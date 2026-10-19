@@ -1,0 +1,122 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "831831AD-AEA9-4E53-9D86-122D8A234CBB.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.appearance.8151D9E1-BD1A-415B-8FF0-64AF13B5C82B\" Button`_0_434C3644-B480-4FC3-8783-8517ED23F9F7.txt",
+    "timestamp": 1792396062.46,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8C408B9B-BE1A-459D-AD0E-98A93B67F10C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.appearance.8151D9E1-BD1A-415B-8FF0-64AF13B5C82B\" Button`_0_DF850B6D-3B76-453D-8442-318B0DD72A31.txt",
+    "timestamp": 1792396061.483,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "761A2AE2-543A-49B0-8E14-E26B31637384.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.appearance.8151D9E1-BD1A-415B-8FF0-64AF13B5C82B\" Button`_0_900B980C-B2D4-4E7D-8396-D4BCC2FEA171.txt",
+    "timestamp": 1792396059.595,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5F89F63C-15FD-4105-9066-5AD840B25535.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_ECD82EFC-3EF4-478B-AE97-3D15742364D7.PlannerMCPPrototype",
+    "timestamp": 1792396035.662,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "84DE0BDE-7CB2-4F9E-8FC9-6D7A7500C509.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_53DF1E55-35BF-4129-AE1F-07FC4AC86DB6.txt",
+    "timestamp": 1792396035.461,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1E53D529-19A3-4E5B-A9B5-D8C15E72190B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_A67340A0-2F0C-4BA3-ABB3-8870B68C87C4.txt",
+    "timestamp": 1792396034.463,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8E881116-FE88-4EE1-85DC-C8315C670C38.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_92CA97B5-6B08-4D26-BB1E-E04C6E9742D8.PlannerMCPPrototype",
+    "timestamp": 1792396025.135,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "2255FF2D-D058-40CF-9017-289FAF9F8239.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_0483809D-8BE2-48C6-855D-EBECD2988AD3.txt",
+    "timestamp": 1792396024.914,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8AD6802F-C863-433F-8FCB-3AD833D3A7DC.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_F5D70F9C-4AD0-42C7-BED5-497514C7692A.txt",
+    "timestamp": 1792396023.908,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0A96BB28-C013-4B90-8D25-200109CBA306.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_638379B1-B172-4AA0-A01D-174AC6B53A64.PlannerMCPPrototype",
+    "timestamp": 1792396014.666,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "37B6CBB2-E8F9-4698-AB36-77ECB01A5240.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_C4A01FAF-59BE-4DF8-8027-F3ABB52E0E1D.txt",
+    "timestamp": 1792396014.467,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CD2EF811-013E-47AC-8056-4475CC6BA51B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_8E75D4A8-D3AA-4D15-A651-EF632B3856C6.txt",
+    "timestamp": 1792396013.451,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  }
+]

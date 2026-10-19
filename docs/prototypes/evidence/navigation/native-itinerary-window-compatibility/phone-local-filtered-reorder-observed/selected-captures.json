@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "88EFAB6C-2006-4EBA-A369-4BE4DCC49011.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Hidden membership retained after filtered drag and relaunch_0_C003F054-580A-491F-99FA-CFB3A80BA0E6.png",
+    "timestamp": 1792396650.002,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "40C559B5-2907-4AB2-85A2-FD417D038D42.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered Manual drag keeps full List progress_0_44627A12-4B88-4B84-8B2E-9AD21EEE63B7.png",
+    "timestamp": 1792396618.962,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "BE8560EE-0FC7-4D24-9C9E-F3A812B4E3AC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered List after native drag_0_72AC9969-E3C6-4B3B-8854-C0EAA4E2B4D6.png",
+    "timestamp": 1792396616.235,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "33765B8F-55AB-4510-9787-5AD14652CE1F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered List before native drag_0_CDFDEF0F-05F4-4729-A668-96716E9B1366.png",
+    "timestamp": 1792396610.25,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  }
+]

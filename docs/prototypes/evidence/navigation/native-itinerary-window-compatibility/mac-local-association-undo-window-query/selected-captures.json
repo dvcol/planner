@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1F284B5C-B712-4B93-896B-73A3DBD5A690.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Undo restores original completed List appearance_0_14E44BCB-7DA5-43E8-8F72-8F04FEACDCBC.png",
+    "timestamp": 1792395695.864,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()"
+  }
+]

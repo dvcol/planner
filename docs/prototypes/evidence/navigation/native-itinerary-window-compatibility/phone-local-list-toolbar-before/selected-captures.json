@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "21FE3095-E4B1-4951-A36F-E1A31F41ABCA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved native List after relaunch_0_4845D363-98C3-497A-8EEB-9CC1BF2BE26D.png",
+    "timestamp": 1792395570.705,
+    "testIdentifier": "SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "307CBC59-4D6C-4CF2-BAB8-F760CB954879.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved native List with empty progress_0_7A88E1E7-BC89-407E-97E8-1FDA784F5AB4.png",
+    "timestamp": 1792395561.168,
+    "testIdentifier": "SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch()"
+  }
+]

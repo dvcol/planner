@@ -657,7 +657,8 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     addition.activateForPlannerJourney()
     let choice = application.descendants(matching: .any).matching(
       NSPredicate(
-        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.", title)
+        format: "identifier BEGINSWITH %@ AND (label == %@ OR value == %@)",
+        "saved.itinerary.entry.choice.", title, title)
     ).firstMatch
     XCTAssertTrue(choice.waitForExistence(timeout: 5))
     choice.activateForPlannerJourney()

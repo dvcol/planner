@@ -1,0 +1,41 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "3470A4A0-7350-4C8F-A8A4-EBF86C0D75AA.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Complete Issue Description.txt",
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "BBBFB0B9-ED0A-4529-AD9C-F34B02C9086E.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_A3F7BE62-E6F5-40CE-ADFA-E3913A46CA4B.PlannerMCPPrototype",
+    "timestamp": 1792396917.402,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "A4B42015-8D91-4B14-A966-89F660B7DB8D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo data persists and history expires after relaunch_0_FF24AFD8-9473-4BCC-9E04-2B513C4620BF.png",
+    "timestamp": 1792397020.113,
+    "testIdentifier": "SavedLabelsJourneyTests/testItineraryEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "4C8CA5C0-B9A2-4CB2-8111-F11015E97444.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo restores identities while keeping saved notes_0_4048D990-495E-4B00-A464-6B931F32DA8D.png",
+    "timestamp": 1792397010.457,
+    "testIdentifier": "SavedLabelsJourneyTests/testItineraryEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  }
+]

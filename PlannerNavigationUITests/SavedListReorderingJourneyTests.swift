@@ -40,8 +40,10 @@ final class SavedListReorderingJourneyTests: XCTestCase {
       let edit = application.plannerElement("saved.list.edit")
       edit.activateForPlannerJourney()
     #endif
+    recordScreenshot(application, name: "Filtered List before native drag")
     dragItem(cafe, relativeTo: museum, before: true, application: application)
-    XCTAssertTrue(waitForOrder(cafe, before: museum))
+    recordScreenshot(application, name: "Filtered List after native drag")
+    XCTAssertTrue(waitForOrder(cafe, before: museum), application.debugDescription)
     #if os(iOS)
       edit.activateForPlannerJourney()
     #endif

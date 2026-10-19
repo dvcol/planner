@@ -128,10 +128,14 @@ final class SavedLabelsJourneyTests: XCTestCase {
 
   private func revealGroupedEditorElement(_ element: XCUIElement, application: XCUIApplication) {
     for _ in 0..<12 {
-      if element.isHittable { return }
       #if os(macOS)
-        application.scrollViews.firstMatch.scroll(byDeltaX: 0, deltaY: -200)
+        let form = application.sheets.firstMatch.scrollViews.firstMatch
+        let visibleFrame = form.frame.insetBy(dx: 0, dy: 8)
+        if element.isHittable && visibleFrame.contains(element.frame) { return }
+        let direction: CGFloat = element.frame.midY < visibleFrame.midY ? 200 : -200
+        form.scroll(byDeltaX: 0, deltaY: direction)
       #else
+        if element.isHittable { return }
         dismissGroupedEditorKeyboard(application)
         let form = application.collectionViews.firstMatch
         let start = form.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.75))
@@ -1212,7 +1216,12 @@ final class SavedLabelsJourneyTests: XCTestCase {
     field.activateForPlannerJourney()
     field.typeText(name)
     application.plannerElement("saved.\(kind.lowercased()).save").activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
+    let savedLabel = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND (label == %@ OR value == %@)",
+        "saved.\(kind.lowercased()).", name, name)
+    ).firstMatch
+    XCTAssertTrue(savedLabel.waitForExistence(timeout: 10))
   }
 
   private func openItems(_ application: XCUIApplication) {

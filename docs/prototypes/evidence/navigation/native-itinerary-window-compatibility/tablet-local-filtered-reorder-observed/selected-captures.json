@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E47ABA1F-FC34-465B-B704-03FDFEED287F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Hidden membership retained after filtered drag and relaunch_0_C6723D3C-403C-4C16-9A22-DF194887BF24.png",
+    "timestamp": 1792396677.63,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "090F80B2-EEB0-4B57-938D-53DB14018BFD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered Manual drag keeps full List progress_0_93BF6DBC-966B-402C-A2FF-2F4529E74D70.png",
+    "timestamp": 1792396647.464,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D657C9BF-3E07-4DB8-8A7A-C04E5FF741B4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered List after native drag_0_03FDB568-48C5-4B6F-86FE-74FE6BBA1840.png",
+    "timestamp": 1792396645.123,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1B572B95-F986-41F9-9A3E-7B7ACD3FEC90.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered List before native drag_0_D7DFB937-5814-4036-AA77-F330DAEFBC1F.png",
+    "timestamp": 1792396639.597,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  }
+]

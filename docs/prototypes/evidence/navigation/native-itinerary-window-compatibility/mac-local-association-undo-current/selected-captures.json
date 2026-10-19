@@ -1,0 +1,41 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "FDD67044-B835-46AA-BF4F-823A9FE2F1DC.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_3511A976-CB89-49F2-B12A-15FF4B96C581.PlannerMCPPrototype",
+    "timestamp": 1792395507.756,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "0C621488-6718-4F35-AF70-C2D174D3E977.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Any`_0_01C608D9-2951-4F3E-931D-4E0BBDB5025C.txt",
+    "timestamp": 1792395507.612,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7C4B62C7-0701-4B34-A0B3-4AC4E615BFA9.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Any`_0_4365132D-ACF1-4110-BD60-F340EA15CC38.txt",
+    "timestamp": 1792395506.744,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1D8E911C-069C-48CA-ADF0-F88E6201B1E3.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Complete Issue Description.txt",
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()"
+  }
+]
