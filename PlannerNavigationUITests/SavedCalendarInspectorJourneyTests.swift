@@ -60,7 +60,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.item.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let schedule = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")

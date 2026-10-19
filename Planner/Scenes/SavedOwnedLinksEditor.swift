@@ -52,8 +52,8 @@ struct SavedOwnedLinksEditor: View {
   var body: some View {
     Section("Links") {
       ForEach($links) { $link in
-        VStack(alignment: .leading) {
-          HStack {
+        VStack(alignment: .leading, spacing: 8) {
+          HStack(spacing: 12) {
             TextField("URL", text: $link.originalURL)
               .autocorrectionDisabled()
               .focused($focusedLinkIdentifier, equals: link.id)
@@ -63,12 +63,12 @@ struct SavedOwnedLinksEditor: View {
                 .keyboardType(.URL)
               #endif
             Menu {
-              Button("Move Up", systemImage: "arrow.up") { moveLink(link.id, offset: -1) }
+              Button("Move up", systemImage: "arrow.up") { moveLink(link.id, offset: -1) }
                 .disabled(links.first?.id == link.id)
-              Button("Move Down", systemImage: "arrow.down") { moveLink(link.id, offset: 1) }
+              Button("Move down", systemImage: "arrow.down") { moveLink(link.id, offset: 1) }
                 .disabled(links.last?.id == link.id)
               Divider()
-              Button("Remove Link", systemImage: "minus.circle", role: .destructive) {
+              Button("Remove link", systemImage: "minus.circle", role: .destructive) {
                 if focusedLinkIdentifier == link.id { focusedLinkIdentifier = nil }
                 links.removeAll { $0.id == link.id }
               }
@@ -84,11 +84,12 @@ struct SavedOwnedLinksEditor: View {
             .accessibilityIdentifier("\(accessibilityIdentifierPrefix).label.\(link.id.uuidString)")
         }
       }
-      Button("Add Link", systemImage: "plus") {
+      Button("Add link", systemImage: "plus") {
         let draft = SavedOwnedLinkDraft()
         links.append(draft)
         focusedLinkIdentifier = draft.id
       }
+      .controlSize(.regular)
       .accessibilityIdentifier("\(accessibilityIdentifierPrefix).add")
     }
   }

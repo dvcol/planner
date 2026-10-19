@@ -57,16 +57,16 @@ struct SavedSchedulesSection: View {
             ProgressView("Loading schedules")
           } else if let loadingFailure {
             Text(loadingFailure).foregroundStyle(.secondary)
-            Button("Try Again") { Task { await loadSchedules() } }
+            Button("Try again") { Task { await loadSchedules() } }
           } else {
             ForEach(schedules, id: \.source.id) { schedule in
               SavedScheduleRow(schedule: schedule)
                 .contextMenu {
-                  Button("Edit Schedule", systemImage: "pencil") {
+                  Button("Edit schedule", systemImage: "pencil") {
                     editSchedule(schedule)
                   }
                   .disabled(!canChange)
-                  Button("Remove Schedule", systemImage: "calendar.badge.minus", role: .destructive)
+                  Button("Remove schedule", systemImage: "calendar.badge.minus", role: .destructive)
                   {
                     removalOperationIdentifier = UUID()
                     scheduleToRemove = schedule
@@ -86,7 +86,7 @@ struct SavedSchedulesSection: View {
       titleVisibility: .visible
     ) {
       if let schedule = scheduleToRemove {
-        Button("Remove Schedule", role: .destructive) {
+        Button("Remove schedule", role: .destructive) {
           let operationIdentifier = removalOperationIdentifier
           Task {
             await store.removeSchedule(schedule.source.id, operationIdentifier: operationIdentifier)
@@ -377,7 +377,7 @@ struct SavedScheduleForm: View {
       }
       .disabled(store.isSaving)
       .navigationTitle(
-        schedule == nil ? "Schedule \(source.kind.rawValue.capitalized)" : "Edit Schedule"
+        schedule == nil ? "Schedule \(source.kind.rawValue.capitalized)" : "Edit schedule"
       )
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {

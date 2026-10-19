@@ -23,7 +23,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
       application.staticTexts["Place details come from this Maps link and haven't been verified."]
         .exists)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let address = application.textFields["saved.item.edit.location.address"]
     revealSavedMap(address, application: application)
     XCTAssertTrue(address.waitForExistence(timeout: 5))
@@ -215,7 +215,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
     #endif
     XCTAssertTrue(completion.waitForPlannerBooleanState(true))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].firstMatch.waitForExistence(timeout: 10))
     let originalLink = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
@@ -249,7 +249,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
     application.launchSavedPlannerJourney()
     openItems(application)
     application.plannerElement("saved.items.filters").activateForPlannerJourney()
-    application.plannerElement("Clear Filters").activateForPlannerJourney()
+    application.plannerElement("Clear filters").activateForPlannerJourney()
     application.plannerElement("saved.filters.done").activateForPlannerJourney()
     let originalRow = application.savedPlannerItemRows("Keep original").firstMatch
     XCTAssertTrue(originalRow.waitForExistence(timeout: 10))
@@ -344,7 +344,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
       ).count, 0)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let quantity = application.descendants(matching: .any).matching(
       identifier: "saved.item.edit.estimate.quantity"
     ).firstMatch

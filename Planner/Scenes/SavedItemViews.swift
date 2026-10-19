@@ -97,13 +97,15 @@ struct SavedItemCatalog: View {
       }
       ToolbarItem {
         Menu {
-          Button("New Item", systemImage: "square.and.pencil", action: create)
+          Button("New item", systemImage: "square.and.pencil", action: create)
             .accessibilityIdentifier("saved.item.new")
-          Button("From Link or Text", systemImage: "text.badge.plus", action: capture)
+          Button("From link or text", systemImage: "text.badge.plus", action: capture)
             .accessibilityIdentifier("saved.capture.new")
         } label: {
           Label("Add", systemImage: "plus")
         }
+        .labelStyle(.iconOnly)
+        .help("Add an item")
         .disabled(!canCreate)
         .accessibilityIdentifier("saved.item.addMenu")
       }
@@ -158,7 +160,7 @@ struct SavedItemCatalog: View {
     case .failed(let reason):
       VStack(alignment: .leading) {
         Text(reason).foregroundStyle(.secondary)
-        Button("Try Again") { Task { await window?.requestRows(at: [index]) } }
+        Button("Try again") { Task { await window?.requestRows(at: [index]) } }
       }
       .selectionDisabled()
     }
@@ -174,7 +176,7 @@ struct SavedItemCatalog: View {
       } description: {
         Text(reason)
       } actions: {
-        Button("Try Again") { retryIdentifier = UUID() }
+        Button("Try again") { retryIdentifier = UUID() }
       }
     case .ready:
       if window?.matchingCount == 0 {
@@ -288,23 +290,24 @@ struct SavedItemDetail: View {
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {
-          Button("Edit Item", action: editItem)
+          Button("Edit item", action: editItem)
             .disabled(!canChange)
-          Button("Add to List", action: addToList)
+          Button("Add to list", action: addToList)
             .disabled(!canChange)
-          Button("Schedule Item") { showNewSchedule = true }
+          Button("Schedule item") { showNewSchedule = true }
             .disabled(!canChange)
-          Button(item.state.archived == true ? "Unarchive Item" : "Archive Item") {
+          Button(item.state.archived == true ? "Unarchive item" : "Archive item") {
             setArchive(item.state.archived != true)
           }
           .disabled(!canChange)
           Divider()
-          Button("Delete Item", role: .destructive, action: deleteItem)
+          Button("Delete item", role: .destructive, action: deleteItem)
             .disabled(!canChange)
             .accessibilityIdentifier("saved.item.delete")
         } label: {
           Label("Item actions", systemImage: "ellipsis")
         }
+        .labelStyle(.iconOnly)
         .help("Item actions")
         .accessibilityIdentifier("saved.item.actions")
       }

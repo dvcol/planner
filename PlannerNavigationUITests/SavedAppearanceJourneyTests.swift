@@ -20,7 +20,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       completion.activateForPlannerJourney()
       XCTAssertTrue(completion.waitForPlannerValue("Completed"))
       row.press(forDuration: 1)
-      application.plannerElement("Remove from List").activateForPlannerJourney()
+      application.plannerElement("Remove from list").activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
       let associationUndo = application.plannerElement("saved.association.undo")
       XCTAssertTrue(associationUndo.waitForExistence(timeout: 5))
@@ -100,7 +100,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       museum.press(forDuration: 1)
     #endif
-    application.plannerElement("Remove from List").activateForPlannerJourney()
+    application.plannerElement("Remove from list").activateForPlannerJourney()
     XCTAssertTrue(museum.waitForNonExistence(timeout: 10))
     XCTAssertTrue(hotel.waitForExistence(timeout: 10))
     application.chooseSavedPlannerStateFilter("Todo", control: filters)
@@ -175,7 +175,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertEqual(title.value as? String, "Unsaved visit")
     XCTAssertEqual(notes.value as? String, "Keep these fields when the originating List is deleted")
     #if os(iOS)
-      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+      application.navigationBars["New item"].staticTexts["New item"].tap()
     #endif
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(
@@ -240,12 +240,12 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
     #endif
     openListContextMenu(origin)
-    application.plannerElement("Archive List").activateForPlannerJourney()
+    application.plannerElement("Archive list").activateForPlannerJourney()
     XCTAssertTrue(origin.waitForNonExistence(timeout: 10))
     XCTAssertEqual(title.value as? String, "Retained visit")
     XCTAssertEqual(notes.value as? String, "Preserve this draft and its original destination")
     #if os(iOS)
-      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+      application.navigationBars["New item"].staticTexts["New item"].tap()
     #endif
     recordScreenshot(application, name: "Archived origin draft before explicit Save")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
@@ -276,11 +276,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(origin.waitForExistence(timeout: 10))
     XCTAssertEqual(origin.identifier, originalListIdentifier)
     openListContextMenu(origin)
-    application.plannerElement("Unarchive List").activateForPlannerJourney()
+    application.plannerElement("Unarchive list").activateForPlannerJourney()
     XCTAssertEqual(title.value as? String, "Retained visit")
     XCTAssertEqual(notes.value as? String, "Preserve this draft and its original destination")
     #if os(iOS)
-      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+      application.navigationBars["New item"].staticTexts["New item"].tap()
     #endif
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(title.waitForNonExistence(timeout: 10))
@@ -330,7 +330,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     openList("Tokyo Food", application: application)
     row.activateForPlannerJourney()
     application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
-    application.plannerElement("Move to List").activateForPlannerJourney()
+    application.plannerElement("Move to list").activateForPlannerJourney()
     let destination = moveDestination("Wishlist", application: application)
     XCTAssertTrue(destination.waitForExistence(timeout: 5))
     destination.activateForPlannerJourney()
@@ -397,7 +397,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       row.press(forDuration: 1)
     #endif
-    application.plannerElement("Remove from List").activateForPlannerJourney()
+    application.plannerElement("Remove from list").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     #if os(macOS)
       let originIdentifier = application.windows.firstMatch.identifier
@@ -470,7 +470,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       original.press(forDuration: 1)
     #endif
-    application.plannerElement("Remove from List").activateForPlannerJourney()
+    application.plannerElement("Remove from list").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     addItem(application)
     let replacement = application.savedPlannerItemRows("Nezu Museum").firstMatch
@@ -561,8 +561,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     recordScreenshot(application, name: "All selected Lists retain one shared source Item")
     catalogFilters.activateForPlannerJourney()
     setPresenceFilter("saved.filters.hasLinks", to: true, application: application)
-    let clearLists = application.plannerElement("Clear Lists")
-    application.revealSavedPlannerFilter("Clear Lists")
+    let clearLists = application.plannerElement("Clear lists")
+    application.revealSavedPlannerFilter("Clear lists")
     clearLists.activateForPlannerJourney()
     application.plannerElement("saved.filters.done").activateForPlannerJourney()
     XCTAssertEqual(catalogFilters.label, "Active · Links")
@@ -816,7 +816,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let hotelIdentifier = hotel.identifier
     viewGlobalItem(application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     openList("Tokyo Food", itemTitle: "Hotel", application: application)
     let filters = application.plannerElement("saved.list.filters")
@@ -892,7 +892,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       XCTAssertTrue(nestedActions.waitForExistence(timeout: 5), application.debugDescription)
       nestedActions.activateForPlannerJourney()
     }
-    let command = application.plannerElement(done ? "Mark all Done" : "Mark all Undone")
+    let command = application.plannerElement(done ? "Mark all done" : "Mark all undone")
     XCTAssertTrue(command.waitForExistence(timeout: 5), application.debugDescription)
     command.activateForPlannerJourney()
   }
@@ -1029,7 +1029,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Live List appearance reuses the native website preview")
     let actions = application.plannerElement("saved.appearance.actions")
     actions.activateForPlannerJourney()
-    application.plannerElement("View Item").activateForPlannerJourney()
+    application.plannerElement("View item").activateForPlannerJourney()
     openItemEditor(application)
     removeBookmark(imageIdentity, application: application)
     application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
@@ -1116,15 +1116,15 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     revealEditorElement(guideActions, application: application)
     XCTAssertTrue(guideActions.waitForExistence(timeout: 5))
     guideActions.activateForPlannerJourney()
-    XCTAssertFalse(application.plannerElement("Move Up").isEnabled)
-    application.plannerElement("Move Down").activateForPlannerJourney()
+    XCTAssertFalse(application.plannerElement("Move up").isEnabled)
+    application.plannerElement("Move down").activateForPlannerJourney()
     revealEditorElement(guideActions, application: application)
     guideActions.activateForPlannerJourney()
-    XCTAssertFalse(application.plannerElement("Move Down").isEnabled)
-    application.plannerElement("Move Up").activateForPlannerJourney()
+    XCTAssertFalse(application.plannerElement("Move down").isEnabled)
+    application.plannerElement("Move up").activateForPlannerJourney()
     revealEditorElement(guideActions, application: application)
     guideActions.activateForPlannerJourney()
-    application.plannerElement("Move Down").activateForPlannerJourney()
+    application.plannerElement("Move down").activateForPlannerJourney()
     let guideURL = application.textFields["saved.item.edit.link.url.\(guideIdentity)"]
     revealEditorElement(guideURL, application: application)
     replaceText(
@@ -1311,7 +1311,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let filters = application.plannerElement("saved.lists.archive")
     revealSidebarIfNeeded(application, element: filters)
     openListContextMenu(tokyo)
-    application.plannerElement("Archive List").activateForPlannerJourney()
+    application.plannerElement("Archive list").activateForPlannerJourney()
     XCTAssertEqual(filters.label, "Active Lists")
     XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForNonExistence(timeout: 10))
     XCTAssertTrue(application.savedPlannerListRow("Wishlist").exists)
@@ -1369,7 +1369,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     assertItemOrder(["Zulu", "Alpha"], application: application)
     revealSidebarIfNeeded(application, element: filters)
     openListContextMenu(application.plannerElement(tokyoIdentifier))
-    application.plannerElement("Unarchive List").activateForPlannerJourney()
+    application.plannerElement("Unarchive list").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForNonExistence(timeout: 10))
     chooseFilter("Active Lists", menu: filters, application: application)
     XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForExistence(timeout: 10))
@@ -1470,7 +1470,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.savedPlannerItemRows("Alpha").firstMatch.activateForPlannerJourney()
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     #if os(iOS)
       if back.exists { back.activateForPlannerJourney() }
@@ -1532,7 +1532,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       membership.press(forDuration: 1)
     #endif
-    application.plannerElement("Remove from List").activateForPlannerJourney()
+    application.plannerElement("Remove from list").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     openCatalogSection("Inbox", application: application)
     assertItemOrder(["Zulu", "Middle"], application: application)
@@ -1733,7 +1733,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(completion.waitForPlannerValue("Completed"))
     viewGlobalItem(application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     openList("Tokyo Food", application: application)
     assertProgress(0.5, application: application)
@@ -1829,7 +1829,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(completion.waitForPlannerValue("Completed"))
     viewGlobalItem(application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    let editItem = application.plannerElement("Edit Item")
+    let editItem = application.plannerElement("Edit item")
     editItem.activateForPlannerJourney()
     let subtitle = application.textFields["saved.item.edit.subtitle"]
     XCTAssertTrue(subtitle.waitForExistence(timeout: 5))
@@ -1898,7 +1898,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     activateGlobalCompletion(globalCompletion)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    let editItem = application.plannerElement("Edit Item")
+    let editItem = application.plannerElement("Edit item")
     XCTAssertTrue(editItem.waitForExistence(timeout: 5))
     editItem.activateForPlannerJourney()
     let titleField = application.textFields["saved.item.edit.title"]
@@ -1980,7 +1980,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    let editItem = application.plannerElement("Edit Item")
+    let editItem = application.plannerElement("Edit item")
     XCTAssertTrue(editItem.waitForExistence(timeout: 5))
     editItem.activateForPlannerJourney()
     let titleField = application.textFields["saved.item.edit.title"]
@@ -2071,7 +2071,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     openList("Tokyo Food", application: application)
     item.activateForPlannerJourney()
     application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
-    let addToList = application.plannerElement("Add to List")
+    let addToList = application.plannerElement("Add to list")
     XCTAssertTrue(addToList.waitForExistence(timeout: 5))
     addToList.activateForPlannerJourney()
     let destination = moveDestination("Wishlist", application: application)
@@ -2154,7 +2154,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.launchSavedPlannerJourney()
     createItem(application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    let addToList = application.plannerElement("Add to List")
+    let addToList = application.plannerElement("Add to list")
     XCTAssertTrue(addToList.waitForExistence(timeout: 5))
     addToList.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No Lists yet"].waitForExistence(timeout: 5))
@@ -2195,7 +2195,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     activateGlobalCompletion(globalCompletion)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    let addToList = application.plannerElement("Add to List")
+    let addToList = application.plannerElement("Add to list")
     XCTAssertTrue(addToList.waitForExistence(timeout: 5))
     addToList.activateForPlannerJourney()
     let add = application.plannerElement("saved.item.list.add")
@@ -2299,7 +2299,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       item.press(forDuration: 1)
     #endif
-    let moveToList = application.plannerElement("Move to List")
+    let moveToList = application.plannerElement("Move to list")
     XCTAssertTrue(moveToList.waitForExistence(timeout: 5))
     moveToList.activateForPlannerJourney()
     let destination = moveDestination("Wishlist", application: application)
@@ -2357,7 +2357,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     openList("Tokyo Food", application: application)
     item.activateForPlannerJourney()
     application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
-    let moveToList = application.plannerElement("Move to List")
+    let moveToList = application.plannerElement("Move to list")
     XCTAssertTrue(moveToList.waitForExistence(timeout: 5))
     moveToList.activateForPlannerJourney()
     let move = application.plannerElement("saved.membership.move")
@@ -2436,7 +2436,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       item.press(forDuration: 1)
     #endif
-    let remove = application.plannerElement("Remove from List")
+    let remove = application.plannerElement("Remove from list")
     XCTAssertTrue(remove.waitForExistence(timeout: 5))
     remove.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
@@ -2486,7 +2486,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     item.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForExistence(timeout: 5))
     application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
-    let remove = application.plannerElement("Remove from List")
+    let remove = application.plannerElement("Remove from list")
     XCTAssertTrue(remove.waitForExistence(timeout: 5))
     remove.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForNonExistence(timeout: 10))
@@ -2540,7 +2540,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.launchSavedPlannerJourney()
     createItem(application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     application.terminate()
     application.launchSavedPlannerJourney()
@@ -2567,7 +2567,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Archived"].exists)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    application.plannerElement("Unarchive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
     recordScreenshot(application, name: "Unlisted archived Item restored through the Items catalog")
     application.terminate()
@@ -2596,7 +2596,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(completion.waitForPlannerValue("Completed"))
     viewGlobalItem(application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     openList("Tokyo Food", application: application)
     let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
@@ -2672,7 +2672,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.item.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 5))
     actions.activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
     XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
@@ -2689,7 +2689,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     viewGlobalItem(application)
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    application.plannerElement("Unarchive item").activateForPlannerJourney()
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
     XCTAssertTrue(
       application.staticTexts["Archived"].waitForNonExistence(timeout: 10))
@@ -2795,7 +2795,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Saved List appearance details")
 
     application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
-    application.plannerElement("View Item").activateForPlannerJourney()
+    application.plannerElement("View item").activateForPlannerJourney()
     let globalCompletion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(globalCompletion.waitForExistence(timeout: 10))
@@ -2855,7 +2855,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   private func openItemEditor(_ application: XCUIApplication) {
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.edit.title"].waitForExistence(timeout: 5))
   }
 
@@ -2953,7 +2953,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     revealEditorElement(actions, application: application)
     XCTAssertTrue(actions.waitForExistence(timeout: 5))
     actions.activateForPlannerJourney()
-    application.plannerElement("Remove Link").activateForPlannerJourney()
+    application.plannerElement("Remove link").activateForPlannerJourney()
   }
 
   private func openListContextMenu(_ list: XCUIElement) {
@@ -3126,14 +3126,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     closeNewItemEditor(application)
     XCTAssertTrue(title.waitForNonExistence(timeout: 5))
-    XCTAssertFalse(application.buttons["Keep Editing"].exists)
+    XCTAssertFalse(application.buttons["Keep editing"].exists)
     openNewItemInList(application)
     title.activateForPlannerJourney()
     title.typeText("Preserved draft")
     attemptDraftNavigation(application)
     let dialog = application.windows.firstMatch.sheets.firstMatch
     XCTAssertTrue(dialog.waitForExistence(timeout: 5))
-    for choice in ["Save", "Discard", "Keep Editing"] {
+    for choice in ["Save", "Discard", "Keep editing"] {
       XCTAssertTrue(dialog.buttons[choice].exists)
     }
     #if os(macOS)
@@ -3144,7 +3144,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     hierarchy.name = "Draft navigation own-window hierarchy"
     hierarchy.lifetime = .keepAlways
     add(hierarchy)
-    chooseDraftNavigationAction("Keep Editing", application: application)
+    chooseDraftNavigationAction("Keep editing", application: application)
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     XCTAssertEqual(title.value as? String, "Preserved draft")
     replaceText(title, with: "", application: application)
@@ -3262,7 +3262,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       waitForPlannerWindowOrientation(application, landscape: true)
     #endif
     assertNewItemFields(richFields, application: application)
-    XCTAssertFalse(application.windows.firstMatch.sheets.buttons["Keep Editing"].exists)
+    XCTAssertFalse(application.windows.firstMatch.sheets.buttons["Keep editing"].exists)
     recordScreenshot(application, name: "Edited Item draft survives expanded layout")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 10))
@@ -3389,7 +3389,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   private func attemptDraftNavigation(_ application: XCUIApplication) {
     #if os(iOS)
       if application.windows.firstMatch.frame.width < 600 {
-        application.navigationBars["New Item"].buttons.matching(
+        application.navigationBars["New item"].buttons.matching(
           NSPredicate(
             format: "identifier == %@ OR identifier == %@", "BackButton", "saved.item.back")
         ).firstMatch.activateForPlannerJourney()
@@ -3432,7 +3432,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     openCatalogSection("Items", application: application)
     application.savedPlannerItemRows("Zzz archived").firstMatch.activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     openCatalogSection("Items", application: application)
     chooseSort(
       "Descending", menu: application.plannerElement("saved.items.sort"), application: application)
@@ -3593,19 +3593,19 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       XCTAssertEqual(notes.value as? String, "Keep these notes through destination review")
       application.plannerElement("saved.item.save").click()
       let review = application.windows.firstMatch.sheets.firstMatch
-      XCTAssertTrue(review.buttons["Use This List"].waitForExistence(timeout: 10))
+      XCTAssertTrue(review.buttons["Use this list"].waitForExistence(timeout: 10))
       XCTAssertTrue(
         review.staticTexts[
           "The original List changed. Save to Renamed origin instead? Your draft is preserved."
         ].exists)
       recordScreenshot(application, name: "Renamed List requires explicit Item destination review")
-      review.buttons["Keep Editing"].click()
+      review.buttons["Keep editing"].click()
       XCTAssertEqual(title.value as? String, "Retained visit")
       XCTAssertEqual(notes.value as? String, "Keep these notes through destination review")
       XCTAssertTrue(application.staticTexts["No items"].exists)
       application.plannerElement("saved.item.save").click()
-      XCTAssertTrue(review.buttons["Use This List"].waitForExistence(timeout: 10))
-      review.buttons["Use This List"].click()
+      XCTAssertTrue(review.buttons["Use this list"].waitForExistence(timeout: 10))
+      review.buttons["Use this list"].click()
       XCTAssertTrue(review.waitForNonExistence(timeout: 5))
       XCTAssertTrue(title.exists)
       XCTAssertTrue(application.staticTexts["No items"].exists)
@@ -3718,7 +3718,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let actions = window.descendants(matching: .any)["saved.\(sourceKind).actions"]
       XCTAssertTrue(actions.waitForExistence(timeout: 10))
       actions.click()
-      application.menuItems["Delete \(sourceKind.capitalized)"].click()
+      application.menuItems["Delete \(sourceKind.lowercased())"].click()
       let confirm = window.sheets.descendants(matching: .any)["saved.\(sourceKind).delete.confirm"]
       XCTAssertTrue(confirm.waitForExistence(timeout: 5))
       confirm.click()
@@ -3772,7 +3772,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
       XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
       overflow.activateForPlannerJourney()
-      let overflowAdd = application.plannerElement("Add existing Item")
+      let overflowAdd = application.plannerElement("Add existing item")
       XCTAssertTrue(overflowAdd.waitForExistence(timeout: 5), application.debugDescription)
       overflowAdd.activateForPlannerJourney()
     }
@@ -3843,7 +3843,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.appearance.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 5))
     actions.activateForPlannerJourney()
-    let viewItem = application.plannerElement("View Item")
+    let viewItem = application.plannerElement("View item")
     XCTAssertTrue(viewItem.waitForExistence(timeout: 5))
     viewItem.activateForPlannerJourney()
   }

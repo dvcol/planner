@@ -112,7 +112,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     #else
       hotel.press(forDuration: 1)
     #endif
-    let move = application.plannerElement("Move to End")
+    let move = application.plannerElement("Move to end")
     XCTAssertTrue(move.waitForExistence(timeout: 5))
     move.activateForPlannerJourney()
     XCTAssertTrue(waitForOrder(museum, before: hotel))
@@ -192,7 +192,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
       let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
       XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
       overflow.activateForPlannerJourney()
-      let overflowAdd = application.plannerElement("Add existing Item")
+      let overflowAdd = application.plannerElement("Add existing item")
       XCTAssertTrue(overflowAdd.waitForExistence(timeout: 5), application.debugDescription)
       overflowAdd.activateForPlannerJourney()
     }

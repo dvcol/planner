@@ -53,7 +53,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
       application: application)
     application.plannerElement("saved.itinerary.link.actions.\(tokyoIdentifier)")
       .activateForPlannerJourney()
-    application.plannerElement("Move Down").activateForPlannerJourney()
+    application.plannerElement("Move down").activateForPlannerJourney()
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     let retainedTokyo = links.matching(identifier: tokyoIdentity).firstMatch
     XCTAssertTrue(retainedTokyo.waitForExistence(timeout: 10))
@@ -67,7 +67,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
       application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
       application.plannerElement("saved.itinerary.link.actions.\(kyotoIdentifier)")
         .activateForPlannerJourney()
-      application.plannerElement("Remove Link").activateForPlannerJourney()
+      application.plannerElement("Remove link").activateForPlannerJourney()
       let action = confirmsRemoval ? "saved.itinerary.save" : "saved.itinerary.cancel"
       application.plannerElement(action).activateForPlannerJourney()
       XCTAssertTrue(retainedTokyo.waitForExistence(timeout: 10))
@@ -199,7 +199,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Keep the route notes"].waitForExistence(timeout: 10))
     application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     selectPlanningTimeZone("Europe/Paris", search: "Paris", application: application)
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let scheduleRows = application.descendants(matching: .any).matching(
@@ -213,13 +213,13 @@ final class SavedItineraryJourneyTests: XCTestCase {
     XCTAssertTrue(originalDescription.hasSuffix(" · Europe/Paris"))
     let originalInstant = try displayedStartInstant(originalDescription)
     openScheduleMenu(schedule)
-    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    application.plannerElement("Edit schedule").activateForPlannerJourney()
     selectPlanningTimeZone("America/New_York", search: "New York", application: application)
     application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
     XCTAssertTrue(schedule.waitForPlannerValue(originalDescription))
     XCTAssertEqual(scheduleRows.count, 1)
     openScheduleMenu(schedule)
-    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    application.plannerElement("Edit schedule").activateForPlannerJourney()
     selectPlanningTimeZone("Asia/Tokyo", search: "Tokyo", application: application)
     recordScreenshot(application, name: "Itinerary planning zone stages the original appointment")
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
@@ -303,7 +303,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.itinerary.actions")
     XCTAssertTrue(actions.isEnabled)
     actions.activateForPlannerJourney()
-    let scheduleAction = application.plannerElement("Schedule Itinerary")
+    let scheduleAction = application.plannerElement("Schedule itinerary")
     XCTAssertTrue(scheduleAction.waitForExistence(timeout: 5))
     scheduleAction.activateForPlannerJourney()
     let includeEnd = application.descendants(matching: .any)
@@ -376,7 +376,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
       .matching(identifier: "saved.schedule.allDay").firstMatch
     for includesEnd in [false, true] {
       application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+      application.plannerElement("Schedule itinerary").activateForPlannerJourney()
       XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
       if includesEnd { activateScheduleToggle(includeEnd) }
       application.plannerElement("saved.schedule.save").activateForPlannerJourney()
@@ -391,7 +391,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
     let converted = application.descendants(matching: .any)
       .matching(identifier: convertedIdentity).firstMatch
     openScheduleMenu(converted)
-    let editAction = application.plannerElement("Edit Schedule")
+    let editAction = application.plannerElement("Edit schedule")
     XCTAssertTrue(editAction.waitForExistence(timeout: 5))
     editAction.activateForPlannerJourney()
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -432,7 +432,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
     XCTAssertEqual(startOnlyRows.firstMatch.identifier, retainedIdentity)
     XCTAssertEqual(startOnlyRows.firstMatch.value as? String, retainedDescription)
     openScheduleMenu(converted)
-    let removeAction = application.plannerElement("Remove Schedule")
+    let removeAction = application.plannerElement("Remove schedule")
     XCTAssertTrue(removeAction.waitForExistence(timeout: 5))
     removeAction.activateForPlannerJourney()
     let confirm = application.buttons["saved.schedule.remove.confirm"].firstMatch

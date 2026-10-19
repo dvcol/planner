@@ -19,7 +19,7 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
     title.typeText("Month museum")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any).matching(
       identifier: "saved.schedule.allDay"
     ).firstMatch

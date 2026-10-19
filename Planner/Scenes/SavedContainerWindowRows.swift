@@ -71,7 +71,7 @@ struct SavedContainerWindowRows<SelectionValue: Hashable, RowContent: View>: Vie
     case .failed(let reason):
       VStack(alignment: .leading) {
         Text(reason).foregroundStyle(.secondary)
-        Button("Try Again") { Task { await window.requestRows(at: [index]) } }
+        Button("Try again") { Task { await window.requestRows(at: [index]) } }
       }
       .selectionDisabled()
     }

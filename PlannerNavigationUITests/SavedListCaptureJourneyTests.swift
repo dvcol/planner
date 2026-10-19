@@ -16,7 +16,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     #else
       list.press(forDuration: 1)
     #endif
-    application.plannerElement("Archive List").activateForPlannerJourney()
+    application.plannerElement("Archive list").activateForPlannerJourney()
     XCTAssertTrue(list.waitForNonExistence(timeout: 10))
     openListArchiveFilter(application)
     application.plannerElement("All Lists").activateForPlannerJourney()
@@ -87,7 +87,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     #else
       archivedList.press(forDuration: 1)
     #endif
-    application.plannerElement("Archive List").activateForPlannerJourney()
+    application.plannerElement("Archive list").activateForPlannerJourney()
     XCTAssertTrue(archivedList.waitForNonExistence(timeout: 10))
     openListArchiveFilter(application)
     application.plannerElement("All Lists").activateForPlannerJourney()
@@ -176,7 +176,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
         let overflow = application.windows.firstMatch.popUpButtons["more toolbar items"]
         XCTAssertTrue(overflow.waitForExistence(timeout: 5))
         overflow.activateForPlannerJourney()
-        let nativeCreate = overflow.menuItems["New List"]
+        let nativeCreate = overflow.menuItems["New list"]
         XCTAssertTrue(nativeCreate.waitForExistence(timeout: 5))
         nativeCreate.activateForPlannerJourney()
       }
@@ -191,7 +191,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
           .firstMatch
         XCTAssertTrue(overflow.waitForPlannerHittability())
         overflow.activateForPlannerJourney()
-        let nativeCreate = application.plannerElement("New List")
+        let nativeCreate = application.plannerElement("New list")
         XCTAssertTrue(nativeCreate.waitForExistence(timeout: 5))
         nativeCreate.activateForPlannerJourney()
       }

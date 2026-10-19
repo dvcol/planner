@@ -206,7 +206,7 @@ struct SavedCalendarView: View {
           ContentUnavailableView {
             Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
           } actions: {
-            Button("Try Again") { Task { await loadEntries() } }
+            Button("Try again") { Task { await loadEntries() } }
           }
         }
       }
@@ -217,15 +217,19 @@ struct SavedCalendarView: View {
     .navigationTitle("Calendar")
     .toolbarTitleDisplayMode(.inline)
     .toolbar {
-      Button("Display Time Zone", systemImage: "globe") {
+      Button("Display time zone", systemImage: "globe") {
         showsTimeZonePreferences = true
       }
+      .labelStyle(.iconOnly)
+      .help("Calendar time zone")
       .disabled(!store.isReady)
       .accessibilityIdentifier("saved.calendar.zone.open")
       Button("Today", systemImage: "calendar") {
         selectedDate = Date()
         visibleDate = selectedDate
       }
+      .labelStyle(.titleOnly)
+      .help("Go to today")
     }
     .sheet(isPresented: $showsTimeZonePreferences) {
       SavedCalendarDisplayZoneSettings(
@@ -317,7 +321,7 @@ struct SavedCalendarView: View {
         ContentUnavailableView {
           Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
         } actions: {
-          Button("Try Again") { Task { await loadEntries() } }
+          Button("Try again") { Task { await loadEntries() } }
         }
       }
     }

@@ -25,7 +25,7 @@ final class SavedMapsPreviewJourneyTests: XCTestCase {
     let bookmarkIdentifier = edited.identifier
     let linkIdentifier = bookmarkIdentifier.replacingOccurrences(of: "saved.item.link.", with: "")
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let urlField = application.textFields["saved.item.edit.link.url." + linkIdentifier]
     reveal(urlField, application: application)
     XCTAssertEqual(
@@ -170,11 +170,11 @@ final class SavedMapsPreviewJourneyTests: XCTestCase {
     let delayedIdentifier = delayed.identifier.replacingOccurrences(
       of: "saved.item.link.", with: "")
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let actions = application.plannerElement("saved.item.edit.link.actions." + delayedIdentifier)
     reveal(actions, application: application)
     actions.activateForPlannerJourney()
-    application.plannerElement("Remove Link").activateForPlannerJourney()
+    application.plannerElement("Remove link").activateForPlannerJourney()
     application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
     let map = application.descendants(matching: .any)
       .matching(identifier: "saved.item.maps.preview.map").firstMatch

@@ -17,7 +17,7 @@ struct SavedRecoveryStatusSection: View {
         ProgressView("Finishing recovery copy")
       }
       if !store.incompleteRecoveryOperationIdentifiers.isEmpty {
-        Button("Retry Recovery Copy", systemImage: "arrow.clockwise") {
+        Button("Retry recovery copy", systemImage: "arrow.clockwise") {
           Task { await store.retryIncompleteRecovery() }
         }
         .disabled(!store.canRetryRecovery)
@@ -33,7 +33,7 @@ struct SavedRecoveryStatusSection: View {
           Text(failure).font(.caption).textSelection(.enabled)
             .accessibilityIdentifier("saved.recovery.failure.details")
         }
-        Button("Check Again") { Task { await store.refreshRecoveryStatus() } }
+        Button("Check again") { Task { await store.refreshRecoveryStatus() } }
           .disabled(store.isSaving || store.isCheckingRecovery)
           .accessibilityIdentifier("saved.recovery.status.refresh")
       }

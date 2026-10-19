@@ -72,7 +72,7 @@ import XCTest
         let sourceIdentifier = source.identifier
         source.activateForPlannerJourney()
         application.plannerElement("saved.item.actions").activateForPlannerJourney()
-        application.plannerElement("Add to List").activateForPlannerJourney()
+        application.plannerElement("Add to list").activateForPlannerJourney()
         let firstDestination = destinationRow("Window List 001", application: application)
         XCTAssertTrue(firstDestination.waitForExistence(timeout: 15))
         let firstListIdentifier = firstDestination.identifier
@@ -102,7 +102,7 @@ import XCTest
         XCTAssertTrue(completion.waitForPlannerValue("Completed"))
         originalAppearance.activateForPlannerJourney()
         application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
-        application.plannerElement("Move to List").activateForPlannerJourney()
+        application.plannerElement("Move to list").activateForPlannerJourney()
         XCTAssertTrue(choices.waitForExistence(timeout: 15))
         XCTAssertFalse(firstDestination.exists)
         scrollCatalog(choices, to: lastDestination, towardEnd: true, application: application)
@@ -500,7 +500,7 @@ import XCTest
       let actions = application.plannerElement("saved.item.actions")
       XCTAssertTrue(actions.waitForExistence(timeout: 10))
       actions.activateForPlannerJourney()
-      application.plannerElement("Edit Item").activateForPlannerJourney()
+      application.plannerElement("Edit item").activateForPlannerJourney()
       let estimate = application.descendants(matching: .any).matching(
         identifier: "saved.item.edit.estimate.enabled"
       ).firstMatch

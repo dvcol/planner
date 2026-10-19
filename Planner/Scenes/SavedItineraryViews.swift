@@ -67,7 +67,7 @@ struct SavedItineraryCatalog: View {
         } description: {
           Text(loadingFailure)
         } actions: {
-          Button("Try Again") { Task { await loadItineraries() } }
+          Button("Try again") { Task { await loadItineraries() } }
         }
       } else if catalogWindow?.state == .ready, catalogWindow?.matchingCount == 0 {
         ContentUnavailableView(
@@ -89,7 +89,9 @@ struct SavedItineraryCatalog: View {
           accessibilityIdentifier: "saved.itineraries.archive")
       }
       ToolbarItem(placement: .primaryAction) {
-        Button("New Itinerary", systemImage: "plus") { showNewItinerary = true }
+        Button("New itinerary", systemImage: "plus") { showNewItinerary = true }
+          .labelStyle(.iconOnly)
+          .help("New itinerary")
           .disabled(!store.canCreate)
           .accessibilityIdentifier("saved.itinerary.new")
       }
@@ -322,20 +324,24 @@ struct SavedItineraryDetail: View {
           #endif
           ToolbarItem(placement: .primaryAction) {
             Button("Add entry", systemImage: "plus") { showAddEntry = true }
+              .labelStyle(.iconOnly)
+              .help("Add an itinerary entry")
               .disabled(!store.canCreate || isLoading)
               .accessibilityIdentifier("saved.itinerary.entry.new")
           }
           ToolbarItem(placement: .primaryAction) {
-            Button("Edit Itinerary", systemImage: "pencil") {
+            Button("Edit itinerary", systemImage: "pencil") {
               editDraft = .init(itinerary: itinerary)
             }
+            .labelStyle(.iconOnly)
+            .help("Edit itinerary")
             .disabled(!store.canCreate || isLoading)
             .accessibilityIdentifier("saved.itinerary.edit")
           }
           ToolbarItem(placement: .primaryAction) {
             Menu {
-              Button("Schedule Itinerary") { showNewSchedule = true }
-              Button(itinerary.state.archived == true ? "Unarchive Itinerary" : "Archive Itinerary")
+              Button("Schedule itinerary") { showNewSchedule = true }
+              Button(itinerary.state.archived == true ? "Unarchive itinerary" : "Archive itinerary")
               {
                 Task {
                   _ = await store.setItineraryArchived(
@@ -344,12 +350,12 @@ struct SavedItineraryDetail: View {
               }
               Divider()
               Group {
-                Button("Mark all Done") {
+                Button("Mark all done") {
                   prepareBulkCompletion(
                     .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
                     done: true)
                 }
-                Button("Mark all Undone") {
+                Button("Mark all undone") {
                   prepareBulkCompletion(
                     .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
                     done: false)
@@ -357,11 +363,12 @@ struct SavedItineraryDetail: View {
               }
               .disabled(itinerary.progress.totalCount == 0)
               Divider()
-              Button("Delete Itinerary", role: .destructive) { prepareDeletion(itinerary) }
+              Button("Delete itinerary", role: .destructive) { prepareDeletion(itinerary) }
                 .accessibilityIdentifier("saved.itinerary.delete")
             } label: {
               Label("Itinerary actions", systemImage: "ellipsis")
             }
+            .labelStyle(.iconOnly)
             .disabled(
               !store.canCreate || isLoading || isPreparingBulkCompletion || isPreparingDeletion
             )
@@ -375,7 +382,7 @@ struct SavedItineraryDetail: View {
         } description: {
           Text(loadingFailure)
         } actions: {
-          Button("Try Again") { Task { await loadItinerary() } }
+          Button("Try again") { Task { await loadItinerary() } }
         }
       } else {
         ProgressView("Opening Itinerary")
@@ -536,12 +543,12 @@ struct SavedItineraryDetail: View {
             entryActions(entry, in: contents.entries)
             Divider()
             Group {
-              Button("Mark all Done") {
+              Button("Mark all done") {
                 prepareBulkCompletion(
                   .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
                   containerName: list.content.name, done: true)
               }
-              Button("Mark all Undone") {
+              Button("Mark all undone") {
                 prepareBulkCompletion(
                   .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
                   containerName: list.content.name, done: false)
@@ -575,7 +582,7 @@ struct SavedItineraryDetail: View {
         case .failed(let message):
           VStack(alignment: .leading) {
             Text(message).foregroundStyle(.secondary)
-            Button("Try Again") { Task { await window.requestRows(at: [row.index]) } }
+            Button("Try again") { Task { await window.requestRows(at: [row.index]) } }
           }
           .selectionDisabled().moveDisabled(true)
         }
@@ -636,14 +643,14 @@ struct SavedItineraryDetail: View {
     _ entry: SavedItineraryWindowEntry, in entries: [SavedItineraryWindowEntry]
   ) -> some View {
     Group {
-      Button("Move to Beginning") {
+      Button("Move to beginning") {
         Task {
           _ = await store.reorderItineraryEntry(
             entry.id, itineraryIdentifier: identifier, placement: .first)
         }
       }
       .disabled(entries.first?.id == entry.id)
-      Button("Move to End") {
+      Button("Move to end") {
         Task {
           _ = await store.reorderItineraryEntry(
             entry.id, itineraryIdentifier: identifier, placement: .last)
@@ -651,7 +658,7 @@ struct SavedItineraryDetail: View {
       }
       .disabled(entries.last?.id == entry.id)
       Divider()
-      Button("Remove from Itinerary", role: .destructive) { removeEntry(entry) }
+      Button("Remove from itinerary", role: .destructive) { removeEntry(entry) }
     }
     .disabled(!store.canCreate || isLoading || isPreparingBulkCompletion)
   }
@@ -856,7 +863,7 @@ private struct SavedItineraryForm: View {
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
-      .navigationTitle(itinerary == nil ? "New Itinerary" : "Edit Itinerary")
+      .navigationTitle(itinerary == nil ? "New itinerary" : "Edit itinerary")
       .toolbarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {

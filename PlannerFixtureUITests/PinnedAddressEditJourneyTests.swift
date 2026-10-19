@@ -96,7 +96,7 @@ final class PinnedAddressEditJourneyTests: XCTestCase {
 
   private func openEditor(_ application: XCUIApplication) {
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
   }
 
   private func chooseRemove(_ pin: XCUIElement, application: XCUIApplication) {

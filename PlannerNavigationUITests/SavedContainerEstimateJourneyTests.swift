@@ -109,7 +109,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     revealCatalogRow(prefix: "saved.item.", title: "Lunch", application: application)
       .activateForPlannerJourney()
     toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let itemEstimate = application.descendants(matching: .any).matching(
       identifier: "saved.item.edit.estimate.enabled"
     ).firstMatch
@@ -253,7 +253,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     let lunch = revealCatalogRow(prefix: "saved.item.", title: "Lunch", application: application)
     lunch.activateForPlannerJourney()
     toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     let globalCompletion = application.descendants(matching: .any).matching(
       identifier: "saved.item.completion"
     ).firstMatch
@@ -305,7 +305,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     lunch.activateForPlannerJourney()
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
     toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
-    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    application.plannerElement("Unarchive item").activateForPlannerJourney()
     openSection("Itineraries", application: application)
     revealCatalogRow(
       prefix: "saved.itinerary.row.", title: "Budget route", application: application
@@ -725,7 +725,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     let lunch = application.savedPlannerItemRows("Lunch").firstMatch
     if lunch.exists { lunch.activateForPlannerJourney() }
     toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let itemEstimate = application.descendants(matching: .any).matching(
       identifier: "saved.item.edit.estimate.enabled"
     ).firstMatch
@@ -940,9 +940,9 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     }
     let title: String
     switch identifier {
-    case "saved.list.add": title = "Add existing Item"
+    case "saved.list.add": title = "Add existing item"
     case "saved.item.actions": title = "Item actions"
-    case "saved.itinerary.edit": title = "Edit Itinerary"
+    case "saved.itinerary.edit": title = "Edit itinerary"
     case "saved.itinerary.entry.new": title = "Add entry"
     default: title = identifier
     }
@@ -1024,7 +1024,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
       {
         overflow.activateForPlannerJourney()
         if !element.exists && identifier == "saved.list.new" {
-          element = application.collectionViews.buttons["New List"].firstMatch
+          element = application.collectionViews.buttons["New list"].firstMatch
         }
       }
     #endif

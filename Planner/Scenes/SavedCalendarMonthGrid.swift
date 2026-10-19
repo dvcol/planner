@@ -37,10 +37,10 @@
           DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
             .datePickerStyle(.compact)
           Spacer()
-          Button("Previous Month", systemImage: "chevron.left") { moveMonth(-1) }
+          Button("Previous month", systemImage: "chevron.left") { moveMonth(-1) }
             .labelStyle(.iconOnly)
             .accessibilityIdentifier("DatePicker.PreviousMonth")
-          Button("Next Month", systemImage: "chevron.right") { moveMonth(1) }
+          Button("Next month", systemImage: "chevron.right") { moveMonth(1) }
             .labelStyle(.iconOnly)
             .accessibilityIdentifier("DatePicker.NextMonth")
         }

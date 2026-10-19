@@ -130,7 +130,7 @@ struct SavedItineraryItemDetail: View {
         } description: {
           Text(failure)
         } actions: {
-          Button("Try Again") { Task { await loadItem() } }
+          Button("Try again") { Task { await loadItem() } }
         }
       } else {
         ProgressView("Opening Item")
@@ -344,7 +344,7 @@ struct SavedAddItineraryEntryForm: View {
     case .failed(let reason):
       VStack(alignment: .leading) {
         Text(reason).foregroundStyle(.secondary)
-        Button("Try Again") { Task { await window?.requestRows(at: [index]) } }
+        Button("Try again") { Task { await window?.requestRows(at: [index]) } }
       }
     }
   }
@@ -377,7 +377,7 @@ struct SavedAddItineraryEntryForm: View {
     } description: {
       Text(reason)
     } actions: {
-      Button("Try Again") { retryIdentifier = UUID() }
+      Button("Try again") { retryIdentifier = UUID() }
         .accessibilityIdentifier("saved.itinerary.entry.retry")
     }
   }

@@ -26,7 +26,7 @@ struct SavedBulkCompletionForm: View {
     return done
   }
 
-  private var actionTitle: String { marksDone ? "Mark all Done" : "Mark all Undone" }
+  private var actionTitle: String { marksDone ? "Mark all done" : "Mark all undone" }
 
   private var contextDescription: String {
     guard case .setBulkCompletion(let scope, _) = review.command else { return "this plan" }

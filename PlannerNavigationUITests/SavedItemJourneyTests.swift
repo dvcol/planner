@@ -276,7 +276,7 @@ final class SavedItemJourneyTests: XCTestCase {
       title.typeText("Missing clock time")
       application.plannerElement("saved.item.save").activateForPlannerJourney()
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       selectPlanningTimeZone("America/New_York", search: "New York", application: application)
       try enterScheduleClock(
         application, identifier: "saved.schedule.start", date: "8 Mar 2026", hour: 2, minute: 30)
@@ -339,7 +339,7 @@ final class SavedItemJourneyTests: XCTestCase {
       title.typeText(itemTitle)
       application.plannerElement("saved.item.save").activateForPlannerJourney()
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       selectPlanningTimeZone(planningTimeZone, search: timeZoneSearch, application: application)
       try enterScheduleClock(
         application, identifier: "saved.schedule.start", date: date, hour: 1, minute: minute,
@@ -376,7 +376,7 @@ final class SavedItemJourneyTests: XCTestCase {
         recordScreenshot(application, name: "Civil schedule Start \(offset) after relaunch")
         if offset == expectedOccurrences.first?.offset {
           openScheduleMenu(schedule)
-          application.plannerElement("Edit Schedule").activateForPlannerJourney()
+          application.plannerElement("Edit schedule").activateForPlannerJourney()
           XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
         }
       }
@@ -395,7 +395,7 @@ final class SavedItemJourneyTests: XCTestCase {
       title.typeText("Clock change span")
       application.plannerElement("saved.item.save").activateForPlannerJourney()
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       selectPlanningTimeZone("America/New_York", search: "New York", application: application)
       try enterScheduleClock(
         application, identifier: "saved.schedule.start", date: "1 Nov 2026", hour: 1, minute: 45)
@@ -435,7 +435,7 @@ final class SavedItemJourneyTests: XCTestCase {
         try displayedClockChangeInstant(endpoints[1] + " · " + components[1]),
         formatter.date(from: "2026-11-01T06:15:00Z"))
       openScheduleMenu(schedule)
-      application.plannerElement("Edit Schedule").activateForPlannerJourney()
+      application.plannerElement("Edit schedule").activateForPlannerJourney()
       XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
       try enterScheduleClock(
         application, identifier: "saved.schedule.start", date: "8 Mar 2026", hour: 1, minute: 30)
@@ -571,7 +571,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let timeZoneControl = application.plannerElement("saved.schedule.zone")
     XCTAssertTrue(timeZoneControl.waitForExistence(timeout: 5))
     selectPlanningTimeZone("Europe/Paris", search: "Paris", application: application)
@@ -587,13 +587,13 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertTrue(originalDescription.hasSuffix(" · Europe/Paris"))
     let originalInstant = try displayedStartInstant(originalDescription)
     openScheduleMenu(schedule)
-    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    application.plannerElement("Edit schedule").activateForPlannerJourney()
     selectPlanningTimeZone("America/New_York", search: "New York", application: application)
     application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
     XCTAssertTrue(schedule.waitForPlannerValue(originalDescription))
     XCTAssertEqual(scheduleRows.count, 1)
     openScheduleMenu(schedule)
-    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    application.plannerElement("Edit schedule").activateForPlannerJourney()
     selectPlanningTimeZone("Asia/Tokyo", search: "Tokyo", application: application)
     recordScreenshot(application, name: "Native timezone selection stages the existing instant")
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
@@ -666,7 +666,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -697,7 +697,7 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertTrue(originalDescription?.contains("9") == true)
     XCTAssertTrue(originalDescription?.contains("11") == true)
     openScheduleMenu(schedule)
-    let editAction = application.plannerElement("Edit Schedule")
+    let editAction = application.plannerElement("Edit schedule")
     XCTAssertTrue(editAction.waitForExistence(timeout: 5))
     editAction.activateForPlannerJourney()
     XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
@@ -767,7 +767,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Keep the gallery notes"].waitForExistence(timeout: 10))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let includeEnd = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.hasEnd").firstMatch
     XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
@@ -783,7 +783,7 @@ final class SavedItemJourneyTests: XCTestCase {
     let originalDescription = schedule.value as? String
     XCTAssertFalse(originalDescription?.isEmpty ?? true)
     openScheduleMenu(schedule)
-    let editAction = application.plannerElement("Edit Schedule")
+    let editAction = application.plannerElement("Edit schedule")
     XCTAssertTrue(editAction.waitForExistence(timeout: 5))
     editAction.activateForPlannerJourney()
     XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
@@ -847,7 +847,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -951,7 +951,7 @@ final class SavedItemJourneyTests: XCTestCase {
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
     for cancelsDraft in [true, false] {
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       let allDay = application.descendants(matching: .any)
         .matching(identifier: "saved.schedule.allDay").firstMatch
       XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -1021,7 +1021,7 @@ final class SavedItemJourneyTests: XCTestCase {
     for includesEnd in [false, true] {
       row.activateForPlannerJourney()
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       let includeEnd = application.descendants(matching: .any)
         .matching(identifier: "saved.schedule.hasEnd").firstMatch
       XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
@@ -1091,7 +1091,7 @@ final class SavedItemJourneyTests: XCTestCase {
         format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.", "Timed"))
     for includesEnd in [false, true] {
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       let includeEnd = application.descendants(matching: .any)
         .matching(identifier: "saved.schedule.hasEnd").firstMatch
       XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
@@ -1102,7 +1102,7 @@ final class SavedItemJourneyTests: XCTestCase {
     }
     let retainedIdentifier = startOnlySchedules.firstMatch.identifier
     openScheduleMenu(timedSchedules.firstMatch)
-    let removeAction = application.plannerElement("Remove Schedule")
+    let removeAction = application.plannerElement("Remove schedule")
     XCTAssertTrue(removeAction.waitForExistence(timeout: 5))
     removeAction.activateForPlannerJourney()
     let confirm = application.buttons.matching(identifier: "saved.schedule.remove.confirm")
@@ -1177,7 +1177,7 @@ final class SavedItemJourneyTests: XCTestCase {
     title.typeText("Timed visit")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let includeEnd = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.hasEnd").firstMatch
     XCTAssertTrue(includeEnd.waitForExistence(timeout: 5))
@@ -1201,7 +1201,7 @@ final class SavedItemJourneyTests: XCTestCase {
         format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.", "Timed"))
     XCTAssertEqual(timedSchedules.count, 0)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
     activateCompletion(includeEnd)
     XCTAssertTrue(endPicker.waitForExistence(timeout: 5))
@@ -1249,7 +1249,7 @@ final class SavedItemJourneyTests: XCTestCase {
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(itemCompletion.waitForPlannerBooleanState(false))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    let scheduleAction = application.plannerElement("Schedule Item")
+    let scheduleAction = application.plannerElement("Schedule item")
     XCTAssertTrue(scheduleAction.waitForExistence(timeout: 5))
     scheduleAction.activateForPlannerJourney()
     let startPicker = application.descendants(matching: .any)

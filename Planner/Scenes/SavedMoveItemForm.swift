@@ -71,7 +71,7 @@ struct SavedMoveItemForm: View {
           } description: {
             Text(loadingFailure)
           } actions: {
-            Button("Try Again") { Task { await loadLists() } }
+            Button("Try again") { Task { await loadLists() } }
           }
         } else if case .failed(let reason) = window?.state {
           ContentUnavailableView {
@@ -79,7 +79,7 @@ struct SavedMoveItemForm: View {
           } description: {
             Text(reason)
           } actions: {
-            Button("Try Again") { Task { await loadLists() } }
+            Button("Try again") { Task { await loadLists() } }
           }
         } else if window?.state != .ready || loadedIdentity != loadIdentity {
           ProgressView("Loading Lists")

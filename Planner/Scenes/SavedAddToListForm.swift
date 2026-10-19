@@ -63,7 +63,7 @@ struct SavedAddToListForm: View {
           } description: {
             Text(loadingFailure)
           } actions: {
-            Button("Try Again") { Task { await loadLists() } }
+            Button("Try again") { Task { await loadLists() } }
           }
         } else if case .failed(let reason) = window?.state {
           ContentUnavailableView {
@@ -71,7 +71,7 @@ struct SavedAddToListForm: View {
           } description: {
             Text(reason)
           } actions: {
-            Button("Try Again") { Task { await loadLists() } }
+            Button("Try again") { Task { await loadLists() } }
           }
         } else if window?.state != .ready || loadedIdentity != loadIdentity {
           ProgressView("Loading Lists")
@@ -81,7 +81,7 @@ struct SavedAddToListForm: View {
             description: Text("Create a List before adding this Item."))
         }
       }
-      .navigationTitle("Add to List")
+      .navigationTitle("Add to list")
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Cancel") { dismiss() }

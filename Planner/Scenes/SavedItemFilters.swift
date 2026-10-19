@@ -196,7 +196,7 @@ private struct SavedItemFilterForm: View {
           .accessibilityIdentifier("saved.filters.categories")
           if !filters.categoryIdentifiers.isEmpty {
             matchPicker(.category, selection: $filters.categoryMatch)
-            Button("Clear Categories") { filters.categoryIdentifiers = [] }
+            Button("Clear categories") { filters.categoryIdentifiers = [] }
           }
         }
         Section("Tags") {
@@ -208,7 +208,7 @@ private struct SavedItemFilterForm: View {
           .accessibilityIdentifier("saved.filters.tags")
           if !filters.tagIdentifiers.isEmpty {
             matchPicker(.tag, selection: $filters.tagMatch)
-            Button("Clear Tags") { filters.tagIdentifiers = [] }
+            Button("Clear tags") { filters.tagIdentifiers = [] }
           }
         }
         Section("Lists") {
@@ -225,7 +225,7 @@ private struct SavedItemFilterForm: View {
             }
             .pickerStyle(.menu)
             .accessibilityIdentifier("saved.filters.list.match")
-            Button("Clear Lists") { filters.listIdentifiers = [] }
+            Button("Clear lists") { filters.listIdentifiers = [] }
           }
         }
         Section("Content") {
@@ -243,7 +243,7 @@ private struct SavedItemFilterForm: View {
       #endif
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
-          Button("Clear Filters") { filters = .init() }
+          Button("Clear filters") { filters = .init() }
             .disabled(filters == SavedItemFilters())
             .accessibilityIdentifier("saved.filters.clear")
         }
@@ -320,7 +320,7 @@ private struct SavedFilterListPicker: View {
         } description: {
           Text(loadingFailure)
         } actions: {
-          Button("Try Again") { Task { await loadLists() } }
+          Button("Try again") { Task { await loadLists() } }
         }
       } else if window?.state != .ready || loadedIdentity != loadIdentity {
         ProgressView("Loading Lists")

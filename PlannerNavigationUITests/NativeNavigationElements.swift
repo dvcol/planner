@@ -335,7 +335,7 @@ extension XCUIApplication {
       let overflow = windows.firstMatch.popUpButtons["more toolbar items"]
       XCTAssertTrue(overflow.waitForExistence(timeout: 5), windows.firstMatch.debugDescription)
       overflow.activateForPlannerJourney()
-      let nativeCreate = overflow.menuItems["New List"]
+      let nativeCreate = overflow.menuItems["New list"]
       XCTAssertTrue(nativeCreate.waitForExistence(timeout: 5), windows.firstMatch.debugDescription)
       nativeCreate.activateForPlannerJourney()
     #else
@@ -348,7 +348,7 @@ extension XCUIApplication {
           identifier: "OverflowBarButtonItem"
         ).allElementsBoundByIndex.first(where: \.isHittable) {
           overflow.activateForPlannerJourney()
-          let nativeCreate = plannerElement("New List")
+          let nativeCreate = plannerElement("New list")
           XCTAssertTrue(
             nativeCreate.waitForExistence(timeout: 5), windows.firstMatch.debugDescription)
           nativeCreate.activateForPlannerJourney()

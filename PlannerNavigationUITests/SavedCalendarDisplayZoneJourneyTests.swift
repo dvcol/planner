@@ -15,7 +15,7 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
     title.typeText("Civil-date museum")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any).matching(
       identifier: "saved.schedule.allDay"
     ).firstMatch
@@ -113,7 +113,7 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
     title.typeText("Travelling museum")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let savedSchedule = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")

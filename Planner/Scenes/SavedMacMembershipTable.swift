@@ -88,14 +88,14 @@ import UniformTypeIdentifiers
           }
         }
         .contextMenu {
-          Button("Move to Beginning") { reorder(item.id, placement: .first) }
+          Button("Move to beginning") { reorder(item.id, placement: .first) }
             .disabled(!canReorderMemberships || rows.first?.id == item.id)
-          Button("Move to End") { reorder(item.id, placement: .last) }
+          Button("Move to end") { reorder(item.id, placement: .last) }
             .disabled(!canReorderMemberships || rows.last?.id == item.id)
           Divider()
-          Button("Add to List") { addToList(item) }.disabled(!store.canCreate)
-          Button("Move to List") { moveMembership(item) }.disabled(!store.canCreate)
-          Button("Remove from List", role: .destructive) { removeMembership(item.id) }
+          Button("Add to list") { addToList(item) }.disabled(!store.canCreate)
+          Button("Move to list") { moveMembership(item) }.disabled(!store.canCreate)
+          Button("Remove from list", role: .destructive) { removeMembership(item.id) }
             .disabled(!store.canCreate)
         }
       case .loading, .loaded:
@@ -103,7 +103,7 @@ import UniformTypeIdentifiers
       case .failed(let reason):
         VStack(alignment: .leading) {
           Text(reason).foregroundStyle(.secondary)
-          Button("Try Again") { retryMembership(row) }
+          Button("Try again") { retryMembership(row) }
         }
       }
     }
