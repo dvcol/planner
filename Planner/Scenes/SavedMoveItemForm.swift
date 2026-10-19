@@ -13,7 +13,7 @@ struct SavedMoveItemForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let draft: SavedMembershipMoveDraft
-  let didMove: (String) -> Void
+  let didMove: (PlannerOperationResult, String) -> Void
   @State private var selectedListIdentifier: UUID?
   @State private var operationIdentifier = UUID()
   @State private var window: SavedItemWindow?
@@ -131,11 +131,11 @@ struct SavedMoveItemForm: View {
     guard let destination = await store.readList(destinationIdentifier), !Task.isCancelled,
       loadIdentity == identity, selectedDestinationIdentifier == destinationIdentifier
     else { return }
-    if await store.moveMembership(
+    let result = await store.moveMembership(
       draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
       destinationListIdentifier: destinationIdentifier, operationIdentifier: operationIdentifier)
-    {
-      didMove(destination.content.name)
+    if let result, case .applied = result.outcome, loadIdentity?.namespace == identity.namespace {
+      didMove(result, destination.content.name)
       dismiss()
     }
   }

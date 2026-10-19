@@ -253,7 +253,8 @@ struct SavedPlannerView: View {
         }
       }
       .sheet(item: $membershipMoveDraft) { draft in
-        SavedMoveItemForm(store: store, draft: draft) { destinationName in
+        SavedMoveItemForm(store: store, draft: draft) { result, destinationName in
+          associationUndo.record(result, name: "Move Item", store: store, manager: undoManager)
           clearRemovedMembershipSelection(
             draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
             explanation: "The Item is now in \(destinationName).", detailTitle: "Item moved")
@@ -1169,6 +1170,7 @@ struct SavedPlannerView: View {
     isOpeningAppearance = false
     appearanceChangeMessage = explanation
     appearanceChangeTitle = detailTitle
+    preferredCompactColumn = .content
   }
 
   private func proposeMembershipMove(
