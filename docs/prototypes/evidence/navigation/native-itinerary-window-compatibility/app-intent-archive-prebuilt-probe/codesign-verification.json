@@ -1,0 +1,13 @@
+{
+  "command": [
+    "codesign",
+    "--verify",
+    "--deep",
+    "--strict",
+    "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "Verifies existing local test signatures only; no identity, entitlement or provisioning changes."
+}

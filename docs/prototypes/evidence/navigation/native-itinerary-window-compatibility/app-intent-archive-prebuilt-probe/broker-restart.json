@@ -1,0 +1,19 @@
+{
+  "ownedHost": 97108,
+  "ownedHostTerminated": true,
+  "otherCurrentUserTestOrDebugJobs": [],
+  "restartPerformed": false,
+  "command": [
+    "launchctl",
+    "kickstart",
+    "-k",
+    "gui/502/com.apple.testmanagerd"
+  ],
+  "previousBrokerPid": 97031,
+  "exitCode": 150,
+  "stdout": "",
+  "stderr": "Could not kickstart service \"com.apple.testmanagerd\": 150: Operation not permitted while System Integrity Protection is engaged\n",
+  "brokerPidAfterDeniedRestart": 97031,
+  "brokerUnchanged": true,
+  "ownedHostExitVerified": true
+}

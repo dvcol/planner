@@ -1,0 +1,10 @@
+{
+  "observedFrames": [
+    "+                                         619 RunTestsFromRunLoop  (in libXCTestBundleInject.dylib) + 112  [0x100ca13c0]",
+    "+                                           619 _XCTestMain  (in XCTestCore) + 88  [0x1018ed670]",
+    "+                                               619 -[XCTestDriver _prepareTestConfigurationAndIDESession]  (in XCTestCore) + 268  [0x1018ea550]",
+    "+                                                 619 -[XCTFuture value]  (in XCTestCore) + 28  [0x101922a1c]"
+  ],
+  "observedTestStarts": 0,
+  "scope": "One-second sample while the owned prebuilt probe is live; waits in XCTest IDE-session setup. Neither selected test body is established. Does not identify the underlying OS/permission cause or an Archive defect."
+}
