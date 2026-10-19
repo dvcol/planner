@@ -1,0 +1,140 @@
+[
+  {
+    "epoch": "history-controller-explicit-first",
+    "exitCode": 65,
+    "functions": [
+      {
+        "name": "testExplicitUndoDeduplicatesRemovalAndPreservesOtherManagerTargets",
+        "result": "failed",
+        "seconds": 0.334
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 3 failures (0 unexpected) in 0.334 (0.335) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-explicit-qualified",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testExplicitUndoDeduplicatesRemovalAndPreservesOtherManagerTargets",
+        "result": "passed",
+        "seconds": 0.121
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.121 (0.122) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-final-regressions",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testExplicitUndoDeduplicatesRemovalAndPreservesOtherManagerTargets",
+        "result": "passed",
+        "seconds": 0.123
+      },
+      {
+        "name": "testNativeUndoQueuesDistinctRemovalsAndDoesNotRegisterRedo",
+        "result": "passed",
+        "seconds": 0.154
+      },
+      {
+        "name": "testNewerMembershipRejectsOldUndoWithExplanationAndPreservesCurrentData",
+        "result": "passed",
+        "seconds": 0.112
+      },
+      {
+        "name": "testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair",
+        "result": "passed",
+        "seconds": 0.148
+      },
+      {
+        "name": "testSeparateHistoriesRestoreOnlyTheirOwnRemovalAndPreserveOrdinaryUndo",
+        "result": "passed",
+        "seconds": 0.124
+      }
+    ],
+    "executionSummary": [
+      "Executed 5 tests, with 0 failures (0 unexpected) in 0.660 (0.662) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-isolation-first",
+    "exitCode": 65,
+    "functions": [],
+    "executionSummary": []
+  },
+  {
+    "epoch": "history-controller-isolation-qualified",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testSeparateHistoriesRestoreOnlyTheirOwnRemovalAndPreserveOrdinaryUndo",
+        "result": "passed",
+        "seconds": 0.154
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.154 (0.155) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-queued-first",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testNativeUndoQueuesDistinctRemovalsAndDoesNotRegisterRedo",
+        "result": "passed",
+        "seconds": 0.175
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.175 (0.176) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-queued-retry-qualified",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair",
+        "result": "passed",
+        "seconds": 0.167
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.167 (0.168) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-retry-first",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair",
+        "result": "passed",
+        "seconds": 0.15
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.150 (0.151) seconds"
+    ]
+  },
+  {
+    "epoch": "history-controller-stale-first",
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testNewerMembershipRejectsOldUndoWithExplanationAndPreservesCurrentData",
+        "result": "passed",
+        "seconds": 0.132
+      }
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.132 (0.134) seconds"
+    ]
+  }
+]

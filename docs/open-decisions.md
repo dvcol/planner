@@ -132,12 +132,12 @@ The [implementation report](prototypes/native-association-undo.md) records the a
 
 ## Q108 through Q110, accepted Undo follow-up
 
-- Q108 A approves [additional native history-controller tests](native-association-history-test-contract-review.md), using production history, actual Foundation UndoManager and real Planner storage/filesystem failures in the existing app-hosted target. Mac window/text-field qualification remains separate.
+- Q108 A approves [additional native history-controller tests](native-association-history-test-contract-review.md), using production history, actual Foundation UndoManager and real Planner storage/filesystem failures in the existing app-hosted target. The [five-function qualification](prototypes/native-association-history-controller.md) passes without production changes. Mac window/text-field qualification remains separate.
 - Q109 A reverses a whole Move atomically. Restore the origin identity/order/local state, remove a destination membership only when that Move created it and reversal remains safe, and preserve a preexisting destination. Reject the whole unsafe inverse while retaining unrelated Item edits. The [worked proposal](native-owned-association-undo-proposal.md) records the cases.
 - Q110 A creates one atomic association-removal history group per editor Save. Restore original identities, link order and owned fields together, preserving edited notes and independent additions. Reject the whole unsafe group. Label association removal remains distinct from shared-label Delete.
 
 Q108's tests may proceed at the approved boundary. Q109/Q110's concrete capability/result/restore contract and literal fixtures still require review before their implementation. These accepted choices add no association Redo, source-Delete recovery or persistent editing history. Signing, physical sync/account/Share, scale and final whole-app polish retain their separate gates.
 
-## Current unanswered frontier
+## Q111, accepted compound-association Undo contract
 
-Q111 reviews the [concrete compound-association Undo contract](native-compound-association-undo-contract-review.md), including Move destination guards, whole-group issuance/restoration, bookmark anchor placement and literal fixtures. A approves the proposal; B requests specific changes before implementation. Q108 controller qualification can continue independently. Q108, Q109 and Q110 are answered and must not be asked again.
+The human accepted Q111 A on 19 October 2026. The [concrete compound-association Undo contract](native-compound-association-undo-contract-review.md), including Move destination guards, whole-group issuance/restoration, bookmark anchor placement and literal fixtures, is approved for tests and implementation. Q108 through Q111 are answered; no question in this Undo decision frontier remains open. Their platform and implementation acceptance gates remain separate.

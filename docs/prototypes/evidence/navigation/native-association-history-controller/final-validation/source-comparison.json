@@ -1,0 +1,56 @@
+[
+  {
+    "epoch": "history-controller-explicit-first",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  },
+  {
+    "epoch": "history-controller-explicit-qualified",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  },
+  {
+    "epoch": "history-controller-final-regressions",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": true
+  },
+  {
+    "epoch": "history-controller-isolation-first",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  },
+  {
+    "epoch": "history-controller-isolation-qualified",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  },
+  {
+    "epoch": "history-controller-queued-first",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  },
+  {
+    "epoch": "history-controller-queued-retry-qualified",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": true
+  },
+  {
+    "epoch": "history-controller-retry-first",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  },
+  {
+    "epoch": "history-controller-stale-first",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "testMatchesCurrent": false
+  }
+]

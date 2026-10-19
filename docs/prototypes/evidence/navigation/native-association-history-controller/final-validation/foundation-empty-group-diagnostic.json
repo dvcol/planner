@@ -1,0 +1,11 @@
+{
+  "command": [
+    "xcrun",
+    "swift",
+    "-e",
+    "import Foundation\nfinal class EditedValue { var text = \"Changed\" }\nlet value = EditedValue()\nlet manager = UndoManager()\nmanager.groupsByEvent = false\nmanager.beginUndoGrouping()\nmanager.registerUndo(withTarget: value) { $0.text = \"Original\" }\nmanager.setActionName(\"Edit Title\")\nmanager.endUndoGrouping()\nprint(\"Before empty group:\", manager.undoActionName)\nmanager.beginUndoGrouping()\nmanager.endUndoGrouping()\nprint(\"After empty group:\", manager.undoActionName)\nmanager.undo()\nprint(\"After one Undo:\", value.text, manager.undoActionName)\n"
+  ],
+  "exitCode": 0,
+  "stdout": "Before empty group: Edit Title\nAfter empty group: \nAfter one Undo: Changed Edit Title\n",
+  "stderr": ""
+}

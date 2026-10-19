@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "a3d570d2a34ed3e473809634d2cef3d350b12b38",
+  "overlays": [
+    "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+  ]
+}

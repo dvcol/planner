@@ -1,0 +1,41 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerItemWindowMarkdownlint.json",
+        "docs/prototypes/native-association-history-controller.md",
+        "docs/native-association-history-test-contract-review.md",
+        "docs/open-decisions.md",
+        "docs/native-compound-association-undo-contract-review.md",
+        "docs/native-owned-association-undo-proposal.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "localLinksChecked": 70,
+  "missingLinks": [],
+  "productionChanged": false,
+  "targetOrConfigurationChanged": false
+}

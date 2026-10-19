@@ -1,6 +1,6 @@
 # Compound association Undo contract
 
-Status: proposed Q111. Q109 A and Q110 A settle atomic Move reversal and one removal group per Save. This document makes issuance, validation, link placement and literal expected outcomes concrete before implementation. Q108's independently approved controller tests can continue.
+Status: Q111 A approved by the human on 19 October 2026. Q109 A and Q110 A settle atomic Move reversal and one removal group per Save. This document makes issuance, validation, link placement and literal expected outcomes concrete before implementation. Approval alone establishes no implementation or runtime result.
 
 ## Context, goal and starting state
 
