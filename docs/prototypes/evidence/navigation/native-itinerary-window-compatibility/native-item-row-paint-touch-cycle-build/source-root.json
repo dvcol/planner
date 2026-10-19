@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "e7a2fa827d328a5d1ca2712f2d3662feb24fbbf2",
+  "overlays": [
+    "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift"
+  ]
+}

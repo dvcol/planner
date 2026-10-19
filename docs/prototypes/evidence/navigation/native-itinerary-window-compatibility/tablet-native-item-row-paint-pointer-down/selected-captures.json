@@ -1,0 +1,62 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "7D01B9E7-3920-4AF0-AFE6-503929AAFFED.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Row paint after waiting without changing selection_0_BB680F61-234B-4A55-AD3D-73E4E4F4DF85.png",
+    "timestamp": 1792442528.968,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "972B61FF-D5F6-4E31-8244-4D8B86376D76.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unselected native row paint observation_0_3EEF513C-AF4E-45C3-B4B0-2FD7BC3C5C4C.txt",
+    "timestamp": 1792442528.878,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "C9F622EA-3AA5-428D-807F-15E0A9BB2EC0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Row paint with the original source selected offscreen_0_EC0CB7BF-3843-47E7-B73B-2B2C8EF21B05.png",
+    "timestamp": 1792442527.554,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CA6DEF54-1379-4C0F-8DE2-19089F41BFBC.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Row paint native catalog after fast scrolling_0_1131F0AA-05EC-48D0-86F1-CCA7253393DA.txt",
+    "timestamp": 1792442520.551,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3DEC681D-CC01-4856-AB88-2E62E16AAAB0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Row paint fast-scroll controller checkpoint_0_6BD598E0-1AB7-41AD-BBFC-CE41665B5876.png",
+    "timestamp": 1792442519.5,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F3866951-369D-4D0A-81EA-94C3D1245F74.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native row paint positive control_0_FD8C30C3-3390-4E81-A15D-99CB827A1C62.txt",
+    "timestamp": 1792442407.699,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  }
+]

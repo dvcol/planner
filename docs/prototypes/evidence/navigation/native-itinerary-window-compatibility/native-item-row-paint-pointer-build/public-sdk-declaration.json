@@ -1,0 +1,6 @@
+{
+  "source": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIElement.h",
+  "sha256": "2279cc5f76043ff8ccbdeefc6b0966f3c6c64330cc93904fa03b9fbbbaad01e3",
+  "observedDeclaration": "- (void)scrollByDeltaX:(CGFloat)deltaX deltaY:(CGFloat)deltaY API_AVAILABLE(ios(15.0), macCatalyst(13.0));",
+  "scope": "Public installed SDK declaration, not proof that this setup route reaches the required endpoint."
+}

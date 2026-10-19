@@ -1,8 +1,167 @@
 import XCTest
 
 #if os(iOS)
+  import ImageIO
+  import UIKit
+
   @MainActor
   final class LargeCollectionScrollJourneyTests: XCTestCase {
+    func testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen() throws {
+      continueAfterFailure = false
+      guard UIDevice.current.userInterfaceIdiom == .pad else {
+        throw XCTSkip("This diagnostic requires the simultaneous iPad catalog/detail layout.")
+      }
+      XCUIDevice.shared.orientation = .portrait
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "large-collection", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      openCatalog(application)
+      let first = application.savedPlannerItemRows("Scale Item 00001").firstMatch
+      XCTAssertTrue(first.waitForExistence(timeout: 30))
+      let catalog = application.collectionViews["saved.items.catalog"].firstMatch
+      first.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Scale notes 1"].waitForExistence(timeout: 10))
+      revealCatalog(application, contents: catalog)
+      let control = try visiblePaintSample(in: catalog)
+      let controlPaint = try rowPaint(
+        in: control.frame, application: application, screenshot: XCUIScreen.main.screenshot())
+      let controlObservation = XCTAttachment(
+        string: "Source: \(control.label)\nFrame: \(control.frame)\nPaint: \(controlPaint)")
+      controlObservation.name = "Native row paint positive control"
+      controlObservation.lifetime = .keepAlways
+      add(controlObservation)
+      guard controlPaint.dark > controlPaint.total / 2 else {
+        throw XCTSkip("Run this native paint diagnostic with dark appearance.")
+      }
+      XCTAssertGreaterThan(controlPaint.bright, 20)
+      let last = application.savedPlannerItemRows("Scale Item 05000").firstMatch
+      for attempt in 0..<4 {
+        if last.exists && last.isHittable && catalog.frame.contains(last.frame) { break }
+        let pointerTarget = try visiblePaintSample(in: catalog)
+        pointerTarget.scroll(byDeltaX: 0, deltaY: 500_000)
+        let snapshot = try catalog.snapshot()
+        let rows = visibleItemSnapshots(snapshot, within: snapshot.frame)
+          .filter { $0.elementType == .button }.sorted { $0.frame.midY < $1.frame.midY }
+        print("Row paint pointer-scroll attempt \(attempt): \(rows.last?.label ?? "no source")")
+      }
+      XCTAssertTrue(last.exists && last.isHittable)
+      for _ in 0..<12 {
+        catalog.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.42))
+          .press(
+            forDuration: 0.05,
+            thenDragTo: catalog.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.72)))
+      }
+      XCTAssertFalse(last.isHittable)
+      for attempt in 0..<40 {
+        if last.exists && last.isHittable && catalog.frame.contains(last.frame) { break }
+        catalog.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.72))
+          .press(
+            forDuration: 0.05,
+            thenDragTo: catalog.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.42)))
+        if attempt.isMultiple(of: 10) { print("Row paint touch-return attempt \(attempt)") }
+      }
+      let checkpoint = capture("Row paint fast-scroll controller checkpoint")
+      let hierarchy = XCTAttachment(string: catalog.debugDescription)
+      hierarchy.name = "Row paint native catalog after fast scrolling"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      XCTAssertTrue(last.exists && last.isHittable, catalog.debugDescription)
+      XCTAssertTrue(application.staticTexts["Scale notes 1"].isHittable)
+      let sample = try visiblePaintSample(in: catalog)
+      let sampleTitle = sample.label
+      let sampleIdentifier = sample.identifier
+      let sampleFrame = sample.frame
+      capture("Row paint with the original source selected offscreen")
+      let initial = try rowPaint(
+        in: sampleFrame, application: application, screenshot: checkpoint)
+      var settled = initial
+      let painted = NSPredicate { _, _ in
+        guard
+          let current = try? self.rowPaint(
+            in: sampleFrame, application: application, screenshot: XCUIScreen.main.screenshot())
+        else {
+          return false
+        }
+        settled = current
+        return current.bright > 20
+      }
+      let outcome = XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: painted, object: sample)], timeout: 5)
+      let observation = XCTAttachment(
+        string:
+          "Source: \(sampleTitle)\nIdentity: \(sampleIdentifier)\nFrame: \(sampleFrame)\nInitial: \(initial)\nSettled: \(settled)\nPaint wait: \(outcome.rawValue)"
+      )
+      observation.name = "Unselected native row paint observation"
+      observation.lifetime = .keepAlways
+      add(observation)
+      capture("Row paint after waiting without changing selection")
+      XCTAssertGreaterThan(initial.dark, initial.total / 2, "Run this diagnostic in dark mode.")
+      XCTAssertEqual(outcome, .completed, "The visible source title must paint without a tap.")
+      XCTAssertEqual(sample.identifier, sampleIdentifier)
+      XCTAssertEqual(sample.label, sampleTitle)
+      XCTAssertTrue(application.staticTexts["Scale notes 1"].isHittable)
+    }
+
+    private func visiblePaintSample(in catalog: XCUIElement) throws -> XCUIElement {
+      let viewport = catalog.frame
+      let visibleSources = catalog.buttons.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@", "saved.item.", "Scale Item ")
+      ).allElementsBoundByIndex.filter {
+        $0.isHittable && viewport.contains($0.frame)
+      }.sorted { $0.frame.midY < $1.frame.midY }
+      guard visibleSources.count > 3 else {
+        XCTFail("The native catalog must expose enough source rows for an unselected sample.")
+        throw CancellationError()
+      }
+      return visibleSources[visibleSources.count / 2]
+    }
+
+    private func rowPaint(
+      in frame: CGRect, application: XCUIApplication, screenshot: XCUIScreenshot
+    ) throws -> (
+      bright: Int, dark: Int, total: Int
+    ) {
+      guard let source = CGImageSourceCreateWithData(screenshot.pngRepresentation as CFData, nil),
+        let image = CGImageSourceCreateImageAtIndex(source, 0, nil)
+      else { throw CocoaError(.fileReadCorruptFile) }
+      let windowFrame = application.windows.firstMatch.frame
+      let scale = CGFloat(image.width) / windowFrame.width
+      let region = CGRect(
+        x: (frame.minX - windowFrame.minX) * scale,
+        y: (frame.minY - windowFrame.minY) * scale,
+        width: frame.width * scale, height: frame.height * scale
+      ).integral
+      guard let cropped = image.cropping(to: region), cropped.width > 0, cropped.height > 0 else {
+        throw CocoaError(.fileReadCorruptFile)
+      }
+      var pixels = [UInt8](repeating: 0, count: cropped.width * cropped.height * 4)
+      let drawn = pixels.withUnsafeMutableBytes { buffer in
+        guard
+          let context = CGContext(
+            data: buffer.baseAddress, width: cropped.width, height: cropped.height,
+            bitsPerComponent: 8, bytesPerRow: cropped.width * 4,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+              | CGBitmapInfo.byteOrder32Big.rawValue)
+        else { return false }
+        context.draw(cropped, in: CGRect(x: 0, y: 0, width: cropped.width, height: cropped.height))
+        return true
+      }
+      guard drawn else { throw CocoaError(.fileReadCorruptFile) }
+      var bright = 0
+      var dark = 0
+      for offset in stride(from: 0, to: pixels.count, by: 4) {
+        if pixels[offset] > 230 && pixels[offset + 1] > 230 && pixels[offset + 2] > 230 {
+          bright += 1
+        }
+        if pixels[offset] < 38 && pixels[offset + 1] < 38 && pixels[offset + 2] < 38 { dark += 1 }
+      }
+      return (bright, dark, cropped.width * cropped.height)
+    }
+
     func testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog() throws {
       continueAfterFailure = false
       let application = XCUIApplication()
@@ -344,11 +503,14 @@ import XCTest
       XCTAssertTrue(hasVisibleSources(in: contents), application.debugDescription)
     }
 
-    private func capture(_ name: String) {
-      let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    @discardableResult
+    private func capture(_ name: String) -> XCUIScreenshot {
+      let screenshot = XCUIScreen.main.screenshot()
+      let attachment = XCTAttachment(screenshot: screenshot)
       attachment.name = name
       attachment.lifetime = .keepAlways
       add(attachment)
+      return screenshot
     }
   }
 #endif

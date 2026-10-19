@@ -1,0 +1,4 @@
+{
+  "reason": "Stopped the redundant long repeat after independent decoding established that the original PNG contains the same painted row pixels as both passing reduced-route captures. The scaled preview was misread; no production defect was established.",
+  "credit": "Partial exact-route execution only, not a completed pass or rendering red."
+}

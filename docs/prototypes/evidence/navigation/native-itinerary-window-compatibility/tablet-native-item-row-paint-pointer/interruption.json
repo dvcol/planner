@@ -1,0 +1,5 @@
+{
+  "reason": "Stopped the owned setup probe after its completed negative pointer-scroll event left the tail at Scale Item 00014. Next probe reverses direction.",
+  "lastObservedCheckpoint": "Row paint pointer-scroll attempt 0: Scale Item 00014",
+  "credit": "No rendering reproduction or complete pass. Public API compiled and its first scroll event completed."
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6AB24DC3-C371-4278-8C54-42BEE33B369D.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native row paint positive control_0_13451E68-AB7F-417B-ACE7-6195A2F2CF28.txt",
+    "timestamp": 1792441461.265,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "464EC0EA-B3F7-4CA8-9552-595D2DB4A30B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_436C0E5E-99F0-4E30-957D-75EE9C9940FD.PlannerFixtures'`",
+    "timestamp": 1792441446.843,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "12320F4B-9E4A-48C9-9A08-AB1FEEFBD6C9.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_70E074F7-E3CA-48D4-B77C-ABBD4F3F1B1E.PlannerFixtures'`",
+    "timestamp": 1792441446.402,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D8E5D2B1-DC61-447B-A359-CC5D4D8034AA.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_E1D26E38-2D97-4147-A4B7-45DBD5349A03.PlannerFixtures'`",
+    "timestamp": 1792441444.824,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A0F426F6-1021-462E-A544-7E5815A74366.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_A28DD211-1C10-4D71-A453-A1DD172B4C8D.PlannerFixtures'`",
+    "timestamp": 1792441443.841,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DD4144CB-8777-467A-A0F7-4B2FB7C66217.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_C5A0B0E1-76C0-463F-AD48-CF2169FE1897.PlannerFixtures'`",
+    "timestamp": 1792441442.86,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "28A11B47-F652-47E9-80AA-B91389350493.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_5258C4DA-07DC-435C-9369-D5DE34FD2DBF.PlannerFixtures'`",
+    "timestamp": 1792441441.771,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EE78255B-ADEB-48CB-B224-FABC1882F405.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Target Application 'org.example_0_2B83DC70-A9EC-435A-9081-7975C1C1C447.PlannerFixtures'`",
+    "timestamp": 1792441440.893,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testVisibleRowsStayPaintedWhenSelectionScrollsOffscreen()"
+  }
+]

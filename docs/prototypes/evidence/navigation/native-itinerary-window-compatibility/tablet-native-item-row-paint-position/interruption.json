@@ -1,0 +1,5 @@
+{
+  "reason": "Deliberately stopped the isolated setup trial. Observed SDK-fast swipes advance about 110 Items per ten gestures, so its 200-gesture cap cannot reach Item 05000. Next probe uses the installed public iOS pointer-scroll API.",
+  "lastObservedCheckpoint": "Row paint fast-scroll attempt 80: Scale Item 00917",
+  "credit": "No rendering reproduction or complete test pass."
+}

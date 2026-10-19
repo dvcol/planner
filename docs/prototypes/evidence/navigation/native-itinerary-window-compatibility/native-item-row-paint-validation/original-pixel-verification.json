@@ -1,0 +1,550 @@
+{
+  "result": "Original row pixels are painted and identical across all three captures.",
+  "visibleRegionsCompared": 14,
+  "regionBasis": "The native sample frame for Item 04994 is (68,657,136,39.5) points at 2x capture scale. Adjacent fixed-height rows are 74 points apart. Regions cover the title/metadata area, away from the scrollbar and detail pane.",
+  "allRegionBytesIdentical": true,
+  "originalPreviewInterpretationCorrected": true,
+  "scope": "Decoded original-file RGB evidence plus sampled native paint checks. Not an all-row/all-scene contrast, semantic OCR or physical-performance claim. No original image is edited.",
+  "captures": {
+    "original": {
+      "file": "tablet-native-every-item-final/A303F52E-D8EE-480A-ACEF-D27F0C34845E.png",
+      "originalFileSHA256": "ef222839c0b8ab6eb791fdb0d7b0eb8ae40874efa26342318e749d1402cb38b4",
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        1640,
+        2360
+      ],
+      "regions": [
+        {
+          "sourceTitle": "Scale Item 04987",
+          "pixelRectangle": [
+            136,
+            278,
+            408,
+            357
+          ],
+          "brightPixels": 1418,
+          "totalPixels": 21488,
+          "rgbSHA256": "5ad412ca09a8fefc8a4e6ae06a07ba450bfd1d18185c0ff711c0984792079ea6"
+        },
+        {
+          "sourceTitle": "Scale Item 04988",
+          "pixelRectangle": [
+            136,
+            426,
+            408,
+            505
+          ],
+          "brightPixels": 1477,
+          "totalPixels": 21488,
+          "rgbSHA256": "2592d741d3140d28a49ee52be91602fd23921d6a22a27956a94af82a3448c1c5"
+        },
+        {
+          "sourceTitle": "Scale Item 04989",
+          "pixelRectangle": [
+            136,
+            574,
+            408,
+            653
+          ],
+          "brightPixels": 1475,
+          "totalPixels": 21488,
+          "rgbSHA256": "1d9a39dba5cdd540f0c72cde9d6f99badbe2fa8370d65644de0b47386d01023f"
+        },
+        {
+          "sourceTitle": "Scale Item 04990",
+          "pixelRectangle": [
+            136,
+            722,
+            408,
+            801
+          ],
+          "brightPixels": 1461,
+          "totalPixels": 21488,
+          "rgbSHA256": "27647c7659b9afb2c06670721ce18b87ed1317cab79c726b89b8ae2a4eb9b6e2"
+        },
+        {
+          "sourceTitle": "Scale Item 04991",
+          "pixelRectangle": [
+            136,
+            870,
+            408,
+            949
+          ],
+          "brightPixels": 1396,
+          "totalPixels": 21488,
+          "rgbSHA256": "aa7c55861d1c67abcae6045886ba97991c3d7d1bdd917928fec1a482bc61851e"
+        },
+        {
+          "sourceTitle": "Scale Item 04992",
+          "pixelRectangle": [
+            136,
+            1018,
+            408,
+            1097
+          ],
+          "brightPixels": 1439,
+          "totalPixels": 21488,
+          "rgbSHA256": "c8e12946f0d1c3a61f6682a5c101add3ee83a25345b6071b3ab382331db2a676"
+        },
+        {
+          "sourceTitle": "Scale Item 04993",
+          "pixelRectangle": [
+            136,
+            1166,
+            408,
+            1245
+          ],
+          "brightPixels": 1442,
+          "totalPixels": 21488,
+          "rgbSHA256": "5e8421120575b0695e69189b36229f7e9f8436eaccdfab904aa0658719173ab1"
+        },
+        {
+          "sourceTitle": "Scale Item 04994",
+          "pixelRectangle": [
+            136,
+            1314,
+            408,
+            1393
+          ],
+          "brightPixels": 1454,
+          "totalPixels": 21488,
+          "rgbSHA256": "cfd7bf88016b58173314bd604d93da9b25dab1476631298e9a0d231ad7d3d2db"
+        },
+        {
+          "sourceTitle": "Scale Item 04995",
+          "pixelRectangle": [
+            136,
+            1462,
+            408,
+            1541
+          ],
+          "brightPixels": 1449,
+          "totalPixels": 21488,
+          "rgbSHA256": "bbf0b44b3ad44e37943be60db2ec715b71362fc96630f1312f4c40bb1bae65f2"
+        },
+        {
+          "sourceTitle": "Scale Item 04996",
+          "pixelRectangle": [
+            136,
+            1610,
+            408,
+            1689
+          ],
+          "brightPixels": 1471,
+          "totalPixels": 21488,
+          "rgbSHA256": "6ebf754a5e4effa138eb17669c9de100168d5ddc4372d327583e1e1e48fb24ef"
+        },
+        {
+          "sourceTitle": "Scale Item 04997",
+          "pixelRectangle": [
+            136,
+            1758,
+            408,
+            1837
+          ],
+          "brightPixels": 1416,
+          "totalPixels": 21488,
+          "rgbSHA256": "98794f70f0ba05784e6637dccc76bb9561aa9193d87d61abac0dad10d44d279c"
+        },
+        {
+          "sourceTitle": "Scale Item 04998",
+          "pixelRectangle": [
+            136,
+            1906,
+            408,
+            1985
+          ],
+          "brightPixels": 1475,
+          "totalPixels": 21488,
+          "rgbSHA256": "5536899e689911a294b242b6f3ef0d02400b7fd55301ce656897883f0b313e31"
+        },
+        {
+          "sourceTitle": "Scale Item 04999",
+          "pixelRectangle": [
+            136,
+            2054,
+            408,
+            2133
+          ],
+          "brightPixels": 1473,
+          "totalPixels": 21488,
+          "rgbSHA256": "5cc9f4c16ab9bb424ab40950e7c70ae945ae995ecd4578625b31f27a294f2ea1"
+        },
+        {
+          "sourceTitle": "Scale Item 05000",
+          "pixelRectangle": [
+            136,
+            2202,
+            408,
+            2281
+          ],
+          "brightPixels": 1432,
+          "totalPixels": 21488,
+          "rgbSHA256": "81e11e198a03899766d8d10fbcc74d1b69e60050086a12c9cc6637d65d574b3b"
+        }
+      ]
+    },
+    "pointer": {
+      "file": "tablet-native-item-row-paint-pointer-down/C9F622EA-3AA5-428D-807F-15E0A9BB2EC0.png",
+      "originalFileSHA256": "b25bc9921281745b80f50c7eb25f0feb4ac16e03937d4d19f9a37ad96865b327",
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        1640,
+        2360
+      ],
+      "regions": [
+        {
+          "sourceTitle": "Scale Item 04987",
+          "pixelRectangle": [
+            136,
+            278,
+            408,
+            357
+          ],
+          "brightPixels": 1418,
+          "totalPixels": 21488,
+          "rgbSHA256": "5ad412ca09a8fefc8a4e6ae06a07ba450bfd1d18185c0ff711c0984792079ea6"
+        },
+        {
+          "sourceTitle": "Scale Item 04988",
+          "pixelRectangle": [
+            136,
+            426,
+            408,
+            505
+          ],
+          "brightPixels": 1477,
+          "totalPixels": 21488,
+          "rgbSHA256": "2592d741d3140d28a49ee52be91602fd23921d6a22a27956a94af82a3448c1c5"
+        },
+        {
+          "sourceTitle": "Scale Item 04989",
+          "pixelRectangle": [
+            136,
+            574,
+            408,
+            653
+          ],
+          "brightPixels": 1475,
+          "totalPixels": 21488,
+          "rgbSHA256": "1d9a39dba5cdd540f0c72cde9d6f99badbe2fa8370d65644de0b47386d01023f"
+        },
+        {
+          "sourceTitle": "Scale Item 04990",
+          "pixelRectangle": [
+            136,
+            722,
+            408,
+            801
+          ],
+          "brightPixels": 1461,
+          "totalPixels": 21488,
+          "rgbSHA256": "27647c7659b9afb2c06670721ce18b87ed1317cab79c726b89b8ae2a4eb9b6e2"
+        },
+        {
+          "sourceTitle": "Scale Item 04991",
+          "pixelRectangle": [
+            136,
+            870,
+            408,
+            949
+          ],
+          "brightPixels": 1396,
+          "totalPixels": 21488,
+          "rgbSHA256": "aa7c55861d1c67abcae6045886ba97991c3d7d1bdd917928fec1a482bc61851e"
+        },
+        {
+          "sourceTitle": "Scale Item 04992",
+          "pixelRectangle": [
+            136,
+            1018,
+            408,
+            1097
+          ],
+          "brightPixels": 1439,
+          "totalPixels": 21488,
+          "rgbSHA256": "c8e12946f0d1c3a61f6682a5c101add3ee83a25345b6071b3ab382331db2a676"
+        },
+        {
+          "sourceTitle": "Scale Item 04993",
+          "pixelRectangle": [
+            136,
+            1166,
+            408,
+            1245
+          ],
+          "brightPixels": 1442,
+          "totalPixels": 21488,
+          "rgbSHA256": "5e8421120575b0695e69189b36229f7e9f8436eaccdfab904aa0658719173ab1"
+        },
+        {
+          "sourceTitle": "Scale Item 04994",
+          "pixelRectangle": [
+            136,
+            1314,
+            408,
+            1393
+          ],
+          "brightPixels": 1454,
+          "totalPixels": 21488,
+          "rgbSHA256": "cfd7bf88016b58173314bd604d93da9b25dab1476631298e9a0d231ad7d3d2db"
+        },
+        {
+          "sourceTitle": "Scale Item 04995",
+          "pixelRectangle": [
+            136,
+            1462,
+            408,
+            1541
+          ],
+          "brightPixels": 1449,
+          "totalPixels": 21488,
+          "rgbSHA256": "bbf0b44b3ad44e37943be60db2ec715b71362fc96630f1312f4c40bb1bae65f2"
+        },
+        {
+          "sourceTitle": "Scale Item 04996",
+          "pixelRectangle": [
+            136,
+            1610,
+            408,
+            1689
+          ],
+          "brightPixels": 1471,
+          "totalPixels": 21488,
+          "rgbSHA256": "6ebf754a5e4effa138eb17669c9de100168d5ddc4372d327583e1e1e48fb24ef"
+        },
+        {
+          "sourceTitle": "Scale Item 04997",
+          "pixelRectangle": [
+            136,
+            1758,
+            408,
+            1837
+          ],
+          "brightPixels": 1416,
+          "totalPixels": 21488,
+          "rgbSHA256": "98794f70f0ba05784e6637dccc76bb9561aa9193d87d61abac0dad10d44d279c"
+        },
+        {
+          "sourceTitle": "Scale Item 04998",
+          "pixelRectangle": [
+            136,
+            1906,
+            408,
+            1985
+          ],
+          "brightPixels": 1475,
+          "totalPixels": 21488,
+          "rgbSHA256": "5536899e689911a294b242b6f3ef0d02400b7fd55301ce656897883f0b313e31"
+        },
+        {
+          "sourceTitle": "Scale Item 04999",
+          "pixelRectangle": [
+            136,
+            2054,
+            408,
+            2133
+          ],
+          "brightPixels": 1473,
+          "totalPixels": 21488,
+          "rgbSHA256": "5cc9f4c16ab9bb424ab40950e7c70ae945ae995ecd4578625b31f27a294f2ea1"
+        },
+        {
+          "sourceTitle": "Scale Item 05000",
+          "pixelRectangle": [
+            136,
+            2202,
+            408,
+            2281
+          ],
+          "brightPixels": 1432,
+          "totalPixels": 21488,
+          "rgbSHA256": "81e11e198a03899766d8d10fbcc74d1b69e60050086a12c9cc6637d65d574b3b"
+        }
+      ]
+    },
+    "touch": {
+      "file": "tablet-native-item-row-paint-touch-cycle/6FF49014-0E93-454E-AE5F-76ECF2B50A33.png",
+      "originalFileSHA256": "538a1d50d00207a4e84a067c6dbecee2142054a67af7de5924a6254602ec3d29",
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        1640,
+        2360
+      ],
+      "regions": [
+        {
+          "sourceTitle": "Scale Item 04987",
+          "pixelRectangle": [
+            136,
+            278,
+            408,
+            357
+          ],
+          "brightPixels": 1418,
+          "totalPixels": 21488,
+          "rgbSHA256": "5ad412ca09a8fefc8a4e6ae06a07ba450bfd1d18185c0ff711c0984792079ea6"
+        },
+        {
+          "sourceTitle": "Scale Item 04988",
+          "pixelRectangle": [
+            136,
+            426,
+            408,
+            505
+          ],
+          "brightPixels": 1477,
+          "totalPixels": 21488,
+          "rgbSHA256": "2592d741d3140d28a49ee52be91602fd23921d6a22a27956a94af82a3448c1c5"
+        },
+        {
+          "sourceTitle": "Scale Item 04989",
+          "pixelRectangle": [
+            136,
+            574,
+            408,
+            653
+          ],
+          "brightPixels": 1475,
+          "totalPixels": 21488,
+          "rgbSHA256": "1d9a39dba5cdd540f0c72cde9d6f99badbe2fa8370d65644de0b47386d01023f"
+        },
+        {
+          "sourceTitle": "Scale Item 04990",
+          "pixelRectangle": [
+            136,
+            722,
+            408,
+            801
+          ],
+          "brightPixels": 1461,
+          "totalPixels": 21488,
+          "rgbSHA256": "27647c7659b9afb2c06670721ce18b87ed1317cab79c726b89b8ae2a4eb9b6e2"
+        },
+        {
+          "sourceTitle": "Scale Item 04991",
+          "pixelRectangle": [
+            136,
+            870,
+            408,
+            949
+          ],
+          "brightPixels": 1396,
+          "totalPixels": 21488,
+          "rgbSHA256": "aa7c55861d1c67abcae6045886ba97991c3d7d1bdd917928fec1a482bc61851e"
+        },
+        {
+          "sourceTitle": "Scale Item 04992",
+          "pixelRectangle": [
+            136,
+            1018,
+            408,
+            1097
+          ],
+          "brightPixels": 1439,
+          "totalPixels": 21488,
+          "rgbSHA256": "c8e12946f0d1c3a61f6682a5c101add3ee83a25345b6071b3ab382331db2a676"
+        },
+        {
+          "sourceTitle": "Scale Item 04993",
+          "pixelRectangle": [
+            136,
+            1166,
+            408,
+            1245
+          ],
+          "brightPixels": 1442,
+          "totalPixels": 21488,
+          "rgbSHA256": "5e8421120575b0695e69189b36229f7e9f8436eaccdfab904aa0658719173ab1"
+        },
+        {
+          "sourceTitle": "Scale Item 04994",
+          "pixelRectangle": [
+            136,
+            1314,
+            408,
+            1393
+          ],
+          "brightPixels": 1454,
+          "totalPixels": 21488,
+          "rgbSHA256": "cfd7bf88016b58173314bd604d93da9b25dab1476631298e9a0d231ad7d3d2db"
+        },
+        {
+          "sourceTitle": "Scale Item 04995",
+          "pixelRectangle": [
+            136,
+            1462,
+            408,
+            1541
+          ],
+          "brightPixels": 1449,
+          "totalPixels": 21488,
+          "rgbSHA256": "bbf0b44b3ad44e37943be60db2ec715b71362fc96630f1312f4c40bb1bae65f2"
+        },
+        {
+          "sourceTitle": "Scale Item 04996",
+          "pixelRectangle": [
+            136,
+            1610,
+            408,
+            1689
+          ],
+          "brightPixels": 1471,
+          "totalPixels": 21488,
+          "rgbSHA256": "6ebf754a5e4effa138eb17669c9de100168d5ddc4372d327583e1e1e48fb24ef"
+        },
+        {
+          "sourceTitle": "Scale Item 04997",
+          "pixelRectangle": [
+            136,
+            1758,
+            408,
+            1837
+          ],
+          "brightPixels": 1416,
+          "totalPixels": 21488,
+          "rgbSHA256": "98794f70f0ba05784e6637dccc76bb9561aa9193d87d61abac0dad10d44d279c"
+        },
+        {
+          "sourceTitle": "Scale Item 04998",
+          "pixelRectangle": [
+            136,
+            1906,
+            408,
+            1985
+          ],
+          "brightPixels": 1475,
+          "totalPixels": 21488,
+          "rgbSHA256": "5536899e689911a294b242b6f3ef0d02400b7fd55301ce656897883f0b313e31"
+        },
+        {
+          "sourceTitle": "Scale Item 04999",
+          "pixelRectangle": [
+            136,
+            2054,
+            408,
+            2133
+          ],
+          "brightPixels": 1473,
+          "totalPixels": 21488,
+          "rgbSHA256": "5cc9f4c16ab9bb424ab40950e7c70ae945ae995ecd4578625b31f27a294f2ea1"
+        },
+        {
+          "sourceTitle": "Scale Item 05000",
+          "pixelRectangle": [
+            136,
+            2202,
+            408,
+            2281
+          ],
+          "brightPixels": 1432,
+          "totalPixels": 21488,
+          "rgbSHA256": "81e11e198a03899766d8d10fbcc74d1b69e60050086a12c9cc6637d65d574b3b"
+        }
+      ]
+    }
+  }
+}

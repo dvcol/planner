@@ -1,0 +1,29 @@
+{
+  "result": "Passed paint-test body and pixel/capture helpers unchanged in final compiled source.",
+  "runtimeSummaries": {
+    "tablet-native-item-row-paint-pointer-down": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "tablet-native-item-row-paint-touch-cycle": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    }
+  },
+  "finalBuildExit": {
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  "historicalInterpretationCorrection": {
+    "file": "native-every-item-validation/final-visual-inspection.json",
+    "sha256": "e3269fdd6cbb06c23d012d49604466abba546d6dd57f578703c462aec194fcc7",
+    "correction": "The blank-row interpretation was a scaled-preview misreading. Original RGB regions contain painted glyphs and match both passing paint captures. Historical record and original PNG remain unchanged.",
+    "evidence": "original-pixel-verification.json"
+  }
+}
