@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F3EE029A-69A3-41E0-80B6-A68865E10FD4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Every Item traversal opens the original far-end source_0_F6D2DBB0-D55A-4021-95A2-D735EFE0DC45.png",
+    "timestamp": 1792440477.148,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F026894D-EE3A-4A81-97B2-A9E47A76ACFF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Every Item traversal observes all five thousand source identities_0_5053E630-7908-451D-8970-668823B45967.png",
+    "timestamp": 1792440474.066,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "03871C26-A35C-467D-B2D3-B1B6093BD015.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Item traversal observed title and identity pairs_0_DDD4A9C1-39C8-478E-AA8E-8106E8863582.txt",
+    "timestamp": 1792440473.771,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3946DADC-8199-4E65-A622-8B3D76D94085.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Every Item traversal begins with the unfiltered first source_0_DA0DA86B-5E99-42FA-891E-1250E1C131EF.png",
+    "timestamp": 1792436824.701,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  }
+]

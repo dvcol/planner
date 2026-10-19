@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerItemWindowMarkdownlint.json",
+        "docs/prototypes/native-every-item-traversal.md"
+      ],
+      "exitCode": 0,
+      "observedResult": "0 issues"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "observedResult": "No whitespace errors"
+    }
+  ],
+  "sourceSHA256": {
+    "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift": "97ab4d180809666a1ab9dc0a5af524173db9dcedf7a0a1f7600b0d81f347ae70",
+    "docs/prototypes/native-every-item-traversal.md": "50ea1937622abf030037464885af0d9ed33d1bc3ba5a365dd9b1ff537d3ac998"
+  },
+  "scope": "Records the observed final report validation. Swift source is unchanged from the earlier strict Swift lint and the passing native build/runtime epoch."
+}

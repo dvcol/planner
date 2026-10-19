@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A1CA47F9-99A3-4F9C-97B1-FDF58FA387A3.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Every Item traversal opens the original far-end source_0_206E7621-0077-4B87-B9FE-51E9FF8C39F6.png",
+    "timestamp": 1792440363.111,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A303F52E-D8EE-480A-ACEF-D27F0C34845E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Every Item traversal observes all five thousand source identities_0_1AB2567D-08B4-422C-919A-07675706309E.png",
+    "timestamp": 1792440359.43,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5BF2F51F-51C9-4076-BB3A-C3993B102676.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Item traversal observed title and identity pairs_0_E1F3C78D-DA5E-4EF8-B24F-B24F8BCE9F84.txt",
+    "timestamp": 1792440359.012,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DF755646-C3C0-4D69-91E6-D48C615959FB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Every Item traversal begins with the unfiltered first source_0_2EE31132-B4BE-421F-B757-8B1F5750543E.png",
+    "timestamp": 1792436825.875,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog()"
+  }
+]

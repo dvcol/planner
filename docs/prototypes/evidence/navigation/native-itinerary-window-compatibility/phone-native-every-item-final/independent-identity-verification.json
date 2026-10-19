@@ -1,0 +1,23 @@
+{
+  "result": "Passed",
+  "observedPairs": 5000,
+  "expectedTitles": 5000,
+  "uniqueTitles": 5000,
+  "uniqueSourceIdentifiers": 5000,
+  "completeExpectedTitleSet": true,
+  "titlesSorted": true,
+  "originalAttachment": "03871C26-A35C-467D-B2D3-B1B6093BD015.txt",
+  "originalSHA256": "e986525de8b321f10529f0f861c64597538c9d11783d89cf77669ee4ff342a63",
+  "committedAttachmentMatchesOriginal": true,
+  "sourceAndProductHashesStillMatch": true,
+  "appearanceRestored": true,
+  "firstObservedPair": [
+    "Scale Item 00001",
+    "saved.item.F44924B7-FECF-4F33-90FD-5B99AF722F75"
+  ],
+  "lastObservedPair": [
+    "Scale Item 05000",
+    "saved.item.8E497918-17F3-44C7-A446-6CFDAE7BC16D"
+  ],
+  "scope": "Independent attachment/count/identity verification. Native frame and hittability assertions belong to the recorded real XCTest journey; no pixel, memory or physical-performance claim."
+}

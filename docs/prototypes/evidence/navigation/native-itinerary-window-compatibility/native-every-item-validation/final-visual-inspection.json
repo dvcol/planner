@@ -1,0 +1,20 @@
+{
+  "scope": "Selected original captures; does not establish all-row pixel readability, memory bounds or physical performance.",
+  "captures": [
+    {
+      "file": "phone-native-every-item-final/F3EE029A-69A3-41E0-80B6-A68865E10FD4.png",
+      "sha256": "4787244f778d9fc5ddaff3e685cfc3e8141810235b3246047b87b54e7a8e4ffb",
+      "observation": "Light phone opens Item 05000 with Todo toggle, expected far-end notes and 91-minute estimate."
+    },
+    {
+      "file": "tablet-native-every-item-final/A1CA47F9-99A3-4F9C-97B1-FDF58FA387A3.png",
+      "sha256": "e7f9ce95165ab19222472674af7ac927b7d59bacb61e9f051487961c92913d62",
+      "observation": "Dark tablet with Increase Contrast selects Item 05000; its detail and surrounding rows are painted."
+    },
+    {
+      "file": "tablet-native-every-item-final/A303F52E-D8EE-480A-ACEF-D27F0C34845E.png",
+      "sha256": "ef222839c0b8ab6eb791fdb0d7b0eb8ae40874efa26342318e749d1402cb38b4",
+      "observation": "Before the final selection, Item 00001 remains in details and several visible catalog rows look blank. Subsequent capture paints those rows. This rendering observation requires reproduction and is not closed by the accessibility identity pass."
+    }
+  ]
+}
