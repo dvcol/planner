@@ -1,6 +1,6 @@
 # Remaining original-association Undo decisions
 
-Status: proposed Q109/Q110 frontier. No implementation or new tests are authorized by this proposal. Q106/Q107's membership/Itinerary-entry slice and Q108's separate controller-test choice retain their existing status.
+Status: Q109 A and Q110 A approved by the human on 19 October 2026. Reverse a whole Move atomically and issue one atomic association-removal history group per editor Save. The concrete extension contract and literal fixtures still require review before its tests or implementation. Q108 A separately approves the existing production history-controller test boundary.
 
 ## Context and goal
 
