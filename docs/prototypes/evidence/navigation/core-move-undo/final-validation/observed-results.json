@@ -1,0 +1,138 @@
+[
+  {
+    "epoch": "move-and-existing-undo-core-regressions",
+    "exitCode": 0,
+    "selectedFilter": "Association(Undo|MoveUndo)",
+    "lastExecutedSummary": [
+      [
+        "16",
+        "4",
+        "passed",
+        "0.816"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-expanded-contexts-qualified",
+    "exitCode": 0,
+    "selectedFilter": "AssociationMoveUndoTests/moveUndoRestoresIndependentExpandedContextsWithoutCompletingOtherAppearances",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.184"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-full-affected-core-regressions",
+    "exitCode": 0,
+    "selectedFilter": "MembershipRemovalTests|MembershipMoveTests|ItineraryEntryRemovalTests|ExpandedCompletionMembershipTests|AssociationMoveUndoTests|AssociationUndoHistoryTests|AssociationUndoRecoveryTests|AssociationUndoSaveFailureTests|ItemInListCreationFailureTests",
+    "lastExecutedSummary": [
+      [
+        "27",
+        "9",
+        "passed",
+        "1.514"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-newer-relationship-guards-qualified",
+    "exitCode": 0,
+    "selectedFilter": "AssociationMoveUndoTests/newerRelationshipChangesRejectTheWholeMoveUndo",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.254"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-original-state-first-green",
+    "exitCode": 0,
+    "selectedFilter": "AssociationMoveUndoTests/moveUndoRestoresOriginAndRemovesOnlyItsCreatedDestination",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.163"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-original-state-qualified-red",
+    "exitCode": 1,
+    "selectedFilter": "AssociationMoveUndoTests/moveUndoRestoresOriginAndRemovesOnlyItsCreatedDestination",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "failed",
+        "0.116"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-original-state-red",
+    "exitCode": 1,
+    "selectedFilter": "AssociationMoveUndoTests/moveUndoRestoresOriginAndRemovesOnlyItsCreatedDestination",
+    "lastExecutedSummary": []
+  },
+  {
+    "epoch": "move-preexisting-destination-qualified",
+    "exitCode": 0,
+    "selectedFilter": "AssociationMoveUndoTests/moveUndoPreservesAnExistingDestinationAndItsLaterLocalChanges",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.148"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-recovery-publication-qualified",
+    "exitCode": 0,
+    "selectedFilter": "AssociationMoveUndoTests/committedMoveAndUndoRepairOnlyRecoveryWithoutRepeatingTheirChanges",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.128"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-save-failure-first-green",
+    "exitCode": 0,
+    "selectedFilter": "AssociationUndoSaveFailureTests/failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.348"
+      ]
+    ]
+  },
+  {
+    "epoch": "move-save-failure-red",
+    "exitCode": 1,
+    "selectedFilter": "AssociationUndoSaveFailureTests/failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "failed",
+        "0.188"
+      ]
+    ]
+  }
+]

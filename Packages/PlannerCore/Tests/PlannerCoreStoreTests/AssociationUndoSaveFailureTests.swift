@@ -7,6 +7,76 @@ import SwiftData
   import Testing
 
   struct AssociationUndoSaveFailureTests {
+    @Test func failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry() async throws {
+      guard ProcessInfo.processInfo.environment["PLANNER_UNDO_WRITE_FAULT_CHILD"] == "1" else {
+        try runIsolatedWriteFailure(
+          functionName: "failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry")
+        return
+      }
+      for restoring in [false, true] {
+        let fixture = try await AssociationUndoFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.directory) }
+        let creation = try await fixture.save(.createList(content: .init(name: "Destination")))
+        let destination = try #require(creation.generated.first)
+        let move = PlannerCommand.moveMembership(
+          listId: fixture.list.id, membershipId: fixture.membershipIdentifier,
+          destinationListId: destination.id, placement: .last)
+        let command: PlannerCommand
+        if restoring {
+          let moved = await fixture.planner.execute(
+            .init(operationId: UUID(), session: fixture.session, command: move))
+          command = .restoreAssociation(snapshot: try #require(moved.associationUndoSnapshot))
+        } else {
+          command = move
+        }
+        let before = try await fixture.export()
+        let obstruction = NativeSaveFileSizeObstruction(
+          configuration: fixture.configuration, maximumFileSize: 1)
+        let observer = NotificationCenter.default.addObserver(
+          forName: ModelContext.willSave, object: nil, queue: nil
+        ) { notification in obstruction.observe(notification) }
+        defer {
+          NotificationCenter.default.removeObserver(observer)
+          try? obstruction.restore()
+        }
+        let operationIdentifier = UUID()
+        let response = await fixture.planner.execute(
+          .init(operationId: operationIdentifier, session: fixture.session, command: command))
+        try obstruction.restore()
+        #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+        guard case .rejected(let failure) = response.outcome else { throw CancellationError() }
+        #expect(failure.code == "persistenceFailure")
+        #expect(response.associationUndoSnapshot == nil)
+        let reopened = Planner(configuration: fixture.configuration)
+        guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+          case .exported(let retained) = await reopened.exportData(session: reopenedSession)
+        else { throw CancellationError() }
+        #expect(retained == before)
+        guard
+          case .noReliableEvidence = await reopened.operationStatus(
+            session: reopenedSession, operationId: operationIdentifier)
+        else {
+          Issue.record("A known failed Move action must discard prepared evidence before retry.")
+          return
+        }
+        let retry = await fixture.planner.execute(
+          .init(operationId: operationIdentifier, session: fixture.session, command: command))
+        guard case .applied(_, .complete) = retry.outcome,
+          case .decoded(let saved) = fixture.planner.decodeImport(try await fixture.export())
+        else { throw CancellationError() }
+        #expect(saved.backup.memberships.count == 1)
+        let membership = try #require(saved.backup.memberships.first)
+        if restoring {
+          #expect(membership.id == fixture.membershipIdentifier && membership.localDone)
+          #expect(membership.list == fixture.list)
+        } else {
+          #expect(membership.id != fixture.membershipIdentifier && !membership.localDone)
+          #expect(membership.list == destination)
+          #expect(retry.associationUndoSnapshot != nil)
+        }
+      }
+    }
+
     @Test func failedNativeRemovalSaveIssuesNoUndoAndRetainsOriginalAssociations() async throws {
       guard ProcessInfo.processInfo.environment["PLANNER_UNDO_WRITE_FAULT_CHILD"] == "1" else {
         try runIsolatedWriteFailure(

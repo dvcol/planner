@@ -1,0 +1,41 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerAssociationUndoValues.swift",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationMoveUndoTests.swift",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoSaveFailureTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerItemWindowMarkdownlint.json",
+        "docs/prototypes/core-move-undo.md",
+        "docs/native-compound-association-undo-contract-review.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "localLinksChecked": 4,
+  "missingLinks": [],
+  "verifiedFinalPackageInputs": 259,
+  "changedFinalInputs": []
+}

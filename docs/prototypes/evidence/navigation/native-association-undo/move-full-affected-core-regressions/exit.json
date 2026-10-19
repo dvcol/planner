@@ -1,0 +1,4 @@
+{
+  "exitCode": 0,
+  "filter": "MembershipRemovalTests|MembershipMoveTests|ItineraryEntryRemovalTests|ExpandedCompletionMembershipTests|AssociationMoveUndoTests|AssociationUndoHistoryTests|AssociationUndoRecoveryTests|AssociationUndoSaveFailureTests|ItemInListCreationFailureTests"
+}

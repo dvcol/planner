@@ -5,6 +5,15 @@ public struct PlannerAssociationUndoSnapshot: Sendable {
   public enum OriginalRecord: Sendable {
     case membership(PlannerPortableMembership)
     case itineraryEntry(PlannerPortableItineraryEntry)
+    case membershipMove(PlannerMembershipMoveUndoRecord)
+
+    var membership: PlannerPortableMembership? {
+      switch self {
+      case .membership(let original): return original
+      case .membershipMove(let move): return move.originalMembership
+      case .itineraryEntry: return nil
+      }
+    }
   }
 
   init(
@@ -61,6 +70,7 @@ public struct PlannerAssociationUndoSnapshot: Sendable {
     switch originalRecord {
     case .membership(let membership): record = membership.importCanonicalValue
     case .itineraryEntry(let entry): record = entry.importCanonicalValue
+    case .membershipMove(let move): record = move.canonicalValue
     }
     let value = PlannerCanonicalValue.record([
       "command": .record([
@@ -74,5 +84,58 @@ public struct PlannerAssociationUndoSnapshot: Sendable {
     return plannerDigest(
       Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
       prefix: "sha256-payload-v1:")
+  }
+
+  init(
+    storeIdentity: PlannerStoreIdentity, closingOperationId: UUID,
+    move: PlannerMembershipMoveUndoRecord, expandedStates: [ExpandedCompletionSnapshot]
+  ) {
+    datasetId = storeIdentity.datasetId
+    ownershipBinding = storeIdentity.ownershipBinding
+    let original = move.originalMembership
+    identity = .init(kind: .membership, id: original.id, lifetimeId: original.lifetimeId)
+    self.closingOperationId = closingOperationId
+    originalRecord = .membershipMove(move)
+    originalExpandedStates = expandedStates.map {
+      .init(context: $0.context, localDone: $0.localDone)
+    }
+  }
+}
+
+public struct PlannerMembershipMoveUndoRecord: Sendable {
+  public let originalMembership: PlannerPortableMembership
+  public let createdDestinationMembership: PlannerPortableMembership?
+  public let destinationEntries: [PlannerPortableBoundIdentity]
+  public let destinationExpandedStates: [PlannerPortableExpandedCompletion]
+
+  init(
+    original: MembershipSnapshot, createdDestination: MembershipSnapshot?,
+    destinationEntries: [ItineraryEntrySnapshot]
+  ) {
+    originalMembership = original.portableUndoRecord
+    createdDestinationMembership = createdDestination?.portableUndoRecord
+    self.destinationEntries = destinationEntries.map {
+      .init(kind: .itineraryEntry, id: $0.id, lifetimeId: $0.lifetimeId)
+    }
+    destinationExpandedStates = []
+  }
+
+  var canonicalValue: PlannerCanonicalValue {
+    .record([
+      "type": .string("membershipMove"),
+      "originalMembership": originalMembership.importCanonicalValue,
+      "createdDestinationMembership": .optional(createdDestinationMembership?.importCanonicalValue),
+      "destinationEntries": .identitySet(destinationEntries.map(\.importCanonicalValue)),
+      "destinationExpandedStates": .ordered(destinationExpandedStates.map(\.importCanonicalValue)),
+    ])
+  }
+}
+
+extension MembershipSnapshot {
+  var portableUndoRecord: PlannerPortableMembership {
+    .init(
+      id: id, lifetimeId: lifetimeId, list: .init(kind: .list, id: list.id),
+      listLifetimeId: list.lifetimeId, item: .init(kind: .item, id: item.id),
+      itemLifetimeId: item.lifetimeId, rank: rank, localDone: localDone)
   }
 }
