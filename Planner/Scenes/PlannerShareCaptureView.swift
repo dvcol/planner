@@ -34,6 +34,12 @@ struct PlannerShareCaptureView: View {
               ContentUnavailableView(
                 "Open Planner to prepare Share", systemImage: "exclamationmark.triangle",
                 description: Text(failure))
+            } else if store.recoveryBlocked {
+              ContentUnavailableView(
+                "Open Planner to review recovery", systemImage: "exclamationmark.triangle",
+                description: Text(
+                  "Further changes are paused until Planner's local recovery is ready. Open Planner to review or retry recovery, then share again."
+                ))
             } else {
               ProgressView("Loading shared content")
             }
@@ -49,7 +55,9 @@ struct PlannerShareCaptureView: View {
     }
     .task {
       await store.open()
-      guard store.isReady, !Task.isCancelled, loadedInputs == nil else { return }
+      guard store.isReady, !store.recoveryBlocked, !Task.isCancelled, loadedInputs == nil else {
+        return
+      }
       let loaded = await PlannerNativeCaptureLoader.load(providers: providers)
       guard !Task.isCancelled else { return }
       loadedInputs = loaded
