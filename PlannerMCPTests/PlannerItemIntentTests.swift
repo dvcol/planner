@@ -8,6 +8,68 @@ import XCTest
 
 @MainActor
 final class PlannerItemIntentTests: XCTestCase {
+  func testArchiveIntentRetainsItemIdentityContentAndIndependentListCompletionAfterReopen()
+    async throws
+  {
+    let (directory, configuration, store) = try makeStorage()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    AppDependencyManager.shared.add(dependency: store)
+    var creation = CreatePlannerItemIntent()
+    creation.title = "Museum"
+    creation.notes = "Keep the shared notes"
+    let item = try await creation.callAsFunction(donate: false)
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else {
+      return XCTFail("The Item's real dataset must be ready.")
+    }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let operation = await planner.execute(
+        .init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let result, .complete) = operation.outcome else {
+        throw CancellationError()
+      }
+      return result
+    }
+    var appearances: [PlannerAppearance] = []
+    for name in ["Tokyo", "Wishlist"] {
+      let listCreation = try await save(.createList(content: .init(name: name)))
+      let list = try XCTUnwrap(listCreation.generated.first)
+      let membership = try await save(
+        .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      guard case .membership(let identifier, _, _)? = membership.generatedReferences.first else {
+        return XCTFail("Each saved membership must retain its own identity.")
+      }
+      appearances.append(.listMembership(listId: list.id, membershipId: identifier))
+    }
+    _ = try await save(.setCompletion(scope: .appearance(appearances[0]), done: true))
+    var archive = SetPlannerItemArchiveIntent()
+    archive.item = item
+    for archived in [true, false] {
+      archive.archived = archived
+      let _: Void = try await archive.callAsFunction(donate: false)
+      let reopened = PlannerCore.Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .source(.item(let source)) = await reopened.read(
+          session: reopenedSession, request: .source(.init(kind: .item, id: item.id)))
+      else { return XCTFail("Archive must preserve the original source after reopening.") }
+      XCTAssertEqual(source.source.id, item.id)
+      XCTAssertEqual(source.content.title, "Museum")
+      XCTAssertEqual(source.content.notes, "Keep the shared notes")
+      XCTAssertEqual(source.state.archived, archived)
+      XCTAssertEqual(source.state.globalDone, false)
+      for (index, appearance) in appearances.enumerated() {
+        guard
+          case .appearance(let current) = await reopened.read(
+            session: reopenedSession, request: .appearance(appearance))
+        else { return XCTFail("Archive must preserve both original memberships.") }
+        XCTAssertEqual(current.archived, archived)
+        XCTAssertFalse(current.globalDone)
+        XCTAssertEqual(current.localDone, index == 0)
+        XCTAssertEqual(current.effectiveDone, index == 0)
+      }
+    }
+  }
+
   func testCreationCancelledBeforeInvocationLeavesNoSavedItem() async throws {
     let fixture = try makeStorage()
     defer { try? FileManager.default.removeItem(at: fixture.directory) }
