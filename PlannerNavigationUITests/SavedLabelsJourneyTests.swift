@@ -2,6 +2,160 @@ import XCTest
 
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
+  func testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes() {
+    qualifyGroupedEditorUndo(itinerary: false)
+  }
+
+  func testItineraryEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes() {
+    qualifyGroupedEditorUndo(itinerary: true)
+  }
+
+  private func qualifyGroupedEditorUndo(itinerary: Bool) {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openLabels(application)
+    createLabel("Tag", name: "Indoor", application: application)
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    let prefix = itinerary ? "saved.itinerary" : "saved.item.edit"
+    if itinerary {
+      openItineraries(application)
+      application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+      let title = application.textFields["saved.itinerary.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Grouped Undo")
+      selectLabels("Tags", names: ["Indoor"], identifierPrefix: prefix, application: application)
+    } else {
+      createLabeledItem("Grouped Undo", categories: [], tags: ["Indoor"], application: application)
+      openItemEditor(application)
+    }
+    for label in ["Guide", "Tickets"] {
+      dismissGroupedEditorKeyboard(application)
+      let addLink = application.plannerElement("\(prefix).link.add")
+      revealGroupedEditorElement(addLink, application: application)
+      let fields = application.textFields.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "\(prefix).link.url."))
+      let existing = fields.allElementsBoundByIndex.map(\.identifier)
+      addLink.activateForPlannerJourney()
+      let field = fields.matching(NSPredicate(format: "NOT identifier IN %@", existing)).firstMatch
+      if !field.waitForExistence(timeout: 5) {
+        recordLabelsScreenshot(application, name: "Grouped Undo missing newly added link")
+        let hierarchy = XCTAttachment(string: application.debugDescription)
+        hierarchy.name = "Grouped Undo form after Add Link"
+        hierarchy.lifetime = .keepAlways
+        add(hierarchy)
+        XCTFail("Add Link must expose its new URL field before typing.")
+        return
+      }
+      revealGroupedEditorElement(field, application: application)
+      field.activateForPlannerJourney()
+      field.typeText("https://example.com/\(label.lowercased())")
+      let labelField = application.textFields[
+        field.identifier.replacingOccurrences(
+          of: ".url.", with: ".label.")]
+      revealGroupedEditorElement(labelField, application: application)
+      labelField.activateForPlannerJourney()
+      labelField.typeText(label)
+      #if os(iOS)
+        // Return ends native field editing before the iPad sheet recenters.
+        labelField.typeText("\n")
+      #endif
+    }
+    application.plannerElement("\(prefix).save").activateForPlannerJourney()
+    let links = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
+    XCTAssertTrue(links.firstMatch.waitForExistence(timeout: 10))
+    let identifiers = links.allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(identifiers.count, 2)
+    if itinerary { openItineraryEditor(application) } else { openItemEditor(application) }
+    let notes = application.textFields["\(prefix).notes"]
+    XCTAssertTrue(notes.waitForExistence(timeout: 5))
+    notes.activateForPlannerJourney()
+    notes.typeText("Notes kept after Undo")
+    selectLabels(
+      "Tags", names: ["Indoor"], identifierPrefix: prefix, selected: false,
+      application: application)
+    for identifier in identifiers {
+      let identity = identifier.replacingOccurrences(of: "saved.item.link.", with: "")
+      let actions = application.plannerElement("\(prefix).link.actions.\(identity)")
+      revealGroupedEditorElement(actions, application: application)
+      actions.activateForPlannerJourney()
+      application.plannerElement("Remove Link").activateForPlannerJourney()
+    }
+    application.plannerElement("\(prefix).save").activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["\(prefix).notes"].waitForNonExistence(timeout: 10))
+    XCTAssertEqual(links.count, 0)
+    XCTAssertTrue(application.staticTexts["Notes kept after Undo"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      let undo = application.plannerElement("saved.association.undo")
+      XCTAssertTrue(undo.waitForExistence(timeout: 5))
+      XCTAssertEqual(undo.label, "Undo Remove Links and Labels")
+      recordLabelsScreenshot(application, name: "Grouped Undo offers one named removal action")
+      undo.activateForPlannerJourney()
+    #else
+      application.typeKey("z", modifierFlags: .command)
+    #endif
+    XCTAssertTrue(links.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(links.allElementsBoundByIndex.map(\.identifier), identifiers)
+    XCTAssertTrue(application.staticTexts["Indoor"].firstMatch.exists)
+    XCTAssertTrue(application.staticTexts["Notes kept after Undo"].exists)
+    recordLabelsScreenshot(
+      application, name: "Grouped Undo restores identities while keeping saved notes")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    if itinerary {
+      openItineraries(application)
+      application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Grouped Undo"
+        )
+      )
+      .firstMatch.activateForPlannerJourney()
+    } else {
+      openItems(application)
+      application.savedPlannerItemRows("Grouped Undo").firstMatch.activateForPlannerJourney()
+    }
+    XCTAssertTrue(links.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(links.allElementsBoundByIndex.map(\.identifier), identifiers)
+    XCTAssertTrue(application.staticTexts["Indoor"].firstMatch.exists)
+    XCTAssertTrue(application.staticTexts["Notes kept after Undo"].exists)
+    XCTAssertFalse(application.plannerElement("saved.association.undo").exists)
+    recordLabelsScreenshot(
+      application, name: "Grouped Undo data persists and history expires after relaunch")
+  }
+
+  private func revealGroupedEditorElement(_ element: XCUIElement, application: XCUIApplication) {
+    for _ in 0..<12 {
+      if element.isHittable { return }
+      #if os(macOS)
+        application.scrollViews.firstMatch.scroll(byDeltaX: 0, deltaY: -200)
+      #else
+        dismissGroupedEditorKeyboard(application)
+        let form = application.collectionViews.firstMatch
+        let start = form.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.75))
+        let end = form.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.45))
+        start.press(forDuration: 0.01, thenDragTo: end)
+      #endif
+    }
+    XCTAssertTrue(element.waitForPlannerHittability(), application.debugDescription)
+  }
+
+  private func dismissGroupedEditorKeyboard(_ application: XCUIApplication) {
+    #if os(iOS)
+      let dismissal = application.keyboards.buttons["Hide keyboard"].firstMatch
+      guard dismissal.exists && dismissal.isHittable else { return }
+      dismissal.activateForPlannerJourney()
+      let keyboard = application.keyboards.firstMatch
+      let dismissed = NSPredicate { _, _ in !keyboard.exists || keyboard.frame.isEmpty }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: dismissed, object: keyboard)], timeout: 5),
+        .completed, "The keyboard must finish dismissing before another form action.")
+    #endif
+  }
+
   func testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch() {
     assertNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentities(originatingList: nil)
   }
@@ -677,10 +831,16 @@ final class SavedLabelsJourneyTests: XCTestCase {
   }
 
   private func openItineraries(_ application: XCUIApplication) {
+    let nativeSection = application.plannerElement("saved.section.itineraries")
+    if !nativeSection.exists || !nativeSection.isHittable {
+      let sidebar = application.plannerElement("Show Sidebar")
+      if sidebar.exists { sidebar.activateForPlannerJourney() }
+    }
     #if os(macOS)
-      let section = application.plannerElement("saved.section.itineraries")
+      let section = nativeSection
     #else
-      let section = application.buttons["Itineraries"].firstMatch
+      let section =
+        nativeSection.exists ? nativeSection : application.buttons["Itineraries"].firstMatch
     #endif
     XCTAssertTrue(section.waitForExistence(timeout: 10))
     section.activateForPlannerJourney()
@@ -699,7 +859,17 @@ final class SavedLabelsJourneyTests: XCTestCase {
   }
 
   private func openItineraryEditor(_ application: XCUIApplication) {
-    let editor = application.plannerElement("saved.itinerary.edit")
+    var editor = application.plannerElement("saved.itinerary.edit")
+    #if os(iOS)
+      if !editor.exists || !editor.isHittable {
+        let overflow = application.navigationBars.buttons["OverflowBarButtonItem"].firstMatch
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+        overflow.activateForPlannerJourney()
+        if !editor.exists {
+          editor = application.collectionViews.buttons["Edit Itinerary"].firstMatch
+        }
+      }
+    #endif
     XCTAssertTrue(editor.waitForExistence(timeout: 10))
     editor.activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.itinerary.title"].waitForExistence(timeout: 5))
@@ -1046,10 +1216,15 @@ final class SavedLabelsJourneyTests: XCTestCase {
   }
 
   private func openItems(_ application: XCUIApplication) {
+    let nativeSection = application.plannerElement("saved.section.items")
+    if !nativeSection.exists || !nativeSection.isHittable {
+      let sidebar = application.plannerElement("Show Sidebar")
+      if sidebar.exists { sidebar.activateForPlannerJourney() }
+    }
     #if os(macOS)
-      let items = application.plannerElement("saved.section.items")
+      let items = nativeSection
     #else
-      let items = application.buttons["Items"].firstMatch
+      let items = nativeSection.exists ? nativeSection : application.buttons["Items"].firstMatch
     #endif
     XCTAssertTrue(items.waitForExistence(timeout: 10))
     items.activateForPlannerJourney()
@@ -1112,11 +1287,16 @@ final class SavedLabelsJourneyTests: XCTestCase {
 
   private func openLabels(_ application: XCUIApplication) {
     let labels = application.plannerElement("saved.categories.manage")
+    if !labels.exists || !labels.isHittable {
+      let sidebar = application.plannerElement("Show Sidebar")
+      if sidebar.exists { sidebar.activateForPlannerJourney() }
+    }
     if !labels.waitForExistence(timeout: 3) || !labels.isHittable {
+      let nativeSection = application.plannerElement("saved.section.lists")
       #if os(macOS)
-        let lists = application.plannerElement("saved.section.lists")
+        let lists = nativeSection
       #else
-        let lists = application.buttons["Lists"].firstMatch
+        let lists = nativeSection.exists ? nativeSection : application.buttons["Lists"].firstMatch
       #endif
       XCTAssertTrue(lists.waitForExistence(timeout: 5))
       lists.activateForPlannerJourney()

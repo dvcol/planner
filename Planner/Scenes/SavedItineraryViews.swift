@@ -187,6 +187,7 @@ struct SavedItineraryDetail: View {
   let isReviewingDeletion: Bool
   let prepareDeletion: (PlannerItinerarySourceRead) -> Void
   let recordRemoval: (PlannerOperationResult) -> Void
+  let recordOwnedRemovals: (PlannerOperationResult) -> Void
   @State private var window: SavedItemWindow?
   @State private var windowNamespace: String?
   @State private var windowItineraryIdentifier: UUID?
@@ -392,7 +393,9 @@ struct SavedItineraryDetail: View {
       if !isReviewingDeletion { Task { await loadItinerary() } }
     }
     .sheet(item: $editDraft) { draft in
-      SavedItineraryForm(store: store, itinerary: draft.itinerary) { _ in }
+      SavedItineraryForm(
+        store: store, itinerary: draft.itinerary, didEdit: recordOwnedRemovals
+      ) { _ in }
     }
     .sheet(isPresented: $showAddEntry) {
       SavedAddItineraryEntryForm(store: store, itineraryId: identifier)
@@ -778,6 +781,8 @@ private struct SavedItineraryForm: View {
   let store: SavedPlannerStore
   let itinerary: PlannerItinerarySourceRead?
   let didSave: (PlannerEntityReference) -> Void
+  private let didEdit: ((PlannerOperationResult) -> Void)?
+  @State private var namespace: String?
   @State private var title: String
   @State private var notes: String
   @State private var manualEstimate: PlannerEstimate?
@@ -789,11 +794,14 @@ private struct SavedItineraryForm: View {
 
   init(
     store: SavedPlannerStore, itinerary: PlannerItinerarySourceRead? = nil,
+    didEdit: ((PlannerOperationResult) -> Void)? = nil,
     didSave: @escaping (PlannerEntityReference) -> Void
   ) {
     self.store = store
     self.itinerary = itinerary
     self.didSave = didSave
+    self.didEdit = didEdit
+    _namespace = State(initialValue: store.devicePreferenceNamespace)
     _title = State(initialValue: itinerary?.content.title ?? "")
     _notes = State(initialValue: itinerary?.content.notes ?? "")
     _manualEstimate = State(initialValue: itinerary?.content.manualEstimate)
@@ -885,15 +893,20 @@ private struct SavedItineraryForm: View {
   }
 
   private func save() async {
+    guard let namespace, namespace == store.devicePreferenceNamespace else { return }
     let source: PlannerEntityReference?
     if let itinerary {
-      let saved = await store.editItinerary(
+      let result = await store.editItinerary(
         itinerary, title: title, notes: notes, location: locationDraft.value,
         links: links.map(\.input),
         categoryIdentifiers: categoryIdentifiers,
         tagIdentifiers: tagIdentifiers, manualEstimate: manualEstimate,
         operationIdentifier: operationIdentifier)
-      source = saved ? itinerary.source : nil
+      guard let result, case .applied = result.outcome,
+        namespace == store.devicePreferenceNamespace
+      else { return }
+      didEdit?(result)
+      source = itinerary.source
     } else {
       source = await store.createItinerary(
         title: title, notes: notes, location: locationDraft.value, links: links.map(\.input),
@@ -901,7 +914,9 @@ private struct SavedItineraryForm: View {
         tagIdentifiers: tagIdentifiers, manualEstimate: manualEstimate,
         operationIdentifier: operationIdentifier)
     }
-    guard let source, store.alertMessage == nil else { return }
+    guard let source, namespace == store.devicePreferenceNamespace, store.alertMessage == nil else {
+      return
+    }
     didSave(source)
     dismiss()
   }
