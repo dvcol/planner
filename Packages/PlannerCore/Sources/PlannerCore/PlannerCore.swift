@@ -5394,8 +5394,20 @@ public actor Planner {
     let bindings: [PlannerBoundIdentity]
     var restoredExpandedReferences: [PlannerReferenceRead] = []
     var restoredItineraryIdentifiers: Set<UUID> = []
+    var additionalReferences: [PlannerReferenceRead] = []
+    var additionalSources: [PlannerEntityReference] = []
+    var additionalBindings: [PlannerBoundIdentity] = []
     switch snapshot.originalRecord {
-    case .membership(let original):
+    case .membership, .membershipMove:
+      guard let original = snapshot.originalRecord.membership else {
+        throw PlannerFailure(
+          "associationUndoUnavailable", "The original membership is unavailable.")
+      }
+      var destinationRemoval: PlannerSchemaV18.Membership?
+      if case .membershipMove(let move) = snapshot.originalRecord {
+        destinationRemoval = try validatedMoveUndoDestination(
+          move, current: current, context: context)
+      }
       let memberships = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
       guard
         !memberships.contains(where: {
@@ -5437,6 +5449,34 @@ public actor Planner {
         }
         _ = try entry.value()
         expandedEntries.append((state, entry))
+      }
+      if let destinationRemoval {
+        let removed = try destinationRemoval.value()
+        let marker = PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .membership(
+            .init(kind: "membership", id: removed.id, lifetimeId: removed.lifetimeId)),
+          closedFamilyId: nil)
+        let closed = try closingRestorationFamilies([marker], context: context)[0]
+        try context.insert(PlannerSchemaV4.DeletionMarker(closed))
+        for completion in destinationRemoval.expandedCompletions ?? [] {
+          context.delete(completion)
+        }
+        context.delete(destinationRemoval)
+        let destinationOwners = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).filter {
+          $0.id == removed.list.id && $0.lifetimeId == removed.list.lifetimeId
+        }
+        for destinationOwner in destinationOwners { destinationOwner.updatedAt = Date() }
+        additionalReferences.append(removed.reference)
+        additionalSources.append(.init(kind: .list, id: removed.list.id))
+        additionalBindings.append(
+          .init(kind: "membership", id: removed.id, lifetimeId: removed.lifetimeId))
+        additionalBindings.append(removed.list)
+        restoredItineraryIdentifiers.formUnion(
+          current.itineraryEntries.filter {
+            $0.source.kind == .list && $0.source.id == removed.list.id
+              && $0.sourceLifetimeId == removed.list.lifetimeId
+          }.map { $0.itinerary.id })
       }
       let restored = MembershipSnapshot(
         id: original.id, lifetimeId: lifetimeIdentifier,
@@ -5559,12 +5599,14 @@ public actor Planner {
     let result = PlannerAppliedResult(
       generatedIdentities: [],
       affectedIdentities: [.reference(restoredReference), .source(ownerReference)]
+        + additionalReferences.map { .reference($0) }
+        + additionalSources.map { .source($0) }
         + restoredExpandedReferences.map { .reference($0) }
         + restoredItineraryIdentifiers.sorted { $0.uuidString < $1.uuidString }.map {
           .source(.init(kind: .itinerary, id: $0))
         })
     let receipt = try PlannerSchemaV1.Receipt(
-      operation: operation, digest: digest, result: result, bindings: bindings)
+      operation: operation, digest: digest, result: result, bindings: bindings + additionalBindings)
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
@@ -5593,6 +5635,38 @@ public actor Planner {
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
     }
+  }
+
+  private func validatedMoveUndoDestination(
+    _ move: PlannerMembershipMoveUndoRecord, current: PlannerPortableBackup, context: ModelContext
+  ) throws -> PlannerSchemaV18.Membership? {
+    guard let expected = move.createdDestinationMembership else { return nil }
+    let destinationEntries = current.itineraryEntries.filter {
+      $0.source.kind == .list && $0.source.id == expected.list.id
+        && $0.sourceLifetimeId == expected.listLifetimeId
+    }.map {
+      PlannerPortableBoundIdentity(kind: .itineraryEntry, id: $0.id, lifetimeId: $0.lifetimeId)
+    }
+    let expanded = current.expandedCompletions.filter {
+      $0.context.membershipId == expected.id
+        && $0.context.membershipLifetimeId == expected.lifetimeId
+    }.sorted { $0.context.orderingKey < $1.context.orderingKey }
+    guard current.memberships.filter({ $0.id == expected.id }) == [expected],
+      Set(destinationEntries) == Set(move.destinationEntries),
+      expanded == move.destinationExpandedStates
+    else {
+      throw PlannerFailure(
+        "associationUndoUnavailable",
+        "Newer destination relationship changes prevent undoing this Move.")
+    }
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).filter {
+      $0.id == expected.id && $0.lifetimeId == expected.lifetimeId
+    }
+    guard records.count == 1, let record = records.first else {
+      throw PlannerFailure(
+        "associationUndoUnavailable", "The Move destination is no longer available.")
+    }
+    return record
   }
 
   private func membershipRemovalDigest(
@@ -5762,9 +5836,10 @@ public actor Planner {
         .source(ownerSnapshot.reference), .source(destinationSnapshot.reference),
       ] + expandedSnapshots.map { .reference($0.reference) }
         + affectedItineraries.map { .source(.init(kind: .itinerary, id: $0)) })
+    let moveProposalIdentifier = UUID()
     try archive.prepare(
       RecoveryPreparedProposal(
-        proposalId: UUID(), originalOperationId: operation.operationId,
+        proposalId: moveProposalIdentifier, originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
           itineraries: retainedItineraries,
@@ -5792,10 +5867,25 @@ public actor Planner {
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
+      do { try archive.discardPreparedProposal(moveProposalIdentifier) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The Move save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
       throw PlannerFailure(
         "persistenceFailure",
         "The complete membership move was not committed: \(error.localizedDescription)")
     }
+    let destinationEntries = retainedItineraries.flatMap(\.entries).filter {
+      $0.source.kind == "list" && $0.source.id == destinationSnapshot.id
+        && $0.source.lifetimeId == destinationSnapshot.lifetimeId
+    }
+    associationUndoSnapshots[operation.operationId] = .init(
+      storeIdentity: identity, closingOperationId: operation.operationId,
+      move: .init(
+        original: before, createdDestination: added, destinationEntries: destinationEntries),
+      expandedStates: expandedSnapshots)
     do {
       let generation = try archive.publish(
         itineraries: retainedItineraries,
