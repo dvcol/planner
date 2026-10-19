@@ -1,0 +1,20 @@
+{
+  "scope": "Selected original captures only, not an exhaustive pixel, contrast or whole-app audit.",
+  "captures": [
+    {
+      "file": "phone-native-every-item-traversal/93F64920-7DB8-4BAC-BB4D-2DB786BED151.png",
+      "sha256": "6192acf9f981fe00f598ca9f5abe9e2cf5757bf9eb3b25e08b6d9f332ef6f1ce",
+      "observation": "The original final catalog shows the last source, its duration preview and icon-only native toolbar. This capture predates the final failing toggle lookup."
+    },
+    {
+      "file": "phone-native-item-visible-row-regression/636283A0-A9D6-4281-9195-9823DFF99AEA.png",
+      "sha256": "0620c5c046061ba517c8286334944192b066fd02f40e8f70969b745b90ddbf60",
+      "observation": "Light iPhone returns to the original first Item, showing its Todo toggle, notes and estimate after rotation."
+    },
+    {
+      "file": "tablet-native-item-visible-row-regression/BC4D71E5-68BE-490C-B24E-C2F42426DED6.png",
+      "sha256": "4031dac59f42e3918e3e0badfe4fae510a635c2ab3eca130d3215f2b18de4ef6",
+      "observation": "Dark iPad with Increase Contrast shows native Item rows beside the selected source details, with icon toolbar actions and readable selected-row text."
+    }
+  ]
+}

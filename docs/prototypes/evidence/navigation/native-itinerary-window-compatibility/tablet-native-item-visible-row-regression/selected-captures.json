@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "83755B72-5072-473E-9C53-6FBE5E4F1A4F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Released first page reopens its original source after rotation_0_592B439D-FBC8-4A59-9FB6-4B1BECB81014.png",
+    "timestamp": 1792436764.263,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BC4D71E5-68BE-490C-B24E-C2F42426DED6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed native catalog selects its visible source in landscape_0_518AB79C-3787-4610-9CA7-8A1FC664B8BF.png",
+    "timestamp": 1792436734.196,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F6FE3953-78D4-418B-B55F-5EF8150F35F6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00129_0_16BBAF9F-55E5-4E02-AB09-4F55D6A24970.png",
+    "timestamp": 1792436723.631,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8B99AAAB-F44B-46A6-A514-751CADCCD6D0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00065_0_FCB0CBA1-21CA-411E-AF12-F1822D750D65.png",
+    "timestamp": 1792436683.153,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1F761D07-1FE8-41C4-85EC-051D46BB7F7F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Item window observed source and layout_0_96C017C7-2758-44AA-985B-10D2F4E91C7F.txt",
+    "timestamp": 1792436650.83,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  }
+]

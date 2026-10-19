@@ -1,0 +1,34 @@
+[
+  {
+    "name": "swift-format",
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "markdownlint",
+    "command": [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "/private/tmp/PlannerItemWindowMarkdownlint.json",
+      "docs/prototypes/native-every-item-traversal.md"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

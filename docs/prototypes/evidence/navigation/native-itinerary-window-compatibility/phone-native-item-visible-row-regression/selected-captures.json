@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "636283A0-A9D6-4281-9195-9823DFF99AEA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Released first page reopens its original source after rotation_0_44D28E0A-34D5-4EAB-BF8F-9306E3DF0AF6.png",
+    "timestamp": 1792436749.52,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F9968395-2580-416C-AA74-69BE6A8E89A6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed native catalog selects its visible source in landscape_0_032CA870-DB0F-445C-BDF3-C80B96A0A10F.png",
+    "timestamp": 1792436738.896,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "842BB7BD-E0CD-4F3F-9C2D-CBB9DE4E928B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00129_0_81FE172D-6BE0-4BEF-9E2F-62C8EEE2B8F2.png",
+    "timestamp": 1792436733.097,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "A777B5FF-85AA-4004-9BA0-277AFCE096FF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00065_0_6F817D99-54D5-4609-96AC-FC8239809933.png",
+    "timestamp": 1792436691.448,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "372655F1-870D-4A99-A14B-571A6157F56B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Item window observed source and layout_0_47791289-E7E4-4CAD-B940-4574E08BBA79.txt",
+    "timestamp": 1792436651.942,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  }
+]

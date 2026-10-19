@@ -1,0 +1,6 @@
+{
+  "reason": "Agent cancelled this isolated retry after the tablet preflight exposed the shared Back-only catalog-return assumption. Source and products were unchanged until the wrapper completed.",
+  "lastLoggedObservation": "Every Item traversal attempt 10: 65 identities; last visible Scale Item 00066",
+  "scope": "Partial native preflight/traversal only; no complete test pass.",
+  "attachmentExport": "Unavailable: xcresulttool cannot read the interrupted result bundle because Info.plist is absent. The original runtime log, process exit and source/product records remain retained; no completed xcresult is claimed."
+}
