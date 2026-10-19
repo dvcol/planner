@@ -1,0 +1,14 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "fd190ff0b2fa9a5f996604194afe7a9d292bb7ea",
+  "overlays": [
+    "Planner/Scenes/SavedAssociationUndoHistory.swift",
+    "Planner/Scenes/SavedEditItemForm.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedOwnedLinksEditor.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+  ]
+}

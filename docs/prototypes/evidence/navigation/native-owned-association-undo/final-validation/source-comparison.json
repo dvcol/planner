@@ -1,0 +1,392 @@
+[
+  {
+    "epoch": "owned-group-native-complete-history-http",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-complete-mac",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-complete-mobile",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-complete-mobile-qualified",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-explicit-center-probe-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-final-history-http",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "owned-group-native-final-mac",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "owned-group-native-final-mobile",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "owned-group-native-history-first-green",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-history-http-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-history-http-final-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-history-http-regressions",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-history-http-regressions-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-history-qualified-first-green",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-keyboard-probe-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-label-submit-probe-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-link-hit-fix-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedOwnedLinksEditor.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-link-hit-probe-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-mac-compile",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-mac-compile-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-mac-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-mac-final-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-mobile-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-qualified-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-qualified-mobile-build-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-red-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedAssociationUndoHistory.swift",
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-row-geometry-probe-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "owned-group-native-row-geometry-qualified-mobile-build",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-owned-group-native-complete",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-owned-group-native-editor-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-owned-group-native-executed-red",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedAssociationUndoHistory.swift",
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-owned-group-native-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-owned-group-native-final-qualified",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "phone-owned-group-native-final-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-owned-group-native-qualified",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedOwnedLinksEditor.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-complete",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-editor-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-explicit-center-probe",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-final",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-final-qualified",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "tablet-owned-group-native-final-v2",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-keyboard-probe",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-label-submit-probe",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-link-hit-probe",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-link-hit-probe-rebooted",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-qualified",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedEditItemForm.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedOwnedLinksEditor.swift",
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-row-geometry-probe",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-owned-group-native-row-geometry-qualified",
+    "productionInputs": 150,
+    "allDifferentCurrentInputs": [
+      "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+    ]
+  }
+]

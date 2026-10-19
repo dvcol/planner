@@ -1,0 +1,7 @@
+{
+  "chunk_id": "dfdc56",
+  "wall_time_seconds": 0.000009459,
+  "exit_code": 0,
+  "original_token_count": 127,
+  "output": "Monitoring boot status for iPad Air 11-inch (M4) (FBD72DAB-1D40-4E64-912D-7F9763E00446).\n[2026-10-19 03:58:47 +0000] Status=1, isTerminal=NO, Elapsed=00:03.\n\tWaiting on BackBoard\n\n[2026-10-19 03:58:48 +0000] Status=2, isTerminal=NO, Elapsed=00:03.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-19 03:58:48 +0000] Status=4, isTerminal=NO, Elapsed=00:04.\n\tWaiting on System App\n\n[2026-10-19 03:58:49 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:05.\n\tFinished\n\n"
+}

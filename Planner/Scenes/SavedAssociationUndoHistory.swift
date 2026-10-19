@@ -43,6 +43,23 @@ final class SavedAssociationUndoHistory {
     #endif
   }
 
+  func recordOwnedRemovals(
+    _ result: PlannerOperationResult, store: SavedPlannerStore, manager: UndoManager?
+  ) {
+    guard let snapshot = result.associationUndoSnapshot,
+      case .ownedAssociationGroup(let group) = snapshot.originalRecord
+    else { return }
+    let name: String
+    if group.removedLinks.isEmpty {
+      name = "Remove Labels"
+    } else if group.removedLabels.isEmpty {
+      name = "Remove Links"
+    } else {
+      name = "Remove Links and Labels"
+    }
+    record(result, name: name, store: store, manager: manager)
+  }
+
   func record(
     _ result: PlannerOperationResult, name: String, store: SavedPlannerStore,
     manager: UndoManager?

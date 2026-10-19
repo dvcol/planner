@@ -497,7 +497,7 @@ final class SavedPlannerStore {
     location: PlannerOwnedLocation?,
     categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
     operationIdentifier: UUID
-  ) async -> Bool {
+  ) async -> PlannerOperationResult? {
     let titleChange: PlannerFieldChange<String>
     if title == item.content.title {
       titleChange = .unchanged
@@ -554,7 +554,7 @@ final class SavedPlannerStore {
     } else {
       tagChange = .set(tagIdentifiers)
     }
-    return await executeChange(
+    return await executeChangeResponse(
       .editItem(
         sourceId: item.source.id,
         changes: .init(
@@ -562,7 +562,7 @@ final class SavedPlannerStore {
           location: locationChange, estimate: estimateChange, links: linksChange,
           categoryIds: categoryChange,
           tagIds: tagChange),
-        expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
+        expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier)
   }
 
   func setItemCompletion(_ identifier: UUID, done: Bool) async -> Bool {
@@ -841,7 +841,7 @@ final class SavedPlannerStore {
     location: PlannerOwnedLocation?, links: [PlannerLinkInput],
     categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>, manualEstimate: PlannerEstimate?,
     operationIdentifier: UUID
-  ) async -> Bool {
+  ) async -> PlannerOperationResult? {
     let titleChange: PlannerFieldChange<String> =
       title == itinerary.content.title ? .unchanged : .set(title)
     let notesChange: PlannerFieldChange<String>
@@ -884,13 +884,13 @@ final class SavedPlannerStore {
     } else {
       estimateChange = .clear
     }
-    return await executeChange(
+    return await executeChangeResponse(
       .editItinerary(
         sourceId: itinerary.source.id,
         changes: .init(
           title: titleChange, notes: notesChange, location: locationChange, links: linksChange,
           categoryIds: categoryChange, tagIds: tagChange, manualEstimate: estimateChange),
-        expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier) != nil
+        expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier)
   }
 
   func renameLabel(

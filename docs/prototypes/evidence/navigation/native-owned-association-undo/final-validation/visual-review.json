@@ -1,0 +1,104 @@
+{
+  "originals": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-owned-group-native-final-qualified/C95C2B3D-04E5-4E70-93A5-60F7076C9658.png",
+      "sha256": "5bb7225106de638946d75050acdf3b5b2bb1f078a14fff14d2162bbfd6e060e9",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo data persists and history expires after relaunch_0_FC5D29CE-0B1A-40BE-BF0A-CDE465026671.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-owned-group-native-final-qualified/CD2FC67F-37B8-4CF6-85DF-4286F22A0116.png",
+      "sha256": "4a20cf0a7f59fd2fd7616fd623f10f1d4bdd3273ceb5990c13fc7479c491e1cf",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo restores identities while keeping saved notes_0_D5B64F6F-D3FA-4EB3-BD04-9F952245DDCD.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-owned-group-native-final-qualified/EB878FCE-ED14-4C81-A190-638A113C60E6.png",
+      "sha256": "fca5f4bc5038e715420b3c8663128cda9e329064245516beae449ae166e126a8",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo offers one named removal action_0_CF51ACDF-F834-4B36-96C0-67690EC039CF.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-owned-group-native-final-qualified/C6382AEA-883C-441B-8505-83CCD187604A.png",
+      "sha256": "28a764dd48838efae922f6ce9b28d4231883b7d3192edaec37de25f15a3edf6b",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo data persists and history expires after relaunch_0_9BD8260B-7E64-40E4-B055-405AAB0717BB.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-owned-group-native-final-qualified/21F96459-3440-40D2-B5C8-C28F70EE8631.png",
+      "sha256": "fda8fd7b3e0bc9a4223bced867a1b30f9f78fc30ef172b07d2635833fdb9419d",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo restores identities while keeping saved notes_0_44B35275-F467-44E9-BFF1-E6D78A814F12.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-owned-group-native-final-qualified/1217E322-986F-4A91-8F5C-A1594B16D827.png",
+      "sha256": "9e6c51a5ae7ff963b6ed20fbd8645a3d739c76e3abc5021a55b15461e532acab",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo offers one named removal action_0_FC86F5AE-2293-42FA-B533-64C56570AB35.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-owned-group-native-final-qualified/CE3A49CF-5CCB-4009-854A-B57CC25EBBBE.png",
+      "sha256": "dc99149842371b9f4af309ca6479446fe7f22a08e24f99539e3d096fd683cde2",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo data persists and history expires after relaunch_0_B679D154-0C5B-4178-B181-D7705531867B.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-owned-group-native-final-qualified/E013313F-D2F2-403C-BB31-904CF82649CB.png",
+      "sha256": "df3d04915b839e19b36662ac93d3e3ee5f50de4338a9d0ef6521a7586ccdeaf8",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo restores identities while keeping saved notes_0_FB98AA61-B928-4CB9-8D64-202035B0DC28.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-owned-group-native-final-qualified/F83A756D-7CE1-44CC-BB16-740BB1CB14CA.png",
+      "sha256": "87bd90083d142b70e7e2152a240e8cdd8e9892a2900974e2de5a17c9d136183e",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo offers one named removal action_0_B9EA08B1-20AD-48CF-AA8A-F9D3C366AD30.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-owned-group-native-final-qualified/ADADF51A-405C-447E-8B30-D1ECACFA752D.png",
+      "sha256": "72e456537324959e7b9b04dd9efbe0f0fff6f43ca91042e6247e933d362e3762",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo data persists and history expires after relaunch_0_2F7001A3-6B41-4A65-AB5C-170670750346.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-owned-group-native-final-qualified/ED34297C-9BD0-41E0-AC8F-94BA1FCA4EE7.png",
+      "sha256": "61fca96b00139242f144ec2548322719315dfa407294d68e69c67c6e9f008ac5",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo restores identities while keeping saved notes_0_0917DC1A-8E52-45E8-B2B3-7987F5C08FA2.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-owned-group-native-final-qualified/765A6081-402D-4257-BA46-7F707B3CBFF1.png",
+      "sha256": "233b5444d876fae3b367df7b2202f9599744c97f425a231bb13a5d94caa7f417",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Grouped Undo offers one named removal action_0_B11CD911-28A5-4E71-B77C-DC61F53D837E.png"
+    }
+  ],
+  "observations": [
+    "Both editor journeys show one named native Undo, restored link labels/current Tag and retained notes after relaunch. Native assertions separately verify exact bookmark identities and order.",
+    "Dark phone and light tablet originals were inspected. Lower phone link content lies behind floating tabs at the captured scroll position. No scroll-clearance, measured contrast, Increase Contrast, full-scene or Mac window acceptance is claimed."
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0F0AA68B-14EB-42B9-8D3C-C0BB64F43324.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo data persists and history expires after relaunch_0_F6077CBB-BF04-4DA9-A16E-95D958F369C2.png",
+    "timestamp": 1792382508.313,
+    "testIdentifier": "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CDA96DAF-E7F0-4F03-AC30-A31987451942.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo restores identities while keeping saved notes_0_698D0CE8-A9CA-463E-B645-AED6869C1C13.png",
+    "timestamp": 1792382495.99,
+    "testIdentifier": "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A0F8BC38-769C-4680-9150-C9FFC277DE88.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo offers one named removal action_0_36E8C2B7-EEC3-44A0-ABE6-AC65A1C43CF8.png",
+    "timestamp": 1792382493.763,
+    "testIdentifier": "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "36876D1B-223A-4923-9AF2-EA2CCCD2F134.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo leading Add Link hit produces a new field_0_71FCC855-C473-47C6-9CC2-1E0DDAC9BE79.png",
+    "timestamp": 1792382450.031,
+    "testIdentifier": "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A66F45C1-5DED-4680-AF4A-FA6482F4DFC9.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo form after Add Link_0_FF2B11D2-E200-4D23-9A05-194BA5A7372A.txt",
+    "timestamp": 1792382447.629,
+    "testIdentifier": "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "10FBB9B2-C75B-419B-BBB2-C6D9080003C6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Grouped Undo missing newly added link_0_1ED90C3A-6FBF-427D-9CFD-2618713225D5.png",
+    "timestamp": 1792382447.007,
+    "testIdentifier": "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+  }
+]

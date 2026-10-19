@@ -1,0 +1,9 @@
+{
+  "reason": "Repeated XCTest app-animation completion waits of sixty seconds while entering the first link, before the second-link hit-target probe.",
+  "signal": 15,
+  "scope": "Only this epoch xcodebuild process was terminated.",
+  "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+  "simulatorAppearanceRestored": true,
+  "dataErased": false,
+  "nextEpoch": "tablet-owned-group-native-link-hit-probe-rebooted"
+}

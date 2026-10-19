@@ -6,6 +6,121 @@ import XCTest
 
 @MainActor
 final class SavedAssociationUndoHistoryTests: XCTestCase {
+  func testNativeEditorResponsesRegisterOneSpecificallyNamedRemovalGroupAndKeepSavedNotes()
+    async throws
+  {
+    for itinerary in [false, true] {
+      for removalKind in ["links", "labels", "both"] {
+        let fixture = try await Fixture()
+        defer { try? FileManager.default.removeItem(at: fixture.directory) }
+        func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+          let response = await fixture.planner.execute(
+            .init(operationId: UUID(), session: fixture.session, command: command))
+          guard case .applied(let result, .complete) = response.outcome else {
+            throw CancellationError()
+          }
+          return result
+        }
+        let tagCreation = try await save(.createTag(content: .init(name: "Indoor")))
+        let tag = try XCTUnwrap(tagCreation.generated.first)
+        let categoryCreation = try await save(.createCategory(content: .init(name: "Culture")))
+        let category = try XCTUnwrap(categoryCreation.generated.first)
+        let links: [PlannerLinkInput] = [
+          .init(originalUrl: "https://example.com/guide", label: "Guide"),
+          .init(originalUrl: "https://example.com/tickets", label: "Tickets"),
+        ]
+        let command: PlannerCommand
+        if itinerary {
+          command = .createItinerary(
+            content: .init(
+              title: "Route", links: links,
+              categoryIds: [category.id], tagIds: [tag.id]))
+        } else {
+          command = .createItem(
+            content: .init(
+              title: "Gallery", links: links,
+              categoryIds: [category.id], tagIds: [tag.id]))
+        }
+        let ownerCreation = try await save(command)
+        let owner = try XCTUnwrap(ownerCreation.generated.first)
+        let removingLinks = removalKind != "labels"
+        let removingLabels = removalKind != "links"
+        let result: PlannerOperationResult?
+        let originalLinks: [PlannerOwnedLinkRead]
+        if itinerary {
+          let loaded = await fixture.store.readItinerary(owner.id)
+          let current = try XCTUnwrap(loaded)
+          originalLinks = current.content.links
+          result = await fixture.store.editItinerary(
+            current, title: current.content.title, notes: "Saved notes stay current",
+            location: current.content.location,
+            links: removingLinks ? [] : current.content.links.map(\.editInput),
+            categoryIdentifiers: removingLabels ? [] : current.content.categoryIds,
+            tagIdentifiers: removingLabels ? [] : current.content.tagIds,
+            manualEstimate: current.content.manualEstimate, operationIdentifier: UUID())
+        } else {
+          let loaded = await fixture.store.readItem(owner.id)
+          let current = try XCTUnwrap(loaded)
+          originalLinks = current.content.links
+          result = await fixture.store.editItem(
+            current, title: current.content.title, subtitle: current.content.subtitle ?? "",
+            notes: "Saved notes stay current", estimate: current.content.estimate,
+            links: removingLinks ? [] : current.content.links.map(\.editInput),
+            location: current.content.location,
+            categoryIdentifiers: removingLabels ? [] : current.content.categoryIds,
+            tagIdentifiers: removingLabels ? [] : current.content.tagIds,
+            operationIdentifier: UUID())
+        }
+        let response = try XCTUnwrap(result)
+        guard case .applied(_, .complete) = response.outcome else { throw CancellationError() }
+        let history = SavedAssociationUndoHistory()
+        let manager = UndoManager()
+        manager.groupsByEvent = false
+        defer { history.clear() }
+        manager.beginUndoGrouping()
+        history.recordOwnedRemovals(response, store: fixture.store, manager: manager)
+        history.recordOwnedRemovals(response, store: fixture.store, manager: manager)
+        manager.endUndoGrouping()
+        let expectedName: String
+        switch removalKind {
+        case "links": expectedName = "Remove Links"
+        case "labels": expectedName = "Remove Labels"
+        default: expectedName = "Remove Links and Labels"
+        }
+        XCTAssertEqual(manager.undoActionName, expectedName)
+        XCTAssertEqual(history.actionTitle, "Undo \(expectedName)")
+        manager.undo()
+        try await waitForRestoration(history)
+        let restoredLinks: [PlannerOwnedLinkRead]
+        let restoredNotes: String?
+        let restoredCategories: Set<UUID>
+        let restoredTags: Set<UUID>
+        if itinerary {
+          let loaded = await fixture.store.readItinerary(owner.id)
+          let restored = try XCTUnwrap(loaded)
+          restoredLinks = restored.content.links
+          restoredNotes = restored.content.notes
+          restoredCategories = restored.content.categoryIds
+          restoredTags = restored.content.tagIds
+        } else {
+          let loaded = await fixture.store.readItem(owner.id)
+          let restored = try XCTUnwrap(loaded)
+          restoredLinks = restored.content.links
+          restoredNotes = restored.content.notes
+          restoredCategories = restored.content.categoryIds
+          restoredTags = restored.content.tagIds
+        }
+        XCTAssertEqual(restoredLinks, originalLinks)
+        XCTAssertEqual(restoredNotes, "Saved notes stay current")
+        XCTAssertEqual(restoredCategories, [category.id])
+        XCTAssertEqual(restoredTags, [tag.id])
+        XCTAssertNil(history.actionTitle)
+        XCTAssertFalse(manager.canUndo)
+        XCTAssertFalse(manager.canRedo)
+      }
+    }
+  }
+
   func testNativeMoveResponseRegistersOneWholeInverseWithItsActionName() async throws {
     let fixture = try await Fixture()
     defer { try? FileManager.default.removeItem(at: fixture.directory) }

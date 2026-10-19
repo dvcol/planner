@@ -10,6 +10,8 @@ struct SavedEditItemForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let item: PlannerItemSourceRead
+  let didSave: (PlannerOperationResult) -> Void
+  @State private var namespace: String?
   @State private var title: String
   @State private var subtitle: String
   @State private var notes: String
@@ -20,9 +22,14 @@ struct SavedEditItemForm: View {
   @State private var tagIdentifiers: Set<UUID>
   @State private var operationIdentifier = UUID()
 
-  init(store: SavedPlannerStore, item: PlannerItemSourceRead) {
+  init(
+    store: SavedPlannerStore, item: PlannerItemSourceRead,
+    didSave: @escaping (PlannerOperationResult) -> Void
+  ) {
     self.store = store
     self.item = item
+    self.didSave = didSave
+    _namespace = State(initialValue: store.devicePreferenceNamespace)
     _title = State(initialValue: item.content.title)
     _subtitle = State(initialValue: item.content.subtitle ?? "")
     _notes = State(initialValue: item.content.notes ?? "")
@@ -101,15 +108,18 @@ struct SavedEditItemForm: View {
                 title, subtitle, notes, estimate, links, location, categoryIdentifiers,
                 tagIdentifiers
               ] in
-              if await store.editItem(
+              guard let namespace, namespace == store.devicePreferenceNamespace else { return }
+              let result = await store.editItem(
                 item, title: title, subtitle: subtitle, notes: notes, estimate: estimate,
                 links: links.map(\.input),
                 location: location, categoryIdentifiers: categoryIdentifiers,
                 tagIdentifiers: tagIdentifiers,
                 operationIdentifier: operationIdentifier)
-              {
-                dismiss()
-              }
+              guard let result, case .applied = result.outcome,
+                namespace == store.devicePreferenceNamespace
+              else { return }
+              didSave(result)
+              dismiss()
             }
           }
           .disabled(

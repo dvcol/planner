@@ -1,0 +1,52 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedAssociationUndoHistory.swift",
+        "Planner/Scenes/SavedEditItemForm.swift",
+        "Planner/Scenes/SavedItineraryViews.swift",
+        "Planner/Scenes/SavedPlannerStore.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift",
+        "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerItemWindowMarkdownlint.json",
+        "docs/prototypes/native-owned-association-undo.md",
+        "docs/prototypes/core-owned-association-undo.md",
+        "docs/open-decisions.md",
+        "docs/native-ui-scene-inventory.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "localLinksChecked": 129,
+  "missingLinks": [],
+  "originalImagesInspected": 12,
+  "finalSourceEpochs": [
+    "owned-group-native-final-history-http",
+    "owned-group-native-final-mac",
+    "owned-group-native-final-mobile",
+    "phone-owned-group-native-final-qualified",
+    "tablet-owned-group-native-final-qualified"
+  ]
+}

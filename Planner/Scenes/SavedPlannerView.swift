@@ -264,7 +264,9 @@ struct SavedPlannerView: View {
         SavedAddToListForm(store: store, draft: draft)
       }
       .sheet(item: $itemEditDraft) { draft in
-        SavedEditItemForm(store: store, item: draft.item)
+        SavedEditItemForm(store: store, item: draft.item) { result in
+          associationUndo.recordOwnedRemovals(result, store: store, manager: undoManager)
+        }
       }
       .sheet(item: $itemDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
         SavedSourceDeletionForm(store: store, draft: draft)
@@ -577,6 +579,9 @@ struct SavedPlannerView: View {
       recordRemoval: { result in
         associationUndo.record(
           result, name: "Remove from Itinerary", store: store, manager: undoManager)
+      },
+      recordOwnedRemovals: { result in
+        associationUndo.recordOwnedRemovals(result, store: store, manager: undoManager)
       }
     )
     .id(identifier)

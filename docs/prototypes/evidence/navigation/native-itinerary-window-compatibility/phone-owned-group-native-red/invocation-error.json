@@ -1,0 +1,5 @@
+{
+  "executedTests": 0,
+  "reason": "Compiler epoch supplied as a name rather than its repository-relative directory. Product validation stopped before xcodebuild. Simulator appearance was restored.",
+  "correctedEpoch": "phone-owned-group-native-executed-red"
+}
