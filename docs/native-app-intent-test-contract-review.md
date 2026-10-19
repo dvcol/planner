@@ -4,7 +4,7 @@ Status: approved under Q112 A on 19 October 2026. Existing Q33 ordinary Intent a
 
 ## Context and intended outcome
 
-The repository has no Intent source. The first real-system creation/read journey now compiles in the existing native UI target against Xcode 27's public AppIntentsTesting framework. On the installed iOS 27 Simulator, invocation rejects with AppIntentsServicesSecurityErrorDomain 803, "Unable to run internal tests on a Customer build", before any Planner Intent can run. This is unavailable test infrastructure, not a feature red or evidence that developer signing would solve it.
+Before this slice, the repository has no Intent source. The first real-system creation/read journey compiles in the existing native UI target against Xcode 27's public AppIntentsTesting framework. On the installed iOS 27 Simulator, invocation rejects with AppIntentsServicesSecurityErrorDomain 803, "Unable to run internal tests on a Customer build", before any Planner Intent can run. This is unavailable test infrastructure, not a feature red or evidence that developer signing would solve it.
 
 The goal is repeatable local behavior tests while keeping actual system discovery, invocation, lock/restriction and confirmation as distinct native gates.
 

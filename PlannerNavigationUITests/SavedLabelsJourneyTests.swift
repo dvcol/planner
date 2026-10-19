@@ -15,6 +15,9 @@ final class SavedLabelsJourneyTests: XCTestCase {
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
+    #if os(macOS)
+      if !itinerary { application.fillSavedPlannerWindowForJourney() }
+    #endif
     openLabels(application)
     createLabel("Tag", name: "Indoor", application: application)
     application.plannerElement("saved.categories.done").activateForPlannerJourney()
@@ -105,6 +108,9 @@ final class SavedLabelsJourneyTests: XCTestCase {
       application, name: "Grouped Undo restores identities while keeping saved notes")
     application.terminate()
     application.launchSavedPlannerJourney()
+    #if os(macOS)
+      if !itinerary { application.fillSavedPlannerWindowForJourney() }
+    #endif
     if itinerary {
       openItineraries(application)
       application.descendants(matching: .any).matching(
@@ -1259,6 +1265,11 @@ final class SavedLabelsJourneyTests: XCTestCase {
     if identifierPrefix == "saved.filters" {
       application.revealSavedPlannerFilter("\(identifierPrefix).\(kind.lowercased())")
     }
+    #if os(macOS)
+      if identifierPrefix == "saved.item.edit" {
+        revealGroupedEditorElement(picker, application: application)
+      }
+    #endif
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.activateForPlannerJourney()
     for name in names {

@@ -1,6 +1,6 @@
 # Native Item Intent prototype
 
-Status: local implementation and qualification in progress under Q112 A. This is a tracer for ordinary Item actions, not the complete Intent catalog or system qualification.
+Status: the local Item tracer is implemented and qualified under Q112 A. The complete Intent catalog and actual system qualification remain open.
 
 ## Context and readiness
 
