@@ -234,9 +234,13 @@ struct ItineraryEditTests {
     #expect(portableItinerary.id == itinerary.id)
     #expect(retainedItem.content.links.count + portableItinerary.content.links.count == 2)
     #expect(recovery.decodedBackup.backup.labelAssociations.count == 2)
-    let graph = try #require(
-      JSONSerialization.jsonObject(with: recovery.portableData) as? [String: Any])
-    #expect((graph["deletionMarkers"] as? [[String: Any]])?.count == 2)
+    let markers = recovery.decodedBackup.backup.deletionMarkers
+    #expect(markers.count == 4)
+    let closedLinks = markers.compactMap { marker -> UUID? in
+      guard case .ownedLink(let identifier, _) = marker.target else { return nil }
+      return identifier
+    }
+    #expect(Set(closedLinks) == Set(edited.content.links.map(\.linkId)))
     #expect(namespace.preparedProposals.isEmpty)
   }
   private struct MissingResult: Error {}
