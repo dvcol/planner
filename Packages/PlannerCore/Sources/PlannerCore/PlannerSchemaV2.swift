@@ -139,10 +139,10 @@ enum PlannerSchemaV2: VersionedSchema {
   }
 }
 
-struct OwnedLinkSnapshot: Codable {
+struct OwnedLinkSnapshot: Codable, PlannerRankedAssociation {
   let id: UUID
   let lifetimeId: UUID
-  let rank: Int64
+  var rank: Int64
   let originalUrl: String
   let label: String?
   let kind: PlannerLinkKind

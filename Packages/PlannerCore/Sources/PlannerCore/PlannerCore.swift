@@ -5397,7 +5397,21 @@ public actor Planner {
     var additionalReferences: [PlannerReferenceRead] = []
     var additionalSources: [PlannerEntityReference] = []
     var additionalBindings: [PlannerBoundIdentity] = []
+    var additionalRestorationFamilies: [PlannerPortableRestorationFamily] = []
     switch snapshot.originalRecord {
+    case .ownedAssociationGroup(let group):
+      let staged = try stageOwnedAssociationUndo(
+        group, closingOperationId: snapshot.closingOperationId, operationId: operation.operationId,
+        primary: snapshot.identity, primaryLifetime: lifetimeIdentifier,
+        current: current, context: context)
+      guard let first = staged.references.first else {
+        throw PlannerFailure("associationUndoUnavailable", "This removal group is empty.")
+      }
+      restoredReference = first
+      ownerReference = group.owner.reference
+      bindings = staged.bindings
+      additionalReferences = Array(staged.references.dropFirst())
+      additionalRestorationFamilies = staged.families.filter { $0.predecessor != snapshot.identity }
     case .membership, .membershipMove:
       guard let original = snapshot.originalRecord.membership else {
         throw PlannerFailure(
@@ -5573,9 +5587,11 @@ public actor Planner {
       familyId: plannerRestorationFamilyIdentifier(snapshot.identity),
       predecessor: snapshot.identity,
       candidates: [.init(lifetimeId: lifetimeIdentifier, operationId: operation.operationId)])
-    try plannerStageLineageRecord(
-      family, identifier: family.familyId, kind: "restorationFamily",
-      records: context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()), context: context)
+    for restoredFamily in [family] + additionalRestorationFamilies {
+      try plannerStageLineageRecord(
+        restoredFamily, identifier: restoredFamily.familyId, kind: "restorationFamily",
+        records: context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()), context: context)
+    }
     let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() }
     let lists = try listSnapshots(context)
     let itineraries = try itinerarySnapshots(context)
@@ -8201,12 +8217,20 @@ public actor Planner {
     let updatedIdentifiers = Set(updatedAssociations.map(\.id))
     let added = updatedAssociations.filter { !previousIdentifiers.contains($0.id) }
     let removed = before.labelAssociations.filter { !updatedIdentifiers.contains($0.id) }
-    let pendingRemovalMarkers = removed.map { association in
-      PortableDeletionMarker(
-        deletionId: UUID(), operationId: operation.operationId,
-        target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
-        closedFamilyId: nil)
-    }
+    let updatedLinkIdentifiers = Set(updatedLinks.map(\.id))
+    let removedLinks = before.links.filter { !updatedLinkIdentifiers.contains($0.id) }
+    let pendingRemovalMarkers =
+      removed.map { association in
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
+          closedFamilyId: nil)
+      }
+      + removedLinks.map { link in
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .ownedLink(id: link.id, lifetimeId: link.lifetimeId), closedFamilyId: nil)
+      }
     let removalMarkers = try closingRestorationFamilies(pendingRemovalMarkers, context: context)
     let markers = try deletionMarkers(context) + removalMarkers
     let associations =
@@ -8233,7 +8257,7 @@ public actor Planner {
       affectedIdentities: [.source(before.reference)]
         + (removed + added).sorted { $0.id.uuidString < $1.id.uuidString }.map {
           .reference($0.reference)
-        })
+        } + removedLinks.map { .reference(.ownedLink(id: $0.id, owner: before.reference)) })
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
@@ -8274,10 +8298,21 @@ public actor Planner {
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
+      do { try archive.discardPreparedProposal(proposal.proposalId) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The Itinerary edit failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
       throw PlannerFailure(
         "persistenceFailure",
         "The complete Itinerary edit was not committed: \(error.localizedDescription)")
     }
+    associationUndoSnapshots[operation.operationId] = .init(
+      storeIdentity: identity, closingOperationId: operation.operationId,
+      group: .init(
+        owner: .init(kind: .itinerary, id: before.id, lifetimeId: before.lifetimeId),
+        originalLinks: before.links, removedLinks: removedLinks, removedLabels: removed))
     do {
       let generation = try archive.publish(
         itineraries: snapshots,
@@ -8446,12 +8481,20 @@ public actor Planner {
     let updatedIdentifiers = Set(updatedAssociations.map(\.id))
     let added = updatedAssociations.filter { !previousIdentifiers.contains($0.id) }
     let removed = before.labelAssociations.filter { !updatedIdentifiers.contains($0.id) }
-    let pendingRemovalMarkers = removed.map { association in
-      PortableDeletionMarker(
-        deletionId: UUID(), operationId: operation.operationId,
-        target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
-        closedFamilyId: nil)
-    }
+    let updatedLinkIdentifiers = Set(updatedLinks.map(\.id))
+    let removedLinks = before.links.filter { !updatedLinkIdentifiers.contains($0.id) }
+    let pendingRemovalMarkers =
+      removed.map { association in
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
+          closedFamilyId: nil)
+      }
+      + removedLinks.map { link in
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .ownedLink(id: link.id, lifetimeId: link.lifetimeId), closedFamilyId: nil)
+      }
     let removalMarkers = try closingRestorationFamilies(pendingRemovalMarkers, context: context)
     let markers = try deletionMarkers(context) + removalMarkers
     let associations =
@@ -8478,7 +8521,7 @@ public actor Planner {
       affectedIdentities: [.source(before.reference)]
         + (removed + added).sorted { $0.id.uuidString < $1.id.uuidString }.map {
           .reference($0.reference)
-        })
+        } + removedLinks.map { .reference(.ownedLink(id: $0.id, owner: before.reference)) })
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
@@ -8511,10 +8554,21 @@ public actor Planner {
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
+      do { try archive.discardPreparedProposal(proposal.proposalId) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The Item edit failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
       throw PlannerFailure(
         "persistenceFailure",
         "The complete Item edit was not committed: \(error.localizedDescription)")
     }
+    associationUndoSnapshots[operation.operationId] = .init(
+      storeIdentity: identity, closingOperationId: operation.operationId,
+      group: .init(
+        owner: .init(kind: .item, id: before.id, lifetimeId: before.lifetimeId),
+        originalLinks: before.links, removedLinks: removedLinks, removedLabels: removed))
     do {
       let generation = try archive.publish(
         itineraries: try itinerarySnapshots(context),

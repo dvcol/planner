@@ -7,6 +7,103 @@ import SwiftData
   import Testing
 
   struct AssociationUndoSaveFailureTests {
+    @Test func failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry() async throws {
+      guard ProcessInfo.processInfo.environment["PLANNER_UNDO_WRITE_FAULT_CHILD"] == "1" else {
+        try runIsolatedWriteFailure(
+          functionName: "failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry")
+        return
+      }
+      for ownerKind in ["item", "itinerary"] {
+        for restoring in [false, true] {
+          let fixture = try await AssociationUndoFixture()
+          defer { try? FileManager.default.removeItem(at: fixture.directory) }
+          let tag = try #require(
+            try await fixture.save(.createTag(content: .init(name: "Indoor"))).generated.first)
+          let links: [PlannerLinkInput] = [
+            .init(originalUrl: "https://example.com/a"),
+            .init(originalUrl: "https://example.com/b"),
+          ]
+          let removal: PlannerCommand
+          if ownerKind == "item" {
+            let owner = try #require(
+              try await fixture.save(
+                .createItem(content: .init(title: "Owner", links: links, tagIds: [tag.id]))
+              )
+              .generated.first)
+            guard
+              case .source(.item(let current)) = await fixture.planner.read(
+                session: fixture.session, request: .source(owner))
+            else { throw CancellationError() }
+            removal = .editItem(
+              sourceId: owner.id,
+              changes: .init(notes: .set("Saved notes"), links: .set([]), tagIds: .set([])),
+              expectedFieldHashes: current.fieldHashes)
+          } else {
+            let owner = try #require(
+              try await fixture.save(
+                .createItinerary(content: .init(title: "Owner", links: links, tagIds: [tag.id]))
+              )
+              .generated.first)
+            guard
+              case .source(.itinerary(let current)) = await fixture.planner.read(
+                session: fixture.session, request: .source(owner))
+            else { throw CancellationError() }
+            removal = .editItinerary(
+              sourceId: owner.id,
+              changes: .init(notes: .set("Saved notes"), links: .set([]), tagIds: .set([])),
+              expectedFieldHashes: current.fieldHashes)
+          }
+          let command: PlannerCommand
+          if restoring {
+            let removed = await fixture.planner.execute(
+              .init(operationId: UUID(), session: fixture.session, command: removal))
+            command = .restoreAssociation(snapshot: try #require(removed.associationUndoSnapshot))
+          } else {
+            command = removal
+          }
+          let before = try await fixture.export()
+          let obstruction = NativeSaveFileSizeObstruction(
+            configuration: fixture.configuration, maximumFileSize: 1)
+          let observer = NotificationCenter.default.addObserver(
+            forName: ModelContext.willSave, object: nil, queue: nil
+          ) { notification in obstruction.observe(notification) }
+          defer {
+            NotificationCenter.default.removeObserver(observer)
+            try? obstruction.restore()
+          }
+          let operationIdentifier = UUID()
+          let response = await fixture.planner.execute(
+            .init(operationId: operationIdentifier, session: fixture.session, command: command))
+          try obstruction.restore()
+          #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+          guard case .rejected(let failure) = response.outcome else { throw CancellationError() }
+          #expect(failure.code == "persistenceFailure")
+          #expect(response.associationUndoSnapshot == nil)
+          let reopened = Planner(configuration: fixture.configuration)
+          guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+            case .exported(let retained) = await reopened.exportData(session: reopenedSession)
+          else { throw CancellationError() }
+          #expect(retained == before)
+          guard
+            case .noReliableEvidence = await reopened.operationStatus(
+              session: reopenedSession, operationId: operationIdentifier)
+          else {
+            Issue.record(
+              "A failed \(ownerKind) group action must discard prepared evidence before retry.")
+            continue
+          }
+          let retry = await fixture.planner.execute(
+            .init(operationId: operationIdentifier, session: fixture.session, command: command))
+          guard case .applied(_, .complete) = retry.outcome,
+            case .decoded(let decoded) = fixture.planner.decodeImport(try await fixture.export())
+          else { throw CancellationError() }
+          #expect(decoded.backup.ownedLinks.count == (restoring ? 2 : 0))
+          #expect(decoded.backup.labelAssociations.count == (restoring ? 1 : 0))
+          #expect((retry.associationUndoSnapshot != nil) == !restoring)
+        }
+      }
+    }
+
     @Test func failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry() async throws {
       guard ProcessInfo.processInfo.environment["PLANNER_UNDO_WRITE_FAULT_CHILD"] == "1" else {
         try runIsolatedWriteFailure(

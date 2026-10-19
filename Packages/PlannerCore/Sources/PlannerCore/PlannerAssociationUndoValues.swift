@@ -6,12 +6,13 @@ public struct PlannerAssociationUndoSnapshot: Sendable {
     case membership(PlannerPortableMembership)
     case itineraryEntry(PlannerPortableItineraryEntry)
     case membershipMove(PlannerMembershipMoveUndoRecord)
+    case ownedAssociationGroup(PlannerOwnedAssociationUndoGroup)
 
     var membership: PlannerPortableMembership? {
       switch self {
       case .membership(let original): return original
       case .membershipMove(let move): return move.originalMembership
-      case .itineraryEntry: return nil
+      case .itineraryEntry, .ownedAssociationGroup: return nil
       }
     }
   }
@@ -71,6 +72,7 @@ public struct PlannerAssociationUndoSnapshot: Sendable {
     case .membership(let membership): record = membership.importCanonicalValue
     case .itineraryEntry(let entry): record = entry.importCanonicalValue
     case .membershipMove(let move): record = move.canonicalValue
+    case .ownedAssociationGroup(let group): record = group.canonicalValue
     }
     let value = PlannerCanonicalValue.record([
       "command": .record([
@@ -99,6 +101,70 @@ public struct PlannerAssociationUndoSnapshot: Sendable {
     originalExpandedStates = expandedStates.map {
       .init(context: $0.context, localDone: $0.localDone)
     }
+  }
+
+  init?(
+    storeIdentity: PlannerStoreIdentity, closingOperationId: UUID,
+    group: PlannerOwnedAssociationUndoGroup
+  ) {
+    guard let first = group.identities.first else { return nil }
+    datasetId = storeIdentity.datasetId
+    ownershipBinding = storeIdentity.ownershipBinding
+    identity = first
+    self.closingOperationId = closingOperationId
+    originalRecord = .ownedAssociationGroup(group)
+    originalExpandedStates = []
+  }
+}
+
+public struct PlannerOwnedAssociationUndoGroup: Sendable {
+  public let owner: PlannerBoundSource
+  public let removedLinks: [PlannerPortableOwnedLink]
+  public let removedLabels: [PlannerPortableLabelAssociation]
+  public let originalLinkOrder: [PlannerPortableBoundIdentity]
+
+  init(
+    owner: PlannerBoundSource, originalLinks: [OwnedLinkSnapshot],
+    removedLinks: [OwnedLinkSnapshot], removedLabels: [LabelAssociationSnapshot]
+  ) {
+    self.owner = owner
+    self.removedLinks = removedLinks.map {
+      .init(
+        id: $0.id, lifetimeId: $0.lifetimeId, owner: owner, rank: $0.rank,
+        originalUrl: $0.originalUrl, label: $0.label, kind: $0.kind,
+        providerReference: $0.providerReference)
+    }
+    self.removedLabels = removedLabels.map {
+      .init(
+        id: $0.id, lifetimeId: $0.lifetimeId, owner: $0.ownerReference,
+        ownerLifetimeId: $0.owner.lifetimeId, label: $0.labelReference,
+        labelLifetimeId: $0.label.lifetimeId)
+    }
+    originalLinkOrder = originalLinks.map {
+      .init(kind: .ownedLink, id: $0.id, lifetimeId: $0.lifetimeId)
+    }
+  }
+
+  var identities: [PlannerPortableBoundIdentity] {
+    let links = removedLinks.map {
+      PlannerPortableBoundIdentity(kind: .ownedLink, id: $0.id, lifetimeId: $0.lifetimeId)
+    }
+    let labels = removedLabels.map {
+      PlannerPortableBoundIdentity(kind: .labelAssociation, id: $0.id, lifetimeId: $0.lifetimeId)
+    }
+    return (links + labels).sorted {
+      if $0.kind != $1.kind { return $0.kind.rawValue < $1.kind.rawValue }
+      return $0.id.uuidString < $1.id.uuidString
+    }
+  }
+
+  var canonicalValue: PlannerCanonicalValue {
+    .record([
+      "type": .string("ownedAssociationGroup"), "owner": owner.importCanonicalValue,
+      "removedLinks": .identitySet(removedLinks.map(\.importCanonicalValue)),
+      "removedLabels": .identitySet(removedLabels.map(\.importCanonicalValue)),
+      "originalLinkOrder": .ordered(originalLinkOrder.map(\.importCanonicalValue)),
+    ])
   }
 }
 

@@ -1,0 +1,4 @@
+{
+  "exitCode": 1,
+  "filter": "OwnedAssociationUndoTests|AssociationMoveUndoTests|AssociationUndoHistoryTests|AssociationUndoRecoveryTests|AssociationUndoSaveFailureTests|ItemEditTests|ItemLinkEditTests|ItemLabelEditTests|ItemLabelEditValidationTests|ItemLabelHashTests|ItemLabelRecoveryTests|ItineraryEditTests|ItineraryEditAdmissionTests|ItineraryEditConflictTests|NativeImportRestorationTests|MembershipRemovalTests|ItineraryEntryRemovalTests"
+}

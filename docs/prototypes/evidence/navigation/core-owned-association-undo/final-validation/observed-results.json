@@ -1,0 +1,177 @@
+[
+  {
+    "epoch": "itinerary-owned-removal-group-first-green",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests/itineraryGroupPreservesDuplicateLinksLiveLabelNamesCompletionAndItsBooking",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.188"
+      ]
+    ]
+  },
+  {
+    "epoch": "itinerary-owned-removal-group-red",
+    "exitCode": 1,
+    "selectedFilter": "OwnedAssociationUndoTests/itineraryGroupPreservesDuplicateLinksLiveLabelNamesCompletionAndItsBooking",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "failed",
+        "0.138"
+      ]
+    ]
+  },
+  {
+    "epoch": "label-only-independent-order-first-green",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests/labelOnlyUndoPreservesAnIndependentBookmarkReorder",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.133"
+      ]
+    ]
+  },
+  {
+    "epoch": "label-only-independent-order-red",
+    "exitCode": 1,
+    "selectedFilter": "OwnedAssociationUndoTests/labelOnlyUndoPreservesAnIndependentBookmarkReorder",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "failed",
+        "0.132"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-bookmark-anchor-placement-qualified",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests/restoredLinkRunsKeepIndependentAdditionsAndUseSurvivingAnchors",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.154"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-group-atomic-rejection-qualified",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests/changedBindingsOrIncompatibleOrderRejectTheWholeRemovalGroup",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.147"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-group-final-affected-core-regressions",
+    "exitCode": 1,
+    "selectedFilter": "OwnedAssociationUndoTests|AssociationMoveUndoTests|AssociationUndoHistoryTests|AssociationUndoRecoveryTests|AssociationUndoSaveFailureTests|ItemEditTests|ItemLinkEditTests|ItemLabelEditTests|ItemLabelEditValidationTests|ItemLabelHashTests|ItemLabelRecoveryTests|ItineraryEditTests|ItineraryEditAdmissionTests|ItineraryEditConflictTests|NativeImportRestorationTests|MembershipRemovalTests|ItineraryEntryRemovalTests",
+    "lastExecutedSummary": [
+      [
+        "47",
+        "17",
+        "failed",
+        "2.829"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-group-final-qualified-core-regressions",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests|AssociationMoveUndoTests|AssociationUndoHistoryTests|AssociationUndoRecoveryTests|AssociationUndoSaveFailureTests|ItemEditTests|ItemLinkEditTests|ItemLabelEditTests|ItemLabelEditValidationTests|ItemLabelHashTests|ItemLabelRecoveryTests|ItineraryEditTests|ItineraryEditAdmissionTests|ItineraryEditConflictTests|NativeImportRestorationTests|MembershipRemovalTests|ItineraryEntryRemovalTests",
+    "lastExecutedSummary": [
+      [
+        "47",
+        "17",
+        "passed",
+        "2.995"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-group-recovery-and-lifetime-qualified",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests/(committedGroupsRepairOnlyTheirRecoveryCheckpoint|groupIssuanceExpiresAcrossRunsAndDatasetsAndOldLineageCannotReplayAsNewUndo)",
+    "lastExecutedSummary": [
+      [
+        "2",
+        "1",
+        "passed",
+        "0.245"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-group-save-failure-first-green",
+    "exitCode": 0,
+    "selectedFilter": "AssociationUndoSaveFailureTests/failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.520"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-group-save-failure-red",
+    "exitCode": 1,
+    "selectedFilter": "AssociationUndoSaveFailureTests/failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "failed",
+        "0.517"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-removal-group-first-green",
+    "exitCode": 1,
+    "selectedFilter": "OwnedAssociationUndoTests/oneSaveRestoresItsRemovedLinksAndTagTogetherWithoutOverwritingLaterEdits",
+    "lastExecutedSummary": []
+  },
+  {
+    "epoch": "owned-removal-group-qualified-first-green",
+    "exitCode": 0,
+    "selectedFilter": "OwnedAssociationUndoTests/oneSaveRestoresItsRemovedLinksAndTagTogetherWithoutOverwritingLaterEdits",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "passed",
+        "0.157"
+      ]
+    ]
+  },
+  {
+    "epoch": "owned-removal-group-red",
+    "exitCode": 1,
+    "selectedFilter": "OwnedAssociationUndoTests/oneSaveRestoresItsRemovedLinksAndTagTogetherWithoutOverwritingLaterEdits",
+    "lastExecutedSummary": [
+      [
+        "1",
+        "1",
+        "failed",
+        "0.105"
+      ]
+    ]
+  }
+]
