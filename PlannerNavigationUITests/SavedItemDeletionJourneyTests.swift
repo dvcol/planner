@@ -50,7 +50,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     }
     XCTAssertTrue(application.staticTexts["2 of 4 items done"].waitForExistence(timeout: 10))
     application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.schedule.save").waitForExistence(timeout: 5))
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let itinerarySchedule = scheduleRows(application, sourceKind: "itinerary").firstMatch
@@ -60,7 +60,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     XCTAssertFalse(itineraryScheduleDescription?.isEmpty ?? true)
     openItem(removedItemIdentifier, application: application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.schedule.save").waitForExistence(timeout: 5))
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let itemSchedule = scheduleRows(application).firstMatch
@@ -202,7 +202,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["Museum booking"].waitForExistence(timeout: 10))
     application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
     XCTAssertFalse(application.plannerElement("saved.item.delete").exists)
-    application.plannerElement("View Item").activateForPlannerJourney()
+    application.plannerElement("View item").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
     application.plannerElement("saved.item.delete").activateForPlannerJourney()
@@ -307,7 +307,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
       let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
       XCTAssertTrue(overflow.waitForExistence(timeout: 5))
       overflow.activateForPlannerJourney()
-      application.plannerElement("Add existing Item").activateForPlannerJourney()
+      application.plannerElement("Add existing item").activateForPlannerJourney()
     }
     let candidate = application.staticTexts[title].firstMatch
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))

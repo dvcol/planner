@@ -21,7 +21,7 @@ final class SavedCalendarDeletionJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.item.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))

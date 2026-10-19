@@ -20,12 +20,12 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     let actions = application.plannerElement("saved.item.actions")
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     for _ in 0..<9 {
       XCTAssertTrue(actions.waitForExistence(timeout: 10))
       actions.activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       let allDay = application.descendants(matching: .any).matching(
         identifier: "saved.schedule.allDay"
       ).firstMatch
@@ -129,11 +129,11 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     let actions = application.plannerElement("saved.item.actions")
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any).matching(
       identifier: "saved.schedule.allDay"
     ).firstMatch
@@ -260,7 +260,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     for _ in 0..<4 {
       XCTAssertTrue(actions.waitForExistence(timeout: 10))
       actions.activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     }
     #if os(macOS)
@@ -319,7 +319,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     title.typeText("Timed museum")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let savedSchedule = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")

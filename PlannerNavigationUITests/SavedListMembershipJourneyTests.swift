@@ -26,7 +26,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     let sourceIdentifier = source.identifier
     source.activateForPlannerJourney()
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
 
     openSection("Lists", application: application)
@@ -61,7 +61,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     archivedSource.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    application.plannerElement("Unarchive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Keep the garden entrance notes"].exists)
 
     openSection("Lists", application: application)
@@ -230,7 +230,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
         .allElementsBoundByIndex.first(where: \.isHittable)
       {
         overflow.activateForPlannerJourney()
-        let menuAction = application.collectionViews.buttons["New List"].firstMatch
+        let menuAction = application.collectionViews.buttons["New list"].firstMatch
         XCTAssertTrue(menuAction.waitForExistence(timeout: 5))
         return menuAction
       }

@@ -123,7 +123,7 @@ struct SavedBackupImportForm: View {
         }
         if reviewFailure != nil {
           Section {
-            Button("Try Again") { Task { await prepareReview() } }
+            Button("Try again") { Task { await prepareReview() } }
               .disabled(isReviewing || store.isSaving)
           }
         }

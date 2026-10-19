@@ -33,7 +33,7 @@ final class DelayedLinkPreviewJourneyTests: XCTestCase {
     XCTAssertFalse(card.exists)
     capture(application, name: "Controlled link stays pending before URL editing")
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let urlField = application.textFields["saved.item.edit.link.url." + linkIdentifier]
     reveal(urlField, application: application)
     XCTAssertTrue(urlField.waitForPlannerValue("https://fixtures.invalid/delayed"))

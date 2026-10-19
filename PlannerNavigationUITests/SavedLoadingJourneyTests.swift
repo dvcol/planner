@@ -128,7 +128,7 @@ final class SavedLoadingJourneyTests: XCTestCase {
       addItem.activateForPlannerJourney()
     } else {
       application.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()
-      application.plannerElement("Add existing Item").activateForPlannerJourney()
+      application.plannerElement("Add existing item").activateForPlannerJourney()
     }
     let candidate = application.staticTexts[title].firstMatch
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))

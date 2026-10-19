@@ -92,7 +92,7 @@ struct SavedNewItemForm: View {
       }
       .disabled(isSaving)
       .formStyle(.grouped)
-      .navigationTitle("New Item")
+      .navigationTitle("New item")
       .toolbarTitleDisplayMode(.inline)
       #if os(iOS)
         .navigationBarBackButtonHidden(horizontalSizeClass == .compact)
@@ -136,12 +136,12 @@ struct SavedNewItemForm: View {
       titleVisibility: .visible
     ) {
       if let destination = draft.proposedDestination {
-        Button("Use This List") {
+        Button("Use this list") {
           draft.destination = destination
           draft.proposedDestination = nil
         }
       }
-      Button("Keep Editing", role: .cancel) { draft.proposedDestination = nil }
+      Button("Keep editing", role: .cancel) { draft.proposedDestination = nil }
     } message: {
       Text(
         "The original List changed. Save to \(draft.proposedDestination?.content.name ?? "this List") instead? Your draft is preserved."

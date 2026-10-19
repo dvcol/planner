@@ -1,0 +1,17 @@
+{
+  "scope": "Selected original native captures; not full scene or accessibility acceptance.",
+  "captures": [
+    {
+      "file": "81EBE6E2-8AC2-474B-85B7-A621DD845B53.png",
+      "sha256": "dfa85beb7eda8d5a6725dbd3233388043016b113a3d75905d3079ce52f64d183",
+      "originalBytesUnchanged": true,
+      "inspection": "Dark pushed New item editor retains a labeled Save action, native link ellipsis menus and separated link URL/label rows. The floating-tab scroll edge remains part of final polish."
+    },
+    {
+      "file": "58FA482A-56CE-46A0-8CF4-CC79B24DE0FE.png",
+      "sha256": "d19d0dbed2ce2a72693846fb5dbdc5f3f9471b3019f399bb7331ffa82288a7c2",
+      "originalBytesUnchanged": true,
+      "inspection": "Native Undo accessory shows the concise Undo label with its system arrow; itinerary toolbar uses icons and the short native Edit control."
+    }
+  ]
+}

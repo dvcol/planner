@@ -1,0 +1,11 @@
+{
+  "scope": "Selected original captures; not whole-app UI acceptance.",
+  "captures": [
+    {
+      "file": "CC4F2D0D-9DBA-45F9-8020-AFC685B84764.png",
+      "sha256": "796c96854b4dcf57ea4a9a9d5c80d200e5e511ff554028217b3cd6cd3f9f36ea",
+      "originalBytesUnchanged": true,
+      "inspection": "Light iPad: staged New item uses a detail column, native labeled Cancel/Save, icon actions, shared-label pickers and sentence-case Add link."
+    }
+  ]
+}

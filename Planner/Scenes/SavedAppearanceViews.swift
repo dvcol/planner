@@ -111,16 +111,17 @@ struct SavedAppearanceDetail: View {
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {
-          Button("Add to List", action: addToList)
+          Button("Add to list", action: addToList)
             .disabled(!canChange)
-          Button("View Item", action: viewItem)
-          Button("Move to List", action: moveToList)
+          Button("View item", action: viewItem)
+          Button("Move to list", action: moveToList)
             .disabled(!canChange)
-          Button("Remove from List", role: .destructive, action: removeFromList)
+          Button("Remove from list", role: .destructive, action: removeFromList)
             .disabled(!canChange)
         } label: {
           Label("Item actions", systemImage: "ellipsis")
         }
+        .labelStyle(.iconOnly)
         .help("Item actions")
         .accessibilityIdentifier("saved.appearance.actions")
       }

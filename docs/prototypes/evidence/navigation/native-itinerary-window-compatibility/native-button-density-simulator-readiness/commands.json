@@ -1,0 +1,70 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "shutdown",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "boot",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "bootstatus",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-b"
+    ],
+    "exitCode": 0,
+    "stdout": "Monitoring boot status for iPhone 18 Pro (2A49C66C-C8A4-435F-B98A-9A90706780DE).\n[2026-10-19 17:10:54 +0000] Status=2, isTerminal=NO, Elapsed=00:02.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-19 17:10:55 +0000] Status=4, isTerminal=NO, Elapsed=00:04.\n\tWaiting on System App\n\n[2026-10-19 17:10:55 +0000] Status=4, isTerminal=NO, Elapsed=00:04.\n\tWaiting on System App\n\n[2026-10-19 17:10:56 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-19 17:10:57 +0000] Status=4, isTerminal=NO, Elapsed=00:06.\n\tWaiting on System App\n\n[2026-10-19 17:10:59 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:08.\n\tFinished\n\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "shutdown",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "boot",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "bootstatus",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "-b"
+    ],
+    "exitCode": 0,
+    "stdout": "Monitoring boot status for iPad Air 11-inch (M4) (FBD72DAB-1D40-4E64-912D-7F9763E00446).\n[2026-10-19 17:11:23 +0000] Status=4, isTerminal=NO, Elapsed=00:16.\n\tWaiting on System App\n\n[2026-10-19 17:11:26 +0000] Status=4, isTerminal=NO, Elapsed=00:18.\n\tWaiting on System App\n\n[2026-10-19 17:11:27 +0000] Status=4, isTerminal=NO, Elapsed=00:20.\n\tWaiting on System App\n\n[2026-10-19 17:11:28 +0000] Status=4, isTerminal=NO, Elapsed=00:21.\n\tWaiting on System App\n\n[2026-10-19 17:11:28 +0000] Status=4, isTerminal=NO, Elapsed=00:21.\n\tWaiting on System App\n\n[2026-10-19 17:11:29 +0000] Status=4, isTerminal=NO, Elapsed=00:22.\n\tWaiting on System App\n\n[2026-10-19 17:11:29 +0000] Status=4, isTerminal=NO, Elapsed=00:22.\n\tWaiting on System App\n\n[2026-10-19 17:11:30 +0000] Status=4, isTerminal=NO, Elapsed=00:23.\n\tWaiting on System App\n\n[2026-10-19 17:11:31 +0000] Status=4, isTerminal=NO, Elapsed=00:24.\n\tWaiting on System App\n\n[2026-10-19 17:11:32 +0000] Status=4, isTerminal=NO, Elapsed=00:25.\n\tWaiting on System App\n\n[2026-10-19 17:11:38 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:31.\n\tFinished\n\n",
+    "stderr": ""
+  }
+]

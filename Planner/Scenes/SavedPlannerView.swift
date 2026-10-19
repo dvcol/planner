@@ -132,8 +132,8 @@ struct SavedPlannerView: View {
         } description: {
           Text(reason)
         } actions: {
-          Button("Try Again") { Task { await store.open() } }
-          Button("Recovery Copies", systemImage: "clock.arrow.circlepath") {
+          Button("Try again") { Task { await store.open() } }
+          Button("Recovery copies", systemImage: "clock.arrow.circlepath") {
             showRecovery = true
           }
           .accessibilityIdentifier("saved.settings.recovery")
@@ -303,9 +303,9 @@ struct SavedPlannerView: View {
         Button("Save") { Task { await saveNewItem(continuingNavigation: true) } }
         Button("Discard", role: .destructive) { finishDraftNavigation() }
         #if os(macOS)
-          Button("Keep Editing", role: .cancel) { pendingDraftNavigation = nil }
+          Button("Keep editing", role: .cancel) { pendingDraftNavigation = nil }
         #else
-          Button("Keep Editing") { pendingDraftNavigation = nil }
+          Button("Keep editing") { pendingDraftNavigation = nil }
         #endif
       } message: {
         Text("Save this Item, discard the draft, or keep editing before leaving.")
@@ -578,7 +578,7 @@ struct SavedPlannerView: View {
       prepareDeletion: { itinerary in Task { await prepareItineraryDeletion(itinerary) } },
       recordRemoval: { result in
         associationUndo.record(
-          result, name: "Remove from Itinerary", store: store, manager: undoManager)
+          result, name: "Remove from itinerary", store: store, manager: undoManager)
       },
       recordOwnedRemovals: { result in
         associationUndo.recordOwnedRemovals(result, store: store, manager: undoManager)
@@ -748,7 +748,7 @@ struct SavedPlannerView: View {
       ContentUnavailableView {
         Label("Item unavailable", systemImage: "exclamationmark.triangle")
       } actions: {
-        Button("Try Again") { Task { await loadSelectedItem() } }
+        Button("Try again") { Task { await loadSelectedItem() } }
       }
     } else if let itemDeletionMessage {
       ContentUnavailableView(
@@ -1125,7 +1125,7 @@ struct SavedPlannerView: View {
       ContentUnavailableView {
         Label("List entry unavailable", systemImage: "exclamationmark.triangle")
       } actions: {
-        Button("Try Again") { Task { await loadSelectedAppearance() } }
+        Button("Try again") { Task { await loadSelectedAppearance() } }
       }
     } else {
       if let listDeletionMessage {
@@ -1157,7 +1157,7 @@ struct SavedPlannerView: View {
           membershipIdentifier, listIdentifier: listIdentifier),
         case .applied = result.outcome, store.devicePreferenceNamespace == namespace
       else { return }
-      associationUndo.record(result, name: "Remove from List", store: store, manager: undoManager)
+      associationUndo.record(result, name: "Remove from list", store: store, manager: undoManager)
       clearRemovedMembershipSelection(
         membershipIdentifier, listIdentifier: listIdentifier,
         explanation: "The Item remains available in Items.", detailTitle: "Item removed from List")
@@ -1258,7 +1258,7 @@ struct SavedPlannerView: View {
               )
               .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
               .contextMenu {
-                Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox")
+                Button(list.archived ? "Unarchive list" : "Archive list", systemImage: "archivebox")
                 {
                   Task { _ = await store.setListArchived(list.id, archived: !list.archived) }
                 }
@@ -1288,7 +1288,7 @@ struct SavedPlannerView: View {
         ContentUnavailableView {
           Label("Lists unavailable", systemImage: "exclamationmark.triangle")
         } actions: {
-          Button("Try Again") { Task { await loadListCatalog() } }
+          Button("Try again") { Task { await loadListCatalog() } }
         }
       }
     }
@@ -1300,13 +1300,17 @@ struct SavedPlannerView: View {
     .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
     .toolbar {
       ToolbarItem(placement: secondaryToolbarPlacement) {
-        Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
+        Button("Manage labels", systemImage: "square.grid.2x2") { showLabels = true }
+          .labelStyle(.iconOnly)
+          .help("Manage labels")
           .disabled(!store.isReady)
           .accessibilityIdentifier("saved.categories.manage")
       }
       #if os(iOS)
         ToolbarItem(placement: secondaryToolbarPlacement) {
           Button("Settings", systemImage: "gearshape") { showSettings = true }
+            .labelStyle(.iconOnly)
+            .help("Settings")
             .disabled(!store.isReady)
             .accessibilityIdentifier("saved.settings.open")
         }
@@ -1320,9 +1324,11 @@ struct SavedPlannerView: View {
           accessibilityIdentifier: "saved.lists.archive")
       }
       ToolbarItem(placement: .primaryAction) {
-        Button("New List", systemImage: "plus") {
+        Button("New list", systemImage: "plus") {
           requestDraftNavigation { showNewList = true }
         }
+        .labelStyle(.iconOnly)
+        .help("New list")
         .disabled(!store.canCreate)
         .accessibilityIdentifier("saved.list.new")
       }
@@ -1409,7 +1415,7 @@ struct SavedPlannerView: View {
         } description: {
           Text(reason)
         } actions: {
-          Button("Try Again") { Task { await loadSelectedList() } }
+          Button("Try again") { Task { await loadSelectedList() } }
         }
       case .idle, .loading:
         ProgressView("Opening List")
@@ -1462,24 +1468,24 @@ struct SavedPlannerView: View {
           }
         }
         .contextMenu {
-          Button("Move to Beginning") {
+          Button("Move to beginning") {
             Task {
               _ = await store.reorderMembership(item.id, listId: list.source.id, placement: .first)
             }
           }
           .disabled(!canReorderMemberships || listRows.first?.id == item.id)
-          Button("Move to End") {
+          Button("Move to end") {
             Task {
               _ = await store.reorderMembership(item.id, listId: list.source.id, placement: .last)
             }
           }
           .disabled(!canReorderMemberships || listRows.last?.id == item.id)
           Divider()
-          Button("Add to List") { proposeListAddition(item) }.disabled(!store.canCreate)
-          Button("Move to List") {
+          Button("Add to list") { proposeListAddition(item) }.disabled(!store.canCreate)
+          Button("Move to list") {
             proposeMembershipMove(item.id, itemTitle: item.row.title, list: list)
           }.disabled(!store.canCreate)
-          Button("Remove from List", role: .destructive) {
+          Button("Remove from list", role: .destructive) {
             removeMembership(item.id, listIdentifier: list.source.id)
           }.disabled(!store.canCreate)
         }
@@ -1489,7 +1495,7 @@ struct SavedPlannerView: View {
       case .failed(let reason):
         VStack(alignment: .leading) {
           Text(reason).foregroundStyle(.secondary)
-          Button("Try Again") { retryMembership(row) }
+          Button("Try again") { retryMembership(row) }
         }
         .selectionDisabled().moveDisabled(true)
       }
@@ -1554,21 +1560,23 @@ struct SavedPlannerView: View {
             #endif
             ToolbarItem {
               Menu {
-                Button("New Item", systemImage: "square.and.pencil") {
+                Button("New item", systemImage: "square.and.pencil") {
                   beginNewItem(listIdentifier: selectedList.source.id)
                 }
                 .accessibilityIdentifier("saved.list.createItem")
-                Button("Add existing Item", systemImage: "plus") {
+                Button("Add existing item", systemImage: "plus") {
                   requestDraftNavigation { showAddItem = true }
                 }
                 .accessibilityIdentifier("saved.list.add")
-                Button("From Link or Text", systemImage: "text.badge.plus") {
+                Button("From link or text", systemImage: "text.badge.plus") {
                   requestDraftNavigation { captureEntryPoint = .list(selectedList.source.id) }
                 }
                 .accessibilityIdentifier("saved.list.capture")
               } label: {
                 Label("Add", systemImage: "plus")
               }
+              .labelStyle(.iconOnly)
+              .help("Add an item to this list")
               .disabled(!store.canCreate || selectedList.state.archived == true || isSavingNewItem)
               .accessibilityIdentifier("saved.list.addMenu")
             }
@@ -1580,18 +1588,19 @@ struct SavedPlannerView: View {
                 .accessibilityIdentifier("saved.list.estimate.edit")
                 Divider()
                 Group {
-                  Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
-                  Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
+                  Button("Mark all done") { prepareListBulkCompletion(selectedList, done: true) }
+                  Button("Mark all undone") { prepareListBulkCompletion(selectedList, done: false) }
                 }
                 .disabled(selectedList.progress.totalCount == 0)
                 Divider()
-                Button("Delete List", role: .destructive) {
+                Button("Delete list", role: .destructive) {
                   Task { await prepareListDeletion(selectedList) }
                 }
                 .accessibilityIdentifier("saved.list.delete")
               } label: {
                 Label("List actions", systemImage: "ellipsis")
               }
+              .labelStyle(.iconOnly)
               .disabled(
                 !store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion
               )
@@ -1613,7 +1622,7 @@ struct SavedPlannerView: View {
             Text("Planner could not open the selected List.")
           }
         } actions: {
-          Button("Try Again") { Task { await loadSelectedList() } }
+          Button("Try again") { Task { await loadSelectedList() } }
         }
       } else if let listDeletionMessage {
         ContentUnavailableView(
@@ -1873,7 +1882,7 @@ private struct SavedListForm: View {
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
-      .navigationTitle(list == nil ? "New List" : "Edit List")
+      .navigationTitle(list == nil ? "New list" : "Edit List")
       .toolbarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {

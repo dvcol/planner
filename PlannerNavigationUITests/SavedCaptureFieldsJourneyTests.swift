@@ -114,7 +114,7 @@ final class SavedCaptureFieldsJourneyTests: XCTestCase {
     ).firstMatch
     reveal(actions, application: application)
     actions.activateForPlannerJourney()
-    application.plannerElement("Remove Link").activateForPlannerJourney()
+    application.plannerElement("Remove link").activateForPlannerJourney()
     application.plannerElement("saved.capture.add").activateForPlannerJourney()
     for _ in 0..<4 where !title.exists || !title.isHittable {
       scrollableCapture(application).swipeDown()
@@ -209,7 +209,7 @@ final class SavedCaptureFieldsJourneyTests: XCTestCase {
 
   private func createLabel(_ kind: String, name: String, application: XCUIApplication) {
     application.plannerElement("saved.labels.new").activateForPlannerJourney()
-    application.plannerElement("New \(kind)").activateForPlannerJourney()
+    application.plannerElement("New \(kind.lowercased())").activateForPlannerJourney()
     let field = application.textFields["saved.\(kind.lowercased()).name"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()

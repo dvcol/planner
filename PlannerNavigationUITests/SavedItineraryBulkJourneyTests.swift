@@ -97,7 +97,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     #else
       openEntryMenu(application.staticTexts["Food stops"].firstMatch)
     #endif
-    application.plannerElement("Remove from Itinerary").activateForPlannerJourney()
+    application.plannerElement("Remove from itinerary").activateForPlannerJourney()
     XCTAssertTrue(
       waitForItineraryOrder([originalIdentifiers[1]], application: application))
     let filters = application.plannerElement("saved.itinerary.filters")
@@ -173,7 +173,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     revealNavigation(to: list, application: application)
     XCTAssertTrue(list.waitForExistence(timeout: 10))
     openEntryMenu(list)
-    application.plannerElement("Archive List").activateForPlannerJourney()
+    application.plannerElement("Archive list").activateForPlannerJourney()
     openItinerary(application)
     assertProgress("2 of 3 items finished", application: application)
     XCTAssertTrue(application.staticTexts["0 done · 2 archived"].exists)
@@ -232,7 +232,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     XCTAssertTrue(membershipCompletion.waitForPlannerValue("Completed"))
     revealNavigation(to: list, application: application)
     openEntryMenu(list)
-    application.plannerElement("Unarchive List").activateForPlannerJourney()
+    application.plannerElement("Unarchive list").activateForPlannerJourney()
     openItinerary(application)
     assertProgress("0 of 3 items done", application: application)
     assertChecks(["To do", "To do", "To do"], application: application)
@@ -278,7 +278,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     if back.exists { back.activateForPlannerJourney() }
     let firstListHeader = application.staticTexts["Food stops"].firstMatch
     openEntryMenu(firstListHeader)
-    let removal = application.plannerElement("Remove from Itinerary")
+    let removal = application.plannerElement("Remove from itinerary")
     XCTAssertTrue(removal.waitForExistence(timeout: 5))
     removal.activateForPlannerJourney()
     if detailsAlongsideRoute {
@@ -452,7 +452,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     assertChecks(["Completed", "To do", "To do"], application: application)
     let first = application.plannerElement(originalIdentifiers[0])
     openEntryMenu(first)
-    let moveToEnd = application.plannerElement("Move to End")
+    let moveToEnd = application.plannerElement("Move to end")
     XCTAssertTrue(moveToEnd.waitForExistence(timeout: 5))
     XCTAssertTrue(moveToEnd.isEnabled)
     recordScreenshot(application, name: "Native Itinerary entry ordering menu")
@@ -464,7 +464,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     let listHeader = application.staticTexts["Food stops"].firstMatch
     XCTAssertTrue(listHeader.waitForExistence(timeout: 5))
     openEntryMenu(listHeader)
-    let moveToBeginning = application.plannerElement("Move to Beginning")
+    let moveToBeginning = application.plannerElement("Move to beginning")
     XCTAssertTrue(moveToBeginning.waitForExistence(timeout: 5))
     XCTAssertTrue(moveToBeginning.isEnabled)
     moveToBeginning.activateForPlannerJourney()
@@ -581,7 +581,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
 
     openItem("Museum", application: application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Archive Item").activateForPlannerJourney()
+    application.plannerElement("Archive item").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
     openItinerary(application)
     XCTAssertEqual(itineraryRows(application).count, 3)
@@ -650,7 +650,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
       let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
       XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
       overflow.activateForPlannerJourney()
-      application.plannerElement("Add existing Item").activateForPlannerJourney()
+      application.plannerElement("Add existing item").activateForPlannerJourney()
     }
     let museum = application.staticTexts["Museum"].firstMatch
     XCTAssertTrue(museum.waitForExistence(timeout: 5))
@@ -687,7 +687,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
 
   private func openBulkReview(done: Bool, application: XCUIApplication) {
     reveal("saved.itinerary.actions", application: application).activateForPlannerJourney()
-    let action = application.plannerElement(done ? "Mark all Done" : "Mark all Undone")
+    let action = application.plannerElement(done ? "Mark all done" : "Mark all undone")
     XCTAssertTrue(action.waitForExistence(timeout: 5))
     action.activateForPlannerJourney()
   }
@@ -700,7 +700,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     #else
       header.press(forDuration: 1)
     #endif
-    let action = application.plannerElement(done ? "Mark all Done" : "Mark all Undone")
+    let action = application.plannerElement(done ? "Mark all done" : "Mark all undone")
     XCTAssertTrue(action.waitForExistence(timeout: 5), application.debugDescription)
     action.activateForPlannerJourney()
   }
@@ -731,7 +731,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
   private func openItinerary(_ application: XCUIApplication) {
     openSection("Itineraries", application: application)
     #if os(iOS)
-      if application.navigationBars["Weekend route"].exists,
+      if application.navigationBars["Weekend route"].waitForExistence(timeout: 5),
         application.collectionViews["saved.itinerary.contents"].exists
       {
         let sidebar = application.buttons["Hide Sidebar"].firstMatch

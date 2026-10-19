@@ -21,7 +21,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.item.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let schedule = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
@@ -104,7 +104,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     XCTAssertTrue(childRow.waitForExistence(timeout: 10))
     let childIdentifier = childRow.identifier
     application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -138,7 +138,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
       let itineraryActions = application.plannerElement("Itinerary actions")
       if itineraryActions.exists { itineraryActions.activateForPlannerJourney() }
     }
-    let scheduleAction = application.plannerElement("Schedule Itinerary")
+    let scheduleAction = application.plannerElement("Schedule itinerary")
     XCTAssertTrue(scheduleAction.waitForExistence(timeout: 5))
     scheduleAction.activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.schedule.cancel").waitForExistence(timeout: 5))
@@ -177,7 +177,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.item.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))

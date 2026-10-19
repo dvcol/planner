@@ -22,7 +22,7 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     for _ in 0..<2 {
       actions.activateForPlannerJourney()
-      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
       let allDay = application.descendants(matching: .any)
         .matching(identifier: "saved.schedule.allDay").firstMatch
       XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -57,7 +57,7 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
     #else
       laterSchedule.press(forDuration: 1)
     #endif
-    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    application.plannerElement("Edit schedule").activateForPlannerJourney()
     selectDay(10, pickerIdentifier: "saved.schedule.start", application: application)
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let changedCaption = XCTNSPredicateExpectation(

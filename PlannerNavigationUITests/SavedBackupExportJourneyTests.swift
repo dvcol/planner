@@ -11,7 +11,7 @@ final class SavedBackupExportJourneyTests: XCTestCase {
       openSettings(application)
       application.plannerElement("saved.settings.labels").activateForPlannerJourney()
       application.plannerElement("saved.labels.new").activateForPlannerJourney()
-      application.plannerElement("New Tag").activateForPlannerJourney()
+      application.plannerElement("New tag").activateForPlannerJourney()
       let name = application.textFields["saved.tag.name"]
       XCTAssertTrue(name.waitForExistence(timeout: 5))
       name.activateForPlannerJourney()
@@ -63,7 +63,7 @@ final class SavedBackupExportJourneyTests: XCTestCase {
     openSettings(application)
     application.plannerElement("saved.settings.labels").activateForPlannerJourney()
     application.plannerElement("saved.labels.new").activateForPlannerJourney()
-    application.plannerElement("New Tag").activateForPlannerJourney()
+    application.plannerElement("New tag").activateForPlannerJourney()
     let name = application.textFields["saved.tag.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()

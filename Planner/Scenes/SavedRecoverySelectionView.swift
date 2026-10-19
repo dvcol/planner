@@ -46,7 +46,7 @@ struct SavedRecoverySelectionView: View {
               LabeledContent("Original operation", value: operationIdentifier.uuidString)
             }
           }
-          Button("Review Restore", systemImage: "arrow.uturn.backward") {
+          Button("Review restore", systemImage: "arrow.uturn.backward") {
             restoreDraft = .init(recoverySelection: selection)
           }
           .disabled(!store.canCreate || showExporter)

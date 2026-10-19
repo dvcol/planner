@@ -234,7 +234,7 @@ struct SavedCaptureForm: View {
       }
       if let reason = destinationLoadingFailure {
         Label(reason, systemImage: "exclamationmark.triangle")
-        Button("Try Again") {
+        Button("Try again") {
           Task { await loadDestinations(identity: destinationLoadIdentity) }
         }
         .accessibilityIdentifier("saved.capture.destinations.retry")
@@ -244,7 +244,7 @@ struct SavedCaptureForm: View {
         Label(
           "A selected List is no longer available. Review your destinations before adding.",
           systemImage: "exclamationmark.triangle")
-        Button("Remove unavailable Lists") {
+        Button("Remove unavailable lists") {
           selectedListIdentifiers.formIntersection(availableDestinationIdentifiers)
         }
         .accessibilityIdentifier("saved.capture.destinations.removeUnavailable")
@@ -259,7 +259,7 @@ struct SavedCaptureForm: View {
     ForEach(draft.inputIssues, id: \.inputIndex) { issue in
       Section {
         Label(issue.message, systemImage: "exclamationmark.triangle")
-        Button("Remove Input") {
+        Button("Remove input") {
           Task {
             isWorking = true
             defer { isWorking = false }
@@ -291,7 +291,7 @@ struct SavedCaptureForm: View {
         }
         if linksChanged {
           Label("Links changed. Refresh to preview the edited links.", systemImage: "map")
-          Button("Refresh Preview") { Task { await lookupMaps() } }
+          Button("Refresh preview") { Task { await lookupMaps() } }
             .accessibilityIdentifier("saved.capture.preview.refresh")
         } else if activePreviewRequestIdentifier != nil {
           ProgressView("Loading Maps preview")

@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "88746CAF-52C8-4EC7-98C7-F0E6A48414DB.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inbox native navigation frames_0_54157B9D-72C3-4C2F-8B74-56195C76EA4B.txt",
+    "timestamp": 1792430615.015,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "20D84EC9-E597-4FAB-87D9-824B7D2846DB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inbox title beside native catalog actions_0_589CF56B-497F-4ADA-B4DC-00AE5F830802.png",
+    "timestamp": 1792430614.768,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0ABC8860-8654-4CED-8D50-8628ED5DB291.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Items native navigation frames_0_9E3D228C-1EF7-4FBD-932B-3617869D66FC.txt",
+    "timestamp": 1792430608.369,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F03FA6A3-AEEE-4942-94D8-C288ADDD5691.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Items title beside native catalog actions_0_1B96D15C-16D7-4A8A-99E0-F4903DDD5EDA.png",
+    "timestamp": 1792430608.092,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()"
+  }
+]

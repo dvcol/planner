@@ -29,7 +29,7 @@ struct SavedRecoveryCopiesView: View {
           } description: {
             Text(failure)
           } actions: {
-            Button("Try Again") { Task { await loadCopies() } }
+            Button("Try again") { Task { await loadCopies() } }
           }
         } else if let copies, copies.isEmpty {
           ContentUnavailableView(
@@ -88,7 +88,7 @@ struct SavedRecoveryCopiesView: View {
           ProgressView("Reading recovery copies")
         }
       }
-      .navigationTitle("Recovery Copies")
+      .navigationTitle("Recovery copies")
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Done") { dismiss() }

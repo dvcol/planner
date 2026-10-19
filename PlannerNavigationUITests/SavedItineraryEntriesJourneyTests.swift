@@ -21,7 +21,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     chooseEntry("Hotel", application: application)
     application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
     application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     XCTAssertTrue(itineraryRows(application).firstMatch.waitForExistence(timeout: 10))
     openItemCatalog(application)
@@ -145,7 +145,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     let appearanceIdentity = contextualRow.identifier
     XCTAssertFalse((contextualRow.value as? String ?? "").contains("Scheduled:"))
     application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
     XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
@@ -323,7 +323,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
     XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
     overflow.activateForPlannerJourney()
-    let overflowAction = application.plannerElement("Add existing Item")
+    let overflowAction = application.plannerElement("Add existing item")
     XCTAssertTrue(overflowAction.waitForExistence(timeout: 5), application.debugDescription)
     overflowAction.activateForPlannerJourney()
   }

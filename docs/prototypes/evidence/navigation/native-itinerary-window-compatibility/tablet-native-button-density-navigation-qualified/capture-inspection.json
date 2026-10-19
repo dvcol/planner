@@ -1,0 +1,11 @@
+{
+  "scope": "Selected original captures; not whole-app UI acceptance.",
+  "captures": [
+    {
+      "file": "7C6A3092-1D17-4D35-9175-2AF79F525BDB.png",
+      "sha256": "e250c016246bca104c369d48bf3253d71e301bc6c899e40a4adc3a110a139ef1",
+      "originalBytesUnchanged": true,
+      "inspection": "Light iPad: concise Undo with its native system arrow remains visible after removing an itinerary entry; native toolbar icons preserve the content heading."
+    }
+  ]
+}

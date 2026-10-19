@@ -1,0 +1,11 @@
+{
+  "scope": "Selected original native captures; not full scene or accessibility acceptance.",
+  "captures": [
+    {
+      "file": "82179327-A6CA-400C-B4CA-ECE2B4E39A52.png",
+      "sha256": "2d51d221a20f3c8e15ba09bfad1d0c57a9a6c050c97f63fdf64e6d6ad0c26de3",
+      "originalBytesUnchanged": true,
+      "inspection": "Light wide-iPad editor uses labeled Cancel/Save in the detail column, icon actions and separated link fields with Add link in sentence case."
+    }
+  ]
+}

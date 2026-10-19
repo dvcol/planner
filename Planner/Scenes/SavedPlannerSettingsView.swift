@@ -24,12 +24,12 @@ struct SavedPlannerSettingsView: View {
           Form {
             SavedRecoveryStatusSection(store: store)
             Section("Organization") {
-              Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
+              Button("Manage labels", systemImage: "square.grid.2x2") { showLabels = true }
                 .disabled(store.isSaving)
                 .accessibilityIdentifier("saved.settings.labels")
             }
             Section {
-              Button("Export Backup", systemImage: "square.and.arrow.up") {
+              Button("Export backup", systemImage: "square.and.arrow.up") {
                 exportFailure = nil
                 exportedFilename = nil
                 exportRequest = UUID()
@@ -43,7 +43,7 @@ struct SavedPlannerSettingsView: View {
                 LabeledContent("Backup exported", value: exportedFilename)
                   .accessibilityIdentifier("saved.settings.exported")
               }
-              Button("Import Backup", systemImage: "square.and.arrow.down") {
+              Button("Import backup", systemImage: "square.and.arrow.down") {
                 importFailure = nil
                 showImporter = true
               }
@@ -52,7 +52,7 @@ struct SavedPlannerSettingsView: View {
               )
               .accessibilityIdentifier("saved.settings.import")
               if importURL != nil { ProgressView("Reading backup") }
-              Button("Recovery Copies", systemImage: "clock.arrow.circlepath") {
+              Button("Recovery copies", systemImage: "clock.arrow.circlepath") {
                 showRecovery = true
               }
               .accessibilityIdentifier("saved.settings.recovery")
@@ -71,8 +71,8 @@ struct SavedPlannerSettingsView: View {
           } description: {
             Text(reason)
           } actions: {
-            Button("Try Again") { Task { await store.open() } }
-            Button("Recovery Copies", systemImage: "clock.arrow.circlepath") {
+            Button("Try again") { Task { await store.open() } }
+            Button("Recovery copies", systemImage: "clock.arrow.circlepath") {
               showRecovery = true
             }
             .accessibilityIdentifier("saved.settings.recovery")

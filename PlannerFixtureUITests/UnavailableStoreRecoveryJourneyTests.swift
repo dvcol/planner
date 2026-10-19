@@ -11,7 +11,7 @@ import XCTest
       ]
       application.launchSavedPlannerJourney()
       assertUnavailable(application)
-      application.plannerElement("Try Again").activateForPlannerJourney()
+      application.plannerElement("Try again").activateForPlannerJourney()
       assertUnavailable(application)
       capture("Unavailable Planner offers recovery without creating a replacement dataset")
       let firstIdentities = inspectRecovery(application)

@@ -375,7 +375,7 @@ final class SavedItemEstimateJourneyTests: XCTestCase {
 
   private func openEditor(_ application: XCUIApplication) {
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.edit.title"].waitForExistence(timeout: 5))
   }
 
@@ -454,7 +454,7 @@ final class SavedItemEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(waitForYearEstimate(summary))
     for shouldSave in [false, true] {
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Edit Item").activateForPlannerJourney()
+      application.plannerElement("Edit item").activateForPlannerJourney()
       let unit = application.plannerElement("saved.item.edit.estimate.unit")
       XCTAssertTrue(unit.waitForExistence(timeout: 5))
       XCTAssertTrue(unit.label.contains("Months"))
@@ -500,7 +500,7 @@ final class SavedItemEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     for shouldSave in [false, true] {
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Edit Item").activateForPlannerJourney()
+      application.plannerElement("Edit item").activateForPlannerJourney()
       let enabled = application.descendants(matching: .any).matching(
         identifier: "saved.item.edit.estimate.enabled"
       ).firstMatch

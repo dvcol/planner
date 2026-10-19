@@ -1,0 +1,14 @@
+{
+  "signatureVerification": {
+    "Planner.app": {
+      "exitCode": 0,
+      "stderr": ""
+    },
+    "PlannerNavigationUITests-Runner.app": {
+      "exitCode": 0,
+      "stderr": ""
+    }
+  },
+  "consoleLockState": "Not established by the read-only registry probe.",
+  "runtimeResult": "Automation-mode initialization timed out before any Test Case."
+}

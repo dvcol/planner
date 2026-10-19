@@ -59,11 +59,11 @@ struct SavedLabelsView: View {
           } description: {
             Text(loadingFailure)
           } actions: {
-            Button("Try Again") { Task { await loadLabels() } }
+            Button("Try again") { Task { await loadLabels() } }
           }
         }
       }
-      .navigationTitle("Manage Labels")
+      .navigationTitle("Manage labels")
       .navigationDestination(for: SavedLabelSelection.self) { selection in
         SavedLabelEditDestination(store: store, selection: selection)
       }
@@ -77,14 +77,17 @@ struct SavedLabelsView: View {
         ToolbarItem(placement: .primaryAction) {
           Menu {
             ForEach(SavedLabelKind.allCases) { kind in
-              Button("New \(kind.title)", systemImage: kind.systemImage) { newLabelKind = kind }
+              Button("New \(kind.title.lowercased())", systemImage: kind.systemImage) {
+                newLabelKind = kind
+              }
             }
           } label: {
-            Label("New Label", systemImage: "plus")
+            Label("New label", systemImage: "plus")
           }
+          .labelStyle(.iconOnly)
           .disabled(!store.canCreate)
           .accessibilityIdentifier("saved.labels.new")
-          .help("Create a Category or Tag")
+          .help("New category or tag")
         }
       }
       .task(id: store.changeRevision) { await loadLabels() }
@@ -144,7 +147,7 @@ private struct SavedLabelEditDestination: View {
         } description: {
           Text(loadingFailure)
         } actions: {
-          Button("Try Again") { Task { await loadLabel() } }
+          Button("Try again") { Task { await loadLabel() } }
         }
       } else {
         ProgressView("Opening \(selection.kind.title)")
@@ -188,7 +191,7 @@ private struct SavedLabelForm: View {
         .accessibilityIdentifier("saved.\(kind.rawValue).name")
       if let original {
         Section {
-          Button("Delete \(kind.title)", systemImage: "trash", role: .destructive) {
+          Button("Delete \(kind.title.lowercased())", systemImage: "trash", role: .destructive) {
             Task { await reviewDeletion(original) }
           }
           .disabled(!store.canCreate)
@@ -198,7 +201,9 @@ private struct SavedLabelForm: View {
     }
     .disabled(store.isSaving || isReviewingDeletion)
     .formStyle(.grouped)
-    .navigationTitle(original == nil ? "New \(kind.title)" : "Edit \(kind.title)")
+    .navigationTitle(
+      original == nil ? "New \(kind.title.lowercased())" : "Edit \(kind.title.lowercased())"
+    )
     #if os(iOS)
       .navigationBarTitleDisplayMode(.inline)
     #endif

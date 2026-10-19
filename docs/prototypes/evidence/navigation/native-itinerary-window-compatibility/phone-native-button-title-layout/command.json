@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "test-without-building",
+  "-xctestrun",
+  "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/PlannerFixtures_iphonesimulator27.1-arm64.xctestrun",
+  "-destination",
+  "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+  "-destination-timeout",
+  "20",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-test-timeouts-enabled",
+  "YES",
+  "-default-test-execution-time-allowance",
+  "300",
+  "-maximum-test-execution-time-allowance",
+  "300",
+  "-only-testing:PlannerFixtureUITests/CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions",
+  "-resultBundlePath",
+  "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-button-title-layout.xcresult"
+]

@@ -1,0 +1,17 @@
+{
+  "scope": "Items/Inbox native toolbar titles only.",
+  "captures": [
+    {
+      "file": "F03FA6A3-AEEE-4942-94D8-C288ADDD5691.png",
+      "sha256": "34ba5cdbf3f30b9acff5e3a8b5f2331a202070bea36dc186a13df77ada064b6f",
+      "originalBytesUnchanged": true,
+      "inspection": "Dark phone: full catalog title and native filter/sort/Add symbols remain readable without overlap. Layout journey also measures the actual title and button frames."
+    },
+    {
+      "file": "20D84EC9-E597-4FAB-87D9-824B7D2846DB.png",
+      "sha256": "3e9abf19e073b96333a053e204f6f17a40b96e80bbc9ecdfd0cecf150763121a",
+      "originalBytesUnchanged": true,
+      "inspection": "Dark phone: full catalog title and native filter/sort/Add symbols remain readable without overlap. Layout journey also measures the actual title and button frames."
+    }
+  ]
+}

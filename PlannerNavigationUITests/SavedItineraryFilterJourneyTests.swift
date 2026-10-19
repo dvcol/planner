@@ -11,7 +11,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     createItem("Zulu Hotel", application: application)
     createItem("Beta Museum", application: application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     selectLabels(
       "categories", names: ["Culture"], prefix: "saved.item.edit", application: application)
     selectLabels("tags", names: ["Rain"], prefix: "saved.item.edit", application: application)
@@ -30,7 +30,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
       addItem.activateForPlannerJourney()
     } else {
       application.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()
-      application.plannerElement("Add existing Item").activateForPlannerJourney()
+      application.plannerElement("Add existing item").activateForPlannerJourney()
     }
     let museum = application.staticTexts["Beta Museum"].firstMatch
     XCTAssertTrue(museum.waitForExistence(timeout: 5))
@@ -231,7 +231,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     manage.activateForPlannerJourney()
     for (kind, name) in [("Category", "Culture"), ("Tag", "Rain"), ("Tag", "Indoor")] {
       application.plannerElement("saved.labels.new").activateForPlannerJourney()
-      application.plannerElement("New \(kind)").activateForPlannerJourney()
+      application.plannerElement("New \(kind.lowercased())").activateForPlannerJourney()
       let field = application.textFields["saved.\(kind.lowercased()).name"]
       XCTAssertTrue(field.waitForExistence(timeout: 5))
       field.activateForPlannerJourney()

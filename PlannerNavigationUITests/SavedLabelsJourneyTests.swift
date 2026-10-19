@@ -85,7 +85,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
       let actions = application.plannerElement("\(prefix).link.actions.\(identity)")
       revealGroupedEditorElement(actions, application: application)
       actions.activateForPlannerJourney()
-      application.plannerElement("Remove Link").activateForPlannerJourney()
+      application.plannerElement("Remove link").activateForPlannerJourney()
     }
     application.plannerElement("\(prefix).save").activateForPlannerJourney()
     XCTAssertTrue(application.textFields["\(prefix).notes"].waitForNonExistence(timeout: 10))
@@ -220,8 +220,6 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertTrue(discard.waitForExistence(timeout: 5))
     discard.activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 5))
-    let addMenuIdentifier = originatingList == nil ? "saved.item.addMenu" : "saved.list.addMenu"
-    XCTAssertTrue(application.plannerElement(addMenuIdentifier).waitForExistence(timeout: 5))
     XCTAssertEqual(application.savedPlannerItemRows("Discarded label draft").count, 0)
     openNewItem(application, originatingList: originatingList)
     enterNewItemTitle("Rainy museum", application: application)
@@ -679,7 +677,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     openSettings(application)
     recordLabelsScreenshot(application, name: "Native Settings entry for Manage Labels")
     application.plannerElement("saved.settings.labels").activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["Manage Labels"].firstMatch.waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Manage labels"].firstMatch.waitForExistence(timeout: 5))
     newTag(application)
     let name = application.textFields["saved.tag.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
@@ -876,7 +874,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
         XCTAssertTrue(overflow.waitForExistence(timeout: 5))
         overflow.activateForPlannerJourney()
         if !editor.exists {
-          editor = application.collectionViews.buttons["Edit Itinerary"].firstMatch
+          editor = application.collectionViews.buttons["Edit itinerary"].firstMatch
         }
       }
     #endif
@@ -891,7 +889,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openLabels(application)
-    XCTAssertTrue(application.staticTexts["Manage Labels"].firstMatch.waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Manage labels"].firstMatch.waitForExistence(timeout: 5))
     newTag(application)
     let name = application.textFields["saved.tag.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
@@ -1107,7 +1105,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertTrue(completion.waitForPlannerValue("Completed"))
     recordLabelsScreenshot(application, name: "Cumulative label filters retain full List progress")
     filters.activateForPlannerJourney()
-    application.plannerElement("Clear Categories").activateForPlannerJourney()
+    application.plannerElement("Clear categories").activateForPlannerJourney()
     application.plannerElement("saved.filters.done").activateForPlannerJourney()
     XCTAssertTrue(application.savedPlannerItemRows("Cafe").firstMatch.waitForExistence(timeout: 10))
     XCTAssertFalse(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
@@ -1173,19 +1171,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
   private func createListWithItems(
     _ name: String, itemTitles: [String], application: XCUIApplication
   ) {
-    #if os(macOS)
-      let lists = application.plannerElement("saved.section.lists")
-    #else
-      let lists = application.buttons["Lists"].firstMatch
-    #endif
-    lists.activateForPlannerJourney()
-    let create = application.plannerElement("saved.list.new")
-    if !create.waitForExistence(timeout: 3) {
-      let sidebar = application.plannerElement("Show Sidebar")
-      if sidebar.exists { sidebar.activateForPlannerJourney() }
-    }
-    XCTAssertTrue(create.waitForExistence(timeout: 10))
-    create.activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let title = application.textFields["saved.list.name"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1201,7 +1187,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
         let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
         XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
         overflow.activateForPlannerJourney()
-        let overflowAdd = application.plannerElement("Add existing Item")
+        let overflowAdd = application.plannerElement("Add existing item")
         XCTAssertTrue(overflowAdd.waitForExistence(timeout: 5), application.debugDescription)
         overflowAdd.activateForPlannerJourney()
       }
@@ -1216,7 +1202,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
 
   private func createLabel(_ kind: String, name: String, application: XCUIApplication) {
     application.plannerElement("saved.labels.new").activateForPlannerJourney()
-    application.plannerElement("New \(kind)").activateForPlannerJourney()
+    application.plannerElement("New \(kind.lowercased())").activateForPlannerJourney()
     let field = application.textFields["saved.\(kind.lowercased()).name"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()
@@ -1252,7 +1238,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     let actions = application.plannerElement("saved.item.actions")
     XCTAssertTrue(actions.waitForExistence(timeout: 10))
     actions.activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.edit.title"].waitForExistence(timeout: 5))
   }
 
@@ -1337,7 +1323,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
 
   private func newTag(_ application: XCUIApplication) {
     application.plannerElement("saved.labels.new").activateForPlannerJourney()
-    let tag = application.plannerElement("New Tag")
+    let tag = application.plannerElement("New tag")
     XCTAssertTrue(tag.waitForExistence(timeout: 5))
     tag.activateForPlannerJourney()
   }

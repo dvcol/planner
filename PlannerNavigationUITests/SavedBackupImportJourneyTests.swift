@@ -76,9 +76,9 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       XCTAssertEqual(title.value as? String, "Retained restored visit")
       XCTAssertEqual(
         notes.value as? String, "Preserve these fields across explicit List restoration")
-      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+      application.navigationBars["New item"].staticTexts["New item"].tap()
       application.plannerElement("saved.item.save").activateForPlannerJourney()
-      let review = application.plannerElement("Use This List")
+      let review = application.plannerElement("Use this list")
       XCTAssertTrue(review.waitForExistence(timeout: 10))
       XCTAssertTrue(
         application.staticTexts[
@@ -341,7 +341,7 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       openSettings(application)
       application.plannerElement("saved.settings.labels").activateForPlannerJourney()
       application.plannerElement("saved.labels.new").activateForPlannerJourney()
-      application.plannerElement("New Tag").activateForPlannerJourney()
+      application.plannerElement("New tag").activateForPlannerJourney()
       let name = application.textFields["saved.tag.name"]
       XCTAssertTrue(name.waitForExistence(timeout: 5))
       name.activateForPlannerJourney()

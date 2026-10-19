@@ -65,7 +65,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     let retainedSchedule = createItinerarySchedule(application)
     openItem(museumIdentifier, application: application)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.schedule.save").waitForExistence(timeout: 5))
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let itemSchedule = scheduleRows(application).firstMatch
@@ -145,7 +145,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     let itemIdentifier = createItem("Museum", notes: "Museum booking", application: application)
     let emptyIdentifier = createItinerary("Empty plan", application: application)
     openItineraryActions(application)
-    let bulk = application.plannerElement("Mark all Done")
+    let bulk = application.plannerElement("Mark all done")
     XCTAssertTrue(bulk.exists)
     XCTAssertFalse(bulk.isEnabled)
     application.plannerElement("saved.itinerary.delete").activateForPlannerJourney()
@@ -245,7 +245,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     identifier: String, description: String?
   ) {
     openItineraryActions(application)
-    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.schedule.save").waitForExistence(timeout: 5))
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     let schedule = scheduleRows(application, sourceKind: "itinerary").firstMatch
@@ -359,7 +359,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
       let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
       XCTAssertTrue(overflow.waitForExistence(timeout: 5))
       overflow.activateForPlannerJourney()
-      application.plannerElement("Add existing Item").activateForPlannerJourney()
+      application.plannerElement("Add existing item").activateForPlannerJourney()
     }
     let candidate = application.staticTexts[title].firstMatch
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))

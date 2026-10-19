@@ -55,7 +55,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
 
   private func newCategory(_ application: XCUIApplication) {
     application.plannerElement("saved.labels.new").activateForPlannerJourney()
-    let category = application.plannerElement("New Category")
+    let category = application.plannerElement("New category")
     XCTAssertTrue(category.waitForExistence(timeout: 5))
     category.activateForPlannerJourney()
   }

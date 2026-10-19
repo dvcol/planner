@@ -33,7 +33,7 @@ struct SavedItemLabelPicker: View {
         } description: {
           Text(loadingFailure)
         } actions: {
-          Button("Try Again") { Task { await loadLabels() } }
+          Button("Try again") { Task { await loadLabels() } }
         }
       } else if labels == nil {
         ProgressView("Loading \(kind.pluralTitle)")

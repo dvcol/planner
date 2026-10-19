@@ -94,7 +94,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ).firstMatch
     reveal(firstActions, application: application)
     firstActions.activateForPlannerJourney()
-    application.buttons["Remove Link"].activateForPlannerJourney()
+    application.buttons["Remove link"].activateForPlannerJourney()
     reveal(refresh, application: application)
     refresh.activateForPlannerJourney()
     let repairedPreview = XCTNSPredicateExpectation(
@@ -140,7 +140,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     }
     XCTAssertTrue(actions.exists)
     actions.activateForPlannerJourney()
-    application.buttons["Remove Link"].activateForPlannerJourney()
+    application.buttons["Remove link"].activateForPlannerJourney()
     let refresh = application.plannerElement("saved.capture.preview.refresh")
     XCTAssertTrue(refresh.waitForExistence(timeout: 5))
     refresh.activateForPlannerJourney()
@@ -447,7 +447,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     _ application: XCUIApplication, expectedTitle: String
   ) {
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
-    application.plannerElement("Edit Item").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
     let title = application.textFields["saved.item.edit.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     XCTAssertEqual(title.value as? String, expectedTitle)
