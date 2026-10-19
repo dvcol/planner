@@ -1,0 +1,12 @@
+#include "Base.xcconfig"
+
+PRODUCT_NAME = PlannerShareMobile
+PRODUCT_BUNDLE_IDENTIFIER = $(PLANNER_APPLICATION_BUNDLE_IDENTIFIER).ShareMobile
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator
+SDKROOT = iphoneos
+APPLICATION_EXTENSION_API_ONLY = YES
+SKIP_INSTALL = YES
+GENERATE_INFOPLIST_FILE = NO
+INFOPLIST_FILE = PlannerShareMobile/Info.plist
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks
+TARGETED_DEVICE_FAMILY = 1,2

@@ -12,7 +12,12 @@ struct PlannerFixtureApp: App {
   var body: some Scene {
     WindowGroup {
       Group {
-        if let store {
+        if ProcessInfo.processInfo.arguments.contains("--share-extension-fixture") {
+          PlannerShareFixtureView()
+            .environment(previews)
+            .environment(addressPreviews)
+            .environment(mapsPreviews)
+        } else if let store {
           SavedPlannerView(store: store)
             .environment(store)
             .environment(previews)
@@ -27,6 +32,9 @@ struct PlannerFixtureApp: App {
         }
       }
       .task {
+        guard !ProcessInfo.processInfo.arguments.contains("--share-extension-fixture") else {
+          return
+        }
         guard store == nil, failure == nil else { return }
         do { store = try await PlannerFixtureDataset.makeStore() } catch {
           failure = error.localizedDescription

@@ -1,0 +1,13 @@
+#include "Base.xcconfig"
+
+PRODUCT_NAME = PlannerShareMac
+PRODUCT_BUNDLE_IDENTIFIER = $(PLANNER_APPLICATION_BUNDLE_IDENTIFIER).ShareMac
+SUPPORTED_PLATFORMS = macosx
+SDKROOT = macosx
+APPLICATION_EXTENSION_API_ONLY = YES
+SKIP_INSTALL = YES
+GENERATE_INFOPLIST_FILE = NO
+INFOPLIST_FILE = PlannerShareMac/Info.plist
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks
+ENABLE_APP_SANDBOX = YES
+CODE_SIGN_ENTITLEMENTS = PlannerShareMac/PlannerShareMac.entitlements

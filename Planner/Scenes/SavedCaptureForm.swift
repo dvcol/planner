@@ -5,11 +5,13 @@ import SwiftUI
 enum SavedCaptureEntryPoint: Identifiable {
   case global
   case list(UUID)
+  case share(PlannerLoadedCaptureInputs)
 
   var id: String {
     switch self {
     case .global: "global"
     case .list(let identifier): "list.\(identifier.uuidString)"
+    case .share: "share"
     }
   }
 
@@ -30,6 +32,7 @@ struct SavedCaptureForm: View {
   let store: SavedPlannerStore
   let entryPoint: SavedCaptureEntryPoint
   let didSave: (PlannerEntityReference) -> Void
+  var didCancel: (() -> Void)? = nil
   @State private var input = ""
   @State private var draft: PlannerCaptureDraftRead?
   @State private var title = ""
@@ -60,6 +63,10 @@ struct SavedCaptureForm: View {
       Form {
         if let draft {
           reviewSections(draft)
+        } else if case .share = entryPoint {
+          Section {
+            Text("Review the shared content before adding one Item.")
+          }
         } else {
           Section {
             TextField("Text or link", text: $input, axis: .vertical)
@@ -95,7 +102,7 @@ struct SavedCaptureForm: View {
             Task {
               isWorking = true
               if let draft, !applied { await store.discardCapture(draft) }
-              dismiss()
+              if let didCancel { didCancel() } else { dismiss() }
             }
           }
           .disabled(isWorking || store.isSaving)
@@ -104,10 +111,11 @@ struct SavedCaptureForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           if draft == nil {
-            Button("Review") { Task { await prepare() } }
+            Button(entryPoint.id == "share" ? "Retry" : "Review") { Task { await prepare() } }
               .disabled(
                 !store.canCreate || isWorking
-                  || input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                  || (entryPoint.id != "share"
+                    && input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
               )
               .accessibilityIdentifier("saved.capture.review")
           } else {
@@ -124,6 +132,9 @@ struct SavedCaptureForm: View {
       }
     }
     .interactiveDismissDisabled(isWorking || store.isSaving)
+    .task {
+      if case .share = entryPoint { await prepare() }
+    }
     .task(id: destinationLoadIdentity) { await loadDestinations(identity: destinationLoadIdentity) }
     .task(id: selectedPreviewLinkIdentifier) { await lookupMaps() }
     .onChange(of: links.map(\.input)) {
@@ -450,7 +461,13 @@ struct SavedCaptureForm: View {
     guard !isWorking, let namespace = store.devicePreferenceNamespace else { return }
     isWorking = true
     defer { isWorking = false }
-    guard let prepared = await store.prepareCapture(text: input), !Task.isCancelled,
+    let captureInput: PlannerCaptureInput
+    if case .share(let loaded) = entryPoint {
+      captureInput = .loaded(loaded)
+    } else {
+      captureInput = .direct([.text(input)])
+    }
+    guard let prepared = await store.prepareCapture(input: captureInput), !Task.isCancelled,
       store.devicePreferenceNamespace == namespace
     else { return }
     captureNamespace = namespace
