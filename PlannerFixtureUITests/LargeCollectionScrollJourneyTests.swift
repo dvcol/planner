@@ -3,6 +3,115 @@ import XCTest
 #if os(iOS)
   @MainActor
   final class LargeCollectionScrollJourneyTests: XCTestCase {
+    func testEveryItemCanBeObservedThroughTheUnfilteredNativeCatalog() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "large-collection", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      openCatalog(application)
+      let first = application.savedPlannerItemRows("Scale Item 00001").firstMatch
+      XCTAssertTrue(first.waitForExistence(timeout: 30))
+      let catalog = application.collectionViews.containing(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@", "saved.item.", "Scale Item ")
+      ).firstMatch
+      XCTAssertTrue(catalog.waitForExistence(timeout: 15))
+      let expectedTitles = Set((1...5000).map { String(format: "Scale Item %05d", $0) })
+      var observedIdentifiersByTitle: [String: String] = [:]
+      first.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Scale notes 1"].waitForExistence(timeout: 10))
+      let completion = application.descendants(matching: .any).matching(
+        identifier: "saved.item.completion"
+      ).firstMatch
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      revealCatalog(application, contents: catalog)
+      XCTAssertTrue(first.waitForExistence(timeout: 10))
+      XCTAssertTrue(first.isHittable)
+      capture("Every Item traversal begins with the unfiltered first source")
+      let last = application.savedPlannerItemRows("Scale Item 05000").firstMatch
+      for attempt in 0...5000 {
+        var snapshot = try catalog.snapshot()
+        var rows = visibleItemSnapshots(snapshot, within: snapshot.frame)
+        if rows.contains(where: { $0.elementType == .progressIndicator }) {
+          let loaded = NSPredicate { _, _ in
+            guard let current = try? catalog.snapshot() else { return false }
+            return !self.visibleItemSnapshots(current, within: current.frame).contains {
+              $0.elementType == .progressIndicator
+            }
+          }
+          XCTAssertEqual(
+            XCTWaiter.wait(
+              for: [XCTNSPredicateExpectation(predicate: loaded, object: catalog)], timeout: 10),
+            .completed)
+          snapshot = try catalog.snapshot()
+          rows = visibleItemSnapshots(snapshot, within: snapshot.frame)
+        }
+        let sourceRows = rows.filter { $0.elementType == .button }.sorted {
+          $0.frame.midY < $1.frame.midY
+        }
+        let titles = sourceRows.map(\.label)
+        XCTAssertEqual(titles, titles.sorted())
+        for row in sourceRows {
+          XCTAssertTrue(expectedTitles.contains(row.label))
+          if let retainedIdentifier = observedIdentifiersByTitle[row.label] {
+            XCTAssertEqual(row.identifier, retainedIdentifier)
+            continue
+          }
+          let element = catalog.buttons.matching(identifier: row.identifier).firstMatch
+          guard element.isHittable else { continue }
+          observedIdentifiersByTitle[row.label] = row.identifier
+        }
+        if attempt.isMultiple(of: 10) {
+          print(
+            "Every Item traversal attempt \(attempt): \(observedIdentifiersByTitle.count) identities; last visible \(titles.last ?? "none")"
+          )
+        }
+        if last.exists && last.isHittable && snapshot.frame.contains(last.frame) { break }
+        catalog.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.72))
+          .press(
+            forDuration: 0.05,
+            thenDragTo: catalog.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.42)))
+      }
+      let observed = XCTAttachment(
+        string: observedIdentifiersByTitle.sorted { $0.key < $1.key }.map { entry in
+          "\(entry.key): \(entry.value)"
+        }.joined(separator: "\n"))
+      observed.name = "Native Item traversal observed title and identity pairs"
+      observed.lifetime = .keepAlways
+      add(observed)
+      XCTAssertEqual(Set(observedIdentifiersByTitle.keys), expectedTitles)
+      XCTAssertEqual(Set(observedIdentifiersByTitle.values).count, 5000)
+      XCTAssertTrue(last.isHittable)
+      let lastIdentifier = try XCTUnwrap(observedIdentifiersByTitle["Scale Item 05000"])
+      XCTAssertEqual(last.identifier, lastIdentifier)
+      capture("Every Item traversal observes all five thousand source identities")
+      last.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Far-end collection marker"].waitForExistence(timeout: 10))
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      capture("Every Item traversal opens the original far-end source")
+    }
+
+    private func visibleItemSnapshots(
+      _ snapshot: any XCUIElementSnapshot, within viewport: CGRect
+    ) -> [any XCUIElementSnapshot] {
+      var rows: [any XCUIElementSnapshot] = []
+      if viewport.contains(snapshot.frame) && !snapshot.frame.isEmpty {
+        let isSource =
+          snapshot.elementType == .button
+          && snapshot.identifier.hasPrefix("saved.item.") && snapshot.label.hasPrefix("Scale Item ")
+        let isLoading =
+          snapshot.elementType == .progressIndicator && snapshot.label == "Loading Item"
+        if isSource || isLoading { rows.append(snapshot) }
+      }
+      for child in snapshot.children {
+        rows.append(contentsOf: visibleItemSnapshots(child, within: viewport))
+      }
+      return rows
+    }
+
     func testUnfilteredCatalogScrollsToBothEndsAndReopensTheSameSource() {
       continueAfterFailure = false
       print("XCTest Fast touch velocity: \(XCUIGestureVelocity.fast.rawValue)")
@@ -11,8 +120,7 @@ import XCTest
         "--fixture", "large-collection", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 120))
-      application.openPlannerSection("Items")
+      openCatalog(application)
       let first = application.savedPlannerItemRows("Scale Item 00001").firstMatch
       XCTAssertTrue(first.waitForExistence(timeout: 30))
       XCTAssertTrue(first.isHittable)
@@ -74,8 +182,7 @@ import XCTest
         "--fixture", "large-collection", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 120))
-      application.openPlannerSection("Items")
+      openCatalog(application)
       let first = application.savedPlannerItemRows("Scale Item 00001").firstMatch
       XCTAssertTrue(first.waitForExistence(timeout: 30))
       let firstIdentifier = first.identifier
@@ -199,12 +306,42 @@ import XCTest
       XCTFail("The unfiltered catalog did not expose \(target.label) after native touch scrolling.")
     }
 
+    private func openCatalog(_ application: XCUIApplication) {
+      let navigationReady = NSPredicate { _, _ in
+        application.buttons["Items"].firstMatch.exists
+          || application.buttons["Show Sidebar"].firstMatch.exists
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: navigationReady, object: application)],
+          timeout: 120), .completed)
+      application.openPlannerSection("Items")
+    }
+
+    private func hasVisibleSources(in contents: XCUIElement) -> Bool {
+      guard contents.exists else { return false }
+      let viewport = contents.frame
+      let sources = contents.buttons.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@", "saved.item.", "Scale Item ")
+      ).allElementsBoundByIndex
+      return sources.contains { source in
+        source.isHittable && viewport.contains(source.frame)
+      }
+    }
+
     private func revealCatalog(_ application: XCUIApplication, contents: XCUIElement) {
-      if contents.exists && contents.isHittable { return }
+      if hasVisibleSources(in: contents) { return }
       let back = application.buttons["BackButton"].firstMatch
-      if back.exists { back.activateForPlannerJourney() }
+      if back.exists && back.isHittable {
+        back.activateForPlannerJourney()
+      } else {
+        let sidebar = application.buttons["Show Sidebar"].firstMatch
+        XCTAssertTrue(sidebar.waitForExistence(timeout: 10))
+        sidebar.activateForPlannerJourney()
+      }
       XCTAssertTrue(contents.waitForExistence(timeout: 10))
-      XCTAssertTrue(contents.isHittable)
+      XCTAssertTrue(hasVisibleSources(in: contents), application.debugDescription)
     }
 
     private func capture(_ name: String) {
