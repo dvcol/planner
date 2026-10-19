@@ -137,3 +137,7 @@ The [implementation report](prototypes/native-association-undo.md) records the a
 - Q110 A creates one atomic association-removal history group per editor Save. Restore original identities, link order and owned fields together, preserving edited notes and independent additions. Reject the whole unsafe group. Label association removal remains distinct from shared-label Delete.
 
 Q108's tests may proceed at the approved boundary. Q109/Q110's concrete capability/result/restore contract and literal fixtures still require review before their implementation. These accepted choices add no association Redo, source-Delete recovery or persistent editing history. Signing, physical sync/account/Share, scale and final whole-app polish retain their separate gates.
+
+## Current unanswered frontier
+
+Q111 reviews the [concrete compound-association Undo contract](native-compound-association-undo-contract-review.md), including Move destination guards, whole-group issuance/restoration, bookmark anchor placement and literal fixtures. A approves the proposal; B requests specific changes before implementation. Q108 controller qualification can continue independently. Q108, Q109 and Q110 are answered and must not be asked again.
