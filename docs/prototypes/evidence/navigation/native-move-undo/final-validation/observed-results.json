@@ -1,0 +1,82 @@
+[
+  {
+    "epoch": "move-native-history-first-green",
+    "exitCode": 0,
+    "executedSummaries": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.136 (0.136) seconds",
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.136 (0.136) seconds",
+      "Executed 1 test, with 0 failures (0 unexpected) in 0.136 (0.137) seconds"
+    ]
+  },
+  {
+    "epoch": "move-native-history-http-regressions",
+    "exitCode": 0,
+    "executedSummaries": [
+      "Executed 6 tests, with 0 failures (0 unexpected) in 0.745 (0.747) seconds",
+      "Executed 6 tests, with 0 failures (0 unexpected) in 0.745 (0.747) seconds",
+      "Executed 6 tests, with 0 failures (0 unexpected) in 0.745 (0.748) seconds",
+      "\u2714 Test run with 13 tests in 2 suites passed after 1.256 seconds."
+    ]
+  },
+  {
+    "epoch": "move-native-navigation-red-build",
+    "exitCode": 0,
+    "executedSummaries": []
+  },
+  {
+    "epoch": "move-native-undo-final-mac-build",
+    "exitCode": 0,
+    "executedSummaries": []
+  },
+  {
+    "epoch": "move-native-undo-final-mobile-build",
+    "exitCode": 0,
+    "executedSummaries": []
+  },
+  {
+    "epoch": "move-native-undo-qualified-mobile-build",
+    "exitCode": 0,
+    "executedSummaries": []
+  },
+  {
+    "epoch": "move-native-undo-red-build",
+    "exitCode": 0,
+    "executedSummaries": []
+  },
+  {
+    "epoch": "phone-move-undo-final",
+    "exitCode": 0,
+    "executedSummaries": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 109.624 (109.630) seconds",
+      "Executed 1 test, with 0 failures (0 unexpected) in 109.624 (109.637) seconds",
+      "Executed 1 test, with 0 failures (0 unexpected) in 109.624 (109.638) seconds"
+    ]
+  },
+  {
+    "epoch": "phone-move-undo-missing-registration",
+    "exitCode": 65,
+    "executedSummaries": [
+      "Executed 1 test, with 1 failure (0 unexpected) in 75.683 (75.695) seconds",
+      "Executed 1 test, with 1 failure (0 unexpected) in 75.683 (75.699) seconds",
+      "Executed 1 test, with 1 failure (0 unexpected) in 75.683 (75.700) seconds"
+    ]
+  },
+  {
+    "epoch": "phone-move-undo-navigation-qualified-red",
+    "exitCode": 65,
+    "executedSummaries": [
+      "Executed 1 test, with 1 failure (0 unexpected) in 68.029 (68.034) seconds",
+      "Executed 1 test, with 1 failure (0 unexpected) in 68.029 (68.035) seconds",
+      "Executed 1 test, with 1 failure (0 unexpected) in 68.029 (68.036) seconds"
+    ]
+  },
+  {
+    "epoch": "tablet-move-undo-final",
+    "exitCode": 0,
+    "executedSummaries": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 120.458 (120.465) seconds",
+      "Executed 1 test, with 0 failures (0 unexpected) in 120.458 (120.465) seconds",
+      "Executed 1 test, with 0 failures (0 unexpected) in 120.458 (120.467) seconds"
+    ]
+  }
+]

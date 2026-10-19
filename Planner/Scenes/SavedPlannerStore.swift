@@ -622,12 +622,12 @@ final class SavedPlannerStore {
   func moveMembership(
     _ membershipIdentifier: UUID, listIdentifier: UUID, destinationListIdentifier: UUID,
     operationIdentifier: UUID
-  ) async -> Bool {
-    await executeChange(
+  ) async -> PlannerOperationResult? {
+    await executeChangeResponse(
       .moveMembership(
         listId: listIdentifier, membershipId: membershipIdentifier,
         destinationListId: destinationListIdentifier, placement: .last),
-      operationId: operationIdentifier) != nil
+      operationId: operationIdentifier)
   }
 
   func setAppearanceCompletion(_ appearance: PlannerAppearance, done: Bool) async -> Bool {

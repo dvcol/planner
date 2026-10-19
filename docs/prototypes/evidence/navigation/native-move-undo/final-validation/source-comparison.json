@@ -1,0 +1,106 @@
+[
+  {
+    "epoch": "move-native-history-first-green",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "move-native-history-http-regressions",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "move-native-navigation-red-build",
+    "productionInputs": 149,
+    "differentProductionInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ],
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+    ]
+  },
+  {
+    "epoch": "move-native-undo-final-mac-build",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "move-native-undo-final-mobile-build",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": [
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+    ]
+  },
+  {
+    "epoch": "move-native-undo-qualified-mobile-build",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "move-native-undo-red-build",
+    "productionInputs": 149,
+    "differentProductionInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ],
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-move-undo-final",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": []
+  },
+  {
+    "epoch": "phone-move-undo-missing-registration",
+    "productionInputs": 149,
+    "differentProductionInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ],
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+    ]
+  },
+  {
+    "epoch": "phone-move-undo-navigation-qualified-red",
+    "productionInputs": 149,
+    "differentProductionInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ],
+    "allDifferentCurrentInputs": [
+      "Planner/Scenes/SavedMoveItemForm.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift"
+    ]
+  },
+  {
+    "epoch": "tablet-move-undo-final",
+    "productionInputs": 149,
+    "differentProductionInputs": [],
+    "allDifferentCurrentInputs": []
+  }
+]

@@ -311,6 +311,72 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
   }
 
+  func testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let row = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let originalIdentifier = row.identifier
+    let originalCompletion = application.buttons[
+      originalIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    originalCompletion.activateForPlannerJourney()
+    XCTAssertTrue(originalCompletion.waitForPlannerValue("Completed"))
+    createList("Wishlist", application: application)
+    openList("Tokyo Food", application: application)
+    row.activateForPlannerJourney()
+    application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+    application.plannerElement("Move to List").activateForPlannerJourney()
+    let destination = moveDestination("Wishlist", application: application)
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    application.plannerElement("saved.membership.move").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      XCTAssertTrue(
+        application.plannerElement("saved.association.undo").waitForExistence(timeout: 5))
+    #endif
+    recordScreenshot(application, name: "Confirmed Move offers native Undo Move Item")
+    openList("Wishlist", application: application)
+    XCTAssertNotEqual(row.identifier, originalIdentifier)
+    let destinationCompletion = application.buttons[
+      row.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    #if os(macOS)
+      application.typeKey("z", modifierFlags: .command)
+    #else
+      application.plannerElement("saved.association.undo").activateForPlannerJourney()
+    #endif
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(row.exists)
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(row.identifier, originalIdentifier)
+    XCTAssertTrue(originalCompletion.waitForPlannerValue("Completed"))
+    recordScreenshot(application, name: "Undo Move restores the original completed appearance")
+    row.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(row.identifier, originalIdentifier)
+    XCTAssertTrue(originalCompletion.waitForPlannerValue("Completed"))
+    openSection("Lists", application: application)
+    let emptiedDestination = application.savedPlannerListRow("Wishlist")
+    revealSidebarIfNeeded(application, element: emptiedDestination)
+    XCTAssertTrue(emptiedDestination.waitForExistence(timeout: 10))
+    emptiedDestination.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(application.plannerElement("saved.association.undo").exists)
+    recordScreenshot(
+      application, name: "Relaunch retains the reversed Move and expires Undo history")
+  }
+
   func testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

@@ -1,0 +1,57 @@
+{
+  "originals": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-move-undo-final/089EEA11-E29A-464B-953A-330ADA4810F8.png",
+      "sha256": "e3eade88d352b1740d9927a2c43bc64cff9156da6965e375cad865ccead57d1c",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Relaunch retains the reversed Move and expires Undo history_0_A1D6422D-DEC9-44FE-B93F-0A669A4B33F6.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-move-undo-final/D0F1BA39-581A-4658-98DF-4387E176A3AA.png",
+      "sha256": "501c88f3386cbf6be4b4a62cd1499d51610869f8c4d80970bb9a31c541136510",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Undo Move restores the original completed appearance_0_908BA609-1E34-4EB7-BA74-7C0DCEE96717.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-move-undo-final/0E9E3B0A-9B15-40E8-AB5F-7FFA26FAC0B3.png",
+      "sha256": "89cbff61d382d15a0eb41996ecd082fc74ac6b5928728f97c1c7e01f5d74dcdb",
+      "width": 1206,
+      "height": 2622,
+      "inspectedOriginal": true,
+      "caption": "Confirmed Move offers native Undo Move Item_0_D5C9D732-2532-4C25-85AA-529CBE396116.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-move-undo-final/4A57D6B9-7645-473A-A2B1-5A9414EE2F3F.png",
+      "sha256": "5b387867479f12da6cfe97882fc75f70d36f6120cf809b8cb4dd3cb0ea36b7a9",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Relaunch retains the reversed Move and expires Undo history_0_5F080937-746D-419B-84DB-26A8BDD1388F.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-move-undo-final/45E2682E-679D-4059-94D4-D0CAA913B049.png",
+      "sha256": "ea9db2a810c855f03baca5327f604063944a5e70c36a2e17b24462b7182ae9fe",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Undo Move restores the original completed appearance_0_86984CF5-8294-49EF-B1E6-5BFFD9453950.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-move-undo-final/4EA292C9-CD4D-426B-9427-67A78A94DEDB.png",
+      "sha256": "0f722b306f2c919abc01e97848da12bf56fb9622b67de99e305f57253e301575",
+      "width": 1640,
+      "height": 2360,
+      "inspectedOriginal": true,
+      "caption": "Confirmed Move offers native Undo Move Item_0_54823E80-E91E-46CA-BC03-FE20AB238FF6.png"
+    }
+  ],
+  "observations": [
+    "Both appearances show native Undo Move Item, the restored checked appearance/progress and an empty destination after relaunch.",
+    "The phone relaunch capture shows a partially clipped navigation title behind toolbar controls; retain for final UI polish.",
+    "The iPad unselected detail placeholder is intentional. No measured contrast, Increase Contrast or whole-app accessibility acceptance is claimed."
+  ]
+}

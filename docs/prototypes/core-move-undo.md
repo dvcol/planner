@@ -39,3 +39,5 @@ The native caller still returns only a Boolean, so its Undo registration must be
 Core now implements the represented atomic inverse, validation, original/independent contexts, truthful save failure, recovery and replay at the approved public seam. Native Move result propagation, named window/mobile history, native failure presentation and agent admission regressions remain part of the next slice. Grouped owned-association restoration is approved but not implemented by this change.
 
 Local Core and compiler results do not establish CloudKit convergence, physical account/Share behavior, actual Mac window/text-field UI, signing, scale or final whole-app polish. Those owning-map gates remain open.
+
+The later [native whole-Move Undo checkpoint](native-move-undo.md) supplies its own caller, controller, HTTP and represented phone/iPad qualification. This Core report retains the scope and source epochs above.

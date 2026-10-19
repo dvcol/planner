@@ -1,6 +1,6 @@
 # Remaining original-association Undo decisions
 
-Status: Q109 A and Q110 A approved by the human on 19 October 2026. Reverse a whole Move atomically and issue one atomic association-removal history group per editor Save. The concrete extension contract and literal fixtures still require review before its tests or implementation. Q108 A separately approves the existing production history-controller test boundary.
+Status: Q109 A and Q110 A approved by the human on 19 October 2026. Reverse a whole Move atomically and issue one atomic association-removal history group per editor Save. Q111 A also approves the concrete extension contract and literal fixtures. Q108 A separately approves the production history-controller test boundary. Move has its linked Core/native checkpoints; grouped owned-association implementation remains open.
 
 ## Context and goal
 
@@ -30,7 +30,7 @@ Neither choice restores deleted shared Items, Lists, Itineraries, Categories or 
 
 ## Next contract and definition of ready
 
-The [Q111 concrete contract](native-compound-association-undo-contract-review.md) now proposes the snapshot/result/restore extension and literal fixtures for review before tests or implementation. The current companion/history deduplicates one snapshot per closing operation and has only membership/entry record variants. The proposal defines one operation's issued capability, replay, namespace/lifetime guards, native naming and failure outcomes without persistent history or adapter/backup exposure.
+The approved [Q111 concrete contract](native-compound-association-undo-contract-review.md) defines the snapshot/result/restore extension and literal fixtures. The [Core Move checkpoint](prototypes/core-move-undo.md) and [native Move checkpoint](prototypes/native-move-undo.md) implement and qualify their represented cases. One operation's issued capability, replay, namespace/lifetime guards, native naming and failure outcomes retain the accepted current-run model. Grouped bookmark/label restoration still needs implementation.
 
 The next review must settle bookmark order alongside retained/new links and the exact guards on a newly created Move destination. Keep original public identities and closed predecessor lifetimes separate from fresh authorized restoration lifetimes. Define the effect on contextual children before writing its tests.
 

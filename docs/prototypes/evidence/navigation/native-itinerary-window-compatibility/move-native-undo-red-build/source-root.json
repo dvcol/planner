@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "7ee1630306a8d6e1b3289eb812f202956ff30f35",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerAssociationUndoValues.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationMoveUndoTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoSaveFailureTests.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+  ]
+}

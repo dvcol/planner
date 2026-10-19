@@ -6,6 +6,41 @@ import XCTest
 
 @MainActor
 final class SavedAssociationUndoHistoryTests: XCTestCase {
+  func testNativeMoveResponseRegistersOneWholeInverseWithItsActionName() async throws {
+    let fixture = try await Fixture()
+    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let creation = await fixture.planner.execute(
+      .init(
+        operationId: UUID(), session: fixture.session,
+        command: .createList(content: .init(name: "Destination"))))
+    guard case .applied(let created, .complete) = creation.outcome else {
+      throw CancellationError()
+    }
+    let destination = try XCTUnwrap(created.generated.first)
+    let response = await fixture.store.moveMembership(
+      fixture.membershipIdentifiers[0], listIdentifier: fixture.list.id,
+      destinationListIdentifier: destination.id, operationIdentifier: UUID())
+    let moved = try XCTUnwrap(response)
+    guard case .applied(_, .complete) = moved.outcome else { throw CancellationError() }
+    let history = SavedAssociationUndoHistory()
+    let manager = UndoManager()
+    manager.groupsByEvent = false
+    defer { history.clear() }
+    manager.beginUndoGrouping()
+    history.record(moved, name: "Move Item", store: fixture.store, manager: manager)
+    manager.endUndoGrouping()
+    XCTAssertEqual(manager.undoActionName, "Move Item")
+    XCTAssertEqual(history.actionTitle, "Undo Move Item")
+    manager.undo()
+    try await waitForRestoration(history)
+    let restored = try await fixture.memberships().sorted { $0.rank < $1.rank }
+    XCTAssertEqual(restored.map(\.id), fixture.membershipIdentifiers)
+    XCTAssertTrue(restored.allSatisfy { $0.list == fixture.list && $0.localDone })
+    XCTAssertFalse(manager.canUndo)
+    XCTAssertFalse(manager.canRedo)
+    XCTAssertNil(history.actionTitle)
+  }
+
   func testSeparateHistoriesRestoreOnlyTheirOwnRemovalAndPreserveOrdinaryUndo() async throws {
     let fixture = try await Fixture()
     defer { try? FileManager.default.removeItem(at: fixture.directory) }

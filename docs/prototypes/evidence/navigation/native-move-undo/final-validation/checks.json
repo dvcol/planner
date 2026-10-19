@@ -1,0 +1,50 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedPlannerStore.swift",
+        "Planner/Scenes/SavedMoveItemForm.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerMCPTests/SavedAssociationUndoHistoryTests.swift",
+        "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerItemWindowMarkdownlint.json",
+        "docs/prototypes/native-move-undo.md",
+        "docs/prototypes/core-move-undo.md",
+        "docs/open-decisions.md",
+        "docs/native-owned-association-undo-proposal.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "localLinksChecked": 81,
+  "missingLinks": [],
+  "originalImagesInspected": 6,
+  "finalSourceEpochs": [
+    "move-native-history-http-regressions",
+    "move-native-undo-final-mac-build",
+    "move-native-undo-qualified-mobile-build",
+    "phone-move-undo-final",
+    "tablet-move-undo-final"
+  ]
+}

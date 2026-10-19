@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4A57D6B9-7645-473A-A2B1-5A9414EE2F3F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Relaunch retains the reversed Move and expires Undo history_0_5F080937-746D-419B-84DB-26A8BDD1388F.png",
+    "timestamp": 1792378522.4,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "45E2682E-679D-4059-94D4-D0CAA913B049.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Undo Move restores the original completed appearance_0_86984CF5-8294-49EF-B1E6-5BFFD9453950.png",
+    "timestamp": 1792378498.213,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4EA292C9-CD4D-426B-9427-67A78A94DEDB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Confirmed Move offers native Undo Move Item_0_54823E80-E91E-46CA-BC03-FE20AB238FF6.png",
+    "timestamp": 1792378477.319,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination()"
+  }
+]

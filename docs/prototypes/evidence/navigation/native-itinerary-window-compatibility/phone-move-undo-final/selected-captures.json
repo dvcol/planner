@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "089EEA11-E29A-464B-953A-330ADA4810F8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Relaunch retains the reversed Move and expires Undo history_0_A1D6422D-DEC9-44FE-B93F-0A669A4B33F6.png",
+    "timestamp": 1792378501.605,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D0F1BA39-581A-4658-98DF-4387E176A3AA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Undo Move restores the original completed appearance_0_908BA609-1E34-4EB7-BA74-7C0DCEE96717.png",
+    "timestamp": 1792378478.027,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0E9E3B0A-9B15-40E8-AB5F-7FFA26FAC0B3.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Confirmed Move offers native Undo Move Item_0_D5C9D732-2532-4C25-85AA-529CBE396116.png",
+    "timestamp": 1792378457.88,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoMoveRestoresOriginalDoneAppearanceAndRemovesItsCreatedDestination()"
+  }
+]
