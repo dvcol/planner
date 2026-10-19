@@ -1,6 +1,6 @@
 # Native association history qualification
 
-Status: proposed for Q108. Q106/Q107 product behavior and the existing Core/native UI boundaries remain accepted.
+Status: Q108 A approved by the human on 19 October 2026. Q106/Q107 product behavior and the existing Core/native UI boundaries remain accepted. Execution evidence follows implementation; approval alone does not qualify the controller.
 
 ## Context, goal and starting state
 
