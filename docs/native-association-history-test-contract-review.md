@@ -29,3 +29,5 @@ Use bounded asynchronous waits against observable results. Keep real Mac window/
 ## Definition of done
 
 The additional app-hosted tests execute against actual production history, Foundation and durable storage. They preserve independent data and ordinary Undo targets, qualify retry/serial handling and pass affected lint/build checks. Publish exact results and source hashes. Mac UI startup, real window/text-field behavior, signing and physical-device gates remain explicit until their own journeys pass.
+
+The [Q108 execution report](prototypes/native-association-history-controller.md) records the five passing controller functions, their failed diagnostic attempts and exact evidence. Production behavior is unchanged; actual native window/text-field checks remain separate.
