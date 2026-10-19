@@ -1,0 +1,132 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5DE9BABE-C19E-4168-9D46-6B9F6C3D4BCD.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_C4EECEF9-7C92-4C25-92A5-74A213CF59E6.PlannerFixtures",
+    "timestamp": 1792402482.324,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0A98C2C6-C13A-4E37-BB8D-3745F7461345.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_F9569695-3118-4F85-A256-F6618F3A8C5A.txt",
+    "timestamp": 1792402482.18,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CB548255-C4BF-46AC-8B0A-443DFEBE9F33.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_507F3E71-BB99-4BDD-82DF-D3101CAFE939.txt",
+    "timestamp": 1792402481.214,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "69C26B0F-37FC-474F-BB9E-0193AA860A0A.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_A9B10F0C-0EF5-4C55-A0CE-35914AAFADC9.txt",
+    "timestamp": 1792402480.233,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5C87DF8A-B689-47F4-820B-1B293E16BEE9.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_E35739C5-5C00-4413-BEAF-6CA759F4620E.txt",
+    "timestamp": 1792402479.248,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1E1B6CC0-8B3B-4A43-9846-5C993A209911.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_21A1544E-37CB-4659-AACC-35F2E7221C21.txt",
+    "timestamp": 1792402478.258,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1CE5AC1A-BBFB-4A5F-AED4-B38D1C5A0364.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_E02911DA-3376-403E-B638-6117D8818C37.txt",
+    "timestamp": 1792402477.255,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F8973D8D-F8E7-4EA0-B5EF-B42174C96BF2.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_BCA1EBA0-F4B9-4B2A-B0A2-EC3311FF398F.txt",
+    "timestamp": 1792402476.259,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "406FC094-48D7-4E4B-88AE-F17D68824E6C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_48EDF230-BAA2-4BFD-9797-DEE135590A43.txt",
+    "timestamp": 1792402475.162,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2E431310-F54B-4C62-9A61-B205DF5A004A.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_DC7AAE26-77DF-4A2D-B129-B7BBB73E964B.txt",
+    "timestamp": 1792402474.197,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BAD00FD4-9FE9-4F6F-8758-1A07A8364A2B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.item.completion\" Button`_0_73241866-3D2C-4DB7-9875-15333F8EF3CD.txt",
+    "timestamp": 1792402473.207,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6B646286-BA66-4F8C-891F-62CD58652E4E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Applied Share must expose incomplete recovery before finishing_0_95324092-0648-419F-BE67-011FC07A4AB9.png",
+    "timestamp": 1792402463.288,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DB7BD227-AB0F-4AC7-AD53-AB4247AF7B95.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share exposes the existing recovery gate before capture_0_68C9D433-8463-4C73-90DA-F0B673C43A25.png",
+    "timestamp": 1792402489.467,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareWithExistingIncompleteRecoveryExplainsTheGateWithoutOfferingCapture()"
+  }
+]

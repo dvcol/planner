@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3BFD6E4F-A019-4350-A8F8-774564968E57.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Finishing incomplete Share retains one applied Item_0_DDD850A7-1A15-467D-B872-9D3BA1EDBEDA.png",
+    "timestamp": 1792402253.236,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "27F5EAD9-74B9-45CD-8851-ACDA69C3A432.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Applied Share must expose incomplete recovery before finishing_0_2E5A2CBD-2ED9-4994-A48F-7DC37F6DB616.png",
+    "timestamp": 1792402244.012,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  }
+]

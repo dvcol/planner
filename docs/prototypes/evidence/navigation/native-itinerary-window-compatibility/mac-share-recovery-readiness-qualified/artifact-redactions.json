@@ -1,0 +1,23 @@
+[
+  {
+    "file": "46AECD78-3FBE-4B90-A30F-3A733D0801C4.txt.gz",
+    "originalSHA256": "5e63c79d9edf25e3e9ba7dcc5da2173faccdc6c8bfdf85095111d518b66202e2",
+    "scopedSHA256": "e594a5dd49afa60942279878d5248a314dd52ed520914147a6c0061e13fc303b",
+    "omitted": "Unrelated system Apple menu, including global recent applications and documents.",
+    "originalRetainedAt": "/private/tmp/PlannerItineraryCompatibilityAttachments-mac-share-recovery-readiness-qualified/46AECD78-3FBE-4B90-A30F-3A733D0801C4.txt"
+  },
+  {
+    "file": "5DDEE771-FF57-494D-B5DC-E9A8687BA7E1.txt.gz",
+    "originalSHA256": "472efd5beaaed81bad04636346a3a74b8a3339fb8e9488570433c7fca65667a9",
+    "scopedSHA256": "4efe05aad333a9807c1912dec6e57168167914b54ff907be043c396f10794668",
+    "omitted": "Unrelated system Apple menu, including global recent applications and documents.",
+    "originalRetainedAt": "/private/tmp/PlannerItineraryCompatibilityAttachments-mac-share-recovery-readiness-qualified/5DDEE771-FF57-494D-B5DC-E9A8687BA7E1.txt"
+  },
+  {
+    "file": "C2B72AFD-C55F-4B37-8F37-A3B5CA304194.txt.gz",
+    "originalSHA256": "492c43bba3c793721e7074cbfed3b69488424858690b65bfb88439ad6a33c199",
+    "scopedSHA256": "c84a72252b1387c0f42840de814c94ff6d1be8531f82c93488d77514dc7d1c97",
+    "omitted": "Unrelated system Apple menu, including global recent applications and documents.",
+    "originalRetainedAt": "/private/tmp/PlannerItineraryCompatibilityAttachments-mac-share-recovery-readiness-qualified/C2B72AFD-C55F-4B37-8F37-A3B5CA304194.txt"
+  }
+]

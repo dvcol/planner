@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3BA98A3E-2659-4CD9-B91C-A2DD57ABCCAD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Finishing incomplete Share retains one applied Item_0_BF0B4F1F-DF72-42E3-98F7-28610B19CB29.png",
+    "timestamp": 1792402258.464,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1454EE2E-7712-4132-B154-743280C0300D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Applied Share must expose incomplete recovery before finishing_0_C72E65DD-601E-47B5-99E3-47472531B90A.png",
+    "timestamp": 1792402246.096,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  }
+]

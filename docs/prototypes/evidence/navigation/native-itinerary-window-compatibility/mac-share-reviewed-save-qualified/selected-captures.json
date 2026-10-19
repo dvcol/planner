@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E53873B2-9A36-4CA6-A5D2-8210F2D11A37.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed Share saves one Item with its original link_0_673D1205-B8B1-429C-9ABE-56B16B1F6A2B.png",
+    "timestamp": 1792403700.994,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "12B8C1E4-876A-4DB0-AD8A-91B96702536E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Share reviews held prose and the original link_0_02200D24-7602-4EB3-B7F0-E34A91D0A12D.png",
+    "timestamp": 1792403677.944,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  }
+]

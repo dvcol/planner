@@ -83,15 +83,21 @@ struct SavedCaptureForm: View {
             )
           }
         }
-        if let message = store.alertMessage {
-          Section {
-            Label(message, systemImage: "exclamationmark.triangle")
-          }
-        }
       }
       .formStyle(.grouped)
       .accessibilityIdentifier("saved.capture.form")
       .disabled(isWorking || store.isSaving || applied)
+      .safeAreaInset(edge: .top, spacing: 0) {
+        if let message = store.alertMessage {
+          Label(message, systemImage: "exclamationmark.triangle")
+            .font(.callout)
+            .foregroundStyle(.primary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .background(.background)
+            .accessibilityIdentifier("saved.capture.failure")
+        }
+      }
       .navigationTitle(draft == nil ? "Capture Text or Link" : "Review Capture")
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
@@ -574,12 +580,14 @@ struct SavedCaptureForm: View {
     switch await store.applyReviewedChange(prepared, operationIdentifier: operationIdentifier) {
     case .applied(let result):
       applied = true
-      UserDefaults.standard.set(selectedListIdentifiers.map(\.uuidString), forKey: preferenceKey)
+      if !store.recoveryBlocked, store.alertMessage == nil {
+        UserDefaults.standard.set(selectedListIdentifiers.map(\.uuidString), forKey: preferenceKey)
+      }
       let source =
         reuseIdentifier.map { PlannerEntityReference(kind: .item, id: $0) }
         ?? result.generated.first { $0.kind == .item }
       if let source { didSave(source) }
-      if store.alertMessage == nil { dismiss() }
+      if !store.recoveryBlocked, store.alertMessage == nil { dismiss() }
     case .reviewChanged:
       reviewChanged = true
     case .failed: break

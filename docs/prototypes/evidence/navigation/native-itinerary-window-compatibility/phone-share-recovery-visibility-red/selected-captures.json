@@ -1,0 +1,112 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "94E3FE37-42C8-4985-8DBA-33773556E83E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_1FA40D4C-B2E3-4062-AA5A-93FC8917373E.PlannerFixtures",
+    "timestamp": 1792402094.838,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "322AF14B-CA7F-43CD-BB23-C591E1B02B61.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_D903AE4D-5DEE-4156-89F4-526504851D0E.txt",
+    "timestamp": 1792402094.742,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8EE929BF-CD04-4D08-9BB1-ED6261B034FF.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_D7B6C761-AC81-4519-8BE0-7083B47DC060.txt",
+    "timestamp": 1792402093.831,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9616387B-2603-46E2-9368-5DB0CAEC26CF.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_DA4A6D15-83AB-4580-8D1E-2CD0EA59A2E2.txt",
+    "timestamp": 1792402092.746,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E60AA338-B6DC-4324-8471-4C58A65D8DFF.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_8C92F246-0931-453C-8124-087BE2461CCA.txt",
+    "timestamp": 1792402091.781,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "846650B6-983F-4D2C-B6D0-F2D75F85395A.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_5F03B673-CDF5-4D85-81D6-3EE93E7F03E0.txt",
+    "timestamp": 1792402090.792,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7E9D4E50-4D00-4B7E-B8E4-A1575CDA9EB3.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_E728A883-6B53-4CD9-BA70-EDA89F2287B7.txt",
+    "timestamp": 1792402089.797,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5167729E-D1F7-47C2-9DF0-B6D1AD503F21.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_34920626-BC70-47D1-BF62-5179F645AD8E.txt",
+    "timestamp": 1792402088.824,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9C1C96B1-F6FF-4F98-A2C1-5EB49F88200B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_E5071F69-A7F6-4C91-9C53-03FD493287DE.txt",
+    "timestamp": 1792402087.74,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "2F3E90EE-A4EE-4EF7-9604-99187C920070.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_8B89D57C-E5BA-4035-900C-65D4DE4E31E0.txt",
+    "timestamp": 1792402086.76,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AEB34047-4142-46C9-9C65-34D22ECEF64D.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Your change is in local storage, but its recovery copy is incomplete. Further changes are paused.\" StaticText`_0_60E2D4FD-CD44-4151-AFB4-4C26DAD7226D.txt",
+    "timestamp": 1792402085.768,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  }
+]

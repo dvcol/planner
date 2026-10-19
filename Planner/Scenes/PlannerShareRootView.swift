@@ -50,7 +50,7 @@ struct PlannerShareRootView: View {
         .fileReadNoPermission,
         userInfo: [
           NSLocalizedDescriptionKey:
-            "Shared storage is not configured or accessible. Open Planner to complete setup."
+            "Share cannot access Planner's data. Add the content in Planner."
         ])
     }
     let plannerDirectory = directory.appending(path: "Planner", directoryHint: .isDirectory)

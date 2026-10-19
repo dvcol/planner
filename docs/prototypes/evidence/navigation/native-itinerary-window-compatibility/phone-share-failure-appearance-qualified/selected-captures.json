@@ -1,0 +1,72 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "19B27389-7587-43DF-8142-534F10DAB15A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed Share saves one Item with its original link_0_843F5EB2-9C9C-4698-A777-EE528B5CDF71.png",
+    "timestamp": 1792402883.325,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9351612C-9293-465C-9C18-3C736C9B5852.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Share reviews held prose and the original link_0_0DD18B97-6431-43EF-A7D0-FCE418142A29.png",
+    "timestamp": 1792402861.635,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B002CD57-5961-471D-9248-9EA0CDA420F9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Finishing incomplete Share retains one applied Item_0_7456E175-C92B-4484-884E-694E5D00DFBE.png",
+    "timestamp": 1792402911.836,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4277533C-890C-48E0-BD9F-6E6604220443.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Applied Share must expose incomplete recovery before finishing_0_67E37664-618E-475D-BD00-A2627130364C.png",
+    "timestamp": 1792402904.033,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "547ED6AD-81C0-4FF5-A1DD-C9231C01D592.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share requires the main app to initialize real Core storage_0_1294C21A-8198-4DBE-8427-55907F84E47F.png",
+    "timestamp": 1792402918.547,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0A1C4C76-79BF-40B5-A76B-DD46E350A84B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share exposes the existing recovery gate before capture_0_F5AFF398-659A-464C-BF85-B1C6C851FADD.png",
+    "timestamp": 1792402929.733,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareWithExistingIncompleteRecoveryExplainsTheGateWithoutOfferingCapture()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "20A30E7E-BA19-431F-BBF7-F4D21CC0CB7A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unconfigured Share cannot promise that opening Planner grants storage_0_1CFE2A6F-2806-40DA-9E45-C493207E3055.png",
+    "timestamp": 1792402942.215,
+    "testIdentifier": "ShareCaptureJourneyTests/testUnconfiguredShareFailsWithoutInventingAPrivateStoreOrPromisingSetup()"
+  }
+]

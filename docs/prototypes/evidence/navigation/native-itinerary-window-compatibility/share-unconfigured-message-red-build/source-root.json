@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "baef9e1998a97c8953b0d9091f41e20a98d7260e",
+  "overlays": [
+    "Planner/Scenes/PlannerShareCaptureView.swift",
+    "Planner/Scenes/SavedCaptureForm.swift",
+    "PlannerFixtureUITests/ShareCaptureJourneyTests.swift",
+    "PlannerFixtures/PlannerShareFixtureView.swift"
+  ]
+}

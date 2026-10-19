@@ -1,0 +1,332 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "F07CF7F7-888C-442E-A85E-DA35F18285D6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_E6011CDB-DE5A-4BB4-BCA9-FF001091F85A.PlannerFixtures",
+    "timestamp": 1792403108.776,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7E644CC8-72E7-4A28-8CE5-D7639651B31D.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_0CE055B8-6D3F-4DB2-85E5-5BF347B8E028.txt",
+    "timestamp": 1792403108.621,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "752A1A8A-725A-40FC-9E90-12CE1D569C63.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_FD0545A3-BCBD-416B-9F45-00643C187BA7.txt",
+    "timestamp": 1792403107.558,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "17DA70BB-BFA0-4D41-A232-8C471619C7A5.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_E09DE36D-1AC6-49DC-8302-53A44927BC10.txt",
+    "timestamp": 1792403106.565,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E14086F1-8A27-463E-8C9D-16B609015D26.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_2224744A-8E57-47BE-A59F-A1C00C135F9E.txt",
+    "timestamp": 1792403105.553,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "CA66BBB0-8737-4ACF-AACA-B0F153AC3451.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_875B98C6-0774-455A-BDAC-A561C879E174.txt",
+    "timestamp": 1792403104.637,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E36071FB-7BBB-4801-A4BE-2BC62C3D3570.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_B9AE128D-5CD5-432F-968E-D0165E56EFDB.PlannerFixtures",
+    "timestamp": 1792403096.524,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7C84413C-ECAE-4A67-84D2-45A23512D8C9.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_04F91111-E22F-478E-85C8-F4B22847B070.txt",
+    "timestamp": 1792403096.442,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "2ABC6681-3D62-430E-B650-03524C437FCF.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_48971BA8-86CD-4EB0-845C-2011298F7DB4.txt",
+    "timestamp": 1792403095.481,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "5B8C2AE0-53C1-409D-B701-BFB888A820D6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_C2D40BB4-6371-49DA-972D-CC909FBAD6DD.txt",
+    "timestamp": 1792403094.514,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "F248E407-1646-47E2-8E21-17F95C6DF99F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Share reviews held prose and the original link_0_1CFB10C2-0358-4548-95F6-38A64280B524.png",
+    "timestamp": 1792403088.57,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "47044AE0-F5E2-4485-845D-65CADF566D41.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_1465B804-CE68-4910-954E-8DD27D22555B.PlannerFixtures",
+    "timestamp": 1792403084.186,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "2EEE735E-1D0E-4BDF-8E18-B663B594087D.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_45B7965E-4010-4E6E-86EC-D21163B00DC1.txt",
+    "timestamp": 1792403084.111,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "BD7E6138-06E0-46E5-A5CB-E8ADDD0E62E5.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_31F55B53-BDC3-4667-9BC0-124A8C5E1CA6.txt",
+    "timestamp": 1792403083.203,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "BF109613-248F-42F8-A4C7-23EADCB2242D.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_9C68AC68-9764-4C92-938B-72EDCDE1C11B.txt",
+    "timestamp": 1792403082.237,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7BD3A015-32BC-426C-9C2D-D9B23C272BDC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Applied Share must expose incomplete recovery before finishing_0_2336F09F-C329-404B-AA72-9326BD73ED3F.png",
+    "timestamp": 1792403119.86,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "101F2892-CEBA-4F6F-875D-C8B23186CE34.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_10746BBB-68DC-4B99-9415-344331E8BEAA.PlannerFixtures",
+    "timestamp": 1792403113.863,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "B715E7B3-43CF-4BFD-A0E5-8ACA0F8BB30C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_99A012C0-E17E-4C86-A03E-3844B9B77A03.txt",
+    "timestamp": 1792403113.776,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "0848D705-1BBC-4405-9C4F-04336F37D2E2.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_2C744F7E-602A-4FC1-B05A-A9568088E923.txt",
+    "timestamp": 1792403112.799,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "60D37C1E-25AF-4EC4-9A7C-1C7167A05CE5.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_C5776F2B-0014-46C2-9018-9CA9A3253A75.txt",
+    "timestamp": 1792403111.846,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E9AFF0DC-722C-45E3-9C19-EC4A1315154B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_AC2D2346-64D4-4614-9857-C9BB75B70DE2.PlannerFixtures",
+    "timestamp": 1792403140.915,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "2D4BE224-87FA-4DFB-AA4E-289773F96023.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_730E9C4B-F388-49E0-83C8-EB7702D23A79.txt",
+    "timestamp": 1792403140.793,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1399825A-2FB9-40DE-90EA-1C242DC2740F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_D0F71D5A-B541-4854-B3B9-2C9BD7325527.txt",
+    "timestamp": 1792403139.915,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "847F2AF9-7BAC-4586-9FAB-17B63A211A5D.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_06492DB8-FDAD-4F78-81D1-1FDAE9172AD9.txt",
+    "timestamp": 1792403138.802,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "65AB18B8-6607-468A-8CB1-EF64B156509F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_C636CD65-3899-4BCE-BA08-A7C8B2809374.txt",
+    "timestamp": 1792403137.8,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E140858C-4945-4206-B534-F6B58DD76D80.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Show Sidebar\" Any`_0_7AC2119B-C9C1-419F-95B5-5F981B3CEACC.txt",
+    "timestamp": 1792403136.788,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "DF45142F-FF53-4E45-8D6D-3841084D4B5C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share requires the main app to initialize real Core storage_0_6A872746-BCD4-4E29-9C70-7BBE742F138E.png",
+    "timestamp": 1792403134.585,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "EB5C98CB-A409-4040-A838-FB5DA67CAFED.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_0A308963-5836-4150-876D-77BB6817DCD7.PlannerFixtures",
+    "timestamp": 1792403125.051,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "066619B1-A01B-474B-B87D-5065FD93AC10.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_37AA8CA4-0907-4B1F-AE43-9C44863FBBCB.txt",
+    "timestamp": 1792403124.967,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "8EFDBFAD-25A2-4DCC-AB08-84CD9D6269E1.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_84B2BE30-47FC-48E5-B377-66A855C445C5.txt",
+    "timestamp": 1792403123.989,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1B0BE2ED-17A5-495E-81AD-5BFBFA70ACBB.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_59F78403-D1DF-4AA8-9331-5074322924F4.txt",
+    "timestamp": 1792403123.029,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1E5B4060-ED7B-4D23-91C4-8524A495689B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share exposes the existing recovery gate before capture_0_D9AA9591-7970-482B-9AC7-3979ADF765A6.png",
+    "timestamp": 1792403150.249,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareWithExistingIncompleteRecoveryExplainsTheGateWithoutOfferingCapture()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "57F0085C-0AE2-479F-9807-EC29BAEAFCD4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unconfigured Share cannot promise that opening Planner grants storage_0_3C34FB22-1B68-4F50-8488-D0885CBA13A0.png",
+    "timestamp": 1792403169.159,
+    "testIdentifier": "ShareCaptureJourneyTests/testUnconfiguredShareFailsWithoutInventingAPrivateStoreOrPromisingSetup()"
+  }
+]

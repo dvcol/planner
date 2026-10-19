@@ -1,4 +1,5 @@
 import PlannerCore
+import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -7,6 +8,8 @@ struct PlannerShareFixtureView: View {
   @State private var mainStore: SavedPlannerStore?
   @State private var failure: String?
   @State private var captureIdentifier: UUID? = UUID()
+  @State private var recoveryObstruction: FixtureRecoverySaveObstruction?
+  @State private var recoveryObserver: NSObjectProtocol?
 
   var body: some View {
     Group {
@@ -24,11 +27,16 @@ struct PlannerShareFixtureView: View {
     }
     .sheet(isPresented: capturePresented) {
       if let configuration {
-        PlannerShareCaptureView(
-          configuration: configuration, providers: providers(), didCancel: finishCapture,
-          didSave: { _ in finishCapture() }
-        )
-        .id(captureIdentifier)
+        if ProcessInfo.processInfo.arguments.contains("--share-without-group-configuration") {
+          PlannerShareRootView(
+            providers: providers(), didCancel: finishCapture, didSave: { _ in finishCapture() })
+        } else {
+          PlannerShareCaptureView(
+            configuration: configuration, providers: providers(), didCancel: finishCapture,
+            didSave: { _ in finishCapture() }
+          )
+          .id(captureIdentifier)
+        }
       }
     }
     .task {
@@ -52,11 +60,24 @@ struct PlannerShareFixtureView: View {
     let directory = FileManager.default.temporaryDirectory
       .appending(path: "PlannerShareFixtures/\(identifier.uuidString)", directoryHint: .isDirectory)
     let mainConfiguration = makeConfiguration(directory, role: .mainApplication)
+    let obstruction = FixtureRecoverySaveObstruction(configuration: mainConfiguration)
+    try obstruction.restore()
     let planner = PlannerCore.Planner(configuration: mainConfiguration)
     if !arguments.contains("--share-without-main-setup") {
       guard case .ready = await planner.bootstrap() else { throw CancellationError() }
     }
-    mainStore = SavedPlannerStore(configuration: mainConfiguration)
+    if arguments.contains("--share-recovery-failure") {
+      recoveryObstruction = obstruction
+      recoveryObserver = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+    }
+    if arguments.contains("--share-existing-recovery-failure") {
+      mainStore = try await PlannerRecoveryFixture.makeStore(
+        directory: directory, access: .writable)
+    } else {
+      mainStore = SavedPlannerStore(configuration: mainConfiguration)
+    }
     configuration = makeConfiguration(directory, role: .shareExtension)
   }
 
@@ -89,6 +110,11 @@ struct PlannerShareFixtureView: View {
   }
 
   private func finishCapture() {
+    guard captureIdentifier != nil else { return }
+    if let recoveryObserver { NotificationCenter.default.removeObserver(recoveryObserver) }
+    recoveryObserver = nil
+    do { try recoveryObstruction?.restore() } catch { failure = error.localizedDescription }
+    recoveryObstruction = nil
     captureIdentifier = nil
     guard let configuration else { return }
     mainStore = SavedPlannerStore(

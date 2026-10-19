@@ -241,6 +241,12 @@ extension XCUIApplication {
 
   func openPlannerSection(_ title: String) {
     let savedSection = plannerElement("saved.section.\(title.lowercased())")
+    #if os(macOS)
+      activate()
+      let savedSectionExists = savedSection.waitForExistence(timeout: 5)
+    #else
+      let savedSectionExists = savedSection.exists
+    #endif
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .pad {
         if !savedSection.exists {
@@ -256,7 +262,7 @@ extension XCUIApplication {
         }
       }
     #endif
-    if savedSection.exists {
+    if savedSectionExists {
       XCTAssertTrue(savedSection.waitForPlannerHittability())
       savedSection.activateForPlannerJourney()
       return
