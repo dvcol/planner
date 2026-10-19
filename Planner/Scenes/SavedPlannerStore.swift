@@ -129,8 +129,10 @@ final class SavedPlannerStore {
       session = ready
       await refreshRecoveryStatus()
     case .unavailable(let reason): openingFailure = reason.message
-    case .mainAppSetupRequired, .mainAppMigrationRequired:
-      openingFailure = "Planner could not initialize its local data."
+    case .mainAppSetupRequired:
+      openingFailure = "Open Planner once to set up its shared data before using Share."
+    case .mainAppMigrationRequired:
+      openingFailure = "Open Planner to update its shared data before using Share."
     }
   }
 
@@ -690,9 +692,13 @@ final class SavedPlannerStore {
   }
 
   func prepareCapture(text: String) async -> PlannerCaptureDraftRead? {
+    await prepareCapture(input: .direct([.text(text)]))
+  }
+
+  func prepareCapture(input: PlannerCaptureInput) async -> PlannerCaptureDraftRead? {
     guard let planner, let session, canCreate else { return nil }
     alertMessage = nil
-    switch await planner.prepareCapture(session: session, input: .direct([.text(text)])) {
+    switch await planner.prepareCapture(session: session, input: input) {
     case .draft(let draft): return draft
     case .rejected(let reason): alertMessage = reason.message
     }

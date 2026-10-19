@@ -1,0 +1,14 @@
+{
+  "exitCode": 0,
+  "evaluatedBy": "Foundation NSPredicate with MapKit public type identifier",
+  "accepted": [
+    "public.url",
+    "public.utf8-plain-text",
+    "MKMapItemTypeIdentifier"
+  ],
+  "rejected": [
+    "public.png",
+    "empty registered type list"
+  ],
+  "installedHostCredit": false
+}

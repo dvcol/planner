@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "A7472673-5A4B-4CC3-B777-22C53BDFF8E0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed Share saves one Item with its original link_0_C96E93BE-64A0-4A30-A583-C0668E26626F.png",
+    "timestamp": 1792398233.554,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "066649FA-EB8B-4EB0-9D43-1DD6DB3A4AC2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Share reviews held prose and the original link_0_6DFF5000-024A-4DC8-AA04-820CA1AE3130.png",
+    "timestamp": 1792398211.152,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "6F8FC436-CA12-4E6A-BB98-C53DC1E2685D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share requires the main app to initialize real Core storage_0_760532D8-B6AA-4EAE-BFCF-D1F4D319B8C4.png",
+    "timestamp": 1792398251.971,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  }
+]

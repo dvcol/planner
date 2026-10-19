@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EB99D3AE-2886-4D49-9BA8-2344E6954B07.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed Share saves one Item with its original link_0_5E15A384-99FE-480E-AE15-C1979641EE63.png",
+    "timestamp": 1792398236.922,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A99569F7-924C-4175-B78C-B8A58AC9833A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Share reviews held prose and the original link_0_99B7D249-1EF4-431E-8E3E-AF13346A8032.png",
+    "timestamp": 1792398211.169,
+    "testIdentifier": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5221E5D4-D7AD-4D13-9DB9-D7D96D122C61.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share requires the main app to initialize real Core storage_0_FC0F72A3-2CAC-4EBD-AE4A-C76D3CD8AD5F.png",
+    "timestamp": 1792398258.564,
+    "testIdentifier": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()"
+  }
+]

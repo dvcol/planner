@@ -1,0 +1,27 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "fff5804891012bddcc37d68430a49d4cecd0a517",
+  "overlays": [
+    "Configuration/Base.xcconfig",
+    "Configuration/Planner.xcconfig",
+    "Configuration/PlannerNavigationUITests.xcconfig",
+    "Configuration/PlannerShareMac.xcconfig",
+    "Configuration/PlannerShareMobile.xcconfig",
+    "Planner.xcodeproj/project.pbxproj",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerShareMac.xcscheme",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerShareMobile.xcscheme",
+    "Planner/Scenes/PlannerShareCaptureView.swift",
+    "Planner/Scenes/PlannerShareRootView.swift",
+    "Planner/Scenes/SavedCaptureForm.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "PlannerFixtureUITests/ShareCaptureJourneyTests.swift",
+    "PlannerFixtures/PlannerFixtureApp.swift",
+    "PlannerFixtures/PlannerShareFixtureView.swift",
+    "PlannerNavigationUITests/SavedAppIntentJourneyTests.swift",
+    "PlannerShareMac/Info.plist",
+    "PlannerShareMac/PlannerShareMac.entitlements",
+    "PlannerShareMac/ShareViewController.swift",
+    "PlannerShareMobile/Info.plist",
+    "PlannerShareMobile/ShareViewController.swift"
+  ]
+}

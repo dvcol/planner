@@ -1,0 +1,10 @@
+{
+  "Build/Products/Debug/PlannerShareMac.appex/Contents/Info.plist": "58b01247c26b9da55af86aea854e23c80244faa31c7365c233f12d8d45d1e257",
+  "Build/Products/Debug/PlannerShareMac.appex/Contents/MacOS/PlannerShareMac": "fcbc961d869e9bcf2a177919b0ddaad850d4ed925eba00f560218afd09bfbc4c",
+  "Build/Products/Debug/Planner.app/Contents/Info.plist": "af07acc21978aef008e34b3057ba2e4ff92c72ae02c8b77847bb2a727dd0c44a",
+  "Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "8adb19907883eabcb530c7e663e72daaa711c901f146e73e4a29b06065ac289f",
+  "Build/Products/Debug/Planner.app/Contents/Resources/swift-nio_NIOPosix.bundle/Contents/Info.plist": "eeb224dfad93e30d3fb7407c4c03383a1328a6431b97794467f7daa2870dd4e5",
+  "Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerShareMac.appex/Contents/Info.plist": "58b01247c26b9da55af86aea854e23c80244faa31c7365c233f12d8d45d1e257",
+  "Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerShareMac.appex/Contents/MacOS/PlannerShareMac": "a35d0ab1cafb79ad0b4f241296c2865cc46cfc6a0ea377224eca16cb5bc2e871",
+  "Build/Products/Debug/swift-nio_NIOPosix.bundle/Contents/Info.plist": "eeb224dfad93e30d3fb7407c4c03383a1328a6431b97794467f7daa2870dd4e5"
+}
