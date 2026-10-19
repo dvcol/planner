@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "23CD8676-663B-460F-AFDE-D1CE3103E900.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed native capture saves Weekend estimate notes and original link_0_83CB9BF3-7B66-4420-90A0-84C953B35C89.png",
+    "timestamp": 1792401867.834,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E2EE97F4-3CF1-462A-900D-F672A0B75692.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native capture review keeps the staged estimate before Cancel_0_8D05AD6F-946E-408F-98C0-9B9716EB774C.png",
+    "timestamp": 1792401834.293,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  }
+]

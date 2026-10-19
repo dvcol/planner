@@ -2,10 +2,14 @@ import PlannerPreviews
 import SwiftUI
 
 #if !PLANNER_FIXTURES
+  import AppIntents
+#endif
+
+#if !PLANNER_FIXTURES
   @main
 #endif
 struct PlannerApp: App {
-  @State private var savedPlanner = SavedPlannerStore()
+  @State private var savedPlanner: SavedPlannerStore
   @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())
   @State private var addressPreviews = PlannerAddressPreviews(
     provider: AppleAddressPreviewProvider())
@@ -17,6 +21,14 @@ struct PlannerApp: App {
     @FocusedBinding(\.navigationPrototypeInformationPresented) private var showPrototypeInformation:
       Bool?
   #endif
+
+  init() {
+    let plannerStore = SavedPlannerStore()
+    _savedPlanner = State(initialValue: plannerStore)
+    #if !PLANNER_FIXTURES
+      AppDependencyManager.shared.add(dependency: plannerStore)
+    #endif
+  }
 
   var body: some Scene {
     WindowGroup {

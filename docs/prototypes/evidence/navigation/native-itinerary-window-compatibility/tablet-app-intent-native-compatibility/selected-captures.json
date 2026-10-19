@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A0C7A03A-1990-4B87-B62B-C037167DDCF0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed native capture saves Weekend estimate notes and original link_0_38BC7C07-74C5-433C-9894-BE251030BDA5.png",
+    "timestamp": 1792401865.279,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "209EBD4B-45C7-45C4-8A10-84EE57DF83EA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native capture review keeps the staged estimate before Cancel_0_D4918941-6A13-4AA2-A609-1E1D7EC9D612.png",
+    "timestamp": 1792401829.699,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  }
+]
