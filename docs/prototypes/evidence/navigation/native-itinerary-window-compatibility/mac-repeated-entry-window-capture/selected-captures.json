@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E0BC10A2-06F5-49D4-B7EA-23CD84FE76B8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Undo restores one independent repeated List entry_0_AF0ACCEB-D8A2-4A70-B1E2-1FC5CE32B633.png",
+    "timestamp": 1792406911.708,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "AE946FDE-5FAC-4F5E-A4F4-6F80CF1F0EF2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary Undo preserves Todo filtering and full progress_0_2CD64310-73A1-478E-85BB-2E5047B13CA9.png",
+    "timestamp": 1792406899.801,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  }
+]

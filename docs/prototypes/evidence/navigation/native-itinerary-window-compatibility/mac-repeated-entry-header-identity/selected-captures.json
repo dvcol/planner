@@ -1,0 +1,62 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "5F5D753F-123A-43D9-A6BE-944AE8BF3D0C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_DD5AF186-F3B0-4CD4-A412-002DA51EADC7.PlannerMCPPrototype",
+    "timestamp": 1792405370.265,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1E129953-A8F0-4830-97A5-A1B824F65511.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_69F75A05-1FE3-45EC-863B-3214AD740A66.txt",
+    "timestamp": 1792405370.094,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1156C1AC-54B1-4F0D-A814-0B9F1C7D5F88.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_57CD123A-4DA7-4E11-9B63-3012E7415316.txt",
+    "timestamp": 1792405369.165,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7EE930D8-7BBC-40B8-AA80-8C7E4EC7EE3F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_C2853883-E71B-426F-9329-896B3064F8A2.txt",
+    "timestamp": 1792405368.183,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E871A700-EFF0-48DC-88BC-9E4E0551F87C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_C5BD77FF-4556-4CCD-84A7-7518D958F70F.txt",
+    "timestamp": 1792405367.191,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "4D079A9E-D38A-45E2-ADD4-2C4E94775AD8.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_B231897B-18AB-43CE-AA57-3073F58C805D.txt",
+    "timestamp": 1792405366.104,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  }
+]

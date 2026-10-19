@@ -63,6 +63,9 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
+    #if os(macOS)
+      application.fillSavedPlannerWindowForJourney()
+    #endif
     createItem("Museum", application: application)
     createList(application)
     createItinerary(application)
@@ -80,7 +83,20 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
           of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
       ).waitForPlannerValue("Completed"))
     assertChecks(["Completed", "To do"], application: application)
-    openEntryMenu(application.staticTexts["Food stops"].firstMatch)
+    #if os(macOS)
+      guard let entryIdentifier = originalIdentifiers[0].split(separator: ".").dropFirst(3).first
+      else {
+        XCTFail("The selected appearance must identify its containing itinerary entry.")
+        return
+      }
+      let header = application.groups.matching(
+        identifier: "saved.itinerary.entry.\(entryIdentifier)"
+      ).firstMatch
+      XCTAssertTrue(header.waitForExistence(timeout: 5))
+      openEntryMenu(header)
+    #else
+      openEntryMenu(application.staticTexts["Food stops"].firstMatch)
+    #endif
     application.plannerElement("Remove from Itinerary").activateForPlannerJourney()
     XCTAssertTrue(
       waitForItineraryOrder([originalIdentifiers[1]], application: application))
@@ -122,6 +138,9 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Native Undo restores one independent repeated List entry")
     application.terminate()
     application.launchSavedPlannerJourney()
+    #if os(macOS)
+      application.fillSavedPlannerWindowForJourney()
+    #endif
     openItinerary(application)
     XCTAssertTrue(waitForItineraryOrder(originalIdentifiers, application: application))
     assertChecks(["Completed", "To do"], application: application)
@@ -771,7 +790,10 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
   }
 
   private func assertProgress(_ value: String, application: XCUIApplication) {
-    XCTAssertTrue(application.staticTexts[value].waitForExistence(timeout: 10))
+    let progress = application.progressIndicators["saved.itinerary.progress"]
+    let expected = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "label == %@", value), object: progress)
+    XCTAssertEqual(XCTWaiter.wait(for: [expected], timeout: 10), .completed)
   }
 
   private func activateGlobalCompletion(_ element: XCUIElement) {
@@ -785,7 +807,12 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    #if os(macOS)
+      let screenshot = application.windows.firstMatch.screenshot()
+    #else
+      let screenshot = application.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)

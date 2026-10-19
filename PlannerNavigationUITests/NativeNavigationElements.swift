@@ -48,7 +48,9 @@ extension XCUIApplication {
 
   func openSavedPlannerNewItemEditor() {
     openSavedPlannerCatalogAddMenu()
-    plannerElement("saved.item.new").activateForPlannerJourney()
+    let newItem = plannerElement("saved.item.new")
+    XCTAssertTrue(newItem.waitForExistence(timeout: 5))
+    newItem.activateForPlannerJourney()
   }
 
   func openSavedPlannerCaptureEditor() {
@@ -117,6 +119,17 @@ extension XCUIApplication {
     #endif
   }
 
+  #if os(macOS)
+    func fillSavedPlannerWindowForJourney() {
+      activate()
+      menuBars.menuBarItems["Window"].click()
+      let fill = menuItems.matching(identifier: "_zoomFill:").firstMatch
+      XCTAssertTrue(fill.waitForExistence(timeout: 5))
+      XCTAssertTrue(fill.isEnabled)
+      fill.click()
+    }
+  #endif
+
   func savedPlannerItemRows(_ title: String) -> XCUIElementQuery {
     #if os(macOS)
       return descendants(matching: .any).matching(
@@ -156,15 +169,14 @@ extension XCUIApplication {
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.activateForPlannerJourney()
     #if os(macOS)
-      let choices = descendants(matching: .any)
+      let option = menuItems.matching(NSPredicate(format: "title == %@", title)).firstMatch
     #else
-      let choices = buttons
+      let option = buttons.matching(
+        NSPredicate(
+          format: "(label == %@ OR identifier == %@) AND identifier != %@",
+          title, title, "saved.filters.done")
+      ).firstMatch
     #endif
-    let option = choices.matching(
-      NSPredicate(
-        format: "(label == %@ OR identifier == %@) AND identifier != %@",
-        title, title, "saved.filters.done")
-    ).firstMatch
     XCTAssertTrue(option.waitForExistence(timeout: 5))
     XCTAssertTrue(option.waitForPlannerHittability())
     option.activateForPlannerJourney()
@@ -245,7 +257,7 @@ extension XCUIApplication {
       activate()
       let savedSectionExists = savedSection.waitForExistence(timeout: 5)
     #else
-      let savedSectionExists = savedSection.exists
+      var savedSectionExists = savedSection.exists
     #endif
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .pad {
@@ -260,6 +272,7 @@ extension XCUIApplication {
             sidebarCatalog.swipeDown()
           }
         }
+        savedSectionExists = savedSection.exists
       }
     #endif
     if savedSectionExists {
@@ -414,7 +427,9 @@ extension XCUIElement {
 
   var plannerControlTitle: String {
     #if os(macOS)
-      title
+      let nativeTitle = title
+      if !nativeTitle.isEmpty { return nativeTitle }
+      return label
     #else
       label
     #endif

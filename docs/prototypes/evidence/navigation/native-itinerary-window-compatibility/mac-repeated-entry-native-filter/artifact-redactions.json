@@ -1,0 +1,15 @@
+[
+  {
+    "file": "C9F335DC-AC15-4694-B983-D4983FF868AF.txt.gz",
+    "originalSHA256": "42a6e69b00b8f6e0491197c9cc73060d57c26a20e90328e9ffdc667010e0b135",
+    "scopedSHA256": "984f375212451ad3fed869674d3c9f7f1a97d766b7f8166a2c31f1828d6db9e0",
+    "omitted": "Unrelated system Apple menu, including global recent applications and documents.",
+    "originalRetainedAt": "/private/tmp/PlannerItineraryCompatibilityAttachments-mac-repeated-entry-native-filter/C9F335DC-AC15-4694-B983-D4983FF868AF.txt"
+  },
+  {
+    "file": "108DA805-ECCD-4A86-98C3-3FF8905330DB.png",
+    "originalSHA256": "c44e2c14db6053339bd61372d0098131ff69e48aa7ae15c509902d12fba655f6",
+    "omitted": "Whole-display capture includes unrelated system menu-bar content. A later window-only capture replaces this public evidence.",
+    "originalRetainedAt": "/private/tmp/PlannerItineraryCompatibilityAttachments-mac-repeated-entry-native-filter/108DA805-ECCD-4A86-98C3-3FF8905330DB.png"
+  }
+]

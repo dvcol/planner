@@ -1,0 +1,18 @@
+{
+  "inspectedAtUTC": "2026-10-19T10:53:18.395886+00:00",
+  "scope": "Original selected captures; not whole-app UI or accessibility acceptance.",
+  "captures": [
+    {
+      "file": "E0BC10A2-06F5-49D4-B7EA-23CD84FE76B8.png",
+      "sha256": "58794e36e5a9ad74cec4cc68cbd371bf78183f95eb1d900da81628effa402f67",
+      "originalBytesUnchanged": true,
+      "inspection": "Planner window only. Two repeated Food stops branches retain distinct completion; full progress is 1 of 2. No global menu bar is included."
+    },
+    {
+      "file": "AE946FDE-5FAC-4F5E-A4F4-6F80CF1F0EF2.png",
+      "sha256": "a291a50a71790f3c31182ec76ab9a70289c31f8345e3fa951ad6a459227ffed1",
+      "originalBytesUnchanged": true,
+      "inspection": "Planner window only. Todo filter leaves the unfinished branch visible; full progress stays 1 of 2 and matching count is 1 of 2."
+    }
+  ]
+}

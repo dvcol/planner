@@ -1,0 +1,10 @@
+{
+  "Build/Products/Debug-iphoneos/swift-nio_NIOPosix.bundle/Info.plist": "e8fd8d014982f9a0e8804f24bef170aa473a4cbc2dddf6344770a6054e103552",
+  "Build/Products/Debug-iphoneos/PlannerShareMobile.appex/PlannerShareMobile": "b84fcc3af38d46b660fa79e26ee50609212ca889c34ae566db5fd0d53bb45702",
+  "Build/Products/Debug-iphoneos/PlannerShareMobile.appex/Info.plist": "03af2c23747143862086113a3d7cc382e94aef047f904d6c23c67117b3782d14",
+  "Build/Products/Debug-iphoneos/Planner.app/Planner": "3ada7df8b51791967afeb1e3377759237e464af2a65feef8dd0f8c4990767de4",
+  "Build/Products/Debug-iphoneos/Planner.app/Info.plist": "083baab39d4539b40b4ade10ba71ca4c184e0a587fd843f14f870b7ac51fed7a",
+  "Build/Products/Debug-iphoneos/Planner.app/swift-nio_NIOPosix.bundle/Info.plist": "e8fd8d014982f9a0e8804f24bef170aa473a4cbc2dddf6344770a6054e103552",
+  "Build/Products/Debug-iphoneos/Planner.app/PlugIns/PlannerShareMobile.appex/PlannerShareMobile": "262562bad5cff873e34c8364515473420e900dd2e008bd0a09d544b4afe209f0",
+  "Build/Products/Debug-iphoneos/Planner.app/PlugIns/PlannerShareMobile.appex/Info.plist": "03af2c23747143862086113a3d7cc382e94aef047f904d6c23c67117b3782d14"
+}

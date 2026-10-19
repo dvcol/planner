@@ -1,0 +1,24 @@
+{
+  "inspectedAtUTC": "2026-10-19T10:55:31.107248+00:00",
+  "scope": "Original selected captures; not whole-app UI or accessibility acceptance.",
+  "captures": [
+    {
+      "file": "EA93FDC7-6C61-4246-89B4-91FDB50AB4B1.png",
+      "sha256": "5d9489444b8451ea256ec5a4567a01297c2e1d17206fa8c2eaaa9e4ae231fc73",
+      "originalBytesUnchanged": true,
+      "inspection": "Light iPad with Increase Contrast. The restored repeated branches retain independent completion; full progress is 1 of 2."
+    },
+    {
+      "file": "109B3FA2-CD08-4913-B6F3-290E7D7E79AC.png",
+      "sha256": "62fe2e6e409914d048a4df819d5a4cd82c6cdc4fd557acf8b15e9396f1fbc751",
+      "originalBytesUnchanged": true,
+      "inspection": "Todo filter leaves the unfinished branch visible and retains full 1-of-2 progress and matching count."
+    },
+    {
+      "file": "C2258479-F1F3-4098-BFCA-0BA9B361744E.png",
+      "sha256": "5e83924c0bd77d56004068f97cc4c873a0cdf79c21954dc7bd2d9fd2c2efd431",
+      "originalBytesUnchanged": true,
+      "inspection": "The scoped native Undo action remains available after removing one repeated branch."
+    }
+  ]
+}

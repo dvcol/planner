@@ -1,0 +1,72 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "59B81483-7D3B-4347-A1FB-557B2E5D9B93.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "List title beside native filter sort Edit Add and actions_0_7B830521-99C1-4CC9-8DD9-19D8C78FF156.png",
+    "timestamp": 1792404354.795,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "715AA596-A22A-4245-92C8-51ED79A0C74E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_C3865E56-0723-4708-8161-9978D73CDCF8.PlannerFixtures",
+    "timestamp": 1792404354.642,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1B2B24D6-2FC6-4362-BD76-AA188991DD7E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_F647F8E4-32AB-4447-B03F-1AD997418782.txt",
+    "timestamp": 1792404354.475,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "89193C7D-CC47-4E43-9EC4-25FA25A01EEE.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_057C44FC-E838-4374-847E-1F9F37FE1E12.txt",
+    "timestamp": 1792404353.527,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9C7BBE83-373C-4636-B55D-3DD228F18230.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_2933918B-2150-449C-909F-762FEE815D06.txt",
+    "timestamp": 1792404352.486,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3D55C6C5-F06A-4B7B-9328-709A21AEA608.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_A52940BE-7DD1-4115-A23B-8D39B8D33B53.txt",
+    "timestamp": 1792404351.549,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "DDDA2B10-34EE-45B6-89A2-1AE78DFD9F81.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_5439EDD7-3EB0-4218-B97D-0E4AA7C26980.txt",
+    "timestamp": 1792404350.507,
+    "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()"
+  }
+]

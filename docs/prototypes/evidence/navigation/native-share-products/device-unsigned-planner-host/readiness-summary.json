@@ -1,0 +1,23 @@
+{
+  "sampledAtUTC": "2026-10-19T10:23:38.446046+00:00",
+  "mutationsPerformed": false,
+  "codeSigningIdentityProbe": {
+    "exitCode": 0,
+    "validIdentityCount": 0,
+    "appleDevelopmentIdentityAvailable": false
+  },
+  "deviceProbeExitCode": 0,
+  "physicalDevices": [
+    {
+      "platform": "iOS",
+      "model": "iPad Pro 13-inch (M4)",
+      "operatingSystemVersion": "27.0.1",
+      "pairingState": "paired",
+      "transportType": "localNetwork",
+      "tunnelState": "disconnected",
+      "developerModeStatus": "enabled",
+      "reality": "physical"
+    }
+  ],
+  "simulatedDeviceCount": 2
+}

@@ -1,0 +1,24 @@
+{
+  "inspectedAtUTC": "2026-10-19T10:53:18.400188+00:00",
+  "scope": "Original selected captures; not whole-app UI or accessibility acceptance.",
+  "captures": [
+    {
+      "file": "F4F5357A-0525-49F8-A281-870972428C58.png",
+      "sha256": "d2d35d3db87c057d4b57032e77dec4948a7d93e9346beedbe377e46115fc9b2e",
+      "originalBytesUnchanged": true,
+      "inspection": "Dark phone with Increase Contrast. Restored repeated branches have independent checks. Scrolled content passes beneath the floating top bar; final toolbar/scroll-edge polish remains open."
+    },
+    {
+      "file": "F6146BD2-94E3-437B-94AE-88F31A7B4930.png",
+      "sha256": "09fb2967704d9f81bc8d3f5a4dcbcff65f843a3c876d2784828195ff8eeb1ddc",
+      "originalBytesUnchanged": true,
+      "inspection": "Todo filtering retains full 1-of-2 progress and shows the unfinished branch with matching count."
+    },
+    {
+      "file": "F4628957-CDA8-4C76-83D3-566E9AA10B08.png",
+      "sha256": "a951130a17a8cf4bcb58bc6d69dda530bd816cb98d347b065cd7f828902f5dcf",
+      "originalBytesUnchanged": true,
+      "inspection": "After removal, one unfinished branch remains and the native scoped Undo action is visible above the tab bar."
+    }
+  ]
+}
