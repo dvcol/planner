@@ -409,7 +409,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       XCTAssertTrue(other.waitForExistence(timeout: 10))
       other.click()
       application.typeKey("z", modifierFlags: .command)
-      let origin = application.windows.matching(identifier: originIdentifier).firstMatch
+      let origin = application.windows.matching(
+        NSPredicate(format: "identifier == %@", originIdentifier)
+      ).firstMatch
       XCTAssertTrue(origin.staticTexts["No items"].exists)
       XCTAssertFalse(origin.buttons.matching(identifier: originalIdentifier).firstMatch.exists)
       other.buttons["_XCUI:CloseWindow"].click()
