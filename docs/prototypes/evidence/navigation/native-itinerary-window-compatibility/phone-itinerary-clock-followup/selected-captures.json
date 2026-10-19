@@ -1,0 +1,72 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3A989FE8-21AC-451D-AA8B-2BD0968ADE71.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary planning timezone survives relaunch_0_192433EB-ADD1-490F-ADD1-AF4C1EB5EB1B.png",
+    "timestamp": 1792445064.377,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F705283B-A208-4AB6-B063-7226F25CD899.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary timezone edit retains its owner and instant_0_A94E249F-B18F-46F7-BE0D-1688A4B8310C.png",
+    "timestamp": 1792445043.31,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AF8422E4-0A21-45AE-ADDC-70F81F4A8187.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary planning zone stages the original appointment_0_A86E2CE2-83D3-45CC-AB64-86294BFCC5E3.png",
+    "timestamp": 1792445040.577,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3F1584B7-8281-483B-B4B2-CF0C8085C3AE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary schedule removal survives relaunch_0_1DAA7314-EFF7-4E84-A65F-3E331FA47C48.png",
+    "timestamp": 1792445291.82,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "370C6DAE-31EE-430B-8AED-4BF96D07158C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary removal retains its other appointment_0_9FDAD59C-45A4-416C-84C1-075A4C686417.png",
+    "timestamp": 1792445277.321,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "01B91918-03DD-44A4-82ED-2B831881CA7B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary schedule removal explains its scope_0_4613E574-F6B5-4152-95DC-87333FB2D417.png",
+    "timestamp": 1792445267.916,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "BA97A091-77CF-49F0-B9B9-086394985537.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary edit reloads its converted all-day form_0_37EB1EE2-EF1E-4A5B-8063-5C9423CDE02C.png",
+    "timestamp": 1792445246.897,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  }
+]

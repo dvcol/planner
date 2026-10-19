@@ -1,0 +1,40 @@
+{
+  "scope": "Primary inspection of seven unchanged native original captures, supported by independent RGB comparisons. No full-scene contrast/accessibility, physical performance, exact fractional-instant or Mac runtime claim.",
+  "captures": [
+    {
+      "file": "AF8422E4-0A21-45AE-ADDC-70F81F4A8187.png",
+      "sha256": "87b536c8a2dca5cc50e09ca14a6dc723c581e7fc95cac1c441a81ef3744ce493",
+      "observation": "Native timed editor shows the retained itinerary, Tokyo planning zone, optional End off, Save/Cancel and fixed-instant explanation."
+    },
+    {
+      "file": "F705283B-A208-4AB6-B063-7226F25CD899.png",
+      "sha256": "0ac8dd798a5e2b5b8f681d9a238fd20abd520840418a94323fc6f2b78ffdb804",
+      "observation": "Saved itinerary shows retained notes, empty progress and one Start only assignment in Asia/Tokyo."
+    },
+    {
+      "file": "3A989FE8-21AC-451D-AA8B-2BD0968ADE71.png",
+      "sha256": "c0eb1c7087dbdba26cb2ad29b97cd21855c307e3aad9459bd80a5b1f12c5bb93",
+      "observation": "Relaunched itinerary retains the same visible title, notes and Start only assignment; original RGB title/notes/schedule regions also match the preceding saved capture."
+    },
+    {
+      "file": "BA97A091-77CF-49F0-B9B9-086394985537.png",
+      "sha256": "d5dd108ba3939dbb56e3489ca7086a295dba0516038b13d1d4129d6b86058515",
+      "observation": "Reopened converted all-day editor has Start and End on 20 October 2026, Include end date enabled and inclusive-date explanation."
+    },
+    {
+      "file": "01B91918-03DD-44A4-82ED-2B831881CA7B.png",
+      "sha256": "7ceb625fd068697d444f6f71dda0ec5d1a4add249c6182274f0fd4781727b774",
+      "observation": "Native removal popover explains one selected schedule is removed while the itinerary and other schedules remain."
+    },
+    {
+      "file": "370C6DAE-31EE-430B-8AED-4BF96D07158C.png",
+      "sha256": "b0283fc06b347cea72ed1359eba55aaf0a032d9924274aefb3cb7a6e64f019b5",
+      "observation": "After confirmed removal, the itinerary notes and other Start only appointment remain visible."
+    },
+    {
+      "file": "3F1584B7-8281-483B-B4B2-CF0C8085C3AE.png",
+      "sha256": "16a2a64737e8cc5a7a133f3896eb3c4c81de875308839336a2a02e6cad31408d",
+      "observation": "After relaunch, the surviving appointment and itinerary remain; original app-content RGB below the status bar is identical to the preceding saved capture."
+    }
+  ]
+}
