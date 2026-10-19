@@ -1,6 +1,6 @@
 # Complete native Item traversal
 
-Status: focused phone/tablet navigation regressions pass; corrected exhaustive traversal is running. This implements an open local completeness check from the Navigation map; it requires neither signing nor Mac UI access.
+Status: complete native title/identity observation passes on phone and tablet. A tablet row-paint observation remains open below. This implements an open local completeness check from the Navigation map; it requires neither signing nor Mac UI access.
 
 ## Context, readiness and goal
 
@@ -36,8 +36,19 @@ That preflight passes the real toggle check on both devices. Tablet then fails i
 
 The class now shares the actual Items/sidebar readiness path across its three journeys. The first return-helper revision passes the existing phone boundary/rotation journey in 122.924 seconds, but tablet fails in 25.820 seconds. Its captured hierarchy places the Item catalog beside the selected detail, then shows the root sidebar covering it after the helper opens Show Sidebar. A container's accessibility hit point is not a reliable proxy for its child controls. Availability now requires a real hittable source row whose frame lies inside the catalog. Only a genuinely unavailable catalog invokes native return navigation.
 
-With that correction, the existing boundary/rotation journey passes in 123.629 seconds on light phone and 134.413 seconds on dark tablet with Increase Contrast. Both retain the selected source across page changes and rotation, and restore appearance afterward. The focused fixture build passes. Exhaustive runs now use that same frozen source/product epoch on both devices. Their four-hour execution allowance belongs only to the test runner; no app or agent timeout changes. All failed and interrupted attempts remain retained. No complete corrected traversal is claimed yet.
+With that correction, the existing boundary/rotation journey passes in 123.629 seconds on light phone and 134.413 seconds on dark tablet with Increase Contrast. Both retain the selected source across page changes and rotation, and restore appearance afterward. The focused fixture build passes. The exhaustive runs use that same frozen source/product epoch on both devices. Their four-hour execution allowance belongs only to the test runner; no app or agent timeout changes. All failed and interrupted attempts remain retained.
+
+## Complete observation results
+
+| Device and appearance | Native result | Independently verified observed pairs |
+| --- | --- | --- |
+| iPhone Simulator, light | One pass, zero failures/skips, 3,683.373 seconds | All 5,000 expected titles and distinct source UUIDs |
+| iPad Simulator, dark with Increase Contrast | One pass, zero failures/skips, 3,565.451 seconds | All 5,000 expected titles and distinct source UUIDs |
+
+Each original attachment contains exactly 5,000 sorted title/identity pairs. A separate verifier checks the complete literal title set, unique parsed UUIDs and byte-for-byte equality of the retained compressed attachment with the original export. Both native journeys open Item 05000, read its expected notes and verify Todo. Source/product hashes still match their recorded epoch. Appearance and contrast return to their original values. These execution times include automation and do not measure app performance.
+
+Three original final captures were inspected. The phone detail and tablet selected detail show Item 05000 with its expected notes, Todo toggle and 91-minute estimate. The tablet's preceding catalog capture, while Item 00001 remains selected offscreen, shows several blank-looking rows. Those rows are painted in the subsequent selected-detail capture. Accessibility identities and hittability alone do not settle that rendering observation. A focused native reproduction and paint check must determine whether this is transient capture timing or a persistent visible-row defect. This UI outcome remains open; the title/identity pass does not close it.
 
 ## Recorded artifacts
 
-The [compatibility evidence directory](evidence/navigation/native-itinerary-window-compatibility/) contains the native-every-item build epochs, initial traversal attempts, phone-native-item-navigation-regression, tablet-native-item-navigation-regression, and the final phone/tablet native-item-visible-row-regression packets. Packets preserve exact commands, source/product hashes, compiler or native logs, exit status, appearance restoration and selected original attachments. The phone-native-every-item-final and tablet-native-every-item-final packets are in progress until their wrappers record terminal results.
+The [compatibility evidence directory](evidence/navigation/native-itinerary-window-compatibility/) contains the native-every-item build epochs, initial traversal attempts, phone-native-item-navigation-regression, tablet-native-item-navigation-regression, and the final phone/tablet native-item-visible-row-regression packets. Packets preserve exact commands, source/product hashes, compiler or native logs, exit status, appearance restoration and selected original attachments. The phone-native-every-item-final and tablet-native-every-item-final packets include terminal summaries, complete original identity attachments and independent verification records. The deliberately interrupted retry has no readable completed xcresult; its original runtime log and interruption record remain retained without completion credit.
