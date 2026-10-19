@@ -1,6 +1,6 @@
 # Complete native Item traversal
 
-Status: complete native title/identity observation passes on phone and tablet. A tablet row-paint observation remains open below. This implements an open local completeness check from the Navigation map; it requires neither signing nor Mac UI access.
+Status: complete native title/identity observation passes on phone and tablet. The apparent tablet blank-row observation is resolved by original-file pixel verification below. This implements an open local completeness check from the Navigation map; it requires neither signing nor Mac UI access.
 
 ## Context, readiness and goal
 
@@ -47,7 +47,7 @@ With that correction, the existing boundary/rotation journey passes in 123.629 s
 
 Each original attachment contains exactly 5,000 sorted title/identity pairs. A separate verifier checks the complete literal title set, unique parsed UUIDs and byte-for-byte equality of the retained compressed attachment with the original export. Both native journeys open Item 05000, read its expected notes and verify Todo. Source/product hashes still match their recorded epoch. Appearance and contrast return to their original values. These execution times include automation and do not measure app performance.
 
-Three original final captures were inspected. The phone detail and tablet selected detail show Item 05000 with its expected notes, Todo toggle and 91-minute estimate. The tablet's preceding catalog capture, while Item 00001 remains selected offscreen, shows several blank-looking rows. Those rows are painted in the subsequent selected-detail capture. Accessibility identities and hittability alone do not settle that rendering observation. A focused native reproduction and paint check must determine whether this is transient capture timing or a persistent visible-row defect. This UI outcome remains open; the title/identity pass does not close it.
+Three original final captures were inspected. The phone detail and tablet selected detail show Item 05000 with its expected notes, Todo toggle and 91-minute estimate. The tablet's preceding catalog capture was initially misread in its scaled preview as showing blank rows. The [row-paint investigation](native-item-row-paint.md) independently decodes that untouched PNG: all fourteen visible row regions contain painted glyphs and have identical RGB bytes to both passing native paint captures. A full-resolution inspection confirms the sample title and duration. That original-file evidence corrects the initial interpretation; no production rendering defect or style fix is established. This remains separate from all-row pixel, whole-app accessibility and physical-performance qualification.
 
 ## Recorded artifacts
 
