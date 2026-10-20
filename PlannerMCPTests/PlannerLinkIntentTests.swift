@@ -712,13 +712,13 @@ private func addLinkUsingIntent(
   return try await adding.callAsFunction(donate: false)
 }
 
-private struct LinkIntentSourceObservations {
+struct LinkIntentSourceObservations {
   let item: PlannerItemSourceRead
   let itinerary: PlannerItinerarySourceRead
 }
 
 @MainActor
-private func readLinkIntentSources(_ fixture: LinkIntentFixture) async throws
+func readLinkIntentSources(_ fixture: LinkIntentFixture) async throws
   -> LinkIntentSourceObservations
 {
   guard
@@ -731,7 +731,7 @@ private func readLinkIntentSources(_ fixture: LinkIntentFixture) async throws
 }
 
 @MainActor
-private func assertLinkIntentSourcesUnchanged(
+func assertLinkIntentSourcesUnchanged(
   _ before: LinkIntentSourceObservations, fixture: LinkIntentFixture
 ) async throws {
   let after = try await readLinkIntentSources(fixture)
@@ -750,7 +750,7 @@ private func assertLinkIntentSourcesUnchanged(
 }
 
 @MainActor
-private func applyLinkIntentFixtureCommand(_ fixture: LinkIntentFixture, _ command: PlannerCommand)
+func applyLinkIntentFixtureCommand(_ fixture: LinkIntentFixture, _ command: PlannerCommand)
   async throws
 {
   let result = await fixture.planner.execute(
@@ -764,7 +764,7 @@ private func applyLinkIntentFixtureCommand(_ fixture: LinkIntentFixture, _ comma
 }
 
 @MainActor
-private func readLinksUsingIntent(_ owner: PlannerEntityReference) async throws
+func readLinksUsingIntent(_ owner: PlannerEntityReference) async throws
   -> [PlannerLinkEntity]
 {
   if owner.kind == .item {
@@ -777,7 +777,7 @@ private func readLinksUsingIntent(_ owner: PlannerEntityReference) async throws
   return try await reading.callAsFunction(donate: false)
 }
 
-private struct LinkIntentFixture {
+struct LinkIntentFixture {
   let configuration: PlannerStorageConfiguration
   let store: SavedPlannerStore
   let planner: PlannerCore.Planner
@@ -787,7 +787,7 @@ private struct LinkIntentFixture {
 }
 
 @MainActor
-private func makeLinkIntentFixture() async throws -> LinkIntentFixture {
+func makeLinkIntentFixture() async throws -> LinkIntentFixture {
   let (_, configuration, store) = try makePlannerIntentStorage()
   AppDependencyManager.shared.add(dependency: store)
   let planner = PlannerCore.Planner(configuration: configuration)
