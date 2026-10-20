@@ -1,0 +1,12 @@
+{
+  "qualificationPassed": false,
+  "reason": "Feature red: all three precancelled empty-result reads incorrectly succeeded. The failed test and original log remain preserved.",
+  "sourceLogSha256": "09dff144a75671d7ffe6e909c2961f1d4174a1ddef7ebcef0365b1c12893b129",
+  "closedHostProcessIdentifiers": [
+    95676
+  ],
+  "closedDatabaseHandlesVerified": true,
+  "removedMarkedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FA809450-C1D9-4DD4-B782-FA15A1AA8B6C"
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "actions": [
+    "AddPlannerItemLinkIntent",
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerItineraryLinkIntent",
+    "AddPlannerListToItineraryIntent",
+    "ClearPlannerItemEstimateIntent",
+    "ClearPlannerItemLocationIntent",
+    "ClearPlannerItineraryLocationIntent",
+    "ClearPlannerScheduleEndIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "CreatePlannerTagIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItemLinkIntent",
+    "EditPlannerItemLocationIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerItineraryLinkIntent",
+    "EditPlannerItineraryLocationIntent",
+    "EditPlannerListIntent",
+    "FindPlannerItemsIntent",
+    "FindPlannerSchedulesIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemCategoriesIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItemLinksIntent",
+    "GetPlannerItemSchedulesIntent",
+    "GetPlannerItemTagsIntent",
+    "GetPlannerItineraryCategoriesIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerItineraryItemIntent",
+    "GetPlannerItineraryLinksIntent",
+    "GetPlannerItinerarySchedulesIntent",
+    "GetPlannerItineraryTagsIntent",
+    "GetPlannerListIntent",
+    "GetPlannerScheduleIntent",
+    "GetPlannerScheduleItemIntent",
+    "GetPlannerScheduleItineraryIntent",
+    "GetPlannerTagIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "RemovePlannerItemLinkIntent",
+    "RemovePlannerItineraryEntryIntent",
+    "RemovePlannerItineraryLinkIntent",
+    "RemovePlannerScheduleIntent",
+    "RenamePlannerCategoryIntent",
+    "RenamePlannerTagIntent",
+    "ReorderPlannerItemInListIntent",
+    "ReorderPlannerItemLinkIntent",
+    "ReorderPlannerItineraryEntryIntent",
+    "ReorderPlannerItineraryLinkIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCategoryIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItemLocationPinIntent",
+    "SetPlannerItemTagIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerItineraryCategoryIntent",
+    "SetPlannerItineraryItemCompletionIntent",
+    "SetPlannerItineraryLocationPinIntent",
+    "SetPlannerItineraryTagIntent",
+    "SetPlannerListArchiveIntent",
+    "SetPlannerScheduleTimeZoneIntent",
+    "UsePlannerItineraryCalculatedEstimateIntent",
+    "UsePlannerListCalculatedEstimateIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerItineraryEntryEntity",
+    "PlannerItineraryItemEntity",
+    "PlannerLinkEntity",
+    "PlannerListEntity",
+    "PlannerScheduleEntity",
+    "PlannerTagEntity",
+    "PlannerTimeZoneEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerItineraryEntryEntityQuery",
+    "PlannerItineraryItemEntityQuery",
+    "PlannerLinkEntityQuery",
+    "PlannerListEntityQuery",
+    "PlannerScheduleEntityQuery",
+    "PlannerTagEntityQuery",
+    "PlannerTimeZoneEntityQuery"
+  ],
+  "enumCount": 9,
+  "newActionParameters": {
+    "text": {
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      },
+      "optional": false
+    },
+    "scope": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindScope"
+          }
+        }
+      },
+      "optional": false
+    },
+    "completion": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindCompletion"
+          }
+        }
+      },
+      "optional": false
+    },
+    "archive": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindArchive"
+          }
+        }
+      },
+      "optional": false
+    },
+    "sort": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindSort"
+          }
+        }
+      },
+      "optional": false
+    },
+    "direction": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindDirection"
+          }
+        }
+      },
+      "optional": false
+    }
+  },
+  "newActionOutput": {
+    "array": {
+      "wrapper": {
+        "capabilities": 3,
+        "memberValueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    }
+  },
+  "newEnumCases": {
+    "PlannerItemFindCompletion": [
+      "all",
+      "done",
+      "todo"
+    ],
+    "PlannerItemFindArchive": [
+      "active",
+      "all",
+      "archived"
+    ],
+    "PlannerItemFindScope": [
+      "allItems",
+      "inbox"
+    ],
+    "PlannerItemFindSort": [
+      "created",
+      "duration",
+      "lastUpdated",
+      "title"
+    ],
+    "PlannerItemFindDirection": [
+      "ascending",
+      "descending"
+    ]
+  },
+  "priorActionParametersAndOutputsUnchanged": true,
+  "priorEntitiesQueriesEnumsUnchanged": true,
+  "metadataSha256": "09c9e9051ecebb86bba00bc6b78ab3048fb677cf043dd843d4429da0f2645177",
+  "systemInvocationQualified": false
+}

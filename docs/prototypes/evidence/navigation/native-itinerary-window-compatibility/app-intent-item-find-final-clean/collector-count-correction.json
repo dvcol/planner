@@ -1,0 +1,10 @@
+{
+  "collectorAttemptSucceeded": false,
+  "failedAssertion": "Expected 31 marked fixtures, observed 29.",
+  "actualPassedTests": 31,
+  "actualPassedXCTestCases": 29,
+  "actualPassedHTTPTests": 2,
+  "actualMarkedFixturesSafelyRemoved": 29,
+  "correction": "Compare the marked fixture count with the 29 native XCTest fixtures. Do not infer that every HTTP test uses the marker factory.",
+  "productionOrTestSourcesChanged": false
+}

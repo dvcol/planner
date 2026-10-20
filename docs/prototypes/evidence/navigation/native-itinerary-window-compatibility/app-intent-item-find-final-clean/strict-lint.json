@@ -1,0 +1,14 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/AppIntents/PlannerItemFindIntent.swift",
+    "Planner/AppIntents/PlannerItemIntents.swift",
+    "PlannerMCPTests/PlannerItemFindIntentTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": ""
+}
