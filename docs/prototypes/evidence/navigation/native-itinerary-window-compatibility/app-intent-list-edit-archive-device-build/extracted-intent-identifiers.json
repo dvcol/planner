@@ -1,0 +1,25 @@
+{
+  "metadataPath": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/Metadata.appintents/extract.actionsdata",
+  "sha256": "4c02fb37b803b9480859d3afdbf0e39ed6b6203fc2081bfc15ed2df5f4be6ec9",
+  "actions": [
+    "AddPlannerItemToListIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerListIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerListIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerListIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerListArchiveIntent"
+  ],
+  "entities": [
+    "PlannerItemEntity",
+    "PlannerListEntity"
+  ],
+  "queries": [
+    "PlannerItemEntityQuery",
+    "PlannerListEntityQuery"
+  ],
+  "runtimeCredit": false
+}

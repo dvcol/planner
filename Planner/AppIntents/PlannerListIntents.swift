@@ -189,6 +189,103 @@
     }
   }
 
+  struct EditPlannerListIntent: AppIntent {
+    static let title: LocalizedStringResource = "Edit List"
+    static let description = IntentDescription(
+      "Change the name or notes. Leave a field unset to keep it; empty notes clears them.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "List") var list: PlannerListEntity
+    @Parameter(title: "Name") var name: String?
+    @Parameter(title: "Notes") var notes: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      guard name != nil || notes != nil else {
+        throw PlannerListIntentFailure(message: "Choose a name or notes to change.")
+      }
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let source: PlannerListSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .list, id: list.id)))
+      {
+      case .source(.list(let current)): source = current
+      case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
+      default: throw PlannerListIntentFailure(message: "Planner could not read this List.")
+      }
+      let nameChange = name.map(PlannerFieldChange.set) ?? .unchanged
+      let notesChange: PlannerFieldChange<String>
+      if let notes {
+        notesChange = notes.isEmpty ? .clear : .set(notes)
+      } else {
+        notesChange = .unchanged
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .editList(
+          sourceId: source.source.id, changes: .init(name: nameChange, notes: notesChange),
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerListIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Updated the List. Its entries are preserved."
+        case .incomplete:
+          dialog =
+            "The List changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
+  struct SetPlannerListArchiveIntent: AppIntent {
+    static let title: LocalizedStringResource = "Set List archive state"
+    static let description = IntentDescription(
+      "Archive or unarchive the List while preserving its Items and saved entry completion.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "List") var list: PlannerListEntity
+    @Parameter(title: "Archived") var archived: Bool
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let result = try await plannerStore.executeAppIntent(
+        .setArchive(source: .init(kind: .list, id: list.id), archived: archived))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerListIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          if archived {
+            dialog = "Archived the List. Its Items and entry completion are preserved."
+          } else {
+            dialog = "Unarchived the List. Its Items and entry completion are preserved."
+          }
+        case .incomplete:
+          dialog =
+            "The List's archive state changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerListIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }
