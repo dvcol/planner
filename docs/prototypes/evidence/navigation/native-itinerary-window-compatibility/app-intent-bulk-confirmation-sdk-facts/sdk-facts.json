@@ -1,0 +1,22 @@
+{
+  "sources": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/AppIntents.framework/Versions/A/Modules/AppIntents.swiftmodule/arm64e-apple-macos.swiftinterface",
+      "sha256": "0c8b05843c1a30fa9faddd2c10318257b9e72e2280597146338a4f45123204ab"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/AppIntentsTesting.framework/Versions/A/Modules/AppIntentsTesting.swiftmodule/arm64-apple-macos.swiftinterface",
+      "sha256": "f19e812d5c39c19c1d6d98410220ab04b5ec2bb756dd3bed5ebe77e7b59ba96b"
+    }
+  ],
+  "observations": [
+    "Modern requestConfirmation(conditions:actionName:dialog:) is async throwing with no returned confirmation Bool.",
+    "callAsFunction accepts donate only; it exposes no confirmation response argument.",
+    "AnyAppIntent.run has no parameters; the public AppIntentsTesting interface has no confirmation response control.",
+    "Normal return and SDK cancellation semantics require actual runtime qualification; ordinary Task.cancel is not a simulated user decision."
+  ],
+  "limits": [
+    "SDK declaration/source inspection and typecheck only.",
+    "No system confirmation, GUI or signing/account operation was executed."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/usr/bin/xcrun",
+    "--sdk",
+    "macosx",
+    "swiftc",
+    "-typecheck",
+    "-target",
+    "arm64-apple-macos27.0",
+    "-module-cache-path",
+    "/private/tmp/planner-confirmation-sdk.sqA9w7/ModuleCache",
+    "/private/tmp/planner-confirmation-sdk.sqA9w7/ConfirmationDeclarations.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSha256": "eee8469a3176f5d09c1a666cddafc7063a29e408a0c9b90647eda7d17cd3c417",
+  "runtimeCredit": false,
+  "confirmationInvoked": false,
+  "signingChanged": false
+}
