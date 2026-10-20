@@ -811,7 +811,7 @@ final class PlannerItemIntentTests: XCTestCase {
 
 }
 
-private final class IntentRecoverySaveObstruction: @unchecked Sendable {
+final class IntentRecoverySaveObstruction: @unchecked Sendable {
   private let lock = NSLock()
   private let storeURL: URL
   private let recoveryURL: URL
