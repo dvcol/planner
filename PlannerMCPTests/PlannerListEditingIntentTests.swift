@@ -10,14 +10,13 @@ import XCTest
 final class PlannerListEditingIntentTests: XCTestCase {
   func testUnavailableStorageRejectsListEditingAndArchiveWithoutAcknowledgingAChange() async throws
   {
-    let (directory, _, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (directory, _, store) = try makePlannerIntentStorage()
     let obstruction = Data("The store parent is a file.".utf8)
     let parent = directory.appending(path: "store")
     try obstruction.write(to: parent)
     AppDependencyManager.shared.add(dependency: store)
     let list = PlannerListEntity(id: UUID(), name: "Unavailable", archived: false)
-    var editing = EditPlannerListIntent()
+    let editing = EditPlannerListIntent()
     editing.list = list
     editing.name = "Cannot save here"
     do {
@@ -26,7 +25,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     } catch {
       XCTAssertFalse(error.localizedDescription.isEmpty)
     }
-    var archiving = SetPlannerListArchiveIntent()
+    let archiving = SetPlannerListArchiveIntent()
     archiving.list = list
     archiving.archived = true
     do {
@@ -42,10 +41,9 @@ final class PlannerListEditingIntentTests: XCTestCase {
   }
 
   func testAppliedListArchiveWithIncompleteRecoveryBlocksUnarchiveUntilNativeRetry() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Recovery List"
     creation.notes = "Keep this empty List"
     let list = try await creation.callAsFunction(donate: false)
@@ -57,7 +55,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var archiving = SetPlannerListArchiveIntent()
+    let archiving = SetPlannerListArchiveIntent()
     archiving.list = list
     archiving.archived = true
     let _: Void = try await archiving.callAsFunction(donate: false)
@@ -107,10 +105,9 @@ final class PlannerListEditingIntentTests: XCTestCase {
   }
 
   func testAppliedListEditWithIncompleteRecoveryRetainsContentAndBlocksTheNextEdit() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Original List"
     creation.notes = "Original notes"
     let list = try await creation.callAsFunction(donate: false)
@@ -122,7 +119,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var editing = EditPlannerListIntent()
+    let editing = EditPlannerListIntent()
     editing.list = list
     editing.name = "Updated List"
     editing.notes = "Reviewed notes"
@@ -172,10 +169,9 @@ final class PlannerListEditingIntentTests: XCTestCase {
 
   func testInvalidListEditsAndMissingOrDeletedTargetsLeaveNoPartialOrResurrectedData() async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Original List"
     creation.notes = "Keep the original notes"
     let list = try await creation.callAsFunction(donate: false)
@@ -186,7 +182,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
         session: session, request: .source(source))
     else { return XCTFail("The original List must be readable before rejected edits.") }
     for (name, notes) in [(nil, nil), ("   ", "Must not apply")] as [(String?, String?)] {
-      var editing = EditPlannerListIntent()
+      let editing = EditPlannerListIntent()
       editing.list = list
       editing.name = name
       editing.notes = notes
@@ -214,7 +210,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     XCTAssertEqual(unchanged.fieldHashes, before.fieldHashes)
     XCTAssertEqual(unchanged.updatedAt, before.updatedAt)
     for target in [list, PlannerListEntity(id: UUID(), name: "Missing", archived: false)] {
-      var editing = EditPlannerListIntent()
+      let editing = EditPlannerListIntent()
       editing.list = target
       editing.name = "Cannot recreate this List"
       do {
@@ -224,7 +220,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
         XCTAssertFalse(error.localizedDescription.isEmpty)
       }
       for archived in [true, false] {
-        var archiving = SetPlannerListArchiveIntent()
+        let archiving = SetPlannerListArchiveIntent()
         archiving.list = target
         archiving.archived = archived
         do {
@@ -249,8 +245,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
   func testListArchiveRetiresOnlyItsItineraryBranchAndRestoresIndependentStatesOnUnarchive()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
@@ -302,7 +297,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
       membershipId: membershipIdentifier)
     let direct = PlannerAppearance.directItineraryItem(
       itineraryId: itinerary.id, entryId: directEntryIdentifier)
-    var archiving = SetPlannerListArchiveIntent()
+    let archiving = SetPlannerListArchiveIntent()
     archiving.list = .init(id: list.id, name: "Stale name", archived: true)
     for archived in [true, false] {
       archiving.archived = archived
@@ -347,16 +342,15 @@ final class PlannerListEditingIntentTests: XCTestCase {
   }
 
   func testListPartialEditsKeepOmittedFieldsAndExplicitlyClearNotes() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Original List"
     creation.notes = "Keep the notes"
     let list = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
-    var editing = EditPlannerListIntent()
+    let editing = EditPlannerListIntent()
     editing.list = list
     editing.name = "Renamed List"
     let _: Void = try await editing.callAsFunction(donate: false)
@@ -390,8 +384,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
   func testListEditPreservesIdentityMetadataArchiveAndMembershipCompletionAfterReopen()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
@@ -425,7 +418,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
       case .source(.list(let before)) = await planner.read(
         session: session, request: .source(list))
     else { return XCTFail("The rich archived List must be readable before its edit.") }
-    var editing = EditPlannerListIntent()
+    let editing = EditPlannerListIntent()
     editing.list = .init(id: list.id, name: "Obsolete cached name", archived: false)
     editing.name = "Reviewed Tokyo Food"
     editing.notes = "Reviewed List notes"
@@ -454,18 +447,4 @@ final class PlannerListEditingIntentTests: XCTestCase {
     XCTAssertTrue(retained.effectiveDone)
   }
 
-  private func makeStorage() throws -> (
-    directory: URL, configuration: PlannerStorageConfiguration, store: SavedPlannerStore
-  ) {
-    let directory = FileManager.default.temporaryDirectory
-      .appending(
-        path: "PlannerListEditingIntentTests/\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appending(path: "store/Planner.sqlite"),
-      controlURL: directory.appending(path: "control/writer"),
-      recoveryDirectoryURL: directory.appending(path: "recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
-    return (directory, configuration, SavedPlannerStore(configuration: configuration))
-  }
 }
