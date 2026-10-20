@@ -12,6 +12,8 @@ The [full-graph native file follow-up](prototypes/native-backup-full-graph-file.
 
 The [nonempty graph follow-up](prototypes/native-backup-graph-conflicts.md) qualifies native Skip/Overwrite for shared Item content and List-local completion/history, plus an independent new Item. Phone and dark iPad pass, and their actual delivered files match both complete expected graphs. Two earlier controller failures remain failed. No production change or pending feature approval is inferred.
 
+The [referenced-Item restoration follow-up](prototypes/native-backup-item-restoration.md) adds a native rejection/restoration journey and corrects an iPad presentation stall after Cancel. The review consumes its displayed shared error on dismissal; saved data and recovery blocks are unchanged. Final phone/dark iPad restoration and successful-import regression pass, preserving original public identities and independent completion. Mac compilation and affected lint also pass. Three earlier restoration failures remain recorded; no map gate is broadly closed by this slice.
+
 These choices remain unanswered. Recommendations are proposals, not accepted defaults.
 
 | Question | Decision still needed | Recommendation and consequence | Concrete review |

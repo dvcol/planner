@@ -540,6 +540,119 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         name: "Conflicting graph keeps the addition and overwritten notes after relaunch")
     }
 
+    func testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner full graph backup.json", application: application)
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Items")
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      museum.activateForPlannerJourney()
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("saved.item.delete").activateForPlannerJourney()
+      let deletion = application.plannerElement("saved.item.delete.confirm")
+      XCTAssertTrue(deletion.waitForExistence(timeout: 10))
+      deletion.activateForPlannerJourney()
+      XCTAssertTrue(deletion.waitForNonExistence(timeout: 10))
+      application.openPlannerSection("Lists")
+      openSettings(application)
+      selectBackup("Planner full graph backup.json", application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      let authorizationFailure = application.staticTexts[
+        "Deleted data needs separate reviewed restoration."]
+      revealImportElement(authorizationFailure, application: application)
+      XCTAssertTrue(authorizationFailure.waitForExistence(timeout: 15))
+      XCTAssertFalse(application.staticTexts["saved.import.applied"].exists)
+      recordImport(application, name: "Graph restoration requires separate authorization")
+      let closeReview = application.plannerElement("saved.import.close")
+      closeReview.activateForPlannerJourney()
+      XCTAssertTrue(closeReview.waitForNonExistence(timeout: 10))
+      let closeSettings = application.plannerElement("saved.settings.done")
+      XCTAssertTrue(closeSettings.waitForPlannerHittability())
+      closeSettings.activateForPlannerJourney()
+      XCTAssertTrue(closeSettings.waitForNonExistence(timeout: 10))
+      application.openPlannerSection("Items")
+      let itemFilters = application.plannerElement("saved.items.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: itemFilters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: itemFilters)
+      XCTAssertTrue(
+        application.plannerElement("saved.item.00000000-0000-4000-8000-000000000102")
+          .waitForExistence(timeout: 15))
+      XCTAssertFalse(museum.exists)
+      recordImport(application, name: "Graph restoration rejection leaves the Item deleted")
+      application.openPlannerSection("Lists")
+      openSettings(application)
+      selectBackup("Planner full graph backup.json", application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      let restore = application.descendants(matching: .any).matching(
+        identifier: "saved.import.restore"
+      ).firstMatch
+      revealImportElement(restore, application: application)
+      restore.switches.firstMatch.activateForPlannerJourney()
+      let restorations = application.staticTexts["saved.import.summary.restorations"]
+      revealImportElement(restorations, application: application)
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "label == %@", "Restorations, 1"),
+              object: restorations)
+          ], timeout: 15), .completed)
+      recordImport(application, name: "Graph restoration explicitly reviews the deleted Item")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      let completion = application.descendants(matching: .any).matching(
+        identifier: "saved.item.completion"
+      ).firstMatch
+      XCTAssertTrue(completion.waitForExistence(timeout: 5))
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      XCTAssertTrue(
+        application.descendants(matching: .any).matching(
+          identifier: "saved.item.schedule.00000000-0000-4000-8000-000000000701"
+        ).firstMatch.waitForExistence(timeout: 10))
+      recordImport(
+        application, name: "Graph restoration retains shared Item and Schedule identities")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(
+        application.savedPlannerListRow("Tokyo Food"), application: application)
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000401"
+        ).waitForPlannerValue("Completed"))
+      recordImport(application, name: "Graph restoration retains the first membership Done state")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(application.savedPlannerListRow("Wishlist"), application: application)
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000403"
+        ).waitForPlannerValue("To do"))
+      application.openPlannerSection("Itineraries")
+      openImportedCatalogRow(
+        application.plannerElement("saved.itinerary.row.00000000-0000-4000-8000-000000000301"),
+        application: application)
+      XCTAssertTrue(application.staticTexts["1 of 3 items finished"].waitForExistence(timeout: 10))
+      recordImport(
+        application, name: "Graph restoration keeps the other planning contexts independent")
+    }
+
     private func openImportedCatalogRow(_ row: XCUIElement, application: XCUIApplication) {
       if !row.waitForExistence(timeout: 2) || !row.isHittable {
         let sidebar = application.plannerElement("Show Sidebar")
