@@ -1,0 +1,51 @@
+{
+  "format": "planner-data",
+  "formatVersion": 1,
+  "sources": [
+    {
+      "kind": "list",
+      "id": "00000000-0000-4000-8000-000000000201",
+      "lifetimeId": "00000000-0000-4000-8000-000000000821",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "name": "Unresolved backup list",
+        "notes": null,
+        "color": null,
+        "iconName": null
+      },
+      "globalDone": null,
+      "archived": false,
+      "contentOrigins": {
+        "name": "independent"
+      }
+    }
+  ],
+  "memberships": [
+    {
+      "id": "00000000-0000-4000-8000-000000000401",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "rank": "1024",
+      "localDone": true,
+      "lifetimeId": "00000000-0000-4000-8000-000000000401"
+    }
+  ],
+  "itineraryEntries": [],
+  "expandedCompletions": [],
+  "schedules": [],
+  "labelAssociations": [],
+  "ownedLinks": [],
+  "deletionMarkers": [],
+  "contextAliases": [],
+  "completionChanges": [],
+  "restorationFamilies": []
+}

@@ -1,0 +1,39 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-unresolved-phone.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1DAFA778-CA00-478A-976D-6125D5C1C008.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Rejected unresolved backup creates no List after relaunch_0_06EA164C-3799-4B2F-8A88-8E59FF2AAC8E.png",
+      "timestamp": 1792531432.247,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch()",
+      "originalSha256": "494927ebeb04b07a2c5e18c1566efb629c49936762449b9e6e9d1f623c4ba8b2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "455FA38D-E4DD-470D-B80E-2B057A0CE5FE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Valid backup remains reviewable after unresolved reference_0_8ADE1668-1D9B-46A0-BB01-F45D75D79068.png",
+      "timestamp": 1792531413.287,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch()",
+      "originalSha256": "4e3c30d50051f0210693c75d9547b1972bf5dff9147f6932997283fc50df6875"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "578207EC-B0B2-458C-A894-BD36F6AFC338.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unresolved backup reference blocks native confirmation_0_00E62088-6959-4F3C-B3CC-425A5104E4FB.png",
+      "timestamp": 1792531403.982,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch()",
+      "originalSha256": "a0e06437ee7f17ea3e0e3bf7d65c5f0e6c8efaf62e56cef4eb6ab237085afa99"
+    }
+  ],
+  "videoPublished": false
+}

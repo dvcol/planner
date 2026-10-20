@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "dab495b4564a95704bd02f20c04a0a00f83e9d7f",
+  "overlays": [
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+    "docs/fixtures/native-unresolved-backup.json.invalid"
+  ]
+}

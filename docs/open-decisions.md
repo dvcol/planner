@@ -6,6 +6,8 @@ Q116 A is implemented. Item/Itinerary edits return exact new bookmark references
 
 Further local work qualifies [native unsupported backup-version rejection](prototypes/native-backup-version-rejection.md), valid-file retry and retained Tag identity on phone and dark-mode tablet. Its failed controller attempts remain separate from four final passing invocations. This does not consume a pending choice or close signing, physical, Mac runtime or full-graph import gates.
 
+The [unresolved-reference follow-up](prototypes/native-backup-unresolved-reference.md) also passes on phone and dark-mode tablet: a new List's missing Item blocks confirmation, current data survives, and no partial List appears after relaunch. Other invalid bindings and broad import/recovery gates remain open.
+
 These choices remain unanswered. Recommendations are proposals, not accepted defaults.
 
 | Question | Decision still needed | Recommendation and consequence | Concrete review |

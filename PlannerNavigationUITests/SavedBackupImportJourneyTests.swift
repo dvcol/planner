@@ -367,6 +367,46 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       recordImport(application, name: "Unsupported backup leaves original Tag after relaunch")
     }
 
+    func testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let exportedBackup = createAndExportTagBackup(application)
+      selectBackupFile("Planner unresolved reference backup.json", application: application)
+      let failure = application.staticTexts[
+        "The imported reference cannot resolve in this dataset."]
+      revealImportElement(failure, application: application)
+      XCTAssertTrue(failure.waitForExistence(timeout: 15))
+      let confirmation = application.plannerElement("saved.import.confirm")
+      XCTAssertTrue(confirmation.exists)
+      XCTAssertFalse(confirmation.isEnabled)
+      let retry = application.plannerElement("Try again")
+      revealImportElement(retry, application: application)
+      XCTAssertTrue(retry.isEnabled)
+      recordImport(application, name: "Unresolved backup reference blocks native confirmation")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      selectBackup(exportedBackup.filename, application: application)
+      let unchanged = application.staticTexts["saved.import.summary.unchanged"]
+      XCTAssertTrue(unchanged.waitForExistence(timeout: 15))
+      XCTAssertEqual(unchanged.label, "Unchanged, 1")
+      recordImport(application, name: "Valid backup remains reviewable after unresolved reference")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let retainedTag = application.plannerElement(exportedBackup.tagIdentifier)
+      XCTAssertTrue(retainedTag.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedTag.label, "Original backup tag")
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Lists")
+      XCTAssertTrue(application.staticTexts["No Lists yet"].waitForExistence(timeout: 15))
+      XCTAssertFalse(application.savedPlannerListRow("Unresolved backup list").exists)
+      recordImport(application, name: "Rejected unresolved backup creates no List after relaunch")
+    }
+
     private func createAndExportTagBackup(_ application: XCUIApplication) -> (
       tagIdentifier: String, filename: String
     ) {

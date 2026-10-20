@@ -1,0 +1,39 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-unresolved-tablet-dark.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "667BDAF6-F917-47F6-8E8D-F4334BA59C3B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Rejected unresolved backup creates no List after relaunch_0_40E469D0-2AFA-4A6F-B1EF-C3E8A3D93FD1.png",
+      "timestamp": 1792531553.598,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch()",
+      "originalSha256": "c6d1e89303b9869cedaae465f41de453878603e4a907985142db295446d7cf1d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "01AC4F97-0FA8-42E0-9BD5-86699A73AF2E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Valid backup remains reviewable after unresolved reference_0_D1F625D3-8543-41A4-AF05-FCD31874D050.png",
+      "timestamp": 1792531533.886,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch()",
+      "originalSha256": "a7cc4f34be89213ebf9535281e85076c7cb9b2e3d25e7a59ed9d3ed12dc8f788"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4CE2985C-C910-44A2-A3A1-0D4473396E25.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unresolved backup reference blocks native confirmation_0_BEF04BA2-B562-4D4B-B807-F55E9C336FE4.png",
+      "timestamp": 1792531523.159,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnresolvedBackupReferenceDisablesImportAndPreservesCurrentDataAfterRelaunch()",
+      "originalSha256": "80692538f450ae4a704636607906b13832edbb3114ddad0ef24f11b3d04232f6"
+    }
+  ],
+  "videoPublished": false
+}

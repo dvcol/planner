@@ -1,0 +1,106 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "output": "validation-0.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerMarkdownlintConfig.json",
+        "docs/prototypes/native-backup-unresolved-reference.md",
+        "docs/prototypes/native-backup-import.md",
+        "docs/native-ui-polish.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "output": "validation-1.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": "validation-2.log"
+    }
+  ],
+  "sourceEpochs": {
+    "native-backup-unresolved-phone": {
+      "inputCount": 1042,
+      "differences": []
+    },
+    "native-backup-unresolved-tablet-dark": {
+      "inputCount": 1042,
+      "differences": []
+    },
+    "native-backup-unresolved-mac-build": {
+      "inputCount": 1042,
+      "differences": []
+    }
+  },
+  "runtimeReconciliation": {
+    "native-backup-unresolved-phone": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "83.963"
+      ]
+    },
+    "native-backup-unresolved-tablet-dark": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "95.176"
+      ]
+    }
+  },
+  "products": {
+    "mac": {
+      "application": {
+        "path": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+        "sha256": "b0583d22c9fab04caef5652c2aba74520287687ce7ebe995bd41195b1526fc3f"
+      },
+      "nativeUITests": {
+        "path": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests",
+        "sha256": "5099f7146d86c5445d60b2dde011f13ea88d5cbbcbe6d679e03f9db5a018348a"
+      }
+    },
+    "simulator": {
+      "application": {
+        "path": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+        "sha256": "56a90972ace48d09604caaeab68958686ab1bc97effa0f995cf5f7b20c7c74d3"
+      },
+      "nativeUITests": {
+        "path": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests",
+        "sha256": "74bb2b101a404c6aa30a646efb3375c13ad2c1bdbf7db8a0ad20af92c24cafd0"
+      }
+    }
+  },
+  "productionInputsUnchanged": true,
+  "priorTestAndControllerBytesUnchanged": true,
+  "macCompilerDiagnostics": [],
+  "manualReview": {
+    "standards": "One additional native behavior test with existing production UI and actual external file input. Earlier test/controller bytes remain exact; no production testing hook or private-store assertion.",
+    "specification": "The supported version-1 file declares a List and missing external Item. Native review blocks confirmation and offers Retry/Cancel, current valid backup remains reviewable, original Tag identity/name survives relaunch, and ready Lists remain empty. Other kinds and graph/recovery gates stay open.",
+    "capturesInspected": [
+      "native-backup-unresolved-phone",
+      "native-backup-unresolved-tablet-dark"
+    ],
+    "macUIRuntimeFunctions": 0,
+    "newCoreOrHTTPInvocations": 0
+  }
+}
