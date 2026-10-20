@@ -165,6 +165,105 @@
     }
   }
 
+  struct EditPlannerItineraryIntent: AppIntent {
+    static let title: LocalizedStringResource = "Edit Itinerary"
+    static let description = IntentDescription(
+      "Change the title or notes. Leave a field unset to keep it; empty notes clears them.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Parameter(title: "Title") var title: String?
+    @Parameter(title: "Notes") var notes: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      guard title != nil || notes != nil else {
+        throw PlannerItineraryIntentFailure(message: "Choose a title or notes to change.")
+      }
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let source: PlannerItinerarySourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+      {
+      case .source(.itinerary(let current)): source = current
+      case .failed(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
+      default:
+        throw PlannerItineraryIntentFailure(message: "Planner could not read this Itinerary.")
+      }
+      let titleChange = title.map(PlannerFieldChange.set) ?? .unchanged
+      let notesChange: PlannerFieldChange<String>
+      if let notes {
+        notesChange = notes.isEmpty ? .clear : .set(notes)
+      } else {
+        notesChange = .unchanged
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .editItinerary(
+          sourceId: source.source.id, changes: .init(title: titleChange, notes: notesChange),
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerItineraryIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Updated the Itinerary. Its entries are preserved."
+        case .incomplete:
+          dialog =
+            "The Itinerary changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
+  struct SetPlannerItineraryArchiveIntent: AppIntent {
+    static let title: LocalizedStringResource = "Set Itinerary archive state"
+    static let description = IntentDescription(
+      "Archive or unarchive this Itinerary while preserving its shared Items, Lists and entry completion."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Parameter(title: "Archived") var archived: Bool
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let result = try await plannerStore.executeAppIntent(
+        .setArchive(source: .init(kind: .itinerary, id: itinerary.id), archived: archived))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerItineraryIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          if archived {
+            dialog = "Archived the Itinerary. Its entries and shared content are preserved."
+          } else {
+            dialog = "Unarchived the Itinerary. Its entries and shared content are preserved."
+          }
+        case .incomplete:
+          dialog =
+            "The Itinerary's archive state changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerItineraryIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }
