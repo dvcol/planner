@@ -1,6 +1,6 @@
 # New bookmark identities in edit results
 
-Status: Q116 A's Core result amendment passes locally. Native Add Link actions are the next slice. Signing remains deferred.
+Status: Q116 A's Core result amendment passes locally. The [native Add Link follow-up](native-add-link-intents.md) is subsequently implemented and qualified separately. Signing remains deferred.
 
 ## Context, starting state and goal
 
@@ -28,4 +28,4 @@ Core packets are in [native-association-undo](evidence/navigation/native-associa
 
 The actual Simulator app/native UI-test target and unsigned generic device app compile successfully. The device app embeds one mobile Share extension; both executables are arm64. All 45 native actions, eight entities, eight queries, parameter contracts, enum cases and Link-read outputs remain unchanged. The frozen epoch has 1010 inputs; the only addition is the new Core test file. Both platform builds match the final Mac run's production inputs. The Simulator snapshot predates only the HTTP fixture-lifecycle correction. Strict affected Swift lint and platform type checks pass.
 
-Q116's Core amendment is implemented. Its native Add Link result/confirmation and failure qualification remain open for the next slice. [Q115](../native-estimate-intent-input-review.md) remains pending for estimate input. Actual Shortcuts invocation, signed Agent Control, shared/account-bound storage and CloudKit implementation/proof, installed Share, physical qualification and feature-complete whole-app UI polish retain their separate map gates. No signing/account setup or device installation occurred.
+Q116's Core amendment is implemented. Its native Add Link result/confirmation and failure qualification subsequently pass in the linked follow-up. [Q115](../native-estimate-intent-input-review.md) remains pending for estimate input. Actual Shortcuts invocation, signed Agent Control, shared/account-bound storage and CloudKit implementation/proof, installed Share, physical qualification and feature-complete whole-app UI polish retain their separate map gates. No signing/account setup or device installation occurred.

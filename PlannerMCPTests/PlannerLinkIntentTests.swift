@@ -8,6 +8,259 @@ import XCTest
 
 @MainActor
 final class PlannerLinkIntentTests: XCTestCase {
+  func testAddingBookmarksReturnsExactSavedIdentitiesAndAuthoredValuesForBothOwnerKinds()
+    async throws
+  {
+    let fixture = try await makeLinkIntentFixture()
+    let original = try await readLinkIntentSources(fixture)
+    let originalURL = "https://example.com/Guide?Ref=%2f&Ref=A#Room"
+    let addingItem = AddPlannerItemLinkIntent()
+    addingItem.item = .init(id: fixture.item.id, title: "Cached", done: true, archived: true)
+    addingItem.originalURL = originalURL
+    addingItem.label = "  Guide  "
+    let itemLink = try await addingItem.callAsFunction(donate: false)
+    let addingItinerary = AddPlannerItineraryLinkIntent()
+    addingItinerary.itinerary = .init(id: fixture.itinerary.id, title: "Cached", archived: true)
+    addingItinerary.originalURL = originalURL
+    addingItinerary.label = ""
+    let itineraryLink = try await addingItinerary.callAsFunction(donate: false)
+    let current = try await readLinkIntentSources(fixture)
+    let savedItemLink = try XCTUnwrap(current.item.content.links.last)
+    let savedItineraryLink = try XCTUnwrap(current.itinerary.content.links.last)
+    XCTAssertEqual(
+      itemLink.id, "item:\(fixture.item.id.uuidString):\(savedItemLink.linkId.uuidString)")
+    XCTAssertEqual(
+      itineraryLink.id,
+      "itinerary:\(fixture.itinerary.id.uuidString):\(savedItineraryLink.linkId.uuidString)")
+    XCTAssertEqual(itemLink.originalURL, originalURL)
+    XCTAssertEqual(itineraryLink.originalURL, originalURL)
+    XCTAssertEqual(itemLink.url.absoluteString, originalURL)
+    XCTAssertEqual(itineraryLink.url.absoluteString, originalURL)
+    XCTAssertEqual(itemLink.label, "  Guide  ")
+    XCTAssertEqual(itineraryLink.label, "")
+    XCTAssertEqual(itemLink.ownerTitle, "Museum")
+    XCTAssertEqual(itineraryLink.ownerTitle, "Weekend")
+    XCTAssertEqual(itemLink.position, 4)
+    XCTAssertEqual(itineraryLink.position, 2)
+    XCTAssertNotEqual(savedItemLink.linkId, original.item.content.links[1].linkId)
+    XCTAssertEqual(Array(current.item.content.links.dropLast()), original.item.content.links)
+    XCTAssertEqual(
+      Array(current.itinerary.content.links.dropLast()), original.itinerary.content.links)
+    XCTAssertFalse(fixture.store.recoveryBlocked)
+    let query = PlannerLinkEntityQuery()
+    query.plannerStore = fixture.store
+    let resolved = try await query.entities(for: [itemLink.id, itineraryLink.id])
+    XCTAssertEqual(resolved.map(\.id), [itemLink.id, itineraryLink.id])
+  }
+
+  func testAddingDuplicateURLsWithNilLabelsPreservesContentStatesReferencesAndBookings()
+    async throws
+  {
+    let fixture = try await makeLinkIntentFixture()
+    for command in [
+      PlannerCommand.setCompletion(scope: .globalItem(itemId: fixture.item.id), done: true),
+      .setArchive(source: fixture.item, archived: true),
+      .setArchive(source: fixture.itinerary, archived: true),
+      .addItineraryEntry(itineraryId: fixture.itinerary.id, source: fixture.item, placement: .last),
+    ] { try await applyLinkIntentFixtureCommand(fixture, command) }
+    let form = PlannerScheduleForm.allDay(start: .init(year: 2026, month: 10, day: 21), end: nil)
+    var schedules: [PlannerEntityReference] = []
+    for owner in [fixture.item, fixture.itinerary] {
+      let response = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .createSchedule(source: owner, form: form)))
+      guard case .applied(let applied, .complete) = response.outcome,
+        let schedule = applied.generated.first
+      else { throw CancellationError() }
+      schedules.append(schedule)
+    }
+    let before = try await readLinkIntentSources(fixture)
+    for owner in [fixture.item, fixture.itinerary] {
+      let first = try await addLinkUsingIntent(
+        owner, originalURL: "https://example.com/duplicate", label: nil)
+      let second = try await addLinkUsingIntent(
+        owner, originalURL: "https://example.com/duplicate", label: nil)
+      XCTAssertNotEqual(first.id, second.id)
+      XCTAssertNil(first.label)
+      XCTAssertNil(second.label)
+      XCTAssertEqual(second.position, first.position + 1)
+    }
+    let after = try await readLinkIntentSources(fixture)
+    XCTAssertEqual(Array(after.item.content.links.dropLast(2)), before.item.content.links)
+    XCTAssertEqual(Array(after.itinerary.content.links.dropLast(2)), before.itinerary.content.links)
+    XCTAssertEqual(after.item.sourceLifetimeId, before.item.sourceLifetimeId)
+    XCTAssertEqual(after.itinerary.sourceLifetimeId, before.itinerary.sourceLifetimeId)
+    func nonBookmarkReferences(_ references: [PlannerReferenceRead]) -> [PlannerReferenceRead] {
+      references.filter {
+        if case .ownedLink = $0 { return false }
+        return true
+      }
+    }
+    XCTAssertEqual(
+      nonBookmarkReferences(after.item.references), nonBookmarkReferences(before.item.references))
+    XCTAssertEqual(
+      nonBookmarkReferences(after.itinerary.references),
+      nonBookmarkReferences(before.itinerary.references))
+    XCTAssertEqual(after.item.state.globalDone, true)
+    XCTAssertEqual(after.item.state.archived, true)
+    XCTAssertEqual(after.itinerary.state.archived, true)
+    XCTAssertEqual(after.itinerary.progress.totalCount, before.itinerary.progress.totalCount)
+    XCTAssertEqual(after.itinerary.progress.doneCount, before.itinerary.progress.doneCount)
+    XCTAssertEqual(after.itinerary.progress.state, before.itinerary.progress.state)
+    XCTAssertEqual(after.itinerary.estimates, before.itinerary.estimates)
+    for (field, hash) in before.item.fieldHashes where field != .links {
+      XCTAssertEqual(after.item.fieldHashes[field], hash)
+    }
+    for (field, hash) in before.itinerary.fieldHashes where field != .links {
+      XCTAssertEqual(after.itinerary.fieldHashes[field], hash)
+    }
+    for (schedule, owner) in zip(schedules, [fixture.item, fixture.itinerary]) {
+      guard
+        case .source(.schedule(let saved)) = await fixture.planner.read(
+          session: fixture.session, request: .source(schedule))
+      else { throw CancellationError() }
+      XCTAssertEqual(saved.content.form, form)
+      XCTAssertEqual(saved.content.source, owner)
+    }
+    XCTAssertFalse(fixture.store.recoveryBlocked)
+  }
+
+  func testInvalidLinkInputsAndMissingOwnersDoNotApplyPartialEdits() async throws {
+    let fixture = try await makeLinkIntentFixture()
+    let before = try await readLinkIntentSources(fixture)
+    for owner in [fixture.item, fixture.itinerary] {
+      for originalURL in [
+        "", "not a URL", "file:///private/tmp/bookmark", "https:///no-host",
+        "https://example.com/café",
+      ] {
+        do {
+          _ = try await addLinkUsingIntent(owner, originalURL: originalURL, label: "Must not save")
+          XCTFail("Invalid authored URL text cannot allocate a saved bookmark.")
+        } catch { XCTAssertFalse(error.localizedDescription.isEmpty) }
+      }
+    }
+    for owner in [
+      PlannerEntityReference(kind: .item, id: UUID()), .init(kind: .itinerary, id: UUID()),
+      .init(kind: .item, id: fixture.itinerary.id), .init(kind: .itinerary, id: fixture.item.id),
+    ] {
+      do {
+        _ = try await addLinkUsingIntent(owner, originalURL: "https://example.com/new", label: nil)
+        XCTFail("A missing or mismatched typed owner cannot redirect an addition.")
+      } catch { XCTAssertFalse(error.localizedDescription.isEmpty) }
+    }
+    try await assertLinkIntentSourcesUnchanged(before, fixture: fixture)
+    XCTAssertFalse(fixture.store.recoveryBlocked)
+    XCTAssertFalse(fixture.store.isSaving)
+  }
+
+  func testPrecancelledAdditionsLeaveBothOwnersUntouched() async throws {
+    let fixture = try await makeLinkIntentFixture()
+    let before = try await readLinkIntentSources(fixture)
+    for owner in [fixture.item, fixture.itinerary] {
+      let request = Task {
+        try await addLinkUsingIntent(
+          owner, originalURL: "https://example.com/cancelled", label: nil)
+      }
+      request.cancel()
+      do {
+        _ = try await request.value
+        XCTFail("An addition cancelled before execution cannot report a saved Link.")
+      } catch { XCTAssertFalse(error.localizedDescription.isEmpty) }
+    }
+    try await assertLinkIntentSourcesUnchanged(before, fixture: fixture)
+    XCTAssertFalse(fixture.store.isSaving)
+  }
+
+  func testAdditionsFailWhenBootstrapStorageIsUnavailable() async throws {
+    let (directory, _, _) = try makePlannerIntentStorage()
+    let parent = directory.appending(path: "blocked-store")
+    let obstruction = Data("Keep this real filesystem obstruction".utf8)
+    try obstruction.write(to: parent)
+    let configuration = PlannerStorageConfiguration(
+      storeURL: parent.appending(path: "Planner.sqlite"),
+      controlURL: directory.appending(path: "control/writer"),
+      recoveryDirectoryURL: directory.appending(path: "recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let store = SavedPlannerStore(configuration: configuration)
+    AppDependencyManager.shared.add(dependency: store)
+    for owner in [
+      PlannerEntityReference(kind: .item, id: UUID()), .init(kind: .itinerary, id: UUID()),
+    ] {
+      do {
+        _ = try await addLinkUsingIntent(owner, originalURL: "https://example.com/new", label: nil)
+        XCTFail("Unavailable storage cannot report a newly saved bookmark.")
+      } catch { XCTAssertFalse(error.localizedDescription.isEmpty) }
+    }
+    XCTAssertEqual(try Data(contentsOf: parent), obstruction)
+    XCTAssertFalse(store.isReady)
+    XCTAssertFalse(store.isSaving)
+  }
+
+  func testAddedBookmarkIdentitySurvivesPostSaveRecoveryFailureWithoutASecondMutation() async throws
+  {
+    for ownerKind in [PlannerEntityKind.item, .itinerary] {
+      let fixture = try await makeLinkIntentFixture()
+      await fixture.store.open()
+      XCTAssertTrue(fixture.store.isReady)
+      let owner: PlannerEntityReference
+      if ownerKind == .item { owner = fixture.item } else { owner = fixture.itinerary }
+      let obstruction = IntentRecoverySaveObstruction(configuration: fixture.configuration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) {
+        notification in obstruction.observe(notification)
+      }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let added = try await addLinkUsingIntent(
+        owner, originalURL: "https://example.com/saved-before-failure", label: "Keep")
+      XCTAssertTrue(obstruction.didObstruct)
+      XCTAssertTrue(fixture.store.recoveryBlocked)
+      XCTAssertEqual(fixture.store.incompleteRecoveryOperationIdentifiers.count, 1)
+      let operationIdentifier = try XCTUnwrap(
+        fixture.store.incompleteRecoveryOperationIdentifiers.first)
+      try obstruction.restore()
+      guard
+        case .appliedRecoveryIncomplete(let applied, _) = await fixture.planner.operationStatus(
+          session: fixture.session, operationId: operationIdentifier)
+      else {
+        return XCTFail(
+          "The returned Link must belong to the locally applied edit awaiting recovery.")
+      }
+      let expected = applied.generatedReferences.compactMap { reference -> UUID? in
+        guard case .ownedLink(let identifier, let savedOwner) = reference, savedOwner == owner
+        else { return nil }
+        return identifier
+      }
+      XCTAssertEqual(expected.count, 1)
+      XCTAssertEqual(
+        added.id,
+        "\(owner.kind.rawValue):\(owner.id.uuidString):\(try XCTUnwrap(expected.first).uuidString)")
+      let beforeRepair = try await readLinkIntentSources(fixture)
+      let links = try await readLinksUsingIntent(owner)
+      XCTAssertEqual(links.last?.id, added.id)
+      do {
+        _ = try await addLinkUsingIntent(
+          owner, originalURL: "https://example.com/blocked", label: nil)
+        XCTFail("Incomplete recovery must block another addition without losing the first Link.")
+      } catch { XCTAssertFalse(error.localizedDescription.isEmpty) }
+      try await assertLinkIntentSourcesUnchanged(beforeRepair, fixture: fixture)
+      NotificationCenter.default.removeObserver(observer)
+      try obstruction.restore()
+      await fixture.store.retryIncompleteRecovery()
+      XCTAssertFalse(fixture.store.recoveryBlocked)
+      try await assertLinkIntentSourcesUnchanged(beforeRepair, fixture: fixture)
+      guard
+        case .appliedRecoveryComplete(let acknowledged, _) = await fixture.planner.operationStatus(
+          session: fixture.session, operationId: operationIdentifier)
+      else { throw CancellationError() }
+      XCTAssertEqual(acknowledged, applied)
+    }
+  }
+
   func testItemLinkReadReturnsSavedOrderExactURLsAndDistinctDuplicateIdentitiesAfterReopen()
     async throws
   {
@@ -439,6 +692,24 @@ final class PlannerLinkIntentTests: XCTestCase {
         "Native recovery must acknowledge the original edit without replaying Link reads.")
     }
   }
+}
+
+@MainActor
+private func addLinkUsingIntent(
+  _ owner: PlannerEntityReference, originalURL: String, label: String?
+) async throws -> PlannerLinkEntity {
+  if owner.kind == .item {
+    let adding = AddPlannerItemLinkIntent()
+    adding.item = .init(id: owner.id, title: "Cached Item", done: true, archived: true)
+    adding.originalURL = originalURL
+    adding.label = label
+    return try await adding.callAsFunction(donate: false)
+  }
+  let adding = AddPlannerItineraryLinkIntent()
+  adding.itinerary = .init(id: owner.id, title: "Cached Itinerary", archived: true)
+  adding.originalURL = originalURL
+  adding.label = label
+  return try await adding.callAsFunction(donate: false)
 }
 
 private struct LinkIntentSourceObservations {

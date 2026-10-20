@@ -1,6 +1,6 @@
 # New bookmark identities in edit results
 
-Status: accepted, Q116 A, 21 October 2026. Implementation and qualification are in progress. Ordered native Link reads retain their existing contract.
+Status: accepted, Q116 A, 21 October 2026. The [Core result amendment](prototypes/core-owned-link-edit-results.md) and [native Add Link follow-up](prototypes/native-add-link-intents.md) are implemented and qualified locally. Ordered native Link reads retain their existing contract. Actual system invocation and physical gates remain separate.
 
 ## Context and starting state
 

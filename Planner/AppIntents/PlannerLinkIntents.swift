@@ -25,10 +25,19 @@
       guard let url = URL(string: link.originalUrl) else {
         throw PlannerLinkIntentFailure(message: "Planner could not read this saved Link's URL.")
       }
-      self.id = PlannerLinkIdentity(owner: owner, linkIdentifier: link.linkId).id
+      self.init(
+        owner: owner, ownerTitle: ownerTitle, position: position, linkIdentifier: link.linkId,
+        url: url, originalURL: link.originalUrl, label: link.label)
+    }
+
+    fileprivate init(
+      owner: PlannerEntityReference, ownerTitle: String, position: Int, linkIdentifier: UUID,
+      url: URL, originalURL: String, label: String?
+    ) {
+      self.id = PlannerLinkIdentity(owner: owner, linkIdentifier: linkIdentifier).id
       self.url = url
-      self.originalURL = link.originalUrl
-      self.label = link.label
+      self.originalURL = originalURL
+      self.label = label
       self.ownerTitle = ownerTitle
       self.position = position
     }
@@ -112,6 +121,120 @@
           message: "This Itinerary is no longer available in Planner's current data.")
       }
       return .result(value: links)
+    }
+  }
+
+  struct AddPlannerItemLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Add Item link"
+    static let description = IntentDescription(
+      "Append a bookmark to this Item and return its exact new Link. Equal URLs remain separate bookmarks."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Link") var originalURL: String
+    @Parameter(title: "Label") var label: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<PlannerLinkEntity, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let added = try await addPlannerLink(
+        to: .init(kind: .item, id: item.id), originalURL: originalURL, label: label,
+        store: plannerStore)
+      return .result(value: added.link, dialog: added.dialog)
+    }
+  }
+
+  struct AddPlannerItineraryLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Add Itinerary link"
+    static let description = IntentDescription(
+      "Append a bookmark to this Itinerary's own Links and return its exact identity. Referenced Items keep their separate bookmarks."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Parameter(title: "Link") var originalURL: String
+    @Parameter(title: "Label") var label: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<PlannerLinkEntity, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let added = try await addPlannerLink(
+        to: .init(kind: .itinerary, id: itinerary.id), originalURL: originalURL, label: label,
+        store: plannerStore)
+      return .result(value: added.link, dialog: added.dialog)
+    }
+  }
+
+  @MainActor
+  private func addPlannerLink(
+    to owner: PlannerEntityReference, originalURL: String, label: String?, store: SavedPlannerStore
+  ) async throws -> (link: PlannerLinkEntity, dialog: IntentDialog) {
+    let (planner, session) = try await store.appIntentContext()
+    try Task.checkCancellation()
+    guard let url = URL(string: originalURL, encodingInvalidCharacters: false) else {
+      throw PlannerLinkIntentFailure(message: "A bookmark must be an absolute HTTP or HTTPS URL.")
+    }
+    func replacement(_ links: [PlannerOwnedLinkRead]) -> [PlannerLinkInput] {
+      links.map {
+        .init(linkId: $0.linkId, originalUrl: $0.originalUrl, label: $0.label)
+      } + [.init(originalUrl: originalURL, label: label)]
+    }
+    let ownerTitle: String
+    let position: Int
+    let command: PlannerCommand
+    switch await planner.read(session: session, request: .source(owner)) {
+    case .source(.item(let current)) where owner.kind == .item:
+      ownerTitle = current.content.title
+      position = current.content.links.count + 1
+      command = .editItem(
+        sourceId: owner.id, changes: .init(links: .set(replacement(current.content.links))),
+        expectedFieldHashes: current.fieldHashes)
+    case .source(.itinerary(let current)) where owner.kind == .itinerary:
+      ownerTitle = current.content.title
+      position = current.content.links.count + 1
+      command = .editItinerary(
+        sourceId: owner.id, changes: .init(links: .set(replacement(current.content.links))),
+        expectedFieldHashes: current.fieldHashes)
+    case .failed(let reason): throw PlannerLinkIntentFailure(message: reason.message)
+    default: throw PlannerLinkIntentFailure(message: "Planner could not read this Link's owner.")
+    }
+    let response = try await store.executeAppIntent(command)
+    switch response.outcome {
+    case .rejected(let reason): throw PlannerLinkIntentFailure(message: reason.message)
+    case .unverified:
+      throw PlannerLinkIntentFailure(
+        message:
+          "Planner could not verify this change. Open Planner to review recovery before making another change."
+      )
+    case .applied(let applied, let recovery):
+      let identifiers = applied.generatedReferences.compactMap { reference -> UUID? in
+        guard case .ownedLink(let identifier, let savedOwner) = reference, savedOwner == owner
+        else {
+          return nil
+        }
+        return identifier
+      }
+      guard identifiers.count == 1, let identifier = identifiers.first else {
+        throw PlannerLinkIntentFailure(
+          message:
+            "The Link was saved, but Planner could not return its identity. Open Planner to review it."
+        )
+      }
+      let dialog: IntentDialog
+      switch recovery {
+      case .complete: dialog = "Added the Link."
+      case .incomplete:
+        dialog =
+          "The Link was added on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+      }
+      return (
+        PlannerLinkEntity(
+          owner: owner, ownerTitle: ownerTitle, position: position, linkIdentifier: identifier,
+          url: url, originalURL: originalURL, label: label), dialog
+      )
     }
   }
 
