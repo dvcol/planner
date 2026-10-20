@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "qualificationPassed": false,
+  "failure": "New fixture used unescaped Unicode URL, rejected by existing strict HTTP(S) input validation before the read Intent",
+  "passedCases": 11,
+  "failedCases": 1,
+  "closedHostIdentifiers": [
+    74833
+  ],
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/8C2C467E-DFB3-45AE-B497-EBE62F3D0B5E",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E33FE2F7-1D1B-49CC-AE7F-48A6768E8E55",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/98A7271A-6DE6-4F30-AF7D-EF34D1A5BFE0",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/8ADC3933-FB3E-4FCF-A3B2-492D59E6E206",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/2E51AE5B-1609-48C7-8D0C-5B000185E984",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4B53F100-23FF-4DD0-9FAF-0699C3642E74",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/A4EB378F-9035-4B48-854A-9DC02EDA38B3",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/546D7129-7196-42E9-99F0-9D876A0216FE",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7138A877-697C-4FF3-BD75-E5C001CEB9AD",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4FAA8BF5-6374-492C-9CC8-33A815B62741",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/5B988A5A-DFF2-487F-8CA9-1AFE52C53FA4",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/F9F82508-1518-4893-905F-E7B059A81AC8"
+  ],
+  "sourceLogSha256": "7cc52b62e9fd7d9fd69a3a698d6bd11b1c630bba8909dfa89ee6284b99a6052e"
+}

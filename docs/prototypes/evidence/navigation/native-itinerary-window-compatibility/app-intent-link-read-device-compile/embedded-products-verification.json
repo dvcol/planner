@@ -1,0 +1,23 @@
+{
+  "products": [
+    {
+      "bundleIdentifier": "org.example.PlannerMCPPrototype",
+      "executable": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/Planner",
+      "architectures": [
+        "arm64"
+      ],
+      "sha256": "3ada7df8b51791967afeb1e3377759237e464af2a65feef8dd0f8c4990767de4"
+    },
+    {
+      "bundleIdentifier": "org.example.PlannerMCPPrototype.ShareMobile",
+      "executable": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/PlugIns/PlannerShareMobile.appex/PlannerShareMobile",
+      "architectures": [
+        "arm64"
+      ],
+      "sha256": "262562bad5cff873e34c8364515473420e900dd2e008bd0a09d544b4afe209f0"
+    }
+  ],
+  "embeddedMobileShareCount": 1,
+  "signingAllowed": false,
+  "installedOrLaunched": false
+}

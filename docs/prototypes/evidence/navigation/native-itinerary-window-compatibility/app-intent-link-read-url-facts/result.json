@@ -1,0 +1,13 @@
+{
+  "command": [
+    "xcrun",
+    "swift",
+    "-module-cache-path",
+    "/private/tmp/PlannerLinkReadURLCache",
+    "-e",
+    "import Foundation; let raw = \"https://example.com/café?note=été&Ref=%2f#entrée\"; let encoded = \"https://example.com/caf%C3%A9?note=%C3%A9t%C3%A9&Ref=%2f#entr%C3%A9e\"; print(\"strict raw accepted:\", URL(string: raw, encodingInvalidCharacters: false) != nil); print(\"strict escaped accepted:\", URL(string: encoded, encodingInvalidCharacters: false) != nil)"
+  ],
+  "exitCode": 0,
+  "output": "strict raw accepted: false\nstrict escaped accepted: true\n",
+  "plannerInvocationCredit": false
+}

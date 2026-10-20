@@ -1,0 +1,1233 @@
+{
+  "actions": [
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerListToItineraryIntent",
+    "ClearPlannerItemEstimateIntent",
+    "ClearPlannerItemLocationIntent",
+    "ClearPlannerItineraryLocationIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "CreatePlannerTagIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItemLocationIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerItineraryLocationIntent",
+    "EditPlannerListIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItemLinksIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerItineraryItemIntent",
+    "GetPlannerItineraryLinksIntent",
+    "GetPlannerListIntent",
+    "GetPlannerTagIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "RemovePlannerItineraryEntryIntent",
+    "RenamePlannerCategoryIntent",
+    "RenamePlannerTagIntent",
+    "ReorderPlannerItemInListIntent",
+    "ReorderPlannerItineraryEntryIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCategoryIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItemLocationPinIntent",
+    "SetPlannerItemTagIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerItineraryCategoryIntent",
+    "SetPlannerItineraryItemCompletionIntent",
+    "SetPlannerItineraryLocationPinIntent",
+    "SetPlannerItineraryTagIntent",
+    "SetPlannerListArchiveIntent",
+    "UsePlannerItineraryCalculatedEstimateIntent",
+    "UsePlannerListCalculatedEstimateIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerItineraryEntryEntity",
+    "PlannerItineraryItemEntity",
+    "PlannerLinkEntity",
+    "PlannerListEntity",
+    "PlannerTagEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerItineraryEntryEntityQuery",
+    "PlannerItineraryItemEntityQuery",
+    "PlannerLinkEntityQuery",
+    "PlannerListEntityQuery",
+    "PlannerTagEntityQuery"
+  ],
+  "enumCases": {
+    "PlannerItineraryEntryKind": {
+      "item": "Item",
+      "list": "List"
+    },
+    "PlannerItineraryReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Entry",
+      "after": "After Entry"
+    },
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "parameterContracts": {
+    "AddPlannerItemToItineraryIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      }
+    },
+    "AddPlannerItemToListIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      }
+    },
+    "AddPlannerListToItineraryIntent": {
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      },
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      }
+    },
+    "ClearPlannerItemEstimateIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    },
+    "ClearPlannerItemLocationIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    },
+    "ClearPlannerItineraryLocationIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      }
+    },
+    "CreatePlannerCategoryIntent": {
+      "name": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "CreatePlannerItemIntent": {
+      "title": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "subtitle": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "CreatePlannerItineraryIntent": {
+      "title": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "CreatePlannerListIntent": {
+      "name": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "CreatePlannerTagIntent": {
+      "name": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "EditPlannerItemIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "title": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "subtitle": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "EditPlannerItemLocationIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "placeName": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "address": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "removeSavedPin": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "EditPlannerItineraryIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "title": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "EditPlannerItineraryLocationIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "placeName": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "address": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "removeSavedPin": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "EditPlannerListIntent": {
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      },
+      "name": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerCategoryIntent": {
+      "category": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerCategoryEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerItemIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerItemLinksIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerItineraryIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerItineraryItemIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryItemEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerItineraryLinksIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerListIntent": {
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerTagIntent": {
+      "tag": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerTagEntity"
+            }
+          }
+        }
+      }
+    },
+    "MovePlannerItemBetweenListsIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "sourceList": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      },
+      "destinationList": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      }
+    },
+    "RemovePlannerItemFromListIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      }
+    },
+    "RemovePlannerItineraryEntryIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "entry": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntryEntity"
+            }
+          }
+        }
+      }
+    },
+    "RenamePlannerCategoryIntent": {
+      "category": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerCategoryEntity"
+            }
+          }
+        }
+      },
+      "name": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "RenamePlannerTagIntent": {
+      "tag": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerTagEntity"
+            }
+          }
+        }
+      },
+      "name": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "ReorderPlannerItemInListIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      },
+      "position": {
+        "optional": false,
+        "valueType": {
+          "linkEnumeration": {
+            "wrapper": {
+              "identifier": "PlannerListReorderPosition"
+            }
+          }
+        }
+      },
+      "relativeItem": {
+        "optional": true,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    },
+    "ReorderPlannerItineraryEntryIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "entry": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntryEntity"
+            }
+          }
+        }
+      },
+      "position": {
+        "optional": false,
+        "valueType": {
+          "linkEnumeration": {
+            "wrapper": {
+              "identifier": "PlannerItineraryReorderPosition"
+            }
+          }
+        }
+      },
+      "relativeEntry": {
+        "optional": true,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntryEntity"
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItemArchiveIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "archived": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItemCategoryIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "category": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerCategoryEntity"
+            }
+          }
+        }
+      },
+      "assigned": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItemCompletionIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "done": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItemListCompletionIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      },
+      "done": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItemLocationPinIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "location": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "system": {
+                "bundleIdentifier": "com.apple.-GeoToolbox-AppIntents",
+                "contentTypeIdentifier": "com.apple.GeoToolbox.PlaceDescriptor"
+              },
+              "typeName": "GeoToolbox.PlaceDescriptorEntity"
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItemTagIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "tag": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerTagEntity"
+            }
+          }
+        }
+      },
+      "assigned": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItineraryArchiveIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "archived": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItineraryCategoryIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "category": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerCategoryEntity"
+            }
+          }
+        }
+      },
+      "assigned": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItineraryItemCompletionIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryItemEntity"
+            }
+          }
+        }
+      },
+      "done": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItineraryLocationPinIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "location": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "system": {
+                "bundleIdentifier": "com.apple.-GeoToolbox-AppIntents",
+                "contentTypeIdentifier": "com.apple.GeoToolbox.PlaceDescriptor"
+              },
+              "typeName": "GeoToolbox.PlaceDescriptorEntity"
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerItineraryTagIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      },
+      "tag": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerTagEntity"
+            }
+          }
+        }
+      },
+      "assigned": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "SetPlannerListArchiveIntent": {
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      },
+      "archived": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 1
+            }
+          }
+        }
+      }
+    },
+    "UsePlannerItineraryCalculatedEstimateIntent": {
+      "itinerary": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItineraryEntity"
+            }
+          }
+        }
+      }
+    },
+    "UsePlannerListCalculatedEstimateIntent": {
+      "list": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerListEntity"
+            }
+          }
+        }
+      }
+    }
+  },
+  "outputContracts": {
+    "GetPlannerItemLinksIntent": {
+      "array": {
+        "wrapper": {
+          "capabilities": 3,
+          "memberValueType": {
+            "entity": {
+              "wrapper": {
+                "typeName": "PlannerLinkEntity"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetPlannerItineraryLinksIntent": {
+      "array": {
+        "wrapper": {
+          "capabilities": 3,
+          "memberValueType": {
+            "entity": {
+              "wrapper": {
+                "typeName": "PlannerLinkEntity"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "linkPropertyContracts": {
+    "url": {
+      "optional": false,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 11
+          }
+        }
+      }
+    },
+    "originalURL": {
+      "optional": false,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      }
+    },
+    "label": {
+      "optional": true,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      }
+    },
+    "ownerTitle": {
+      "optional": false,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      }
+    },
+    "position": {
+      "optional": false,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 2
+          }
+        }
+      }
+    }
+  },
+  "metadataSha256": "3402d429d97832cb3a510cb3df0bcb8356f87953387d444e03dc081e9fa8b217",
+  "catalogExtensionVerified": true,
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}

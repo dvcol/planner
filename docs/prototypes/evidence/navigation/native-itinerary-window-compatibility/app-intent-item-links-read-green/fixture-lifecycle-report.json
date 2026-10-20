@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "qualificationPassed": false,
+  "failure": "Test incorrectly expected owned provider IDs from ordinary bookmark URL text; public Core source reads have nil providerReference",
+  "closedHostIdentifiers": [
+    64874
+  ],
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4AC5DDDC-B385-4F5B-B36D-49D22D37CF66"
+  ],
+  "sourceLogSha256": "54eee59e8e37de2ccfcaa92d87160eba1ada25f7f09e78d4966aec67fef40a76"
+}
