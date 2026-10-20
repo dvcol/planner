@@ -102,11 +102,13 @@
     @Parameter(title: "Title") var title: String
     @Parameter(title: "Subtitle") var subtitle: String?
     @Parameter(title: "Notes") var notes: String?
+    @Parameter(title: "List") var list: PlannerListEntity?
     @Dependency private var plannerStore: SavedPlannerStore
     typealias PerformResult = IntentResultContainer<PlannerItemEntity, Never, Never, IntentDialog>
     @MainActor func perform() async throws -> PerformResult {
       let result = try await plannerStore.executeAppIntent(
-        .createItem(content: .init(title: title, subtitle: subtitle, notes: notes)))
+        .createItem(
+          content: .init(title: title, subtitle: subtitle, notes: notes), listId: list?.id))
       switch result.outcome {
       case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
       case .unverified:
@@ -145,7 +147,7 @@
     typealias PerformResult = IntentResultContainer<PlannerItemEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
-      var query = PlannerItemEntityQuery()
+      let query = PlannerItemEntityQuery()
       query.plannerStore = plannerStore
       let matches = try await query.entities(for: [item.id])
       guard let current = matches.first else {

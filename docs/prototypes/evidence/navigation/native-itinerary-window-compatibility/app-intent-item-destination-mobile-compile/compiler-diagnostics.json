@@ -1,0 +1,3 @@
+[
+  "/tmp/PlannerNativeItemWindowSource/Planner/AppIntents/PlannerItemIntents.swift:150:11: warning: variable 'query' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]"
+]

@@ -1,0 +1,5 @@
+{
+  "qualified": false,
+  "buildExitCode": 0,
+  "reason": "The initial Simulator build reported an unnecessary mutable query binding. The warning was corrected and the clean source is qualified in separate final-clean and mobile-clean packets."
+}

@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "qualificationPassed": false,
+  "reason": "Expected runtime red: the declared List parameter did not yet reach Core creation.",
+  "hostProcessIdentifiers": [
+    77863
+  ],
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/77102E43-8EDD-44FD-963F-DFAB1B87579C"
+  ]
+}
