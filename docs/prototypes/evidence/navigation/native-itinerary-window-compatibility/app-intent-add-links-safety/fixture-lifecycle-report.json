@@ -1,0 +1,9 @@
+{
+  "qualificationPassed": false,
+  "reason": "Two incorrect test assumptions about owned references and status while the recovery path is obstructed",
+  "removedFixtures": 18,
+  "closedHostIdentifiers": [
+    16725
+  ],
+  "closedDatabasesVerified": true
+}

@@ -1,0 +1,25 @@
+{
+  "priorInputs": 1010,
+  "currentInputs": 1024,
+  "changedInputs": [
+    "Planner/AppIntents/PlannerLinkIntents.swift",
+    "PlannerMCPTests/PlannerLinkIntentTests.swift"
+  ],
+  "addedCommittedFixtureInputs": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/control/writer",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/manifest.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/producer.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/checkpoint-1.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/checkpoint-2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/checkpoint-3.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/identity.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/proposal-5BD8C6D6-D3E0-4638-8324-91C7F925A24F.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/proposal-680F674D-8EC5-4F4E-AAD4-6228F3F90F4A.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/proposal-A32A5125-B992-413D-BA85-0DB0A66267CB.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/recovery/69DDE010-9C0E-42A7-B3BC-077AAC23D3F5/proposal-CCACBB19-9A96-4F2C-93B1-1348DA635189.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/store/Planner.sqlite",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/store/Planner.sqlite-shm",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/LegacyOwnedLinkResults/store/Planner.sqlite-wal"
+  ],
+  "otherPriorInputsUnchanged": true
+}

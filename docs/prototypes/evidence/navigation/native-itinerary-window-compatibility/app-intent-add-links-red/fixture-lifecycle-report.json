@@ -1,0 +1,9 @@
+{
+  "qualificationPassed": false,
+  "reason": "Expected runtime red before implementing Add Link",
+  "removedFixtures": 1,
+  "closedHostIdentifiers": [
+    13153
+  ],
+  "closedDatabasesVerified": true
+}
