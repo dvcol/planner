@@ -1,0 +1,12 @@
+{
+  "baselinePacket": "app-intent-schedule-removal-http-base",
+  "baselineWarnings": [
+    "/private/tmp/PlannerScheduleRemovalBaseSource/Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryValues.swift:158:12: warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]",
+    "/tmp/PlannerScheduleRemovalBaseSource/Planner/Scenes/SavedActivityEstimateEditor.swift:75:14: warning: value 'estimate' was defined but never used; consider replacing with boolean test [#NoUsage]",
+    "macro expansion #expect:2:37: warning: '#require(_:_:)' is redundant because 'rows.first' never equals 'nil' (from macro 'require')",
+    "/tmp/PlannerScheduleRemovalBaseSource/Planner/AgentControl/PlannerMCPReviewTool.swift:78:15: warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]",
+    "/tmp/PlannerScheduleRemovalBaseSource/Planner/Scenes/SavedActivityEstimateEditor.swift:75:14: warning: value 'estimate' was defined but never used; consider replacing with boolean test [#NoUsage]"
+  ],
+  "currentDiagnostics": [],
+  "introducedDiagnostics": []
+}

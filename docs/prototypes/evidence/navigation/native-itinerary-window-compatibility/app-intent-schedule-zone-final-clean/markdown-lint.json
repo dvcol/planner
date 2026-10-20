@@ -1,0 +1,14 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerMarkdownlintConfig.json",
+    "docs/prototypes/native-schedule-zone-intent.md",
+    "docs/native-schedule-intent-workflow-review.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-schedule-zone-intent.md docs/native-schedule-intent-workflow-review.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 482ms using pnpm v12.14.0\n"
+}

@@ -1,0 +1,11 @@
+{
+  "priorInputs": 1034,
+  "currentInputs": 1035,
+  "changedInputs": [
+    "Planner/AppIntents/PlannerScheduleIntents.swift"
+  ],
+  "addedInputs": [
+    "PlannerMCPTests/PlannerScheduleZoneIntentTests.swift"
+  ],
+  "otherPriorInputsUnchanged": true
+}

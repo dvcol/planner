@@ -1,0 +1,78 @@
+{
+  "scope": "Delegated installed-SDK/compiler probes only; no app/system invocation or signing",
+  "files": [
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/Probe.swift",
+      "artifact": "civil-sdk-Probe.swift.gz",
+      "sha256": "351fae90d72a287505524b817cfa39bf78f195befcbb9a895870950184ca0ed6"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/protocols.json",
+      "artifact": "civil-sdk-protocols.json.gz",
+      "sha256": "ea3c6ee91612945b9d4fe01f70eb892225675ef4f28e1b8659211fc8ac32aa4c"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/sources.txt",
+      "artifact": "civil-sdk-sources.txt.gz",
+      "sha256": "5bba4cab9d9ab3cd8ddf0258af4ad36aaca6b7cdd10560e7400f9ee3adb8b5b4"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/const-values.txt",
+      "artifact": "civil-sdk-const-values.txt.gz",
+      "sha256": "b936b7b4e7e0c89b41ddec87ade65b9149d98de2ce0c2ee57ace068952a68d1b"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/compile.log",
+      "artifact": "civil-sdk-compile.log.gz",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/const-compile.log",
+      "artifact": "civil-sdk-const-compile.log.gz",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/ios-compile.log",
+      "artifact": "civil-sdk-ios-compile.log.gz",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/metadata.log",
+      "artifact": "civil-sdk-metadata.log.gz",
+      "sha256": "c9acebb8f3c78fcbb29be8c4a26faeb99e59027b6850592887bc9bd471db4a86"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/metadata-parameter-facts.json",
+      "artifact": "civil-sdk-metadata-parameter-facts.json.gz",
+      "sha256": "2d4fa2a8aaa30872e4d71e9b1e36395bfdd30280cb2429994de578d0cf5d4eab"
+    },
+    {
+      "original": "/private/tmp/PlannerCivilScheduleSDKFacts/metadata/Metadata.appintents/extract.actionsdata",
+      "artifact": "civil-sdk-metadata-Metadata.appintents-extract.actionsdata.gz",
+      "sha256": "cc0ff00354b031e50aaf885ae1255855e75b5aec09903656fb63cb3a59a0c66c"
+    }
+  ],
+  "commands": [
+    {
+      "command": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swiftc -typecheck -swift-version 6 -strict-concurrency=complete -target arm64-apple-macos27.0 -module-cache-path /private/tmp/PlannerCivilScheduleSDKFacts/cache /private/tmp/PlannerCivilScheduleSDKFacts/Probe.swift > /private/tmp/PlannerCivilScheduleSDKFacts/compile.log 2>&1",
+      "recordedExitCode": null,
+      "note": "Empty compiler log; shell subsequently ran cat, so the typecheck exit was not captured separately."
+    },
+    {
+      "command": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swiftc -c -swift-version 6 -strict-concurrency=complete -target arm64-apple-macos27.0 -module-name CivilScheduleFacts -module-cache-path /private/tmp/PlannerCivilScheduleSDKFacts/cache -emit-const-values-path /private/tmp/PlannerCivilScheduleSDKFacts/Probe.swiftconstvalues -const-gather-protocols-list /private/tmp/PlannerCivilScheduleSDKFacts/protocols.json /private/tmp/PlannerCivilScheduleSDKFacts/Probe.swift -o /private/tmp/PlannerCivilScheduleSDKFacts/Probe.o > /private/tmp/PlannerCivilScheduleSDKFacts/const-compile.log 2>&1",
+      "recordedExitCode": 0,
+      "agentToolChunk": "f795b9"
+    },
+    {
+      "command": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun appintentsmetadataprocessor --output /private/tmp/PlannerCivilScheduleSDKFacts/metadata --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CivilScheduleFacts --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk --xcode-version 27A9275 --platform-family macOS --deployment-target 27.0 --target-triple arm64-apple-macos27.0 --source-file-list /private/tmp/PlannerCivilScheduleSDKFacts/sources.txt --swift-const-vals-list /private/tmp/PlannerCivilScheduleSDKFacts/const-values.txt > /private/tmp/PlannerCivilScheduleSDKFacts/metadata.log 2>&1",
+      "recordedExitCode": 0,
+      "agentToolChunk": "14884d"
+    },
+    {
+      "command": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swiftc -typecheck -swift-version 6 -strict-concurrency=complete -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk -target arm64-apple-ios27.0-simulator -module-cache-path /private/tmp/PlannerCivilScheduleSDKFacts/ios-cache /private/tmp/PlannerCivilScheduleSDKFacts/Probe.swift > /private/tmp/PlannerCivilScheduleSDKFacts/ios-compile.log 2>&1",
+      "recordedExitCode": 0,
+      "agentToolSession": 70153,
+      "agentToolChunk": "6fe1df"
+    }
+  ]
+}

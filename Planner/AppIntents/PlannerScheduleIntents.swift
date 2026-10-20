@@ -94,6 +94,59 @@
     }
   }
 
+  struct SetPlannerScheduleTimeZoneIntent: AppIntent {
+    static let title: LocalizedStringResource = "Set Timed Schedule Timezone"
+    static let description = IntentDescription(
+      "Change the planning timezone while preserving the saved start and optional end instants.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Schedule", query: PlannerScheduleEntityQuery())
+    var schedule: PlannerScheduleEntity
+    @Parameter(title: "Planning timezone", query: PlannerTimeZoneEntityQuery())
+    var planningTimeZone: PlannerTimeZoneEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let (planner, session) = try await plannerStore.appIntentContext()
+      try Task.checkCancellation()
+      let source: PlannerScheduleSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .schedule, id: schedule.id)))
+      {
+      case .source(.schedule(let current)): source = current
+      case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+      default: throw PlannerScheduleIntentFailure(message: "Planner could not read this Schedule.")
+      }
+      guard case .timed = source.content.form else {
+        throw PlannerScheduleIntentFailure(
+          message: "Choose a timed Schedule to change its timezone.")
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .changeScheduleZone(
+          scheduleId: source.source.id, planningTimeZone: planningTimeZone.id,
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerScheduleIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Updated the planning timezone. The saved instants are preserved."
+        case .incomplete:
+          dialog =
+            "The planning timezone changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   struct RemovePlannerScheduleIntent: AppIntent {
     static let title: LocalizedStringResource = "Remove Planner Schedule"
     static let description = IntentDescription(

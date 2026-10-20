@@ -1,0 +1,46 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/06E37552-185F-49FF-8588-E166B212E177",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/BCDA3611-B7F5-4EA5-9E38-2A6A0DCA086D",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/EC3B5DF8-EF44-4BE0-9BCB-DA25E1CAEEA2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/DA25CB03-43A7-48C9-B90D-43FF60448D5C",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FBB7B1C9-F3B5-4007-86B2-367C5857C513",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/375C48B2-5513-4AC6-8DBD-C48FC2B9FC3A",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/12C58911-808D-4463-A9AF-F84079B1AE63",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/29DC2340-9017-4545-9C56-9E5B047B9341",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7E4D1E0A-6DF8-4375-B8C8-A88AA79808DC",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C015FAC9-66F1-47A9-9E63-910FFB9741EF",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/A64A58D2-F2A8-4E82-BC32-C06AB197BA5D",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/8C149B8B-4C71-45ED-9C61-0152BCBE8E73",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/ECB3D42C-7F81-4540-A421-8FD00AEA6322",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3A5FB81A-1BFF-458E-8F5A-E76DAD002499",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/6B21D6A1-13B5-4E0A-8F04-C22227D54FED",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/21B52DCD-C3EF-4DC3-9A79-5C87B49184C9",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/50CA93FD-8D1D-4464-9111-544E07BBFD5C",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/2A29C6D2-1297-432A-95E6-BA51D495D9AA",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/CFB59E3C-E9BE-479C-86F7-2052EF6F352F",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/399C72F6-166B-4650-8D5B-BB2645D010C2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/136A3833-90B0-45E5-93F3-8D1DC31E4AA0",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/330B4E31-B11E-4EE2-86C3-BD26D79C2FB0",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/0977B8F1-879E-4D3F-AA66-173ED22F66AF",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/665191B6-8C0A-4FC4-9DE0-94980CB24962",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/0050166E-8143-42EA-A69C-F168AF7D7F80",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/D747C567-BFBC-43B5-9E76-34CDA6816502",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/55441D37-3095-4199-80A9-F4CB32F6A70B",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/AE782F96-BA52-4A1C-97A9-9BF1A583C8DD",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/73638E57-DDE8-4F11-B118-CF8B3C1F4E76",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E3809682-FB8E-483B-AE65-74489EE692EC"
+  ],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b",
+  "sourceLogSha256": "cd78a3146abb40f9a2c4f82f6a79553c9fd6cfd47f92ec59355da31ab2b396ed",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 30,
+  "hostProcessIdentifiers": [
+    62081
+  ]
+}
