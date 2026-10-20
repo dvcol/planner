@@ -1,0 +1,15 @@
+{
+  "passedNativeCases": 38,
+  "passedHttpDeclarations": 2,
+  "actualSummaryPasses": 40,
+  "newContainerFindCases": [
+    "testContainerFindsReadAppliedChangesWithoutAcknowledgingIncompleteRecovery",
+    "testBothContainerFindsReadEveryPageAndRefreshAfterAnotherWriter",
+    "testPrecancelledEmptyContainerFindsThrowWithoutChangingData",
+    "testUnavailableStorageThrowsForBothFindActionsRatherThanReturningNoMatches",
+    "testItineraryFindingCombinesFiltersAndEverySortWithoutChangingRoutesOrBookings",
+    "testListSortingUsesEveryModeAndRetainsEstimateGroupsAndSavedGraph",
+    "testListFindingCombinesTextAndArchiveWithoutChangingSavedData"
+  ],
+  "markedFixtures": 40
+}

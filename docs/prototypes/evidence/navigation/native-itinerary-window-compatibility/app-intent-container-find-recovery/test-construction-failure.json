@@ -1,0 +1,9 @@
+{
+  "qualificationPassed": false,
+  "reason": "The test used PlannerOperationResult outcome syntax in a PlannerOperationStatus assertion. Corrected to appliedRecoveryComplete before runtime qualification.",
+  "errors": [
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerContainerFindIntentTests.swift:85:23: error: '_' can only appear in a pattern or on the left side of an assignment",
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerContainerFindIntentTests.swift:85:39: error: type 'PlannerOperationStatus' has no member 'applied'"
+  ],
+  "fixtureRecords": 0
+}

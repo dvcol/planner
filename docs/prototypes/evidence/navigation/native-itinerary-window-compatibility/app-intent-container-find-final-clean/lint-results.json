@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "env",
+      "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer",
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/AppIntents/PlannerContainerFindIntents.swift",
+      "Planner/AppIntents/PlannerListIntents.swift",
+      "Planner/AppIntents/PlannerItineraryIntents.swift",
+      "PlannerMCPTests/PlannerContainerFindIntentTests.swift"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "/private/tmp/PlannerMarkdownlintConfig.json",
+      "docs/prototypes/native-container-find-intents.md"
+    ],
+    "exitCode": 0,
+    "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-container-find-intents.md\nLinting: 1 file\nSummary: 0 issues in 0 files\n",
+    "stderr": "Done in 318ms using pnpm v12.14.0\n"
+  }
+]

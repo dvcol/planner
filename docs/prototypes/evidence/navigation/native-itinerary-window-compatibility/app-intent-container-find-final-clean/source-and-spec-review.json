@@ -1,0 +1,28 @@
+{
+  "reviewKind": "primary-agent source and contract review",
+  "reviewedInputs": [
+    "Planner/AppIntents/PlannerContainerFindIntents.swift",
+    "Planner/AppIntents/PlannerListIntents.swift",
+    "Planner/AppIntents/PlannerItineraryIntents.swift",
+    "PlannerMCPTests/PlannerContainerFindIntentTests.swift"
+  ],
+  "checks": [
+    "Q87 catalog text/archive/sort rules are forwarded directly through Core, with source kinds fixed by the two native actions.",
+    "Each action reuses its existing typed query loader. Existing choices retain all-archive alphabetical defaults; both loaders check cancellation after the snapshot.",
+    "All four sort modes and both directions match independent literal sequences, including uncertainty groups, overflow and manual totals.",
+    "Fixtures retain a locally Done appearance, globally Done and archived Items, saved child/route order and bookings. Export equality establishes read-only preservation.",
+    "Both 65-row result sets cross the paging boundary; another writer rename/archive changes current identities, titles and ordering without native writes.",
+    "Precancellation, unavailable storage and real incomplete recovery use the approved production Intent/EntityQuery and filesystem boundaries.",
+    "Initial recovery test-construction failure remains separate from passing runtime evidence.",
+    "All seven new tests have runtime passes; original counts reconcile to 38 XCTest plus two real HTTP declarations.",
+    "All 67 prior action parameter/output contracts, existing entities/queries and eleven enums remain unchanged.",
+    "Current inputs match all three compiled platform snapshots; report relative evidence links resolve."
+  ],
+  "unresolved": [
+    "Q115 duration input/ranges",
+    "Q117 deferred property choice/boundary",
+    "Q118 and Q119 Schedule workflow choices",
+    "Actual system invocation and physical/signing-dependent qualification"
+  ],
+  "introducedFindings": []
+}

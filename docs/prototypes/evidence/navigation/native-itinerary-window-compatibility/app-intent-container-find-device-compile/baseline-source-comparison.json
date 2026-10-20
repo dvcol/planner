@@ -1,0 +1,14 @@
+{
+  "baselinePacket": "app-intent-related-empty-cancellation-final-clean",
+  "priorInputs": 1038,
+  "currentInputs": 1040,
+  "changedInputs": [
+    "Planner/AppIntents/PlannerItineraryIntents.swift",
+    "Planner/AppIntents/PlannerListIntents.swift"
+  ],
+  "addedInputs": [
+    "Planner/AppIntents/PlannerContainerFindIntents.swift",
+    "PlannerMCPTests/PlannerContainerFindIntentTests.swift"
+  ],
+  "otherPriorInputsUnchanged": true
+}

@@ -46,24 +46,23 @@
     }
 
     @MainActor func entities(matching string: String) async throws -> [PlannerListEntity] {
-      try await loadLists(matching: string)
+      try await loadLists(query: .init(sourceKind: .list, text: string, archive: .all))
     }
 
     @MainActor func suggestedEntities() async throws -> [PlannerListEntity] {
-      try await loadLists(matching: "")
+      try await loadLists(query: .init(sourceKind: .list, archive: .all))
     }
 
-    @MainActor private func loadLists(matching text: String) async throws -> [PlannerListEntity] {
+    @MainActor func loadLists(query: PlannerCatalogQuery) async throws -> [PlannerListEntity] {
       let (planner, session) = try await plannerStore.appIntentContext()
       let snapshot: PlannerQuerySnapshot
       switch await planner.query(
-        .init(
-          session: session,
-          request: .catalog(.init(sourceKind: .list, text: text, archive: .all))))
+        .init(session: session, request: .catalog(query)))
       {
       case .snapshot(let current): snapshot = current
       case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
       }
+      try Task.checkCancellation()
       var entities: [PlannerListEntity] = []
       var offset: Int64 = 0
       while offset < snapshot.matchingCount {
