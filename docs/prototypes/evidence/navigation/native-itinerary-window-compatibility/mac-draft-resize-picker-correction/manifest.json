@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "D6DC58F9-75E8-4608-A93B-4F4FE9790BAC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Edited Item draft survives expanded layout_0_1225671D-02EC-4D44-9A2C-B854F375A5F6.png",
+        "timestamp" : 1792477849.781
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "7EDA6810-B91A-458F-8397-F3F9560EF2F5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Edited Item draft survives a narrow Mac window_0_14A96281-9390-4F91-8D78-AD5FDDCD6750.png",
+        "timestamp" : 1792477817.595
+      }
+    ],
+    "testIdentifier" : "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges"
+  }
+]

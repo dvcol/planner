@@ -1,6 +1,6 @@
 # Native text Undo beside association history
 
-Status: the represented phone/iPad text-Undo and explicit removal-Undo journey passes. Q108's direct history-controller test proposal remains unanswered and is not used here. Production behavior is unchanged.
+Status: the represented phone/iPad journey passes. After the user refreshes the Mac session on 20 October, the existing native Mac journey also passes, including text Undo, window-local association history and restored identity/completion after relaunch. Production behavior is unchanged. Historical Q108 references below retain their original checkpoint; Q108 A was subsequently approved.
 
 ## Context, goal and starting state
 
@@ -62,3 +62,11 @@ On 19 October 2026, the existing `SavedAppearanceJourneyTests.testNativeUndoRest
 The invocation exits 65 after 71.489 seconds, before any actual test function starts. XCTest reports "Timed out while enabling automation mode." Its summary records one failed runner entry; that is not an executed behavior test. The [runtime record](evidence/navigation/native-itinerary-window-compatibility/mac-current-association-undo/test-summary.json) and [validation](evidence/navigation/native-itinerary-window-compatibility/mac-current-association-undo/validation.json) retain the failed result and zero-start count. It supplies no Mac text/window or per-window qualification.
 
 A separate read-only signing inventory still reports zero valid identities. This retry changes no account, team or signing configuration, and does not establish signing as the cause of the automation failure. The passing phone/iPad results above retain their original scope. Q108, Q109 and Q110 remain unanswered.
+
+## Mac qualification after session refresh
+
+On 20 October 2026 the user confirms a refreshed Mac session and Xcode open. The same existing native journey now executes and passes in 70.244 seconds with zero failures or skips. No production source, account, team, entitlement or security setting changes are made for this retry. The source snapshot and original log are retained in [the qualification packet](evidence/navigation/native-itinerary-window-compatibility/mac-association-undo-after-session-refresh/).
+
+The journey removes a locally Done List membership, then opens another Planner window. Command-Z in that window leaves the original window's membership removed. Back in the original window, Command-Z clears the unsaved New Item title without restoring the association. Cancel closes the empty draft; the next Command-Z restores the original membership identity and local Done. Relaunch retains the restored identity and Done while clearing the editing-session history.
+
+The packet retains the original named screenshot and its export manifest. Direct inspection shows the completed Museum row, full ProgressView, native dark surfaces and toolbar. The sidebar estimate truncates at this captured width, and the detail column has no selected Item at this point in the journey. This adds represented native Mac interaction evidence, without closing whole-app polish, all keyboard/accessibility paths, signed Agent Control or physical-device gates. The earlier failed automation attempts remain historical evidence; session refresh does not establish their underlying cause.

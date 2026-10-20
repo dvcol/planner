@@ -1,0 +1,6 @@
+{
+  "batch": "Failed, one passing Undo function and one failing draft-resize assertion.",
+  "passed": "testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance, 93.324 seconds",
+  "failed": "testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges, 74.684 seconds, selected unit label assertion",
+  "attachmentPolicy": "Only the named own-app passing capture is retained here. Diagnostic full-display recording remains local; no unrelated application content is published."
+}

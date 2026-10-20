@@ -3347,7 +3347,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       if identifier == "saved.item.notes" {
         let unit = application.plannerElement("saved.item.estimate.unit")
         revealEditorElement(unit, application: application)
-        XCTAssertTrue(unit.label.contains("Hours"))
+        #if os(macOS)
+          XCTAssertTrue(unit.waitForPlannerValue("Hours"))
+        #else
+          XCTAssertTrue(unit.label.contains("Hours"))
+        #endif
         let quantity = application.descendants(matching: .any).matching(
           identifier: "saved.item.estimate.quantity"
         ).firstMatch

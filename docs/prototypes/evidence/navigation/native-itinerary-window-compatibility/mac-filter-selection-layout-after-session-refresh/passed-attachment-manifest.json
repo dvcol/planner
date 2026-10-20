@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "exportedFileName": "BAA5E52A-68DE-452B-88BE-9570740E6931.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Undo retains Todo filtering and the other selected appearance_0_223D4BA8-1B57-44AE-A9FA-252A4164EB37.png",
+        "timestamp": 1792477024.083
+      }
+    ],
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance"
+  }
+]

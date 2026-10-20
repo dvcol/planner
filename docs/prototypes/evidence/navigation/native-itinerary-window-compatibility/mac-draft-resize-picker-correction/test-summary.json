@@ -1,0 +1,19 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerItemWindow-mac-draft-resize-picker-correction.xcresult"
+  ],
+  "summary": {
+    "title": "Test - PlannerNavigation",
+    "result": "Passed",
+    "totalTestCount": 1,
+    "passedTests": 1,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

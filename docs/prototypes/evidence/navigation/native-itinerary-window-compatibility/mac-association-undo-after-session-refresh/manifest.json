@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "6DF19B10-9B09-4DAE-AF22-E7B19CCFCBD2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Undo restores original completed List appearance_0_35A41EE0-FC1A-4ABD-9CFB-EA76C2CA79B9.png",
+        "timestamp" : 1792476880.341
+      }
+    ],
+    "testIdentifier" : "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion"
+  }
+]
