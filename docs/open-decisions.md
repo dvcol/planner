@@ -14,9 +14,9 @@ The [nonempty graph follow-up](prototypes/native-backup-graph-conflicts.md) qual
 
 The [referenced-Item restoration follow-up](prototypes/native-backup-item-restoration.md) adds a native rejection/restoration journey and corrects an iPad presentation stall after Cancel. The review consumes its displayed shared error on dismissal; saved data and recovery blocks are unchanged. Final phone/dark iPad restoration and successful-import regression pass, preserving original public identities and independent completion. Mac compilation and affected lint also pass. Three earlier restoration failures remain recorded; no map gate is broadly closed by this slice.
 
-These choices remain unanswered. Recommendations are proposals, not accepted defaults.
+The user accepted A for all eight choices below on 21 October 2026. Their implementations and required qualification remain open. Q118 still leads to occurrence/form-input review; Q122 still requires a concrete single-window handoff contract.
 
-| Question | Decision still needed | Recommendation and consequence | Concrete review |
+| Question | Accepted decision | Choice and consequence | Concrete review |
 | --- | --- | --- | --- |
 | Q115 | Shortcuts estimate inputs and exact range | A: Quantity, six-unit selection and Additional minutes. Preserves the complete accepted integer range and mixed durations. | [Estimate inputs](native-estimate-intent-input-review.md) |
 | Q117 | Reading saved content from native entities | A: On-demand deferred properties, with production getter tests. Avoids hydrating full content for every picker row; individual reads can fail or observe different generations. | [Saved-content properties](native-deferred-content-read-contract-review.md) |
@@ -29,7 +29,7 @@ These choices remain unanswered. Recommendations are proposals, not accepted def
 
 ## Remaining gates
 
-- Local implementation continues after the relevant choices. Q122/Q123 now make plan opening and initial App Shortcut discovery concrete. Their absence is not a signing failure.
+- Implement Q115 and Q117–Q123 under their accepted A choices. Settle the next concrete Schedule input and single-window handoff contracts before their dependent implementation. Missing native features are not signing failures.
 - The latest Mac UI runner times out enabling automation before any journey starts. App compilation succeeds, but actual window, editing and text-Undo interactions remain unqualified. No evidence establishes that paid signing fixes this runner error.
 - Actual Shortcuts/Siri execution and picker injection remain unqualified. Apple's system test service rejected the Customer build; passing production-interface tests does not replace system invocation or establish that a paid account fixes it.
 - Signed/shared storage, Agent Control against that storage, CloudKit convergence and account transitions, installed Share extensions and physical-device performance remain open. Signing/account setup is deferred at the user's request.
