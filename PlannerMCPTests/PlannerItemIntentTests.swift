@@ -28,6 +28,7 @@ final class PlannerItemIntentTests: XCTestCase {
     let editing = EditPlannerItemIntent()
     editing.item = item
     editing.title = "Updated museum"
+    editing.subtitle = "Reviewed subtitle"
     editing.notes = "Reviewed notes"
     let _: Void = try await editing.callAsFunction(donate: false)
     XCTAssertTrue(obstruction.didObstruct)
@@ -51,6 +52,7 @@ final class PlannerItemIntentTests: XCTestCase {
     else { return XCTFail("The applied edit must survive reopening despite incomplete recovery.") }
     XCTAssertEqual(applied.content.title, "Updated museum")
     XCTAssertEqual(applied.content.notes, "Reviewed notes")
+    XCTAssertEqual(applied.content.subtitle, "Reviewed subtitle")
     await store.retryIncompleteRecovery()
     XCTAssertFalse(store.recoveryBlocked)
     XCTAssertTrue(store.incompleteRecoveryOperationIdentifiers.isEmpty)
@@ -70,6 +72,7 @@ final class PlannerItemIntentTests: XCTestCase {
     XCTAssertEqual(final.source.id, item.id)
     XCTAssertEqual(final.content.title, "Updated museum")
     XCTAssertEqual(final.content.notes, "Allowed after recovery")
+    XCTAssertEqual(final.content.subtitle, "Reviewed subtitle")
     XCTAssertFalse(store.isSaving)
   }
 

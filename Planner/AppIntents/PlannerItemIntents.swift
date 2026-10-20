@@ -100,12 +100,13 @@
     static var supportedModes: IntentModes { .background }
     static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
     @Parameter(title: "Title") var title: String
+    @Parameter(title: "Subtitle") var subtitle: String?
     @Parameter(title: "Notes") var notes: String?
     @Dependency private var plannerStore: SavedPlannerStore
     typealias PerformResult = IntentResultContainer<PlannerItemEntity, Never, Never, IntentDialog>
     @MainActor func perform() async throws -> PerformResult {
       let result = try await plannerStore.executeAppIntent(
-        .createItem(content: .init(title: title, notes: notes)))
+        .createItem(content: .init(title: title, subtitle: subtitle, notes: notes)))
       switch result.outcome {
       case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
       case .unverified:
@@ -199,19 +200,21 @@
   struct EditPlannerItemIntent: AppIntent {
     static let title: LocalizedStringResource = "Edit Item"
     static let description = IntentDescription(
-      "Change the title or notes. Leave a field unset to keep it; empty notes clears them.")
+      "Change the title, subtitle or notes. Leave a field unset to keep it; empty subtitle or notes clears it."
+    )
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
     static var supportedModes: IntentModes { .background }
     static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
     @Parameter(title: "Item") var item: PlannerItemEntity
     @Parameter(title: "Title") var title: String?
+    @Parameter(title: "Subtitle") var subtitle: String?
     @Parameter(title: "Notes") var notes: String?
     @Dependency private var plannerStore: SavedPlannerStore
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      guard title != nil || notes != nil else {
-        throw PlannerIntentFailure(message: "Choose a title or notes to change.")
+      guard title != nil || subtitle != nil || notes != nil else {
+        throw PlannerIntentFailure(message: "Choose a title, subtitle or notes to change.")
       }
       let (planner, session) = try await plannerStore.appIntentContext()
       let source: PlannerItemSourceRead
@@ -223,6 +226,12 @@
       default: throw PlannerIntentFailure(message: "Planner could not read this Item.")
       }
       let titleChange = title.map(PlannerFieldChange.set) ?? .unchanged
+      let subtitleChange: PlannerFieldChange<String>
+      if let subtitle {
+        subtitleChange = subtitle.isEmpty ? .clear : .set(subtitle)
+      } else {
+        subtitleChange = .unchanged
+      }
       let notesChange: PlannerFieldChange<String>
       if let notes {
         notesChange = notes.isEmpty ? .clear : .set(notes)
@@ -231,7 +240,8 @@
       }
       let result = try await plannerStore.executeAppIntent(
         .editItem(
-          sourceId: source.source.id, changes: .init(title: titleChange, notes: notesChange),
+          sourceId: source.source.id,
+          changes: .init(title: titleChange, subtitle: subtitleChange, notes: notesChange),
           expectedFieldHashes: source.fieldHashes))
       switch result.outcome {
       case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)

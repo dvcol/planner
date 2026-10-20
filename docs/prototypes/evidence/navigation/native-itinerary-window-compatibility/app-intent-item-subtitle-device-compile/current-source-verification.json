@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "verifiedInputCount": 1003,
+  "unchangedPriorInputCount": 1000,
+  "changedInputs": [
+    "Planner/AppIntents/PlannerItemIntents.swift",
+    "PlannerMCPTests/PlannerItemIntentTests.swift"
+  ],
+  "addedInputs": [
+    "PlannerMCPTests/PlannerItemSubtitleIntentTests.swift"
+  ]
+}
