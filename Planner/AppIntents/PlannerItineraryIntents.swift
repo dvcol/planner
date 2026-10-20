@@ -264,6 +264,80 @@
     }
   }
 
+  struct AddPlannerItemToItineraryIntent: AppIntent {
+    static let title: LocalizedStringResource = "Add Item to Itinerary"
+    static let description = IntentDescription(
+      "Append a live Item reference. Each addition has independent local completion.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let result = try await plannerStore.executeAppIntent(
+        .addItineraryEntry(
+          itineraryId: itinerary.id, source: .init(kind: .item, id: item.id), placement: .last))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerItineraryIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          dialog = "Added a new Item entry to the Itinerary. Its local completion is independent."
+        case .incomplete:
+          dialog =
+            "The Item entry was added on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
+  struct AddPlannerListToItineraryIntent: AppIntent {
+    static let title: LocalizedStringResource = "Add List to Itinerary"
+    static let description = IntentDescription(
+      "Append a live List reference. Each addition's children have independent local completion.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "List") var list: PlannerListEntity
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let result = try await plannerStore.executeAppIntent(
+        .addItineraryEntry(
+          itineraryId: itinerary.id, source: .init(kind: .list, id: list.id), placement: .last))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerItineraryIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          dialog = "Added a new List entry to the Itinerary. Its child completion is independent."
+        case .incomplete:
+          dialog =
+            "The List entry was added on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerItineraryIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }
