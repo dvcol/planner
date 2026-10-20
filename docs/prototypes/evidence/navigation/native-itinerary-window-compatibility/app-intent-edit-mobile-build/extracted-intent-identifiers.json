@@ -1,0 +1,19 @@
+{
+  "artifact": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Metadata.appintents/extract.actionsdata",
+  "sha256": "21a9fd4b1d89262c9a95a2fa7b137377a2c97d4bc76aa8d23e064f840f6043f0",
+  "actions": [
+    "CreatePlannerItemIntent",
+    "EditPlannerItemIntent",
+    "GetPlannerItemIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCompletionIntent"
+  ],
+  "entities": [
+    "PlannerItemEntity"
+  ],
+  "queries": [
+    "PlannerItemEntityQuery"
+  ],
+  "systemInvocationCredit": false,
+  "runtimeCredit": false
+}

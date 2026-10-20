@@ -1,0 +1,19 @@
+{
+  "artifact": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/Resources/Metadata.appintents/extract.actionsdata",
+  "sha256": "565310ecf8709c1e5fd8438a4edd2a5808893e65fe3480cf088dc8327939d753",
+  "actions": [
+    "CreatePlannerItemIntent",
+    "EditPlannerItemIntent",
+    "GetPlannerItemIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCompletionIntent"
+  ],
+  "entities": [
+    "PlannerItemEntity"
+  ],
+  "queries": [
+    "PlannerItemEntityQuery"
+  ],
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}
