@@ -1,0 +1,11 @@
+{
+  "qualificationPassed": false,
+  "expectedMissingImplementationInspected": true,
+  "sourceLogSha256": "6f4fa55a2804d958199e046e56d0f3b292e007b835962a9c4812a467c8fd8f13",
+  "hostProcessIdentifiers": [
+    87382
+  ],
+  "removedAfterHostExit": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/DFA7FF92-B458-409E-8FD4-EB5E4B6B5462"
+  ]
+}

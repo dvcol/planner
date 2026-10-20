@@ -1,0 +1,11 @@
+{
+  "qualificationPassed": false,
+  "failureInspected": "Test used default active Category archive filter; Core requires all. Corrected the test without changing creation.",
+  "sourceLogSha256": "e173a76edf2da962799dbaa5733907be1fc0aac4d5d602995c8de29419ff673f",
+  "hostProcessIdentifiers": [
+    81145
+  ],
+  "removedAfterHostExit": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/BD4C2EB9-28BA-4982-BE3B-6FF17AEAAF94"
+  ]
+}

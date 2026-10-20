@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/B9EB9C37-409B-44A5-9F5A-2635637453C2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/EEC7EF26-02F6-4AA5-9908-A4F1769F247E",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/53B7621D-12D7-4CA9-B182-3E293DAFB812",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/8F8DE034-94CB-4363-92E4-FB2179C665CC",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/F5810DD8-770D-485B-9ED8-8F8B6484AB4D",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/2E0F2FF3-6411-42A6-AA90-0AAD5846D8B2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C2410C4A-D309-4B45-B853-195B53D853BC",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/BED3E9AE-DC3F-4323-85CF-BD39C490E5D2"
+  ],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b",
+  "sourceLogSha256": "0d44c83aa461010ac91cb7e752e1809823280b75407e14917b84dcc856cf6951",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 8,
+  "hostProcessIdentifiers": [
+    92489
+  ]
+}

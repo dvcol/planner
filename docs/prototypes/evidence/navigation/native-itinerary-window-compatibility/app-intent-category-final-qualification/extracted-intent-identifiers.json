@@ -1,0 +1,117 @@
+{
+  "actions": [
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerListToItineraryIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerListIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerListIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "ReorderPlannerItemInListIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerListArchiveIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerListEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerListEntityQuery"
+  ],
+  "enums": [
+    {
+      "assistantDefinedSchemas": [],
+      "availabilityAnnotations": {
+        "LNPlatformNameWildcard": {
+          "introducedVersion": "*"
+        }
+      },
+      "cases": [
+        {
+          "displayRepresentation": {
+            "title": {
+              "alternatives": [],
+              "key": "Beginning"
+            }
+          },
+          "identifier": "first"
+        },
+        {
+          "displayRepresentation": {
+            "title": {
+              "alternatives": [],
+              "key": "End"
+            }
+          },
+          "identifier": "last"
+        },
+        {
+          "displayRepresentation": {
+            "title": {
+              "alternatives": [],
+              "key": "Before Item"
+            }
+          },
+          "identifier": "before"
+        },
+        {
+          "displayRepresentation": {
+            "title": {
+              "alternatives": [],
+              "key": "After Item"
+            }
+          },
+          "identifier": "after"
+        }
+      ],
+      "displayTypeName": {
+        "alternatives": [],
+        "key": "Position in List"
+      },
+      "effectiveBundleIdentifiers": [],
+      "fullyQualifiedTypeName": "Planner.PlannerListReorderPosition",
+      "identifier": "PlannerListReorderPosition",
+      "isSystem": false,
+      "mangledTypeName": "7Planner0A19ListReorderPositionO",
+      "mangledTypeNameByBundleIdentifier": {},
+      "numericFormatTypeName": {
+        "alternatives": [],
+        "key": "Position in List"
+      },
+      "systemProtocolMetadata": [],
+      "visibilityMetadata": {
+        "assistantOnly": false,
+        "isDiscoverable": true
+      }
+    }
+  ],
+  "metadataSha256": "8dd8c26915f6d5e9e600fbdd103b3d5d6ad6cf780c345f8cdd2c3d978be7ee93",
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false,
+  "enumCases": {
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "catalogExtensionVerified": true
+}
