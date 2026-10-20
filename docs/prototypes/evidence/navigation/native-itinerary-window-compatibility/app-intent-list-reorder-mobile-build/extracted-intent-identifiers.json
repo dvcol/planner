@@ -1,0 +1,48 @@
+{
+  "metadataPath": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Metadata.appintents/extract.actionsdata",
+  "sha256": "1cd7e8e5e8ce239e5ce6793b6f2e328d8f0a215ee00cb2e45deea31c2e0928a2",
+  "identifiers": {
+    "actions": [
+      "AddPlannerItemToItineraryIntent",
+      "AddPlannerItemToListIntent",
+      "AddPlannerListToItineraryIntent",
+      "CreatePlannerItemIntent",
+      "CreatePlannerItineraryIntent",
+      "CreatePlannerListIntent",
+      "EditPlannerItemIntent",
+      "EditPlannerItineraryIntent",
+      "EditPlannerListIntent",
+      "GetPlannerItemIntent",
+      "GetPlannerItineraryIntent",
+      "GetPlannerListIntent",
+      "MovePlannerItemBetweenListsIntent",
+      "RemovePlannerItemFromListIntent",
+      "ReorderPlannerItemInListIntent",
+      "SetPlannerItemArchiveIntent",
+      "SetPlannerItemCompletionIntent",
+      "SetPlannerItemListCompletionIntent",
+      "SetPlannerItineraryArchiveIntent",
+      "SetPlannerListArchiveIntent"
+    ],
+    "entities": [
+      "PlannerItemEntity",
+      "PlannerItineraryEntity",
+      "PlannerListEntity"
+    ],
+    "queries": [
+      "PlannerItemEntityQuery",
+      "PlannerItineraryEntityQuery",
+      "PlannerListEntityQuery"
+    ]
+  },
+  "enumCases": {
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}

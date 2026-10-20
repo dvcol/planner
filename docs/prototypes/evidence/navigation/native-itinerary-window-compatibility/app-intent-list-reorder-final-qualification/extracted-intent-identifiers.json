@@ -1,0 +1,48 @@
+{
+  "metadataPath": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/Resources/Metadata.appintents/extract.actionsdata",
+  "sha256": "afa7dee3e40f5e1398d85e7e67303240cfa37d058c882e3047817ce2cd103677",
+  "identifiers": {
+    "actions": [
+      "AddPlannerItemToItineraryIntent",
+      "AddPlannerItemToListIntent",
+      "AddPlannerListToItineraryIntent",
+      "CreatePlannerItemIntent",
+      "CreatePlannerItineraryIntent",
+      "CreatePlannerListIntent",
+      "EditPlannerItemIntent",
+      "EditPlannerItineraryIntent",
+      "EditPlannerListIntent",
+      "GetPlannerItemIntent",
+      "GetPlannerItineraryIntent",
+      "GetPlannerListIntent",
+      "MovePlannerItemBetweenListsIntent",
+      "RemovePlannerItemFromListIntent",
+      "ReorderPlannerItemInListIntent",
+      "SetPlannerItemArchiveIntent",
+      "SetPlannerItemCompletionIntent",
+      "SetPlannerItemListCompletionIntent",
+      "SetPlannerItineraryArchiveIntent",
+      "SetPlannerListArchiveIntent"
+    ],
+    "entities": [
+      "PlannerItemEntity",
+      "PlannerItineraryEntity",
+      "PlannerListEntity"
+    ],
+    "queries": [
+      "PlannerItemEntityQuery",
+      "PlannerItineraryEntityQuery",
+      "PlannerListEntityQuery"
+    ]
+  },
+  "enumCases": {
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}

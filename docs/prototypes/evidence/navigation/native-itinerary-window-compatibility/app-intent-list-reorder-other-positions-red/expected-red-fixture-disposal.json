@@ -1,0 +1,10 @@
+{
+  "qualificationPassed": false,
+  "expectedMissingImplementationInspected": "This reorder position is not implemented.",
+  "hostProcessIdentifiers": [
+    38983
+  ],
+  "removedAfterHostExit": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/480F611B-9C4F-48D5-A15E-77B967A8869F"
+  ]
+}
