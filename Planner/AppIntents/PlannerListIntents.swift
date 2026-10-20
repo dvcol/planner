@@ -396,6 +396,66 @@
     }
   }
 
+  struct SetPlannerItemListCompletionIntent: AppIntent {
+    static let title: LocalizedStringResource = "Set Item completion in List"
+    static let description = IntentDescription(
+      "Change only this List entry's completion. Globally Done Items still appear Done.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "List") var list: PlannerListEntity
+    @Parameter(title: "Completed in List") var done: Bool
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let current: PlannerListSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .list, id: list.id)))
+      {
+      case .source(.list(let source)): current = source
+      case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
+      default: throw PlannerListIntentFailure(message: "Planner could not read this List.")
+      }
+      let membership = current.references.first { reference in
+        guard case .membership(_, let owner, let source) = reference else { return false }
+        return owner == .init(kind: .list, id: list.id) && source == .init(kind: .item, id: item.id)
+      }
+      guard case .membership(let identifier, _, _)? = membership else {
+        throw PlannerListIntentFailure(message: "This Item no longer belongs to the selected List.")
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .setCompletion(
+          scope: .appearance(.listMembership(listId: list.id, membershipId: identifier)), done: done
+        ))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerListIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          if done {
+            dialog =
+              "Marked the Item Done in this List. Other entries and global completion are unchanged."
+          } else {
+            dialog = "Cleared this List entry's completion. Globally Done Items still appear Done."
+          }
+        case .incomplete:
+          dialog =
+            "This List entry's completion changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerListIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }
