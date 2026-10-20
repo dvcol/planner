@@ -1,0 +1,72 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-restoration-tablet-consumed-error.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "7565714B-33EC-4C0B-ADFD-B8B7FFEEEE15.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration keeps the other planning contexts independent_0_4B7A0142-B911-4A81-B796-305BFD0239CA.png",
+      "timestamp": 1792536696.236,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "93b1c1bb670aa7dd4c4d0a74e6bb10e0294963ad58553a9c0456c9ccf73e7939"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "62B0B402-391F-4C5E-8116-63242F6924F3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration retains the first membership Done state_0_090FFBA4-AB90-4019-9C08-B448F5527A31.png",
+      "timestamp": 1792536680.672,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "de918f21cb0466e4a7ec01c26ddddac89328639382ea65680f2b2349cda5edab"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "412DBFF8-4157-404F-A5D0-9213E21EFFAC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration retains shared Item and Schedule identities_0_05FB29F6-6BCE-4765-85AB-BBB16B5DC754.png",
+      "timestamp": 1792536672.534,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "6ef737e959d46302548748e28dd97a52924ef1b30ed00ced2cc9d164c9b55d71"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "7FD95E8E-BCD5-4A7C-954B-E2D804659179.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration explicitly reviews the deleted Item_0_43B991BD-BD7F-4AD6-8CE6-1486DBEF5FB0.png",
+      "timestamp": 1792536653.133,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "81c0ab1c2dbf1b9477e7fbdc986eb269c92ffc03b96cd5b6c5a5bdbb0be71790"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "0586A355-F957-4814-9E06-2E206D8D1520.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration rejection leaves the Item deleted_0_36EC47E4-1057-4DEE-AC26-B5D7BC9F1949.png",
+      "timestamp": 1792536608.713,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "b340da4fb91ca80b8d73ac82a79db3bc06f9f1274c42d4589b27092d91a1c96c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "507C293C-8D74-4F41-BF05-362A5FAE3735.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration requires separate authorization_0_19E6DBCC-20EB-420C-A7EB-9453AB32FCC4.png",
+      "timestamp": 1792536579.983,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "71f532307964aef656656e9fb8f2a9dc3d3e7c170b354a9b0c99388c9df15ba4"
+    }
+  ],
+  "videoPublished": false
+}

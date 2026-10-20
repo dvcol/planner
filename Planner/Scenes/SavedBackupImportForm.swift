@@ -158,6 +158,7 @@ struct SavedBackupImportForm: View {
     }
     .task(id: selection) { await prepareReview() }
     .onChange(of: mode) { if mode == .skip { restoreDeletedData = false } }
+    .onDisappear { store.alertMessage = nil }
     .interactiveDismissDisabled(store.isSaving)
     #if os(macOS)
       .frame(minWidth: 480, minHeight: 480)

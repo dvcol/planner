@@ -1,0 +1,13 @@
+{
+  "redPhase": "native-backup-restoration-tablet-dismissal",
+  "redFunctionFailed": true,
+  "greenPhase": "native-backup-restoration-tablet-consumed-error",
+  "greenFunctionPassed": true,
+  "comparedInputs": 1043,
+  "differences": [
+    "Planner/Scenes/SavedBackupImportForm.swift"
+  ],
+  "nativeSidebarHelperUnchangedFromHEAD": true,
+  "testSourceIdentical": true,
+  "productionChange": "Consume the displayed shared error when the import/recovery review disappears."
+}

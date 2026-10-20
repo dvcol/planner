@@ -1,0 +1,24 @@
+{
+  "stagedInputs": [
+    {
+      "platform": "phone",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner full graph backup.json",
+      "verifiedSha256": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+      "removed": true
+    },
+    {
+      "platform": "tablet",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner full graph backup.json",
+      "verifiedSha256": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+      "removed": true
+    },
+    {
+      "platform": "tablet",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner conflicting graph backup.json",
+      "verifiedSha256": "87a37603988bed16f3a0b8db31a3d17c8e2983daece73f5c63758ac155e7e6bf",
+      "removed": true
+    }
+  ],
+  "plannerDatasetsRemoved": false,
+  "deliveredExportsRemoved": false
+}

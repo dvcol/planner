@@ -1,0 +1,85 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-restoration-tablet-sidebar.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "15AEABFE-1241-45D7-A810-36D469840DD0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration requires separate authorization_0_7A8943CD-8458-4783-B262-EE1B660C236A.png",
+      "timestamp": 1792536188.871,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "9c56e0dd3f1cf6fcfe041307f2ed9eaf641870b8f3214975e64caf62b7d906bf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "DA963D12-4078-48AE-8914-8A95B5F0DD7D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph keeps the addition and overwritten notes after relaunch_0_1CBA1C26-34BF-43DE-8A5E-DBCA21D9AFA5.png",
+      "timestamp": 1792536372.427,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "230072e8636ff637c2783dfe8cf83fb812ff9bcadd08cb403f4016e0f449c5f9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "187668D3-BEDB-4A93-8325-08A746881D40.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite retains the exact List appearance_0_5C5A60B2-93E6-4B1A-A252-FEB3B59946E4.png",
+      "timestamp": 1792536358.463,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "f427921f9515f7f3479cb5b99e3e6883b16b70d976847cb2b1a54743341363a9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "19FDD130-BBC4-4B71-92E5-CD773975ABB8.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite delivered backup filename_0_EA22B309-72B6-45FF-A0EE-9AE5989E796E.txt",
+      "timestamp": 1792536329.981,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "19FDD130-BBC4-4B71-92E5-CD773975ABB8.txt.gz",
+      "originalSha256": "916525524c15af57ce1cae358e92b61bc19c01398a7d807bb6a22e4d68481b51"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "5065277F-20DE-4AE3-9C77-FDD99CBF8568.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite reviews two complete owners_0_912DED8B-4E25-4A95-98BD-2E8EC23845B8.png",
+      "timestamp": 1792536317.927,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "2cfed3a3fd0b1cf366dc9e44cbf116d28e465234855b1d4677e0906e722f18aa"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "FAD8B457-47C6-42C0-A515-70FE43196AB8.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip delivered backup filename_0_CF2C9D1A-126D-40A5-871F-15E62825C3BA.txt",
+      "timestamp": 1792536284.279,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "FAD8B457-47C6-42C0-A515-70FE43196AB8.txt.gz",
+      "originalSha256": "2f0220d83e2a632b741d1bb9202d8868f426a9d70955b7069e97386144e95351"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "68F375C4-3D3E-4F8E-9A90-BF6493DFF0AB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip reviews two complete owners_0_3E1A2691-5F12-4464-AA74-CB14523ED6C7.png",
+      "timestamp": 1792536273.175,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "a68dc8c14a16823fdaf3694fe55b0ba4a560d50589980fe37fed12aafd02ffd7"
+    }
+  ],
+  "videoPublished": false
+}

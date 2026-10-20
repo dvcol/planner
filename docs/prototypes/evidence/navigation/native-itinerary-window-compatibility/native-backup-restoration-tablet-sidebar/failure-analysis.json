@@ -1,0 +1,9 @@
+{
+  "testPassed": false,
+  "observation": "Restoration fails at sidebar action hittability after the expected unauthorized import rejection.",
+  "hypothesisTested": "Hidden-sidebar handling in the shared UI test helper",
+  "result": "The same symptom remains. The hypothesis is not a supported correction.",
+  "sidebarHelperRetainedInFinalSource": false,
+  "currentCandidate": "The inline backup error remains in shared alert state; leaving Settings can trigger the parent window alert. Consume the displayed message on review dismissal.",
+  "causeProven": false
+}

@@ -1,0 +1,17 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-restoration-tablet-dismissal.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E7B4652C-CEF5-4083-A17E-0362CBF6F152.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration requires separate authorization_0_600959CE-0C4F-497C-B2D7-8856875A8603.png",
+      "timestamp": 1792535947.448,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "6dff89b995b9f9d0a4ebfde92d385fd02017a7e32d15081d1fda3ed5f1b69e0d"
+    }
+  ],
+  "videoPublished": false
+}

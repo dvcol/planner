@@ -1,0 +1,72 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-restoration-phone.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "4680E008-B2A8-407B-AEF4-206EABF11355.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration keeps the other planning contexts independent_0_AF443818-3C92-47A8-AA23-88EE0F8E67E9.png",
+      "timestamp": 1792535529.841,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "e3a9767b1503e5052a8f9310374ed877b95ca71878908e966d9e8e58ec89a0c5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "93800EDF-D117-49FB-A796-DA6E6BFE985A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration retains the first membership Done state_0_E16A39F5-F854-46F0-A15F-7B5BE143653D.png",
+      "timestamp": 1792535515.457,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "0635733228445ad68ab1129d31f394d7bf7a0a0a5e5de64091ebaa32a82b6d04"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "D19DB0BF-C75C-4F44-931D-B48B0481E246.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration retains shared Item and Schedule identities_0_2EE64F60-8F92-44F4-963D-8F9A55E38518.png",
+      "timestamp": 1792535507.706,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "22ecbf394a022e8ee1dc5ad6fc37612fdf1a7eca41f957078a242253ac43ce96"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C094EC19-9065-40D6-B7F2-64F6E9D75598.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration explicitly reviews the deleted Item_0_2E32B26D-DF26-4D65-8A03-FE989CB91B8E.png",
+      "timestamp": 1792535488.09,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "8d10d5191d3cb5b088f84fbce76d8de137389c89c39e8952ba92426b6e1862a4"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "5B28DBA0-498F-488A-B71E-EDF7DA5BA81B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration rejection leaves the Item deleted_0_3E3EA66D-1B56-4538-97D1-D6EE23D6F30C.png",
+      "timestamp": 1792535462.685,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "907bdb4c4ce865fce8f84a273773b0a6bd3ff349dd3a04363ce6d9bd41898a46"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "3096F9CB-535A-4F04-855E-4C5DB827B68C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Graph restoration requires separate authorization_0_1D50C146-ED92-4AE0-A618-6C930173F4F0.png",
+      "timestamp": 1792535435.181,
+      "testIdentifier": "SavedBackupImportJourneyTests/testDeletedGraphItemNeedsExplicitRestorationAndKeepsItsIndependentAppearances()",
+      "originalSha256": "3ce19cc01d78ba5f583fe36378c2a4abd46530805c991d39799dd32c0c141d93"
+    }
+  ],
+  "videoPublished": false
+}

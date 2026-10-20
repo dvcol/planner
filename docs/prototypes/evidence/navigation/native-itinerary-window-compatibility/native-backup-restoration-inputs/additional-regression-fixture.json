@@ -1,0 +1,7 @@
+{
+  "source": "docs/fixtures/native-conflicting-backup.json",
+  "sha256": "87a37603988bed16f3a0b8db31a3d17c8e2983daece73f5c63758ac155e7e6bf",
+  "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner conflicting graph backup.json",
+  "platform": "tablet",
+  "reason": "Existing whole-owner navigation regression uses this separate fixed input."
+}

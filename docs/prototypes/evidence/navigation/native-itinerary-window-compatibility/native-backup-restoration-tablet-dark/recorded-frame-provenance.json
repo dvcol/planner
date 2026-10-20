@@ -1,0 +1,22 @@
+{
+  "source": "/private/tmp/PlannerBackupVersionAttachments-native-backup-restoration-tablet-dark/57A202AC-296A-4353-B4E3-558ABBA1B24D.mp4",
+  "sourceSha256": "99ee4b56ed17e48ad8428325e73bdef6cb2e73e8c0249f57862a4ec7fbdf14ad",
+  "durationSeconds": 108.59,
+  "frameAtSeconds": 106,
+  "frameSha256": "e087ed3c6bd2ee1431789656d3d4a94be9cd74532e7dee8f21a0ade7134b9a8a",
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-ss",
+    "106",
+    "-i",
+    "/private/tmp/PlannerBackupVersionAttachments-native-backup-restoration-tablet-dark/57A202AC-296A-4353-B4E3-558ABBA1B24D.mp4",
+    "-frames:v",
+    "1",
+    "/private/tmp/planner-restoration-failure-106.png"
+  ],
+  "observation": "The original recording still shows Review Backup near the failure. Its inline rejected-import error is visible. This contradicts treating the underlying sidebar as the current visible page.",
+  "videoPublished": false
+}

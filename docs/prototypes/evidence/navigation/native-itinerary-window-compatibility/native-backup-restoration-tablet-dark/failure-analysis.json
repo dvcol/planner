@@ -1,0 +1,14 @@
+{
+  "testPassed": false,
+  "assertion": "NativeNavigationElements.swift:321, Items sidebar action hittability",
+  "reached": "Expected unauthorized-restoration error was displayed; failure follows close-review and close-settings actions.",
+  "nativeHierarchy": "Settings and document-picker views remain in the captured hierarchy; no Planner Alert is present.",
+  "hypothesesRanked": [
+    "New controller did not await review/Settings dismissal",
+    "Document picker remained above Settings",
+    "A second Planner error alert blocked navigation, weakened by absent Alert in captured hierarchy"
+  ],
+  "probe": "Add explicit review nonexistence, Settings hittability and Settings nonexistence checks in the new test only. No production/helper changes.",
+  "causeProven": false,
+  "postAssertionDiagnostic": "Xcode later reports simctl unavailable; this follows the actual assertion."
+}

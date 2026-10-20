@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedBackupImportForm.swift",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerMarkdownlintConfig.json",
+        "docs/open-decisions.md",
+        "docs/prototypes/native-backup-import.md",
+        "docs/prototypes/native-backup-item-restoration.md"
+      ],
+      "exit": 0,
+      "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/open-decisions.md docs/prototypes/native-backup-import.md docs/prototypes/native-backup-item-restoration.md\nLinting: 3 files\nSummary: 0 issues in 0 files\nDone in 302ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "sourceEpochs": {
+    "native-backup-restoration-tablet-consumed-error": {
+      "inputCount": 1043,
+      "differences": []
+    },
+    "native-backup-restoration-phone-consumed-error": {
+      "inputCount": 1043,
+      "differences": []
+    },
+    "native-backup-restoration-tablet-success-regression": {
+      "inputCount": 1043,
+      "differences": []
+    },
+    "native-backup-restoration-mac-build": {
+      "inputCount": 1043,
+      "differences": []
+    }
+  },
+  "finalUIInvocations": 3,
+  "finalDistinctFunctions": 2,
+  "finalFailures": 0,
+  "finalSkips": 0,
+  "allRuntimeResultsIncludingExperiments": {
+    "passed": 5,
+    "failed": 3,
+    "skipped": 0
+  },
+  "priorTestAndHelperTextUnchanged": true,
+  "onlyProductionChange": "Planner/Scenes/SavedBackupImportForm.swift: consume displayed shared error on view disappearance",
+  "redGreenInputDifferences": [
+    "Planner/Scenes/SavedBackupImportForm.swift"
+  ],
+  "redGreenTestAndHelperIdentical": true,
+  "finalOriginalCapturesIndividuallyInspected": 16,
+  "originalFailureRecordingFrameInspected": true,
+  "macCompilerDiagnostics": [],
+  "macUIRuntimeFunctions": 0,
+  "newCoreOrHTTPInvocations": 0,
+  "review": {
+    "standards": "Existing native UI/Files boundary; original helpers and test bodies retained. One production line, no target/dependency/hook or schema change. Failed sidebar probe reverted.",
+    "specification": "Unauthorized restoration keeps Museum absent with surviving archived Item visible. Explicit review restores original public IDs and independent completion through relaunch. Successful-import delivered files still match full expected graphs. Recovery blocking flags and saved data are not modified by the notification cleanup. Broader family/platform/polish gates remain separate."
+  }
+}
