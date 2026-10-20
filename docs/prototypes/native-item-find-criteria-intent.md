@@ -1,6 +1,6 @@
 # Native cumulative Item criteria
 
-Status: the settled cumulative criteria pass at the production Intent boundary. Mac, Simulator and unsigned device products compile. Signing remains deferred.
+Status: the settled cumulative criteria pass at the production Intent boundary. Mac, Simulator and unsigned device products compile. Signing remains deferred. A [subsequent shared cancellation correction](native-empty-query-cancellation.md) covers empty related pickers separately; the results below retain this criteria slice's evidence epoch.
 
 ## Context and goal
 

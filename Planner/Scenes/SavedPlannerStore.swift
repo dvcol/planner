@@ -150,7 +150,9 @@ final class SavedPlannerStore {
   }
 
   func appIntentContext() async throws -> (PlannerCore.Planner, PlannerDatasetSession) {
+    try Task.checkCancellation()
     await open()
+    try Task.checkCancellation()
     guard let planner, let session, isReady else {
       throw CocoaError(
         .fileReadUnknown,
