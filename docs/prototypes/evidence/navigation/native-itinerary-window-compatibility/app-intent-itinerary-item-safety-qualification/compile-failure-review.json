@@ -1,0 +1,7 @@
+{
+  "qualificationPassed": false,
+  "executedTests": 0,
+  "fixtureCleanupNeeded": false,
+  "reason": "New cancellation-test Task needed an explicit Void invocation result; corrected the test call without a production change.",
+  "sourceLogSha256": "79104c446996f73e6fcec3084e99fea48f95b72f685a5544f6ece4a0399c9876"
+}

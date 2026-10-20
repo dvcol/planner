@@ -1,6 +1,6 @@
 # Itinerary occurrence selection in App Intents
 
-Status: Q114 A is approved on 20 October 2026. Choose the Itinerary first, then its exact Item appearance. The concrete reader/execution contract follows; this workflow decision adds no test boundary.
+Status: Q114 A is approved on 20 October 2026. Choose the Itinerary first, then its exact Item appearance. Get/local completion are implemented; [local qualification](prototypes/native-itinerary-item-intents.md) records the evidence. Populated system picker injection remains open. This workflow decision adds no test boundary.
 
 ## Context
 
@@ -26,4 +26,16 @@ The dependency projection is read-only and has no public constructor or assignme
 
 Exact-identity execution and public reads can use the established local boundary. Actual system injection, choices after changing the parent, discovery and invocation remain separate open gates on the recorded Customer runtime. No signing change, private interface, runtime bypass, test-only production parameter or new target is authorized by this investigation.
 
-The read-only fact checks used source `fdf038d8` and the installed public SDK. Compiler probes are temporary environment evidence, not app behavior tests. The concrete production interface and tests follow the workflow decision.
+The read-only fact checks used source `fdf038d8` and the installed public SDK. Compiler probes are temporary environment evidence, not app behavior tests. The concrete production interface and test requirements are below.
+
+## Concrete local slice
+
+The implementation uses the existing Q112 production Intent/EntityQuery test boundary and real Planner storage. No additional direct helper test boundary is introduced. Reuse SavedItemWindow's approved itinerary metadata/paging interface rather than add another route assembler or Core query.
+
+PlannerItineraryItemEntity exposes the Item title, human context and global/local/effective Done plus Item archive observations. Its opaque stable string ID is versioned and includes the Item source UUID and every contextual UUID. Direct IDs are `v1/direct/<itinerary>/<entry>/<item>`; expanded IDs are `v1/list/<itinerary>/<list-entry>/<membership>/<item>`. UUID case variants normalize to the same canonical ID. Raw IDs and technical enum names are absent from display labels.
+
+Get Item in Itinerary and local completion require both the selected Itinerary and exact appearance. Identifier lookup can resolve an existing saved entity without system picker injection. Malformed, foreign, removed or deleted selections cannot fall back to another appearance or global Item completion. Ordinary missing IDs are omitted during entity resolution; execution requires a current exact match. Names, route positions and completion are read live.
+
+Scoped search/suggestions use Apple's selected-parent dependency. Without a parent, there are no suggested appearances. All results retain saved Manual route order and canonical Core search. A surrounding Core generation validates the full read after paging, so changes cannot yield a successful mixture of generations. The adapter returns a useful read failure on invalidation. This adds no new Core, transport or backup format.
+
+Required local tests cover direct/expanded repeats, live names/positions, malformed/version/case/foreign/missing identities, removal and ordinary re-add, global precedence with independent local flags, archive, saved order/content/schedule preservation, cancellation, unavailable storage and actual recovery failure without replay. Existing Intent regressions, extracted metadata and Mac/Simulator/unsigned device compilation remain required. Actual populated parent injection/search and changing-parent system behavior remain open gates; the local tests must not claim that credit.
