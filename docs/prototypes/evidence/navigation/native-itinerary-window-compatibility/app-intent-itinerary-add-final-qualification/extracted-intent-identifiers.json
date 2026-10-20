@@ -1,0 +1,36 @@
+{
+  "metadataPath": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/Resources/Metadata.appintents/extract.actionsdata",
+  "sha256": "4e5125846ebc331ed3bd82b750420edde7eb66e43c480c21a093d3bef854eb0a",
+  "identifiers": {
+    "actions": [
+      "AddPlannerItemToItineraryIntent",
+      "AddPlannerItemToListIntent",
+      "AddPlannerListToItineraryIntent",
+      "CreatePlannerItemIntent",
+      "CreatePlannerItineraryIntent",
+      "CreatePlannerListIntent",
+      "EditPlannerItemIntent",
+      "EditPlannerItineraryIntent",
+      "EditPlannerListIntent",
+      "GetPlannerItemIntent",
+      "GetPlannerItineraryIntent",
+      "GetPlannerListIntent",
+      "SetPlannerItemArchiveIntent",
+      "SetPlannerItemCompletionIntent",
+      "SetPlannerItineraryArchiveIntent",
+      "SetPlannerListArchiveIntent"
+    ],
+    "entities": [
+      "PlannerItemEntity",
+      "PlannerItineraryEntity",
+      "PlannerListEntity"
+    ],
+    "queries": [
+      "PlannerItemEntityQuery",
+      "PlannerItineraryEntityQuery",
+      "PlannerListEntityQuery"
+    ]
+  },
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}
