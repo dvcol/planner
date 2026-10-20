@@ -8252,12 +8252,17 @@ public actor Planner {
       if record.id == sourceId { return after }
       return try record.value()
     }
+    let previousLinkIdentifiers = Set(before.links.map(\.id))
+    let generatedLinks = updatedLinks.filter { !previousLinkIdentifiers.contains($0.id) }.map {
+      PlannerAppliedIdentity.reference(.ownedLink(id: $0.id, owner: before.reference))
+    }
     let result = PlannerAppliedResult(
-      generatedIdentities: added.map { .reference($0.reference) },
+      generatedIdentities: added.map { .reference($0.reference) } + generatedLinks,
       affectedIdentities: [.source(before.reference)]
         + (removed + added).sorted { $0.id.uuidString < $1.id.uuidString }.map {
           .reference($0.reference)
-        } + removedLinks.map { .reference(.ownedLink(id: $0.id, owner: before.reference)) })
+        } + removedLinks.map { .reference(.ownedLink(id: $0.id, owner: before.reference)) }
+        + generatedLinks)
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
@@ -8516,12 +8521,17 @@ public actor Planner {
       if record.id == sourceId { return after }
       return try record.value()
     }
+    let previousLinkIdentifiers = Set(before.links.map(\.id))
+    let generatedLinks = updatedLinks.filter { !previousLinkIdentifiers.contains($0.id) }.map {
+      PlannerAppliedIdentity.reference(.ownedLink(id: $0.id, owner: before.reference))
+    }
     let result = PlannerAppliedResult(
-      generatedIdentities: added.map { .reference($0.reference) },
+      generatedIdentities: added.map { .reference($0.reference) } + generatedLinks,
       affectedIdentities: [.source(before.reference)]
         + (removed + added).sorted { $0.id.uuidString < $1.id.uuidString }.map {
           .reference($0.reference)
-        } + removedLinks.map { .reference(.ownedLink(id: $0.id, owner: before.reference)) })
+        } + removedLinks.map { .reference(.ownedLink(id: $0.id, owner: before.reference)) }
+        + generatedLinks)
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,

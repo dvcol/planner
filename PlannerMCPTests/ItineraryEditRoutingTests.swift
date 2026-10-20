@@ -5,14 +5,9 @@ import Testing
 @testable import Planner
 
 struct ItineraryEditRoutingTests {
-  @Test func guardedItineraryEditsOverHTTPRetainLaterContentAndTypedConflicts() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-      controlURL: directory.appendingPathComponent("control/writer"),
-      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
+  @Test @MainActor
+  func guardedItineraryEditsOverHTTPRetainLaterContentAndTypedConflicts() async throws {
+    let (_, configuration, _) = try makePlannerIntentStorage()
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let datasetSession) = await planner.bootstrap() else {
       Issue.record("Open the actual Core dataset before its HTTP edit journey.")
@@ -196,6 +191,186 @@ struct ItineraryEditRoutingTests {
       #expect(namespace.preparedProposals.isEmpty)
       #expect(recovery.decodedBackup.backup.labelAssociations.count == 2)
       #expect(recovery.decodedBackup.backup.deletionMarkers.count == 2)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test(arguments: [PlannerEntityKind.item, .itinerary])
+  @MainActor
+  func newBookmarkResultsPreserveSavedOrderPrefixesAndStatusOverHTTP(ownerKind: PlannerEntityKind)
+    async throws
+  {
+    let (_, configuration, _) = try makePlannerIntentStorage()
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    let listener = PlannerMCPLoopbackListener(
+      requestHandler: .init(
+        credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+        planner: planner, datasetSession: session))
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      func execute(_ command: [String: Any], operationIdentifier: UUID = UUID()) async throws
+        -> [String: Any]
+      {
+        try toolValue(
+          try await httpSession.data(
+            for: toolRequest(
+              endpoint: endpoint, name: "planner_execute",
+              arguments: [
+                "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+                "command": command,
+              ])), isError: false)
+      }
+      func read(_ owner: [String: Any]) async throws -> [String: Any] {
+        let response = try toolValue(
+          try await httpSession.data(
+            for: toolRequest(
+              endpoint: endpoint, name: "planner_read",
+              arguments: ["formatVersion": 1, "request": ["kind": "source", "source": owner]])),
+          isError: false)
+        return try #require(response["value"] as? [String: Any])
+      }
+      let categoryCreation = try await execute([
+        "type": "createCategory", "content": ["name": "Food"],
+      ])
+      let categoryResult = try #require(categoryCreation["result"] as? [String: Any])
+      let category = try #require((categoryResult["generated"] as? [[String: Any]])?.first)
+      let categoryIdentifier = try #require(category["id"] as? String)
+      let creation = try await execute([
+        "type": "create" + ownerKind.rawValue.capitalized,
+        "content": [
+          "title": "Keep", "notes": "Unrelated notes",
+          "links": [
+            ["originalUrl": "https://example.com/removed", "label": "Remove"],
+            ["originalUrl": "https://example.com/retained", "label": "Keep"],
+          ],
+        ],
+      ])
+      let creationResult = try #require(creation["result"] as? [String: Any])
+      let created = try #require(creationResult["generated"] as? [[String: Any]])
+      #expect(created.count == 1)
+      let owner = try #require(created.first)
+      let ownerIdentifier = try #require(owner["id"] as? String)
+      let original = try await read(owner)
+      let originalContent = try #require(original["content"] as? [String: Any])
+      let originalLinks = try #require(originalContent["links"] as? [[String: Any]])
+      let removedIdentifier = try #require(originalLinks[0]["linkId"] as? String)
+      let retainedIdentifier = try #require(originalLinks[1]["linkId"] as? String)
+      let replacement: [[String: Any]] = [
+        ["originalUrl": "https://example.com/duplicate", "label": "First"],
+        [
+          "linkId": retainedIdentifier, "originalUrl": "https://example.com/edited",
+          "label": "Changed",
+        ],
+        ["originalUrl": "https://example.com/duplicate", "label": "Second"],
+      ]
+      let operationIdentifier = UUID()
+      let command: [String: Any] = [
+        "type": "edit" + ownerKind.rawValue.capitalized, "sourceId": ownerIdentifier,
+        "changes": ["links": replacement, "categoryIds": [categoryIdentifier]],
+        "expectedFieldHashes": try #require(original["fieldHashes"] as? [String: String]),
+      ]
+      let outcome = try await execute(command, operationIdentifier: operationIdentifier)
+      #expect(outcome["state"] as? String == "applied")
+      let result = try #require(outcome["result"] as? [String: Any])
+      let generated = try #require(result["generated"] as? [[String: Any]])
+      let affected = try #require(result["affected"] as? [[String: Any]])
+      let current = try await read(owner)
+      let content = try #require(current["content"] as? [String: Any])
+      let links = try #require(content["links"] as? [[String: Any]])
+      #expect(links.map { $0["label"] as? String } == ["First", "Changed", "Second"])
+      #expect(links[1]["linkId"] as? String == retainedIdentifier)
+      let newIdentifiers = [
+        try #require(links[0]["linkId"] as? String),
+        try #require(links[2]["linkId"] as? String),
+      ]
+      #expect(Set(newIdentifiers).count == 2)
+      #expect(!newIdentifiers.contains(retainedIdentifier))
+      #expect(!newIdentifiers.contains(removedIdentifier))
+      #expect(
+        generated.map { $0["kind"] as? String } == ["labelAssociation", "ownedLink", "ownedLink"])
+      #expect(generated.dropFirst().map { $0["id"] as? String } == newIdentifiers)
+      #expect(
+        affected.map { $0["kind"] as? String } == [
+          ownerKind.rawValue, "labelAssociation", "ownedLink", "ownedLink", "ownedLink",
+        ])
+      #expect(
+        affected.dropFirst(2).map { $0["id"] as? String } == [removedIdentifier] + newIdentifiers)
+      #expect(NSDictionary(dictionary: generated[0]).isEqual(to: affected[1]))
+      for link in generated.dropFirst() {
+        #expect(
+          NSDictionary(dictionary: try #require(link["owner"] as? [String: Any])).isEqual(to: owner)
+        )
+        #expect(link["source"] is NSNull && link["appearance"] is NSNull)
+      }
+      let typed = try JSONDecoder().decode(
+        PlannerAppliedResult.self, from: JSONSerialization.data(withJSONObject: result))
+      #expect(typed.generated.isEmpty)
+      #expect(
+        typed.affected == [
+          .init(kind: ownerKind, id: try #require(UUID(uuidString: ownerIdentifier)))
+        ])
+      let status = try toolValue(
+        try await httpSession.data(
+          for: toolRequest(
+            endpoint: endpoint, name: "planner_operation_status",
+            arguments: ["formatVersion": 1, "operationId": operationIdentifier.uuidString])),
+        isError: false)
+      #expect(
+        NSDictionary(dictionary: try #require(status["result"] as? [String: Any])).isEqual(
+          to: result))
+      let replayed = try await execute(command, operationIdentifier: operationIdentifier)
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: outcome))
+      let noChange = try await execute([
+        "type": "edit" + ownerKind.rawValue.capitalized, "sourceId": ownerIdentifier,
+        "changes": [
+          "links": links.map { link in
+            [
+              "linkId": link["linkId"]!, "originalUrl": link["originalUrl"]!,
+              "label": link["label"]!,
+            ]
+          }
+        ], "expectedFieldHashes": try #require(current["fieldHashes"] as? [String: String]),
+      ])
+      #expect(noChange["state"] as? String == "applied")
+      let unchangedResult = try JSONDecoder().decode(
+        PlannerAppliedResult.self,
+        from: JSONSerialization.data(
+          withJSONObject: try #require(noChange["result"] as? [String: Any])))
+      #expect(unchangedResult.generatedIdentities.isEmpty)
+      #expect(unchangedResult.affectedIdentities == typed.affected.map { .source($0) })
+      let retained = try await read(owner)
+      #expect(
+        NSDictionary(dictionary: try #require(retained["content"] as? [String: Any])).isEqual(
+          to: content))
+      #expect(
+        retained["fieldHashes"] as? [String: String] == current["fieldHashes"] as? [String: String])
+      let reorderedInputs = [links[2], links[1], links[0]].map { link in
+        ["linkId": link["linkId"]!, "originalUrl": link["originalUrl"]!, "label": link["label"]!]
+      }
+      let reordered = try await execute([
+        "type": "edit" + ownerKind.rawValue.capitalized, "sourceId": ownerIdentifier,
+        "changes": ["links": reorderedInputs],
+        "expectedFieldHashes": try #require(retained["fieldHashes"] as? [String: String]),
+      ])
+      let reorderedResult = try #require(reordered["result"] as? [String: Any])
+      #expect((reorderedResult["generated"] as? [Any])?.isEmpty == true)
+      let reorderedOwner = try await read(owner)
+      let reorderedContent = try #require(reorderedOwner["content"] as? [String: Any])
+      let reorderedLinks = try #require(reorderedContent["links"] as? [[String: Any]])
+      #expect(
+        reorderedLinks.map { $0["linkId"] as? String }
+          == [newIdentifiers[1], retainedIdentifier, newIdentifiers[0]])
+      let lateReplay = try await execute(command, operationIdentifier: operationIdentifier)
+      #expect(NSDictionary(dictionary: lateReplay).isEqual(to: outcome))
+      let afterReplay = try await read(owner)
+      #expect(NSDictionary(dictionary: afterReplay).isEqual(to: reorderedOwner))
+      #expect(content["notes"] as? String == "Unrelated notes")
       await listener.stop()
     } catch {
       await listener.stop()

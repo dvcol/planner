@@ -1,0 +1,52 @@
+[
+  {
+    "checkpoint" : 2,
+    "incomplete" : false,
+    "linkIds" : [
+      "CEEA8588-5739-4FB1-AC2A-367C17CC668E",
+      "3F69EE4D-8963-4DFD-8F9F-625621801AEC"
+    ],
+    "linksHash" : "sha256-v1:f1fca00b2cf12cf44c8b9ec13a9fecff663f756f401f5b97b3fbac5f797ae8d3",
+    "operationId" : "E344AFB6-2677-4BB0-9729-F86A33627DCB",
+    "owner" : {
+      "id" : "1FD151E3-8917-44B1-8A96-F1DA16E1AD13",
+      "kind" : "item"
+    },
+    "result" : {
+      "affected" : [
+        {
+          "id" : "1FD151E3-8917-44B1-8A96-F1DA16E1AD13",
+          "kind" : "item"
+        }
+      ],
+      "generated" : [
+
+      ]
+    }
+  },
+  {
+    "checkpoint" : 4,
+    "incomplete" : true,
+    "linkIds" : [
+      "B80DA85D-915E-402F-97FC-CD6CC70207CC",
+      "60304B47-9C13-4864-B076-468AEAD9BD24"
+    ],
+    "linksHash" : "sha256-v1:8cab674a04443278f1e3328528aaf4b68b9f4634b2d5f332fd5d3c23229049a0",
+    "operationId" : "33BCB4F9-D6F2-4CD8-A9FE-97B312E2527A",
+    "owner" : {
+      "id" : "8CA48153-5455-4505-8DF6-05B34C2679BE",
+      "kind" : "itinerary"
+    },
+    "result" : {
+      "affected" : [
+        {
+          "id" : "8CA48153-5455-4505-8DF6-05B34C2679BE",
+          "kind" : "itinerary"
+        }
+      ],
+      "generated" : [
+
+      ]
+    }
+  }
+]

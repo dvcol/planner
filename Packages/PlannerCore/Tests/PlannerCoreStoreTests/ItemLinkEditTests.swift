@@ -281,6 +281,13 @@ struct ItemLinkEditTests {
       Array(currentIdentifiers.prefix(2)) == [originalLinks[2].linkId, originalLinks[1].linkId])
     #expect(!originalLinks.map(\.linkId).contains(currentIdentifiers[2]))
     #expect(Set(currentIdentifiers).count == 3)
+    let generatedLink = PlannerReferenceRead.ownedLink(id: currentIdentifiers[2], owner: item)
+    #expect(edited.generatedIdentities == [.reference(generatedLink)])
+    #expect(
+      edited.affectedIdentities == [
+        .source(item), .reference(.ownedLink(id: originalLinks[0].linkId, owner: item)),
+        .reference(generatedLink),
+      ])
     #expect(current.content.title == "Hotel")
     #expect(current.content.notes == "Friday booking")
     #expect(current.content.location == location)
