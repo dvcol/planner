@@ -1,0 +1,39 @@
+{
+  "metadataPath": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Metadata.appintents/extract.actionsdata",
+  "sha256": "fbf71535fec051c0550be5799178c7c2b81bd230a78f7ec578d9407951f6df7b",
+  "identifiers": {
+    "actions": [
+      "AddPlannerItemToItineraryIntent",
+      "AddPlannerItemToListIntent",
+      "AddPlannerListToItineraryIntent",
+      "CreatePlannerItemIntent",
+      "CreatePlannerItineraryIntent",
+      "CreatePlannerListIntent",
+      "EditPlannerItemIntent",
+      "EditPlannerItineraryIntent",
+      "EditPlannerListIntent",
+      "GetPlannerItemIntent",
+      "GetPlannerItineraryIntent",
+      "GetPlannerListIntent",
+      "MovePlannerItemBetweenListsIntent",
+      "RemovePlannerItemFromListIntent",
+      "SetPlannerItemArchiveIntent",
+      "SetPlannerItemCompletionIntent",
+      "SetPlannerItemListCompletionIntent",
+      "SetPlannerItineraryArchiveIntent",
+      "SetPlannerListArchiveIntent"
+    ],
+    "entities": [
+      "PlannerItemEntity",
+      "PlannerItineraryEntity",
+      "PlannerListEntity"
+    ],
+    "queries": [
+      "PlannerItemEntityQuery",
+      "PlannerItineraryEntityQuery",
+      "PlannerListEntityQuery"
+    ]
+  },
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}
