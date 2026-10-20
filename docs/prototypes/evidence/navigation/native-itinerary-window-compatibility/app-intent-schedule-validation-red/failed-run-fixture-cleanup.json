@@ -1,0 +1,22 @@
+{
+  "qualificationPassed": false,
+  "expectedFailure": "Gregorian leap-month flag was accepted",
+  "closedHosts": [
+    31286
+  ],
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/96E246C7-5FE1-4C44-A347-610956D24BBE",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/2173A3A1-4599-4705-AC07-B6A14FA8025C",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FD110BAD-2FC9-4999-A620-EDA20BCC4711",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/534EDF61-C401-4F96-A7FB-8BC0A37885B4",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FD4886BC-47CF-435D-8409-480228E05394",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C7B96CA2-078F-44D6-9B71-F3B1132C92B3",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/8CA4164B-A9DB-4EE7-8E87-BB3481209204",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/54EC4234-3AED-4AA7-9CA6-669D8D56A10A",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/0726A57A-C29A-4960-9ACC-F988F3148200",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4783A0D2-4066-4C6D-AA23-A945952C3B74",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/30580BE0-144A-467E-9164-450474F131FC",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/A7E1E8D4-0D79-4AFA-B4CA-2C07B0257E71",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/40043B4A-E623-4D96-8634-35C36039862D"
+  ]
+}

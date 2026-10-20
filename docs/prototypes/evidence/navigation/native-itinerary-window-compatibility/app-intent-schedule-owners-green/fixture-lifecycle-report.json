@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/B00ED55D-F015-4F51-8CE2-58D65EC27F2F",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C50513F1-16EF-4E66-817B-794ECC7C2239",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C4024415-4368-4312-AA8F-F338456B7B81",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3D3D502C-4B63-4651-B204-1A40E47A1CD0",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/DE9D5089-9865-45F2-99C7-1F75C2755D10"
+  ],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b",
+  "sourceLogSha256": "1aa4a8d68c69f18154b3f3f396388f9c0f6e97a649be5f6c512608e44d0e61e8",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 5,
+  "hostProcessIdentifiers": [
+    28061
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerMarkdownlintConfig.json",
+    "docs/prototypes/native-schedule-read-intents.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-schedule-read-intents.md\nLinting: 1 file\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 350ms using pnpm v12.14.0\n"
+}
