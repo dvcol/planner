@@ -1,0 +1,17 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-list-notes-create-green.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C8CD900C-890C-4C20-AADF-DBE2A40A3D85.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List notes retained in the native editor after relaunch_0_7636B1BC-3926-4614-B923-C671D6789EF4.png",
+      "timestamp": 1792527995.088,
+      "testIdentifier": "SavedListJourneyTests/testNewListNotesAreStagedAndRetainedAfterNativeRelaunch()",
+      "originalSha256": "dac16ebb0f560562911ca81e22bd7537290f9b7349f7c1a39f59dc70688bc37a"
+    }
+  ],
+  "videoPublished": false
+}

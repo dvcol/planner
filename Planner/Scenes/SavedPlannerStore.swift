@@ -965,25 +965,34 @@ final class SavedPlannerStore {
     return await executeChange(command, operationId: operationIdentifier) != nil
   }
 
-  func createList(name: String, manualEstimate: PlannerEstimate?, operationId: UUID) async
-    -> PlannerEntityReference?
-  {
+  func createList(
+    name: String, notes: String, manualEstimate: PlannerEstimate?, operationId: UUID
+  ) async -> PlannerEntityReference? {
     guard let planner, let session, canCreate else { return nil }
     activeSaveCount += 1
     defer { activeSaveCount -= 1 }
     let result = await planner.execute(
       PlannerOperation(
         operationId: operationId, session: session,
-        command: .createList(content: .init(name: name, manualEstimate: manualEstimate))
+        command: .createList(
+          content: .init(
+            name: name, notes: notes.isEmpty ? nil : notes, manualEstimate: manualEstimate))
       ))
     guard let applied = await handleChangeResult(result) else { return nil }
     return applied.generated.first { $0.kind == .list }
   }
 
   func editList(
-    _ list: PlannerListSourceRead, name: String, manualEstimate: PlannerEstimate?, operationId: UUID
+    _ list: PlannerListSourceRead, name: String, notes: String, manualEstimate: PlannerEstimate?,
+    operationId: UUID
   ) async -> Bool {
     let nameChange: PlannerFieldChange<String> = name == list.content.name ? .unchanged : .set(name)
+    let notesChange: PlannerFieldChange<String>
+    if notes == (list.content.notes ?? "") {
+      notesChange = .unchanged
+    } else {
+      notesChange = notes.isEmpty ? .clear : .set(notes)
+    }
     let estimateChange: PlannerFieldChange<PlannerEstimate>
     if manualEstimate == list.content.manualEstimate {
       estimateChange = .unchanged
@@ -995,7 +1004,7 @@ final class SavedPlannerStore {
     return await executeChange(
       .editList(
         sourceId: list.source.id,
-        changes: .init(name: nameChange, manualEstimate: estimateChange),
+        changes: .init(name: nameChange, notes: notesChange, manualEstimate: estimateChange),
         expectedFieldHashes: list.fieldHashes), operationId: operationId) != nil
   }
 

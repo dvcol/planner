@@ -1,0 +1,22 @@
+{
+  "reviewer": "Root agent manual source/specification review",
+  "scope": [
+    "Native List Form and guarded Store mapping",
+    "Native menu label and existing UI query fallback",
+    "Two production UI journeys at the existing approved boundary"
+  ],
+  "checked": [
+    "All createList/editList native callers supply the notes draft.",
+    "Notes-only changes enable Save; unchanged name/notes/estimate keep it disabled.",
+    "Unchanged optional notes are not rewritten, changed empty notes clear, and nonempty text is retained verbatim.",
+    "Existing operation identifiers, field hashes, persistence/recovery guards and Cancel behavior are retained.",
+    "The stable existing edit-action identifier remains, and its mobile label fallback changes with the user-facing caption.",
+    "No Core, MCP, backup/schema, dependency, target, entitlement or signing configuration change.",
+    "Literal text, original source identity and one-hour estimate are observed through real native controls after relaunch."
+  ],
+  "findings": [],
+  "remainingGates": [
+    "Mac UI automation initialization timeout before any method starts",
+    "Physical/signing, sync and feature-complete whole-app qualification remain separate map work"
+  ]
+}

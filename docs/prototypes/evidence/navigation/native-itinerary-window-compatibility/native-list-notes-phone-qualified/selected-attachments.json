@@ -1,0 +1,17 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-list-notes-phone-qualified.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "5AF450E9-3202-46E9-9FCE-C31D4CCC6410.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List notes retained in the native editor after relaunch_0_28D9C42F-8653-46AF-96B8-907D6B27DA58.png",
+      "timestamp": 1792528277.744,
+      "testIdentifier": "SavedListJourneyTests/testNewListNotesAreStagedAndRetainedAfterNativeRelaunch()",
+      "originalSha256": "c451c45a5e17d497c78b5fa2e7237f763a9da8e61ea89a460b6fe4641700c6d4"
+    }
+  ],
+  "videoPublished": false
+}

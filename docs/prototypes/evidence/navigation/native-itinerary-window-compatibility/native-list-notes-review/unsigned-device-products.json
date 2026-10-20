@@ -1,0 +1,26 @@
+{
+  "products": [
+    {
+      "bundle": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app",
+      "command": [
+        "file",
+        "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/Planner"
+      ],
+      "exitCode": 0,
+      "output": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/Planner: Mach-O 64-bit executable arm64\n",
+      "executableSha256": "3ada7df8b51791967afeb1e3377759237e464af2a65feef8dd0f8c4990767de4"
+    },
+    {
+      "bundle": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/PlugIns/PlannerShareMobile.appex",
+      "command": [
+        "file",
+        "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/PlugIns/PlannerShareMobile.appex/PlannerShareMobile"
+      ],
+      "exitCode": 0,
+      "output": "/private/tmp/PlannerShareProducts-device/Build/Products/Debug-iphoneos/Planner.app/PlugIns/PlannerShareMobile.appex/PlannerShareMobile: Mach-O 64-bit executable arm64\n",
+      "executableSha256": "262562bad5cff873e34c8364515473420e900dd2e008bd0a09d544b4afe209f0"
+    }
+  ],
+  "embeddedShareExtensionCount": 1,
+  "installedOrLaunched": false
+}

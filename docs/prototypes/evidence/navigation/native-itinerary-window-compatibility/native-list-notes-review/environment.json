@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "xcodebuild",
+      "-version"
+    ],
+    "exitCode": 0,
+    "output": "Xcode 27.1\nBuild version 27A9275\n"
+  },
+  {
+    "command": [
+      "xcrun",
+      "--sdk",
+      "macosx",
+      "--show-sdk-version"
+    ],
+    "exitCode": 0,
+    "output": "27.0\n"
+  },
+  {
+    "command": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-version"
+    ],
+    "exitCode": 0,
+    "output": "2026-10-21 05:42:14.087 xcodebuild[71783:29636609]  DVTFilePathFSEvents: Failed to start fs event stream.\n2026-10-21 05:42:14.244 xcodebuild[71783:29636608] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \"Input/output error\". Using NSCachesDirectory instead.\n2026-10-21 05:42:14.811 xcodebuild[71794:29636635]  DVTFilePathFSEvents: Failed to start fs event stream.\n2026-10-21 05:42:14.971 xcodebuild[71794:29636634] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \"Input/output error\". Using NSCachesDirectory instead.\n2026-10-21 05:42:15.651 xcodebuild[71822:29636767]  DVTFilePathFSEvents: Failed to start fs event stream.\n2026-10-21 05:42:15.997 xcodebuild[71822:29636764] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \"Input/output error\". Using NSCachesDirectory instead.\n27.1\n"
+  },
+  {
+    "command": [
+      "xcrun",
+      "--sdk",
+      "iphoneos",
+      "--show-sdk-version"
+    ],
+    "exitCode": 0,
+    "output": "2026-10-21 05:42:16.882 xcodebuild[71851:29636902]  DVTFilePathFSEvents: Failed to start fs event stream.\n2026-10-21 05:42:17.017 xcodebuild[71851:29636900] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \"Input/output error\". Using NSCachesDirectory instead.\n27.1\n"
+  }
+]

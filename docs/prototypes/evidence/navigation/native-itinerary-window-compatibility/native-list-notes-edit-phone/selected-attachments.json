@@ -1,0 +1,66 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-list-notes-edit-phone.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "EC09C170-8E29-4DAE-9922-5FA742B7C52F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"saved.list.estimate.full\" Other`_0_706035E2-18F2-4262-8664-BE5261015B9F.txt",
+      "timestamp": 1792528116.368,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "retainedFileName": "EC09C170-8E29-4DAE-9922-5FA742B7C52F.txt.gz",
+      "originalSha256": "56aac78cecc0027dd36a781c9627b0be1b788e2aad74ec5f2d47348c6598ef9f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "08984E21-C701-4AF1-A0D5-2E806AEF2A61.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"saved.list.estimate.full\" Other`_0_48E93A6F-6808-4C13-8024-32F8BA92509A.txt",
+      "timestamp": 1792528115.807,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "retainedFileName": "08984E21-C701-4AF1-A0D5-2E806AEF2A61.txt.gz",
+      "originalSha256": "0cb6e242b1f1310609a405050e42041991f44cbdc3e7069af3172d44fc062105"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "CACB93B2-CD48-4B60-A9D6-78D8548D1BAE.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"saved.list.estimate.full\" Other`_0_BEA05AB2-B757-4C7E-8945-FBCEB6056B83.txt",
+      "timestamp": 1792528114.814,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "retainedFileName": "CACB93B2-CD48-4B60-A9D6-78D8548D1BAE.txt.gz",
+      "originalSha256": "2e817b0701189f6308ce6216cc24b9e4edf3ca0d978e77aa2f7ce6d473851629"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "BB733E53-D35F-4EE5-81A8-90D7DD370773.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"saved.list.estimate.full\" Other`_0_B7F52A21-D332-4648-80C5-1862FCE5AD10.txt",
+      "timestamp": 1792528113.826,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "retainedFileName": "BB733E53-D35F-4EE5-81A8-90D7DD370773.txt.gz",
+      "originalSha256": "2a96b7d263635cf368fc6eefe3b59a0ca1e12e2e61251a45987753b9bec7b171"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "775A4D20-8552-42AF-A572-71E4DFAF9FA3.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"saved.list.estimate.full\" Other`_0_DFB5BDDD-EFC7-45E5-8C58-291981332AC9.txt",
+      "timestamp": 1792528112.966,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "retainedFileName": "775A4D20-8552-42AF-A572-71E4DFAF9FA3.txt.gz",
+      "originalSha256": "1dc91e70526620480c4f8a644931ce226da562f5468dbf24d1a7319602b79e38"
+    }
+  ],
+  "videoPublished": false
+}

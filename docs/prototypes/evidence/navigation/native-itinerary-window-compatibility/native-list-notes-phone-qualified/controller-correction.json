@@ -1,0 +1,10 @@
+{
+  "qualificationPassed": false,
+  "cause": "The controller attempted to query the selected List in its hidden compact catalog, then required a Show Sidebar button that this compact view did not offer.",
+  "correction": "Relaunch normally before capturing the original List row identity; use the already qualified catalog entry path.",
+  "productionChangedForCorrection": false,
+  "retainedIndependentPasses": [
+    "testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch",
+    "testNewListNotesAreStagedAndRetainedAfterNativeRelaunch"
+  ]
+}

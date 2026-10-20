@@ -1,0 +1,39 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-list-notes-tablet-dark.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C866E07A-8CEB-46EF-9F84-39B01AC848C1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List notes clear without changing the saved manual estimate_0_8AC4324F-7627-48ED-B2DF-FB09B9B3E4DC.png",
+      "timestamp": 1792528741.325,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "originalSha256": "5571386a7fa491b6a8f1e9e68c08e788630861246ceb8ffafe3b2e876280c2f3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "EC34AF04-C572-4743-B483-611FAB9D91CD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List multiline notes survive an independent name edit_0_840E8B76-80AA-4939-A0B0-58C4AEBA597D.png",
+      "timestamp": 1792528709.409,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "originalSha256": "df430cd22a5fbc4b176354929e9bccbd5027cffd95099056839f87addbee2702"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C23CCC67-C4B5-4EB6-BF6A-D6A070394DC8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List notes retained in the native editor after relaunch_0_DC48465C-4622-44BE-AB39-2EA424BB09E9.png",
+      "timestamp": 1792528798.674,
+      "testIdentifier": "SavedListJourneyTests/testNewListNotesAreStagedAndRetainedAfterNativeRelaunch()",
+      "originalSha256": "c197b2b4cb4aee03183ccab3bc0408c28e1372073b7d06a06267080a05c119a7"
+    }
+  ],
+  "videoPublished": false
+}

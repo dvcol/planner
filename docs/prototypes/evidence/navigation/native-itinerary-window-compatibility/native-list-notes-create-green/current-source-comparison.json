@@ -1,0 +1,7 @@
+{
+  "inputCount": 1040,
+  "differences": [
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "PlannerNavigationUITests/SavedListJourneyTests.swift"
+  ]
+}

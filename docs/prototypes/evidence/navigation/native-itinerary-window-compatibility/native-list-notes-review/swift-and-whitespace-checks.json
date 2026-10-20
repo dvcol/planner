@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerNavigationUITests/NativeNavigationElements.swift",
+      "PlannerNavigationUITests/SavedListJourneyTests.swift"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "output": ""
+  }
+]

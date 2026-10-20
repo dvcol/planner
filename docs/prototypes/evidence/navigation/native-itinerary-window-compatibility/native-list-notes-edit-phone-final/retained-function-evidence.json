@@ -1,0 +1,21 @@
+{
+  "unchangedProductionInputs": [
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift"
+  ],
+  "unchangedPassingFunctions": [
+    {
+      "name": "testNewListNotesAreStagedAndRetainedAfterNativeRelaunch",
+      "sha256": "53c02b7e8acf950f68583072d1a85549d290d18ee5701b2518842e6d622110e5",
+      "priorPassingBundle": "/private/tmp/PlannerItemWindow-native-list-notes-phone-qualified.xcresult"
+    },
+    {
+      "name": "testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch",
+      "sha256": "56e38e9543bf138117b9cdb89548d8092abf417c4456cf8780690385a8a14484",
+      "priorPassingBundle": "/private/tmp/PlannerItemWindow-native-list-notes-phone-qualified.xcresult"
+    }
+  ],
+  "priorAggregatePassed": false,
+  "editedJourneyNowPasses": true
+}

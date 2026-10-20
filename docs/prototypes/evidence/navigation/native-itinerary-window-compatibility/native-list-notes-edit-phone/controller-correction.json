@@ -1,0 +1,6 @@
+{
+  "qualificationPassed": false,
+  "cause": "The controller tapped the identified Toggle container rather than its nested native mobile switch. The saved estimate remained calculated at 0 minutes.",
+  "correction": "Use the existing mobile switch selection pattern and require quantity 1 before submitting Save.",
+  "productionChangedForCorrection": false
+}

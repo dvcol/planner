@@ -1,0 +1,28 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-list-notes-edit-phone-final.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "31B2B7D4-C2D5-4E02-9A14-5D0481ABCAF6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List notes clear without changing the saved manual estimate_0_C460755B-5088-485E-98F5-74CCEEE7E1E9.png",
+      "timestamp": 1792528449.967,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "originalSha256": "80a3540447e3a7074571bf9c9bcd323b3035ce67755d9c1e7d0a6308eac3bbb7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A30A59C5-28A7-4EDE-8E1E-729451F093EE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List multiline notes survive an independent name edit_0_4B40DF80-5773-4388-873C-4D083751E326.png",
+      "timestamp": 1792528424.773,
+      "testIdentifier": "SavedListJourneyTests/testListNotesEditingCancellationRenameAndClearRetainItsIdentityAndManualEstimate()",
+      "originalSha256": "4962250bc73ad8e3abc12c2514037ec4947833cfa733b81be0717350b33eee20"
+    }
+  ],
+  "videoPublished": false
+}
