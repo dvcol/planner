@@ -1,0 +1,9 @@
+{
+  "qualificationPassed": false,
+  "reason": "Expected runtime TDD red before implementing the native action",
+  "removedFixtures": 1,
+  "closedHostIdentifiers": [
+    48069
+  ],
+  "closedDatabasesVerified": true
+}
