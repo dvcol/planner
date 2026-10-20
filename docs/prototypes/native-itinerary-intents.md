@@ -10,7 +10,7 @@ At `c53f165f`, Core, native screens and MCP already create/read Itineraries thro
 
 Create an Itinerary with title/optional notes, return its Core-generated identity and resolve its live title/archive values through EntityStringQuery and Get Itinerary. Use canonical insensitive search, archived-inclusive choices, stable order and generation-bound pages. Preserve distinct same-name sources. Missing/deleted identities stay missing, and read failures throw rather than invent empty successful data.
 
-Creation rejects invalid/canceled requests without partial data. Actual post-save incomplete recovery preserves the saved source and blocks subsequent mutation until native recovery retry. It adds no persisted parent Done state or child copies. Richer fields, edit/archive, organization, contextual/bulk completion and scheduling remain on the full catalog's map; this increment does not replace their scope.
+Creation rejects invalid/canceled requests without partial data. Actual post-save incomplete recovery preserves the saved source and blocks subsequent mutation until native recovery retry. It adds no persisted parent Done state or child copies. Richer fields, organization, contextual/bulk completion and scheduling remain on the full catalog's map; this increment does not replace their scope. The subsequent [edit/archive checkpoint](native-itinerary-edit-archive-intents.md) implements title/notes changes and Archive/Unarchive.
 
 ## Definition of ready
 
@@ -52,7 +52,7 @@ The production query delegates search/order to Core and reads 64-row generation-
 
 All 44 affected Item/List/Itinerary tests pass together with zero failures or skips in 19.186 seconds. This adds nine Itinerary cases to the existing 35; it is not a full target or repository test run. The final packet retains the actual XCTest summary. Mac metadata extracts twelve actions, three entities and three queries, including Create/Get Itinerary and its EntityStringQuery. Metadata proves compilation/extraction only.
 
-The production app and native UI target compile for the generic iPhone/iPad Simulator destination. The generic unsigned iOS device build also passes and embeds one mobile Share extension. Both executables contain arm64. Mobile/device metadata matches the Mac twelve-action, three-entity, three-query catalog. Each final platform packet retains 985 source/configuration inputs that match the current repository files. Commands, logs, product hashes, metadata and embedding checks are retained. Affected strict Swift/Markdown lint passes. Team/account configuration and entitlements are unchanged; Mac uses the existing local ad hoc configuration. No physical device was installed or launched.
+The production app and native UI target compile for the generic iPhone/iPad Simulator destination. The generic unsigned iOS device build also passes and embeds one mobile Share extension. Both executables contain arm64. Mobile/device metadata matches the Mac twelve-action, three-entity, three-query catalog. Each final platform packet retains 985 source/configuration inputs that match the source at this checkpoint. Commands, logs, product hashes, metadata and embedding checks are retained. Affected strict Swift/Markdown lint passes. Team/account configuration and entitlements are unchanged; Mac uses the existing local ad hoc configuration. No physical device was installed or launched.
 
 ## Remaining map work and limits
 
