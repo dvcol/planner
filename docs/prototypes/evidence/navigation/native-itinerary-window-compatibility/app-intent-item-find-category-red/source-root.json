@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerScheduleRemovalBaseSource",
+  "base": "6231c0bad23582a8acdc7ff5c4f6808c6be17bfa",
+  "overlays": [
+    "PlannerMCPTests/PlannerItemFindIntentTests.swift"
+  ]
+}

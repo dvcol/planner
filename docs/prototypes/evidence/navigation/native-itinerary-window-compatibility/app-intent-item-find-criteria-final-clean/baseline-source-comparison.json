@@ -1,0 +1,11 @@
+{
+  "baselinePacket": "app-intent-item-find-final-clean",
+  "priorInputs": 1038,
+  "currentInputs": 1038,
+  "changedInputs": [
+    "Planner/AppIntents/PlannerItemFindIntent.swift",
+    "PlannerMCPTests/PlannerItemFindIntentTests.swift"
+  ],
+  "addedInputs": [],
+  "otherPriorInputsUnchanged": true
+}

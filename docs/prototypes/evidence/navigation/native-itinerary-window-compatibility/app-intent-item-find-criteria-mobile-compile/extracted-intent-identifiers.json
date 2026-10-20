@@ -1,0 +1,301 @@
+{
+  "actions": [
+    "AddPlannerItemLinkIntent",
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerItineraryLinkIntent",
+    "AddPlannerListToItineraryIntent",
+    "ClearPlannerItemEstimateIntent",
+    "ClearPlannerItemLocationIntent",
+    "ClearPlannerItineraryLocationIntent",
+    "ClearPlannerScheduleEndIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "CreatePlannerTagIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItemLinkIntent",
+    "EditPlannerItemLocationIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerItineraryLinkIntent",
+    "EditPlannerItineraryLocationIntent",
+    "EditPlannerListIntent",
+    "FindPlannerItemsIntent",
+    "FindPlannerSchedulesIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemCategoriesIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItemLinksIntent",
+    "GetPlannerItemSchedulesIntent",
+    "GetPlannerItemTagsIntent",
+    "GetPlannerItineraryCategoriesIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerItineraryItemIntent",
+    "GetPlannerItineraryLinksIntent",
+    "GetPlannerItinerarySchedulesIntent",
+    "GetPlannerItineraryTagsIntent",
+    "GetPlannerListIntent",
+    "GetPlannerScheduleIntent",
+    "GetPlannerScheduleItemIntent",
+    "GetPlannerScheduleItineraryIntent",
+    "GetPlannerTagIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "RemovePlannerItemLinkIntent",
+    "RemovePlannerItineraryEntryIntent",
+    "RemovePlannerItineraryLinkIntent",
+    "RemovePlannerScheduleIntent",
+    "RenamePlannerCategoryIntent",
+    "RenamePlannerTagIntent",
+    "ReorderPlannerItemInListIntent",
+    "ReorderPlannerItemLinkIntent",
+    "ReorderPlannerItineraryEntryIntent",
+    "ReorderPlannerItineraryLinkIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCategoryIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItemLocationPinIntent",
+    "SetPlannerItemTagIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerItineraryCategoryIntent",
+    "SetPlannerItineraryItemCompletionIntent",
+    "SetPlannerItineraryLocationPinIntent",
+    "SetPlannerItineraryTagIntent",
+    "SetPlannerListArchiveIntent",
+    "SetPlannerScheduleTimeZoneIntent",
+    "UsePlannerItineraryCalculatedEstimateIntent",
+    "UsePlannerListCalculatedEstimateIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerItineraryEntryEntity",
+    "PlannerItineraryItemEntity",
+    "PlannerLinkEntity",
+    "PlannerListEntity",
+    "PlannerScheduleEntity",
+    "PlannerTagEntity",
+    "PlannerTimeZoneEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerItineraryEntryEntityQuery",
+    "PlannerItineraryItemEntityQuery",
+    "PlannerLinkEntityQuery",
+    "PlannerListEntityQuery",
+    "PlannerScheduleEntityQuery",
+    "PlannerTagEntityQuery",
+    "PlannerTimeZoneEntityQuery"
+  ],
+  "enumCount": 11,
+  "extendedAction": "FindPlannerItemsIntent",
+  "existingParameterPrefix": {
+    "text": {
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      },
+      "optional": false
+    },
+    "scope": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindScope"
+          }
+        }
+      },
+      "optional": false
+    },
+    "completion": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindCompletion"
+          }
+        }
+      },
+      "optional": false
+    },
+    "archive": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindArchive"
+          }
+        }
+      },
+      "optional": false
+    },
+    "sort": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindSort"
+          }
+        }
+      },
+      "optional": false
+    },
+    "direction": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindDirection"
+          }
+        }
+      },
+      "optional": false
+    }
+  },
+  "addedParameters": {
+    "categories": {
+      "valueType": {
+        "array": {
+          "wrapper": {
+            "capabilities": 3,
+            "memberValueType": {
+              "entity": {
+                "wrapper": {
+                  "typeName": "PlannerCategoryEntity"
+                }
+              }
+            }
+          }
+        }
+      },
+      "optional": true
+    },
+    "categoryMatch": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindMatch"
+          }
+        }
+      },
+      "optional": false
+    },
+    "tags": {
+      "valueType": {
+        "array": {
+          "wrapper": {
+            "capabilities": 3,
+            "memberValueType": {
+              "entity": {
+                "wrapper": {
+                  "typeName": "PlannerTagEntity"
+                }
+              }
+            }
+          }
+        }
+      },
+      "optional": true
+    },
+    "tagMatch": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindMatch"
+          }
+        }
+      },
+      "optional": false
+    },
+    "lists": {
+      "valueType": {
+        "array": {
+          "wrapper": {
+            "capabilities": 3,
+            "memberValueType": {
+              "entity": {
+                "wrapper": {
+                  "typeName": "PlannerListEntity"
+                }
+              }
+            }
+          }
+        }
+      },
+      "optional": true
+    },
+    "listMatch": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindMatch"
+          }
+        }
+      },
+      "optional": false
+    },
+    "hasAddress": {
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 1
+          }
+        }
+      },
+      "optional": false
+    },
+    "hasLinks": {
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 1
+          }
+        }
+      },
+      "optional": false
+    },
+    "scheduling": {
+      "valueType": {
+        "linkEnumeration": {
+          "wrapper": {
+            "identifier": "PlannerItemFindScheduling"
+          }
+        }
+      },
+      "optional": false
+    }
+  },
+  "output": {
+    "array": {
+      "wrapper": {
+        "capabilities": 3,
+        "memberValueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      }
+    }
+  },
+  "newEnumCases": {
+    "PlannerItemFindMatch": [
+      "all",
+      "any"
+    ],
+    "PlannerItemFindScheduling": [
+      "all",
+      "scheduled",
+      "unscheduled"
+    ]
+  },
+  "existingParameterContractsAndOutputsPreserved": true,
+  "priorEntitiesQueriesEnumsUnchanged": true,
+  "metadataSha256": "1919078aebd7cff25bdb2d00dd78ef133cf01ec482c805906850d1ecc80d453b",
+  "systemInvocationQualified": false
+}

@@ -1,0 +1,25 @@
+{
+  "reviewKind": "primary-agent source and contract review",
+  "reviewedInputs": [
+    "Planner/AppIntents/PlannerItemFindIntent.swift",
+    "PlannerMCPTests/PlannerItemFindIntentTests.swift"
+  ],
+  "checks": [
+    "Typed saved identities map to existing Core groups; duplicate names never become identifiers.",
+    "Empty groups and Any/All preserve Core semantics; groups narrow cumulatively.",
+    "Presence and scheduling forward existing Core criteria without provider requests or new persistence.",
+    "Old six Find inputs and all existing action outputs retain their metadata contracts.",
+    "Q112 production invocation and real storage remain the test boundaries; no new hook, package or target.",
+    "No mutation in Find; export comparisons verify portable data preservation.",
+    "Current source inputs match all three compiled snapshots.",
+    "Report relative evidence links resolve."
+  ],
+  "unresolved": [
+    "Q115 duration-range input",
+    "Q117 deferred property boundary",
+    "Q118 and Q119 scheduling workflow choices",
+    "Actual system invocation and physical qualification",
+    "Signing deferred"
+  ],
+  "introducedFindings": []
+}

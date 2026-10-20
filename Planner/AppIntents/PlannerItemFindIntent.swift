@@ -84,10 +84,42 @@
     }
   }
 
+  enum PlannerItemFindMatch: String, AppEnum, CaseIterable {
+    case any, all
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Filter matching")
+    static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+      .any: .init(title: "Any selected"), .all: .init(title: "All selected"),
+    ]
+
+    var queryValue: PlannerItemQuery.IdentityGroup.Match {
+      switch self {
+      case .any: .any
+      case .all: .all
+      }
+    }
+  }
+
+  enum PlannerItemFindScheduling: String, AppEnum, CaseIterable {
+    case all, scheduled, unscheduled
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Item scheduling filter")
+    static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+      .all: .init(title: "All"), .scheduled: .init(title: "Scheduled"),
+      .unscheduled: .init(title: "Unscheduled"),
+    ]
+
+    var queryValue: PlannerItemQuery.Scheduling {
+      switch self {
+      case .all: .all
+      case .scheduled: .scheduled
+      case .unscheduled: .unscheduled
+      }
+    }
+  }
+
   struct FindPlannerItemsIntent: AppIntent {
     static let title: LocalizedStringResource = "Find Planner Items"
     static let description = IntentDescription(
-      "Find shared Items with cumulative criteria. Completion is the Item's global state.")
+      "Find Items with cumulative filters. Completion uses the Item's Done everywhere setting.")
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
     static var supportedModes: IntentModes { .background }
     static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
@@ -97,6 +129,15 @@
     @Parameter(title: "Archive", default: .all) var archive: PlannerItemFindArchive
     @Parameter(title: "Sort by", default: .title) var sort: PlannerItemFindSort
     @Parameter(title: "Direction", default: .ascending) var direction: PlannerItemFindDirection
+    @Parameter(title: "Categories") var categories: [PlannerCategoryEntity]?
+    @Parameter(title: "Category matching", default: .any) var categoryMatch: PlannerItemFindMatch
+    @Parameter(title: "Tags") var tags: [PlannerTagEntity]?
+    @Parameter(title: "Tag matching", default: .any) var tagMatch: PlannerItemFindMatch
+    @Parameter(title: "Lists") var lists: [PlannerListEntity]?
+    @Parameter(title: "List matching", default: .any) var listMatch: PlannerItemFindMatch
+    @Parameter(title: "Has address", default: false) var hasAddress: Bool
+    @Parameter(title: "Has links", default: false) var hasLinks: Bool
+    @Parameter(title: "Scheduling", default: .all) var scheduling: PlannerItemFindScheduling
     @Dependency private var plannerStore: SavedPlannerStore
     typealias PerformResult = IntentResultContainer<[PlannerItemEntity], Never, Never, Never>
 
@@ -107,6 +148,12 @@
         query: .init(
           scope: scope.queryValue, text: text, completion: completion.queryValue,
           archive: archive.queryValue,
+          categories: categories.map {
+            .init(ids: Set($0.map(\.id)), match: categoryMatch.queryValue)
+          },
+          tags: tags.map { .init(ids: Set($0.map(\.id)), match: tagMatch.queryValue) },
+          lists: lists.map { .init(ids: Set($0.map(\.id)), match: listMatch.queryValue) },
+          hasAddress: hasAddress, hasLinks: hasLinks, scheduled: scheduling.queryValue,
           sort: .init(mode: sort.queryValue, direction: direction.queryValue)))
       return .result(value: items)
     }
