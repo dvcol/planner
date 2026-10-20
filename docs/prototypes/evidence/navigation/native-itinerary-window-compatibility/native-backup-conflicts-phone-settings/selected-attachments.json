@@ -1,0 +1,74 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-conflicts-phone-settings.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "65656F53-FDA1-4060-9D85-F8DBB4917B77.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph keeps the addition and overwritten notes after relaunch_0_A2779A05-C219-4CA2-B747-6641CDECB267.png",
+      "timestamp": 1792534605.785,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "726b2612370fae1cb3fa65040954ff67dc5b35d7e0a93d9685900d670c137420"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "7A37A303-2430-4678-968A-28DE9F87749D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite retains the exact List appearance_0_7EBC8A4C-1A65-412E-84B9-2B8C188B70FF.png",
+      "timestamp": 1792534592.627,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "9b9aa70f0f53e21cb67755acf44beb6d1612fd3f1183aebd7dd3514e297bf5dd"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A0D58346-CF37-4F05-9096-C27BB1016C68.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite delivered backup filename_0_FDF0C6F2-3D39-4454-B73C-93DEFD6155A1.txt",
+      "timestamp": 1792534563.484,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "A0D58346-CF37-4F05-9096-C27BB1016C68.txt.gz",
+      "originalSha256": "edce9f60a4007262479e0c9691ff678a6b1828a735a8669cc97888aca4949340"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "677569E1-A8C7-4A1D-8E3A-80FCB2CF594D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite reviews two complete owners_0_414D5F84-FE0C-4863-A069-A1BF838E4453.png",
+      "timestamp": 1792534551.16,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "5181b43dd82ebca35787e52fff0df1184702871d8543f6549643beb1838585bc"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1C5BE00E-6647-4BCE-A0B6-EFA76EF80A8E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip delivered backup filename_0_147BAA37-DA2A-4C7D-8A94-A8B6C4DB3A50.txt",
+      "timestamp": 1792534535.934,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "1C5BE00E-6647-4BCE-A0B6-EFA76EF80A8E.txt.gz",
+      "originalSha256": "c648e38bcfdb101406f760d97a83a1a5ccb65d57554caee4d078167d1865c1c1"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A49A307B-4221-4241-B072-677569E224FE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip reviews two complete owners_0_B8B457E5-4429-4574-A304-25629B89C434.png",
+      "timestamp": 1792534525.525,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "f64d2bd88f0bb12921867a24fc705f44a20b03c717474911bcf8fd13365dbfa9"
+    }
+  ],
+  "videoPublished": false
+}

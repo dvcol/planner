@@ -1,0 +1,7 @@
+{
+  "path": "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+  "testedSha256": "dd4e5b290a3585fdde6635cc8b7cc33981e01216b42f0c7d87f52539247c750d",
+  "formattedSha256": "bbcf80e994e2d42331b1d3705df27ca4226f68c465be75b008a83f114a4a5420",
+  "onlyDifference": "One recordImport call wrapped after the opening parenthesis. All string literals and executable tokens unchanged.",
+  "exactReplacementVerified": true
+}

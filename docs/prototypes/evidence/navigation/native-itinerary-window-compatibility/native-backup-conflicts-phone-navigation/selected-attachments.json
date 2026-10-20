@@ -1,0 +1,40 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-conflicts-phone-navigation.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "11FAD859-5D76-4620-8996-2C415C8C67F6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip retains the exact List appearance_0_93686118-70F5-47AE-8CA9-1B7361AF25AD.png",
+      "timestamp": 1792534417.728,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "9b24df350b71f32e0d1b1421e8083004489a5d068ccb86974626aacdda6fb4f3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "FDD4BF0C-A02A-4B20-8B59-B303DE6B6490.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip delivered backup filename_0_C0BD3B83-47C5-44EE-91B6-3E50EE79EC83.txt",
+      "timestamp": 1792534389.1,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "FDD4BF0C-A02A-4B20-8B59-B303DE6B6490.txt.gz",
+      "originalSha256": "83bac6a7fbc6056b937f9111e64dab63a9d62420d2c08c47c8a9f3ba055caf1b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "FEAC24C1-60C9-417D-A2DB-A497302E16F7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip reviews two complete owners_0_CBDA8BCF-C8C1-4443-BCB3-47B9EC531CBB.png",
+      "timestamp": 1792534378.654,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "d3c5705bc7ac369ca7b244a963b169cd467291d97a8cf836d34c196f8cccdcdb"
+    }
+  ],
+  "videoPublished": false
+}

@@ -1,0 +1,40 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-conflicts-phone.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1FFFEE71-9287-493F-BFA9-F8E8D6D599AE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip retains the exact List appearance_0_3DC8CE5F-0175-4176-98C5-04FF9FFEE38F.png",
+      "timestamp": 1792534238.426,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "905da8f04e3bb56e04c025e7591280a3d0ebd3fd0bbd01c41e93ab1af211b86d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2068B472-F22D-447E-B46E-B3798A8029FD.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip delivered backup filename_0_6591F10D-C3C5-4F8C-A1D1-988E1BBF69FA.txt",
+      "timestamp": 1792534209.444,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "2068B472-F22D-447E-B46E-B3798A8029FD.txt.gz",
+      "originalSha256": "fa64744d151d33f301826045df64069debf93cd0b6e5ec2d766bf599ddbacf76"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "FD3B2E33-21E8-4091-893A-CB395822DD1C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip reviews two complete owners_0_26ED425B-B94E-47F3-8459-66CFC5564F51.png",
+      "timestamp": 1792534199.188,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "9c16020a7cc3693aba27a6813aa7a72dd74db4170f0eb692d1e3be7395aa35b3"
+    }
+  ],
+  "videoPublished": false
+}

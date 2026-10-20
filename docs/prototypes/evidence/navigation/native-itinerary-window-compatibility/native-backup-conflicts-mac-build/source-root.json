@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "9af4136a2da389ec3d3a29240112c23834901541",
+  "overlays": [
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+    "docs/fixtures/native-conflicting-backup.json"
+  ]
+}

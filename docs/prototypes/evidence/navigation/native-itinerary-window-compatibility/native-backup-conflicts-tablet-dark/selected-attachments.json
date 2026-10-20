@@ -1,0 +1,74 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-conflicts-tablet-dark.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8CFD661A-FC7A-43CF-9F87-FE362F0516C2.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph keeps the addition and overwritten notes after relaunch_0_381E8548-0A36-4656-94CC-90C0D5A74048.png",
+      "timestamp": 1792534823.77,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "66bb727f1d2592ea0879c636cc75d584942eef25f098cc60ce97a4e41a254699"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "08AC14D9-C65C-4E38-85C4-BAD3BF3FADEB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite retains the exact List appearance_0_57AA5721-A2F1-4440-A14B-ACF5F2113119.png",
+      "timestamp": 1792534810.806,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "d1560008fcf7aabcb3b580ba372ee3e08b8b0529ab26d074365cb50597ca0a32"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "78082476-9E6B-45DA-AA27-3B3D60BC7819.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite delivered backup filename_0_32676181-94E2-43C7-98CF-AD389E0A8540.txt",
+      "timestamp": 1792534782.371,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "78082476-9E6B-45DA-AA27-3B3D60BC7819.txt.gz",
+      "originalSha256": "1ef9991cf2b744ad883fa4ab6453954208b05b2dd9179f8bb2d1c4ff8094efae"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "D2D12CDF-D5C4-4CB1-A97F-B7FAB1D8F663.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Overwrite reviews two complete owners_0_F13F100B-6165-4A26-B075-6E6087C51CCD.png",
+      "timestamp": 1792534770.286,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "d4bab2f18e0b98ea966cd056f6ded71561b0f791fa0a70b9ec96b449cdf49120"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "1D6A14D1-3B0C-4DE8-BA38-57BE71522E86.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip delivered backup filename_0_345F69DC-B85F-465E-8997-32F8463869A6.txt",
+      "timestamp": 1792534736.773,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "retainedFileName": "1D6A14D1-3B0C-4DE8-BA38-57BE71522E86.txt.gz",
+      "originalSha256": "ddfaa0ce6b8e8d94eda9b6a8d14087c4aba634089eebf6892b1ba18275fea4ae"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "BFBB63F8-A32D-4307-96E9-FA60E1485DF4.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Conflicting graph Skip reviews two complete owners_0_330A2D96-EBA7-4254-BD97-7FA6DF20BAB7.png",
+      "timestamp": 1792534724.882,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState()",
+      "originalSha256": "6f4c07f4358157a418454211163add998ed2db4eefca869a19af05b51a2299ff"
+    }
+  ],
+  "videoPublished": false
+}

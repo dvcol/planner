@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerMarkdownlintConfig.json",
+        "docs/open-decisions.md",
+        "docs/prototypes/native-backup-import.md",
+        "docs/prototypes/native-backup-full-graph-file.md",
+        "docs/prototypes/native-backup-graph-conflicts.md"
+      ],
+      "exit": 0,
+      "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/open-decisions.md docs/prototypes/native-backup-import.md docs/prototypes/native-backup-full-graph-file.md docs/prototypes/native-backup-graph-conflicts.md\nLinting: 4 files\nSummary: 0 issues in 0 files\nDone in 285ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "sourceEpochs": {
+    "native-backup-conflicts-phone-settings": {
+      "inputCount": 1043,
+      "differences": [
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+      ]
+    },
+    "native-backup-conflicts-tablet-dark": {
+      "inputCount": 1043,
+      "differences": []
+    },
+    "native-backup-conflicts-mac-build": {
+      "inputCount": 1043,
+      "differences": []
+    }
+  },
+  "phoneToFinalExactSingleCallLineWrapVerified": true,
+  "priorTestAndHelperTextUnchanged": true,
+  "productionInputsUnchanged": true,
+  "finalUIInvocations": 2,
+  "finalFailures": 0,
+  "finalSkips": 0,
+  "earlierControllerFailures": 2,
+  "originalFinalCapturesIndividuallyInspected": 8,
+  "macCompilerDiagnostics": [],
+  "macUIRuntimeFunctions": 0,
+  "newCoreOrHTTPInvocations": 0,
+  "tabletAppearance": {
+    "identifier": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "original": "light",
+    "tested": "dark",
+    "restored": "light",
+    "restoreExitCode": 0
+  },
+  "review": {
+    "standards": "Existing native/file boundaries, unchanged production and helpers, descriptive names, no additional target/hook. Actual file comparisons are part of qualification.",
+    "specification": "Both complete delivered graphs preserve source identities, bindings, independent contexts and unrelated tables; Skip keeps current owners and Overwrite applies the two reviewed owners. No wider import-family/recovery or signing acceptance is inferred."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "testPassed": false,
+  "assertion": "SavedBackupImportJourneyTests.swift:688, settings.waitForExistence",
+  "cause": "The new journey calls the Settings helper while a compact List content page is pushed. The original capture shows Back; the Settings control belongs to the catalog.",
+  "correction": "The new caller switches to Items before opening Settings. Existing shared helpers and production views are unchanged.",
+  "deliveredSkipGraphVerified": true,
+  "overwriteReached": false,
+  "postAssertionDiagnostic": "Xcode later reports simctl utility unavailable. This follows the actual failed assertion and does not explain it."
+}

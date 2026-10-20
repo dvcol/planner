@@ -1,0 +1,9 @@
+{
+  "testPassed": false,
+  "assertion": "SavedBackupImportJourneyTests.swift:689, settings.waitForExistence",
+  "cause": "The new caller switched to the Items catalog, but the production Settings action is in the Lists catalog toolbar. No Settings control was found.",
+  "correction": "Keep Skip/Overwrite reviews and their delivered exports in Settings. Inspect the overwritten List afterward. Both delivered-file comparisons still check the full scoped state.",
+  "deliveredSkipGraphVerified": true,
+  "overwriteReached": false,
+  "productionChanged": false
+}

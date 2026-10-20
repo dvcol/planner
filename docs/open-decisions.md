@@ -10,6 +10,8 @@ The [unresolved-reference follow-up](prototypes/native-backup-unresolved-referen
 
 The [full-graph native file follow-up](prototypes/native-backup-full-graph-file.md) passes empty import/relaunch/scoped state and verifies actual delivered exports against every fixture field on both mobile layouts. The shared exporter regression also passes. Reinspection of both original dark iPad List captures confirms that Estimate and Remaining titles are visible; the earlier missing-title finding was an inspection error. No pending choice is inferred from these checks.
 
+The [nonempty graph follow-up](prototypes/native-backup-graph-conflicts.md) qualifies native Skip/Overwrite for shared Item content and List-local completion/history, plus an independent new Item. Phone and dark iPad pass, and their actual delivered files match both complete expected graphs. Two earlier controller failures remain failed. No production change or pending feature approval is inferred.
+
 These choices remain unanswered. Recommendations are proposals, not accepted defaults.
 
 | Question | Decision still needed | Recommendation and consequence | Concrete review |

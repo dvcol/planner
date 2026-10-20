@@ -1,0 +1,33 @@
+{
+  "sourceFixtureSha256": "87a37603988bed16f3a0b8db31a3d17c8e2983daece73f5c63758ac155e7e6bf",
+  "baseFixtureSha256": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+  "comparison": "All typed fields and complete record tables; duplicate counts, ranks and nested sequence order preserved; top-level table order ignored",
+  "allowedMigration": "formatVersion 1 to 2 and null manualEstimate on List/Itinerary",
+  "uiFunctionPassed": false,
+  "bundlePassed": false,
+  "results": {
+    "Skip": {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-20T22-13-02Z.json",
+      "bytes": 12995,
+      "sha256": "165c2c033bacedddc38288029faa5cc24682cdfe4789ccbd2db91c2c687df9b1",
+      "modifiedAfterTestStarted": true,
+      "recordCounts": {
+        "completionChanges": 1,
+        "contextAliases": 1,
+        "deletionMarkers": 1,
+        "expandedCompletions": 2,
+        "itineraryEntries": 2,
+        "labelAssociations": 4,
+        "memberships": 3,
+        "ownedLinks": 2,
+        "restorationFamilies": 0,
+        "schedules": 2,
+        "sources": 8
+      },
+      "differences": []
+    },
+    "Overwrite": {
+      "notProduced": true
+    }
+  }
+}

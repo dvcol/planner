@@ -75,3 +75,7 @@ Both affected native journeys pass per simulator, with two functions on each dev
 The exact 11-byte fixture and both staged copies have the same hash. Original native error, valid retry and retained-Tag captures were inspected separately. Strict affected Swift/Markdown lint and Mac app/test-host compilation pass. The five production files remain unchanged; zero Mac runtime functions and no new Core/HTTP test runs are credited. Other structural/dependency/version failures, full-graph restoration, stale review and recovery failures retain their gates.
 
 [Malformed-input execution evidence](evidence/navigation/native-backup-malformed/execution.json) retains the fixture bytes/provenance, completed results, commands, original captures and frozen source/product hashes.
+
+## Local graph follow-up, 21 October 2026
+
+The [empty full-graph file qualification](native-backup-full-graph-file.md) verifies actual delivered content, relaunch and independent completion on phone and dark iPad. The [nonempty graph qualification](native-backup-graph-conflicts.md) adds two conflicting owners and a new Item: Skip retains current complete owners, while explicit Overwrite applies the incoming shared content and List-local state/history. Both delivered graphs match every expected field and record collection. These reports retain original attempts and limits. Native restoration families, stale review, persistence/recovery failures, actual Mac interaction and signed/physical gates remain open.
