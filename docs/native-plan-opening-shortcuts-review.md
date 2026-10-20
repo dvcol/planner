@@ -1,6 +1,6 @@
 # Opening plans and App Shortcut discovery
 
-Status: Q122 and Q123 are pending. Existing ordinary data actions remain available. This review grants no implementation or additional test-boundary approval.
+Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. The concrete single-window handoff and any added test boundary still require review.
 
 ## Context and starting state
 
@@ -46,7 +46,7 @@ Recommendation: A. This adds discovery metadata for existing actions, with no ne
 
 ## Definition of ready
 
-Q122 and Q123 can be answered independently. Do not derive either answer from earlier API parity or native component preferences. Signing and account setup stay deferred. The existing Q112 production Intent/EntityQuery boundary is approved; any additional controller or scene test boundary requires its own concrete review before tests are written.
+Both choices are explicitly accepted. Implement the four-shortcut provider independently while preparing the concrete single-window handoff for review. Signing and account setup stay deferred. The existing Q112 production Intent/EntityQuery boundary is approved; any additional controller or scene test boundary requires its own concrete review before tests are written.
 
 ## Required tests and definition of done
 

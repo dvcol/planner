@@ -14,10 +14,10 @@ Modern cross-platform [Color resolution](https://developer.apple.com/documentati
 
 The [read-only SDK observation](prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-appearance-sdk-facts/agent-sdk-observation.json) retains the probe, exact commands and reported exits for macOS 27 and iOS 27. The agent's original tool output reported nonfatal sandbox messages and exit 0 for both. Root inspected the retained source without rerunning it. This is declaration evidence only, not picker behavior or runtime color conversion. No account or signing settings changed.
 
-## Open decision
+## Accepted decision
 
 - A: A native Picker with a small named set of familiar symbols and Default. Preserve any existing custom icon until explicitly changed or cleared. This is the recommended minimal native workflow.
 - B: Add a searchable symbol-picker library, with dependency and compatibility review.
 - C: Implement color editing now and defer icon editing, leaving that feature open.
 
-Q121 remains pending. No appearance implementation or additional test boundary has been assumed. Any implementation should use the already approved native UI/Core boundaries to verify Save/Cancel, exact unchanged values, live references, clearing and relaunch. Creating a label must not rewrite its referring owners or their completion.
+Q121 A was accepted on 21 October 2026. Use the small native symbol picker, preserving custom values until explicitly changed. No additional test boundary is introduced. Any implementation should use the already approved native UI/Core boundaries to verify Save/Cancel, exact unchanged values, live references, clearing and relaunch. Creating a label must not rewrite its referring owners or their completion.

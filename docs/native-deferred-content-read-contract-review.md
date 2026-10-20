@@ -1,6 +1,6 @@
 # Native saved-content property review
 
-Status: Q117 awaits the user's choice. This proposal does not authorize implementation or tests at the additional property boundary by itself.
+Status: Q117 A accepted on 21 October 2026. Deferred properties and the production getter test boundary below are approved.
 
 ## Context, starting state and goal
 
@@ -36,7 +36,7 @@ Recommendation: A, following the accepted preference for first-party components 
 
 ## Definition of ready
 
-Confirm the choice and the production property-getter test boundary below before writing its tests. Q112's AppDependencyManager, real disposable Core storage and existing app-hosted target remain the environment. No new target/package, test-only constructor, injected property resolver, private helper test or runtime replacement is proposed.
+The user approved the choice and production property-getter test boundary in Q117 A. Q112's AppDependencyManager, real disposable Core storage and existing app-hosted target remain the environment. No new target/package, test-only constructor, injected property resolver, private helper test or runtime replacement is proposed.
 
 Apple documents asynchronous deferred properties in [Explore new advances in App Intents, 24:48](https://developer.apple.com/videos/play/wwdc2025/275/?time=1488) and [DeferredProperty](https://developer.apple.com/documentation/appintents/deferredproperty%28title%3A%29). Public installed-SDK probes compile optional String async throwing getters that resolve an AppDependency under Swift 6 strict concurrency for macOS 27 and iOS 27 Simulator. ComputedProperty rejects async getters. These facts establish a supported declaration, not actual system invocation, caching, request ordering or snapshot guarantees.
 

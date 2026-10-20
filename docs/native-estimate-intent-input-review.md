@@ -1,6 +1,6 @@
 # Estimate input in Shortcuts
 
-Status: Q115 is awaiting the user's presentation choice. No duration-input implementation is approved by this document alone.
+Status: Q115 A accepted on 21 October 2026. Quantity, Unit and Additional minutes are approved, using the existing production Intent test boundary.
 
 ## Context and settled behavior
 
@@ -28,6 +28,6 @@ Recommendation: A, matching all existing units while preserving exact mixed dura
 
 ## Definition of ready and required validation
 
-Wait for Q115 before implementing the selected input presentation. Q33's ordinary edit authority, changed-field hash guard and Q112 A's production Intent invocation boundary already apply. No additional test hook, target or direct private-helper test boundary is proposed.
+Q115 A authorizes the selected input presentation. Q33's ordinary edit authority, changed-field hash guard and Q112 A's production Intent invocation boundary already apply. No additional test hook, target or direct private-helper test boundary is proposed.
 
 After the choice, test literal mixed durations and every fixed unit through the actual production action with disposable real storage. Qualify the upper bound, checked conversion failures, nonpositive input, explicit clearing, unrelated owner fields/references/completion/bookings, derived container estimates, cancellation and truthful recovery outcomes. Use current Core summaries for reads and distinguish uncertainty. Verify metadata and affected platform compilation separately from actual system invocation. None of these checks may claim physical performance or system-picker proof from a standalone type probe.

@@ -1,6 +1,6 @@
 # Confirmed bulk completion in Shortcuts
 
-Status: Q120 pending. Q7's system-confirmation policy and existing Core bulk semantics remain accepted. This proposal adds no implementation or new test boundary by itself.
+Status: Q120 A accepted on 21 October 2026. The three actions and production store preparation/submission test boundary below are approved; actual system confirmation remains a separate gate.
 
 ## Context, starting state and goal
 
@@ -50,7 +50,7 @@ Recommendation: A for the accepted quality priority. This does not replace actua
 
 ## Definition of ready
 
-Q7 already authorizes native confirmation with full scope/count. Q112 already authorizes production Intent invocation and EntityQuery tests. Q120 must settle the additional direct store boundary or select B before its tests are written. The TDD skill says, "No test is written at an unconfirmed seam." No new package, target, schema, Core/MCP wire contract, signed identity or device installation is proposed.
+Q7 already authorizes native confirmation with full scope/count. Q112 already authorizes production Intent invocation and EntityQuery tests. Q120 A approves the additional direct store boundary. The TDD skill says, "No test is written at an unconfirmed seam." No new package, target, schema, Core/MCP wire contract, signed identity or device installation is proposed.
 
 ## Required tests and definition of done
 

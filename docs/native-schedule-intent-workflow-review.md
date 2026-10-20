@@ -1,6 +1,6 @@
 # Native Schedule workflow review
 
-Status: Q118 and Q119 awaiting human decisions. Existing temporal policies and Q112 remain accepted.
+Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. Concrete occurrence and full form-edit inputs remain the next decisions.
 
 ## Context and goal
 
@@ -36,6 +36,6 @@ Q112 names Intent invocation and EntityQuery interfaces. It does not name Dynami
 
 ## Readiness and required evidence
 
-Do not implement either unresolved workflow on an assumed answer. The already accepted zone-only command can progress through Q112 independently.
+Implement the approved four-action layout and timed-only choices at the accepted boundaries. Settle the concrete occurrence and full form-edit inputs before implementing those inputs. Existing temporal policies remain unchanged.
 
 After approval, implement vertical failing/passing slices at the selected production interfaces. Test exact IDs/forms, invalid/incomplete civil input, applicable temporal rules, source state preservation, cancellation, unavailable storage and real recovery failures. Inspect actual parameters/conditional metadata, compare existing contracts and compile the same inputs for Mac, Simulator and unsigned device products. Do not convert compiler facts into actual system-picker qualification.
