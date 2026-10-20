@@ -27,6 +27,16 @@ The user accepted A for all eight choices below on 21 October 2026. Their implem
 | Q122 | Open List/Itinerary window and draft behavior | A: Reuse one foreground main window, preserving Save, Discard and Keep editing. Other windows retain their selection; the concrete handoff follows the choice. | [Opening saved plans](native-plan-opening-shortcuts-review.md#q122-opening-a-saved-plan) |
 | Q123 | Initial discoverable App Shortcut set | A: Create Item, Find Items, Find Lists and Find Itineraries. Existing ordinary actions remain available; the initial provider does not depend on unfinished Open actions. | [App Shortcut discovery](native-plan-opening-shortcuts-review.md#q123-the-initial-discoverable-app-shortcuts) |
 
+## Next frontier after the approvals
+
+The three follow-up questions are open; none blocks independent accepted work.
+
+| Question | Concrete decision | Recommendation and impact | Review |
+| --- | --- | --- | --- |
+| Q124 | Civil inputs for the four approved Schedule creation actions | A: native date/dateTime fields, a separate planning zone, and explicit Earlier/Later choices for repeated timed endpoints. Reject normalization and unsupported seconds. | [Civil input contract](native-schedule-civil-intent-contract-review.md#q124-concrete-creation-inputs) |
+| Q125 | Full Schedule replacement action layout | A: two focused Timed/All Day replacement actions. Retain Schedule/owner identity; omitted End clears it. | [Replacement actions](native-schedule-civil-intent-contract-review.md#q125-full-schedule-replacement) |
+| Q126 | Single-window handoff and added test boundary | A: one production coordinator with exclusive claims, truthful pending/busy outcomes and existing draft protection. Direct production-interface tests supplement actual window/system journeys. | [Directed handoff](native-plan-opening-handoff-contract-review.md) |
+
 ## Remaining gates
 
 - Implement Q115 and Q117–Q123 under their accepted A choices. Settle the next concrete Schedule input and single-window handoff contracts before their dependent implementation. Missing native features are not signing failures.
