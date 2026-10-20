@@ -476,6 +476,70 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         application, name: "Full graph Itinerary keeps its independent three appearances")
     }
 
+    func testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner full graph backup.json", application: application)
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+
+      for mode in ["Skip", "Overwrite"] {
+        selectBackup("Planner conflicting graph backup.json", application: application)
+        if mode == "Overwrite" {
+          application.plannerElement("saved.import.mode").activateForPlannerJourney()
+          application.plannerElement("Overwrite").activateForPlannerJourney()
+        }
+        let additions = application.staticTexts["saved.import.summary.additions"]
+        revealImportElement(additions, application: application)
+        XCTAssertEqual(additions.label, mode == "Skip" ? "Additions, 1" : "Additions, 0")
+        let impactIdentifier = mode == "Skip" ? "conflicts" : "replacements"
+        let impact = application.staticTexts["saved.import.summary." + impactIdentifier]
+        revealImportElement(impact, application: application)
+        XCTAssertEqual(impact.label, mode == "Skip" ? "Skipped conflicts, 2" : "Replacements, 2")
+        recordImport(application, name: "Conflicting graph \(mode) reviews two complete owners")
+        application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+        XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+        application.plannerElement("saved.import.close").activateForPlannerJourney()
+        let filename = exportBackup(application)
+        let attachment = XCTAttachment(string: filename)
+        attachment.name = "Conflicting graph \(mode) delivered backup filename"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+      }
+
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(
+        application.savedPlannerListRow("Revised Tokyo Food"), application: application)
+      let filters = application.plannerElement("saved.list.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: filters)
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000401"
+        ).waitForPlannerValue("To do"))
+      XCTAssertTrue(application.staticTexts["1 of 2 items finished"].waitForExistence(timeout: 10))
+      recordImport(
+        application, name: "Conflicting graph Overwrite retains the exact List appearance")
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(
+        application.plannerElement("saved.item.00000000-0000-4000-8000-000000000103")
+          .waitForExistence(timeout: 15))
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 10))
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Incoming museum notes"].waitForExistence(timeout: 10))
+      recordImport(
+        application,
+        name: "Conflicting graph keeps the addition and overwritten notes after relaunch")
+    }
+
     private func openImportedCatalogRow(_ row: XCUIElement, application: XCUIApplication) {
       if !row.waitForExistence(timeout: 2) || !row.isHittable {
         let sidebar = application.plannerElement("Show Sidebar")
