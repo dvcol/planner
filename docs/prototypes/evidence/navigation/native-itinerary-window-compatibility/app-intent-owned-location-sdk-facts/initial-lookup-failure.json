@@ -1,0 +1,7 @@
+{
+  "stage": "Default toolchain iphoneos SDK lookup",
+  "error": "SDK iphoneos cannot be located",
+  "cause": "DEVELOPER_DIR was omitted from the SDK-path lookup",
+  "systemPickerCredit": false,
+  "deviceCompileCredit": false
+}

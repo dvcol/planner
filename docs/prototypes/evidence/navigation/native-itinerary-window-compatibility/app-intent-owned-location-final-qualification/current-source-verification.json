@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "verifiedInputCount": 1007,
+  "unchangedPriorInputCount": 1005,
+  "addedInputs": [
+    "Planner/AppIntents/PlannerOwnedLocationIntents.swift",
+    "PlannerMCPTests/PlannerOwnedLocationIntentTests.swift"
+  ]
+}

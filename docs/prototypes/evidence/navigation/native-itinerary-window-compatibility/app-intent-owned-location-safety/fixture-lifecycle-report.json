@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "qualificationPassed": false,
+  "failure": "SDK constructor trapped while constructing an invalid test descriptor, before Intent invocation",
+  "closedHostIdentifiers": [
+    37937,
+    38447
+  ],
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/AF14BDBA-7532-4340-B0B6-DDDAAAD46EC3",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/EDC1AB2D-C2D0-49F9-9CB4-A931B2AABCB8",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C8FDEC92-0911-453A-9A32-1EE0EAA094C3",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/ACC22F1C-64BF-443D-872A-3E9E3058B5D8",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/DA8BF4B4-20CF-476F-9E29-9B4F119171B9",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3A9B180F-403E-4E6C-989A-97A1821DE911",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7709D58B-A4AE-472D-8507-85673EA931AF",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4089FDFB-66B3-4451-B3D9-2A9E1F7131F2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/0B7A8EFB-AF03-44E9-8462-6B9D3D7A1524",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7967CC36-74FE-41DE-9055-8F448DC08E8F",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/409699E1-AF72-4F43-819D-3C304CBDA18C",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/F78F9B73-725E-45A5-8072-C223EF78A310",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/14C20E38-1BB6-449C-A135-6CC6EC68DB3D",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7C04B8B0-0EB3-4673-959F-16EF7C7FADEF",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/80A4D3C7-87B6-44C6-B970-157449FB5D19",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/B0E76B4B-832A-4295-91F4-E57262E29CDA",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/9CF014F4-328D-45FA-982A-58A719B511AA",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3DE41082-5ABE-467E-AE0C-66B7375559EC",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/DD9BC174-DD23-4098-AA4E-42EAC0849A0A"
+  ],
+  "sourceLogSha256": "3bcf3b52569ad609de111aa2732091f2decbbc90bd0bfef669093e3bc7089d0e"
+}

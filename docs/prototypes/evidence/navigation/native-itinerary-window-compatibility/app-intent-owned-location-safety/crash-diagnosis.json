@@ -1,0 +1,88 @@
+{
+  "pid": 37937,
+  "exception": {
+    "codes": "0x0000000000000001, 0x0000000233185d58",
+    "rawCodes": [
+      1,
+      9447169368
+    ],
+    "type": "EXC_BREAKPOINT",
+    "signal": "SIGTRAP"
+  },
+  "termination": {
+    "flags": 0,
+    "code": 5,
+    "namespace": "SIGNAL",
+    "indicator": "Trace/BPT trap: 5",
+    "byProc": "exc handler",
+    "byPid": 37937
+  },
+  "frames": [
+    {
+      "imageOffset": 11608,
+      "imageIndex": 39
+    },
+    {
+      "imageOffset": 15644,
+      "imageIndex": 39
+    },
+    {
+      "imageOffset": 12421208,
+      "sourceLine": 210,
+      "sourceFile": "PlannerOwnedLocationIntentTests.swift",
+      "symbol": "PlannerOwnedLocationIntentTests.testInvalidNativePointsRejectWithoutChangingEitherOwner()",
+      "imageIndex": 35,
+      "symbolLocation": 244
+    },
+    {
+      "imageOffset": 8721913,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 175425,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 175425,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 175425,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 175425,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 175425,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 2710593,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 175425,
+      "imageIndex": 35
+    },
+    {
+      "imageOffset": 56641,
+      "symbol": "completeTaskWithClosure(swift::AsyncContext*, swift::SwiftError*)",
+      "symbolLocation": 1,
+      "imageIndex": 40
+    }
+  ],
+  "topImage": {
+    "source": "P",
+    "arch": "arm64e",
+    "base": 9447157760,
+    "CFBundleShortVersionString": "1.0",
+    "CFBundleIdentifier": "com.apple.GeoToolbox",
+    "size": 33952,
+    "uuid": "059705ce-9e12-3a77-a336-73356e09dadf",
+    "path": "/System/Library/Frameworks/GeoToolbox.framework/Versions/A/GeoToolbox",
+    "name": "GeoToolbox",
+    "CFBundleVersion": "1"
+  }
+}

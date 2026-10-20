@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "expectedFailures": 0,
+      "failedTests": 1,
+      "passedTests": 13,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 1,
+  "finishTime": 1792506866.38,
+  "passedTests": 13,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1792506807.299,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "Crash: Planner",
+      "targetName": "PlannerMCPTests",
+      "testIdentifier": 4,
+      "testIdentifierString": "PlannerOwnedLocationIntentTests/testInvalidNativePointsRejectWithoutChangingEitherOwner()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/PlannerOwnedLocationIntentTests/testInvalidNativePointsRejectWithoutChangingEitherOwner",
+      "testName": "testInvalidNativePointsRejectWithoutChangingEitherOwner()"
+    }
+  ],
+  "title": "Test - Planner",
+  "topInsights": [
+    {
+      "category": "Longest Test Runs",
+      "impact": "35% of duration",
+      "text": "1 longest test run with outlier durations exceeding 2.94s (three standard deviations)"
+    }
+  ],
+  "totalTestCount": 14
+}

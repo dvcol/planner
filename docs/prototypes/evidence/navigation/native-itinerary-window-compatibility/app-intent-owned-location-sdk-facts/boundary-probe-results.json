@@ -1,0 +1,70 @@
+{
+  "compileCommand": [
+    "xcrun",
+    "swiftc",
+    "-swift-version",
+    "6",
+    "-warnings-as-errors",
+    "-target",
+    "arm64-apple-macos26.0",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+    "-module-cache-path",
+    "/private/tmp/PlannerOwnedPinSDKProbes/RecordedCache-macosx",
+    "/private/tmp/PlannerPlaceDescriptorBoundaryProbe.swift",
+    "-o",
+    "/private/tmp/PlannerPlaceDescriptorBoundaryProbe"
+  ],
+  "compileExitCode": 0,
+  "cases": [
+    {
+      "case": "empty",
+      "exitCode": -5,
+      "stdout": "",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    },
+    {
+      "case": "address",
+      "exitCode": 0,
+      "stdout": "1\n",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    },
+    {
+      "case": "latitude",
+      "exitCode": -5,
+      "stdout": "",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    },
+    {
+      "case": "longitude",
+      "exitCode": -5,
+      "stdout": "",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    },
+    {
+      "case": "nan",
+      "exitCode": -5,
+      "stdout": "",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    },
+    {
+      "case": "infinity",
+      "exitCode": -5,
+      "stdout": "",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    },
+    {
+      "case": "conflicting",
+      "exitCode": -5,
+      "stdout": "",
+      "stderr": "",
+      "plannerInvocationCredit": false
+    }
+  ]
+}

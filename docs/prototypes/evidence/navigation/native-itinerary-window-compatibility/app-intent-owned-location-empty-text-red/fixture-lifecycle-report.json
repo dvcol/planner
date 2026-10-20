@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "qualificationPassed": false,
+  "expectedFailure": "Both explicit empty-text edits retained an empty owned location",
+  "closedHostIdentifiers": [
+    33363
+  ],
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/766F304A-9666-422C-BB92-EEAA600E1825"
+  ],
+  "sourceLogSha256": "68afd39d12c94e407608143a9430bd796b12f9c09fd61a923e832015dc8d9298"
+}
