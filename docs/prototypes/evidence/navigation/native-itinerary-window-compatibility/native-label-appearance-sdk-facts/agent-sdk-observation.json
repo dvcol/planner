@@ -1,0 +1,39 @@
+{
+  "evidenceOrigin": "Read-only SDK fact agent original exec session 7253; reported completion collected with write_stdin. Root inspected the retained probe source; no root rerun.",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "commands": [
+    [
+      "/usr/bin/xcrun",
+      "--sdk",
+      "macosx",
+      "swiftc",
+      "-typecheck",
+      "-target",
+      "arm64-apple-macos27.0",
+      "-module-cache-path",
+      "/private/tmp/planner-label-appearance-sdk.DNSMwQ/MacModuleCache",
+      "/private/tmp/planner-label-appearance-sdk.DNSMwQ/ColorDeclarations.swift"
+    ],
+    [
+      "/usr/bin/xcrun",
+      "--sdk",
+      "iphoneos",
+      "swiftc",
+      "-typecheck",
+      "-target",
+      "arm64-apple-ios27.0",
+      "-module-cache-path",
+      "/private/tmp/planner-label-appearance-sdk.DNSMwQ/iOSModuleCache",
+      "/private/tmp/planner-label-appearance-sdk.DNSMwQ/ColorDeclarations.swift"
+    ]
+  ],
+  "reportedExitCodes": [
+    0,
+    0
+  ],
+  "reportedOutput": "sandbox-exec: sandbox_apply: Operation not permitted\nsandbox-exec: sandbox_apply: Operation not permitted\nsandbox-exec: sandbox_apply: Operation not permitted\nMAC_EXIT_CODE=0\nIOS_EXIT_CODE=0\n",
+  "probeSha256": "601e763ca3744b1a851fb479d83a2efd51e33f1c4a58fa9edb944aa81bca8459",
+  "runtimeCredit": false,
+  "pickerUIInvoked": false,
+  "signingChanged": false
+}
