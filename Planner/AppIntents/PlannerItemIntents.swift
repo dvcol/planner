@@ -196,6 +196,63 @@
     }
   }
 
+  struct EditPlannerItemIntent: AppIntent {
+    static let title: LocalizedStringResource = "Edit Item"
+    static let description = IntentDescription(
+      "Change the title or notes. Leave a field unset to keep it; empty notes clears them.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Title") var title: String?
+    @Parameter(title: "Notes") var notes: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      guard title != nil || notes != nil else {
+        throw PlannerIntentFailure(message: "Choose a title or notes to change.")
+      }
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let source: PlannerItemSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .item, id: item.id)))
+      {
+      case .source(.item(let current)): source = current
+      case .failed(let reason): throw PlannerIntentFailure(message: reason.message)
+      default: throw PlannerIntentFailure(message: "Planner could not read this Item.")
+      }
+      let titleChange = title.map(PlannerFieldChange.set) ?? .unchanged
+      let notesChange: PlannerFieldChange<String>
+      if let notes {
+        notesChange = notes.isEmpty ? .clear : .set(notes)
+      } else {
+        notesChange = .unchanged
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .editItem(
+          sourceId: source.source.id, changes: .init(title: titleChange, notes: notesChange),
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Updated the Item."
+        case .incomplete:
+          dialog =
+            "The Item changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   struct SetPlannerItemArchiveIntent: AppIntent {
     static let title: LocalizedStringResource = "Set Item archive state"
     static let description = IntentDescription(
