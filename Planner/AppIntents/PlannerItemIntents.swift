@@ -38,6 +38,7 @@
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
     @Dependency var plannerStore: SavedPlannerStore
     @MainActor func entities(for identifiers: [UUID]) async throws -> [PlannerItemEntity] {
+      try Task.checkCancellation()
       let (planner, session) = try await plannerStore.appIntentContext()
       var seenIdentifiers: Set<UUID> = []
       var entities: [PlannerItemEntity] = []
@@ -55,23 +56,22 @@
       return entities
     }
     @MainActor func entities(matching string: String) async throws -> [PlannerItemEntity] {
-      try await loadItems(matching: string)
+      try await loadItems(query: .init(text: string, completion: .all, archive: .all))
     }
     @MainActor func suggestedEntities() async throws -> [PlannerItemEntity] {
-      try await loadItems(matching: "")
+      try await loadItems(query: .init(completion: .all, archive: .all))
     }
 
-    @MainActor private func loadItems(matching text: String) async throws -> [PlannerItemEntity] {
+    @MainActor func loadItems(query: PlannerItemQuery) async throws -> [PlannerItemEntity] {
+      try Task.checkCancellation()
       let (planner, session) = try await plannerStore.appIntentContext()
       let snapshot: PlannerQuerySnapshot
-      switch await planner.query(
-        .init(
-          session: session,
-          request: .items(.init(text: text, completion: .all, archive: .all))))
+      switch await planner.query(.init(session: session, request: .items(query)))
       {
       case .snapshot(let current): snapshot = current
       case .failed(let reason): throw PlannerIntentFailure(message: reason.message)
       }
+      try Task.checkCancellation()
       var entities: [PlannerItemEntity] = []
       var offset: Int64 = 0
       while offset < snapshot.matchingCount {
