@@ -48,6 +48,12 @@
     @Dependency var plannerStore: SavedPlannerStore
     @IntentParameterDependency<EditPlannerItemLinkIntent>(\.$item) var itemEditIntent
     @IntentParameterDependency<EditPlannerItineraryLinkIntent>(\.$itinerary) var itineraryEditIntent
+    @IntentParameterDependency<RemovePlannerItemLinkIntent>(\.$item) var itemRemovalIntent
+    @IntentParameterDependency<RemovePlannerItineraryLinkIntent>(\.$itinerary)
+    var itineraryRemovalIntent
+    @IntentParameterDependency<ReorderPlannerItemLinkIntent>(\.$item) var itemReorderIntent
+    @IntentParameterDependency<ReorderPlannerItineraryLinkIntent>(\.$itinerary)
+    var itineraryReorderIntent
 
     @MainActor func entities(for identifiers: [String]) async throws -> [PlannerLinkEntity] {
       let (planner, session) = try await plannerStore.appIntentContext()
@@ -81,6 +87,14 @@
       if let item = itemEditIntent?.item {
         owner = .init(kind: .item, id: item.id)
       } else if let itinerary = itineraryEditIntent?.itinerary {
+        owner = .init(kind: .itinerary, id: itinerary.id)
+      } else if let item = itemRemovalIntent?.item {
+        owner = .init(kind: .item, id: item.id)
+      } else if let itinerary = itineraryRemovalIntent?.itinerary {
+        owner = .init(kind: .itinerary, id: itinerary.id)
+      } else if let item = itemReorderIntent?.item {
+        owner = .init(kind: .item, id: item.id)
+      } else if let itinerary = itineraryReorderIntent?.itinerary {
         owner = .init(kind: .itinerary, id: itinerary.id)
       } else {
         return []
@@ -145,6 +159,106 @@
     }
   }
 
+  enum PlannerLinkReorderPosition: String, AppEnum, CaseIterable {
+    case first, last, before, after
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Link position")
+    static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+      .first: .init(title: "Beginning"), .last: .init(title: "End"),
+      .before: .init(title: "Before link"), .after: .init(title: "After link"),
+    ]
+  }
+
+  struct ReorderPlannerItemLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Reorder Item link"
+    static let description = IntentDescription(
+      "Move this exact bookmark in its Item's saved Link order. Before/After need a relative Link in the same Item; Beginning/End ignore it."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Link", query: PlannerLinkEntityQuery()) var link: PlannerLinkEntity
+    @Parameter(title: "Position") var position: PlannerLinkReorderPosition
+    @Parameter(title: "Relative link", query: PlannerLinkEntityQuery())
+    var relativeLink: PlannerLinkEntity?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let dialog = try await changePlannerLink(
+        owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
+        change: .reorder(position: position, relativeLinkIdentifier: relativeLink?.id),
+        store: plannerStore)
+      return .result(dialog: dialog)
+    }
+  }
+
+  struct ReorderPlannerItineraryLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Reorder Itinerary link"
+    static let description = IntentDescription(
+      "Move this exact bookmark in the Itinerary's own Links. Before/After need a relative Link in this plan; Beginning/End ignore it."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Parameter(title: "Link", query: PlannerLinkEntityQuery()) var link: PlannerLinkEntity
+    @Parameter(title: "Position") var position: PlannerLinkReorderPosition
+    @Parameter(title: "Relative link", query: PlannerLinkEntityQuery())
+    var relativeLink: PlannerLinkEntity?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let dialog = try await changePlannerLink(
+        owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
+        change: .reorder(position: position, relativeLinkIdentifier: relativeLink?.id),
+        store: plannerStore)
+      return .result(dialog: dialog)
+    }
+  }
+
+  struct RemovePlannerItemLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Remove Item link"
+    static let description = IntentDescription(
+      "Remove this exact bookmark while retaining its Item, other Links and planning references.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Link", query: PlannerLinkEntityQuery()) var link: PlannerLinkEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let dialog = try await changePlannerLink(
+        owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
+        change: .remove, store: plannerStore)
+      return .result(dialog: dialog)
+    }
+  }
+
+  struct RemovePlannerItineraryLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Remove Itinerary link"
+    static let description = IntentDescription(
+      "Remove this exact bookmark from the Itinerary's own Links. Keep the plan, referenced Items and other bookmarks."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Parameter(title: "Link", query: PlannerLinkEntityQuery()) var link: PlannerLinkEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let dialog = try await changePlannerLink(
+        owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
+        change: .remove, store: plannerStore)
+      return .result(dialog: dialog)
+    }
+  }
+
   struct EditPlannerItemLinkIntent: AppIntent {
     static let title: LocalizedStringResource = "Edit Item link"
     static let description = IntentDescription(
@@ -161,9 +275,9 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      let dialog = try await editPlannerLink(
+      let dialog = try await changePlannerLink(
         owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
-        originalURL: originalURL, label: label, store: plannerStore)
+        change: .edit(originalURL: originalURL, label: label), store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -184,9 +298,9 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      let dialog = try await editPlannerLink(
+      let dialog = try await changePlannerLink(
         owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
-        originalURL: originalURL, label: label, store: plannerStore)
+        change: .edit(originalURL: originalURL, label: label), store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -306,15 +420,15 @@
   }
 
   @MainActor
-  private func editPlannerLink(
-    owner: PlannerEntityReference, linkIdentifier: String, originalURL: String?, label: String?,
+  private func changePlannerLink(
+    owner: PlannerEntityReference, linkIdentifier: String, change: PlannerLinkChange,
     store: SavedPlannerStore
   ) async throws -> IntentDialog {
     guard let identity = PlannerLinkIdentity(linkIdentifier), identity.owner == owner else {
       throw PlannerLinkIntentFailure(
         message: "Choose a Link saved in the selected Item or Itinerary.")
     }
-    guard originalURL != nil || label != nil else {
+    if case .edit(let originalURL, let label) = change, originalURL == nil, label == nil {
       throw PlannerLinkIntentFailure(message: "Choose a URL or label to change.")
     }
     let (planner, session) = try await store.appIntentContext()
@@ -325,15 +439,47 @@
         throw PlannerLinkIntentFailure(
           message: "This Link is no longer saved in the selected Item or Itinerary.")
       }
-      let currentLink = links[currentIndex]
-      var updatedLabel = currentLink.label
-      if let label { updatedLabel = label.isEmpty ? nil : label }
       var updatedLinks = links.map {
         PlannerLinkInput(linkId: $0.linkId, originalUrl: $0.originalUrl, label: $0.label)
       }
-      updatedLinks[currentIndex] = .init(
-        linkId: currentLink.linkId, originalUrl: originalURL ?? currentLink.originalUrl,
-        label: updatedLabel)
+      switch change {
+      case .edit(let originalURL, let label):
+        let currentLink = links[currentIndex]
+        var updatedLabel = currentLink.label
+        if let label { updatedLabel = label.isEmpty ? nil : label }
+        updatedLinks[currentIndex] = .init(
+          linkId: currentLink.linkId, originalUrl: originalURL ?? currentLink.originalUrl,
+          label: updatedLabel)
+      case .remove:
+        updatedLinks.remove(at: currentIndex)
+      case .reorder(let position, let relativeLinkIdentifier):
+        let movingLink = updatedLinks.remove(at: currentIndex)
+        let insertionIndex: Int
+        switch position {
+        case .first: insertionIndex = 0
+        case .last: insertionIndex = updatedLinks.count
+        case .before, .after:
+          guard let relativeLinkIdentifier,
+            let anchor = PlannerLinkIdentity(relativeLinkIdentifier), anchor.owner == owner,
+            anchor.linkIdentifier != identity.linkIdentifier
+          else {
+            throw PlannerLinkIntentFailure(
+              message: "Choose a different relative Link saved in the same Item or Itinerary.")
+          }
+          guard
+            let anchorIndex = updatedLinks.firstIndex(where: { $0.linkId == anchor.linkIdentifier })
+          else {
+            throw PlannerLinkIntentFailure(
+              message: "The relative Link is no longer saved in this Item or Itinerary.")
+          }
+          if position == .after {
+            insertionIndex = anchorIndex + 1
+          } else {
+            insertionIndex = anchorIndex
+          }
+        }
+        updatedLinks.insert(movingLink, at: insertionIndex)
+      }
       return updatedLinks
     }
     let command: PlannerCommand
@@ -357,12 +503,35 @@
         message:
           "Planner could not verify this change. Open Planner to review recovery before making another change."
       )
-    case .applied(_, let recovery):
-      switch recovery {
-      case .complete: return "Updated the Link."
-      case .incomplete:
+    case .applied(_, .complete): return change.completedDialog
+    case .applied(_, .incomplete): return change.incompleteDialog
+    }
+  }
+
+  private enum PlannerLinkChange {
+    case edit(originalURL: String?, label: String?)
+    case remove
+    case reorder(position: PlannerLinkReorderPosition, relativeLinkIdentifier: String?)
+
+    var completedDialog: IntentDialog {
+      switch self {
+      case .edit: return "Updated the Link."
+      case .remove: return "Removed the Link."
+      case .reorder: return "Updated the Link order."
+      }
+    }
+
+    var incompleteDialog: IntentDialog {
+      switch self {
+      case .edit:
         return
           "The Link changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+      case .remove:
+        return
+          "The Link was removed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+      case .reorder:
+        return
+          "The Link order changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
       }
     }
   }
