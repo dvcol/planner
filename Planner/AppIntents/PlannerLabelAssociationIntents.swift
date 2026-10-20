@@ -3,6 +3,82 @@
   import Foundation
   import PlannerCore
 
+  struct GetPlannerItemCategoriesIntent: AppIntent {
+    static let title: LocalizedStringResource = "Get Item Categories"
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<[PlannerCategoryEntity], Never, Never, Never>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let labels = try await readPlannerAssignedLabels(
+        owner: .init(kind: .item, id: item.id), store: plannerStore)
+      return .result(
+        value: labels.filter { $0.reference.kind == .category }.map {
+          PlannerCategoryEntity(id: $0.reference.id, name: $0.name)
+        })
+    }
+  }
+
+  struct GetPlannerItemTagsIntent: AppIntent {
+    static let title: LocalizedStringResource = "Get Item Tags"
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<[PlannerTagEntity], Never, Never, Never>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let labels = try await readPlannerAssignedLabels(
+        owner: .init(kind: .item, id: item.id), store: plannerStore)
+      return .result(
+        value: labels.filter { $0.reference.kind == .tag }.map {
+          PlannerTagEntity(id: $0.reference.id, name: $0.name)
+        })
+    }
+  }
+
+  struct GetPlannerItineraryCategoriesIntent: AppIntent {
+    static let title: LocalizedStringResource = "Get Itinerary Categories"
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<[PlannerCategoryEntity], Never, Never, Never>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let labels = try await readPlannerAssignedLabels(
+        owner: .init(kind: .itinerary, id: itinerary.id), store: plannerStore)
+      return .result(
+        value: labels.filter { $0.reference.kind == .category }.map {
+          PlannerCategoryEntity(id: $0.reference.id, name: $0.name)
+        })
+    }
+  }
+
+  struct GetPlannerItineraryTagsIntent: AppIntent {
+    static let title: LocalizedStringResource = "Get Itinerary Tags"
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<[PlannerTagEntity], Never, Never, Never>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let labels = try await readPlannerAssignedLabels(
+        owner: .init(kind: .itinerary, id: itinerary.id), store: plannerStore)
+      return .result(
+        value: labels.filter { $0.reference.kind == .tag }.map {
+          PlannerTagEntity(id: $0.reference.id, name: $0.name)
+        })
+    }
+  }
+
   struct SetPlannerItemCategoryIntent: AppIntent {
     static let title: LocalizedStringResource = "Set Item Category"
     static let description = IntentDescription(
@@ -86,6 +162,22 @@
         owner: .init(kind: .itinerary, id: itinerary.id),
         label: .init(kind: .tag, id: tag.id), assigned: assigned, store: plannerStore)
       return .result(dialog: dialog)
+    }
+  }
+
+  @MainActor
+  private func readPlannerAssignedLabels(
+    owner: PlannerEntityReference, store: SavedPlannerStore
+  ) async throws -> [PlannerLabelRead] {
+    let (planner, session) = try await store.appIntentContext()
+    try Task.checkCancellation()
+    switch await planner.read(session: session, request: .source(owner)) {
+    case .source(.item(let source)) where owner.kind == .item: return source.labels
+    case .source(.itinerary(let source)) where owner.kind == .itinerary: return source.labels
+    case .failed(let reason): throw PlannerLabelAssociationIntentFailure(message: reason.message)
+    default:
+      throw PlannerLabelAssociationIntentFailure(
+        message: "Planner could not read this label's owner.")
     }
   }
 

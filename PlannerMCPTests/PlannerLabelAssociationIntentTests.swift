@@ -375,7 +375,7 @@ final class PlannerLabelAssociationIntentTests: XCTestCase {
   }
 }
 
-private struct LabelAssociationIntentFixture {
+struct LabelAssociationIntentFixture {
   let configuration: PlannerStorageConfiguration
   let store: SavedPlannerStore
   let planner: PlannerCore.Planner
@@ -395,7 +395,7 @@ private struct LabelAssociationIntentFixture {
 }
 
 @MainActor
-private func makeLabelAssociationIntentFixture() async throws -> LabelAssociationIntentFixture {
+func makeLabelAssociationIntentFixture() async throws -> LabelAssociationIntentFixture {
   let (_, configuration, store) = try makePlannerIntentStorage()
   AppDependencyManager.shared.add(dependency: store)
   let planner = PlannerCore.Planner(configuration: configuration)
