@@ -9,8 +9,7 @@ import XCTest
 @MainActor
 final class PlannerItineraryIntentTests: XCTestCase {
   func testCreateItineraryReturnsSavedIdentityAndPreservesItsContentAfterReopen() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItineraryIntent()
     creation.title = "Tokyo Weekend"
@@ -40,8 +39,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testIdentityLookupDeduplicatesRequestsAndReturnsLiveValuesInRequestedOrder() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItineraryIntent()
     creation.title = "Original itinerary"
@@ -81,8 +79,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testGetItineraryReturnsLiveValuesAndRejectsMissingIdentity() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItineraryIntent()
     creation.title = "Original itinerary"
@@ -116,8 +113,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testItineraryChoicesPreserveCanonicalSearchOrderArchivedSourcesAndEveryPage() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     var identifiers: [UUID] = []
@@ -155,8 +151,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testInvalidAndPrecancelledCreationLeaveNoSavedItineraries() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItineraryIntent()
     creation.title = "   "
@@ -192,8 +187,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testDeletedItineraryStaysMissingWithoutAffectingTheSurvivingSource() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItineraryIntent()
     creation.title = "Remove this route"
@@ -241,8 +235,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testSameTitleItinerariesKeepDistinctIdentitiesAndCanonicalTieOrder() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItineraryIntent()
     creation.title = "Same route"
@@ -275,8 +268,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
   }
 
   func testUnavailableStorageThrowsForChoicesIdentityGetAndCreation() async throws {
-    let (directory, _, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (directory, _, store) = try makePlannerIntentStorage()
     let obstruction = Data("The store parent is a file.".utf8)
     let parent = directory.appending(path: "store")
     try obstruction.write(to: parent)
@@ -320,8 +312,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     testAppliedItineraryCreationWithIncompleteRecoveryRetainsItsIdentityAndBlocksAnotherCreation()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     await store.open()
     XCTAssertTrue(store.isReady)
@@ -384,18 +375,4 @@ final class PlannerItineraryIntentTests: XCTestCase {
     XCTAssertFalse(store.isSaving)
   }
 
-  private func makeStorage() throws -> (
-    directory: URL, configuration: PlannerStorageConfiguration, store: SavedPlannerStore
-  ) {
-    let directory = FileManager.default.temporaryDirectory
-      .appending(
-        path: "PlannerItineraryIntentTests/\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appending(path: "store/Planner.sqlite"),
-      controlURL: directory.appending(path: "control/writer"),
-      recoveryDirectoryURL: directory.appending(path: "recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
-    return (directory, configuration, SavedPlannerStore(configuration: configuration))
-  }
 }

@@ -1,0 +1,8 @@
+{
+  "markers": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "diagnosticsAbsent": true
+}

@@ -1,0 +1,15 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "935d2803bed66e64efb5f336e9691e79b28c6326",
+  "overlays": [
+    "PlannerMCPTests/PlannerIntentFixture.swift",
+    "PlannerMCPTests/PlannerItemIntentTests.swift",
+    "PlannerMCPTests/PlannerItineraryEditingIntentTests.swift",
+    "PlannerMCPTests/PlannerItineraryIntentTests.swift",
+    "PlannerMCPTests/PlannerItineraryOrganizationIntentTests.swift",
+    "PlannerMCPTests/PlannerListCompletionIntentTests.swift",
+    "PlannerMCPTests/PlannerListEditingIntentTests.swift",
+    "PlannerMCPTests/PlannerListIntentTests.swift",
+    "PlannerMCPTests/PlannerListOrganizationIntentTests.swift"
+  ]
+}

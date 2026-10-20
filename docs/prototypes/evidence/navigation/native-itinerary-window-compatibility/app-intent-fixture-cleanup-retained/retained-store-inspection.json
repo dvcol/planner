@@ -1,0 +1,10 @@
+{
+  "recordedHostIdentifiers": [
+    91176
+  ],
+  "hostsExited": true,
+  "accessibleDatabaseOwners": [],
+  "sqliteStructuralCheck": "ok",
+  "fixtureDirectory": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerListCompletionIntentTests/D28D1F66-7DBB-444C-8CC3-2166035E39D3",
+  "cleanupAfterHostExit": true
+}

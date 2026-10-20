@@ -1,0 +1,52 @@
+{
+  "evidenceKind": "controlled CLI filesystem/process safety checks",
+  "appIntentExecutionCredit": false,
+  "passedChecks": 9,
+  "checks": [
+    {
+      "name": "diagnostic-log",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "failed-run",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "live-recorded-host",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "another-open-database-owner",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "unowned-path",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "mismatched-ownership",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "symlink-path",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "validate-all-before-removing-any",
+      "passed": true,
+      "expectedRejection": true
+    },
+    {
+      "name": "closed-owned-fixture",
+      "passed": true,
+      "expectedRejection": false
+    }
+  ]
+}

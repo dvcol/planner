@@ -11,13 +11,12 @@ final class PlannerListIntentTests: XCTestCase {
   func testAppliedAddWithIncompleteRecoveryRetainsItsMembershipAndBlocksAnotherDestination()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Museum"
     let item = try await creation.callAsFunction(donate: false)
-    var listCreation = CreatePlannerListIntent()
+    let listCreation = CreatePlannerListIntent()
     listCreation.name = "Destination"
     let destination = try await listCreation.callAsFunction(donate: false)
     listCreation.name = "Other"
@@ -30,7 +29,7 @@ final class PlannerListIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var adding = AddPlannerItemToListIntent()
+    let adding = AddPlannerItemToListIntent()
     adding.item = item
     adding.list = destination
     let _: Void = try await adding.callAsFunction(donate: false)
@@ -82,13 +81,12 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testDeletedAndMissingListOrItemIdentitiesCannotBeReadOrAddedBackImplicitly() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Museum"
     let item = try await creation.callAsFunction(donate: false)
-    var listCreation = CreatePlannerListIntent()
+    let listCreation = CreatePlannerListIntent()
     listCreation.name = "Deleted destination"
     let deletedList = try await listCreation.callAsFunction(donate: false)
     listCreation.name = "Surviving destination"
@@ -107,7 +105,7 @@ final class PlannerListIntentTests: XCTestCase {
       else { throw CancellationError() }
     }
     func requireRejected(item: PlannerItemEntity, list: PlannerListEntity) async {
-      var adding = AddPlannerItemToListIntent()
+      let adding = AddPlannerItemToListIntent()
       adding.item = item
       adding.list = list
       do {
@@ -122,7 +120,7 @@ final class PlannerListIntentTests: XCTestCase {
     query.plannerStore = store
     let absent = try await query.entities(for: [deletedList.id])
     XCTAssertTrue(absent.isEmpty)
-    var reading = GetPlannerListIntent()
+    let reading = GetPlannerListIntent()
     reading.list = deletedList
     do {
       _ = try await reading.callAsFunction(donate: false)
@@ -155,10 +153,9 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testInvalidAndPrecancelledListCreationLeaveNoSavedLists() async throws {
-    let (directory, _, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, _, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "   "
     do {
       _ = try await creation.callAsFunction(donate: false)
@@ -184,15 +181,14 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testRepeatedAddIntentKeepsAnExistingNonlastMembershipOrderAndLocalCompletion() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Museum"
     let museum = try await creation.callAsFunction(donate: false)
     creation.title = "Lunch"
     let lunch = try await creation.callAsFunction(donate: false)
-    var listCreation = CreatePlannerListIntent()
+    let listCreation = CreatePlannerListIntent()
     listCreation.name = "Route"
     let list = try await listCreation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
@@ -217,7 +213,7 @@ final class PlannerListIntentTests: XCTestCase {
             done: true))
       ).outcome
     else { return XCTFail("The first relationship must have its own local Done state.") }
-    var adding = AddPlannerItemToListIntent()
+    let adding = AddPlannerItemToListIntent()
     adding.item = museum
     adding.list = list
     let _: Void = try await adding.callAsFunction(donate: false)
@@ -240,8 +236,7 @@ final class PlannerListIntentTests: XCTestCase {
   func testAppliedListCreationWithIncompleteRecoveryRetainsItsIdentityAndBlocksAnotherCreation()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     await store.open()
     XCTAssertTrue(store.isReady)
@@ -253,7 +248,7 @@ final class PlannerListIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Recovery food"
     creation.notes = "Keep the applied List"
     let applied = try await creation.callAsFunction(donate: false)
@@ -303,14 +298,13 @@ final class PlannerListIntentTests: XCTestCase {
   func testAddItemIntentCreatesALiveReferenceAndPreservesIndependentCompletionOnRepeatedAdd()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Museum"
     creation.notes = "Shared museum notes"
     let item = try await creation.callAsFunction(donate: false)
-    var listCreation = CreatePlannerListIntent()
+    let listCreation = CreatePlannerListIntent()
     listCreation.name = "Original List"
     let originalList = try await listCreation.callAsFunction(donate: false)
     listCreation.name = "Destination List"
@@ -335,7 +329,7 @@ final class PlannerListIntentTests: XCTestCase {
       listId: originalList.id, membershipId: originalIdentifier)
     _ = try await save(.setCompletion(scope: .appearance(originalAppearance), done: true))
     _ = try await save(.setCompletion(scope: .globalItem(itemId: item.id), done: true))
-    var adding = AddPlannerItemToListIntent()
+    let adding = AddPlannerItemToListIntent()
     adding.item = item
     adding.list = .init(id: destination.id, name: "Obsolete cached name", archived: true)
     let _: Void = try await adding.callAsFunction(donate: false)
@@ -371,7 +365,7 @@ final class PlannerListIntentTests: XCTestCase {
     XCTAssertTrue(retainedOriginal.effectiveDone)
     _ = try await save(.setCompletion(scope: .appearance(destinationAppearance), done: true))
     let _: Void = try await adding.callAsFunction(donate: false)
-    var editing = EditPlannerItemIntent()
+    let editing = EditPlannerItemIntent()
     editing.item = item
     editing.notes = "Updated shared notes"
     let _: Void = try await editing.callAsFunction(donate: false)
@@ -397,8 +391,7 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testUnavailableStorageThrowsForListChoicesIdentityAndCreation() async throws {
-    let (directory, _, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (directory, _, store) = try makePlannerIntentStorage()
     try Data("The store parent is a file.".utf8).write(to: directory.appending(path: "store"))
     AppDependencyManager.shared.add(dependency: store)
     let query = PlannerListEntityQuery()
@@ -414,7 +407,7 @@ final class PlannerListIntentTests: XCTestCase {
     await requireUnavailable { try await query.suggestedEntities() }
     await requireUnavailable { try await query.entities(matching: "Food") }
     await requireUnavailable { try await query.entities(for: [UUID()]) }
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Cannot save here"
     do {
       _ = try await creation.callAsFunction(donate: false)
@@ -428,10 +421,9 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testGetListIntentReturnsLiveValuesAndRejectsMissingIdentity() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Original food"
     let cached = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
@@ -447,7 +439,7 @@ final class PlannerListIntentTests: XCTestCase {
             expectedFieldHashes: original.fieldHashes))
       ).outcome
     else { return XCTFail("The real List must change before resolving its cached Intent entity.") }
-    var reading = GetPlannerListIntent()
+    let reading = GetPlannerListIntent()
     reading.list = cached
     let current = try await reading.callAsFunction(donate: false)
     XCTAssertEqual(current.id, cached.id)
@@ -463,8 +455,7 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testListChoicesPreserveCanonicalSearchOrderArchivedSourcesAndEveryPage() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     var identifiers: [UUID] = []
@@ -506,10 +497,9 @@ final class PlannerListIntentTests: XCTestCase {
   func testListEntityResolutionUsesCurrentNameAndArchiveWithoutInventingMissingIdentities()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Tokyo Food"
     let cached = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
@@ -540,10 +530,9 @@ final class PlannerListIntentTests: XCTestCase {
   }
 
   func testCreateListIntentReturnsTheSavedIdentityAndPreservesItsContentAfterReopen() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerListIntent()
+    let creation = CreatePlannerListIntent()
     creation.name = "Tokyo Food"
     creation.notes = "Keep these places together"
     let list = try await creation.callAsFunction(donate: false)
@@ -568,17 +557,4 @@ final class PlannerListIntentTests: XCTestCase {
     XCTAssertFalse(store.isSaving)
   }
 
-  private func makeStorage() throws -> (
-    directory: URL, configuration: PlannerStorageConfiguration, store: SavedPlannerStore
-  ) {
-    let directory = FileManager.default.temporaryDirectory
-      .appending(path: "PlannerListIntentTests/\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appending(path: "store/Planner.sqlite"),
-      controlURL: directory.appending(path: "control/writer"),
-      recoveryDirectoryURL: directory.appending(path: "recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
-    return (directory, configuration, SavedPlannerStore(configuration: configuration))
-  }
 }

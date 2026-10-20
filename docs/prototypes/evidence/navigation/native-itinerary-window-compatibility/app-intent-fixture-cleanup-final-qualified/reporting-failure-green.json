@@ -1,0 +1,7 @@
+{
+  "evidenceKind": "controlled CLI reporting failure",
+  "appIntentExecutionCredit": false,
+  "exitCode": 1,
+  "fixturePreserved": true,
+  "reportCreated": false
+}

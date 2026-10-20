@@ -11,10 +11,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testAppliedEditWithIncompleteRecoveryRetainsItsContentAndBlocksTheNextEdit()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Recovery museum"
     creation.notes = "Original notes"
     let item = try await creation.callAsFunction(donate: false)
@@ -26,7 +25,7 @@ final class PlannerItemIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var editing = EditPlannerItemIntent()
+    let editing = EditPlannerItemIntent()
     editing.item = item
     editing.title = "Updated museum"
     editing.notes = "Reviewed notes"
@@ -77,10 +76,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testEditIntentRejectsInvalidRequestsAndMissingOrDeletedItemsWithoutPartialChanges()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Original museum"
     creation.notes = "Keep the original notes"
     let item = try await creation.callAsFunction(donate: false)
@@ -91,7 +89,7 @@ final class PlannerItemIntentTests: XCTestCase {
         session: session, request: .source(source))
     else { return XCTFail("The original Item must be readable before invalid requests.") }
     for (title, notes) in [(nil, nil), ("   ", "Must not apply")] as [(String?, String?)] {
-      var editing = EditPlannerItemIntent()
+      let editing = EditPlannerItemIntent()
       editing.item = item
       editing.title = title
       editing.notes = notes
@@ -120,7 +118,7 @@ final class PlannerItemIntentTests: XCTestCase {
     else { return XCTFail("Native confirmed deletion must remove the original Item.") }
     let missing = PlannerItemEntity(id: UUID(), title: "Missing", done: false, archived: false)
     for unavailable in [item, missing] {
-      var editing = EditPlannerItemIntent()
+      let editing = EditPlannerItemIntent()
       editing.item = unavailable
       editing.notes = "Cannot recreate this Item"
       do {
@@ -141,14 +139,13 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testEditIntentCanRenameAndExplicitlyClearNotesTogether() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Original museum"
     creation.notes = "Remove these notes"
     let item = try await creation.callAsFunction(donate: false)
-    var editing = EditPlannerItemIntent()
+    let editing = EditPlannerItemIntent()
     editing.item = item
     editing.title = "Renamed museum"
     editing.notes = ""
@@ -164,14 +161,13 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testTitleOnlyEditIntentKeepsOmittedNotesAfterReopen() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Original museum"
     creation.notes = "Keep these notes"
     let item = try await creation.callAsFunction(donate: false)
-    var editing = EditPlannerItemIntent()
+    let editing = EditPlannerItemIntent()
     editing.item = item
     editing.title = "Revised museum"
     let _: Void = try await editing.callAsFunction(donate: false)
@@ -188,8 +184,7 @@ final class PlannerItemIntentTests: XCTestCase {
   func testNotesEditIntentPreservesLiveContentIdentityAndIndependentCompletionAfterReopen()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else {
@@ -231,7 +226,7 @@ final class PlannerItemIntentTests: XCTestCase {
       case .source(.item(let before)) = await planner.read(
         session: session, request: .source(source))
     else { return XCTFail("The rich Item must be readable before editing.") }
-    var editing = EditPlannerItemIntent()
+    let editing = EditPlannerItemIntent()
     editing.item = PlannerItemEntity(
       id: source.id, title: "Cached obsolete title", done: false, archived: false)
     editing.notes = "Friday booking"
@@ -267,10 +262,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testAppliedArchiveWithIncompleteRecoveryBlocksUnarchiveUntilNativeRecoveryRetry()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Recovery museum"
     creation.notes = "Keep the locally archived Item"
     let item = try await creation.callAsFunction(donate: false)
@@ -282,7 +276,7 @@ final class PlannerItemIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var archive = SetPlannerItemArchiveIntent()
+    let archive = SetPlannerItemArchiveIntent()
     archive.item = item
     archive.archived = true
     let _: Void = try await archive.callAsFunction(donate: false)
@@ -337,10 +331,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testArchiveIntentRejectsMissingAndDeletedItemsWithoutResurrectingTheirIdentities()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Deleted museum"
     let deletedItem = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
@@ -358,7 +351,7 @@ final class PlannerItemIntentTests: XCTestCase {
       id: UUID(), title: "Missing museum", done: false, archived: false)
     for item in [deletedItem, missingItem] {
       for archived in [true, false] {
-        var archive = SetPlannerItemArchiveIntent()
+        let archive = SetPlannerItemArchiveIntent()
         archive.item = item
         archive.archived = archived
         do {
@@ -389,10 +382,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testArchiveIntentRetainsItemIdentityContentAndIndependentListCompletionAfterReopen()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Museum"
     creation.notes = "Keep the shared notes"
     let item = try await creation.callAsFunction(donate: false)
@@ -420,7 +412,7 @@ final class PlannerItemIntentTests: XCTestCase {
       appearances.append(.listMembership(listId: list.id, membershipId: identifier))
     }
     _ = try await save(.setCompletion(scope: .appearance(appearances[0]), done: true))
-    var archive = SetPlannerItemArchiveIntent()
+    let archive = SetPlannerItemArchiveIntent()
     archive.item = item
     for archived in [true, false] {
       archive.archived = archived
@@ -449,10 +441,9 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testCreationCancelledBeforeInvocationLeavesNoSavedItem() async throws {
-    let fixture = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let fixture = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: fixture.store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Cancelled before invocation"
     let request = Task { try await creation.callAsFunction(donate: false) }
     request.cancel()
@@ -462,7 +453,7 @@ final class PlannerItemIntentTests: XCTestCase {
     } catch {
       XCTAssertFalse(error.localizedDescription.isEmpty)
     }
-    var query = PlannerItemEntityQuery()
+    let query = PlannerItemEntityQuery()
     query.plannerStore = fixture.store
     let choices = try await query.suggestedEntities()
     XCTAssertTrue(choices.isEmpty)
@@ -471,10 +462,9 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testInvalidCreationAndMissingItemReadFailWithoutCreatingData() async throws {
-    let fixture = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let fixture = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: fixture.store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "   "
     do {
       _ = try await creation.callAsFunction(donate: false)
@@ -482,11 +472,11 @@ final class PlannerItemIntentTests: XCTestCase {
     } catch {
       XCTAssertFalse(error.localizedDescription.isEmpty)
     }
-    var query = PlannerItemEntityQuery()
+    let query = PlannerItemEntityQuery()
     query.plannerStore = fixture.store
     let suggestions = try await query.suggestedEntities()
     XCTAssertTrue(suggestions.isEmpty)
-    var reading = GetPlannerItemIntent()
+    let reading = GetPlannerItemIntent()
     reading.item = PlannerItemEntity(id: UUID(), title: "Missing", done: false, archived: false)
     do {
       _ = try await reading.callAsFunction(donate: false)
@@ -498,12 +488,11 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testUnavailableStorageThrowsInsteadOfReturningEmptyChoicesOrClaimingCreation() async throws {
-    let fixture = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let fixture = try makePlannerIntentStorage()
     try Data("The store parent is a file, not a directory.".utf8).write(
       to: fixture.directory.appending(path: "store"))
     AppDependencyManager.shared.add(dependency: fixture.store)
-    var query = PlannerItemEntityQuery()
+    let query = PlannerItemEntityQuery()
     query.plannerStore = fixture.store
     do {
       _ = try await query.suggestedEntities()
@@ -511,7 +500,7 @@ final class PlannerItemIntentTests: XCTestCase {
     } catch {
       XCTAssertFalse(error.localizedDescription.isEmpty)
     }
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Cannot save here"
     do {
       _ = try await creation.callAsFunction(donate: false)
@@ -525,8 +514,7 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testEntityChoicesReadBeyondOnePageInCanonicalOrder() async throws {
-    let fixture = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let fixture = try makePlannerIntentStorage()
     let planner = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     var identities: [UUID] = []
@@ -542,7 +530,7 @@ final class PlannerItemIntentTests: XCTestCase {
       else { return XCTFail("Every real fixture Item must save successfully.") }
       identities.append(item.id)
     }
-    var query = PlannerItemEntityQuery()
+    let query = PlannerItemEntityQuery()
     query.plannerStore = fixture.store
     let choices = try await query.entities(matching: "VISIT")
     XCTAssertEqual(choices.map(\.id), identities)
@@ -554,8 +542,7 @@ final class PlannerItemIntentTests: XCTestCase {
   func testAppliedCreationWithIncompleteRecoveryReturnsItsItemAndBlocksFurtherIntentChanges()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     await store.open()
     XCTAssertTrue(store.isReady)
@@ -567,7 +554,7 @@ final class PlannerItemIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try? obstruction.restore()
     }
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Recovery museum"
     let applied = try await creation.callAsFunction(donate: false)
     XCTAssertEqual(applied.title, "Recovery museum")
@@ -604,12 +591,11 @@ final class PlannerItemIntentTests: XCTestCase {
   }
 
   func testConcurrentCreateIntentsKeepBothRequestsAndAwaitTheSameStoreOpening() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var firstCreation = CreatePlannerItemIntent()
+    let firstCreation = CreatePlannerItemIntent()
     firstCreation.title = "Train tickets"
-    var secondCreation = CreatePlannerItemIntent()
+    let secondCreation = CreatePlannerItemIntent()
     secondCreation.title = "Hotel check-in"
     func invoke(_ intent: CreatePlannerItemIntent) async -> Result<PlannerItemEntity, any Error> {
       do { return .success(try await intent.callAsFunction(donate: false)) } catch {
@@ -647,10 +633,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testGlobalCompletionIntentPreservesIndependentListFlagsWhenTheItemIsReopened()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Museum"
     creation.notes = "Keep the shared notes"
     let item = try await creation.callAsFunction(donate: false)
@@ -677,7 +662,7 @@ final class PlannerItemIntentTests: XCTestCase {
       appearances.append(.listMembership(listId: list.id, membershipId: membershipIdentifier))
     }
     _ = try await save(.setCompletion(scope: .appearance(appearances[0]), done: true))
-    var completion = SetPlannerItemCompletionIntent()
+    let completion = SetPlannerItemCompletionIntent()
     completion.item = item
     completion.done = true
     let _: Void = try await completion.callAsFunction(donate: false)
@@ -708,10 +693,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testEntityQueriesResolveCurrentValuesAndCanonicalSearchWithoutInventingMissingItems()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var creation = CreatePlannerItemIntent()
+    let creation = CreatePlannerItemIntent()
     creation.title = "Train tickets"
     creation.notes = "Collect at the station"
     let cached = try await creation.callAsFunction(donate: false)
@@ -740,7 +724,7 @@ final class PlannerItemIntentTests: XCTestCase {
       )
       .outcome
     else { return XCTFail("Real Core edits must prepare the changed source.") }
-    var query = PlannerItemEntityQuery()
+    let query = PlannerItemEntityQuery()
     query.plannerStore = store
     let resolved = try await query.entities(for: [cached.id, cached.id, UUID()])
     XCTAssertEqual(resolved.map(\.id), [cached.id])
@@ -753,7 +737,7 @@ final class PlannerItemIntentTests: XCTestCase {
     XCTAssertTrue(missing.isEmpty)
     let suggestions = try await query.suggestedEntities()
     XCTAssertEqual(suggestions.map(\.id), [cached.id])
-    var reading = GetPlannerItemIntent()
+    let reading = GetPlannerItemIntent()
     reading.item = cached
     let refreshed = try await reading.callAsFunction(donate: false)
     XCTAssertEqual(refreshed.id, cached.id)
@@ -765,10 +749,9 @@ final class PlannerItemIntentTests: XCTestCase {
   func testCreateIntentReturnsTheSingleSavedIdentityAndPreservesContentAndRecoveryAfterReopen()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
-    var intent = CreatePlannerItemIntent()
+    let intent = CreatePlannerItemIntent()
     intent.title = "Train tickets"
     intent.notes = "Collect at the station"
     let created = try await intent.callAsFunction(donate: false)
@@ -794,19 +777,6 @@ final class PlannerItemIntentTests: XCTestCase {
     XCTAssertNotNil(checkpoint)
     XCTAssertTrue(incomplete.isEmpty)
     XCTAssertFalse(blocked)
-  }
-  private func makeStorage() throws -> (
-    directory: URL, configuration: PlannerStorageConfiguration, store: SavedPlannerStore
-  ) {
-    let directory = FileManager.default.temporaryDirectory
-      .appending(path: "PlannerItemIntentTests/\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appending(path: "store/Planner.sqlite"),
-      controlURL: directory.appending(path: "control/writer"),
-      recoveryDirectoryURL: directory.appending(path: "recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
-    return (directory, configuration, SavedPlannerStore(configuration: configuration))
   }
 
 }

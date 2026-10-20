@@ -11,8 +11,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
   func testRepeatedItemAddsKeepLiveContentGlobalPrecedenceAndIndependentLocalStatesAfterReopen()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let creation = CreatePlannerItemIntent()
     creation.title = "Hotel"
@@ -103,8 +102,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
   func testRepeatedListAddsPreserveRouteOrderAndLiveChildrenWithoutInheritingStandaloneCompletion()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let itemCreation = CreatePlannerItemIntent()
     itemCreation.title = "Museum"
@@ -229,8 +227,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
   func testMissingWrongKindAndDeletedSourcesOrDestinationsCannotCreateOrResurrectEntries()
     async throws
   {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let itemCreation = CreatePlannerItemIntent()
     itemCreation.title = "Museum"
@@ -326,8 +323,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
   }
 
   func testPrecancelledItemAndListAdditionsLeaveTheRouteAndSourcesUnchanged() async throws {
-    let (directory, configuration, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (_, configuration, store) = try makePlannerIntentStorage()
     AppDependencyManager.shared.add(dependency: store)
     let itemCreation = CreatePlannerItemIntent()
     itemCreation.title = "Museum"
@@ -394,8 +390,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     async throws
   {
     for addsList in [false, true] {
-      let (directory, configuration, store) = try makeStorage()
-      defer { try? FileManager.default.removeItem(at: directory) }
+      let (_, configuration, store) = try makePlannerIntentStorage()
       AppDependencyManager.shared.add(dependency: store)
       let itemCreation = CreatePlannerItemIntent()
       itemCreation.title = "Museum"
@@ -500,8 +495,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
   }
 
   func testUnavailableStorageCannotAcknowledgeEitherItineraryAddition() async throws {
-    let (directory, _, store) = try makeStorage()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let (directory, _, store) = try makePlannerIntentStorage()
     let obstruction = Data("The store parent is a file.".utf8)
     let parent = directory.appending(path: "store")
     try obstruction.write(to: parent)
@@ -531,18 +525,4 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     XCTAssertEqual(try Data(contentsOf: parent), obstruction)
   }
 
-  private func makeStorage() throws -> (
-    directory: URL, configuration: PlannerStorageConfiguration, store: SavedPlannerStore
-  ) {
-    let directory = FileManager.default.temporaryDirectory.appending(
-      path: "PlannerItineraryOrganizationIntentTests/\(UUID().uuidString)",
-      directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appending(path: "store/Planner.sqlite"),
-      controlURL: directory.appending(path: "control/writer"),
-      recoveryDirectoryURL: directory.appending(path: "recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
-    return (directory, configuration, SavedPlannerStore(configuration: configuration))
-  }
 }
