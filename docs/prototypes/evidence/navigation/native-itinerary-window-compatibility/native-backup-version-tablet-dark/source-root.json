@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "2b4b7bf67c17ccddd500e53f27bfa9d8c188219a",
+  "overlays": [
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+    "docs/fixtures/native-unsupported-backup.json.invalid"
+  ]
+}

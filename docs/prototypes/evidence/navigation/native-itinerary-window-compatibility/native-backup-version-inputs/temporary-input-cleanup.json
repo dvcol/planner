@@ -1,0 +1,16 @@
+{
+  "removedOnlyCreatedInputFiles": true,
+  "datasetsRemoved": false,
+  "destinations": {
+    "phone": {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner unsupported version backup.json",
+      "verifiedSha256": "0e288e9eeebdc20b5fbe1761967051c7314243a999357f8870a9cbc979b4376e",
+      "removed": true
+    },
+    "tablet": {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner unsupported version backup.json",
+      "verifiedSha256": "0e288e9eeebdc20b5fbe1761967051c7314243a999357f8870a9cbc979b4376e",
+      "removed": true
+    }
+  }
+}

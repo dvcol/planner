@@ -1,0 +1,39 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-version-phone-qualified.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F49DC833-D504-4093-B52A-4C26E3244FEA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported backup leaves original Tag after relaunch_0_C95C2EAD-8539-4E7A-935E-81A3455420F3.png",
+      "timestamp": 1792530998.19,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch()",
+      "originalSha256": "c57f740779311d0e796904a660b9433f7c258f0bb33a03d85bebdab516f50462"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "5E87088A-3261-44A2-8F19-21DF7290C629.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Valid backup remains reviewable after unsupported version_0_72A3455D-068B-4DA4-AF55-84A43592BD5F.png",
+      "timestamp": 1792530985.64,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch()",
+      "originalSha256": "31c77239beab8a6bb1e905780e1c6a6b46643a1b7920c7c1a5e0b7adebdfd8c7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "544631C9-E04A-474E-97F1-0E121819D369.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported backup version rejects before native review_0_59F36868-B055-4F8B-9C35-1D74885DADFD.png",
+      "timestamp": 1792530975.321,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch()",
+      "originalSha256": "730958f0b442eae88bf3a84f6514730770ef032e08d006dfc74fe056d64aa6ef"
+    }
+  ],
+  "videoPublished": false
+}

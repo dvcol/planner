@@ -1,0 +1,6 @@
+{
+  "sourceAttachment": "3FFD921F-5938-4E30-89DD-061408966107.txt",
+  "sha256": "ca1801e0d1cb6e4e00a6c457ac828db97e3cfb06ecd6ffd163c5a908d7331e78",
+  "observation": "The picker contains both a selected search-token Other labeled Planner unsupported version backup and the actual file Cell identified Planner unsupported version backup.json, json. The original broad Any query tapped the search token, leaving Files open; the subsequent alert wait failed.",
+  "correction": "Match a native Cell by the complete filename, including its extension. Keep the explicit Name Contains suggestion selection. No Planner production behavior changes."
+}

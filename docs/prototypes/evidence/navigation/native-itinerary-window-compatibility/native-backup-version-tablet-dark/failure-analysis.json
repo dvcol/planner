@@ -1,0 +1,7 @@
+{
+  "sourceAttachment": "FAD963C3-C839-453D-9BAD-69FB7179EED9.txt",
+  "sha256": "728d865052d1b9d7fc632af58b8fc7a3efb0632ad4544bf626accf339b5877df",
+  "observation": "The final picker hierarchy contains a Name Contains suggestion for the exact requested filename, without the document row. The test failed in file selection before import.",
+  "controllerHypothesis": "Explicitly select the visible native filename-search suggestion when offered. No product defect is established.",
+  "diagnosticLimit": "The later xcrun simctl diagnostic-collection error is separate from the recorded assertion. The wrapper restored appearance with exit zero and verified light."
+}

@@ -1,0 +1,135 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "output": "validation-0.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerMarkdownlintConfig.json",
+        "docs/prototypes/native-backup-version-rejection.md",
+        "docs/prototypes/native-backup-import.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "output": "validation-1.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": "validation-2.log"
+    }
+  ],
+  "sourceEpochs": {
+    "native-backup-version-phone-qualified": {
+      "inputCount": 1041,
+      "differences": []
+    },
+    "native-backup-version-tablet-qualified": {
+      "inputCount": 1041,
+      "differences": []
+    },
+    "native-backup-version-mac-build": {
+      "inputCount": 1041,
+      "differences": []
+    }
+  },
+  "runtimeReconciliation": {
+    "native-backup-version-phone": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "79.030"
+      ],
+      "failedFunctionSeconds": []
+    },
+    "native-backup-version-tablet-dark": {
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "passingFunctionSeconds": [],
+      "failedFunctionSeconds": [
+        "70.952"
+      ]
+    },
+    "native-backup-version-tablet-search": {
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "passingFunctionSeconds": [],
+      "failedFunctionSeconds": [
+        "75.370"
+      ]
+    },
+    "native-backup-version-phone-qualified": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "79.757",
+        "60.109"
+      ],
+      "failedFunctionSeconds": []
+    },
+    "native-backup-version-tablet-qualified": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "70.090",
+        "88.060"
+      ],
+      "failedFunctionSeconds": []
+    }
+  },
+  "products": {
+    "mac": {
+      "application": {
+        "path": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+        "sha256": "b0583d22c9fab04caef5652c2aba74520287687ce7ebe995bd41195b1526fc3f"
+      },
+      "nativeUITests": {
+        "path": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests",
+        "sha256": "52fc8a6bbc1abda5d614334569ad84031597d9dc1c1c4246401e001ba772292e"
+      }
+    },
+    "simulator": {
+      "application": {
+        "path": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+        "sha256": "56a90972ace48d09604caaeab68958686ab1bc97effa0f995cf5f7b20c7c74d3"
+      },
+      "nativeUITests": {
+        "path": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests",
+        "sha256": "633e0e1021c8baecde1068d48b0558aadccbe5bb290e44e406f9cda82c85919b"
+      }
+    }
+  },
+  "productionInputsUnchanged": true,
+  "manualReview": {
+    "standards": "One native behavior test and focused document-cell/search-suggestion controller corrections. No test-only production inputs, dependencies or private-store assertions.",
+    "specification": "The test selects an independent unsupported-version file, requires the useful error before confirmation, retries a real valid export and retains the same Tag identity/name after relaunch. Broader graph and device gates remain open.",
+    "capturesInspected": [
+      "native-backup-version-phone",
+      "native-backup-version-phone-qualified",
+      "native-backup-version-tablet-qualified"
+    ],
+    "newCoreOrHTTPRuns": 0,
+    "macUIRuntimeFunctions": 0
+  }
+}

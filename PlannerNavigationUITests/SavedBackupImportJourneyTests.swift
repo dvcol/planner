@@ -335,6 +335,38 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       recordImport(application, name: "Rejected malformed input preserves the Tag after relaunch")
     }
 
+    func testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let exportedBackup = createAndExportTagBackup(application)
+      selectBackupFile("Planner unsupported version backup.json", application: application)
+      let failure = application.alerts["Backup import failed"]
+      XCTAssertTrue(failure.waitForExistence(timeout: 15))
+      XCTAssertTrue(failure.staticTexts["Unsupported portable backup version."].exists)
+      XCTAssertFalse(application.plannerElement("saved.import.confirm").exists)
+      recordImport(application, name: "Unsupported backup version rejects before native review")
+      failure.buttons["OK"].activateForPlannerJourney()
+      let importBackup = application.plannerElement("saved.settings.import")
+      XCTAssertTrue(importBackup.waitForPlannerHittability())
+      XCTAssertTrue(importBackup.isEnabled)
+      selectBackup(exportedBackup.filename, application: application)
+      let unchanged = application.staticTexts["saved.import.summary.unchanged"]
+      XCTAssertTrue(unchanged.waitForExistence(timeout: 15))
+      XCTAssertEqual(unchanged.label, "Unchanged, 1")
+      recordImport(application, name: "Valid backup remains reviewable after unsupported version")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let retainedTag = application.plannerElement(exportedBackup.tagIdentifier)
+      XCTAssertTrue(retainedTag.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedTag.label, "Original backup tag")
+      recordImport(application, name: "Unsupported backup leaves original Tag after relaunch")
+    }
+
     private func createAndExportTagBackup(_ application: XCUIApplication) -> (
       tagIdentifier: String, filename: String
     ) {
@@ -378,8 +410,9 @@ final class SavedBackupImportJourneyTests: XCTestCase {
     private func selectBackupFile(_ filename: String, application: XCUIApplication) {
       application.plannerElement("saved.settings.import").activateForPlannerJourney()
       let documentName = String(filename.dropLast(".json".count))
-      let document = application.descendants(matching: .any).matching(
-        NSPredicate(format: "label BEGINSWITH %@", documentName)
+      let document = application.cells.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ OR label BEGINSWITH %@", filename, filename)
       ).firstMatch
       if !document.waitForExistence(timeout: 5) {
         chooseLocalFileLocation(application)
@@ -398,6 +431,12 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         XCTAssertTrue(search.waitForExistence(timeout: 10))
         search.activateForPlannerJourney()
         search.typeText(documentName + "\n")
+        let filenameSearch = application.buttons.matching(
+          NSPredicate(format: "label BEGINSWITH %@", "Name Contains")
+        ).firstMatch
+        if filenameSearch.waitForExistence(timeout: 2) && filenameSearch.isHittable {
+          filenameSearch.activateForPlannerJourney()
+        }
       }
       let hierarchy = XCTAttachment(string: application.debugDescription)
       hierarchy.name = "Native picker for the selected backup file"

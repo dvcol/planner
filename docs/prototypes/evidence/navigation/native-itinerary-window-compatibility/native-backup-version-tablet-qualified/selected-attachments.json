@@ -1,0 +1,39 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-version-tablet-qualified.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A4A7B838-AF18-43FD-A322-6941A816C79E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported backup leaves original Tag after relaunch_0_58D2B4A4-A8DC-4B41-91DA-945B2F766090.png",
+      "timestamp": 1792530833.534,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch()",
+      "originalSha256": "67d254ee263e8d0618188c0be9db83f92ef9d40d2961d54ab78e41b74f55bb17"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F173DE55-F8F8-4B49-A3D4-F83126575A62.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Valid backup remains reviewable after unsupported version_0_648703B6-DA8E-458D-881D-25B7AB2D2CAF.png",
+      "timestamp": 1792530818.804,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch()",
+      "originalSha256": "e3ffbf9e95c60703bb9b87f62b88ef57cf23db7b7dac39e88dd2925ce816ead2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8DA54F9F-44B5-4A48-870F-669034C39280.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported backup version rejects before native review_0_EED079AD-BF49-44F8-BDC1-FA31939085CF.png",
+      "timestamp": 1792530805.841,
+      "testIdentifier": "SavedBackupImportJourneyTests/testUnsupportedBackupVersionRejectsBeforeReviewAndPreservesCurrentTagAfterRelaunch()",
+      "originalSha256": "eca3444feb753ede7f18304e8b93e98af651880a57bd6784d4361e548be799ef"
+    }
+  ],
+  "videoPublished": false
+}
