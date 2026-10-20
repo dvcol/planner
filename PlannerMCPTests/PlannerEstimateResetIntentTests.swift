@@ -369,7 +369,7 @@ private func assertEstimateWasReset(
   }
 }
 
-private struct EstimateResetIntentFixture {
+struct EstimateResetIntentFixture {
   let configuration: PlannerStorageConfiguration
   let store: SavedPlannerStore
   let planner: PlannerCore.Planner
@@ -387,7 +387,7 @@ private struct EstimateResetIntentFixture {
   let itinerarySchedule: PlannerEntityReference
 }
 
-private struct EstimateResetSourceObservations {
+struct EstimateResetSourceObservations {
   let item: PlannerItemSourceRead
   let lunch: PlannerItemSourceRead
   let list: PlannerListSourceRead
@@ -395,7 +395,7 @@ private struct EstimateResetSourceObservations {
 }
 
 @MainActor
-private func makeEstimateResetIntentFixture() async throws -> EstimateResetIntentFixture {
+func makeEstimateResetIntentFixture() async throws -> EstimateResetIntentFixture {
   let (_, configuration, store) = try makePlannerIntentStorage()
   AppDependencyManager.shared.add(dependency: store)
   let planner = PlannerCore.Planner(configuration: configuration)
@@ -492,7 +492,7 @@ private func makeEstimateResetIntentFixture() async throws -> EstimateResetInten
 }
 
 @MainActor
-private func readEstimateResetSources(
+func readEstimateResetSources(
   _ fixture: EstimateResetIntentFixture, planner: PlannerCore.Planner? = nil,
   session: PlannerDatasetSession? = nil
 ) async throws -> EstimateResetSourceObservations {
@@ -512,7 +512,7 @@ private func readEstimateResetSources(
 }
 
 @MainActor
-private func assertEstimateResetPreservesOtherFields(
+func assertEstimateResetPreservesOtherFields(
   _ before: EstimateResetSourceObservations, _ after: EstimateResetSourceObservations,
   changedKind: PlannerEntityKind?
 ) {
@@ -556,7 +556,7 @@ private func assertEstimateResetPreservesOtherFields(
 }
 
 @MainActor
-private func assertEstimateResetContextsAndBookings(
+func assertEstimateResetContextsAndBookings(
   _ fixture: EstimateResetIntentFixture, planner: PlannerCore.Planner,
   session: PlannerDatasetSession
 ) async throws {

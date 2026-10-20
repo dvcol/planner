@@ -27,6 +27,8 @@ The user accepted A for all eight choices below on 21 October 2026. Their implem
 | Q122 | Open List/Itinerary window and draft behavior | A: Reuse one foreground main window, preserving Save, Discard and Keep editing. Other windows retain their selection; the concrete handoff follows the choice. | [Opening saved plans](native-plan-opening-shortcuts-review.md#q122-opening-a-saved-plan) |
 | Q123 | Initial discoverable App Shortcut set | A: Create Item, Find Items, Find Lists and Find Itineraries. Existing ordinary actions remain available; the initial provider does not depend on unfinished Open actions. | [App Shortcut discovery](native-plan-opening-shortcuts-review.md#q123-the-initial-discoverable-app-shortcuts) |
 
+[Exact estimate setting](prototypes/native-estimate-setting-intents.md) now implements Q115 A at the approved local boundary. Seven setting tests and ten reset regressions pass, with matching Mac/Simulator/unsigned device builds and retained native contracts. Actual system input/invocation remains open.
+
 ## Next frontier after the approvals
 
 The three follow-up questions are open; none blocks independent accepted work.
