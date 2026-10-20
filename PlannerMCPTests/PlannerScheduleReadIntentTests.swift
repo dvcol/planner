@@ -635,7 +635,7 @@ private func readScheduleIdentifiers(
   }
 }
 
-private struct ScheduleReadIntentFixture {
+struct ScheduleReadIntentFixture {
   let configuration: PlannerStorageConfiguration
   let store: SavedPlannerStore
   let planner: PlannerCore.Planner
@@ -649,7 +649,7 @@ private struct ScheduleReadIntentFixture {
 }
 
 @MainActor
-private func makeScheduleReadIntentFixture() async throws -> ScheduleReadIntentFixture {
+func makeScheduleReadIntentFixture() async throws -> ScheduleReadIntentFixture {
   let (_, configuration, store) = try makePlannerIntentStorage()
   AppDependencyManager.shared.add(dependency: store)
   let planner = PlannerCore.Planner(configuration: configuration)
