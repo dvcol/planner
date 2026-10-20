@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "cb05fc36525e4d7b92519fec97957983a73e0290",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryEditTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/OwnedLinkEditResultTests.swift",
+    "PlannerMCPTests/ItineraryEditRoutingTests.swift"
+  ]
+}

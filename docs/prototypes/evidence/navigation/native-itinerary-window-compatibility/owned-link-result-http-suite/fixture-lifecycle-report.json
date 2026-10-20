@@ -1,0 +1,13 @@
+{
+  "qualificationPassed": false,
+  "reason": "Incorrect test expectation for unchanged applied edits; source and failed result retained",
+  "fixturesRemoved": 2,
+  "closedHostIdentifiers": [
+    4203
+  ],
+  "closedDatabasesVerified": true,
+  "directories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/C28CE0CA-23B1-4C03-86DA-52BDB43BE612",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4FC83EF9-988F-4DB9-9E59-D0483CA1E731"
+  ]
+}

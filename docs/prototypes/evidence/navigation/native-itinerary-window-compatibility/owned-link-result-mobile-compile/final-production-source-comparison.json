@@ -1,0 +1,7 @@
+{
+  "allProductionInputsMatchFinalMacQualification": true,
+  "productionInputCount": 179,
+  "sourceEpochDifferences": [
+    "PlannerMCPTests/ItineraryEditRoutingTests.swift"
+  ]
+}

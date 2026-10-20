@@ -1,0 +1,14 @@
+{
+  "priorInputs": 1009,
+  "currentInputs": 1010,
+  "changedInputs": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryEditTests.swift",
+    "PlannerMCPTests/ItineraryEditRoutingTests.swift"
+  ],
+  "addedInputs": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/OwnedLinkEditResultTests.swift"
+  ],
+  "otherPriorInputsUnchanged": true
+}

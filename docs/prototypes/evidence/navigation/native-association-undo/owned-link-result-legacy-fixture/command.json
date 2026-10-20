@@ -1,0 +1,13 @@
+[
+  "xcrun",
+  "swift",
+  "run",
+  "--package-path",
+  "/private/tmp/PlannerLegacyOwnedLinkGenerator",
+  "--scratch-path",
+  "/private/tmp/PlannerLegacyOwnedLinkGeneratorBuild",
+  "--jobs",
+  "1",
+  "LegacyOwnedLinkGenerator",
+  "/private/tmp/PlannerLegacyOwnedLinkGenerator/fixture"
+]

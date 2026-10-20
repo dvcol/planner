@@ -1,0 +1,10 @@
+{
+  "qualificationPassed": false,
+  "testsPassed": 56,
+  "reason": "Legacy HTTP fixture deleted SQLite files before handles closed; corrected separately",
+  "removedFixtures": 57,
+  "closedHostIdentifiers": [
+    5848
+  ],
+  "closedDatabasesVerified": true
+}

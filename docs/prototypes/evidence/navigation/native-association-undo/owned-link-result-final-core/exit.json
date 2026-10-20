@@ -1,0 +1,4 @@
+{
+  "exitCode": 0,
+  "filter": "ItemLinkTests|ItemLinkEditTests|ItemLinkMigrationTests|ItineraryCreationTests|ItineraryEditTests|ItineraryEditAdmissionTests|ItineraryEditConflictTests|OwnedLinkEditResultTests|ItemInListCreationTests|ItemInListCreationRecoveryTests|OwnedAssociationUndoTests|AssociationUndoRecoveryTests"
+}

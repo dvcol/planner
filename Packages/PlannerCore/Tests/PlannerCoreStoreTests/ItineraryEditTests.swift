@@ -119,6 +119,18 @@ struct ItineraryEditTests {
         "https://example.com/route?day=1", "https://example.com/museum",
       ])
     #expect(edited.content.links.first?.linkId == originalLink.linkId)
+    let generatedLink = PlannerReferenceRead.ownedLink(
+      id: try #require(edited.content.links.last?.linkId), owner: itinerary)
+    #expect(editedResult.generatedIdentities == [.reference(generatedLink)])
+    let removedLabels = original.references.compactMap {
+      reference -> (identifier: UUID, reference: PlannerReferenceRead)? in
+      guard case .labelAssociation(let identifier, _, _) = reference else { return nil }
+      return (identifier, reference)
+    }.sorted { $0.identifier.uuidString < $1.identifier.uuidString }.map(\.reference)
+    #expect(
+      editedResult.affectedIdentities
+        == [.source(itinerary)] + removedLabels.map { .reference($0) }
+        + [.reference(generatedLink)])
     #expect(edited.content.categoryIds.isEmpty && edited.content.tagIds.isEmpty)
     #expect(edited.labels.isEmpty && edited.references.isEmpty)
     #expect(edited.fieldHashes[.title] == editedTitle.fieldHashes[.title])

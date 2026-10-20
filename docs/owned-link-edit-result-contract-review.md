@@ -1,6 +1,6 @@
 # New bookmark identities in edit results
 
-Status: proposed for Q116. No Core result change is authorized by this document alone. Ordered native Link reads proceed independently under the existing contract.
+Status: accepted, Q116 A, 21 October 2026. Implementation and qualification are in progress. Ordered native Link reads retain their existing contract.
 
 ## Context and starting state
 
@@ -18,7 +18,7 @@ B. Keep Core result metadata unchanged. Add Link returns its owner and a truthfu
 
 Recommendation: A, so a successful ordinary addition can return its precise identity without a fallible post-save lookup.
 
-## Concrete proposed result rules
+## Accepted result rules
 
 - Existing label-association generation order and existing affected references stay unchanged. Append new bookmark references after those prefixes.
 - A newly generated Link is an ID in the replacement's saved Links absent from that owner's previous Links. Retained IDs, URL/label edits to existing IDs and reordering create no generated Link references.
@@ -31,7 +31,7 @@ For example, an owner has Link A. One edit keeps A, adds Category association L 
 
 ## Definition of ready
 
-Q33 already approves guarded ordinary edits and mixed source/reference results. Existing result enums, Codable receipts and MCP execute/status serialization support `.ownedLink` references. Read-only inspection confirms both edit paths' omission and stored-result replay behavior. The human must accept A before tests or implementation of this result amendment. Existing public Core/store and HTTP operation boundaries, plus Q112's production Intent boundary, remain the test seams.
+Q116 A approves this result amendment. Q33 already approves guarded ordinary edits and mixed source/reference results. Existing result enums, Codable receipts and MCP execute/status serialization support `.ownedLink` references. Read-only inspection confirms both edit paths' omission and stored-result replay behavior. Existing public Core/store and HTTP operation boundaries, plus Q112's production Intent boundary, remain the test seams.
 
 ## Required tests and definition of done
 

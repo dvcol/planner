@@ -1,0 +1,10 @@
+{
+  "actions": 45,
+  "entities": 8,
+  "queries": 8,
+  "parameterContractsUnchanged": true,
+  "enumsUnchanged": true,
+  "linkReadOutputContractsUnchanged": true,
+  "metadataSha256": "0eab65b9e346b20b5bb5f908e41002fe269264b39caf195ca41547ca7da387ad",
+  "systemInvocationQualified": false
+}
