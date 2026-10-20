@@ -1,0 +1,13 @@
+{
+  "qualificationPassed": false,
+  "reason": "Expected feature red: one XCTest case records twenty cancellation failures.",
+  "sourceLogSha256": "006dd8b024a431ed3ebf60bb0ed4d5ab83cac098172151cff73c1740e0ae95c6",
+  "hostProcessIdentifiers": [
+    23863
+  ],
+  "closedDatabaseHandlesVerified": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/34D7640D-4AFA-480D-91E9-DBFAD7B0B55B"
+  ],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b"
+}

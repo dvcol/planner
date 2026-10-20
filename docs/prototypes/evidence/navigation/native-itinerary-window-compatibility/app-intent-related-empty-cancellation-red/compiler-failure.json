@@ -1,0 +1,13 @@
+{
+  "qualificationPassed": false,
+  "reason": "Test-construction failure: asynchronous calls in XCTest autoclosures. Corrected before runtime reproduction.",
+  "errors": [
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerItemFindIntentTests.swift:61:29: error: 'async' call in an autoclosure that does not support concurrency",
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerItemFindIntentTests.swift:62:29: error: 'async' call in an autoclosure that does not support concurrency",
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerItemFindIntentTests.swift:63:29: error: 'async' call in an autoclosure that does not support concurrency",
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerItemFindIntentTests.swift:64:29: error: 'async' call in an autoclosure that does not support concurrency",
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerItemFindIntentTests.swift:65:29: error: 'async' call in an autoclosure that does not support concurrency",
+    "/tmp/PlannerScheduleRemovalBaseSource/PlannerMCPTests/PlannerItemFindIntentTests.swift:66:29: error: 'async' call in an autoclosure that does not support concurrency"
+  ],
+  "fixtureRecords": 0
+}

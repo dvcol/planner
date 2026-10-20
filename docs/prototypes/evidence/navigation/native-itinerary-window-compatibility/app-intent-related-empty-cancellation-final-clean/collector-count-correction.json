@@ -1,0 +1,9 @@
+{
+  "initialExitCode": 1,
+  "reason": "The collector guessed 81 tests from method declarations. The actual xcresult reports 82 passes: 80 XCTest cases and two HTTP declarations. PlannerItineraryIntentTests discovers nine cases, including its extension case.",
+  "initialExpectedPasses": 81,
+  "actualPasses": 82,
+  "actualMarkedFixtureCount": 81,
+  "testRerunRequired": false,
+  "sourceOrResultChanged": false
+}

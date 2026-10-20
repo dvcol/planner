@@ -8,6 +8,74 @@ import XCTest
 
 @MainActor
 final class PlannerItemFindIntentTests: XCTestCase {
+  func testPrecancelledEmptyRelatedChoicesThrowInsteadOfReturningSuccessfulEmptyResults()
+    async throws
+  {
+    let fixture = try await makeItemFindIntentFixture()
+    await fixture.store.open()
+    let categories = PlannerCategoryEntityQuery()
+    categories.plannerStore = fixture.store
+    let tags = PlannerTagEntityQuery()
+    tags.plannerStore = fixture.store
+    let lists = PlannerListEntityQuery()
+    lists.plannerStore = fixture.store
+    let itineraries = PlannerItineraryEntityQuery()
+    itineraries.plannerStore = fixture.store
+    let appearances = PlannerItineraryItemEntityQuery()
+    appearances.plannerStore = fixture.store
+    let entries = PlannerItineraryEntryEntityQuery()
+    entries.plannerStore = fixture.store
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { return XCTFail("Record saved data before cancelling empty related choices.") }
+    let invocations: [(String, @MainActor () async throws -> Void)] = [
+      ("Category identities", { _ = try await categories.entities(for: []) }),
+      ("Category search", { _ = try await categories.entities(matching: "No match") }),
+      ("Category suggestions", { _ = try await categories.suggestedEntities() }),
+      ("Tag identities", { _ = try await tags.entities(for: []) }),
+      ("Tag search", { _ = try await tags.entities(matching: "No match") }),
+      ("Tag suggestions", { _ = try await tags.suggestedEntities() }),
+      ("List identities", { _ = try await lists.entities(for: []) }),
+      ("List search", { _ = try await lists.entities(matching: "No match") }),
+      ("List suggestions", { _ = try await lists.suggestedEntities() }),
+      ("Itinerary identities", { _ = try await itineraries.entities(for: []) }),
+      ("Itinerary search", { _ = try await itineraries.entities(matching: "No match") }),
+      ("Itinerary suggestions", { _ = try await itineraries.suggestedEntities() }),
+      ("Appearance identities", { _ = try await appearances.entities(for: []) }),
+      ("Malformed appearance identities", { _ = try await appearances.entities(for: ["Invalid"]) }),
+      ("Unscoped appearance search", { _ = try await appearances.entities(matching: "No match") }),
+      ("Unscoped appearance suggestions", { _ = try await appearances.suggestedEntities() }),
+      ("Entry identities", { _ = try await entries.entities(for: []) }),
+      ("Malformed entry identities", { _ = try await entries.entities(for: ["Invalid"]) }),
+      ("Unscoped entry search", { _ = try await entries.entities(matching: "No match") }),
+      ("Unscoped entry suggestions", { _ = try await entries.suggestedEntities() }),
+    ]
+    for (label, invocation) in invocations {
+      let request = Task { @MainActor in try await invocation() }
+      request.cancel()
+      do {
+        try await request.value
+        XCTFail("\(label) must propagate precancellation, including empty results.")
+      } catch is CancellationError {
+      } catch { XCTFail("\(label) expected cancellation, received \(error).") }
+    }
+    let categoryChoices = try await categories.suggestedEntities()
+    XCTAssertTrue(categoryChoices.isEmpty)
+    let tagChoices = try await tags.suggestedEntities()
+    XCTAssertTrue(tagChoices.isEmpty)
+    let listChoices = try await lists.suggestedEntities()
+    XCTAssertTrue(listChoices.isEmpty)
+    let itineraryChoices = try await itineraries.suggestedEntities()
+    XCTAssertTrue(itineraryChoices.isEmpty)
+    let appearanceChoices = try await appearances.suggestedEntities()
+    XCTAssertTrue(appearanceChoices.isEmpty)
+    let entryChoices = try await entries.suggestedEntities()
+    XCTAssertTrue(entryChoices.isEmpty)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { return XCTFail("Cancellation cannot alter the saved graph.") }
+    XCTAssertEqual(after, before)
+    XCTAssertFalse(fixture.store.isSaving)
+  }
+
   func testMissingCriteriaIdentitiesNeverFallBackToNamesAndRetainAnyAllSemantics() async throws {
     let fixture = try await makeItemFindIntentFixture()
     let createCategory = CreatePlannerCategoryIntent()

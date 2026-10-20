@@ -1,0 +1,23 @@
+{
+  "reviewKind": "primary-agent source and contract review",
+  "reviewedInputs": [
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "PlannerMCPTests/PlannerItemFindIntentTests.swift"
+  ],
+  "productionDelta": "Two cancellation checks in appIntentContext, before and after awaiting open.",
+  "checks": [
+    "All six reproduced query types acquire this context before their empty early returns.",
+    "Reviewed all 42 context call sites; this context acquisition precedes command execution or source reads, with no added post-commit cancellation check.",
+    "Existing executeAppIntent admitted-write/recovery handling is unchanged.",
+    "The production EntityQuery test boundary remains Q112; no private helper tests, hooks, new target or injected cancellation control.",
+    "Actual runtime red records 20 failures; green checks those cancellations and uncancelled empty suggestions.",
+    "The final 82-test run covers affected ordinary mutations, paging, unavailable storage, cancellation and recovery.",
+    "Current source matches all three platform snapshots; prior native metadata contracts remain unchanged.",
+    "Report relative evidence links resolve."
+  ],
+  "limits": [
+    "Precancellation is deterministic; arbitrary bootstrap cancellation interleavings are not proved.",
+    "Actual system invocation, physical and signing-dependent qualification remain separate."
+  ],
+  "introducedFindings": []
+}
