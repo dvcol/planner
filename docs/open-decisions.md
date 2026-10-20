@@ -8,6 +8,8 @@ Further local work qualifies [native unsupported backup-version rejection](proto
 
 The [unresolved-reference follow-up](prototypes/native-backup-unresolved-reference.md) also passes on phone and dark-mode tablet: a new List's missing Item blocks confirmation, current data survives, and no partial List appears after relaunch. Other invalid bindings and broad import/recovery gates remain open.
 
+The [full-graph native file follow-up](prototypes/native-backup-full-graph-file.md) passes empty import/relaunch/scoped state and verifies actual delivered exports against every fixture field on both mobile layouts. The shared exporter regression also passes. Dark iPad captures expose invisible standalone List metric titles, which need a separate correction. No pending choice is inferred from these checks.
+
 These choices remain unanswered. Recommendations are proposals, not accepted defaults.
 
 | Question | Decision still needed | Recommendation and consequence | Concrete review |
