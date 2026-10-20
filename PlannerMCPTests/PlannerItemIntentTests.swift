@@ -8,6 +8,128 @@ import XCTest
 
 @MainActor
 final class PlannerItemIntentTests: XCTestCase {
+  func testAppliedArchiveWithIncompleteRecoveryBlocksUnarchiveUntilNativeRecoveryRetry()
+    async throws
+  {
+    let (directory, configuration, store) = try makeStorage()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    AppDependencyManager.shared.add(dependency: store)
+    var creation = CreatePlannerItemIntent()
+    creation.title = "Recovery museum"
+    creation.notes = "Keep the locally archived Item"
+    let item = try await creation.callAsFunction(donate: false)
+    let obstruction = IntentRecoverySaveObstruction(configuration: configuration)
+    let observer = NotificationCenter.default.addObserver(
+      forName: ModelContext.didSave, object: nil, queue: nil
+    ) { notification in obstruction.observe(notification) }
+    defer {
+      NotificationCenter.default.removeObserver(observer)
+      try? obstruction.restore()
+    }
+    var archive = SetPlannerItemArchiveIntent()
+    archive.item = item
+    archive.archived = true
+    let _: Void = try await archive.callAsFunction(donate: false)
+    XCTAssertTrue(obstruction.didObstruct)
+    XCTAssertTrue(store.recoveryBlocked)
+    XCTAssertEqual(store.incompleteRecoveryOperationIdentifiers.count, 1)
+    let operationIdentifier = try XCTUnwrap(store.incompleteRecoveryOperationIdentifiers.first)
+    XCTAssertFalse(store.isSaving)
+    archive.archived = false
+    do {
+      let _: Void = try await archive.callAsFunction(donate: false)
+      XCTFail("Incomplete recovery must block a later unarchive action.")
+    } catch {
+      XCTAssertFalse(error.localizedDescription.isEmpty)
+    }
+    XCTAssertEqual(store.incompleteRecoveryOperationIdentifiers, [operationIdentifier])
+    NotificationCenter.default.removeObserver(observer)
+    try obstruction.restore()
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .source(.item(let applied)) = await planner.read(
+        session: session, request: .source(.init(kind: .item, id: item.id)))
+    else { return XCTFail("The locally applied archive must survive reopening.") }
+    XCTAssertEqual(applied.source.id, item.id)
+    XCTAssertEqual(applied.content.title, "Recovery museum")
+    XCTAssertEqual(applied.content.notes, "Keep the locally archived Item")
+    XCTAssertEqual(applied.state.archived, true)
+    await store.retryIncompleteRecovery()
+    XCTAssertFalse(store.recoveryBlocked)
+    XCTAssertTrue(store.incompleteRecoveryOperationIdentifiers.isEmpty)
+    guard
+      case .appliedRecoveryComplete = await planner.operationStatus(
+        session: session, operationId: operationIdentifier),
+      case .source(.item(let recovered)) = await planner.read(
+        session: session, request: .source(.init(kind: .item, id: item.id)))
+    else {
+      return XCTFail("Native recovery retry must acknowledge the original archive operation.")
+    }
+    XCTAssertEqual(recovered.state.archived, true)
+    XCTAssertEqual(recovered.fieldHashes, applied.fieldHashes)
+    let _: Void = try await archive.callAsFunction(donate: false)
+    guard
+      case .source(.item(let unarchived)) = await planner.read(
+        session: session, request: .source(.init(kind: .item, id: item.id))),
+      case .snapshot(let items) = await planner.query(
+        .init(session: session, request: .items(.init(completion: .all, archive: .all))))
+    else { return XCTFail("An explicit unarchive must succeed after recovery is complete.") }
+    XCTAssertEqual(unarchived.state.archived, false)
+    XCTAssertEqual(items.rows, [.source(.init(kind: .item, id: item.id))])
+  }
+
+  func testArchiveIntentRejectsMissingAndDeletedItemsWithoutResurrectingTheirIdentities()
+    async throws
+  {
+    let (directory, configuration, store) = try makeStorage()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    AppDependencyManager.shared.add(dependency: store)
+    var creation = CreatePlannerItemIntent()
+    creation.title = "Deleted museum"
+    let deletedItem = try await creation.callAsFunction(donate: false)
+    let planner = PlannerCore.Planner(configuration: configuration)
+    let deletedSource = PlannerEntityReference(kind: .item, id: deletedItem.id)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .deleteSource(source: deletedSource)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: .deleteSource(source: deletedSource),
+          reviewToken: review.reviewToken)
+      ).outcome
+    else { return XCTFail("The native reviewed deletion must remove the original Item.") }
+    let missingItem = PlannerItemEntity(
+      id: UUID(), title: "Missing museum", done: false, archived: false)
+    for item in [deletedItem, missingItem] {
+      for archived in [true, false] {
+        var archive = SetPlannerItemArchiveIntent()
+        archive.item = item
+        archive.archived = archived
+        do {
+          let _: Void = try await archive.callAsFunction(donate: false)
+          XCTFail("Archive cannot acknowledge a missing or deleted Item.")
+        } catch {
+          XCTAssertFalse(error.localizedDescription.isEmpty)
+        }
+      }
+    }
+    let reopened = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .snapshot(let items) = await reopened.query(
+        .init(session: reopenedSession, request: .items(.init(completion: .all, archive: .all))))
+    else { return XCTFail("The real dataset must remain readable after rejected archive actions.") }
+    XCTAssertTrue(items.rows.isEmpty)
+    for item in [deletedItem, missingItem] {
+      guard
+        case .failed(let reason) = await reopened.read(
+          session: reopenedSession, request: .source(.init(kind: .item, id: item.id)))
+      else { return XCTFail("Rejected archive actions cannot recreate either identity.") }
+      XCTAssertEqual(reason.code, "missingReference")
+    }
+    XCTAssertFalse(store.recoveryBlocked)
+    XCTAssertFalse(store.isSaving)
+  }
+
   func testArchiveIntentRetainsItemIdentityContentAndIndependentListCompletionAfterReopen()
     async throws
   {

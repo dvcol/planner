@@ -1,6 +1,6 @@
 # Native Item Archive Intent
 
-Status: the action is implemented; Mac and iPhone/iPad Simulator compilation pass. Its executable red is recorded; green validation is pending after three XCTest startup attempts fail to enter a test. A protected-broker restart is denied by macOS. Actual system invocation remains a separate gate.
+Status: the Archive action is locally qualified through the approved production Intent interface. After the user refreshes the Mac session, Archive and its startup control execute successfully. All 12 focused Item Intent tests pass, including missing/deleted identities and recovery failure. Mac and iPhone/iPad Simulator compilation pass. Actual system invocation remains a separate gate.
 
 ## Context and goal
 
@@ -26,7 +26,7 @@ After implementation, the Mac app and app-hosted test target compile. The produc
 
 The first green attempt launches the host but records no Test Case start. A one-second sample locates the wait in XCTestDriver's IDE-session setup, before the test body. The same Intent-registration warning appears in the executable red, so that warning alone does not establish this startup failure's cause. The owned attempt is stopped and a bounded retry uses the same compiled test without rebuilding. That repeat times out after 240 seconds before any test starts. Both attempts receive no green credit; owned hosts are closed, with no system-service or signing changes. Source epochs, logs, actual startup sample and interrupted outcomes are retained under [navigation compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/).
 
-The current Mac session-refresh answer is pending. Do not infer an Archive regression or successful behavior from these startup attempts. Strict lint on the two changed Swift files and diff whitespace checks pass. The remaining scenarios below must still execute before this slice is qualified.
+At this historical checkpoint the Mac session-refresh answer was pending. These startup attempts establish neither an Archive regression nor successful behavior. Strict lint on the two changed Swift files and diff whitespace checks pass. The later session-refresh qualification below supersedes the pending adapter checks.
 
 ## Prebuilt startup control
 
@@ -38,9 +38,22 @@ The owned host is terminated and its exit verified. With no other current-user t
 
 The [prebuilt probe packet](evidence/navigation/native-itinerary-window-compatibility/app-intent-archive-prebuilt-probe/) retains commands, source/product hashes, signature verification, actual host sample, zero-start observation, bounded exit, denied restart and verified cleanup. The OS refusal is separate from approval review: the command was allowed to run, then macOS denied the service operation.
 
+## Qualification after the Mac session refresh
+
+The user confirms that the Mac session is refreshed and Xcode is open. The unchanged prebuilt Archive test and invalid-creation/missing-read control both execute and pass, in 0.133 and 0.017 seconds respectively. Their source/product hashes match the original compiled epoch. This establishes that the approved local feedback loop works again; it does not establish the underlying cause of the earlier XCTest IDE-session waits. No team, entitlement, account, security setting or production source changes accompany this retry.
+
+Two additional required qualification cases use the same production `callAsFunction(donate: false)` boundary, real disposable Core storage and the existing real recovery-filesystem failure. They pass on their first execution against the implemented action; no new feature-red or production correction is claimed.
+
+- A natively reviewed deletion removes the original Item. Archive and Unarchive each reject both its cached entity and a never-existing identity. Reopening finds no Items and neither identity resurrected.
+- Obstructing the recovery copy after the real archive save leaves the Item archived locally, records one incomplete operation and blocks Unarchive. Native recovery retry acknowledges that same operation without changing its Item field hashes. A subsequent explicit Unarchive succeeds and retains exactly the original Item.
+
+After formatting, the focused `PlannerItemIntentTests` class executes all 12 tests with zero failures or skips. It covers the three Archive cases and the existing creation, read, global completion, entity query, paging, concurrent creation, cancellation and unavailable/recovery-storage cases. Strict Swift formatting lint and diff whitespace checks pass. Existing temporary-fixture cleanup emits SQLite unlink warnings while live fixture objects retain connections; the test log preserves these warnings, and this run does not establish a production data-integrity defect or clean shutdown qualification.
+
+The evidence packets are [the unchanged prebuilt retry](evidence/navigation/native-itinerary-window-compatibility/app-intent-archive-session-refresh/), [missing/deleted identities](evidence/navigation/native-itinerary-window-compatibility/app-intent-archive-missing-identity/), [recovery failure](evidence/navigation/native-itinerary-window-compatibility/app-intent-archive-recovery/) and [the final focused regression](evidence/navigation/native-itinerary-window-compatibility/app-intent-archive-final-qualification/). Each retains its command, source epoch, original log and exit result. The action's earlier executable red and mobile compilation retain their recorded epochs.
+
 ## Remaining work and readiness
 
-The earlier independent phone caller gap is now qualified. Further ordinary Intent behavior still needs the approved app-hosted feedback loop, beginning with this Archive green. Existing Q112 authorizes that boundary; no replacement test target or weaker substitute is approved here.
+The earlier independent phone caller gap and this Archive adapter slice are now qualified. Further ordinary Intent behavior still needs implementation and the approved app-hosted feedback loop. Existing Q112 authorizes that boundary; no replacement test target or weaker substitute is approved here.
 
 [Q100 B](../native-agent-control-contract-review.md) explicitly defers native Agent Control, protected credentials and the reader until signing and Mac automation are available. Its controlled credential-I/O alternative is unselected. Real-client and native lifecycle acceptance remain downstream.
 

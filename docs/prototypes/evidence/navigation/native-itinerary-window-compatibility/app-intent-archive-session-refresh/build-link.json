@@ -1,0 +1,7 @@
+{
+  "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/app-intent-archive-green",
+  "currentCommit": "33634951ce4f53ad3daa26cb56449a55bf3978c5",
+  "prebuiltConfiguration": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Planner_macosx27.0-arm64.xctestrun",
+  "signatureVerifiedBeforeRun": true,
+  "scope": "Same compiled Mac app-hosted production interfaces; no signing, source, target or dependency changes."
+}
