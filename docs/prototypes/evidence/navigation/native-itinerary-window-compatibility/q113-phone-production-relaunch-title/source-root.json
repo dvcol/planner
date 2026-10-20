@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "127cc2964b4adb280e6f763f1b200ce9f5019346",
+  "overlays": [
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift"
+  ]
+}

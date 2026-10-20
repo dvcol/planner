@@ -1,0 +1,103 @@
+{
+  "sourceBundle": "/private/tmp/PlannerItemWindow-q113-tablet-direct-controls.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "31E3A24F-02EB-44E1-98A5-7D4FCF95C903.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List native toolbar after Sort Edit Done and canceled estimate_0_4D5C91F9-1268-4FF8-BE15-07400818C715.png",
+      "timestamp": 1792482998.248,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListMoreKeepsSortEditDoneAndContainerActionsReachable()",
+      "retainedFileName": "31E3A24F-02EB-44E1-98A5-7D4FCF95C903.png",
+      "originalSha256": "94069d4a37c6062773481bf2af98d4adb3f2826e36865c09169b9cb0aa27e064"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3D8473BD-8027-4193-86B0-5988F6A9104E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List title beside compact native Filters Add and More_0_31ACFBE0-9436-4B66-B411-99EAB264B5BE.png",
+      "timestamp": 1792483015.322,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "3D8473BD-8027-4193-86B0-5988F6A9104E.png",
+      "originalSha256": "f7aba2d680bbde818305efb60d8bf3f5c82b6de4106f7d2c2b135c7d5792e3bb",
+      "visuallyInspected": true
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C1659C0F-2CCB-4B3E-8A43-2050F0BE6E21.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_BEAA1ADA-D362-434D-85E0-4687568BD3C1.PlannerFixtures",
+      "timestamp": 1792483015.18,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "C1659C0F-2CCB-4B3E-8A43-2050F0BE6E21.txt.gz",
+      "originalSha256": "ed64d1038b97979dea6e52267a16b2ac24cd817c2bc169bf97a8a307352321fc"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "40F5AF89-42D4-40CA-8269-001CAF1F1577.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_3AA59140-3A1C-46AE-BF35-782838E13C7B.txt",
+      "timestamp": 1792483015.037,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "40F5AF89-42D4-40CA-8269-001CAF1F1577.txt.gz",
+      "originalSha256": "e755fe657e8d51743223e28a12b274066708bfed959ca4f277136e554706511f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "67D86FA4-A4CD-41D6-8E53-794D8EC7A881.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_59BAFE3F-BD04-4333-A303-D62F5E359C2C.txt",
+      "timestamp": 1792483014.039,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "67D86FA4-A4CD-41D6-8E53-794D8EC7A881.txt.gz",
+      "originalSha256": "e755fe657e8d51743223e28a12b274066708bfed959ca4f277136e554706511f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9191BC63-2A9A-47AE-BF48-BCFD4A46721C.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_2EE77FC6-DCB4-4BDC-A868-E2FB7535B49A.txt",
+      "timestamp": 1792483013.051,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "9191BC63-2A9A-47AE-BF48-BCFD4A46721C.txt.gz",
+      "originalSha256": "e755fe657e8d51743223e28a12b274066708bfed959ca4f277136e554706511f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E289F44D-9A1C-4AE1-9A2F-4DC8662CACCC.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_6A473064-DC30-432C-9F1C-444651893773.txt",
+      "timestamp": 1792483012.107,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "E289F44D-9A1C-4AE1-9A2F-4DC8662CACCC.txt.gz",
+      "originalSha256": "e755fe657e8d51743223e28a12b274066708bfed959ca4f277136e554706511f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4352396B-BC51-49F7-BF13-E65CFC52A06E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Overflow budget\" StaticText`_0_7267A3F8-1DDC-4067-8580-81BC5342153A.txt",
+      "timestamp": 1792483011.049,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "4352396B-BC51-49F7-BF13-E65CFC52A06E.txt.gz",
+      "originalSha256": "e755fe657e8d51743223e28a12b274066708bfed959ca4f277136e554706511f"
+    }
+  ],
+  "fullDisplayVideoPublished": false
+}

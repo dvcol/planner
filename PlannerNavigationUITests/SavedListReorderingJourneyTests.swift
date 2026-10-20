@@ -37,15 +37,14 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
     XCTAssertTrue(application.staticTexts["Showing 2 of 3 items"].exists)
     #if os(iOS)
-      let edit = application.plannerElement("saved.list.edit")
-      edit.activateForPlannerJourney()
+      application.savedPlannerListEditControl().activateForPlannerJourney()
     #endif
     recordScreenshot(application, name: "Filtered List before native drag")
     dragItem(cafe, relativeTo: museum, before: true, application: application)
     recordScreenshot(application, name: "Filtered List after native drag")
     XCTAssertTrue(waitForOrder(cafe, before: museum), application.debugDescription)
     #if os(iOS)
-      edit.activateForPlannerJourney()
+      application.savedPlannerListEditControl().activateForPlannerJourney()
     #endif
     XCTAssertFalse(hotel.exists)
     XCTAssertEqual(museum.identifier, museumIdentifier)
@@ -71,6 +70,12 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     XCTAssertEqual(cafe.identifier, cafeIdentifier)
     XCTAssertTrue(hotelCompletion.waitForPlannerValue("Completed"))
     XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    #if os(iOS)
+      if application.windows.firstMatch.frame.width < 600 {
+        let navigationTitle = application.navigationBars.staticTexts["Tokyo"].firstMatch
+        XCTAssertTrue(navigationTitle.waitForExistence(timeout: 5))
+      }
+    #endif
     recordScreenshot(
       application, name: "Hidden membership retained after filtered drag and relaunch")
   }
@@ -138,9 +143,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     #if os(iOS)
       let backToList = application.plannerElement("BackButton")
       if backToList.exists { backToList.activateForPlannerJourney() }
-      let edit = application.plannerElement("saved.list.edit")
-      XCTAssertTrue(edit.waitForExistence(timeout: 5))
-      edit.activateForPlannerJourney()
+      application.savedPlannerListEditControl().activateForPlannerJourney()
     #endif
     dragItem(hotel, relativeTo: museum, before: true, application: application)
     XCTAssertTrue(waitForOrder(hotel, before: museum))
@@ -149,7 +152,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     dragItem(hotel, relativeTo: museum, before: true, application: application)
     XCTAssertTrue(waitForOrder(hotel, before: museum))
     #if os(iOS)
-      edit.activateForPlannerJourney()
+      application.savedPlannerListEditControl().activateForPlannerJourney()
     #endif
     XCTAssertEqual(hotel.identifier, retainedIdentifier)
     hotel.activateForPlannerJourney()

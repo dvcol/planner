@@ -1,0 +1,19 @@
+{
+  "sourceBundle": "/private/tmp/PlannerItemWindow-q113-tablet-native-layout-qualified.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4FD31515-E92E-4B22-974D-E4DE07434C14.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List title beside compact native Filters Add and More_0_E7FD07A1-F770-4CF6-A312-D703C5DF9379.png",
+      "timestamp": 1792483125.052,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "4FD31515-E92E-4B22-974D-E4DE07434C14.png",
+      "originalSha256": "6d4835d59cba1f101be69070fb8416167bbd49145e70808bf8f460fe6a34b807",
+      "visuallyInspected": true
+    }
+  ],
+  "fullDisplayVideoPublished": false
+}

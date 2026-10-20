@@ -1,0 +1,11 @@
+{
+  "textRedactions": [
+    {
+      "file": "0396312D-B45D-4614-A7B7-39A034CDC5F8.txt.gz",
+      "retainedSha256": "08a386a8bb3ad1d1530aafcd26f0fafea2b98c94242195b5eb2ceef7dced1455",
+      "redaction": "System menu contents omitted."
+    }
+  ],
+  "fullDisplayVideoPublished": false,
+  "currentRunNativeListOutcome": "Not reached; no window in failure snapshot."
+}

@@ -70,6 +70,27 @@ extension XCUIApplication {
     openSavedPlannerMenu(identifier: "saved.list.actions", title: "List actions")
   }
 
+  func savedPlannerListSortControl() -> XCUIElement {
+    savedPlannerMenu(identifier: "saved.list.sort", title: "Sort")
+  }
+
+  func savedPlannerListEditControl() -> XCUIElement {
+    savedPlannerMenu(identifier: "saved.list.edit", title: "Edit")
+  }
+
+  func dismissSavedPlannerListOverflow() {
+    #if os(iOS)
+      let editing = collectionViews.buttons.matching(
+        NSPredicate(format: "label == %@ OR label == %@", "Edit", "Done")
+      ).firstMatch
+      guard editing.exists else { return }
+      let title = navigationBars.staticTexts.firstMatch
+      XCTAssertTrue(title.exists)
+      title.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).tap()
+      XCTAssertTrue(editing.waitForNonExistence(timeout: 5))
+    #endif
+  }
+
   private func openSavedPlannerMenu(identifier: String, title: String) {
     savedPlannerMenu(identifier: identifier, title: title).activateForPlannerJourney()
   }
@@ -92,7 +113,20 @@ extension XCUIApplication {
         }
         contentBar.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()
         if !menu.exists {
-          menu = collectionViews.buttons[title].firstMatch
+          switch identifier {
+          case "saved.list.sort":
+            menu =
+              collectionViews.buttons.matching(
+                NSPredicate(format: "label BEGINSWITH %@", "Sort: ")
+              ).firstMatch
+          case "saved.list.edit":
+            menu =
+              collectionViews.buttons.matching(
+                NSPredicate(format: "label == %@ OR label == %@", "Edit", "Done")
+              ).firstMatch
+          default:
+            menu = collectionViews.buttons[title].firstMatch
+          }
         }
       #endif
     }
@@ -218,7 +252,15 @@ extension XCUIApplication {
     #if os(macOS)
       descendants(matching: .any)[identifier]
     #else
-      buttons[identifier]
+      switch identifier {
+      case "saved.list.estimate.edit", "saved.list.delete":
+        let identified = buttons[identifier]
+        if identified.exists { return identified }
+        let title = identifier == "saved.list.delete" ? "Delete list" : "Edit estimate"
+        return collectionViews.buttons[title].firstMatch
+      default:
+        return buttons[identifier]
+      }
     #endif
   }
 

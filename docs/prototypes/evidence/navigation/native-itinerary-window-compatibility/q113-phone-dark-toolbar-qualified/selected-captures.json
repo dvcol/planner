@@ -1,0 +1,42 @@
+{
+  "sourceBundle": "/private/tmp/PlannerItemWindow-q113-phone-dark-toolbar-qualified.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "FE8DEB18-27D8-472A-8321-AB31225BE758.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List native toolbar after Sort Edit Done and canceled estimate_0_76DC8ECF-CCA6-412B-842C-08AC224B600B.png",
+      "timestamp": 1792483481.165,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListMoreKeepsSortEditDoneAndContainerActionsReachable()",
+      "retainedFileName": "FE8DEB18-27D8-472A-8321-AB31225BE758.png",
+      "originalSha256": "3913ccc3762715a25357df01e5194dbdd86a7c0922db65699b2edf79763c63ed"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "3A4B90E0-671C-405C-8EE5-EB7DFF09D273.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List native title and toolbar frames_0_CF8809A4-38E0-45A0-88A1-6B2AF90761B6.txt",
+      "timestamp": 1792483502.739,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "3A4B90E0-671C-405C-8EE5-EB7DFF09D273.txt.gz",
+      "originalSha256": "1d229270ea807372d68ec857423271063c51fc11998933523dc0491128389b3d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "59A0E1CE-E604-4999-9D53-70F9A85694AE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List title beside compact native Filters Add and More_0_1B374039-A5A9-4843-B0F7-B24CE19A120F.png",
+      "timestamp": 1792483494.559,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "59A0E1CE-E604-4999-9D53-70F9A85694AE.png",
+      "originalSha256": "bb1aef87bf576eb5cc85f777cbd58679d56295d175d838cc429de7274bd8434b"
+    }
+  ],
+  "fullDisplayVideoPublished": false
+}

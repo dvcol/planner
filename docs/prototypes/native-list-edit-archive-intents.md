@@ -64,4 +64,4 @@ All 983 frozen inputs in each final Mac, Simulator and device packet match the c
 
 ## Remaining map work
 
-The broader ordinary Intent catalog, system invocation/confirmation/background/locked checks, native Agent Control and client routes, shared iCloud/account-bound storage, installed Share behavior and physical-device convergence/recovery/performance remain open. Richer List properties and other data workflows are separate slices. Signing remains deferred. Q113 A now approves compact List toolbar grouping in the next native slice. Final whole-app polish follows feature completion.
+The broader ordinary Intent catalog, system invocation/confirmation/background/locked checks, native Agent Control and client routes, shared iCloud/account-bound storage, installed Share behavior and physical-device convergence/recovery/performance remain open. Richer List properties and other data workflows are separate slices. Signing remains deferred. Q113 A approves compact List toolbar grouping; [the native review](../native-list-toolbar-review.md) records its implementation and platform qualification. Final whole-app polish follows feature completion.

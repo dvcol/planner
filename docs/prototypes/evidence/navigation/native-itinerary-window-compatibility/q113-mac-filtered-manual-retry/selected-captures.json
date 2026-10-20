@@ -1,0 +1,138 @@
+{
+  "sourceBundle": "/private/tmp/PlannerItemWindow-q113-mac-filtered-manual-retry.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "B9E8B9B5-925D-41A3-87ED-F96F597A12CE.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_1E66354D-73C9-477F-B20A-FE276B44436A.PlannerMCPPrototype",
+      "timestamp": 1792484094.844,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "B9E8B9B5-925D-41A3-87ED-F96F597A12CE.txt.gz",
+      "originalSha256": "32c937f32924e8c697a0b8143622fcf4158ee4e9cb58b870b8c9f1a50bf1f1c5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "7FE7A3BA-BA6F-4033-9C25-FB0A8E3C0250.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_84E05D40-60D5-47E9-9F7D-D8F47E94431A.txt",
+      "timestamp": 1792484094.751,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "7FE7A3BA-BA6F-4033-9C25-FB0A8E3C0250.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "E0AFF8AB-D754-472A-AD88-E2B037F66B0A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_59F7BAA0-5F99-43FA-9331-FCDFA9510CB3.txt",
+      "timestamp": 1792484093.836,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "E0AFF8AB-D754-472A-AD88-E2B037F66B0A.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "8C35459B-8229-425C-8DB7-D8D90DB0A3E4.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_A7B784C0-D3E4-4C0B-9E93-58A731EE849B.txt",
+      "timestamp": 1792484092.742,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "8C35459B-8229-425C-8DB7-D8D90DB0A3E4.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "F28C37A9-5BE5-45C9-904E-6BDB49B70023.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_4EA5D976-0A5F-4CA3-A7CB-DBED481D1DDE.txt",
+      "timestamp": 1792484091.754,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "F28C37A9-5BE5-45C9-904E-6BDB49B70023.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "D1488F7A-45A6-4738-BB23-9CA1AC03F25A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_1BD9901D-D169-4D47-9B25-75AC041B5AA9.txt",
+      "timestamp": 1792484090.756,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "D1488F7A-45A6-4738-BB23-9CA1AC03F25A.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "D25E312F-41D5-4FC4-B802-53B741BD57A8.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_76773D2D-0726-4AF9-9715-60E5C04B1E13.txt",
+      "timestamp": 1792484089.77,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "D25E312F-41D5-4FC4-B802-53B741BD57A8.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "5C938841-34BD-4C2A-96A1-36490BA98A6B.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_C36956FD-B5C0-40A7-92B1-B322A7BAB405.txt",
+      "timestamp": 1792484088.783,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "5C938841-34BD-4C2A-96A1-36490BA98A6B.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "78837E3C-7C0B-4E66-9F17-B2FC022E724A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_E92EA9A8-A470-405C-9FEF-F62A436806A0.txt",
+      "timestamp": 1792484087.792,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "78837E3C-7C0B-4E66-9F17-B2FC022E724A.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "A54ED23D-CA5D-4A94-AE78-4409C90F0FC4.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_D27E2EEB-C48A-442A-9EFE-C1A88E312029.txt",
+      "timestamp": 1792484086.807,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "A54ED23D-CA5D-4A94-AE78-4409C90F0FC4.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "0A382438-F02B-4D98-9704-AA27199DE26E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Notes for Hotel\" StaticText`_0_392257DB-9F0D-46F9-B827-496432659674.txt",
+      "timestamp": 1792484085.828,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "0A382438-F02B-4D98-9704-AA27199DE26E.txt.gz",
+      "originalSha256": "1e4f175815646f40e4049568ce660286cce7fbdb55a9b826d703acf74d9d44a2"
+    }
+  ],
+  "fullDisplayVideoPublished": false
+}

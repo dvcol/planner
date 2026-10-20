@@ -1,0 +1,79 @@
+{
+  "sourceBundle": "/private/tmp/PlannerItemWindow-q113-mac-filtered-manual-qualified.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "0396312D-B45D-4614-A7B7-39A034CDC5F8.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_1CF0AB6D-B001-4B6E-9D91-621535F5C6D2.PlannerMCPPrototype",
+      "timestamp": 1792483950.558,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "0396312D-B45D-4614-A7B7-39A034CDC5F8.txt.gz",
+      "originalSha256": "28cd070a0f95265e3b19a06946b87e60dad65ab2cd925ad2feea4cff7aaaab3d",
+      "redaction": "System menu subtree omitted; no native Window/Sheet/Dialog in the original hierarchy."
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "5D518C21-619A-41E0-B5FA-7E61EB8EF4FA.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"more toolbar items\" PopUpButton`_0_79F5F19C-A2D6-4AE5-ACE5-A09C3E5A4285.txt",
+      "timestamp": 1792483950.47,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "5D518C21-619A-41E0-B5FA-7E61EB8EF4FA.txt.gz",
+      "originalSha256": "3c8efca0e837148c69189634790e3911442673f4d08d246ab0f7b58d31d9ba81"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "75A65E24-90E4-486F-BF15-9DCF566C0E15.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"more toolbar items\" PopUpButton`_0_86B06030-C3B4-4012-8B20-99488F6C6442.txt",
+      "timestamp": 1792483949.477,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "75A65E24-90E4-486F-BF15-9DCF566C0E15.txt.gz",
+      "originalSha256": "3c8efca0e837148c69189634790e3911442673f4d08d246ab0f7b58d31d9ba81"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "ADD6FF4A-AC0A-421E-B4B5-44059D1C719A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"more toolbar items\" PopUpButton`_0_42A153B0-A870-406E-991F-05C137E5DC54.txt",
+      "timestamp": 1792483948.498,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "ADD6FF4A-AC0A-421E-B4B5-44059D1C719A.txt.gz",
+      "originalSha256": "3c8efca0e837148c69189634790e3911442673f4d08d246ab0f7b58d31d9ba81"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "4E357C10-81C1-4EA5-87E1-46AB07D2FA44.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"more toolbar items\" PopUpButton`_0_4644322A-A651-4430-945B-8FC38D0F9DEA.txt",
+      "timestamp": 1792483947.517,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "4E357C10-81C1-4EA5-87E1-46AB07D2FA44.txt.gz",
+      "originalSha256": "3c8efca0e837148c69189634790e3911442673f4d08d246ab0f7b58d31d9ba81"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "261FF32C-3940-48C3-B61B-01DD80E09F01.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"more toolbar items\" PopUpButton`_0_CDAB8225-8708-40C5-AD75-18D4E2DCDFDE.txt",
+      "timestamp": 1792483946.539,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "261FF32C-3940-48C3-B61B-01DD80E09F01.txt.gz",
+      "originalSha256": "3c8efca0e837148c69189634790e3911442673f4d08d246ab0f7b58d31d9ba81"
+    }
+  ],
+  "fullDisplayVideoPublished": false
+}
