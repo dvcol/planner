@@ -1,0 +1,12 @@
+{
+  "qualificationPassed": false,
+  "reason": "The test incorrectly expected receipt status to be available while its recovery archive was obstructed. No feature qualification is credited.",
+  "sourceLogSha256": "32add4f431a9c3ceaa2ae969d09208ef955c9259b516069846acb19ced0c7d85",
+  "closedHostProcessIdentifiers": [
+    79138
+  ],
+  "closedDatabaseHandlesVerified": true,
+  "removedMarkedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/BAC813F7-126C-4B23-BCC0-CDBCE1714068"
+  ]
+}

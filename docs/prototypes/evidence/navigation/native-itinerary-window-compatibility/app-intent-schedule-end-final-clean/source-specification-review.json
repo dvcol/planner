@@ -1,0 +1,12 @@
+{
+  "review": "Source and specification review of the saved-end adapter and all seven production-interface tests.",
+  "reportLinksExist": true,
+  "matchingCurrentInputs": 1036,
+  "preservedPriorContracts": true,
+  "newAction": "ClearPlannerScheduleEndIntent",
+  "testSeam": "Q112 production Intent callAsFunction with real Core storage",
+  "noNewPackagesTargetsSchemaOrTestHooks": true,
+  "systemInvocationQualified": false,
+  "signingOrInstallationPerformed": false,
+  "remainingConfirmedFindings": []
+}

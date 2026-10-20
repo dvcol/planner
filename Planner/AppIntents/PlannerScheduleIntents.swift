@@ -94,6 +94,59 @@
     }
   }
 
+  struct ClearPlannerScheduleEndIntent: AppIntent {
+    static let title: LocalizedStringResource = "Clear Schedule End"
+    static let description = IntentDescription(
+      "Keep the saved start and timezone. An all-day booking becomes a single day.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Schedule", query: PlannerScheduleEntityQuery())
+    var schedule: PlannerScheduleEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let (planner, session) = try await plannerStore.appIntentContext()
+      try Task.checkCancellation()
+      let source: PlannerScheduleSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .schedule, id: schedule.id)))
+      {
+      case .source(.schedule(let current)): source = current
+      case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+      default: throw PlannerScheduleIntentFailure(message: "Planner could not read this Schedule.")
+      }
+      let form: PlannerScheduleForm
+      switch source.content.form {
+      case .timed(let start, _, let zone):
+        form = .timed(start: start, end: nil, planningTimeZone: zone)
+      case .allDay(let start, _): form = .allDay(start: start, end: nil)
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .editSchedule(
+          scheduleId: source.source.id, changes: .init(form: form),
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerScheduleIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Cleared the Schedule end. Its saved start is preserved."
+        case .incomplete:
+          dialog =
+            "The Schedule end was cleared on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   struct SetPlannerScheduleTimeZoneIntent: AppIntent {
     static let title: LocalizedStringResource = "Set Timed Schedule Timezone"
     static let description = IntentDescription(
