@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "verifiedInputCount": 1002,
+  "unchangedPriorInputCount": 1000,
+  "addedInputs": [
+    "Planner/AppIntents/PlannerLabelAssociationIntents.swift",
+    "PlannerMCPTests/PlannerLabelAssociationIntentTests.swift"
+  ]
+}

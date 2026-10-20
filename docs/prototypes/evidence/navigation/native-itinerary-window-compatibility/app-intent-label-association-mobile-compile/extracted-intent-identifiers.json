@@ -1,0 +1,120 @@
+{
+  "actions": [
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerListToItineraryIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "CreatePlannerTagIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerListIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerItineraryItemIntent",
+    "GetPlannerListIntent",
+    "GetPlannerTagIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "RemovePlannerItineraryEntryIntent",
+    "RenamePlannerCategoryIntent",
+    "RenamePlannerTagIntent",
+    "ReorderPlannerItemInListIntent",
+    "ReorderPlannerItineraryEntryIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCategoryIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItemTagIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerItineraryCategoryIntent",
+    "SetPlannerItineraryItemCompletionIntent",
+    "SetPlannerItineraryTagIntent",
+    "SetPlannerListArchiveIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerItineraryEntryEntity",
+    "PlannerItineraryItemEntity",
+    "PlannerListEntity",
+    "PlannerTagEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerItineraryEntryEntityQuery",
+    "PlannerItineraryItemEntityQuery",
+    "PlannerListEntityQuery",
+    "PlannerTagEntityQuery"
+  ],
+  "enumCases": {
+    "PlannerItineraryEntryKind": {
+      "item": "Item",
+      "list": "List"
+    },
+    "PlannerItineraryReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Entry",
+      "after": "After Entry"
+    },
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "parameterContracts": {
+    "SetPlannerItemCategoryIntent": {
+      "owner": "PlannerItemEntity",
+      "label": "PlannerCategoryEntity",
+      "requiredParameters": [
+        "assigned",
+        "category",
+        "item"
+      ],
+      "assignedDefault": true
+    },
+    "SetPlannerItemTagIntent": {
+      "owner": "PlannerItemEntity",
+      "label": "PlannerTagEntity",
+      "requiredParameters": [
+        "assigned",
+        "item",
+        "tag"
+      ],
+      "assignedDefault": true
+    },
+    "SetPlannerItineraryCategoryIntent": {
+      "owner": "PlannerItineraryEntity",
+      "label": "PlannerCategoryEntity",
+      "requiredParameters": [
+        "assigned",
+        "category",
+        "itinerary"
+      ],
+      "assignedDefault": true
+    },
+    "SetPlannerItineraryTagIntent": {
+      "owner": "PlannerItineraryEntity",
+      "label": "PlannerTagEntity",
+      "requiredParameters": [
+        "assigned",
+        "itinerary",
+        "tag"
+      ],
+      "assignedDefault": true
+    }
+  },
+  "metadataSha256": "9ba0e2e1fbdfa67962e63c4b35e85a922c4241fea9dc3fd3fbfc431aa4f1a49c",
+  "catalogExtensionVerified": true,
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}
