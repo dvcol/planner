@@ -456,6 +456,94 @@
     }
   }
 
+  enum PlannerListReorderPosition: String, AppEnum, CaseIterable {
+    case first, last, before, after
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Position in List")
+    static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+      .first: .init(title: "Beginning"), .last: .init(title: "End"),
+      .before: .init(title: "Before Item"), .after: .init(title: "After Item"),
+    ]
+  }
+
+  struct ReorderPlannerItemInListIntent: AppIntent {
+    static let title: LocalizedStringResource = "Reorder Item in List"
+    static let description = IntentDescription(
+      "Change the saved Manual order. Before/After use a relative Item in the same List; Beginning/End use only the selected Item and List."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "List") var list: PlannerListEntity
+    @Parameter(title: "Position") var position: PlannerListReorderPosition
+    @Parameter(title: "Relative to Item") var relativeItem: PlannerItemEntity?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let current: PlannerListSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .list, id: list.id)))
+      {
+      case .source(.list(let source)): current = source
+      case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
+      default: throw PlannerListIntentFailure(message: "Planner could not read this List.")
+      }
+      let membership = current.references.first { reference in
+        guard case .membership(_, let owner, let source) = reference else { return false }
+        return owner == .init(kind: .list, id: list.id) && source == .init(kind: .item, id: item.id)
+      }
+      guard case .membership(let identifier, _, _)? = membership else {
+        throw PlannerListIntentFailure(message: "This Item no longer belongs to the selected List.")
+      }
+      let placement: PlannerPlacement
+      switch position {
+      case .first: placement = .first
+      case .last: placement = .last
+      case .before, .after:
+        guard let relativeItem else {
+          throw PlannerListIntentFailure(message: "Choose a relative Item for Before or After.")
+        }
+        let anchor = current.references.first { reference in
+          guard case .membership(_, let owner, let source) = reference else { return false }
+          return owner == .init(kind: .list, id: list.id)
+            && source == .init(kind: .item, id: relativeItem.id)
+        }
+        guard case .membership(let anchorIdentifier, _, _)? = anchor else {
+          throw PlannerListIntentFailure(
+            message: "The relative Item no longer belongs to this List.")
+        }
+        if position == .before {
+          placement = .before(associationId: anchorIdentifier)
+        } else {
+          placement = .after(associationId: anchorIdentifier)
+        }
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .reorderMembership(listId: list.id, membershipId: identifier, placement: placement))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerListIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          dialog =
+            "Updated this List's saved Manual order. Shared Items and entry completion are preserved."
+        case .incomplete:
+          dialog =
+            "The saved List order changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerListIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }
