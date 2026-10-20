@@ -1,0 +1,19 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerItemWindow-app-intent-list-final-qualification.xcresult"
+  ],
+  "summary": {
+    "title": "Test - Planner",
+    "result": "Passed",
+    "totalTestCount": 28,
+    "passedTests": 28,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

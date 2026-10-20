@@ -1,0 +1,14 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryValues.swift": {
+    "unchangedFromBase": "f15d6db4",
+    "sha256": "2b042746259536b6497eb4bb2c7fece73763c4f9ab8b222ee26e739da9218cbc"
+  },
+  "Planner/Scenes/SavedActivityEstimateEditor.swift": {
+    "unchangedFromBase": "f15d6db4",
+    "sha256": "83af541964b9ef66cc60d75fcec2c1c784545697b2faead2b5d7cdbc67e3f118"
+  },
+  "Planner/AppIntents/PlannerItemIntents.swift": {
+    "unchangedFromBase": "f15d6db4",
+    "sha256": "d1c9a3300945912c0c807d4fe47fadb443caacbbd384184d76f13d0ac06b9e63"
+  }
+}
