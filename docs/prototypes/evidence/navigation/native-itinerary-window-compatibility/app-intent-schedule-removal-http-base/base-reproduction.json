@@ -1,0 +1,11 @@
+{
+  "committedBase": "aa2267c9c2b2d736eaafc930239b6faa987dad8d",
+  "workingTreeOverlays": false,
+  "same1033InputsAsQualifiedBase": true,
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 3,
+    "invalidated open fd": 3,
+    "database integrity compromised": 3
+  },
+  "qualificationPassed": false
+}

@@ -8,14 +8,8 @@ struct ItineraryScheduleRoutingTests {
   @Test func rowWindowsOverHttpDistinguishDirectAppointmentsPlanSpansAndInheritedPlanning()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let planner = PlannerCore.Planner(
-      configuration: .init(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+    let configuration = try await MainActor.run { try makePlannerIntentStorage().configuration }
+    let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
       guard
@@ -138,14 +132,8 @@ struct ItineraryScheduleRoutingTests {
 
   @Test func itineraryScheduleUsesOwnedIdentityForHttpCreateReadEditReplayAndRemoval() async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let planner = PlannerCore.Planner(
-      configuration: .init(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+    let configuration = try await MainActor.run { try makePlannerIntentStorage().configuration }
+    let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
         .init(

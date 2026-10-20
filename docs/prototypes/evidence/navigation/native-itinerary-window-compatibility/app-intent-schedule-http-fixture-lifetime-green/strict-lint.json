@@ -1,0 +1,12 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerMCPTests/ItineraryScheduleRoutingTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": ""
+}

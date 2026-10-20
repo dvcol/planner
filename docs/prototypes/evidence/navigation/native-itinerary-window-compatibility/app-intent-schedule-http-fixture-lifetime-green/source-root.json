@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerScheduleRemovalBaseSource",
+  "base": "aa2267c9c2b2d736eaafc930239b6faa987dad8d",
+  "overlays": [
+    "PlannerMCPTests/ItineraryScheduleRoutingTests.swift"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "cause": "Two HTTP tests removed their directories while Core SQLite handles were still alive.",
+  "baseWarningReproduced": true,
+  "changedInputs": [
+    "PlannerMCPTests/ItineraryScheduleRoutingTests.swift"
+  ],
+  "priorInputs": 1033,
+  "currentInputs": 1033,
+  "passedTests": 3,
+  "actualHttpTests": 2,
+  "nativeReadTests": 1,
+  "productCodeChanged": false,
+  "postHostCleanupVerified": true
+}
