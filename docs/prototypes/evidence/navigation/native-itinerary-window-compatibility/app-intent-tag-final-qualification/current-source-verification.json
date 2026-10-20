@@ -1,0 +1,11 @@
+{
+  "allInputsMatch": true,
+  "inputCount": 999,
+  "priorInputsUnchanged": true,
+  "priorInputCount": 997,
+  "newInputs": [
+    "Planner/AppIntents/PlannerTagIntents.swift",
+    "PlannerMCPTests/PlannerTagIntentTests.swift"
+  ],
+  "runtimeScope": "16 Tag/Category cases; earlier 99-case runtime evidence is retained, not rerun."
+}
