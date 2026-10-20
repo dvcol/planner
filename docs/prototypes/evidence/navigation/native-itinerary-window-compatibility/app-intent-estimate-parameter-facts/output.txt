@@ -1,0 +1,11 @@
+measurementUnits [(extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.hours, (extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.microseconds, (extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.milliseconds, (extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.minutes, (extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.nanoseconds, (extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.picoseconds, (extension in AppIntents):AppIntents.IntentParameter<Foundation.Measurement<__C.NSUnitDuration>>.Duration.seconds]
+durationUnits ["hours", "microseconds", "milliseconds", "minutes", "nanoseconds", "picoseconds", "seconds"]
+mixed90Minutes 90.0
+DoubleInt64Max 9.223372036854776e+18 exactInt64 nil
+DoubleAdjacentMaxDistinct false
+Beyond2Pow53 9007199254740992.0 Optional(9007199254740992)
+nativeIntBits 64 9223372036854775807
+durationWholeMinutes (seconds: 5400, attoseconds: 0)
+durationMaxWholeMinutes 2835686391007820528
+CoreMaxMinutes 9223372036854775807
+equalDifferentDurationConstruction true

@@ -1,0 +1,15 @@
+[
+  "xcrun",
+  "--sdk",
+  "macosx",
+  "swiftc",
+  "-target",
+  "arm64-apple-macos27.0",
+  "-sdk",
+  "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+  "-module-cache-path",
+  "/private/tmp/PlannerDurationParameterFacts/cache",
+  "/private/tmp/PlannerDurationParameterFacts/Supported.swift",
+  "-o",
+  "/private/tmp/PlannerDurationParameterFacts/supported-verified"
+]
