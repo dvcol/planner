@@ -1,5 +1,34 @@
 # Decision register
 
+## Current frontier, 21 October 2026
+
+Q116 A is implemented. Item/Itinerary edits return exact new bookmark references, and the native Add Link actions use them without a second read. The [Core result qualification](prototypes/core-owned-link-edit-results.md) and [native adapter qualification](prototypes/native-add-link-intents.md) retain their tests and limits. Native [List notes](prototypes/native-list-notes.md) are also implemented. Neither checkpoint closes the map.
+
+These choices remain unanswered. Recommendations are proposals, not accepted defaults.
+
+| Question | Decision still needed | Recommendation and consequence | Concrete review |
+| --- | --- | --- | --- |
+| Q115 | Shortcuts estimate inputs and exact range | A: Quantity, six-unit selection and Additional minutes. Preserves the complete accepted integer range and mixed durations. | [Estimate inputs](native-estimate-intent-input-review.md) |
+| Q117 | Reading saved content from native entities | A: On-demand deferred properties, with production getter tests. Avoids hydrating full content for every picker row; individual reads can fail or observe different generations. | [Saved-content properties](native-deferred-content-read-contract-review.md) |
+| Q118 | Schedule creation action layout | A: Four focused actions for timed/all-day Item/Itinerary bookings. Required inputs are explicit; the action library gains four entries. Occurrence and full form-edit choices follow this decision. | [Schedule workflows](native-schedule-intent-workflow-review.md#q118-creation-action-layout) |
+| Q119 | Relevant timed Schedule choices and their test boundary | A: A native DynamicOptionsProvider with direct production results tests. Offers timed choices while retaining execution-time validation; actual system picker behavior remains separate. | [Timed choices](native-schedule-intent-workflow-review.md#q119-timed-schedule-choices-and-test-boundary) |
+| Q120 | Confirmed bulk adapter contract and local test boundary | A: Three focused actions and direct production store preparation/submission tests. Tests exact reviewed writes locally without fabricating system confirmation. | [Confirmed bulk completion](native-bulk-intent-contract-review.md) |
+| Q121 | Category/Tag icon selection | A: A native Picker with a small named symbol set and Default. Retain an existing custom symbol until explicitly changed or cleared. | [Label appearance](native-label-appearance-review.md) |
+| Q122 | Open List/Itinerary window and draft behavior | A: Reuse one foreground main window, preserving Save, Discard and Keep editing. Other windows retain their selection; the concrete handoff follows the choice. | [Opening saved plans](native-plan-opening-shortcuts-review.md#q122-opening-a-saved-plan) |
+| Q123 | Initial discoverable App Shortcut set | A: Create Item, Find Items, Find Lists and Find Itineraries. Existing ordinary actions remain available; the initial provider does not depend on unfinished Open actions. | [App Shortcut discovery](native-plan-opening-shortcuts-review.md#q123-the-initial-discoverable-app-shortcuts) |
+
+## Remaining gates
+
+- Local implementation continues after the relevant choices. Q122/Q123 now make plan opening and initial App Shortcut discovery concrete. Their absence is not a signing failure.
+- The latest Mac UI runner times out enabling automation before any journey starts. App compilation succeeds, but actual window, editing and text-Undo interactions remain unqualified. No evidence establishes that paid signing fixes this runner error.
+- Actual Shortcuts/Siri execution and picker injection remain unqualified. Apple's system test service rejected the Customer build; passing production-interface tests does not replace system invocation or establish that a paid account fixes it.
+- Signed/shared storage, Agent Control against that storage, CloudKit convergence and account transitions, installed Share extensions and physical-device performance remain open. Signing/account setup is deferred at the user's request.
+- Final whole-app UI polish follows feature completion under [its dedicated contract](native-ui-polish.md). Earlier scoped layout, contrast and dark-mode corrections do not close it. Specification handoff also needs the remaining prototype gates and the user's final coherence review.
+
+The [map](https://github.com/dvcol/planner/issues/1) and open prototype issues retain their original Context, DoR, DoD and required tests. This register separates human choices from implementation and platform evidence; it grants no new test boundary or feature approval.
+
+## Historical decisions and checkpoints
+
 The human accepted Q108 A, Q109 A and Q110 A on 19 October 2026. The additional production history-controller test boundary is approved. Move Undo reverses the whole Move atomically; one editor Save issues one atomic group for its removed associations. Their concrete extension contract and literal fixtures follow those choices before implementation. Q102's account/team setup remains deferred. An accepted choice alone does not establish implementation or platform acceptance. The following historical entries retain their original context. Current implementation reports and later status entries supersede their earlier starting-state wording.
 
 The human accepted A for Q94, Q95 and Q96 on 17 October 2026. Their concrete presentations, production interfaces and test seams are approved. The human also accepted A for Q97: extend the shared loader for standalone List windows. The 18 October UI-review request brought the navigation and appearance slice forward. Q94–Q97's local implementation checkpoints are linked below; their broader qualification gates remain open.
