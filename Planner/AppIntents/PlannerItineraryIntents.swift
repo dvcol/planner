@@ -48,26 +48,25 @@
     }
 
     @MainActor func entities(matching string: String) async throws -> [PlannerItineraryEntity] {
-      try await loadItineraries(matching: string)
+      try await loadItineraries(query: .init(sourceKind: .itinerary, text: string, archive: .all))
     }
 
     @MainActor func suggestedEntities() async throws -> [PlannerItineraryEntity] {
-      try await loadItineraries(matching: "")
+      try await loadItineraries(query: .init(sourceKind: .itinerary, archive: .all))
     }
 
-    @MainActor private func loadItineraries(matching text: String) async throws
+    @MainActor func loadItineraries(query: PlannerCatalogQuery) async throws
       -> [PlannerItineraryEntity]
     {
       let (planner, session) = try await plannerStore.appIntentContext()
       let snapshot: PlannerQuerySnapshot
       switch await planner.query(
-        .init(
-          session: session,
-          request: .catalog(.init(sourceKind: .itinerary, text: text, archive: .all))))
+        .init(session: session, request: .catalog(query)))
       {
       case .snapshot(let current): snapshot = current
       case .failed(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
       }
+      try Task.checkCancellation()
       var entities: [PlannerItineraryEntity] = []
       var offset: Int64 = 0
       while offset < snapshot.matchingCount {
