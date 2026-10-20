@@ -153,6 +153,53 @@
     }
   }
 
+  struct RenamePlannerCategoryIntent: AppIntent {
+    static let title: LocalizedStringResource = "Rename Category"
+    static let description = IntentDescription(
+      "Rename the shared Category while preserving its references, color and icon.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Category") var category: PlannerCategoryEntity
+    @Parameter(title: "New name") var name: String
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let source: PlannerCategorySourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .category, id: category.id)))
+      {
+      case .source(.category(let current)): source = current
+      case .failed(let reason): throw PlannerCategoryIntentFailure(message: reason.message)
+      default:
+        throw PlannerCategoryIntentFailure(message: "Planner could not read this Category.")
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .editCategory(
+          sourceId: source.source.id, changes: .init(name: .set(name)),
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerCategoryIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerCategoryIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Renamed the shared Category. Its references are preserved."
+        case .incomplete:
+          dialog =
+            "The Category was renamed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerCategoryIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }

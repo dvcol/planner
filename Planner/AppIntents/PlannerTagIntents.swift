@@ -143,6 +143,52 @@
     }
   }
 
+  struct RenamePlannerTagIntent: AppIntent {
+    static let title: LocalizedStringResource = "Rename Tag"
+    static let description = IntentDescription(
+      "Rename the shared Tag while preserving its references, color and icon.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Tag") var tag: PlannerTagEntity
+    @Parameter(title: "New name") var name: String
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let source: PlannerTagSourceRead
+      switch await planner.read(
+        session: session, request: .source(.init(kind: .tag, id: tag.id)))
+      {
+      case .source(.tag(let current)): source = current
+      case .failed(let reason): throw PlannerTagIntentFailure(message: reason.message)
+      default: throw PlannerTagIntentFailure(message: "Planner could not read this Tag.")
+      }
+      let result = try await plannerStore.executeAppIntent(
+        .editTag(
+          sourceId: source.source.id, changes: .init(name: .set(name)),
+          expectedFieldHashes: source.fieldHashes))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerTagIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerTagIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Renamed the shared Tag. Its references are preserved."
+        case .incomplete:
+          dialog =
+            "The Tag was renamed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerTagIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }

@@ -1,0 +1,17 @@
+{
+  "allInputsMatch": true,
+  "inputCount": 1000,
+  "modifiedPriorInputs": [
+    "Planner/AppIntents/PlannerCategoryIntents.swift",
+    "Planner/AppIntents/PlannerTagIntents.swift"
+  ],
+  "unchangedPriorInputCount": 997,
+  "newInputs": [
+    "PlannerMCPTests/PlannerLabelRenameIntentTests.swift"
+  ],
+  "unchangedCreateGetQueryPrefixes": {
+    "Planner/AppIntents/PlannerCategoryIntents.swift": "9a05de99c552859f80d715999eb2321df3de8331dd83ee6d631c810198d03d00",
+    "Planner/AppIntents/PlannerTagIntents.swift": "0f09f17366464e7931cab5ff06a59c23566979c9a9ce0719ae1cd131489a467f"
+  },
+  "runtimeScope": "23 affected label cases; broader runtime evidence retained, not rerun."
+}

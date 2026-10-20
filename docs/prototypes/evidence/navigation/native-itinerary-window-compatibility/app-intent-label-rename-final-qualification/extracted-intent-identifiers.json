@@ -1,0 +1,74 @@
+{
+  "actions": [
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerListToItineraryIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "CreatePlannerTagIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerListIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerItineraryItemIntent",
+    "GetPlannerListIntent",
+    "GetPlannerTagIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "RemovePlannerItineraryEntryIntent",
+    "RenamePlannerCategoryIntent",
+    "RenamePlannerTagIntent",
+    "ReorderPlannerItemInListIntent",
+    "ReorderPlannerItineraryEntryIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerItineraryItemCompletionIntent",
+    "SetPlannerListArchiveIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerItineraryEntryEntity",
+    "PlannerItineraryItemEntity",
+    "PlannerListEntity",
+    "PlannerTagEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerItineraryEntryEntityQuery",
+    "PlannerItineraryItemEntityQuery",
+    "PlannerListEntityQuery",
+    "PlannerTagEntityQuery"
+  ],
+  "enumCases": {
+    "PlannerItineraryEntryKind": {
+      "item": "Item",
+      "list": "List"
+    },
+    "PlannerItineraryReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Entry",
+      "after": "After Entry"
+    },
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "metadataSha256": "022eb259492a0369ec1114a780d488b6f5f222e76b91a866e09b411f073136df",
+  "catalogExtensionVerified": true,
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}
