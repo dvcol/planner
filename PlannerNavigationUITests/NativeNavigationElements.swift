@@ -256,7 +256,7 @@ extension XCUIApplication {
       case "saved.list.estimate.edit", "saved.list.delete":
         let identified = buttons[identifier]
         if identified.exists { return identified }
-        let title = identifier == "saved.list.delete" ? "Delete list" : "Edit estimate"
+        let title = identifier == "saved.list.delete" ? "Delete list" : "Edit list"
         return collectionViews.buttons[title].firstMatch
       default:
         return buttons[identifier]

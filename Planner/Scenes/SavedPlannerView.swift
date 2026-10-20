@@ -1658,7 +1658,7 @@ struct SavedPlannerView: View {
 
   private func listActionsMenu(_ list: PlannerListSourceRead) -> some View {
     Menu {
-      Button("Edit estimate", systemImage: "clock") {
+      Button("Edit list", systemImage: "square.and.pencil") {
         listEditDraft = .init(list: list)
       }
       .accessibilityIdentifier("saved.list.estimate.edit")
@@ -1866,6 +1866,7 @@ private struct SavedListForm: View {
   let list: PlannerListSourceRead?
   let didCreate: (PlannerEntityReference) -> Void
   @State private var name: String
+  @State private var notes: String
   @State private var manualEstimate: PlannerEstimate?
   @State private var operationId = UUID()
 
@@ -1877,6 +1878,7 @@ private struct SavedListForm: View {
     self.list = list
     self.didCreate = didCreate
     _name = State(initialValue: list?.content.name ?? "")
+    _notes = State(initialValue: list?.content.notes ?? "")
     _manualEstimate = State(initialValue: list?.content.manualEstimate)
   }
 
@@ -1885,7 +1887,8 @@ private struct SavedListForm: View {
       return false
     }
     guard let list else { return true }
-    return name != list.content.name || manualEstimate != list.content.manualEstimate
+    return name != list.content.name || notes != (list.content.notes ?? "")
+      || manualEstimate != list.content.manualEstimate
   }
 
   var body: some View {
@@ -1893,13 +1896,16 @@ private struct SavedListForm: View {
       Form {
         TextField("Name", text: $name)
           .accessibilityIdentifier("saved.list.name")
+        TextField("Notes", text: $notes, axis: .vertical)
+          .lineLimit(3...8)
+          .accessibilityIdentifier("saved.list.notes")
         SavedActivityEstimateEditor(
           estimate: $manualEstimate,
           accessibilityIdentifierPrefix: "saved.list.estimate", purpose: .overall)
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
-      .navigationTitle(list == nil ? "New list" : "Edit List")
+      .navigationTitle(list == nil ? "New list" : "Edit list")
       .toolbarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
@@ -1914,11 +1920,13 @@ private struct SavedListForm: View {
               let source: PlannerEntityReference?
               if let list {
                 let saved = await store.editList(
-                  list, name: name, manualEstimate: manualEstimate, operationId: operationId)
+                  list, name: name, notes: notes, manualEstimate: manualEstimate,
+                  operationId: operationId)
                 source = saved ? list.source : nil
               } else {
                 source = await store.createList(
-                  name: name, manualEstimate: manualEstimate, operationId: operationId)
+                  name: name, notes: notes, manualEstimate: manualEstimate,
+                  operationId: operationId)
               }
               guard let source, store.alertMessage == nil else { return }
               didCreate(source)
