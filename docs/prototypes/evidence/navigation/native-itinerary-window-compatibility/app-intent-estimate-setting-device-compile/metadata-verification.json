@@ -1,0 +1,34 @@
+{
+  "platform": "device",
+  "metadataSha256": "affddfbca6f23435b0cca822b9cda21eab2cde24d377d9347f4c590512be9529",
+  "baseline": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/app-intent-container-find-device-compile/extract.actionsdata.gz",
+  "retainedActions": 69,
+  "addedActions": [
+    "SetPlannerItemEstimateIntent",
+    "SetPlannerItineraryEstimateIntent",
+    "SetPlannerListEstimateIntent"
+  ],
+  "retainedEntities": 10,
+  "retainedQueries": 10,
+  "retainedEnums": 14,
+  "units": [
+    "minute",
+    "hour",
+    "day",
+    "week",
+    "month",
+    "year"
+  ],
+  "allPriorContractsEqual": true,
+  "comparisonNormalization": "Only resolvableInputTypes alternatives are treated as an unordered set; parameter and enum case order remain exact",
+  "requiredFields": [
+    "owner",
+    "quantity",
+    "unit",
+    "additionalMinutes"
+  ],
+  "quantityAndAdditionalMinutesType": "native Int",
+  "defaultUnit": "minute",
+  "defaultAdditionalMinutes": 0,
+  "systemInvocationCredit": false
+}

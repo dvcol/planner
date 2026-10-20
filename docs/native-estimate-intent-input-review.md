@@ -1,6 +1,6 @@
 # Estimate input in Shortcuts
 
-Status: Q115 A accepted on 21 October 2026. Quantity, Unit and Additional minutes are approved, using the existing production Intent test boundary.
+Status: Q115 A accepted on 21 October 2026 and [implemented locally](prototypes/native-estimate-setting-intents.md). Quantity, Unit and Additional minutes preserve exact values through the approved production Intent boundary. Actual system input/invocation remains open.
 
 ## Context and settled behavior
 

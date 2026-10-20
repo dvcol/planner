@@ -1,0 +1,10 @@
+{
+  "matchingFrozenInputCount": 1045,
+  "phases": [
+    "app-intent-estimate-setting-final",
+    "app-intent-estimate-setting-mobile-compile",
+    "app-intent-estimate-setting-device-compile"
+  ],
+  "allSourceEpochsEqual": true,
+  "systemInvocationCredit": false
+}
