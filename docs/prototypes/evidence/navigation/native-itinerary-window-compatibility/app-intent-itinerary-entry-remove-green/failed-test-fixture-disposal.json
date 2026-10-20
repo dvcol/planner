@@ -1,0 +1,11 @@
+{
+  "qualificationPassed": false,
+  "failureInspected": "The test expected all incoming List references unchanged; removal correctly removes only its selected itineraryEntry reference. Corrected the expectation without changing production behavior.",
+  "sourceLogSha256": "01698f2a7e4dc3663052ea5db840fe449a114e879316ce19900be3a028414d95",
+  "hostProcessIdentifiers": [
+    48036
+  ],
+  "removedAfterHostExit": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/D4FF7EB3-D0B9-403B-96DD-81DCFEA4B770"
+  ]
+}
