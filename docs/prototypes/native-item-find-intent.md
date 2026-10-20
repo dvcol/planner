@@ -1,6 +1,6 @@
 # Native Item finding
 
-Status: first text/state/scope/sort slice qualified at the production Intent boundary. Mac, Simulator and unsigned device products compile. Signing remains deferred.
+Status: first text/state/scope/sort slice qualified at the production Intent boundary. Mac, Simulator and unsigned device products compile. Signing remains deferred. The [cumulative identity/presence/scheduling follow-up](native-item-find-criteria-intent.md) is subsequently qualified separately; the counts below retain this first slice's original evidence epoch.
 
 ## Context and goal
 
