@@ -1,0 +1,12 @@
+{
+  "priorInputs": 1028,
+  "currentInputs": 1029,
+  "changedInputs": [
+    "Planner/AppIntents/PlannerLabelAssociationIntents.swift",
+    "PlannerMCPTests/PlannerLabelAssociationIntentTests.swift"
+  ],
+  "addedInputs": [
+    "PlannerMCPTests/PlannerAssignedLabelIntentTests.swift"
+  ],
+  "otherPriorInputsUnchanged": true
+}

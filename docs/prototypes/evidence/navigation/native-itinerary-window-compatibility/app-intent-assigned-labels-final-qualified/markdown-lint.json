@@ -1,0 +1,13 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerMarkdownlintConfig.json",
+    "docs/prototypes/native-assigned-label-read-intents.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-assigned-label-read-intents.md\nLinting: 1 file\nSummary: 0 issues in 0 files\n",
+  "stderr": ".../mvgyf90g-24en                        | Progress: resolved 0, reused 1, downloaded 0, added 0\n.../mvgyf90g-24en                        | Progress: resolved 0, reused 63, downloaded 0, added 0\n.../mvgyf90g-24en                        | Progress: resolved 1, reused 90, downloaded 0, added 0\n.../mvgyf90g-24en                        | Progress: resolved 87, reused 90, downloaded 0, added 87, done\n\ndependencies:\n+ markdownlint-cli2 0.23.3\n\nDone in 5.2s using pnpm v12.14.0\n"
+}

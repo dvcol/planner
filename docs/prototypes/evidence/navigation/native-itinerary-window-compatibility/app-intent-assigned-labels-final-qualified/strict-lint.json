@@ -1,0 +1,14 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/AppIntents/PlannerLabelAssociationIntents.swift",
+    "PlannerMCPTests/PlannerLabelAssociationIntentTests.swift",
+    "PlannerMCPTests/PlannerAssignedLabelIntentTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": ""
+}
