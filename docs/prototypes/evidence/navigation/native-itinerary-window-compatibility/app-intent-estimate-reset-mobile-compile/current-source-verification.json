@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "verifiedInputCount": 1005,
+  "unchangedPriorInputCount": 1003,
+  "addedInputs": [
+    "Planner/AppIntents/PlannerEstimateResetIntents.swift",
+    "PlannerMCPTests/PlannerEstimateResetIntentTests.swift"
+  ]
+}

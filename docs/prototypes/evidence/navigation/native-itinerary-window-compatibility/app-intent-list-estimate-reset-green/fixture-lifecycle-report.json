@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/A115E2BE-880D-49F4-BF61-CF18A1FEA249",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/BFC51719-DF62-4E8D-B80C-CCEF5279BAFB"
+  ],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b",
+  "sourceLogSha256": "e9893712c9e8de14a4db7da056333de97ebc3b6081f5f564f351f9f55b12d0d1",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 2,
+  "hostProcessIdentifiers": [
+    87557
+  ]
+}

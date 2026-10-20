@@ -1,0 +1,174 @@
+{
+  "actions": [
+    "AddPlannerItemToItineraryIntent",
+    "AddPlannerItemToListIntent",
+    "AddPlannerListToItineraryIntent",
+    "ClearPlannerItemEstimateIntent",
+    "CreatePlannerCategoryIntent",
+    "CreatePlannerItemIntent",
+    "CreatePlannerItineraryIntent",
+    "CreatePlannerListIntent",
+    "CreatePlannerTagIntent",
+    "EditPlannerItemIntent",
+    "EditPlannerItineraryIntent",
+    "EditPlannerListIntent",
+    "GetPlannerCategoryIntent",
+    "GetPlannerItemIntent",
+    "GetPlannerItineraryIntent",
+    "GetPlannerItineraryItemIntent",
+    "GetPlannerListIntent",
+    "GetPlannerTagIntent",
+    "MovePlannerItemBetweenListsIntent",
+    "RemovePlannerItemFromListIntent",
+    "RemovePlannerItineraryEntryIntent",
+    "RenamePlannerCategoryIntent",
+    "RenamePlannerTagIntent",
+    "ReorderPlannerItemInListIntent",
+    "ReorderPlannerItineraryEntryIntent",
+    "SetPlannerItemArchiveIntent",
+    "SetPlannerItemCategoryIntent",
+    "SetPlannerItemCompletionIntent",
+    "SetPlannerItemListCompletionIntent",
+    "SetPlannerItemTagIntent",
+    "SetPlannerItineraryArchiveIntent",
+    "SetPlannerItineraryCategoryIntent",
+    "SetPlannerItineraryItemCompletionIntent",
+    "SetPlannerItineraryTagIntent",
+    "SetPlannerListArchiveIntent",
+    "UsePlannerItineraryCalculatedEstimateIntent",
+    "UsePlannerListCalculatedEstimateIntent"
+  ],
+  "entities": [
+    "PlannerCategoryEntity",
+    "PlannerItemEntity",
+    "PlannerItineraryEntity",
+    "PlannerItineraryEntryEntity",
+    "PlannerItineraryItemEntity",
+    "PlannerListEntity",
+    "PlannerTagEntity"
+  ],
+  "queries": [
+    "PlannerCategoryEntityQuery",
+    "PlannerItemEntityQuery",
+    "PlannerItineraryEntityQuery",
+    "PlannerItineraryEntryEntityQuery",
+    "PlannerItineraryItemEntityQuery",
+    "PlannerListEntityQuery",
+    "PlannerTagEntityQuery"
+  ],
+  "enumCases": {
+    "PlannerItineraryEntryKind": {
+      "item": "Item",
+      "list": "List"
+    },
+    "PlannerItineraryReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Entry",
+      "after": "After Entry"
+    },
+    "PlannerListReorderPosition": {
+      "first": "Beginning",
+      "last": "End",
+      "before": "Before Item",
+      "after": "After Item"
+    }
+  },
+  "parameterContracts": {
+    "ClearPlannerItemEstimateIntent": {
+      "parameter": "item",
+      "entityType": "PlannerItemEntity",
+      "optional": false
+    },
+    "UsePlannerListCalculatedEstimateIntent": {
+      "parameter": "list",
+      "entityType": "PlannerListEntity",
+      "optional": false
+    },
+    "UsePlannerItineraryCalculatedEstimateIntent": {
+      "parameter": "itinerary",
+      "entityType": "PlannerItineraryEntity",
+      "optional": false
+    }
+  },
+  "retainedParameterContracts": {
+    "CreatePlannerItemIntent": {
+      "title": {
+        "optional": false,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "subtitle": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    },
+    "EditPlannerItemIntent": {
+      "item": {
+        "optional": false,
+        "valueType": {
+          "entity": {
+            "wrapper": {
+              "typeName": "PlannerItemEntity"
+            }
+          }
+        }
+      },
+      "title": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "subtitle": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      },
+      "notes": {
+        "optional": true,
+        "valueType": {
+          "primitive": {
+            "wrapper": {
+              "typeIdentifier": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "metadataSha256": "c098fe84b2a4749865b291a17ee0b2f7a4fc4d570090bad4095d50fd9492fc8c",
+  "catalogExtensionVerified": true,
+  "systemInvocationCredit": false,
+  "metadataRuntimeCredit": false
+}
