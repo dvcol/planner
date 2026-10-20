@@ -1,0 +1,9 @@
+{
+  "qualificationPassed": false,
+  "reason": "Expected runtime TDD red before implementing retained-Link edits",
+  "removedFixtures": 1,
+  "closedHostIdentifiers": [
+    27810
+  ],
+  "closedDatabasesVerified": true
+}

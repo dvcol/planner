@@ -43,9 +43,11 @@
     }
   }
 
-  struct PlannerLinkEntityQuery: EntityQuery {
+  struct PlannerLinkEntityQuery: EntityStringQuery {
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
     @Dependency var plannerStore: SavedPlannerStore
+    @IntentParameterDependency<EditPlannerItemLinkIntent>(\.$item) var itemEditIntent
+    @IntentParameterDependency<EditPlannerItineraryLinkIntent>(\.$itinerary) var itineraryEditIntent
 
     @MainActor func entities(for identifiers: [String]) async throws -> [PlannerLinkEntity] {
       let (planner, session) = try await plannerStore.appIntentContext()
@@ -69,9 +71,28 @@
     }
 
     @MainActor func suggestedEntities() async throws -> [PlannerLinkEntity] {
-      _ = try await plannerStore.appIntentContext()
+      try await entities(matching: "")
+    }
+
+    @MainActor func entities(matching string: String) async throws -> [PlannerLinkEntity] {
+      let (planner, session) = try await plannerStore.appIntentContext()
       try Task.checkCancellation()
-      return []
+      let owner: PlannerEntityReference
+      if let item = itemEditIntent?.item {
+        owner = .init(kind: .item, id: item.id)
+      } else if let itinerary = itineraryEditIntent?.itinerary {
+        owner = .init(kind: .itinerary, id: itinerary.id)
+      } else {
+        return []
+      }
+      guard
+        let links = try await loadPlannerLinkEntities(
+          owner: owner, planner: planner, session: session)
+      else { return [] }
+      return links.filter {
+        string.isEmpty || $0.originalURL.localizedStandardContains(string)
+          || $0.label?.localizedStandardContains(string) == true
+      }
     }
   }
 
@@ -121,6 +142,52 @@
           message: "This Itinerary is no longer available in Planner's current data.")
       }
       return .result(value: links)
+    }
+  }
+
+  struct EditPlannerItemLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Edit Item link"
+    static let description = IntentDescription(
+      "Change this exact bookmark. Omitted fields stay unchanged; empty label text clears its label."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Link", query: PlannerLinkEntityQuery()) var link: PlannerLinkEntity
+    @Parameter(title: "New URL") var originalURL: String?
+    @Parameter(title: "New label") var label: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let dialog = try await editPlannerLink(
+        owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
+        originalURL: originalURL, label: label, store: plannerStore)
+      return .result(dialog: dialog)
+    }
+  }
+
+  struct EditPlannerItineraryLinkIntent: AppIntent {
+    static let title: LocalizedStringResource = "Edit Itinerary link"
+    static let description = IntentDescription(
+      "Change this exact bookmark in the Itinerary's own Links. Omitted fields stay unchanged; empty label text clears its label."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Itinerary") var itinerary: PlannerItineraryEntity
+    @Parameter(title: "Link", query: PlannerLinkEntityQuery()) var link: PlannerLinkEntity
+    @Parameter(title: "New URL") var originalURL: String?
+    @Parameter(title: "New label") var label: String?
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let dialog = try await editPlannerLink(
+        owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
+        originalURL: originalURL, label: label, store: plannerStore)
+      return .result(dialog: dialog)
     }
   }
 
@@ -235,6 +302,68 @@
           owner: owner, ownerTitle: ownerTitle, position: position, linkIdentifier: identifier,
           url: url, originalURL: originalURL, label: label), dialog
       )
+    }
+  }
+
+  @MainActor
+  private func editPlannerLink(
+    owner: PlannerEntityReference, linkIdentifier: String, originalURL: String?, label: String?,
+    store: SavedPlannerStore
+  ) async throws -> IntentDialog {
+    guard let identity = PlannerLinkIdentity(linkIdentifier), identity.owner == owner else {
+      throw PlannerLinkIntentFailure(
+        message: "Choose a Link saved in the selected Item or Itinerary.")
+    }
+    guard originalURL != nil || label != nil else {
+      throw PlannerLinkIntentFailure(message: "Choose a URL or label to change.")
+    }
+    let (planner, session) = try await store.appIntentContext()
+    try Task.checkCancellation()
+    func replacement(_ links: [PlannerOwnedLinkRead]) throws -> [PlannerLinkInput] {
+      guard let currentIndex = links.firstIndex(where: { $0.linkId == identity.linkIdentifier })
+      else {
+        throw PlannerLinkIntentFailure(
+          message: "This Link is no longer saved in the selected Item or Itinerary.")
+      }
+      let currentLink = links[currentIndex]
+      var updatedLabel = currentLink.label
+      if let label { updatedLabel = label.isEmpty ? nil : label }
+      var updatedLinks = links.map {
+        PlannerLinkInput(linkId: $0.linkId, originalUrl: $0.originalUrl, label: $0.label)
+      }
+      updatedLinks[currentIndex] = .init(
+        linkId: currentLink.linkId, originalUrl: originalURL ?? currentLink.originalUrl,
+        label: updatedLabel)
+      return updatedLinks
+    }
+    let command: PlannerCommand
+    switch await planner.read(session: session, request: .source(owner)) {
+    case .source(.item(let current)) where owner.kind == .item:
+      command = .editItem(
+        sourceId: owner.id, changes: .init(links: .set(try replacement(current.content.links))),
+        expectedFieldHashes: current.fieldHashes)
+    case .source(.itinerary(let current)) where owner.kind == .itinerary:
+      command = .editItinerary(
+        sourceId: owner.id, changes: .init(links: .set(try replacement(current.content.links))),
+        expectedFieldHashes: current.fieldHashes)
+    case .failed(let reason): throw PlannerLinkIntentFailure(message: reason.message)
+    default: throw PlannerLinkIntentFailure(message: "Planner could not read this Link's owner.")
+    }
+    let response = try await store.executeAppIntent(command)
+    switch response.outcome {
+    case .rejected(let reason): throw PlannerLinkIntentFailure(message: reason.message)
+    case .unverified:
+      throw PlannerLinkIntentFailure(
+        message:
+          "Planner could not verify this change. Open Planner to review recovery before making another change."
+      )
+    case .applied(_, let recovery):
+      switch recovery {
+      case .complete: return "Updated the Link."
+      case .incomplete:
+        return
+          "The Link changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+      }
     }
   }
 

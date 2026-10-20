@@ -1,0 +1,70 @@
+{
+  "explicitQueryQualified": false,
+  "expectedQueryIdentifier": "Planner.PlannerLinkEntityQuery",
+  "parameters": {
+    "EditPlannerItemLinkIntent": {
+      "capabilities": 0,
+      "dynamicOptionsSupport": 2,
+      "inputConnectionBehavior": 0,
+      "isInput": false,
+      "isOptional": false,
+      "name": "link",
+      "resolvableInputTypes": [],
+      "title": {
+        "alternatives": [],
+        "key": "Link"
+      },
+      "typeSpecificMetadata": [],
+      "valueType": {
+        "entity": {
+          "wrapper": {
+            "typeName": "PlannerLinkEntity"
+          }
+        }
+      }
+    },
+    "EditPlannerItineraryLinkIntent": {
+      "capabilities": 0,
+      "dynamicOptionsSupport": 2,
+      "inputConnectionBehavior": 0,
+      "isInput": false,
+      "isOptional": false,
+      "name": "link",
+      "resolvableInputTypes": [],
+      "title": {
+        "alternatives": [],
+        "key": "Link"
+      },
+      "typeSpecificMetadata": [],
+      "valueType": {
+        "entity": {
+          "wrapper": {
+            "typeName": "PlannerLinkEntity"
+          }
+        }
+      }
+    }
+  },
+  "existingScopedEntryExample": {
+    "capabilities": 4,
+    "dynamicOptionsSupport": 2,
+    "inputConnectionBehavior": 0,
+    "isInput": false,
+    "isOptional": false,
+    "name": "entry",
+    "queryIdentifier": "Planner.PlannerItineraryEntryEntityQuery",
+    "resolvableInputTypes": [],
+    "title": {
+      "alternatives": [],
+      "key": "Entry"
+    },
+    "typeSpecificMetadata": [],
+    "valueType": {
+      "entity": {
+        "wrapper": {
+          "typeName": "PlannerItineraryEntryEntity"
+        }
+      }
+    }
+  }
+}
