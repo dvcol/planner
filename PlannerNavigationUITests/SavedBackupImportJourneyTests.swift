@@ -407,6 +407,89 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       recordImport(application, name: "Rejected unresolved backup creates no List after relaunch")
     }
 
+    func testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner full graph backup.json", application: application)
+      let additions = application.staticTexts["saved.import.summary.additions"]
+      XCTAssertTrue(additions.waitForExistence(timeout: 15))
+      XCTAssertEqual(additions.label, "Additions, 7")
+      recordImport(application, name: "Full graph backup reviews all seven source additions")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      let filename = exportBackup(application)
+      let exportedFilename = XCTAttachment(string: filename)
+      exportedFilename.name = "Full graph delivered backup filename"
+      exportedFilename.lifetime = .keepAlways
+      add(exportedFilename)
+      recordImport(application, name: "Full graph backup is delivered through the native exporter")
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      XCTAssertEqual(museum.label, "Nezu Museum")
+      XCTAssertTrue((museum.value as? String)?.contains("Food") == true)
+      XCTAssertTrue((museum.value as? String)?.contains("rainy-day") == true)
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      let globalCompletion = application.descendants(matching: .any).matching(
+        identifier: "saved.item.completion"
+      ).firstMatch
+      XCTAssertTrue(globalCompletion.waitForExistence(timeout: 5))
+      XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+      recordImport(
+        application, name: "Full graph Item keeps its shared labels notes and global Todo")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(
+        application.savedPlannerListRow("Tokyo Food"), application: application)
+      let listFilters = application.plannerElement("saved.list.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: listFilters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: listFilters)
+      XCTAssertTrue(application.staticTexts["2 of 2 items finished"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000401"
+        )
+        .waitForPlannerValue("Completed"))
+      recordImport(application, name: "Full graph List retains local Done and archived progress")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(application.savedPlannerListRow("Wishlist"), application: application)
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000403"
+        )
+        .waitForPlannerValue("To do"))
+      recordImport(
+        application, name: "Full graph second List keeps its independent Todo appearance")
+      application.openPlannerSection("Itineraries")
+      openImportedCatalogRow(
+        application.plannerElement("saved.itinerary.row.00000000-0000-4000-8000-000000000301"),
+        application: application)
+      XCTAssertTrue(application.staticTexts["1 of 3 items finished"].waitForExistence(timeout: 10))
+      recordImport(
+        application, name: "Full graph Itinerary keeps its independent three appearances")
+    }
+
+    private func openImportedCatalogRow(_ row: XCUIElement, application: XCUIApplication) {
+      if !row.waitForExistence(timeout: 2) || !row.isHittable {
+        let sidebar = application.plannerElement("Show Sidebar")
+        if sidebar.exists {
+          sidebar.activateForPlannerJourney()
+        } else {
+          let back = application.navigationBars.buttons["BackButton"].firstMatch
+          if back.exists { back.activateForPlannerJourney() }
+        }
+      }
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      row.activateForPlannerJourney()
+    }
+
     private func createAndExportTagBackup(_ application: XCUIApplication) -> (
       tagIdentifier: String, filename: String
     ) {
@@ -426,6 +509,10 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       XCTAssertTrue(tag.waitForExistence(timeout: 10))
       let tagIdentifier = tag.identifier
       application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      return (tagIdentifier: tagIdentifier, filename: exportBackup(application))
+    }
+
+    private func exportBackup(_ application: XCUIApplication) -> String {
       application.plannerElement("saved.settings.export").activateForPlannerJourney()
       let save = application.buttons.matching(NSPredicate(format: "label == %@", "Save")).firstMatch
       XCTAssertTrue(save.waitForExistence(timeout: 10))
@@ -438,7 +525,7 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       XCTAssertTrue(exported.waitForExistence(timeout: 10))
       let filename = String(exported.label.dropFirst("Backup exported, ".count))
       XCTAssertTrue(filename.hasSuffix(".json"))
-      return (tagIdentifier: tagIdentifier, filename: filename)
+      return filename
     }
 
     private func selectBackup(_ filename: String, application: XCUIApplication) {

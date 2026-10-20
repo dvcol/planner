@@ -1,0 +1,40 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-graph-phone.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C095BA8F-CA2D-4E33-B41B-BB60197209FF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph backup is delivered through the native exporter_0_CB6599F0-5639-4048-A6FF-EA1CB487850A.png",
+      "timestamp": 1792532323.439,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "258b38497186d98afca8862674868f4b735858a55fd3b8d47bb26d8eae0f47f1"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "CD116271-8D2D-4D95-A440-C0F80E7AC7D2.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph delivered backup filename_0_06F91F5F-32D9-46F9-91A7-2E2D3DB488D8.txt",
+      "timestamp": 1792532323.358,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "retainedFileName": "CD116271-8D2D-4D95-A440-C0F80E7AC7D2.txt.gz",
+      "originalSha256": "8705186e6b4ef3313124c75e28bc3bbf1d838e516282b945447abb4cd657cc34"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "5B1537A6-CE1E-4153-A5F8-9C530EA7A659.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph backup reviews all seven source additions_0_80A91D44-5955-4DFA-9C9E-A192E76279BF.png",
+      "timestamp": 1792532313.071,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "eedf77d1cbb5d04be31fdf151dce9d074cfbe61ef447946656de7ba1f7fa8de1"
+    }
+  ],
+  "videoPublished": false
+}

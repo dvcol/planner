@@ -1,0 +1,7 @@
+{
+  "invocationRetainsFailure": true,
+  "reason": "The new test called the mobile button-only plannerElement helper for a SwiftUI Toggle; it did not establish a bad stored global flag.",
+  "independentFileEvidence": "delivered-backup-verification.json records complete data equality and uiInvocationPassed false.",
+  "correction": "Resolve the actual native control through the existing any-element identity query, wait for existence, then read its Boolean state.",
+  "productionChanged": false
+}

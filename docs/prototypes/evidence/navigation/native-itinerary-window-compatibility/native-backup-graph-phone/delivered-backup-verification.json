@@ -1,0 +1,25 @@
+{
+  "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-20T21-38-36Z.json",
+  "bytes": 12498,
+  "sha256": "3849d4f9cf2dd4d4928eb22d8cf6713bfb61278328ae2de0663c1851745fd75a",
+  "modifiedAfterTestStarted": true,
+  "sourceFixture": "docs/fixtures/portable-backup-v1.json",
+  "sourceFixtureSha256": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+  "allowedMigration": "formatVersion 1 to 2, adding null manualEstimate to List/Itinerary content",
+  "comparison": "Every typed field in every complete record table; top-level table order ignored, ranks and nested sequence order exact",
+  "recordCounts": {
+    "completionChanges": 1,
+    "contextAliases": 1,
+    "deletionMarkers": 1,
+    "expandedCompletions": 2,
+    "itineraryEntries": 2,
+    "labelAssociations": 4,
+    "memberships": 3,
+    "ownedLinks": 2,
+    "restorationFamilies": 0,
+    "schedules": 2,
+    "sources": 7
+  },
+  "differences": [],
+  "uiInvocationPassed": false
+}

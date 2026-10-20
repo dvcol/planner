@@ -1,0 +1,84 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-graph-tablet-dark.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "0A429AC8-9BAA-47AF-9C4F-F55C86370278.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph Itinerary keeps its independent three appearances_0_5CF16F40-24D6-460E-9A52-209463BF21D0.png",
+      "timestamp": 1792532809.268,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "41be05e854081f3201a8c2b5f8942e2336683d6557e1f844553ae4f0db7322e1"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "6B749BE1-8724-4ADF-8014-B1EDAE1FACF4.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph second List keeps its independent Todo appearance_0_21E4E5BF-2ACF-4D59-97CA-39CAA69924A8.png",
+      "timestamp": 1792532801.401,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "c28d69381815a113b23eb09255050734bcb6358f1bba2d0395f020cdb555be7f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "7594BEA9-2625-4A8A-9554-B4131A0CFFD2.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph List retains local Done and archived progress_0_E500AEAA-A836-4068-A0F4-0D9819AC9E37.png",
+      "timestamp": 1792532793.698,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "5f8111c6b05f61c52624918ee83d2e5446eba1dcd4b1791b7e2983aacda33c5b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "66A13840-8F1F-4EB1-83BA-03A68401D910.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph Item keeps its shared labels notes and global Todo_0_F786C728-7586-4B08-8A5D-D7758E25E6E3.png",
+      "timestamp": 1792532764.566,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "a3fd1a961856a902a8e9ec53a3db41450e4e1c99de6577ee6de3c0751723b571"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "340D1276-C4FD-46C3-924F-7AF935EE382B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph backup is delivered through the native exporter_0_BA81B957-177E-4D63-BEFB-4B2C76A81572.png",
+      "timestamp": 1792532748.37,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "41b3056b47ebdafcf231dbee42e1e396e5e01efdf2a2dda580714858987804d1"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9691467C-8D16-452F-B0A4-1F42BD5EBBEB.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph delivered backup filename_0_1F6A202E-B87C-466E-A1A2-368E25D3FE19.txt",
+      "timestamp": 1792532748.268,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "retainedFileName": "9691467C-8D16-452F-B0A4-1F42BD5EBBEB.txt.gz",
+      "originalSha256": "f4cce6ebc344269ee541d6124419106c04614d09f9cc0628b42150845ad5277c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4F24BF01-CEC3-4AF9-A891-575A5CB4E06C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph backup reviews all seven source additions_0_488645D4-384E-4058-8ADA-E53AAFDADC2A.png",
+      "timestamp": 1792532736.647,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "07c8c9dbb68b1a648d475353efc08592e987c3cd57984b5a1ba63ec589c6443b"
+    }
+  ],
+  "videoPublished": false
+}

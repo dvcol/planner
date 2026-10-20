@@ -1,0 +1,146 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "output": "validation-0.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerMarkdownlintConfig.json",
+        "docs/prototypes/native-backup-full-graph-file.md",
+        "docs/prototypes/native-backup-import.md",
+        "docs/native-ui-polish.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "output": "validation-1.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": "validation-2.log"
+    }
+  ],
+  "sourceEpochs": {
+    "native-backup-graph-phone-toggle": {
+      "inputCount": 1042,
+      "differences": []
+    },
+    "native-backup-graph-tablet-dark": {
+      "inputCount": 1042,
+      "differences": []
+    },
+    "native-backup-graph-phone-export-regression": {
+      "inputCount": 1042,
+      "differences": []
+    },
+    "native-backup-graph-mac-build": {
+      "inputCount": 1042,
+      "differences": []
+    }
+  },
+  "runtimeReconciliation": {
+    "native-backup-graph-phone": {
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "passingFunctionSeconds": [],
+      "failedFunctionSeconds": [
+        "62.988"
+      ]
+    },
+    "native-backup-graph-phone-toggle": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "89.279"
+      ],
+      "failedFunctionSeconds": []
+    },
+    "native-backup-graph-tablet-dark": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "98.010",
+        "88.286"
+      ],
+      "failedFunctionSeconds": []
+    },
+    "native-backup-graph-phone-export-regression": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "passingFunctionSeconds": [
+        "66.820"
+      ],
+      "failedFunctionSeconds": []
+    }
+  },
+  "deliveredFiles": {
+    "native-backup-graph-phone-toggle": {
+      "bytes": 12498,
+      "sha256": "3849d4f9cf2dd4d4928eb22d8cf6713bfb61278328ae2de0663c1851745fd75a",
+      "allRecordGroupsMatch": true
+    },
+    "native-backup-graph-tablet-dark": {
+      "bytes": 12498,
+      "sha256": "3849d4f9cf2dd4d4928eb22d8cf6713bfb61278328ae2de0663c1851745fd75a",
+      "allRecordGroupsMatch": true
+    }
+  },
+  "products": {
+    "mac": {
+      "application": {
+        "path": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+        "sha256": "b0583d22c9fab04caef5652c2aba74520287687ce7ebe995bd41195b1526fc3f"
+      },
+      "nativeUITests": {
+        "path": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests",
+        "sha256": "f7cc8892879535a275bb42087d24c25bb6ba7af85bd89bdbf57b27dc2d2bcc2e"
+      }
+    },
+    "simulator": {
+      "application": {
+        "path": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+        "sha256": "56a90972ace48d09604caaeab68958686ab1bc97effa0f995cf5f7b20c7c74d3"
+      },
+      "nativeUITests": {
+        "path": "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests",
+        "sha256": "b8b35e34bfedb7b84e8c2f66375d22bdb02be729a59f93262442cf6f27320953"
+      }
+    }
+  },
+  "productionInputsUnchanged": true,
+  "priorTestBodiesUnchanged": true,
+  "sharedExportStepsByteIdentical": true,
+  "macCompilerDiagnostics": [],
+  "review": {
+    "standards": "Existing native UI and delivered-file boundaries; no production hooks or new test target. Prior test bodies remain exact; common export steps are byte-identical and both Tag regressions pass.",
+    "specification": "Seven sources and all eleven record collections match the independent fixture after declared v2 migration. Native global/list/itinerary scopes, archived progress and relaunch pass.",
+    "capturesIndividuallyInspected": [
+      "native-backup-graph-phone",
+      "native-backup-graph-phone-toggle",
+      "native-backup-graph-tablet-dark"
+    ],
+    "remainingFinding": "Dark iPad standalone List metric titles are invisible; reproduction/correction is separate and not claimed complete.",
+    "macUIRuntimeFunctions": 0,
+    "newCoreOrHTTPInvocations": 0
+  }
+}

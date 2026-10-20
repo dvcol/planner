@@ -1,0 +1,84 @@
+{
+  "bundle": "/private/tmp/PlannerItemWindow-native-backup-graph-phone-toggle.xcresult",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F9E80BD3-B47D-43B8-BF82-63F2972A63B8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph Itinerary keeps its independent three appearances_0_4DFCC696-DD14-4553-8533-4005EB7E94ED.png",
+      "timestamp": 1792532599.484,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "8b5185d55cc87a5166ef9f62b8424ec93371dba236e57e0f079d4ee7a3bc6a0d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "020CF0B6-33EB-4240-B3AF-8FACBFD312A3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph second List keeps its independent Todo appearance_0_9B946118-AB23-4FEA-A5C3-5E3BB7C2C49B.png",
+      "timestamp": 1792532591.637,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "2a51aef96a3e14284eb104fbf8ec4e91fb3e726d4dfcfea3223088c026fa18dd"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C1E687F8-7E1B-4359-AD7C-07A2D8490591.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph List retains local Done and archived progress_0_66B7D61D-1C94-4D31-85B8-921E2377A1CC.png",
+      "timestamp": 1792532584.807,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "0da4eaf972e6af1cfdf822a80272c8e3cb49a57d6fedb46a33c77e2d728634ba"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A05A3577-7F54-4B61-A640-E21775D6BCFB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph Item keeps its shared labels notes and global Todo_0_2D593853-8FD3-4D24-93AA-3862EFBE43B4.png",
+      "timestamp": 1792532556.724,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "f39609f8d522a876f2cfba32d1c6888c255e091b81e3096635dfd85c10f9e971"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "4DA2B1B6-F943-460C-A3D6-F450D1DAD878.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph backup is delivered through the native exporter_0_E8B268DF-955D-4D05-88FF-3652AC5E4165.png",
+      "timestamp": 1792532541.416,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "74c78986ce4f65b9a7a9cfdcc3e50a320faa8ba808e0ce961b8f901a9319ec8e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "20655D29-A5A9-46FF-BAE0-66EA3344B55B.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph delivered backup filename_0_78463CBE-8D2F-48D9-80EE-2213748C6345.txt",
+      "timestamp": 1792532541.327,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "retainedFileName": "20655D29-A5A9-46FF-BAE0-66EA3344B55B.txt.gz",
+      "originalSha256": "8365ddc34286d953d62331f980651fd75c87d2048ff904666691c4a52ef41538"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A58F4713-732A-46DF-840E-828FB23F67CC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Full graph backup reviews all seven source additions_0_B2A6B124-17C5-4C24-84CA-DFD5F411CB8B.png",
+      "timestamp": 1792532531.04,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData()",
+      "originalSha256": "41c1fed67475638ce82e2c7cbca6eadbc71a7efd3359154bb789dff55578b399"
+    }
+  ],
+  "videoPublished": false
+}
