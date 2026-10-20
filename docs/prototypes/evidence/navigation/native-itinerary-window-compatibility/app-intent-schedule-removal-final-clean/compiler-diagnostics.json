@@ -1,0 +1,3 @@
+[
+  "macro expansion #expect:2:37: warning: '#require(_:_:)' is redundant because 'rows.first' never equals 'nil' (from macro 'require')"
+]

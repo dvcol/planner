@@ -1,0 +1,12 @@
+{
+  "success": false,
+  "removedDirectories": [],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b",
+  "sourceLogSha256": "ea25f8f160a28f5b282a8337dd87e00aa98d1239c60ec35a58897e80343bb77f",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 3,
+    "invalidated open fd": 3,
+    "database integrity compromised": 3
+  },
+  "error": "The original test log contains SQLite lifetime diagnostics."
+}

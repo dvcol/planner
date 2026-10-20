@@ -1,0 +1,15 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/AppIntents/PlannerScheduleIntents.swift",
+    "PlannerMCPTests/PlannerScheduleReadIntentTests.swift",
+    "PlannerMCPTests/PlannerScheduleRemovalIntentTests.swift",
+    "PlannerMCPTests/ItineraryScheduleRoutingTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": ""
+}

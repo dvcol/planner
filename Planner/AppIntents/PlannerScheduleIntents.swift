@@ -94,6 +94,40 @@
     }
   }
 
+  struct RemovePlannerScheduleIntent: AppIntent {
+    static let title: LocalizedStringResource = "Remove Planner Schedule"
+    static let description = IntentDescription(
+      "Remove this saved booking. Keep its Item or Itinerary and all other bookings.")
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Schedule", query: PlannerScheduleEntityQuery())
+    var schedule: PlannerScheduleEntity
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let result = try await plannerStore.executeAppIntent(.removeSchedule(scheduleId: schedule.id))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerScheduleIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete: dialog = "Removed the Schedule. Its Item or Itinerary is preserved."
+        case .incomplete:
+          dialog =
+            "The Schedule was removed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   struct GetPlannerItemSchedulesIntent: AppIntent {
     static let title: LocalizedStringResource = "Get Item Direct Schedules"
     static let description = IntentDescription(
