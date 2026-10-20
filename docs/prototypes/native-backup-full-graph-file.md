@@ -34,7 +34,7 @@ Both final delivered files are 12,498 bytes with SHA-256 `3849d4f9cf2dd4d4928eb2
 
 Six final captures per device were individually inspected. They show review/export, global Todo, locally Done Museum in Tokyo Food, independent Todo in Wishlist and one archived appearance out of three in the Itinerary. The native schedule previews retain the one-hour timed booking separately from the two-hour Item estimate and preserve the October 9–11 all-day dates. The tablet returns to its original light appearance after the dark run.
 
-Inspection also finds invisible Estimate/Remaining titles in the dark tablet's standalone List header. The values and progress remain visible; the same metric titles appear in the Itinerary. This is an unresolved display defect to reproduce and correct separately, not evidence of wrong backup content or complete dark-mode acceptance.
+The first inspection incorrectly reported invisible Estimate/Remaining titles in the dark tablet's standalone List header. Reopening the original Tokyo Food and Wishlist captures confirms both titles are visibly rendered in secondary text. That finding is withdrawn; no production correction or regression test is justified by these captures. The original review JSON retains the historical claim, superseded by this correction. These represented captures still do not establish complete dark-mode acceptance.
 
 ## Final validation and limits
 
@@ -42,4 +42,4 @@ Mac app/native UI-target compilation passes with the existing local ad hoc confi
 
 The [evidence directory](evidence/navigation/native-itinerary-window-compatibility/) retains `native-backup-graph-*` commands, logs, actual summaries, input hashes, original captures, the delivered JSON files and their verification recipes. The input fixture remains staged for the immediate contrast follow-up; no Planner dataset is removed. This does not claim the separate App Intent fixture-disposal procedure applies to native UI datasets.
 
-This qualifies the represented full graph's empty native file import, relaunch, scoped state and delivered export. Nonempty Skip/Overwrite graph conflicts, restoration families/deleted lifetimes, stale review, read/save/termination and incomplete recovery retain their own gates. Actual Mac interaction, signed CloudKit/account/Share, physical performance, the observed contrast defect and final whole-app polish remain open. No issue is closed.
+This qualifies the represented full graph's empty native file import, relaunch, scoped state and delivered export. Nonempty Skip/Overwrite graph conflicts, restoration families/deleted lifetimes, stale review, read/save/termination and incomplete recovery retain their own gates. Actual Mac interaction, signed CloudKit/account/Share, physical performance and final whole-app polish remain open. No issue is closed.
