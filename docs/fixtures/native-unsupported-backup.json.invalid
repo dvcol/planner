@@ -1,0 +1,15 @@
+{
+  "format": "planner-data",
+  "formatVersion": 3,
+  "sources": [],
+  "memberships": [],
+  "itineraryEntries": [],
+  "expandedCompletions": [],
+  "schedules": [],
+  "labelAssociations": [],
+  "ownedLinks": [],
+  "deletionMarkers": [],
+  "contextAliases": [],
+  "completionChanges": [],
+  "restorationFamilies": []
+}

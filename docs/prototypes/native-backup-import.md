@@ -34,7 +34,7 @@ Original phone/tablet Skip, Overwrite, applied-result, before/after and identity
 
 ## Remaining gates
 
-This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow, the single-Tag empty-dataset/reimport and replacement-cancellation journeys, and malformed-file rejection/retry below. Native unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
+This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow, the single-Tag empty-dataset/reimport and replacement-cancellation journeys, and malformed-file rejection/retry below. The later [unsupported-version qualification](native-backup-version-rejection.md) adds phone/tablet error, retry and retained-Tag evidence. Dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 is settled in the [current decision register](../open-decisions.md); earlier pending wording is historical.
 
 ## Empty-dataset restoration and identical reimport
 

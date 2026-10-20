@@ -4,6 +4,8 @@
 
 Q116 A is implemented. Item/Itinerary edits return exact new bookmark references, and the native Add Link actions use them without a second read. The [Core result qualification](prototypes/core-owned-link-edit-results.md) and [native adapter qualification](prototypes/native-add-link-intents.md) retain their tests and limits. Native [List notes](prototypes/native-list-notes.md) are also implemented. Neither checkpoint closes the map.
 
+Further local work qualifies [native unsupported backup-version rejection](prototypes/native-backup-version-rejection.md), valid-file retry and retained Tag identity on phone and dark-mode tablet. Its failed controller attempts remain separate from four final passing invocations. This does not consume a pending choice or close signing, physical, Mac runtime or full-graph import gates.
+
 These choices remain unanswered. Recommendations are proposals, not accepted defaults.
 
 | Question | Decision still needed | Recommendation and consequence | Concrete review |
