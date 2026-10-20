@@ -1546,17 +1546,21 @@ struct SavedPlannerView: View {
               SavedItemFilterControl(
                 filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
             }
-            ToolbarItem {
-              SavedItemSortMenu(
-                sort: listSort, allowsManual: true, accessibilityIdentifier: "saved.list.sort")
-            }
             #if os(iOS)
-              ToolbarItem {
-                EditButton()
-                  .environment(\.editMode, $listEditMode)
-                  .disabled(!canReorderMemberships || listRows.count < 2)
-                  .accessibilityIdentifier("saved.list.edit")
+              if horizontalSizeClass == .compact {
+                ToolbarOverflowMenu {
+                  listSortMenu
+                  listEditButton
+                  listActionsMenu(selectedList)
+                }
+              } else {
+                ToolbarItem { listSortMenu }
+                ToolbarItem { listEditButton }
+                ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
               }
+            #else
+              ToolbarItem { listSortMenu }
+              ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
             #endif
             ToolbarItem {
               Menu {
@@ -1579,33 +1583,6 @@ struct SavedPlannerView: View {
               .help("Add an item to this list")
               .disabled(!store.canCreate || selectedList.state.archived == true || isSavingNewItem)
               .accessibilityIdentifier("saved.list.addMenu")
-            }
-            ToolbarItem(placement: .primaryAction) {
-              Menu {
-                Button("Edit estimate", systemImage: "clock") {
-                  listEditDraft = .init(list: selectedList)
-                }
-                .accessibilityIdentifier("saved.list.estimate.edit")
-                Divider()
-                Group {
-                  Button("Mark all done") { prepareListBulkCompletion(selectedList, done: true) }
-                  Button("Mark all undone") { prepareListBulkCompletion(selectedList, done: false) }
-                }
-                .disabled(selectedList.progress.totalCount == 0)
-                Divider()
-                Button("Delete list", role: .destructive) {
-                  Task { await prepareListDeletion(selectedList) }
-                }
-                .accessibilityIdentifier("saved.list.delete")
-              } label: {
-                Label("List actions", systemImage: "ellipsis")
-              }
-              .labelStyle(.iconOnly)
-              .disabled(
-                !store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion
-              )
-              .help("List actions")
-              .accessibilityIdentifier("saved.list.actions")
             }
           }
       } else if isOpeningList {
@@ -1663,6 +1640,46 @@ struct SavedPlannerView: View {
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
     }
+  }
+
+  private var listSortMenu: some View {
+    SavedItemSortMenu(
+      sort: listSort, allowsManual: true, accessibilityIdentifier: "saved.list.sort")
+  }
+
+  #if os(iOS)
+    private var listEditButton: some View {
+      EditButton()
+        .environment(\.editMode, $listEditMode)
+        .disabled(!canReorderMemberships || listRows.count < 2)
+        .accessibilityIdentifier("saved.list.edit")
+    }
+  #endif
+
+  private func listActionsMenu(_ list: PlannerListSourceRead) -> some View {
+    Menu {
+      Button("Edit estimate", systemImage: "clock") {
+        listEditDraft = .init(list: list)
+      }
+      .accessibilityIdentifier("saved.list.estimate.edit")
+      Divider()
+      Group {
+        Button("Mark all done") { prepareListBulkCompletion(list, done: true) }
+        Button("Mark all undone") { prepareListBulkCompletion(list, done: false) }
+      }
+      .disabled(list.progress.totalCount == 0)
+      Divider()
+      Button("Delete list", role: .destructive) {
+        Task { await prepareListDeletion(list) }
+      }
+      .accessibilityIdentifier("saved.list.delete")
+    } label: {
+      Label("List actions", systemImage: "ellipsis")
+    }
+    .labelStyle(.iconOnly)
+    .disabled(!store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion)
+    .help("List actions")
+    .accessibilityIdentifier("saved.list.actions")
   }
 
   private var usesAutomaticDeletionSelection: Bool {
