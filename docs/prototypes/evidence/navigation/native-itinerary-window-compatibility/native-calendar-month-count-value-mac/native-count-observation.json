@@ -1,0 +1,5 @@
+{
+  "sourceAttachmentSha256": "857c88a825a12ea0fa5cc265afd72db4dff30b721333bdfad4b7fcf79da5ee71",
+  "observedAttributeLine": "Attributes: StaticText, 0x786f922e40, {{1409.1, 619.0}, {88.0, 13.0}}, identifier: 'saved.calendar.day.2026-10-22.schedule-count', value: 1 scheduled entry",
+  "scope": "Exact first attribute line extracted from the actual native element. Broad query-chain diagnostics remain local."
+}

@@ -1,0 +1,2233 @@
+{
+  "scope": "Compact records of completed unpublished Calendar diagnostics. Raw packets retained privately; relocation is not disk reclamation. No failed runtime receives passing credit.",
+  "records": [
+    {
+      "phase": "native-calendar-adaptive-inspector-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "0cb8379118d23908a416f40e90997b355ddeb2d726a21227710bcc924b8e237a",
+        "SavedPlannerView.swift.gz": "d4cf14de9ff9a5c84e675f00e3bb8fad9d6d6f21f4d61b9ed1165bc70a233351",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "32bb34497d0cb77547e806e00957af9614f104bd64ef8c816abcc23535b60059",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "44bf2d15e2ed01ec0bb854a3876c457d5721e7621063a6f4adee7b4e0529966e",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "5ee9d5e8fcadd2cc5007a342a9a6a6424e00deb1a3682acbb554650c8d2ca3fc",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-adaptive-inspector-build/SavedPlannerView.swift.gz",
+        "native-calendar-adaptive-inspector-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-adaptive-inspector-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-adaptive-inspector-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-adaptive-inspector-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-adaptive-inspector-month-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-adaptive-inspector-month-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Planner's own window must actually reach the requested width.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+            "testName": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "773ac31287adbf25635017ab6164d954a5cf23b567a652c900852784085a4d71",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "0cb8379118d23908a416f40e90997b355ddeb2d726a21227710bcc924b8e237a",
+        "8E53B78C-86C3-400D-976F-215AB6878280.png": "509eff0268eea4f3137b01e947943d96783f686e3d2022304bf7245c5f57d8d3",
+        "runner.py.gz": "f1f085c808d54f35437c118ad9fae33eb7ac35e9c8b811e6c004022c63267e57",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "selected-attachments.json": "10516e41c9dbad933b4520ae69209bb1cbdf8ad1fa2d563be4468f628b767570",
+        "source-sha256.json": "44bf2d15e2ed01ec0bb854a3876c457d5721e7621063a6f4adee7b4e0529966e",
+        "7BBA57CF-4D4F-428A-9509-573997067556.txt.gz": "648df0fc34e7d5953a8e0006c5b5be3721780e62b0a64ab117ce5b1016d864df",
+        "2880FE0C-B11A-4973-B1C1-94E50D8743C3.png": "80bcc121b7d354a5b5c5580baa6cd85446fe5a53137b2ce7797379fc9cb80ebd",
+        "command.json": "e4d1d264aa6dc1c6c8b58270428f7bf5bb3755c84aee17c4c7015fbdb096886a",
+        "177CB489-AC6C-482A-9FE8-1B741E704C58.png": "ccdcd2c64a19581c154b89f3f383ef462ad5f0d1f4442b993a2253cecfcb0258",
+        "evidence-commands.json": "669159f2acaf5c7ab1da655b8bc8002d36d62e76ab21cba7588258c998beffc4",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "6feee67971f1d310c684bcdd33286e4752cff3f2d5b1eb09f660e4e092ad6c4a",
+        "06009F70-2277-4D0F-A460-ED8067072945.png": "2813f30799b710085f6fdab1f419b24b1f3666a1fa2e2ac22910ff29481ce45e",
+        "test-results-summary.json": "fe6224d900d55852314fd0eb87fb1153220580a13f128859f643e66db0d0be0f"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-detail-inspector-placement-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "b0b4cbfbab0d49b742d2a19d09f52e95c3e3c72799dafdee977c5f1b47699f85",
+        "SavedPlannerView.swift.gz": "d4cf14de9ff9a5c84e675f00e3bb8fad9d6d6f21f4d61b9ed1165bc70a233351",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "c26d2605579e75108d6df5b677e5dac77256be06a5bf9337848eaea504017c3d",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "source-sha256.json": "7a1786006f66f27a91323d1cca92c27a8ce0364be3d6785d630559f454e00a39",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "225121df3334132cdb093ef51b9ad5e796d371b7434cb4c2827d5bd0f6ceb2dd",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-detail-inspector-placement-build/SavedPlannerView.swift.gz",
+        "native-calendar-detail-inspector-placement-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-detail-inspector-placement-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-detail-inspector-placement-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-fixed-inspector-build",
+      "exit": {
+        "exitCode": 74,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "ee5bc15fe0783f6af297834759c9136c6daca98d5ce672ecd76364886c1e16b5",
+        "SavedPlannerView.swift.gz": "1e54193a892e2fbfb2d1b4d6a760508d0504ed7928be2991ec9f65b11f1b486a",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "19a6fa2ef51429c9cc238e52ba7ef77e18848e775dc68a4eeffe5064cc6cb46e",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "1327699d93a5f34230c8be664978cce2dca5da5205a2ba6dc31482c0b5658f7c",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-fixed-inspector-build/SavedPlannerView.swift.gz",
+        "native-calendar-fixed-inspector-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-fixed-inspector-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-fixed-inspector-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-fixed-inspector-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-fixed-inspector-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-fixed-inspector-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertNotEqual failed: (\"XCUIApplicationState(rawValue: 1)\") is equal to (\"XCUIApplicationState(rawValue: 1)\") - Planner must survive Calendar resizing.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "ce93bf50f36f74e0cfc7e7960eec15a6d24a4d862a94e8b2774e4b6c2c5903f0",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "b5c713aad29d5b497c4f975def8c54da48c53d527bc3ca3b1e0890b81724812a",
+        "runner.py.gz": "ef8a64e87f77e973c0c1eb554f9ed5765d3c09a3ca15b8a90c5df022d5653664",
+        "9AD3B61C-EC70-4C37-AF64-D500C133E389.png": "f06d550845f97814bec38632cd5d411d531f244534a377d2df57c9e014c41097",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "CDA7C642-1674-42ED-B0EE-F7D39F2349DD.png": "b257271f1fd9a7cbc354ed166bca2d978710737e47fcbcccfc32d16db1a37ee4",
+        "641EF71A-258C-4888-932C-46C56FD505CC.png": "1d2b8cf0752019f450728559e751efa92be2b43ae0666618ec328b2af2dc479b",
+        "selected-attachments.json": "0ee70e934bc3507dd5a97096e16f857f56f3bb64d6ace8038d4b260c6e02f830",
+        "source-sha256.json": "1327699d93a5f34230c8be664978cce2dca5da5205a2ba6dc31482c0b5658f7c",
+        "D267D993-6A47-4998-A88B-6B17A98AE2D1.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "command.json": "a7dedee30af01c635b59ff45ae28bc5233619b352b555ef23f64a15dc84ba859",
+        "evidence-commands.json": "339012e74b8e714f6077bbfef3c46a887e67ea2bb9acac7519f2f919352bb389",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "2c2c56bea8662d95b4c19829a720cc38206f7802e36fc49ff3b826904be1d2c6",
+        "DDA43F0C-D772-46C1-9976-C8EF27E5AB88.png": "1ae6244ca6da19ad7094f174f5d9d5eb03b88977eda56279ba90256349d237f5",
+        "5A71A963-7C9F-461C-A968-E64BDD08D15E.txt.gz": "ef444e263f0d7876939ff784e4574279116cef91e3eb332408f0abc27094db8e",
+        "test-results-summary.json": "ba447e93a02b663f7244bc0af4926f086aef71c040458736a0a290a4dc24b09c"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-fixed-inspector-local-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "b5c713aad29d5b497c4f975def8c54da48c53d527bc3ca3b1e0890b81724812a",
+        "SavedPlannerView.swift.gz": "1e54193a892e2fbfb2d1b4d6a760508d0504ed7928be2991ec9f65b11f1b486a",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "18c3da781cce28b68f5117228a47abaa451b5a3e331fb1fc2ccb70d2a39f5f16",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "1327699d93a5f34230c8be664978cce2dca5da5205a2ba6dc31482c0b5658f7c",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-fixed-inspector-local-build/SavedPlannerView.swift.gz",
+        "native-calendar-fixed-inspector-local-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-fixed-inspector-local-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-fixed-inspector-local-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-fixed-inspector-local-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-flexible-month-grid-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "0b5af2b61790a8404f1fe4ba9814dff7dc048560ef9712cbff742d9a060c8ffd",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "6f8e7448f35761cfc67e1323ef08fe2431e89b0488898101c15902b0d6f436c9",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "175e07c35ba3d1f0688785a769942eec573e6bc491331deacbac91f34a3bbc69",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "52c2ec2696f9c6fc280a2e3f326c5774b930ac5644359ee7bbdf3654fb0d2aa2",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "5ee9d5e8fcadd2cc5007a342a9a6a6424e00deb1a3682acbb554650c8d2ca3fc",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-flexible-month-grid-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-flexible-month-grid-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-flexible-month-grid-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-flexible-month-grid-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-flexible-viewport-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "ececb94109ff1213300ee33246ec20208bec9675ae68db8cfd9814006af9dd9f",
+        "SavedPlannerView.swift.gz": "02ab0c1f81f97a66852385b211db29322ef1e0d3e9703020f7407a5cf44445db",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "7e5765f0e4f0d5960dd7c51485d14d9645769250805ec82e571937476267321e",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "source-sha256.json": "25608dfc6dd32b55c51dcbafe14ca4fa8d35f631376bc04bff458b63ec4e70fc",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-flexible-viewport-build/SavedPlannerView.swift.gz",
+        "native-calendar-flexible-viewport-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-flexible-viewport-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-flexible-viewport-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-flexible-viewport-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-flexible-viewport-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertNotEqual failed: (\"XCUIApplicationState(rawValue: 1)\") is equal to (\"XCUIApplicationState(rawValue: 1)\") - Planner must survive Calendar resizing.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "fc30e6ba0b00b6698b2658775b97813cb4d8d2c08e2630e3433aa833c0aefde9",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "FC8230CF-8CC9-4FBD-8A0F-309610F65CA0.txt.gz": "ef444e263f0d7876939ff784e4574279116cef91e3eb332408f0abc27094db8e",
+        "product-sha256.json": "ececb94109ff1213300ee33246ec20208bec9675ae68db8cfd9814006af9dd9f",
+        "8453B3E6-851B-4DF9-95EE-4CA08FCF0926.png": "6da50b9f4ce9e08b1caa8a7bcc6803215086658d442bc2008d3179c4df65ea1b",
+        "runner.py.gz": "2b9debadea30160dcf8a410681968e55cce0d1414043b0b034b86ddd813c9a37",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "selected-attachments.json": "e12301e1833653803694899063c09c4c79eaa1500e23a0b128492a6f53a91ef6",
+        "source-sha256.json": "25608dfc6dd32b55c51dcbafe14ca4fa8d35f631376bc04bff458b63ec4e70fc",
+        "47647389-FA4A-46D4-89A6-802B40A44DEB.png": "738f8b3d01256affed1ea1ab769c2981c349fb4df25517b38150d9e719892770",
+        "80098A9E-3182-4D7C-AD3A-39F5FD06ED41.png": "98fd1e11e12f4c88e063cd3b3655e073451cee27ee0828b1f72856f459b15725",
+        "command.json": "6281b1cbec9a5c302f3058c920138551c39dcc97c6c2b7f607aa112b30129ac2",
+        "evidence-commands.json": "dba4d9c6f61fd4bbe9720877f670b320c8e04c3ca4f4d7d2e1fb42ff90853ae7",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "c34f6fdaf96d7c92feb857d5d6fd036036817300ac00ca94a86a49ddb07291f3",
+        "CCBD87D9-09E7-4DFC-A390-AA6C842D2363.png": "f81f4cac1d6084cdbfb5547095c4710b2440355156df0bface2ea3f965bb506a",
+        "73323164-AB32-40E6-A309-462315111A48.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "test-results-summary.json": "c78e75f020558d4d0dabfaebfc1e6a9e39e6c9f04d19512532f0e300799be50b"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-day-selection-inspection-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-day-selection-inspection-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Planner's own window must actually reach the requested width.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "40159b27f42a9a97a1847aaee86124a823887e24a5aa5832f208c5db50bb7947",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "dca4c32d2f8d68c6786d6355f6860cce8b8518a76a9e238c96f040a07b2e12c4",
+        "runner.py.gz": "532e75563f5ec775e24b523bc42b0f10c80d9ab14b0336c068e77b1093a72549",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "EF1AC9C0-AA1B-4D15-992E-CDBA5CA0F5CB.png": "b821809a1f2d911e4f71a9a363cf9b8622d438b416fa51672779e6b8b9ee592f",
+        "selected-attachments.json": "01c44fb1e2000adfbcca229b972c79efd518f954f07c3ee00e5af443d9ceab46",
+        "source-sha256.json": "47b8b71438d4f26fbd864c2dcba845fcab288e77f2488c2393259ee0aaf36d49",
+        "command.json": "1a0957c79059cef22d5b913e36efba2ab143192bf8ed0535a9bd92b1bf53df5e",
+        "C316D7D7-2A0C-4C84-9EAC-357ECFB8E1C4.png": "6989fb3e602bed9479b0ff85daa9847c862a478b435bd22df255a9ac7d55a200",
+        "evidence-commands.json": "95abbfa965fa266df6dd4484ba834eace0f4b75af290fae4e230b7fedc7ede20",
+        "FF846BFD-A878-4107-BC6F-F39B5E6F271F.png": "fd98bbdda70e95244f00307cc8fe41b3cd6b72327525ab841b95bd23d04ee662",
+        "322B513A-A8DD-4ADA-9BD4-C523EB79F66C.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "0af41badb68937c1069ea05296577072ae026f99cb8dc52e715e8e37dd38e5e2",
+        "F6371D5F-7470-4C96-973C-E0CC83830A81.txt.gz": "60a1fb1c9eb005d2f6c188c13299395584a7e27210ae5f06f674f0e22a699a66",
+        "8FBE2958-D06B-46AD-BCD3-E3FC708AE972.png": "d1ece81f385be4400961b02bfb3b0186e5f1eaf5338967f801687be172317349",
+        "test-results-summary.json": "6400a0a5e9e13919e9b72a1175f10ece492c0a8fe20142c82deb6c6cf736846c"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-detail-placement-month-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-detail-placement-month-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+            "testName": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "d2329aa98e3eb7f98831327d55450b968f7793cc0405a486b931bb0ce6b8ef72",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "b0b4cbfbab0d49b742d2a19d09f52e95c3e3c72799dafdee977c5f1b47699f85",
+        "runner.py.gz": "60580dc1a9f41784cddbc14e77853bd951ade6cb109dfc7f8a2a41e93baddac2",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "selected-attachments.json": "40fc2727faf7e3c20f52e64699ea050fb02a0a3fcc7c1ecc0634e8e5a0b45401",
+        "source-sha256.json": "7a1786006f66f27a91323d1cca92c27a8ce0364be3d6785d630559f454e00a39",
+        "F85A9A8C-16BD-439A-91EA-979AB1391192.txt.gz": "c71f6bcb28d4326b283d8168c6cb02dbdb78d8393ca3e786989b8e2a88757526",
+        "83880FAC-CF96-4585-AE76-D953FD535E18.txt.gz": "cf83e7fb92de04d5be70fe6588626267ef3f65e8dbbf91737e5acf6e78e6a40f",
+        "4DB414DC-EDEA-4FA9-A3CA-E51A368DE298.png": "1aba32374eb31166c2cd480bab5390b1059fcb46cbd5c0bab6f25eebadd3951f",
+        "command.json": "7a21f591bf55e86316efac884e03dbe0853dd0b0bd2170403edfe75b1bd77bc0",
+        "evidence-commands.json": "183dec2eab0cbffd7efd62e6e7785df985c1222073687d943c44b3528cc2a933",
+        "7E895C9A-5AE9-4285-9A6C-74D3F36660E9.png": "08a03033cc5f3266dc79d1c6ce05ac426163522be4d7d59be3a02f8e26bcf8d4",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "61b150beb223d743cca8025c788da75bacf3b9aa71c140d597db68057512b79a",
+        "3312F009-F629-4193-8550-19F829868DF7.png": "577c4b2af95a74822a9e3550bdeb978983800e561d6d865af23add30f9fab116",
+        "8AE1E50C-3574-40DB-B5C9-228FC2BD9A2F.png": "cdfab2381280da0b48849b261684b210ce5116a9393e3134393202b0986ae694",
+        "test-results-summary.json": "1d784c22b0c2f78c50c7e929c756ae6e9d6ab695f4e6ae858b9ba3fe2f2f8eb6"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-flexible-grid-month-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-flexible-grid-month-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Planner's own window must actually reach the requested width.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+            "testName": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "4ea6c944e7ca4788ad9df1e5c686f38ae38c033cadf3fefdb50e64d0446d178a",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "0b5af2b61790a8404f1fe4ba9814dff7dc048560ef9712cbff742d9a060c8ffd",
+        "runner.py.gz": "85ecef6c68139df3dd536a0965f59738244efad2770280a96270c863d1ea9429",
+        "source-root.json": "175e07c35ba3d1f0688785a769942eec573e6bc491331deacbac91f34a3bbc69",
+        "selected-attachments.json": "f3f6e5d325f4ff8d70c358a6297136e21386b767cf091b65d3bfec2c7daed532",
+        "25465E05-CFA0-4EBC-9DAB-7CEFF2DCC0B3.png": "44d27c7541ef5849ab2b985fbfc6d6d390f85b4b6ab8c3f2f443dbeaaa6c76dd",
+        "source-sha256.json": "52c2ec2696f9c6fc280a2e3f326c5774b930ac5644359ee7bbdf3654fb0d2aa2",
+        "6B95EFF5-DF06-4297-B8C0-51336BE30BA0.txt.gz": "648df0fc34e7d5953a8e0006c5b5be3721780e62b0a64ab117ce5b1016d864df",
+        "command.json": "d831de4cb97135f8825d53790dc699f2f848abf283b0977da8b3e656f1ce3d5f",
+        "evidence-commands.json": "2d5c267bd9b0abe21eefac873cc288375d27d2682fb50b68f6f446bdf04861f7",
+        "20455D1A-5794-46C2-8922-582DB87C199B.png": "3674b31ea175bb716706310e9bd4ca0304d6fb4e164c45f5178352c058970a0a",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "37b53c7fe2d44501018a5c97751ff59200a1e3e24ad5bd7e06d90a8a76c2a21f",
+        "81E902EF-D9AE-4AF5-94B0-453BD3786B96.png": "b8e3462388e76f035bc322f83d925912e40241879dfde541cfa1142deb1c8e6a",
+        "407F1AC6-7C02-4343-9A5A-1FFBBC91246F.png": "b99f3a367c95a0ccb9236d33fb601a5c45a87312cf0a89d319fb2b8708a74280",
+        "test-results-summary.json": "b7b2268a444be62de0775d262378562dec9498dfe21ddb04629091365a61dd6f"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-month-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "Failed to click \"Month\" Button: No matches found for first query match sequence: `Descendants matching type Any` -> `Elements matching predicate '\"saved.calendar.mode\" IN identifiers'`, given input App element pid: 55168",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+            "testName": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "516df2de840b73136e97a2acfb0ce29a6c09c1c45152b3252f57c10569e75987",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "15c33881dbab2a7c6f5817188237fc75ec2470f8cef842f0d4145e1985e7901d",
+        "runner.py.gz": "3bc122fd29bdae96fdf2d8cc16304a80d1ebd0764606226d7ec420ba98880cf3",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "selected-attachments.json": "3fdfa234e4bd5dc0ef6a5e154ce767710852f5dc1ff11337362326b2e8b53e37",
+        "source-sha256.json": "868cc004c161622ff808271bf86680092abf80b900d395fa9198b70b3fcfb8b1",
+        "command.json": "84e4861bd94cb074628b0229833bf77be3069483be82121c885ff28a4130ab78",
+        "evidence-commands.json": "3527d1139ae774602cb04fe38357c1068d968bbbd93d5fabb0d284fe883ec98f",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "3b4fe60cf22452c4582af5ca49f10646bc26a87ee4d575d43afc3d34c1480888",
+        "test-results-summary.json": "476649bc0bae4786abb1a71193b2709803ee5ebdebdabd4dcf957d6db338f009"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-month-native-controls-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-native-controls-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+            "testName": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "d326c6ab74e5cf29b026c5fe7126381964decd579af6d980daf35f27393ff524",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "d6f99318a8995aaffa386b3f9e249a8c9b6c63d3720da9d109ff73a66513b325",
+        "runner.py.gz": "89f1c624384b9d054a044f39a66db1d303883db772ed40f38bbacdc5581771b3",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "selected-attachments.json": "8f553eb9c120f5417084c10fbe1834d14633d4d3030b8462c714383a3d2a5847",
+        "source-sha256.json": "afcabd3d0d3ab2558ae1edc9b7a63f551ba2a9c659a0893f2871051b54aec1ce",
+        "command.json": "e83ce5b4d7295eafe08246cebcad5b7d715dbec553c4c912d9f535555b0b6e75",
+        "evidence-commands.json": "daebb0c3fd8a281a10f9ea13d9a052a8f555dcb1cf82775f596b11c1ae46a5e6",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "f92671da0e75ce3a81d67dc0fcfd483e432e06f0a88bbf08c53af86aa9b67a97",
+        "test-results-summary.json": "6e86875a6c8fb2436757e7b33a02a54dd57c8210b023d8678582f6f188d14838"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-selection-inspection-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "dca4c32d2f8d68c6786d6355f6860cce8b8518a76a9e238c96f040a07b2e12c4",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "d0a5616345ce1086be495f6753b53f4eba493beaed709871c9347df1e9e3f7d1",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "source-sha256.json": "47b8b71438d4f26fbd864c2dcba845fcab288e77f2488c2393259ee0aaf36d49",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "225121df3334132cdb093ef51b9ad5e796d371b7434cb4c2827d5bd0f6ceb2dd",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-inspector-selection-inspection-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-inspector-selection-inspection-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-inspector-selection-inspection-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-inspector-selection-inspection-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-selection-inspection-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+            "testName": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "9a4008a0afdc101c39b50a80a94eb614a7a54056bc9a733aedc0db76a6afc8f2",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "dca4c32d2f8d68c6786d6355f6860cce8b8518a76a9e238c96f040a07b2e12c4",
+        "runner.py.gz": "532e75563f5ec775e24b523bc42b0f10c80d9ab14b0336c068e77b1093a72549",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "selected-attachments.json": "93a45e51924283a1d8594adadcaa391c2ef591bb82ce1fa4093bed9419ba37aa",
+        "F81E6792-01B6-452A-BD94-0D62D714741B.txt.gz": "2b3d088eac8888b8cf9102e757d460cefb3333d2c9b17e03eac80e1e9eca70c4",
+        "source-sha256.json": "47b8b71438d4f26fbd864c2dcba845fcab288e77f2488c2393259ee0aaf36d49",
+        "command.json": "78f12cd1265e81383ee6e9819823cd179ab9b1e8d2fc0c2b163bfd76e19d817e",
+        "F28A1077-68E7-424D-AE46-4A29203029DF.png": "b3de6485736cd995ace6df20a6b40e05b17eec1a1a28d84f39ff079b9735dc91",
+        "evidence-commands.json": "649c583ff144ad82db673952b41910cc344c9616a1e920ed5484739c3e5c3d3e",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "3c820f6f12bc6cf646cb5230a343230819c88061891183d385cc88d8a338a06f",
+        "test-results-summary.json": "93b71589f86c3d2e300d0677b49c3f49bef5e683176d3b42eabc8afd7127f6fa"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-inspector-zone-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "15c33881dbab2a7c6f5817188237fc75ec2470f8cef842f0d4145e1985e7901d",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "a1707fd7b93990165b5d8406ed83d11cfe98a149f2d3036dce6d532630d1c2b7",
+        "SavedCalendarMonthJourneyTests.swift.gz": "40de46639ce6b648dbfeb511d8e7107842b8be51af75eeb3801434920ac91b1b",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "source-sha256.json": "868cc004c161622ff808271bf86680092abf80b900d395fa9198b70b3fcfb8b1",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "60491ebd446f7bc16b5ec77cba6af72f8364b2e51da9964bf8a4cabe2d47aca1",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-inspector-zone-mac-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-inspector-zone-mac-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-inspector-zone-mac-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-leaf-inspector-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "cf9ed0368c5593526750bfcd80111625d166b22987e84adc80aac73caab1a400",
+        "SavedPlannerView.swift.gz": "53e14679601aec64d922a06317e87d9f510eb18efb7a4cc2675b2301d1f01d66",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "5c6fcd7a6e1c6ded1a3ef9fb3c7426a0f5f6e340ab5033a30129244fcadf78be",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "source-sha256.json": "6d83f6ba5ec53941efb41fef41125cea51aa2204da115f6d9b03c36b9e6c9cd4",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-leaf-inspector-build/SavedPlannerView.swift.gz",
+        "native-calendar-leaf-inspector-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-leaf-inspector-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-leaf-inspector-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-leaf-inspector-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-leaf-inspector-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertNotEqual failed: (\"XCUIApplicationState(rawValue: 1)\") is equal to (\"XCUIApplicationState(rawValue: 1)\") - Planner must survive Calendar resizing.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "699afa3fae217518f76a06fa967605714ac7d07479d64b4585b5f8196d3ccb42",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "cf9ed0368c5593526750bfcd80111625d166b22987e84adc80aac73caab1a400",
+        "runner.py.gz": "49d7cffb8a20f1b1d9657526f3acfe8b38c934a24819b9c070ee8bce6b1da07f",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "selected-attachments.json": "d637f555ce4833da61e7657ca258028080ca2a976a19e1d7415cbf212e086c74",
+        "source-sha256.json": "6d83f6ba5ec53941efb41fef41125cea51aa2204da115f6d9b03c36b9e6c9cd4",
+        "BE0D10FA-38D1-42B0-8B8C-B7E82C5C5D34.png": "2f4cb3c24e6786a737581e784e37bb03e90e35326b378323f39f4c89ce866ade",
+        "A8C44FB5-B79F-4426-8B9F-D78CD6466A8C.png": "b3023b8d6a4e4f2d4d8278a1234a117f6f971302aafcb06bcb2ceffc86964f0f",
+        "command.json": "65975d0e5f76b85a7b3907a4fe9653adaa09fd5a396ea6418042f3a89f2c263d",
+        "3FD3B438-5DD0-4119-BE94-A0FED4AEBE73.png": "52531269050b8bf5730b3b96fc59281802e5504ea6e572dd21284a730ab568a3",
+        "70DB51EF-4D4C-42E4-95F9-BDF4A45C4F7F.txt.gz": "ef444e263f0d7876939ff784e4574279116cef91e3eb332408f0abc27094db8e",
+        "evidence-commands.json": "cc41823c12c7c4f8f0e67604d01f640d365d166a14d779b8620e881dedfcc607",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "70e1424d880adf3244da7fdcde885a37f96abde049c7fc72a531cd880fd5ada3",
+        "1391B243-8E70-4C6F-8A23-47D21C572D08.png": "07cd734cce7975d4f3e154af0f8fbdca2f1c6a19f8a081b18a2c28cd1a417f58",
+        "test-results-summary.json": "4a805dbd66371fe6faef6af769192cf0ff705bf1cb3a38887836507420e70f6f",
+        "7495E639-5DA3-4A9E-9108-37447122612B.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-local-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "1f6ae3e26eb2a53b90cf16c103102cd7e5ac0882fc15c5ab4435dc7ca5d83fae",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "2a781ff7816e2b6f871ad03d5c144487da4451591c449ccbe891cc0a1b696fc3",
+        "SavedCalendarMonthJourneyTests.swift.gz": "25d23b26b26276d238715c51079be3dc830c9c86d8e6335ff9ec604244cd3c71",
+        "source-root.json": "49a64749567bec67fcf9b277d2c39b21fb40cd26a70fb83bc335474eff2008fd",
+        "source-sha256.json": "8fe85aecc62ee79de39f74b53d135f1f146c22574934c5002330f6d836995959",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-local-mac-build/SavedCalendarMonthJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-main-content-minimum-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "67fb9f04a5cbe22783e66827a9091d38d0dce6982cf0c76e528c3aee245fb475",
+        "SavedPlannerView.swift.gz": "6d7a68eabf205bc22b06dd68c8f22c8795fd9f9149c217e01ddd13b5f56f0b3d",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "2278b6583f5723e18dc3900470d8a26c0ca46b2327618c865c9e8f64469ff9ff",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "source-sha256.json": "0dc7fc11e2ba4c8950e37608de554d7e7da688655e0101fb5e68374e4355ebbc",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "46b69848675b48f42ac6dee1158525d6d5921c58f4042e60295a745c6567b317",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-main-content-minimum-build/SavedPlannerView.swift.gz",
+        "native-calendar-main-content-minimum-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-main-content-minimum-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-main-content-minimum-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-main-minimum-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-main-minimum-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Planner's own window must actually reach the requested width.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "4561d25534918e740540db7ec695dc0cec65037435a8bc6e2d00a53f1bee50f2",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "67fb9f04a5cbe22783e66827a9091d38d0dce6982cf0c76e528c3aee245fb475",
+        "runner.py.gz": "c628e47e0b8043f8e585ba873b837960574ce2e4b5c32075c302d6fe5db74ab2",
+        "source-root.json": "0084959510d9c5020b0211c4459dc625477e19dfb2fb8c3e740e0f3229fc706c",
+        "C58EE623-DADB-4DE1-8777-538E58FAFDCF.png": "271f83f16f694095814f453e8297d3f6907683b0ded6a499ad888bbb0ff40df1",
+        "selected-attachments.json": "7c96eed99793b9cb4f13c5c04ca1be0e6d438eead1f349b9b5ae792673273550",
+        "8680C440-3D81-479F-85F7-E1306D2FE8EF.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "F3DC59FB-454D-44EC-A4E8-50BF7E05C75C.png": "c8af7ebbbe3995de1b8e2f8bf442f32b3bcb0c6f893ddd39dc91f932acb3fe9a",
+        "source-sha256.json": "0dc7fc11e2ba4c8950e37608de554d7e7da688655e0101fb5e68374e4355ebbc",
+        "AD3BE44A-79B6-4A53-B588-AEB2F9161D9C.png": "29455f4688b2d20fe3c6fc3e43d2bc47c47f76756d42602592de17cbdc839616",
+        "command.json": "40f649b3f4a975d44c91e39260980b7c0a616797f2f80d2d48cd769935dc5118",
+        "evidence-commands.json": "c78f4eea4e11da427940176c7733a8e672cd709cf165c175e1af17da6c84d6bc",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "a57bb654db3d33f57a67a8ddee7e4f7bf8739f7a268f49ffd07df173cb27964f",
+        "5364F6FD-A41C-4653-A7B6-71AE02524C22.png": "e0f33afe1eed3f591c158371183ce53f6ec5d6baa2dab5aa5cc3a586de17559d",
+        "test-results-summary.json": "167ded8c94eb644bf9f4a240c2e73b282661bdb343482023127d6b3832e0dc74"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-month-mac-local",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-month-mac-local.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"\") is not equal to (\"1 scheduled entry\")",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity",
+            "testName": "testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "9728d0e66eb79af14f7ad182aa365120a097b1a3e2b5ed774e475df7c08b2532",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "1f6ae3e26eb2a53b90cf16c103102cd7e5ac0882fc15c5ab4435dc7ca5d83fae",
+        "runner.py.gz": "c41f6dbc380ccb5f14fc5adaa80cc6a5effd36789c73f2dee1c7b67cfc7810c9",
+        "source-root.json": "49a64749567bec67fcf9b277d2c39b21fb40cd26a70fb83bc335474eff2008fd",
+        "selected-attachments.json": "73435876af332f69a0cace0f261ab94d31a781fb41c98cfb19a579e1aebb6b16",
+        "source-sha256.json": "8fe85aecc62ee79de39f74b53d135f1f146c22574934c5002330f6d836995959",
+        "command.json": "c8629128a567bcc587e4775367952fc3abcee0339d830f690acf0a7429936fff",
+        "evidence-commands.json": "4a56c432b38961ac9f085faaa79219695f1500a9fae1d0f899ca61a352c2bed5",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "f95b220c12ef04212fc5337009cbfdb32d1eaabbd630c6c960cd16edd56cdb76",
+        "test-results-summary.json": "323b98949d3daeb6f1d3ee34761bf06cc9394a415e4be815faaba62b56261b74"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-native-controls-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "d6f99318a8995aaffa386b3f9e249a8c9b6c63d3720da9d109ff73a66513b325",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "eb6b3de58e233773ac86e3b9a2dbba9bafb02d07945e920529113b3bad31f5f1",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "11ada30fb2330733e6a5fad7b2c303814685144cb89c88fffc3285a47a8dc338",
+        "source-sha256.json": "afcabd3d0d3ab2558ae1edc9b7a63f551ba2a9c659a0893f2871051b54aec1ce",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "627209720aa07cd7e6703aaaad2e45105f476bb793e6f2f2790bee26f827a1cb",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-native-controls-mac-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-native-controls-mac-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-native-controls-mac-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-prior-toolbar-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-prior-toolbar-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/PlannerApp.swift",
+          "Planner/Scenes/SavedPlannerMainWindow.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertNotEqual failed: (\"XCUIApplicationState(rawValue: 1)\") is equal to (\"XCUIApplicationState(rawValue: 1)\") - Planner must survive Calendar resizing.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "d9b7f2a349fbdfaec0e2150c1ca4357f79fc72c64c6d5d4a7fd99f2e717957a5",
+        "A346FEB4-E64B-4849-A155-DD746E76111A.png": "c65230780d4fe05c87ee947bb6026b1e12e4d28b7f3849bd92ab1a12e1016bfb",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "F18438F4-0EAD-4B28-AECA-4FBD58351A6A.png": "216f4e18a85f32410f3ad1743b83407ee536223a9651cac26e1e65b71b3f5289",
+        "product-sha256.json": "719cc66077535a835e061a70d01f961e8f08230ee613d552fe2bcdeb7c5e545d",
+        "runner.py.gz": "f52bf9f69c0bc893c9c61376cdfcfd8817cb91bbfbc6fc9a735df9436235e77f",
+        "C1A6F5EA-6739-46FF-8E22-D025D7354C06.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "source-root.json": "895e03f46345ca8dfc7951fab39888da82958779eb8cbd91676831e4d6565502",
+        "selected-attachments.json": "a810224cd335b2e1347b751d03d08db4925dcf7fbb22ce62ddac8893b446e0e4",
+        "source-sha256.json": "f3cfd500416f0f67f56f92fe86c8dc5aa458ab834d10543c2331511dd14b2c1c",
+        "9463E94A-8993-4632-86D5-E4BE9688BA48.png": "b1fb93d0eee7cc32b4ec2b25f7876e7b619077072a7a2a321c064fcd8595af6c",
+        "268F788B-5B3F-468B-94A9-FB2BCD9FA3D7.txt.gz": "ef444e263f0d7876939ff784e4574279116cef91e3eb332408f0abc27094db8e",
+        "command.json": "82e09cc434885525572ea3aacb75c9e1701140f94c4038fbf73c408c18d2d4fa",
+        "evidence-commands.json": "1cbec498f7acc41c0ffea1e9970ff858dcc88d8b04509ad795e45d61d1f40124",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "207d8d0748328b63caaa659845f7ac73cd023955a9704b008c0bef6eb6fb957c",
+        "EF6A5601-BEB2-44DF-ADE6-5C4FD5C20246.png": "76dd453f7c930c50a6820b0ccf6cb4178e2915aba3b916b97abf962159f02e86",
+        "test-results-summary.json": "d49c696eae5d293b7479f836bcf9ba1fd68ce2df83326b48949f8e08d658be20"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-prior-toolbar-style-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/PlannerApp.swift",
+          "Planner/Scenes/SavedPlannerMainWindow.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "719cc66077535a835e061a70d01f961e8f08230ee613d552fe2bcdeb7c5e545d",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "0375fdbbe893e5d98c23c3d75ef81c977037657905aa6f73cca6692e795bb436",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "895e03f46345ca8dfc7951fab39888da82958779eb8cbd91676831e4d6565502",
+        "source-sha256.json": "f3cfd500416f0f67f56f92fe86c8dc5aa458ab834d10543c2331511dd14b2c1c",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "PlannerApp.swift.gz": "d6bfd5bc8831ab1a8ec36d56d1c92c8185098003726204c22b4010fe305f2717",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd",
+        "SavedPlannerMainWindow.swift.gz": "4c59110289beebafa64bc892942e7b46f2604b98e7884fb46e0f657441e644a8"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-prior-toolbar-style-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-prior-toolbar-style-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-prior-toolbar-style-build/PlannerApp.swift.gz",
+        "native-calendar-prior-toolbar-style-build/SavedCalendarDisplayZoneJourneyTests.swift.gz",
+        "native-calendar-prior-toolbar-style-build/SavedPlannerMainWindow.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-stable-toolbar-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "16233b69164beae5bb1fc08b3081f90719a54123d3955670bd59271630a2fd31",
+        "SavedPlannerView.swift.gz": "7770d282d6535fd1455ec51ae97fc5f26b39e8285140860b622e60cf31cb8ad3",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "5c1144efb410e0e7719046743dc07f0f82e2e67271c750cd0063530ad1b3ec7b",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "fddc51fa4dbb2e1b402f8e788b4900a130a5f6450f837b5d0ebf7cec902600bb",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-stable-toolbar-build/SavedPlannerView.swift.gz",
+        "native-calendar-stable-toolbar-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-stable-toolbar-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-stable-toolbar-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-stable-toolbar-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-stable-toolbar-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-stable-toolbar-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertNotEqual failed: (\"XCUIApplicationState(rawValue: 1)\") is equal to (\"XCUIApplicationState(rawValue: 1)\") - Planner must survive Calendar resizing.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "63f3b88906ec3ad3d2a46abcd543141716d9f830c443be0c34adc6eb1d132afd",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "16233b69164beae5bb1fc08b3081f90719a54123d3955670bd59271630a2fd31",
+        "runner.py.gz": "7eb4d003b5a46fa217750736f9d05764e2804adcbb4f3e42fa5edb71a7100fcd",
+        "7C40DA39-6D5C-4D8A-A5A7-C38560B62561.png": "fadf908647d187b614fa9ad346d41c8890e84dfc2adeec15681cae294203f9d0",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "selected-attachments.json": "cf882d7b21544cff3896542486ededb1d297124a8455a2ba7b52cf5b2f326bd1",
+        "9142EBD3-120E-425D-AA30-CD82034C35CA.png": "276ac0adb297663d62a956e1e8ebc69e65a7018933c4468e18ef0d85c2886d1e",
+        "source-sha256.json": "fddc51fa4dbb2e1b402f8e788b4900a130a5f6450f837b5d0ebf7cec902600bb",
+        "C241D86E-5E4D-427F-BE5F-7E5F5338D247.png": "3f49e4f2a4fb21e1f79d90962386610aa62aa7bb6f7954b62a9bf897b412f5a7",
+        "command.json": "8535f7dcfd4eebf2a79eb1979791feb5816072e629da0816a7a63f6ddebb9944",
+        "evidence-commands.json": "f05e22dae74e0e1b325b2d4647b026226442dec7db698cb5e2533be37b2076f3",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "498c0feb12fd8da5da5e969c961c1d7a7da9be8252ab875e7ee8ae3aa2bd9809",
+        "3C0581EC-DFA7-4AA0-98CD-A77072B9D6DE.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "133A290F-AC7F-4BF2-B27C-44772D5C26C7.txt.gz": "ef444e263f0d7876939ff784e4574279116cef91e3eb332408f0abc27094db8e",
+        "1EC8CC5E-CB4F-42BF-9DA4-DDAF217FA8DB.png": "75260921c76c93512e9f79351fef5f708ead1ed2f103b87e13b017d6c7220fdc",
+        "test-results-summary.json": "ce31a9874bea137732b2cf3e80b1f80b62e3944fef2ed7af611b361bee5c1e7a"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-under-toolbar-day-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-calendar-under-toolbar-day-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertNotEqual failed: (\"XCUIApplicationState(rawValue: 1)\") is equal to (\"XCUIApplicationState(rawValue: 1)\") - Planner must survive Calendar resizing.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+            "testName": "testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "e35f317afb100cfd724d714a83c5be8f07a9f17bc7c8a706116b87c8c4ef65ed",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "38e0dc50e33bdd71fb603a9b94aefb7791e5347ad657928da2da2eb1ba2cf8c3",
+        "runner.py.gz": "70d163f74469d70d5f6f5113b1b17c0f8bec62dbf0b5baa012d6d77130ab062f",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "C19BB13A-C207-45F9-80CA-F4FAF790FAE0.txt.gz": "5d9e3f9edf567898b311b1f335dbc5db8bcd7f44b7e45e9d57db5e59145a2e01",
+        "selected-attachments.json": "03fdb4e74b0e892b1c659ae423582d581e1052b3b99d84c707cc5ba5cf901d37",
+        "398E4371-9E61-4CAB-9FDF-569700B71707.png": "55bfcec30123b0849b7b0178deff2370d99472dc39ac3b9a439b55f4ef444f8e",
+        "786FBD95-29C5-4F79-A515-E95DCA8F4CB7.png": "2761a5299e41beae610f990b88109dc7f6c853062b458a15741b88a855e0f8c1",
+        "source-sha256.json": "9fec7399d7ff284e054e91e9d7e57e42edafbdb4c9f2383cb5c40d188096a9b2",
+        "3911B24E-8702-4D3D-88A0-254399033899.png": "2dc7d250f917a4217b36a767b764303594cd6f6c31e508e66b439f2c54305c27",
+        "command.json": "f5937f8ea4979c14a60e3186605ed41aa937dbe5f71e698d5a9b6d2ad2aa49b4",
+        "evidence-commands.json": "f5f12131c35b7dc7508f60cbfe6a43b370d343c3ec721acc4ad71cadac412f82",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "c5561b93215b5494d9c6cd5069a81239b84ae96b689ec9fc267cec612db99ca7",
+        "37D79CD3-7131-4651-A93B-69108154F0C1.txt.gz": "ef444e263f0d7876939ff784e4574279116cef91e3eb332408f0abc27094db8e",
+        "test-results-summary.json": "5066f8fd21a20cb1a9e93df793050fdc4bfc918d96b97235b860f71b4caee7c2",
+        "E225A3A5-3E4C-4370-B22F-AA8797057070.png": "7072d38df6c14ddd01d07b73d811dd549fe61c2562fb6e7cf90e274139fe13a3"
+      },
+      "retainedSourceSnapshots": []
+    },
+    {
+      "phase": "native-calendar-under-toolbar-formatted-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "38e0dc50e33bdd71fb603a9b94aefb7791e5347ad657928da2da2eb1ba2cf8c3",
+        "SavedPlannerView.swift.gz": "78d99c0bc1a533920f7bc572668e2b66e5af1ebc532f9603b2a49158c506fc43",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "ac704eef0e6f13708c1862e4d07d8d8339d429c3fcffc3bb398396bb23742b5e",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "9fec7399d7ff284e054e91e9d7e57e42edafbdb4c9f2383cb5c40d188096a9b2",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-under-toolbar-formatted-build/SavedPlannerView.swift.gz",
+        "native-calendar-under-toolbar-formatted-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-under-toolbar-formatted-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-under-toolbar-formatted-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-under-toolbar-formatted-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-calendar-under-toolbar-inspector-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketArchivedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "92e2fb5634d7ead36839b2faf1d40bb3677df05d",
+        "overlays": [
+          "Planner/Scenes/SavedCalendarMonthGrid.swift",
+          "Planner/Scenes/SavedPlannerView.swift",
+          "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift",
+          "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "aa83765cb6c17002f17bf517ca9af56d9ad3c3263447166d12b728f1cd1515d5",
+        "SavedPlannerView.swift.gz": "d76d7d3f356119782f136542f6d29eb1fb96051ddd1d7193e4e6df57c9efa1da",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "88908ecdfb21168add9171833badd18ab383d9ecf76a6b2010c52fe6e393d1ef",
+        "SavedCalendarMonthJourneyTests.swift.gz": "90543c4c9a61a934d3d007f3ed2e77d20c1d9d50aff605dcf74e003df4958c30",
+        "source-root.json": "299a3b481e599cab2e8302a443d63d519f3739627962f3ec3a7f90fd0a1cfe14",
+        "SavedCalendarMonthGrid.swift.gz": "a4eaa56cc626d7947c9c8afdf81804dcc6344ec94c437a453ceae1cfdba5bd66",
+        "source-sha256.json": "951b286aa36d92897b181e1f682e4f1cc28cb1f1599275787b015314eaf83af4",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedCalendarInspectorJourneyTests.swift.gz": "c3ed2b732ab2a87dcbb6f0eb603b2c57536675e7316220790cbdc770335ced5f",
+        "SavedCalendarDisplayZoneJourneyTests.swift.gz": "7b416abfa6adfb6164751aeeea316f7e4b856491a0bf3cf0b1182de006bba4bd"
+      },
+      "retainedSourceSnapshots": [
+        "native-calendar-under-toolbar-inspector-build/SavedPlannerView.swift.gz",
+        "native-calendar-under-toolbar-inspector-build/SavedCalendarMonthJourneyTests.swift.gz",
+        "native-calendar-under-toolbar-inspector-build/SavedCalendarMonthGrid.swift.gz",
+        "native-calendar-under-toolbar-inspector-build/SavedCalendarInspectorJourneyTests.swift.gz",
+        "native-calendar-under-toolbar-inspector-build/SavedCalendarDisplayZoneJourneyTests.swift.gz"
+      ]
+    }
+  ]
+}

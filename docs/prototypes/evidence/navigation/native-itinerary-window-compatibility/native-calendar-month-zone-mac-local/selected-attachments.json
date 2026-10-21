@@ -1,0 +1,48 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "48A3946F-6A15-4A77-8F39-89962A6A9C03.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "All-day civil date stays fixed across Calendar display zones_0_5A259F63-227F-475B-A324-876B6BB7CFAD.png",
+      "timestamp": 1792599653.074,
+      "retainedFileName": "48A3946F-6A15-4A77-8F39-89962A6A9C03.png",
+      "sha256": "0b03ce4bbaf9dc56bb4224f4a3c8b56e9184d0bdbfb23cab1ee65788a862c267"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "0B6A8498-CA10-4389-98C0-001D23393DDD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Calendar uses a local display time-zone override_0_3962C6BE-1626-47A6-845D-B9E3E0BC32DC.png",
+      "timestamp": 1792599699.865,
+      "retainedFileName": "0B6A8498-CA10-4389-98C0-001D23393DDD.png",
+      "sha256": "df9d4a39bcc892b7f0eddaf537bf31952c8a97080b852a3480b2761f49bedf5a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "FD8555DD-A9B8-45CC-AE48-1B014512F2C3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Month indicates a saved Schedule's date and retains its agenda identity_0_0A9099BE-BE40-494D-A8DD-BD040AC02D9F.png",
+      "timestamp": 1792599729.333,
+      "retainedFileName": "FD8555DD-A9B8-45CC-AE48-1B014512F2C3.png",
+      "sha256": "71114c92dcb7095f85fcee0ca795aad912a6ecdffeafa87b49d9bac6a06bf65d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "C370370F-193D-4DAF-9486-C057B1D09616.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac Month count representation_0_CD5FC2F7-60F2-4E3A-B16F-94B719A5B768.txt",
+      "timestamp": 1792599729.012,
+      "retainedFileName": "C370370F-193D-4DAF-9486-C057B1D09616.txt.gz",
+      "sha256": "13a9a2c4ee66a549d2505ff04e4754193d789e4bfceb050b4cfe46fc00286504"
+    }
+  ]
+}

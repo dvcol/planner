@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/usr/bin/log",
+    "show",
+    "--style",
+    "compact",
+    "--start",
+    "2026-10-22 00:36:10",
+    "--end",
+    "2026-10-22 00:36:30",
+    "--predicate",
+    "processID == 63702 AND eventMessage BEGINSWITH \"The window has been marked\"",
+    "--info",
+    "--debug"
+  ],
+  "exitCode": 0,
+  "stdoutSha256": "397c65e7459354ca8aee825a1dd986a60bc6d1378331868df466c67b68b19d02",
+  "stderr": ""
+}

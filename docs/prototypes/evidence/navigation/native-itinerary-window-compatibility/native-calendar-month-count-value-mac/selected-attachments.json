@@ -1,0 +1,29 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "AC6D226B-1A70-4C35-9170-352F16FF1302.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Month indicates a saved Schedule's date and retains its agenda identity_0_432714F6-E57E-4879-BD1D-CCA8AA42D29F.png",
+      "timestamp": 1792595336.474,
+      "retainedFileName": "AC6D226B-1A70-4C35-9170-352F16FF1302.png",
+      "sha256": "b004bf62d0d995313f066d6114517779c34cdfe83f6db3ac6355b0406bc4cfce"
+    }
+  ],
+  "excludedAttachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "42E1B1C0-E8A3-41AC-9A0F-D015C6A73C5D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac Month count representation_0_A5E24670-21D3-4285-95EE-C796565CB4D9.txt",
+      "timestamp": 1792595336.166,
+      "retainedFileName": "42E1B1C0-E8A3-41AC-9A0F-D015C6A73C5D.txt.gz",
+      "sha256": "857c88a825a12ea0fa5cc265afd72db4dff30b721333bdfad4b7fcf79da5ee71",
+      "reason": "Broad query-chain hierarchy includes unrelated menu titles; raw retained locally."
+    }
+  ]
+}

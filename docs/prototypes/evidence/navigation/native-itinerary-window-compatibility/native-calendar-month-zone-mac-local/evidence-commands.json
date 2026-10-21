@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-month-zone-mac-local.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792599729.952,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792599617.722,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-month-zone-mac-local.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-calendar-month-zone-mac-local"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 1 attachment for: SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone():\nFile: 48A3946F-6A15-4A77-8F39-89962A6A9C03.png, suggested name: \"All-day civil date stays fixed across Calendar display zones_0_5A259F63-227F-475B-A324-876B6BB7CFAD.png\"\n\nExported 1 attachment for: SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule():\nFile: 0B6A8498-CA10-4389-98C0-001D23393DDD.png, suggested name: \"Native Calendar uses a local display time-zone override_0_3962C6BE-1626-47A6-845D-B9E3E0BC32DC.png\"\n\nExported 2 attachments for: SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity():\nFile: FD8555DD-A9B8-45CC-AE48-1B014512F2C3.png, suggested name: \"Month indicates a saved Schedule's date and retains its agenda identity_0_0A9099BE-BE40-494D-A8DD-BD040AC02D9F.png\"\nFile: C370370F-193D-4DAF-9486-C057B1D09616.txt, suggested name: \"Native Mac Month count representation_0_CD5FC2F7-60F2-4E3A-B16F-94B719A5B768.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-calendar-month-zone-mac-local/manifest.json\n",
+    "stderr": ""
+  }
+]

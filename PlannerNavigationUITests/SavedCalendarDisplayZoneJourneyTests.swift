@@ -46,7 +46,11 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
       identifier: "saved.calendar.day.\(dateIdentifier).schedule-count"
     ).firstMatch
     XCTAssertTrue(indicator.waitForExistence(timeout: 10))
-    XCTAssertEqual(indicator.label, "1 scheduled entry")
+    #if os(macOS)
+      XCTAssertEqual(indicator.value as? String, "1 scheduled entry")
+    #else
+      XCTAssertEqual(indicator.label, "1 scheduled entry")
+    #endif
     #if os(macOS)
       var calendar = Calendar(identifier: .gregorian)
       calendar.timeZone = try XCTUnwrap(TimeZone(identifier: overrideIdentifier))
@@ -68,7 +72,12 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
     #endif
     XCTAssertTrue(entry.waitForExistence(timeout: 10))
     XCTAssertEqual(entry.value as? String, calendarDescription)
-    let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    #if os(macOS)
+      let screenshot = application.windows.firstMatch.screenshot()
+    #else
+      let screenshot = XCUIScreen.main.screenshot()
+    #endif
+    let capture = XCTAttachment(screenshot: screenshot)
     capture.name = "All-day civil date stays fixed across Calendar display zones"
     capture.lifetime = .keepAlways
     add(capture)
@@ -134,7 +143,12 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
     let overrideDescription = try XCTUnwrap(entry.value as? String)
     XCTAssertNotEqual(overrideDescription, deviceDescription)
     XCTAssertTrue(overrideDescription.hasPrefix("Start only · "))
-    let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    #if os(macOS)
+      let screenshot = application.windows.firstMatch.screenshot()
+    #else
+      let screenshot = XCUIScreen.main.screenshot()
+    #endif
+    let capture = XCTAttachment(screenshot: screenshot)
     capture.name = "Native Calendar uses a local display time-zone override"
     capture.lifetime = .keepAlways
     add(capture)

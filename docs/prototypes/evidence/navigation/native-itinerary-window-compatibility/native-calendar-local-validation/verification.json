@@ -1,0 +1,16 @@
+{
+  "sourceInputCount": 1061,
+  "sourceInputsMatchWorkspace": true,
+  "productionCalendarAndListHeaderUnchangedFrom": "92e2fb56",
+  "verifiedOriginalAttachmentCount": 14,
+  "scopedPrivacyScanFindings": [],
+  "passedMacCases": 3,
+  "failedMacCasesInFinalReadInvocation": 0,
+  "skippedMacCasesInFinalReadInvocation": 0,
+  "inspectorResizeQualified": false,
+  "pendingHumanDecision": "Q127",
+  "strictSwiftLint": "passed for the three affected UI-test drivers",
+  "markdownLint": "passed for the three affected documents",
+  "whitespace": "git diff --check passed",
+  "visualInspection": "All three final owned-window Month/zone captures inspected; no full desktop capture used."
+}

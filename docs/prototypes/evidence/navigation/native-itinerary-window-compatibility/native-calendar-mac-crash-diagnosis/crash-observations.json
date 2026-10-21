@@ -1,0 +1,1869 @@
+{
+  "scope": "Only Planner crash exception and stack fields; original reports remain local. No account, system identity or unrelated process fields retained.",
+  "reports": [
+    {
+      "originalFileName": "Planner-2026-10-22-001411.ips",
+      "originalSha256": "d4c06299db440c08a7f925bfbb76c17bd008293d51e0f67af57eb011ebe6c199",
+      "captureTime": "2026-10-22 00:13:42.1225 +0900",
+      "processIdentifier": 56205,
+      "exception": {
+        "codes": "0x0000000000000001, 0x000000019a714dd8",
+        "rawCodes": [
+          1,
+          6886084056
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 56205
+      },
+      "lastExceptionBacktrace": []
+    },
+    {
+      "originalFileName": "Planner-2026-10-22-001703.ips",
+      "originalSha256": "300ea708fb7aa8d44d08ffce130b01be61a1b026661986a1c2b28327a91b82d9",
+      "captureTime": "2026-10-22 00:16:37.7030 +0900",
+      "processIdentifier": 57137,
+      "exception": {
+        "codes": "0x0000000000000000, 0x0000000000000000",
+        "rawCodes": [
+          0,
+          0
+        ],
+        "type": "EXC_CRASH",
+        "signal": "SIGABRT"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 6,
+        "namespace": "SIGNAL",
+        "indicator": "Abort trap: 6",
+        "byProc": "Planner",
+        "byPid": 57137
+      },
+      "lastExceptionBacktrace": [
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__exceptionPreprocess",
+          "imageOffset": 989364
+        },
+        {
+          "framework": "libobjc.A.dylib",
+          "symbol": "objc_exception_throw",
+          "imageOffset": 99852
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "+[NSException exceptionWithName:reason:userInfo:]",
+          "imageOffset": 989104
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSDisplayCycle) _postWindowNeedsUpdateConstraints]",
+          "imageOffset": 9996152
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView setNeedsUpdateConstraints:]",
+          "imageOffset": 344780
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.setNeedsUpdate()",
+          "imageOffset": 9252524
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.requestUpdate(after:)",
+          "imageOffset": 9389680
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "ViewGraphHost.LayoutInvalidator.invalidate()",
+          "imageOffset": 3410108
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.invalidateLayout()",
+          "imageOffset": 11830020
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831192
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.Action.callAsFunction()",
+          "imageOffset": 5091816
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "dispatch #1 () in UpdateGroup.dispatchActions()",
+          "imageOffset": 5091052
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.dispatchActions()",
+          "imageOffset": 5088476
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.end()",
+          "imageOffset": 5084284
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.enqueueAction(reason:_:)",
+          "imageOffset": 5083744
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost._layoutMetricsInvalidatedForHostedView()",
+          "imageOffset": 11833600
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "@objc AppKitPlatformViewHost._layoutMetricsInvalidatedForHostedView()",
+          "imageOffset": 11833660
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[_NSConstraintBasedLayoutHostingView constraintsDidChangeInEngine:]",
+          "imageOffset": 14817044
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine tryToChangeConstraintSuchThatMarker:isReplacedByMarkerPlusDelta:undoHandler:]",
+          "imageOffset": 58720
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSLayoutConstraint _tryToChangeContainerGeometryWithUndoHandler:]",
+          "imageOffset": 198912
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSLayoutConstraint _setSymbolicConstant:constant:symbolicConstantMultiplier:]",
+          "imageOffset": 200120
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSLayoutConstraint setConstant:]",
+          "imageOffset": 200364
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.SizeConstraints.update(from:)",
+          "imageOffset": 9315184
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9320768
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "@objc NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9321064
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776028
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__82-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]_block_invoke",
+          "imageOffset": 826468
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine withBehaviors:performModifications:]",
+          "imageOffset": 48468
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776148
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke_2",
+          "imageOffset": 10885212
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke",
+          "imageOffset": 775520
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSPerformVisuallyAtomicChange",
+          "imageOffset": 502620
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView updateConstraintsForSubtreeIfNeeded]",
+          "imageOffset": 775284
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSConstraintBasedLayoutInternal) updateConstraintsIfNeeded]",
+          "imageOffset": 14130144
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__NSWindowGetDisplayCycleObserverForUpdateConstraints_block_invoke",
+          "imageOffset": 910172
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleObserverInvoke",
+          "imageOffset": 909784
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleFlush",
+          "imageOffset": 908900
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::run_commit_handlers(CATransactionPhase)",
+          "imageOffset": 16524
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::commit()",
+          "imageOffset": 9868
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush()",
+          "imageOffset": 9072
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush_as_runloop_observer(bool)",
+          "imageOffset": 2294300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "stepTransactionFlush",
+          "imageOffset": 5537048
+        },
+        {
+          "framework": "UpdateCycle",
+          "symbol": "UC::DriverCore::continueProcessing()",
+          "imageOffset": 5628
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__",
+          "imageOffset": 530756
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopDoSource0",
+          "imageOffset": 530648
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopDoSources0",
+          "imageOffset": 529936
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopRun",
+          "imageOffset": 524768
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "_CFRunLoopRunSpecificWithOptions",
+          "imageOffset": 1419308
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "RunCurrentEventLoopInMode",
+          "imageOffset": 767376
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "ReceiveNextEventCommon",
+          "imageOffset": 780572
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "_BlockUntilNextEventMatchingListInMode",
+          "imageOffset": 2364288
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSBlockUntilNextEventMatchingListInMode",
+          "imageOffset": 3654300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSNextEvent",
+          "imageOffset": 234748
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9115464
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9114220
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication run]",
+          "imageOffset": 182540
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSApplicationMain",
+          "imageOffset": 19532
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "specialized runApp(_:)",
+          "imageOffset": 1055876
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "runApp<A>(_:)",
+          "imageOffset": 5327976
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "static App.main()",
+          "imageOffset": 8321208
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "static PlannerApp.$main()",
+          "imageOffset": 10430072
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "__debug_main_executable_dylib_entry_point",
+          "imageOffset": 10430736
+        },
+        {
+          "framework": "dyld",
+          "symbol": "start",
+          "imageOffset": 204416
+        }
+      ]
+    },
+    {
+      "originalFileName": "Planner-2026-10-22-002043.ips",
+      "originalSha256": "33b34f638e9ccbae595845ee246545b47c024d60749ccfead31ccb1a5d0aa41a",
+      "captureTime": "2026-10-22 00:20:18.0515 +0900",
+      "processIdentifier": 58306,
+      "exception": {
+        "codes": "0x0000000000000000, 0x0000000000000000",
+        "rawCodes": [
+          0,
+          0
+        ],
+        "type": "EXC_CRASH",
+        "signal": "SIGABRT"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 6,
+        "namespace": "SIGNAL",
+        "indicator": "Abort trap: 6",
+        "byProc": "Planner",
+        "byPid": 58306
+      },
+      "lastExceptionBacktrace": [
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__exceptionPreprocess",
+          "imageOffset": 989364
+        },
+        {
+          "framework": "libobjc.A.dylib",
+          "symbol": "objc_exception_throw",
+          "imageOffset": 99852
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "+[NSException exceptionWithName:reason:userInfo:]",
+          "imageOffset": 989104
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSDisplayCycle) _postWindowNeedsUpdateConstraints]",
+          "imageOffset": 9996152
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView setNeedsUpdateConstraints:]",
+          "imageOffset": 344780
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.setNeedsUpdate()",
+          "imageOffset": 9252524
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in NSHostingView.beginTransaction()",
+          "imageOffset": 9393916
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "onMainThread(do:)",
+          "imageOffset": 14977308
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.beginTransaction()",
+          "imageOffset": 9393672
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "specialized GraphHost.asyncTransaction<A>(_:id:mutation:style:mayDeferUpdate:)",
+          "imageOffset": 2749228
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "ViewGraphHost.LayoutInvalidator.invalidate()",
+          "imageOffset": 3410036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.invalidateLayout()",
+          "imageOffset": 11830020
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831192
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.Action.callAsFunction()",
+          "imageOffset": 5091816
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "dispatch #1 () in UpdateGroup.dispatchActions()",
+          "imageOffset": 5091052
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.dispatchActions()",
+          "imageOffset": 5088476
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.end()",
+          "imageOffset": 5084284
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.enqueueAction(reason:_:)",
+          "imageOffset": 5083744
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "SplitViewChildController.hostingView<A>(_:didUpdateMinSize:maxSize:)",
+          "imageOffset": 12793576
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.SizeConstraints.update(from:)",
+          "imageOffset": 9316684
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9320768
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "@objc NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9321064
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776028
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__82-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]_block_invoke",
+          "imageOffset": 826468
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine withBehaviors:performModifications:]",
+          "imageOffset": 48468
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776148
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke_2",
+          "imageOffset": 10885212
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke",
+          "imageOffset": 775520
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSPerformVisuallyAtomicChange",
+          "imageOffset": 502620
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView updateConstraintsForSubtreeIfNeeded]",
+          "imageOffset": 775284
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSConstraintBasedLayoutInternal) updateConstraintsIfNeeded]",
+          "imageOffset": 14130144
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__NSWindowGetDisplayCycleObserverForUpdateConstraints_block_invoke",
+          "imageOffset": 910172
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleObserverInvoke",
+          "imageOffset": 909784
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleFlush",
+          "imageOffset": 908900
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::run_commit_handlers(CATransactionPhase)",
+          "imageOffset": 16524
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::commit()",
+          "imageOffset": 9868
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush()",
+          "imageOffset": 9072
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush_as_runloop_observer(bool)",
+          "imageOffset": 2294300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "stepTransactionFlush",
+          "imageOffset": 5537048
+        },
+        {
+          "framework": "UpdateCycle",
+          "symbol": "UC::DriverCore::continueProcessing()",
+          "imageOffset": 5628
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+          "imageOffset": 527556
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopDoObservers",
+          "imageOffset": 527292
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "_CFRunLoopRunSpecificWithOptions",
+          "imageOffset": 1419260
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "RunCurrentEventLoopInMode",
+          "imageOffset": 767376
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "ReceiveNextEventCommon",
+          "imageOffset": 780572
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "_BlockUntilNextEventMatchingListInMode",
+          "imageOffset": 2364288
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSBlockUntilNextEventMatchingListInMode",
+          "imageOffset": 3654300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSNextEvent",
+          "imageOffset": 234748
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9115464
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9114220
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication run]",
+          "imageOffset": 182540
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSApplicationMain",
+          "imageOffset": 19532
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "specialized runApp(_:)",
+          "imageOffset": 1055876
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "runApp<A>(_:)",
+          "imageOffset": 5327976
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "static App.main()",
+          "imageOffset": 8321208
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "static PlannerApp.$main()",
+          "imageOffset": 10430072
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "__debug_main_executable_dylib_entry_point",
+          "imageOffset": 10430736
+        },
+        {
+          "framework": "dyld",
+          "symbol": "start",
+          "imageOffset": 204416
+        }
+      ]
+    },
+    {
+      "originalFileName": "Planner-2026-10-22-002834.ips",
+      "originalSha256": "8476d0d6d134031f2f5515535788125d55d66daded8adeb88adbcbc8cd70e533",
+      "captureTime": "2026-10-22 00:28:04.3305 +0900",
+      "processIdentifier": 61011,
+      "exception": {
+        "codes": "0x0000000000000000, 0x0000000000000000",
+        "rawCodes": [
+          0,
+          0
+        ],
+        "type": "EXC_CRASH",
+        "signal": "SIGABRT"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 6,
+        "namespace": "SIGNAL",
+        "indicator": "Abort trap: 6",
+        "byProc": "Planner",
+        "byPid": 61011
+      },
+      "lastExceptionBacktrace": [
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__exceptionPreprocess",
+          "imageOffset": 989364
+        },
+        {
+          "framework": "libobjc.A.dylib",
+          "symbol": "objc_exception_throw",
+          "imageOffset": 99852
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "+[NSException exceptionWithName:reason:userInfo:]",
+          "imageOffset": 989104
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSDisplayCycle) _postWindowNeedsUpdateConstraints]",
+          "imageOffset": 9996152
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView setNeedsUpdateConstraints:]",
+          "imageOffset": 344780
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.setNeedsUpdate()",
+          "imageOffset": 9252524
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in NSHostingView.beginTransaction()",
+          "imageOffset": 9393916
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "onMainThread(do:)",
+          "imageOffset": 14977308
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.beginTransaction()",
+          "imageOffset": 9393672
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "specialized GraphHost.asyncTransaction<A>(_:id:mutation:style:mayDeferUpdate:)",
+          "imageOffset": 2749228
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "ViewGraphHost.LayoutInvalidator.invalidate()",
+          "imageOffset": 3410036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.invalidateLayout()",
+          "imageOffset": 11830020
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831192
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.Action.callAsFunction()",
+          "imageOffset": 5091816
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "dispatch #1 () in UpdateGroup.dispatchActions()",
+          "imageOffset": 5091052
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.dispatchActions()",
+          "imageOffset": 5088476
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.end()",
+          "imageOffset": 5084284
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.enqueueAction(reason:_:)",
+          "imageOffset": 5083744
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "SplitViewChildController.hostingView<A>(_:didUpdateMinSize:maxSize:)",
+          "imageOffset": 12793576
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.SizeConstraints.update(from:)",
+          "imageOffset": 9316684
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9320768
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "@objc NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9321064
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776028
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__82-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]_block_invoke",
+          "imageOffset": 826468
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine withBehaviors:performModifications:]",
+          "imageOffset": 48468
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776148
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke_2",
+          "imageOffset": 10885212
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke",
+          "imageOffset": 775520
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSPerformVisuallyAtomicChange",
+          "imageOffset": 502620
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView updateConstraintsForSubtreeIfNeeded]",
+          "imageOffset": 775284
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSConstraintBasedLayoutInternal) updateConstraintsIfNeeded]",
+          "imageOffset": 14130144
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__NSWindowGetDisplayCycleObserverForUpdateConstraints_block_invoke",
+          "imageOffset": 910172
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleObserverInvoke",
+          "imageOffset": 909784
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleFlush",
+          "imageOffset": 908900
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::run_commit_handlers(CATransactionPhase)",
+          "imageOffset": 16524
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::commit()",
+          "imageOffset": 9868
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush()",
+          "imageOffset": 9072
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush_as_runloop_observer(bool)",
+          "imageOffset": 2294300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "stepTransactionFlush",
+          "imageOffset": 5537048
+        },
+        {
+          "framework": "UpdateCycle",
+          "symbol": "UC::DriverCore::continueProcessing()",
+          "imageOffset": 5628
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+          "imageOffset": 527556
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopDoObservers",
+          "imageOffset": 527292
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "_CFRunLoopRunSpecificWithOptions",
+          "imageOffset": 1419260
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "RunCurrentEventLoopInMode",
+          "imageOffset": 767376
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "ReceiveNextEventCommon",
+          "imageOffset": 780572
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "_BlockUntilNextEventMatchingListInMode",
+          "imageOffset": 2364288
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSBlockUntilNextEventMatchingListInMode",
+          "imageOffset": 3654300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSNextEvent",
+          "imageOffset": 234748
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9115464
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9114220
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication run]",
+          "imageOffset": 182540
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSApplicationMain",
+          "imageOffset": 19532
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "specialized runApp(_:)",
+          "imageOffset": 1055876
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "runApp<A>(_:)",
+          "imageOffset": 5327976
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "static App.main()",
+          "imageOffset": 8321208
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "static PlannerApp.$main()",
+          "imageOffset": 10430088
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "__debug_main_executable_dylib_entry_point",
+          "imageOffset": 10430752
+        },
+        {
+          "framework": "dyld",
+          "symbol": "start",
+          "imageOffset": 204416
+        }
+      ]
+    },
+    {
+      "originalFileName": "Planner-2026-10-22-003155.ips",
+      "originalSha256": "230ad34c2b5f831cdda271d119af3d7abd17a13e763684fd1e2b3f5ad59c6c31",
+      "captureTime": "2026-10-22 00:31:25.3700 +0900",
+      "processIdentifier": 62036,
+      "exception": {
+        "codes": "0x0000000000000000, 0x0000000000000000",
+        "rawCodes": [
+          0,
+          0
+        ],
+        "type": "EXC_CRASH",
+        "signal": "SIGABRT"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 6,
+        "namespace": "SIGNAL",
+        "indicator": "Abort trap: 6",
+        "byProc": "Planner",
+        "byPid": 62036
+      },
+      "lastExceptionBacktrace": [
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__exceptionPreprocess",
+          "imageOffset": 989364
+        },
+        {
+          "framework": "libobjc.A.dylib",
+          "symbol": "objc_exception_throw",
+          "imageOffset": 99852
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "+[NSException exceptionWithName:reason:userInfo:]",
+          "imageOffset": 989104
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSDisplayCycle) _postWindowNeedsUpdateConstraints]",
+          "imageOffset": 9996152
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[_NSConstraintBasedLayoutHostingView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 14816932
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView setNeedsUpdateConstraints:]",
+          "imageOffset": 344780
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.setNeedsUpdate()",
+          "imageOffset": 9252524
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in NSHostingView.beginTransaction()",
+          "imageOffset": 9393916
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "onMainThread(do:)",
+          "imageOffset": 14977308
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.beginTransaction()",
+          "imageOffset": 9393672
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "specialized GraphHost.asyncTransaction<A>(_:id:mutation:style:mayDeferUpdate:)",
+          "imageOffset": 2749228
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "ViewGraphHost.LayoutInvalidator.invalidate()",
+          "imageOffset": 3410036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.invalidateLayout()",
+          "imageOffset": 11830020
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831192
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.Action.callAsFunction()",
+          "imageOffset": 5091816
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "dispatch #1 () in UpdateGroup.dispatchActions()",
+          "imageOffset": 5091052
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.dispatchActions()",
+          "imageOffset": 5088476
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.end()",
+          "imageOffset": 5084284
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.enqueueAction(reason:_:)",
+          "imageOffset": 5083744
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "SplitViewChildController.hostingView<A>(_:didUpdateMinSize:maxSize:)",
+          "imageOffset": 12793576
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.SizeConstraints.update(from:)",
+          "imageOffset": 9316684
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9320768
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "@objc NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9321064
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776028
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__82-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]_block_invoke",
+          "imageOffset": 826468
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine withBehaviors:performModifications:]",
+          "imageOffset": 48468
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776148
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__82-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]_block_invoke",
+          "imageOffset": 826468
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine withBehaviors:performModifications:]",
+          "imageOffset": 48468
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776148
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke_2",
+          "imageOffset": 10885212
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke",
+          "imageOffset": 775520
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSPerformVisuallyAtomicChange",
+          "imageOffset": 502620
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView updateConstraintsForSubtreeIfNeeded]",
+          "imageOffset": 775284
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSConstraintBasedLayoutInternal) updateConstraintsIfNeeded]",
+          "imageOffset": 14130144
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__NSWindowGetDisplayCycleObserverForUpdateConstraints_block_invoke",
+          "imageOffset": 910172
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleObserverInvoke",
+          "imageOffset": 909784
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleFlush",
+          "imageOffset": 908900
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::run_commit_handlers(CATransactionPhase)",
+          "imageOffset": 16524
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::commit()",
+          "imageOffset": 9868
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush()",
+          "imageOffset": 9072
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush_as_runloop_observer(bool)",
+          "imageOffset": 2294300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "stepTransactionFlush",
+          "imageOffset": 5537048
+        },
+        {
+          "framework": "UpdateCycle",
+          "symbol": "UC::DriverCore::continueProcessing()",
+          "imageOffset": 5628
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+          "imageOffset": 527556
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopDoObservers",
+          "imageOffset": 527292
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "_CFRunLoopRunSpecificWithOptions",
+          "imageOffset": 1419260
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "RunCurrentEventLoopInMode",
+          "imageOffset": 767376
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "ReceiveNextEventCommon",
+          "imageOffset": 780572
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "_BlockUntilNextEventMatchingListInMode",
+          "imageOffset": 2364288
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSBlockUntilNextEventMatchingListInMode",
+          "imageOffset": 3654300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSNextEvent",
+          "imageOffset": 234748
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9115464
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9114220
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication run]",
+          "imageOffset": 182540
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSApplicationMain",
+          "imageOffset": 19532
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "specialized runApp(_:)",
+          "imageOffset": 1055876
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "runApp<A>(_:)",
+          "imageOffset": 5327976
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "static App.main()",
+          "imageOffset": 8321208
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "static PlannerApp.$main()",
+          "imageOffset": 10430036
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "__debug_main_executable_dylib_entry_point",
+          "imageOffset": 10430700
+        },
+        {
+          "framework": "dyld",
+          "symbol": "start",
+          "imageOffset": 204416
+        }
+      ]
+    },
+    {
+      "originalFileName": "Planner-2026-10-22-003653.ips",
+      "originalSha256": "0817bc85bd2077128e73faae587948dbc5c9e6b2b30ab71233b73635d030dc84",
+      "captureTime": "2026-10-22 00:36:23.0191 +0900",
+      "processIdentifier": 63702,
+      "exception": {
+        "codes": "0x0000000000000000, 0x0000000000000000",
+        "rawCodes": [
+          0,
+          0
+        ],
+        "type": "EXC_CRASH",
+        "signal": "SIGABRT"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 6,
+        "namespace": "SIGNAL",
+        "indicator": "Abort trap: 6",
+        "byProc": "Planner",
+        "byPid": 63702
+      },
+      "lastExceptionBacktrace": [
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__exceptionPreprocess",
+          "imageOffset": 989364
+        },
+        {
+          "framework": "libobjc.A.dylib",
+          "symbol": "objc_exception_throw",
+          "imageOffset": 99852
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "+[NSException exceptionWithName:reason:userInfo:]",
+          "imageOffset": 989104
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSDisplayCycle) _postWindowNeedsUpdateConstraints]",
+          "imageOffset": 9996152
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _informContainerThatSubviewsNeedUpdateConstraints]",
+          "imageOffset": 344912
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView setNeedsUpdateConstraints:]",
+          "imageOffset": 344780
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.setNeedsUpdate()",
+          "imageOffset": 9252524
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in NSHostingView.beginTransaction()",
+          "imageOffset": 9393916
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "onMainThread(do:)",
+          "imageOffset": 14977308
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.beginTransaction()",
+          "imageOffset": 9393672
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "specialized GraphHost.asyncTransaction<A>(_:id:mutation:style:mayDeferUpdate:)",
+          "imageOffset": 2749228
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "ViewGraphHost.LayoutInvalidator.invalidate()",
+          "imageOffset": 3410036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.invalidateLayout()",
+          "imageOffset": 11830020
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "closure #1 in AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831192
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.Action.callAsFunction()",
+          "imageOffset": 5091816
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "dispatch #1 () in UpdateGroup.dispatchActions()",
+          "imageOffset": 5091052
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.dispatchActions()",
+          "imageOffset": 5088476
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.end()",
+          "imageOffset": 5084284
+        },
+        {
+          "framework": "SwiftUICore",
+          "symbol": "UpdateGroup.enqueueAction(reason:_:)",
+          "imageOffset": 5083744
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "AppKitPlatformViewHost.enqueueLayoutInvalidation()",
+          "imageOffset": 11831036
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "SplitViewChildController.hostingView<A>(_:didUpdateMinSize:maxSize:)",
+          "imageOffset": 12793576
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView.SizeConstraints.update(from:)",
+          "imageOffset": 9316684
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9320768
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "@objc NSHostingView._willUpdateConstraintsForSubtree()",
+          "imageOffset": 9321064
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776028
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__82-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]_block_invoke",
+          "imageOffset": 826468
+        },
+        {
+          "framework": "CoreAutoLayout",
+          "symbol": "-[NSISEngine withBehaviors:performModifications:]",
+          "imageOffset": 48468
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776148
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView _updateConstraintsForSubtreeIfNeededCollectingViewsWithInvalidBaselines:]",
+          "imageOffset": 776324
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke_2",
+          "imageOffset": 10885212
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__45-[NSView updateConstraintsForSubtreeIfNeeded]_block_invoke",
+          "imageOffset": 775520
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSPerformVisuallyAtomicChange",
+          "imageOffset": 502620
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSView updateConstraintsForSubtreeIfNeeded]",
+          "imageOffset": 775284
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSWindow(NSConstraintBasedLayoutInternal) updateConstraintsIfNeeded]",
+          "imageOffset": 14130144
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "__NSWindowGetDisplayCycleObserverForUpdateConstraints_block_invoke",
+          "imageOffset": 910172
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleObserverInvoke",
+          "imageOffset": 909784
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSDisplayCycleFlush",
+          "imageOffset": 908900
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::run_commit_handlers(CATransactionPhase)",
+          "imageOffset": 16524
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::commit()",
+          "imageOffset": 9868
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush()",
+          "imageOffset": 9072
+        },
+        {
+          "framework": "QuartzCore",
+          "symbol": "CA::Transaction::flush_as_runloop_observer(bool)",
+          "imageOffset": 2294300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "stepTransactionFlush",
+          "imageOffset": 5537048
+        },
+        {
+          "framework": "UpdateCycle",
+          "symbol": "UC::DriverCore::continueProcessing()",
+          "imageOffset": 5628
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+          "imageOffset": 527556
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "__CFRunLoopDoObservers",
+          "imageOffset": 527292
+        },
+        {
+          "framework": "CoreFoundation",
+          "symbol": "_CFRunLoopRunSpecificWithOptions",
+          "imageOffset": 1419260
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "RunCurrentEventLoopInMode",
+          "imageOffset": 767376
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "ReceiveNextEventCommon",
+          "imageOffset": 780572
+        },
+        {
+          "framework": "HIToolbox",
+          "symbol": "_BlockUntilNextEventMatchingListInMode",
+          "imageOffset": 2364288
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSBlockUntilNextEventMatchingListInMode",
+          "imageOffset": 3654300
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "_DPSNextEvent",
+          "imageOffset": 234748
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9115464
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+          "imageOffset": 9114220
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "-[NSApplication run]",
+          "imageOffset": 182540
+        },
+        {
+          "framework": "AppKit",
+          "symbol": "NSApplicationMain",
+          "imageOffset": 19532
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "specialized runApp(_:)",
+          "imageOffset": 1055876
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "runApp<A>(_:)",
+          "imageOffset": 5327976
+        },
+        {
+          "framework": "SwiftUI",
+          "symbol": "static App.main()",
+          "imageOffset": 8321208
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "static PlannerApp.$main()",
+          "imageOffset": 10430072
+        },
+        {
+          "framework": "Planner.debug.dylib",
+          "symbol": "__debug_main_executable_dylib_entry_point",
+          "imageOffset": 10430736
+        },
+        {
+          "framework": "dyld",
+          "symbol": "start",
+          "imageOffset": 204416
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "868C7E59-AABF-46F4-B2D9-78DD815A2BFE.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Window bounds before requesting 860_0_87F2D066-C93B-4243-A7E6-410E21D61572.0",
+      "timestamp": 1792596981.312,
+      "retainedFileName": "868C7E59-AABF-46F4-B2D9-78DD815A2BFE.txt.gz",
+      "sha256": "7f594a4761a9bd80edbcb1632a2f3235248a9ffa16ef3f3644c675fc4fcd2eaf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "99CC7E76-C248-4E65-9AC6-1AA6D78DA9BB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Calendar inspector retains the selected Schedule and Item_0_7794ECB7-9222-4B9E-BEF3-4B4BCE8EB79B.png",
+      "timestamp": 1792596981.295,
+      "retainedFileName": "99CC7E76-C248-4E65-9AC6-1AA6D78DA9BB.png",
+      "sha256": "405492eda2e97e6b4e5fb692a544b935f9270f6bf3f5a73b1000a20aa5098668"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "FDEC1112-F674-4F0E-B0B2-13D333C6C6F5.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Calendar uses the main width with its inspector hidden_0_942FB1C3-ECDD-421A-B99E-AFA0EE832D6A.png",
+      "timestamp": 1792596975.799,
+      "retainedFileName": "FDEC1112-F674-4F0E-B0B2-13D333C6C6F5.png",
+      "sha256": "3c24005af6269465a3eadb6a663973aff3641ba118ce3b19212d0ff81dd01c81"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "C42853BB-F359-41D5-9864-816DBFAC48A2.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Calendar inspector layout observations_0_8B38D73B-9819-45B6-8F40-7DA6AF823D4F.txt",
+      "timestamp": 1792596974.45,
+      "retainedFileName": "C42853BB-F359-41D5-9864-816DBFAC48A2.txt.gz",
+      "sha256": "b5883848905603aae9f119c6376ee08c2d78a52f00b4ca5dd41d5d6d6f75e3df"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "D0B2F7C3-15AD-4773-B780-CBD151D8BB3A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Calendar inspector presentation before closing_0_B7E4864F-6F04-43AF-B768-FDDBA7912D75.png",
+      "timestamp": 1792596972.588,
+      "retainedFileName": "D0B2F7C3-15AD-4773-B780-CBD151D8BB3A.png",
+      "sha256": "082962b64d3650a49f261319b21f3922115fd211b447cbd497afd1b121100dcb"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "E3E00F9F-9E7E-4E51-8A07-FDA892543D1D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Calendar inspector after native entry selection_0_93C84FDC-CE71-4BE3-B14B-E57CF4A2C822.png",
+      "timestamp": 1792596970.125,
+      "retainedFileName": "E3E00F9F-9E7E-4E51-8A07-FDA892543D1D.png",
+      "sha256": "0f3181f3d35867c429cfd4ab2bbdbfce8f3e8c74d5ffca3ea32ac14046af15ca"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "B9A82847-5941-44AD-BB64-92EEBE6791ED.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Window bounds after Calendar selection_0_6C06182C-46A6-4B3F-A311-D0C4EA949A3E.txt",
+      "timestamp": 1792596969.948,
+      "retainedFileName": "B9A82847-5941-44AD-BB64-92EEBE6791ED.txt.gz",
+      "sha256": "7f594a4761a9bd80edbcb1632a2f3235248a9ffa16ef3f3644c675fc4fcd2eaf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "8BA19C05-786E-4A5F-9771-9B8DDB987B2A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Window bounds after requesting 1200_0_64B6EEBA-391A-410F-8F5E-40A508FD29B9.0",
+      "timestamp": 1792596942.181,
+      "retainedFileName": "8BA19C05-786E-4A5F-9771-9B8DDB987B2A.txt.gz",
+      "sha256": "7f594a4761a9bd80edbcb1632a2f3235248a9ffa16ef3f3644c675fc4fcd2eaf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "995B8407-4AA7-4B8B-91A7-CB21A96CE627.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Window bounds before requesting 1200_0_580A2DE6-55BC-4F90-8C81-184A6BE3AD3A.0",
+      "timestamp": 1792596938.468,
+      "retainedFileName": "995B8407-4AA7-4B8B-91A7-CB21A96CE627.txt.gz",
+      "sha256": "cd5f040f36394090605ff94a8c3e85b13c1e2760132c1cec03cd189b5992c3da"
+    }
+  ],
+  "excludedAttachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "14C99CF8-AE42-493B-951A-BB5CF200E7E5.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_A131464E-D295-40A2-88C2-8F8025E8622E.txt",
+      "timestamp": 1792596987.925,
+      "retainedFileName": "14C99CF8-AE42-493B-951A-BB5CF200E7E5.txt.gz",
+      "sha256": "198e6e3127447db6144f05cebf446d36d6ba69abf12d41f27dbec90179cac0ff",
+      "reason": "Automatic failure diagnostic excluded from public evidence; provenance or query scope is broader than the deliberate owned Planner capture. Original retained privately."
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "03C40B67-0EE4-4B09-A827-F1A9543E964F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_385E892A-9412-4DD8-ACE8-E8E166A4CCE3.txt",
+      "timestamp": 1792596986.945,
+      "retainedFileName": "03C40B67-0EE4-4B09-A827-F1A9543E964F.txt.gz",
+      "sha256": "198e6e3127447db6144f05cebf446d36d6ba69abf12d41f27dbec90179cac0ff",
+      "reason": "Automatic failure diagnostic excluded from public evidence; provenance or query scope is broader than the deliberate owned Planner capture. Original retained privately."
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "F4EEDC2E-1D47-45D4-9390-9ACDF8D58A01.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_1EBC4771-B477-42C5-8FCA-C66248C563FD.txt",
+      "timestamp": 1792596986.007,
+      "retainedFileName": "F4EEDC2E-1D47-45D4-9390-9ACDF8D58A01.txt.gz",
+      "sha256": "198e6e3127447db6144f05cebf446d36d6ba69abf12d41f27dbec90179cac0ff",
+      "reason": "Automatic failure diagnostic excluded from public evidence; provenance or query scope is broader than the deliberate owned Planner capture. Original retained privately."
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "7745FFC1-8AC7-43F1-B347-D144343CC07B.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_4FEB8A53-90F6-47D6-9E61-FBA4B1D694D9.txt",
+      "timestamp": 1792596984.982,
+      "retainedFileName": "7745FFC1-8AC7-43F1-B347-D144343CC07B.txt.gz",
+      "sha256": "198e6e3127447db6144f05cebf446d36d6ba69abf12d41f27dbec90179cac0ff",
+      "reason": "Automatic failure diagnostic excluded from public evidence; provenance or query scope is broader than the deliberate owned Planner capture. Original retained privately."
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "3A88A32F-7908-43C5-B2C4-2F38EEFDA998.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Window (First Match)`_0_B6959AAF-5518-4A49-9445-BE2C01DF6934.txt",
+      "timestamp": 1792596983.95,
+      "retainedFileName": "3A88A32F-7908-43C5-B2C4-2F38EEFDA998.txt.gz",
+      "sha256": "198e6e3127447db6144f05cebf446d36d6ba69abf12d41f27dbec90179cac0ff",
+      "reason": "Automatic failure diagnostic excluded from public evidence; provenance or query scope is broader than the deliberate owned Planner capture. Original retained privately."
+    }
+  ]
+}

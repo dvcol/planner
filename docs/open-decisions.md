@@ -1,6 +1,8 @@
 # Decision register
 
-## Current frontier, 21 October 2026
+## Current frontier, 22 October 2026
+
+Q127 is pending in the question tool. Actual Mac Calendar inspector narrowing aborts Planner with a constraint-update exception. The [diagnosis and concrete alternatives](prototypes/native-calendar-mac-inspector-resize.md) recommend a hideable native split pane on Mac; a native sheet is the alternative. Failed production experiments are reverted. No accepted choice is inferred, and the iPad inspector remains unchanged. Independent [Mac Month and display-zone reads](prototypes/native-calendar-month-components.md#mac-runtime-follow-up-22-october-2026) now pass three cases with zero failures/skips. The resize gate stays open; signing is not its demonstrated cause.
 
 Q116 A is implemented. Item/Itinerary edits return exact new bookmark references, and the native Add Link actions use them without a second read. The [Core result qualification](prototypes/core-owned-link-edit-results.md) and [native adapter qualification](prototypes/native-add-link-intents.md) retain their tests and limits. Native [List notes](prototypes/native-list-notes.md) are also implemented. Neither checkpoint closes the map.
 
