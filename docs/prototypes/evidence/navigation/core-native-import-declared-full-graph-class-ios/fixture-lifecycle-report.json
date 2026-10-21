@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/FF7780B3-D46A-4BF6-B3AF-95F7883E3095",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/86E3A558-6603-4868-BD86-1FB0EB975A92",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/7F3D82A7-F25F-403F-B872-AC7D6ED0AE65",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/D57D61AD-65FE-432F-B690-7157831F1928",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/D1B15D34-7733-4630-B4E3-51C0F2437A95",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/D9DE3724-31BD-4FA1-8256-3259DC9F6467",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/B5A893B1-8F6A-4497-8A29-B344AF2BEDDD",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/21F28502-919A-4DEC-9979-AD4BC9BCE58D",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/8E6E096B-AF11-4831-85AB-262EF34C1627",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/BC23652A-A8D1-446C-9137-A456F62756C0"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "13d8eff3babe9d686e19dfb1e304a972eee9950eb9a1db663f9833ee4e28873a",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 10,
+  "hostProcessIdentifiers": [
+    30357
+  ]
+}

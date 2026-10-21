@@ -1,0 +1,34 @@
+{
+  "coreInputsMatched": 740,
+  "nativeInputsMatched": 1062,
+  "functionsMatched": 4,
+  "invocationsPerPlatform": 10,
+  "functions": [
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:)",
+      "invocations": 3
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingCurrentOwners(importCase:)",
+      "invocations": 3
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner(declaresCurrentCandidate:)",
+      "invocations": 2
+    }
+  ],
+  "productHashesVerified": true,
+  "sqliteUnlinkWarningsPerPlatform": 0,
+  "removedFixturesPerPlatform": 10,
+  "nativeUIOrPhysicalCredit": false,
+  "unchangedProductionInputs": 81,
+  "productionBaseline": "b69f40f7bc13fabe107c90de7bde9224f8c1e756"
+}
