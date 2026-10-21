@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-appearance-mac-driver-qualified.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792586064.177,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792585922.517,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-appearance-mac-driver-qualified.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-appearance-mac-driver-qualified"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 2 attachments for: SavedCategoryJourneyTests/testCategoryColorStagesSaveCancelAndClearAcrossRelaunch():\nFile: DB858450-B923-49B6-969E-6A4B24FE89C2.png, suggested name: \"Cleared category color remains absent after relaunch_0_51C2113D-1463-45C1-AFE0-DD2B798E7FE9.png\"\nFile: B463841D-3F4F-4EEE-ADEB-17D249C5BFE6.png, suggested name: \"Native optional category ColorPicker_0_4A8B5378-4409-4E88-B7E5-CBD3D23AF14E.png\"\n\nExported 2 attachments for: SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch():\nFile: CCC50F20-EA14-4836-A0C0-39ADB0EF03E2.png, suggested name: \"Native Category after relaunch_0_DD4AEB81-FE5F-460F-B4C1-EE8FEE85E26F.png\"\nFile: 0AB1F557-4A20-436E-992F-D5A2994CF34F.png, suggested name: \"Saved native Category_0_B000B631-AC30-47F9-AFA9-F034EAABB4F1.png\"\n\nExported 2 attachments for: SavedCategoryJourneyTests/testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch():\nFile: 099F79E8-8938-4BD8-81BC-C476C8533ECA.png, suggested name: \"Native category symbol survives relaunch_0_DFD1BF4B-7612-4C52-BE4A-07A989D2539B.png\"\nFile: AB0534B6-D953-4728-990D-818C770E4539.png, suggested name: \"Native category symbol picker stages Museum_0_CD7A4AEC-6B73-407F-86D1-ED8EA00BB964.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-appearance-mac-driver-qualified/manifest.json\n",
+    "stderr": ""
+  }
+]

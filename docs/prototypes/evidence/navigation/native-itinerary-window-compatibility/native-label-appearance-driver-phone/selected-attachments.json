@@ -1,0 +1,125 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "8134BAD2-7B1B-45B5-A4F2-D7FB78E41C1E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Cleared category color remains absent after relaunch_0_3F7B6391-D67C-4463-BCCA-45B68734A2F5.png",
+      "timestamp": 1792586180.251,
+      "retainedFileName": "8134BAD2-7B1B-45B5-A4F2-D7FB78E41C1E.png",
+      "sha256": "52fa0db4e2cc0dfbd31fb54ad21021545ca574419ee5e503fd2c145765bc308e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9B54F84D-47C2-489A-86AC-D930A6F81922.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native optional category ColorPicker_0_36EA8414-C99B-4E7F-890D-1A7D03D9E673.png",
+      "timestamp": 1792586153.244,
+      "retainedFileName": "9B54F84D-47C2-489A-86AC-D930A6F81922.png",
+      "sha256": "0d7c14225cd2a667676aec1edebe68673f19411760926708924a9cbc1dae7ced"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1B8FE6FA-BD76-4D87-9C81-9EFB5C431689.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Category after relaunch_0_1BD7030B-716B-4362-B450-A6AD2EBF91C1.png",
+      "timestamp": 1792586243.122,
+      "retainedFileName": "1B8FE6FA-BD76-4D87-9C81-9EFB5C431689.png",
+      "sha256": "f8f6abf7ff83ed4f229accf36de3f068f7237d856e9eeec1cb83d186c0a333a6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0CD08C52-B5AB-43DA-9EA2-AFCB09C22022.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Saved native Category_0_6C342031-77A5-4EC8-82B0-9F7923389595.png",
+      "timestamp": 1792586211.716,
+      "retainedFileName": "0CD08C52-B5AB-43DA-9EA2-AFCB09C22022.png",
+      "sha256": "906d19f8a33d0a6f1cb4acedc9cc176ef8b92565f8578b8293345106acd6103f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "50326A03-1281-4A6D-8F46-760413F93851.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native category symbol survives relaunch_0_F287CE12-EB2C-4A4E-8EC0-08266EB46168.png",
+      "timestamp": 1792586296.913,
+      "retainedFileName": "50326A03-1281-4A6D-8F46-760413F93851.png",
+      "sha256": "a47b7e4ec31002e7a1acbad3828dfba484f2b9c058a00eef1d408697b828aeaa"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "AABC6F90-E85D-453A-951B-DCE526718D90.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native category symbol picker stages Museum_0_1FF2CB3A-03C8-46AD-8A26-68A0D9F3098C.png",
+      "timestamp": 1792586275.118,
+      "retainedFileName": "AABC6F90-E85D-453A-951B-DCE526718D90.png",
+      "sha256": "acaf1fbdfc443109070bc7a5ffdae432784fdf5414a530ad8340876ae59caeff"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "45097A70-1BA3-450A-8DC8-21897B486074.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native edited color survives Save and relaunch_0_0CF1BFB7-611B-45D0-AA1D-537FDBC8970A.png",
+      "timestamp": 1792586360.747,
+      "retainedFileName": "45097A70-1BA3-450A-8DC8-21897B486074.png",
+      "sha256": "f9debe0b297c7429b7882f249be88125f018e2ee2a766eaa54275abcc809a611"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "47A833E6-9926-4A63-9E7B-3D4D5405B852.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_B4F2D357-B667-4E03-BE36-04ACFE385E60.png",
+      "timestamp": 1792586340.778,
+      "retainedFileName": "47A833E6-9926-4A63-9E7B-3D4D5405B852.png",
+      "sha256": "7b0d1076ec052cfd74da91c7e5ea8fee6bebc0b6828516cd2572b7195fee528a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A44357A0-6446-45B5-8A7C-99E563F72434.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker after explicit RGB input_0_478928DB-80D6-422E-A5E2-E6264766A86B.txt",
+      "timestamp": 1792586340.581,
+      "retainedFileName": "A44357A0-6446-45B5-8A7C-99E563F72434.txt.gz",
+      "sha256": "6328719073f6d90e90215dee6abd1b37afced976ffd21d7f72900e7dc52dfc0c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "7F9F0D80-4A7C-48E6-8B10-253F6BD42339.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_CA416E05-F923-4BFF-827C-EB739E48E575.png",
+      "timestamp": 1792586326.708,
+      "retainedFileName": "7F9F0D80-4A7C-48E6-8B10-253F6BD42339.png",
+      "sha256": "f5100bef8cf751e5d8d281a574df84921e24f8ad43f9cbbd3ee7155f91f8111c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2AD2A536-1790-4D6E-ACA3-AB79C5C7E023.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker after explicit RGB input_0_3D29264A-F50F-4039-8577-09FCC7475518.txt",
+      "timestamp": 1792586326.496,
+      "retainedFileName": "2AD2A536-1790-4D6E-ACA3-AB79C5C7E023.txt.gz",
+      "sha256": "026eea5becd71bd3763f7987f1aa1ac4899f928c75f4c5f53e1ff08c43f2e06a"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "706A1939-22A9-4BBC-8759-BD862B91136F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native edited color survives Save and relaunch_0_D020AF3D-BAF1-4687-B2BA-544A5E27064C.png",
+      "timestamp": 1792586893.532,
+      "retainedFileName": "706A1939-22A9-4BBC-8759-BD862B91136F.png",
+      "sha256": "f600adc3f34dc35bf67ee32a24c593690e2464aa2a4fab79bece6c0b4e20e68f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8BEAA8AF-E3DB-4C1D-A27D-C928428873CA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_62C353B8-7AAC-4B8F-BBE4-1851907D9A45.png",
+      "timestamp": 1792586866.519,
+      "retainedFileName": "8BEAA8AF-E3DB-4C1D-A27D-C928428873CA.png",
+      "sha256": "dd97c3f91c1b0f9db916174c5ed7cfdc36b2ce2e59163bed60aed79bfa336ee7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "32C469FE-6F8E-4296-9D6C-DD54FB7CFA21.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker after explicit RGB input_0_84208419-3B1F-4F44-94CE-83539AE99B25.txt",
+      "timestamp": 1792586866.329,
+      "retainedFileName": "32C469FE-6F8E-4296-9D6C-DD54FB7CFA21.txt.gz",
+      "sha256": "92e2d95f30dd6f9ce5784609a079f0e5f8eba8efd29269da18837c8cf093ee01"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "856A7712-1A82-4B93-882F-609CFF97F39F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_6098E1F4-B1BE-4EEF-9046-47489AD079FA.png",
+      "timestamp": 1792586847.949,
+      "retainedFileName": "856A7712-1A82-4B93-882F-609CFF97F39F.png",
+      "sha256": "1e802b2ee8b0e48a1e9561d445426bb5981f05b31025071c5be71e5a8b414880"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "32E28A67-CD0C-4345-B236-4A3AE074E45C.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker after explicit RGB input_0_D1C219C4-B91E-441B-ADC4-1E7F3DFA4D4C.txt",
+      "timestamp": 1792586847.751,
+      "retainedFileName": "32E28A67-CD0C-4345-B236-4A3AE074E45C.txt.gz",
+      "sha256": "2de6933ea340f9b1bee5379ebf9fbc86fb4c149d05311bb64a81789a7898306d"
+    }
+  ]
+}

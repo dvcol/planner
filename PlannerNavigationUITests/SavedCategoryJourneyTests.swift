@@ -15,7 +15,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     name.activateForPlannerJourney()
     name.typeText("Canceled category")
     application.plannerElement("saved.category.cancel").activateForPlannerJourney()
-    XCTAssertFalse(application.staticTexts["Canceled category"].exists)
+    XCTAssertFalse(categoryRow(named: "Canceled category", in: application).exists)
     XCTAssertTrue(application.staticTexts["No Categories yet"].exists)
 
     newCategory(application)
@@ -23,7 +23,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     name.activateForPlannerJourney()
     name.typeText("Food")
     application.plannerElement("saved.category.save").activateForPlannerJourney()
-    let food = application.staticTexts["Food"].firstMatch
+    let food = categoryRow(named: "Food", in: application)
     XCTAssertTrue(food.waitForExistence(timeout: 10))
     XCTAssertFalse(name.exists)
     recordScreenshot(application, name: "Saved native Category")
@@ -33,12 +33,12 @@ final class SavedCategoryJourneyTests: XCTestCase {
     replaceText(name, with: "Canceled rename", application: application)
     application.plannerElement("saved.category.cancel").activateForPlannerJourney()
     XCTAssertTrue(food.waitForExistence(timeout: 5))
-    XCTAssertFalse(application.staticTexts["Canceled rename"].exists)
+    XCTAssertFalse(categoryRow(named: "Canceled rename", in: application).exists)
     food.activateForPlannerJourney()
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     replaceText(name, with: "Dining", application: application)
     application.plannerElement("saved.category.save").activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["Dining"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(categoryRow(named: "Dining", in: application).waitForExistence(timeout: 10))
     XCTAssertFalse(food.exists)
     XCTAssertFalse(name.exists)
 
@@ -46,10 +46,10 @@ final class SavedCategoryJourneyTests: XCTestCase {
     application.terminate()
     application.launchSavedPlannerJourney()
     openCategories(application)
-    XCTAssertTrue(application.staticTexts["Dining"].firstMatch.waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Food"].exists)
-    XCTAssertFalse(application.staticTexts["Canceled category"].exists)
-    XCTAssertFalse(application.staticTexts["Canceled rename"].exists)
+    XCTAssertTrue(categoryRow(named: "Dining", in: application).waitForExistence(timeout: 10))
+    XCTAssertFalse(categoryRow(named: "Food", in: application).exists)
+    XCTAssertFalse(categoryRow(named: "Canceled category", in: application).exists)
+    XCTAssertFalse(categoryRow(named: "Canceled rename", in: application).exists)
     recordScreenshot(application, name: "Native Category after relaunch")
   }
 
@@ -78,7 +78,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     application.plannerElement("Museum").activateForPlannerJourney()
     recordScreenshot(application, name: "Native category symbol picker stages Museum")
     application.plannerElement("saved.category.save").activateForPlannerJourney()
-    let category = application.staticTexts["Culture"].firstMatch
+    let category = categoryRow(named: "Culture", in: application)
     XCTAssertTrue(category.waitForExistence(timeout: 10))
     category.activateForPlannerJourney()
     XCTAssertTrue(icon.waitForExistence(timeout: 5))
@@ -112,7 +112,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     name.activateForPlannerJourney()
     name.typeText("Colored category")
     #if os(macOS)
-      let useColor = application.checkBoxes["saved.category.color.enabled"]
+      let useColor = application.switches["saved.category.color.enabled"]
     #else
       let useColor = application.switches["saved.category.color.enabled"].switches.firstMatch
     #endif
@@ -132,7 +132,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     XCTAssertTrue(color.waitForExistence(timeout: 5))
     recordScreenshot(application, name: "Native optional category ColorPicker")
     application.plannerElement("saved.category.save").activateForPlannerJourney()
-    let category = application.staticTexts["Colored category"].firstMatch
+    let category = categoryRow(named: "Colored category", in: application)
     XCTAssertTrue(category.waitForExistence(timeout: 10))
     category.activateForPlannerJourney()
     XCTAssertTrue(useColor.waitForExistence(timeout: 5))
@@ -175,7 +175,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
       useColor.activateForPlannerJourney()
       setNativeHexColor("4080C0", application: application)
       application.plannerElement("saved.category.save").activateForPlannerJourney()
-      let category = application.staticTexts["Native selected color"].firstMatch
+      let category = categoryRow(named: "Native selected color", in: application)
       XCTAssertTrue(category.waitForExistence(timeout: 10))
       category.activateForPlannerJourney()
       XCTAssertTrue(useColor.waitForExistence(timeout: 5))
@@ -198,7 +198,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
       XCTAssertTrue(application.textFields["sliderGreen"].waitForPlannerValue("64"))
       XCTAssertTrue(application.textFields["sliderBlue"].waitForPlannerValue("96"))
       recordScreenshot(application, name: "Native edited color survives Save and relaunch")
-      application.buttons["close"].activateForPlannerJourney()
+      dismissNativeColorPicker(application)
       application.plannerElement("saved.category.cancel").activateForPlannerJourney()
     }
 
@@ -223,10 +223,33 @@ final class SavedCategoryJourneyTests: XCTestCase {
       hierarchy.lifetime = .keepAlways
       add(hierarchy)
       recordScreenshot(application, name: "Native system color selection")
-      application.buttons["close"].activateForPlannerJourney()
+      dismissNativeColorPicker(application)
+    }
+
+    private func dismissNativeColorPicker(_ application: XCUIApplication) {
+      let picker = application.otherElements["UIColorPicker"].firstMatch
+      XCTAssertTrue(picker.waitForExistence(timeout: 5))
+      let close = application.buttons["close"].firstMatch
+      if close.exists {
+        close.activateForPlannerJourney()
+      } else {
+        let dismissRegion = application.otherElements["UIColorPickerView"]
+          .otherElements["PopoverDismissRegion"].firstMatch
+        XCTAssertTrue(dismissRegion.waitForPlannerHittability())
+        dismissRegion.activateForPlannerJourney()
+      }
+      XCTAssertTrue(picker.waitForNonExistence(timeout: 5))
     }
 
   #endif
+
+  private func categoryRow(named name: String, in application: XCUIApplication) -> XCUIElement {
+    application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND (label == %@ OR value == %@)",
+        "saved.category.", name, name)
+    ).firstMatch
+  }
 
   private func newCategory(_ application: XCUIApplication) {
     application.plannerElement("saved.labels.new").activateForPlannerJourney()

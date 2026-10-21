@@ -1,0 +1,157 @@
+{
+  "epochs": [
+    {
+      "packet": "native-label-appearance-mac-driver-build",
+      "productionConfigurationInputsMatch": true,
+      "checkedInputCount": 867,
+      "commonCasesAndHelpersByteIdentical": true,
+      "entireCategoryTestFileMatchesCurrent": false
+    },
+    {
+      "packet": "native-label-appearance-driver-phone",
+      "productionConfigurationInputsMatch": true,
+      "checkedInputCount": 867,
+      "commonCasesAndHelpersByteIdentical": true,
+      "entireCategoryTestFileMatchesCurrent": false
+    },
+    {
+      "packet": "native-label-appearance-driver-tablet",
+      "productionConfigurationInputsMatch": true,
+      "checkedInputCount": 867,
+      "commonCasesAndHelpersByteIdentical": true,
+      "entireCategoryTestFileMatchesCurrent": false
+    },
+    {
+      "packet": "native-label-rgb-popover-tablet",
+      "productionConfigurationInputsMatch": true,
+      "checkedInputCount": 867,
+      "commonCasesAndHelpersByteIdentical": true,
+      "entireCategoryTestFileMatchesCurrent": true
+    },
+    {
+      "packet": "native-label-rgb-sheet-phone",
+      "productionConfigurationInputsMatch": true,
+      "checkedInputCount": 867,
+      "commonCasesAndHelpersByteIdentical": true,
+      "entireCategoryTestFileMatchesCurrent": true
+    }
+  ],
+  "runs": [
+    {
+      "packet": "native-label-appearance-mac-driver-qualified",
+      "exitCode": 0,
+      "passingCaseNames": [
+        "testCategoryColorStagesSaveCancelAndClearAcrossRelaunch",
+        "testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch",
+        "testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch"
+      ],
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-label-appearance-driver-phone",
+      "exitCode": 0,
+      "passingCaseNames": [
+        "testCategoryColorStagesSaveCancelAndClearAcrossRelaunch",
+        "testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch",
+        "testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch",
+        "testNativeColorPickerEditsPersistAcrossSaveAndRelaunch"
+      ],
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-label-appearance-driver-tablet",
+      "exitCode": 65,
+      "passingCaseNames": [
+        "testCategoryColorStagesSaveCancelAndClearAcrossRelaunch",
+        "testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch",
+        "testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch"
+      ],
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-label-rgb-popover-tablet",
+      "exitCode": 0,
+      "passingCaseNames": [
+        "testNativeColorPickerEditsPersistAcrossSaveAndRelaunch"
+      ],
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-label-rgb-sheet-phone",
+      "exitCode": 0,
+      "passingCaseNames": [
+        "testNativeColorPickerEditsPersistAcrossSaveAndRelaunch"
+      ],
+      "failedTests": 0,
+      "skippedTests": 0
+    }
+  ],
+  "distinctPassingCasesByPlatform": {
+    "mac": [
+      "testCategoryColorStagesSaveCancelAndClearAcrossRelaunch",
+      "testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch",
+      "testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch"
+    ],
+    "phone": [
+      "testCategoryColorStagesSaveCancelAndClearAcrossRelaunch",
+      "testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch",
+      "testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch",
+      "testNativeColorPickerEditsPersistAcrossSaveAndRelaunch"
+    ],
+    "tablet": [
+      "testCategoryColorStagesSaveCancelAndClearAcrossRelaunch",
+      "testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch",
+      "testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch",
+      "testNativeColorPickerEditsPersistAcrossSaveAndRelaunch"
+    ]
+  },
+  "verifiedAttachments": 43,
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/native-label-appearance.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-label-appearance.md docs/open-decisions.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+      "stderr": "Done in 285ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "reviewedFileSha256": {
+    "PlannerNavigationUITests/SavedCategoryJourneyTests.swift": "f730c70bfcb8c0d528b50dea5751e43ead7cf168cdfe9afefb2d0f9defbae211",
+    "docs/prototypes/native-label-appearance.md": "ecbaf2ecee41263b7e3e10691227637a7113738086fa1bc3c591504506fc75c5",
+    "docs/open-decisions.md": "0dc3a74113b9a1bca1b482cca1e999b8c1576777d103a55f187ec4829de4cac0"
+  },
+  "limits": "The original tablet invocation remains failed. Mac RGB-panel input, complete Mac label-file import/export, physical/signed and final whole-app acceptance are not credited."
+}
