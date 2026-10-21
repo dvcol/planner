@@ -1,0 +1,259 @@
+{
+  "evidenceCommit": "b2c6750228cf5c612a10ec1b2b37f1c4cad56260",
+  "scope": "Only these ten completed Calendar-mode raw xcresults. Original extracted attachments, retained private packets, source, current products, package caches, Simulator state, fixture/export JSON and Planner datasets are excluded.",
+  "bundles": [
+    {
+      "phase": "native-calendar-day-week-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-day-week-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-modes-iterations/native-calendar-day-week-mac/test-results-summary.json",
+      "summarySha256": "221673cca73a46d117d442e26ae41c232173e03acd7dc793a2b3c3894219a0a6",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-day-week-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 4,
+      "nominalBytes": 2063832,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-overlap-overflow-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-overlap-overflow-mac.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-overlap-overflow-mac/test-results-summary.json",
+      "summarySha256": "effd1c5ec3bf7d2b66487c197d67810520ae3a32e9d5712ecf4bbebb8920723f",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-overlap-overflow-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 8,
+      "nominalBytes": 179408216,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-modes-mac-lookup",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-modes-mac-lookup.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-modes-iterations/native-calendar-modes-mac-lookup/test-results-summary.json",
+      "summarySha256": "2839dca44a50c764f67a8a87acf59e3e6d04fdd87597a71242ce018e6230f428",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-modes-mac-lookup.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 10,
+      "nominalBytes": 180487526,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-modes-mac-readback",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-modes-mac-readback.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-modes-iterations/native-calendar-modes-mac-readback/test-results-summary.json",
+      "summarySha256": "edeb7fb5d565e2b24b60cb48c73be732b0c9ff8c50b148b080e49eb91c0d874b",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-modes-mac-readback.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 13,
+      "nominalBytes": 180234069,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-schedule-accessibility-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-schedule-accessibility-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-modes-iterations/native-calendar-schedule-accessibility-mac/test-results-summary.json",
+      "summarySha256": "7710e7ff986fe708f43a6b65d1c329096989f5fe61cba1645b3b80f52b030afb",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-schedule-accessibility-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 9,
+      "nominalBytes": 179733087,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-schedule-static-text-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-schedule-static-text-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-modes-iterations/native-calendar-schedule-static-text-mac/test-results-summary.json",
+      "summarySha256": "a9fa1118ff71b5bfcb1b45424d516196fd8f96eeafa7801bb32dd868e5dd8c73",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-schedule-static-text-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 4,
+      "nominalBytes": 3447387,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-modes-qualified-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-mac.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-mac/test-results-summary.json",
+      "summarySha256": "ee66e6c95d76ef68222d32cbbff163371198ba0b658e97a9983ea9c0cec6ac36",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 10,
+      "nominalBytes": 6778288,
+      "openHandles": false,
+      "result": {
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-modes-qualified-phone",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-phone.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-phone/test-results-summary.json",
+      "summarySha256": "56e7f3d983b1fe8743bb0bbcf50ce02513d1c9938d29e0f81b99009384dcd5ba",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-phone.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 8,
+      "nominalBytes": 5969214,
+      "openHandles": false,
+      "result": {
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-tablet/test-results-summary.json",
+      "summarySha256": "a9796c1ebddee2a15b13a3d20fc44435f1d4a251ea6843622113855e0f7c0e34",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 4,
+      "nominalBytes": 7979739,
+      "openHandles": false,
+      "result": {
+        "passedTests": 2,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet-retry",
+      "path": "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet-retry.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-tablet-retry/test-results-summary.json",
+      "summarySha256": "b7a61c1de070aa094f4c1401c824affbbb87b11f5d6ddc1c47952aa782b7345f",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet-retry.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 8,
+      "nominalBytes": 6233797,
+      "openHandles": false,
+      "result": {
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    }
+  ],
+  "bundleNominalBytes": 752335155,
+  "deleted": true,
+  "actualCleanupScope": "Ten completed raw xcresult directories only. Original extracted attachments, private diagnostic packets, source, current build products, package caches, Simulator state, fixture/export JSON and Planner datasets remain intact."
+}
