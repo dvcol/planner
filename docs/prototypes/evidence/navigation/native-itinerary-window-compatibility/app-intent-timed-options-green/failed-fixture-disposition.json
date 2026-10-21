@@ -1,0 +1,12 @@
+{
+  "testOutcome": "failed: direct provider dependency was uninitialized",
+  "passingRuntimeCredit": false,
+  "hostProcessIdentifiers": [
+    34719
+  ],
+  "closedHostsAndDatabasesVerified": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3BB07298-D214-48A9-858A-E54C2C23E3FB"
+  ],
+  "originalLogRetained": true
+}

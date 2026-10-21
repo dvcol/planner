@@ -1,0 +1,12 @@
+{
+  "platform": "device",
+  "actions": 72,
+  "entities": 10,
+  "queries": 10,
+  "onlyContractChange": "SetPlannerScheduleTimeZoneIntent.schedule uses native dynamic options instead of its explicit general query binding",
+  "scheduleEntityTypeAndRequirednessUnchanged": true,
+  "defaultScheduleQueryPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "90db042794e0726f4545d6d6bd9c884e4152fca15910ccdf27f290b1c7c80a17",
+  "systemPickerCredit": false
+}

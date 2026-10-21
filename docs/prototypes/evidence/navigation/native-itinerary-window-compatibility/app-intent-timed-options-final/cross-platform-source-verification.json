@@ -1,0 +1,10 @@
+{
+  "phases": [
+    "app-intent-timed-options-final",
+    "app-intent-timed-options-mobile-compile",
+    "app-intent-timed-options-device-compile"
+  ],
+  "matchingFrozenInputCount": 1046,
+  "allSourceEpochsEqual": true,
+  "systemPickerCredit": false
+}

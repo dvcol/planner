@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "34856b66407307ffbca8feb520c426277b97bc7a",
+  "overlays": [
+    "Planner/AppIntents/PlannerScheduleIntents.swift",
+    "PlannerMCPTests/PlannerTimedScheduleOptionsTests.swift"
+  ]
+}

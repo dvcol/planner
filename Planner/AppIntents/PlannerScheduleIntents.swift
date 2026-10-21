@@ -94,6 +94,16 @@
     }
   }
 
+  struct PlannerTimedScheduleOptionsProvider: DynamicOptionsProvider {
+    @Dependency var plannerStore: SavedPlannerStore
+
+    @MainActor func results() async throws -> [PlannerScheduleEntity] {
+      let query = PlannerScheduleEntityQuery()
+      query.plannerStore = plannerStore
+      return try await query.suggestedEntities().filter { !$0.allDay }
+    }
+  }
+
   struct ClearPlannerScheduleEndIntent: AppIntent {
     static let title: LocalizedStringResource = "Clear Schedule End"
     static let description = IntentDescription(
@@ -154,7 +164,7 @@
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
     static var supportedModes: IntentModes { .background }
     static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
-    @Parameter(title: "Schedule", query: PlannerScheduleEntityQuery())
+    @Parameter(title: "Schedule", optionsProvider: PlannerTimedScheduleOptionsProvider())
     var schedule: PlannerScheduleEntity
     @Parameter(title: "Planning timezone", query: PlannerTimeZoneEntityQuery())
     var planningTimeZone: PlannerTimeZoneEntity
