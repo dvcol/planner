@@ -1,0 +1,10 @@
+{
+  "evidenceCommit": "80478af0",
+  "mapCommit": "44d46536",
+  "candidateCount": 16,
+  "nominalBytes": 151257110,
+  "fileCount": 732,
+  "removed": true,
+  "retained": "Committed selected original images, hierarchies/events, native summaries/logs and hashes; current app products, frozen sources, native Maps archives and all datasets.",
+  "scope": "Nominal regular-file sizes, not an APFS free-space increase."
+}
