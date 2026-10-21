@@ -1114,36 +1114,42 @@ struct SavedPlannerView: View {
     isOpeningAppearance = false
   }
 
+  private func appearanceContent(
+    _ selectedAppearance: PlannerAppearanceRead, list selectedList: PlannerListSourceRead
+  ) -> SavedAppearanceDetail {
+    SavedAppearanceDetail(
+      item: selectedAppearance, listName: selectedList.content.name, canChange: store.canCreate,
+      addToList: {
+        listAdditionDraft = SavedListAdditionDraft(
+          itemIdentifier: selectedAppearance.source.id,
+          itemTitle: selectedAppearance.content.title)
+      },
+      viewItem: {
+        selectedItemId = selectedAppearance.source.id
+        selectedSection = .items
+      },
+      moveToList: {
+        guard
+          case .listMembership(let listIdentifier, let membershipIdentifier) =
+            selectedAppearance.appearance,
+          listIdentifier == selectedList.source.id
+        else { return }
+        proposeMembershipMove(
+          membershipIdentifier, itemTitle: selectedAppearance.content.title, list: selectedList)
+      },
+      removeFromList: {
+        guard
+          case .listMembership(let listIdentifier, let membershipIdentifier) =
+            selectedAppearance.appearance
+        else { return }
+        removeMembership(membershipIdentifier, listIdentifier: listIdentifier)
+      })
+  }
+
   @ViewBuilder
   private var appearanceDetail: some View {
     if let selectedAppearance, let selectedList {
-      SavedAppearanceDetail(
-        item: selectedAppearance, listName: selectedList.content.name, canChange: store.canCreate,
-        addToList: {
-          listAdditionDraft = SavedListAdditionDraft(
-            itemIdentifier: selectedAppearance.source.id,
-            itemTitle: selectedAppearance.content.title)
-        },
-        viewItem: {
-          selectedItemId = selectedAppearance.source.id
-          selectedSection = .items
-        },
-        moveToList: {
-          guard
-            case .listMembership(let listIdentifier, let membershipIdentifier) =
-              selectedAppearance.appearance,
-            listIdentifier == selectedList.source.id
-          else { return }
-          proposeMembershipMove(
-            membershipIdentifier, itemTitle: selectedAppearance.content.title, list: selectedList)
-        },
-        removeFromList: {
-          guard
-            case .listMembership(let listIdentifier, let membershipIdentifier) =
-              selectedAppearance.appearance
-          else { return }
-          removeMembership(membershipIdentifier, listIdentifier: listIdentifier)
-        })
+      appearanceContent(selectedAppearance, list: selectedList)
     } else if isOpeningAppearance {
       ProgressView("Opening Item")
     } else if selectedAppearanceIdentity != nil {
@@ -1561,6 +1567,32 @@ struct SavedPlannerView: View {
             .safeAreaInset(edge: .top, spacing: 0) {
               listPaneHeader(selectedList)
             }
+            .toolbar {
+              ToolbarItemGroup(placement: .primaryAction) {
+                SavedItemFilterControl(
+                  filters: $listFilters, accessibilityIdentifier: "saved.list.filters",
+                  showsSummary: newItemDraft == nil)
+                if newItemDraft == nil {
+                  listSortMenu
+                  listActionsMenu(selectedList)
+                  listAddMenu(selectedList)
+                  if let selectedAppearance {
+                    appearanceContent(selectedAppearance, list: selectedList).actionsMenu
+                  }
+                } else {
+                  Menu {
+                    listSortMenu
+                    listActionsMenu(selectedList)
+                    listAddMenu(selectedList)
+                  } label: {
+                    Label("List options", systemImage: "ellipsis")
+                  }
+                  .labelStyle(.iconOnly)
+                  .help("List options")
+                  .accessibilityIdentifier("saved.list.options")
+                }
+              }
+            }
           #endif
           .searchable(text: $listSearchText, prompt: "Search this List")
           .searchPresentationToolbarBehavior(.avoidHidingContent)
@@ -1638,9 +1670,6 @@ struct SavedPlannerView: View {
       }
     }
     .navigationSplitViewStyle(.balanced)
-    #if os(macOS)
-      .toolbar(removing: isItemSection || usesItineraryColumns ? nil : .title)
-    #endif
     .onChange(of: selectedListId) { _, identifier in
       appearanceChangeMessage = nil
       if identifier != nil { listDeletionMessage = nil }
@@ -1688,37 +1717,11 @@ struct SavedPlannerView: View {
   #if os(macOS)
     private func listPaneHeader(_ list: PlannerListSourceRead) -> some View {
       VStack(spacing: 0) {
-        VStack(alignment: .leading, spacing: 12) {
-          SavedListProgress(
-            listName: list.content.name, progress: list.progress, estimates: list.estimates,
-            manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
-            isArchived: list.state.archived == true)
-          ViewThatFits(in: .horizontal) {
-            HStack {
-              SavedItemFilterControl(
-                filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
-              listSortMenu
-              listActionsMenu(list)
-              listAddMenu(list)
-            }
-            .fixedSize(horizontal: true, vertical: false)
-            VStack(spacing: 8) {
-              HStack {
-                SavedItemFilterControl(
-                  filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
-                Spacer(minLength: 8)
-                listAddMenu(list)
-              }
-              HStack {
-                listSortMenu
-                Spacer(minLength: 8)
-                listActionsMenu(list)
-              }
-            }
-          }
-          .buttonStyle(.bordered)
-          .controlSize(.regular)
-        }
+        SavedListProgress(
+          listName: list.content.name, progress: list.progress, estimates: list.estimates,
+          manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
+          isArchived: list.state.archived == true, showsTitle: false
+        )
         .padding()
         Divider()
       }

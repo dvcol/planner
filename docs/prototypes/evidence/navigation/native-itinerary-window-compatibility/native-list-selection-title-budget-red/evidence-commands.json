@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-selection-title-budget-red.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792590090.125,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792590044.718,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertGreaterThanOrEqual failed: (\\\"160.0\\\") is less than (\\\"1603.5\\\") - One Item action must not collapse the List title to its column width.\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testSelectingAListItemKeepsItsWindowTitleSpace()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testSelectingAListItemKeepsItsWindowTitleSpace\",\n      \"testName\" : \"testSelectingAListItemKeepsItsWindowTitleSpace()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-selection-title-budget-red.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-selection-title-budget-red"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 19 attachments for: SavedAppearanceJourneyTests/testSelectingAListItemKeepsItsWindowTitleSpace():\nFile: C30258AC-4303-4871-8E8F-8FAC1A24915D.png, suggested name: \"List window title after selecting an Item_0_672C2DB2-1ED5-4765-A389-9F22F17208B4.png\"\nFile: D9BABF09-0817-4E9B-8FF2-7FB3AF1D2735, suggested name: \"Synthesized Event 2026-10-21 at 10.41.13 PM\"\nFile: 2C05BD3F-7DEA-4682-B2D2-95C778BABF21, suggested name: \"Synthesized Event 2026-10-21 at 10.41.12 PM\"\nFile: 5A3830E3-DFC7-43A7-9747-7F917FD82856, suggested name: \"Synthesized Event 2026-10-21 at 10.41.12 PM\"\nFile: 7125461B-D2F9-4D96-92EE-4A0BA1941D12, suggested name: \"Synthesized Event 2026-10-21 at 10.41.10 PM\"\nFile: 4527B534-6F44-49AE-801C-C14745CB317E, suggested name: \"Synthesized Event 2026-10-21 at 10.41.09 PM\"\nFile: 6148395F-0546-430F-9034-28CC62CC1F52, suggested name: \"Synthesized Event 2026-10-21 at 10.41.09 PM\"\nFile: B51B1AA3-7C03-41F1-836F-707BBE3BFA03.png, suggested name: \"List window title before selecting an Item_0_F0FF9BC1-1804-4C21-AD8C-B41965F4D144.png\"\nFile: B8E61AE8-214E-4D14-849A-87719E11E761, suggested name: \"Synthesized Event 2026-10-21 at 10.41.05 PM\"\nFile: 1FB489C9-FEFB-4DBE-B6F6-7CA70E217F0E, suggested name: \"Synthesized Event 2026-10-21 at 10.41.05 PM\"\nFile: 4B08B7DD-1A4D-483D-A3F6-FAFE52D7AB4D, suggested name: \"Synthesized Event 2026-10-21 at 10.41.04 PM\"\nFile: BCF7C037-8600-41D5-BAA6-DC605FA7E21B, suggested name: \"Synthesized Event 2026-10-21 at 10.41.02 PM\"\nFile: 42285FF6-8875-4B85-9519-675DC9870F10, suggested name: \"Synthesized Event 2026-10-21 at 10.41.01 PM\"\nFile: 5AB7DC35-29BE-4C4F-B596-2C4CA137F0DA, suggested name: \"Synthesized Event 2026-10-21 at 10.40.59 PM\"\nFile: D4D2F9B8-B602-4EBA-82E2-C9A12BCEA35B, suggested name: \"Synthesized Event 2026-10-21 at 10.40.58 PM\"\nFile: A4A3895E-EB20-437F-AA98-CEDD35B15079, suggested name: \"Synthesized Event 2026-10-21 at 10.40.55 PM\"\nFile: 36254424-5421-41E9-99ED-59AB11808371, suggested name: \"Synthesized Event 2026-10-21 at 10.40.54 PM\"\nFile: B5AFCED3-4B9C-404E-B311-70A59FEB565A, suggested name: \"Synthesized Event 2026-10-21 at 10.40.52 PM\"\nFile: DB69F094-7114-48DC-8FD0-A241123DB43F.mp4, suggested name: \"Screen Recording 2026-10-21 at 10.40.45 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-selection-title-budget-red/manifest.json\n",
+    "stderr": ""
+  }
+]

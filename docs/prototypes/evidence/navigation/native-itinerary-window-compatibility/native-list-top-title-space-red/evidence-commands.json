@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-top-title-space-red.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792589085.895,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792589036.563,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertGreaterThan failed: (\\\"158.5\\\") is not greater than (\\\"158.5\\\") - Widening the window must release space for the List title.\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testLongListTitleSharesTopToolbarAndUsesAvailableSpace()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testLongListTitleSharesTopToolbarAndUsesAvailableSpace\",\n      \"testName\" : \"testLongListTitleSharesTopToolbarAndUsesAvailableSpace()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-top-title-space-red.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-top-title-space-red"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 17 attachments for: SavedAppearanceJourneyTests/testLongListTitleSharesTopToolbarAndUsesAvailableSpace():\nFile: 7E1FA401-D556-4C3C-9C3B-A85369185C99, suggested name: \"Synthesized Event 2026-10-21 at 10.24.32 PM\"\nFile: EDA7EB03-BF29-4DCD-8BE1-E3EB4E5642FD.png, suggested name: \"Long List title uses the wide top toolbar_0_FEF546A1-97D5-4B35-B503-9878016E775A.png\"\nFile: 0C47ABFF-64CC-44DE-8334-A2FC960D1026, suggested name: \"Synthesized Event 2026-10-21 at 10.24.28 PM\"\nFile: B3E1CDEC-FE62-4C1D-9A55-8480BFBEAA51.png, suggested name: \"Long List title in a narrow native window_0_525CC4BD-1009-4648-ABF6-C114B181A8BD.png\"\nFile: 10AE839A-5A7E-465A-A7CF-B69B51CD7B80.txt, suggested name: \"Long List title in a narrow native window_0_3A898A63-4CB4-4B16-85A8-A6A0F8EEC1E5.txt\"\nFile: E32BBBA4-44FB-4820-8A79-9BEEFA2CB070, suggested name: \"Synthesized Event 2026-10-21 at 10.24.19 PM\"\nFile: 367B7B13-01D9-4EB4-847F-D68D35D053CE, suggested name: \"Synthesized Event 2026-10-21 at 10.24.14 PM\"\nFile: D71BCD71-5394-4DFF-BA94-1D5EB1A7CACF, suggested name: \"Synthesized Event 2026-10-21 at 10.24.13 PM\"\nFile: 119C328C-86EF-4021-AD70-DE491C079138, suggested name: \"Synthesized Event 2026-10-21 at 10.24.11 PM\"\nFile: ACDDFE23-567C-42A3-ACD3-A59EFAFAC0C9, suggested name: \"Synthesized Event 2026-10-21 at 10.24.09 PM\"\nFile: 6EFF156A-41D0-4CB8-9636-D716BEA8F478, suggested name: \"Synthesized Event 2026-10-21 at 10.24.08 PM\"\nFile: 4142029E-9B2F-4D8D-8D4F-59BABC5071AF, suggested name: \"Synthesized Event 2026-10-21 at 10.24.07 PM\"\nFile: 4FB46060-71BA-4A85-A35B-BED24B55ACB2, suggested name: \"Synthesized Event 2026-10-21 at 10.24.05 PM\"\nFile: 22694AD0-0CFE-4E0F-B19C-BCDF93815DBC, suggested name: \"Synthesized Event 2026-10-21 at 10.24.02 PM\"\nFile: 02664CBA-4E95-4082-B761-A6CC2E3E9247, suggested name: \"Synthesized Event 2026-10-21 at 10.24.01 PM\"\nFile: 8A77B34A-BD7A-4B0C-AD69-0F8D4FCDCEF0, suggested name: \"Synthesized Event 2026-10-21 at 10.24.00 PM\"\nFile: 078CBB1D-7C88-4CB8-8A20-A51B47A6199F.mp4, suggested name: \"Screen Recording 2026-10-21 at 10.23.57 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-top-title-space-red/manifest.json\n",
+    "stderr": ""
+  }
+]

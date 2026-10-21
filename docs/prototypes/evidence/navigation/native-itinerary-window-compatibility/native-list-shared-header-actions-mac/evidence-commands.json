@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-shared-header-actions-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 2,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792592018.643,\n  \"passedTests\" : 2,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792591705.111,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 2\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-shared-header-actions-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-shared-header-actions-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 1 attachment for: SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation():\nFile: 527DAA86-2AF8-41FC-8A9B-66607AF1F21F.png, suggested name: \"Saved List appearance details_0_8DC47809-5AAC-459A-B50F-6EBCF3A11308.png\"\n\nExported 2 attachments for: SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress():\nFile: C544871C-FA02-476F-A138-B16381FFF655.png, suggested name: \"Relaunched List keeps its own sort and source order_0_41F62970-07A8-44C0-B4BF-2E38EC9FF52A.png\"\nFile: 8B493B3D-729D-4EA0-9DC1-B0F10D3B1311.png, suggested name: \"Manual order restored with retained List completion_0_A0AAE13B-F018-45A8-B08C-003F3A3199CA.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-shared-header-actions-mac/manifest.json\n",
+    "stderr": ""
+  }
+]

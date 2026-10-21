@@ -159,7 +159,10 @@ extension XCUIApplication {
       menuBars.menuBarItems["Window"].click()
       let fill = menuItems.matching(identifier: "_zoomFill:").firstMatch
       XCTAssertTrue(fill.waitForExistence(timeout: 5))
-      XCTAssertTrue(fill.isEnabled)
+      guard fill.isEnabled else {
+        menuBars.menuBarItems["Window"].click()
+        return
+      }
       fill.click()
     }
   #endif

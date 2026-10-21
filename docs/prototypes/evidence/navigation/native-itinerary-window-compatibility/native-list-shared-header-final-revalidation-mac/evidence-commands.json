@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-shared-header-final-revalidation-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792591574.815,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792591413.761,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-shared-header-final-revalidation-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-shared-header-final-revalidation-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 5 attachments for: SavedAppearanceJourneyTests/testLongListTitleSharesTopToolbarAndUsesAvailableSpace():\nFile: 0C641DBA-BD56-4441-8A85-7F1046014D45.png, suggested name: \"Permanent List header with a saved Item in a wide window_0_5305FBC0-1C5A-4F11-8A0A-19BCD9D65259.png\"\nFile: 34C74771-01B2-4708-820C-F399636998C3.png, suggested name: \"Permanent List header with a saved Item in a narrow window_0_4367B944-2BDD-424E-BE5A-5567E63930CE.png\"\nFile: E3E83934-279D-410E-B3B7-CC249FEC766E.png, suggested name: \"Long List title uses the wide top toolbar_0_E602ABDA-8A5B-406C-BBCB-99673B10BAE3.png\"\nFile: 641667C3-97CF-455B-939D-3A29650E4972.png, suggested name: \"Long List title in a narrow native window_0_525BEF11-00DE-4D44-A2FA-7F30E627045C.png\"\nFile: 038180F4-0141-4E51-B432-5970F23EB259.txt, suggested name: \"Long List title in a narrow native window_0_E8865AB4-91DC-4A31-B032-2F067EF4E772.txt\"\n\nExported 5 attachments for: SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen():\nFile: 9A9C702D-4B92-4278-9D57-D48E3DF58C6B.png, suggested name: \"Explicit navigation Save creates the Item before leaving_0_A3558A19-EE30-4B10-BC45-6F3B227C5303.png\"\nFile: 022DB95C-00DE-4BA7-8E58-B481E5549BDA.txt, suggested name: \"Draft navigation own-window hierarchy_0_99CA84E1-35BC-4BCB-843F-8A73E002628F.txt\"\nFile: C3CBF93A-A787-4C09-814C-6521A1FAA87F.png, suggested name: \"Draft navigation choices after guarded Back_0_5D06A31B-6364-4417-9669-EAB1DB3DA1A5.png\"\nFile: E41ABEA0-05A8-4750-B0CC-9CFC5F68F2E3.txt, suggested name: \"Actual draft confirmation container_0_A4D86866-B730-46B9-8095-47AB02D880D1.txt\"\nFile: FA1F565C-B1AB-4A63-AE5F-DB0706D4295D.png, suggested name: \"Draft confirmation before container lookup_0_870D6A43-4D31-480D-977C-2B3D814263D4.png\"\n\nExported 2 attachments for: SavedAppearanceJourneyTests/testSelectingAListItemKeepsItsWindowTitleSpace():\nFile: 4EE3A626-1F59-43DA-896C-ABBD0689BA87.png, suggested name: \"List window title after selecting an Item_0_FCDAA9C5-F364-4ECA-96CA-D9A6861A2E14.png\"\nFile: FEA11DBA-EA28-4F3A-9337-D796FE050618.png, suggested name: \"List window title before selecting an Item_0_22B6DC60-A662-4286-BF0A-31288C568A90.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-shared-header-final-revalidation-mac/manifest.json\n",
+    "stderr": ""
+  }
+]

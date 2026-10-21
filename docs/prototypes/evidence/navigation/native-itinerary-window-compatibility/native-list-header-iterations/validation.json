@@ -1,0 +1,56 @@
+{
+  "matchingSourceInputs": 1061,
+  "matchingEpochs": [
+    "native-list-editor-options-build",
+    "native-list-editor-options-mac",
+    "native-list-shared-header-final-revalidation-mac",
+    "native-list-shared-header-actions-mac",
+    "native-list-shared-header-phone",
+    "native-list-shared-header-tablet"
+  ],
+  "sourceManifestSha256": "5bbc87258dbb6ae17ae60cb5ab5a98ce2934bcd28287080735280b8dfabcec2b",
+  "passingExecutions": 8,
+  "distinctCases": 6,
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/PlannerApp.swift",
+        "Planner/Scenes/SavedAppearanceViews.swift",
+        "Planner/Scenes/SavedItemFilters.swift",
+        "Planner/Scenes/SavedPlannerMainWindow.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerNavigationUITests/NativeNavigationElements.swift",
+        "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/native-list-pane-header.md",
+        "docs/open-decisions.md",
+        "docs/native-ui-polish.md"
+      ],
+      "exitCode": 0,
+      "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-list-pane-header.md docs/open-decisions.md docs/native-ui-polish.md\nLinting: 3 files\nSummary: 0 issues in 0 files\nDone in 270ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    }
+  ]
+}

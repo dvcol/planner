@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-top-header-qualified-red.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792588786.227,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792588729.437,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertTrue failed - The List title belongs in the top native toolbar.\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable\",\n      \"testName\" : \"testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-top-header-qualified-red.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-top-header-qualified-red"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 15 attachments for: SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable():\nFile: 81985575-C8E5-4B4D-A22C-4212A5BD3C6D, suggested name: \"Synthesized Event 2026-10-21 at 10.19.24 PM\"\nFile: 0C6AAF17-EC6B-4408-BD36-CE6A8E5E735F.png, suggested name: \"Long List title in a narrow native window_0_CAD7C2CE-0C7C-4EEB-A848-D2142DB276E3.png\"\nFile: CA93F045-2C99-49D5-A63E-82615BFC01F8.txt, suggested name: \"Long List title in a narrow native window_0_C77E35AD-9C62-4FA7-B590-D8E500D1E1D5.txt\"\nFile: 3629FFB5-0795-466E-B9EB-A073244B2584, suggested name: \"Synthesized Event 2026-10-21 at 10.19.17 PM\"\nFile: D8E1DDAC-0007-4128-BD3E-876CF1342693, suggested name: \"Synthesized Event 2026-10-21 at 10.19.13 PM\"\nFile: 75B724CE-C2F5-4303-A284-77D177770026, suggested name: \"Synthesized Event 2026-10-21 at 10.19.12 PM\"\nFile: 4EF40D68-08A2-4AF0-9702-84D268C50953, suggested name: \"Synthesized Event 2026-10-21 at 10.19.10 PM\"\nFile: 716227B1-4059-44C9-B716-8DF3B2A6C27E, suggested name: \"Synthesized Event 2026-10-21 at 10.19.08 PM\"\nFile: E52735A1-8786-4EFC-92E5-E23F95FEE633, suggested name: \"Synthesized Event 2026-10-21 at 10.19.07 PM\"\nFile: 01DCCD78-0307-4CEB-BAD5-5AA5E68F3B18, suggested name: \"Synthesized Event 2026-10-21 at 10.19.05 PM\"\nFile: E52EACC8-CCDC-4B27-B152-8EA28F293215, suggested name: \"Synthesized Event 2026-10-21 at 10.19.04 PM\"\nFile: 38D6957A-8623-487F-9492-A636D1AFA832, suggested name: \"Synthesized Event 2026-10-21 at 10.19.01 PM\"\nFile: 6D068EBA-F03B-4A3B-89EE-335EC5F53B65, suggested name: \"Synthesized Event 2026-10-21 at 10.19.00 PM\"\nFile: E27A81F0-91A4-43E0-AE48-0CB556F53704, suggested name: \"Synthesized Event 2026-10-21 at 10.18.59 PM\"\nFile: 06F01551-7159-4CAB-BB8C-7D69C4591BE2.mp4, suggested name: \"Screen Recording 2026-10-21 at 10.18.50 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-top-header-qualified-red/manifest.json\n",
+    "stderr": ""
+  }
+]

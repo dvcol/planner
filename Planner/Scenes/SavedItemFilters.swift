@@ -119,20 +119,25 @@ struct SavedItemFilterControl: View {
   @Environment(SavedPlannerStore.self) private var store
   @Binding var filters: SavedItemFilters
   let accessibilityIdentifier: String
+  var showsSummary = true
   @State private var showFilters = false
 
   var body: some View {
     Button {
       showFilters = true
     } label: {
-      Label(filters.summary, systemImage: "line.3.horizontal.decrease")
-        .labelStyle(.titleAndIcon)
-        #if os(macOS)
-          .lineLimit(1)
-          .padding(.horizontal, 6)
-        #else
-          .fixedSize(horizontal: true, vertical: false)
-        #endif
+      Label {
+        if showsSummary { Text(filters.summary) }
+      } icon: {
+        Image(systemName: "line.3.horizontal.decrease")
+      }
+      .labelStyle(.titleAndIcon)
+      #if os(macOS)
+        .lineLimit(1)
+        .padding(.horizontal, 6)
+      #else
+        .fixedSize(horizontal: true, vertical: false)
+      #endif
     }
     .accessibilityLabel(filters.summary)
     .accessibilityIdentifier(accessibilityIdentifier)
@@ -407,14 +412,17 @@ struct SavedListProgress: View {
   let manualEstimate: PlannerEstimate?
   let matchingCount: Int
   var isArchived = false
+  var showsTitle = true
 
   var body: some View {
     VStack(alignment: .leading, spacing: 6) {
-      Text(listName).font(.title2).fontWeight(.semibold)
-        .foregroundStyle(Color.primary)
-        .lineLimit(2)
-        .help(listName)
-        .accessibilityAddTraits(.isHeader)
+      if showsTitle {
+        Text(listName).font(.title2).fontWeight(.semibold)
+          .foregroundStyle(Color.primary)
+          .lineLimit(2)
+          .help(listName)
+          .accessibilityAddTraits(.isHeader)
+      }
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(Color.secondary)
       }

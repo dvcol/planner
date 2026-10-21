@@ -1,0 +1,377 @@
+{
+  "description": "Superseded native layout and locator probes. These results are not final acceptance. Raw packets remain in a local diagnostic archive; qualified baselines and final runs are retained separately.",
+  "outcomes": [
+    {
+      "phase": "native-label-mac-rgb-inspection-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "f16ebe3570cf239274cdc0016054c4a21f6e047196f1d88e1c189775e468167a"
+    },
+    {
+      "phase": "native-list-header-current-reproduction",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "a29cb935c63d517a8809418f817a50e2761718ec27335cb7537d60e08149e4a3"
+    },
+    {
+      "phase": "native-list-header-populated-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "b2bfbd514938b204453493d318382773331ee42f781269fe330d20201071000a"
+    },
+    {
+      "phase": "native-list-header-populated-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "5c9b5ca629c620118442b97cea92bde3bcec04a2d550d69df9990a6725cfd840"
+    },
+    {
+      "phase": "native-list-header-populated-mac-retry",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "3797c3098dedd81f841be5e267e5218a2e25109c13d7687a7f82afb8c345738c"
+    },
+    {
+      "phase": "native-list-root-toolbar-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "6855c5280e99169654ec6edee0e25bea13934da269656ce2ee60f85d8767782e"
+    },
+    {
+      "phase": "native-list-root-toolbar-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "1954d12d6690fffb70517eb75abb74a4091b1d1cdca679aa032d0efd766ee359"
+    },
+    {
+      "phase": "native-list-selected-title-red",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "6e3cca322bc0fc6804241b46752fb9084605ccce8a19a207e04294b79fe035b8"
+    },
+    {
+      "phase": "native-list-selected-title-red-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "ccd38546cde18dfcd0312de246c104bd94ec83dc3fa09d02c2610df38ec22048"
+    },
+    {
+      "phase": "native-list-selected-title-red-retry",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "47c5aede14ab5e338e576240b5ee9ec185a9368c9bc2fb28656ba040fd65e256"
+    },
+    {
+      "phase": "native-list-selection-title-red",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "e55146ced7c8025d40e62797775c09fad1c2fea2f96f9cd9a348033f9c65b7dc"
+    },
+    {
+      "phase": "native-list-selection-title-red-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "0877b2b56a5ed54579bd8a56c0e9614198786e3f90917b62fda89ea8397e8315"
+    },
+    {
+      "phase": "native-list-shared-header-compatibility-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 3,
+        "passedTests": 2,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "d9d82a6fbcad88bbb5bd77faa8efae51f89bead1a1679e78259b0f2ad791fd81"
+    },
+    {
+      "phase": "native-list-shared-header-final-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "8e97f2a108fefb872bd278db01b011c8b5ac6754c381685799d6a45e241c6968"
+    },
+    {
+      "phase": "native-list-shared-header-final-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 2,
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "13941fce6c2e0477378649d813f5c1c327e34e1b8f59cdb28812911c3efd2f80"
+    },
+    {
+      "phase": "native-list-system-title-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "58292129997e30586054a693ae8fb8777446073bf1d0c02eaaa3b35e238913e0"
+    },
+    {
+      "phase": "native-list-system-title-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "db3ef6f58e565be781d6a2eb719276965f8bad750a39100710b7f9998d12a7a8"
+    },
+    {
+      "phase": "native-list-toolbar-owner-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "63f2c87a8599ef1336b58c40e903906c88ad02f407b0297278aacf103374e27f"
+    },
+    {
+      "phase": "native-list-toolbar-owner-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "099679439aa05d039614c07d60ed1e6c8bc940bda16144603592bc49c6f18dd0"
+    },
+    {
+      "phase": "native-list-top-flexible-title-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "3e283b6165a77100bdc9e71b31dd2fad885c540c2a34819564d38c812b16a673"
+    },
+    {
+      "phase": "native-list-top-flexible-title-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "853e9169ae55af273d3d68d9bc475b6d67e901c7237779ffbecd2bb13b68aba8"
+    },
+    {
+      "phase": "native-list-top-header-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "1673155f3fbd1bac3684f3d6a62f49d1dfa82b5e55b65f8e4828f3f3567d1b45"
+    },
+    {
+      "phase": "native-list-top-header-descendants-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "1f87b96fe3817cb8faefd2ef8497e50da9a37ef2633ef0c3451f55948fe30c96"
+    },
+    {
+      "phase": "native-list-top-header-final-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "56e720ca1277960efc1fc7a4de56a71e7748d1691344a5a0180e439fa678d20b"
+    },
+    {
+      "phase": "native-list-top-header-final-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "cf0943d427cd022f87ee10f3c3fb59063503107058217e351fb0922e299e6df1"
+    },
+    {
+      "phase": "native-list-top-header-mac",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "5cc1a82feb4c6b41a2efa08a6e94f7ea99a3d83ec6694d2bc7a958bdf9c6abf3"
+    },
+    {
+      "phase": "native-list-top-header-red",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "test.log.gzSha256": "e4b0c43248f3f501e56f3e8319e67159ec301ac77ab6210a326599d2b1b100ec"
+    },
+    {
+      "phase": "native-list-top-header-red-build",
+      "acceptanceCredit": false,
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "build.log.gzSha256": "ef0f26ac0102526046f964f0d57ce3cc57285400a78c2f2504c32511f9493028"
+    }
+  ]
+}
