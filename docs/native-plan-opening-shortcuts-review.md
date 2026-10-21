@@ -58,4 +58,4 @@ Record genuine failures and source epochs. No live service, paid account, device
 
 ## Local implementation checkpoint
 
-The [directed plan-opening report](prototypes/native-plan-opening-handoff.md) records the production coordinator, exact-identity Open actions, native scene integration and draft protection. It separates passing earlier production-interface and ordinary mobile draft journeys from the final focus-order rerun blocked before XCTest starts, actual external-request/window tests, system invocation and signing/physical gates. No map acceptance is inferred from implementation or compilation.
+The [directed plan-opening report](prototypes/native-plan-opening-handoff.md) records the production coordinator, exact-identity Open actions, native scene integration and draft protection. It separates passing earlier production-interface and ordinary mobile draft journeys from the passing direct-module focus-order rerun, blocked Xcode IDE-session workflow, actual external-request/window tests, system invocation and signing/physical gates. No map acceptance is inferred from implementation or compilation.

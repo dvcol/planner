@@ -1,6 +1,6 @@
 # Directed native plan-opening handoff
 
-Status: Q126 A accepted on 21 October 2026. The concrete production handoff and additional test boundary below are approved. The implementation checkpoint is linked below; post-focus-fix local reruns and actual window/system qualification remain open.
+Status: Q126 A accepted on 21 October 2026. The concrete production handoff and additional test boundary below are approved. The implementation checkpoint is linked below; all 13 post-focus-fix production-interface cases pass in the existing direct XCTest mode, while IDE-session and actual window/system qualification remain open.
 
 ## Context and starting state
 
@@ -47,4 +47,4 @@ Run affected strict lint/type checks, matching Mac/Simulator/unsigned device com
 
 ## Local implementation checkpoint
 
-The [directed plan-opening report](prototypes/native-plan-opening-handoff.md) records the production coordinator, exact-identity Open actions, native scene integration and draft protection. It separates passing earlier production-interface and ordinary mobile draft journeys from the final focus-order rerun blocked before XCTest starts, actual external-request/window tests, system invocation and signing/physical gates. No map acceptance is inferred from implementation or compilation.
+The [directed plan-opening report](prototypes/native-plan-opening-handoff.md) records the production coordinator, exact-identity Open actions, native scene integration and draft protection. It separates passing earlier production-interface and ordinary mobile draft journeys from the passing direct-module focus-order rerun, blocked Xcode IDE-session workflow, actual external-request/window tests, system invocation and signing/physical gates. No map acceptance is inferred from implementation or compilation.
