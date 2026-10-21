@@ -1,0 +1,44 @@
+{
+  "platform": "mac",
+  "addedActions": {
+    "CreatePlannerTimedItemScheduleIntent": [
+      "item",
+      "PlannerItemEntity",
+      "timed"
+    ],
+    "CreatePlannerTimedItineraryScheduleIntent": [
+      "itinerary",
+      "PlannerItineraryEntity",
+      "timed"
+    ],
+    "CreatePlannerAllDayItemScheduleIntent": [
+      "item",
+      "PlannerItemEntity",
+      "allDay"
+    ],
+    "CreatePlannerAllDayItineraryScheduleIntent": [
+      "itinerary",
+      "PlannerItineraryEntity",
+      "allDay"
+    ],
+    "SetPlannerScheduleTimedFormIntent": [
+      "schedule",
+      "PlannerScheduleEntity",
+      "timed"
+    ],
+    "SetPlannerScheduleAllDayFormIntent": [
+      "schedule",
+      "PlannerScheduleEntity",
+      "allDay"
+    ]
+  },
+  "actionCount": 81,
+  "earlierLaterOccurrenceEnumAdded": true,
+  "allPrevious75ActionContractsAndEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "civilDateAndDateTimeKindsVerified": true,
+  "requiredAndOptionalFieldsAndNoOccurrenceDefaultsVerified": true,
+  "allSixActionsReturnExactScheduleEntities": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "830597cee7995e0ee47ae87c007af0c4f27744b5d20f9edf77e6496aa03c474d",
+  "actualSystemPickerSerializationAndInvocationCredit": false
+}

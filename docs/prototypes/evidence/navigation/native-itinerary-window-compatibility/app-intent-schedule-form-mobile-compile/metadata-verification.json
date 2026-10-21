@@ -1,0 +1,44 @@
+{
+  "platform": "mobile",
+  "addedActions": {
+    "CreatePlannerTimedItemScheduleIntent": [
+      "item",
+      "PlannerItemEntity",
+      "timed"
+    ],
+    "CreatePlannerTimedItineraryScheduleIntent": [
+      "itinerary",
+      "PlannerItineraryEntity",
+      "timed"
+    ],
+    "CreatePlannerAllDayItemScheduleIntent": [
+      "item",
+      "PlannerItemEntity",
+      "allDay"
+    ],
+    "CreatePlannerAllDayItineraryScheduleIntent": [
+      "itinerary",
+      "PlannerItineraryEntity",
+      "allDay"
+    ],
+    "SetPlannerScheduleTimedFormIntent": [
+      "schedule",
+      "PlannerScheduleEntity",
+      "timed"
+    ],
+    "SetPlannerScheduleAllDayFormIntent": [
+      "schedule",
+      "PlannerScheduleEntity",
+      "allDay"
+    ]
+  },
+  "actionCount": 81,
+  "earlierLaterOccurrenceEnumAdded": true,
+  "allPrevious75ActionContractsAndEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "civilDateAndDateTimeKindsVerified": true,
+  "requiredAndOptionalFieldsAndNoOccurrenceDefaultsVerified": true,
+  "allSixActionsReturnExactScheduleEntities": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "55fffaa6fd62748b3929cb05c9ee7d788029c216787e820368ff6aef6bf97662",
+  "actualSystemPickerSerializationAndInvocationCredit": false
+}

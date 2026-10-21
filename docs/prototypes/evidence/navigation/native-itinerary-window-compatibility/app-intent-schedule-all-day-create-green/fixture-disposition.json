@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/0F27BD1C-ADF6-40AE-AF9E-4FF1046D4068",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/6D1CDA46-8DB2-4F39-992B-96F5DE9266C0",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E268CDBA-61A5-449E-A482-15FD771B944C",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/246CEB76-86F9-4AE1-85D1-CBF90979F928",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7AF4C3F7-E9AC-4BE0-AA08-8F9611426C52",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E723677B-D38C-4EC6-9A60-E2B4BA3CC320"
+  ],
+  "verifierSha256": "85af6efb86504103c85612315b14929776921aed40130a5ac8693632a261f40b",
+  "sourceLogSha256": "214673f89190db95428185b5b5702a4e0e422f1e203a1dc64499c39bdcb8e974",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 6,
+  "hostProcessIdentifiers": [
+    86343
+  ]
+}

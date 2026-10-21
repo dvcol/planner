@@ -1,6 +1,6 @@
 # Native Schedule workflow review
 
-Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. [Timed choices are implemented locally](prototypes/native-timed-schedule-options.md). Q124 A and Q125 A now approve the [concrete civil inputs and focused replacement actions](native-schedule-civil-intent-contract-review.md).
+Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. [Timed choices are implemented locally](prototypes/native-timed-schedule-options.md). Q124 A and Q125 A now approve the [concrete civil inputs and focused replacement actions](native-schedule-civil-intent-contract-review.md). [The six form actions are implemented locally](prototypes/native-schedule-form-intents.md); actual system invocation and serialization remain separate gates.
 
 ## Context and goal
 

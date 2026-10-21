@@ -1,0 +1,16 @@
+{
+  "passingCredit": false,
+  "originalInvocation": "failed",
+  "sourceLogSha256": "804788a0214ac03481fa37e7af0b1d3245cfd28456bc41183ff03673209784ab",
+  "hostProcessIdentifiers": [
+    81885
+  ],
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E5CAC990-C9FC-48C4-B9C3-44C9B399DA31"
+  ]
+}

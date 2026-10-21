@@ -1,0 +1,53 @@
+{
+  "matchingSourceInputs": 1056,
+  "matchingSourcePhases": [
+    "app-intent-schedule-form-final",
+    "app-intent-schedule-form-mobile-compile",
+    "app-intent-schedule-form-device-compile"
+  ],
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/AppIntents/PlannerScheduleCreationIntents.swift",
+        "Planner/AppIntents/PlannerScheduleReplacementIntents.swift",
+        "Planner/AppIntents/PlannerScheduleIntents.swift",
+        "PlannerMCPTests/PlannerScheduleCreationIntentTests.swift",
+        "PlannerMCPTests/PlannerScheduleReplacementIntentTests.swift",
+        "PlannerMCPTests/PlannerScheduleMutationSafetyTests.swift"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerMarkdownlintConfig.json",
+        "docs/prototypes/native-schedule-form-intents.md",
+        "docs/native-schedule-civil-intent-contract-review.md",
+        "docs/native-schedule-intent-workflow-review.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-schedule-form-intents.md docs/native-schedule-civil-intent-contract-review.md docs/native-schedule-intent-workflow-review.md docs/open-decisions.md\nLinting: 4 files\nSummary: 0 issues in 0 files\n",
+      "stderr": "Done in 263ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}
