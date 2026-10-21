@@ -10,6 +10,7 @@ import SwiftUI
 #endif
 struct PlannerApp: App {
   @State private var savedPlanner: SavedPlannerStore
+  @State private var planOpening: SavedPlanOpeningCoordinator
   @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())
   @State private var addressPreviews = PlannerAddressPreviews(
     provider: AppleAddressPreviewProvider())
@@ -24,23 +25,31 @@ struct PlannerApp: App {
 
   init() {
     let plannerStore = SavedPlannerStore()
+    let opening = SavedPlanOpeningCoordinator()
     _savedPlanner = State(initialValue: plannerStore)
+    _planOpening = State(initialValue: opening)
     #if !PLANNER_FIXTURES
       AppDependencyManager.shared.add(dependency: plannerStore)
+      AppDependencyManager.shared.add(dependency: opening)
     #endif
   }
 
   var body: some Scene {
-    WindowGroup {
+    WindowGroup(id: SavedPlanOpeningCoordinator.mainWindowSceneIdentifier, for: UUID.self) {
+      $windowIdentifier in
       if ProcessInfo.processInfo.arguments.contains("--navigation-prototype") {
         NavigationPrototypeView()
       } else {
-        SavedPlannerView(store: savedPlanner)
-          .environment(savedPlanner)
-          .environment(previews)
-          .environment(addressPreviews)
-          .environment(mapsPreviews)
+        SavedPlannerMainWindow(
+          store: savedPlanner, planOpening: planOpening, windowIdentifier: windowIdentifier
+        )
+        .environment(savedPlanner)
+        .environment(previews)
+        .environment(addressPreviews)
+        .environment(mapsPreviews)
       }
+    } defaultValue: {
+      UUID()
     }
     #if os(macOS)
       .defaultSize(width: 1200, height: 800)
