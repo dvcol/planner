@@ -31,6 +31,8 @@ The user accepted A for all eight choices below on 21 October 2026. Their implem
 
 [Timed Schedule choices](prototypes/native-timed-schedule-options.md) implement Q119 A locally. Four production-provider tests and 22 affected Schedule read/zone regressions pass, with matching platform builds. The ordinary Schedule query and execution-time form validation remain intact; actual system picker invocation is still open.
 
+[Four initial App Shortcuts](prototypes/native-app-shortcut-discovery.md) implement Q123 A as native metadata. Exact create/find entries and all ordinary contracts verify across matching platform builds; 19 underlying adapter cases pass. Actual system discovery/prompting/Siri remain separate.
+
 ## Next frontier after the approvals
 
 The three follow-up questions are open; none blocks independent accepted work.

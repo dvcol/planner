@@ -1,6 +1,6 @@
 # Opening plans and App Shortcut discovery
 
-Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. The concrete single-window handoff and any added test boundary still require review.
+Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. [The four-shortcut provider is implemented locally](prototypes/native-app-shortcut-discovery.md). The concrete single-window handoff and any added test boundary still require review.
 
 ## Context and starting state
 
