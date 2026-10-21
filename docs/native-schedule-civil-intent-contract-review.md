@@ -1,6 +1,6 @@
 # Civil Schedule inputs and replacement actions
 
-Status: Q124 A and Q125 A accepted on 21 October 2026. The concrete civil inputs and two focused replacement actions below are approved. Implementation and qualification remain open.
+Status: Q124 A and Q125 A accepted on 21 October 2026. The concrete civil inputs and two focused replacement actions below are approved. [Creation and replacement are implemented and locally qualified](prototypes/native-schedule-form-intents.md). Actual system and physical qualification remain open.
 
 ## Context and starting state
 

@@ -559,7 +559,7 @@
     }
   }
 
-  private func plannerScheduleCivilDate(_ components: DateComponents) throws -> PlannerCivilDate {
+  func plannerScheduleCivilDate(_ components: DateComponents) throws -> PlannerCivilDate {
     if let calendar = components.calendar,
       calendar.identifier != .gregorian && calendar.identifier != .iso8601
     {
