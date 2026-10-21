@@ -1342,15 +1342,17 @@ struct SavedPlannerView: View {
       case .ready:
         let rows = listRows
         if rows.isEmpty {
-          VStack(spacing: 0) {
-            SavedListProgress(
-              listName: list.content.name, progress: list.progress, estimates: list.estimates,
-              manualEstimate: list.content.manualEstimate, matchingCount: 0,
-              isArchived: list.state.archived == true
-            ).padding()
-            ContentUnavailableView(
-              list.progress.totalCount == 0 ? "No items" : "No matching items",
-              systemImage: "checklist", description: appearanceChangeMessage.map { Text($0) })
+          ScrollView {
+            VStack(spacing: 0) {
+              SavedListProgress(
+                listName: list.content.name, progress: list.progress, estimates: list.estimates,
+                manualEstimate: list.content.manualEstimate, matchingCount: 0,
+                isArchived: list.state.archived == true
+              ).padding()
+              ContentUnavailableView(
+                list.progress.totalCount == 0 ? "No items" : "No matching items",
+                systemImage: "checklist", description: appearanceChangeMessage.map { Text($0) })
+            }
           }
         } else {
           #if os(macOS)
