@@ -1,0 +1,38 @@
+{
+  "Planner/PlannerApp.swift": {
+    "sha256": "932bb9d502dece2f23cae038085e94a76991c9da5f6c38a619af13410f693fc4",
+    "matchesEarlierPassingRun": true,
+    "matchesWorkspace": true
+  },
+  "Planner/Scenes/SavedPlannerMainWindow.swift": {
+    "sha256": "2de5f2eb3d47cee50e14d8ddbb2072fb0643f68379cb5a8d14663d034cb55ec2",
+    "matchesEarlierPassingRun": true,
+    "matchesWorkspace": true
+  },
+  "Planner/Scenes/SavedPlannerView.swift": {
+    "sha256": "56dea7a538b398ca9271201e9698f9887601b76bb436fa6b1831ea6ebfa2db66",
+    "matchesEarlierPassingRun": true,
+    "matchesWorkspace": true
+  },
+  "Planner/Scenes/SavedAppearanceViews.swift": {
+    "sha256": "22caa0c098cabca13d1d1aeffdbf26b05f1178d33c547c3ae126fe39721a7829",
+    "matchesEarlierPassingRun": true,
+    "matchesWorkspace": true
+  },
+  "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": {
+    "sha256": "16fc95f45441c7878dbe78b67aab3f344f7713d1314c19d973a28f7da98238e4",
+    "matchesEarlierPassingRun": true,
+    "matchesWorkspace": false,
+    "selectedMethods": {
+      "testSelectingAListItemKeepsItsWindowTitleSpace": {
+        "sha256": "49288a2cf8b8d3f2f51f4b81aea4ac7c53859ae1f1c2350e22a09ae27664b6f9",
+        "matchesEarlierPassingRevision": true
+      },
+      "testLongListTitleSharesTopToolbarAndUsesAvailableSpace": {
+        "sha256": "fa4b45f062f9e10ef779bdc0f3c9d2d8354a345005385fa654e692d48e6e551d",
+        "matchesEarlierPassingRevision": true
+      }
+    },
+    "wholeFileChange": "80478af0 updates separate saved-preview interactions in this test file; neither requested title method changes."
+  }
+}

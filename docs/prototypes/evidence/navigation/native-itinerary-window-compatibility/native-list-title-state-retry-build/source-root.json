@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "1a08607e41af3284b5982b227d78cb422547badb",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportRestorationTests.swift"
+  ]
+}
