@@ -1,0 +1,39 @@
+{
+  "evidenceCommit": "6595eceae21541f961bd63dd97cab35af31c6445",
+  "verifiedInputs": 751,
+  "verifiedRawSummaries": 2,
+  "verifiedOriginalLogs": 3,
+  "ownedServerStopped": true,
+  "removed": [
+    {
+      "path": "/private/tmp/PlannerPreviewIOSDerivedData",
+      "regularFileCount": 2862,
+      "nominalFileBytes": 215892668,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerPreviewSDK-phone.xcresult",
+      "regularFileCount": 84,
+      "nominalFileBytes": 311515,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerPreviewSDK-tablet.xcresult",
+      "regularFileCount": 84,
+      "nominalFileBytes": 311632,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    }
+  ],
+  "retained": [
+    {
+      "path": "/private/tmp/PlannerPreviewIOSSource",
+      "reason": "Open handles or an inconclusive open-file check; source copy retained."
+    }
+  ],
+  "nominalFileBytes": 216515815,
+  "metric": "Regular-file logical bytes, not an equal APFS free-space promise.",
+  "preserved": "Committed original logs/results/recipes, raw text logs, current app/UI products and source, native Maps archives, unrelated package caches, Simulator state and Planner datasets."
+}
