@@ -1,0 +1,86 @@
+{
+  "platform": "mobile",
+  "nativeShortcuts": [
+    {
+      "actionIdentifier": "CreatePlannerItemIntent",
+      "availabilityAnnotations": {
+        "LNPlatformNameWildcard": {
+          "introducedVersion": "*"
+        }
+      },
+      "phraseTemplates": [
+        {
+          "alternatives": [],
+          "key": "Create an item in ${applicationName}"
+        }
+      ],
+      "shortTitle": {
+        "alternatives": [],
+        "key": "Create item"
+      },
+      "systemImageName": "plus"
+    },
+    {
+      "actionIdentifier": "FindPlannerItemsIntent",
+      "availabilityAnnotations": {
+        "LNPlatformNameWildcard": {
+          "introducedVersion": "*"
+        }
+      },
+      "phraseTemplates": [
+        {
+          "alternatives": [],
+          "key": "Find items in ${applicationName}"
+        }
+      ],
+      "shortTitle": {
+        "alternatives": [],
+        "key": "Find items"
+      },
+      "systemImageName": "checklist"
+    },
+    {
+      "actionIdentifier": "FindPlannerListsIntent",
+      "availabilityAnnotations": {
+        "LNPlatformNameWildcard": {
+          "introducedVersion": "*"
+        }
+      },
+      "phraseTemplates": [
+        {
+          "alternatives": [],
+          "key": "Find lists in ${applicationName}"
+        }
+      ],
+      "shortTitle": {
+        "alternatives": [],
+        "key": "Find lists"
+      },
+      "systemImageName": "list.bullet"
+    },
+    {
+      "actionIdentifier": "FindPlannerItinerariesIntent",
+      "availabilityAnnotations": {
+        "LNPlatformNameWildcard": {
+          "introducedVersion": "*"
+        }
+      },
+      "phraseTemplates": [
+        {
+          "alternatives": [],
+          "key": "Find itineraries in ${applicationName}"
+        }
+      ],
+      "shortTitle": {
+        "alternatives": [],
+        "key": "Find itineraries"
+      },
+      "systemImageName": "point.topleft.down.to.point.bottomright.curvepath"
+    }
+  ],
+  "all72ActionContractsPreserved": true,
+  "entitiesQueriesAndEnumsPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "53c2143dd3e7b28cb69202fddc61e11ee73cce7cc5ee406d825af349b0804474",
+  "systemDiscoveryOrSiriInvocationCredit": false
+}

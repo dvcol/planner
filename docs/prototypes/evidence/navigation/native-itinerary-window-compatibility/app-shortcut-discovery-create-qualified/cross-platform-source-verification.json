@@ -1,0 +1,10 @@
+{
+  "phases": [
+    "app-shortcut-discovery-create-qualified",
+    "app-shortcut-discovery-mobile-compile",
+    "app-shortcut-discovery-device-compile"
+  ],
+  "matchingFrozenInputCount": 1047,
+  "allSourceEpochsEqual": true,
+  "systemDiscoveryCredit": false
+}

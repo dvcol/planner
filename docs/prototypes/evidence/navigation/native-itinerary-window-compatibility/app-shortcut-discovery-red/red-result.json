@@ -1,0 +1,7 @@
+{
+  "boundary": "actual extracted native App Shortcut metadata",
+  "expectedShortcutCount": 4,
+  "observedShortcutCount": 0,
+  "passed": false,
+  "systemDiscoveryCredit": false
+}
