@@ -3154,6 +3154,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
+    #if os(macOS)
+      application.fillSavedPlannerWindowForJourney()
+    #endif
     createList("Origin", application: application)
     openNewItemInList(application)
     let title = application.textFields["saved.item.title"]

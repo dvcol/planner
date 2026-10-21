@@ -1,0 +1,10 @@
+{
+  "actualResultVerified": true,
+  "case": "SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen",
+  "totalTests": 1,
+  "passedTests": 1,
+  "failedTests": 0,
+  "skippedTests": 0,
+  "originalRunnerPassingCredit": false,
+  "classificationNote": "Original runner recognizes TEST SUCCEEDED only; test-without-building reports TEST EXECUTE SUCCEEDED. Original exit record is retained; xcresult and the actual case result prove this pass."
+}

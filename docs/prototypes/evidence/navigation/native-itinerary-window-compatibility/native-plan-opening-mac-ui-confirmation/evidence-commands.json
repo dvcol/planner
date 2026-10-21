@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-mac-ui-confirmation.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792570541.92,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792570502.275,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertTrue failed\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen\",\n      \"testName\" : \"testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-mac-ui-confirmation.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-mac-ui-confirmation"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 18 attachments for: SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen():\nFile: B5584507-35FC-4C9B-BE87-95F8C4DA439A.txt, suggested name: \"App UI hierarchy for org.example_0_9FE63263-F69D-46CE-BAAA-708BA0953D0A.PlannerMCPPrototype\"\nFile: D529903D-5FC3-477E-A196-E49D2C8D2146, suggested name: \"UI Snapshot 2026-10-21 at 05.15.28 PM\"\nFile: B55B7C04-C4C2-4F40-902D-35C96161FFDD.txt, suggested name: \"Debug description for `Button (First Match)`_0_66F86394-E613-469E-AC37-954D3A918B48.txt\"\nFile: A134DC2E-A828-4C98-9A08-08E884E516DC.txt, suggested name: \"Debug description for `Button (First Match)`_0_CDDFDFBE-C352-40CA-BD74-D1B47152D1CC.txt\"\nFile: 6A5C7DDD-000D-49DD-A42C-3F6DFE596B67.txt, suggested name: \"Debug description for `Button (First Match)`_0_2C327AAE-3535-42E1-A9ED-342E7F8F3299.txt\"\nFile: E6B89C68-4A57-4CAF-8124-5D6DB0ED25BF.txt, suggested name: \"Debug description for `Button (First Match)`_0_4BC7EAE5-D347-40A1-9856-D444918DB30E.txt\"\nFile: E90CB39A-E597-4813-87E1-9777F5C57305.txt, suggested name: \"Debug description for `Button (First Match)`_0_FCB7F549-96CE-4F7D-AE95-50BA88F39273.txt\"\nFile: E92E4D8C-4C0F-4C33-BCA5-AEE2A01C97E9, suggested name: \"Synthesized Event 2026-10-21 at 05.15.21 PM\"\nFile: 935D1D07-E47E-439C-A1DE-D20B5A5B5055, suggested name: \"Synthesized Event 2026-10-21 at 05.15.21 PM\"\nFile: 75A3877D-61A0-47D1-BA99-0CB346C57498, suggested name: \"Synthesized Event 2026-10-21 at 05.15.20 PM\"\nFile: 22811591-6D1C-4F34-AB94-12187BC84624, suggested name: \"Synthesized Event 2026-10-21 at 05.15.17 PM\"\nFile: 5ED2CD88-E0DB-4C4A-B1F3-2CD482CFE6A8, suggested name: \"Synthesized Event 2026-10-21 at 05.15.16 PM\"\nFile: F4371630-0085-4411-809C-C153FEE6D95E, suggested name: \"Synthesized Event 2026-10-21 at 05.15.16 PM\"\nFile: 96EB4AFE-B876-4EFC-AEBD-C02B9D9DE3C8, suggested name: \"Synthesized Event 2026-10-21 at 05.15.14 PM\"\nFile: 92720311-E454-437E-89DC-B79B7DBFE0CD, suggested name: \"Synthesized Event 2026-10-21 at 05.15.13 PM\"\nFile: 3549F5B8-7846-4598-B671-8B758950FBFF, suggested name: \"Synthesized Event 2026-10-21 at 05.15.11 PM\"\nFile: 18C48ECB-1826-4120-8F1B-A07911720DE2, suggested name: \"Synthesized Event 2026-10-21 at 05.15.10 PM\"\nFile: A572B520-F09A-4C82-A4BB-E9AC1ADF7716.mp4, suggested name: \"Screen Recording 2026-10-21 at 05.15.03 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-mac-ui-confirmation/manifest.json\n",
+    "stderr": ""
+  }
+]

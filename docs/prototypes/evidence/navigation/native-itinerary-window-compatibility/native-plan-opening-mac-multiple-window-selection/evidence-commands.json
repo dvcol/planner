@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-mac-multiple-window-selection.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792571426.208,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792571330.747,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-mac-multiple-window-selection.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-mac-multiple-window-selection"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 3 attachments for: SavedAppearanceJourneyTests/testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling():\nFile: 4E364863-20DB-4623-91F3-CF94FE706AAC.png, suggested name: \"Item deletion selects the surviving List appearance in its own context_0_A299B21A-A342-446E-A63B-F2E1745425A7.png\"\nFile: EDFF4A01-23EE-4960-9F28-EDADA28D3FAB.txt, suggested name: \"Original List window after source Item deletion_0_6917C5CD-80B3-4F94-A2D0-E239FB77D79B.txt\"\nFile: 2B71D2E2-DA63-4EFA-883A-66C7140749CF.txt, suggested name: \"Planner window identities after source Item deletion_0_29D5B468-FEA7-4641-A9AB-DFA75AB87B91.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-mac-multiple-window-selection/manifest.json\n",
+    "stderr": ""
+  }
+]

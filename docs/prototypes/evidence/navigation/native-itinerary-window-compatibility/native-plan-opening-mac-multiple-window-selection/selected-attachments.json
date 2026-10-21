@@ -1,0 +1,37 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "4E364863-20DB-4623-91F3-CF94FE706AAC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Item deletion selects the surviving List appearance in its own context_0_A299B21A-A342-446E-A63B-F2E1745425A7.png",
+      "timestamp": 1792571425.502,
+      "retainedFileName": "4E364863-20DB-4623-91F3-CF94FE706AAC.png",
+      "sha256": "f7b8994c62c8cedd67b91cd845ec07c4f1b635d86f307cb1683a145b44e4c375"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "EDFF4A01-23EE-4960-9F28-EDADA28D3FAB.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Original List window after source Item deletion_0_6917C5CD-80B3-4F94-A2D0-E239FB77D79B.txt",
+      "timestamp": 1792571423.509,
+      "retainedFileName": "EDFF4A01-23EE-4960-9F28-EDADA28D3FAB.txt.gz",
+      "sha256": "154ed9205fe14676288b63e833cd2ea97f0e9066355e356042793f92b2af89c6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "2B71D2E2-DA63-4EFA-883A-66C7140749CF.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Planner window identities after source Item deletion_0_29D5B468-FEA7-4641-A9AB-DFA75AB87B91.txt",
+      "timestamp": 1792571419.943,
+      "retainedFileName": "2B71D2E2-DA63-4EFA-883A-66C7140749CF.txt.gz",
+      "sha256": "93b29bd23c2d88f501cd3a3231cf42929b076d2efc3f14124114097677ea49f9"
+    }
+  ]
+}

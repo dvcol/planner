@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-mac-filled-window.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792570972.688,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792570875.819,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-mac-filled-window.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-mac-filled-window"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 5 attachments for: SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen():\nFile: 22D89769-3E15-4400-B108-CBFFB06FD564.png, suggested name: \"Explicit navigation Save creates the Item before leaving_0_C770ADD4-D577-4D81-9AFB-C05F2E4109C9.png\"\nFile: 8BE535E0-0583-4FC9-9459-E1B9D60D4F2E.txt, suggested name: \"Draft navigation own-window hierarchy_0_55066FE2-452D-44EB-A52C-575211F97B12.txt\"\nFile: 9288EEFC-7BC7-425B-938D-BE3F2CC11E43.png, suggested name: \"Draft navigation choices after guarded Back_0_090CF569-D25B-44DD-A51E-EF3B25112755.png\"\nFile: 79C66E74-8514-4298-B2CD-15B9C6E79634.txt, suggested name: \"Actual draft confirmation container_0_EB368676-A6B8-4525-A1C1-6019E0C35E4F.txt\"\nFile: 4A3E3495-3C13-49CB-A75E-11120A3A469A.png, suggested name: \"Draft confirmation before container lookup_0_4E8A78BE-F587-4EFA-886A-15E875438670.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-mac-filled-window/manifest.json\n",
+    "stderr": ""
+  }
+]

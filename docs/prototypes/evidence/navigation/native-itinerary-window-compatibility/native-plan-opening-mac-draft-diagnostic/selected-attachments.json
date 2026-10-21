@@ -1,0 +1,114 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "50B1D6AE-03C5-4C9A-9FAC-FE9BD9B95E19.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_B0489D60-B3C7-4482-8DBF-971ED22E6F37.PlannerMCPPrototype",
+      "timestamp": 1792570718.952,
+      "retainedFileName": "50B1D6AE-03C5-4C9A-9FAC-FE9BD9B95E19.txt.gz",
+      "sha256": "e100c13bafeb87a0855a15e0a26971466fe6080e9f3129391004564a3afc9721"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "CFF0B14C-EF50-4674-B555-CE5076025E5B.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Sheet (First Match)`_0_F70C33F6-DC83-4CEC-BEED-1F29640C134A.txt",
+      "timestamp": 1792570718.855,
+      "retainedFileName": "CFF0B14C-EF50-4674-B555-CE5076025E5B.txt.gz",
+      "sha256": "e2b6fb4241330e95caf5e6441eadbeab819209b5966759fa2aae940d062fe3d9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "A3613B42-5E87-47EC-A83F-F0DC3FF2E03E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Sheet (First Match)`_0_A0FEF1AC-D0BE-4568-AD20-25346EFC014C.txt",
+      "timestamp": 1792570717.876,
+      "retainedFileName": "A3613B42-5E87-47EC-A83F-F0DC3FF2E03E.txt.gz",
+      "sha256": "e2b6fb4241330e95caf5e6441eadbeab819209b5966759fa2aae940d062fe3d9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "381CC565-045E-4707-BC6D-25AB099570C1.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Sheet (First Match)`_0_5F417C58-DF61-47F6-B345-74E68C494D36.txt",
+      "timestamp": 1792570716.891,
+      "retainedFileName": "381CC565-045E-4707-BC6D-25AB099570C1.txt.gz",
+      "sha256": "e2b6fb4241330e95caf5e6441eadbeab819209b5966759fa2aae940d062fe3d9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "D1A4A054-3A76-4C58-8C5D-0ACB8BE6C04A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Sheet (First Match)`_0_6088D397-4AD6-4446-8B18-8D4A81DCD3AA.txt",
+      "timestamp": 1792570715.904,
+      "retainedFileName": "D1A4A054-3A76-4C58-8C5D-0ACB8BE6C04A.txt.gz",
+      "sha256": "e2b6fb4241330e95caf5e6441eadbeab819209b5966759fa2aae940d062fe3d9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "54D15B99-98A2-431B-B018-607CA2DF5F46.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Sheet (First Match)`_0_CC0AD854-1604-4C76-8D0F-426A82F286E2.txt",
+      "timestamp": 1792570714.929,
+      "retainedFileName": "54D15B99-98A2-431B-B018-607CA2DF5F46.txt.gz",
+      "sha256": "e2b6fb4241330e95caf5e6441eadbeab819209b5966759fa2aae940d062fe3d9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "E9D044B2-69BB-4629-BC96-0D37C47F8723.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Actual draft confirmation container_0_EE7DA84C-8640-4D17-8BB4-2907BAC1B465.txt",
+      "timestamp": 1792570713.794,
+      "retainedFileName": "E9D044B2-69BB-4629-BC96-0D37C47F8723.txt.gz",
+      "sha256": "af144757c7d59dbafa86ec6738b2a027fce1e9809caf6cd3124d174e97f74ff8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "CBA0F357-5D74-4B61-96BA-86DDD8AB6AA2.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Draft confirmation before container lookup_0_4A1FF570-2100-4D50-AA19-B5C5D63E4AB3.png",
+      "timestamp": 1792570713.605,
+      "retainedFileName": "CBA0F357-5D74-4B61-96BA-86DDD8AB6AA2.png",
+      "sha256": "198fc1e3562e6fd3ea795df3624ebd5ce412b274f7a20f28a5b426c0acae7ca2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "124A7E37-38A8-4064-AFBF-1A3693B3FE76.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "DEBUG-q126-mac untouched draft window_0_44F432F8-5CA6-44AF-B429-F7614B454779.txt",
+      "timestamp": 1792570703.869,
+      "retainedFileName": "124A7E37-38A8-4064-AFBF-1A3693B3FE76.txt.gz",
+      "sha256": "5f1775f51d49b9665c9360b28ac48aafb1d66279cab50b22128111532268dc3d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "94A85BA1-45D7-4B5F-97C8-9524E933C057.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "DEBUG-q126-mac untouched draft before Cancel_0_3A4ADF22-F0AE-44BC-9DC1-654C9A58D391.png",
+      "timestamp": 1792570703.669,
+      "retainedFileName": "94A85BA1-45D7-4B5F-97C8-9524E933C057.png",
+      "sha256": "ba12bcd4663994b6998d0c357aa7ef86d299ba59cdaeccc8cc75e9fe65218903"
+    }
+  ]
+}

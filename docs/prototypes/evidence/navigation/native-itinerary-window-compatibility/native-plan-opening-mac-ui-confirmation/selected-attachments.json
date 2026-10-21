@@ -1,0 +1,70 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "B5584507-35FC-4C9B-BE87-95F8C4DA439A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_9FE63263-F69D-46CE-BAAA-708BA0953D0A.PlannerMCPPrototype",
+      "timestamp": 1792570528.416,
+      "retainedFileName": "B5584507-35FC-4C9B-BE87-95F8C4DA439A.txt.gz",
+      "sha256": "72b0b2abbc2888e170ccffd9e9a64886bdab39823d7c1b5bde674a0fb5decb36"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "B55B7C04-C4C2-4F40-902D-35C96161FFDD.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_66F86394-E613-469E-AC37-954D3A918B48.txt",
+      "timestamp": 1792570528.339,
+      "retainedFileName": "B55B7C04-C4C2-4F40-902D-35C96161FFDD.txt.gz",
+      "sha256": "d4983ef61ac358f44233bd1c0a338b1468178e69eda18164a6986cba9110dba8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "A134DC2E-A828-4C98-9A08-08E884E516DC.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_CDDFDFBE-C352-40CA-BD74-D1B47152D1CC.txt",
+      "timestamp": 1792570527.41,
+      "retainedFileName": "A134DC2E-A828-4C98-9A08-08E884E516DC.txt.gz",
+      "sha256": "d4983ef61ac358f44233bd1c0a338b1468178e69eda18164a6986cba9110dba8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "6A5C7DDD-000D-49DD-A42C-3F6DFE596B67.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_2C327AAE-3535-42E1-A9ED-342E7F8F3299.txt",
+      "timestamp": 1792570526.429,
+      "retainedFileName": "6A5C7DDD-000D-49DD-A42C-3F6DFE596B67.txt.gz",
+      "sha256": "d4983ef61ac358f44233bd1c0a338b1468178e69eda18164a6986cba9110dba8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "E6B89C68-4A57-4CAF-8124-5D6DB0ED25BF.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_4BC7EAE5-D347-40A1-9856-D444918DB30E.txt",
+      "timestamp": 1792570525.346,
+      "retainedFileName": "E6B89C68-4A57-4CAF-8124-5D6DB0ED25BF.txt.gz",
+      "sha256": "d4983ef61ac358f44233bd1c0a338b1468178e69eda18164a6986cba9110dba8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "E90CB39A-E597-4813-87E1-9777F5C57305.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_FCB7F549-96CE-4F7D-AE95-50BA88F39273.txt",
+      "timestamp": 1792570524.367,
+      "retainedFileName": "E90CB39A-E597-4813-87E1-9777F5C57305.txt.gz",
+      "sha256": "d4983ef61ac358f44233bd1c0a338b1468178e69eda18164a6986cba9110dba8"
+    }
+  ]
+}
