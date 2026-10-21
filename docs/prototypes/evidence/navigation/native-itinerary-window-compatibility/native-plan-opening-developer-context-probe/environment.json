@@ -1,0 +1,12 @@
+{
+  "before": "",
+  "probe": "/Applications/Xcode.app/Contents/Developer",
+  "temporaryUserContextOnly": true,
+  "protectedBrokerRestarted": false,
+  "restored": true,
+  "setenvExitCode": 0,
+  "setenvStderr": "",
+  "testRunnerExitCode": 65,
+  "restoreExitCode": 0,
+  "after": ""
+}

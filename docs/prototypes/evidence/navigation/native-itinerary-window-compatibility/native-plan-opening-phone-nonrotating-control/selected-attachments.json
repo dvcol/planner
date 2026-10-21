@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F3AC3FF0-73E2-4D4B-955E-B8CD89C2ED25.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items catalog after cleared Inbox search_0_ECA5961A-1C03-4B6C-9155-E3C486D14F52.png",
+      "timestamp": 1792563439.66,
+      "retainedFileName": "F3AC3FF0-73E2-4D4B-955E-B8CD89C2ED25.png",
+      "sha256": "39bedcdcc27effe90fa49024bfc9edc88f152033a223e8a9ac4f644852f18ecd"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "8CFD14E4-2E19-4BD8-B169-AEB6A8718851.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Cleared Inbox search before native tab switch_0_8C0E2D40-EBAE-4203-BA18-80D80BD008AB.png",
+      "timestamp": 1792563433.758,
+      "retainedFileName": "8CFD14E4-2E19-4BD8-B169-AEB6A8718851.png",
+      "sha256": "725f90d75b371b14047c5b906dbe15bc0594c07aeedf22242d1ae137df72274b"
+    }
+  ]
+}

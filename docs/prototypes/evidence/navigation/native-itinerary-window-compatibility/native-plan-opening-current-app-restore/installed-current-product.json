@@ -1,0 +1,36 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "install",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/Planner.app"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "org.example.PlannerMCPPrototype",
+        "app"
+      ],
+      "exitCode": 0,
+      "stdout": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Bundle/Application/395745DB-94AF-421A-89C8-DCF35A5B50B9/Planner.app\n",
+      "stderr": ""
+    }
+  ],
+  "sourceInputCount": 1061,
+  "sourceInputsMatchRepository": true,
+  "installedMetadataMatchesProduct": true,
+  "actionCount": 83,
+  "simulatorErased": false,
+  "appDataReset": false,
+  "runtimeInteractionCredit": false
+}

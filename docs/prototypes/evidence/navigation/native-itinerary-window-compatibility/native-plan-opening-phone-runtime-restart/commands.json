@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "shutdown",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "boot",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "bootstatus",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-b"
+    ],
+    "exitCode": 0,
+    "stdout": "Monitoring boot status for iPhone 18 Pro (2A49C66C-C8A4-435F-B98A-9A90706780DE).\n[2026-10-21 05:41:48 +0000] Status=1, isTerminal=NO, Elapsed=00:03.\n\tWaiting on BackBoard\n\n[2026-10-21 05:41:50 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-21 05:41:50 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-21 05:41:50 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-21 05:41:52 +0000] Status=4, isTerminal=NO, Elapsed=00:06.\n\tWaiting on System App\n\n[2026-10-21 05:41:53 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:07.\n\tFinished\n\n",
+    "stderr": ""
+  }
+]

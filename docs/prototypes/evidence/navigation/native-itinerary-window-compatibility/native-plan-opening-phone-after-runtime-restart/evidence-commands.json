@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-after-runtime-restart.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792561631.744,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792561337.867,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"Test exceeded execution time allowance of 2 minutes\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testCreatingFirstListInLandscapeLoadsItsContents()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testCreatingFirstListInLandscapeLoadsItsContents\",\n      \"testName\" : \"testCreatingFirstListInLandscapeLoadsItsContents()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-after-runtime-restart.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-phone-after-runtime-restart"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 7 attachments for: SavedAppearanceJourneyTests/testCreatingFirstListInLandscapeLoadsItsContents():\nFile: 0E3DE68C-33E4-4EB1-BA86-DB6C41790C8B.png, suggested name: \"First landscape List finishes loading_0_32CFD8DE-834B-4D64-8C0F-8DCEFF122AA7.png\"\nFile: C95A67D2-5F4F-4C16-99F1-F39E53358946, suggested name: \"Synthesized Event 2026-10-21 at 02.45.01 PM\"\nFile: C485D957-673D-4DDC-B915-A28CA81242D2, suggested name: \"Synthesized Event 2026-10-21 at 02.45.00 PM\"\nFile: E6C0BCC8-3596-4507-86F9-FFDD4E819187, suggested name: \"Synthesized Event 2026-10-21 at 02.44.58 PM\"\nFile: FA583159-FC9A-46A4-8AB2-95EC6732B2A7, suggested name: \"Synthesized Event 2026-10-21 at 02.44.56 PM\"\nFile: 1853A7B6-A4D6-40D0-9190-C819CD0F125B, suggested name: \"Synthesized Event 2026-10-21 at 02.44.53 PM\"\nFile: AA2CD6E7-5EB6-4CBD-8098-E0B0E8F95A4D, suggested name: \"Screen Recording 2026-10-21 at 02.44.45 PM\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-phone-after-runtime-restart/manifest.json\n",
+    "stderr": ""
+  }
+]

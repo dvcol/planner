@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-nonrotating-control.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792563566.475,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792563274.548,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"Test exceeded execution time allowance of 2 minutes\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch\",\n      \"testName\" : \"testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-nonrotating-control.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-phone-nonrotating-control"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 12 attachments for: SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch():\nFile: F3AC3FF0-73E2-4D4B-955E-B8CD89C2ED25.png, suggested name: \"Items catalog after cleared Inbox search_0_ECA5961A-1C03-4B6C-9155-E3C486D14F52.png\"\nFile: D89BB054-8DFF-43C7-8518-5B57EA1E86D7, suggested name: \"Synthesized Event 2026-10-21 at 03.17.14 PM\"\nFile: 8CFD14E4-2E19-4BD8-B169-AEB6A8718851.png, suggested name: \"Cleared Inbox search before native tab switch_0_8C0E2D40-EBAE-4203-BA18-80D80BD008AB.png\"\nFile: DD9666DE-30F3-44BF-AE4A-762F7DD06347, suggested name: \"Synthesized Event 2026-10-21 at 03.17.12 PM\"\nFile: 919E6896-2383-473E-BDBE-544FE4805472, suggested name: \"Synthesized Event 2026-10-21 at 03.17.09 PM\"\nFile: A9DD4668-FB96-4939-923C-4E7683967978, suggested name: \"Synthesized Event 2026-10-21 at 03.17.08 PM\"\nFile: CE8F7B5C-8FAD-46FE-857D-4014C99BFA74, suggested name: \"Synthesized Event 2026-10-21 at 03.17.06 PM\"\nFile: 360DFB74-A4C9-499D-9764-15E42103593A, suggested name: \"Synthesized Event 2026-10-21 at 03.17.04 PM\"\nFile: FDEDB604-F086-474A-A0FA-8599BA9D0DC2, suggested name: \"Synthesized Event 2026-10-21 at 03.17.02 PM\"\nFile: 9B8574C7-4BB9-49DF-96AD-64A9CB5DD6D5, suggested name: \"Synthesized Event 2026-10-21 at 03.17.01 PM\"\nFile: 83E27C83-E2FD-4CAC-A926-A2BC494628CB, suggested name: \"Synthesized Event 2026-10-21 at 03.16.57 PM\"\nFile: 30823754-CAEF-43CC-87B5-9276F3DEE67E, suggested name: \"Screen Recording 2026-10-21 at 03.16.50 PM\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-phone-nonrotating-control/manifest.json\n",
+    "stderr": ""
+  }
+]

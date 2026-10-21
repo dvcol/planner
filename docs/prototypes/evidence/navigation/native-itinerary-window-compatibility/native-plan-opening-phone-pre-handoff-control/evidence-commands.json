@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-pre-handoff-control.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792564039.599,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792563709.726,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"Test exceeded execution time allowance of 2 minutes\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch\",\n      \"testName\" : \"testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-pre-handoff-control.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-phone-pre-handoff-control"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 12 attachments for: SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch():\nFile: EBE4DFC4-B7AC-493B-8E29-7F95414EA314.png, suggested name: \"Items catalog after cleared Inbox search_0_F4BEFBAE-75FB-4099-AE16-DDFC51A026F1.png\"\nFile: D4A267F2-E025-41D8-86C7-3E5686A10CE0, suggested name: \"Synthesized Event 2026-10-21 at 03.25.07 PM\"\nFile: 3674BBFC-0115-4849-8B77-BAF0C1F0F69C.png, suggested name: \"Cleared Inbox search before native tab switch_0_2548A7EB-01B2-4EE6-933F-3E435FB34B33.png\"\nFile: F82FA0D4-BAD9-4F60-B9B3-5AEB00F4237E, suggested name: \"Synthesized Event 2026-10-21 at 03.25.05 PM\"\nFile: 64BC88B2-F599-4AAC-85D3-F71375048B3A, suggested name: \"Synthesized Event 2026-10-21 at 03.25.02 PM\"\nFile: 4A57983A-F24C-41F8-A45E-56E4BB8E5701, suggested name: \"Synthesized Event 2026-10-21 at 03.25.01 PM\"\nFile: BB49E5BB-005C-414B-9D2A-930D01F83881, suggested name: \"Synthesized Event 2026-10-21 at 03.24.59 PM\"\nFile: E77A69B7-DEA9-4051-A6EC-3DB179478DF1, suggested name: \"Synthesized Event 2026-10-21 at 03.24.57 PM\"\nFile: 2308C365-03E5-4FAB-9278-D5279C657426, suggested name: \"Synthesized Event 2026-10-21 at 03.24.56 PM\"\nFile: 7F05634E-B398-47F3-81F1-71DE9E4442ED, suggested name: \"Synthesized Event 2026-10-21 at 03.24.54 PM\"\nFile: A7D2320D-EC49-493F-9BA6-2BE8367EC4C8, suggested name: \"Synthesized Event 2026-10-21 at 03.24.50 PM\"\nFile: D3B922A7-A5C0-4EE7-8ABC-1412AFD7BA91, suggested name: \"Screen Recording 2026-10-21 at 03.24.44 PM\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-phone-pre-handoff-control/manifest.json\n",
+    "stderr": ""
+  }
+]
