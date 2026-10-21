@@ -1,0 +1,8 @@
+{
+  "context": "User confirmed Mac readiness; execution recovery does not prove a full host restart or establish its cause.",
+  "bootTime": "{ sec = 1791971509, usec = 83221 } Wed Oct 14 18:51:49 2026",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "signingAccountChanges": false,
+  "securitySettingChanges": false,
+  "newProductionOrControllerChanges": false
+}

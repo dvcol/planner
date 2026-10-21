@@ -1,6 +1,6 @@
 # Native XCTest runtime diagnosis
 
-Status: all 13 production-module handoff cases pass. Native completion remains blocked on both current and pre-handoff app revisions. Every experimental controller change is reverted. A normal Mac session refresh is the next external action.
+Status: after the user's readiness confirmation, both unchanged phone controls and all 13 cases through Xcode's ordinary Mac hosted workflow pass. Mac UI automation now executes; its draft-navigation journey fails after guarded Save with a sidebar hit-point error. Earlier failures remain recorded. Diagnosis continues at that specific native interaction.
 
 ## Context, starting state and goal
 
@@ -42,8 +42,22 @@ Ambient xcode-select points to Command Line Tools, and ordinary xcrun cannot fin
 
 The repository's production and UI-test source are restored to committed code. The latest app/test targets compile after the intentionally older comparison. All 1,061 frozen inputs match the repository. The current app is reinstalled only on the task's iPhone Simulator, retaining its data; installed metadata matches the product and contains all 83 expected actions. [Restore/build/install verification](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-current-app-restore/). This supplies no runtime interaction credit.
 
-## Required next action and definition of done
+## Earlier required action and definition of done
 
 The protected user test broker remains the long-running process recorded during the earlier macOS refusal. No alternate mechanism attempts to bypass that refusal. A normal user-driven Mac restart and reopening Xcode is the next meaningful runtime change. Signing/account setup remains deferred. Request readiness after source/evidence is pushed, rather than repeating unchanged native runs.
 
 After refresh, revalidate live processes and tool selection, then rerun the unchanged native completion control and orientation journey before broader Mac/mobile qualification. This gap is resolved only when the required current-source native journeys complete successfully with their actual results retained. The passing module cases do not replace actual window activation, system Intents, signed/physical checks or the final feature-complete UI review. This runtime gap and the overall map remain open.
+
+## Executed retries after readiness
+
+The user confirmed readiness on 21 October. The execution host still reports the earlier boot time and protected broker identity, so these results do not establish that a full host restart occurred or identify what repaired execution. No developer, signing or security setting changes were made during these retries.
+
+| Unchanged check | Actual result |
+| --- | --- |
+| Nonrotating Inbox search/tab control | Passes, including normal completion, in 31.927 seconds. [Result and original captures](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-phone-after-readiness/). |
+| First List creation in landscape | Passes, including Portrait cleanup, in 35.715 seconds. The original capture shows the ready empty List and both estimate metrics. [Result and capture](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-phone-landscape-after-readiness/). |
+| Xcode-hosted SavedPlanOpeningTests | All 13 cases pass, zero failures/skips, in 1.434 seconds. The existing strict verifier safely disposes all 17 closed, owned fixtures with no lifetime diagnostics. [Result and disposal](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-hosted-after-readiness/). |
+| Mac app/UI products | Current source builds successfully. [Source and product hashes](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-mac-build-after-readiness/). |
+| Mac guarded draft navigation | Automation starts and reaches Keep editing, invalid Save and a later valid Save. A subsequent Items-sidebar click fails to find a hit point for its ScrollView. The 65.304-second invocation completes with exit 65 rather than timing out. [Failure and original window hierarchies/captures](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-mac-ui-after-readiness/). |
+
+All 1,061 inputs of each passing retry match the current repository. The Mac UI invocation additionally checks its compiled products before and after execution. Its failure supplies no complete draft-navigation credit. The ordinary hosted-startup and represented phone-completion gaps now have passing reruns; their original failed invocations remain failed. Next diagnose the Mac interaction through the existing native UI seam. Actual external-request/window behavior, system invocation, signed/physical qualification and final whole-app review remain open.

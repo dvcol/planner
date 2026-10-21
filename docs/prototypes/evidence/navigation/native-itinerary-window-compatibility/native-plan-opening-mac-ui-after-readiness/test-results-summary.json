@@ -1,0 +1,51 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "expectedFailures": 0,
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 1,
+  "finishTime": 1792570261.159,
+  "passedTests": 0,
+  "result": "Failed",
+  "runtimeWarnings": [
+    {
+      "issueType": "Runtime Warning",
+      "message": "[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions"
+    }
+  ],
+  "skippedTests": 0,
+  "startTime": 1792570179.615,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "Unable to find hit point for ScrollView, {{534.0, 414.0}, {240.0, 748.0}}",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 1,
+      "testIdentifierString": "SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen",
+      "testName": "testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()"
+    }
+  ],
+  "title": "Test - PlannerNavigation",
+  "topInsights": [],
+  "totalTestCount": 1
+}

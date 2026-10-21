@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-hosted-after-readiness.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 13,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"Planner \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792570062.584,\n  \"passedTests\" : 13,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792570034.466,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - Planner\",\n  \"topInsights\" : [\n    {\n      \"category\" : \"Longest Test Runs\",\n      \"impact\" : \"38% of duration\",\n      \"text\" : \"1 longest test run with outlier durations exceeding 0.51s (three standard deviations)\"\n    }\n  ],\n  \"totalTestCount\" : 13\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-hosted-after-readiness.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-hosted-after-readiness"
+    ],
+    "exitCode": 0,
+    "stdout": "Skipped export for SavedPlanOpeningTests/testChangedDatasetRejectsDelayedNavigationWithoutChangingEitherDataset(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testClosingOrCancellingTheRecipientNeverRedirectsItsPendingDraftDecision(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testColdRequestWaitsForOneReadyWindowAndResolvesOnlyItsExactPlan(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testConcurrentSubmissionAdmitsExactlyOneRequest(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testDeletedAndExplicitlyRestoredPlansCannotConsumeAnOldRequest(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testDeletingTheTargetDuringADecisionNeverOpensASameNameSurvivor(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testForegroundRecipientKeepsItsRequestWhenAnotherOpeningArrives(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testMissingWrongKindPrecancelledAndUnavailableRequestsNeverQueueOrChangeData(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testNewInactiveWindowDoesNotReplaceTheMostRecentlyFocusedRecipient(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testOpenItineraryIntentRetainsItsExactTargetAndRejectsMissingPlans(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testOpenListIntentRequestsItsExactSavedIdentityWithoutClaimingNavigation(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testRenameAndArchiveKeepTheExactIdentityWhileARequestWaits(): no matching attachments\n\nSkipped export for SavedPlanOpeningTests/testUnreadyWindowWaitsAndWrongResolutionCannotConsumeTheRequest(): no matching attachments\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-hosted-after-readiness/manifest.json\n",
+    "stderr": ""
+  }
+]

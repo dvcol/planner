@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-after-readiness.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792569924.626,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792569865.101,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-after-readiness.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-phone-after-readiness"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 2 attachments for: SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch():\nFile: 0644191B-370A-4E26-9D65-9574F802F90E.png, suggested name: \"Items catalog after cleared Inbox search_0_BC23EBCC-29D8-41A8-8618-C1137F172D28.png\"\nFile: F1CABC8C-CD60-4045-9694-4150E0500181.png, suggested name: \"Cleared Inbox search before native tab switch_0_2CA7DCD9-2715-4CD0-AE8E-EA587AAF319B.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-phone-after-readiness/manifest.json\n",
+    "stderr": ""
+  }
+]

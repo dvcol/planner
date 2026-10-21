@@ -63,3 +63,9 @@ The exact 13-case SavedPlanOpeningTests suite passes with zero failures or skips
 ## Native completion diagnosis
 
 The [runtime diagnosis](native-xctest-runtime-diagnosis.md) now reproduces the completion timeout in an existing non-rotating journey and in the exact committed pre-handoff app, whose compiled product contains neither new Open action. All controller experiments are reverted; no cleanup fix is claimed. Scoped Simulator and temporary developer-context probes also fail, with the prior environment restored. The 13-case direct module pass remains valid. A normal user-driven Mac session refresh is the next external action before further native runs; signed and system gates stay separate.
+
+## Native execution after readiness
+
+The [subsequent unchanged retries](native-xctest-runtime-diagnosis.md#executed-retries-after-readiness) now pass both phone completion controls and all 13 handoff cases through Xcode's ordinary hosted workflow, with zero failures/skips. The strict verifier safely disposes all 17 owned hosted fixtures. These results supersede the missing ordinary hosted result and represented phone-completion gap above, without reclassifying earlier failures.
+
+Actual Mac UI automation also starts. Its ordinary guarded-draft journey fails at a later Items-sidebar hit-point lookup after valid Save, rather than IDE-session startup or test completion. That specific interaction remains under diagnosis. No causal restart claim, actual external-request/window acceptance, system invocation or signing qualification follows from the recovered test execution.
