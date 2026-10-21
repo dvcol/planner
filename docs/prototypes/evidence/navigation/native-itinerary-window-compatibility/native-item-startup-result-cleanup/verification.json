@@ -1,0 +1,134 @@
+{
+  "evidenceCommit": "4d03fbff1342a33affc135c634f5b7f7f7c00b48",
+  "scope": "Only these five completed startup-diagnostic raw xcresults. Original extracted attachments, retained private packets, source, current products, package caches, Simulator state, fixture/export JSON and Planner datasets are excluded.",
+  "bundles": [
+    {
+      "phase": "native-schedule-actions-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-schedule-actions-mac.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-schedule-actions-mac/test-results-summary.json",
+      "summarySha256": "97e31fa3573bd4be2b0e91ace3f5f1cb0ddc3a2cccdf5d6140c879e95b461350",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-schedule-actions-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 0,
+      "nominalBytes": 157014014,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-item-cold-start-tablet",
+      "path": "/private/tmp/PlannerItemWindow-native-item-cold-start-tablet.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-tablet/test-results-summary.json",
+      "summarySha256": "44fee8cba048a4e486d39de8e3154a68d8274a657626ae8936d212ab82a0979d",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-item-cold-start-tablet.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 0,
+      "nominalBytes": 380225,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-item-cold-start-phone",
+      "path": "/private/tmp/PlannerItemWindow-native-item-cold-start-phone.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-phone/test-results-summary.json",
+      "summarySha256": "9d50297677f27fc49c6e917b8ee00ad1e83a52a4c2fd261781dc9bbf738f86ec",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-item-cold-start-phone.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 2,
+      "nominalBytes": 4242705,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-item-cold-start-phone-controls",
+      "path": "/private/tmp/PlannerItemWindow-native-item-cold-start-phone-controls.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-phone-controls/test-results-summary.json",
+      "summarySha256": "629975635e60c26b1200ad34071914cf70083e2f0a371bd3782273b9106e2492",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-item-cold-start-phone-controls.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 0,
+      "nominalBytes": 369601,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-item-cold-start-tablet-controls",
+      "path": "/private/tmp/PlannerItemWindow-native-item-cold-start-tablet-controls.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-tablet-controls/test-results-summary.json",
+      "summarySha256": "983e97400d4048caacd0c69cfba3655db3a44926ba2b2be7fd7aa8d90e80b46f",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-item-cold-start-tablet-controls.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 0,
+      "nominalBytes": 392924,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    }
+  ],
+  "bundleNominalBytes": 162399469,
+  "deleted": true,
+  "actualCleanupScope": "Five completed raw startup-diagnostic xcresult directories only. Original extracted attachments, private diagnostic packets, source, current build products, package caches, Simulator state, fixture/export JSON and Planner datasets remain intact."
+}
