@@ -1,6 +1,6 @@
 # Native Schedule workflow review
 
-Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. Concrete occurrence and full form-edit inputs remain the next decisions.
+Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. [Timed choices are implemented locally](prototypes/native-timed-schedule-options.md). Concrete occurrence and full form-edit inputs remain the next decisions.
 
 ## Context and goal
 

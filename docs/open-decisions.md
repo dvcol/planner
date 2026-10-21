@@ -29,6 +29,8 @@ The user accepted A for all eight choices below on 21 October 2026. Their implem
 
 [Exact estimate setting](prototypes/native-estimate-setting-intents.md) now implements Q115 A at the approved local boundary. Seven setting tests and ten reset regressions pass, with matching Mac/Simulator/unsigned device builds and retained native contracts. Actual system input/invocation remains open.
 
+[Timed Schedule choices](prototypes/native-timed-schedule-options.md) implement Q119 A locally. Four production-provider tests and 22 affected Schedule read/zone regressions pass, with matching platform builds. The ordinary Schedule query and execution-time form validation remain intact; actual system picker invocation is still open.
+
 ## Next frontier after the approvals
 
 The three follow-up questions are open; none blocks independent accepted work.
