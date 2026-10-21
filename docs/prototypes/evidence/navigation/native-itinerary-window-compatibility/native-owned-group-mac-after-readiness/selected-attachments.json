@@ -1,0 +1,48 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "1B89C99A-BC32-483B-AE12-585FC6C8859A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Grouped Undo data persists and history expires after relaunch_0_E57ED16F-4517-4966-B4AB-0D76E3FF5774.png",
+      "timestamp": 1792585516.133,
+      "retainedFileName": "1B89C99A-BC32-483B-AE12-585FC6C8859A.png",
+      "sha256": "06c3e677121822d2594c64eb357ddaef57a83ec0fec6406d95ac902ba9841347"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "A74C3FBA-BFA2-495D-BA71-7A70574983FA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Grouped Undo restores identities while keeping saved notes_0_B2D84F03-79D7-423B-A0AB-A0F4387188AE.png",
+      "timestamp": 1792585499.965,
+      "retainedFileName": "A74C3FBA-BFA2-495D-BA71-7A70574983FA.png",
+      "sha256": "336b516ddc1f510d0dc26857c9a9c521246c28e7787b38d84f29e7d2aa30b95e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "E9F3B705-9376-4CBD-94D8-6029683BB9A7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Grouped Undo data persists and history expires after relaunch_0_99348083-E3D4-4097-A994-BC7E12A41DBE.png",
+      "timestamp": 1792585581.709,
+      "retainedFileName": "E9F3B705-9376-4CBD-94D8-6029683BB9A7.png",
+      "sha256": "2cc47e952a7819fb090da9f136d6ac5803aa8ad4b38df626420243f5546e5200"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "9696BBA8-AE70-4544-9250-9DC9399CD2FE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Grouped Undo restores identities while keeping saved notes_0_6090AEAE-BC21-4AFA-A821-8D2D44BD419F.png",
+      "timestamp": 1792585572.642,
+      "retainedFileName": "9696BBA8-AE70-4544-9250-9DC9399CD2FE.png",
+      "sha256": "bfe5a8d2f2bc127af1ba51625d1f242eeb242267ee725d4e128ddce8aab40da2"
+    }
+  ]
+}

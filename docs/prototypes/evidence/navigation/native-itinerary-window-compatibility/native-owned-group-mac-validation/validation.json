@@ -1,0 +1,50 @@
+{
+  "repositoryHead": "b1d4ae714537591ae63b9983ae9046752de4672e",
+  "checkedTrackedInputs": 1061,
+  "sourceSnapshotSha256": "e33d88228eed5d7c42a64025be4c9b2625790be7959ebe3292fb6cd97d8de056",
+  "actualResult": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0
+  },
+  "retainedAttachmentsVerified": 4,
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/native-owned-association-undo.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-owned-association-undo.md docs/open-decisions.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+      "stderr": "Done in 253ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "limits": "Grouped Mac restoration and saved-content relaunch. No native Mac Edit-menu history-expiry assertion, physical/signed or whole-app acceptance."
+}

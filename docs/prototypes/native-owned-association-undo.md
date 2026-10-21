@@ -1,6 +1,6 @@
 # Native grouped link and label Undo
 
-Status: the represented Item and Itinerary journeys pass on dark iPhone and light iPad. Seven native history-controller functions and thirteen real HTTP functions pass. Actual Mac window interaction and final whole-app polish remain open.
+Status: the represented Item and Itinerary journeys pass on dark iPhone, light iPad and, in the 21 October follow-up below, actual Mac windows. Seven native history-controller functions and thirteen real HTTP functions retain their recorded results. Final whole-app polish and the broader signed/physical gates remain open.
 
 ## Context, goal and starting state
 
@@ -59,4 +59,12 @@ Provider previews can be loading or unavailable without hiding the saved links. 
 
 The represented native journeys, controller/HTTP outcomes, Mac/mobile compilers and affected lint now bind to the final source. Both editors restore the removal group while preserving saved notes and original public bookmark identities/order across relaunch. Only the current-run history expires. The existing Core checkpoint separately qualifies anchor conflicts, recreated relationships, fresh lifetimes, rollback, recovery and replay; this does not claim a native UI run for every guarded variant.
 
-Actual Mac window/focus/text-field interaction remains unqualified. No signing/account setup, protected Agent Control, physical CloudKit/account/Share, scale or whole-app polish acceptance is claimed. The earlier phone List-title clipping remains on the UI polish map. The grouped Core report retains its own 47-function qualification and broader sync limits.
+At the initial checkpoint, actual Mac window/focus/text-field interaction remained unqualified. The follow-up below supplies the represented Mac restoration and relaunch journeys. No signing/account setup, protected Agent Control, physical CloudKit/account/Share, scale or whole-app polish acceptance is claimed. The earlier phone List-title clipping remains on the UI polish map. The grouped Core report retains its own 47-function qualification and broader sync limits.
+
+## Mac follow-up, 21 October 2026
+
+After native execution recovered, reuse the existing Q111 UI boundary and current compiled app/test products. No production or test source change is needed for these two journeys. The [actual Mac invocation](evidence/navigation/native-itinerary-window-compatibility/native-owned-group-mac-after-readiness/) passes both cases with zero failures/skips: Item in 97.023 seconds and Itinerary in 65.729 seconds.
+
+Each journey creates two links and a Tag, removes those associations in one Save while changing notes, then invokes ordinary Command-Z. Native reads require the two original bookmark identities in their original order, the restored Indoor label and the new notes. The restored content survives app termination and relaunch. All four original own-window captures were inspected. Unavailable provider previews leave saved bookmarks visible and usable.
+
+The runner verifies frozen source and compiled product hashes before and after execution. The validation packet reconciles those tracked inputs with the current repository and records the actual two-case result. This establishes real Mac grouped restoration and saved-data relaunch behavior. The journey's absent mobile Undo button after relaunch does not establish the state of Mac's Edit menu; no such menu-expiry assertion is credited here. Wider guarded inverses, ordinary text Undo and separate-window history retain their own Core/controller/native evidence.
