@@ -1,0 +1,472 @@
+{
+  "evidenceCommit": "fd7ee6b639cb6bddeb212c62519f0308a7ebe0f3",
+  "scope": "Only completed label-file raw xcresults and hash-verified test-created inputs/delivered exports. Source, current products, package caches, Simulator state and Planner datasets are excluded.",
+  "bundles": [
+    {
+      "phase": "native-label-file-visible-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-visible-mac.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-visible-mac/test-results-summary.json",
+      "summarySha256": "f85b06a90b57bf055b502d773b4be08426c05f0e82d93424925d845ae30d1a2a",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-visible-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 13,
+      "nominalBytes": 172334550,
+      "openHandles": false,
+      "result": {
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-phone-visible",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-phone-visible.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-phone-visible/test-results-summary.json",
+      "summarySha256": "d8891dead0633f32e4d0a7e3b081de572860d0b1ba6fab96354b364a36ecabe6",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-phone-visible.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 6,
+      "nominalBytes": 3230961,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-tablet-visible-dark",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-tablet-visible-dark.xcresult",
+      "summaryPath": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-tablet-visible-dark/test-results-summary.json",
+      "summarySha256": "2c79805161ddbbb940b934e9288c845632deefc3ee206704514d22c1acb72c7d",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-tablet-visible-dark.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 6,
+      "nominalBytes": 3758111,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-cancel-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-cancel-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-cancel-mac/test-results-summary.json",
+      "summarySha256": "a315d6e8c6cf54c871fadcbff3d237fab40f558f9c45e9fdb50bd4afb1ad7446",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-cancel-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 13,
+      "nominalBytes": 163053193,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-export-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-export-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-export-mac/test-results-summary.json",
+      "summarySha256": "b6c23cce1ef99afabf0866206e6eb9f71065b23ccf0b8a4c8547b7d0a1dc63d0",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-export-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 3,
+      "nominalBytes": 157990970,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-final-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-final-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-final-mac/test-results-summary.json",
+      "summarySha256": "63ecb217d322cb98140b6eb5d928c5c4421e5d5c95cb96be371b2a0b4e7c4ec6",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-final-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 13,
+      "nominalBytes": 171549517,
+      "openHandles": false,
+      "result": {
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-mac-first",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-mac-first.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-mac-first/test-results-summary.json",
+      "summarySha256": "4d19deb4b86f29ea44f7608ca52157309cadbd10681948f06613e730b1c4e562",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-mac-first.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 7,
+      "nominalBytes": 155718255,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-path-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-path-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-path-mac/test-results-summary.json",
+      "summarySha256": "ecb598457de519fc98ef0d0aec19594f1ae28d109f2be7550058fc65d817a23c",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-path-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 12,
+      "nominalBytes": 159973446,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-phone-corrected",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-phone-corrected.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-phone-corrected/test-results-summary.json",
+      "summarySha256": "90336bb280da67e16c342e08e6f02f1bc21f7ef4663e89f954fe620fa82b93f0",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-phone-corrected.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 6,
+      "nominalBytes": 2244828,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-phone-regression",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-phone-regression.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-phone-regression/test-results-summary.json",
+      "summarySha256": "531595845dbf950c15192a01d764d4f65cc4bc40e59141a85bbdb4f3c0395a3a",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-phone-regression.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 31,
+      "nominalBytes": 11522403,
+      "openHandles": false,
+      "result": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-scoped-mac",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-scoped-mac.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-scoped-mac/test-results-summary.json",
+      "summarySha256": "1ca63523322bd80b842d81c69a665a52f7f625246d374cc6a305d3a05bcba9a9",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-scoped-mac.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 10,
+      "nominalBytes": 165437701,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-label-file-tablet-dark-regression",
+      "path": "/private/tmp/PlannerItemWindow-native-label-file-tablet-dark-regression.xcresult",
+      "summaryPath": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-tablet-dark-regression/test-results-summary.json",
+      "summarySha256": "71e70acea8554fd7f6950b41fa51a6d4ce6cea9856cda2b0cb342196d40040f0",
+      "rawSummaryExactlyMatches": true,
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-label-file-tablet-dark-regression.xcresult"
+      ],
+      "verifiedSelectedOriginalAttachments": 6,
+      "nominalBytes": 3651295,
+      "openHandles": false,
+      "result": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    }
+  ],
+  "files": [
+    {
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-B64F6055-BC33-4CA8-A273-42B5ECBC1299/Planner label appearance export.json",
+      "sha256": "66104b894389c0a3fcf8753d5ed39ee518f16b12f32ca126d68c904f3da20be1",
+      "bytes": 12889,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-visible-mac/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-BD2F0D8A-33D2-4693-9DE4-E643A489AFD9/Planner label appearance export.json",
+      "sha256": "45d3b3184fbc318e6ff533e66e9fc4fb1053b79ef30066f91e71fbf6f0dc62db",
+      "bytes": 12708,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-visible-mac/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-21T17-01-11Z.json",
+      "sha256": "1114822e7addde86ded71ef49e077cb7230c527893edb580bb8ee126aa2a8b6f",
+      "bytes": 12888,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-phone-visible/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-21T17-01-41Z.json",
+      "sha256": "50f52745162674e572571f07e10eaa7361066279d5c19f207a5c013e814a5230",
+      "bytes": 12706,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-phone-visible/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-21T17-03-55Z.json",
+      "sha256": "05f1a3dc592bc3a90b6b81488cef9a2dcb4265216c029e48e31cdbbeecfdd82b",
+      "bytes": 12887,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-tablet-visible-dark/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-21T17-04-27Z.json",
+      "sha256": "117275e5a48906ce1188e6b5d46a2ea5e6525c4fee43b066d1375c12b237fe90",
+      "bytes": 12707,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-file-tablet-visible-dark/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-286E856F-48B5-416D-8511-CDAE568BE596/Planner label appearance export.json",
+      "sha256": "1129bb3f0e5fc4f683cd86cfa6aaf0d453310b72391067b19f94983d3895d2b0",
+      "bytes": 12889,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-final-mac/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-D2EB25FE-A8B7-4217-9C83-707F4FFAE7DB/Planner label appearance export.json",
+      "sha256": "a83a98061480f8e450155e6d7fa087e1788c086de542f81da92ebef4e033c01b",
+      "bytes": 12708,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-final-mac/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-21T16-53-57Z.json",
+      "sha256": "536b6ba8ca2aee988bb58abe5c65b581ade11760f55cfb581d3099ec37be4bb1",
+      "bytes": 12888,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-phone-corrected/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-21T16-54-27Z.json",
+      "sha256": "13cf1cd451827821c12f0837bbf584344f4379a01025da240b57ea17789133e5",
+      "bytes": 12708,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-phone-corrected/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-DA715920-DE5E-41CF-9719-E714AFC1A32F/Planner label appearance export.json",
+      "sha256": "c162c246e5c65d4e18f77aeb4563ce9c497feb854265c2d9a9cb65c94f2c5015",
+      "bytes": 12889,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-scoped-mac/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-FC6B4C82-9AC4-48B8-828A-06A9B24B68B8/Planner label appearance export.json",
+      "sha256": "e4661e3cb67e8dfb556c7992c06e16535f53514f354aa0b786feddcaac578a46",
+      "bytes": 12708,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-scoped-mac/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-21T16-57-01Z.json",
+      "sha256": "8a002eecf966050a246c6822c3fdd17bb4bdcd183115c2a88046bd7a05d7e1f6",
+      "bytes": 12889,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-tablet-dark-regression/name-only-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-21T16-57-33Z.json",
+      "sha256": "9bd3c10dd916244da0c1f8d3569e3e74eb2e2338e39e17ac77b2de722f7575b4",
+      "bytes": 12708,
+      "ownership": "Native delivered export whose full expected seven-source graph was verified during this qualification.",
+      "retainedBytes": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-label-file-iterations/native-label-file-tablet-dark-regression/cleared-delivered-backup.json.gz",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner label appearance backup.json",
+      "sha256": "39cfca7747d6df319f47020047cc35eb2e23c12190d5dda9594fe412887cf555",
+      "bytes": 12426,
+      "ownership": "New Simulator-only fixture copy created by this qualification without replacing any existing file.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/fixtures/native-label-appearance-backup.json",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    },
+    {
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner label appearance backup.json",
+      "sha256": "39cfca7747d6df319f47020047cc35eb2e23c12190d5dda9594fe412887cf555",
+      "bytes": 12426,
+      "ownership": "New Simulator-only fixture copy created by this qualification without replacing any existing file.",
+      "retainedBytes": "/Users/dinh-van.colomban/Workspace/private/planner/docs/fixtures/native-label-appearance-backup.json",
+      "openHandles": false,
+      "removed": false,
+      "preservedFor": "Small native fixture/delivered-file inputs retained for local reruns and review; these are not part of disk reclamation."
+    }
+  ],
+  "bundleNominalBytes": 1170465230,
+  "fileBytes": 204024,
+  "deleted": true,
+  "actualCleanupScope": "12 completed raw xcresult directories only. All 16 small JSON fixtures/exports, original extracted attachments, private diagnostic packets, source, products, caches, Simulator state and Planner datasets remain intact."
+}
