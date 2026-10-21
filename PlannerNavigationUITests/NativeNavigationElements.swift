@@ -108,6 +108,18 @@ extension XCUIApplication {
             && $0.buttons["OverflowBarButtonItem"].firstMatch.isHittable
         }
         guard let contentBar else {
+          XCTContext.runActivity(named: "Unavailable catalog toolbar") { activity in
+            let window = windows.firstMatch
+            guard window.exists else { return }
+            let capture = XCTAttachment(screenshot: window.screenshot())
+            capture.name = "Unavailable catalog toolbar owned window"
+            capture.lifetime = .keepAlways
+            activity.add(capture)
+            let hierarchy = XCTAttachment(string: window.debugDescription)
+            hierarchy.name = "Unavailable catalog toolbar owned-window hierarchy"
+            hierarchy.lifetime = .keepAlways
+            activity.add(hierarchy)
+          }
           XCTFail("The selected catalog's \(title) menu is unavailable")
           return menu
         }

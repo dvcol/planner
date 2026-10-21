@@ -75,3 +75,31 @@ The next [two-case compatibility invocation](evidence/navigation/native-itinerar
 The inspected original narrow and expanded captures show the native sidebar, content pane and editor, with Save/Cancel and rich fields present. The narrow capture contains dashed overlay lines, so it is compatibility evidence rather than a final polished presentation. Strict Swift formatting and the current Mac app/UI compilation pass. No production behavior correction, complete accessibility acceptance or external-request injection is inferred. Continue the remaining native window/feature checks; signing and account setup remain deferred.
 
 The unchanged [two-window selection journey](evidence/navigation/native-itinerary-window-compatibility/native-plan-opening-mac-multiple-window-selection/) also passes, in 94.272 seconds. Deleting the source from a second real window replaces the original window's selected appearance with its first visible sibling in the same List, preserving that surviving association identity and contextual notes rather than selecting an unrelated global Item. The second window closes independently. Its original window identities, hierarchy and capture remain retained. This qualifies that ordinary shared-data/window interaction, not external Intent focus targeting.
+
+## Mac automation and Item startup follow-up, 22 October 2026
+
+### Current starting state and next goal
+
+After the [Calendar mode checkpoint](native-calendar-day-week.md#mac-runtime-follow-up-22-october-2026), the next local checks are native Schedule Edit/Cancel/Clear End and confirmed removal, followed by Mac all-day date entry and spans. The map remains open and signing is deferred. Separately, the first iPad Calendar group had failed before creation because its Add-menu helper found no available control; its unchanged complete retry passed without establishing a cause.
+
+### Actual Mac outcome
+
+The [two-case Mac request](evidence/navigation/native-itinerary-window-compatibility/native-schedule-actions-mac/) validates the existing source/product hashes, then ends with xcodebuild exit 65 and no requested test function started. XCTest reports “Timed out while enabling automation mode.” Its summary counts one runner-initialization error; that is not an executed Schedule case. Neither requested editing/removal journey receives passing or failing product credit.
+
+A read-only, filtered session observation establishes only that the session is on-console. It does not establish that the Mac is unlocked or idle. Current readiness is requested through the question tool. No signing, global tool selection, protected broker or security setting is changed. A fresh current-source Mac app/UI build succeeds later, providing compilation evidence only.
+
+### Startup tracer and required tests
+
+Use the already approved public native UI seam to minimize the mobile startup path: launch an isolated dataset, select Items, use the native Add menu, open an untouched New Item editor, verify its Title field is usable and leave through the native cancellation control. Failure-only diagnostics at the existing unavailable-menu guard capture Planner's owned window and its window-scoped hierarchy. They add no production flag, dependency injection, package or target.
+
+The Definition of Ready is the existing native UI boundary and accepted Add/draft-navigation behavior. The Definition of Done for this diagnostic tracer is current-source compilation on both platforms, actual phone/tablet execution, a recorded cold-boot precondition on the dedicated iPad Simulator and an honest distinction between this result and the original failure. No production correction or complete startup-stability gate is claimed merely because the tracer passes.
+
+The [initial cold-boot iPad case](evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-tablet/) passes in 20.529 seconds. The [first phone attempt](evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-phone/) reaches the editor and then fails in 17.623 seconds because the new test used the older Cancel-only identifier. Its scoped original observation shows the compact editor's native Back button. The final selector reuses the existing draft journeys' accepted Back/Cancel representations; production navigation is unchanged.
+
+The [final phone case](evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-phone-controls/) passes in 19.192 seconds. The [final iPad case](evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-tablet-controls/) passes in 29.333 seconds after a [second controlled cold boot](evidence/navigation/native-itinerary-window-compatibility/native-item-cold-start-tablet-controls-boot/). Both boot records show shutdown, boot and successful bootstatus for the dedicated test device; neither erases data. The original Add-menu failure is not reproduced in these observations and remains unclassified. The new missing-menu capture branch has not been exercised by a reproduced failure.
+
+The [verification packet](evidence/navigation/native-itinerary-window-compatibility/native-item-startup-validation/verification.json) reconciles all 1,061 inputs across the final two mobile runtimes and current Mac compilation. It verifies two passing executions of one tracer, zero requested Mac Schedule cases executed and no production changes relative to `2d360504`. Affected strict Swift/Markdown and whitespace checks pass. The initial compiler, failed phone driver, cold-boot records and Mac startup error retain their actual outcomes.
+
+### Remaining gates and required input
+
+The Mac Schedule actions and all-day span/date-input journeys remain unexecuted in this follow-up. Current Mac readiness is needed before another UI attempt. Q127 separately asks the human to choose the Mac Calendar details presentation after the proven resize crash; that decision is restated through the question tool. The iPad startup cause, wider native accessibility/keyboard and window checks, actual system Intents, signed/physical qualification and final whole-app polish remain open. These compiler/tracer results do not close those gates or imply that a paid developer account repairs UI automation.
