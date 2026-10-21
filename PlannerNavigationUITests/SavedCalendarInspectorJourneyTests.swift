@@ -39,7 +39,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       let originalWidth = window.frame.width
       addTeardownBlock {
         await MainActor.run {
-          guard window.exists else { return }
+          guard application.state != .notRunning, window.exists else { return }
           SavedCalendarInspectorJourneyTests.resizePlannerWindow(window, width: originalWidth)
         }
       }
@@ -74,7 +74,11 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       identifier: "saved.calendar.mode"
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
-    modes.buttons[mode].activateForPlannerJourney()
+    #if os(macOS)
+      modes.radioButtons[mode].activateForPlannerJourney()
+    #else
+      modes.buttons[mode].activateForPlannerJourney()
+    #endif
     let entry: XCUIElement
     if mode == "Month" {
       entry =
@@ -102,6 +106,9 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     XCTAssertTrue(application.windows.firstMatch.frame.contains(entry.frame))
     let entryDescription = try XCTUnwrap(entry.value as? String)
     entry.activateForPlannerJourney()
+    #if os(macOS)
+      recordScreenshot(application, name: "Calendar inspector after native entry selection")
+    #endif
     XCTAssertTrue(application.staticTexts["The same saved Item"].waitForExistence(timeout: 10))
     let details = application.plannerElement("saved.calendar.details.toggle")
     XCTAssertTrue(details.waitForExistence(timeout: 5))
@@ -146,10 +153,10 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["The same saved Item"].waitForExistence(timeout: 5))
     XCTAssertEqual(schedule.identifier, scheduleIdentifier)
     XCTAssertEqual(schedule.value as? String, scheduleDescription)
-    assertInspectorContentVisible(application, schedule: schedule)
-    XCTAssertEqual(entry.value as? String, entryDescription)
     recordScreenshot(
       application, name: "Selected Calendar details remain after narrowing the layout")
+    assertInspectorContentVisible(application, schedule: schedule)
+    XCTAssertEqual(entry.value as? String, entryDescription)
     details.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["The same saved Item"].waitForNonExistence(timeout: 5))
     #if os(macOS)
@@ -195,7 +202,11 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       picker.buttons["DatePicker.PreviousMonth"].activateForPlannerJourney()
     }
     XCTAssertTrue(marker.waitForExistence(timeout: 10))
-    XCTAssertEqual(marker.label, "1 scheduled entry")
+    #if os(macOS)
+      XCTAssertEqual(marker.value as? String, "1 scheduled entry")
+    #else
+      XCTAssertEqual(marker.label, "1 scheduled entry")
+    #endif
     let components = marker.identifier.split(separator: ".")[3].split(separator: "-")
     XCTAssertEqual(components.count, 3)
     let day = try XCTUnwrap(Int(components[2]))
@@ -234,6 +245,15 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     _ application: XCUIApplication, schedule: XCUIElement
   ) {
     let retainedNotes = application.staticTexts["The same saved Item"]
+    #if os(macOS)
+      let geometry = XCTAttachment(
+        string:
+          "Window: \(application.windows.firstMatch.frame)\nNotes: \(retainedNotes.frame)\n"
+          + "Schedule: \(schedule.frame)\n")
+      geometry.name = "Native Calendar inspector content bounds"
+      geometry.lifetime = .keepAlways
+      add(geometry)
+    #endif
     for content in [retainedNotes, schedule] {
       XCTAssertTrue(content.waitForPlannerHittability())
       XCTAssertFalse(content.frame.isEmpty)
@@ -258,14 +278,28 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
 
   #if os(macOS)
     private static func resizePlannerWindow(_ window: XCUIElement, width: CGFloat) {
+      let application = XCUIApplication()
+      application.activate()
       let edge = window.coordinate(withNormalizedOffset: .init(dx: 1, dy: 0.8))
         .withOffset(.init(dx: -1, dy: 0))
       let target = edge.withOffset(.init(dx: width - window.frame.width, dy: 0))
       edge.click(forDuration: 0.1, thenDragTo: target)
-      let resized = NSPredicate { _, _ in abs(window.frame.width - width) < 8 }
+      let resized = NSPredicate { _, _ in
+        guard application.state != .notRunning else { return false }
+        return abs(window.frame.width - width) < 8
+      }
+      let result = XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: resized, object: window)], timeout: 5)
+      XCTAssertNotEqual(application.state, .notRunning, "Planner must survive Calendar resizing.")
+      XCTContext.runActivity(named: "Native Calendar resize observation") { activity in
+        let attachment = XCTAttachment(
+          string: "Requested width: \(width)\nActual bounds: \(window.frame)\n")
+        attachment.name = "Native Calendar resize observation"
+        attachment.lifetime = .keepAlways
+        activity.add(attachment)
+      }
       XCTAssertEqual(
-        XCTWaiter.wait(
-          for: [XCTNSPredicateExpectation(predicate: resized, object: window)], timeout: 5),
+        result,
         .completed, "Planner's own window must actually reach the requested width.")
     }
   #endif

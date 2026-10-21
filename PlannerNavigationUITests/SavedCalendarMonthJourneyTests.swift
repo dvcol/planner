@@ -48,7 +48,18 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
       identifier: "saved.calendar.day.\(dateIdentifier).schedule-count"
     ).firstMatch
     XCTAssertTrue(indicator.waitForExistence(timeout: 10))
-    XCTAssertEqual(indicator.label, "1 scheduled entry")
+    #if os(macOS)
+      let nativeCount = XCTAttachment(
+        string:
+          "Identifier: \(indicator.identifier)\nLabel: \(indicator.label)\n"
+          + "Value: \(indicator.value as? String ?? "<no text value>")\n")
+      nativeCount.name = "Native Mac Month count representation"
+      nativeCount.lifetime = .keepAlways
+      add(nativeCount)
+      XCTAssertEqual(indicator.value as? String, "1 scheduled entry")
+    #else
+      XCTAssertEqual(indicator.label, "1 scheduled entry")
+    #endif
     let entry = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.schedule.\(scheduleIdentifier)"
     ).firstMatch
@@ -63,7 +74,12 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(entry.frame.minX, picker.frame.maxX)
       }
     #endif
-    let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    #if os(macOS)
+      let screenshot = application.windows.firstMatch.screenshot()
+    #else
+      let screenshot = XCUIScreen.main.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = "Month indicates a saved Schedule's date and retains its agenda identity"
     attachment.lifetime = .keepAlways
     add(attachment)
