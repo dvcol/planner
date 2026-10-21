@@ -1,0 +1,27 @@
+{
+  "comparison": "Current header production files against prior executed Mac header qualification",
+  "files": [
+    {
+      "file": "Planner/PlannerApp.swift",
+      "sha256": "932bb9d502dece2f23cae038085e94a76991c9da5f6c38a619af13410f693fc4",
+      "matchesPriorQualification": true
+    },
+    {
+      "file": "Planner/Scenes/SavedPlannerMainWindow.swift",
+      "sha256": "2de5f2eb3d47cee50e14d8ddbb2072fb0643f68379cb5a8d14663d034cb55ec2",
+      "matchesPriorQualification": true
+    },
+    {
+      "file": "Planner/Scenes/SavedPlannerView.swift",
+      "sha256": "56dea7a538b398ca9271201e9698f9887601b76bb436fa6b1831ea6ebfa2db66",
+      "matchesPriorQualification": true
+    },
+    {
+      "file": "Planner/Scenes/SavedAppearanceViews.swift",
+      "sha256": "22caa0c098cabca13d1d1aeffdbf26b05f1178d33c547c3ae126fe39721a7829",
+      "matchesPriorQualification": true
+    }
+  ],
+  "previousPacket": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-shared-header-final-revalidation-mac",
+  "runtimeCredit": false
+}

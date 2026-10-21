@@ -1,0 +1,7 @@
+{
+  "packet": "../core-native-import-known-family-binding-final-mac-build",
+  "sourceAndProductHashesValidatedBeforeAndAfter": true,
+  "requestedCasesExecuted": 0,
+  "runnerLimitSeconds": 600,
+  "outcome": "Bounded runner timeout before either requested test case; no runtime pass or product failure."
+}
