@@ -36,4 +36,20 @@ The four affected shared-label Intent suites pass **34 tests with 0 failures and
 
 ## Remaining acceptance
 
-Native editor and file results do not establish actual Mac interaction, installed physical-device behavior, CloudKit/account transitions or signed/shared storage. Whole-app UI polish remains its own map work after features. No prototype issue is closed by this slice.
+The initial native editor and file results did not establish actual Mac interaction. The follow-up below supplies the represented Mac name/icon/optional-color journeys. Installed physical-device behavior, CloudKit/account transitions and signed/shared storage remain open. Whole-app UI polish remains its own map work after features. No prototype issue is closed by this slice.
+
+## Mac driver and execution follow-up, 21 October 2026
+
+The first three actual Mac journeys fail at native lookups, with their [original results and hierarchies](evidence/navigation/native-itinerary-window-compatibility/native-label-appearance-mac-after-readiness/) retained. The Category navigation rows are native Buttons, not separate StaticText elements. The optional-color Toggle is a native Switch, not a CheckBox.
+
+Only the UI-test driver changes. A saved-Category query uses the existing public identifier prefix and accessible name/value, including negative Cancel checks. Mac color activation selects the observed Switch. Production rendering, commands, validation, persistence and color conversion are unchanged. The test boundary remains the approved real native UI.
+
+The [corrected Mac invocation](evidence/navigation/native-itinerary-window-compatibility/native-label-appearance-mac-driver-qualified/) passes all three cases with zero failures/skips: optional color in 45.450 seconds, name creation/rename in 40.919 seconds, and independent icon edits in 41.530 seconds. Each covers explicit Save/Cancel and relaunch. All six original dark Mac captures were inspected, including the native ColorPicker well, cleared-color editor and saved Museum/Dining choices.
+
+The [phone regression invocation](evidence/navigation/native-itinerary-window-compatibility/native-label-appearance-driver-phone/) passes all four Category cases. The [tablet invocation](evidence/navigation/native-itinerary-window-compatibility/native-label-appearance-driver-tablet/) passes name, icon and optional-color cases, then fails the RGB case when looking for a Close button. Its original capture shows a normal native color popover with no Close button, with the entered 4080C0 visible in its controls.
+
+The driver now uses Close for the phone sheet or the scoped native PopoverDismissRegion for the tablet popover, then requires the picker to disappear. No coordinate-dismissal workaround or production change is added. The focused [tablet RGB journey](evidence/navigation/native-itinerary-window-compatibility/native-label-rgb-popover-tablet/) passes in 82.263 seconds; the affected [phone sheet regression](evidence/navigation/native-itinerary-window-compatibility/native-label-rgb-sheet-phone/) passes in 72.408 seconds. Both enter 4080C0, save, change to 204060, save and relaunch, then read RGB 32/64/96 through the native picker. Their final original readback captures were inspected.
+
+The eleven distinct represented Category cases now have passing results across Mac, phone and tablet. The earlier tablet invocation remains failed; its three passing sibling cases have unchanged test bodies and saved-row logic. Final RGB results use the corrected helper, and the Mac helper is unaffected by the iOS-only dismissal change. The validation packet records these exact source differences and production/configuration equality, rather than claiming one eleven-case invocation.
+
+The Mac cases do not enter an RGB value through the Mac system Color panel and do not execute the complete Mac file-import/export journey; those local qualifications remain required. Earlier complete-graph and adapter results retain their own recorded epochs. Physical, signed/shared storage and whole-app acceptance remain separate.
