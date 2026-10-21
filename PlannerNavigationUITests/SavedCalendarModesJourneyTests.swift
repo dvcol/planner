@@ -45,7 +45,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       identifier: "saved.calendar.mode"
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
-    modes.buttons["Day"].activateForPlannerJourney()
+    modeControl("Day", in: modes).activateForPlannerJourney()
     let grid = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.time-grid"
     ).firstMatch
@@ -54,7 +54,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.")
     ).firstMatch
     XCTAssertTrue(timed.waitForExistence(timeout: 10))
-    let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    let capture = XCTAttachment(screenshot: calendarScreenshot(application))
     capture.name = "Dense all-day header preserves the timed appointment"
     capture.lifetime = .keepAlways
     add(capture)
@@ -87,7 +87,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       overflow.swipeUp()
     }
     XCTAssertTrue(lastSchedule.isHittable)
-    let overflowCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    let overflowCapture = XCTAttachment(screenshot: calendarScreenshot(application))
     overflowCapture.name = "Native overflow traversal reaches all nine Schedule identities"
     overflowCapture.lifetime = .keepAlways
     add(overflowCapture)
@@ -108,6 +108,25 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     }
     XCTAssertTrue(savedSchedule.waitForExistence(timeout: 5))
     XCTAssertEqual(savedSchedule.label, "All day")
+    #if os(macOS)
+      let expectedDate = String(calendarDescription.dropFirst(10))
+      let valueReady = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "value == %@", expectedDate), object: savedSchedule)
+      XCTAssertEqual(XCTWaiter.wait(for: [valueReady], timeout: 5), .completed)
+      let scheduleObservation = application.descendants(matching: .any).matching(
+        identifier: "saved.item.schedule.\(scheduleIdentifier)"
+      ).allElementsBoundByIndex.map { element in
+        "type=\(element.elementType.rawValue) label=\(element.label) value=\(String(describing: element.value)) frame=\(element.frame) hittable=\(element.isHittable)"
+      }.joined(separator: "\n")
+      let observation = XCTAttachment(string: scheduleObservation)
+      observation.name = "Selected saved Schedule native value and visibility"
+      observation.lifetime = .keepAlways
+      add(observation)
+      let detailsCapture = XCTAttachment(screenshot: calendarScreenshot(application))
+      detailsCapture.name = "Selected overflow Schedule in native details"
+      detailsCapture.lifetime = .keepAlways
+      add(detailsCapture)
+    #endif
     XCTAssertEqual(savedSchedule.value as? String, String(calendarDescription.dropFirst(10)))
   }
 
@@ -169,7 +188,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       identifier: "saved.calendar.mode"
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
-    modes.buttons["Week"].activateForPlannerJourney()
+    modeControl("Week", in: modes).activateForPlannerJourney()
     let grid = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.time-grid"
     ).firstMatch
@@ -212,7 +231,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     XCTAssertGreaterThanOrEqual(hourLabels.count, 2)
     let positions = hourLabels.map { $0.frame.minY }
     XCTAssertLessThanOrEqual(try XCTUnwrap(positions.max()) - XCTUnwrap(positions.min()), 1)
-    let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    let capture = XCTAttachment(screenshot: calendarScreenshot(application))
     capture.name = "All-day span above aligned Week hours"
     capture.lifetime = .keepAlways
     add(capture)
@@ -273,7 +292,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
     for mode in ["Day", "Week"] {
-      modes.buttons[mode].activateForPlannerJourney()
+      modeControl(mode, in: modes).activateForPlannerJourney()
       let grid = application.descendants(matching: .any).matching(
         identifier: "saved.calendar.time-grid"
       ).firstMatch
@@ -282,7 +301,15 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed."))
       XCTAssertTrue(entries.firstMatch.waitForExistence(timeout: 10))
       XCTAssertEqual(entries.count, 4)
-      let heading = grid.staticTexts[Date().formatted(.dateTime.weekday().month().day())].firstMatch
+      let dayHeading = Date().formatted(.dateTime.weekday().month().day())
+      #if os(macOS)
+        let headings = application.descendants(matching: .any)
+      #else
+        let headings = grid.staticTexts
+      #endif
+      let heading = headings.matching(
+        NSPredicate(format: "label == %@ OR value == %@", dayHeading, dayHeading)
+      ).firstMatch
       XCTAssertTrue(heading.waitForExistence(timeout: 5))
       XCTAssertGreaterThanOrEqual(heading.frame.minX, grid.frame.minX)
       let appointments = entries.allElementsBoundByIndex
@@ -295,7 +322,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
           XCTAssertFalse(appointment.frame.intersects(other.frame))
         }
       }
-      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      let capture = XCTAttachment(screenshot: calendarScreenshot(application))
       capture.name = "Independent overlapping start-only appointments in \(mode)"
       capture.lifetime = .keepAlways
       add(capture)
@@ -328,6 +355,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     let scheduleIdentifier = savedSchedule.identifier.replacingOccurrences(
       of: "saved.item.schedule.", with: "")
     let savedDescription = try XCTUnwrap(savedSchedule.value as? String)
+    XCTAssertFalse(savedDescription.isEmpty)
     #if os(macOS)
       application.plannerElement("saved.section.calendar").activateForPlannerJourney()
     #else
@@ -342,22 +370,26 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     let modes = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.mode"
     ).firstMatch
-    let hierarchy = XCTAttachment(string: application.debugDescription)
+    let hierarchy = XCTAttachment(
+      string: ["Day", "Week", "Month"].map { name in
+        let control = modeControl(name, in: modes)
+        return "Mode: \(name); type: \(control.elementType.rawValue); label: \(control.label)"
+      }.joined(separator: "\n"))
     hierarchy.name = "Native Calendar mode selector hierarchy"
     hierarchy.lifetime = .keepAlways
     add(hierarchy)
-    let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    let capture = XCTAttachment(screenshot: calendarScreenshot(application))
     capture.name = "Native Calendar mode selector"
     capture.lifetime = .keepAlways
     add(capture)
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
     for mode in ["Day", "Week"] {
-      modes.buttons[mode].activateForPlannerJourney()
+      modeControl(mode, in: modes).activateForPlannerJourney()
       let grid = application.descendants(matching: .any).matching(
         identifier: "saved.calendar.time-grid"
       ).firstMatch
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
-      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      let capture = XCTAttachment(screenshot: calendarScreenshot(application))
       capture.name = "Native \(mode) time grid"
       capture.lifetime = .keepAlways
       add(capture)
@@ -391,4 +423,20 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
     XCTAssertEqual(savedSchedule.value as? String, savedDescription)
   }
+  private func modeControl(_ name: String, in picker: XCUIElement) -> XCUIElement {
+    #if os(macOS)
+      picker.radioButtons[name]
+    #else
+      picker.buttons[name]
+    #endif
+  }
+
+  private func calendarScreenshot(_ application: XCUIApplication) -> XCUIScreenshot {
+    #if os(macOS)
+      application.windows.firstMatch.screenshot()
+    #else
+      XCUIScreen.main.screenshot()
+    #endif
+  }
+
 }

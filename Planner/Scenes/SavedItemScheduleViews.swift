@@ -60,19 +60,20 @@ struct SavedSchedulesSection: View {
             Button("Try again") { Task { await loadSchedules() } }
           } else {
             ForEach(schedules, id: \.source.id) { schedule in
-              SavedScheduleRow(schedule: schedule)
-                .contextMenu {
-                  Button("Edit schedule", systemImage: "pencil") {
-                    editSchedule(schedule)
-                  }
-                  .disabled(!canChange)
-                  Button("Remove schedule", systemImage: "calendar.badge.minus", role: .destructive)
-                  {
-                    removalOperationIdentifier = UUID()
-                    scheduleToRemove = schedule
-                  }
-                  .disabled(!canChange)
+              let scheduleRow = SavedScheduleRow(schedule: schedule)
+              scheduleRow.contextMenu {
+                Button("Edit schedule", systemImage: "pencil") {
+                  editSchedule(schedule)
                 }
+                .disabled(!canChange)
+                Button("Remove schedule", systemImage: "calendar.badge.minus", role: .destructive) {
+                  removalOperationIdentifier = UUID()
+                  scheduleToRemove = schedule
+                }
+                .disabled(!canChange)
+              }
+              .accessibilityValue(scheduleRow.description)
+              .accessibilityAddTraits(.isStaticText)
             }
           }
         }
@@ -134,7 +135,7 @@ private struct SavedScheduleRow: View {
     }
   }
 
-  private var description: String {
+  fileprivate var description: String {
     switch schedule.content.form {
     case .timed(let start, let end, let planningTimeZone):
       let timeZone = TimeZone(identifier: planningTimeZone) ?? .current

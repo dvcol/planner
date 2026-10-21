@@ -46,3 +46,39 @@ Strict Swift lint passes for the three affected files, and scoped Markdown lint 
 ## Remaining gates
 
 This delivers the ordinary Day/Week layout, not the full Calendar completion gate. Week clock alignment on short/long days, repeated-hour descriptions, travel fixtures and the per-device display-zone override remain open. Native keyboard/VoiceOver/Dynamic Type qualification, additional responsive layouts, large-catalog storage performance and the broader map still require evidence. The earlier Mac runner failed before any journey executed. No signing, physical-device or native Computer Use action was performed for this slice.
+
+## Mac runtime follow-up, 22 October 2026
+
+### Context, starting state and goal
+
+The recovered Mac test runtime can now execute the existing Day/Week journeys. This follow-up qualifies the native mode controls, start-only Schedule readback/relaunch, dense all-day overflow and independent overlapping appointments. It does not replace Q127's pending resize decision or the final whole-app review.
+
+The first [Mac reproduction](evidence/navigation/native-itinerary-window-compatibility/native-calendar-overlap-overflow-mac/) starts both cases and fails them. The overlap test's indexed StaticText query misses a visible native heading. Its scoped observation retains that heading's label and bounds. The dense case reaches all nine all-day Schedule identities and the source details, but the exact saved date reads as an empty accessibility value. The captured production file hash matches the committed baseline. These are executed failures, not startup failures or evidence about signing.
+
+### Native correction and required checks
+
+Mac's segmented controls expose RadioButtons. The test driver now selects that native type, locates the owning-day heading through the app's native descendants and still checks its position against the grid. Mobile retains its scoped heading query. Deliberate Mac captures use Planner's owned window; broad automatic application hierarchies remain private with their hashes and exclusion reasons retained.
+
+The saved Schedule row visibly renders its date, yet its native Other element returns an empty accessible value, even after a bounded wait. Reapplying the value after the context-menu wrapper alone does not fix it. Giving that outer element the native static-text trait alongside its existing date value does: the exact same native read returns the expected all-day date. The title, context menu, saved Schedule, form and source identities retain their meaning. The start-only journey now also rejects an empty saved caption before comparing it after relaunch. No schema, Core/MCP command, package, target or production test hook changes.
+
+The Definition of Ready remains the approved native UI boundary and saved-time policies above. This correction's Definition of Done requires the three affected real native journeys on Mac, iPhone and iPad, matching source inputs, original capture inspection and affected Swift/Markdown checks. Tests must retain nonempty saved descriptions, the same Schedule identity through Month/Day/Week and relaunch, all nine overflow identities, exact selected-source date readback and four distinct nonintersecting usable appointment lanes. Unit tests that mirror the SwiftUI modifier would not establish these native outcomes.
+
+### Executed results
+
+The final [Mac invocation](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-mac/) passes three cases, with zero failures or skips: start-only identity/caption/relaunch in 34.097 seconds; dense header/overflow/source date in 77.604 seconds; and four independent Day/Week lanes in 44.657 seconds. The [compiler packet](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-mac-build/) records the local ad-hoc build. It carries no paid-signing or protected-storage qualification.
+
+The same three cases pass on [light iPhone](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-phone/) and [dark iPad](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-tablet-retry/), nine passing executions in the final three invocations with zero failures/skips. Simulator appearance readbacks retain those settings. All 1,061 source/configuration inputs match the workspace across the final Mac build and three platform runtime epochs. The [verification packet](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-validation/verification.json) checks all 26 original attachment hashes, including 22 images. Twelve original Month, dense-overflow/source-detail and overlap captures were visually inspected. The phone intentionally scrolls the wider overlap grid horizontally; an edge card can be partly outside its viewport.
+
+| Case | Mac | Light iPhone | Dark iPad retry |
+| --- | --- | --- | --- |
+| Start-only identity, nonempty saved caption, Day/Week and relaunch | 34.097 seconds | 52.309 seconds | 52.446 seconds |
+| Nine all-day entries, usable timed entry, overflow and exact source date | 77.604 seconds | 103.712 seconds | 106.371 seconds |
+| Four independent usable Day/Week appointment lanes | 44.657 seconds | 57.952 seconds | 62.196 seconds |
+
+The [first iPad group](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-qualified-tablet/) fails its start-only case at the native creation helper's unavailable Add menu after 14.508 seconds, before any Schedule exists. Its dense and overlap cases pass in 106.785 and 62.005 seconds. The complete unchanged retry above passes. No startup workaround is introduced, and the failure's cause remains unestablished. It remains part of the broader stability qualification. An additional failure-path `simctl` lookup reports the ambient command-line-tools selection; the successful retry introduces no global Xcode selection or signing change.
+
+Affected strict Swift formatting, scoped Markdown lint and whitespace checks pass. Earlier compiler, locator and accessibility probes remain in the [compact iteration record](evidence/navigation/native-itinerary-window-compatibility/native-calendar-modes-iterations/outcomes.json); raw unpublished packets remain local. Relocation is not disk reclamation.
+
+### Remaining limits
+
+The Mac all-day span/native date-entry journey has not yet executed in this follow-up. Q127's inspector resize crash remains a separate local gate. Wider accessibility/keyboard checks, physical devices, signed storage/sync/Share, actual system Intents and feature-complete whole-app polish remain open. Passing these three cases cannot close the full Calendar or map gate.
