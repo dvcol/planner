@@ -80,14 +80,19 @@ final class SavedBackupExportJourneyTests: XCTestCase {
     let export = application.plannerElement("saved.settings.export")
     XCTAssertTrue(export.waitForExistence(timeout: 10))
     export.activateForPlannerJourney()
-    XCTAssertTrue(application.plannerElement("Save").waitForExistence(timeout: 10))
+    #if os(macOS)
+      XCTAssertTrue(
+        application.sheets["save-panel"].buttons["OKButton"].waitForExistence(timeout: 10))
+    #else
+      XCTAssertTrue(application.plannerElement("Save").waitForExistence(timeout: 10))
+    #endif
     #if os(iOS)
       let browse = application.buttons["Browse"]
       if browse.exists { browse.activateForPlannerJourney() }
     #endif
     recordHierarchy(application, name: "Native backup export picker")
     #if os(macOS)
-      let cancel = application.plannerElement("Cancel")
+      let cancel = application.sheets["save-panel"].buttons["CancelButton"]
       XCTAssertTrue(cancel.waitForExistence(timeout: 10))
       cancel.activateForPlannerJourney()
     #else
@@ -131,14 +136,27 @@ final class SavedBackupExportJourneyTests: XCTestCase {
   }
 
   private func recordHierarchy(_ application: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(string: application.debugDescription)
+    #if os(macOS)
+      let panel = application.sheets["save-panel"]
+      let content =
+        "Save panel: \(panel.exists)\nExport: \(panel.buttons["OKButton"].exists)\n"
+        + "Cancel: \(panel.buttons["CancelButton"].exists)\n"
+    #else
+      let content = application.debugDescription
+    #endif
+    let attachment = XCTAttachment(string: content)
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    #if os(macOS)
+      let screenshot = application.windows.firstMatch.screenshot()
+    #else
+      let screenshot = application.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)
