@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "/private/tmp/PlannerCaptureLiveHTTPS/Driver.swift",
+      "/private/tmp/PlannerCaptureLiveHTTPS/PlannerCaptureHTTPTransport.swift"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.032
+  },
+  {
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-parse-as-library",
+      "-swift-version",
+      "6",
+      "-target",
+      "arm64-apple-macos27.0",
+      "/private/tmp/PlannerCaptureLiveHTTPS/PlannerCaptureHTTPTransport.swift",
+      "/private/tmp/PlannerCaptureLiveHTTPS/Driver.swift",
+      "-o",
+      "/private/tmp/PlannerCaptureLiveHTTPS/probe"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.6
+  },
+  {
+    "command": [
+      "/private/tmp/PlannerCaptureLiveHTTPS/probe"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.876
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "base": "eab0dfdc2c4b03627b646c7add12cd8757e3b1e4",
+  "root": "/private/tmp/PlannerCaptureLiveHTTPS",
+  "productionSource": "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureHTTPTransport.swift",
+  "scope": "Exact standalone production transport compiled with a temporary public-interface driver. No Planner store, app data, package, target or production configuration changes."
+}

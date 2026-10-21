@@ -1,0 +1,18 @@
+{
+  "runtimeCredit": true,
+  "sampledRequests": 2,
+  "observedHTTP200AtOriginalURL": 2,
+  "observedErrors": 0,
+  "unitTestInvocations": 0,
+  "productionHashMatchesCommittedAndCurrentSource": true,
+  "scope": "One Mac HEAD request for each documented coordinate long link. Default production transport, no Planner store or app configuration changes.",
+  "limits": [
+    "No short-link or redirect-chain observation.",
+    "No selected-place, preview retention, app/mobile or Share qualification.",
+    "No TLS-version, HTTP-version, memory or wire-byte measurement."
+  ],
+  "documentation": [
+    "https://developer.apple.com/documentation/mapkit/unified-map-urls",
+    "https://developers.google.com/maps/documentation/urls/get-started#search"
+  ]
+}

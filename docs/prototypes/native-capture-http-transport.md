@@ -59,6 +59,19 @@ The completed suite passes eight functions and nine invocations on [Mac](evidenc
 
 The iOS log retains Network's `SO_NECP_LISTENUUID` diagnostic and Xcode SDK-build parsing diagnostics. All selected runtime cases execute and pass; no app security exception or workaround was introduced.
 
+## Live HTTPS observations, 22 October 2026
+
+Two public coordinate links from [Apple's unified Maps URL examples](https://developer.apple.com/documentation/mapkit/unified-map-urls) and [Google's Maps URL examples](https://developers.google.com/maps/documentation/urls/get-started#search) now have live Mac observations. A temporary Swift executable compiles the exact committed standalone transport with a driver calling its public `head` interface and default configuration. It requests one hop per link with the accepted four-second timeout. It opens no Planner store and changes no app, target, package, signing or security configuration.
+
+| Documented sample | Observed status | Elapsed |
+| --- | --- | --- |
+| Apple coordinate place card | HTTP 200 at the original URL | 0.638 seconds |
+| Google coordinate search | HTTP 200 at the original URL | 0.320 seconds |
+
+The calls ran at 19:15:28 and 19:15:29 UTC on 21 October, which is 22 October in the test Mac's timezone. The [observation packet](evidence/capture/http-transport/live-https-mac/) retains exact request/response URLs, timestamps, elapsed time, native stdout/stderr, compiler/lint commands, driver/source snapshots and hashes. The production hash matches the committed and current source. Strict Swift lint and compilation pass. The driver reports errors without disguising them as process failures; `qualification.json` separately verifies these two actual successful responses. They are manual observations, not additional unit-test invocations.
+
+No response bodies, cookies, credentials or unrelated headers are recorded. HTTP 200 establishes a response to these two native HEAD requests; it does not establish a resolved POI, an owned address, preview retention, app presentation or a durable provider guarantee. These are long links with no observed redirect. Short-link expansion, provider-specific redirect chains, identifier-only enrichment, actual app/mobile provider journeys and installed Share retain separate gates. No TLS version or HTTP protocol negotiation was measured.
+
 ## Current remaining qualification
 
-These checks use plain loopback HTTP at the standalone transport boundary. They do not qualify live Apple/Google HTTPS behavior, TLS, HTTP/2 or HTTP/3, provider-specific redirects, a wire-byte/allocation ceiling, physical memory/lifecycle behavior, or the installed Share extension. Core's accepted provider, redirect-budget and stale-draft rules remain independently tested through the linked Core interface. Signed storage/account/sync, actual system Intents and final whole-app UI review remain separate map gates.
+The controlled socket checks use plain loopback HTTP at the standalone transport boundary; the two live HTTPS samples above have their own narrower credit. Neither qualifies general provider behavior, TLS versions, HTTP/2 or HTTP/3, provider-specific redirects, a wire-byte/allocation ceiling, physical memory/lifecycle behavior, or the installed Share extension. Core's accepted provider, redirect-budget and stale-draft rules remain independently tested through the linked Core interface. Signed storage/account/sync, actual system Intents and final whole-app UI review remain separate map gates.

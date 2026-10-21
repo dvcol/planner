@@ -1,0 +1,16 @@
+[
+  {
+    "elapsedSeconds": 0.63820425,
+    "observedAt": "2026-10-21T19:15:28Z",
+    "requestURL": "https://maps.apple.com/place?coordinate=40.779092,-73.962932",
+    "responseURL": "https://maps.apple.com/place?coordinate=40.779092,-73.962932",
+    "statusCode": 200
+  },
+  {
+    "elapsedSeconds": 0.319794459,
+    "observedAt": "2026-10-21T19:15:29Z",
+    "requestURL": "https://www.google.com/maps/search/?api=1&query=47.5951518%2C-122.3316393",
+    "responseURL": "https://www.google.com/maps/search/?api=1&query=47.5951518%2C-122.3316393",
+    "statusCode": 200
+  }
+]

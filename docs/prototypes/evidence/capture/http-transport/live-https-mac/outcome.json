@@ -1,0 +1,6 @@
+{
+  "frozenInputsUnchanged": true,
+  "runtimeExecuted": true,
+  "runtimeCredit": false,
+  "scope": "Inspect per-provider observations separately. Exit zero does not require either provider to succeed."
+}
