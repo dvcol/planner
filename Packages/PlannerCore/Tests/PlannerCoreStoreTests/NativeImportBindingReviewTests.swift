@@ -4,6 +4,7 @@ import Testing
 
 struct NativeImportBindingReviewTests {
   enum BindingCase: CaseIterable { case live, missing, wrongLifetime }
+  enum KnownFamilyImportCase: CaseIterable { case externalSkip, externalOverwrite, declaredSkip }
 
   @Test(arguments: [false, true])
   func skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner(
@@ -487,10 +488,13 @@ struct NativeImportBindingReviewTests {
     #expect(NSDictionary(dictionary: lateGraph).isEqual(to: deletedGraph))
   }
 
-  @Test(arguments: [PlannerImportMode.skip, .overwrite])
-  func routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingOmittedOwners(
-    mode: PlannerImportMode
+  @Test(arguments: KnownFamilyImportCase.allCases)
+  func routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingCurrentOwners(
+    importCase: KnownFamilyImportCase
   ) async throws {
+    let mode: PlannerImportMode
+    if importCase == .externalOverwrite { mode = .overwrite } else { mode = .skip }
+    let declaresSources = importCase == .declaredSkip
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -524,6 +528,21 @@ struct NativeImportBindingReviewTests {
       newSources.append(source)
     }
     incoming["sources"] = newSources
+    if declaresSources {
+      let candidateLifetimes = Dictionary(
+        uniqueKeysWithValues: [(101, 2101), (201, 2201), (301, 2301), (501, 2501), (601, 2601)]
+          .map { (knownFamilyFixtureIdentifier($0.0), knownFamilyFixtureIdentifier($0.1)) })
+      let declaredSources = seedSources.compactMap { source -> [String: Any]? in
+        guard let identifier = source["id"] as? String,
+          let lifetime = candidateLifetimes[identifier]
+        else { return nil }
+        var declared = source
+        declared["lifetimeId"] = lifetime
+        return declared
+      }
+      #expect(declaredSources.count == 5)
+      incoming["sources"] = newSources + declaredSources
+    }
     let newItem = knownFamilyFixtureBinding("item", 7001, 7001)
     let newItinerary = knownFamilyFixtureBinding("itinerary", 7002, 7002)
     let newList = knownFamilyFixtureBinding("list", 7003, 7003)
@@ -583,22 +602,33 @@ struct NativeImportBindingReviewTests {
       case .decoded(let backup) = planner.decodeImport(
         try JSONSerialization.data(withJSONObject: incoming))
     else { throw CancellationError() }
-    #expect(backup.externalBindings.count == 5)
+    if declaresSources {
+      #expect(backup.externalBindings.isEmpty && backup.originPaths.isEmpty)
+    } else {
+      #expect(backup.externalBindings.count == 5)
+    }
     let outcome = await planner.prepareReview(
       session: session, command: .applyImport(backup: backup, mode: mode))
     guard case .reviewed(let review) = outcome else {
       Issue.record(
-        "Resolve route and label candidates without replacing omitted owners: \(outcome)")
+        "Resolve route and label candidates without replacing current owners: \(outcome)")
       return
     }
     let details = try #require(review.impact.importDetails)
     #expect(
       Set(details.imports.map(\.owner.id.uuidString))
         == Set((7001...7003).map(knownFamilyFixtureIdentifier)))
-    #expect(
-      Set(details.skippedConflicts.map(\.owner.id.uuidString))
-        == Set([101, 301].map(knownFamilyFixtureIdentifier)))
-    #expect(details.skippedConflicts.allSatisfy { $0.reasonCode == "omittedOwner" })
+    if declaresSources {
+      #expect(
+        Set(details.skippedConflicts.map(\.owner.id.uuidString))
+          == Set([101, 201, 301, 501, 601].map(knownFamilyFixtureIdentifier)))
+      #expect(details.skippedConflicts.allSatisfy { $0.reasonCode == "matchingRecordConflict" })
+    } else {
+      #expect(
+        Set(details.skippedConflicts.map(\.owner.id.uuidString))
+          == Set([101, 301].map(knownFamilyFixtureIdentifier)))
+      #expect(details.skippedConflicts.allSatisfy { $0.reasonCode == "omittedOwner" })
+    }
     #expect(details.replacements.isEmpty && details.restorations.isEmpty)
     let operationIdentifier = UUID()
     let response = await planner.execute(
