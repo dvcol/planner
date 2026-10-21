@@ -1,6 +1,7 @@
 #if !PLANNER_FIXTURES
   import AppIntents
   import Foundation
+  import GeoToolbox
   import PlannerCore
 
   struct PlannerItemEntity: AppEntity {
@@ -10,6 +11,48 @@
     @Property(title: "Title") var title: String
     @Property(title: "Completed everywhere") var done: Bool
     @Property(title: "Archived") var archived: Bool
+    @DeferredProperty(title: "Notes")
+    var notes: String? {
+      get async throws {
+        try await readPlannerDeferredItemSource(identifier: id).content.notes
+      }
+    }
+    @DeferredProperty(title: "Subtitle")
+    var subtitle: String? {
+      get async throws {
+        try await readPlannerDeferredItemSource(identifier: id).content.subtitle
+      }
+    }
+    @DeferredProperty(title: "Location name")
+    var locationName: String? {
+      get async throws {
+        try await readPlannerDeferredItemSource(identifier: id).content.location?.displayName
+      }
+    }
+    @DeferredProperty(title: "Address")
+    var address: String? {
+      get async throws {
+        try await readPlannerDeferredItemSource(identifier: id).content.location?.formattedAddress
+      }
+    }
+    @DeferredProperty(title: "Pin")
+    var pin: PlaceDescriptor? {
+      get async throws {
+        try await plannerDeferredPin(readPlannerDeferredItemSource(identifier: id).content.location)
+      }
+    }
+    @DeferredProperty(title: "Created")
+    var created: Date {
+      get async throws {
+        try await readPlannerDeferredItemSource(identifier: id).createdAt
+      }
+    }
+    @DeferredProperty(title: "Last updated")
+    var lastUpdated: Date {
+      get async throws {
+        try await readPlannerDeferredItemSource(identifier: id).updatedAt
+      }
+    }
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(title)") }
 
     init(id: UUID, title: String, done: Bool, archived: Bool) {

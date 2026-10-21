@@ -1,0 +1,20 @@
+[
+  "xcodebuild",
+  "build",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "Planner",
+  "-destination",
+  "generic/platform=iOS",
+  "-derivedDataPath",
+  "/private/tmp/PlannerShareProducts-device",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerCalendarMonthSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-jobs",
+  "1",
+  "CODE_SIGNING_ALLOWED=NO",
+  "ARCHS=arm64",
+  "ONLY_ACTIVE_ARCH=YES"
+]

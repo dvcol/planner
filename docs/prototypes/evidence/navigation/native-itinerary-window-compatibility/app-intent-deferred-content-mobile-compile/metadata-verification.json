@@ -1,0 +1,33 @@
+{
+  "platform": "mobile",
+  "addedDeferredProperties": {
+    "PlannerItemEntity": {
+      "notes": "text",
+      "subtitle": "text",
+      "locationName": "text",
+      "address": "text",
+      "pin": "pin",
+      "created": "date",
+      "lastUpdated": "date"
+    },
+    "PlannerListEntity": {
+      "notes": "text",
+      "created": "date",
+      "lastUpdated": "date"
+    },
+    "PlannerItineraryEntity": {
+      "notes": "text",
+      "locationName": "text",
+      "address": "text",
+      "pin": "pin",
+      "created": "date",
+      "lastUpdated": "date"
+    }
+  },
+  "addedPropertyCount": 16,
+  "all72ActionContractsPreserved": true,
+  "existingPropertiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "407f7e62b35f32e0c5add0495e0191a634372771672a42e5d50644e0a37cdb0b",
+  "systemPropertyFetchingCredit": false
+}

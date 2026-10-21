@@ -1,0 +1,33 @@
+{
+  "platform": "mac",
+  "addedDeferredProperties": {
+    "PlannerItemEntity": {
+      "notes": "text",
+      "subtitle": "text",
+      "locationName": "text",
+      "address": "text",
+      "pin": "pin",
+      "created": "date",
+      "lastUpdated": "date"
+    },
+    "PlannerListEntity": {
+      "notes": "text",
+      "created": "date",
+      "lastUpdated": "date"
+    },
+    "PlannerItineraryEntity": {
+      "notes": "text",
+      "locationName": "text",
+      "address": "text",
+      "pin": "pin",
+      "created": "date",
+      "lastUpdated": "date"
+    }
+  },
+  "addedPropertyCount": 16,
+  "all72ActionContractsPreserved": true,
+  "existingPropertiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "f4c8ba7266437b9593d472c6e339eb5e5bf92f4468df3d672a340c4804856798",
+  "systemPropertyFetchingCredit": false
+}

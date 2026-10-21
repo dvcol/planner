@@ -1,0 +1,21 @@
+{
+  "testOutcome": "failed: unsupported direct dependency setup",
+  "passingInvocationCredit": false,
+  "closedHostsAndDatabasesVerified": true,
+  "hostProcessIdentifiers": [
+    53218,
+    53492
+  ],
+  "sourceLogSha256": "412cbe3dcd08faab5c23f0dadc0b93ec609cfdd504c5c4163ee5e42f9f484b8a",
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E0B9B24A-E008-41C4-9540-49997C46DB5D",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/4787EC73-9F79-4C6E-A29F-E9C810A866DA",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/A0D8330A-47E2-4B22-9DFE-38CB434E8DA2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/11F4E59C-44EF-490A-AC06-C84F65071C19",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/51F09CA8-D701-4126-B0FF-D75522901F3B",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3DBD135B-B678-44F4-A508-8E1E35C72DB3",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/876B6423-FCC0-4C70-9863-C8258E688A85",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/99747D53-9374-4E2D-A0FD-AF994231AB52"
+  ],
+  "originalLogRetained": true
+}

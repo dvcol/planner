@@ -33,6 +33,8 @@ The user accepted A for all eight choices below on 21 October 2026. Their implem
 
 [Four initial App Shortcuts](prototypes/native-app-shortcut-discovery.md) implement Q123 A as native metadata. Exact create/find entries and all ordinary contracts verify across matching platform builds; 19 underlying adapter cases pass. Actual system discovery/prompting/Siri remain separate.
 
+[Live saved-content properties](prototypes/native-deferred-content-properties.md) implement Q117 A locally. Seven getter cases and 69 affected adapter cases pass, with matching platform builds and preserved prior contracts. Actual system property fetching, including cold dependency initialization, remains open.
+
 ## Next frontier after the approvals
 
 The three follow-up questions are open; none blocks independent accepted work.

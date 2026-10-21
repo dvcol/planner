@@ -1,0 +1,10 @@
+{
+  "phases": [
+    "app-intent-deferred-content-final",
+    "app-intent-deferred-content-mobile-compile",
+    "app-intent-deferred-content-device-compile"
+  ],
+  "matchingFrozenInputCount": 1049,
+  "allSourceEpochsEqual": true,
+  "systemPropertyFetchingCredit": false
+}

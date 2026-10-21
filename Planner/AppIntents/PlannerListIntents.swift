@@ -9,6 +9,24 @@
     let id: UUID
     @Property(title: "Name") var name: String
     @Property(title: "Archived") var archived: Bool
+    @DeferredProperty(title: "Notes")
+    var notes: String? {
+      get async throws {
+        try await readPlannerDeferredListSource(identifier: id).content.notes
+      }
+    }
+    @DeferredProperty(title: "Created")
+    var created: Date {
+      get async throws {
+        try await readPlannerDeferredListSource(identifier: id).createdAt
+      }
+    }
+    @DeferredProperty(title: "Last updated")
+    var lastUpdated: Date {
+      get async throws {
+        try await readPlannerDeferredListSource(identifier: id).updatedAt
+      }
+    }
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(name)") }
 
     init(id: UUID, name: String, archived: Bool) {
