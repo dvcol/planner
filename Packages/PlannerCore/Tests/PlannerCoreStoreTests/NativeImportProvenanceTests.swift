@@ -5,10 +5,7 @@ import Testing
 struct NativeImportProvenanceTests {
   @Test(arguments: ["item", "list", "itinerary", "category", "tag"])
   func importedFallbackOriginsSurviveNativeChangesAndRecovery(kind: String) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportProvenanceTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let sourceConfiguration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("source/store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("source/control/writer"),

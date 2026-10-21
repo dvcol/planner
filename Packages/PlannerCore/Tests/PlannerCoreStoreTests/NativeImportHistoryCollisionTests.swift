@@ -6,8 +6,7 @@ struct NativeImportHistoryCollisionTests {
   @Test(arguments: ["alias", "change"])
   func skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision: String) async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

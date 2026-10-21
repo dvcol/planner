@@ -11,8 +11,7 @@ struct NativeImportLineageMigrationTests {
     #endif
     let fixture = try #require(
       bundle.url(forResource: "SchemaV15", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       [String: String].self,

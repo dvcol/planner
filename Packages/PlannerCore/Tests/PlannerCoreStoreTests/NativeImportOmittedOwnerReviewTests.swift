@@ -9,8 +9,7 @@ struct NativeImportOmittedOwnerReviewTests {
   )
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -126,8 +125,7 @@ struct NativeImportOmittedOwnerReviewTests {
   func omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(
     mode: PlannerImportMode, deletedKind: PlannerEntityKind
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -226,8 +224,7 @@ struct NativeImportOmittedOwnerReviewTests {
   func omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(
     mode: PlannerImportMode, incomingRecordsChanged: Bool
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

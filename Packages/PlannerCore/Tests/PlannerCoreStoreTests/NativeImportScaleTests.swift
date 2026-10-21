@@ -33,7 +33,7 @@ struct NativeImportScaleTests {
     }
     object["sources"] = sources
     object["memberships"] = memberships
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let result = nativeImportPlanner(directory: directory).decodeImport(
       try JSONSerialization.data(withJSONObject: object))
     guard case .decoded(let decoded) = result else {

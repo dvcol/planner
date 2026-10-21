@@ -94,7 +94,7 @@ struct NativeImportLineageTests {
     object["sources"] = sources
     object["deletionMarkers"] = markers
     object["restorationFamilies"] = families
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     var bytes = try JSONSerialization.data(withJSONObject: object)
     if scenario == "missingFamily" {
       let text = try #require(String(data: bytes, encoding: .utf8))
@@ -158,7 +158,7 @@ struct NativeImportLineageTests {
       ], "closedFamilyId": NSNull(),
     ])
     object["deletionMarkers"] = markers
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let result = nativeImportPlanner(directory: directory).decodeImport(
       try JSONSerialization.data(withJSONObject: object))
     guard case .invalid(let failure) = result else {
@@ -185,7 +185,7 @@ struct NativeImportLineageTests {
     lateAlias["currentChangeId"] = NSNull()
     aliases.append(lateAlias)
     object["contextAliases"] = aliases
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     guard
       case .decoded(let decoded) = nativeImportPlanner(directory: directory).decodeImport(
         try JSONSerialization.data(withJSONObject: object))
@@ -208,7 +208,7 @@ struct NativeImportLineageTests {
       of: "\"title\": \"Nezu Museum\"",
       with: "\"title\": \"Nezu Museum\", \"title\": \"Backup museum\"")
     #expect(duplicated != original)
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = nativeImportPlanner(directory: directory)
     var bytes = Data(duplicated.utf8)
     guard case .decoded(let first) = planner.decodeImport(bytes) else {

@@ -5,8 +5,7 @@ import Testing
 struct NativeImportClosedHistoryTests {
   @Test(arguments: ["listMembership", "directItineraryItem", "expandedListItem"])
   func removedContextsRetainReviewableRestorableHistory(kind: String) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     func configuration(_ name: String) -> PlannerStorageConfiguration {
       let root = directory.appendingPathComponent(name)
       return .init(

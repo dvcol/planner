@@ -13,7 +13,7 @@ struct NativeImportDecodingTests {
       fixtureBundle.url(
         forResource: "portable-backup-v1", withExtension: "json",
         subdirectory: "Fixtures/PortableImport"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

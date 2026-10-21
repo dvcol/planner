@@ -5,10 +5,7 @@ import Testing
 struct NativeImportProviderTests {
   @Test(arguments: ["item", "itinerary"])
   func applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind: String) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportProviderTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let sourceConfiguration = providerTestConfiguration(directory.appendingPathComponent("source"))
     let source = Planner(configuration: sourceConfiguration)
     var seedGraph = try providerTestGraph(nativeImportFixtureData())

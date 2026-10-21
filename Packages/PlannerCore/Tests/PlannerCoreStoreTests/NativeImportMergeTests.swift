@@ -5,8 +5,7 @@ import Testing
 struct NativeImportMergeTests {
   @Test(arguments: ["referenceLifetime", "aliasIdentity", "changeIdentity"])
   func changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario: String) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -83,8 +82,7 @@ struct NativeImportMergeTests {
     "schedules", "contextAliases", "completionChanges",
   ])
   func retainedOwnedDataOverwritesPreserveBindingsAndHistory(group: String) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -177,8 +175,7 @@ struct NativeImportMergeTests {
   }
 
   @Test func overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -304,8 +301,7 @@ struct NativeImportMergeTests {
   )
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

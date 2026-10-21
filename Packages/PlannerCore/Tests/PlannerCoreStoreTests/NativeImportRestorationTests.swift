@@ -4,9 +4,7 @@ import Testing
 
 struct NativeImportRestorationTests {
   @Test func skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource() async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportRestorationTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -129,9 +127,7 @@ struct NativeImportRestorationTests {
   }
 
   @Test func foreignOwnedCandidateCannotBypassRestorationReconciliation() async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportRestorationTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -221,9 +217,7 @@ struct NativeImportRestorationTests {
   func restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(
     kind: String, deleteThroughImport: Bool
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportRestorationTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -458,9 +452,7 @@ struct NativeImportRestorationTests {
   }
 
   @Test func reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportRestorationTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify an actual XCTest log and remove its disposable stores after host exit."""
+"""Verify a completed native test log and remove disposable stores after host exit."""
 
 import argparse
 import hashlib
@@ -11,13 +11,23 @@ import subprocess
 import uuid
 from pathlib import Path
 
+FIXTURE_KINDS = (
+    (
+        "PLANNER_INTENT_FIXTURE ",
+        "PlannerIntentFixtures",
+        ".planner-intent-fixture.json",
+    ),
+    ("PLANNER_STORE_FIXTURE ", "PlannerStoreFixtures", ".planner-store-fixture.json"),
+)
+
 
 def read_fixtures(log):
     records = {}
     for line in log.splitlines():
-        marker = "PLANNER_INTENT_FIXTURE "
-        if marker not in line:
+        fixture_kind = next((kind for kind in FIXTURE_KINDS if kind[0] in line), None)
+        if fixture_kind is None:
             continue
+        marker, namespace, ownership_filename = fixture_kind
         record, _ = json.JSONDecoder().raw_decode(line.split(marker, 1)[1])
         if not isinstance(record, dict):
             raise TypeError("A fixture record must be an object.")
@@ -31,15 +41,12 @@ def read_fixtures(log):
         if not isinstance(record["directory"], str):
             raise TypeError("A fixture directory must be a path string.")
         directory = Path(record["directory"])
-        if (
-            not directory.is_absolute()
-            or directory.parent.name != "PlannerIntentFixtures"
-        ):
+        if not directory.is_absolute() or directory.parent.name != namespace:
             raise ValueError("The record is outside the disposable fixture directory.")
         uuid.UUID(directory.name)
         if directory.is_symlink() or directory != directory.resolve(strict=True):
             raise ValueError("A fixture must be a canonical directory, not a symlink.")
-        ownership = directory / ".planner-intent-fixture.json"
+        ownership = directory / ownership_filename
         if ownership.is_symlink() or json.loads(ownership.read_text()) != record:
             raise ValueError(
                 "The fixture ownership marker does not match its log record."
@@ -48,7 +55,7 @@ def read_fixtures(log):
             raise ValueError("Conflicting fixture records.")
         records[directory] = record
     if not records:
-        raise ValueError("The log contains no owned Intent fixtures.")
+        raise ValueError("The log contains no owned test fixtures.")
     return records
 
 
@@ -104,7 +111,7 @@ def main():
         same_log = report_path == log_path
         if arguments.report.exists() and arguments.log.exists():
             same_log = same_log or arguments.report.samefile(arguments.log)
-        if same_log or "PlannerIntentFixtures" in report_path.parts:
+        if same_log or any(kind[1] in report_path.parts for kind in FIXTURE_KINDS):
             raise ValueError(
                 "The report must preserve the original log and stay outside fixture storage."
             )
@@ -125,10 +132,25 @@ def main():
         completed_suite = re.search(
             r"^Test Suite '(?:All tests|Selected tests)' passed at", log, re.MULTILINE
         )
+        completed_swift_testing = re.search(
+            r"^✔ Test run with [1-9][0-9]* tests?(?: in [1-9][0-9]* suites?)? passed after",
+            log,
+            re.MULTILINE,
+        )
         failed_suite = re.search(r"^Test Suite '.+' failed at", log, re.MULTILINE)
-        if not completed_suite or failed_suite or "** TEST FAILED **" in log:
-            raise ValueError("A successful completed XCTest invocation is required.")
-        if not re.search(r"Executed [1-9][0-9]* tests?, with 0 failures", log):
+        failed_swift_testing = re.search(r"^✘ Test run .+ failed", log, re.MULTILINE)
+        if (
+            not (completed_suite or completed_swift_testing)
+            or failed_suite
+            or failed_swift_testing
+            or "** TEST FAILED **" in log
+        ):
+            raise ValueError(
+                "A successful completed XCTest or Swift Testing invocation is required."
+            )
+        if not completed_swift_testing and not re.search(
+            r"Executed [1-9][0-9]* tests?, with 0 failures", log
+        ):
             raise ValueError("The log does not establish passing test execution.")
         records = read_fixtures(log)
         report["fixtureCount"] = len(records)
