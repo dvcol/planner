@@ -1052,10 +1052,10 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     openItemEditor(application)
     let name = application.textFields["saved.item.edit.location.name"]
     let address = application.textFields["saved.item.edit.location.address"]
-    XCTAssertTrue(address.waitForExistence(timeout: 5))
     revealEditorElement(name, application: application)
     replaceText(name, with: "Apple Park stop", application: application)
     revealEditorElement(address, application: application)
+    XCTAssertTrue(address.waitForExistence(timeout: 5))
     replaceText(address, with: "1 Apple Park Way, Cupertino, CA", application: application)
     application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
     XCTAssertFalse(application.staticTexts["Apple Park stop"].exists)
@@ -1218,9 +1218,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     activateGlobalCompletion(globalCompletion)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
     openItemEditor(application)
-    replaceText(
-      application.textFields["saved.item.edit.title"], with: "Rejected title",
-      application: application)
+    let editedTitleField = application.textFields["saved.item.edit.title"]
+    replaceText(editedTitleField, with: "Rejected title", application: application)
+    #if os(iOS)
+      editedTitleField.typeText("\n")
+    #endif
     _ = addBookmark(
       "file:///private/tmp/bookmark", label: "Invalid bookmark", application: application)
     application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
@@ -3032,6 +3034,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     revealEditorElement(labelField, application: application)
     labelField.activateForPlannerJourney()
     labelField.typeText(label)
+    #if os(iOS)
+      labelField.typeText("\n")
+    #endif
     return newURL.identifier
   }
 
