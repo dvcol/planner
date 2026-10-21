@@ -34,4 +34,6 @@ Four changed Swift files passed strict lint. The final macOS production app buil
 
 ## Remaining map gates
 
+These are the gates at this original checkpoint. [Later native HTTP qualification](native-capture-http-transport.md#real-socket-follow-up-22-october-2026) adds real-socket outcomes and two live long-link observations; it does not replace native preview, short-link, physical or signed qualification.
+
 The controlled fixture supplies HTTP status and headers through the actual Core transport composition. It does not qualify live provider services, real network allocation/deadline behavior, physical Share payloads or signed-device capture. Mac UI runtime, provider intake, Share and App Intents, changed-target/save/read failure and termination fixtures, Calendar Q79–Q81 with pending Q82, moving-window performance, physical sync/account recovery and whole-app polish remain open.

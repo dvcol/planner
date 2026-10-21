@@ -39,4 +39,6 @@ Final source and spec reviews have no remaining confirmed findings. Both indepen
 
 ## Remaining map gates
 
+The following gates describe this original checkpoint. [Native preview work](native-maps-capture-preview.md) and [later native HTTP qualification](native-capture-http-transport.md#real-socket-follow-up-22-october-2026) record subsequent results, including real sockets and two live long-link observations. They do not qualify every provider, short link or physical lifecycle.
+
 Controlled HTTP responses are not live Apple/Google or socket qualification. Native/agent preview presentation, native explicit Retry journeys, provider-reference-only URL enrichment, physical sender allocations and Share lifecycle remain open. Calendar Q79-Q81 and its proposed Q82 contract, signed-device sync/account recovery, and whole-app UI polish retain their existing owners and completion gates.
