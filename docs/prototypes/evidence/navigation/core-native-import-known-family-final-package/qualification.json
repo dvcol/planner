@@ -1,0 +1,39 @@
+{
+  "coreInputs": 739,
+  "platformEpochs": {
+    "macApp": {
+      "inputs": 1061,
+      "exitCode": 0,
+      "laterChangedProducts": []
+    },
+    "iosCore": {
+      "inputs": 1061,
+      "exitCode": 0,
+      "laterChangedProducts": []
+    },
+    "macNativeFixture": {
+      "inputs": 1061,
+      "exitCode": 0,
+      "laterChangedProducts": []
+    },
+    "iosApp": {
+      "inputs": 1061,
+      "exitCode": 0,
+      "laterChangedProducts": []
+    }
+  },
+  "macPackageFunctions": 57,
+  "macPackageInvocations": 228,
+  "iosFunctions": 57,
+  "iosInvocations": 228,
+  "macNativeFixtureFunctions": 2,
+  "macNativeFixtureInvocations": 3,
+  "failures": 0,
+  "skips": 0,
+  "limits": [
+    "Known current families only; incoming candidate consolidation remains unimplemented.",
+    "Old-predecessor Overwrite remains gated pending Q128.",
+    "No new UI, physical CloudKit, signed shared-storage or system-Intent qualification."
+  ],
+  "qualificationScope": "Final accepted executions only; earlier compiler and functional probe failures remain recorded."
+}

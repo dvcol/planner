@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.275e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.129282958">
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode:)" time="0.128954292">
+            <failure message="Issue recorded (error): Skip the whole dependent owner after family Delete: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: Optional(&quot;/memberships/0/item/lifetimeId&quot;), message: &quot;The imported reference cannot resolve in this dataset.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): Skip the whole dependent owner after family Delete: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: Optional(&quot;/memberships/0/item/lifetimeId&quot;), message: &quot;The imported reference cannot resolve in this dataset.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

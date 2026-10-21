@@ -1,0 +1,17 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 6.097,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.048863,
+      "failures": [
+        "Issue recorded (error): The current open family authorizes the candidate reference: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/memberships/0/item/lifetimeId\"), message: \"The imported reference names another source lifetime.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ]
+}

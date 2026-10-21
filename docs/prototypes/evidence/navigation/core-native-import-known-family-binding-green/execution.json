@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 91.602,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.07016975,
+      "failures": [],
+      "skipped": false
+    }
+  ]
+}

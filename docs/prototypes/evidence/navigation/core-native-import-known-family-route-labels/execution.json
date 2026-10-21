@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 19.715,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingOmittedOwners(mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.161779541,
+      "failures": [],
+      "skipped": false
+    }
+  ]
+}

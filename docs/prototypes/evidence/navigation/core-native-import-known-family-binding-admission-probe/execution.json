@@ -1,0 +1,17 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 12.135,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.057054041,
+      "failures": [
+        "Issue recorded (error): Save the complete new List against its authorized candidate: PlannerOperationResult(operationId: 2777DC54-B197-4257-8EAF-1CDEA5A6EDC1, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The membership has unresolved source bindings.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ]
+}

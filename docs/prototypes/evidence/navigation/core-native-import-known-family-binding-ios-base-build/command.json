@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "build-for-testing",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "PlannerCore",
+  "-destination",
+  "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+  "-derivedDataPath",
+  "/private/tmp/PlannerItemWindowsNativemobileDerivedData",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerCalendarMonthSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerCoreStoreTests/OwnedLinkEditResultTests",
+  "CODE_SIGNING_ALLOWED=NO",
+  "ARCHS=arm64",
+  "ONLY_ACTIVE_ARCH=YES"
+]

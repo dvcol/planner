@@ -42,3 +42,5 @@ For A, real Create, Backup, Delete, Restore and Edit must first expose the unsup
 For B, review and approve the family and cross-owner reference contract first, then prove those literal outcomes through the same public interfaces, including late B edits and references after the replacement. For C, prove the useful whole-action rejection and unchanged complete graph while preserving Skip and valid current-lifetime Overwrite.
 
 Every choice still requires affected import/deletion/lineage regressions, native presentation checks and platform compilation. Physical convergence, signing and final whole-app acceptance remain separate gates.
+
+The [grilling skill](/Users/dinh-van.colomban/.agents/skills/grilling/SKILL.md) says, "The decisions are the user's: put each to them and wait." This is an unresolved behavior choice, so its dependent implementation waits for the user's answer. Known-family binding work proceeds under the already accepted A20 rule.

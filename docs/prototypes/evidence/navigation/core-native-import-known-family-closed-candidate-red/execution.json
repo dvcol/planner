@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 19.387,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.128954292,
+      "failures": [
+        "Issue recorded (error): Skip the whole dependent owner after family Delete: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/memberships/0/item/lifetimeId\"), message: \"The imported reference cannot resolve in this dataset.\", details: nil))",
+        "Issue recorded (error): Skip the whole dependent owner after family Delete: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/memberships/0/item/lifetimeId\"), message: \"The imported reference cannot resolve in this dataset.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ]
+}

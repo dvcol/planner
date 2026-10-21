@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 145.378,
+  "frozenInputsUnchanged": true,
+  "requestedClasses": [
+    "OwnedLinkEditResultTests"
+  ],
+  "summary": {
+    "result": "Passed",
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

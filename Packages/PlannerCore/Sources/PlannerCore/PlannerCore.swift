@@ -3159,7 +3159,7 @@ public actor Planner {
       throw PlannerFailure("unavailable", "Deleted data needs separate reviewed restoration.")
     }
     let merge = try PlannerImportMerge(
-      incoming: backup.backup, current: current.backup, resolution: resolution, mode: mode,
+      current: current.backup, resolution: resolution, mode: mode,
       operationId: operation.operationId)
     try plannerRemoveUnretainedImportedRecords(notIn: merge.projected, context: context)
     try plannerInsertImportedGraph(

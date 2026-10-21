@@ -1,0 +1,38 @@
+{
+  "exitCode": 65,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 136.288,
+  "frozenInputsUnchanged": true,
+  "requestedClasses": [
+    "NativeImportAdmissionTests",
+    "NativeImportApplyTests",
+    "NativeImportBindingReviewTests",
+    "NativeImportClosedHistoryTests",
+    "NativeImportConflictReviewTests",
+    "NativeImportDecodingTests",
+    "NativeImportDeletedReviewTests",
+    "NativeImportHistoryCollisionTests",
+    "NativeImportIncomingDeletionReviewTests",
+    "NativeImportLineageMigrationTests",
+    "NativeImportLineageTests",
+    "NativeImportMarkerTests",
+    "NativeImportMergeTests",
+    "NativeImportOmittedOwnerReviewTests",
+    "NativeImportOverwriteDeletionReviewTests",
+    "NativeImportOwnedAdditionTests",
+    "NativeImportOwnedRemovalTests",
+    "NativeImportProvenanceTests",
+    "NativeImportProviderTests",
+    "NativeImportRestorationTests",
+    "NativeImportResultTests",
+    "NativeImportReviewTests",
+    "NativeImportScaleTests",
+    "NativeImportSourceDeletionTests"
+  ],
+  "summary": {
+    "result": "unknown",
+    "passedTests": 0,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}
