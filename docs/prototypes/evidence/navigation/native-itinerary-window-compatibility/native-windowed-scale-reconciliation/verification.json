@@ -1,0 +1,41 @@
+{
+  "historicalTraversalEvidence": [
+    {
+      "previousEpoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-every-item-final",
+      "recordedNativeResult": "Passed, one function, no failures/skips",
+      "attachment": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-every-item-final/03871C26-A35C-467D-B2D3-B1B6093BD015.txt.gz",
+      "decodedAttachmentSHA256": "e986525de8b321f10529f0f861c64597538c9d11783d89cf77669ee4ff342a63",
+      "matchesRecordedOriginalAttachmentHash": true,
+      "orderedExpectedTitles": 5000,
+      "distinctParsedSourceUUIDs": 5000,
+      "currentSourceMatchesRecordedCompiledInputs": {
+        "Planner/Scenes/SavedItemWindow.swift": true,
+        "Planner/Scenes/SavedItemViews.swift": true,
+        "Planner/Scenes/SavedItemRowContent.swift": true
+      },
+      "fixtureWindowSetupChangedSinceThatEpoch": true
+    },
+    {
+      "previousEpoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-every-item-final",
+      "recordedNativeResult": "Passed, one function, no failures/skips",
+      "attachment": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-every-item-final/5BF2F51F-51C9-4076-BB3A-C3993B102676.txt.gz",
+      "decodedAttachmentSHA256": "0b07ec798a6b2545ab5bb6ad4f49a5c074c99faed96a828ec85f8505b08ae94d",
+      "matchesRecordedOriginalAttachmentHash": true,
+      "orderedExpectedTitles": 5000,
+      "distinctParsedSourceUUIDs": 5000,
+      "currentSourceMatchesRecordedCompiledInputs": {
+        "Planner/Scenes/SavedItemWindow.swift": true,
+        "Planner/Scenes/SavedItemViews.swift": true,
+        "Planner/Scenes/SavedItemRowContent.swift": true
+      },
+      "fixtureWindowSetupChangedSinceThatEpoch": true
+    }
+  ],
+  "exhaustiveJourneyBodyUnchanged": true,
+  "scope": "Existing exhaustive runs already use the windowed loader. This is retained-evidence reconciliation, not new runtime or current whole-app equivalence.",
+  "currentFollowUp": "Current fixture compilation and page-boundary/rotation runtime are recorded separately. New main-window setup prevents claiming every current input matches the exhaustive epoch.",
+  "limits": [
+    "No renewed exhaustive current-source run.",
+    "No physical latency, memory bound, hitch, accessibility or Mac UI credit."
+  ]
+}

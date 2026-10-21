@@ -1,0 +1,39 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerWindowedScaleCurrent-tablet.xcresult"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerWindowedScaleCurrent-tablet.xcresult"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerWindowedScaleCurrent-tablet.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerWindowedScaleCurrent-tablet-attachments"
+    ],
+    "exitCode": 0
+  }
+]

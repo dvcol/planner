@@ -71,6 +71,10 @@ The [next runtime/startup checkpoint](prototypes/native-xctest-runtime-diagnosis
 
 The [map](https://github.com/dvcol/planner/issues/1) and open prototype issues retain their original Context, DoR, DoD and required tests. This register separates human choices from implementation and platform evidence; it grants no new test boundary or feature approval.
 
+## Local qualification follow-up, 22 October 2026
+
+The [22 October scale reconciliation](prototypes/native-item-windows.md#scale-evidence-and-current-fixture-follow-up-22-october-2026) verifies that both retained 5,000-identity traversals already used the windowed loader. The current fixture also compiles and passes the existing page-boundary/selection/rotation case on light phone and dark iPad, with 1,061 matching inputs. Historical exhaustive results retain their original epoch; physical performance, Mac UI and final polish remain open. The [native HTTP follow-up](prototypes/native-capture-http-transport.md#real-socket-follow-up-22-october-2026) separately adds real-socket Mac/iOS outcomes and two live Mac HTTPS observations. No pending choice or signing decision is consumed.
+
 ## Historical decisions and checkpoints
 
 The human accepted Q108 A, Q109 A and Q110 A on 19 October 2026. The additional production history-controller test boundary is approved. Move Undo reverses the whole Move atomically; one editor Save issues one atomic group for its removed associations. Their concrete extension contract and literal fixtures follow those choices before implementation. Q102's account/team setup remains deferred. An accepted choice alone does not establish implementation or platform acceptance. The following historical entries retain their original context. Current implementation reports and later status entries supersede their earlier starting-state wording.

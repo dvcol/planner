@@ -1,0 +1,13 @@
+{
+  "runtimeCredit": true,
+  "executedFunctions": 1,
+  "executedInvocations": 1,
+  "failures": 0,
+  "skips": 0,
+  "currentWorkspaceAndBothEpochInputCount": 1061,
+  "inspectedOriginalPNGs": 4,
+  "verifiedOriginalAttachments": 5,
+  "productionChanges": false,
+  "scope": "Current fixture page-boundary, selection and rotation regression on the 5,000-Item graph. Earlier exhaustive traversal keeps its own source epoch.",
+  "appearanceScope": "Phone light / tablet dark, no setting mutation. Initial increasecontrast query spelling was unsupported; corrected read-only settings are in appearance-after.json. No Increase Contrast qualification claimed."
+}

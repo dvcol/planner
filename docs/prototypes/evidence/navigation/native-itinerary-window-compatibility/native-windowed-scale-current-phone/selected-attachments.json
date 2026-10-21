@@ -1,0 +1,77 @@
+[
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E1E432A0-1019-4BC6-B809-343F5B63C87C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Released first page reopens its original source after rotation_0_4C72B874-A9E7-4BC0-91E7-CEFAB736B4B2.png",
+      "timestamp": 1792610833.658
+    },
+    "retainedFile": "E1E432A0-1019-4BC6-B809-343F5B63C87C.png",
+    "originalSHA256": "9b77008a71838b9abb7f32fd1a4c0955e9c32903f96e969f0b8c19b1dc87437f",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "5FC92D99-CAC8-4DA5-AC80-BB3892DEB4D9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Windowed native catalog selects its visible source in landscape_0_E754F47C-73FA-4B4F-96AD-BC3FDD3812A1.png",
+      "timestamp": 1792610822.96
+    },
+    "retainedFile": "5FC92D99-CAC8-4DA5-AC80-BB3892DEB4D9.png",
+    "originalSHA256": "262db756e98cb96b9ec27b597c2d6b4367f7ffecc14076f80029581b62c63cbc",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B97E98A7-2FA7-4CE5-B268-1F86C31F9780.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00129_0_19B00ECB-4D64-414D-8AC9-D5AD75F587B8.png",
+      "timestamp": 1792610816.59
+    },
+    "retainedFile": "B97E98A7-2FA7-4CE5-B268-1F86C31F9780.png",
+    "originalSHA256": "b66ae3ae404a97eef7f3bca5e019babb29e34b7df4f81e2e1be59f58e65afa8e",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "82697FE1-2AB7-42E0-A0C0-B3E01EA63562.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00065_0_402A590A-6BB9-460F-A40C-3876805C9776.png",
+      "timestamp": 1792610775.115
+    },
+    "retainedFile": "82697FE1-2AB7-42E0-A0C0-B3E01EA63562.png",
+    "originalSHA256": "891be09840333d3b90059950dcb8de8b5fd620ff574d49c7ec44f4772b0109a2",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2C0651D4-AD67-47F0-B36B-682975D86452.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Item window observed source and layout_0_E39EA6C3-6946-4BF9-847E-2CBACD3654E3.txt",
+      "timestamp": 1792610735.818
+    },
+    "retainedFile": "2C0651D4-AD67-47F0-B36B-682975D86452.txt.gz",
+    "originalSHA256": "23eb6c765a610a5d068904783cf1f96b7dbeed9d9a6dd4f24ecf1b3ad2928839",
+    "visuallyInspected": false,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  }
+]

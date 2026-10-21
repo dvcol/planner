@@ -1,0 +1,77 @@
+[
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "790647CD-668F-4220-A229-68220DE108BD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Released first page reopens its original source after rotation_0_FFE6CA5E-5723-4BD9-A612-036E326FC540.png",
+      "timestamp": 1792610850.794
+    },
+    "retainedFile": "790647CD-668F-4220-A229-68220DE108BD.png",
+    "originalSHA256": "0b8ae649ece39b979cc5ca181a8695b50f81ea231c6eaf5294c0dafd5d029384",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "062F7007-4894-430A-BE1B-C651C2FAF937.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Windowed native catalog selects its visible source in landscape_0_4437F748-C8D6-4974-BC75-CDC05BDF95F3.png",
+      "timestamp": 1792610820.762
+    },
+    "retainedFile": "062F7007-4894-430A-BE1B-C651C2FAF937.png",
+    "originalSHA256": "310ca84f213a9fd0e14399bb1cf9862ffe341bc95e279b268b7d1fda46e39e58",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3F43DBF5-B942-425E-8A80-C6FF9DCCFE14.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00129_0_D0A966C8-934A-432A-BF3E-5AB9CD31396D.png",
+      "timestamp": 1792610810.284
+    },
+    "retainedFile": "3F43DBF5-B942-425E-8A80-C6FF9DCCFE14.png",
+    "originalSHA256": "c3febc0d3d36b3628e1a888cfc6eaad3356c76b4a106254aebd5d6da798ead19",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "14BB551B-AD77-4E02-8C40-880CE8C390FD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00065_0_DEC3B023-7D97-420F-8051-CFA94E2C4BA3.png",
+      "timestamp": 1792610769.895
+    },
+    "retainedFile": "14BB551B-AD77-4E02-8C40-880CE8C390FD.png",
+    "originalSHA256": "424027ba430a2a07540725b60b5086b53c6cb4b0d73a5982c5f9ff727d44cb2a",
+    "visuallyInspected": true,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  },
+  {
+    "metadata": {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F5A53CEF-963D-4560-AC07-B7176AFF4DA6.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Item window observed source and layout_0_56BE5112-349E-41E6-8A51-8F6B91A36DB5.txt",
+      "timestamp": 1792610737.817
+    },
+    "retainedFile": "F5A53CEF-963D-4560-AC07-B7176AFF4DA6.txt.gz",
+    "originalSHA256": "d9c9261d9469fdc0a265cdd4adc647bfbaf9b94edf2bfed7425e02705822e617",
+    "visuallyInspected": false,
+    "scope": "Synthetic fixture app only; original pixels retained."
+  }
+]
