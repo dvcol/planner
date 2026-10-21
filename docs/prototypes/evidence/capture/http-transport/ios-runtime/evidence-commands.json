@@ -1,0 +1,20 @@
+[
+  [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerCaptureTransportIOS.xcresult"
+  ],
+  [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "tests",
+    "--path",
+    "/private/tmp/PlannerCaptureTransportIOS.xcresult"
+  ]
+]

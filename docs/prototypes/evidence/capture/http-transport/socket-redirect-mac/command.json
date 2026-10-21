@@ -1,0 +1,11 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--scratch-path",
+  "/private/tmp/PlannerCaptureTransportMacBuild",
+  "--jobs",
+  "1",
+  "--filter",
+  "CaptureHTTPTransportTests"
+]

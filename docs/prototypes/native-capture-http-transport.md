@@ -2,7 +2,7 @@
 
 ## Context and goal
 
-Q78 A approves a production HTTP transport interface, controlled Core lookup outcomes and separate native delegate qualification. Before this slice, PlannerCore had no production module for a single header-only request. Higher-level Maps lookup remains unfinished.
+Q78 A approves a production HTTP transport interface, controlled Core lookup outcomes and separate native delegate qualification. Before this slice, PlannerCore had no production module for a single header-only request. Higher-level Maps lookup was unfinished at this original checkpoint; its later implementation and controlled results are recorded in [Core Maps capture lookup](core-maps-capture-lookup.md).
 
 This slice adds `PlannerCaptureHTTPTransport.head(requestURL:timeout:)`, returning Foundation's `HTTPURLResponse`. Its native implementation sends one HEAD request, refuses automatic redirects, cancels at the response stage, propagates task cancellation and applies the supplied request timeout. It accumulates no response body. The caller owns provider eligibility, each explicit redirect and the overall attempt budget.
 
@@ -30,8 +30,35 @@ The final scoped Mac run passed four functions in one suite, with five invocatio
 
 Both affected Swift files passed strict lint. The iOS app target compiled the same production source successfully. Its initial build could not find deleted temporary dependency checkouts; resolving the existing pinned versions into a fresh task directory restored the build without changing Package.resolved. [Execution evidence](evidence/capture/http-transport/execution.json) records the actual logs, commands and final source hashes. Unfinished Core lookup was excluded from qualification.
 
-No live Apple/Google request, physical Share lifecycle, socket allocation or iOS transport runtime qualification is claimed. The fixture verifies actual Foundation delegate behavior under controlled I/O; it does not establish wire-byte or memory limits for real senders.
+That original checkpoint did not qualify live Apple/Google requests, physical Share lifecycle, socket allocation or iOS transport runtime. The fixture verifies actual Foundation delegate behavior under controlled I/O; it does not establish wire-byte or memory limits for real senders.
 
-## Remaining map work
+## Original remaining map work
 
-Core must integrate the module, validate every provider URL/hop, implement the eight-second attempt and stale draft/operation protection, preserve original bookmarks on failure, and expose appropriate preview feedback through native and agent adapters. Controlled Core response tests, native socket/provider qualification, memory/lifecycle measurements, Share/Intents, Calendar implementation and whole-app polish remain open.
+At that checkpoint, Core still needed to integrate the module, validate every provider URL/hop, implement the eight-second attempt and stale draft/operation protection, preserve original bookmarks on failure, and expose appropriate preview feedback through native and agent adapters. The linked Core report and later capture reports retain their subsequent outcomes. The follow-up below records the current transport qualification limits.
+
+## iOS runtime follow-up, 22 October 2026
+
+The original four transport functions now pass through Xcode's generated PlannerCore package scheme on iPhone 18 Pro, iOS 27.0 Simulator. Its two cancellation arguments make five invocations, with no failures or skips. This uses the unchanged production transport and configured URLProtocol fixtures at Q78's approved external I/O boundary. No app, target, package dependency, signing or security setting changes are needed.
+
+The [discovery packet](evidence/capture/http-transport/ios-discovery/) retains the generated scheme discovery. The [runtime packet](evidence/capture/http-transport/ios-runtime/) retains the command, original compressed log, structured results and explicit qualification. All 739 source/configuration hashes match the recorded committed package at `c794a35f`. The wrapper's original `runtimeCredit: false` means its exit alone supplied no qualification; the separate `qualification.json` records the inspected five passing invocations and their actual iOS execution device.
+
+## Real-socket follow-up, 22 October 2026
+
+The same approved public transport interface now has four loopback checks using Apple's Network framework in the existing test target. A private fixture binds only `127.0.0.1` on an ephemeral port. It reads the actual request line and supplies either headers, a redirect or no response. It leaves connections open so the test can observe client EOF/reset before fixture cleanup. All fixture startup/observation waits are bounded. Production source, default URLSession configuration, package settings, targets and dependencies are unchanged.
+
+The checks establish these observable outcomes:
+
+- The wire request is `HEAD /capture HTTP/1.1`; the caller receives HTTP 200 and the fixture header, then the server observes client closure.
+- A real 301 response returns the original request URL and relative Location header. Following that Location would return 200, which fails the assertion. The connection closes.
+- Cancellation waits until the server has received the complete request. The caller gets CancellationError and the pending connection closes.
+- With no response headers, the one-second request times out with URLError.timedOut within three seconds, and the pending connection closes.
+
+The first three additions passed individually through the growing Mac suite. Their [HEAD](evidence/capture/http-transport/socket-head-mac/), [cancellation](evidence/capture/http-transport/socket-cancellation-mac/) and [redirect](evidence/capture/http-transport/socket-redirect-mac/) packets retain their own source snapshots and actual results. They characterize existing production behavior; no production correction or manufactured failing baseline is claimed.
+
+The completed suite passes eight functions and nine invocations on [Mac](evidence/capture/http-transport/socket-final-mac/) and [iPhone Simulator](evidence/capture/http-transport/socket-final-ios/), with zero failures/skips. Mac executes on macOS 27.0.1; iPhone 18 Pro executes iOS 27.0. The suite takes 1.025 seconds on Mac and 1.205 seconds on iOS, excluding compilation. Both final epochs and the current workspace match all 739 package inputs. The separate qualification files distinguish inspected results from the wrappers' provisional exit records. Scoped compilation and strict Swift formatting pass.
+
+The iOS log retains Network's `SO_NECP_LISTENUUID` diagnostic and Xcode SDK-build parsing diagnostics. All selected runtime cases execute and pass; no app security exception or workaround was introduced.
+
+## Current remaining qualification
+
+These checks use plain loopback HTTP at the standalone transport boundary. They do not qualify live Apple/Google HTTPS behavior, TLS, HTTP/2 or HTTP/3, provider-specific redirects, a wire-byte/allocation ceiling, physical memory/lifecycle behavior, or the installed Share extension. Core's accepted provider, redirect-budget and stale-draft rules remain independently tested through the linked Core interface. Signed storage/account/sync, actual system Intents and final whole-app UI review remain separate map gates.

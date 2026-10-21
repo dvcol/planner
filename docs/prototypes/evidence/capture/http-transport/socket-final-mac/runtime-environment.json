@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "sw_vers",
+      "-productVersion"
+    ],
+    "exitCode": 0,
+    "output": "27.0.1"
+  },
+  {
+    "command": [
+      "sw_vers",
+      "-buildVersion"
+    ],
+    "exitCode": 0,
+    "output": "26A434"
+  },
+  {
+    "command": [
+      "uname",
+      "-m"
+    ],
+    "exitCode": 0,
+    "output": "arm64"
+  }
+]

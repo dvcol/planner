@@ -1,0 +1,6 @@
+[
+  "xcodebuild",
+  "-list",
+  "-json",
+  "-disableAutomaticPackageResolution"
+]

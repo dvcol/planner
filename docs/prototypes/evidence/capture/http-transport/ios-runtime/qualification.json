@@ -1,0 +1,26 @@
+{
+  "base": "c794a35f31c17c4c012df6e33509c61c1e164154",
+  "verifiedCommittedPackageInputs": 739,
+  "executedFunctions": 4,
+  "executedInvocations": 5,
+  "failures": 0,
+  "skips": 0,
+  "runtimeDevice": {
+    "architecture": "arm64",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "modelName": "iPhone 18 Pro",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "runtimeCredit": true,
+  "scope": "Existing configured-URLProtocol native transport checks on iOS Simulator; no socket, live provider, TLS, memory or physical qualification in this invocation.",
+  "basis": [
+    "Original test.log.gz",
+    "test-results-summary.json",
+    "test-results-tests.json.gz",
+    "Every source hash verified against the recorded committed base."
+  ],
+  "subsequentChanges": "The later real-socket test is outside this original epoch."
+}

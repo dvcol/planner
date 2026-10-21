@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerCaptureTransportIOSSource",
+  "base": "c794a35f31c17c4c012df6e33509c61c1e164154",
+  "scope": "Only the committed PlannerCore package; independent of the app/UI frozen root.",
+  "overlays": [
+    "Packages/PlannerCore/Tests/PlannerCoreTests/CaptureHTTPTransportTests.swift"
+  ]
+}

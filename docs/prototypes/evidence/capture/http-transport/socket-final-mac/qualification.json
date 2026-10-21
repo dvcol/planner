@@ -1,0 +1,25 @@
+{
+  "runtimeCredit": true,
+  "executedFunctions": 8,
+  "executedInvocations": 9,
+  "failures": 0,
+  "skips": 0,
+  "packageInputsMatchingOtherPlatformAndCurrentWorkspace": 739,
+  "publicBoundary": "PlannerNativeCaptureHTTPTransport.head(requestURL:timeout:)",
+  "scope": "Four configured-URLProtocol functions and four real loopback socket functions. Peer closure is asserted before fixture cleanup. No production or package configuration change.",
+  "limits": [
+    "Plain loopback HTTP, not live provider HTTPS/TLS.",
+    "No wire-byte or allocation ceiling, physical memory/lifecycle or installed Share qualification."
+  ],
+  "passedFunctions": [
+    "nativeSocketRequestUsesHEADAndClosesAfterReceivingHeaders",
+    "cancellingPendingNativeSocketRequestClosesItsConnection",
+    "nativeSocketRedirectReturnsFirstHopAndClosesItsConnection",
+    "nativeSocketTimeoutClosesThePendingConnection",
+    "nativeRequestTimesOutWhenNoHeadersArrive",
+    "nativeTransportReturnsRedirectHeadersWithoutFollowingTheNextRequest",
+    "cancelledNativeRequestReturnsCancellationBeforeItsTimeout",
+    "nativeTransportUsesHEADAndReturnsStatusAndHeaders"
+  ],
+  "runtimeEnvironmentFile": "runtime-environment.json"
+}
