@@ -1,6 +1,6 @@
 # Civil Schedule inputs and replacement actions
 
-Status: Q124 and Q125 are proposed after Q118 A. Existing temporal rules and four creation actions are accepted; these questions settle their concrete inputs and the remaining full-edit presentation.
+Status: Q124 A and Q125 A accepted on 21 October 2026. The concrete civil inputs and two focused replacement actions below are approved. Implementation and qualification remain open.
 
 ## Context and starting state
 
@@ -31,7 +31,7 @@ Recommend A, consistent with Q118's focused creation actions. Both use the curre
 ## Definition of ready
 
 - Q118 A accepts four creation actions; fixed instants, explicit repeated occurrences, gap rejection, inclusive all-day dates and optional ends are already settled.
-- Q124 settles the concrete input contract. Q125 settles replacement presentation independently.
+- Q124 A approves the concrete input contract. Q125 A approves two focused replacement actions.
 - Q112 approves production Intent invocation with Apple's dependency manager, disposable storage and actual recovery-filesystem faults in the existing app-hosted target. No additional test boundary or test-only resolver/clock is proposed.
 
 ## Required tests and validation
