@@ -1,0 +1,24 @@
+--- qualified-three-platform-driver
++++ owned-Mac-panel-diagnostics
+@@ -235,7 +235,7 @@
+     let hexadecimal = fields.matching(
+       NSPredicate(format: "value MATCHES %@", "[0-9A-Fa-f]{6}")
+     ).firstMatch
+-    XCTAssertTrue(hexadecimal.waitForExistence(timeout: 5), application.debugDescription)
++    XCTAssertTrue(hexadecimal.waitForExistence(timeout: 5), hexadecimal.debugDescription)
+     hexadecimal.activateForPlannerJourney()
+     #if os(macOS)
+       hexadecimal.typeKey("a", modifierFlags: .command)
+@@ -245,7 +245,11 @@
+     #endif
+     XCTAssertTrue(hexadecimal.waitForPlannerValue(value))
+     hexadecimal.typeText("\n")
+-    let hierarchy = XCTAttachment(string: application.debugDescription)
++    #if os(macOS)
++      let hierarchy = XCTAttachment(string: application.windows["Colors"].debugDescription)
++    #else
++      let hierarchy = XCTAttachment(string: application.debugDescription)
++    #endif
+     hierarchy.name = "Native ColorPicker after explicit RGB input"
+     hierarchy.lifetime = .keepAlways
+     add(hierarchy)

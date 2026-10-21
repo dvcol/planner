@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-rgb-shared-picker-tablet.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792594771.107,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792594682.311,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-rgb-shared-picker-tablet.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-rgb-shared-picker-tablet"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 5 attachments for: SavedCategoryJourneyTests/testNativeColorPickerEditsPersistAcrossSaveAndRelaunch():\nFile: 2B1FF15B-4DCA-4053-9C82-2977A582B71A.png, suggested name: \"Native edited color survives Save and relaunch_0_CF73762F-3A52-4F12-9C37-93E0BF1D38E0.png\"\nFile: C07645DC-7A76-4E1E-9EDD-8661B74251B2.png, suggested name: \"Native system color selection_0_112292A4-88CD-490A-8E89-B200A2ED8645.png\"\nFile: C3F8F967-03F9-4797-A504-7034E7A2BA2F.txt, suggested name: \"Native ColorPicker after explicit RGB input_0_300D2C16-28C6-43E1-975F-DF119A3BC196.txt\"\nFile: EE0302A5-40B1-4B22-BC70-473F393FA3BC.png, suggested name: \"Native system color selection_0_C226F9A5-D06A-4D14-8096-49A896B38760.png\"\nFile: 07667506-A751-49F1-B650-CB03E72873EC.txt, suggested name: \"Native ColorPicker after explicit RGB input_0_329CA44D-4387-43F5-A53A-7BFE348267D0.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-rgb-shared-picker-tablet/manifest.json\n",
+    "stderr": ""
+  }
+]

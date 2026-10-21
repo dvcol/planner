@@ -1,0 +1,62 @@
+{
+  "scope": "Completed exploratory native panel inspections; production data qualification uses the separate RGB save/edit/relaunch journey.",
+  "rawDiagnosticsRetainedLocally": true,
+  "rows": [
+    {
+      "phase": "native-label-mac-rgb-panel-inspection-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "savedDataAcceptanceCredit": false,
+      "source-sha256.jsonSha256": "342a254b3cc57d9d23dec929d2b5c32e9337b07e279bb4296530f49ba28ca335",
+      "build.log.gzSha256": "5ea62a5413620d30b44713c55f99195c0b60f5a4a9cd0ee1bb6c3402812d7fb1"
+    },
+    {
+      "phase": "native-label-mac-rgb-panel-inspection",
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "savedDataAcceptanceCredit": false,
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "source-sha256.jsonSha256": "342a254b3cc57d9d23dec929d2b5c32e9337b07e279bb4296530f49ba28ca335",
+      "test.log.gzSha256": "eefd2612908f604f0abcc7442511bcec3c563daa01b9b42cb9355872f861c5b1"
+    },
+    {
+      "phase": "native-label-mac-rgb-sliders-inspection-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "savedDataAcceptanceCredit": false,
+      "source-sha256.jsonSha256": "0923c647595c8456cf5d4c376ccbfef8f1112035eedc0b533cd6ae2a39daf20c",
+      "build.log.gzSha256": "5940655ce75a1b2ac58f06e40226ba5b9e123a9bdbf8f20bb023861ec498a99f"
+    },
+    {
+      "phase": "native-label-mac-rgb-sliders-inspection",
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "savedDataAcceptanceCredit": false,
+      "testCounts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "source-sha256.jsonSha256": "0923c647595c8456cf5d4c376ccbfef8f1112035eedc0b533cd6ae2a39daf20c",
+      "test.log.gzSha256": "15e2321b3868645c302659d05fd7182877534585aac7ac5bea25c36219b254d1"
+    }
+  ]
+}

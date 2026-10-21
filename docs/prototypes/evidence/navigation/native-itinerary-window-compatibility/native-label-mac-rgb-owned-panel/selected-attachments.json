@@ -1,0 +1,59 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "971C3947-35CC-482D-8132-23008AAB8A70.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native edited color survives Save and relaunch_0_246DE01D-83D4-427C-AC85-F266B9D915F0.png",
+      "timestamp": 1792595032.741,
+      "retainedFileName": "971C3947-35CC-482D-8132-23008AAB8A70.png",
+      "sha256": "2c3f781bd1c6ef3a5b1e4ed54f0c5f4b757836f360c135c68f95b59be55e1616"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "63E130DC-9992-483C-A284-A6D4F3121AB9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_21D1B3BB-C4D5-40E6-B03E-B563A364FD36.png",
+      "timestamp": 1792595010.817,
+      "retainedFileName": "63E130DC-9992-483C-A284-A6D4F3121AB9.png",
+      "sha256": "5f2b4c06ae53f1979b8df353bdf4af95ff9f4437f4e01e71782dbbc33db72674"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "DE605C73-70B2-450E-9106-EE192E13F852.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker after explicit RGB input_0_6BE763D6-EDDE-49AE-8AC6-47B495238888.txt",
+      "timestamp": 1792595010.794,
+      "retainedFileName": "DE605C73-70B2-450E-9106-EE192E13F852.txt.gz",
+      "sha256": "4580fc61523988ba6429601c679c64d145afa73e8a04f25ba25b274a4974c977"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "AC08B10A-84CB-4F29-8A28-A948089299E6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_A31C972C-B79A-4766-B3E6-DB612C4C6BBA.png",
+      "timestamp": 1792594995.862,
+      "retainedFileName": "AC08B10A-84CB-4F29-8A28-A948089299E6.png",
+      "sha256": "960f21f2860f26b888ad67b22ed5aa0a4f40a4428cfaf7b2a6c648ec5bf17bb3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "4FA26E50-47C3-4D9F-B831-80B2EAE424C5.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker after explicit RGB input_0_259F663B-B81D-4B60-A9E1-6ECA6FB5BB72.txt",
+      "timestamp": 1792594995.836,
+      "retainedFileName": "4FA26E50-47C3-4D9F-B831-80B2EAE424C5.txt.gz",
+      "sha256": "634fe54a268a58ea7b7c7ad48eb46e0b5dbd57c808de1a518e83763a9e6f947f"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-rgb-shared-picker-phone.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792594643.289,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792594558.187,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-rgb-shared-picker-phone.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-rgb-shared-picker-phone"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 5 attachments for: SavedCategoryJourneyTests/testNativeColorPickerEditsPersistAcrossSaveAndRelaunch():\nFile: 8A52C880-8BE1-4E39-B1F5-D5513D0A88A0.png, suggested name: \"Native edited color survives Save and relaunch_0_CAFC5097-005A-407D-A5CD-F4C93FD564D1.png\"\nFile: 2766C034-F078-4EFF-833C-C978810C8C2D.png, suggested name: \"Native system color selection_0_F59CD207-903C-434D-A4BB-74898C45C292.png\"\nFile: FDE31831-1F54-4F41-A4B4-0A6D104F878E.txt, suggested name: \"Native ColorPicker after explicit RGB input_0_60DBB920-544C-4F83-9FBB-F210C7AE0925.txt\"\nFile: 68067E55-FB63-4E4E-BF30-AFA090BB7ED3.png, suggested name: \"Native system color selection_0_69E488E1-4E7F-48FD-A6DE-79E2ED56E640.png\"\nFile: 39B4C89A-8F20-40E5-BE0C-72BB66BBD920.txt, suggested name: \"Native ColorPicker after explicit RGB input_0_FCE9F943-66AD-40C4-9C6A-E330850F0F13.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-rgb-shared-picker-phone/manifest.json\n",
+    "stderr": ""
+  }
+]

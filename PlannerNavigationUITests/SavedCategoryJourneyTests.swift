@@ -158,75 +158,112 @@ final class SavedCategoryJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Cleared category color remains absent after relaunch")
   }
 
-  #if os(iOS)
-    func testNativeColorPickerEditsPersistAcrossSaveAndRelaunch() {
-      continueAfterFailure = false
-      let application = XCUIApplication()
-      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
-      application.launchSavedPlannerJourney()
-      openCategories(application)
-      newCategory(application)
-      let name = application.textFields["saved.category.name"]
-      XCTAssertTrue(name.waitForExistence(timeout: 5))
-      name.activateForPlannerJourney()
-      name.typeText("Native selected color")
+  func testNativeColorPickerEditsPersistAcrossSaveAndRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openCategories(application)
+    newCategory(application)
+    let name = application.textFields["saved.category.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Native selected color")
+    #if os(macOS)
+      let useColor = application.switches["saved.category.color.enabled"]
+    #else
       let useColor = application.switches["saved.category.color.enabled"].switches.firstMatch
-      XCTAssertTrue(useColor.waitForExistence(timeout: 5))
-      useColor.activateForPlannerJourney()
-      setNativeHexColor("4080C0", application: application)
-      application.plannerElement("saved.category.save").activateForPlannerJourney()
-      let category = categoryRow(named: "Native selected color", in: application)
-      XCTAssertTrue(category.waitForExistence(timeout: 10))
-      category.activateForPlannerJourney()
-      XCTAssertTrue(useColor.waitForExistence(timeout: 5))
-      setNativeHexColor("204060", application: application)
-      application.plannerElement("saved.category.save").activateForPlannerJourney()
-      XCTAssertTrue(category.waitForExistence(timeout: 10))
-      application.plannerElement("saved.categories.done").activateForPlannerJourney()
-      application.terminate()
-      application.launchSavedPlannerJourney()
-      openCategories(application)
-      category.activateForPlannerJourney()
-      XCTAssertTrue(useColor.waitForExistence(timeout: 5))
-      let color = application.descendants(matching: .any).matching(
-        identifier: "saved.category.color"
-      ).firstMatch
-      color.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
-      XCTAssertTrue(application.otherElements["UIColorPicker"].waitForExistence(timeout: 5))
-      application.buttons["Sliders"].activateForPlannerJourney()
+    #endif
+    XCTAssertTrue(useColor.waitForExistence(timeout: 5))
+    useColor.activateForPlannerJourney()
+    setNativeHexColor("4080C0", application: application)
+    application.plannerElement("saved.category.save").activateForPlannerJourney()
+    let category = categoryRow(named: "Native selected color", in: application)
+    XCTAssertTrue(category.waitForExistence(timeout: 10))
+    category.activateForPlannerJourney()
+    XCTAssertTrue(useColor.waitForExistence(timeout: 5))
+    setNativeHexColor("204060", application: application)
+    application.plannerElement("saved.category.save").activateForPlannerJourney()
+    XCTAssertTrue(category.waitForExistence(timeout: 10))
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openCategories(application)
+    category.activateForPlannerJourney()
+    XCTAssertTrue(useColor.waitForExistence(timeout: 5))
+    openNativeColorPicker(application)
+    #if os(macOS)
+      let panel = application.windows["Colors"]
+      XCTAssertTrue(panel.textFields["red"].waitForPlannerValue("32"), panel.debugDescription)
+      XCTAssertTrue(panel.textFields["green"].waitForPlannerValue("64"), panel.debugDescription)
+      XCTAssertTrue(panel.textFields["blue"].waitForPlannerValue("96"), panel.debugDescription)
+    #else
       XCTAssertTrue(application.textFields["sliderRed"].waitForPlannerValue("32"))
       XCTAssertTrue(application.textFields["sliderGreen"].waitForPlannerValue("64"))
       XCTAssertTrue(application.textFields["sliderBlue"].waitForPlannerValue("96"))
-      recordScreenshot(application, name: "Native edited color survives Save and relaunch")
-      dismissNativeColorPicker(application)
-      application.plannerElement("saved.category.cancel").activateForPlannerJourney()
-    }
+    #endif
+    recordScreenshot(application, name: "Native edited color survives Save and relaunch")
+    dismissNativeColorPicker(application)
+    application.plannerElement("saved.category.cancel").activateForPlannerJourney()
+  }
 
-    private func setNativeHexColor(_ value: String, application: XCUIApplication) {
-      let color = application.descendants(matching: .any).matching(
-        identifier: "saved.category.color"
-      ).firstMatch
-      XCTAssertTrue(color.waitForExistence(timeout: 5))
+  private func openNativeColorPicker(_ application: XCUIApplication) {
+    let color = application.plannerElement("saved.category.color")
+    XCTAssertTrue(color.waitForExistence(timeout: 5))
+    #if os(macOS)
+      color.activateForPlannerJourney()
+      let panel = application.windows["Colors"]
+      XCTAssertTrue(panel.waitForExistence(timeout: 5))
+      application.activate()
+      panel.buttons["Color Sliders"].activateForPlannerJourney()
+      panel.popUpButtons.firstMatch.activateForPlannerJourney()
+      panel.menuItems["RGB Sliders"].activateForPlannerJourney()
+    #else
       color.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
       XCTAssertTrue(application.otherElements["UIColorPicker"].waitForExistence(timeout: 5))
       application.buttons["Sliders"].activateForPlannerJourney()
-      let hexadecimal = application.textFields.matching(
-        NSPredicate(format: "value MATCHES %@", "[0-9A-Fa-f]{6}")
-      ).firstMatch
-      XCTAssertTrue(hexadecimal.waitForExistence(timeout: 5))
-      hexadecimal.activateForPlannerJourney()
-      hexadecimal.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 6) + value)
-      XCTAssertTrue(hexadecimal.waitForPlannerValue(value))
-      hexadecimal.typeText("\n")
-      let hierarchy = XCTAttachment(string: application.debugDescription)
-      hierarchy.name = "Native ColorPicker after explicit RGB input"
-      hierarchy.lifetime = .keepAlways
-      add(hierarchy)
-      recordScreenshot(application, name: "Native system color selection")
-      dismissNativeColorPicker(application)
-    }
+    #endif
+  }
 
-    private func dismissNativeColorPicker(_ application: XCUIApplication) {
+  private func setNativeHexColor(_ value: String, application: XCUIApplication) {
+    openNativeColorPicker(application)
+    #if os(macOS)
+      let fields = application.windows["Colors"].textFields
+    #else
+      let fields = application.textFields
+    #endif
+    let hexadecimal = fields.matching(
+      NSPredicate(format: "value MATCHES %@", "[0-9A-Fa-f]{6}")
+    ).firstMatch
+    XCTAssertTrue(hexadecimal.waitForExistence(timeout: 5), hexadecimal.debugDescription)
+    hexadecimal.activateForPlannerJourney()
+    #if os(macOS)
+      hexadecimal.typeKey("a", modifierFlags: .command)
+      hexadecimal.typeText(value)
+    #else
+      hexadecimal.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 6) + value)
+    #endif
+    XCTAssertTrue(hexadecimal.waitForPlannerValue(value))
+    hexadecimal.typeText("\n")
+    #if os(macOS)
+      let hierarchy = XCTAttachment(string: application.windows["Colors"].debugDescription)
+    #else
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+    #endif
+    hierarchy.name = "Native ColorPicker after explicit RGB input"
+    hierarchy.lifetime = .keepAlways
+    add(hierarchy)
+    recordScreenshot(application, name: "Native system color selection")
+    dismissNativeColorPicker(application)
+  }
+
+  private func dismissNativeColorPicker(_ application: XCUIApplication) {
+    #if os(macOS)
+      let panel = application.windows["Colors"]
+      XCTAssertTrue(panel.waitForExistence(timeout: 5))
+      panel.buttons["_XCUI:CloseWindow"].activateForPlannerJourney()
+      XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
+    #else
       let picker = application.otherElements["UIColorPicker"].firstMatch
       XCTAssertTrue(picker.waitForExistence(timeout: 5))
       let close = application.buttons["close"].firstMatch
@@ -239,9 +276,8 @@ final class SavedCategoryJourneyTests: XCTestCase {
         dismissRegion.activateForPlannerJourney()
       }
       XCTAssertTrue(picker.waitForNonExistence(timeout: 5))
-    }
-
-  #endif
+    #endif
+  }
 
   private func categoryRow(named name: String, in application: XCUIApplication) -> XCUIElement {
     application.descendants(matching: .any).matching(

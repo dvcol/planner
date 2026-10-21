@@ -1,0 +1,97 @@
+{
+  "sourceInputs": 1061,
+  "epochs": [
+    {
+      "phase": "native-label-mac-rgb-persistence-build",
+      "testOnlySourceDifferences": [
+        "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+      ]
+    },
+    {
+      "phase": "native-label-mac-rgb-persistence",
+      "testOnlySourceDifferences": [
+        "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+      ],
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    },
+    {
+      "phase": "native-label-rgb-shared-picker-phone",
+      "testOnlySourceDifferences": [
+        "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+      ],
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    },
+    {
+      "phase": "native-label-rgb-shared-picker-tablet",
+      "testOnlySourceDifferences": [
+        "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+      ],
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    },
+    {
+      "phase": "native-label-mac-rgb-owned-panel-build",
+      "testOnlySourceDifferences": []
+    },
+    {
+      "phase": "native-label-mac-rgb-owned-panel",
+      "testOnlySourceDifferences": [],
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/native-label-appearance.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-label-appearance.md docs/open-decisions.md\nLinting: 2 files\nSummary: 0 issues in 0 files\nDone in 414ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "finalOwnWindowReadbackCaptureInspected": true
+}

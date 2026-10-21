@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-mac-rgb-persistence.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792594520.199,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792594441.456,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-mac-rgb-persistence.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-mac-rgb-persistence"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 5 attachments for: SavedCategoryJourneyTests/testNativeColorPickerEditsPersistAcrossSaveAndRelaunch():\nFile: CB5F71CA-0C6A-4637-B9B6-A832307D2ECF.png, suggested name: \"Native edited color survives Save and relaunch_0_AD81F887-C177-449C-813D-DAADF490CB5A.png\"\nFile: E10B6ACF-EC97-4566-8BAE-880874CC19BA.png, suggested name: \"Native system color selection_0_7907F9BC-C484-4A19-9572-BFB202832D1B.png\"\nFile: CF3C0AA1-E341-448C-ABF2-A511BFECD6C9.txt, suggested name: \"Native ColorPicker after explicit RGB input_0_B98FBFBB-27D8-43F3-9184-9C4C7BC604BE.txt\"\nFile: 9955092C-093B-4C98-9700-AE054AD9F855.png, suggested name: \"Native system color selection_0_671EC054-065E-4631-B90F-8194490B9363.png\"\nFile: AF7CCE7B-7055-416F-AA9A-6E0F3C8CB43C.txt, suggested name: \"Native ColorPicker after explicit RGB input_0_72CAA88B-B083-43EB-BB8E-2AC09ABD61B6.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-mac-rgb-persistence/manifest.json\n",
+    "stderr": ""
+  }
+]
