@@ -1,0 +1,43 @@
+{
+  "evidenceCommit": "248334080b32153761a4a416f158691cd4238ca7",
+  "verifiedFrozenPackageInputs": 739,
+  "verifiedRawSummaries": 2,
+  "verifiedOriginalCompressedLogs": 6,
+  "removed": [
+    {
+      "path": "/private/tmp/PlannerCaptureTransportIOSDerivedData",
+      "regularFileCount": 5050,
+      "nominalFileBytes": 437759557,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerCaptureTransportMacBuild",
+      "regularFileCount": 5331,
+      "nominalFileBytes": 483645089,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerCaptureTransportIOS.xcresult",
+      "regularFileCount": 50,
+      "nominalFileBytes": 359103,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerCaptureTransport-socket-final-ios.xcresult",
+      "regularFileCount": 58,
+      "nominalFileBytes": 330901,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    }
+  ],
+  "nominalFileBytes": 922094650,
+  "metric": "Regular-file logical bytes, not a promise of equal APFS free-space change.",
+  "preserved": "Committed evidence, raw text logs, the transport source copy retained by DTServiceHub cwd, app/UI frozen source and products, other package caches, Simulator data and Planner datasets.",
+  "retainedSource": {
+    "path": "/private/tmp/PlannerCaptureTransportIOSSource",
+    "reason": "Preflight found DTServiceHub with cwd in this source. No deletion occurred in that preflight; the helper was not stopped."
+  }
+}
