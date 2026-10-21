@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-title-state-current-mac.xcresult"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-title-state-current-mac.xcresult"
+    ],
+    "exitCode": 0
+  }
+]
