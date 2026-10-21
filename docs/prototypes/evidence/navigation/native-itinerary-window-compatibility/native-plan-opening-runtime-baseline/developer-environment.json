@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "xcode-select",
+      "-p"
+    ],
+    "exitCode": 0,
+    "stdout": "/Library/Developer/CommandLineTools\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "--find",
+      "simctl"
+    ],
+    "exitCode": 72,
+    "stdout": "",
+    "stderr": "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH\n"
+  },
+  {
+    "command": [
+      "launchctl",
+      "getenv",
+      "DEVELOPER_DIR"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "launchctl",
+      "list"
+    ],
+    "exitCode": 0,
+    "stdout": "-\t0\tcom.apple.CoreSimulator.SimLaunchHost-x86\n12965\t0\tcom.apple.CoreSimulator.SimDevice.FBD72DAB-1D40-4E64-912D-7F9763E00446\n12660\t0\tcom.apple.CoreSimulator.SimulatorTrampoline\n12658\t0\tcom.apple.CoreSimulator.CoreSimulatorService\n97031\t-9\tcom.apple.testmanagerd\n12709\t0\tcom.apple.CoreSimulator.SimDevice.2A49C66C-C8A4-435F-B98A-9A90706780DE\n12661\t0\tcom.apple.CoreSimulator.SimLaunchHost-arm64",
+    "stderr": ""
+  }
+]

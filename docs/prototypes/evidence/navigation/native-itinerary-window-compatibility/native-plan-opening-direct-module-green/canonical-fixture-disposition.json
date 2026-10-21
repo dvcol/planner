@@ -1,0 +1,27 @@
+{
+  "standardVerifierOutcome": "rejected noncanonical Foundation /var alias; original failure retained",
+  "testResult": "13 passing tests",
+  "aliasRule": "Only /var/folders to /private/var/folders; no leaf or ownership symlinks",
+  "hostProcessIdentifiers": [
+    18832
+  ],
+  "removedCanonicalDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/1EB48435-5721-4B78-84B1-B58EC21F3805",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/FE3AA083-CC23-46D8-9FE7-426F1F590312",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/7393CB9F-A8A3-4964-A69D-5DB49965840E",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/D2EE9264-8541-4F73-A01A-1EB9388D261F",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/356D9F48-75A6-4722-A041-7584B7BFAD8A",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/8C84D81A-920D-41C6-A2B2-1F078E823582",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/5F0E665A-0582-47F7-AD64-557586E9AD7A",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/C6CBCC6F-C2FB-4058-94BF-8E9BAF5B3F80",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/A5B8D708-960A-4EC3-A543-6C67E6DF2B67",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/E8D67FC8-22CB-4186-9535-86CFE6CB6B66",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/5C9FB20F-3F9E-4951-9B1D-9AE62313B312",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/45E7AAC8-DDC4-4716-B997-3ECC6BA5CE58",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/3B69B663-3538-4A99-96B7-E413BFDC90A9",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/5C42951C-CC46-4C1E-9CB3-ECCF55AA6BFF",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/072AEA79-29DE-43B4-8B47-E79315B94C17",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/EE9E1DCE-4BD5-4CC3-BD8D-F00E5E04381C",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerIntentFixtures/2BBF32DD-BEEE-40F0-97A2-9D78D2680BA6"
+  ]
+}
