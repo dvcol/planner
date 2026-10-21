@@ -1,6 +1,6 @@
 # Native Schedule workflow review
 
-Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. [Timed choices are implemented locally](prototypes/native-timed-schedule-options.md). Concrete occurrence and full form-edit inputs remain the next decisions.
+Status: Q118 A and Q119 A accepted on 21 October 2026. Four focused creation actions and the timed-provider production test boundary are approved. [Timed choices are implemented locally](prototypes/native-timed-schedule-options.md). Q124 A and Q125 A now approve the [concrete civil inputs and focused replacement actions](native-schedule-civil-intent-contract-review.md).
 
 ## Context and goal
 
@@ -36,6 +36,6 @@ Q112 names Intent invocation and EntityQuery interfaces. It does not name Dynami
 
 ## Readiness and required evidence
 
-Implement the approved four-action layout and timed-only choices at the accepted boundaries. Settle the concrete occurrence and full form-edit inputs before implementing those inputs. Existing temporal policies remain unchanged.
+Implement the approved four-action layout and timed-only choices at the accepted boundaries. Implement the concrete occurrence inputs and two full-replacement actions under Q124 A and Q125 A. Existing temporal policies remain unchanged.
 
 After approval, implement vertical failing/passing slices at the selected production interfaces. Test exact IDs/forms, invalid/incomplete civil input, applicable temporal rules, source state preservation, cancellation, unavailable storage and real recovery failures. Inspect actual parameters/conditional metadata, compare existing contracts and compile the same inputs for Mac, Simulator and unsigned device products. Do not convert compiler facts into actual system-picker qualification.

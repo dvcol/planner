@@ -14,7 +14,7 @@ The [nonempty graph follow-up](prototypes/native-backup-graph-conflicts.md) qual
 
 The [referenced-Item restoration follow-up](prototypes/native-backup-item-restoration.md) adds a native rejection/restoration journey and corrects an iPad presentation stall after Cancel. The review consumes its displayed shared error on dismissal; saved data and recovery blocks are unchanged. Final phone/dark iPad restoration and successful-import regression pass, preserving original public identities and independent completion. Mac compilation and affected lint also pass. Three earlier restoration failures remain recorded; no map gate is broadly closed by this slice.
 
-The user accepted A for all eight choices below on 21 October 2026. Their implementations and required qualification remain open. Q118 still leads to occurrence/form-input review; Q122 still requires a concrete single-window handoff contract.
+The user accepted A for all eight choices below on 21 October 2026. Local implementation checkpoints are linked below. The user has also accepted Q124 A, Q125 A and Q126 A, approving the concrete Schedule and plan-opening contracts.
 
 | Question | Accepted decision | Choice and consequence | Concrete review |
 | --- | --- | --- | --- |
@@ -35,11 +35,11 @@ The user accepted A for all eight choices below on 21 October 2026. Their implem
 
 [Live saved-content properties](prototypes/native-deferred-content-properties.md) implement Q117 A locally. Seven getter cases and 69 affected adapter cases pass, with matching platform builds and preserved prior contracts. Actual system property fetching, including cold dependency initialization, remains open.
 
-## Next frontier after the approvals
+## Accepted concrete follow-ups
 
-The three follow-up questions are open; none blocks independent accepted work.
+The user accepted A for Q124, Q125 and Q126 on 21 October 2026. No question in this frontier remains unanswered. Implementation and qualification continue under these contracts.
 
-| Question | Concrete decision | Recommendation and impact | Review |
+| Question | Concrete decision | Accepted choice and impact | Review |
 | --- | --- | --- | --- |
 | Q124 | Civil inputs for the four approved Schedule creation actions | A: native date/dateTime fields, a separate planning zone, and explicit Earlier/Later choices for repeated timed endpoints. Reject normalization and unsupported seconds. | [Civil input contract](native-schedule-civil-intent-contract-review.md#q124-concrete-creation-inputs) |
 | Q125 | Full Schedule replacement action layout | A: two focused Timed/All Day replacement actions. Retain Schedule/owner identity; omitted End clears it. | [Replacement actions](native-schedule-civil-intent-contract-review.md#q125-full-schedule-replacement) |
@@ -47,7 +47,7 @@ The three follow-up questions are open; none blocks independent accepted work.
 
 ## Remaining gates
 
-- Implement Q115 and Q117–Q123 under their accepted A choices. Settle the next concrete Schedule input and single-window handoff contracts before their dependent implementation. Missing native features are not signing failures.
+- Q115, Q117, Q119 and Q123 have local checkpoints above. Implement Q120 bulk completion, Q118/Q124/Q125 Schedule creation/replacement, Q121 label appearance and Q122/Q126 directed plan opening. Their concrete contracts and test boundaries are approved. Missing native features are not signing failures.
 - The latest Mac UI runner times out enabling automation before any journey starts. App compilation succeeds, but actual window, editing and text-Undo interactions remain unqualified. No evidence establishes that paid signing fixes this runner error.
 - Actual Shortcuts/Siri execution and picker injection remain unqualified. Apple's system test service rejected the Customer build; passing production-interface tests does not replace system invocation or establish that a paid account fixes it.
 - Signed/shared storage, Agent Control against that storage, CloudKit convergence and account transitions, installed Share extensions and physical-device performance remain open. Signing/account setup is deferred at the user's request.

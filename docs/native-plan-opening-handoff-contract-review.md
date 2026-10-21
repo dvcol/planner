@@ -1,6 +1,6 @@
 # Directed native plan-opening handoff
 
-Status: Q126 proposed after Q122 A. The foreground-window policy is accepted; the concrete production handoff and its additional test boundary await review.
+Status: Q126 A accepted on 21 October 2026. The concrete production handoff and additional test boundary below are approved. Implementation and actual window/system qualification remain open.
 
 ## Context and starting state
 
@@ -27,7 +27,7 @@ Recommend A. It makes delayed navigation truthful and testable while retaining a
 ## Definition of ready
 
 - Q122 A accepts one foreground main window, other-window isolation and Q91 draft protection.
-- Q126 settles the concrete coordinator lifecycle and added production test seam before its tests.
+- Q126 A approves the concrete coordinator lifecycle and additional production test seam.
 - Installed SDK and existing scene/draft code establish available APIs, not successful cold/warm native delivery. Signing stays deferred.
 
 ## Required tests and validation

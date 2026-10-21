@@ -1,6 +1,6 @@
 # Opening plans and App Shortcut discovery
 
-Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. [The four-shortcut provider is implemented locally](prototypes/native-app-shortcut-discovery.md). The concrete single-window handoff and any added test boundary still require review.
+Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. [The four-shortcut provider is implemented locally](prototypes/native-app-shortcut-discovery.md). Q126 A now approves the [directed handoff and production coordinator tests](native-plan-opening-handoff-contract-review.md).
 
 ## Context and starting state
 
@@ -46,7 +46,7 @@ Recommendation: A. This adds discovery metadata for existing actions, with no ne
 
 ## Definition of ready
 
-Both choices are explicitly accepted. Implement the four-shortcut provider independently while preparing the concrete single-window handoff for review. Signing and account setup stay deferred. The existing Q112 production Intent/EntityQuery boundary is approved; any additional controller or scene test boundary requires its own concrete review before tests are written.
+Both choices are explicitly accepted. The four-shortcut provider is locally implemented. Implement the single-window handoff under Q126 A. Signing and account setup stay deferred. The existing Q112 production Intent/EntityQuery boundary is approved; Q126 A approves direct production coordinator tests; actual scene/system journeys remain separate.
 
 ## Required tests and definition of done
 
