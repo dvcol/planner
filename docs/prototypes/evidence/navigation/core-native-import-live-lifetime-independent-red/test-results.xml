@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.7375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.095799208">
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource()" time="0.095444916">
+            <failure message="Issue recorded (error): Skip must retain the live Item and admit independent data: .failed(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: Optional(&quot;/sources/0/lifetimeId&quot;), message: &quot;Source-lifetime import reconciliation is not implemented yet.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

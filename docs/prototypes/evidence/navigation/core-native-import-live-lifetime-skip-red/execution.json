@@ -1,0 +1,17 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.07,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.082869792,
+      "failures": [
+        "Issue recorded (error): Skip must retain the current restored Item: .failed(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: Optional(\"/sources/0/lifetimeId\"), message: \"Source-lifetime import reconciliation is not implemented yet.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ]
+}

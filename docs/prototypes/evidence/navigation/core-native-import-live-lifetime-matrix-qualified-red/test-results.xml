@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.95e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="10" skipped="0" time="0.300971083">
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)" time="0.300637417">
+            <failure message="Issue recorded (error): Skip must review the older item without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older list without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older category without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older tag without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older itinerary without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older list without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older tag without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older item without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older itinerary without replacing its restored graph."/>
+            <failure message="Issue recorded (error): Skip must review the older category without replacing its restored graph."/>
+        </testcase>
+    </testsuite>
+</testsuites>

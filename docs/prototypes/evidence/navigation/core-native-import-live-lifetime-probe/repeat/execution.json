@@ -1,0 +1,6 @@
+{
+  "exitCode": 1,
+  "testStarted": false,
+  "qualification": false,
+  "reason": "Preflight expected SwiftPM task-display names instead of the actual native test executable filenames."
+}

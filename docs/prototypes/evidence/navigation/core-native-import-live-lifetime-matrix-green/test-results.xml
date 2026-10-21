@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.4417e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="1.03873125">
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)" time="1.03824025"/>
+    </testsuite>
+</testsuites>

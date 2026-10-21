@@ -386,11 +386,6 @@ func plannerResolveImportReview(
       if case .item(let item) = source, item.globalDone { globalFlagsChanged = true }
       continue
     }
-    guard source.importBinding.lifetimeId == existing.importBinding.lifetimeId else {
-      throw PlannerFailure(
-        "unavailable", "Source-lifetime import reconciliation is not implemented yet.",
-        propertyPath: "/sources/\(index)/lifetimeId")
-    }
     let incomingFields = projection.fields(for: source)
     let currentFields = currentProjection.fields(for: existing)
     let changedFields = incomingFields.keys.filter { name in
@@ -411,12 +406,17 @@ func plannerResolveImportReview(
     if mode == .skip {
       skippedConflicts.append(
         .init(
-          owner: source.importBinding, reasonCode: "matchingRecordConflict",
+          owner: existing.importBinding, reasonCode: "matchingRecordConflict",
           dependencies: dependencies,
           propertyPaths: propertyPaths,
           before: before, after: before))
       changes += existingReferences.map { .init(change: .retain, reference: $0.reference) }
       continue
+    }
+    guard source.importBinding.lifetimeId == existing.importBinding.lifetimeId else {
+      throw PlannerFailure(
+        "unavailable", "Source-lifetime import reconciliation is not implemented yet.",
+        propertyPath: "/sources/\(index)/lifetimeId")
     }
     replacements.append(
       .init(

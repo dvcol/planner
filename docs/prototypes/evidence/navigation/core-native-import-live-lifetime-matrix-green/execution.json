@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 13.368,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 1.03824025,
+      "failures": [],
+      "skipped": false
+    }
+  ]
+}

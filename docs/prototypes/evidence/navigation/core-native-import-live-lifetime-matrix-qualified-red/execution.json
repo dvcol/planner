@@ -1,0 +1,26 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 14.212,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.300637417,
+      "failures": [
+        "Issue recorded (error): Skip must review the older item without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older list without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older category without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older tag without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older itinerary without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older list without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older tag without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older item without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older itinerary without replacing its restored graph.",
+        "Issue recorded (error): Skip must review the older category without replacing its restored graph."
+      ],
+      "skipped": false
+    }
+  ]
+}

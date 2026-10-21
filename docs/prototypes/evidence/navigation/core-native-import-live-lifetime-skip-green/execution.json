@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 12.794,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.150181583,
+      "failures": [],
+      "skipped": false
+    }
+  ]
+}

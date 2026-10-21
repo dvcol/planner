@@ -1,0 +1,17 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 14.546,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.073934125,
+      "failures": [
+        "Issue recorded (error): Skip must retain the live Item and admit independent data: .failed(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: Optional(\"/sources/0/lifetimeId\"), message: \"Source-lifetime import reconciliation is not implemented yet.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ]
+}

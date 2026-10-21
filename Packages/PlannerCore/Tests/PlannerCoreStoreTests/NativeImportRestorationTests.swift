@@ -3,6 +3,131 @@ import PlannerCore
 import Testing
 
 struct NativeImportRestorationTests {
+  @Test func skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeImportRestorationTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Museum", notes: "Keep current notes")))
+      ).outcome,
+      let item = created.generated.first,
+      case .exported(let originalData) = await planner.exportData(session: session),
+      case .decoded(let original) = planner.decodeImport(originalData),
+      case .reviewed(let deletion) = await planner.prepareReview(
+        session: session, command: .deleteSource(source: item)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: deletion.command,
+          reviewToken: deletion.reviewToken)
+      ).outcome,
+      case .reviewed(let restoration) = await planner.prepareReview(
+        session: session,
+        command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: restoration.command,
+          reviewToken: restoration.reviewToken)
+      ).outcome,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(scope: .globalItem(itemId: item.id), done: true))
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let current) = planner.decodeImport(before),
+      let currentItem = current.backup.items.first
+    else { throw CancellationError() }
+    var incoming = try #require(JSONSerialization.jsonObject(with: originalData) as? [String: Any])
+    let fixture = try #require(
+      JSONSerialization.jsonObject(with: nativeImportFixtureData()) as? [String: Any])
+    let fixtureSources = try #require(fixture["sources"] as? [[String: Any]])
+    let independentTag = try #require(fixtureSources.first { $0["kind"] as? String == "tag" })
+    let tagIdentifier = try #require(independentTag["id"] as? String)
+    let tagUUID = try #require(UUID(uuidString: tagIdentifier))
+    var sources = try #require(incoming["sources"] as? [[String: Any]])
+    sources.append(independentTag)
+    incoming["sources"] = sources
+    guard
+      case .decoded(let backup) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: incoming))
+    else { throw CancellationError() }
+    let reviewOutcome = await planner.prepareReview(
+      session: session, command: .applyImport(backup: backup, mode: .skip))
+    guard case .reviewed(let review) = reviewOutcome else {
+      Issue.record("Skip must retain the live Item and admit independent data: \(reviewOutcome)")
+      return
+    }
+    let details = try #require(review.impact.importDetails)
+    #expect(details.imports.map(\.owner.id) == [tagUUID])
+    #expect(details.skippedConflicts.map(\.owner.id) == [item.id])
+    #expect(details.skippedConflicts.first?.owner.lifetimeId == currentItem.lifetimeId)
+    #expect(details.replacements.isEmpty && details.restorations.isEmpty)
+    #expect(details.skippedDependents.isEmpty)
+    guard case .exported(let afterReview) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    #expect(afterReview == before)
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(let result, .complete(let checkpoint)) = response.outcome,
+      case .exported(let after) = await planner.exportData(session: session),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else {
+      Issue.record("Mixed Skip must apply and independently recover together: \(response)")
+      return
+    }
+    var actual = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    let recovery = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    #expect(NSDictionary(dictionary: recovery).isEqual(to: actual))
+    let actualSources = try #require(actual["sources"] as? [[String: Any]])
+    let importedTag = try #require(
+      actualSources.first { $0["id"] as? String == tagIdentifier })
+    #expect(NSDictionary(dictionary: importedTag).isEqual(to: independentTag))
+    actual["sources"] = actualSources.filter { $0["id"] as? String != tagIdentifier }
+    let expectedCurrent = try #require(
+      JSONSerialization.jsonObject(with: before) as? [String: Any])
+    #expect(NSDictionary(dictionary: actual).isEqual(to: expectedCurrent))
+    #expect(!result.generated.contains(item))
+    #expect(result.importSummary?.imports.map(\.owner.id) == [tagUUID])
+    #expect(
+      result.importSummary?.skippedConflicts.first?.owner.lifetimeId == currentItem.lifetimeId)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
+      ).outcome,
+      case .reviewed(let repeatedReview) = await reopened.prepareReview(
+        session: reopenedSession, command: .applyImport(backup: backup, mode: .skip)),
+      case .applied(let repeated, .complete) = await reopened.execute(
+        .init(
+          operationId: UUID(), session: reopenedSession, command: repeatedReview.command,
+          reviewToken: repeatedReview.reviewToken)
+      ).outcome,
+      case .exported(let repeatedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == after)
+    #expect(replayed == result && replayCheckpoint == checkpoint)
+    #expect(repeated.generated.isEmpty && repeatedData == after)
+  }
+
   @Test func foreignOwnedCandidateCannotBypassRestorationReconciliation() async throws {
     let directory = FileManager.default.temporaryDirectory
       .appendingPathComponent("PlannerNativeImportRestorationTests", isDirectory: true)
@@ -160,6 +285,43 @@ struct NativeImportRestorationTests {
       Issue.record("Apply complete \(kind) restoration: \(response)")
       return
     }
+    guard
+      case .reviewed(let olderReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: original, mode: .skip))
+    else {
+      Issue.record("Skip must review the older \(kind) without replacing its restored graph.")
+      return
+    }
+    let restoredBackupObject = try #require(
+      JSONSerialization.jsonObject(with: restoredData) as? [String: Any])
+    let restoredSourceRecords = try #require(restoredBackupObject["sources"] as? [[String: Any]])
+    let keptSourceRecord = try #require(
+      restoredSourceRecords.first {
+        $0["kind"] as? String == kind && $0["id"] as? String == source.id.uuidString
+      })
+    let keptLifetimeText = try #require(keptSourceRecord["lifetimeId"] as? String)
+    let keptLifetime = try #require(UUID(uuidString: keptLifetimeText))
+    let olderDetails = try #require(olderReview.impact.importDetails)
+    let keptEntry = try #require(
+      olderDetails.skippedConflicts.first {
+        $0.owner.id == source.id && $0.owner.kind == source.kind
+      })
+    #expect(keptEntry.owner.lifetimeId == keptLifetime)
+    #expect(olderDetails.imports.isEmpty && olderDetails.replacements.isEmpty)
+    #expect(olderDetails.restorations.isEmpty && olderDetails.skippedDependents.isEmpty)
+    #expect(olderDetails.referenceChanges.allSatisfy { $0.change == .retain })
+    guard case .exported(let afterOlderReview) = await planner.exportData(session: session),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: olderReview.command,
+          reviewToken: olderReview.reviewToken)
+      ).outcome,
+      case .exported(let afterOlderImport) = await planner.exportData(session: session)
+    else {
+      Issue.record("Skip must retain every restored \(kind) reference and history record.")
+      return
+    }
+    #expect(afterOlderReview == restoredData && afterOlderImport == restoredData)
     #expect(result.generated.isEmpty && result.affected.contains(source))
     #expect(
       Set(result.affectedReferences).isSuperset(
@@ -382,6 +544,31 @@ struct NativeImportRestorationTests {
     #expect(restoredItem.id == item.id && restoredItem.content.title == "Museum")
     #expect(restoredItem.content.notes == "Saved notes")
     #expect(restoredItem.lifetimeId != originalItem.lifetimeId)
+    let olderBackupReview = await planner.prepareReview(
+      session: session, command: .applyImport(backup: original, mode: .skip))
+    guard case .reviewed(let olderReview) = olderBackupReview else {
+      Issue.record("Skip must retain the current restored Item: \(olderBackupReview)")
+      return
+    }
+    let olderDetails = try #require(olderReview.impact.importDetails)
+    #expect(olderDetails.skippedConflicts.map(\.owner.id) == [item.id])
+    #expect(olderDetails.skippedConflicts.first?.owner.lifetimeId == restoredItem.lifetimeId)
+    #expect(olderDetails.skippedConflicts.first?.reasonCode == "matchingRecordConflict")
+    #expect(olderDetails.imports.isEmpty && olderDetails.replacements.isEmpty)
+    #expect(olderDetails.restorations.isEmpty && olderDetails.skippedDependents.isEmpty)
+    guard case .exported(let afterOlderReview) = await planner.exportData(session: session),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: olderReview.command,
+          reviewToken: olderReview.reviewToken)
+      ).outcome,
+      case .exported(let afterOlderImport) = await planner.exportData(session: session)
+    else {
+      Issue.record("Reviewed Skip must preserve the restored graph through execution.")
+      return
+    }
+    #expect(afterOlderReview == restoredData)
+    #expect(afterOlderImport == restoredData)
     guard
       case .rejected(let replayAuthorizationFailure) = await planner.execute(
         .init(

@@ -1,0 +1,18 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "/private/tmp/PlannerImportLifetimeAuditSource/Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerImportLifetimeAuditBuild",
+  "--jobs",
+  "1",
+  "--skip-build",
+  "--disable-xctest",
+  "--enable-swift-testing",
+  "--filter",
+  "NativeImportRestorationTests/reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime",
+  "--xunit-output",
+  "/private/tmp/PlannerImportLifetimeAuditRepeat.xml"
+]

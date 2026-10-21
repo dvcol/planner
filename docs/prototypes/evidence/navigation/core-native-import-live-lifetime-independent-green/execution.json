@@ -1,0 +1,17 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 12.457,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.120168792,
+      "failures": [
+        "Expectation failed: recovered.portableData == after (error)"
+      ],
+      "skipped": false
+    }
+  ]
+}

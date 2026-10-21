@@ -1,0 +1,93 @@
+{
+  "baseRevision": "e583d0044718c73a5da8244a2b3e759c27389bad",
+  "coreInputsMatch": 739,
+  "mobileInputsMatch": 1061,
+  "macBuildChangedFinalInputs": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportRestorationTests.swift"
+  ],
+  "finalRedDiffersOnlyInBaselineProduction": true,
+  "functionsPassed": 53,
+  "invocationsPassed": 221,
+  "parameterizedStartedAndPassedMatch": true,
+  "failures": 0,
+  "skips": 0,
+  "packets": [
+    {
+      "packet": "core-native-import-live-lifetime-affected-regression",
+      "executionSha256": "19dc4f099876fc019dc40de94c8058a2bc6acb999a4350a7a2f6151b7d37370b",
+      "exitCode": 0,
+      "caseCount": 53
+    },
+    {
+      "packet": "core-native-import-live-lifetime-independent-final-red",
+      "executionSha256": "cf87f2d636e8bde76af6bfe53d8ccad884367623ac5c4e48053f7a1164c6a6f7",
+      "exitCode": 1,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-independent-green",
+      "executionSha256": "3aeefc1c1724fda45a99e5d19092e932c3da6c593d19fd2caaa9b8fc1e29ad1c",
+      "exitCode": 1,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-independent-qualified-green",
+      "executionSha256": "a6f4b5f3708474078b090e13a4cc0a4a87aaa3ae070816579ea8c1b8efcfdf97",
+      "exitCode": 0,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-independent-red",
+      "executionSha256": "af833fe25481ca78e749b0aef98be8c22df43234320341b203c8958dc731f4e4",
+      "exitCode": 1,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-matrix-green",
+      "executionSha256": "48e1fa49c2e5198abd5e65db318d5e3b18f490f52f96cab6822c3e90017eed36",
+      "exitCode": 0,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-matrix-qualified-red",
+      "executionSha256": "d899d71c8744a81893e47efe600714a09ba0d6c03833a851d6e7a5f5043ac609",
+      "exitCode": 1,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-matrix-red",
+      "executionSha256": "2b838a135c91229542b8e720a3fa66d6dac3b8f10aea002e9b81c9212dd6252d",
+      "exitCode": 1,
+      "caseCount": 0
+    },
+    {
+      "packet": "core-native-import-live-lifetime-probe",
+      "executionSha256": "af4f97d8e309ced9917446aa648a4c32a494d6ef51b471ff4e6a13fee3f13581",
+      "exitCode": 1,
+      "caseCount": 0
+    },
+    {
+      "packet": "core-native-import-live-lifetime-restoration-regression",
+      "executionSha256": "a634dd38f92850fb1a51b8f3b77ba77747d2f27333befd0d3270bcdcb5e19d58",
+      "exitCode": 0,
+      "caseCount": 3
+    },
+    {
+      "packet": "core-native-import-live-lifetime-skip-green",
+      "executionSha256": "225db4ae12c47c408358a3d2e1eb5a5e8ab1cc3cd6c1f94ca3ceca77e451e118",
+      "exitCode": 0,
+      "caseCount": 1
+    },
+    {
+      "packet": "core-native-import-live-lifetime-skip-red",
+      "executionSha256": "c9cc27591c69cf30955fcf56cdde472f6db947203f978cff141c422121d28bb5",
+      "exitCode": 1,
+      "caseCount": 1
+    }
+  ],
+  "limits": [
+    "Mac import UI and actual title cases remain unexecuted in this follow-up.",
+    "Different-live-lifetime Overwrite and broader reconciliation remain implementation gates.",
+    "No physical, signed CloudKit or system-Intent qualification."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "file": "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+  "actualCompiledSourceSha256": "6221d0b4afb8dd56c5e819e8ad3524d0565c5c96c419c06f542b147ec77a5c65",
+  "correction": "The baseline override occurs after the runner initially captures working overlays. The retained production snapshot now comes from the unchanged executed source root and matches the native epoch manifest. The unused working overlay is separately named."
+}
