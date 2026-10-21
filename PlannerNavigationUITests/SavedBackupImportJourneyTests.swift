@@ -407,6 +407,106 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       recordImport(application, name: "Rejected unresolved backup creates no List after relaunch")
     }
 
+    func testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner label appearance backup.json", application: application)
+      let additions = application.staticTexts["saved.import.summary.additions"]
+      XCTAssertTrue(additions.waitForExistence(timeout: 15))
+      XCTAssertEqual(additions.label, "Additions, 7")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let categoryIdentifier = "saved.category.00000000-0000-4000-8000-000000000501"
+      let tagIdentifier = "saved.tag.00000000-0000-4000-8000-000000000601"
+      for (kind, identifier, newName) in [
+        ("category", categoryIdentifier, "Dining custom"), ("tag", tagIdentifier, "Weather custom"),
+      ] {
+        let row = application.plannerElement(identifier)
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        row.activateForPlannerJourney()
+        let name = application.textFields["saved.\(kind).name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 10))
+        XCTAssertEqual(
+          application.plannerElement("saved.\(kind).icon").value as? String, "Current icon")
+        let color = application.switches["saved.\(kind).color.enabled"].switches.firstMatch
+        XCTAssertTrue(color.waitForPlannerBooleanState(true))
+        name.activateForPlannerJourney()
+        let oldName = try XCTUnwrap(name.value as? String)
+        name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: oldName.count))
+        name.typeText(newName)
+        application.plannerElement("saved.\(kind).save").activateForPlannerJourney()
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        XCTAssertEqual(row.label, newName)
+      }
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      let unchangedFilename = exportBackup(application)
+      let unchanged = XCTAttachment(string: unchangedFilename)
+      unchanged.name = "Label appearance name-only delivered backup filename"
+      unchanged.lifetime = .keepAlways
+      add(unchanged)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      application.plannerElement(categoryIdentifier).activateForPlannerJourney()
+      let icon = application.plannerElement("saved.category.icon")
+      let color = application.switches["saved.category.color.enabled"].switches.firstMatch
+      XCTAssertTrue(icon.waitForExistence(timeout: 10))
+      XCTAssertEqual(icon.value as? String, "Current icon")
+      XCTAssertTrue(color.waitForPlannerBooleanState(true))
+      recordImport(
+        application, name: "Imported custom symbol and color remain after name-only Save")
+      color.activateForPlannerJourney()
+      icon.activateForPlannerJourney()
+      application.plannerElement("Default").activateForPlannerJourney()
+      application.plannerElement("saved.category.cancel").activateForPlannerJourney()
+      application.plannerElement(categoryIdentifier).activateForPlannerJourney()
+      XCTAssertTrue(icon.waitForExistence(timeout: 10))
+      XCTAssertEqual(icon.value as? String, "Current icon")
+      XCTAssertTrue(color.waitForPlannerBooleanState(true))
+      color.activateForPlannerJourney()
+      icon.activateForPlannerJourney()
+      application.plannerElement("Default").activateForPlannerJourney()
+      application.plannerElement("saved.category.save").activateForPlannerJourney()
+      XCTAssertTrue(application.plannerElement(categoryIdentifier).waitForExistence(timeout: 10))
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      let clearedFilename = exportBackup(application)
+      XCTAssertNotEqual(clearedFilename, unchangedFilename)
+      let cleared = XCTAttachment(string: clearedFilename)
+      cleared.name = "Label appearance cleared delivered backup filename"
+      cleared.lifetime = .keepAlways
+      add(cleared)
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      application.plannerElement(categoryIdentifier).activateForPlannerJourney()
+      XCTAssertTrue(icon.waitForExistence(timeout: 10))
+      XCTAssertEqual(icon.value as? String, "Default")
+      XCTAssertTrue(color.waitForPlannerBooleanState(false))
+      application.plannerElement("saved.category.cancel").activateForPlannerJourney()
+      application.plannerElement(tagIdentifier).activateForPlannerJourney()
+      XCTAssertTrue(application.plannerElement("saved.tag.icon").waitForExistence(timeout: 10))
+      XCTAssertEqual(application.plannerElement("saved.tag.icon").value as? String, "Current icon")
+      XCTAssertTrue(
+        application.switches["saved.tag.color.enabled"].switches.firstMatch
+          .waitForPlannerBooleanState(true))
+      recordImport(application, name: "Only the explicitly cleared Category loses its appearance")
+      application.plannerElement("saved.tag.cancel").activateForPlannerJourney()
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Items")
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Dining custom"].waitForExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["Weather custom"].waitForExistence(timeout: 10))
+      recordImport(application, name: "Live shared labels remain in the original Item details")
+    }
+
     func testFullGraphFileImportPreservesScopedStateAndExportsItsSavedData() {
       continueAfterFailure = false
       let application = XCUIApplication()

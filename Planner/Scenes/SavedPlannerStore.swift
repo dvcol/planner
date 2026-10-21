@@ -889,13 +889,17 @@ final class SavedPlannerStore {
     }
   }
 
-  func createLabel(_ kind: SavedLabelKind, name: String, operationIdentifier: UUID) async
+  func createLabel(
+    _ kind: SavedLabelKind, name: String, color: PlannerColor? = nil, iconName: String? = nil,
+    operationIdentifier: UUID
+  ) async
     -> PlannerEntityReference?
   {
     let command: PlannerCommand
     switch kind {
-    case .category: command = .createCategory(content: .init(name: name))
-    case .tag: command = .createTag(content: .init(name: name))
+    case .category:
+      command = .createCategory(content: .init(name: name, color: color, iconName: iconName))
+    case .tag: command = .createTag(content: .init(name: name, color: color, iconName: iconName))
     }
     let result = await executeChange(command, operationId: operationIdentifier)
     return result?.generated.first { $0.kind == kind.sourceKind }
@@ -973,18 +977,38 @@ final class SavedPlannerStore {
         expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier)
   }
 
-  func renameLabel(
-    _ label: SavedLabelSource, name: String, operationIdentifier: UUID
+  func editLabel(
+    _ label: SavedLabelSource, name: String, color: PlannerColor?, iconName: String?,
+    operationIdentifier: UUID
   ) async -> Bool {
+    let nameChange: PlannerFieldChange<String> = name == label.name ? .unchanged : .set(name)
+    let colorChange: PlannerFieldChange<PlannerColor>
+    if color == label.color {
+      colorChange = .unchanged
+    } else if let color {
+      colorChange = .set(color)
+    } else {
+      colorChange = .clear
+    }
+    let iconChange: PlannerFieldChange<String>
+    if iconName == label.iconName {
+      iconChange = .unchanged
+    } else if let iconName {
+      iconChange = .set(iconName)
+    } else {
+      iconChange = .clear
+    }
     let command: PlannerCommand
     switch label {
     case .category(let category):
       command = .editCategory(
-        sourceId: category.source.id, changes: .init(name: .set(name)),
+        sourceId: category.source.id,
+        changes: .init(name: nameChange, color: colorChange, iconName: iconChange),
         expectedFieldHashes: category.fieldHashes)
     case .tag(let tag):
       command = .editTag(
-        sourceId: tag.source.id, changes: .init(name: .set(name)),
+        sourceId: tag.source.id,
+        changes: .init(name: nameChange, color: colorChange, iconName: iconChange),
         expectedFieldHashes: tag.fieldHashes)
     }
     return await executeChange(command, operationId: operationIdentifier) != nil

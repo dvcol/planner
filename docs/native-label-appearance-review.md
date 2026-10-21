@@ -21,3 +21,7 @@ The [read-only SDK observation](prototypes/evidence/navigation/native-itinerary-
 - C: Implement color editing now and defer icon editing, leaving that feature open.
 
 Q121 A was accepted on 21 October 2026. Use the small native symbol picker, preserving custom values until explicitly changed. No additional test boundary is introduced. Any implementation should use the already approved native UI/Core boundaries to verify Save/Cancel, exact unchanged values, live references, clearing and relaunch. Creating a label must not rewrite its referring owners or their completion.
+
+## Local implementation checkpoint
+
+The native editor and delivered-file qualification are recorded in [Native label appearance](prototypes/native-label-appearance.md). Original custom values survive untouched saves; explicit icon/color edits, Cancel, clearing and relaunch are qualified on mobile. Actual Mac interaction, signed storage and physical-device checks remain separate.

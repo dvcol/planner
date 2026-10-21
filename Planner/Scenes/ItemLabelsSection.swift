@@ -21,12 +21,22 @@ struct ItemLabelsSection: View {
     labelSection(.tag)
   }
 
+  private func iconColor(for label: PlannerLabelRead) -> Color {
+    guard let color = label.color else { return .secondary }
+    return Color(.sRGB, red: color.red, green: color.green, blue: color.blue, opacity: color.alpha)
+  }
+
   @ViewBuilder private func labelSection(_ kind: SavedLabelKind) -> some View {
     let selectedLabels = labels.sortedLabels(of: kind.sourceKind)
     if !selectedLabels.isEmpty {
       Section(kind.pluralTitle) {
         ForEach(selectedLabels, id: \.reference.id) { label in
-          Label(label.name, systemImage: kind.systemImage)
+          Label {
+            Text(label.name)
+          } icon: {
+            Image(systemName: label.iconName ?? kind.systemImage)
+              .foregroundStyle(iconColor(for: label))
+          }
         }
       }
     }
