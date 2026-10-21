@@ -1,0 +1,60 @@
+{
+  "completedAt": "2026-10-21T11:53:47.687238+00:00",
+  "scope": "Completed Planner temporary raw result bundles only. Current compiler products, active results, source and retained committed evidence are unchanged.",
+  "removed": [
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-every-item-final",
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-native-every-item-final.xcresult",
+      "allocatedBytes": 245878784,
+      "manifest": "selected-captures.json",
+      "summary": "test-summary.json",
+      "exitCode": 0,
+      "retainedAttachments": 4,
+      "verification": "Every selected attachment, log, summary, command and outcome matches the committed Git blob."
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-every-item-final",
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-every-item-final.xcresult",
+      "allocatedBytes": 245542912,
+      "manifest": "selected-captures.json",
+      "summary": "test-summary.json",
+      "exitCode": 0,
+      "retainedAttachments": 4,
+      "verification": "Every selected attachment, log, summary, command and outcome matches the committed Git blob."
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/q113-mac-filtered-manual-retry",
+      "bundle": "/private/tmp/PlannerItemWindow-q113-mac-filtered-manual-retry.xcresult",
+      "allocatedBytes": 197877760,
+      "manifest": "selected-captures.json",
+      "summary": "test-summary.json",
+      "exitCode": 65,
+      "retainedAttachments": 11,
+      "verification": "Every selected attachment, log, summary, command and outcome matches the committed Git blob."
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/q113-mac-filtered-manual-qualified",
+      "bundle": "/private/tmp/PlannerItemWindow-q113-mac-filtered-manual-qualified.xcresult",
+      "allocatedBytes": 188084224,
+      "manifest": "selected-captures.json",
+      "summary": "test-summary.json",
+      "exitCode": 65,
+      "retainedAttachments": 6,
+      "verification": "Every selected attachment, log, summary, command and outcome matches the committed Git blob."
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-notes-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-notes-mac.xcresult",
+      "allocatedBytes": 164466688,
+      "manifest": "selected-attachments.json",
+      "summary": "test-results-summary.json",
+      "exitCode": 65,
+      "retainedAttachments": 0,
+      "verification": "Every selected attachment, log, summary, command and outcome matches the committed Git blob."
+    }
+  ],
+  "nominalAllocatedBytes": 1041850368,
+  "freeBytesBefore": 53424267264,
+  "freeBytesAfter": 54471581696,
+  "freeSpaceNote": "APFS free space also reflects concurrent work and shared or cloned allocation."
+}

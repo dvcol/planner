@@ -1,0 +1,60 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 2,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1792201001.916,
+  "passedTests" : 2,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792200631.09,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+      "testName" : "testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling()"
+    },
+    {
+      "failureText" : "Crash: PlannerNavigationUITests-Runner at main",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+      "testName" : "testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 4
+}

@@ -1,0 +1,434 @@
+[
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-every-item-traversal",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-every-item-traversal.xcresult",
+    "allocatedBytes": 2058739712,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-phone-native-every-item-traversal.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 13,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-destination-rich-and-capture-qualified",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-destination-rich-and-capture-qualified.xcresult",
+    "allocatedBytes": 205778944,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-destination-rich-and-capture-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 4,
+      "passedTests": 2,
+      "failedTests": 2,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 3,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-local-compound-undo-visible-sheet",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-local-compound-undo-visible-sheet.xcresult",
+    "allocatedBytes": 204857344,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-local-compound-undo-visible-sheet.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 3,
+      "passedTests": 1,
+      "failedTests": 2,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 4,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-layout-compatibility/mac-layout-and-deletion-compatibility",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-layout-and-deletion-compatibility.xcresult",
+    "allocatedBytes": 194830336,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-layout-and-deletion-compatibility.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 4,
+      "passedTests": 2,
+      "failedTests": 2,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 4,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-maps-and-list-capture",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-maps-and-list-capture.xcresult",
+    "allocatedBytes": 194412544,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-maps-and-list-capture.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 2,
+      "passedTests": 0,
+      "failedTests": 2,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 0,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-layout-compatibility/mac-table-dependencies-regression",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-table-dependencies-regression.xcresult",
+    "allocatedBytes": 189636608,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-table-dependencies-regression.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 2,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-container-picker-adaptive-navigation",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-container-picker-adaptive-navigation.xcresult",
+    "allocatedBytes": 185556992,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-tablet-container-picker-adaptive-navigation.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 2,
+      "passedTests": 0,
+      "failedTests": 2,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 6,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-window-scoped-review",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-window-scoped-review.xcresult",
+    "allocatedBytes": 182771712,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-window-scoped-review.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 2,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-layout-compatibility/mac-layout-compatibility-final",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-layout-compatibility-final.xcresult",
+    "allocatedBytes": 179838976,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-layout-compatibility-final.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 6,
+      "passedTests": 6,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 11,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-local-compound-undo-native-traits",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-local-compound-undo-native-traits.xcresult",
+    "allocatedBytes": 176685056,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-local-compound-undo-native-traits.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 3,
+      "passedTests": 0,
+      "failedTests": 3,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 18,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-draft-cancel-role-green",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-draft-cancel-role-green.xcresult",
+    "allocatedBytes": 172412928,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-draft-cancel-role-green.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 3,
+      "passedTests": 2,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 5,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-final-creation-navigation",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-final-creation-navigation.xcresult",
+    "allocatedBytes": 170905600,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-final-creation-navigation.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 5,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-native-list-capture-qualified",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-native-list-capture-qualified.xcresult",
+    "allocatedBytes": 165867520,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-native-list-capture-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 0,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-list-window-evidence-qualified",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-list-window-evidence-qualified.xcresult",
+    "allocatedBytes": 164339712,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-list-window-evidence-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 1,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-choice-red-and-rich-controller",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-choice-red-and-rich-controller.xcresult",
+    "allocatedBytes": 163844096,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-choice-red-and-rich-controller.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 3,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-remaining-undo-window-readiness-qualified",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-remaining-undo-window-readiness-qualified.xcresult",
+    "allocatedBytes": 163663872,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-remaining-undo-window-readiness-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 3,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-layout-compatibility/mac-table-environment-regression",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-table-environment-regression.xcresult",
+    "allocatedBytes": 162873344,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-table-environment-regression.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 0,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-repeated-entry-native-filter",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-repeated-entry-native-filter.xcresult",
+    "allocatedBytes": 161214464,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-repeated-entry-native-filter.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 11,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-share-recovery-native",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-share-recovery-native.xcresult",
+    "allocatedBytes": 160403456,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-share-recovery-native.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 5,
+      "passedTests": 2,
+      "failedTests": 3,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 33,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-local-compound-undo-baseline",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-local-compound-undo-baseline.xcresult",
+    "allocatedBytes": 157986816,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-local-compound-undo-baseline.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 4,
+      "passedTests": 1,
+      "failedTests": 3,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 31,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-share-recovery-readiness-qualified",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-share-recovery-readiness-qualified.xcresult",
+    "allocatedBytes": 157536256,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-share-recovery-readiness-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 5,
+      "passedTests": 4,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 25,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-repeated-entry-header-identity",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-repeated-entry-header-identity.xcresult",
+    "allocatedBytes": 154550272,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-repeated-entry-header-identity.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 6,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-item-creation-runtime/mac-navigation-unlocked-retry",
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-navigation-unlocked-retry.xcresult",
+    "allocatedBytes": 150786048,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerQ93NativeRuntime-mac-navigation-unlocked-retry.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 3,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-share-reviewed-save-qualified",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-share-reviewed-save-qualified.xcresult",
+    "allocatedBytes": 149540864,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-share-reviewed-save-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 2,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-container-choice-queries-qualified",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-container-choice-queries-qualified.xcresult",
+    "allocatedBytes": 142823424,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-phone-container-choice-queries-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 2,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-catalog-add-menu/q101-mac-static-estimate-qualified",
+    "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-q101-mac-static-estimate-qualified.xcresult",
+    "allocatedBytes": 140951552,
+    "manifest": "selected-captures.json",
+    "exitCode": 0,
+    "summaryFile": "PlannerSceneAppearanceRuntime-q101-mac-static-estimate-qualified.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 2,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/mac-local-association-undo-current",
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-local-association-undo-current.xcresult",
+    "allocatedBytes": 140689408,
+    "manifest": "selected-captures.json",
+    "exitCode": 65,
+    "summaryFile": "PlannerItineraryCompatibilityRuntime-mac-local-association-undo-current.xcresult.summary.json",
+    "summaryCounts": {
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "retainedAttachments": 4,
+    "verification": "Every selected attachment, log, command and outcome matches the committed Git blob. The actual raw result summary is exported before removal."
+  }
+]

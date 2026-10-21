@@ -1,0 +1,75 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 3,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 3,
+  "finishTime" : 1792396600.425,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions"
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792396486.993,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "failed - Add Link must expose its new URL field before typing.",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedLabelsJourneyTests/testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes",
+      "testName" : "testItemEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+    },
+    {
+      "failureText" : "failed - Add Link must expose its new URL field before typing.",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 3,
+      "testIdentifierString" : "SavedLabelsJourneyTests/testItineraryEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedLabelsJourneyTests/testItineraryEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes",
+      "testName" : "testItineraryEditorUndoRestoresItsLinkAndLabelGroupWithoutRevertingSavedNotes()"
+    },
+    {
+      "failureText" : "Failed to click \"saved.item.new\" Any: No matches found for Elements matching predicate '\"saved.item.new\" IN identifiers' from input {(\n    Window, identifier: 'SwiftUI.WindowGroup<SwiftUI._ConditionalContent<Planner.NavigationPrototypeView, SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<Planner.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<Planner.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier', title: 'Items',\n    Button, identifier: '_XCUI:FullScreenWindow',\n    Group,\n    Group\n)}",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry",
+      "testName" : "testNativeUndoRestoresOneRepeatedItineraryEntry()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "66% of failures",
+      "text" : "2 runs of 2 tests failed with failed - Add Link must expose its new URL field before typing."
+    }
+  ],
+  "totalTestCount" : 3
+}

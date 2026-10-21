@@ -1,0 +1,41 @@
+{
+  "scope": "Five completed agent-owned temporary result bundles; committed summaries/logs and hash-verified exported captures retained.",
+  "removed": [
+    {
+      "phase": "native-plan-opening-mac-ui-after-readiness",
+      "bundle": "/private/tmp/PlannerItemWindow-native-plan-opening-mac-ui-after-readiness.xcresult",
+      "retainedAttachments": 8,
+      "retainedSummarySha256": "5c3d8f80b93f0e08a1a42a5a5f765aeaa37d589ec1fca8ffa2f2f06664bbf4ba",
+      "allocatedKibibytes": 183268
+    },
+    {
+      "phase": "native-plan-opening-mac-ui-confirmation",
+      "bundle": "/private/tmp/PlannerItemWindow-native-plan-opening-mac-ui-confirmation.xcresult",
+      "retainedAttachments": 6,
+      "retainedSummarySha256": "1238dddfcf8b4f5a1c86c3a015fadb5fee48f3810f6166d75c49d46117850697",
+      "allocatedKibibytes": 168736
+    },
+    {
+      "phase": "native-plan-opening-mac-draft-diagnostic",
+      "bundle": "/private/tmp/PlannerItemWindow-native-plan-opening-mac-draft-diagnostic.xcresult",
+      "retainedAttachments": 10,
+      "retainedSummarySha256": "5ec12dffff7fdba6c7f323b5f92f582a073e58a5a2e9d048e75cadea4a0e4e5c",
+      "allocatedKibibytes": 168124
+    },
+    {
+      "phase": "native-plan-opening-mac-draft-compatibility",
+      "bundle": "/private/tmp/PlannerItemWindow-native-plan-opening-mac-draft-compatibility.xcresult",
+      "retainedAttachments": 7,
+      "retainedSummarySha256": "c3293a74d65f4db9645198f604bae286d320a1cb0eae6d6eb9a27c87a354a227",
+      "allocatedKibibytes": 150536
+    },
+    {
+      "phase": "native-plan-opening-mac-filled-window",
+      "bundle": "/private/tmp/PlannerItemWindow-native-plan-opening-mac-filled-window.xcresult",
+      "retainedAttachments": 5,
+      "retainedSummarySha256": "7df0b451153bd5d4e2cdcd0fac23274339c86c2fadb1654efe046b7b0df70e94",
+      "allocatedKibibytes": 138880
+    }
+  ],
+  "freeBytesAfter": 1101824000
+}
