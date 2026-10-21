@@ -1,0 +1,26 @@
+{
+  "startCommand": [
+    "python3",
+    "-u",
+    "scripts/preview-fixture-server.py",
+    "--port",
+    "0"
+  ],
+  "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+  "observedURL": "http://127.0.0.1:53798",
+  "scriptSHA256": "4cb6d5057db93f8fcafdec6dcc77b0d53140885a56bb5928ef54e512f0a62ea5",
+  "observedToolHandle": 87211,
+  "observedRequests": {
+    "GET /image 200": 2,
+    "GET /image.png 200": 2,
+    "GET /plain 200": 2
+  },
+  "requestObservationScope": "Counts observed directly in the live tool output after both runs, not a retained original server stdout log. Optional favicon/apple-touch-icon requests returned fixture 404s.",
+  "verifiedListenerPID": 51783,
+  "verifiedProcessCommand": "/opt/homebrew/Cellar/python@3.15/3.15.0/Frameworks/Python.framework/Versions/3.15/Resources/Python.app/Contents/MacOS/Python -u scripts/preview-fixture-server.py --port 0",
+  "shutdownCommand": [
+    "kill",
+    "-TERM",
+    "51783"
+  ]
+}

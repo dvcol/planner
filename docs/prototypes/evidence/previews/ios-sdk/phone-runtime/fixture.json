@@ -1,0 +1,7 @@
+{
+  "previewURL": "http://127.0.0.1:53798",
+  "address": "1 Apple Park Way, Cupertino, CA",
+  "serverSource": "scripts/preview-fixture-server.py",
+  "serverSHA256": "4cb6d5057db93f8fcafdec6dcc77b0d53140885a56bb5928ef54e512f0a62ea5",
+  "scope": "Existing local HTML/image fixtures and fixed public Apple Park address; no device-location request or Planner store."
+}

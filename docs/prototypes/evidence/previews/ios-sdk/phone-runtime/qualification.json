@@ -1,0 +1,24 @@
+{
+  "runtimeCredit": true,
+  "executedFunctions": 18,
+  "executedSuites": 5,
+  "executedInvocations": 28,
+  "failures": 0,
+  "skips": 0,
+  "bothRealAppleSDKTestsEnabledAndPassed": true,
+  "sourceInputsMatchingCurrentWorkspaceAndBothEpochs": 751,
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "modelName": "iPhone 18 Pro",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "scope": "Unchanged preview package on iOS Simulator. Real Apple LinkMetadata against local controlled image/plain pages; real Apple geocoding of one public address. Other cases qualify controlled cache/provider behavior.",
+  "limits": [
+    "No arbitrary live website, real map-link sender or physical-device guarantee.",
+    "No allocation/hitch, installed Share, signed sync/account or final UI credit."
+  ]
+}

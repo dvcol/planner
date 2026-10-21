@@ -1,5 +1,7 @@
 # Native preview boundary qualification
 
+Status: the original milestones below retain their source epochs. Q48/Q49/Q51 are resolved in the [decision register](../open-decisions.md); later [candidate](native-controlled-address-candidates.md), [Retry](native-controlled-address-retry.md), [delayed-result](native-delayed-address-result.md) and [pin-editing](native-pinned-address-editing.md) reports supersede the initial mobile UI gaps. The iOS SDK follow-up below adds package runtime evidence without closing Mac UI, physical or final-polish gates.
+
 ## Context and scope
 
 Q50 accepts a production cache/provider boundary for temporary native previews, controlled external responses, and separate Apple SDK and UI checks. Core exposes the dataset ownership namespace, source identity and source lifetime needed to bind each request. Previously there was no native provider/cache module for saved website bookmarks.
@@ -69,3 +71,17 @@ Separate public provider regressions failed for raw URL paths and addresses. Bot
 The raw-path example exercises the reusable preview API. Core's current strict bookmark validation rejects those unescaped paths, so this is not evidence that the saved Item form accepts them. Saved address text permits Unicode. Controlled address responses prove isolation without assuming that Apple's service returns different candidates for equivalent spellings.
 
 Twelve preview functions in four suites pass, with seventeen case invocations and both Apple SDK tests enabled. The iPhone's existing saved website and address journeys also pass, including actual image painting, completed List detail and reopening. Mac app/test bundles compile with zero runtime functions. Affected strict Swift/Markdown lint and whitespace checks pass. [Exact-request evidence](evidence/navigation/preview-exact-request-identity.json) records both red/green pairs, commands, source hashes and these qualification limits. Native controlled address presentation/invalidation, Mac runtime and signed-device gates remain open; schema 7 and portable format 1 are unchanged.
+
+## iOS SDK follow-up, 22 October 2026
+
+Before this follow-up, recorded preview-package runs exercise the real Apple adapters on Mac, while simulator presentation has its own represented live/controlled-provider results. The goal here is direct current-package runtime on both iOS simulator form factors, with both existing SDK tests enabled. Q50 already approves this production provider/cache and external I/O boundary. No production/test source, package, target, dependency, signing or security change is needed.
+
+The unchanged fixture server binds an ephemeral loopback port and serves its existing detailed PNG, image HTML and plain HTML. The existing opt-in environment variables enable the real `LinkMetadata` adapter against those pages and the real `MKGeocodingRequest` adapter against 1 Apple Park Way, Cupertino, CA. The generated xctestrun copies supply these test-host variables. No Planner store or device-location request is involved. SDK geocoding may use service caches; this does not measure a fresh network round trip.
+
+The [package build](evidence/previews/ios-sdk/build/) passes. Both [iPhone](evidence/previews/ios-sdk/phone-runtime/) and [iPad](evidence/previews/ios-sdk/tablet-runtime/) execute 18 functions across five suites, with 28 invocations per device and zero failures/skips. The suite takes 2.456 seconds on phone and 1.993 seconds on tablet, excluding build/runner setup. Each native link case verifies the literal image-page title, an ImageIO-decodable image, the plain-page title and absent plain-page image. Each native geocoding case verifies nonempty named/identified candidates, a coordinate inside the expected Cupertino bounds and a formatted Cupertino address. The other cases cover controlled link/address/Maps cache keys, retry, stale results and shared-request cancellation.
+
+All 751 recorded inputs match both epochs and the current workspace; compiled products remain unchanged. Both SDK test names appear as actually passing in the native logs and structured results, so the optional tests are not counted from a default skipped run. Strict affected Swift and Markdown lint pass. The wrappers' provisional exit records remain separate from explicit qualification files.
+
+The [server record](evidence/previews/ios-sdk/server/) records two observed image-page, image-PNG and plain-page GETs. Optional icon requests return the fixture's expected 404s. Those counts are scoped observations from the live tool output, not an original retained server stdout log. After both runtimes finish, only the verified owned listener is terminated; its intentional exit 143 is not a test outcome.
+
+This adds real iOS adapter and controlled-cache evidence. It does not qualify arbitrary public websites, actual saved-app integration with these live results, original Maps sender/URL binding, installed Share, physical memory/latency, signed sync/account transitions, Mac keyboard/window behavior or final whole-app UI acceptance. Prior UI captures and source epochs retain their own limits.

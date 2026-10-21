@@ -1,0 +1,6 @@
+{
+  "exitCode": 143,
+  "intentionallyTerminated": true,
+  "toolHandle": 87211,
+  "scope": "Owned fixture server stopped after both SDK runtimes completed; not a test result."
+}

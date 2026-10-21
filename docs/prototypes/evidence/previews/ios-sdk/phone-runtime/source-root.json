@@ -1,0 +1,6 @@
+{
+  "root": "/private/tmp/PlannerPreviewIOSSource",
+  "base": "8b31e11dcb5304f48eb2e1602e7a3dd9ffb61a74",
+  "overlays": [],
+  "scope": "Committed preview package, its Core dependency and existing fixture server; no production or test edits."
+}
