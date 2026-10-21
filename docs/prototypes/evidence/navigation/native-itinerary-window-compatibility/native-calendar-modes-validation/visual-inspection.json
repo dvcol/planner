@@ -1,0 +1,77 @@
+{
+  "captures": [
+    {
+      "phase": "native-calendar-modes-qualified-mac",
+      "file": "8B3DD73A-1EFA-4D76-8046-3BF54AB9AF5D.png",
+      "sha256": "5e06516ca6da03ce82d692741453eee5bebd8c36015b8bfcac22ec40de60d310",
+      "observation": "Month grid and selected-day agenda show the same start-only owner."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-mac",
+      "file": "70296864-E719-450F-8C15-DE09C7337C56.png",
+      "sha256": "d510218a513528af319336bf25e621013b14c23d2609c01416e182d05fbe8df3",
+      "observation": "The selected all-day source details visibly show the civil date alongside the time grid."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-mac",
+      "file": "93CF0FE4-E35D-49EC-9515-F668DC29DBC3.png",
+      "sha256": "1460572e3540be5f93c364ed0d5f846373520be2d82817c32fa89d276f972414",
+      "observation": "Week shows four separate appointment lanes under the owning day."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-mac",
+      "file": "E623AB13-4D1A-4EA2-A21E-D91C551745A8.png",
+      "sha256": "a157e1f12f4ae27de6887c21d4365d3b8608da172687dfb0c4cbb25e226244dc",
+      "observation": "Day shows four separate usable appointment cards."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-phone",
+      "file": "A4416A14-A00E-4225-9DD0-B7BC8132D4FF.png",
+      "sha256": "d5cb7c72cebdd31cf58bf1ef8c4b0b10b3baf8e7d102d49a36eadca602e32ac3",
+      "observation": "Native light-mode Month calendar retains the marked day and start-only agenda."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-phone",
+      "file": "3EE9C404-9263-48DC-A19D-D54F8C322429.png",
+      "sha256": "624f21271861527e04a72c110ff5be604df38627e0e266ccfc9a541f4c87c20f",
+      "observation": "Native all-day overflow sheet scrolls its date-labeled entries."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-phone",
+      "file": "3A1E968E-1E57-489A-89D4-27A6E782BA46.png",
+      "sha256": "33c1e3fc24ccc23b43da849f78a87da10a9e6b374a6e853574f2f74e9409c425",
+      "observation": "Week has distinct lanes in the intended horizontally scrolling grid; the rightmost card is partially beyond the viewport."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-phone",
+      "file": "86CF8D5F-7EF2-4552-90E3-5914B1D026FD.png",
+      "sha256": "1ae4408c3ca4cce9eb13c0f7f0156dd22a6031052c30b73c99349d08999ccd2f",
+      "observation": "Day has distinct lanes in the intended horizontally scrolling grid; the rightmost card is partially beyond the viewport."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet-retry",
+      "file": "135ED192-89CB-470E-8788-6BBB7847BAC3.png",
+      "sha256": "34bb94aa6a608488d789c011d3e6ad685fa0412035e5c420e75508aea1b6a6c9",
+      "observation": "Dark native Month calendar preserves the marked date and start-only agenda beside the sidebar."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet-retry",
+      "file": "88732733-122F-495D-A647-AA27533EFCAB.png",
+      "sha256": "8a06d956ef98f89b7b343e00eb92f9725c316ace2a1fca4318f0b05bc490aa6f",
+      "observation": "Dark native overflow sheet presents the dated all-day entries."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet-retry",
+      "file": "A4598D8F-A725-47EA-8220-EE59FBB2845E.png",
+      "sha256": "903fb5d05a977d888220a5f9922d8e42fba05784a211e9e02eff62b639caeac5",
+      "observation": "Dark Week grid has four distinct lanes under the owning day and an adjacent day column."
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet-retry",
+      "file": "4ABD7A6F-59BF-45B4-AFCF-7B293A0C4201.png",
+      "sha256": "3bb0c952710289803f466eaffee06f5973a924034b61a87a5f90be55f5bc6f69",
+      "observation": "Dark Day grid shows four distinct nonintersecting appointment cards."
+    }
+  ],
+  "scope": "Manual inspection of these byte-identical original captures. This is not a whole-app visual or accessibility audit."
+}

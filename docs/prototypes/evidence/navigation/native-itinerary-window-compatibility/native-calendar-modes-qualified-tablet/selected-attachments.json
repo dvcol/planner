@@ -1,0 +1,48 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "54C6607C-ED7F-4D11-AB89-ED06182D2811.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_0AA9A84A-F6B5-4D58-B41A-86ECD1E01ED4.png",
+      "timestamp": 1792605545.901,
+      "retainedFileName": "54C6607C-ED7F-4D11-AB89-ED06182D2811.png",
+      "sha256": "201f3a2ff44e6dfbc1a067885eb334374292310fe63b63ffe6bf09ad0dc45654"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "D428D9F2-B5F1-4785-8F27-0109F3645D70.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_85E0BF0D-8218-4200-A6E3-843950E6F13F.png",
+      "timestamp": 1792605539.433,
+      "retainedFileName": "D428D9F2-B5F1-4785-8F27-0109F3645D70.png",
+      "sha256": "efa6aa1271758de30e029208a078c2b15c7e56b90b10e7e2ad5f5abd13edca62"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "79E86036-65F6-4F13-A14A-65B88D4C4B48.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent overlapping start-only appointments in Week_0_AE8A9FF1-0274-4AEA-BCEB-166FE9777E68.png",
+      "timestamp": 1792605613.678,
+      "retainedFileName": "79E86036-65F6-4F13-A14A-65B88D4C4B48.png",
+      "sha256": "d81ff549e5ee4cb051f4b1565e4a88048f4d7b9e9d1a151394fe02764e543329"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "80B40507-4258-4B32-A9AA-5EA5BF12A507.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent overlapping start-only appointments in Day_0_C62B7979-1E40-4CA6-8157-37AAF491A5C6.png",
+      "timestamp": 1792605603.202,
+      "retainedFileName": "80B40507-4258-4B32-A9AA-5EA5BF12A507.png",
+      "sha256": "fa829ee423ef8aad41280f86c6eee293b18d274559767ed087b9327eedda9c69"
+    }
+  ]
+}

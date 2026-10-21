@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet-retry.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792605922.819,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792605695.047,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet-retry.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-calendar-modes-qualified-tablet-retry"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 4 attachments for: SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt():\nFile: 9F73C5D4-06ED-4D7F-A76E-0DA07B548215.png, suggested name: \"Native Week time grid_0_36A65750-1380-4F1E-BB86-8142192B2C29.png\"\nFile: 0DB57A86-6C02-4CD9-8E0F-BB54FFCC13A9.png, suggested name: \"Native Day time grid_0_1CBA1E23-B874-4638-BDE0-56E167BDE3DB.png\"\nFile: 135ED192-89CB-470E-8788-6BBB7847BAC3.png, suggested name: \"Native Calendar mode selector_0_1AB9F8C3-3372-4ABF-B61F-F540F777CFFB.png\"\nFile: 027B5333-7F32-412B-AEA7-C1DA06682977.txt, suggested name: \"Native Calendar mode selector hierarchy_0_7D89DFB5-A56E-4B8A-8A29-A32622B4A8B4.txt\"\n\nExported 2 attachments for: SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible():\nFile: 88732733-122F-495D-A647-AA27533EFCAB.png, suggested name: \"Native overflow traversal reaches all nine Schedule identities_0_1A34F45D-1DCA-4998-89F2-D9338BA69EE0.png\"\nFile: 9264B06A-18EE-416C-9177-B676F34D6300.png, suggested name: \"Dense all-day header preserves the timed appointment_0_5862A3D4-4AAA-4F7F-92A2-61495CDDEFF9.png\"\n\nExported 2 attachments for: SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView():\nFile: A4598D8F-A725-47EA-8220-EE59FBB2845E.png, suggested name: \"Independent overlapping start-only appointments in Week_0_7DCEC018-6947-43F4-9BA9-EB6A71A26D97.png\"\nFile: 4ABD7A6F-59BF-45B4-AFCF-7B293A0C4201.png, suggested name: \"Independent overlapping start-only appointments in Day_0_5801931C-F6EE-40D0-B7F9-5CF668A50803.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-calendar-modes-qualified-tablet-retry/manifest.json\n",
+    "stderr": ""
+  }
+]

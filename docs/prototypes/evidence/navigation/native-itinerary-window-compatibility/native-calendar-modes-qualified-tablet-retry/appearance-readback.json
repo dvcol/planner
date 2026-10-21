@@ -1,0 +1,12 @@
+{
+  "command": [
+    "xcrun",
+    "simctl",
+    "ui",
+    "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "appearance"
+  ],
+  "exitCode": 0,
+  "stdout": "dark\n",
+  "stderr": ""
+}

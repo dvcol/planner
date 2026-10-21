@@ -1,0 +1,54 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "expectedFailures": 0,
+      "failedTests": 2,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 2,
+  "finishTime": 1792603716.741,
+  "passedTests": 0,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1792603587.103,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "XCTAssertEqual failed: (\"Optional(\"\")\") is not equal to (\"Optional(\"22 Oct 2026\")\")",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 1,
+      "testIdentifierString": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+      "testName": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()"
+    },
+    {
+      "failureText": "XCTAssertTrue failed",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 2,
+      "testIdentifierString": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+      "testName": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()"
+    }
+  ],
+  "title": "Test - PlannerNavigation",
+  "topInsights": [],
+  "totalTestCount": 2
+}

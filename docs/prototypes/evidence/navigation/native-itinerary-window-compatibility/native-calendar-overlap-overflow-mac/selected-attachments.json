@@ -1,0 +1,95 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "4404EB87-1C57-4F1B-8588-3EE7ED4C47BB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_D4EF4414-831C-4482-A31F-414A24A85AB0.png",
+      "timestamp": 1792603658.171,
+      "retainedFileName": "4404EB87-1C57-4F1B-8588-3EE7ED4C47BB.png",
+      "sha256": "b0c56a8b3d8cfc927ea5443df256cb0ee6ae2738d39fc90259bb1216d64a2266"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "594A5401-31F4-4130-A4C7-73F2F0963D72.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_3699544C-14B8-499A-9056-4905883C593A.png",
+      "timestamp": 1792603651.207,
+      "retainedFileName": "594A5401-31F4-4130-A4C7-73F2F0963D72.png",
+      "sha256": "d9b8c908b43be9876549a7290edcf04b0cbdf66ffb25cd2770b6ec34d79d03d6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "6B092BCC-FEA9-426E-A3F0-D587AB75FAC9.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Thu 22 Oct\" StaticText`_0_DD475BE9-212D-4DA7-8109-849324F03028.txt",
+      "timestamp": 1792603701.981,
+      "retainedFileName": "6B092BCC-FEA9-426E-A3F0-D587AB75FAC9.txt.gz",
+      "sha256": "20508932edf5e59c4cc5b059deb0c14e309925208e28f5bb2c963d5e4738b7f5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "03EDD9C4-D5E6-442F-8EAF-798B762E5A54.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Thu 22 Oct\" StaticText`_0_95C9501E-297C-404E-9ABA-FBBF38B8090C.txt",
+      "timestamp": 1792603701.027,
+      "retainedFileName": "03EDD9C4-D5E6-442F-8EAF-798B762E5A54.txt.gz",
+      "sha256": "20508932edf5e59c4cc5b059deb0c14e309925208e28f5bb2c963d5e4738b7f5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "8DE76916-BDE4-4FF2-BC16-54972C8C300D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Thu 22 Oct\" StaticText`_0_DECFDA7B-52E0-45DA-A0B3-B57B0CC615F8.txt",
+      "timestamp": 1792603700,
+      "retainedFileName": "8DE76916-BDE4-4FF2-BC16-54972C8C300D.txt.gz",
+      "sha256": "20508932edf5e59c4cc5b059deb0c14e309925208e28f5bb2c963d5e4738b7f5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "0604D5DA-0BD0-4C4F-9069-5C799497322F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Thu 22 Oct\" StaticText`_0_332F530B-15C3-467E-89A6-ACCC0D6FC77B.txt",
+      "timestamp": 1792603698.982,
+      "retainedFileName": "0604D5DA-0BD0-4C4F-9069-5C799497322F.txt.gz",
+      "sha256": "20508932edf5e59c4cc5b059deb0c14e309925208e28f5bb2c963d5e4738b7f5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "2467D020-87BB-4241-9566-4450D2CE18EB.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Thu 22 Oct\" StaticText`_0_C5755E99-5609-4421-B759-6A771A6A49B1.txt",
+      "timestamp": 1792603697.978,
+      "retainedFileName": "2467D020-87BB-4241-9566-4450D2CE18EB.txt.gz",
+      "sha256": "20508932edf5e59c4cc5b059deb0c14e309925208e28f5bb2c963d5e4738b7f5"
+    }
+  ],
+  "excludedAttachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "363A2630-E39D-4051-9419-6C4C1B76DD0A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_8D0A0B49-9BC7-4C01-8598-72B7B9D17CC3.PlannerMCPPrototype",
+      "timestamp": 1792603702.168,
+      "retainedFileName": "363A2630-E39D-4051-9419-6C4C1B76DD0A.txt.gz",
+      "sha256": "d8933c63275a2fcc47975f362db58cfe2681e629d5359c818378a7b86accff99",
+      "exclusionReason": "Automatic broad app hierarchy retained privately; only scoped Calendar observations are public."
+    }
+  ]
+}

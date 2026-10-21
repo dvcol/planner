@@ -1,0 +1,92 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9F73C5D4-06ED-4D7F-A76E-0DA07B548215.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Week time grid_0_36A65750-1380-4F1E-BB86-8142192B2C29.png",
+      "timestamp": 1792605738.83,
+      "retainedFileName": "9F73C5D4-06ED-4D7F-A76E-0DA07B548215.png",
+      "sha256": "e84edc56bcfa8ec410e3f16a40392f46ea9dc6c5d9c4ed1e8d28836852fb5e60"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "0DB57A86-6C02-4CD9-8E0F-BB54FFCC13A9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Day time grid_0_1CBA1E23-B874-4638-BDE0-56E167BDE3DB.png",
+      "timestamp": 1792605733.931,
+      "retainedFileName": "0DB57A86-6C02-4CD9-8E0F-BB54FFCC13A9.png",
+      "sha256": "032a7598835d84a3cd563a3a8ed8974e00ab5d6f8c30f2a0d25070c603915028"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "135ED192-89CB-470E-8788-6BBB7847BAC3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Calendar mode selector_0_1AB9F8C3-3372-4ABF-B61F-F540F777CFFB.png",
+      "timestamp": 1792605729.309,
+      "retainedFileName": "135ED192-89CB-470E-8788-6BBB7847BAC3.png",
+      "sha256": "34bb94aa6a608488d789c011d3e6ad685fa0412035e5c420e75508aea1b6a6c9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "027B5333-7F32-412B-AEA7-C1DA06682977.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Calendar mode selector hierarchy_0_7D89DFB5-A56E-4B8A-8A29-A32622B4A8B4.txt",
+      "timestamp": 1792605729.201,
+      "retainedFileName": "027B5333-7F32-412B-AEA7-C1DA06682977.txt.gz",
+      "sha256": "b2170d2451cb1897770ba7f00c8ac2772e326b814abfd3185f03bdc924c11f6b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "88732733-122F-495D-A647-AA27533EFCAB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_1A34F45D-1DCA-4998-89F2-D9338BA69EE0.png",
+      "timestamp": 1792605854.19,
+      "retainedFileName": "88732733-122F-495D-A647-AA27533EFCAB.png",
+      "sha256": "8a06d956ef98f89b7b343e00eb92f9725c316ace2a1fca4318f0b05bc490aa6f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9264B06A-18EE-416C-9177-B676F34D6300.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_5862A3D4-4AAA-4F7F-92A2-61495CDDEFF9.png",
+      "timestamp": 1792605847.749,
+      "retainedFileName": "9264B06A-18EE-416C-9177-B676F34D6300.png",
+      "sha256": "1052202661e9a027216253191a455a07509b80c6171bb2c1ecdb37b94d04406a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A4598D8F-A725-47EA-8220-EE59FBB2845E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent overlapping start-only appointments in Week_0_7DCEC018-6947-43F4-9BA9-EB6A71A26D97.png",
+      "timestamp": 1792605922.162,
+      "retainedFileName": "A4598D8F-A725-47EA-8220-EE59FBB2845E.png",
+      "sha256": "903fb5d05a977d888220a5f9922d8e42fba05784a211e9e02eff62b639caeac5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4ABD7A6F-59BF-45B4-AFCF-7B293A0C4201.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent overlapping start-only appointments in Day_0_5801931C-F6EE-40D0-B7F9-5CF668A50803.png",
+      "timestamp": 1792605911.679,
+      "retainedFileName": "4ABD7A6F-59BF-45B4-AFCF-7B293A0C4201.png",
+      "sha256": "3bb0c952710289803f466eaffee06f5973a924034b61a87a5f90be55f5bc6f69"
+    }
+  ]
+}

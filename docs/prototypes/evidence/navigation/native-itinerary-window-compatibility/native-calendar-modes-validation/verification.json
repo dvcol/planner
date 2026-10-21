@@ -1,0 +1,89 @@
+{
+  "sourceInputs": 1061,
+  "allFinalInputsMatchWorkspace": true,
+  "passingExecutions": 9,
+  "distinctCases": 3,
+  "compilerAndRuntimeEpochs": 4,
+  "originalImages": 22,
+  "visuallyInspectedImages": 12,
+  "runs": [
+    {
+      "phase": "native-calendar-modes-qualified-mac",
+      "summary": {
+        "totalTestCount": 3,
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "cases": [
+        {
+          "name": "testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt",
+          "seconds": 34.097
+        },
+        {
+          "name": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+          "seconds": 77.604
+        },
+        {
+          "name": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+          "seconds": 44.657
+        }
+      ],
+      "originalAttachments": 10
+    },
+    {
+      "phase": "native-calendar-modes-qualified-phone",
+      "summary": {
+        "totalTestCount": 3,
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "cases": [
+        {
+          "name": "testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt",
+          "seconds": 52.309
+        },
+        {
+          "name": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+          "seconds": 103.712
+        },
+        {
+          "name": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+          "seconds": 57.952
+        }
+      ],
+      "originalAttachments": 8
+    },
+    {
+      "phase": "native-calendar-modes-qualified-tablet-retry",
+      "summary": {
+        "totalTestCount": 3,
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "cases": [
+        {
+          "name": "testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt",
+          "seconds": 52.446
+        },
+        {
+          "name": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+          "seconds": 106.371
+        },
+        {
+          "name": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+          "seconds": 62.196
+        }
+      ],
+      "originalAttachments": 8
+    }
+  ],
+  "earlierTabletInvocation": {
+    "passed": 2,
+    "failed": 1,
+    "scope": "Initial Add-menu helper failure before any Schedule creation. Unchanged full-group retry is recorded separately. Cause remains unestablished; no startup workaround is applied."
+  },
+  "remaining": "Mac all-day span/date-input journey, Q127 inspector resizing, full accessibility/keyboard/physical qualification and broader map gates remain open."
+}

@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792605116.857,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792604959.606,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-calendar-modes-qualified-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 4 attachments for: SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt():\nFile: 97FD50B1-DD49-4132-8BB1-1D1453DFEA74.png, suggested name: \"Native Week time grid_0_994FDEA1-EF96-4528-BC29-F0B1AC3428D8.png\"\nFile: 7A6808E5-5C57-4524-B957-BC3263D8AF32.png, suggested name: \"Native Day time grid_0_88D89739-080A-4A3B-9152-C96EC8A6506C.png\"\nFile: 8B3DD73A-1EFA-4D76-8046-3BF54AB9AF5D.png, suggested name: \"Native Calendar mode selector_0_1E597001-67F3-48BF-836C-CD3743A03706.png\"\nFile: 819E5CB1-9A06-43C4-8CD1-58BB4101F0A1.txt, suggested name: \"Native Calendar mode selector hierarchy_0_2F1C6F1E-3114-4D56-9404-FD0636351E70.txt\"\n\nExported 4 attachments for: SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible():\nFile: 70296864-E719-450F-8C15-DE09C7337C56.png, suggested name: \"Selected overflow Schedule in native details_0_51728EF9-5047-44AE-96A4-0708C4B1E00F.png\"\nFile: ED7E404F-B752-40F3-BA4F-9C5A8E84E45D.txt, suggested name: \"Selected saved Schedule native value and visibility_0_AADDF8C2-4A96-4EC9-BC09-4EB2FE23055F.txt\"\nFile: 9D43C28B-BA5F-47FE-A275-2C5AB25ECF8F.png, suggested name: \"Native overflow traversal reaches all nine Schedule identities_0_B5A7E61D-C6AE-438A-AF8A-1150363BAE4F.png\"\nFile: 6B5DD523-0BB5-4A33-BBC3-FCE0F0209EEB.png, suggested name: \"Dense all-day header preserves the timed appointment_0_7A819466-ED24-4C88-9789-57CD2261B082.png\"\n\nExported 2 attachments for: SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView():\nFile: 93CF0FE4-E35D-49EC-9515-F668DC29DBC3.png, suggested name: \"Independent overlapping start-only appointments in Week_0_FF6969B1-2033-4336-B622-9A928FA1CAE5.png\"\nFile: E623AB13-4D1A-4EA2-A21E-D91C551745A8.png, suggested name: \"Independent overlapping start-only appointments in Day_0_A6BBDDD6-BB6B-44BE-B540-13F61855775B.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-calendar-modes-qualified-mac/manifest.json\n",
+    "stderr": ""
+  }
+]

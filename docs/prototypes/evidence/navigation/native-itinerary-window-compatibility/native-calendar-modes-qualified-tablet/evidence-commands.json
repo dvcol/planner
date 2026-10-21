@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 2,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792605614.342,\n  \"passedTests\" : 2,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792605414.374,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"failed - The selected catalog's Add menu is unavailable\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt\",\n      \"testName\" : \"testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-calendar-modes-qualified-tablet.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-calendar-modes-qualified-tablet"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 3 attachments for: SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt():\nFile: F4C5A772-D948-47F8-8C86-D737D6A61550, suggested name: \"Synthesized Event 2026-10-22 at 02.57.19 AM\"\nFile: 81BFE749-4BBE-4551-8CCB-C99F9ABFDD38, suggested name: \"Synthesized Event 2026-10-22 at 02.57.16 AM\"\nFile: B25D8E9F-4EBA-43F3-8B06-2F2E49D43CE0.mp4, suggested name: \"Screen Recording 2026-10-22 at 02.57.10 AM.mp4\"\n\nExported 2 attachments for: SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible():\nFile: 54C6607C-ED7F-4D11-AB89-ED06182D2811.png, suggested name: \"Native overflow traversal reaches all nine Schedule identities_0_0AA9A84A-F6B5-4D58-B41A-86ECD1E01ED4.png\"\nFile: D428D9F2-B5F1-4785-8F27-0109F3645D70.png, suggested name: \"Dense all-day header preserves the timed appointment_0_85E0BF0D-8218-4200-A6E3-843950E6F13F.png\"\n\nExported 2 attachments for: SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView():\nFile: 79E86036-65F6-4F13-A14A-65B88D4C4B48.png, suggested name: \"Independent overlapping start-only appointments in Week_0_AE8A9FF1-0274-4AEA-BCEB-166FE9777E68.png\"\nFile: 80B40507-4258-4B32-A9AA-5EA5BF12A507.png, suggested name: \"Independent overlapping start-only appointments in Day_0_C62B7979-1E40-4CA6-8157-37AAF491A5C6.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-calendar-modes-qualified-tablet/manifest.json\n",
+    "stderr": ""
+  }
+]

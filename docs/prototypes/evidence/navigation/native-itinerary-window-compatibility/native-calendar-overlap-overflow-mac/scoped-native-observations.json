@@ -1,0 +1,22 @@
+{
+  "heading": {
+    "type": "StaticText",
+    "label": "Thu 22 Oct",
+    "frame": {
+      "x": 248,
+      "y": 178,
+      "width": 71,
+      "height": 16
+    },
+    "ancestors": [
+      "Group saved.calendar.canvas",
+      "ScrollView saved.calendar.time-grid",
+      "Other"
+    ]
+  },
+  "failedQuery": "The indexed StaticText lookup searched identifiers, not the exposed label.",
+  "sourceAttachmentSHA256": "d8933c63275a2fcc47975f362db58cfe2681e629d5359c818378a7b86accff99",
+  "timedEntryCount": 4,
+  "scheduleDateInIdentifiers": "2026-10-22",
+  "privacy": "Broad automatic hierarchy retained privately. These are scoped native observations, not a replacement raw attachment."
+}

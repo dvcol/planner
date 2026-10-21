@@ -1,0 +1,92 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "84BB6EAC-39AF-4BC1-ABC3-32494B570100.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Week time grid_0_BFC9C085-07B5-4F8D-A26D-B8346E735334.png",
+      "timestamp": 1792605199.208,
+      "retainedFileName": "84BB6EAC-39AF-4BC1-ABC3-32494B570100.png",
+      "sha256": "715e70634aa854f6f6b05bba40a3391f2a6cca996a72883a23980190d3150c31"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C2CAD45C-5FC3-4242-9E5A-BDA8C659852D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Day time grid_0_BF12E87C-CD75-4811-8817-42C9EB11CFC3.png",
+      "timestamp": 1792605194.642,
+      "retainedFileName": "C2CAD45C-5FC3-4242-9E5A-BDA8C659852D.png",
+      "sha256": "69603973e9f558f631640d30f570310750c4834d7de67f7b8bbd7dc233a9f846"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A4416A14-A00E-4225-9DD0-B7BC8132D4FF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Calendar mode selector_0_B4D35175-7518-49E2-AE89-26513DE6ECCA.png",
+      "timestamp": 1792605190.221,
+      "retainedFileName": "A4416A14-A00E-4225-9DD0-B7BC8132D4FF.png",
+      "sha256": "d5cb7c72cebdd31cf58bf1ef8c4b0b10b3baf8e7d102d49a36eadca602e32ac3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E7DDDD6C-CE53-4CE8-A984-941C101582E7.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Calendar mode selector hierarchy_0_275A358D-CFC9-404D-B230-F12989DACAD8.txt",
+      "timestamp": 1792605190.115,
+      "retainedFileName": "E7DDDD6C-CE53-4CE8-A984-941C101582E7.txt.gz",
+      "sha256": "b2170d2451cb1897770ba7f00c8ac2772e326b814abfd3185f03bdc924c11f6b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "3EE9C404-9263-48DC-A19D-D54F8C322429.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_F3F4FECD-8D31-431F-B65F-3712D62CD6FF.png",
+      "timestamp": 1792605310.77,
+      "retainedFileName": "3EE9C404-9263-48DC-A19D-D54F8C322429.png",
+      "sha256": "624f21271861527e04a72c110ff5be604df38627e0e266ccfc9a541f4c87c20f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "07EB8827-6616-41F7-BFD5-33F26BD8FE9C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_2F0BDB13-8536-4612-A648-0F38B763E8E5.png",
+      "timestamp": 1792605302.84,
+      "retainedFileName": "07EB8827-6616-41F7-BFD5-33F26BD8FE9C.png",
+      "sha256": "9f420f21eebe0d43e5b99ac9439e9ff0eb8b872d16cb46d52aec0bb0b717acc9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "3A1E968E-1E57-489A-89D4-27A6E782BA46.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent overlapping start-only appointments in Week_0_3263468E-C5D3-4BDE-B848-D97814908AA0.png",
+      "timestamp": 1792605375.392,
+      "retainedFileName": "3A1E968E-1E57-489A-89D4-27A6E782BA46.png",
+      "sha256": "33c1e3fc24ccc23b43da849f78a87da10a9e6b374a6e853574f2f74e9409c425"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "86CF8D5F-7EF2-4552-90E3-5914B1D026FD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent overlapping start-only appointments in Day_0_C4E31980-95D1-4C2E-A72B-E47CE688E626.png",
+      "timestamp": 1792605365.916,
+      "retainedFileName": "86CF8D5F-7EF2-4552-90E3-5914B1D026FD.png",
+      "sha256": "1ae4408c3ca4cce9eb13c0f7f0156dd22a6031052c30b73c99349d08999ccd2f"
+    }
+  ]
+}

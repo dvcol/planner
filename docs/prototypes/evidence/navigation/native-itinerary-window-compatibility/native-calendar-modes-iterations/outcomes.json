@@ -1,0 +1,1072 @@
+{
+  "description": "Completed superseded Mac Calendar compiler/driver/accessibility probes. Raw unpublished packets remain private; this relocation is not disk reclamation. The static-text-named compiler probe immediately before the corrected patch contains the prior source, because the first patch attempt did not apply. No runtime credit is assigned to a build.",
+  "sourceSnapshots": "Changed production/test files are retained as compressed originals where present. Initial base inputs and final compiler/runtime packets remain public.",
+  "iterations": [
+    {
+      "phase": "native-calendar-day-week-mac",
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "files": {
+        "0B8919AD-8F39-42ED-9FF4-1F38B965AFA6.png": "ae0ffe06da8b9267aa482bc0bbfd5d8d1e46bc9df49e972678b1bcba4b6689d2",
+        "19F4FAA8-C31C-40EA-A262-CB41C4037EF2.png": "b53da99f003d769e5b3f9c110340f8f6d9902997aad9ddb7a4fedbe36fd55980",
+        "4024B415-A7DE-42AB-9AB5-A428CB69480A.txt.gz": "9024177f844f287fb13e12bdc676e4e059f9b2a412e23a2afbc3db950b9b2bb9",
+        "C9C221C5-0F90-4393-B67E-3B022F060344.png": "2362768c6621752e66053f964c298721ee996a0c849c85d692cc1564a4f8961d",
+        "command.json": "91d168a319878be8fed11b91f1d6998be09e98bf4cc3f0f72eff3dd3408eaeb2",
+        "evidence-commands.json": "d1704bc238a80f4301ba822b482db90f6dd909f15002ba33437393c38467c72b",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "original-attachment-manifest.json.gz": "b780e1a52e8033c24586c176eab8d00127fdf01ff6670b0cab4f677ceba1ac42",
+        "product-sha256.json": "e127ccfd68a2662ad7bcbf473a710b9235ec664a3109bfada2bae8a52c481562",
+        "runner.py.gz": "6415b82b148af10b7f09d033fa5fe55e72fe5c490323c428fc1dd11a7a056787",
+        "selected-attachments.json": "328d1bea73af4fe1ea56b049d25f954d8c900b9ac4e01fd436a80bceba3236ff",
+        "source-root.json": "e1b960e8972d1d59da40dd2fa3b5ccc1d8b249fbb7bd068d90ec8861eadb98ff",
+        "source-sha256.json": "57c2270a1a3e3a6ea5c3aa0a5d5f61a37809d8d5f3ef76501c6172768b2a6482",
+        "test-results-summary.json": "221673cca73a46d117d442e26ae41c232173e03acd7dc793a2b3c3894219a0a6",
+        "test.log.gz": "d94e373fa3f9ba5bb09c3da19aad0efef4b09ab634c706f4c71ee9b1235361d5"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      },
+      "test-results-summary.json": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "00006030-001A586C3EA3001C",
+              "deviceName": "My Mac",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1792603450.709,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1792603415.63,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "selected-attachments.json": {
+        "attachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "19F4FAA8-C31C-40EA-A262-CB41C4037EF2.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native Week time grid_0_9F76CB9F-DC0F-4AC7-B60D-BE3C152D7F5F.png",
+            "timestamp": 1792603441.03,
+            "retainedFileName": "19F4FAA8-C31C-40EA-A262-CB41C4037EF2.png",
+            "sha256": "b53da99f003d769e5b3f9c110340f8f6d9902997aad9ddb7a4fedbe36fd55980"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "C9C221C5-0F90-4393-B67E-3B022F060344.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native Day time grid_0_8F386C14-01C0-431E-A7D8-5C1BB41A9AF8.png",
+            "timestamp": 1792603437.747,
+            "retainedFileName": "C9C221C5-0F90-4393-B67E-3B022F060344.png",
+            "sha256": "2362768c6621752e66053f964c298721ee996a0c849c85d692cc1564a4f8961d"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "0B8919AD-8F39-42ED-9FF4-1F38B965AFA6.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native Calendar mode selector_0_607D3F57-B1F2-44DC-A54F-DC5A5C2AAB7E.png",
+            "timestamp": 1792603434.731,
+            "retainedFileName": "0B8919AD-8F39-42ED-9FF4-1F38B965AFA6.png",
+            "sha256": "ae0ffe06da8b9267aa482bc0bbfd5d8d1e46bc9df49e972678b1bcba4b6689d2"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "4024B415-A7DE-42AB-9AB5-A428CB69480A.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native Calendar mode selector hierarchy_0_1C30010C-D6E9-449D-99F7-73CEC8282B82.txt",
+            "timestamp": 1792603434.609,
+            "retainedFileName": "4024B415-A7DE-42AB-9AB5-A428CB69480A.txt.gz",
+            "sha256": "03bce7d02c1e6b3630d27b642050a33519aa1673b24ae5b037d64910155038f4"
+          }
+        ]
+      },
+      "caseOutcomes": [
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt]' started.",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt]' passed (34.126 seconds)."
+      ]
+    },
+    {
+      "phase": "native-calendar-modes-mac-lookup-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "files": {
+        "SavedCalendarModesJourneyTests.swift.gz": "64b5bb4cdc8894a843c79f544d45c251de7bc9b543a18631810f31e4062b3c00",
+        "build.log.gz": "047cc5e9ff41d8d18eb459c65963b1e1f5e5757654f9d5e94e6ce8554e39b103",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "aa4c7681d95118af9fe6807884b85c424a3a1f03761d8f9f116580a52c4936ba",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "source-root.json": "e1b960e8972d1d59da40dd2fa3b5ccc1d8b249fbb7bd068d90ec8861eadb98ff",
+        "source-sha256.json": "19ead362cd2f0186ca8e7e277b31baf6d83edc3e8155bb19b682b2250672e924"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      }
+    },
+    {
+      "phase": "native-calendar-modes-mac-lookup",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "files": {
+        "1141AC1E-C70A-4700-982A-978FAFCEA93E.txt.gz": "d3d8869d1b088f46525ead5407ff764185296f4ca9cd6546044948ae990286b8",
+        "26DDB3B1-7824-41CD-9C73-28201A7ED86E.txt.gz": "d3d8869d1b088f46525ead5407ff764185296f4ca9cd6546044948ae990286b8",
+        "421A3993-966E-43A5-AF09-8A23C7E27D21.txt.gz": "d3d8869d1b088f46525ead5407ff764185296f4ca9cd6546044948ae990286b8",
+        "516522F2-9E4B-40F1-993C-1FFE758DCD3F.txt.gz": "d3d8869d1b088f46525ead5407ff764185296f4ca9cd6546044948ae990286b8",
+        "703D702E-442F-49BF-A4B0-515499FB9ACB.png": "a4176449674ca0fb5ea97f118b8d1cc954ca2f4496e223856b33cddf6cfee493",
+        "C5CAD3BF-2AEC-4EE9-98D1-E90EC29A94E7.txt.gz": "d3d8869d1b088f46525ead5407ff764185296f4ca9cd6546044948ae990286b8",
+        "C689C2E5-FFE3-4FB2-B995-0DC9A4C57A6A.png": "54967fd0d074902035725957b842b321a073d4624f47c071689626ed55a20671",
+        "D37A7055-BF7E-41BA-94FD-52369EB174C5.png": "958d264fab0caa80e7f4077b571e94fe68727515dfc7255cc14ad58ac1bb4aa5",
+        "E547BDF5-EFA4-4E60-B31A-97A204DF8A64.txt.gz": "70d245ea38d06d5b887df550c7cdf98fe6a32a1df0438f6df3af80f3ad14c62b",
+        "command.json": "ec8a26ce95d8a08bf2eded36f507ca44dd18c61654871959152a38ca1c3b58de",
+        "evidence-commands.json": "664256aa044fdc4dd54d2905e3b314c0e6276b3d4b61127148c47eb3f5c60e4e",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "original-attachment-manifest.json.gz": "11a16a9e11a2a37839575211051b32a0b0ccb93069ff6f5a5c3951d45b510436",
+        "product-sha256.json": "aa4c7681d95118af9fe6807884b85c424a3a1f03761d8f9f116580a52c4936ba",
+        "runner.py.gz": "b3543c39370ffeab285307e95eb063f7335742119f29b0c1cfe4f595ab13b77a",
+        "scoped-native-observations.json": "1139e1c9714c0f98b2ca7e069e8edef7d9b133fe42dcab956c6f0f6dda605d11",
+        "selected-attachments.json": "8158da3870e722b8c69627bfb22971f6d5d4b232a16ae87f39b9338d48d93b5a",
+        "source-root.json": "e1b960e8972d1d59da40dd2fa3b5ccc1d8b249fbb7bd068d90ec8861eadb98ff",
+        "source-sha256.json": "19ead362cd2f0186ca8e7e277b31baf6d83edc3e8155bb19b682b2250672e924",
+        "test-results-summary.json": "2839dca44a50c764f67a8a87acf59e3e6d04fdd87597a71242ce018e6230f428",
+        "test.log.gz": "a4b27283fa7c4e8212ed531f9e7299e1fbaefab4e0b9238777210f2b0c6a306a"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      },
+      "test-results-summary.json": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "00006030-001A586C3EA3001C",
+              "deviceName": "My Mac",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 2,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 2,
+        "finishTime": 1792604286.545,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1792604157.054,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"Optional(\"\")\") is not equal to (\"Optional(\"22 Oct 2026\")\")",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+            "testName": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()"
+          },
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 2,
+            "testIdentifierString": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+            "testName": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "selected-attachments.json": {
+        "attachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "D37A7055-BF7E-41BA-94FD-52369EB174C5.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Selected overflow Schedule in native details_0_C4F22CA3-CE8F-4B28-86A1-6221509F71AF.png",
+            "timestamp": 1792604232.74,
+            "retainedFileName": "D37A7055-BF7E-41BA-94FD-52369EB174C5.png",
+            "sha256": "958d264fab0caa80e7f4077b571e94fe68727515dfc7255cc14ad58ac1bb4aa5"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "E547BDF5-EFA4-4E60-B31A-97A204DF8A64.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Selected saved Schedule native value and visibility_0_A25A2B66-C92A-47BE-8D8E-C22775B580B6.txt",
+            "timestamp": 1792604232.62,
+            "retainedFileName": "E547BDF5-EFA4-4E60-B31A-97A204DF8A64.txt.gz",
+            "sha256": "3d1e064be97d31a66f47723801b80396f1b56c9389185936c675649acf1b73f9"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "703D702E-442F-49BF-A4B0-515499FB9ACB.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_29F1FB09-88CC-4A8D-B729-606F22955C3B.png",
+            "timestamp": 1792604227.647,
+            "retainedFileName": "703D702E-442F-49BF-A4B0-515499FB9ACB.png",
+            "sha256": "a4176449674ca0fb5ea97f118b8d1cc954ca2f4496e223856b33cddf6cfee493"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "C689C2E5-FFE3-4FB2-B995-0DC9A4C57A6A.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_55550772-2DEB-4077-84B7-3B6B4414D115.png",
+            "timestamp": 1792604220.727,
+            "retainedFileName": "C689C2E5-FFE3-4FB2-B995-0DC9A4C57A6A.png",
+            "sha256": "54967fd0d074902035725957b842b321a073d4624f47c071689626ed55a20671"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "1141AC1E-C70A-4700-982A-978FAFCEA93E.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_FD484967-9282-4356-A642-8EFECF8260A8.txt",
+            "timestamp": 1792604272.382,
+            "retainedFileName": "1141AC1E-C70A-4700-982A-978FAFCEA93E.txt.gz",
+            "sha256": "091ab995671f60a1c6836bc7342d3b97706693ac554b045b07b9adcc6fef9a06"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "421A3993-966E-43A5-AF09-8A23C7E27D21.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_923BC784-933A-4D7E-AFA9-9BBF6D3B8841.txt",
+            "timestamp": 1792604271.413,
+            "retainedFileName": "421A3993-966E-43A5-AF09-8A23C7E27D21.txt.gz",
+            "sha256": "091ab995671f60a1c6836bc7342d3b97706693ac554b045b07b9adcc6fef9a06"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "26DDB3B1-7824-41CD-9C73-28201A7ED86E.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_8E99E333-CCD0-4C7B-AB46-365E5C66D72A.txt",
+            "timestamp": 1792604270.399,
+            "retainedFileName": "26DDB3B1-7824-41CD-9C73-28201A7ED86E.txt.gz",
+            "sha256": "091ab995671f60a1c6836bc7342d3b97706693ac554b045b07b9adcc6fef9a06"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "516522F2-9E4B-40F1-993C-1FFE758DCD3F.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_406DFBC7-B36B-490C-A986-23C8A01F60E3.txt",
+            "timestamp": 1792604269.389,
+            "retainedFileName": "516522F2-9E4B-40F1-993C-1FFE758DCD3F.txt.gz",
+            "sha256": "091ab995671f60a1c6836bc7342d3b97706693ac554b045b07b9adcc6fef9a06"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "C5CAD3BF-2AEC-4EE9-98D1-E90EC29A94E7.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_C023B8C0-2BF4-4FF2-B98B-6E83334CC50F.txt",
+            "timestamp": 1792604268.381,
+            "retainedFileName": "C5CAD3BF-2AEC-4EE9-98D1-E90EC29A94E7.txt.gz",
+            "sha256": "091ab995671f60a1c6836bc7342d3b97706693ac554b045b07b9adcc6fef9a06"
+          }
+        ],
+        "excludedAttachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "62051993-CCAB-429F-A460-F6B38DC2128C.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "App UI hierarchy for org.example_0_BA2FC8D8-11AE-4861-92D9-CEDD502516DB.PlannerMCPPrototype",
+            "timestamp": 1792604272.562,
+            "retainedFileName": "62051993-CCAB-429F-A460-F6B38DC2128C.txt.gz",
+            "sha256": "30dd56df6857f2e151fc8566dcd969c7c927c93ba96e84d13426a0115893cc8e",
+            "exclusionReason": "Automatic broad app hierarchy retained privately; only scoped Calendar observations are public."
+          }
+        ]
+      },
+      "scoped-native-observations.json": {
+        "headingLabel": "Thu 22 Oct",
+        "headingFrame": [
+          248,
+          178,
+          71,
+          16
+        ],
+        "sourceAttachmentSHA256": "30dd56df6857f2e151fc8566dcd969c7c927c93ba96e84d13426a0115893cc8e",
+        "savedSchedule": {
+          "type": "Other",
+          "label": "All day",
+          "value": "",
+          "frame": [
+            1928,
+            847,
+            76.5,
+            36
+          ],
+          "hittable": true
+        },
+        "ownedWindowCapture": "D37A7055-BF7E-41BA-94FD-52369EB174C5.png",
+        "observations": "Selected all-day date is visibly rendered. Scoped Calendar heading query still fails despite matching label in the owned window hierarchy. No production data defect is established."
+      },
+      "caseOutcomes": [
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift:126: error: -[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible] : XCTAssertEqual failed: (\"Optional(\"\")\") is not equal to (\"Optional(\"22 Oct 2026\")\")",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' failed (75.558 seconds).",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift:304: error: -[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView] : XCTAssertTrue failed",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView]' failed (39.640 seconds)."
+      ]
+    },
+    {
+      "phase": "native-calendar-modes-mac-readback-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "files": {
+        "SavedCalendarModesJourneyTests.swift.gz": "1740bd7e15657d4ec1cdbdf3fc05cb48851a6177e97f133e6d39e2bccbb4f14f",
+        "build.log.gz": "5f7d79b7841389a4fe0cd2cdddcfb67da8a255e4cf5c762712a7a38413dc8abd",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "a568701091fafc76596b2ffee703e1f453f80863322e475f2159c0dd5b77c0b3",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "source-root.json": "e1b960e8972d1d59da40dd2fa3b5ccc1d8b249fbb7bd068d90ec8861eadb98ff",
+        "source-sha256.json": "45ad30cf73e24d9419ccab4e6f0aa2b44476532c333a4b9d1922ea15a95fd549"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      }
+    },
+    {
+      "phase": "native-calendar-modes-mac-readback",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "files": {
+        "40D70ACD-0950-4C5E-8347-ABAD584846B7.txt.gz": "cd413152797da917122d360e8d040cb788b560bf73d98af58d3e0127cdeab4e9",
+        "51F663A4-EDFA-421D-8267-0B00CB13FDE1.txt.gz": "cd413152797da917122d360e8d040cb788b560bf73d98af58d3e0127cdeab4e9",
+        "55313D99-04AD-4EF4-91DE-D4938933A7D1.txt.gz": "cd413152797da917122d360e8d040cb788b560bf73d98af58d3e0127cdeab4e9",
+        "7B24C7A5-2733-4A15-B217-56822D2CA9F3.txt.gz": "c109448ba54883e534d950425f61d5936629620ef8be77e9e5e8fd37c50dbe5d",
+        "92E730FA-2FEE-4591-9A04-652CA1EA11EA.txt.gz": "76c0721f41ea009a0113164b1402088bec1ee79ec5d621da25d1203a5db49e6d",
+        "9398BBFE-D1DA-4CB2-A372-AB0785938E5F.txt.gz": "cd413152797da917122d360e8d040cb788b560bf73d98af58d3e0127cdeab4e9",
+        "99125326-E837-4C8D-A6AD-CE2F9262C47D.png": "6cc038eddf2cb4807a7eb1837dca0b1d7f2ebe8523f70d8d4e553da3d22616b1",
+        "9D3FB6D1-A854-4F54-8FA0-699A777FB96E.txt.gz": "ed839080b505dbeac53ef752059b0fe85f9485eff66b88febd00d22ef5a058d3",
+        "A6C3F78B-DD31-4BBD-932C-F14BCF20BDBF.txt.gz": "cd413152797da917122d360e8d040cb788b560bf73d98af58d3e0127cdeab4e9",
+        "AF47E7A6-5F9B-4C9B-93E6-77896F9C2BB9.txt.gz": "8af6a373eb6dc622d51748b41d76ea6a5820c8a84693643584c95a2995fd05df",
+        "D374E512-C82D-4D31-8988-F7119C514DD2.png": "8398d99bdff6723d13e16a3f1dfa7edd9ad6aa45bfdf557b33e4d2de1701e20f",
+        "E624C6B3-BD03-4559-8BD9-C5EC43243DBC.txt.gz": "87168ab6dd1ccc65bac63111b8c9039252d6b026b03c9d0033a808ce9677ab26",
+        "command.json": "12bdc9a9110952c1c513d650d06c071a115ef57fa15b7ae04da3446a36eea132",
+        "evidence-commands.json": "5e53714e90a451cfccd9ecc450292923eeb0ea1280f693ce1185c7178c5f2573",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "original-attachment-manifest.json.gz": "9b6241bec13a5caedfac962f297f0c221e8293aa3da280fe4d7059f10c5a0fb3",
+        "product-sha256.json": "a568701091fafc76596b2ffee703e1f453f80863322e475f2159c0dd5b77c0b3",
+        "runner.py.gz": "7283ab60f9df9b9c279e2dae9552d14691814ced2b3abb3418c747bbbce92f2e",
+        "selected-attachments.json": "c27de87e8d9d1d3bcd5999402bfd4df397840e11c234abdf7ea83fb011d3181f",
+        "source-root.json": "e1b960e8972d1d59da40dd2fa3b5ccc1d8b249fbb7bd068d90ec8861eadb98ff",
+        "source-sha256.json": "45ad30cf73e24d9419ccab4e6f0aa2b44476532c333a4b9d1922ea15a95fd549",
+        "test-results-summary.json": "edeb7fb5d565e2b24b60cb48c73be732b0c9ff8c50b148b080e49eb91c0d874b",
+        "test.log.gz": "57f0ac45042f24c6652714101683454da1cd0ab74ecab8005b5313e911986402"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      },
+      "test-results-summary.json": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "00006030-001A586C3EA3001C",
+              "deviceName": "My Mac",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 2,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 2,
+        "finishTime": 1792604537.462,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1792604402.193,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+            "testName": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()"
+          },
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 2,
+            "testIdentifierString": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+            "testName": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "selected-attachments.json": {
+        "attachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "9D3FB6D1-A854-4F54-8FA0-699A777FB96E.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.D9B909CE-DC61-4F35-AE70-5B3E15364285\" Other`_0_84FE453E-B6A0-4968-9E75-99ED5AD2CBB6.txt",
+            "timestamp": 1792604482.774,
+            "retainedFileName": "9D3FB6D1-A854-4F54-8FA0-699A777FB96E.txt.gz",
+            "sha256": "5cdea75ab627e800946658df38d9f4c1bc8773282024ec5220f7aa22c9270ba5"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "AF47E7A6-5F9B-4C9B-93E6-77896F9C2BB9.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.D9B909CE-DC61-4F35-AE70-5B3E15364285\" Other`_0_D52255A5-D54D-41FF-931B-E7DA9FC92097.txt",
+            "timestamp": 1792604481.955,
+            "retainedFileName": "AF47E7A6-5F9B-4C9B-93E6-77896F9C2BB9.txt.gz",
+            "sha256": "26cea65609b751989e2d0096b593b3df6d42d8ec8ff28577aab5d13dcb445f07"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "92E730FA-2FEE-4591-9A04-652CA1EA11EA.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.D9B909CE-DC61-4F35-AE70-5B3E15364285\" Other`_0_A18AAB67-CCC7-4992-B0D7-4E6D98BEFF79.txt",
+            "timestamp": 1792604480.965,
+            "retainedFileName": "92E730FA-2FEE-4591-9A04-652CA1EA11EA.txt.gz",
+            "sha256": "729119e64d4f84b1a84f42c26ecc6587e5076199cb55f76a0d87833214679bd0"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "E624C6B3-BD03-4559-8BD9-C5EC43243DBC.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.D9B909CE-DC61-4F35-AE70-5B3E15364285\" Other`_0_203B1545-C044-403F-9FF3-F52A2D36C794.txt",
+            "timestamp": 1792604479.976,
+            "retainedFileName": "E624C6B3-BD03-4559-8BD9-C5EC43243DBC.txt.gz",
+            "sha256": "3842819e85da84cd5332b537c22ea55bb88d595dca6885942fbf8e6990b3630e"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "7B24C7A5-2733-4A15-B217-56822D2CA9F3.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.D9B909CE-DC61-4F35-AE70-5B3E15364285\" Other`_0_648A2249-A41E-4FEF-8759-0BA155B7C0B5.txt",
+            "timestamp": 1792604478.782,
+            "retainedFileName": "7B24C7A5-2733-4A15-B217-56822D2CA9F3.txt.gz",
+            "sha256": "72aa553ec1779dfd6479b96f10a851971f0e0fb0c362bfd6900de20fb7f20e6f"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "99125326-E837-4C8D-A6AD-CE2F9262C47D.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_3DD15F40-67EB-4132-85BA-E650F4412059.png",
+            "timestamp": 1792604472.86,
+            "retainedFileName": "99125326-E837-4C8D-A6AD-CE2F9262C47D.png",
+            "sha256": "6cc038eddf2cb4807a7eb1837dca0b1d7f2ebe8523f70d8d4e553da3d22616b1"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "D374E512-C82D-4D31-8988-F7119C514DD2.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_9740186B-BB6C-4DAE-8F56-3A3E6BB5FD6E.png",
+            "timestamp": 1792604465.774,
+            "retainedFileName": "D374E512-C82D-4D31-8988-F7119C514DD2.png",
+            "sha256": "8398d99bdff6723d13e16a3f1dfa7edd9ad6aa45bfdf557b33e4d2de1701e20f"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "9398BBFE-D1DA-4CB2-A372-AB0785938E5F.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_8F072A66-2207-4E23-9B8F-09F304A89997.txt",
+            "timestamp": 1792604522.499,
+            "retainedFileName": "9398BBFE-D1DA-4CB2-A372-AB0785938E5F.txt.gz",
+            "sha256": "911e9f0ace7a04472a7b78c92fdcd01e16ed20ef20399516c832154c08f9c51a"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "A6C3F78B-DD31-4BBD-932C-F14BCF20BDBF.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_88BD476B-D137-4786-802F-888D758D29B9.txt",
+            "timestamp": 1792604521.52,
+            "retainedFileName": "A6C3F78B-DD31-4BBD-932C-F14BCF20BDBF.txt.gz",
+            "sha256": "911e9f0ace7a04472a7b78c92fdcd01e16ed20ef20399516c832154c08f9c51a"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "55313D99-04AD-4EF4-91DE-D4938933A7D1.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_A9C5A631-527C-4577-8C1B-E430633947E4.txt",
+            "timestamp": 1792604520.558,
+            "retainedFileName": "55313D99-04AD-4EF4-91DE-D4938933A7D1.txt.gz",
+            "sha256": "911e9f0ace7a04472a7b78c92fdcd01e16ed20ef20399516c832154c08f9c51a"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "40D70ACD-0950-4C5E-8347-ABAD584846B7.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_4CC3253D-24D0-4D72-B95F-63780A3E57AA.txt",
+            "timestamp": 1792604519.577,
+            "retainedFileName": "40D70ACD-0950-4C5E-8347-ABAD584846B7.txt.gz",
+            "sha256": "911e9f0ace7a04472a7b78c92fdcd01e16ed20ef20399516c832154c08f9c51a"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "51F663A4-EDFA-421D-8267-0B00CB13FDE1.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `StaticText (First Match)`_0_0DA62B56-7F93-4F05-B30F-B4E4DDD83B1B.txt",
+            "timestamp": 1792604518.513,
+            "retainedFileName": "51F663A4-EDFA-421D-8267-0B00CB13FDE1.txt.gz",
+            "sha256": "911e9f0ace7a04472a7b78c92fdcd01e16ed20ef20399516c832154c08f9c51a"
+          }
+        ],
+        "excludedAttachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "329C2071-78A2-4DDC-9C7E-FC0E22EC9BD4.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "App UI hierarchy for org.example_0_DB3A8C31-96EC-4F3B-BBE7-AA9BD0069190.PlannerMCPPrototype",
+            "timestamp": 1792604522.637,
+            "retainedFileName": "329C2071-78A2-4DDC-9C7E-FC0E22EC9BD4.txt.gz",
+            "sha256": "eaca3282420c3a6944bbae2163d99a6123c68f15c2de29f4672b0b2587bb5c71",
+            "exclusionReason": "Automatic broad app hierarchy retained privately; this does not qualify the native Calendar behavior."
+          }
+        ]
+      },
+      "caseOutcomes": [
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift:115: error: -[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible] : XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' failed (80.416 seconds).",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift:313: error: -[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView] : XCTAssertTrue failed",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView]' failed (39.733 seconds)."
+      ]
+    },
+    {
+      "phase": "native-calendar-schedule-accessibility-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "files": {
+        "SavedCalendarModesJourneyTests.swift.gz": "073e209df1bacf8438f321b75705897d1b47e747a6ca5a31d1b1f37033541db0",
+        "SavedItemScheduleViews.swift.gz": "905f1f6464ddb3fa55a888ee0829362643f6e07711ce01948b612fb069342d9d",
+        "build.log.gz": "4aa85215fb9ec44ef006bec068cf1f1f607dde43681afb32be4f73a92f74be2d",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "8f648c22ba9191a9bc57a394c49bd13cf799556f21e3ff892487066570248a69",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "source-root.json": "f6126499876ccba5c97211d9e87e150d8c6bb581ec288836067b525aeac0954f",
+        "source-sha256.json": "bce716b3d9ca49edf564628bc4f638840d7b518bfa827259b972fe8149e29ed4"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "Planner/Scenes/SavedItemScheduleViews.swift",
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      }
+    },
+    {
+      "phase": "native-calendar-schedule-accessibility-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "files": {
+        "049F2884-7AC1-4B44-826E-FDC839AE6FEE.png": "2cc4355c14343f16ab3bf8e200c0193d472f4d290ed09236c50ae1b1ad01eb85",
+        "28759B54-FDD7-4676-AE77-45DBADF100AC.txt.gz": "cdd1b764bfd4b6193ea35619012d2b59512ab314fd92082ddc00c2dd4926eda6",
+        "491D5546-4BE8-4FFF-A784-4390DBFF7C7E.png": "be4cab7ff00beac9e8abdbb5eb7d5fee2732f32c47d4be52dca350ee6f930d1a",
+        "730CC375-0486-441C-BDCF-C88DBC20F3A7.txt.gz": "10dc3b99aeeccb6e60e8e78bf775b625a0070e452ae195a933da86d35e18f6b3",
+        "7ADF6C66-AB8C-4D28-B87F-65CB3DE6834E.png": "1d6664def9af9ab1ebccfed32bc1b669dea3575cea49fdca465ead7dffbddf37",
+        "87E22A48-80AD-412D-87A6-4CAC70F14D82.txt.gz": "ad4475e1dd2fb4429dc33fb4fb5ea0ede7768101ee2a0c9642e15b9f88c22469",
+        "D0BB6D19-A366-4FAD-B0EB-CC88DF598E19.txt.gz": "8feab567217a3f3d0c923e01b42c24f257fc89d3818757f3e7771f1efee3daf2",
+        "D3A7949B-9D3E-4AE4-AD78-B7E971471248.png": "beede548f87ccfef3cb207754cfea54e2757b1c87d80a9ef80ffdd312f11d421",
+        "EE3EA5B9-E8ED-4D88-ACAB-6636A5F82EB5.txt.gz": "d00e5ca0575f2f29d3177ec2d69969d249f8fcdc251fff4abb83d10ed5aa4d7e",
+        "command.json": "05b4e5cb67c0c0ca439b72c0ccff0251be40119514f85b58bb4d5c7c21a9719a",
+        "evidence-commands.json": "8d8873d9a809230131bd02c25e0ef503bc3c1311665c386b8ddfae870c2d80b9",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "original-attachment-manifest.json.gz": "3ac9e0c6bafbb673f3b5a4c3ab554de342d6b8f740ad2ecdb00bcc21ecb0090a",
+        "product-sha256.json": "8f648c22ba9191a9bc57a394c49bd13cf799556f21e3ff892487066570248a69",
+        "runner.py.gz": "2c020ede7497db3f5bfaf0d790a26deeee04fbd4832940c43a881926a94aefbd",
+        "selected-attachments.json": "013a3467cbe4e13116a6fab42bb2a3d3664805ab7c569bb7b28352d2a4883add",
+        "source-root.json": "f6126499876ccba5c97211d9e87e150d8c6bb581ec288836067b525aeac0954f",
+        "source-sha256.json": "bce716b3d9ca49edf564628bc4f638840d7b518bfa827259b972fe8149e29ed4",
+        "test-results-summary.json": "7710e7ff986fe708f43a6b65d1c329096989f5fe61cba1645b3b80f52b030afb",
+        "test.log.gz": "e431c90e19e416edd7e4dbcad99982b964da8390105a1a89c201fef931c8cb0b"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "Planner/Scenes/SavedItemScheduleViews.swift",
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      },
+      "test-results-summary.json": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "00006030-001A586C3EA3001C",
+              "deviceName": "My Mac",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1792604738.147,
+        "passedTests": 1,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1792604594.227,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+            "testName": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "selected-attachments.json": {
+        "attachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "87E22A48-80AD-412D-87A6-4CAC70F14D82.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.E4B63171-D647-4259-A4F9-89E4767209FB\" Other`_0_5B3B8B5A-122B-4CF8-ACF5-D371AAB1CC24.txt",
+            "timestamp": 1792604677.999,
+            "retainedFileName": "87E22A48-80AD-412D-87A6-4CAC70F14D82.txt.gz",
+            "sha256": "e25a7e3411d49c9296da590f2d3d8c0aae37837859b04f3f4db91f0412915214"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "D0BB6D19-A366-4FAD-B0EB-CC88DF598E19.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.E4B63171-D647-4259-A4F9-89E4767209FB\" Other`_0_4C4DAC14-B42F-4DE4-8E97-E55914D3532E.txt",
+            "timestamp": 1792604677.069,
+            "retainedFileName": "D0BB6D19-A366-4FAD-B0EB-CC88DF598E19.txt.gz",
+            "sha256": "cc81376fa9ca285c56c2ea35bd2563b5d46dedf0bd0d12faaf7bcc725bad908a"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "EE3EA5B9-E8ED-4D88-ACAB-6636A5F82EB5.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.E4B63171-D647-4259-A4F9-89E4767209FB\" Other`_0_5245B707-2EBA-49C2-B512-E47873EA8FF9.txt",
+            "timestamp": 1792604676.211,
+            "retainedFileName": "EE3EA5B9-E8ED-4D88-ACAB-6636A5F82EB5.txt.gz",
+            "sha256": "295e5b859d77ba67266afaafd0a52a22ffd1d4181962aa921b71f3b4e9cd4d10"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "28759B54-FDD7-4676-AE77-45DBADF100AC.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.E4B63171-D647-4259-A4F9-89E4767209FB\" Other`_0_237E4B1A-8933-4E06-90C1-3CA4E327E5E8.txt",
+            "timestamp": 1792604675.102,
+            "retainedFileName": "28759B54-FDD7-4676-AE77-45DBADF100AC.txt.gz",
+            "sha256": "c416ce69a56e16eac0c6ebb74fe5163554a25051640a1c957321d18dd8096280"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "730CC375-0486-441C-BDCF-C88DBC20F3A7.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Debug description for `\"saved.item.schedule.E4B63171-D647-4259-A4F9-89E4767209FB\" Other`_0_5C7736EE-6A2B-434B-903E-24E5E59A8C0F.txt",
+            "timestamp": 1792604674.028,
+            "retainedFileName": "730CC375-0486-441C-BDCF-C88DBC20F3A7.txt.gz",
+            "sha256": "e36c369bf11677c8b232eddcff5c2f208ac141ba93942718fbc5339243345ffa"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "7ADF6C66-AB8C-4D28-B87F-65CB3DE6834E.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_2CA6E121-E7B7-48E2-B8AF-8AF5DB850914.png",
+            "timestamp": 1792604668.133,
+            "retainedFileName": "7ADF6C66-AB8C-4D28-B87F-65CB3DE6834E.png",
+            "sha256": "1d6664def9af9ab1ebccfed32bc1b669dea3575cea49fdca465ead7dffbddf37"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "049F2884-7AC1-4B44-826E-FDC839AE6FEE.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_25F6A303-EE45-4AA8-887A-9E247A608005.png",
+            "timestamp": 1792604661.174,
+            "retainedFileName": "049F2884-7AC1-4B44-826E-FDC839AE6FEE.png",
+            "sha256": "2cc4355c14343f16ab3bf8e200c0193d472f4d290ed09236c50ae1b1ad01eb85"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "491D5546-4BE8-4FFF-A784-4390DBFF7C7E.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Independent overlapping start-only appointments in Week_0_C7EF5131-94AE-4739-BB24-33C137725DBA.png",
+            "timestamp": 1792604723.116,
+            "retainedFileName": "491D5546-4BE8-4FFF-A784-4390DBFF7C7E.png",
+            "sha256": "be4cab7ff00beac9e8abdbb5eb7d5fee2732f32c47d4be52dca350ee6f930d1a"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "D3A7949B-9D3E-4AE4-AD78-B7E971471248.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Independent overlapping start-only appointments in Day_0_CD8CB93B-5F67-4E23-8596-2FEA1F15A890.png",
+            "timestamp": 1792604715.597,
+            "retainedFileName": "D3A7949B-9D3E-4AE4-AD78-B7E971471248.png",
+            "sha256": "beede548f87ccfef3cb207754cfea54e2757b1c87d80a9ef80ffdd312f11d421"
+          }
+        ]
+      },
+      "caseOutcomes": [
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift:115: error: -[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible] : XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' failed (83.591 seconds).",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView]' started.",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView]' passed (44.954 seconds)."
+      ]
+    },
+    {
+      "phase": "native-calendar-schedule-text-role-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "files": {
+        "SavedCalendarModesJourneyTests.swift.gz": "073e209df1bacf8438f321b75705897d1b47e747a6ca5a31d1b1f37033541db0",
+        "SavedItemScheduleViews.swift.gz": "905f1f6464ddb3fa55a888ee0829362643f6e07711ce01948b612fb069342d9d",
+        "build.log.gz": "db513ff3ceb0211b08c4b5c250451b1c0beab14f235f44c076772bd2a038fe1a",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "8f648c22ba9191a9bc57a394c49bd13cf799556f21e3ff892487066570248a69",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "source-root.json": "f6126499876ccba5c97211d9e87e150d8c6bb581ec288836067b525aeac0954f",
+        "source-sha256.json": "bce716b3d9ca49edf564628bc4f638840d7b518bfa827259b972fe8149e29ed4"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "Planner/Scenes/SavedItemScheduleViews.swift",
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      }
+    },
+    {
+      "phase": "native-calendar-schedule-static-text-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "files": {
+        "SavedCalendarModesJourneyTests.swift.gz": "073e209df1bacf8438f321b75705897d1b47e747a6ca5a31d1b1f37033541db0",
+        "SavedItemScheduleViews.swift.gz": "13d3f3ab219eb7d15e16e93ccc7cafae2476e03ea53c9af2f99cd2b472adf20c",
+        "build.log.gz": "2e916227b32701c3089bd20e56804a27cd6c5e29c917923103f3495c944e3553",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "7875273f33078ca8e241dcba4e628e386d5fe3f5d94af34008fd782eafcba396",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "source-root.json": "f6126499876ccba5c97211d9e87e150d8c6bb581ec288836067b525aeac0954f",
+        "source-sha256.json": "828e7ce15ed0180c830e0b048e29cdd865fcd338fd0833f2d8c06fac309a7732"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "Planner/Scenes/SavedItemScheduleViews.swift",
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      }
+    },
+    {
+      "phase": "native-calendar-schedule-static-text-mac",
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "files": {
+        "2855785C-83A4-4577-9F37-6DBFC36B1114.png": "b0222dff33cf65f71184fc22b974982f41f3d27a0a02e000025d73aba2682fd7",
+        "562E2D4C-9B81-4017-8F60-D8C000578C5B.png": "e9412bfe8408499dd11a2ad315b36605dd499786761e48aa9789dcae9639c2cb",
+        "AA708882-4E8E-48FB-A566-7105EC5417BC.png": "cc17eed82f6164b2b1edba17abe06ada83754c25ff4377a7f0951e98861633f0",
+        "E402B467-85E0-4A47-B02C-9D46865C444E.txt.gz": "23e2da82384eea8b0158d51cbacdc3bebae5e1e611759b554ea73576949a96ac",
+        "command.json": "f057f70b17ff74edb9c52891aad1dfc9709d84401ea49417e7e4398c30330e0d",
+        "evidence-commands.json": "b4fe57c2494f494a82e5237989f24d3ae2ff6018da7858f2fd492149dc39410a",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "original-attachment-manifest.json.gz": "a46108300a172d0b9009abe4a7caf20cb7e770d32ede6fe6d68401ea44058cc4",
+        "product-sha256.json": "7875273f33078ca8e241dcba4e628e386d5fe3f5d94af34008fd782eafcba396",
+        "runner.py.gz": "b2ea5539d342d24da64c7dbbcb34125c74105cedf8c8045189f9e828cca4471e",
+        "selected-attachments.json": "334801a475246688746ffdf4a56136887b3c96a7b888e77f8c3c90fe8fbe5cc9",
+        "source-root.json": "f6126499876ccba5c97211d9e87e150d8c6bb581ec288836067b525aeac0954f",
+        "source-sha256.json": "828e7ce15ed0180c830e0b048e29cdd865fcd338fd0833f2d8c06fac309a7732",
+        "test-results-summary.json": "a9fa1118ff71b5bfcb1b45424d516196fd8f96eeafa7801bb32dd868e5dd8c73",
+        "test.log.gz": "15ade32de92682095424b837d2a65b81c56be8fde884874589cd6b96c64dda30"
+      },
+      "source-root.json": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "5ffa684ba894448740a66c68c4204040959adcb4",
+        "overlays": [
+          "Planner/Scenes/SavedItemScheduleViews.swift",
+          "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift"
+        ]
+      },
+      "test-results-summary.json": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "00006030-001A586C3EA3001C",
+              "deviceName": "My Mac",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1792604893.158,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1792604814.179,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "selected-attachments.json": {
+        "attachments": [
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "AA708882-4E8E-48FB-A566-7105EC5417BC.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Selected overflow Schedule in native details_0_AAB66C09-647D-44A6-A3CA-535CC4F0FD6B.png",
+            "timestamp": 1792604892.427,
+            "retainedFileName": "AA708882-4E8E-48FB-A566-7105EC5417BC.png",
+            "sha256": "cc17eed82f6164b2b1edba17abe06ada83754c25ff4377a7f0951e98861633f0"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "E402B467-85E0-4A47-B02C-9D46865C444E.txt",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Selected saved Schedule native value and visibility_0_62BE0CB0-8950-4760-BC61-53F7737D275C.txt",
+            "timestamp": 1792604892.315,
+            "retainedFileName": "E402B467-85E0-4A47-B02C-9D46865C444E.txt.gz",
+            "sha256": "7a38f0d5982544119c72648d1e40d9a43738a649deeda44af02a2a8cbe935c27"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "562E2D4C-9B81-4017-8F60-D8C000578C5B.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Native overflow traversal reaches all nine Schedule identities_0_145A8E26-7EB8-40B4-B165-D5806EAAF9F2.png",
+            "timestamp": 1792604886.037,
+            "retainedFileName": "562E2D4C-9B81-4017-8F60-D8C000578C5B.png",
+            "sha256": "e9412bfe8408499dd11a2ad315b36605dd499786761e48aa9789dcae9639c2cb"
+          },
+          {
+            "configurationName": "Test Scheme Action",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "exportedFileName": "2855785C-83A4-4577-9F37-6DBFC36B1114.png",
+            "isAssociatedWithFailure": false,
+            "suggestedHumanReadableName": "Dense all-day header preserves the timed appointment_0_DC044317-6171-4129-B5FA-D60964A9C00D.png",
+            "timestamp": 1792604878.977,
+            "retainedFileName": "2855785C-83A4-4577-9F37-6DBFC36B1114.png",
+            "sha256": "b0222dff33cf65f71184fc22b974982f41f3d27a0a02e000025d73aba2682fd7"
+          }
+        ]
+      },
+      "caseOutcomes": [
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' started.",
+        "Test Case '-[PlannerNavigationUITests.SavedCalendarModesJourneyTests testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible]' passed (78.059 seconds)."
+      ]
+    }
+  ]
+}
