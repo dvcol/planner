@@ -1,0 +1,49 @@
+{
+  "evidenceCommits": [
+    "ba052c13999e19df9474e2c8b4748e57152d3a81",
+    "82ec576ac7f168d3fb26d8d27467259b1e6f6aed"
+  ],
+  "verifiedPackageInputs": 739,
+  "verifiedRawSummaries": 4,
+  "verifiedOriginalLogs": 5,
+  "removed": [
+    {
+      "path": "/private/tmp/PlannerGenuineIOSCaptureDerivedData",
+      "regularFileCount": 5020,
+      "nominalFileBytes": 432361536,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerGenuineIOSCapture-phone.xcresult",
+      "regularFileCount": 30,
+      "nominalFileBytes": 262867,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerWindowedScaleCurrent-phone.xcresult",
+      "regularFileCount": 42,
+      "nominalFileBytes": 6412731,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerGenuineIOSCapture-tablet.xcresult",
+      "regularFileCount": 30,
+      "nominalFileBytes": 262899,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerWindowedScaleCurrent-tablet.xcresult",
+      "regularFileCount": 42,
+      "nominalFileBytes": 6502571,
+      "openFileCheckExitCode": 1,
+      "removed": true
+    }
+  ],
+  "nominalFileBytes": 445802604,
+  "metric": "Regular-file logical bytes, not an equal APFS free-space promise.",
+  "preserved": "Committed evidence, original scale attachment exports, raw logs, both native MapKit archives, named store fixtures, temporary source copies, current app/UI products, Simulator data and Planner datasets."
+}
