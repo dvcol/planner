@@ -1,6 +1,7 @@
 #if !PLANNER_FIXTURES
   import AppIntents
   import Foundation
+  import GeoToolbox
   import PlannerCore
 
   struct PlannerItineraryEntity: AppEntity {
@@ -9,6 +10,44 @@
     let id: UUID
     @Property(title: "Title") var title: String
     @Property(title: "Archived") var archived: Bool
+    @DeferredProperty(title: "Notes")
+    var notes: String? {
+      get async throws {
+        try await readPlannerDeferredItinerarySource(identifier: id).content.notes
+      }
+    }
+    @DeferredProperty(title: "Location name")
+    var locationName: String? {
+      get async throws {
+        try await readPlannerDeferredItinerarySource(identifier: id).content.location?.displayName
+      }
+    }
+    @DeferredProperty(title: "Address")
+    var address: String? {
+      get async throws {
+        try await readPlannerDeferredItinerarySource(identifier: id).content.location?
+          .formattedAddress
+      }
+    }
+    @DeferredProperty(title: "Pin")
+    var pin: PlaceDescriptor? {
+      get async throws {
+        try await plannerDeferredPin(
+          readPlannerDeferredItinerarySource(identifier: id).content.location)
+      }
+    }
+    @DeferredProperty(title: "Created")
+    var created: Date {
+      get async throws {
+        try await readPlannerDeferredItinerarySource(identifier: id).createdAt
+      }
+    }
+    @DeferredProperty(title: "Last updated")
+    var lastUpdated: Date {
+      get async throws {
+        try await readPlannerDeferredItinerarySource(identifier: id).updatedAt
+      }
+    }
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(title)") }
 
     init(id: UUID, title: String, archived: Bool) {

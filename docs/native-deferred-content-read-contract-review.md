@@ -1,6 +1,6 @@
 # Native saved-content property review
 
-Status: Q117 A accepted on 21 October 2026. Deferred properties and the production getter test boundary below are approved.
+Status: Q117 A accepted on 21 October 2026. Deferred properties and the production getter test boundary below are approved and [implemented locally](prototypes/native-deferred-content-properties.md). Actual system property fetching remains open.
 
 ## Context, starting state and goal
 
