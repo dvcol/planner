@@ -237,6 +237,7 @@ struct PlannerImportProjection {
 }
 
 struct PlannerImportReviewResolution {
+  let incoming: PlannerPortableBackup
   let details: PlannerImportReview
   let targets: [PlannerReviewTarget]
   let sourceDeletes: [PlannerEntityReference]
@@ -262,22 +263,38 @@ func plannerResolveImportReview(
       guard case .source(let source, let lifetimeId) = marker.target else { return nil }
       return .init(kind: source.kind, id: source.id, lifetimeId: lifetimeId)
     })
+  let currentGraph = PlannerImportGraph(backup: current.backup)
+  var resolvedSourceLifetimes: [PlannerBoundSource: UUID] = [:]
   for path in incoming.originPaths {
     if let actual = currentSources[path.binding.reference] {
-      guard actual.lifetimeId == path.binding.lifetimeId else {
+      guard
+        let kind = PlannerPortableIdentityKind(rawValue: actual.kind.rawValue),
+        currentGraph.resolves(
+          .init(kind: kind, id: path.binding.id, lifetimeId: path.binding.lifetimeId),
+          to: .init(kind: kind, id: actual.id, lifetimeId: actual.lifetimeId))
+      else {
         throw PlannerFailure(
           "missingReference", "The imported reference names another source lifetime.",
           propertyPath: path.propertyPath + "/lifetimeId")
       }
+      if path.binding.lifetimeId != actual.lifetimeId {
+        resolvedSourceLifetimes[path.binding] = actual.lifetimeId
+      }
       continue
     }
-    if closedSourceBindings.contains(path.binding) { continue }
+    if let kind = PlannerPortableIdentityKind(rawValue: path.binding.kind.rawValue),
+      currentGraph.isClosed(
+        .init(kind: kind, id: path.binding.id, lifetimeId: path.binding.lifetimeId))
+    {
+      continue
+    }
     let knownIdentity = closedSourceBindings.contains { $0.reference == path.binding.reference }
     throw PlannerFailure(
       "missingReference", "The imported reference cannot resolve in this dataset.",
       propertyPath: path.propertyPath + (knownIdentity ? "/lifetimeId" : "/id"))
   }
-  let projection = try PlannerImportProjection(backup: incoming.backup)
+  let resolvedIncoming = incoming.backup.resolvingImportSourceLifetimes(resolvedSourceLifetimes)
+  let projection = try PlannerImportProjection(backup: resolvedIncoming)
   let currentProjection = try PlannerImportProjection(backup: current.backup)
   let deletedSources = Set(
     current.backup.deletionMarkers.compactMap { marker -> PlannerEntityReference? in
@@ -608,6 +625,7 @@ func plannerResolveImportReview(
     return $0.id.uuidString < $1.id.uuidString
   }
   return .init(
+    incoming: resolvedIncoming,
     details: .init(
       imports: imports, unchanged: unchanged, skippedConflicts: skippedConflicts,
       skippedDependents: skippedDependents,
@@ -616,4 +634,55 @@ func plannerResolveImportReview(
     targets: targetSources.map { .source($0) }
       + uniqueChanges.map { .reference($0.reference) }, sourceDeletes: sourceDeletes,
     globalFlagsChanged: globalFlagsChanged)
+}
+
+extension PlannerPortableBackup {
+  fileprivate func resolvingImportSourceLifetimes(_ lifetimes: [PlannerBoundSource: UUID])
+    -> PlannerPortableBackup
+  {
+    guard !lifetimes.isEmpty else { return self }
+    func lifetime(_ source: PlannerEntityReference, _ original: UUID) -> UUID {
+      lifetimes[.init(kind: source.kind, id: source.id, lifetimeId: original)] ?? original
+    }
+    return .init(
+      sources: sources,
+      labelAssociations: labelAssociations.map {
+        .init(
+          id: $0.id, lifetimeId: $0.lifetimeId, owner: $0.owner,
+          ownerLifetimeId: lifetime($0.owner, $0.ownerLifetimeId), label: $0.label,
+          labelLifetimeId: lifetime($0.label, $0.labelLifetimeId))
+      },
+      memberships: memberships.map {
+        .init(
+          id: $0.id, lifetimeId: $0.lifetimeId, list: $0.list,
+          listLifetimeId: lifetime($0.list, $0.listLifetimeId), item: $0.item,
+          itemLifetimeId: lifetime($0.item, $0.itemLifetimeId), rank: $0.rank,
+          localDone: $0.localDone)
+      },
+      itineraryEntries: itineraryEntries.map {
+        .init(
+          id: $0.id, lifetimeId: $0.lifetimeId, itinerary: $0.itinerary,
+          itineraryLifetimeId: lifetime($0.itinerary, $0.itineraryLifetimeId), source: $0.source,
+          sourceLifetimeId: lifetime($0.source, $0.sourceLifetimeId), rank: $0.rank,
+          localDone: $0.localDone)
+      },
+      expandedCompletions: expandedCompletions,
+      schedules: schedules.map {
+        .init(
+          id: $0.id, lifetimeId: $0.lifetimeId, source: $0.source,
+          sourceLifetimeId: lifetime($0.source, $0.sourceLifetimeId), form: $0.form)
+      },
+      deletionMarkers: deletionMarkers,
+      ownedLinks: ownedLinks.map {
+        .init(
+          id: $0.id, lifetimeId: $0.lifetimeId,
+          owner: .init(
+            kind: $0.owner.kind, id: $0.owner.id,
+            lifetimeId: lifetime($0.owner.reference, $0.owner.lifetimeId)),
+          rank: $0.rank, originalUrl: $0.originalUrl, label: $0.label, kind: $0.kind,
+          providerReference: $0.providerReference)
+      },
+      contextAliases: contextAliases, completionChanges: completionChanges,
+      restorationFamilies: restorationFamilies)
+  }
 }

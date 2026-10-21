@@ -6,11 +6,12 @@ struct PlannerImportMerge {
   let projected: PlannerPortableBackup
 
   init(
-    incoming: PlannerPortableBackup, current: PlannerPortableBackup,
+    current: PlannerPortableBackup,
     resolution: PlannerImportReviewResolution, mode: PlannerImportMode, operationId: UUID
   ) throws {
     let incoming = try PlannerImportRestoration(
-      incoming: incoming, current: current, resolution: resolution, operationId: operationId
+      incoming: resolution.incoming, current: current, resolution: resolution,
+      operationId: operationId
     ).incoming
     let selectedOwners = Set(
       (resolution.details.imports + resolution.details.restorations).map { $0.owner.reference })
