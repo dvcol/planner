@@ -1,6 +1,6 @@
 # Complete native Item traversal
 
-Status: complete native title/identity observation passes on phone and tablet. The apparent tablet blank-row observation is resolved by original-file pixel verification below. This implements an open local completeness check from the Navigation map; it requires neither signing nor Mac UI access.
+Status: complete native title/identity observation passes on phone and tablet. The apparent tablet blank-row observation is resolved by original-file pixel verification below. This implements an open local completeness check from the Navigation map; it requires neither signing nor Mac UI access. The [22 October reconciliation and fixture follow-up](native-item-windows.md#scale-evidence-and-current-fixture-follow-up-22-october-2026) verifies that these runs already used the moving-window loader, preserves their original epoch and records current page-boundary/rotation regressions separately.
 
 ## Context, readiness and goal
 
