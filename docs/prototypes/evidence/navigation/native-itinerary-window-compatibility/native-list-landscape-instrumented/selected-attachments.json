@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9CD72DC0-69F7-4C79-9BED-0A862F9AC9BF.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"No items\" StaticText`_0_6B9C87EC-839E-4B4F-88A2-95662E81B42C.txt",
+      "timestamp": 1792551084.156,
+      "retainedFileName": "9CD72DC0-69F7-4C79-9BED-0A862F9AC9BF.txt.gz",
+      "sha256": "be61d862333af22674e5566504f4eaec5e9c5485430c6470bbf65da73ab913ee"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0034140D-0F9F-4150-A0BE-8E5304D9882B.txt",
+      "isAssociatedWithFailure": true,
+      "suggestedHumanReadableName": "2026-10-21 025200 +0000-Spindump_0_37AA1B92-9106-4C2C-9E75-4101EA11130C.txt",
+      "timestamp": 1792551145.439,
+      "retainedFileName": "0034140D-0F9F-4150-A0BE-8E5304D9882B.txt.gz",
+      "sha256": "109e2fb0d45e9734cbc20e2244ed9dce943b0686f2a236ee30ec8e81a31bd7f2"
+    }
+  ]
+}

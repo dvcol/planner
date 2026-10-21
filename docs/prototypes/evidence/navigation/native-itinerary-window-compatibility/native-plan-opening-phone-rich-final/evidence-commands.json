@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-rich-final.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792552593.383,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792552342.054,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-phone-rich-final.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-phone-rich-final"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 2 attachments for: SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges():\nFile: 38BDA34F-5E1F-4102-B7F3-EFA93A354EDC.png, suggested name: \"Edited Item draft survives expanded layout_0_58F5D7BD-EFA1-4275-9C83-136E3991EBF1.png\"\nFile: F78A56B8-3593-45FC-8234-E6B91BCA275F.png, suggested name: \"Edited Item draft survives portrait navigation layout_0_04FC0415-D426-4B8F-B0C1-97949EB06307.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-phone-rich-final/manifest.json\n",
+    "stderr": ""
+  }
+]

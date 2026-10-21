@@ -1,0 +1,5 @@
+{
+  "committedBaseline": "5baa1b79df1a3e8f6cd047c6b1d9843c3e732f07",
+  "onlyProductionChange": "diagnostic reduction of loaded empty-state content to native Text, unchanged toolbar/search, tagged trait log",
+  "patchSha256": "82c42ec9a6b05bedcf27d82845debd03661f0f04f080575b0fc972f6de96289a"
+}

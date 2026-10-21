@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-tablet-dialog-diagnostic.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792553257.497,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792553203.359,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertTrue failed\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen\",\n      \"testName\" : \"testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-plan-opening-tablet-dialog-diagnostic.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-plan-opening-tablet-dialog-diagnostic"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 26 attachments for: SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen():\nFile: 8196B383-E9C0-4A3F-A815-939FF22C938B.txt, suggested name: \"App UI hierarchy for org.example_0_E7D8D291-1E91-441A-9F05-38EA3D04A224.PlannerMCPPrototype\"\nFile: 5CB863B7-B58A-4227-AF60-87545E7BEC89, suggested name: \"UI Snapshot 2026-10-21 at 12.27.36 PM\"\nFile: 0DFD740C-AD74-450B-B0CE-10A9E9A3E695.txt, suggested name: \"Debug description for `Sheet (First Match)`_0_5DA7665D-E948-4BDD-B660-2B451ACCC756.txt\"\nFile: C3DF93F8-5B91-495E-B2D8-DBD51795E90E.txt, suggested name: \"Debug description for `Sheet (First Match)`_0_81563170-1BD0-4B7A-92FE-C405D9788BFF.txt\"\nFile: EA8F3AD7-E8FC-42CE-A7D3-B44D488385D6.txt, suggested name: \"Debug description for `Sheet (First Match)`_0_C635FA8E-4A70-4A30-9F49-AE20934067F5.txt\"\nFile: CDDFA773-991E-41B4-8A9A-B5E762B41E98.txt, suggested name: \"Debug description for `Sheet (First Match)`_0_863FA503-94F0-403A-826F-FFDF6532CF3D.txt\"\nFile: 863BC291-5550-4D98-9554-03CB1C45F2DE.txt, suggested name: \"Debug description for `Sheet (First Match)`_0_791CB836-2940-42D7-A480-4B907384479B.txt\"\nFile: 044A0E5E-7E53-4803-83A5-5CB4A672BF60.txt, suggested name: \"Actual draft confirmation container_0_40C5D20F-5A97-4977-ADC1-D7E511862740.txt\"\nFile: 95683AC4-1558-414A-9BDB-EC666BAA201D.png, suggested name: \"Draft confirmation before container lookup_0_5BD68D5E-8732-43F7-87E3-5EACBAE99BC4.png\"\nFile: BA23FA32-A1A6-4682-B958-C38837C9D720, suggested name: \"Synthesized Event 2026-10-21 at 12.27.30 PM\"\nFile: 5DCEF1F0-B607-42A1-914F-E998A85548C9, suggested name: \"Synthesized Event 2026-10-21 at 12.27.29 PM\"\nFile: 78218E7C-C1E3-4846-8240-567D1F0534C4, suggested name: \"Synthesized Event 2026-10-21 at 12.27.28 PM\"\nFile: 3226B2C4-F240-42CD-9B28-DA9E212F427F, suggested name: \"Synthesized Event 2026-10-21 at 12.27.26 PM\"\nFile: 565B08B9-3A38-4336-9D2D-1AFED9D3EA03, suggested name: \"Synthesized Event 2026-10-21 at 12.27.24 PM\"\nFile: 168D4A14-960C-4510-ABE4-CEC7C36C9B59, suggested name: \"Synthesized Event 2026-10-21 at 12.27.20 PM\"\nFile: 09CDA0D1-7C53-4F01-9021-00A54FFFD30F, suggested name: \"Synthesized Event 2026-10-21 at 12.27.16 PM\"\nFile: 06CB7550-EDEE-4E1C-9685-4AFF21703F59, suggested name: \"Synthesized Event 2026-10-21 at 12.27.15 PM\"\nFile: 451E42E9-165D-44D5-A472-99534E9A5754, suggested name: \"Synthesized Event 2026-10-21 at 12.27.13 PM\"\nFile: B254DA0C-D229-4243-B962-44DA7A8975E2, suggested name: \"Synthesized Event 2026-10-21 at 12.27.08 PM\"\nFile: 857BB73A-EED0-48FC-A808-224B21D3FFBA, suggested name: \"Synthesized Event 2026-10-21 at 12.27.08 PM\"\nFile: 8E8EB990-44BF-49C0-A2DA-A76B7974AB19, suggested name: \"Synthesized Event 2026-10-21 at 12.27.07 PM\"\nFile: 8CAD31E5-C963-4331-98A4-203860311F7A, suggested name: \"Synthesized Event 2026-10-21 at 12.27.04 PM\"\nFile: C287BE2A-D935-4762-8DF1-CEC54ECC6AA0, suggested name: \"Synthesized Event 2026-10-21 at 12.27.02 PM\"\nFile: A5944754-B8D8-4AFC-9F08-4275EE87F6F7, suggested name: \"Synthesized Event 2026-10-21 at 12.27.01 PM\"\nFile: 3C1BEB06-1E54-478F-8530-BE7BD00FB1B0, suggested name: \"Synthesized Event 2026-10-21 at 12.26.58 PM\"\nFile: 1520A3A5-144F-47BA-86AE-160F1D40702E.mp4, suggested name: \"Screen Recording 2026-10-21 at 12.26.53 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-plan-opening-tablet-dialog-diagnostic/manifest.json\n",
+    "stderr": ""
+  }
+]

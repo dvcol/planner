@@ -1,0 +1,13 @@
+{
+  "platform": "mobile",
+  "actionCount": 83,
+  "newForegroundOpenActions": {
+    "OpenPlannerListIntent": "PlannerListEntity",
+    "OpenPlannerItineraryIntent": "PlannerItineraryEntity"
+  },
+  "previous81ActionsAndEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "requiredExactTargetWithoutDefaultsAndNoValueResult": true,
+  "normalization": "resolvableInputTypes alternatives only",
+  "sha256": "119384ad9588356959eeca7a6dc2c9cd5eaadb91ae3a85d05a2cce3a68b7b4b0",
+  "actualSystemInvocationCredit": false
+}

@@ -1,0 +1,5 @@
+{
+  "committedBaseline": "5baa1b79df1a3e8f6cd047c6b1d9843c3e732f07",
+  "onlyProductionChange": "defer new List selection until native sheet onDismiss",
+  "patchSha256": "ff32149bfec13ace5df81b2614d39eaa474f0f3d55ef80e225f72c29a7acbc0d"
+}

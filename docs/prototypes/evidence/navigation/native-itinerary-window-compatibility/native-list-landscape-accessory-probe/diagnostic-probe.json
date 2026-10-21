@@ -1,0 +1,5 @@
+{
+  "committedBaseline": "5baa1b79df1a3e8f6cd047c6b1d9843c3e732f07",
+  "onlyProductionChange": "omit the disabled native Undo tab accessory in the no-history scenario; diagnostic only",
+  "patchSha256": "3a5a3d13ab8b16415c40fc00411de7980969f3d7fe8c19f3afab6a7246559a4a"
+}

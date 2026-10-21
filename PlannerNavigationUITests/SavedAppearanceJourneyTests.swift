@@ -4,6 +4,27 @@ import XCTest
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
   #if os(iOS)
+    func testCreatingFirstListInLandscapeLoadsItsContents() {
+      continueAfterFailure = false
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      XCUIDevice.shared.orientation = .landscapeLeft
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      createList("Landscape loading", application: application)
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      for identifier in ["saved.list.estimate.full", "saved.list.estimate.remaining"] {
+        XCTAssertTrue(
+          application.descendants(matching: .any).matching(identifier: identifier).firstMatch
+            .waitForExistence(timeout: 5))
+      }
+      recordScreenshot(application, name: "First landscape List finishes loading")
+    }
+  #endif
+
+  #if os(iOS)
     func testNativeTextUndoPreservesTheSeparateRemovedMembershipAction() {
       continueAfterFailure = false
       let application = XCUIApplication()
@@ -3144,6 +3165,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     title.activateForPlannerJourney()
     title.typeText("Preserved draft")
     attemptDraftNavigation(application)
+    recordScreenshot(application, name: "Draft confirmation before container lookup")
+    let presentedHierarchy = XCTAttachment(string: application.windows.firstMatch.debugDescription)
+    presentedHierarchy.name = "Actual draft confirmation container"
+    presentedHierarchy.lifetime = .keepAlways
+    add(presentedHierarchy)
     let dialog = application.windows.firstMatch.sheets.firstMatch
     XCTAssertTrue(dialog.waitForExistence(timeout: 5))
     for choice in ["Save", "Discard", "Keep editing"] {
@@ -3171,6 +3197,13 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       application.staticTexts["An Item title must contain text."].waitForExistence(timeout: 5))
     application.windows.firstMatch.buttons["OK"].firstMatch.activateForPlannerJourney()
     XCTAssertEqual(notes.value as? String, "Keep this note while fixing the title")
+    #if os(iOS)
+      if let sidebar = application.buttons.matching(identifier: "Hide Sidebar")
+        .allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        sidebar.activateForPlannerJourney()
+      }
+    #endif
     title.activateForPlannerJourney()
     title.typeText("Saved while leaving")
     attemptDraftNavigation(application)
@@ -3411,8 +3444,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
             format: "identifier == %@ OR identifier == %@", "BackButton", "saved.item.back")
         ).firstMatch.activateForPlannerJourney()
       } else {
-        application.buttons.matching(identifier: "square.stack").allElementsBoundByIndex
-          .first(where: \.isHittable)?.activateForPlannerJourney()
+        openSection("Items", application: application)
       }
     #else
       openSection("Items", application: application)

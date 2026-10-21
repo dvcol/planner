@@ -1,0 +1,18 @@
+{
+  "command": [
+    "xcrun",
+    "simctl",
+    "spawn",
+    "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "log",
+    "show",
+    "--last",
+    "3m",
+    "--style",
+    "json",
+    "--predicate",
+    "process == \"Planner\" AND eventMessage CONTAINS \"[DEBUG-list-landscape]\""
+  ],
+  "temporaryInstrumentationRemovedFromWorkingSource": true,
+  "eventCount": 7
+}

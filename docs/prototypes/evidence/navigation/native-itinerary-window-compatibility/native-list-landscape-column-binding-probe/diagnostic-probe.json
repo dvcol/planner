@@ -1,0 +1,5 @@
+{
+  "committedBaseline": "5baa1b79df1a3e8f6cd047c6b1d9843c3e732f07",
+  "onlyProductionChange": "remove shared compact-column binding from inactive Item and Inbox split views",
+  "patchSha256": "0c2732956ad416d2d220450e3fede5a61daf501d9b42ce7715cc6788dedeb904"
+}

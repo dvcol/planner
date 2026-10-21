@@ -1,0 +1,5 @@
+{
+  "committedBaseline": "5baa1b79df1a3e8f6cd047c6b1d9843c3e732f07",
+  "onlyProductionChange": "new List creation uses the existing native row-selection binding and column visibility",
+  "patchSha256": "822ebb528a420a61cf52f7c8f53fce795bbaa0317c0423d53529d6ca3abff97f"
+}

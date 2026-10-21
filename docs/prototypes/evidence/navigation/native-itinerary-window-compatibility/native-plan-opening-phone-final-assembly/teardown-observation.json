@@ -1,0 +1,10 @@
+{
+  "passingCredit": false,
+  "actualTestCaseStarted": true,
+  "allBodyAssertionsReached": true,
+  "failurePhase": "orientation reset in teardown",
+  "observedAppCPUPercent": 0,
+  "sampleMainThread": "UIKit event loop waiting for a Mach message",
+  "sampleSha256": "56254fa25e261e191b5bd50b92aaece5eda1647a18491467e07cd6a06c27334f",
+  "causeEstablished": false
+}

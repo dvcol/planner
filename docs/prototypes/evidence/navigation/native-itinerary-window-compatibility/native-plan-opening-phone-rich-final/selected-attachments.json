@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "38BDA34F-5E1F-4102-B7F3-EFA93A354EDC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_58F5D7BD-EFA1-4275-9C83-136E3991EBF1.png",
+      "timestamp": 1792552495.56,
+      "retainedFileName": "38BDA34F-5E1F-4102-B7F3-EFA93A354EDC.png",
+      "sha256": "e4dc0a3793ac4b20c5537889d5d807b2ce65e06605c9fae4a232a3030f98f4dc"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F78A56B8-3593-45FC-8234-E6B91BCA275F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_04FC0415-D426-4B8F-B0C1-97949EB06307.png",
+      "timestamp": 1792552466.578,
+      "retainedFileName": "F78A56B8-3593-45FC-8234-E6B91BCA275F.png",
+      "sha256": "4c21839ffafaab17196c164dc182e6630cab85a4a27865c3a7206462a6cf2c3c"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "sample",
+    "70019",
+    "3",
+    "-file",
+    "/private/tmp/PlannerOpeningLandscapeSample.txt"
+  ],
+  "process": "exact iPhone simulator Planner test app",
+  "observedCPUPercent": 98.8,
+  "sampleSha256": "492628954a75c3b2d2e249553500fc3109fd2c14fc980bd3136d6b7f36c64848",
+  "interpretation": "Main-thread SwiftUI/AttributeGraph preference/layout work; not proof of the cause"
+}
