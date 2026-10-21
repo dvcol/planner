@@ -1,0 +1,112 @@
+{
+  "sourceReconciliation": [
+    {
+      "packet": "native-list-pane-header-final-mac-build",
+      "productionInputsMatchCurrent": true,
+      "checkedInputCount": 867,
+      "sourceSnapshotSha256": "695002317b5c71c3b4a83bd7a396d46b103a0478ada539a1a774a966e4f4ee8b"
+    },
+    {
+      "packet": "native-list-pane-header-sort-native-mac-build",
+      "productionInputsMatchCurrent": true,
+      "checkedInputCount": 867,
+      "sourceSnapshotSha256": "e33d88228eed5d7c42a64025be4c9b2625790be7959ebe3292fb6cd97d8de056"
+    },
+    {
+      "packet": "native-list-pane-header-phone",
+      "productionInputsMatchCurrent": true,
+      "checkedInputCount": 867,
+      "sourceSnapshotSha256": "e33d88228eed5d7c42a64025be4c9b2625790be7959ebe3292fb6cd97d8de056"
+    },
+    {
+      "packet": "native-list-pane-header-tablet",
+      "productionInputsMatchCurrent": true,
+      "checkedInputCount": 867,
+      "sourceSnapshotSha256": "e33d88228eed5d7c42a64025be4c9b2625790be7959ebe3292fb6cd97d8de056"
+    }
+  ],
+  "nativeResults": [
+    {
+      "packet": "native-list-pane-header-final-mac",
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-list-pane-header-sort-native-mac",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-list-pane-header-phone",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "packet": "native-list-pane-header-tablet",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedItemFilters.swift",
+        "Planner/Scenes/SavedMacMembershipTable.swift",
+        "Planner/Scenes/SavedNewItemForm.swift",
+        "Planner/Scenes/SavedOwnedLinksEditor.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/native-list-pane-header.md",
+        "docs/prototypes/native-local-storage-cleanup.md",
+        "docs/native-ui-polish.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0,
+      "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-list-pane-header.md docs/prototypes/native-local-storage-cleanup.md docs/native-ui-polish.md docs/open-decisions.md\nLinting: 4 files\nSummary: 0 issues in 0 files\n",
+      "stderr": "Done in 348ms using pnpm v12.14.0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "reviewedFilesSha256": {
+    "Planner/Scenes/SavedItemFilters.swift": "4460687ee51db40401406ea6beb46c4fb1062f6e9b8e363a711c527dbb4bb118",
+    "Planner/Scenes/SavedMacMembershipTable.swift": "41236eb6fbe25c1870b2ae8e25409b802521535b9a1a3a59f368a55e69eb2166",
+    "Planner/Scenes/SavedNewItemForm.swift": "b112165722c9ec4272346c41022419cb94d3a5ca7354a45a9617dae92152ad54",
+    "Planner/Scenes/SavedOwnedLinksEditor.swift": "3b60ea759c42ea5817366cc697933d7b711067235f76a9208c6e69cf2df1115c",
+    "Planner/Scenes/SavedPlannerView.swift": "a6aaa0efbe4d5d157446e56324f14e20fbb51f41b176c31d58f8f9a34a264f79",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "acc24f8f3da094ec3806e6a9f9bcfe4eb2cb5df57556efc1b9a9ceffa2e990fc",
+    "docs/prototypes/native-list-pane-header.md": "c352d090ea9f4c961720374111c78de76071b672e83d532c1d1e9a39b9ee267f",
+    "docs/prototypes/native-local-storage-cleanup.md": "fa0ee98526ea2665c78e50f72ac6303053e7c3bdc7f761978a84a4019302bd1f",
+    "docs/native-ui-polish.md": "f1e810a0b0f4a4cac7568ac241fc9ab281214b9c93e55d507b6a2d4d246e68c3",
+    "docs/open-decisions.md": "3d577def2e43e12c5514c4dc6b5e5eb1c6bc334dd05ca638435ab06218035861"
+  },
+  "limits": "Focused native UI qualification only. No physical, signed-storage, system Intent, complete accessibility or whole-app release acceptance."
+}

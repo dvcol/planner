@@ -3,6 +3,53 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  #if os(macOS)
+    func testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.fillSavedPlannerWindowForJourney()
+      let listName =
+        "Tokyo weekend museum visits and favourite restaurants, gardens, bookshops and rainy-day alternatives"
+      createList(listName, application: application)
+      let window = application.windows.firstMatch
+      let originalWidth = window.frame.width
+      addTeardownBlock {
+        await MainActor.run {
+          guard window.exists else { return }
+          SavedAppearanceJourneyTests.resizePlannerWindow(window, width: originalWidth)
+        }
+      }
+      Self.resizePlannerWindow(window, width: 860)
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      let hierarchy = XCTAttachment(string: window.debugDescription)
+      hierarchy.name = "Long List title in a narrow native window"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      recordScreenshot(application, name: "Long List title in a narrow native window")
+      let filters = application.plannerElement("saved.list.filters")
+      XCTAssertTrue(filters.waitForPlannerHittability())
+      let title = try XCTUnwrap(
+        window.staticTexts.matching(
+          NSPredicate(format: "value == %@ OR label == %@", listName, listName)
+        )
+        .allElementsBoundByIndex.first)
+      let listPane = try XCTUnwrap(
+        window.scrollViews.allElementsBoundByIndex.first { $0.staticTexts["No items"].exists })
+      XCTAssertGreaterThanOrEqual(title.frame.minX, listPane.frame.minX)
+      XCTAssertLessThanOrEqual(title.frame.maxX, listPane.frame.maxX)
+      let addMenu = application.plannerElement("saved.list.addMenu")
+      XCTAssertTrue(addMenu.waitForPlannerHittability())
+      for control in [filters, addMenu] {
+        XCTAssertGreaterThanOrEqual(control.frame.minX, listPane.frame.minX)
+        XCTAssertLessThanOrEqual(control.frame.maxX, listPane.frame.maxX)
+      }
+      Self.resizePlannerWindow(window, width: 1200)
+      XCTAssertTrue(application.savedPlannerListRow(listName).waitForExistence(timeout: 5))
+    }
+  #endif
+
   #if os(iOS)
     func testCreatingFirstListInLandscapeLoadsItsContents() {
       continueAfterFailure = false
@@ -1662,7 +1709,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     completion.activateForPlannerJourney()
     XCTAssertTrue(completion.waitForPlannerValue("Completed"))
     assertProgress(completedFraction, application: application)
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    XCTAssertEqual(
+      application.progressIndicators["saved.list.progress"].label, "1 of 3 items done")
     #if os(iOS)
       let edit = application.savedPlannerListEditControl()
       XCTAssertEqual(edit.plannerControlTitle, "Edit")
@@ -3014,7 +3062,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   private func assertSortChoice(_ choice: String, menu: XCUIElement) {
-    let selected = NSPredicate(format: "label == %@", "Sort: \(choice)")
+    #if os(macOS)
+      let selected = NSPredicate(format: "title == %@", "Sort: \(choice)")
+    #else
+      let selected = NSPredicate(format: "label == %@", "Sort: \(choice)")
+    #endif
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [XCTNSPredicateExpectation(predicate: selected, object: menu)], timeout: 5), .completed
@@ -3235,6 +3287,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       XCUIDevice.shared.orientation = .landscapeLeft
     #endif
     application.launchSavedPlannerJourney()
+    #if os(macOS)
+      application.fillSavedPlannerWindowForJourney()
+    #endif
     createList("Other", application: application)
     createList("Origin", application: application)
     let origin = application.savedPlannerListRow("Origin")

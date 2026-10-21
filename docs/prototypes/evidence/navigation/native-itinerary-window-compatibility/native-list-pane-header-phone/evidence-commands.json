@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-pane-header-phone.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792585116.543,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792585055.45,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-pane-header-phone.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-pane-header-phone"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 1 attachment for: SavedAppearanceJourneyTests/testCreatingFirstListInLandscapeLoadsItsContents():\nFile: 1F3C5E6A-CA90-47A1-BF6E-DAA85CA745E7.png, suggested name: \"First landscape List finishes loading_0_B64AF689-676B-4805-8E97-D020A227FFF5.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-pane-header-phone/manifest.json\n",
+    "stderr": ""
+  }
+]

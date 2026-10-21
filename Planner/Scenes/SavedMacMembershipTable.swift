@@ -31,11 +31,6 @@ import UniformTypeIdentifiers
 
     var body: some View {
       VStack(alignment: .leading, spacing: 0) {
-        SavedListProgress(
-          listName: list.content.name, progress: list.progress, estimates: list.estimates,
-          manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
-          isArchived: list.state.archived == true
-        ).padding()
         Table(of: SavedMembershipWindowRow.self, selection: selection) {
           TableColumn("Items") { row in
             cell(row)

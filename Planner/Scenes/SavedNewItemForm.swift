@@ -104,13 +104,18 @@ struct SavedNewItemForm: View {
             .keyboardShortcut(.cancelAction)
         }
         ToolbarItem(placement: .confirmationAction) {
-          Button("Save", action: save)
-            .disabled(
-              isSaving || !store.canCreate
-                || draft.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            )
-            .keyboardShortcut(.defaultAction)
-            .accessibilityIdentifier("saved.item.save")
+          Button(action: save) {
+            Text("Save")
+              #if os(macOS)
+                .padding(.horizontal, 6)
+              #endif
+          }
+          .disabled(
+            isSaving || !store.canCreate
+              || draft.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+          )
+          .keyboardShortcut(.defaultAction)
+          .accessibilityIdentifier("saved.item.save")
         }
       }
       .overlay {
@@ -170,7 +175,10 @@ struct SavedNewItemForm: View {
         Button("Cancel", action: cancel).accessibilityIdentifier("saved.item.cancel")
       }
     #else
-      Button("Cancel", action: cancel).accessibilityIdentifier("saved.item.cancel")
+      Button(action: cancel) {
+        Text("Cancel").padding(.horizontal, 6)
+      }
+      .accessibilityIdentifier("saved.item.cancel")
     #endif
   }
 

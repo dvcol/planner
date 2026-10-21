@@ -127,7 +127,12 @@ struct SavedItemFilterControl: View {
     } label: {
       Label(filters.summary, systemImage: "line.3.horizontal.decrease")
         .labelStyle(.titleAndIcon)
-        .fixedSize(horizontal: true, vertical: false)
+        #if os(macOS)
+          .lineLimit(1)
+          .padding(.horizontal, 6)
+        #else
+          .fixedSize(horizontal: true, vertical: false)
+        #endif
     }
     .accessibilityLabel(filters.summary)
     .accessibilityIdentifier(accessibilityIdentifier)
@@ -407,6 +412,8 @@ struct SavedListProgress: View {
     VStack(alignment: .leading, spacing: 6) {
       Text(listName).font(.title2).fontWeight(.semibold)
         .foregroundStyle(Color.primary)
+        .lineLimit(2)
+        .help(listName)
         .accessibilityAddTraits(.isHeader)
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(Color.secondary)
@@ -427,6 +434,7 @@ struct SavedListProgress: View {
         }
       }
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
 

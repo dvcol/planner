@@ -1,0 +1,46 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "expectedFailures": 0,
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 1,
+  "finishTime": 1792584517.671,
+  "passedTests": 0,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1792584420.778,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 1,
+      "testIdentifierString": "SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress",
+      "testName": "testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress()"
+    }
+  ],
+  "title": "Test - PlannerNavigation",
+  "topInsights": [],
+  "totalTestCount": 1
+}

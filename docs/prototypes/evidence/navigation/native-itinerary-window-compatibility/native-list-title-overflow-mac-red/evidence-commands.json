@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-title-overflow-mac-red.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792583310.038,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792583266.349,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-title-overflow-mac-red.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-title-overflow-mac-red"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 2 attachments for: SavedAppearanceJourneyTests/testLongListTitleKeepsItsToolbarControlsReachableInANarrowWindow():\nFile: 60CA8C52-12D8-4C2C-ADD2-9B8FF7ECB6C5.png, suggested name: \"Long List title stays within its pane_0_82129F51-175E-4F86-A1CE-1ABED8FEBE03.png\"\nFile: E49A54CE-9962-4439-BDCF-E450F7C80CA5.txt, suggested name: \"Long List title in a narrow native window_0_6EF7C6EC-DAA3-461F-A0F5-EF4EEE2DFDCF.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-title-overflow-mac-red/manifest.json\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "EF8EEBA3-390F-4BC9-9C30-E9E575DA4D68.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Relaunched List keeps its own sort and source order_0_6C576107-D3EC-42EB-82A1-C7D2B714D8F0.png",
+      "timestamp": 1792585011.234,
+      "retainedFileName": "EF8EEBA3-390F-4BC9-9C30-E9E575DA4D68.png",
+      "sha256": "e38dce802d9043811bbdda0f2ccc283df4b0caa4c5732177dd57a80d3a0bf9ff"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "FE6E58EF-1551-4C0B-BBD8-CCE951E8575B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Manual order restored with retained List completion_0_1467ABDE-ABE3-4038-92B7-50379E18387D.png",
+      "timestamp": 1792584904.819,
+      "retainedFileName": "FE6E58EF-1551-4C0B-BBD8-CCE951E8575B.png",
+      "sha256": "96024b31b14a0e8718d2a5083488c2ba1cb80f8c71dbb7173e24fd04b8dfb5dd"
+    }
+  ]
+}

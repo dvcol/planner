@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-pane-header-red.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792584005.66,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792583956.618,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertLessThanOrEqual failed: (\\\"474.0\\\") is greater than (\\\"440.0\\\")\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable\",\n      \"testName\" : \"testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-pane-header-red.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-pane-header-red"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 15 attachments for: SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable():\nFile: 8E898889-CF83-49F6-BE43-9075E3A86B58, suggested name: \"Synthesized Event 2026-10-21 at 08.59.52 PM\"\nFile: 08C6D0F8-76A1-400A-BB9A-9F7D5EE16E2E.png, suggested name: \"Long List title in a narrow native window_0_66799552-8BD3-40E1-B3C3-B56700DBFDB6.png\"\nFile: EBEF5F8B-A84B-44C1-B706-391618F1A865.txt, suggested name: \"Long List title in a narrow native window_0_6C731476-2D56-44C8-8D78-3C153F69D956.txt\"\nFile: 9F8223DC-04FC-4D55-99BA-BF2ACBDCB5F2, suggested name: \"Synthesized Event 2026-10-21 at 08.59.44 PM\"\nFile: 5981E149-B21E-4C6A-AC99-069E97E09C44, suggested name: \"Synthesized Event 2026-10-21 at 08.59.39 PM\"\nFile: 96CB4552-D7A4-4598-B797-33E14B577171, suggested name: \"Synthesized Event 2026-10-21 at 08.59.39 PM\"\nFile: 8B2BE781-C295-40CF-9E79-40AE10F5573D, suggested name: \"Synthesized Event 2026-10-21 at 08.59.37 PM\"\nFile: 410664CA-F858-4C31-A526-5AFA945096FB, suggested name: \"Synthesized Event 2026-10-21 at 08.59.35 PM\"\nFile: A6EB5DE4-604F-4EF1-A9F7-2CCA0BB4924B, suggested name: \"Synthesized Event 2026-10-21 at 08.59.34 PM\"\nFile: 57363871-C48A-436E-B536-398319D483A8, suggested name: \"Synthesized Event 2026-10-21 at 08.59.33 PM\"\nFile: A8300C60-9840-45F3-B2EE-868D3CA78040, suggested name: \"Synthesized Event 2026-10-21 at 08.59.31 PM\"\nFile: 5E7E0CF8-99B2-4264-90D8-A3B6428F0749, suggested name: \"Synthesized Event 2026-10-21 at 08.59.28 PM\"\nFile: B55A22EE-E605-49DF-A648-BB5A2E317AF6, suggested name: \"Synthesized Event 2026-10-21 at 08.59.27 PM\"\nFile: 2EC1F963-968A-478D-A305-4E62FA598F18, suggested name: \"Synthesized Event 2026-10-21 at 08.59.26 PM\"\nFile: 9D00AB48-F489-43A6-A55C-252B7F6A3A2D.mp4, suggested name: \"Screen Recording 2026-10-21 at 08.59.17 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-pane-header-red/manifest.json\n",
+    "stderr": ""
+  }
+]

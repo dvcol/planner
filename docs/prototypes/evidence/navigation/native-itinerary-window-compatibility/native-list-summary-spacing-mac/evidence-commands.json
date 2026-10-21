@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-summary-spacing-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792572163.812,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    },\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792571840.058,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-summary-spacing-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-summary-spacing-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 3 attachments for: SavedAppearanceJourneyTests/testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling():\nFile: 749799E1-A0AC-475D-83D1-7B0F952F06CE.png, suggested name: \"Item deletion selects the surviving List appearance in its own context_0_1D5969C9-5701-4784-9DB3-9448B10E4EC3.png\"\nFile: 702BD758-BD81-42FF-96C2-08DB9F22B8EB.txt, suggested name: \"Original List window after source Item deletion_0_4E872078-EDF8-45CA-82B8-A63B829D42E7.txt\"\nFile: F624970C-2A30-411E-ABC8-3BBF25C81FF9.txt, suggested name: \"Planner window identities after source Item deletion_0_37A154EF-56A4-4E2A-B79B-40BE83CD9A52.txt\"\n\nExported 2 attachments for: SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges():\nFile: A60665E3-184F-4C19-92B5-48F9966BCE4A.png, suggested name: \"Edited Item draft survives expanded layout_0_2F4BCABD-2FAB-4878-B2BF-2BCBB27875AD.png\"\nFile: DFBFE350-ED3D-4024-B463-1669E28880B7.png, suggested name: \"Edited Item draft survives a narrow Mac window_0_60852B95-CD5E-44EB-AA51-970F6D81432A.png\"\n\nExported 5 attachments for: SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen():\nFile: 0561AB5C-8888-4AC2-9A7F-3CF1804D2630.png, suggested name: \"Explicit navigation Save creates the Item before leaving_0_B55DD22D-EA49-4BC5-B07B-0636DAEBB446.png\"\nFile: A40A0F61-3E01-4841-80FF-B79529314DE9.txt, suggested name: \"Draft navigation own-window hierarchy_0_710F9CED-AA47-49AD-9C28-37C5474F4AE4.txt\"\nFile: B6F885DB-9261-4178-B34E-8280CB6F4F98.png, suggested name: \"Draft navigation choices after guarded Back_0_BC5EE0F9-65AF-40B4-80A0-F1E32C830134.png\"\nFile: 0DD5343B-7770-4992-B81A-30A9C9363410.txt, suggested name: \"Actual draft confirmation container_0_8D1833EC-E1BF-49F1-88C0-1961F37E476A.txt\"\nFile: B236DAA8-E35F-427E-B3DF-C0E1B26AFBD2.png, suggested name: \"Draft confirmation before container lookup_0_D148416B-243C-4BD4-8631-A71489954F4E.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-summary-spacing-mac/manifest.json\n",
+    "stderr": ""
+  }
+]

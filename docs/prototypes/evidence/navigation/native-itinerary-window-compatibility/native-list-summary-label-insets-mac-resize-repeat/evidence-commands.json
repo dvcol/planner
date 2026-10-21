@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac-resize-repeat.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792573129.124,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792573102.501,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"Unable to find hit point for ScrollView, {{899.0, 592.5}, {470.0, 319.5}}\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges\",\n      \"testName\" : \"testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac-resize-repeat.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-summary-label-insets-mac-resize-repeat"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 5 attachments for: SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges():\nFile: 0559D2ED-6C27-4904-BB75-9274652899E3, suggested name: \"Synthesized Event 2026-10-21 at 05.58.33 PM\"\nFile: EE09A623-FFBB-437C-8351-C913E068B0DE, suggested name: \"Synthesized Event 2026-10-21 at 05.58.32 PM\"\nFile: EFAD2D8D-6794-47DD-B846-DBB726C72845, suggested name: \"Synthesized Event 2026-10-21 at 05.58.31 PM\"\nFile: C5D0C710-FE3D-4E07-A868-1319DAB3A97F, suggested name: \"Synthesized Event 2026-10-21 at 05.58.29 PM\"\nFile: 2A1349AC-F6D7-432F-AE5E-CC043A88EE37.mp4, suggested name: \"Screen Recording 2026-10-21 at 05.58.23 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-summary-label-insets-mac-resize-repeat/manifest.json\n",
+    "stderr": ""
+  }
+]

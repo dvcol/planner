@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "08C6D0F8-76A1-400A-BB9A-9F7D5EE16E2E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Long List title in a narrow native window_0_66799552-8BD3-40E1-B3C3-B56700DBFDB6.png",
+      "timestamp": 1792583986.509,
+      "retainedFileName": "08C6D0F8-76A1-400A-BB9A-9F7D5EE16E2E.png",
+      "sha256": "9daa59938b9a910e1773a592f3b2ab84b64a5e868ce820708e6ddc2cee859dbe"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "EBEF5F8B-A84B-44C1-B706-391618F1A865.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Long List title in a narrow native window_0_6C731476-2D56-44C8-8D78-3C153F69D956.txt",
+      "timestamp": 1792583986.419,
+      "retainedFileName": "EBEF5F8B-A84B-44C1-B706-391618F1A865.txt.gz",
+      "sha256": "f8db945404d27160fa314bcadab0267be36c619547817f77d920f741ffbd6766"
+    }
+  ]
+}

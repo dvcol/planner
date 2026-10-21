@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac-space-retry.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792583120.383,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792583077.496,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"Unable to find hit point for ScrollView, {{899.0, 592.5}, {470.0, 319.5}}\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges\",\n      \"testName\" : \"testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac-space-retry.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-summary-label-insets-mac-space-retry"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 12 attachments for: SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges():\nFile: 72995692-84A6-40F7-8AB3-AEED7F022334, suggested name: \"Synthesized Event 2026-10-21 at 08.45.02 PM\"\nFile: 60054BE9-2E8D-4B9C-89A5-80DAF70652C0, suggested name: \"Synthesized Event 2026-10-21 at 08.45.02 PM\"\nFile: 44DB1CCC-A17B-45CC-82F8-38F7E5B54714, suggested name: \"Synthesized Event 2026-10-21 at 08.45.00 PM\"\nFile: 6CB05ACE-6A8B-418B-84FE-68369C9CA4EE, suggested name: \"Synthesized Event 2026-10-21 at 08.44.59 PM\"\nFile: 8B961044-7528-496A-8133-78744BB2B5C6, suggested name: \"Synthesized Event 2026-10-21 at 08.44.55 PM\"\nFile: 4CF6DD09-EB4A-444D-9748-917157AC9BD0, suggested name: \"Synthesized Event 2026-10-21 at 08.44.54 PM\"\nFile: 909574F5-9825-40DC-B316-FACAC97FA263, suggested name: \"Synthesized Event 2026-10-21 at 08.44.54 PM\"\nFile: C5D8A451-418E-40ED-A7F1-EB426E5875C9, suggested name: \"Synthesized Event 2026-10-21 at 08.44.52 PM\"\nFile: B26C96A0-42A1-4AA9-AE1B-605E792C8240, suggested name: \"Synthesized Event 2026-10-21 at 08.44.51 PM\"\nFile: 8128DAE9-4AF3-4A11-8586-33501E0A0AE0, suggested name: \"Synthesized Event 2026-10-21 at 08.44.49 PM\"\nFile: 8F94E68B-D3E3-4E02-A094-0DADADD21E3E, suggested name: \"Synthesized Event 2026-10-21 at 08.44.48 PM\"\nFile: 67F3C239-8907-4937-AC2A-99DE2CD496B7.mp4, suggested name: \"Screen Recording 2026-10-21 at 08.44.42 PM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-summary-label-insets-mac-space-retry/manifest.json\n",
+    "stderr": ""
+  }
+]

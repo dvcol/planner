@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-pane-header-final-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792584407.232,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    },\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792584141.353,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-list-pane-header-final-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-list-pane-header-final-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 2 attachments for: SavedAppearanceJourneyTests/testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable():\nFile: 8C7C7FF9-7A5D-4783-A15E-25A9BCF2BB0B.png, suggested name: \"Long List title in a narrow native window_0_033D63DD-6CB9-4C2A-8C23-ECC4C08DA533.png\"\nFile: 4C5FA3A1-FDA5-44A0-81E6-2EA6B22CEFE6.txt, suggested name: \"Long List title in a narrow native window_0_38680837-DCA9-425A-A63E-82BB3448220B.txt\"\n\nExported 2 attachments for: SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges():\nFile: EBF0CA85-7208-408D-98C6-248872B94A3A.png, suggested name: \"Edited Item draft survives expanded layout_0_5B073966-3609-4DCA-89E6-6247426E886D.png\"\nFile: C7B0B317-E738-4013-9B26-F43339CB8101.png, suggested name: \"Edited Item draft survives a narrow Mac window_0_EF0329EF-2B04-4070-A64B-67BF1245D543.png\"\n\nExported 5 attachments for: SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen():\nFile: 9050D912-062B-4717-AD9D-BB2D3363A420.png, suggested name: \"Explicit navigation Save creates the Item before leaving_0_7E4F26C2-8CBC-44A7-BE90-9CDA9510F1AF.png\"\nFile: 0E1A951A-332A-4BE1-B0C2-31DB86E00D17.txt, suggested name: \"Draft navigation own-window hierarchy_0_81FADCC3-0D9B-4554-8DFB-755ED2A94EE5.txt\"\nFile: F324BA27-E3E2-4EDE-AD72-3B4EC8DB00B0.png, suggested name: \"Draft navigation choices after guarded Back_0_624C1527-FF23-448C-8EB8-8C5B98037A28.png\"\nFile: 286CCEBF-DB61-4BF4-8E23-9357349C27A3.txt, suggested name: \"Actual draft confirmation container_0_2B5D9AF9-48E4-4892-B8A6-E6354C57C0EB.txt\"\nFile: 61C17D75-2462-4015-A42B-BE6299FE92FC.png, suggested name: \"Draft confirmation before container lookup_0_37410509-3F8D-4227-9956-32F132737C7B.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-list-pane-header-final-mac/manifest.json\n",
+    "stderr": ""
+  }
+]
