@@ -1,0 +1,556 @@
+{
+  "date": "2026-10-21",
+  "completedBundles": 32,
+  "nominalAllocatedBytesRemoved": 2562351104,
+  "freeBytesBefore": 55287115776,
+  "freeBytesAfter": 57871929344,
+  "freeSpaceCaveat": "Concurrent APFS activity and shared allocation also affect free space.",
+  "retainedOriginalAttachments": 125,
+  "retainedGitCommit": "9de04bdf5b4b9a67eb9299e07c267e1f77b66b75",
+  "rows": [
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-editor-options-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-editor-options-mac.xcresult",
+      "bytes": 169316352,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "30bff117cb6823762646db8162474d2c85e87a735d3c71020e5f66ebfd24dfc0",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "faa1bfffe6e039495317a53f2a484af0b7fcd98bf2bdffaf7a92aab7f1abae55",
+        "test.log.gz": "6313942e84454c6117a18c4bc7fc4b76481da9630e1d71a07cc9e62c51928fa8",
+        "original-attachment-manifest.json.gz": "e1218c3455b594f3a2ca291e9099cbc9eefc098492764745b9ab1f1bb22e3877",
+        "selected-attachments.json": "d2c17ff4a6da227bc2c20e90d3166a47a2bef7812d4b8de1189e392778d5f44b"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-editor-toolbar-priority-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-editor-toolbar-priority-mac.xcresult",
+      "bytes": 178696192,
+      "verifiedRetainedAttachments": 6,
+      "retainedSha256": {
+        "command.json": "f85ef4fa99ea56efb51c136736d7863321b2134822d7abbacdbfe851dfef34e6",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "842f190be4c22ff6128b4accd36feeacd5fbcb44c06e8d58b71bf97a84c06a6e",
+        "test.log.gz": "2a00f4b40cedd0a51e7497c489ba71216c416fa2675f186cb0e7473963f422d7",
+        "original-attachment-manifest.json.gz": "d0beb44b39bcc0729b917e770dad6db80bdddd9c4e143bdc907213d54974a40e",
+        "selected-attachments.json": "00b8518206f7df14c5a0ab8b02e7fb1999648f60a3b0a1ed22d539b1cdddd956"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-accessory-probe",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-accessory-probe.xcresult",
+      "bytes": 1241088,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "d92de505d0feec4e877e6129f17808bdc26943746485dcb8ca868a467651e0d1",
+        "exit.json": "74d3e8566773d24e75b73081580a8b6acfd787dbe83875c9c0a47cf64e308b40",
+        "test-results-summary.json": "b057f31247f2457e08d87e7dafeec155b590177012126024431b7f41b75616d0",
+        "test.log.gz": "7aba735c5bfd2027a0a1cb1d2bd5981d2e735b1a230105e7a1074b5aaf441ff0",
+        "original-attachment-manifest.json.gz": "bc8272b7958b89472b4889276d09548451f7c7cc48408cbd122df9ba0614f5f4",
+        "selected-attachments.json": "48e5aee21fd791c6c3adcb2828e23165ec942d70e236be59d124f2c5d41f13ba"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-chrome-probe",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-chrome-probe.xcresult",
+      "bytes": 1253376,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "53e382e87e17c9c4997dcc6e4057b5b8365135dadcca7cb3a47322928a99dc21",
+        "exit.json": "0bec3793a681f4d023c61e349958052c12e2e944e4a5c64acb4a563c05063820",
+        "test-results-summary.json": "14eb36108ae7f43c878c6ac8aca74b5886408b0655c00aeb667f787f00bd8310",
+        "test.log.gz": "1e5a75c22f80305c1c8c5aaf9bae58ef205024058ff20d3a5fef75ceff4db961",
+        "original-attachment-manifest.json.gz": "501bae998ddaba9ae4376124cb52dc53e9322d69da0f432dd0c0c7f826df1814",
+        "selected-attachments.json": "7f0151a7fbbfbcf4c5ff7166f66f3f49f10219920037285c48648a7d193c9e1f"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-column-binding-probe",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-column-binding-probe.xcresult",
+      "bytes": 1290240,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "830ca9bea9e07807c00a29ba8bc029a12c386750e380561db6da44671c9e4fb7",
+        "exit.json": "51f80dcda26ac1da37fd2b66ef949417eebda905df709c56dcfcf38ca3209459",
+        "test-results-summary.json": "ca445f6fe9e563f8567dda684fe1d41a1ab9f76463b2fa15819c85e40250b2f1",
+        "test.log.gz": "26942a56613acfba3b262a4131cfad42e598da8332700d8740dc5ba30cec1f9f",
+        "original-attachment-manifest.json.gz": "25497b8a5202a03941f848808888746b5c49071f0c95c962574d343f2d91f1d9",
+        "selected-attachments.json": "dd4aa1845456299d8aebf30643745b78d0d0b0a8f1ca5546e1da72012fd0e564"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-content-reduction",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-content-reduction.xcresult",
+      "bytes": 643072,
+      "verifiedRetainedAttachments": 1,
+      "retainedSha256": {
+        "command.json": "2913712825ed557cdc432f432a7e0657134c4c645b56efbbe7e1f53dabf94076",
+        "exit.json": "c82bb2e64ef76cd7ca92add804ab0dbdc682489210c6725069413865c1b0485d",
+        "test-results-summary.json": "67701905b4d9b31f0d6e4d709d0c0758a4852f906e71e0d976702de0748745f3",
+        "test.log.gz": "268fc9121e7c9685be6779635b20f884f1b2d7c1b78b808293eab5998c215908",
+        "original-attachment-manifest.json.gz": "f3a88e9ece1cf0fceebd081741bb8a4086e52958a3daf360f029e59d72a3de51",
+        "selected-attachments.json": "fc00f0586605df819801461fb3f624432ddff6e295f968e45cbd5f887cf918da"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-dismissal-probe",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-dismissal-probe.xcresult",
+      "bytes": 1855488,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "39fa155d39730e6b262253fe319e4179a01b3389a2942e7cee29effbc722ac34",
+        "exit.json": "b31434c09b8daa463b7786815514711dc0448418f0e7ea6f2d8042d9c787801c",
+        "test-results-summary.json": "176a3fb016529267ec204abedaa5916c06375a7c83f231dde8f6fb5276bd70bb",
+        "test.log.gz": "35270119b28ce8c3e8cc554ab38997eac0407b215a8d1d47aef3af2ca18fbc8e",
+        "original-attachment-manifest.json.gz": "126712e821ee6a0cef7f467b3836d9c63649681d8974d0383d40455fc4bd033c",
+        "selected-attachments.json": "87181ac6710bdcbb6f73f9529daf49c8b9cf48f549193de56cee88f4527f5969"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-instrumented",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-instrumented.xcresult",
+      "bytes": 1290240,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "8c38c1c6a5f8e49d37a4a419af4e6cb4b65f421824d8b51d2f66a4765310ee93",
+        "exit.json": "308147ba8537327d1a6ca121433311f81cad1ee71ed3e7097376be6245891129",
+        "test-results-summary.json": "3cbc717189b9ac2ec5e54dc7ea601ab32ca73ace1d59502fae7c114ab098a5f8",
+        "test.log.gz": "62bb5c24ae56549dbba3c77161938592fdf0614ad8ebfc3c634ce16804e0574a",
+        "original-attachment-manifest.json.gz": "c612e6d2876c7e95da0e1a1da56a994e45846df7009119467ef9c9f79fd92596",
+        "selected-attachments.json": "e07f16db7383657964d6f9d499be4e2b9b4815862270d55d3c61efffe692c054"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-more-menu-probe",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-more-menu-probe.xcresult",
+      "bytes": 1245184,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "b3a54fc6be66cacdbaf1d516efe6567186d6a0d9739f0ecf17c3d6a0f49fa2f9",
+        "exit.json": "7def086aaaed2e1b585bc348a2aa7bfa7294a1e3462da8da5a112f19e047d778",
+        "test-results-summary.json": "d824b876ea0894491a16933db7c8460ea158265ccb7ad6aa63303c89ba9c9aef",
+        "test.log.gz": "74dd59c9041da4ae8249e76cb06d33b774926d0da7906af2c68740ae64ebd6b0",
+        "original-attachment-manifest.json.gz": "deee32fb16f15afda52b11a6aacca28e8934ec1b440b859cad9747eeac34ede1",
+        "selected-attachments.json": "f907483565c1c0615df601bb692b3649b2210c3589f8b8b29911f576a1fabe83"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-scroll-candidate",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-scroll-candidate.xcresult",
+      "bytes": 659456,
+      "verifiedRetainedAttachments": 1,
+      "retainedSha256": {
+        "command.json": "ddd451cf4e0f6892288f6dc7132f873bf87d1d157983cf1f834909fae78b19c9",
+        "exit.json": "bccd67c01f8c29268f46f023e3062d6faa29281b05c2b4219c1966558f079b80",
+        "test-results-summary.json": "c2f1688e7f7175551bd891aa6e243897500f2fd9e10844e48e0948363658c5b5",
+        "test.log.gz": "12d5487a34c987c522d6333179c9d83f03b0bd1c185dd9483ca772987fc86e9c",
+        "original-attachment-manifest.json.gz": "ba3898964e58dc2c7405edc9532498e3d7a2c461b21118b2ccde74108d0a38bf",
+        "selected-attachments.json": "230f74cbaa5a806fee08c8fb597680c6e7ea88979bb87877198417119e6d33c5"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-landscape-selection-probe",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-landscape-selection-probe.xcresult",
+      "bytes": 1875968,
+      "verifiedRetainedAttachments": 3,
+      "retainedSha256": {
+        "command.json": "51ec95836066ab6158a4f0073a7fcf191c0819a3a620c74c18a58d6b4dbe3631",
+        "exit.json": "3fbdb4c8955bb8425de411c087e9f89e566ba89cf71534730fa36668f9909e8f",
+        "test-results-summary.json": "4b108abf8dbb873294875dd2bcda43dce9f53a5ecf5fdfe6c503b56f2b8bdee5",
+        "test.log.gz": "d50fb6eef17a0faa10dca42366f810171b059e5d160659b25e9a331c2e26f3c1",
+        "original-attachment-manifest.json.gz": "5cc925911a892fab894d368796e881a26d5edab0901769c9c1355f36516531ca",
+        "selected-attachments.json": "511673c03813a3ea8770f98039f071a5cd0c949b1c611376b5a0ad6a22ab8a23"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-final-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-final-mac.xcresult",
+      "bytes": 177360896,
+      "verifiedRetainedAttachments": 9,
+      "retainedSha256": {
+        "command.json": "ac5baa1c91696b0beaa466c8a7d2d9b1dcfeb903da118816792bb748d0992b8c",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "0ba0863d35a8e098991aac310933214e4290e2f00efeba4d6514b0dcd0e42092",
+        "test.log.gz": "862556d7574dda5d1d5a384c34ba3b845289fa381142590de2cd77a1b39edfdc",
+        "original-attachment-manifest.json.gz": "a553da1a57f85bb5048fb835bf5326cd0ee53ce3f8d4667aa7284eadeb1b8f2c",
+        "selected-attachments.json": "ba013e17ea163b8656a73b8620786b569e3233ceb02a6c860be6a16825440ac8"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-phone",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-phone.xcresult",
+      "bytes": 704512,
+      "verifiedRetainedAttachments": 1,
+      "retainedSha256": {
+        "command.json": "5e3ff015e1cdae36be8b80f88db609e581c984ff9ca40a852781b65d0ad78921",
+        "exit.json": "5023b4b60cf670bf5367a334ae5927cf543861ffd4a2d899d4c89c9fb5aba6db",
+        "test-results-summary.json": "3095f10d50df2d61b9419cb0a901b8d6871941826424f4bf45eceabb223a7ae0",
+        "test.log.gz": "5933f9a7269d24f3b240207e60a9b20df5a45496079885f9382d83391e8527fe",
+        "original-attachment-manifest.json.gz": "2a4bc4a935f169c6dac9e13e166b1237fde7213fe8f8741f54b07c85607a0a65",
+        "selected-attachments.json": "2d3293efd7501c7851636239da924bd08b764441b278c6991d05bff01b36e1a8"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-red",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-red.xcresult",
+      "bytes": 167522304,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "8dd2f3988842d856e2507cdc4dcaba7e8aafafc6992716f060831b88cdf68fc0",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "216fef03c8f15d59b3ae9f2b8cbe82fe36eff663bdd2f3c05f233b1f8ab9b496",
+        "test.log.gz": "092b8533653608620739841697858847a4fd30a920e62a441e62a53c7a78fb6e",
+        "original-attachment-manifest.json.gz": "a9768481deee24d4ebc74c8e77ba00da426d220aadccf3ef616806da3dac9d3b",
+        "selected-attachments.json": "6cf420106503c14c3cf92b9916af93836a6b1a9b1912f4aa27ed7007e43d7cf6"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-sort-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-sort-mac.xcresult",
+      "bytes": 169353216,
+      "verifiedRetainedAttachments": 14,
+      "retainedSha256": {
+        "command.json": "17b55d0a1c6b224841c0c32b697da81732d204f6351960743b72df061c729e3c",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "7d7bc68a5c601a9389079ab0fbcdd33d0c52443f77efaaf9e1b40dd624fefc8f",
+        "test.log.gz": "e514551bc524b8751be4bea3b2125238079384ba2005f7e53bf8f686d69b07a2",
+        "original-attachment-manifest.json.gz": "ce9e6a5206934962979aefe85067c7a9776160c44046fee667e61f2bd372d658",
+        "selected-attachments.json": "196368e6f1176d37fd13d31144cf5d39e299a483f7495ccfe1fe1765218d8ff4"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-sort-native-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-sort-native-mac.xcresult",
+      "bytes": 2433024,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "dde3253cd38400c5a9bdbf1a0413ee3a7f453e95bc998c4a89b2681d53090d62",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "c85ebbe5a0949e255d5e5a014dfd51035e3aec64841c9ab1ba1b6e4c47956a51",
+        "test.log.gz": "372b342e2390accc01eb8b758186bb2a266e1f624e50cba200c8e9791ce595ac",
+        "original-attachment-manifest.json.gz": "b3b9c9561426d3ea7175c84eb553974965831f07744dde7d751d5ed70969144e",
+        "selected-attachments.json": "1a7c874e352625bfe5d17c5947eb60dce6afdcdf0f0e2bd2e8b0d181338b9b28"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-sort-qualified-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-sort-qualified-mac.xcresult",
+      "bytes": 169644032,
+      "verifiedRetainedAttachments": 9,
+      "retainedSha256": {
+        "command.json": "f227a3829f3b772c3528369cc4a83338633231bf1838a8032b8d19e084f4aaa3",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "e8510773fb87a80b7ff485b6fdf1b57092e3b08ee2a721184addf0d1c952d962",
+        "test.log.gz": "246144820f3d6f1464e8c8ad45768aeae31da814fbf440244e224af5f5f91572",
+        "original-attachment-manifest.json.gz": "46227773502ab5f192c4e4635aae842d1bbd52f9c3f96e9aa403583664a12159",
+        "selected-attachments.json": "8185504dcf54e86544366ca86a2fd64479be32b8efb7165528679b9c89178241"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-pane-header-tablet",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-pane-header-tablet.xcresult",
+      "bytes": 696320,
+      "verifiedRetainedAttachments": 1,
+      "retainedSha256": {
+        "command.json": "7bf8382bf26c9de79c07db81763f66524d7479000c5751e61a2f1d1f4ca306aa",
+        "exit.json": "58a413bd1ca382f745900c83d28320e57b21bd2cd0268b89eb592d7fb8ad22d1",
+        "test-results-summary.json": "805d7b83a9c2f8f6f9250cfed479274cf119a66432cfe2797e9b16dd83853d8f",
+        "test.log.gz": "955b173ed97ddec3f3d618c64371d69c3fe50cef384c9e20ae4440e660dc7b08",
+        "original-attachment-manifest.json.gz": "2a2e5354a75e09f16ca95af2e66c0a8f2bbfc2679c7eaaa3e5ace76f69e8f18f",
+        "selected-attachments.json": "edab07e0ede45ebc780e17eb86483865e54ca71a604c7ba069a19d7c29dd44cc"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-selection-title-budget-red",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-selection-title-budget-red.xcresult",
+      "bytes": 170618880,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "360312f8da32bce6a08db195f134db7ece2eb83af8ffa158188432f1464d5bc6",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "8f2dc356d10917c03690b844021a960a42779c434910ac4d86fdbb11f41231ce",
+        "test.log.gz": "71251e265f005e0626e7d771805872621f75818b0e6d1be80bb9f437d0b0e524",
+        "original-attachment-manifest.json.gz": "034c6a5cf7a73f24663914ea17bfc056b482677852e6f3aa5592ef59e40719fb",
+        "selected-attachments.json": "7c0bff6cb8e33738af1ef4a9aa4c40a1b740ddea7e0840ac75ecc511e13cbb88"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-shared-header-actions-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-shared-header-actions-mac.xcresult",
+      "bytes": 3338240,
+      "verifiedRetainedAttachments": 3,
+      "retainedSha256": {
+        "command.json": "7c5364aca561da56a02e3aa3ca572ce76bee40eb9214a987c57ba1da5925e691",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "3c40830903654aa69c8f36099bde0fabf2a7316fdd73a0f3d91a6becdacce543",
+        "test.log.gz": "1be004de8d7002af0773e16ab994f128ad72cbc622f291e0c9a4e925713bcd60",
+        "original-attachment-manifest.json.gz": "3cc652f9d26993d2f381ea51d38cb5c26648bb9f32bcc3630d3749c4e51270d3",
+        "selected-attachments.json": "c737cec769cbdf170867bde1edde9fd6fb5e5c9681c4e501ba01315129440083"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-shared-header-final-revalidation-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-shared-header-final-revalidation-mac.xcresult",
+      "bytes": 172314624,
+      "verifiedRetainedAttachments": 12,
+      "retainedSha256": {
+        "command.json": "3ce27e07832615f0d889fd8751cb3783eb25ec86a4e8d2bed208de9a924185ac",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "5d0edfb4c5f822d11fbf9dda24e456ede86b4ba45669c9a477d53b3f76f905b3",
+        "test.log.gz": "de87d62d73b7c8c036923bf99661eafe906943c9b435dbed583a34d4351b224c",
+        "original-attachment-manifest.json.gz": "396f0d751cbeb3aea1f900553ac7990c7202630e4906b2bd5dfdc4c7050be8f4",
+        "selected-attachments.json": "623ff462cc82847467db9f56be5de400c9d662d5c00ad334205c33287362e270"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-shared-header-phone",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-shared-header-phone.xcresult",
+      "bytes": 1142784,
+      "verifiedRetainedAttachments": 1,
+      "retainedSha256": {
+        "command.json": "381895c9190136e1129383d742c7ba8e34b8969a8d65501fb879e0b9d76e7bdf",
+        "exit.json": "65aae5d8144aa939048ea81372f7e5b1464f478079048ed5f87372db0978be8d",
+        "test-results-summary.json": "d237d4b16ddcba3a671fee77914cba42fb7c70d9c51789e5766d16412c5e7c3f",
+        "test.log.gz": "fc3d1f4d5151cfb0cdffd3ef549a7c65b9888a51e36da7153f74a10b7da7c83f",
+        "original-attachment-manifest.json.gz": "22b7349a7d8e20b170784fc37174b426fbc3c2d435a222910706e4494c387d03",
+        "selected-attachments.json": "d7688f13539f3341c75d7a1b0e3d690a0615da6c79178a371e08fe40d3652f1e"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-shared-header-tablet",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-shared-header-tablet.xcresult",
+      "bytes": 1216512,
+      "verifiedRetainedAttachments": 1,
+      "retainedSha256": {
+        "command.json": "8da3a322db18856d797e87758e1c4ae65b6b61ba636a5c6d84d669fb9d641ca8",
+        "exit.json": "5dd29e516933066b53f419c2fcba8b845fcba7b292107bc7a4c91a3c166b5a37",
+        "test-results-summary.json": "196e0e451034b0231573e96e4efc4af1f06e2a4d9b7a347a91f81ee97ca36b06",
+        "test.log.gz": "49ea8fcd2e14a4063072d799d6bacf69922dee1470b14b93cbc8a00ed39fc942",
+        "original-attachment-manifest.json.gz": "310dbf7a973fe2f8f37b9a264b40e72b0977a940dcced9358272bfbf53380ad1",
+        "selected-attachments.json": "9f2a830564a217bb4595e1f6192ae24199b15845458586acfbaf546a2ec09ee2"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-summary-label-insets-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac.xcresult",
+      "bytes": 11763712,
+      "verifiedRetainedAttachments": 10,
+      "retainedSha256": {
+        "command.json": "7d319214bc2901c49d98df39d5f244743291df97d30fb6881e277ba80d390006",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "374ddf4d5e9dc6606f68258e5f53574c4e8151835b19d947f3f93fe1d539cfba",
+        "test.log.gz": "eb76de18a6fdd737050cf011f4818c2f886a8adb797e4f811059ed1fe3897a63",
+        "original-attachment-manifest.json.gz": "bc02d00b8b594b3e8616466e8ee9bfbb05c7f9ad12fba6e9283376d18bb7c535",
+        "selected-attachments.json": "caed54da6c8dfbce0b32bd078e7260620c7db7b715dcd1d5c28d203d3e22d352"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-summary-label-insets-mac-resize-repeat",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac-resize-repeat.xcresult",
+      "bytes": 150626304,
+      "verifiedRetainedAttachments": 0,
+      "retainedSha256": {
+        "command.json": "3a38ceeffc6a419d434b0f06cfa98db31bb30f88f972f933b3f628e7f10a561c",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "93f775f4b910c555d8265201ba5fed4797d7d695d8ee5bdb0d83db02db2051bc",
+        "test.log.gz": "a4f892234ca4bde8fc782e738c5afcd9f18d7813bdf36bf34bf1b983bb98c399",
+        "original-attachment-manifest.json.gz": "ed6b7328a60239708b129ad07475d50c1a7821b358bdf326d7815e6daa2f245e",
+        "selected-attachments.json": "73435876af332f69a0cace0f261ab94d31a781fb41c98cfb19a579e1aebb6b16"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-summary-label-insets-mac-space-retry",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-summary-label-insets-mac-space-retry.xcresult",
+      "bytes": 160129024,
+      "verifiedRetainedAttachments": 0,
+      "retainedSha256": {
+        "command.json": "c123a77216b0d95084bcff936910f30bb7974c801f7bd212e099c7cc65a82fa8",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "106927ddfaa1762a765ca530295b82397f8b9a816e8a5aa6b7f4a1b624a87d74",
+        "test.log.gz": "3ffd993da00dbd6b0e43eb9920771840de8c5924ca2d15fb3f72095ab190fc18",
+        "original-attachment-manifest.json.gz": "96491548f930611b618f3d353d0123c762b3fab540d5a9b37bd2cc2633714fb6",
+        "selected-attachments.json": "73435876af332f69a0cace0f261ab94d31a781fb41c98cfb19a579e1aebb6b16"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-summary-spacing-mac",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-summary-spacing-mac.xcresult",
+      "bytes": 159506432,
+      "verifiedRetainedAttachments": 10,
+      "retainedSha256": {
+        "command.json": "abaa4e26fc177e7dbffc6d51698557a48eb23e80777249f2e31f059987955def",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "fa34e00e8c77c8899d73d1dc50be79823535de425b33cd9cde8af8d7dbf2bad9",
+        "test.log.gz": "582360a1fb8515435e48f7a07b73a8245322de6287fb460ad151f3bda50fa298",
+        "original-attachment-manifest.json.gz": "c4f8a573b1cea7a89308f90269198d7bf2462f8b0a55eb08ebeee4db2bcd34a0",
+        "selected-attachments.json": "858d0709786d2887fe6fc887797dfe32844752d7964aa158c898425a59fe36b8"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-title-overflow-mac-red",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-title-overflow-mac-red.xcresult",
+      "bytes": 761856,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "7ba2270af1ca672b72d3d6f81d99bd00baa7e2176e508db1b3fcd147f49941fd",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "test-results-summary.json": "148a79d0c057c0ef78973884c1498cde4bf03c6d3b9e8131f9f86e47f02ea61b",
+        "test.log.gz": "cfacfb5ec98f4bbff6d2e1912b935236fcc96e5b6e28aa8332731d6cd6f0a006",
+        "original-attachment-manifest.json.gz": "0b63f25532e97d3aefbd68ad772f640cc54a0307c87c5344ffbb00ebcd14c7f8",
+        "selected-attachments.json": "d601470f4c988b2ced14c3ece14ed6aa3df2036191a060e1c9d2b828d18fd3a8"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-title-pane-mac-green",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-title-pane-mac-green.xcresult",
+      "bytes": 177758208,
+      "verifiedRetainedAttachments": 14,
+      "retainedSha256": {
+        "command.json": "c25df866750e99b2189c17027e6ae38acaa1493be3afd335d535773a9809191b",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "8632a04aff05f99cc6374ec9d3975cc1c3de9101eaeff442388f8d858f41e242",
+        "test.log.gz": "ad1355dd9356c5f17641bf37c8fac5cbac0eaea86291be282a7235b7cb43f46e",
+        "original-attachment-manifest.json.gz": "7ca07a6d1addbed8ee1f423992aabbc3054ddb8a5c53397d86cb6dd78b9f08d6",
+        "selected-attachments.json": "ee0acb489f95257f67fc09ab314accda16770d63841158b19f66c18089ada16f"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-title-pane-regression-red",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-title-pane-regression-red.xcresult",
+      "bytes": 164081664,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "88a48da1c61c1d53b4f618e1adea70523c9edd6b96f465e2b4354380928aae9b",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "19b12aba2fe6a30224b5af4d143519e366a36a762cfa8cda083d857926067184",
+        "test.log.gz": "7c25d3349a5c26bc16f5478a6b2e677579e0ef3de720f53d92bb330fa6019c14",
+        "original-attachment-manifest.json.gz": "80bbd8a176491b9144d0c85b50d2d6d6895243123759d928b004be4ba8cd3025",
+        "selected-attachments.json": "40b963e365244da9f5218ff3f4ddffced32c437524fc3875c116b49438946a7e"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-top-header-qualified-red",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-top-header-qualified-red.xcresult",
+      "bytes": 169971712,
+      "verifiedRetainedAttachments": 2,
+      "retainedSha256": {
+        "command.json": "6053a59645d0222fae380c6d2c704eb8283a28521131c5287212c8b77ae6561a",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "1d2d59c1073fcf182ddeeca21ec61fc954888ef0a8bc61e0c2cea9e711ceb27d",
+        "test.log.gz": "0e9ec3ac14b5f3e0a9cb82024ec008e3f38b61232d703e884ad00624cc326626",
+        "original-attachment-manifest.json.gz": "a1552e5766615bb3ac44eca8f5cc8668a6b2f956185db9801a38f5d006761ed7",
+        "selected-attachments.json": "f5458091d9f274aed13e20b3fc53ffa4b5620030f210ba864ff36ff49bd4d50f"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-list-top-title-space-red",
+      "bundle": "/private/tmp/PlannerItemWindow-native-list-top-title-space-red.xcresult",
+      "bytes": 172040192,
+      "verifiedRetainedAttachments": 3,
+      "retainedSha256": {
+        "command.json": "d73c0380ac29d0f1f04556201000a959e12e23969e21fd825d7959af60697af8",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "test-results-summary.json": "8831cd390a82f868190f8eab9125ea3cc7db218ee2c0412ec327dcef19b034bd",
+        "test.log.gz": "f4968fd69c0345e6894b3ab07cdb5132b27f979841318258e53dbc031ecb683a",
+        "original-attachment-manifest.json.gz": "06c9d9ec6c7a5811e83fc79cd275ef41f8d050fbe43ccad7e40b846648d84227",
+        "selected-attachments.json": "e2f753bf4c45d90fc20418df0ef75e6dc3636ca24fa65744773b779a828a0c51"
+      },
+      "rawSummaryMatchesRetained": true,
+      "openFileExcluded": true,
+      "removed": true
+    }
+  ]
+}
