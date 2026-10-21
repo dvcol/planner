@@ -1,0 +1,694 @@
+{
+  "evidenceCommit": "dc8c17893e44f1b275715cb2f9fa37d0ee8aeea3",
+  "scope": "Completed Calendar xcresult bundles only. Retained scoped evidence and original exported attachments remain unchanged. No source, products, packages, Simulator or user datasets are cleanup candidates.",
+  "bundles": [
+    {
+      "phase": "native-calendar-month-count-value-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-month-count-value-mac.xcresult",
+      "retainedSummary": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-month-count-value-mac/test-results-summary.json",
+      "retainedSummarySha256": "63133ab62d233392ad10bafa5a98170d8fe6b07f1794e29e28c5a1fa6e051906",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-month-count-value-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-month-count-value-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 2,
+      "nominalBytes": 913795,
+      "fileCount": 34,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-window-bounds-day-inspection-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-window-bounds-day-inspection-mac.xcresult",
+      "retainedSummary": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-window-bounds-day-inspection-mac/test-results-summary.json",
+      "retainedSummarySha256": "35fbb734afd0b7180a4a43014f9b5a4481250cfbea5e589aa1cd65fcb42c1861",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-window-bounds-day-inspection-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-window-bounds-day-inspection-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 14,
+      "nominalBytes": 169276206,
+      "fileCount": 2076,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-month-zone-mac-local",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-month-zone-mac-local.xcresult",
+      "retainedSummary": "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-calendar-month-zone-mac-local/test-results-summary.json",
+      "retainedSummarySha256": "0bb89a4fbad6e4797d1450212b2eb292113c387e9930e6c6676343b0e046cd0e",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-month-zone-mac-local.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-month-zone-mac-local.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 4,
+      "nominalBytes": 2236694,
+      "fileCount": 42,
+      "counts": {
+        "totalTestCount": 3,
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-adaptive-inspector-month-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-adaptive-inspector-month-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-adaptive-inspector-month-mac/test-results-summary.json",
+      "retainedSummarySha256": "fe6224d900d55852314fd0eb87fb1153220580a13f128859f643e66db0d0be0f",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-adaptive-inspector-month-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-adaptive-inspector-month-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 10,
+      "nominalBytes": 169554929,
+      "fileCount": 2032,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-fixed-inspector-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-fixed-inspector-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-fixed-inspector-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "ba447e93a02b663f7244bc0af4926f086aef71c040458736a0a290a4dc24b09c",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-fixed-inspector-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-fixed-inspector-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 169159738,
+      "fileCount": 2088,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-flexible-viewport-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-flexible-viewport-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-flexible-viewport-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "c78e75f020558d4d0dabfaebfc1e6a9e39e6c9f04d19512532f0e300799be50b",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-flexible-viewport-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-flexible-viewport-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 169818435,
+      "fileCount": 2070,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-inspector-day-selection-inspection-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-inspector-day-selection-inspection-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-inspector-day-selection-inspection-mac/test-results-summary.json",
+      "retainedSummarySha256": "6400a0a5e9e13919e9b72a1175f10ece492c0a8fe20142c82deb6c6cf736846c",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-day-selection-inspection-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-inspector-day-selection-inspection-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 168823179,
+      "fileCount": 2042,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-inspector-detail-placement-month-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-inspector-detail-placement-month-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-inspector-detail-placement-month-mac/test-results-summary.json",
+      "retainedSummarySha256": "1d784c22b0c2f78c50c7e929c756ae6e9d6ab695f4e6ae858b9ba3fe2f2f8eb6",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-detail-placement-month-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-inspector-detail-placement-month-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 166758620,
+      "fileCount": 2036,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-inspector-flexible-grid-month-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-inspector-flexible-grid-month-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-inspector-flexible-grid-month-mac/test-results-summary.json",
+      "retainedSummarySha256": "b7b2268a444be62de0775d262378562dec9498dfe21ddb04629091365a61dd6f",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-flexible-grid-month-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-inspector-flexible-grid-month-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 10,
+      "nominalBytes": 168484850,
+      "fileCount": 2034,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-inspector-month-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-inspector-month-mac/test-results-summary.json",
+      "retainedSummarySha256": "476649bc0bae4786abb1a71193b2709803ee5ebdebdabd4dcf957d6db338f009",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 1,
+      "nominalBytes": 159669300,
+      "fileCount": 2032,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-inspector-month-native-controls-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-native-controls-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-inspector-month-native-controls-mac/test-results-summary.json",
+      "retainedSummarySha256": "6e86875a6c8fb2436757e7b33a02a54dd57c8210b023d8678582f6f188d14838",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-native-controls-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-inspector-month-native-controls-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 1,
+      "nominalBytes": 165100286,
+      "fileCount": 2032,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-inspector-selection-inspection-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-inspector-selection-inspection-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-inspector-selection-inspection-mac/test-results-summary.json",
+      "retainedSummarySha256": "93b71589f86c3d2e300d0677b49c3f49bef5e683176d3b42eabc8afd7127f6fa",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-inspector-selection-inspection-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-inspector-selection-inspection-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 12,
+      "nominalBytes": 168799995,
+      "fileCount": 2044,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-leaf-inspector-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-leaf-inspector-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-leaf-inspector-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "4a805dbd66371fe6faef6af769192cf0ff705bf1cb3a38887836507420e70f6f",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-leaf-inspector-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-leaf-inspector-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 169125018,
+      "fileCount": 2072,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-main-minimum-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-main-minimum-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-main-minimum-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "167ded8c94eb644bf9f4a240c2e73b282661bdb343482023127d6b3832e0dc74",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-main-minimum-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-main-minimum-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 10,
+      "nominalBytes": 166847436,
+      "fileCount": 2086,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-month-mac-local",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-month-mac-local.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-month-mac-local/test-results-summary.json",
+      "retainedSummarySha256": "323b98949d3daeb6f1d3ee34761bf06cc9394a415e4be815faaba62b56261b74",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-month-mac-local.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-month-mac-local.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 0,
+      "nominalBytes": 156544700,
+      "fileCount": 2020,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-prior-toolbar-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-prior-toolbar-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-prior-toolbar-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "d49c696eae5d293b7479f836bcf9ba1fd68ce2df83326b48949f8e08d658be20",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-prior-toolbar-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-prior-toolbar-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 169251521,
+      "fileCount": 2080,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-stable-toolbar-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-stable-toolbar-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-stable-toolbar-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "ce31a9874bea137732b2cf3e80b1f80b62e3944fef2ed7af611b361bee5c1e7a",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-stable-toolbar-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-stable-toolbar-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 168678793,
+      "fileCount": 2074,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    },
+    {
+      "phase": "native-calendar-under-toolbar-day-mac",
+      "rawBundle": "/private/tmp/PlannerItemWindow-native-calendar-under-toolbar-day-mac.xcresult",
+      "retainedSummary": "/private/tmp/PlannerHeaderUnpublishedDiagnostics/native-calendar-resize-probes/native-calendar-under-toolbar-day-mac/test-results-summary.json",
+      "retainedSummarySha256": "5066f8fd21a20cb1a9e93df793050fdc4bfc918d96b97235b860f71b4caee7c2",
+      "rawSummaryCommand": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerItemWindow-native-calendar-under-toolbar-day-mac.xcresult"
+      ],
+      "rawSummaryMatchesRetained": true,
+      "openFileCheck": {
+        "command": [
+          "/usr/sbin/lsof",
+          "-n",
+          "-P",
+          "+D",
+          "/private/tmp/PlannerItemWindow-native-calendar-under-toolbar-day-mac.xcresult"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "verifiedOriginalAttachmentCount": 11,
+      "nominalBytes": 168837074,
+      "fileCount": 2080,
+      "counts": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "removed": true
+    }
+  ],
+  "nominalBytes": 2677880569,
+  "verifiedOriginalAttachmentCount": 152,
+  "deleted": true,
+  "preserved": "All source, current products, packages, Simulator state, user datasets, committed evidence, private diagnostic packets and 152 hash-verified original exported attachments."
+}
