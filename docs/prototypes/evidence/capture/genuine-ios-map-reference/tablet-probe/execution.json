@@ -1,0 +1,42 @@
+{
+  "originalProbe": "docs/prototypes/evidence/navigation/genuine-native-map-reference/PlannerGenuineAppleMapProbe.swift",
+  "originalSHA256": "3ea47c6c317e34e2cd034dec9ffc3f043a1b245d4987c1425082ef5343a9f0d3",
+  "probeSHA256": "c7b57aa3a449d2791d5c2b0c1e702d9e059b644c61edf1b0e272763c78f8946b",
+  "onlySourceChange": "Separate temporary archive output path for the iPad attempt.",
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-target",
+        "arm64-apple-ios27.0-simulator",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk",
+        "/private/tmp/PlannerGenuineIOSMapProbe/PadProbe.swift",
+        "-o",
+        "/private/tmp/PlannerGenuineIOSMapProbe/pad-probe"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.525
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "spawn",
+        "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "/private/tmp/PlannerGenuineIOSMapProbe/pad-probe"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.349
+    }
+  ],
+  "fixtureExistsOnHost": true,
+  "runtimeCredit": false,
+  "scope": "Separate genuine iPad Simulator producer and secure archive; public Core integration remains unqualified.",
+  "fixtureSHA256": "d8d2560ab6a5193f8a552c3766e7bbfffa315252a102799aa3559938fdef7270",
+  "fixtureBytes": 22379
+}

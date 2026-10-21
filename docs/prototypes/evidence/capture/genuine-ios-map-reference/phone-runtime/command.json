@@ -1,0 +1,15 @@
+[
+  "xcodebuild",
+  "test-without-building",
+  "-xctestrun",
+  "/private/tmp/PlannerGenuineIOSCaptureDerivedData/Build/Products/PlannerGenuineCapture-phone.xctestrun",
+  "-destination",
+  "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerCoreStoreTests/GenuineNativeMapCaptureTests",
+  "-resultBundlePath",
+  "/private/tmp/PlannerGenuineIOSCapture-phone.xcresult"
+]

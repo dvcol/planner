@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerCaptureTransportIOSSource",
+  "base": "ba052c13999e19df9474e2c8b4748e57152d3a81",
+  "overlays": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/GenuineNativeMapCaptureTests.swift"
+  ],
+  "scope": "Existing public Core/provider I/O test enabled on iOS; no production change. Named local store fixtures remain until the test process exits."
+}

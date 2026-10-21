@@ -1,0 +1,17 @@
+{
+  "runtimeCredit": true,
+  "observedNativePlatform": "iPad Simulator via simctl spawn",
+  "provider": "MKLocalSearch",
+  "fixedRegionOnly": true,
+  "deviceLocationRequested": false,
+  "nativeIdentifier": "ID40BC454B39E9696",
+  "roundTripIdentifier": "ID40BC454B39E9696",
+  "displayName": "Nezu Museum",
+  "archiveBytes": 22379,
+  "fixtureSHA256": "d8d2560ab6a5193f8a552c3766e7bbfffa315252a102799aa3559938fdef7270",
+  "scope": "Separate genuine iPad native result and secure round trip; public Core outcome is in tablet-runtime.",
+  "limits": [
+    "No original Maps URL binding or physical Share sender.",
+    "No iCloud/account, memory/lifecycle or installed extension credit."
+  ]
+}

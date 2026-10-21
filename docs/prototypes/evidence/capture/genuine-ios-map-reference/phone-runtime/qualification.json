@@ -1,0 +1,24 @@
+{
+  "runtimeCredit": true,
+  "executedFunctions": 1,
+  "executedInvocations": 1,
+  "failures": 0,
+  "skips": 0,
+  "packageInputsMatchingCurrentWorkspaceAndOtherPlatform": 739,
+  "nativeArchiveSHA256": "002292ebd5f4c2c92fdbd6c0a9c2e488dbabf6a4830e2e2a02255fe8e25ada5e",
+  "nativeArchiveBytes": 23570,
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "modelName": "iPhone 18 Pro",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "scope": "Genuine native producer archive through existing public load/prepare/edit/review/apply/read/export interfaces. Provider reference remains temporary; only owned title is saved.",
+  "limits": [
+    "No physical Maps Share sender, original URL binding or installed extension credit.",
+    "No iCloud/account, physical memory/lifecycle or final app UI qualification."
+  ]
+}

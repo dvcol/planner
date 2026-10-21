@@ -1,0 +1,17 @@
+{
+  "runtimeCredit": true,
+  "observedNativePlatform": "iOS Simulator via simctl spawn",
+  "provider": "MKLocalSearch",
+  "fixedRegionOnly": true,
+  "deviceLocationRequested": false,
+  "nativeIdentifier": "ID40BC454B39E9696",
+  "roundTripIdentifier": "ID40BC454B39E9696",
+  "displayName": "Nezu Museum",
+  "archiveBytes": 23570,
+  "fixtureSHA256": "002292ebd5f4c2c92fdbd6c0a9c2e488dbabf6a4830e2e2a02255fe8e25ada5e",
+  "scope": "One genuine native iOS result and secure-archive round trip. Public Planner capture/save/export integration is not yet qualified.",
+  "limits": [
+    "No original Maps URL binding or physical Share sender.",
+    "No iCloud/account, memory/lifecycle or installed extension credit."
+  ]
+}

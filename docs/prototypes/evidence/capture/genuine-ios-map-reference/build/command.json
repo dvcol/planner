@@ -1,0 +1,19 @@
+[
+  "xcodebuild",
+  "build-for-testing",
+  "-scheme",
+  "PlannerCore",
+  "-destination",
+  "generic/platform=iOS Simulator",
+  "-derivedDataPath",
+  "/private/tmp/PlannerGenuineIOSCaptureDerivedData",
+  "-disableAutomaticPackageResolution",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerCoreStoreTests/GenuineNativeMapCaptureTests",
+  "CODE_SIGNING_ALLOWED=NO",
+  "ARCHS=arm64",
+  "ONLY_ACTIVE_ARCH=YES"
+]

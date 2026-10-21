@@ -30,4 +30,21 @@ Compile/run the probe with the recorded Mac SDK command, then run the focused te
 
 One public-boundary integration function passed on Mac against committed `69f8836` Core. The changed test passed strict lint and compilation; the document passed Markdown lint. [Execution evidence](evidence/navigation/genuine-native-map-reference/execution.json) records the qualified sources, command, result and fixture hash.
 
-This proves one genuine native result and constructed provider on Mac. It does not prove original Maps URL binding, an iPhone/iPad positive-ID payload, a physical Maps Share sender, extension allocation/lifetime or iCloud convergence. Those gates remain open. The separately pending Maps HTTP transport design and its unfinished facade are excluded from this qualification.
+That original checkpoint proves one genuine native result and constructed provider on Mac. It does not prove original Maps URL binding, iOS payloads, a physical Maps Share sender, extension allocation/lifetime or iCloud convergence. Its then-pending HTTP transport and facade have their own later [Core lookup](core-maps-capture-lookup.md) and [native transport](native-capture-http-transport.md) results. The iOS follow-up below has separate producer and integration evidence.
+
+## iOS follow-up, 22 October 2026
+
+Before this follow-up, genuine positive-ID extraction is qualified on Mac only. After it, independently produced iPhone/iPad Simulator archives preserve the observed Apple reference through the public capture interface and an owned edit, while the saved Item and portable backup exclude provider content. This qualifies the existing implementation; production source, schema, facade, packages, targets, signing and security settings are unchanged.
+
+Q33/Q50 already approve the native provider I/O and public Core load/prepare/edit/review/apply/read/export boundaries. The existing optional fixture test now compiles on both supported platforms, retaining its explicit `PLANNER_GENUINE_MAP_FIXTURE` opt-in. The external native probe remains separate from Planner and records its result before Core sees the archive. It uses the same fixed public museum region and no device-location request. The test's named disposable store is retained until its process exits, following the later native-store lifetime policy instead of unlinking a potentially live SwiftData container in the test body.
+
+| Native producer | Secure archive | Observed and decoded identifier | Core integration |
+| --- | --- | --- | --- |
+| [iPhone 18 Pro Simulator](evidence/capture/genuine-ios-map-reference/probe/) | 23,570 bytes | `ID40BC454B39E9696` | [One pass](evidence/capture/genuine-ios-map-reference/phone-runtime/), 0.182 seconds |
+| [iPad Air 11-inch M4 Simulator](evidence/capture/genuine-ios-map-reference/tablet-probe/) | 22,379 bytes | `ID40BC454B39E9696` | [One pass](evidence/capture/genuine-ios-map-reference/tablet-runtime/), 0.097 seconds |
+
+Both native searches return Nezu Museum. Secure serialization/readback retains the identifier before a manually registered NSItemProvider supplies that native archive to Planner. The public test verifies the literal expected name/reference, initially empty owned fields, retained preview reference after editing, reviewed durable Add, saved title My museum with no owned location/bookmarks, and absence of the provider name/identifier from the exported backup. Each device uses its own produced archive and recorded hash. Native archives remain outside Git.
+
+The [scoped package build](evidence/capture/genuine-ios-map-reference/build/) passes. Both actual Swift Testing runs execute one function with zero failures/skips; their structured results and native logs agree. The plain XCTest wrapper's zero-test line is not the Swift Testing result. All 739 package inputs match the current workspace and both final epochs; products and native fixture hashes remain unchanged. The generated xctestrun copies set only the test's existing fixture environment variable through Apple's documented test-host EnvironmentVariables field. No production test parameter or new test boundary is added. Strict affected Swift and Markdown lint pass.
+
+This completes the represented iOS positive-ID/temporary-retention qualification. It does not qualify an original Maps URL binding, the actual Maps app's sender envelope, physical Share, installed extensions, memory/lifecycle limits, signed storage/account sync or final UI presentation. The broader capture gates remain open.

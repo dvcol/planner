@@ -1,0 +1,42 @@
+{
+  "originalProbe": "docs/prototypes/evidence/navigation/genuine-native-map-reference/PlannerGenuineAppleMapProbe.swift",
+  "originalSHA256": "3ea47c6c317e34e2cd034dec9ffc3f043a1b245d4987c1425082ef5343a9f0d3",
+  "probeSHA256": "5961128323823f7fc23ea2500ec334576d82a71db868e029e6f9490bbb7d49f3",
+  "onlySourceChange": "Separate temporary archive output path for the iOS attempt.",
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-target",
+        "arm64-apple-ios27.0-simulator",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.1.sdk",
+        "/private/tmp/PlannerGenuineIOSMapProbe/Probe.swift",
+        "-o",
+        "/private/tmp/PlannerGenuineIOSMapProbe/probe"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3.551
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "spawn",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "/private/tmp/PlannerGenuineIOSMapProbe/probe"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.144
+    }
+  ],
+  "fixtureExistsOnHost": true,
+  "runtimeCredit": false,
+  "scope": "Inspect actual native search/archive result before qualification. No Planner store, location permission, signing setup or app security change.",
+  "fixtureSHA256": "002292ebd5f4c2c92fdbd6c0a9c2e488dbabf6a4830e2e2a02255fe8e25ada5e",
+  "fixtureBytes": 23570
+}
