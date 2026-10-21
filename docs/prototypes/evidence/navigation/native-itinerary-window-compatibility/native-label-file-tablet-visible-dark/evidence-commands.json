@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-file-tablet-visible-dark.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792602309.439,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792602167.375,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-file-tablet-visible-dark.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-file-tablet-visible-dark"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 6 attachments for: SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges():\nFile: 9EC8D853-BED7-48B2-BB67-12700DAFA7DD.png, suggested name: \"Live shared labels remain in the original Item details_0_DD009D13-01EB-4BC7-96BD-CD299A9A9975.png\"\nFile: 43473D27-9E78-4864-9A56-190B1BA94E66.png, suggested name: \"Only the explicitly cleared Category loses its appearance_0_DEBB743F-482B-43CA-8725-F2E32B826B5C.png\"\nFile: 81813F94-6A46-4F1F-B296-6305148A5BCB.txt, suggested name: \"Label appearance cleared delivered backup filename_0_ADC2E029-8E17-48A8-8236-55900AE9EBB6.txt\"\nFile: 27F52303-7077-47EF-86D0-1B62E6674E5D.png, suggested name: \"Imported custom symbol and color remain after name-only Save_0_C019D774-8236-4BFD-9BB9-65D54919BBCE.png\"\nFile: F6EFE856-5853-42CF-B5B5-0074D61AA0CC.txt, suggested name: \"Label appearance name-only delivered backup filename_0_E0A2F281-A71F-4F0E-86F1-2F2AEBC7324B.txt\"\nFile: E534AB2A-E8CC-4BBB-89AF-0B52F5BB64E9.txt, suggested name: \"Native picker for the selected backup file_0_1377320C-4B17-4175-A940-98553448F27F.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-file-tablet-visible-dark/manifest.json\n",
+    "stderr": ""
+  }
+]

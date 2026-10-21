@@ -1,0 +1,999 @@
+{
+  "scope": "Completed native label-file qualification iterations, including failures and earlier passes. Public scoped final evidence is retained separately; moving raw unpublished packets does not reclaim disk space.",
+  "records": [
+    {
+      "phase": "native-label-file-cancel-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch",
+        "-only-testing:PlannerNavigationUITests/SavedBackupExportJourneyTests/testCancellingBackupExportPreservesSavedLabelsAfterRelaunch",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-cancel-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 2,
+        "passedTests": 1,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 2,
+            "testIdentifierString": "SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch",
+            "testName": "testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "89c436142d768046484d432aab85dced5ad5d24959cdcb638b92faaac3ffb6c8",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "258ffc9da3428f0f11701f20b356dc062e082100e93784126dfd627e68e420f7",
+        "runner.py.gz": "0deb4793e3de919135249e1a2fb0e6ecff4263bc4bb3caf75cfa693f7f90381a",
+        "CE90F7B3-A13E-461E-AFB3-57AF3D1D4C92.txt.gz": "502a4489700812427f7889b5b6443a5d687f20d74acd29b0d56056b69e7fee48",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "98917C50-0505-436A-9A17-7A4A393A8D2D.png": "13f0f9f79de11b72ad2006380e79209f6b03a1f6761576c8c78dce2f2bc67cac",
+        "selected-attachments.json": "ca447651eddf032a0c754bbd4f79acc0de9196b904a2f7cc5dae53533ee0fcc8",
+        "source-sha256.json": "6fbb864b929337f311048e816992f4b0f50a91ec5301c4c077f55bcbbea3da1d",
+        "command.json": "b76e9080b9282d23033c6657479ce28d57d9fd6c3fdd54c48f17e3849c2a5873",
+        "evidence-commands.json": "1d03917545d00eb45dcb4db5cc7f4222269cefa5f807c9bb0c12c8154f981c73",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "b7c3d529fb9233448cee92bf203127783152a784cfbafa72ab342a4c47bf2405",
+        "test-results-summary.json": "a315d6e8c6cf54c871fadcbff3d237fab40f558f9c45e9fdb50bd4afb1ad7446"
+      },
+      "sourceSnapshots": []
+    },
+    {
+      "phase": "native-label-file-export-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-export-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "Failed to click \"Open\" Button: Find single matching element. Multiple matching elements found for <XCUIElementQuery: 0x7ce5e5c910>.\nSparse tree of matches:\n\u2192Application, pid: 84905, title: 'Planner'\n  \u21b3TouchBar\n  \u22c5 \u21b3Button, title: 'Open'\n  \u21b3Window, identifier: 'com_apple_SwiftUI_Settings_window', title: 'Planner Settings'\n    \u21b3Sheet, identifier: 'open-panel', label: 'open'\n      \u21b3SplitGroup\n        \u21b3Button, identifier: 'OKButton', title: 'Open'\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Other from legacy attributes vs Button from modern attribute. Input attributes and values: {\n    AXAutomationType = 9;\n    AXRole = AXUnknown;\n}\nSee test report attachments for more detail.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+            "testName": "testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "c68e3a7bfc7e16ddbe1440a619cb006cc9cf12048b07adb3712433eca16b954a",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "9e9504c6b57611cd563e65d744f90a8284e5344c06d720c65a9e576eaa4ebd0d",
+        "runner.py.gz": "3331818d8ca19ce6743a270bdb887c3891e790a6a892171220865d768a828ff2",
+        "source-root.json": "1f4afa411d4488b6abe85392c11b554e2626abe336e79e59ed60580c52d2737e",
+        "selected-attachments.json": "c2f6e98e5c76f8602ec04ba12f9e6e6787100d271b7cf344a47c90382c0cc2b4",
+        "source-sha256.json": "8de9b2fe1bf719dda9fdc9ad45478717faea1c574b5d8c4a5421de297625ead3",
+        "1919B719-BFF4-451A-9AC3-6FBAD534AB7E.txt.gz": "35ad25b65748d4426561799367f4cdfe99893c30fa1fc773e7553a7f34344bef",
+        "command.json": "da5be746f6168073b112b12bfaf445a8fdd47c5ebf02b597f340cb10374e6757",
+        "evidence-commands.json": "06d88b9c6d26ab24696cbaee19e3fabab5cda06a7f7a97b5601084830f51eeb4",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "96ce4517d7933db60a5e90d995f2c3b6bbbf8554c021d338e64f2d3a43554cac",
+        "test-results-summary.json": "b6c23cce1ef99afabf0866206e6eb9f71065b23ccf0b8a4c8547b7d0a1dc63d0"
+      },
+      "sourceSnapshots": []
+    },
+    {
+      "phase": "native-label-file-export-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "9e9504c6b57611cd563e65d744f90a8284e5344c06d720c65a9e576eaa4ebd0d",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "861d122a09ae64b14e6840495a046e67e1c3906a5740ca2ca294c235aee1b7ab",
+        "source-root.json": "1f4afa411d4488b6abe85392c11b554e2626abe336e79e59ed60580c52d2737e",
+        "SavedBackupImportJourneyTests.swift.gz": "e572a0b026514b490eb35f2467a72546860d80c47d79ef3a189bc6f3eadcb1bf",
+        "source-sha256.json": "8de9b2fe1bf719dda9fdc9ad45478717faea1c574b5d8c4a5421de297625ead3",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475"
+      },
+      "sourceSnapshots": [
+        "native-label-file-export-mac-build/SavedBackupImportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-final-mac",
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch",
+        "-only-testing:PlannerNavigationUITests/SavedBackupExportJourneyTests/testCancellingBackupExportPreservesSavedLabelsAfterRelaunch",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-final-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 3,
+        "passedTests": 3,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "result": "Passed"
+      },
+      "originalFilesSha256": {
+        "EF624321-A3D0-4395-AB37-E04A32B00534.txt.gz": "6372d0f74248f8803f4366983d1b488aeeac4e822b4fcaeda9d437ed88dc9666",
+        "original-attachment-manifest.json.gz": "a1ad579f5717155bbb4bcfb4439a2ff3b0a96e970f4a8d047d5f417f053afcf7",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "product-sha256.json": "5648a4edaf6b9772169ee3a4b4444a85b066eb28c2b420be098bca8b40c85db2",
+        "runner.py.gz": "0caab98e7e445814658e10377fd6e5aa36ac51787c8dec4e7416f4c7ee225281",
+        "delivered-appearance-verification.py.gz": "4ec4172f905e574f11c3cca3c1598b4571e5364e57b600009746655acf34c779",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "33A79A81-DB89-4EB3-836C-D46F8BBADA45.png": "872dafb29759e1a79478d3dcbe28d9836c71af7c0193a4ab555a530f2cb14e5a",
+        "selected-attachments.json": "220ee2f6b0939c9b890020cb5254f576b8da761e9581f6c0ff8799d3a7b9e24b",
+        "BAF24651-7599-4D38-ABCB-83F118CF437A.txt.gz": "28eaf739bb3180d14222f0219a2a2dca075ca8fde5828926bfed7bb35564d7e1",
+        "13D3AB86-1A49-4BD1-BBF7-9E25CAEF6706.txt.gz": "1c1d0b9ce94d3b41504bc4065e6b80bad9826e2d3fec596695cfa24ceb94fe7f",
+        "43269445-A98A-42BD-B964-7FB6AD54CA9C.txt.gz": "e196f8a7b39c55ed4bc6a0f395922ddf70c27562ada5ad938d71f4ba598c7e8b",
+        "delivered-appearance-verification.json": "51a82c5ecb932b3f6cb4ba1e03ef588ef19a05b0b865b1ed6e82e50cff7f382e",
+        "source-sha256.json": "89307899a3e5f308ef6e4b69592b7e09707b6dde5f74089b4cf1441bf1ea007e",
+        "C7C9A5D5-F555-4F02-A74D-6C2CFD58D3E8.png": "967b47a59565861a420dfcb1ae3f52d9db8cacefd07efa045a30aa4eed8fd66e",
+        "BB111C9C-3BF2-464B-A87F-8B5F7103D40B.txt.gz": "e5066592a7ec5c0cb3143a458d0958c5ef97a81313f9c4716ed42d89c2758c0f",
+        "cleared-delivered-backup.json.gz": "cadc1aa86b835a9c3b598c9d8d94ae69dbfb8f563eb9ff678295fed28dab10ca",
+        "command.json": "a05f673500e95839565c2167a4aa27b432150849d3a77574db38f15ad8487daa",
+        "evidence-commands.json": "5ac67044546e89dac063534647f3a2ab46aeec239c87e1cc2bab00645e6093cb",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "45b4a2e056f4d9b7a9bbd3d78d70c97117abd5a174af22cfdfcf6a5728c13ed8",
+        "04A668B4-1C34-4C0A-B16A-815DA4E841D8.txt.gz": "1c1d0b9ce94d3b41504bc4065e6b80bad9826e2d3fec596695cfa24ceb94fe7f",
+        "2E4C90D1-46AD-4DD2-8002-30FC9EDD8840.png": "7103e4a7a81d45d94e3e68e49741565a577250b3ef3702bfd9645bf623aff2a0",
+        "name-only-delivered-backup.json.gz": "05480f3240b21f077b5bf57c058f6231ed42f888b16d302330c78b2f5dd52d53",
+        "4AAABBCA-67AF-4651-B426-D65C9AD910C8.png": "f2f01298ea9c99c77ec36f2853d0d43e6afd60f578db3b3fd280bf625caa6a93",
+        "3D003462-D1F0-4478-A051-163838328858.txt.gz": "778827770058247c3668b86e981077e5025b81cae3b63b2578ccfeb6a43d302a",
+        "DF3000B4-D68A-4243-BC1E-BD8ACAB87170.txt.gz": "502a4489700812427f7889b5b6443a5d687f20d74acd29b0d56056b69e7fee48",
+        "test-results-summary.json": "63ecb217d322cb98140b6eb5d928c5c4421e5d5c95cb96be371b2a0b4e7c4ec6",
+        "A1D290E6-0445-4AE8-A830-B0040B94455D.txt.gz": "e196f8a7b39c55ed4bc6a0f395922ddf70c27562ada5ad938d71f4ba598c7e8b"
+      },
+      "sourceSnapshots": []
+    },
+    {
+      "phase": "native-label-file-final-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "5648a4edaf6b9772169ee3a4b4444a85b066eb28c2b420be098bca8b40c85db2",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "09687de7220c37679d869e5288b64507552190aba613a4f8d601cd2aadcff9fa",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "SavedBackupImportJourneyTests.swift.gz": "6d4e2324592535d901e56cbfbfce8816fcef0d36210842138a57900f9186cad7",
+        "source-sha256.json": "89307899a3e5f308ef6e4b69592b7e09707b6dde5f74089b4cf1441bf1ea007e",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedBackupExportJourneyTests.swift.gz": "24a29a3d6f17cce1299ca42790c8782944308cce56de1e0e838b1274685c8b6b"
+      },
+      "sourceSnapshots": [
+        "native-label-file-final-mac-build/SavedBackupImportJourneyTests.swift.gz",
+        "native-label-file-final-mac-build/SavedBackupExportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "1e4207b940a69f59123ae8f9a6b1e6b1df586afad8670000f3e1da5e561eaeec",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "8134cec480688aef3d201fa51bd6041523f50a348a5025b0c7c97562ff8944d2",
+        "source-root.json": "1f4afa411d4488b6abe85392c11b554e2626abe336e79e59ed60580c52d2737e",
+        "SavedBackupImportJourneyTests.swift.gz": "696622163515de0cfa3b88e20b8b34bf43f1e84c588307247a7a38f5c48a9acc",
+        "source-sha256.json": "14ef7796a12ab632b8252c89fd2f6db6edc2ea71712b514a9bc68c521fc3bff5",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475"
+      },
+      "sourceSnapshots": [
+        "native-label-file-mac-build/SavedBackupImportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-mac-first",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-mac-first.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+            "testName": "testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "ed5461a5d8bdfc436956585db286d5b70559535cf2f7689d0677fa3ca8a69e65",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "1e4207b940a69f59123ae8f9a6b1e6b1df586afad8670000f3e1da5e561eaeec",
+        "runner.py.gz": "a713319346ec756a90c22406fde7cf3ddf9c2a032906bed99dc1d728833de103",
+        "source-root.json": "1f4afa411d4488b6abe85392c11b554e2626abe336e79e59ed60580c52d2737e",
+        "selected-attachments.json": "c0f9912fc79f08db4cfe4d2438b95d8d92dc52a1500b26da454ad3f350402197",
+        "source-sha256.json": "14ef7796a12ab632b8252c89fd2f6db6edc2ea71712b514a9bc68c521fc3bff5",
+        "command.json": "a222f485cf57d7295427e00271e91a3c5c5a64f7722d6baec92f4d59dda220c7",
+        "evidence-commands.json": "925c2c66b4e49ee0b41fdd2dc9db51619b5cf580a865e5df54c5b11f6fc09440",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "6c58e6e58447187fde74e5a2d4d74f59b5689f5d908247fe09b23b1ae6abb830",
+        "test-results-summary.json": "4d19deb4b86f29ea44f7608ca52157309cadbd10681948f06613e730b1c4e562"
+      },
+      "sourceSnapshots": []
+    },
+    {
+      "phase": "native-label-file-path-mac",
+      "exit": {
+        "exitCode": 65,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-path-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+            "testName": "testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "f5f61025a1bc495a743ad6d4aeecc2d490ebfdd21c8a17c471b98890e81e4d76",
+        "exit.json": "b9a3ed3e7c1024927d5555d499c7c48787d70c55efe183235a5284d6023c78fb",
+        "product-sha256.json": "e2b46112537be6da861ed9e4baac3c5b9dd58ca0a25734a112c543ec8dfe8f52",
+        "D99F320D-8791-44CB-AFDB-D9CF3B1D3208.txt.gz": "38b43d506a81f6d8bc080854d77e499ec7641186bb805e4d26cb952ad50dc065",
+        "runner.py.gz": "f0f7d17d3f6287919a108d5a75c3a02462217399a4f4a11cff7a43e24a06f3a0",
+        "source-root.json": "1f4afa411d4488b6abe85392c11b554e2626abe336e79e59ed60580c52d2737e",
+        "selected-attachments.json": "b1dca52e29da0d833b791256cbe29ceaf0bce5964e853791a99251a38669bef7",
+        "source-sha256.json": "71f5d3ae22473a3da1cda85ce883c0be49a85333bd84a61b94923da3ce8e4e48",
+        "command.json": "013f213e70b4d1c2da51a100ff4f76a58b9d8060597418bee65ec6575d3463ec",
+        "evidence-commands.json": "00450c7248da7936ecc32ffb9c197d79f5a2fb16e2a8e21222612148e42b82d7",
+        "native-panel-control-observations.json": "4b2102392b88e3f44503db0187f1f813b319c23c54bcdbf66663a699828f79d6",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "1bcc129f63c1dbdc48f3c7554b80b957946020aa8820e39904fcb0128473bae2",
+        "test-results-summary.json": "ecb598457de519fc98ef0d0aec19594f1ae28d109f2be7550058fc65d817a23c"
+      },
+      "sourceSnapshots": []
+    },
+    {
+      "phase": "native-label-file-path-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "e2b46112537be6da861ed9e4baac3c5b9dd58ca0a25734a112c543ec8dfe8f52",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "7488e1358c7b63bb08f56a85cc02643d10c86c2642340c47b70cf2c826cd6cab",
+        "source-root.json": "1f4afa411d4488b6abe85392c11b554e2626abe336e79e59ed60580c52d2737e",
+        "SavedBackupImportJourneyTests.swift.gz": "04688ffbff22e6b209637162f7bdfac67ba4bbfcd8959b72f55458d3a00258ca",
+        "source-sha256.json": "71f5d3ae22473a3da1cda85ce883c0be49a85333bd84a61b94923da3ce8e4e48",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475"
+      },
+      "sourceSnapshots": [
+        "native-label-file-path-mac-build/SavedBackupImportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-phone-corrected",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-native-label-file-phone-corrected.xcresult"
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerItemWindowsNativemobileDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-phone-corrected.xcresult",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "result": "Passed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "49be9eb43827ee6ba9e88e569a77c7a2850891748325a77e85b6db8474200ad6",
+        "exit.json": "57a6ffce3d19d05437633d132e5101d8654cd7d31858ac6d99e21dc953da263a",
+        "runner.py.gz": "18fe3bdb803b501048311ba615de0a171e4280e145c577d37eb761f5bccf2180",
+        "delivered-appearance-verification.py.gz": "4ec4172f905e574f11c3cca3c1598b4571e5364e57b600009746655acf34c779",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "selected-attachments.json": "e6d8cd246027967c77767a90be8e2dbc5d08e1e374ebc137ea15699f8c51e825",
+        "03414D63-35C0-4A97-AD0B-720CC4567E92.txt.gz": "8024becce710b3af271e3a458683c1c97170b8c1bf457a4e5b400deaa9e13f2e",
+        "delivered-appearance-verification.json": "6f32a1db77803f11ba03154c9fe29da188c22d184c6eec2d8662d45c249f2458",
+        "2D94E581-7108-4879-87D5-30B6D0AC6D70.png": "914a1e4f84cd3aa08897c430043aadd686c1e57ee8fb1dd486597e524c6f883d",
+        "SavedBackupImportJourneyTests.swift.gz": "589efc1003b0be698998924fd6781d129b94f3546f5bdced923b7562ca861977",
+        "source-sha256.json": "b94ea39999c0a5ca93ca4946bc1b696d0a5f8582b9caac8bb146a4f825323d02",
+        "4D01EDEA-2C2D-472A-BD9A-0988B60A556F.png": "b7c4d100a748e2cc848a962f0360bb6e5c0ea73790586d58a0bebcf616415c0a",
+        "cleared-delivered-backup.json.gz": "bb7d143a415e01f3ec9a1a34e4f449a7fe0110685002a92906a715b871f7579e",
+        "command.json": "3a00d76ef3fb34838758523c3f213daada5bd48643114c9fa7d6441039931c36",
+        "SavedBackupExportJourneyTests.swift.gz": "24a29a3d6f17cce1299ca42790c8782944308cce56de1e0e838b1274685c8b6b",
+        "evidence-commands.json": "8fa155e8910c378e055398db0ad729642ab47d9e14b5a9bd69999a78b1cea8e8",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "bd1dab1ff5d415e68b0a65809033046814f083c96dfa2e677d87559a3106b05f",
+        "name-only-delivered-backup.json.gz": "1f89122394183ab6f00946e729580fb95a414ec6fef03be3e62fa63fd9916039",
+        "597B8555-B264-42D4-B1C6-FFF741C0DD1C.txt.gz": "3ecc033ae61a8692875e76831947d4b55d7a0ba120e655f1a803e8ba157fc774",
+        "2F702A85-F064-4ADA-B56A-504450763B3F.png": "79612b9ed056e1f8b1312c65c7cfaf7a4cc7c941fc316a6000f986db7cdac824",
+        "test-results-summary.json": "90336bb280da67e16c342e08e6f02f1bc21f7ef4663e89f954fe620fa82b93f0"
+      },
+      "sourceSnapshots": [
+        "native-label-file-phone-corrected/SavedBackupImportJourneyTests.swift.gz",
+        "native-label-file-phone-corrected/SavedBackupExportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-phone-regression",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-native-label-file-phone-regression.xcresult"
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerItemWindowsNativemobileDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-phone-regression.xcresult",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+            "testName": "testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges()"
+          }
+        ],
+        "result": "Failed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "619574cd0652d1a98758b385907e5a383c4d58e8905fcd1de4af122f799e4d21",
+        "exit.json": "3149d26e508e8caf81497cde93f6fc105b986b598352807ed421bab541242e42",
+        "runner.py.gz": "18fe3bdb803b501048311ba615de0a171e4280e145c577d37eb761f5bccf2180",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "selected-attachments.json": "055aed4c2db83506150c5b462be19210217ecdf1f21fc3396b730bde2917afa9",
+        "SavedBackupImportJourneyTests.swift.gz": "6d4e2324592535d901e56cbfbfce8816fcef0d36210842138a57900f9186cad7",
+        "source-sha256.json": "89307899a3e5f308ef6e4b69592b7e09707b6dde5f74089b4cf1441bf1ea007e",
+        "command.json": "b11e8a3eb8fcfeb2e1e197b78e7fd461b4740b6bcc8a8d7921f3ec1f7e1bb270",
+        "SavedBackupExportJourneyTests.swift.gz": "24a29a3d6f17cce1299ca42790c8782944308cce56de1e0e838b1274685c8b6b",
+        "evidence-commands.json": "5e3f938b798f39518e921e37b076e76bb0c7628cb0313d2c8562a46bbb4f5dad",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "4f0d9acabd34e2cb67123ac87a1ade9002e5aa6529d2ec0802fa011e085b2c4f",
+        "test-results-summary.json": "531595845dbf950c15192a01d764d4f65cc4bc40e59141a85bbdb4f3c0395a3a"
+      },
+      "sourceSnapshots": [
+        "native-label-file-phone-regression/SavedBackupImportJourneyTests.swift.gz",
+        "native-label-file-phone-regression/SavedBackupExportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-scoped-mac",
+      "exit": {
+        "exitCode": 0,
+        "runnerTimedOut": false,
+        "actualTestCaseStarted": true,
+        "passingCredit": true
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-scoped-mac.xcresult"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "result": "Passed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "8fa09f7c4cdcb2c6a5f40a394f8ef5b1b5da44dc02a510f66b4509b9309305b7",
+        "exit.json": "ee5a5a2a7298264ce1d1fe0e0e3cc94d6ae005321a840416e0150da1d303036f",
+        "product-sha256.json": "258ffc9da3428f0f11701f20b356dc062e082100e93784126dfd627e68e420f7",
+        "runner.py.gz": "0deb4793e3de919135249e1a2fb0e6ecff4263bc4bb3caf75cfa693f7f90381a",
+        "delivered-appearance-verification.py.gz": "4ec4172f905e574f11c3cca3c1598b4571e5364e57b600009746655acf34c779",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "8D9A6A3F-FC7D-43AC-B7D0-164BC8D8B98F.png": "324f3e52f034d722a87144b94b2d814c14ee89c709bca3dc00e54beadc5e7ed0",
+        "selected-attachments.json": "72bcc411883e5203dc88ac9939cc73323b13619329ff2ab098c0b9c1cb2b7cb1",
+        "0D4C99B7-31B4-4271-A2C0-5562823BE58F.txt.gz": "dd08c69c745b30b395edacd36c1de7beeb7688f11010a0c26e800bec1572bef2",
+        "delivered-appearance-verification.json": "a24e76025bb36d47d6e1afc7140949c4f657081703f89778e970ceb4e3ab2f5f",
+        "EAF96F99-E638-419D-906D-E55EBFE13CC1.txt.gz": "1c1d0b9ce94d3b41504bc4065e6b80bad9826e2d3fec596695cfa24ceb94fe7f",
+        "source-sha256.json": "6fbb864b929337f311048e816992f4b0f50a91ec5301c4c077f55bcbbea3da1d",
+        "1530CC24-8387-4F19-9A6A-418E82F3BA3D.txt.gz": "35ad25b65748d4426561799367f4cdfe99893c30fa1fc773e7553a7f34344bef",
+        "7143E919-8554-4E95-A61C-F27FE7576934.txt.gz": "1c1d0b9ce94d3b41504bc4065e6b80bad9826e2d3fec596695cfa24ceb94fe7f",
+        "cleared-delivered-backup.json.gz": "53a68acf0e997753c234788d1257319fd62f0a1acb696986d8900e79e41a85f1",
+        "2DB4555F-3A87-47B8-819A-332D66F6402F.txt.gz": "e196f8a7b39c55ed4bc6a0f395922ddf70c27562ada5ad938d71f4ba598c7e8b",
+        "command.json": "d0beb2a0e538877e9835b11c643fd51213142a13601207528bb8a92c6967221a",
+        "evidence-commands.json": "ebaa3a485d2e9161e703692fd95d6dbc4807c8f1fc727d41879bfb56ba83ab18",
+        "F5A1C7A6-6262-4AA7-864E-BF3C39B303CD.txt.gz": "3c648e8247a4cd37a341d54303b5985b86f2ddcd32293ebc8458430889134a33",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "ebedf4fc80489a639272a3412168cf4fe7fd52bc0a45e9327877a63e25fc1760",
+        "80F72F41-1F5E-44E4-84D8-F9BA39454E70.png": "1e97f80c28989815de1095530a6d6e219fea8128beffb0419791f1a3b38cae83",
+        "name-only-delivered-backup.json.gz": "50aa7263f796a9daa0f4afa0a4ec13588542ccea5244d38692d43df2aa43f56e",
+        "84186B3E-B64D-4D53-84E8-1E776C5A887A.png": "2c90766c83ce04073cf851da8b2e485548781708b0c628dff40cf5dde46908f5",
+        "test-results-summary.json": "1ca63523322bd80b842d81c69a665a52f7f625246d374cc6a305d3a05bcba9a9",
+        "300B6AD1-6A96-440C-8B70-994EC7EADCE4.txt.gz": "e196f8a7b39c55ed4bc6a0f395922ddf70c27562ada5ad938d71f4ba598c7e8b"
+      },
+      "sourceSnapshots": []
+    },
+    {
+      "phase": "native-label-file-scoped-mac-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerNativeItemWindowDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-only-testing:PlannerNavigationUITests",
+        "CODE_SIGNING_ALLOWED=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "CODE_SIGN_STYLE=Manual",
+        "DEVELOPMENT_TEAM="
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "originalFilesSha256": {
+        "exit.json": "93b0938d31c91c5b4036e5d95ba9500ed2e32ef2a2104d19cbfa7e9cb3840a8b",
+        "product-sha256.json": "258ffc9da3428f0f11701f20b356dc062e082100e93784126dfd627e68e420f7",
+        "runner.py.gz": "3185b006e7fb4892e2a29e744139b30e902ef3284d009897ccb9ff2a4b6c1fb8",
+        "build.log.gz": "d32e6e2aca9b4bba0ed58f1a1bd372d363d94a78a88ccd09ea17c62bac27185f",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "SavedBackupImportJourneyTests.swift.gz": "9eae49a018210d5fc953efa9f5cf626044156ca7eb3a6e2934b45288c25ca872",
+        "source-sha256.json": "6fbb864b929337f311048e816992f4b0f50a91ec5301c4c077f55bcbbea3da1d",
+        "command.json": "91f04a56aadcea9917d3d7dd8813d4a25de8beacc5df79cd99c94ef7a84cb475",
+        "SavedBackupExportJourneyTests.swift.gz": "24a29a3d6f17cce1299ca42790c8782944308cce56de1e0e838b1274685c8b6b"
+      },
+      "sourceSnapshots": [
+        "native-label-file-scoped-mac-build/SavedBackupImportJourneyTests.swift.gz",
+        "native-label-file-scoped-mac-build/SavedBackupExportJourneyTests.swift.gz"
+      ]
+    },
+    {
+      "phase": "native-label-file-tablet-dark-regression",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-native-label-file-tablet-dark-regression.xcresult"
+      },
+      "rawPacketRetainedPrivately": true,
+      "command": [
+        "xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerNavigation",
+        "-destination",
+        "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "-derivedDataPath",
+        "/private/tmp/PlannerItemWindowsNativemobileDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-jobs",
+        "1",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "300",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges",
+        "-resultBundlePath",
+        "/private/tmp/PlannerItemWindow-native-label-file-tablet-dark-regression.xcresult",
+        "CODE_SIGNING_ALLOWED=NO",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES"
+      ],
+      "source": {
+        "root": "/private/tmp/PlannerNativeItemWindowSource",
+        "base": "bb5f6117716cde326e0cf397dd4dea64211f177e",
+        "overlays": [
+          "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift",
+          "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+        ]
+      },
+      "summary": {
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "result": "Passed"
+      },
+      "originalFilesSha256": {
+        "original-attachment-manifest.json.gz": "b2f89da9fc2b1b373b89674f5b79daee892f41a9bc2244905591419c4df09175",
+        "exit.json": "1cc957c9276cf985136365893e253c091fb9f3889fe62ceee8ba5de4043009ef",
+        "runner.py.gz": "18fe3bdb803b501048311ba615de0a171e4280e145c577d37eb761f5bccf2180",
+        "24165D5A-935C-4A40-983F-0321BE38EB5B.txt.gz": "19b5f477f0767ed55c77e3f38b0aa07bb5c515148953a950f4ef2b22378387b1",
+        "delivered-appearance-verification.py.gz": "4ec4172f905e574f11c3cca3c1598b4571e5364e57b600009746655acf34c779",
+        "source-root.json": "cec205a89ba4d1e937683fd749b5df826ed5445b700bab3d16beab95debeca43",
+        "9185FF7F-5887-461A-AEE5-E46865C090F5.png": "53d844fb02854ab0400129cb95159b5672cf6b7bcc4adfc3d853ed019a9838f1",
+        "selected-attachments.json": "158e177beeb99ca98bcbbd962f68166301a5ca8f1fdc303c40f31671861bd956",
+        "delivered-appearance-verification.json": "e99a23c0cdba958e45acece88524351f9374a776a24927c5ff5a1e65bf17b180",
+        "6FFDF274-FA47-4DD4-B3E8-C54B75ADBE5D.txt.gz": "77a42237812728af0371150ea01189f5efd15178305f57854e5f8a3561b46f0f",
+        "SavedBackupImportJourneyTests.swift.gz": "589efc1003b0be698998924fd6781d129b94f3546f5bdced923b7562ca861977",
+        "source-sha256.json": "b94ea39999c0a5ca93ca4946bc1b696d0a5f8582b9caac8bb146a4f825323d02",
+        "8C38FFEA-7EE1-4410-95C0-539151B1BBC2.txt.gz": "785fbfb7f3a54b0c6367a639572559030b31e6213bc89ff9cfa99bc7e689345c",
+        "AC2B6599-3D69-4893-AFBE-0614E2C0314C.png": "404036f6aa0dbe700bd6c0212890a82272a5b8bee432b393fd0ba5f079ad1b3d",
+        "cleared-delivered-backup.json.gz": "013e2877be5f77ef4bddfd7cc39efbd67f3cace1904b75c04a0ff814b74100ac",
+        "command.json": "4f9adbbc9fb28d0712944be2301bbb89105c43054ef530dbad7f7a166c5e62d0",
+        "SavedBackupExportJourneyTests.swift.gz": "24a29a3d6f17cce1299ca42790c8782944308cce56de1e0e838b1274685c8b6b",
+        "evidence-commands.json": "b61c38d4d84ad927a7bff950501d580515add3ea7f883e8ed0c697ae08f701bc",
+        "evidence-runner.py.gz": "851bd86e3c121acb9d9fdf339ac0c7fd5680857365f420645c681f38d18df609",
+        "test.log.gz": "211d8a022fa4c2e99a9ca6c0c8e90673a0041e354ca556c99b4ea56a63be9782",
+        "E02E6920-8E92-4C6C-A728-D85F9DFC2E33.png": "181124b3077257e8dafd1324e63f8d368b765e3b40632d1052e60515eff53a0f",
+        "name-only-delivered-backup.json.gz": "97d4ea2b06b6984f0ca2e399297ee3ae2249b6f2ab0cb21ca1b64077c4b5d393",
+        "test-results-summary.json": "71e70acea8554fd7f6950b41fa51a6d4ce6cea9856cda2b0cb342196d40040f0"
+      },
+      "sourceSnapshots": [
+        "native-label-file-tablet-dark-regression/SavedBackupImportJourneyTests.swift.gz",
+        "native-label-file-tablet-dark-regression/SavedBackupExportJourneyTests.swift.gz"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "DAB0594C-49A0-4AD4-BC88-E35A6C8E710A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Live shared labels remain in the original Item details_0_0388D622-066C-44D5-9FC1-765D65755327.png",
+      "timestamp": 1792602141.537,
+      "retainedFileName": "DAB0594C-49A0-4AD4-BC88-E35A6C8E710A.png",
+      "sha256": "fc93f9d9b5dd626987949ff1f242bfe9636b9c3a52f1e8abdb430c21b4a3a257"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "93D443F3-45F1-49BE-BEA2-67ED03598A90.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Only the explicitly cleared Category loses its appearance_0_12ADE641-E919-4BF6-B0AF-E55C71780188.png",
+      "timestamp": 1792602126.042,
+      "retainedFileName": "93D443F3-45F1-49BE-BEA2-67ED03598A90.png",
+      "sha256": "bea405d9a581c308b8ac1768867bda292c69ee29efa81f5cd9bdf530af467cd1"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6FAC626D-9FC9-4D7D-8276-7B66E141BB1A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Label appearance cleared delivered backup filename_0_34862CC8-FEBA-426A-81D2-4BB9F36E341E.txt",
+      "timestamp": 1792602107.503,
+      "retainedFileName": "6FAC626D-9FC9-4D7D-8276-7B66E141BB1A.txt.gz",
+      "sha256": "4f61dbbd2b4f2ee32b50a13fa96d2233e280ae819642e48f9cc22e8305fb1589"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "88281803-28E4-4EE6-973D-292B909751D5.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Imported custom symbol and color remain after name-only Save_0_63454E77-609C-443B-82A5-79C4D0376E5A.png",
+      "timestamp": 1792602082.937,
+      "retainedFileName": "88281803-28E4-4EE6-973D-292B909751D5.png",
+      "sha256": "540b675fcbf63d4e3c08baa76d82c6519506141ea176c56cbe170534e47ae6ad"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9B75F076-C1DA-4805-9799-8F90F141DCFA.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Label appearance name-only delivered backup filename_0_64F8CF8A-94B3-430C-BBBD-0443AB6294D8.txt",
+      "timestamp": 1792602078.665,
+      "retainedFileName": "9B75F076-C1DA-4805-9799-8F90F141DCFA.txt.gz",
+      "sha256": "487a6ae038c972726b205685139142c9118008cba123ee9fc10a218802193845"
+    }
+  ],
+  "excludedAttachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "401B63A7-D592-4661-8E5E-857B5229F631.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native picker for the selected backup file_0_F3CCB192-256C-4DAC-B680-DEB9DBDB2D4C.txt",
+      "timestamp": 1792602044.864,
+      "retainedFileName": "401B63A7-D592-4661-8E5E-857B5229F631.txt.gz",
+      "sha256": "365d7bdbf0067f8b98884b1c9118dbc4ad91eeebfd487821e4dcd1712cf792d7",
+      "reason": "Broad automatic/document-picker hierarchy retained privately; scoped form captures and delivered backup bytes are the public evidence."
+    }
+  ]
+}

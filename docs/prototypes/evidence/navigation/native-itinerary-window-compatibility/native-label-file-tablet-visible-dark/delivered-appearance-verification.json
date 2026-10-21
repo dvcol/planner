@@ -1,0 +1,33 @@
+{
+  "source": {
+    "source": "docs/fixtures/native-label-appearance-backup.json",
+    "bytes": 12426,
+    "sha256": "39cfca7747d6df319f47020047cc35eb2e23c12190d5dda9594fe412887cf555"
+  },
+  "platform": "tablet",
+  "typedComparison": "Booleans distinct from native numbers; exact binary rational values for every color component; record-table order alone is representation. Nested arrays, identities, lifetimes, ranks, completion, content and history remain exact.",
+  "formatMigration": "Version 1 to 2 plus null manualEstimate on Lists/Itineraries.",
+  "nameOnlyColorAndCustomSymbolPreservationExact": true,
+  "onlyExplicitCategoryAppearanceCleared": true,
+  "unrelatedTagAppearanceAndOwnerRecordsPreserved": true,
+  "delivered": [
+    {
+      "stage": "name-only",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-21T17-03-55Z.json",
+      "bytes": 12887,
+      "sha256": "05f1a3dc592bc3a90b6b81488cef9a2dcb4265216c029e48e31cdbbeecfdd82b",
+      "retainedFileName": "name-only-delivered-backup.json.gz",
+      "allRecordCollectionsAndValuesMatch": true,
+      "onlyAllowedChanges": "Declared label names and their validated edit timestamps; explicit Category color/icon clearing in second export."
+    },
+    {
+      "stage": "cleared",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-21T17-04-27Z.json",
+      "bytes": 12707,
+      "sha256": "117275e5a48906ce1188e6b5d46a2ea5e6525c4fee43b066d1375c12b237fe90",
+      "retainedFileName": "cleared-delivered-backup.json.gz",
+      "allRecordCollectionsAndValuesMatch": true,
+      "onlyAllowedChanges": "Declared label names and their validated edit timestamps; explicit Category color/icon clearing in second export."
+    }
+  ]
+}

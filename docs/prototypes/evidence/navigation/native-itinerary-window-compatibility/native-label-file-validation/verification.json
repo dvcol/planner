@@ -1,0 +1,31 @@
+{
+  "sourceInputs": 1061,
+  "finalMacBuildAndAllThreeRuntimeEpochsMatchWorkspace": true,
+  "productionUnchangedFrom": "bb5f6117",
+  "passedExecutions": 5,
+  "distinctCases": 3,
+  "failedOrSkippedInFinalInvocations": 0,
+  "verifiedOriginalAttachments": 23,
+  "verifiedFullGraphDeliveredFiles": 6,
+  "appearanceReadback": {
+    "phone": "light",
+    "tablet": "dark"
+  },
+  "originalCapturesInspected": {
+    "darkMac": 4,
+    "lightPhone": 3,
+    "darkTablet": 3
+  },
+  "strictSwiftLint": "passed for two affected native UI-test files",
+  "markdownLint": "passed for two affected documents",
+  "whitespace": "git diff --check passed",
+  "scopedUnrelatedContextScanFindings": [],
+  "remainingGates": [
+    "Q127 Calendar presentation",
+    "broader Mac import conflict/restoration",
+    "signed/shared storage",
+    "physical devices",
+    "system Shortcuts",
+    "whole-app polish"
+  ]
+}

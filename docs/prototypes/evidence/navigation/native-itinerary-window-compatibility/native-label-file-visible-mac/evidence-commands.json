@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-file-visible-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 3,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792602554.901,\n  \"passedTests\" : 3,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n    {\n      \"issueType\" : \"Runtime Warning\",\n      \"message\" : \"[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions\"\n    }\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792602393.412,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-file-visible-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-file-visible-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 2 attachments for: SavedBackupExportJourneyTests/testCancellingBackupExportPreservesSavedLabelsAfterRelaunch():\nFile: 67102CC5-1A03-449D-97CB-5371F7FA490C.png, suggested name: \"Canceled export returns to native Settings_0_EED47E27-59B9-4F95-8B59-8BB8E5EC0798.png\"\nFile: 4C5824F7-19D2-4BC5-932A-16D3AAA7D85D.txt, suggested name: \"Native backup export picker_0_D392E4CB-AA30-4010-A938-54756212D0B4.txt\"\n\nExported 1 attachment for: SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch():\nFile: 410C1FF5-3B23-496C-B15C-873BDC45C295.txt, suggested name: \"Native Mac import Cancel controls_0_20C29C57-315C-4E67-90F3-BAD69AEACC03.txt\"\n\nExported 10 attachments for: SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges():\nFile: EA9911E1-1AD5-4FF8-80D7-F0C1BFC27A1F.png, suggested name: \"Live shared labels remain in the original Item details_0_AA7086E3-07BB-4D71-AE08-0C77806651DC.png\"\nFile: B478CD16-2F55-4EE8-BC48-B6206A606DC9.png, suggested name: \"Only the explicitly cleared Category loses its appearance_0_44C195FE-5A7C-4794-8A6B-B4A1DB7ED9A0.png\"\nFile: 217AA1BC-175D-44AE-91B0-59D145C77566.txt, suggested name: \"Label appearance cleared delivered backup filename_0_5CF4117C-C12B-4551-B38C-0DC325B87275.txt\"\nFile: 8BF06CE2-2496-44FE-8165-731F0B876B11.txt, suggested name: \"Native Mac export filename fields_0_857A293B-AC49-45F9-AD68-A18B91BD46C5.txt\"\nFile: 37376693-5B03-49DA-A16B-3EC975295345.txt, suggested name: \"Native Mac Go to Folder fields_0_61E68734-53E2-44E4-908A-B84BCE655A97.txt\"\nFile: 724AF492-71AC-4D1B-AD89-5010616EE0B9.png, suggested name: \"Imported custom symbol and color remain after name-only Save_0_585E103E-E2E7-49FB-8700-381DB2E31462.png\"\nFile: 4F779870-66D4-4834-B222-DB9A8BBDF8AD.txt, suggested name: \"Label appearance name-only delivered backup filename_0_57307746-4256-4C02-A2D1-48D7F116DBCC.txt\"\nFile: 7A3E05BD-7AC5-405C-B06A-5FD5DAA5A027.txt, suggested name: \"Native Mac export filename fields_0_FD04C668-6A38-437A-87E3-F3E1105D5EB1.txt\"\nFile: 2F62A612-A98E-4112-99BE-9C0B710D493F.txt, suggested name: \"Native Mac Go to Folder fields_0_50F6289F-4654-481E-BC52-8DB43B0AA552.txt\"\nFile: 2AAFC3BD-540A-49C9-AF6D-79F08FB857C8.txt, suggested name: \"Native Mac Go to Folder fields_0_DE01D0DF-6D19-4BD8-9934-F4498EF4F11D.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-file-visible-mac/manifest.json\n",
+    "stderr": ""
+  }
+]

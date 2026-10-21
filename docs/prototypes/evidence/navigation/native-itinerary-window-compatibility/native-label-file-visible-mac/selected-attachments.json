@@ -1,0 +1,147 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "67102CC5-1A03-449D-97CB-5371F7FA490C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Canceled export returns to native Settings_0_EED47E27-59B9-4F95-8B59-8BB8E5EC0798.png",
+      "timestamp": 1792602414.021,
+      "retainedFileName": "67102CC5-1A03-449D-97CB-5371F7FA490C.png",
+      "sha256": "9f5c4abda96a87451b8a9eb7aa9de0645c96e5835a75af88e703e703c567647c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "4C5824F7-19D2-4BC5-932A-16D3AAA7D85D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native backup export picker_0_D392E4CB-AA30-4010-A938-54756212D0B4.txt",
+      "timestamp": 1792602410.631,
+      "retainedFileName": "4C5824F7-19D2-4BC5-932A-16D3AAA7D85D.txt.gz",
+      "sha256": "cd2ae739060a640227f54ee3de73d84aba189c9241d08f5e5abc0a4ea138cadb"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "410C1FF5-3B23-496C-B15C-873BDC45C295.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac import Cancel controls_0_20C29C57-315C-4E67-90F3-BAD69AEACC03.txt",
+      "timestamp": 1792602428.727,
+      "retainedFileName": "410C1FF5-3B23-496C-B15C-873BDC45C295.txt.gz",
+      "sha256": "b00e4511847a5ecfd0060e6e4ea3228bfae2271962757d52f7180efe7f920c87"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "EA9911E1-1AD5-4FF8-80D7-F0C1BFC27A1F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Live shared labels remain in the original Item details_0_AA7086E3-07BB-4D71-AE08-0C77806651DC.png",
+      "timestamp": 1792602541.205,
+      "retainedFileName": "EA9911E1-1AD5-4FF8-80D7-F0C1BFC27A1F.png",
+      "sha256": "b6e6eea736e0d7867d703fc784557769d867693916a01d7d9e446ad59b586fae"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "B478CD16-2F55-4EE8-BC48-B6206A606DC9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Only the explicitly cleared Category loses its appearance_0_44C195FE-5A7C-4794-8A6B-B4A1DB7ED9A0.png",
+      "timestamp": 1792602529.646,
+      "retainedFileName": "B478CD16-2F55-4EE8-BC48-B6206A606DC9.png",
+      "sha256": "29201a3936bcbcbc2f81c245b184e4ded53562968566c966d45ee83bc9ba6ace"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "217AA1BC-175D-44AE-91B0-59D145C77566.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Label appearance cleared delivered backup filename_0_5CF4117C-C12B-4551-B38C-0DC325B87275.txt",
+      "timestamp": 1792602517.483,
+      "retainedFileName": "217AA1BC-175D-44AE-91B0-59D145C77566.txt.gz",
+      "sha256": "fcf018c41cfbc50123926caf33ed3ad4e72cbfd072f453e0c04d51deeaf790f3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "8BF06CE2-2496-44FE-8165-731F0B876B11.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac export filename fields_0_857A293B-AC49-45F9-AD68-A18B91BD46C5.txt",
+      "timestamp": 1792602512.625,
+      "retainedFileName": "8BF06CE2-2496-44FE-8165-731F0B876B11.txt.gz",
+      "sha256": "de9bb634eece41833bd2a92c98d24f8705afdf92d478003459988f147f012508"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "37376693-5B03-49DA-A16B-3EC975295345.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac Go to Folder fields_0_61E68734-53E2-44E4-908A-B84BCE655A97.txt",
+      "timestamp": 1792602504.889,
+      "retainedFileName": "37376693-5B03-49DA-A16B-3EC975295345.txt.gz",
+      "sha256": "a1bd44c6fcd4bf95b68430ad5018e5ae4404536d6435a13ab83eeeaf566b013f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "724AF492-71AC-4D1B-AD89-5010616EE0B9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Imported custom symbol and color remain after name-only Save_0_585E103E-E2E7-49FB-8700-381DB2E31462.png",
+      "timestamp": 1792602491.129,
+      "retainedFileName": "724AF492-71AC-4D1B-AD89-5010616EE0B9.png",
+      "sha256": "cd0ea58a5503041218f3b024d8b024f467173926a488b9bfe0c1082ca0d53089"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "4F779870-66D4-4834-B222-DB9A8BBDF8AD.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Label appearance name-only delivered backup filename_0_57307746-4256-4C02-A2D1-48D7F116DBCC.txt",
+      "timestamp": 1792602487.142,
+      "retainedFileName": "4F779870-66D4-4834-B222-DB9A8BBDF8AD.txt.gz",
+      "sha256": "956af137993c48cc1ddf925be9a2ed3d5b018770a57e3a5b8bf1835936138082"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "7A3E05BD-7AC5-405C-B06A-5FD5DAA5A027.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac export filename fields_0_FD04C668-6A38-437A-87E3-F3E1105D5EB1.txt",
+      "timestamp": 1792602482.532,
+      "retainedFileName": "7A3E05BD-7AC5-405C-B06A-5FD5DAA5A027.txt.gz",
+      "sha256": "de9bb634eece41833bd2a92c98d24f8705afdf92d478003459988f147f012508"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "2F62A612-A98E-4112-99BE-9C0B710D493F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac Go to Folder fields_0_50F6289F-4654-481E-BC52-8DB43B0AA552.txt",
+      "timestamp": 1792602474.729,
+      "retainedFileName": "2F62A612-A98E-4112-99BE-9C0B710D493F.txt.gz",
+      "sha256": "a1bd44c6fcd4bf95b68430ad5018e5ae4404536d6435a13ab83eeeaf566b013f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "00006030-001A586C3EA3001C",
+      "deviceName": "My Mac",
+      "exportedFileName": "2AAFC3BD-540A-49C9-AF6D-79F08FB857C8.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Mac Go to Folder fields_0_DE01D0DF-6D19-4BD8-9934-F4498EF4F11D.txt",
+      "timestamp": 1792602444.225,
+      "retainedFileName": "2AAFC3BD-540A-49C9-AF6D-79F08FB857C8.txt.gz",
+      "sha256": "6954cb257b0ad58492d1fea4cbe82c63d8ffaf9f2829e77d0104c5e19b694245"
+    }
+  ]
+}

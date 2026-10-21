@@ -1,0 +1,33 @@
+{
+  "source": {
+    "source": "docs/fixtures/native-label-appearance-backup.json",
+    "bytes": 12426,
+    "sha256": "39cfca7747d6df319f47020047cc35eb2e23c12190d5dda9594fe412887cf555"
+  },
+  "platform": "mac",
+  "typedComparison": "Booleans distinct from native numbers; exact binary rational values for every color component; record-table order alone is representation. Nested arrays, identities, lifetimes, ranks, completion, content and history remain exact.",
+  "formatMigration": "Version 1 to 2 plus null manualEstimate on Lists/Itineraries.",
+  "nameOnlyColorAndCustomSymbolPreservationExact": true,
+  "onlyExplicitCategoryAppearanceCleared": true,
+  "unrelatedTagAppearanceAndOwnerRecordsPreserved": true,
+  "delivered": [
+    {
+      "stage": "name-only",
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-B64F6055-BC33-4CA8-A273-42B5ECBC1299/Planner label appearance export.json",
+      "bytes": 12889,
+      "sha256": "66104b894389c0a3fcf8753d5ed39ee518f16b12f32ca126d68c904f3da20be1",
+      "retainedFileName": "name-only-delivered-backup.json.gz",
+      "allRecordCollectionsAndValuesMatch": true,
+      "onlyAllowedChanges": "Declared label names and their validated edit timestamps; explicit Category color/icon clearing in second export."
+    },
+    {
+      "stage": "cleared",
+      "path": "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype.PlannerNavigationUITests.xctrunner/Data/tmp/PlannerNativeLabelExports-BD2F0D8A-33D2-4693-9DE4-E643A489AFD9/Planner label appearance export.json",
+      "bytes": 12708,
+      "sha256": "45d3b3184fbc318e6ff533e66e9fc4fb1053b79ef30066f91e71fbf6f0dc62db",
+      "retainedFileName": "cleared-delivered-backup.json.gz",
+      "allRecordCollectionsAndValuesMatch": true,
+      "onlyAllowedChanges": "Declared label names and their validated edit timestamps; explicit Category color/icon clearing in second export."
+    }
+  ]
+}
