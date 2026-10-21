@@ -249,7 +249,7 @@
         A00000000000000000000335 = { isa = PBXBuildFile; fileRef = A00000000000000000000331; platformFilters = (ios); settings = { ATTRIBUTES = (RemoveHeadersOnCopy); }; };
         A00000000000000000000337 = { isa = PBXTargetDependency; platformFilters = (ios); target = A000000000000000000008A0; targetProxy = A00000000000000000000339; };
         A00000000000000000000339 = { isa = PBXContainerItemProxy; containerPortal = 000000000000000000000001; proxyType = 1; remoteGlobalIDString = A000000000000000000008A0; remoteInfo = PlannerShareMobile; };
-        A00000000000000000000324 = { isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (SavedPlannerView.swift); target = A000000000000000000008A0; };
+        A00000000000000000000324 = { isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (SavedPlannerView.swift, SavedPlannerMainWindow.swift, SavedPlanOpeningCoordinator.swift); target = A000000000000000000008A0; };
         A000000000000000000008A1 = { isa = PBXNativeTarget; buildConfigurationList = A0000000000000000000034A; buildPhases = (A0000000000000000000032E, A0000000000000000000032F, A00000000000000000000330); buildRules = (); dependencies = (); fileSystemSynchronizedGroups = (A00000000000000000000321, A00000000000000000000323); name = PlannerShareMac; packageProductDependencies = (000000000000000000000311, 000000000000000000000316); productName = PlannerShareMac; productReference = A00000000000000000000332; productType = "com.apple.product-type.app-extension"; };
         A00000000000000000000323 = { isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A00000000000000000000327); path = PlannerShareMac; sourceTree = "<group>"; };
         A00000000000000000000327 = { isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (Info.plist, PlannerShareMac.entitlements); target = A000000000000000000008A1; };
@@ -266,7 +266,7 @@
         A00000000000000000000336 = { isa = PBXBuildFile; fileRef = A00000000000000000000332; platformFilters = (macos); settings = { ATTRIBUTES = (RemoveHeadersOnCopy); }; };
         A00000000000000000000338 = { isa = PBXTargetDependency; platformFilters = (macos); target = A000000000000000000008A1; targetProxy = A0000000000000000000033A; };
         A0000000000000000000033A = { isa = PBXContainerItemProxy; containerPortal = 000000000000000000000001; proxyType = 1; remoteGlobalIDString = A000000000000000000008A1; remoteInfo = PlannerShareMac; };
-        A00000000000000000000325 = { isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (SavedPlannerView.swift); target = A000000000000000000008A1; };
+        A00000000000000000000325 = { isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (SavedPlannerView.swift, SavedPlannerMainWindow.swift, SavedPlanOpeningCoordinator.swift); target = A000000000000000000008A1; };
         A00000000000000000000321 = { isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A00000000000000000000324, A00000000000000000000325); path = Planner/Scenes; sourceTree = "<group>"; };
         A00000000000000000000333 = { isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (A00000000000000000000335, A00000000000000000000336); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
     };

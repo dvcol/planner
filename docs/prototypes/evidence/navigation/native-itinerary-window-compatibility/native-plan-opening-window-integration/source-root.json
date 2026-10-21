@@ -1,0 +1,12 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "5baa1b79df1a3e8f6cd047c6b1d9843c3e732f07",
+  "overlays": [
+    "Planner/AppIntents/PlannerOpenPlanIntents.swift",
+    "Planner/PlannerApp.swift",
+    "Planner/Scenes/SavedPlanOpeningCoordinator.swift",
+    "Planner/Scenes/SavedPlannerMainWindow.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerMCPTests/SavedPlanOpeningTests.swift"
+  ]
+}

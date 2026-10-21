@@ -4,6 +4,8 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct PlannerShareFixtureView: View {
+  let planOpening: SavedPlanOpeningCoordinator
+  let windowIdentifier: UUID
   @State private var configuration: PlannerStorageConfiguration?
   @State private var mainStore: SavedPlannerStore?
   @State private var failure: String?
@@ -14,9 +16,11 @@ struct PlannerShareFixtureView: View {
   var body: some View {
     Group {
       if let mainStore, captureIdentifier == nil {
-        SavedPlannerView(store: mainStore)
-          .id(ObjectIdentifier(mainStore))
-          .environment(mainStore)
+        SavedPlannerMainWindow(
+          store: mainStore, planOpening: planOpening, windowIdentifier: windowIdentifier
+        )
+        .id(ObjectIdentifier(mainStore))
+        .environment(mainStore)
       } else if let failure {
         ContentUnavailableView(
           "Share fixture unavailable", systemImage: "exclamationmark.triangle",

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "codesign",
+    "--verify",
+    "--deep",
+    "--strict",
+    "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "signingSetupChanged": false,
+  "actualMacUIRuntimeCredit": false
+}

@@ -1,0 +1,17 @@
+{
+  "passingCredit": false,
+  "originalInvocation": "failed",
+  "sourceLogSha256": "eee444918cd0571fd4c05b68f13de5856a008541cdb69d7120bdc6c72008ba5c",
+  "hostProcessIdentifiers": [
+    53482
+  ],
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/2776B8DC-DA86-4BB5-9AD5-B439F817D482",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/B94608ED-483E-40CC-923C-D5D8AD81B081"
+  ]
+}

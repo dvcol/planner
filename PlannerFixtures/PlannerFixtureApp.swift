@@ -3,6 +3,7 @@ import SwiftUI
 
 @main
 struct PlannerFixtureApp: App {
+  @State private var planOpening = SavedPlanOpeningCoordinator()
   @State private var store: SavedPlannerStore?
   @State private var failure: String?
   @State private var previews = PlannerPreviews(provider: FixturePreviewProvider())
@@ -10,19 +11,22 @@ struct PlannerFixtureApp: App {
   @State private var mapsPreviews = PlannerMapsPreviews(provider: FixtureMapsPreviewProvider())
 
   var body: some Scene {
-    WindowGroup {
+    WindowGroup(id: SavedPlanOpeningCoordinator.mainWindowSceneIdentifier, for: UUID.self) {
+      $windowIdentifier in
       Group {
         if ProcessInfo.processInfo.arguments.contains("--share-extension-fixture") {
-          PlannerShareFixtureView()
+          PlannerShareFixtureView(planOpening: planOpening, windowIdentifier: windowIdentifier)
             .environment(previews)
             .environment(addressPreviews)
             .environment(mapsPreviews)
         } else if let store {
-          SavedPlannerView(store: store)
-            .environment(store)
-            .environment(previews)
-            .environment(addressPreviews)
-            .environment(mapsPreviews)
+          SavedPlannerMainWindow(
+            store: store, planOpening: planOpening, windowIdentifier: windowIdentifier
+          )
+          .environment(store)
+          .environment(previews)
+          .environment(addressPreviews)
+          .environment(mapsPreviews)
         } else if let failure {
           ContentUnavailableView(
             "Fixture unavailable", systemImage: "exclamationmark.triangle",
@@ -40,6 +44,8 @@ struct PlannerFixtureApp: App {
           failure = error.localizedDescription
         }
       }
+    } defaultValue: {
+      UUID()
     }
     #if os(macOS)
       Settings {

@@ -1,0 +1,13 @@
+{
+  "platform": "mac",
+  "actionCount": 83,
+  "newForegroundOpenActions": {
+    "OpenPlannerListIntent": "PlannerListEntity",
+    "OpenPlannerItineraryIntent": "PlannerItineraryEntity"
+  },
+  "previous81ActionsAndEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "requiredExactTargetWithoutDefaultsAndNoValueResult": true,
+  "normalization": "resolvableInputTypes alternatives only",
+  "sha256": "fdaca889d622f7238beb5a986e6f4e4962941553fc1aa6f9b8752d67a0a649c1",
+  "actualSystemInvocationCredit": false
+}

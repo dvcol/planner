@@ -54,6 +54,11 @@ struct SavedPlannerView: View {
   }
 
   @Bindable var store: SavedPlannerStore
+  let planOpening: SavedPlanOpeningCoordinator
+  let windowIdentifier: UUID
+  @State private var claimedOpeningIdentifier: UUID?
+  @State private var isResolvingOpening = false
+  @State private var openingNavigationTask: Task<Void, Never>?
   @State private var selectedSection: SavedPlannerSection = .lists
   @State private var calendarSelection: SavedCalendarSelection?
   @State private var calendarInspectorPresented = false
@@ -175,6 +180,23 @@ struct SavedPlannerView: View {
 
   var body: some View {
     ZStack { listLifecycleContent }
+      .disabled(isResolvingOpening)
+      .overlay { if isResolvingOpening { ProgressView("Opening plan") } }
+      .task(id: planOpening.readyRequestIdentifier(for: windowIdentifier)) {
+        await receivePlanOpening()
+      }
+      .onChange(of: isSavingNewItem) {
+        if !isSavingNewItem { Task { await receivePlanOpening() } }
+      }
+      .onChange(of: claimedOpeningIdentifier) {
+        if claimedOpeningIdentifier == nil { Task { await receivePlanOpening() } }
+      }
+      .onChange(of: pendingDraftNavigation == nil) {
+        if pendingDraftNavigation == nil { Task { await receivePlanOpening() } }
+      }
+      .onChange(of: hasPresentedWorkflow) {
+        if !hasPresentedWorkflow { Task { await receivePlanOpening() } }
+      }
       .safeAreaInset(edge: .bottom, spacing: 0) {
         if usesSidebarNavigation && associationUndo.presentsControl {
           SavedAssociationUndoControl(history: associationUndo, store: store)
@@ -183,7 +205,10 @@ struct SavedPlannerView: View {
             .background(.bar)
         }
       }
-      .onDisappear { associationUndo.clear() }
+      .onDisappear {
+        openingNavigationTask?.cancel()
+        associationUndo.clear()
+      }
       .task(id: selectedItemId) { await loadSelectedItem() }
       .onChange(of: selectedItemId) {
         if selectedItemId != nil { itemDeletionMessage = nil }
@@ -303,9 +328,9 @@ struct SavedPlannerView: View {
         Button("Save") { Task { await saveNewItem(continuingNavigation: true) } }
         Button("Discard", role: .destructive) { finishDraftNavigation() }
         #if os(macOS)
-          Button("Keep editing", role: .cancel) { pendingDraftNavigation = nil }
+          Button("Keep editing", role: .cancel) { keepEditingDraft() }
         #else
-          Button("Keep editing") { pendingDraftNavigation = nil }
+          Button("Keep editing") { keepEditingDraft() }
         #endif
       } message: {
         Text("Save this Item, discard the draft, or keep editing before leaving.")
@@ -1758,6 +1783,10 @@ struct SavedPlannerView: View {
 
   private func requestDraftNavigation(_ navigation: @escaping () -> Void) {
     guard !isSavingNewItem else { return }
+    guard pendingDraftNavigation == nil else {
+      showDraftNavigationReview = true
+      return
+    }
     guard let newItemDraft, newItemDraft.hasChanges else {
       if self.newItemDraft != nil {
         self.newItemDraft = nil
@@ -1768,6 +1797,70 @@ struct SavedPlannerView: View {
     }
     pendingDraftNavigation = navigation
     showDraftNavigationReview = true
+  }
+
+  private var hasPresentedWorkflow: Bool {
+    showLabels || showRecovery || showSettings || showNewList || showAddItem
+      || listEditDraft != nil || captureEntryPoint != nil || membershipMoveDraft != nil
+      || listAdditionDraft != nil || itemEditDraft != nil || itemDeletionDraft != nil
+      || listDeletionDraft != nil || itineraryDeletionDraft != nil || bulkCompletionDraft != nil
+  }
+
+  private func receivePlanOpening() async {
+    guard claimedOpeningIdentifier == nil, !isSavingNewItem,
+      pendingDraftNavigation == nil, !hasPresentedWorkflow
+    else { return }
+    do {
+      guard
+        let request = try await planOpening.claim(windowIdentifier: windowIdentifier, store: store)
+      else { return }
+      claimedOpeningIdentifier = request.identifier
+      requestDraftNavigation {
+        openingNavigationTask = Task { await navigateToRequestedPlan(request.identifier) }
+      }
+    } catch {
+      if !Task.isCancelled { store.alertMessage = error.localizedDescription }
+    }
+  }
+
+  private func navigateToRequestedPlan(_ identifier: UUID) async {
+    isResolvingOpening = true
+    defer {
+      isResolvingOpening = false
+      claimedOpeningIdentifier = nil
+      openingNavigationTask = nil
+    }
+    do {
+      let source = try await planOpening.resolveNavigation(
+        requestIdentifier: identifier, windowIdentifier: windowIdentifier, store: store)
+      try Task.checkCancellation()
+      recordSelectionChange()
+      if source.kind == .list {
+        if selectedListId != source.id {
+          selectedAppearanceIdentity = nil
+          selectedAppearance = nil
+        }
+        selectedListId = source.id
+        selectedSection = .lists
+        columnVisibility = .all
+        preferredCompactColumn = .content
+      } else {
+        if selectedItineraryIdentifier != source.id { selectedItineraryRow = nil }
+        selectedItineraryIdentifier = source.id
+        selectedSection = .itineraries
+        itineraryColumnVisibility = .doubleColumn
+      }
+    } catch {
+      if !Task.isCancelled { store.alertMessage = error.localizedDescription }
+    }
+  }
+
+  private func keepEditingDraft() {
+    if let identifier = claimedOpeningIdentifier {
+      planOpening.cancel(requestIdentifier: identifier, windowIdentifier: windowIdentifier)
+      claimedOpeningIdentifier = nil
+    }
+    pendingDraftNavigation = nil
   }
 
   private func finishDraftNavigation() {
@@ -1791,10 +1884,14 @@ struct SavedPlannerView: View {
     else { return }
     newItemDraft = nil
     guard store.devicePreferenceNamespace == draft.namespace else {
-      pendingDraftNavigation = nil
+      keepEditingDraft()
       return
     }
-    if continuingNavigation {
+    if claimedOpeningIdentifier != nil && store.recoveryBlocked {
+      keepEditingDraft()
+      return
+    }
+    if continuingNavigation || claimedOpeningIdentifier != nil {
       finishDraftNavigation()
       return
     }

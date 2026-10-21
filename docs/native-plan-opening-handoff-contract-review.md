@@ -1,6 +1,6 @@
 # Directed native plan-opening handoff
 
-Status: Q126 A accepted on 21 October 2026. The concrete production handoff and additional test boundary below are approved. Implementation and actual window/system qualification remain open.
+Status: Q126 A accepted on 21 October 2026. The concrete production handoff and additional test boundary below are approved. The implementation checkpoint is linked below; post-focus-fix local reruns and actual window/system qualification remain open.
 
 ## Context and starting state
 
@@ -44,3 +44,7 @@ Run affected strict lint/type checks, matching Mac/Simulator/unsigned device com
 - Production coordinator and Intent behavior has red/green evidence with real data and truthful request outcomes.
 - Native window/draft/device journeys pass where runnable; unresolved system gates stay open with actual failure evidence.
 - Source and evidence are committed; no signing/account setup or full-map completion is inferred.
+
+## Local implementation checkpoint
+
+The [directed plan-opening report](prototypes/native-plan-opening-handoff.md) records the production coordinator, exact-identity Open actions, native scene integration and draft protection. It separates passing earlier production-interface and ordinary mobile draft journeys from the final focus-order rerun blocked before XCTest starts, actual external-request/window tests, system invocation and signing/physical gates. No map acceptance is inferred from implementation or compilation.

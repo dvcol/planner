@@ -1,0 +1,19 @@
+{
+  "passingCredit": false,
+  "originalInvocation": "failed",
+  "sourceLogSha256": "3c2527e36e9f14d1e731ded96136ee12541538178e190334b7962da79defbf91",
+  "hostProcessIdentifiers": [
+    58213
+  ],
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FB07EDEA-ACDA-4A7F-8745-24BD97FD2729",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/878E7610-F02D-4F78-BDA3-DFF8C4906FF8",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FAC935F8-1A58-4A46-B877-CFE2569B81E2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/89AD0C81-8960-4277-91A2-10A21D6652F3"
+  ]
+}

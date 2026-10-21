@@ -51,7 +51,7 @@ The user accepted A for Q124, Q125 and Q126 on 21 October 2026. No question in t
 
 ## Remaining gates
 
-- Q115, Q117–Q120, Q123, Q124 and Q125 have local checkpoints above. Q121 has its [local native editor checkpoint](prototypes/native-label-appearance.md). Implement Q122/Q126 directed plan opening. Their concrete contracts and test boundaries are approved. Missing native features are not signing failures.
+- Q115, Q117–Q120, Q123, Q124 and Q125 have local checkpoints above. Q121 has its [local native editor checkpoint](prototypes/native-label-appearance.md). Q122/Q126 now have a [directed-opening implementation checkpoint](prototypes/native-plan-opening-handoff.md). Twelve production-interface handoff cases and 34 affected regressions passed before the final focus-order correction. Its additional regression reproduces the bug, but both post-fix Mac hosted reruns stall before any case in XCTest setup. The 13-case post-fix rerun and actual native/system opening remain open; compiler checks do not replace them.
 - The latest Mac UI runner times out enabling automation before any journey starts. App compilation succeeds, but actual window, editing and text-Undo interactions remain unqualified. No evidence establishes that paid signing fixes this runner error.
 - Actual Shortcuts/Siri execution and picker injection remain unqualified. Apple's system test service rejected the Customer build; passing production-interface tests does not replace system invocation or establish that a paid account fixes it.
 - Signed/shared storage, Agent Control against that storage, CloudKit convergence and account transitions, installed Share extensions and physical-device performance remain open. Signing/account setup is deferred at the user's request.

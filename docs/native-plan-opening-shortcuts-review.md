@@ -1,6 +1,6 @@
 # Opening plans and App Shortcut discovery
 
-Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. [The four-shortcut provider is implemented locally](prototypes/native-app-shortcut-discovery.md). Q126 A now approves the [directed handoff and production coordinator tests](native-plan-opening-handoff-contract-review.md).
+Status: Q122 A and Q123 A accepted on 21 October 2026. Reuse one foreground main window with draft protection, and publish four create/find shortcuts. [The four-shortcut provider is implemented locally](prototypes/native-app-shortcut-discovery.md). Q126 A approves the [directed handoff and production coordinator tests](native-plan-opening-handoff-contract-review.md). The [local implementation report](prototypes/native-plan-opening-handoff.md) separates implemented actions from blocked reruns and actual window/system gates.
 
 ## Context and starting state
 
@@ -55,3 +55,7 @@ For opening, test the production action's exact source identity, current dataset
 For discovery, inspect the real extracted provider/action metadata and phrase declarations while preserving the existing 69 action contracts. Exercise the underlying production actions at Q112's approved interface. Compile matching affected Mac, Simulator and unsigned device products and run affected lint/type checks. System discovery, voice phrases, parameter prompting and invocation require actual supported system journeys; static metadata is not runtime proof.
 
 Record genuine failures and source epochs. No live service, paid account, device install, new target or test-only navigation argument is authorized by this document. The owning prototype issues remain open until their full DoD and human review are satisfied.
+
+## Local implementation checkpoint
+
+The [directed plan-opening report](prototypes/native-plan-opening-handoff.md) records the production coordinator, exact-identity Open actions, native scene integration and draft protection. It separates passing earlier production-interface and ordinary mobile draft journeys from the final focus-order rerun blocked before XCTest starts, actual external-request/window tests, system invocation and signing/physical gates. No map acceptance is inferred from implementation or compilation.

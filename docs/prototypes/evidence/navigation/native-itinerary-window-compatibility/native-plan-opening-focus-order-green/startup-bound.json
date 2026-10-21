@@ -1,0 +1,7 @@
+{
+  "passingCredit": false,
+  "actualTestCaseStarted": false,
+  "reason": "Bounded after five minutes without tests; sample waits in XCTest _prepareTestConfigurationAndIDESession.",
+  "terminatedXcodebuild": 37730,
+  "observedTestHost": 39699
+}
