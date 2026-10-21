@@ -1,0 +1,5 @@
+{
+  "scripts/verify-intent-fixtures.py": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "scripts/tests/test_verify_store_fixtures.py": "bb8b80a131502ffa9b39d6b6839bddd8ca657cebc62ccdc48033087593709b0a",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PlannerStoreFixture.swift": "9a3fe0e2d9abb91881f9e83391772704847c639d6cc48346beea48025f44e017"
+}

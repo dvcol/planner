@@ -1,0 +1,12 @@
+{
+  "success": false,
+  "removedDirectories": [],
+  "verifierSha256": "df73f335ddeac7eb2ab7319fc553b30baac0f1962663d6174ddfb7d78e58130e",
+  "sourceLogSha256": "55e184d116dc42b3180641f397fadc0fb2ef80182b52e21cf9331c911cda1930",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "error": "A fixture must be a canonical directory, not a symlink."
+}

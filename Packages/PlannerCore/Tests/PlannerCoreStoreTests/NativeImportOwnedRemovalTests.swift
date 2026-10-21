@@ -4,7 +4,7 @@ import Testing
 
 struct NativeImportOwnedRemovalTests {
   @Test func explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() async throws {
-    let directory = nativeImportRemovalTestDirectory()
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -66,7 +66,7 @@ struct NativeImportOwnedRemovalTests {
   ) async throws {
     let explicitClosure = options.explicitClosure
     let omitUnchangedOwners = options.omitUnchangedOwners
-    let directory = nativeImportRemovalTestDirectory()
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -242,7 +242,7 @@ struct NativeImportOwnedRemovalTests {
 
   @Test(arguments: ["ownedLink", "expandedCompletion"])
   func laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group: String) async throws {
-    let directory = nativeImportRemovalTestDirectory()
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -392,11 +392,4 @@ private func removalGraph(group: String, from original: [String: Any]) throws
     ).filter { ($0["context"] as? [String: Any])?[contextKey] as? String != identifier }
   }
   return (graph, target)
-}
-
-/// Keep disposable stores until the test process exits; SwiftData retains open connections past test teardown.
-private func nativeImportRemovalTestDirectory() -> URL {
-  FileManager.default.temporaryDirectory
-    .appendingPathComponent("PlannerNativeImportOwnedRemovalTests", isDirectory: true)
-    .appendingPathComponent(UUID().uuidString, isDirectory: true)
 }

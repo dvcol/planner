@@ -6,9 +6,7 @@ struct NativeImportSourceDeletionTests {
   @Test(arguments: ["validMixed", "deletedDependency", "markerIdentityConflict"])
   func sourceDeletionAndNewOwnersApplyTogetherOrLeaveNoPartialImport(scenario: String) async throws
   {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportSourceDeletionTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -163,9 +161,7 @@ struct NativeImportSourceDeletionTests {
   func overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(
     kind: String, declareSurvivingOwners: Bool
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportSourceDeletionTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

@@ -1,0 +1,19 @@
+{
+  "coreInputs": 740,
+  "nativeInputs": 1062,
+  "functionsPerPlatform": 57,
+  "invocationsPerPlatform": 228,
+  "failures": 0,
+  "skips": 0,
+  "sqliteLifetimeDiagnostics": 0,
+  "finalOwnedFixturesRemovedPerPlatform": 228,
+  "newCleanupCLIChecks": 8,
+  "existingCleanupCLIChecks": 12,
+  "productionChanges": false,
+  "sourceAndArgumentReconciliation": "source-reconciliation.json and case-counts.json",
+  "limits": [
+    "No Mac UI automation qualification.",
+    "No signing, shared-store, physical CloudKit/account/Share or system-Intent qualification.",
+    "Other test families and the complete map remain open."
+  ]
+}

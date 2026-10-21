@@ -5,9 +5,7 @@ import Testing
 
 struct NativeImportApplyTests {
   @Test func failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -62,9 +60,7 @@ struct NativeImportApplyTests {
   func ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_ scenario: String)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -131,9 +127,7 @@ struct NativeImportApplyTests {
 
   @Test(arguments: [false, true])
   func reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery: Bool) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

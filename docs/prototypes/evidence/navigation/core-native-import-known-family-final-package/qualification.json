@@ -35,5 +35,12 @@
     "Old-predecessor Overwrite remains gated pending Q128.",
     "No new UI, physical CloudKit, signed shared-storage or system-Intent qualification."
   ],
-  "qualificationScope": "Final accepted executions only; earlier compiler and functional probe failures remain recorded."
+  "qualificationScope": "Functional results for this original epoch; its iOS fixture teardown remains unqualified here. Later clean executions are recorded separately.",
+  "iosStoreLifecycleGate": {
+    "status": "open",
+    "unlinkWhileOpenDiagnostics": 443,
+    "newFamilyFixtureRootDiagnostics": 0,
+    "note": "Passing assertions do not qualify safe fixture teardown. Baseline reproduction and a lifecycle correction remain required.",
+    "followUp": "../core-native-import-fixture-lifecycle-ios-canonical/"
+  }
 }

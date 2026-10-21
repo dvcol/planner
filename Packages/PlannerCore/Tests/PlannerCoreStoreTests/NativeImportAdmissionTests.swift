@@ -157,7 +157,7 @@ struct NativeImportAdmissionTests {
       data = Data(
         text.replacingOccurrences(of: "\"createdAt\":10.25", with: "\"createdAt\":1e999").utf8)
     }
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = nativeImportPlanner(directory: directory)
     guard case .invalid(let failure) = planner.decodeImport(data) else {
       Issue.record("Reject the entire \(testCase.rawValue) input.")
@@ -181,7 +181,7 @@ struct NativeImportAdmissionTests {
     sources.removeFirst()
     object["sources"] = sources
     let data = try JSONSerialization.data(withJSONObject: object)
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = nativeImportPlanner(directory: directory)
     guard case .decoded(let decoded) = planner.decodeImport(data) else {
       Issue.record("Record external source bindings for the later authorized dataset review.")

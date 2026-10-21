@@ -6,8 +6,7 @@ struct NativeImportReviewTests {
   @Test func identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -73,8 +72,7 @@ struct NativeImportReviewTests {
   }
 
   @Test func completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "revision": "867d3a7b",
+  "changedFiles": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportBindingReviewTests.swift"
+  ]
+}

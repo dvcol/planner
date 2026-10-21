@@ -9,9 +9,7 @@ struct NativeImportBindingReviewTests {
   func aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode: PlannerImportMode)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportFamilyBindingTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -290,9 +288,7 @@ struct NativeImportBindingReviewTests {
   func routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingOmittedOwners(
     mode: PlannerImportMode
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeImportFamilyBindingTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -490,8 +486,7 @@ struct NativeImportBindingReviewTests {
   func declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase: BindingCase)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

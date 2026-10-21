@@ -1,0 +1,14 @@
+{
+  "functions": 7,
+  "parameterizedFunctions": 5,
+  "parameterizedInvocations": 19,
+  "plainInvocations": 2,
+  "invocations": 21,
+  "perParameterizedFunction": {
+    "declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:)": 3,
+    "changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:)": 3,
+    "retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:)": 7,
+    "skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:)": 4,
+    "newBookmarkIdentitiesSurviveIncompleteRecoveryWithoutReapplying(ownerKind:)": 2
+  }
+}

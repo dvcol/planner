@@ -11,8 +11,7 @@ struct NativeImportOverwriteDeletionReviewTests {
   func overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase: ReferenceTargetCase)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -174,8 +173,7 @@ struct NativeImportOverwriteDeletionReviewTests {
   func overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind: PlannerEntityKind)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -317,8 +315,7 @@ struct NativeImportOverwriteDeletionReviewTests {
   )
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

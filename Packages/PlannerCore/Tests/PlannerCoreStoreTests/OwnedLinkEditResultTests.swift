@@ -8,8 +8,7 @@ struct OwnedLinkEditResultTests {
   func newBookmarkIdentitiesSurviveIncompleteRecoveryWithoutReapplying(ownerKind: PlannerEntityKind)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = storageConfiguration(directory)
     let planner = Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
@@ -130,8 +129,7 @@ struct OwnedLinkEditResultTests {
     let fixture = try #require(
       fixtureBundle.url(
         forResource: "LegacyOwnedLinkResults", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let records = try JSONDecoder().decode(
       [LegacyLinkEdit].self,

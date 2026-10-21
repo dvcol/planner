@@ -12,8 +12,7 @@ struct NativeImportIncomingDeletionReviewTests {
   func skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase: ReferenceTargetCase)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -161,8 +160,7 @@ struct NativeImportIncomingDeletionReviewTests {
   @Test(arguments: NamedSourceCase.allCases)
   func skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase: NamedSourceCase) async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -222,8 +220,7 @@ struct NativeImportIncomingDeletionReviewTests {
   )
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

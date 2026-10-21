@@ -1,0 +1,12 @@
+{
+  "newCLIChecks": 8,
+  "existingCLIChecks": 12,
+  "command": [
+    "python3",
+    "scripts/tests/test_verify_store_fixtures.py"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 2.744,
+  "boundaries": "Real CLI, filesystem, process exit and open SQLite connection. No Planner feature execution credit.",
+  "finalFormattedSources": true
+}
