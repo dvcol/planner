@@ -1369,11 +1369,13 @@ struct SavedPlannerView: View {
         if rows.isEmpty {
           ScrollView {
             VStack(spacing: 0) {
-              SavedListProgress(
-                listName: list.content.name, progress: list.progress, estimates: list.estimates,
-                manualEstimate: list.content.manualEstimate, matchingCount: 0,
-                isArchived: list.state.archived == true
-              ).padding()
+              #if os(iOS)
+                SavedListProgress(
+                  listName: list.content.name, progress: list.progress, estimates: list.estimates,
+                  manualEstimate: list.content.manualEstimate, matchingCount: 0,
+                  isArchived: list.state.archived == true
+                ).padding()
+              #endif
               ContentUnavailableView(
                 list.progress.totalCount == 0 ? "No items" : "No matching items",
                 systemImage: "checklist", description: appearanceChangeMessage.map { Text($0) })
@@ -1555,6 +1557,11 @@ struct SavedPlannerView: View {
         listContents(selectedList)
           .navigationTitle(selectedList.content.name)
           .toolbarTitleDisplayMode(.inline)
+          #if os(macOS)
+            .safeAreaInset(edge: .top, spacing: 0) {
+              listPaneHeader(selectedList)
+            }
+          #endif
           .searchable(text: $listSearchText, prompt: "Search this List")
           .searchPresentationToolbarBehavior(.avoidHidingContent)
           .overlay(alignment: .topTrailing) {
@@ -1568,12 +1575,12 @@ struct SavedPlannerView: View {
               ProgressView("Reviewing deletion").controlSize(.small).padding()
             }
           }
-          .toolbar {
-            ToolbarItem {
-              SavedItemFilterControl(
-                filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
-            }
-            #if os(iOS)
+          #if os(iOS)
+            .toolbar {
+              ToolbarItem {
+                SavedItemFilterControl(
+                  filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
+              }
               if horizontalSizeClass == .compact {
                 ToolbarOverflowMenu {
                   listSortMenu
@@ -1585,33 +1592,11 @@ struct SavedPlannerView: View {
                 ToolbarItem { listEditButton }
                 ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
               }
-            #else
-              ToolbarItem { listSortMenu }
-              ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
-            #endif
-            ToolbarItem {
-              Menu {
-                Button("New item", systemImage: "square.and.pencil") {
-                  beginNewItem(listIdentifier: selectedList.source.id)
-                }
-                .accessibilityIdentifier("saved.list.createItem")
-                Button("Add existing item", systemImage: "plus") {
-                  requestDraftNavigation { showAddItem = true }
-                }
-                .accessibilityIdentifier("saved.list.add")
-                Button("From link or text", systemImage: "text.badge.plus") {
-                  requestDraftNavigation { captureEntryPoint = .list(selectedList.source.id) }
-                }
-                .accessibilityIdentifier("saved.list.capture")
-              } label: {
-                Label("Add", systemImage: "plus")
+              ToolbarItem {
+                listAddMenu(selectedList)
               }
-              .labelStyle(.iconOnly)
-              .help("Add an item to this list")
-              .disabled(!store.canCreate || selectedList.state.archived == true || isSavingNewItem)
-              .accessibilityIdentifier("saved.list.addMenu")
             }
-          }
+          #endif
       } else if isOpeningList {
         ProgressView("Opening List")
       } else if selectedListId != nil {
@@ -1653,6 +1638,9 @@ struct SavedPlannerView: View {
       }
     }
     .navigationSplitViewStyle(.balanced)
+    #if os(macOS)
+      .toolbar(removing: isItemSection || usesItineraryColumns ? nil : .title)
+    #endif
     .onChange(of: selectedListId) { _, identifier in
       appearanceChangeMessage = nil
       if identifier != nil { listDeletionMessage = nil }
@@ -1673,6 +1661,70 @@ struct SavedPlannerView: View {
     SavedItemSortMenu(
       sort: listSort, allowsManual: true, accessibilityIdentifier: "saved.list.sort")
   }
+
+  private func listAddMenu(_ list: PlannerListSourceRead) -> some View {
+    Menu {
+      Button("New item", systemImage: "square.and.pencil") {
+        beginNewItem(listIdentifier: list.source.id)
+      }
+      .accessibilityIdentifier("saved.list.createItem")
+      Button("Add existing item", systemImage: "plus") {
+        requestDraftNavigation { showAddItem = true }
+      }
+      .accessibilityIdentifier("saved.list.add")
+      Button("From link or text", systemImage: "text.badge.plus") {
+        requestDraftNavigation { captureEntryPoint = .list(list.source.id) }
+      }
+      .accessibilityIdentifier("saved.list.capture")
+    } label: {
+      Label("Add", systemImage: "plus")
+    }
+    .labelStyle(.iconOnly)
+    .help("Add an item to this list")
+    .disabled(!store.canCreate || list.state.archived == true || isSavingNewItem)
+    .accessibilityIdentifier("saved.list.addMenu")
+  }
+
+  #if os(macOS)
+    private func listPaneHeader(_ list: PlannerListSourceRead) -> some View {
+      VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 12) {
+          SavedListProgress(
+            listName: list.content.name, progress: list.progress, estimates: list.estimates,
+            manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
+            isArchived: list.state.archived == true)
+          ViewThatFits(in: .horizontal) {
+            HStack {
+              SavedItemFilterControl(
+                filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
+              listSortMenu
+              listActionsMenu(list)
+              listAddMenu(list)
+            }
+            .fixedSize(horizontal: true, vertical: false)
+            VStack(spacing: 8) {
+              HStack {
+                SavedItemFilterControl(
+                  filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
+                Spacer(minLength: 8)
+                listAddMenu(list)
+              }
+              HStack {
+                listSortMenu
+                Spacer(minLength: 8)
+                listActionsMenu(list)
+              }
+            }
+          }
+          .buttonStyle(.bordered)
+          .controlSize(.regular)
+        }
+        .padding()
+        Divider()
+      }
+      .background(.background)
+    }
+  #endif
 
   #if os(iOS)
     private var listEditButton: some View {

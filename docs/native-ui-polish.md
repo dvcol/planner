@@ -68,6 +68,8 @@ The final iPad compatibility run makes the spacing difference visible across des
 
 ## Navigation and appearance correction brought forward
 
+The [21 October List pane header correction](prototypes/native-list-pane-header.md) brings forward the user's duplicate-title, empty-summary alignment and pane-overflow findings. Its pinned Mac header and adaptive native controls are a focused slice; they do not close the final review of the other scenes.
+
 The [18 October native design review](prototypes/native-design-pass.md) replaces the regular iPad's floating-tab/per-destination-sidebar stack with one Notes-style native sidebar and panes, retaining system bottom tabs on iPhone. Native inline toolbar titles and readable List/Itinerary content headings remove the extra title tier and retain context when controls crowd the toolbar. Native Form/List surfaces follow device appearance. The review also repairs lost Itinerary presentation state, hidden List-catalog navigation and Calendar inspector dismissal during rotation. Its report links the executed light/dark mobile journeys, original representative captures, source reviews and compiler/runtime limitations.
 
 These observations supersede the earlier unresolved layout candidate for that specific tablet shell. They do not close the phone scroll/large-text observations, all scene/state visual review, accessibility, Mac runtime or physical qualification. The original requirements and historical captures remain available above; final ticket 23 acceptance still follows the full inventory and gates.

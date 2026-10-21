@@ -84,10 +84,15 @@ struct SavedOwnedLinksEditor: View {
             .accessibilityIdentifier("\(accessibilityIdentifierPrefix).label.\(link.id.uuidString)")
         }
       }
-      Button("Add link", systemImage: "plus") {
+      Button {
         let draft = SavedOwnedLinkDraft()
         links.append(draft)
         focusedLinkIdentifier = draft.id
+      } label: {
+        Label("Add link", systemImage: "plus")
+          #if os(macOS)
+            .padding(.horizontal, 6)
+          #endif
       }
       .controlSize(.regular)
       .accessibilityIdentifier("\(accessibilityIdentifierPrefix).add")
