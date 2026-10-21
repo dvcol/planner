@@ -1,0 +1,44 @@
+{
+  "platform": "device",
+  "addedActions": {
+    "SetPlannerListChildCompletionIntent": [
+      [
+        "list",
+        "PlannerListEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ],
+    "SetPlannerItineraryChildCompletionIntent": [
+      [
+        "itinerary",
+        "PlannerItineraryEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ],
+    "SetPlannerItineraryListChildCompletionIntent": [
+      [
+        "itinerary",
+        "PlannerItineraryEntity"
+      ],
+      [
+        "entry",
+        "PlannerItineraryEntryEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ]
+  },
+  "actionCount": 75,
+  "previous72ActionsAndAllEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "724db688cd66e4d77254829ad79d2985ff999f07ae769a68aa880e7f27b8106b",
+  "actualSystemConfirmationAndPickerCredit": false
+}

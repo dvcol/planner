@@ -161,7 +161,9 @@ final class SavedPlannerStore {
     return (planner, session)
   }
 
-  func executeAppIntent(_ command: PlannerCommand) async throws -> PlannerOperationResult {
+  func executeAppIntent(
+    _ command: PlannerCommand, reviewToken: PlannerReviewToken? = nil
+  ) async throws -> PlannerOperationResult {
     let (planner, session) = try await appIntentContext()
     try Task.checkCancellation()
     guard !isCheckingRecovery, !recoveryBlocked else {
@@ -174,7 +176,29 @@ final class SavedPlannerStore {
         ])
     }
     return await executeAdmittedChange(
-      command, operationId: UUID(), planner: planner, session: session)
+      command, operationId: UUID(), planner: planner, session: session, reviewToken: reviewToken)
+  }
+
+  func prepareAppIntentBulkCompletion(scope: PlannerBulkScope, done: Bool) async throws
+    -> PlannerReview
+  {
+    let (planner, session) = try await appIntentContext()
+    try Task.checkCancellation()
+    guard !isCheckingRecovery, !recoveryBlocked else {
+      throw CocoaError(
+        .fileWriteUnknown,
+        userInfo: [
+          NSLocalizedDescriptionKey: recoveryStatusFailure
+            ?? "Planner cannot make this change now. Open Planner to review its status."
+        ])
+    }
+    switch await planner.prepareReview(
+      session: session, command: .setBulkCompletion(scope: scope, done: done))
+    {
+    case .reviewed(let review): return review
+    case .failed(let reason):
+      throw CocoaError(.fileWriteUnknown, userInfo: [NSLocalizedDescriptionKey: reason.message])
+    }
   }
 
   func refreshRecoveryStatus() async {
@@ -825,12 +849,13 @@ final class SavedPlannerStore {
 
   private func executeAdmittedChange(
     _ command: PlannerCommand, operationId: UUID, planner: PlannerCore.Planner,
-    session: PlannerDatasetSession
+    session: PlannerDatasetSession, reviewToken: PlannerReviewToken? = nil
   ) async -> PlannerOperationResult {
     activeSaveCount += 1
     defer { activeSaveCount -= 1 }
     let result = await planner.execute(
-      PlannerOperation(operationId: operationId, session: session, command: command))
+      PlannerOperation(
+        operationId: operationId, session: session, command: command, reviewToken: reviewToken))
     _ = await handleChangeResult(result)
     return result
   }

@@ -1,0 +1,44 @@
+{
+  "platform": "mac",
+  "addedActions": {
+    "SetPlannerListChildCompletionIntent": [
+      [
+        "list",
+        "PlannerListEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ],
+    "SetPlannerItineraryChildCompletionIntent": [
+      [
+        "itinerary",
+        "PlannerItineraryEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ],
+    "SetPlannerItineraryListChildCompletionIntent": [
+      [
+        "itinerary",
+        "PlannerItineraryEntity"
+      ],
+      [
+        "entry",
+        "PlannerItineraryEntryEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ]
+  },
+  "actionCount": 75,
+  "previous72ActionsAndAllEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "35423216a98432985f3880058939d5ec4f0e15c4cfed34f2c5f7391442afc1c8",
+  "actualSystemConfirmationAndPickerCredit": false
+}

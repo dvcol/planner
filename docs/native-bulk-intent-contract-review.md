@@ -1,6 +1,6 @@
 # Confirmed bulk completion in Shortcuts
 
-Status: Q120 A accepted on 21 October 2026. The three actions and production store preparation/submission test boundary below are approved; actual system confirmation remains a separate gate.
+Status: Q120 A accepted on 21 October 2026. The three actions and production store preparation/submission test boundary below are approved; [The three actions and reviewed writer are implemented locally](prototypes/native-bulk-completion-intents.md); actual system confirmation remains a separate gate.
 
 ## Context, starting state and goal
 

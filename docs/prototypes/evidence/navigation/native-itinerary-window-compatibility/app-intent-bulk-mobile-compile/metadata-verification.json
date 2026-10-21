@@ -1,0 +1,44 @@
+{
+  "platform": "mobile",
+  "addedActions": {
+    "SetPlannerListChildCompletionIntent": [
+      [
+        "list",
+        "PlannerListEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ],
+    "SetPlannerItineraryChildCompletionIntent": [
+      [
+        "itinerary",
+        "PlannerItineraryEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ],
+    "SetPlannerItineraryListChildCompletionIntent": [
+      [
+        "itinerary",
+        "PlannerItineraryEntity"
+      ],
+      [
+        "entry",
+        "PlannerItineraryEntryEntity"
+      ],
+      [
+        "completed",
+        "boolean"
+      ]
+    ]
+  },
+  "actionCount": 75,
+  "previous72ActionsAndAllEntitiesQueriesEnumsAndFourShortcutsPreserved": true,
+  "comparisonNormalization": "resolvableInputTypes alternatives only",
+  "metadataSha256": "f7447f023aeccf44f5f251013bbb3b6fe759c1d7ca55f17d09535f3eb467dddc",
+  "actualSystemConfirmationAndPickerCredit": false
+}

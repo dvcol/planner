@@ -39,6 +39,8 @@
     @Dependency var plannerStore: SavedPlannerStore
     @IntentParameterDependency<RemovePlannerItineraryEntryIntent>(\.$itinerary) var removalIntent
     @IntentParameterDependency<ReorderPlannerItineraryEntryIntent>(\.$itinerary) var reorderIntent
+    @IntentParameterDependency<SetPlannerItineraryListChildCompletionIntent>(\.$itinerary)
+    var bulkCompletionIntent
 
     @MainActor func entities(for identifiers: [String]) async throws
       -> [PlannerItineraryEntryEntity]
@@ -64,10 +66,13 @@
     @MainActor func entities(matching string: String) async throws -> [PlannerItineraryEntryEntity]
     {
       _ = try await plannerStore.appIntentContext()
-      guard let identifier = removalIntent?.itinerary.id ?? reorderIntent?.itinerary.id else {
-        return []
-      }
-      return try await loadEntries(in: identifier, matching: string)
+      guard
+        let identifier = removalIntent?.itinerary.id ?? reorderIntent?.itinerary.id
+          ?? bulkCompletionIntent?.itinerary.id
+      else { return [] }
+      let entries = try await loadEntries(in: identifier, matching: string)
+      if bulkCompletionIntent != nil { return entries.filter { $0.kind == .list } }
+      return entries
     }
 
     @MainActor func suggestedEntities() async throws -> [PlannerItineraryEntryEntity] {
@@ -317,7 +322,7 @@
     }
   }
 
-  private struct PlannerItineraryEntryIdentity {
+  struct PlannerItineraryEntryIdentity {
     let itineraryIdentifier: UUID
     let entryIdentifier: UUID
     let sourceIdentifier: UUID

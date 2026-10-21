@@ -35,6 +35,8 @@ The user accepted A for all eight choices below on 21 October 2026. Local implem
 
 [Live saved-content properties](prototypes/native-deferred-content-properties.md) implement Q117 A locally. Seven getter cases and 69 affected adapter cases pass, with matching platform builds and preserved prior contracts. Actual system property fetching, including cold dependency initialization, remains open.
 
+[Reviewed bulk completion](prototypes/native-bulk-completion-intents.md) implements Q120 A locally. Fourteen new cases and 58 affected regressions pass through the approved store/Intent boundaries. Native confirmation, Cancel and dependent picker execution retain separate system gates.
+
 ## Accepted concrete follow-ups
 
 The user accepted A for Q124, Q125 and Q126 on 21 October 2026. No question in this frontier remains unanswered. Implementation and qualification continue under these contracts.
@@ -47,7 +49,7 @@ The user accepted A for Q124, Q125 and Q126 on 21 October 2026. No question in t
 
 ## Remaining gates
 
-- Q115, Q117, Q119 and Q123 have local checkpoints above. Implement Q120 bulk completion, Q118/Q124/Q125 Schedule creation/replacement, Q121 label appearance and Q122/Q126 directed plan opening. Their concrete contracts and test boundaries are approved. Missing native features are not signing failures.
+- Q115, Q117, Q119, Q120 and Q123 have local checkpoints above. Implement Q118/Q124/Q125 Schedule creation/replacement, Q121 label appearance and Q122/Q126 directed plan opening. Their concrete contracts and test boundaries are approved. Missing native features are not signing failures.
 - The latest Mac UI runner times out enabling automation before any journey starts. App compilation succeeds, but actual window, editing and text-Undo interactions remain unqualified. No evidence establishes that paid signing fixes this runner error.
 - Actual Shortcuts/Siri execution and picker injection remain unqualified. Apple's system test service rejected the Customer build; passing production-interface tests does not replace system invocation or establish that a paid account fixes it.
 - Signed/shared storage, Agent Control against that storage, CloudKit convergence and account transitions, installed Share extensions and physical-device performance remain open. Signing/account setup is deferred at the user's request.
