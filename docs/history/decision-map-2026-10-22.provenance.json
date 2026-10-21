@@ -1,0 +1,14 @@
+{
+  "sourceIssue": "https://github.com/dvcol/planner/issues/1",
+  "sourceTitle": "Native personal planner decision map",
+  "sourceState": "OPEN",
+  "capturedAtUTC": "2026-10-21 20:07:35 UTC",
+  "snapshotFile": "docs/history/decision-map-2026-10-22.md",
+  "originalSourceFile": "docs/history/decision-map-2026-10-22.source.txt",
+  "prefixUTF8Bytes": 610,
+  "originalBodyUTF8Bytes": 65506,
+  "originalBodySHA256": "7bf39e7cde35b52cb5e52ed9b4341b455772cc6d8d68b975ef9ce9a0fa54646f",
+  "scope": "The source.txt preserves the exact former issue body. The readable Markdown permits blank-line normalization only; no nonblank line may change. Archiving changes no requirement, decision or completion gate.",
+  "readableSnapshotSHA256": "4955b5e1c8cc499bc611207deab7cb052b8e9591611b1cc1696acae67b10c4d8",
+  "nonblankPayloadLinesIdentical": true
+}
