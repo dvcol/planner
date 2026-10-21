@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-item-cold-start-tablet-controls.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792607404.974,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792607362.593,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-item-cold-start-tablet-controls.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-item-cold-start-tablet-controls"
+    ],
+    "exitCode": 0,
+    "stdout": "Skipped export for SavedItemJourneyTests/testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft(): no matching attachments\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-item-cold-start-tablet-controls/manifest.json\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "sourceInputs": 1061,
+  "finalCompilerAndRuntimeEpochs": 3,
+  "allFinalInputsMatchWorkspace": true,
+  "productionChanges": false,
+  "runs": [
+    {
+      "phase": "native-item-cold-start-phone-controls",
+      "case": "testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft",
+      "seconds": 19.192,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "phase": "native-item-cold-start-tablet-controls",
+      "case": "testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft",
+      "seconds": 29.333,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "coldBoots": [
+    {
+      "phase": "native-item-cold-start-tablet-boot",
+      "device": "iPad Air 11-inch (M4)",
+      "commands": 3,
+      "completed": true,
+      "erased": false
+    },
+    {
+      "phase": "native-item-cold-start-tablet-controls-boot",
+      "device": "iPad Air 11-inch (M4)",
+      "commands": 3,
+      "completed": true,
+      "erased": false
+    }
+  ],
+  "macScheduleRequestedCasesExecuted": 0,
+  "macRunnerInitializationError": true,
+  "macReadinessRequested": true,
+  "originalAddMenuFailureReproduced": false,
+  "fixClaimed": false,
+  "scope": "Diagnostic startup checkpoint and native test-driver correction only. The original Add-menu failure remains unclassified; Mac Schedule actions/all-day/resize/system/signed/physical qualifications remain open."
+}

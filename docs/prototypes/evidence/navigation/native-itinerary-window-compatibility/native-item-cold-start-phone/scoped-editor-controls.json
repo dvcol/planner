@@ -1,0 +1,16 @@
+{
+  "expectedControlInFailedDriver": "saved.item.cancel",
+  "observedControl": {
+    "type": "Button",
+    "identifier": "saved.item.back",
+    "label": "Back",
+    "frame": [
+      20,
+      66,
+      36,
+      36
+    ]
+  },
+  "sourceAttachmentSHA256": "97cd2ecbe6c359c906e56a1d4691906a4458cd6a10926368776e7f5ff99ec391",
+  "scope": "The editor was reached. This locator failure is distinct from the original missing Add-menu failure."
+}

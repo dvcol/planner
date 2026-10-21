@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-schedule-actions-mac.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"00006030-001A586C3EA3001C\",\n        \"deviceName\" : \"My Mac\",\n        \"modelName\" : \"MacBook Pro\",\n        \"osBuildNumber\" : \"26A434\",\n        \"osVersion\" : \"27.0.1\",\n        \"platform\" : \"macOS\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792606463.863,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792606386.428,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"The test runner failed to initialize for UI testing. (Underlying Error: Timed out while enabling automation mode.)\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"PlannerNavigationUITests-Runner (16762) encountered an error\",\n      \"testName\" : \"PlannerNavigationUITests-Runner (16762) encountered an error\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-schedule-actions-mac.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-schedule-actions-mac"
+    ],
+    "exitCode": 0,
+    "stdout": "Skipped export for PlannerNavigationUITests-Runner (16762) encountered an error: no matching attachments\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-schedule-actions-mac/manifest.json\n",
+    "stderr": ""
+  }
+]

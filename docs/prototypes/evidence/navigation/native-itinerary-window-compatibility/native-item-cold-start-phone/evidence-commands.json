@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-item-cold-start-phone.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792606974.246,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792606948.959,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"Failed to tap \\\"saved.item.cancel\\\" Button: No matches found for Elements matching predicate '\\\"saved.item.cancel\\\" IN identifiers' from input {(\\n    Button, identifier: 'list.bullet', label: 'Lists',\\n    Button, identifier: 'square.stack', label: 'Items', Selected,\\n    Button, identifier: 'tray', label: 'Inbox',\\n    Button, identifier: 'calendar', label: 'Calendar',\\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\\n    Button, identifier: 'saved.item.back', label: 'Back',\\n    Button, identifier: 'saved.item.save', label: 'Save', Disabled,\\n    Button, identifier: 'saved.item.estimate.shortcuts', label: 'Quick estimate',\\n    Button, identifier: 'saved.item.categories', label: 'Categories, None',\\n    Button, identifier: 'saved.item.tags', label: 'Tags, None',\\n    Button\\n)}\\nPossibly caused by runtime issues:\\nAutomation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {\\n    \\\"XC_kAXXCAttributeAutomationType\\\" = 14;\\n    \\\"XC_kAXXCAttributeElementBaseType\\\" = NSObject;\\n    \\\"XC_kAXXCAttributeElementType\\\" = \\\"SwiftUI.AccessibilityNode\\\";\\n    \\\"XC_kAXXCAttributeTraits\\\" = 1108101562369;\\n}\\nSee test report attachments for more detail.\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedItemJourneyTests/testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemJourneyTests/testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft\",\n      \"testName\" : \"testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-item-cold-start-phone.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-item-cold-start-phone"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 7 attachments for: SavedItemJourneyTests/testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft():\nFile: 2AFB4F6A-0A58-44FE-8B6E-ADE39DD53BAF, suggested name: \"Synthesized Event 2026-10-22 at 03.22.48 AM\"\nFile: 8D4C27FD-272F-40D1-8F36-A1D9A4DF30C3, suggested name: \"Synthesized Event 2026-10-22 at 03.22.46 AM\"\nFile: A588EF58-0D13-4CEC-B42D-3EA2DD478219, suggested name: \"Synthesized Event 2026-10-22 at 03.22.42 AM\"\nFile: A339EDD5-D181-4A65-9E3B-E0D5A9F3769A.mp4, suggested name: \"Screen Recording 2026-10-22 at 03.22.36 AM.mp4\"\nFile: 08C31040-8C79-4201-91FD-D8A0B335A149.txt, suggested name: \"Complete Issue Description.txt\"\nFile: 9CD7FEA0-8EF1-4C39-B5A0-9CA743E0DADF.txt, suggested name: \"App UI hierarchy for org.example_0_75538B8E-8B4F-44C8-9756-5D7E9D1E0CB8.PlannerMCPPrototype\"\nFile: 5E9202EA-31E7-495B-B6A9-905B381041F2, suggested name: \"UI Snapshot 2026-10-22 at 03.22.53 AM\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-item-cold-start-phone/manifest.json\n",
+    "stderr": ""
+  }
+]

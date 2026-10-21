@@ -1,0 +1,42 @@
+{
+  "udid": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+  "name": "iPad Air 11-inch (M4)",
+  "beforeState": "Booted",
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "FBD72DAB-1D40-4E64-912D-7F9763E00446"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "FBD72DAB-1D40-4E64-912D-7F9763E00446"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "-b"
+      ],
+      "exitCode": 0,
+      "stdout": "Monitoring boot status for iPad Air 11-inch (M4) (FBD72DAB-1D40-4E64-912D-7F9763E00446).\n[2026-10-21 18:28:03 +0000] Status=2, isTerminal=NO, Elapsed=00:02.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-21 18:28:04 +0000] Status=4, isTerminal=NO, Elapsed=00:03.\n\tWaiting on System App\n\n[2026-10-21 18:28:05 +0000] Status=4, isTerminal=NO, Elapsed=00:04.\n\tWaiting on System App\n\n[2026-10-21 18:28:06 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:05.\n\tFinished\n\n",
+      "stderr": ""
+    }
+  ],
+  "completed": true
+}

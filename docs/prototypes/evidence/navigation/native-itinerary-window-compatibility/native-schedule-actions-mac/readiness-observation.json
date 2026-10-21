@@ -1,0 +1,13 @@
+{
+  "interface": "Read-only CGSessionCopyCurrentDictionary, restricted to session-readiness flag lookups.",
+  "requestedKeys": [
+    "kCGSSessionOnConsoleKey",
+    "kCGSSessionLoginDoneKey",
+    "CGSSessionScreenIsLocked"
+  ],
+  "observedFlags": {
+    "kCGSSessionOnConsoleKey": true
+  },
+  "unlockOrUserAvailabilityEstablished": false,
+  "interpretation": "On-console alone does not establish an unlocked/idle Mac. The user was asked for current readiness. No security, broker or signing setting was changed."
+}

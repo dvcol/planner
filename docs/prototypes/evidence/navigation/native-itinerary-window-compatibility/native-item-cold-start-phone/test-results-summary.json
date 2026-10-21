@@ -1,0 +1,46 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "modelName": "iPhone 18 Pro",
+        "osBuildNumber": "24A434",
+        "osVersion": "27.0",
+        "platform": "iOS Simulator"
+      },
+      "expectedFailures": 0,
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 1,
+  "finishTime": 1792606974.246,
+  "passedTests": 0,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1792606948.959,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "Failed to tap \"saved.item.cancel\" Button: No matches found for Elements matching predicate '\"saved.item.cancel\" IN identifiers' from input {(\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items', Selected,\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar',\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'saved.item.back', label: 'Back',\n    Button, identifier: 'saved.item.save', label: 'Save', Disabled,\n    Button, identifier: 'saved.item.estimate.shortcuts', label: 'Quick estimate',\n    Button, identifier: 'saved.item.categories', label: 'Categories, None',\n    Button, identifier: 'saved.item.tags', label: 'Tags, None',\n    Button\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 14;\n    \"XC_kAXXCAttributeElementBaseType\" = NSObject;\n    \"XC_kAXXCAttributeElementType\" = \"SwiftUI.AccessibilityNode\";\n    \"XC_kAXXCAttributeTraits\" = 1108101562369;\n}\nSee test report attachments for more detail.",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 1,
+      "testIdentifierString": "SavedItemJourneyTests/testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemJourneyTests/testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft",
+      "testName": "testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft()"
+    }
+  ],
+  "title": "Test - PlannerNavigation",
+  "topInsights": [],
+  "totalTestCount": 1
+}

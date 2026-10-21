@@ -1,0 +1,28 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "08C31040-8C79-4201-91FD-D8A0B335A149.txt",
+      "isAssociatedWithFailure": true,
+      "suggestedHumanReadableName": "Complete Issue Description.txt",
+      "retainedFileName": "08C31040-8C79-4201-91FD-D8A0B335A149.txt.gz",
+      "sha256": "65ad288f1e593caf4a0b97b81512986b67dc3bbc907be2cd9880d79cd621f829"
+    }
+  ],
+  "excludedAttachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9CD7FEA0-8EF1-4C39-B5A0-9CA743E0DADF.txt",
+      "isAssociatedWithFailure": true,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_75538B8E-8B4F-44C8-9756-5D7E9D1E0CB8.PlannerMCPPrototype",
+      "timestamp": 1792606973.339,
+      "retainedFileName": "9CD7FEA0-8EF1-4C39-B5A0-9CA743E0DADF.txt.gz",
+      "sha256": "97cd2ecbe6c359c906e56a1d4691906a4458cd6a10926368776e7f5ff99ec391",
+      "exclusionReason": "Broad automatic hierarchy remains private. Public scoped observations retain the actual compact-editor Back control."
+    }
+  ]
+}

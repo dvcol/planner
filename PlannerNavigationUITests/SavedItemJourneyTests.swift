@@ -1292,6 +1292,25 @@ final class SavedItemJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Native start-only Item schedule after relaunch")
   }
 
+  func testItemsCreationMenuAfterFreshLaunchCanOpenAndCancelDraft() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    application.openSavedPlannerNewItemEditor()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    XCTAssertTrue(title.isHittable)
+    let cancel = application.windows.firstMatch.buttons.matching(
+      NSPredicate(
+        format: "identifier == %@ OR identifier == %@", "saved.item.cancel", "saved.item.back")
+    ).firstMatch
+    XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+    cancel.activateForPlannerJourney()
+    XCTAssertTrue(title.waitForNonExistence(timeout: 5))
+  }
+
   func testItemDraftCancellationAndGlobalCompletionSurviveNativeRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
