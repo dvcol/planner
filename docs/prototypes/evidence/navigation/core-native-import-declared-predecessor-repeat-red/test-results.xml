@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.5625e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="4" skipped="0" time="0.092172458">
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor()" time="0.091856458">
+            <failure message="Expectation failed: details.imports.map(\.owner.id) == [tagUUID] (error)"/>
+            <failure message="Expectation failed: Set(details.skippedDependents.map { $0.owner.id }) == [listIdentifier, itineraryIdentifier] (error)"/>
+            <failure message="Expectation failed: details.referenceChanges.isEmpty (error)"/>
+            <failure message="Issue recorded (error): Mixed Skip must apply and independently recover together: PlannerOperationResult(operationId: D1DBFB00-0A60-46DD-8E4D-460D43D16CAE, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;The membership has unresolved source bindings.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

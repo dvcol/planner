@@ -126,6 +126,204 @@ struct NativeImportRestorationTests {
     #expect(repeated.generated.isEmpty && repeatedData == after)
   }
 
+  @Test func skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Museum", notes: "Keep current notes")))
+      ).outcome,
+      let item = created.generated.first,
+      case .applied(let otherCreated, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Current lunch")))
+      ).outcome,
+      let otherItem = otherCreated.generated.first,
+      case .exported(let originalData) = await planner.exportData(session: session),
+      case .decoded(let original) = planner.decodeImport(originalData),
+      case .reviewed(let deletion) = await planner.prepareReview(
+        session: session, command: .deleteSource(source: item)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: deletion.command,
+          reviewToken: deletion.reviewToken)
+      ).outcome,
+      case .reviewed(let restoration) = await planner.prepareReview(
+        session: session,
+        command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: restoration.command,
+          reviewToken: restoration.reviewToken)
+      ).outcome,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(scope: .globalItem(itemId: item.id), done: true))
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let current) = planner.decodeImport(before),
+      let currentItem = current.backup.items.first(where: { $0.id == item.id })
+    else { throw CancellationError() }
+    var incoming = try #require(JSONSerialization.jsonObject(with: originalData) as? [String: Any])
+    let fixture = try #require(
+      JSONSerialization.jsonObject(with: nativeImportFixtureData()) as? [String: Any])
+    let fixtureSources = try #require(fixture["sources"] as? [[String: Any]])
+    let independentTag = try #require(fixtureSources.first { $0["kind"] as? String == "tag" })
+    let tagIdentifier = try #require(independentTag["id"] as? String)
+    let tagUUID = try #require(UUID(uuidString: tagIdentifier))
+    var sources = try #require(incoming["sources"] as? [[String: Any]])
+    let predecessor = try #require(sources.first { $0["id"] as? String == item.id.uuidString })
+    let currentOther = try #require(
+      sources.first { $0["id"] as? String == otherItem.id.uuidString })
+    var listSource = try #require(fixtureSources.first { $0["kind"] as? String == "list" })
+    var listContent = try #require(listSource["content"] as? [String: Any])
+    listContent["name"] = "Old route branch"
+    listContent["manualEstimate"] = NSNull()
+    listSource["content"] = listContent
+    var itinerarySource = try #require(
+      fixtureSources.first { $0["kind"] as? String == "itinerary" })
+    var itineraryContent = try #require(itinerarySource["content"] as? [String: Any])
+    itineraryContent["title"] = "Dependent route"
+    itineraryContent["manualEstimate"] = NSNull()
+    itinerarySource["content"] = itineraryContent
+    let listIdentifierText = try #require(listSource["id"] as? String)
+    let itineraryIdentifierText = try #require(itinerarySource["id"] as? String)
+    let listIdentifier = try #require(UUID(uuidString: listIdentifierText))
+    let itineraryIdentifier = try #require(UUID(uuidString: itineraryIdentifierText))
+    let listBinding: [String: Any] = [
+      "kind": "list", "id": listIdentifier.uuidString,
+      "lifetimeId": try #require(listSource["lifetimeId"] as? String),
+    ]
+    let itineraryBinding: [String: Any] = [
+      "kind": "itinerary", "id": itineraryIdentifier.uuidString,
+      "lifetimeId": try #require(itinerarySource["lifetimeId"] as? String),
+    ]
+    let predecessorBinding: [String: Any] = [
+      "kind": "item", "id": item.id.uuidString,
+      "lifetimeId": try #require(predecessor["lifetimeId"] as? String),
+    ]
+    let otherBinding: [String: Any] = [
+      "kind": "item", "id": otherItem.id.uuidString,
+      "lifetimeId": try #require(currentOther["lifetimeId"] as? String),
+    ]
+    sources += [listSource, itinerarySource, independentTag]
+    incoming["sources"] = sources
+    incoming["memberships"] = [
+      [
+        "id": "00000000-0000-4000-8000-000000000477",
+        "lifetimeId": "00000000-0000-4000-8000-000000000477",
+        "list": listBinding, "item": predecessorBinding, "rank": "1024", "localDone": false,
+      ],
+      [
+        "id": "00000000-0000-4000-8000-000000000478",
+        "lifetimeId": "00000000-0000-4000-8000-000000000478",
+        "list": listBinding, "item": otherBinding, "rank": "2048", "localDone": true,
+      ],
+    ]
+    incoming["itineraryEntries"] = [
+      [
+        "id": "00000000-0000-4000-8000-000000000457",
+        "lifetimeId": "00000000-0000-4000-8000-000000000457",
+        "itinerary": itineraryBinding, "source": listBinding, "rank": "1024",
+        "localDone": NSNull(),
+      ],
+      [
+        "id": "00000000-0000-4000-8000-000000000458",
+        "lifetimeId": "00000000-0000-4000-8000-000000000458",
+        "itinerary": itineraryBinding, "source": otherBinding, "rank": "2048", "localDone": false,
+      ],
+    ]
+    let decodedResponse = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+    guard case .decoded(let backup) = decodedResponse else {
+      Issue.record("The complete predecessor fixture must decode: \(decodedResponse)")
+      return
+    }
+    #expect(backup.externalBindings.isEmpty)
+    let reviewOutcome = await planner.prepareReview(
+      session: session, command: .applyImport(backup: backup, mode: .skip))
+    guard case .reviewed(let review) = reviewOutcome else {
+      Issue.record("Skip must retain the live Item and admit independent data: \(reviewOutcome)")
+      return
+    }
+    let details = try #require(review.impact.importDetails)
+    #expect(details.imports.map(\.owner.id) == [tagUUID])
+    #expect(details.skippedConflicts.map(\.owner.id) == [item.id])
+    #expect(details.skippedConflicts.first?.owner.lifetimeId == currentItem.lifetimeId)
+    #expect(details.replacements.isEmpty && details.restorations.isEmpty)
+    #expect(
+      Set(details.skippedDependents.map { $0.owner.id }) == [listIdentifier, itineraryIdentifier])
+    #expect(details.skippedDependents.allSatisfy { $0.reasonCode == "deletedDependency" })
+    #expect(details.skippedDependents.allSatisfy { $0.before == nil && $0.after == nil })
+    #expect(details.unchanged.map { $0.owner.id } == [otherItem.id])
+    #expect(details.referenceChanges.isEmpty)
+    guard case .exported(let afterReview) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    #expect(afterReview == before)
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(let result, .complete(let checkpoint)) = response.outcome,
+      case .exported(let after) = await planner.exportData(session: session),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else {
+      Issue.record("Mixed Skip must apply and independently recover together: \(response)")
+      return
+    }
+    var actual = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    let recovery = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    #expect(NSDictionary(dictionary: recovery).isEqual(to: actual))
+    let actualSources = try #require(actual["sources"] as? [[String: Any]])
+    let importedTag = try #require(
+      actualSources.first { $0["id"] as? String == tagIdentifier })
+    #expect(NSDictionary(dictionary: importedTag).isEqual(to: independentTag))
+    actual["sources"] = actualSources.filter { $0["id"] as? String != tagIdentifier }
+    let expectedCurrent = try #require(
+      JSONSerialization.jsonObject(with: before) as? [String: Any])
+    #expect(NSDictionary(dictionary: actual).isEqual(to: expectedCurrent))
+    #expect(!result.generated.contains(item))
+    #expect(
+      Set(result.importSummary?.skippedDependents.map { $0.owner.id } ?? [])
+        == [listIdentifier, itineraryIdentifier])
+    #expect(result.importSummary?.imports.map(\.owner.id) == [tagUUID])
+    #expect(
+      result.importSummary?.skippedConflicts.first?.owner.lifetimeId == currentItem.lifetimeId)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
+      ).outcome,
+      case .reviewed(let repeatedReview) = await reopened.prepareReview(
+        session: reopenedSession, command: .applyImport(backup: backup, mode: .skip)),
+      case .applied(let repeated, .complete) = await reopened.execute(
+        .init(
+          operationId: UUID(), session: reopenedSession, command: repeatedReview.command,
+          reviewToken: repeatedReview.reviewToken)
+      ).outcome,
+      case .exported(let repeatedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == after)
+    #expect(replayed == result && replayCheckpoint == checkpoint)
+    #expect(repeated.generated.isEmpty && repeatedData == after)
+  }
+
   @Test func foreignOwnedCandidateCannotBypassRestorationReconciliation() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(

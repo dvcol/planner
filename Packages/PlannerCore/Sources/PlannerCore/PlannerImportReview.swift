@@ -334,8 +334,17 @@ func plannerResolveImportReview(
         guard let identity = reference.identity else { return false }
         return closedIdentities.contains(PlannerImportClosedIdentity(identity))
       }
+      let dependsOnClosedSource = dependencies.contains { dependency in
+        guard let kind = PlannerPortableIdentityKind(rawValue: dependency.kind.rawValue) else {
+          return false
+        }
+        return currentGraph.isClosed(
+          .init(kind: kind, id: dependency.id, lifetimeId: dependency.lifetimeId))
+      }
       guard
-        (mode == .skip && (ownsClosedRecord || closedContextOwners.contains(sourceReference)))
+        (mode == .skip
+          && (ownsClosedRecord || dependsOnClosedSource
+            || closedContextOwners.contains(sourceReference)))
           || dependencies.contains(where: { unavailableSources.contains($0.reference) })
       else {
         continue

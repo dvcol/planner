@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.076565167">
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor()" time="0.076266709">
+            <failure message="Issue recorded (error): The complete predecessor fixture must decode: .invalid(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/sources/2/content/manualEstimate&quot;), message: &quot;A declared backup property is missing.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,21 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 6.408,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.091856458,
+      "failures": [
+        "Expectation failed: details.imports.map(\\.owner.id) == [tagUUID] (error)",
+        "Expectation failed: Set(details.skippedDependents.map { $0.owner.id }) == [listIdentifier, itineraryIdentifier] (error)",
+        "Expectation failed: details.referenceChanges.isEmpty (error)",
+        "Issue recorded (error): Mixed Skip must apply and independently recover together: PlannerOperationResult(operationId: D1DBFB00-0A60-46DD-8E4D-460D43D16CAE, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The membership has unresolved source bindings.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}
