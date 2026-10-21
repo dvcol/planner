@@ -1,0 +1,74 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9807A12B-B049-4FA4-8206-1F20BAF3327C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Invalid bookmark rejects the staged Item edit_0_F36350AF-C74C-460A-8D62-61E6684DE7D7.png",
+      "timestamp": 1792615450.261,
+      "retainedFileName": "9807A12B-B049-4FA4-8206-1F20BAF3327C.png",
+      "originalSha256": "6eeadb6f07a9a7c5ac9a51b39465228f9c4480a2b3d263e7fa5e941450d961fd",
+      "retainedSha256": "6eeadb6f07a9a7c5ac9a51b39465228f9c4480a2b3d263e7fa5e941450d961fd"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "638B28B9-F70D-48DD-8D52-8DB726A3135E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Removing every bookmark survives reopening without changing Item state_0_4F9D66CB-C068-47DD-84F1-5FA01CDD0CA8.png",
+      "timestamp": 1792615592.878,
+      "retainedFileName": "638B28B9-F70D-48DD-8D52-8DB726A3135E.png",
+      "originalSha256": "6d46e45066182a33e8d36fc2dd022cfe9588229aa4dc9e51d6608e6123e4e62f",
+      "retainedSha256": "6d46e45066182a33e8d36fc2dd022cfe9588229aa4dc9e51d6608e6123e4e62f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F0A16604-5BF2-4D5D-B6D5-C212440814E8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Saved owned address renders a native MapKit pin_0_FF4BD573-5B3B-43C3-AE06-FC037FBF287F.png",
+      "timestamp": 1792615649.294,
+      "retainedFileName": "F0A16604-5BF2-4D5D-B6D5-C212440814E8.png",
+      "originalSha256": "89109901f14a299b74ca8e37c7b3f85224798d7203423a910659206828c4bd25",
+      "retainedSha256": "89109901f14a299b74ca8e37c7b3f85224798d7203423a910659206828c4bd25"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C998E14C-E9D5-47CF-A6F3-B023FC97A4A8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Owned address and local completion survive reopening_0_2FDE4DE8-0C1C-4534-813F-2B2330D5BB85.png",
+      "timestamp": 1792615697.004,
+      "retainedFileName": "C998E14C-E9D5-47CF-A6F3-B023FC97A4A8.png",
+      "originalSha256": "a79f7c2e4e7b4fca204117e21f5dac608c392bc817bdbfc7ae09c678a21862fe",
+      "retainedSha256": "a79f7c2e4e7b4fca204117e21f5dac608c392bc817bdbfc7ae09c678a21862fe"
+    }
+  ],
+  "excluded": [
+    {
+      "exportedFileName": "2EEC9CA7-FE85-4CA3-9E3E-6C06CCB13ACF.png",
+      "sha256": "d90d6b35a9ec24be199408d39310bd422faa126658bb96e28a90d9ee7c27d88c",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "4EEEA5AF-5D89-43E7-93DD-7EE86F59D7F2.png",
+      "sha256": "a1ee11388335e3f2da305c53840668c72a03a3d28fb5be886c35172d6deaae74",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "4A10501A-4AB4-4251-BA63-48D8CD38C3FE.png",
+      "sha256": "76638e4855f9eb1c36587b31fb8981cccf6766ab677fb1b710255bb376454f95",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "A5A0D88E-2B0B-4D22-9ACA-FDD93948EFCC.png",
+      "sha256": "246b6cff30063825bcdc93f7f74d1bfab1d19d4803ea1457b48c416637813a8f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    }
+  ]
+}

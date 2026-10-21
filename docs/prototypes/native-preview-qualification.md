@@ -1,6 +1,6 @@
 # Native preview boundary qualification
 
-Status: the original milestones below retain their source epochs. Q48/Q49/Q51 are resolved in the [decision register](../open-decisions.md); later [candidate](native-controlled-address-candidates.md), [Retry](native-controlled-address-retry.md), [delayed-result](native-delayed-address-result.md) and [pin-editing](native-pinned-address-editing.md) reports supersede the initial mobile UI gaps. The iOS SDK follow-up below adds package runtime evidence without closing Mac UI, physical or final-polish gates.
+Status: the original milestones below retain their source epochs. Q48/Q49/Q51 are resolved in the [decision register](../open-decisions.md); later [candidate](native-controlled-address-candidates.md), [Retry](native-controlled-address-retry.md), [delayed-result](native-delayed-address-result.md) and [pin-editing](native-pinned-address-editing.md) reports supersede the initial mobile UI gaps. The iOS SDK and saved-app follow-ups below add separate package and native runtime evidence without closing Mac UI, physical or final-polish gates.
 
 ## Context and scope
 
@@ -85,3 +85,26 @@ All 751 recorded inputs match both epochs and the current workspace; compiled pr
 The [server record](evidence/previews/ios-sdk/server/) records two observed image-page, image-PNG and plain-page GETs. Optional icon requests return the fixture's expected 404s. Those counts are scoped observations from the live tool output, not an original retained server stdout log. After both runtimes finish, only the verified owned listener is terminated; its intentional exit 143 is not a test outcome.
 
 This adds real iOS adapter and controlled-cache evidence. It does not qualify arbitrary public websites, actual saved-app integration with these live results, original Maps sender/URL binding, installed Share, physical memory/latency, signed sync/account transitions, Mac keyboard/window behavior or final whole-app UI acceptance. Prior UI captures and source epochs retain their own limits.
+
+## Saved-app SDK follow-up, 22 October 2026
+
+The package SDK checks above do not establish the saved application's current integration. This follow-up reuses four existing public native journeys in `PlannerNavigation`, with disposable local datasets and the app's ordinary Apple link/address providers. It does not use the controlled-provider fixture application. Website metadata comes through Apple's SDK from the repository's local HTML/image server; the address journey uses the live Apple Park lookup. The goal is actual rendered previews, useful failure handling and preserved saved identities/state across List references and relaunch.
+
+The initial iPhone image/plain and Retry journeys pass. The iPad image journey fails before preview loading while adding its second bookmark. A second, instrumented invocation reproduces the failure. Original AX captures and the synthesized event show Add moving down 40.5 points: the event uses y=833.5, while the button subsequently starts at y=848. The previous Label remains focused and only one URL field exists. The native driver now submits that single-line Label with Return before continuing; the complete iPad image journey then passes. The native framework's underlying repositioning cause is not established, and no production layout change is inferred from the missed event.
+
+The affected regression exposes the same unfinished-entry problem after editing Title, plus an Address-field assertion made before its lazy Form row is revealed. Submit the edited Title before Add and reveal Address before asserting its existence. No existing content, identity, validation, paint, completion, ordering, Cancel or relaunch assertion is removed. These are test-driver corrections, with no production API, provider, package, target, signing or persisted-data change.
+
+| Existing native journey | iPhone | iPad |
+| --- | --- | --- |
+| Painted image and plain cards, live List thumbnail, independent completion, removal and relaunch | 133.856 s | 136.886 s |
+| Unavailable provider retains the owned URL and native Retry | 42.398 s | 43.392 s |
+| Rejected invalid bookmark, stable link identities/order, Cancel, removal and relaunch | 180.006 s | 193.473 s |
+| Cancelled/saved owned address, real MapKit pin, live completed List and relaunch | 86.590 s | 104.065 s |
+
+These are eight passing executions of four functions on each iOS 27.0 simulator. They come from separate recorded epochs. The iPad Retry pass belongs to a three-case invocation whose other two cases fail; their corrected validation/address journeys pass in the final invocation. The complete history is twelve passes, four failures and zero skips across sixteen executions, including the earlier successful iPhone runs and failed probes. Native result trees and original logs determine these classifications; a diagnostic wrapper returning zero cannot turn its recorded native exit 65 into a pass.
+
+The [qualification and source reconciliation](evidence/navigation/native-itinerary-window-compatibility/native-saved-preview-follow-up/qualification.json) binds every accepted case to its exact result and duration. All 1,060 other source/configuration inputs, including production code, remain unchanged. Between the successful preview/Retry epoch and final source, only the two rerun test functions change; every other test and helper is byte-identical. All 1,061 inputs and current products match both final mobile and Mac builds. The Mac build supplies compiler evidence only, with no new Mac UI execution. Strict affected Swift/Markdown lint and whitespace checks pass.
+
+The packets retain 22 inspected original PNGs, selected native hierarchies/event data, complete test outcomes, compressed logs and source/product hashes. Selected attachment hashes verify their unchanged bytes. The [server record](evidence/navigation/native-itinerary-window-compatibility/native-saved-preview-server/) distinguishes observed baseline stdout chunks from the complete follow-up stream. Image/plain requests succeed; optional icon requests return 404. Only the verified owned listener is stopped after dependent tests finish; exit 143 is intentional shutdown, not test success.
+
+Phone captures establish represented light states; iPad captures establish represented dark states, both at Large text without Increase Contrast. They do not qualify every appearance/text-size combination, arbitrary websites or address accuracy, Mac keyboard/window behavior, physical allocation/latency, installed Share, signed sync/account recovery or final whole-app UI acceptance. Mid-scroll captures also do not establish final-row clearance beneath floating bars. Those gates remain open.

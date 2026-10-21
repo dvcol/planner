@@ -1,0 +1,320 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8102AA4E-F9FE-4008-BF4B-B5A078B89B7E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Item editor window before visibility failure_0_A2A16782-75EA-4EFE-AAA3-6A6143FE5805.png",
+      "timestamp": 1792615133.098,
+      "retainedFileName": "8102AA4E-F9FE-4008-BF4B-B5A078B89B7E.png",
+      "originalSha256": "fa80db24e3401f063a60fd34f58d762f437e2f0747c855a53206125b97618caf",
+      "retainedSha256": "fa80db24e3401f063a60fd34f58d762f437e2f0747c855a53206125b97618caf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "2B9833BE-F8AE-4A8D-8DDC-8361D6DD8A4A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Item editor own-app hierarchy before visibility failure_0_740A3BB9-B1BE-4161-A385-74537A6DB8A5.txt",
+      "timestamp": 1792615132.973,
+      "retainedFileName": "2B9833BE-F8AE-4A8D-8DDC-8361D6DD8A4A.txt.gz",
+      "originalSha256": "f29b123723c45d3e210fd96a26b3125d458677282a3a7ccb0522082924bc9b0d",
+      "retainedSha256": "ed7b3396d3ea8bf70251cf41a7601d6e534d7fb2768b9759b1c9b4843b730b73"
+    }
+  ],
+  "excluded": [
+    {
+      "exportedFileName": "EC4649CA-CEA2-4B5D-9F69-D5E5A012F5A5.txt",
+      "sha256": "4f4746454838f3efdb8b7eb7998a8a3738286cdc63f6f118117da60677b8357f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "755E1ED7-7732-4FCF-BCCE-410B5A60EEB6",
+      "sha256": "3120eabc25f2f4c17dccd4cc768ca6f192a7aa553978b3a34fc92d0f4abd9563",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "E41EAC2E-3961-478C-886F-8D7768891855.txt",
+      "sha256": "4f4746454838f3efdb8b7eb7998a8a3738286cdc63f6f118117da60677b8357f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "4012BE8A-8758-4F2F-8DB3-57F2DDCF84AA",
+      "sha256": "3120eabc25f2f4c17dccd4cc768ca6f192a7aa553978b3a34fc92d0f4abd9563",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "2335A0EA-90F8-4671-BCEC-D2004C746BD8.txt",
+      "sha256": "4f4746454838f3efdb8b7eb7998a8a3738286cdc63f6f118117da60677b8357f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "35E32675-AA1C-430C-9133-6BE40D0F6BE7",
+      "sha256": "3120eabc25f2f4c17dccd4cc768ca6f192a7aa553978b3a34fc92d0f4abd9563",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "9843548E-1092-4F38-A8A8-3227E29EB930.txt",
+      "sha256": "4f4746454838f3efdb8b7eb7998a8a3738286cdc63f6f118117da60677b8357f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "C2B1138F-5A11-4D02-87AA-6DE036F27925",
+      "sha256": "3120eabc25f2f4c17dccd4cc768ca6f192a7aa553978b3a34fc92d0f4abd9563",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "64E30F4C-C0A9-4B64-9656-D03CFDA868B0.txt",
+      "sha256": "4f4746454838f3efdb8b7eb7998a8a3738286cdc63f6f118117da60677b8357f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "6E2FDDF2-0D84-42E2-A241-88A5052ACF84",
+      "sha256": "3120eabc25f2f4c17dccd4cc768ca6f192a7aa553978b3a34fc92d0f4abd9563",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "AFF1E511-2D27-4089-AE36-A106806DC2A9",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "644946AD-C4AA-4BBD-8201-83EC5A928801",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "4D8AF058-7564-46CD-B016-1ABF1ADA1D69",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "180B134C-9A74-4ADE-A246-A92EB16B3B55",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "2D4D2600-B0F9-48FD-B84D-F47F34F8AE50",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "E7599C8B-9683-4B71-801F-98D824A8D1DB",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "81204C39-C76E-4B9A-9A67-980F7CE47FB8",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "78D44CC6-3F79-4A4B-9360-746B347B3529",
+      "sha256": "0537e843faa702cf6071151616bcc55b2883848027ff71346d6d1490b32fe46f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "1F955A4A-4377-4CB2-BBF2-FD5C6E40AD9B",
+      "sha256": "cf1ebd3dc69ed4f61f1866f3081efa0a5a534a8dd5fd59874387b60f1dc1cea4",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "4B2E2FF6-82AE-4DAE-8538-085E87050140",
+      "sha256": "967247921ac0610089ebdf449728db5e1c84c677ba58dba8cd79abc70af6b0d4",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "FD2B0873-D053-4B08-8DB6-DE0851270670",
+      "sha256": "77a0a05bd87d512107cd0ea76bf559dedfaa3a953be5d97b06e893480b20cfd3",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "F23B73BA-DB3A-42B3-8B00-F1679B9C9C1F",
+      "sha256": "dc69e766e69e73b9b110aabdefa68ef7ba65bb6595be8dc022fe9fb73c6390cb",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "745DEACF-FB86-4644-B3FF-C2C5D83D1202",
+      "sha256": "5f78dc972d7539b63a364febfa297ad03783c2c2cc1c9025e6ffe01cfbe9952f",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "53C9EFD8-03E5-4AFF-8BC1-278090C1F5CC",
+      "sha256": "300a2e2e5d590fdbb451ef0b9c0cefd2edff6e28c8542a8508144921ddfc563a",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "64640E18-0E62-441A-860C-72A5CE3FE497",
+      "sha256": "ed199e7bac6306fd343317d37ecfa250a51a9f1a0cc57c63e13c68a1a5af3668",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "9FB08A02-2F75-44DB-9C7E-8285A1278E84",
+      "sha256": "ed17b2069a3dd3e08f7676acb5c6678439165fa7667abc0e8d30e13c4b7f4e78",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "1E61B7C0-98C5-40B9-8C95-7EA3B9F041FB",
+      "sha256": "39fc2e52d12f6f78a7c59d94657ce2af96f344e39072369b8e08ad6fc712df5a",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "6600B850-7931-4F57-BD2E-80A31E5E6784",
+      "sha256": "8eed82d5a84683fb568fcc75a9d1c1676e37c15a96d1e0fa9c9d8fcaceb1f1b8",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "3D5A026E-D517-4AE5-A08E-98CDBBC80332",
+      "sha256": "7cec4679388d98382eddfdd544973c7a64c043a03561524dafac00fe356335b0",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "78357CE1-BC45-4775-B8BB-9F5A45FE50F7",
+      "sha256": "2b56ead8b709104e5ef6fe8f7ac8bb098ee2a873fcc92c6dacb9e30e679cf643",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "78A1DDB0-2BFF-4E02-A1B0-9CD596F2B593",
+      "sha256": "4b0b2ce0e0f1234e27ef132b0e733aa042b5e970453579b73dd6434917759482",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "E638007A-6259-4E62-8914-3A641A43B2A2",
+      "sha256": "294d5fb5238fc70dbe66fce2d6a68338da57511c25ad61e96e7227f9b723c551",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "9E23FBA4-FA8B-46C0-96CF-16E73C5A08C7",
+      "sha256": "aa52eb65d81fb615e0b6814ad91959a9344871ba0b8f1d795ae2a3e3c22600ed",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "5065BCE4-7B00-4134-8EE9-F4731CF4A70F",
+      "sha256": "a60d28edc5b17ee6e342d92ff61c4d63dc8d75c8ff611c879de44cf4dcb1ce63",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "503646CE-40DC-4798-A578-C3C4F3FE48E9",
+      "sha256": "abbc204f649349a638e1858a3606179bae778010c6a60b08a7aaf65eff6f0686",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "D782E8D3-0945-47BA-ACC3-51642ABA2544",
+      "sha256": "405f69569a30f3fe643ccda9356992a1b230854c3991745e72fa1a477d120380",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "ED266752-F428-4185-951C-3584D1624D3B",
+      "sha256": "055b236442589731ae891602f42dfd6279ac6127e3cd506175d191b0b03f2098",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "30086F79-006E-4ABE-A8F4-FE8EC480F779.mp4",
+      "sha256": "34d119269bcaa36b5fdca9a702f72884a961178770d840a07b5eff2b49bab448",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "B235E6A1-1C02-4D8A-8229-D0EBA42C307B.png",
+      "sha256": "10d3754237ee9507aa81a683e7035ca76949a92b600430d5a4890144a4bb5f7a",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "75457ED1-9A7B-4A60-B424-C33DC09DB868.txt",
+      "sha256": "ee9b69e0c6a71fe894a173f4efca0e947370cf18743f2a53f78a190e053fdd61",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "21159118-C9FE-489F-80CA-53A060DC3872",
+      "sha256": "0defd6aa8cdda723e5c155731e29197d90d0c95375acedec46ab2950db0cc635",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "89860606-C0C3-4162-A321-A77E95FF3268.txt",
+      "sha256": "c193f7d8e6a787c67a1dfe2e6cf1066255aaf1c6a4b71eb6d2d55bbe54966635",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "93F5EC73-1474-4371-ADF9-DCB1A291BA46.txt",
+      "sha256": "c193f7d8e6a787c67a1dfe2e6cf1066255aaf1c6a4b71eb6d2d55bbe54966635",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "5CBBCAB9-28C5-4F3A-A745-734DF08799C9.txt",
+      "sha256": "c193f7d8e6a787c67a1dfe2e6cf1066255aaf1c6a4b71eb6d2d55bbe54966635",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "FDC5959A-104A-42AD-BE9A-DA917CD39D4E.txt",
+      "sha256": "c193f7d8e6a787c67a1dfe2e6cf1066255aaf1c6a4b71eb6d2d55bbe54966635",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "64706C2C-BAAA-47BE-B970-5CEFA5336461.txt",
+      "sha256": "c193f7d8e6a787c67a1dfe2e6cf1066255aaf1c6a4b71eb6d2d55bbe54966635",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "AB254B5A-6C6C-4B3B-9C2F-5FFE922D99E6",
+      "sha256": "ae06d7eb2ff83174227e709c5c49e56a9716777aa4e35175ac2afb332f103a13",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "7470C519-A1D4-4527-A579-7159D9406E0A",
+      "sha256": "ab572a1c3224aa45542ced78ee61b37d370e5fd36259872322c96b74344bae90",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "6FE6C6D2-877B-4280-9B24-020457444706",
+      "sha256": "bbb8d264719b7496e8b8be8d6402732c0110f3185685ad3106a1079ee0a176d1",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "809A772D-6456-428C-8704-9ED3FCAF74C0",
+      "sha256": "fe42d6619adb9f487032718060ec7d5df68739b266bc7a4ea7ea8424babea5bf",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "5B1503B2-10E3-44D3-952E-AA958D6FC0F6",
+      "sha256": "f832d5ef608e701b9147a9c13c1d27adb702298694109a7e66c048bb0f9c2c62",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "3DA01645-E692-4376-B9FD-4AA10231DE84",
+      "sha256": "9e75e6c8662e3175732f4b86f215829687cff97b5258e582ab97711797094616",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "50505E20-F13C-41E8-82F0-07A8E3281494",
+      "sha256": "84add302ae86e96cddf68d8bfc01a9418d6ac92bfb0ed84f9586b1d9c6c7778c",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "8EC6E646-9970-4993-BB26-8F7E71A62311",
+      "sha256": "d519d1ca961f4f6709771dcf21de4bdb3ac552f9105c1c2e5619360fe70305a6",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "85E5D4E2-951D-4B96-B1F0-AABFB7FEB492",
+      "sha256": "e0ee007c516afe6f7c7612c1ecc59a5347d03f6f442042410ea43c8c05e0e854",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "DA1C5BD4-508D-4943-9EA7-51114A48D247",
+      "sha256": "392e0e7bae8520d577638e5134194b813831530ff3efe7d059f7537dbcef1924",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "2A4C72A8-9E2B-4133-A412-6EDB0E0C21B0",
+      "sha256": "553bacf81c9f0cc3b3cd9a13d4e1b8f4fd29352af063d49b3b8ddf2948043023",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "5260A182-7401-40BE-A7F4-8C2A48BF9621.mp4",
+      "sha256": "b83919c697c91b0339394cb23e99bd1e7e8f6485511af343cf13a60934491f3e",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    }
+  ]
+}

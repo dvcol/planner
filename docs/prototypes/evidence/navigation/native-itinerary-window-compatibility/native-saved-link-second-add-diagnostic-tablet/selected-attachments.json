@@ -1,0 +1,64 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8B551623-2EFC-4C81-A202-E8D8911277EB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Second bookmark before native Add tap_0_1E07B41C-0565-4A6E-8BF8-AF2F7BE8AC03.png",
+      "timestamp": 1792614686.254,
+      "retainedFileName": "8B551623-2EFC-4C81-A202-E8D8911277EB.png",
+      "originalSha256": "5655673e5ecc7a4e407cae515abcf3dc5c098687abd2d4d67ac3bc9ea07b82bd",
+      "retainedSha256": "5655673e5ecc7a4e407cae515abcf3dc5c098687abd2d4d67ac3bc9ea07b82bd"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3A34B831-9060-46DC-B002-F414C1EDCB02.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Second bookmark after native Add tap_0_9B24B4DD-997E-458B-A3FA-1A3FCF45BF2D.png",
+      "timestamp": 1792614687.909,
+      "retainedFileName": "3A34B831-9060-46DC-B002-F414C1EDCB02.png",
+      "originalSha256": "3314f114f43bcdc9701bbf214a63b6558af07566f8f28c7f5f35bbacc53cc061",
+      "retainedSha256": "3314f114f43bcdc9701bbf214a63b6558af07566f8f28c7f5f35bbacc53cc061"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A69A3021-AA9F-41A1-9F9D-7CAD164C7C73.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Second bookmark before native Add tap_0_6320F4A6-970E-4D5F-848E-F5AC3FD461D7.txt",
+      "timestamp": 1792614686.137,
+      "retainedFileName": "A69A3021-AA9F-41A1-9F9D-7CAD164C7C73.txt.gz",
+      "originalSha256": "8589d645f09bdda1bbfb259a28ab458d4e97a749190323bfaea13237a6fcb33e",
+      "retainedSha256": "66528376f7c3e471951c8e108d24f014a359b7c72cecebc414316923ca143c55"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B2B8B928-C46A-40E7-92B0-E80FE032BC2E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Second bookmark after native Add tap_0_8639AEC5-EE80-40FD-927B-DCB604250455.txt",
+      "timestamp": 1792614687.788,
+      "retainedFileName": "B2B8B928-C46A-40E7-92B0-E80FE032BC2E.txt.gz",
+      "originalSha256": "16240db684033e8488a8ce052ee1da843dcf6c0f867f1bb4567d820b0ab49e44",
+      "retainedSha256": "d8392e823e6e4eb80b6a601de50bade58873be94e6ebd5aaed2e81bb124e3e6a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B57BB576-4485-46EE-8B86-64E68A34960C",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 05.31.26 AM",
+      "timestamp": 1792614686.731,
+      "retainedFileName": "B57BB576-4485-46EE-8B86-64E68A34960C.gz",
+      "originalSha256": "8886c9978c29e163d656263b3ff9280009418e1b4fac318bd203dc8a037bbed5",
+      "retainedSha256": "093f9f17075ed43347c2bc468aaf75860dabcb012e86dc4376da690cb41e9b63"
+    }
+  ]
+}

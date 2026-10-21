@@ -1,0 +1,74 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "85769A5E-E6AC-4807-8DF6-9FA620DDD5F0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Invalid bookmark rejects the staged Item edit_0_8CAA25D1-B005-4DD9-BBEA-9A83553454C6.png",
+      "timestamp": 1792615447.473,
+      "retainedFileName": "85769A5E-E6AC-4807-8DF6-9FA620DDD5F0.png",
+      "originalSha256": "ff69fc1df6935426fa6d994291f715e1eca93893582e53b8e4e933c9b2f4d0d3",
+      "retainedSha256": "ff69fc1df6935426fa6d994291f715e1eca93893582e53b8e4e933c9b2f4d0d3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6D4333BE-08B7-4D8F-B64C-4BD7CC64F281.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Removing every bookmark survives reopening without changing Item state_0_BAD535F5-1C5A-4E03-8D15-A382338D9F29.png",
+      "timestamp": 1792615579.396,
+      "retainedFileName": "6D4333BE-08B7-4D8F-B64C-4BD7CC64F281.png",
+      "originalSha256": "c7549ff5a92e8fbbc9d5bfd693eb2ce7bbb53324cca31974ecd4fec92af23493",
+      "retainedSha256": "c7549ff5a92e8fbbc9d5bfd693eb2ce7bbb53324cca31974ecd4fec92af23493"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "098A9820-40EF-492B-8821-5908E23978A3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Saved owned address renders a native MapKit pin_0_B10F6C8C-BCF0-45F8-B358-A37938CE7635.png",
+      "timestamp": 1792615623.066,
+      "retainedFileName": "098A9820-40EF-492B-8821-5908E23978A3.png",
+      "originalSha256": "98848c0fddf30f3c6a56337d53a9ac40b6b57fff0e3b9c81ac364d552f8e1306",
+      "retainedSha256": "98848c0fddf30f3c6a56337d53a9ac40b6b57fff0e3b9c81ac364d552f8e1306"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B4345E00-F0E2-4CA3-987A-346DB7E2B6D9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Owned address and local completion survive reopening_0_9F3D4B2F-A04E-479F-899B-4CE10E102BEB.png",
+      "timestamp": 1792615666.1,
+      "retainedFileName": "B4345E00-F0E2-4CA3-987A-346DB7E2B6D9.png",
+      "originalSha256": "c29587028c78b4415e18c0d3f2f5e1319981c2069e2dc0a26fc43825fa9e1726",
+      "retainedSha256": "c29587028c78b4415e18c0d3f2f5e1319981c2069e2dc0a26fc43825fa9e1726"
+    }
+  ],
+  "excluded": [
+    {
+      "exportedFileName": "B2ECB9A9-F3ED-4D07-9737-049ECFFF615D.png",
+      "sha256": "0f5e839c6f9b3bcc8834c6402e056386e9f74db9dd114c6d8e279d80cd28030e",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "A65D8CD2-FF81-4CB3-8075-0536CD44F336.png",
+      "sha256": "1f97c1aa5dc005a4758d3e0310001b9fe7b0afd56ee7064e4938d1ed18117e2e",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "D02FB1F1-E2E7-43F7-A5EF-B973DD876316.png",
+      "sha256": "89e1e5c831ba0e2234d2e40ce098d422747ac96dad6f1c9b39f209cd3e3f8824",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    },
+    {
+      "exportedFileName": "69BD0251-A845-495E-B5A4-3584393CBB1D.png",
+      "sha256": "1c37765e272cb92670d11d5dd571e45f1a61e41fb7e26a9e68bae099da09aff3",
+      "reason": "Not selected for this compact visual evidence packet; full case outcomes remain in the original result summaries and logs."
+    }
+  ]
+}

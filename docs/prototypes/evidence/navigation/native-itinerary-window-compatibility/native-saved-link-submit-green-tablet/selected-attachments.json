@@ -1,0 +1,53 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8BF818D4-4F60-41AD-BAD0-FBB435D41B93.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native rich website card keeps owned bookmark labels_0_25FDDB66-65D1-4365-9046-A476662C0349.png",
+      "timestamp": 1792614940.701,
+      "retainedFileName": "8BF818D4-4F60-41AD-BAD0-FBB435D41B93.png",
+      "originalSha256": "2374e0cbee0f88aa00fd145b12d2e68d234bf017e131cb5302afaf8c8955b63c",
+      "retainedSha256": "2374e0cbee0f88aa00fd145b12d2e68d234bf017e131cb5302afaf8c8955b63c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8A8DD7F0-D572-4718-8298-DD22AF9F4107.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Live List appearance reuses the native website preview_0_1F732A24-DA46-4B6C-A4B6-876CF8934667.png",
+      "timestamp": 1792614973.612,
+      "retainedFileName": "8A8DD7F0-D572-4718-8298-DD22AF9F4107.png",
+      "originalSha256": "bcebe9d35fb92175ee0e8f72258f10a72355e126ed81fb73d7f95e80c955f557",
+      "retainedSha256": "bcebe9d35fb92175ee0e8f72258f10a72355e126ed81fb73d7f95e80c955f557"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "0AF2FB6F-388D-4D1E-97A7-F8E03AE3188B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Plain website remains useful without an image_0_7BDD1FE8-C557-4244-AA61-F0D0370965F5.png",
+      "timestamp": 1792614995.927,
+      "retainedFileName": "0AF2FB6F-388D-4D1E-97A7-F8E03AE3188B.png",
+      "originalSha256": "adfd0113a6c2b52a16c34df0780479ee163cb4807ea3d2b5086ebc5fde7d9705",
+      "retainedSha256": "adfd0113a6c2b52a16c34df0780479ee163cb4807ea3d2b5086ebc5fde7d9705"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8960D6DF-184E-485B-B4EE-DE76317C654B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Reopening reloads temporary previews from the saved link_0_4032D60F-B6C6-4008-8B06-077B70D0395F.png",
+      "timestamp": 1792615023.294,
+      "retainedFileName": "8960D6DF-184E-485B-B4EE-DE76317C654B.png",
+      "originalSha256": "c70fe7c00370a77333a9853090c1468cbeea625b5fa49d9e798570e391e9e3a8",
+      "retainedSha256": "c70fe7c00370a77333a9853090c1468cbeea625b5fa49d9e798570e391e9e3a8"
+    }
+  ],
+  "excluded": []
+}

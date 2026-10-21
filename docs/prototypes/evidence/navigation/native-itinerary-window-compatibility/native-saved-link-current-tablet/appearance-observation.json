@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "appearance"
+    ],
+    "exitCode": 0,
+    "output": "dark",
+    "error": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "increase_contrast"
+    ],
+    "exitCode": 0,
+    "output": "disabled",
+    "error": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "content_size"
+    ],
+    "exitCode": 0,
+    "output": "large",
+    "error": ""
+  }
+]

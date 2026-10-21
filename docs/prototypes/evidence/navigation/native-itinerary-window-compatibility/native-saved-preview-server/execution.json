@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-u",
+    "scripts/preview-fixture-server.py",
+    "--port",
+    "44555"
+  ],
+  "scriptSha256ObservedAtCollection": "4cb6d5057db93f8fcafdec6dcc77b0d53140885a56bb5928ef54e512f0a62ea5",
+  "scriptMatchesGitHEAD": true,
+  "observedBaselineToolSession": 68413,
+  "baselineStopExitCode": 143,
+  "baselineStreamScope": "Only stdout chunks explicitly read from the original tool handle; no startup line is reconstructed.",
+  "followupToolSession": 92190,
+  "followupPID": 62702,
+  "followupStopExitCode": 143,
+  "followupStreamScope": "Original complete redirected stdout/stderr file, retained after verified owned-process shutdown.",
+  "terminationIsTestSuccess": false
+}

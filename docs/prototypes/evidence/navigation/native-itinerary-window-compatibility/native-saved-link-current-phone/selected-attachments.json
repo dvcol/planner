@@ -1,0 +1,64 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "836B0184-5760-4440-938F-40698CA4453C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native rich website card keeps owned bookmark labels_0_FF02B15D-3A46-4D6C-8A40-4B5813F81BD2.png",
+      "timestamp": 1792614063.023,
+      "retainedFileName": "836B0184-5760-4440-938F-40698CA4453C.png",
+      "originalSha256": "dba77ec2e3a0d3b49e308b6969664f23d90b4698fca4b917d3504118bd953f25",
+      "retainedSha256": "dba77ec2e3a0d3b49e308b6969664f23d90b4698fca4b917d3504118bd953f25"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "3662F8F7-122B-49D1-802A-F763395C8CB3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Live List appearance reuses the native website preview_0_A90E9F29-7188-400D-AD12-A5454AB50B73.png",
+      "timestamp": 1792614091.804,
+      "retainedFileName": "3662F8F7-122B-49D1-802A-F763395C8CB3.png",
+      "originalSha256": "06f0379f0e77ad6dfd00faf8958c629c21f6c3cfceee014b7cb9bcac0ff00405",
+      "retainedSha256": "06f0379f0e77ad6dfd00faf8958c629c21f6c3cfceee014b7cb9bcac0ff00405"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9DBDF062-6632-4FF3-8FF1-02B7DAB2DBFE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Plain website remains useful without an image_0_D12AEF83-E9F2-4E62-A80D-427029E9C24B.png",
+      "timestamp": 1792614113.256,
+      "retainedFileName": "9DBDF062-6632-4FF3-8FF1-02B7DAB2DBFE.png",
+      "originalSha256": "7045d250bec0a454a0476adc6bba20d3b5819f6f0a9651f6608d420c79e845a6",
+      "retainedSha256": "7045d250bec0a454a0476adc6bba20d3b5819f6f0a9651f6608d420c79e845a6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9050112F-20EA-4B19-B108-86A6CA672A36.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Reopening reloads temporary previews from the saved link_0_2124594C-7DC7-4E50-A3AF-697ED21A04F8.png",
+      "timestamp": 1792614150.382,
+      "retainedFileName": "9050112F-20EA-4B19-B108-86A6CA672A36.png",
+      "originalSha256": "3b8218af817d28df9575c540120cbcb022d28860e95a707353727467f83bccc7",
+      "retainedSha256": "3b8218af817d28df9575c540120cbcb022d28860e95a707353727467f83bccc7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1E618964-1EF5-485A-AC8F-4FD5C8823261.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "A provider failure preserves the owned link and native retry_0_C7B85FAA-124D-4053-A5F9-62AA410C3FF5.png",
+      "timestamp": 1792614016.494,
+      "retainedFileName": "1E618964-1EF5-485A-AC8F-4FD5C8823261.png",
+      "originalSha256": "0eb2c985e0433af2787ec27e2f66785abf339317fcce5c7fd7fff4f61dd1372e",
+      "retainedSha256": "0eb2c985e0433af2787ec27e2f66785abf339317fcce5c7fd7fff4f61dd1372e"
+    }
+  ]
+}

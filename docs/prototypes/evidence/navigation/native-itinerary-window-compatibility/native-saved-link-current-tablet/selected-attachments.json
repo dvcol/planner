@@ -1,0 +1,40 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E2E71C1A-5369-44FA-BB81-BE7A5DC28389.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "A provider failure preserves the owned link and native retry_0_C3547961-CA9B-45BB-B58A-FF7DD310A748.png",
+      "timestamp": 1792614016.525,
+      "retainedFileName": "E2E71C1A-5369-44FA-BB81-BE7A5DC28389.png",
+      "originalSha256": "2d09c797f5b4526afc4bc30226e55e76ca69f2f633923e2c5bd614bcdf4c702e",
+      "retainedSha256": "2d09c797f5b4526afc4bc30226e55e76ca69f2f633923e2c5bd614bcdf4c702e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "BF185BBC-4711-4D42-B7B4-832C34776FD3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Item editor window before visibility failure_0_6EC84EB4-897E-4C98-850D-979DFCD5E882.png",
+      "timestamp": 1792614101.683,
+      "retainedFileName": "BF185BBC-4711-4D42-B7B4-832C34776FD3.png",
+      "originalSha256": "a6736508b55e6ab079aa3db318939c7a2afa10555ee009b5c9374219a2482515",
+      "retainedSha256": "a6736508b55e6ab079aa3db318939c7a2afa10555ee009b5c9374219a2482515"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "417AD802-1818-4323-BD4A-CF4EBC0D0210.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Item editor own-app hierarchy before visibility failure_0_FCFE52E9-D9FE-4512-BEF8-3D5821386058.txt",
+      "timestamp": 1792614101.566,
+      "retainedFileName": "417AD802-1818-4323-BD4A-CF4EBC0D0210.txt.gz",
+      "originalSha256": "5abb53a2ca2cc3e43701a0950fa567790f95e5afe4052b2fd620b4f9fc7dfc85",
+      "retainedSha256": "ec3d47e4c8dda2ac2f4515c203784d673567d2002111f915ef902bd060d2a77a"
+    }
+  ]
+}

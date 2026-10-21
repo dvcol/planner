@@ -1,0 +1,34 @@
+{
+  "before": {
+    "addButtonFrame": [
+      136.0,
+      807.5,
+      548.0,
+      52.0
+    ],
+    "urlFieldCount": 1,
+    "addButtonAX": "Button, 0x10acca6c0, {{136.0, 807.5}, {548.0, 52.0}}, identifier: 'saved.item.edit.link.add', label: 'Add link'"
+  },
+  "after": {
+    "addButtonFrame": [
+      136.0,
+      848.0,
+      548.0,
+      52.0
+    ],
+    "urlFieldCount": 1,
+    "addButtonAX": "Button, 0x1144df840, {{136.0, 848.0}, {548.0, 52.0}}, identifier: 'saved.item.edit.link.add', label: 'Add link'"
+  },
+  "actualTouchPoints": [
+    {
+      "coordinate.x": 410.0,
+      "coordinate.y": 833.5
+    },
+    {
+      "coordinate.x": 410.0,
+      "coordinate.y": 833.5
+    }
+  ],
+  "buttonVerticalShift": 40.5,
+  "scope": "Derived from original XCTest AX captures and synthesized event archive, not production instrumentation."
+}
