@@ -1,0 +1,14 @@
+{
+  "phases": [
+    "native-label-appearance-mac-compile",
+    "native-label-system-picker-rgb",
+    "native-label-appearance-device-compile",
+    "native-label-appearance-hosted",
+    "native-label-appearance-phone-valid",
+    "native-label-appearance-tablet-dark"
+  ],
+  "identicalProductionAndConfigurationInputCount": 859,
+  "testSourcesMayDifferBetweenEarlierNativeAndFinalSystemPickerRuns": true,
+  "all81ActionContractsPreservedOnAllPlatforms": true,
+  "actualMacUIOrSignedDeviceRuntimeCredit": false
+}

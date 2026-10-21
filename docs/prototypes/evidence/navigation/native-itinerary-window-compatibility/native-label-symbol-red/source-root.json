@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "69ffb4bd4e89fc156a15b5350edab2bb83f4be9b",
+  "overlays": [
+    "PlannerNavigationUITests/SavedCategoryJourneyTests.swift"
+  ]
+}

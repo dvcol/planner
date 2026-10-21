@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-appearance-phone-valid.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 1,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792546728.634,\n  \"passedTests\" : 1,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792546615.133,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-appearance-phone-valid.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-appearance-phone-valid"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 6 attachments for: SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges():\nFile: 35676AA9-0443-4DCC-90BA-75B455AF6AF1.png, suggested name: \"Live shared labels remain in the original Item details_0_5B81175C-F6C7-47B6-AD27-600D2D2AD53D.png\"\nFile: C60B91B3-E895-4F5E-A26F-17F94108B5A4.png, suggested name: \"Only the explicitly cleared Category loses its appearance_0_40C0AF35-6138-4FF3-922E-3DF1333A4F61.png\"\nFile: 57F6D6FA-EA02-40A4-9C54-6CCB30BC52E0.txt, suggested name: \"Label appearance cleared delivered backup filename_0_BA425766-C30F-4DB0-BA0E-263B765397AE.txt\"\nFile: A12E622C-F5DB-42AC-8A4F-A283FC69463F.png, suggested name: \"Imported custom symbol and color remain after name-only Save_0_3FD416E9-3C66-4A12-A6EA-98AAC2F06CB7.png\"\nFile: A7CAF0F3-804A-420A-A02F-5EE6F3D6A6EF.txt, suggested name: \"Label appearance name-only delivered backup filename_0_1D3E893E-AEA4-48F4-B991-FEFC2B7ADC3F.txt\"\nFile: FFA1270D-4482-4345-BF85-4DC3B19D7D52.txt, suggested name: \"Native picker for the selected backup file_0_BFAA4C20-FF03-4D26-98A7-41BC702CE7D1.txt\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-appearance-phone-valid/manifest.json\n",
+    "stderr": ""
+  }
+]

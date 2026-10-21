@@ -1,0 +1,92 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "63D2775F-A145-4BF3-A896-95D92B636DDE.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_89625B3D-0D1D-40B2-82CD-FE9C885FFDCB.PlannerMCPPrototype",
+      "timestamp": 1792547232.937,
+      "retainedFileName": "63D2775F-A145-4BF3-A896-95D92B636DDE.txt.gz",
+      "sha256": "173cd8119d3a664b3a9bd404c636d830aafa0e1a9a94fd18f8715f33988c8583"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "34A42D6C-06DE-45B8-970F-CD9172294DB9.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Colors\" StaticText`_0_E2E4E0CF-1BD7-412B-9584-FA92DF44AF60.txt",
+      "timestamp": 1792547232.699,
+      "retainedFileName": "34A42D6C-06DE-45B8-970F-CD9172294DB9.txt.gz",
+      "sha256": "78bbad51184a2be2918c3c73e71461e8d6fd8c6134a5f2be22291f0dceeef86a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6E3106F8-E87F-4EAF-A40F-BD3131D06590.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Colors\" StaticText`_0_090B53B5-A4FD-4900-9A1A-92759521CDA0.txt",
+      "timestamp": 1792547231.734,
+      "retainedFileName": "6E3106F8-E87F-4EAF-A40F-BD3131D06590.txt.gz",
+      "sha256": "78bbad51184a2be2918c3c73e71461e8d6fd8c6134a5f2be22291f0dceeef86a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "679BA2A0-89D5-4E6E-8EFD-647944729ED9.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Colors\" StaticText`_0_C2224F7C-72B7-4405-84A1-F47846C3D80D.txt",
+      "timestamp": 1792547230.748,
+      "retainedFileName": "679BA2A0-89D5-4E6E-8EFD-647944729ED9.txt.gz",
+      "sha256": "78bbad51184a2be2918c3c73e71461e8d6fd8c6134a5f2be22291f0dceeef86a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "019D9782-2827-48E3-929C-FAFD799543CF.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Colors\" StaticText`_0_EBFC1D17-ED92-4054-9454-11CD1E0E081E.txt",
+      "timestamp": 1792547229.677,
+      "retainedFileName": "019D9782-2827-48E3-929C-FAFD799543CF.txt.gz",
+      "sha256": "78bbad51184a2be2918c3c73e71461e8d6fd8c6134a5f2be22291f0dceeef86a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "7EC95556-4C69-4E87-8FE4-9FCB9C21FA49.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Colors\" StaticText`_0_28CE669E-EFEB-4BD2-AE04-B709B72DECF9.txt",
+      "timestamp": 1792547228.728,
+      "retainedFileName": "7EC95556-4C69-4E87-8FE4-9FCB9C21FA49.txt.gz",
+      "sha256": "78bbad51184a2be2918c3c73e71461e8d6fd8c6134a5f2be22291f0dceeef86a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "DAA9C717-13C8-46EF-86DD-E1A7881798E1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native system color selection_0_512A0591-9B5E-40C1-BAFA-015B42F74897.png",
+      "timestamp": 1792547227.566,
+      "retainedFileName": "DAA9C717-13C8-46EF-86DD-E1A7881798E1.png",
+      "sha256": "f3725282f0dfab19e665b607c7556a5905dcf6e152bd6500301e48d620c58e5d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "96EFBFA5-3B64-485E-9C58-5E005107B78F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native ColorPicker system controls_0_AAC0DFCE-3EF8-487A-A948-9E1AFC75DF96.txt",
+      "timestamp": 1792547227.394,
+      "retainedFileName": "96EFBFA5-3B64-485E-9C58-5E005107B78F.txt.gz",
+      "sha256": "b6591d264f8f64e77b7857cfa3fd8bf475b23b9bf68412a996edae2072bdc7c5"
+    }
+  ]
+}

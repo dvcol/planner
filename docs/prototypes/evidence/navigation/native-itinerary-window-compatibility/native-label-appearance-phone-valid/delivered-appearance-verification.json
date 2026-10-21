@@ -1,0 +1,38 @@
+{
+  "source": {
+    "source": "docs/fixtures/native-label-appearance-backup.json",
+    "bytes": 12426,
+    "sha256": "39cfca7747d6df319f47020047cc35eb2e23c12190d5dda9594fe412887cf555",
+    "destinations": {
+      "phone": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner label appearance backup.json",
+      "tablet": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner label appearance backup.json"
+    },
+    "correction": "Only name has persisted content origin; color/icon remain owned content."
+  },
+  "platform": "phone",
+  "typedComparison": "Booleans distinct from native numbers; exact binary rational values for every color component; record-table order alone is representation. Nested arrays, identities, lifetimes, ranks, completion, content and history remain exact.",
+  "formatMigration": "Version 1 to 2 plus null manualEstimate on Lists/Itineraries.",
+  "nameOnlyColorAndCustomSymbolPreservationExact": true,
+  "onlyExplicitCategoryAppearanceCleared": true,
+  "unrelatedTagAppearanceAndOwnerRecordsPreserved": true,
+  "delivered": [
+    {
+      "stage": "name-only",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-21T01-37-43Z.json",
+      "bytes": 12889,
+      "sha256": "d016736fc3c0c238f4b6988eafdc84d9f58b18f393a630fb110f2026b16a8698",
+      "retainedFileName": "name-only-delivered-backup.json.gz",
+      "allRecordCollectionsAndValuesMatch": true,
+      "onlyAllowedChanges": "Declared label names and their validated edit timestamps; explicit Category color/icon clearing in second export."
+    },
+    {
+      "stage": "cleared",
+      "path": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-21T01-38-12Z.json",
+      "bytes": 12708,
+      "sha256": "377afb16bb9c52954426814f832dfb557918ae4a8df6bbb63ea8e386973ddc2e",
+      "retainedFileName": "cleared-delivered-backup.json.gz",
+      "allRecordCollectionsAndValuesMatch": true,
+      "onlyAllowedChanges": "Declared label names and their validated edit timestamps; explicit Category color/icon clearing in second export."
+    }
+  ]
+}

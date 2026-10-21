@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-appearance-tablet-dark.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"FBD72DAB-1D40-4E64-912D-7F9763E00446\",\n        \"deviceName\" : \"iPad Air 11-inch (M4)\",\n        \"modelName\" : \"iPad Air 11-inch (M4)\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 0,\n      \"passedTests\" : 4,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 0,\n  \"finishTime\" : 1792547116.217,\n  \"passedTests\" : 4,\n  \"result\" : \"Passed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792546773.918,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 4\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-appearance-tablet-dark.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-appearance-tablet-dark"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 6 attachments for: SavedBackupImportJourneyTests/testLabelAppearancePreservesCustomValuesAndClearsOnlyExplicitChanges():\nFile: 01F9C9F4-AF62-4064-9F3E-C03B22CCA30B.png, suggested name: \"Live shared labels remain in the original Item details_0_D19D196A-B042-4FA5-9E1B-BBCFC97632B3.png\"\nFile: D51A8F86-0244-4121-9F0C-1ACF35C2D2F6.png, suggested name: \"Only the explicitly cleared Category loses its appearance_0_21CB13E7-959B-4E30-83EF-B570FF4FDC5B.png\"\nFile: DBADCBA6-DB14-423F-974E-E54C6CE86DB1.txt, suggested name: \"Label appearance cleared delivered backup filename_0_7A08F897-9BE0-4F16-9FA9-7562393BBAB5.txt\"\nFile: A5DFF0F2-9C8E-48A1-A696-99EE6D75A8F3.png, suggested name: \"Imported custom symbol and color remain after name-only Save_0_D4ED968F-5E66-4DF8-B7C8-8544FB6050A7.png\"\nFile: F1D090A0-BF49-452D-9B90-450AE2FE7B1F.txt, suggested name: \"Label appearance name-only delivered backup filename_0_CB413ECA-BA77-4EB2-8C76-F018FFEAA5A2.txt\"\nFile: 771BA071-2DDE-4680-90CD-CB651DF0ADCE.txt, suggested name: \"Native picker for the selected backup file_0_44F5DEE4-2B9F-41CB-ABE9-3BCED5553FA8.txt\"\n\nExported 2 attachments for: SavedCategoryJourneyTests/testCategoryColorStagesSaveCancelAndClearAcrossRelaunch():\nFile: B2451A77-5B43-45B6-8122-30F3BEDF4903.png, suggested name: \"Cleared category color remains absent after relaunch_0_694EF6CB-1CCD-4371-A47D-010729E789A3.png\"\nFile: AEFA55E3-9CC9-4542-8CED-FCADEF8C4832.png, suggested name: \"Native optional category ColorPicker_0_B4142FA5-413A-45C8-954F-8A9A9989AA48.png\"\n\nExported 2 attachments for: SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch():\nFile: 60E39624-153D-4D7D-B9FF-909BE319F674.png, suggested name: \"Native Category after relaunch_0_4703287C-036E-4F3B-A498-6DD628B5959C.png\"\nFile: BACB0F21-99A0-449F-93F1-465CBE2C3681.png, suggested name: \"Saved native Category_0_F15EC15D-B92E-4462-B281-D94B99FF3D1F.png\"\n\nExported 2 attachments for: SavedCategoryJourneyTests/testCategoryIconStagesCancelAndPersistsIndependentIconEditsAfterRelaunch():\nFile: E23617E1-BC42-4421-9171-797261B3BA36.png, suggested name: \"Native category symbol survives relaunch_0_4AAA9924-1530-4F5C-95BF-BB2DACC45A72.png\"\nFile: AA5B7F2F-8060-40EB-8FFF-6617155B67E9.png, suggested name: \"Native category symbol picker stages Museum_0_800E3B5E-1448-47C1-A00F-E41B82A18059.png\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-appearance-tablet-dark/manifest.json\n",
+    "stderr": ""
+  }
+]

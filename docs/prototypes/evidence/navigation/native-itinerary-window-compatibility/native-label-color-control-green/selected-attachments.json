@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B3BCDE1E-72A1-485D-9D00-BC9F9C804DA8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Cleared category color remains absent after relaunch_0_E7CBFA19-2095-4333-836B-B26510AAC00C.png",
+      "timestamp": 1792546409.692,
+      "retainedFileName": "B3BCDE1E-72A1-485D-9D00-BC9F9C804DA8.png",
+      "sha256": "dae7211b8fbcf5d969eafde7b3178d9b775b5d4e2ce4d06a7b99bd95be2fbeda"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "BC5BAED6-E899-4521-8A14-F4899DA4C75D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native optional category ColorPicker_0_901BE219-4CED-473A-A38F-2915531D0228.png",
+      "timestamp": 1792546382.232,
+      "retainedFileName": "BC5BAED6-E899-4521-8A14-F4899DA4C75D.png",
+      "sha256": "f2dc0d80545480fdabfdf808fc866ac72890a4045523ecbb5ba842075e58e5b2"
+    }
+  ]
+}

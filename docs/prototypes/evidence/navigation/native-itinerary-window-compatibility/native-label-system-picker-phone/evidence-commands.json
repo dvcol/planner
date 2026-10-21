@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-system-picker-phone.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792547233.714,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792547196.213,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertTrue failed\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedCategoryJourneyTests/testNativeColorPickerPresentsSystemColorControls()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCategoryJourneyTests/testNativeColorPickerPresentsSystemColorControls\",\n      \"testName\" : \"testNativeColorPickerPresentsSystemColorControls()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-system-picker-phone.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-system-picker-phone"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 17 attachments for: SavedCategoryJourneyTests/testNativeColorPickerPresentsSystemColorControls():\nFile: 63D2775F-A145-4BF3-A896-95D92B636DDE.txt, suggested name: \"App UI hierarchy for org.example_0_89625B3D-0D1D-40B2-82CD-FE9C885FFDCB.PlannerMCPPrototype\"\nFile: 72622203-0106-44AD-B2EF-F21F6D20EDCA, suggested name: \"UI Snapshot 2026-10-21 at 10.47.12 AM\"\nFile: 34A42D6C-06DE-45B8-970F-CD9172294DB9.txt, suggested name: \"Debug description for `\"Colors\" StaticText`_0_E2E4E0CF-1BD7-412B-9584-FA92DF44AF60.txt\"\nFile: 6E3106F8-E87F-4EAF-A40F-BD3131D06590.txt, suggested name: \"Debug description for `\"Colors\" StaticText`_0_090B53B5-A4FD-4900-9A1A-92759521CDA0.txt\"\nFile: 679BA2A0-89D5-4E6E-8EFD-647944729ED9.txt, suggested name: \"Debug description for `\"Colors\" StaticText`_0_C2224F7C-72B7-4405-84A1-F47846C3D80D.txt\"\nFile: 019D9782-2827-48E3-929C-FAFD799543CF.txt, suggested name: \"Debug description for `\"Colors\" StaticText`_0_EBFC1D17-ED92-4054-9454-11CD1E0E081E.txt\"\nFile: 7EC95556-4C69-4E87-8FE4-9FCB9C21FA49.txt, suggested name: \"Debug description for `\"Colors\" StaticText`_0_28CE669E-EFEB-4BD2-AE04-B709B72DECF9.txt\"\nFile: DAA9C717-13C8-46EF-86DD-E1A7881798E1.png, suggested name: \"Native system color selection_0_512A0591-9B5E-40C1-BAFA-015B42F74897.png\"\nFile: 96EFBFA5-3B64-485E-9C58-5E005107B78F.txt, suggested name: \"Native ColorPicker system controls_0_AAC0DFCE-3EF8-487A-A948-9E1AFC75DF96.txt\"\nFile: E90EEE3A-68D9-455B-A034-084A6AD0F464, suggested name: \"Synthesized Event 2026-10-21 at 10.47.06 AM\"\nFile: 9831A8D8-1464-4454-BAD4-92DBD00DB530, suggested name: \"Synthesized Event 2026-10-21 at 10.47.03 AM\"\nFile: B26C7E32-BE24-4116-BDDD-33D8496BB6AD, suggested name: \"Synthesized Event 2026-10-21 at 10.47.01 AM\"\nFile: E71020EE-2C30-4534-892F-B20BB85538C2, suggested name: \"Synthesized Event 2026-10-21 at 10.47.00 AM\"\nFile: 8C41A8CE-587C-4307-8124-26863AAB0D6E, suggested name: \"Synthesized Event 2026-10-21 at 10.46.58 AM\"\nFile: F71D6957-7052-4A1A-A47B-80FCDC75C355, suggested name: \"Synthesized Event 2026-10-21 at 10.46.55 AM\"\nFile: D98475A3-4ADD-4B75-AE11-09FF5AF93C26, suggested name: \"Synthesized Event 2026-10-21 at 10.46.54 AM\"\nFile: D3EA9B1C-5B15-46BF-8CBC-3CEC0F06D338.mp4, suggested name: \"Screen Recording 2026-10-21 at 10.46.44 AM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-system-picker-phone/manifest.json\n",
+    "stderr": ""
+  }
+]

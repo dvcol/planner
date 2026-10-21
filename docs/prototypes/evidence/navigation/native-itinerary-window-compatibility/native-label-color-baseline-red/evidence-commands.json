@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-color-baseline-red.xcresult"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"devicesAndConfigurations\" : [\n    {\n      \"device\" : {\n        \"architecture\" : \"arm64\",\n        \"deviceId\" : \"2A49C66C-C8A4-435F-B98A-9A90706780DE\",\n        \"deviceName\" : \"iPhone 18 Pro\",\n        \"modelName\" : \"iPhone 18 Pro\",\n        \"osBuildNumber\" : \"24A434\",\n        \"osVersion\" : \"27.0\",\n        \"platform\" : \"iOS Simulator\"\n      },\n      \"expectedFailures\" : 0,\n      \"failedTests\" : 1,\n      \"passedTests\" : 0,\n      \"skippedTests\" : 0,\n      \"testPlanConfiguration\" : {\n        \"configurationId\" : \"1\",\n        \"configurationName\" : \"Test Scheme Action\"\n      }\n    }\n  ],\n  \"environmentDescription\" : \"PlannerNavigation \u00b7 Built with macOS 27.0.1\",\n  \"expectedFailures\" : 0,\n  \"failedTests\" : 1,\n  \"finishTime\" : 1792546243.153,\n  \"passedTests\" : 0,\n  \"result\" : \"Failed\",\n  \"runtimeWarnings\" : [\n\n  ],\n  \"skippedTests\" : 0,\n  \"startTime\" : 1792546162.957,\n  \"statistics\" : [\n\n  ],\n  \"testFailures\" : [\n    {\n      \"failureText\" : \"XCTAssertTrue failed\",\n      \"targetName\" : \"PlannerNavigationUITests\",\n      \"testIdentifier\" : 1,\n      \"testIdentifierString\" : \"SavedCategoryJourneyTests/testCategoryColorStagesSaveCancelAndClearAcrossRelaunch()\",\n      \"testIdentifierURL\" : \"test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCategoryJourneyTests/testCategoryColorStagesSaveCancelAndClearAcrossRelaunch\",\n      \"testName\" : \"testCategoryColorStagesSaveCancelAndClearAcrossRelaunch()\"\n    }\n  ],\n  \"title\" : \"Test - PlannerNavigation\",\n  \"topInsights\" : [\n\n  ],\n  \"totalTestCount\" : 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerItemWindow-native-label-color-baseline-red.xcresult",
+      "--output-path",
+      "/private/tmp/PlannerLabelAttachments-native-label-color-baseline-red"
+    ],
+    "exitCode": 0,
+    "stdout": "Exported 13 attachments for: SavedCategoryJourneyTests/testCategoryColorStagesSaveCancelAndClearAcrossRelaunch():\nFile: EAEB8071-69E9-4421-BE2C-FBCF332900F5.txt, suggested name: \"App UI hierarchy for org.example_0_EDBCF141-EB49-40DD-A242-B307DEDEF3DF.PlannerMCPPrototype\"\nFile: 7DEA28C0-0ECE-4D0E-A64D-2B74C36386D6, suggested name: \"UI Snapshot 2026-10-21 at 10.30.42 AM\"\nFile: C732D743-F011-4B3B-A1A7-7E1647B66E12.txt, suggested name: \"Debug description for `Switch (First Match)`_0_4CFBEC98-4871-48CC-AAA0-01B3FF93B46A.txt\"\nFile: 9F9AB90C-5816-49ED-80A2-92C62FD6E871.txt, suggested name: \"Debug description for `Switch (First Match)`_0_7C60B829-9A79-43FA-8C45-3E441BEA74C2.txt\"\nFile: 9E258937-2F01-4ADC-A364-D818EEB2B8BF.txt, suggested name: \"Debug description for `Switch (First Match)`_0_F0C077FE-B539-4A1B-9049-F38B9FFC3565.txt\"\nFile: 1904E167-174B-4519-B99E-E14A7F5B0C6D.txt, suggested name: \"Debug description for `Switch (First Match)`_0_FD63058B-C6E3-4D33-AA19-6352BED1CD7E.txt\"\nFile: 380C9F8B-4144-4C19-AD89-D1B59858070E.txt, suggested name: \"Debug description for `Switch (First Match)`_0_6BD70381-8617-4DF8-BE60-5CEB47699119.txt\"\nFile: A8D892BB-21BC-4681-92BA-9AC5143FE453, suggested name: \"Synthesized Event 2026-10-21 at 10.30.36 AM\"\nFile: 53B29C98-6C34-460D-AAF4-B233A4D2B2DC, suggested name: \"Synthesized Event 2026-10-21 at 10.30.36 AM\"\nFile: 87801AAA-6F9B-4267-983D-63700C7531BC, suggested name: \"Synthesized Event 2026-10-21 at 10.30.33 AM\"\nFile: 34F3991E-BE04-4918-AC52-DEF31A3A74C8, suggested name: \"Synthesized Event 2026-10-21 at 10.30.30 AM\"\nFile: 5D9A20EF-3A2F-45FE-BBB8-D2454D4FB878, suggested name: \"Synthesized Event 2026-10-21 at 10.30.29 AM\"\nFile: 06EF3BD5-B56F-486B-89F8-5A49CCE4ECE5.mp4, suggested name: \"Screen Recording 2026-10-21 at 10.30.22 AM.mp4\"\n\nGenerated manifest file with attachment details: /private/tmp/PlannerLabelAttachments-native-label-color-baseline-red/manifest.json\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "7D6C5AE1-BAAD-4CAC-8608-245177163286.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native category symbol survives relaunch_0_DFDD1C98-B2DC-4434-B5BC-5241B52BD79D.png",
+      "timestamp": 1792545558.217,
+      "retainedFileName": "7D6C5AE1-BAAD-4CAC-8608-245177163286.png",
+      "sha256": "b35bbd30752e8cd43d541a9e07a9045994d8cd293c9d91799202bc9d085a8fe3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "908F2068-FBB4-4BD0-9309-0F3D90BA8315.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native category symbol picker stages Museum_0_2673A166-28C0-4027-B9DD-7E4B6F7011B1.png",
+      "timestamp": 1792545535.294,
+      "retainedFileName": "908F2068-FBB4-4BD0-9309-0F3D90BA8315.png",
+      "sha256": "7310f8aed9987719edb33e1a6a27f802964002662ddca7f7b012e51dfe9e15d8"
+    }
+  ]
+}

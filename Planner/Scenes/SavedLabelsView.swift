@@ -1,3 +1,4 @@
+import CoreGraphics
 import PlannerCore
 import SwiftUI
 
@@ -28,6 +29,21 @@ enum SavedLabelSource {
     case .tag(let tag): tag.content.name
     }
   }
+
+  var iconName: String? {
+    switch self {
+    case .category(let category): category.content.iconName
+    case .tag(let tag): tag.content.iconName
+    }
+  }
+
+  var color: PlannerColor? {
+    switch self {
+    case .category(let category): category.content.color
+    case .tag(let tag): tag.content.color
+    }
+  }
+
 }
 
 struct SavedLabelSelection: Hashable {
@@ -167,12 +183,41 @@ private struct SavedLabelEditDestination: View {
   }
 }
 
+private enum SavedLabelSymbol: String, CaseIterable, Identifiable {
+  case dining = "fork.knife"
+  case museum = "building.columns"
+  case travel = "airplane"
+  case home = "house"
+  case shopping = "bag"
+  case outdoors = "leaf"
+  case favorite = "star"
+  case flag = "flag"
+
+  var id: String { rawValue }
+  var title: String {
+    switch self {
+    case .dining: "Dining"
+    case .museum: "Museum"
+    case .travel: "Travel"
+    case .home: "Home"
+    case .shopping: "Shopping"
+    case .outdoors: "Outdoors"
+    case .favorite: "Favorite"
+    case .flag: "Flag"
+    }
+  }
+}
+
 private struct SavedLabelForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let kind: SavedLabelKind
   let original: SavedLabelSource?
   @State private var name: String
+  @State private var iconName: String?
+  @State private var usesColor: Bool
+  @State private var selectedColor: CGColor
+  @State private var colorWasEdited = false
   @State private var operationIdentifier = UUID()
   @State private var deletionDraft: SavedSourceDeletionDraft?
   @State private var isReviewingDeletion = false
@@ -183,12 +228,47 @@ private struct SavedLabelForm: View {
     self.kind = kind
     self.original = original
     _name = State(initialValue: original?.name ?? "")
+    _iconName = State(initialValue: original?.iconName)
+    _usesColor = State(initialValue: original?.color != nil)
+    let color =
+      original?.color ?? PlannerColor(red: 0, green: 0.47843137254901963, blue: 1, alpha: 1)
+    _selectedColor = State(
+      initialValue: CGColor(
+        srgbRed: color.red, green: color.green, blue: color.blue, alpha: color.alpha))
   }
 
   var body: some View {
     Form {
       TextField("Name", text: $name)
         .accessibilityIdentifier("saved.\(kind.rawValue).name")
+      Section("Appearance") {
+        Toggle("Use color", isOn: $usesColor)
+          .accessibilityIdentifier("saved.\(kind.rawValue).color.enabled")
+        if usesColor {
+          ColorPicker(
+            "Color",
+            selection: Binding(
+              get: { selectedColor },
+              set: {
+                selectedColor = $0
+                colorWasEdited = true
+              }), supportsOpacity: true
+          )
+          .accessibilityIdentifier("saved.\(kind.rawValue).color")
+        }
+        Picker("Icon", selection: $iconName) {
+          Label("Default", systemImage: kind.systemImage).tag(String?.none)
+          ForEach(SavedLabelSymbol.allCases) { symbol in
+            Label(symbol.title, systemImage: symbol.rawValue).tag(Optional(symbol.rawValue))
+          }
+          if let existing = original?.iconName, SavedLabelSymbol(rawValue: existing) == nil {
+            Label("Current icon", systemImage: existing).tag(Optional(existing))
+          }
+        }
+        .pickerStyle(.menu)
+        .accessibilityIdentifier("saved.\(kind.rawValue).icon")
+        .accessibilityValue(iconDisplayName)
+      }
       if let original {
         Section {
           Button("Delete \(kind.title.lowercased())", systemImage: "trash", role: .destructive) {
@@ -219,7 +299,7 @@ private struct SavedLabelForm: View {
           .disabled(
             !store.canCreate || isReviewingDeletion
               || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-              || name == original?.name
+              || !hasChanges
           )
           .keyboardShortcut(.defaultAction)
           .accessibilityIdentifier("saved.\(kind.rawValue).save")
@@ -251,14 +331,52 @@ private struct SavedLabelForm: View {
     #endif
   }
 
+  private var hasChanges: Bool {
+    name != original?.name || iconName != original?.iconName
+      || usesColor != (original?.color != nil) || (usesColor && colorWasEdited)
+  }
+
+  private func colorForSave() throws -> PlannerColor? {
+    guard usesColor else { return nil }
+    if let originalColor = original?.color, !colorWasEdited { return originalColor }
+    guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
+      let converted = selectedColor.converted(
+        to: colorSpace, intent: .relativeColorimetric, options: nil),
+      let components = converted.components, components.count == 4,
+      components.allSatisfy({ $0.isFinite && (0...1).contains($0) })
+    else {
+      throw CocoaError(
+        .coderInvalidValue,
+        userInfo: [
+          NSLocalizedDescriptionKey: "This color cannot be saved. Try a different color."
+        ])
+    }
+    return PlannerColor(
+      red: Double(components[0]), green: Double(components[1]),
+      blue: Double(components[2]), alpha: Double(components[3]))
+  }
+
+  private var iconDisplayName: String {
+    guard let iconName else { return "Default" }
+    return SavedLabelSymbol(rawValue: iconName)?.title ?? "Current icon"
+  }
+
   private func save() async {
+    let color: PlannerColor?
+    do { color = try colorForSave() } catch {
+      store.alertMessage = error.localizedDescription
+      return
+    }
     let saved: Bool
     if let original {
-      saved = await store.renameLabel(
-        original, name: name, operationIdentifier: operationIdentifier)
+      saved = await store.editLabel(
+        original, name: name, color: color, iconName: iconName,
+        operationIdentifier: operationIdentifier)
     } else {
       saved =
-        await store.createLabel(kind, name: name, operationIdentifier: operationIdentifier) != nil
+        await store.createLabel(
+          kind, name: name, color: color, iconName: iconName,
+          operationIdentifier: operationIdentifier) != nil
     }
     if saved && store.alertMessage == nil { dismiss() }
   }

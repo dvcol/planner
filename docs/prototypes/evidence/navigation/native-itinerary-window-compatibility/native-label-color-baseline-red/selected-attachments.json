@@ -1,0 +1,70 @@
+{
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "EAEB8071-69E9-4421-BE2C-FBCF332900F5.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_EDBCF141-EB49-40DD-A242-B307DEDEF3DF.PlannerMCPPrototype",
+      "timestamp": 1792546242.434,
+      "retainedFileName": "EAEB8071-69E9-4421-BE2C-FBCF332900F5.txt.gz",
+      "sha256": "5f2b7b85972a8dbe4bb49b67f46a95a73d1369f547ac1c8b7c2c288034052219"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C732D743-F011-4B3B-A1A7-7E1647B66E12.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Switch (First Match)`_0_4CFBEC98-4871-48CC-AAA0-01B3FF93B46A.txt",
+      "timestamp": 1792546242.153,
+      "retainedFileName": "C732D743-F011-4B3B-A1A7-7E1647B66E12.txt.gz",
+      "sha256": "53c1c9f20ba26bbdecfeaa3c3b154f5c9c6b8585c72c5f5f905d154ad1f89a74"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9F9AB90C-5816-49ED-80A2-92C62FD6E871.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Switch (First Match)`_0_7C60B829-9A79-43FA-8C45-3E441BEA74C2.txt",
+      "timestamp": 1792546241.233,
+      "retainedFileName": "9F9AB90C-5816-49ED-80A2-92C62FD6E871.txt.gz",
+      "sha256": "53c1c9f20ba26bbdecfeaa3c3b154f5c9c6b8585c72c5f5f905d154ad1f89a74"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9E258937-2F01-4ADC-A364-D818EEB2B8BF.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Switch (First Match)`_0_F0C077FE-B539-4A1B-9049-F38B9FFC3565.txt",
+      "timestamp": 1792546240.139,
+      "retainedFileName": "9E258937-2F01-4ADC-A364-D818EEB2B8BF.txt.gz",
+      "sha256": "53c1c9f20ba26bbdecfeaa3c3b154f5c9c6b8585c72c5f5f905d154ad1f89a74"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1904E167-174B-4519-B99E-E14A7F5B0C6D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Switch (First Match)`_0_FD63058B-C6E3-4D33-AA19-6352BED1CD7E.txt",
+      "timestamp": 1792546239.152,
+      "retainedFileName": "1904E167-174B-4519-B99E-E14A7F5B0C6D.txt.gz",
+      "sha256": "53c1c9f20ba26bbdecfeaa3c3b154f5c9c6b8585c72c5f5f905d154ad1f89a74"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "380C9F8B-4144-4C19-AD89-D1B59858070E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `Switch (First Match)`_0_6BD70381-8617-4DF8-BE60-5CEB47699119.txt",
+      "timestamp": 1792546238.188,
+      "retainedFileName": "380C9F8B-4144-4C19-AD89-D1B59858070E.txt.gz",
+      "sha256": "53c1c9f20ba26bbdecfeaa3c3b154f5c9c6b8585c72c5f5f905d154ad1f89a74"
+    }
+  ]
+}
