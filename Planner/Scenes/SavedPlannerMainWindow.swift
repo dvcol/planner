@@ -12,6 +12,10 @@ struct SavedPlannerMainWindow: View {
     SavedPlannerView(
       store: store, planOpening: planOpening, windowIdentifier: windowIdentifier
     )
+    #if os(macOS)
+      .toolbarBackground(.regularMaterial, for: .windowToolbar)
+      .toolbarBackgroundVisibility(.visible, for: .windowToolbar)
+    #endif
     .onAppear {
       register()
       planOpening.connect(openWindow)

@@ -4,7 +4,41 @@ import XCTest
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
   #if os(macOS)
-    func testLongListTitleStaysInsideItsPaneAndKeepsControlsReachable() throws {
+    func testSelectingAListItemKeepsItsWindowTitleSpace() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.fillSavedPlannerWindowForJourney()
+      let listName = "Tokyo museums, gardens and restaurants"
+      createList(listName, application: application)
+      let window = application.windows.firstMatch
+      let originalWidth = window.frame.width
+      let title = try XCTUnwrap(
+        window.staticTexts.matching(
+          NSPredicate(format: "value == %@ OR label == %@", listName, listName)
+        ).allElementsBoundByIndex.first)
+      let emptyTitleWidth = title.frame.width
+      recordScreenshot(application, name: "List window title before selecting an Item")
+      openNewItemInList(application)
+      let itemTitle = application.textFields["saved.item.title"]
+      XCTAssertTrue(itemTitle.waitForExistence(timeout: 5))
+      itemTitle.activateForPlannerJourney()
+      itemTitle.typeText("Museum visit")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows("Museum visit").firstMatch.waitForExistence(timeout: 10))
+      recordScreenshot(application, name: "List window title after selecting an Item")
+      XCTAssertEqual(window.frame.width, originalWidth, accuracy: 1)
+      let itemActions = application.plannerElement("saved.appearance.actions")
+      XCTAssertTrue(itemActions.waitForPlannerHittability())
+      let additionalToolbarSpace = itemActions.frame.width + window.toolbars.firstMatch.frame.height
+      XCTAssertGreaterThanOrEqual(
+        title.frame.width, emptyTitleWidth - additionalToolbarSpace,
+        "One Item action must not collapse the List title to its column width.")
+    }
+
+    func testLongListTitleSharesTopToolbarAndUsesAvailableSpace() throws {
       continueAfterFailure = false
       let application = XCUIApplication()
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
@@ -28,25 +62,69 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       hierarchy.lifetime = .keepAlways
       add(hierarchy)
       recordScreenshot(application, name: "Long List title in a narrow native window")
-      let filters = application.plannerElement("saved.list.filters")
-      XCTAssertTrue(filters.waitForPlannerHittability())
+      let toolbar = window.toolbars.firstMatch
+      XCTAssertTrue(toolbar.waitForExistence(timeout: 5))
       let title = try XCTUnwrap(
         window.staticTexts.matching(
           NSPredicate(format: "value == %@ OR label == %@", listName, listName)
-        )
-        .allElementsBoundByIndex.first)
+        ).allElementsBoundByIndex.first)
+      XCTAssertTrue(
+        toolbar.frame.contains(title.frame), "The List title belongs in the top native toolbar.")
+      let narrowTitleWidth = title.frame.width
       let listPane = try XCTUnwrap(
         window.scrollViews.allElementsBoundByIndex.first { $0.staticTexts["No items"].exists })
       XCTAssertGreaterThanOrEqual(title.frame.minX, listPane.frame.minX)
-      XCTAssertLessThanOrEqual(title.frame.maxX, listPane.frame.maxX)
+      XCTAssertLessThanOrEqual(title.frame.minX - listPane.frame.minX, toolbar.frame.height)
+      let filters = application.plannerElement("saved.list.filters")
       let addMenu = application.plannerElement("saved.list.addMenu")
-      XCTAssertTrue(addMenu.waitForPlannerHittability())
       for control in [filters, addMenu] {
-        XCTAssertGreaterThanOrEqual(control.frame.minX, listPane.frame.minX)
-        XCTAssertLessThanOrEqual(control.frame.maxX, listPane.frame.maxX)
+        XCTAssertTrue(control.waitForPlannerHittability())
+        XCTAssertTrue(toolbar.frame.contains(control.frame))
+        XCTAssertEqual(control.frame.midY, title.frame.midY, accuracy: 8)
       }
+      let estimate = application.plannerElement("saved.list.estimate.full")
+      XCTAssertTrue(estimate.waitForExistence(timeout: 5))
+      XCTAssertLessThanOrEqual(estimate.frame.minY - toolbar.frame.maxY, toolbar.frame.height)
       Self.resizePlannerWindow(window, width: 1200)
+      recordScreenshot(application, name: "Long List title uses the wide top toolbar")
+      XCTAssertGreaterThan(
+        title.frame.width, narrowTitleWidth,
+        "Widening the window must release space for the List title.")
+      XCTAssertLessThanOrEqual(title.frame.maxX, filters.frame.minX)
+      XCTAssertGreaterThanOrEqual(title.frame.minX, listPane.frame.minX)
+      XCTAssertLessThanOrEqual(title.frame.minX - listPane.frame.minX, toolbar.frame.height)
       XCTAssertTrue(application.savedPlannerListRow(listName).waitForExistence(timeout: 5))
+      openNewItemInList(application)
+      let itemTitle = application.textFields["saved.item.title"]
+      XCTAssertTrue(itemTitle.waitForExistence(timeout: 5))
+      itemTitle.activateForPlannerJourney()
+      itemTitle.typeText("Museum visit")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows("Museum visit").firstMatch.waitForExistence(timeout: 10))
+      Self.resizePlannerWindow(window, width: 860)
+      let populatedPane = application.plannerElement("saved.list.contents")
+      XCTAssertTrue(populatedPane.waitForExistence(timeout: 5))
+      XCTAssertTrue(toolbar.frame.contains(title.frame))
+      XCTAssertLessThanOrEqual(title.frame.maxX, filters.frame.minX)
+      for control in [
+        filters, addMenu, application.plannerElement("saved.list.sort"),
+        application.plannerElement("saved.list.actions"),
+      ] {
+        XCTAssertTrue(control.waitForPlannerHittability())
+        XCTAssertTrue(toolbar.frame.contains(control.frame))
+        XCTAssertEqual(control.frame.midY, title.frame.midY, accuracy: 8)
+      }
+      let populatedNarrowTitleWidth = title.frame.width
+      recordScreenshot(
+        application, name: "Permanent List header with a saved Item in a narrow window")
+      Self.resizePlannerWindow(window, width: 1200)
+      recordScreenshot(
+        application, name: "Permanent List header with a saved Item in a wide window")
+      XCTAssertGreaterThan(
+        title.frame.width, populatedNarrowTitleWidth,
+        "Selecting an Item must not cap the List title while toolbar space is free.")
+      XCTAssertLessThanOrEqual(title.frame.maxX, filters.frame.minX)
     }
   #endif
 
@@ -3431,7 +3509,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   private func assertNewItemFields(
     _ fields: [(String, String)], application: XCUIApplication
   ) {
-    XCTAssertTrue(application.plannerElement("saved.item.save").waitForPlannerHittability())
+    XCTAssertTrue(
+      application.plannerElement("saved.item.save").waitForPlannerHittability(),
+      application.windows.firstMatch.debugDescription)
     let title = application.textFields["saved.item.title"]
     for _ in 0..<8 {
       if title.isHittable { break }
@@ -3482,6 +3562,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   #if os(macOS)
     private static func resizePlannerWindow(_ window: XCUIElement, width: CGFloat) {
+      XCUIApplication().activate()
       let edge = window.coordinate(withNormalizedOffset: .init(dx: 1, dy: 0.8))
         .withOffset(.init(dx: -1, dy: 0))
       let target = edge.withOffset(.init(dx: width - window.frame.width, dy: 0))

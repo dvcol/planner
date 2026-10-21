@@ -106,26 +106,30 @@ struct SavedAppearanceDetail: View {
         sourceLifetimeId: item.sourceLifetimeId)
     }
     .formStyle(.grouped)
-    .navigationTitle(item.content.title)
-    .toolbarTitleDisplayMode(.inline)
-    .toolbar {
-      ToolbarItem(placement: .primaryAction) {
-        Menu {
-          Button("Add to list", action: addToList)
-            .disabled(!canChange)
-          Button("View item", action: viewItem)
-          Button("Move to list", action: moveToList)
-            .disabled(!canChange)
-          Button("Remove from list", role: .destructive, action: removeFromList)
-            .disabled(!canChange)
-        } label: {
-          Label("Item actions", systemImage: "ellipsis")
-        }
-        .labelStyle(.iconOnly)
-        .help("Item actions")
-        .accessibilityIdentifier("saved.appearance.actions")
+    #if os(iOS)
+      .navigationTitle(item.content.title)
+      .toolbarTitleDisplayMode(.inline)
+      .toolbar {
+        ToolbarItem(placement: .primaryAction) { actionsMenu }
       }
+    #endif
+  }
+
+  var actionsMenu: some View {
+    Menu {
+      Button("Add to list", action: addToList)
+        .disabled(!canChange)
+      Button("View item", action: viewItem)
+      Button("Move to list", action: moveToList)
+        .disabled(!canChange)
+      Button("Remove from list", role: .destructive, action: removeFromList)
+        .disabled(!canChange)
+    } label: {
+      Label("Item actions", systemImage: "ellipsis")
     }
+    .labelStyle(.iconOnly)
+    .help("Item actions")
+    .accessibilityIdentifier("saved.appearance.actions")
   }
 
   private var previewSource: PlannerPreviewSource? {

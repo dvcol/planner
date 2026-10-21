@@ -51,7 +51,7 @@ The user accepted A for Q124, Q125 and Q126 on 21 October 2026. No question in t
 
 ## Remaining gates
 
-The [List pane header correction](prototypes/native-list-pane-header.md) addresses the user's latest title, alignment and control-spacing review through the existing native UI boundary. Its own qualification report distinguishes containment, interaction, visual inspection and outstanding platform checks. [Completed-result cleanup](prototypes/native-local-storage-cleanup.md) separately removes 7.75 GiB of temporary artifacts with retained evidence.
+The [List header follow-up](prototypes/native-list-pane-header.md#unified-top-toolbar-follow-up) replaces the intermediate lower header with one persistent native Mac toolbar. List and selected-Item commands share its owner, preserving leading title space across empty/populated states and real resizing. A compact native List options menu keeps Save/Cancel available during narrow drafts. Six affected Mac UI cases pass; the report retains baseline failures, mobile checks, visual inspection and remaining platform limits. [Completed-result cleanup](prototypes/native-local-storage-cleanup.md) separately removes 7.75 GiB of temporary artifacts with retained evidence.
 
 The [grouped Undo Mac follow-up](prototypes/native-owned-association-undo.md#mac-follow-up-21-october-2026) now passes actual Item and Itinerary Command-Z/restoration/relaunch journeys. Its exact bookmark identity/order and retained-note assertions supplement the existing Core, controller and mobile results; no signed or whole-app gate is closed.
 
