@@ -125,7 +125,7 @@ struct OwnedLinkEditResultTests {
     #if SWIFT_PACKAGE
       let fixtureBundle = Bundle.module
     #else
-      let fixtureBundle = Bundle(for: NativeFixtureBundle.self)
+      let fixtureBundle = Bundle(for: OwnedLinkFixtureBundle.self)
     #endif
     let fixture = try #require(
       fixtureBundle.url(
@@ -226,6 +226,10 @@ struct OwnedLinkEditResultTests {
     default: throw CancellationError()
     }
   }
+
+  #if !SWIFT_PACKAGE
+    private final class OwnedLinkFixtureBundle: NSObject {}
+  #endif
 }
 
 private struct LegacyLinkEdit: Codable {
