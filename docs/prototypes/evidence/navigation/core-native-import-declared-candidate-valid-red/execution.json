@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.587,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.065295459,
+      "failures": [
+        "Expectation failed: details.imports.first?.dependencies.first?.lifetimeId.uuidString == \"00000000-0000-4000-8000-000000000814\" (error)",
+        "Issue recorded (error): Apply the complete new List without replacing its current Item: PlannerOperationResult(operationId: D1141E32-2C01-456B-9DB1-92E5BF013E27, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The membership has unresolved source bindings.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

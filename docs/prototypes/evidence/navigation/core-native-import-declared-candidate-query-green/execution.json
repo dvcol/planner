@@ -1,0 +1,16 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 14.027,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.0988445,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

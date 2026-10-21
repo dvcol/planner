@@ -5,6 +5,209 @@ import Testing
 struct NativeImportBindingReviewTests {
   enum BindingCase: CaseIterable { case live, missing, wrongLifetime }
 
+  @Test(arguments: [false, true])
+  func skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner(
+    declaresCurrentCandidate: Bool
+  ) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    var seed = try #require(
+      JSONSerialization.jsonObject(with: nativeImportFixtureData()) as? [String: Any])
+    let fixtureSources = try #require(seed["sources"] as? [[String: Any]])
+    var museum = try #require(fixtureSources.first { $0["kind"] as? String == "item" })
+    museum["lifetimeId"] = "00000000-0000-4000-8000-000000000814"
+    for name in seed.keys where name != "format" && name != "formatVersion" { seed[name] = [] }
+    seed["sources"] = [museum]
+    let predecessor: [String: Any] = [
+      "kind": "item", "id": "00000000-0000-4000-8000-000000000101",
+      "lifetimeId": "00000000-0000-4000-8000-000000000811",
+    ]
+    seed["deletionMarkers"] = [
+      [
+        "deletionId": "00000000-0000-4000-8000-000000000892",
+        "operationId": "00000000-0000-4000-8000-000000000992",
+        "target": ["kind": "source", "source": predecessor], "closedFamilyId": NSNull(),
+      ]
+    ]
+    seed["restorationFamilies"] = [
+      [
+        "familyId": "00000000-0000-4000-8000-000000000890", "predecessor": predecessor,
+        "candidates": [
+          [
+            "lifetimeId": "00000000-0000-4000-8000-000000000814",
+            "operationId": "00000000-0000-4000-8000-000000000994",
+          ],
+          [
+            "lifetimeId": "00000000-0000-4000-8000-000000000815",
+            "operationId": "00000000-0000-4000-8000-000000000995",
+          ],
+        ],
+      ]
+    ]
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let seedBackup) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: seed)),
+      case .reviewed(let seedReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: seedBackup)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: seedReview.command,
+          reviewToken: seedReview.reviewToken)
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let current) = planner.decodeImport(before)
+    else { throw CancellationError() }
+    #expect(
+      current.backup.restorationFamilies.first?.candidates.map(\.lifetimeId.uuidString)
+        == [
+          "00000000-0000-4000-8000-000000000814", "00000000-0000-4000-8000-000000000815",
+        ])
+    #expect(
+      current.backup.items.first?.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000814")
+    var incoming = seed
+    for name in incoming.keys where name != "format" && name != "formatVersion" {
+      incoming[name] = []
+    }
+    var declaredMuseum = museum
+    let declaredLifetime: String
+    if declaresCurrentCandidate {
+      declaredLifetime = "00000000-0000-4000-8000-000000000814"
+      incoming["deletionMarkers"] = seed["deletionMarkers"]
+      incoming["restorationFamilies"] = seed["restorationFamilies"]
+    } else {
+      declaredLifetime = "00000000-0000-4000-8000-000000000815"
+    }
+    declaredMuseum["lifetimeId"] = declaredLifetime
+    var declaredContent = try #require(declaredMuseum["content"] as? [String: Any])
+    declaredContent["title"] = "Ignored candidate title"
+    declaredMuseum["content"] = declaredContent
+    var list = try #require(fixtureSources.first { $0["kind"] as? String == "list" })
+    list["id"] = "00000000-0000-4000-8000-000000000277"
+    list["lifetimeId"] = "00000000-0000-4000-8000-000000000827"
+    incoming["sources"] = [declaredMuseum, list]
+    incoming["memberships"] = [
+      [
+        "id": "00000000-0000-4000-8000-000000000477",
+        "lifetimeId": "00000000-0000-4000-8000-000000000477",
+        "list": [
+          "kind": "list", "id": "00000000-0000-4000-8000-000000000277",
+          "lifetimeId": "00000000-0000-4000-8000-000000000827",
+        ],
+        "item": [
+          "kind": "item", "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000815",
+        ],
+        "rank": "1024", "localDone": true,
+      ]
+    ]
+    let decoded = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+    guard case .decoded(let backup) = decoded else {
+      Issue.record("The internally declared candidate fixture must decode: \(decoded)")
+      return
+    }
+    #expect(backup.externalBindings.isEmpty && backup.originPaths.isEmpty)
+    #expect(backup.backup.restorationFamilies.isEmpty == !declaresCurrentCandidate)
+    let outcome = await planner.prepareReview(
+      session: session, command: .applyImport(backup: backup, mode: .skip))
+    guard case .reviewed(let review) = outcome else {
+      Issue.record("Skip must resolve an already-known open-family candidate: \(outcome)")
+      return
+    }
+    let details = try #require(review.impact.importDetails)
+    #expect(details.imports.map(\.owner.id.uuidString) == ["00000000-0000-4000-8000-000000000277"])
+    #expect(
+      details.skippedConflicts.map(\.owner.id.uuidString) == [
+        "00000000-0000-4000-8000-000000000101"
+      ])
+    #expect(
+      details.skippedConflicts.first?.owner.lifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000814")
+    #expect(
+      details.skippedDependents.isEmpty && details.replacements.isEmpty
+        && details.restorations.isEmpty)
+    #expect(
+      details.imports.first?.dependencies.first?.lifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000814")
+    guard case .exported(let afterReview) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    #expect(afterReview == before)
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(let result, .complete(let checkpoint)) = response.outcome,
+      case .exported(let after) = await planner.exportData(session: session),
+      case .decoded(let saved) = planner.decodeImport(after)
+    else {
+      Issue.record("Apply the complete new List without replacing its current Item: \(response)")
+      return
+    }
+    #expect(saved.backup.memberships.count == 1)
+    #expect(
+      saved.backup.memberships.first?.itemLifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000814")
+    #expect(saved.backup.memberships.first?.localDone == true)
+    var retainedGraph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    let savedSources = try #require(retainedGraph["sources"] as? [[String: Any]])
+    retainedGraph["sources"] = savedSources.filter {
+      $0["id"] as? String != "00000000-0000-4000-8000-000000000277"
+    }
+    retainedGraph["memberships"] = []
+    let currentGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    #expect(NSDictionary(dictionary: retainedGraph).isEqual(to: currentGraph))
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000277")!
+    guard
+      case .snapshot(let snapshot) = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .list(listIdentifier), completion: .all, archive: .all)))),
+      case .rows(let page) = await planner.read(
+        session: session, request: .rows(generation: snapshot.generation, offset: 0, limit: 64)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else { throw CancellationError() }
+    #expect(snapshot.matchingCount == 1 && snapshot.progress.first?.totalCount == 1)
+    #expect(page.rows.map(\.title) == ["Nezu Museum"])
+    #expect(page.rows.first?.effectiveDone == true)
+    let recoveredGraph = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    let savedGraph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    #expect(NSDictionary(dictionary: recoveredGraph).isEqual(to: savedGraph))
+    #expect(
+      backup.backup.items.first?.lifetimeId.uuidString == declaredLifetime)
+    #expect(
+      backup.backup.memberships.first?.itemLifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000815")
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
+      ).outcome,
+      case .reviewed(let repeatedReview) = await reopened.prepareReview(
+        session: reopenedSession, command: .applyImport(backup: backup, mode: .skip)),
+      case .applied(let repeated, .complete) = await reopened.execute(
+        .init(
+          operationId: UUID(), session: reopenedSession, command: repeatedReview.command,
+          reviewToken: repeatedReview.reviewToken)
+      ).outcome,
+      case .exported(let repeatedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == after)
+    #expect(replayed == result && replayCheckpoint == checkpoint)
+    #expect(repeated.generated.isEmpty && repeatedData == after)
+  }
+
   @Test(arguments: [PlannerImportMode.skip, .overwrite])
   func aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode: PlannerImportMode)
     async throws

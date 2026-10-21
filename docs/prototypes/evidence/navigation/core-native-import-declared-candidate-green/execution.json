@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 12.921,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.106655417,
+      "failures": [
+        "Expectation failed: snapshot.matchingCount == 1 && snapshot.progress.first?.totalCount == 1 (error)",
+        "Expectation failed: page.rows.map(\\.title) == [\"Nezu Museum\"] (error)",
+        "Expectation failed: page.rows.first?.effectiveDone == true (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

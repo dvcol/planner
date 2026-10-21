@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.0458e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.099153875">
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner()" time="0.0988445"/>
+    </testsuite>
+</testsuites>

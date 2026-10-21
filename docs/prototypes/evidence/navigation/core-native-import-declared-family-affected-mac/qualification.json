@@ -1,0 +1,307 @@
+{
+  "coreInputsMatched": 740,
+  "nativeInputsMatched": 1062,
+  "functionsMatched": 59,
+  "invocationsPerPlatform": 231,
+  "functions": [
+    {
+      "className": "NativeImportAdmissionTests",
+      "name": "absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportAdmissionTests",
+      "name": "invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:)",
+      "invocations": 30
+    },
+    {
+      "className": "NativeImportApplyTests",
+      "name": "failedRecoveryPreparationLeavesGraphAndReceiptUnapplied()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportApplyTests",
+      "name": "ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportApplyTests",
+      "name": "reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:)",
+      "invocations": 3
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingOmittedOwners(mode:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportBindingReviewTests",
+      "name": "skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner(declaresCurrentCandidate:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportClosedHistoryTests",
+      "name": "removedContextsRetainReviewableRestorableHistory(kind:)",
+      "invocations": 3
+    },
+    {
+      "className": "NativeImportConflictReviewTests",
+      "name": "globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportConflictReviewTests",
+      "name": "incomingCompletionHistoryBelongsToItsWholeOwnerReview()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportConflictReviewTests",
+      "name": "reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportDecodingTests",
+      "name": "bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportDeletedReviewTests",
+      "name": "closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportDeletedReviewTests",
+      "name": "skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)",
+      "invocations": 3
+    },
+    {
+      "className": "NativeImportDeletedReviewTests",
+      "name": "unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportHistoryCollisionTests",
+      "name": "skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportIncomingDeletionReviewTests",
+      "name": "skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportIncomingDeletionReviewTests",
+      "name": "skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportIncomingDeletionReviewTests",
+      "name": "skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:)",
+      "invocations": 6
+    },
+    {
+      "className": "NativeImportLineageMigrationTests",
+      "name": "genuineV15MigrationPreservesGraphBudgetsRecoveryAndCreationReplay()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportLineageTests",
+      "name": "aClosedMembershipCannotRedirectItsHistoryToAnotherItem()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportLineageTests",
+      "name": "explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportLineageTests",
+      "name": "nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportLineageTests",
+      "name": "restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:)",
+      "invocations": 7
+    },
+    {
+      "className": "NativeImportMarkerTests",
+      "name": "actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportMergeTests",
+      "name": "changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:)",
+      "invocations": 3
+    },
+    {
+      "className": "NativeImportMergeTests",
+      "name": "overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportMergeTests",
+      "name": "retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:)",
+      "invocations": 7
+    },
+    {
+      "className": "NativeImportMergeTests",
+      "name": "skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportOmittedOwnerReviewTests",
+      "name": "omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportOmittedOwnerReviewTests",
+      "name": "omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportOmittedOwnerReviewTests",
+      "name": "omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportOverwriteDeletionReviewTests",
+      "name": "overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:)",
+      "invocations": 6
+    },
+    {
+      "className": "NativeImportOverwriteDeletionReviewTests",
+      "name": "overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:)",
+      "invocations": 4
+    },
+    {
+      "className": "NativeImportOverwriteDeletionReviewTests",
+      "name": "overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:)",
+      "invocations": 6
+    },
+    {
+      "className": "NativeImportOwnedAdditionTests",
+      "name": "overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:omitUnchangedOwners:)",
+      "invocations": 24
+    },
+    {
+      "className": "NativeImportOwnedRemovalTests",
+      "name": "explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportOwnedRemovalTests",
+      "name": "laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportOwnedRemovalTests",
+      "name": "overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)",
+      "invocations": 28
+    },
+    {
+      "className": "NativeImportProvenanceTests",
+      "name": "importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:)",
+      "invocations": 5
+    },
+    {
+      "className": "NativeImportProviderTests",
+      "name": "applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportRestorationTests",
+      "name": "foreignOwnedCandidateCannotBypassRestorationReconciliation()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportRestorationTests",
+      "name": "restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)",
+      "invocations": 10
+    },
+    {
+      "className": "NativeImportRestorationTests",
+      "name": "reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportRestorationTests",
+      "name": "skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportRestorationTests",
+      "name": "skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportResultTests",
+      "name": "appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportResultTests",
+      "name": "incompleteRecoveryRetainsSummaryUntilCheckpointRepair()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportResultTests",
+      "name": "mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:)",
+      "invocations": 2
+    },
+    {
+      "className": "NativeImportResultTests",
+      "name": "restorationSummaryReportsSavedLifetimesAndReboundDependencies()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportReviewTests",
+      "name": "completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportReviewTests",
+      "name": "identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportScaleTests",
+      "name": "largePortableListRetainsAllSourcesAndMembershipBindings()",
+      "invocations": 1
+    },
+    {
+      "className": "NativeImportSourceDeletionTests",
+      "name": "overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:)",
+      "invocations": 10
+    },
+    {
+      "className": "NativeImportSourceDeletionTests",
+      "name": "sourceDeletionAndNewOwnersApplyTogetherOrLeaveNoPartialImport(scenario:)",
+      "invocations": 3
+    },
+    {
+      "className": "OwnedLinkEditResultTests",
+      "name": "genuinePreChangeEditReceiptsReplayAndRepairWithoutBackfillingBookmarkResults()",
+      "invocations": 1
+    },
+    {
+      "className": "OwnedLinkEditResultTests",
+      "name": "newBookmarkIdentitiesSurviveIncompleteRecoveryWithoutReapplying(ownerKind:)",
+      "invocations": 2
+    }
+  ],
+  "productHashesVerified": true,
+  "sqliteUnlinkWarningsPerPlatform": 0,
+  "removedFixturesPerPlatform": 231,
+  "nativeUIOrPhysicalCredit": false
+}

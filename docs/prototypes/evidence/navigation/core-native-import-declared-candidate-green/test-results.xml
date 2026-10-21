@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.6958e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="3" skipped="0" time="0.107011042">
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner()" time="0.106655417">
+            <failure message="Expectation failed: snapshot.matchingCount == 1 &amp;&amp; snapshot.progress.first?.totalCount == 1 (error)"/>
+            <failure message="Expectation failed: page.rows.map(\.title) == [&quot;Nezu Museum&quot;] (error)"/>
+            <failure message="Expectation failed: page.rows.first?.effectiveDone == true (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.2875e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.10005575">
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner(declaresCurrentCandidate:)" time="0.099718792">
+            <failure message="Expectation failed: details.imports.first?.dependencies.first?.lifetimeId.uuidString == &quot;00000000-0000-4000-8000-000000000814&quot; (error)"/>
+            <failure message="Issue recorded (error): Apply the complete new List without replacing its current Item: PlannerOperationResult(operationId: EE4FD985-3EB3-43C5-B92D-811853C75E2B, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;The membership has unresolved source bindings.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+        </testcase>
+    </testsuite>
+</testsuites>
