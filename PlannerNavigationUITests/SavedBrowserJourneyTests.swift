@@ -3,8 +3,104 @@ import ImageIO
 import Network
 import XCTest
 
+#if os(iOS)
+  import UIKit
+#endif
+
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testDelayedPreviousGuideCannotReplaceTheNewItineraryReader() async throws {
+    #if os(iOS)
+      guard UIDevice.current.userInterfaceIdiom == .pad else {
+        throw XCTSkip("This journey requires simultaneous Itinerary and reader panes.")
+      }
+    #endif
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    let garden = destination.deletingLastPathComponent().appendingPathComponent("garden")
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    let (firstLink, secondLink) = createLinkedItinerary(
+      in: application, first: destination, second: garden)
+    XCTAssertTrue(firstLink.waitForExistence(timeout: 10))
+    XCTAssertTrue(secondLink.waitForExistence(timeout: 10))
+    let firstIdentifier = firstLink.identifier
+    let secondIdentifier = secondLink.identifier
+    firstLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    page.links["Delayed guide"].activateForPlannerJourney()
+    let requestDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while server.delayedRequestCount == 0, ContinuousClock.now < requestDeadline {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertEqual(server.delayedRequestCount, 1)
+    XCTAssertTrue(secondLink.isHittable)
+    secondLink.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    server.releaseDelayedResponses()
+    let responseDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while server.delayedResponseOutcomes.isEmpty, ContinuousClock.now < responseDeadline {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertEqual(server.delayedResponseOutcomes.count, 1)
+    let outcome = XCTAttachment(string: server.delayedResponseOutcomes.joined(separator: "\n"))
+    outcome.name = "Old guide socket response outcome"
+    outcome.lifetime = .keepAlways
+    add(outcome)
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].exists)
+    XCTAssertFalse(page.staticTexts["Museum guide fixture"].exists)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].firstMatch.exists)
+    XCTAssertFalse(application.buttons["saved.browser.back"].isEnabled)
+    try await recordWindow(application, name: "Delayed previous guide cannot replace Garden")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(firstLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(firstLink.identifier, firstIdentifier)
+    XCTAssertEqual(secondLink.identifier, secondIdentifier)
+    XCTAssertEqual(firstLink.value as? String, destination.absoluteString)
+    XCTAssertEqual(secondLink.value as? String, garden.absoluteString)
+  }
+
+  func testOpeningAnotherSavedItineraryLinkReplacesTheVisibleReader() async throws {
+    #if os(iOS)
+      guard UIDevice.current.userInterfaceIdiom == .pad else {
+        throw XCTSkip("This journey requires simultaneous Itinerary and reader panes.")
+      }
+    #endif
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    let garden = destination.deletingLastPathComponent().appendingPathComponent("garden")
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    let (firstLink, secondLink) = createLinkedItinerary(
+      in: application, first: destination, second: garden)
+    XCTAssertTrue(firstLink.waitForExistence(timeout: 10))
+    XCTAssertTrue(secondLink.waitForExistence(timeout: 10))
+    let firstIdentifier = firstLink.identifier
+    let secondIdentifier = secondLink.identifier
+    firstLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    XCTAssertTrue(secondLink.isHittable)
+    secondLink.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    XCTAssertTrue(server.requestLines.contains("GET /garden HTTP/1.1"))
+    XCTAssertFalse(application.buttons["saved.browser.back"].isEnabled)
+    try await recordWindow(application, name: "Another saved link replaces the visible reader")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(firstLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(firstLink.identifier, firstIdentifier)
+    XCTAssertEqual(secondLink.identifier, secondIdentifier)
+    XCTAssertEqual(firstLink.value as? String, destination.absoluteString)
+    XCTAssertEqual(secondLink.value as? String, garden.absoluteString)
+  }
+
   func testRecoveringAFailedReloadPreservesThePreviousPageInHistory() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -493,6 +589,51 @@ final class SavedBrowserJourneyTests: XCTestCase {
     return brightness.filter { abs($0 - background) > 40 }.count > 16
   }
 
+  private func createLinkedItinerary(
+    in application: XCUIApplication, first: URL, second: URL
+  ) -> (XCUIElement, XCUIElement) {
+    application.openPlannerSection("Itineraries")
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Museum and garden")
+    let addLink = application.plannerElement("saved.itinerary.link.add")
+    for _ in 0..<6 where !addLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(addLink.isHittable)
+    addLink.activateForPlannerJourney()
+    let firstInput = application.textFields.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.link.url.")
+    ).firstMatch
+    XCTAssertTrue(firstInput.waitForExistence(timeout: 5))
+    let firstInputIdentifier = firstInput.identifier
+    firstInput.activateForPlannerJourney()
+    firstInput.typeText(first.absoluteString)
+    for _ in 0..<6 where !addLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(addLink.isHittable)
+    addLink.activateForPlannerJourney()
+    let secondInput = application.textFields.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND identifier != %@",
+        "saved.itinerary.link.url.", firstInputIdentifier)
+    ).firstMatch
+    XCTAssertTrue(secondInput.waitForExistence(timeout: 5))
+    secondInput.activateForPlannerJourney()
+    secondInput.typeText(second.absoluteString)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let firstLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@",
+        "saved.item.link.", first.absoluteString)
+    ).firstMatch
+    let secondLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.",
+        second.absoluteString)
+    ).firstMatch
+    return (firstLink, secondLink)
+  }
+
   private func createLinkedItem(in application: XCUIApplication, destination: URL) {
     application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
@@ -523,6 +664,9 @@ private final class BrowserJourneyServer: @unchecked Sendable {
   private var isGuideAvailable = true
   private var isGardenAvailable = true
   private var connections: [NWConnection] = []
+  private var delayedResponses: [(connection: NWConnection, content: Data)] = []
+  private var observedDelayedRequests = 0
+  private var observedDelayedResponseOutcomes: [String] = []
 
   init() throws {
     let parameters = NWParameters.tcp
@@ -531,9 +675,28 @@ private final class BrowserJourneyServer: @unchecked Sendable {
   }
 
   var requestLines: [String] { lock.withLock { observedRequestLines } }
+  var delayedRequestCount: Int { lock.withLock { observedDelayedRequests } }
+  var delayedResponseOutcomes: [String] { lock.withLock { observedDelayedResponseOutcomes } }
 
   func setGuideAvailable(_ available: Bool) { lock.withLock { isGuideAvailable = available } }
   func setGardenAvailable(_ available: Bool) { lock.withLock { isGardenAvailable = available } }
+
+  func releaseDelayedResponses() {
+    queue.async { [self] in
+      for response in delayedResponses {
+        response.connection.send(
+          content: response.content,
+          completion: .contentProcessed { [self] error in
+            lock.withLock {
+              observedDelayedResponseOutcomes.append(
+                error?.localizedDescription ?? "contentProcessed")
+            }
+            response.connection.cancel()
+          })
+      }
+      delayedResponses.removeAll()
+    }
+  }
 
   func start() async throws -> URL {
     listener.stateUpdateHandler = { [weak self] state in
@@ -607,12 +770,17 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Museum guide</title></head>
           <body><h1>Museum guide fixture</h1><p>Meet at the garden entrance.</p>
-          <a href="/garden">Garden guide</a></body></html>
+          <a href="/garden">Garden guide</a> <a href="/delayed-guide">Delayed guide</a></body></html>
           """
       }
       let content = requestLine.hasPrefix("HEAD ") ? "" : body
       let response =
         "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\nContent-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
+      if requestLine == "GET /delayed-guide HTTP/1.1" {
+        delayedResponses.append((connection, Data(response.utf8)))
+        lock.withLock { observedDelayedRequests += 1 }
+        return
+      }
       connection.send(
         content: Data(response.utf8),
         completion: .contentProcessed { _ in connection.cancel() })
