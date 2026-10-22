@@ -1,6 +1,6 @@
 # Shared Map row contract review
 
-Status: accepted under Q142 A on 22 October 2026. Q131-Q141 already settle the workflow. This declaration governs the added public read and its tests. Implementation and qualification are in progress.
+Status: accepted under Q142 A on 22 October 2026. Q131-Q141 already settle the workflow. This declaration governs the added public read and its tests. The shared read is implemented and locally qualified; see [execution and limits](prototypes/core-map-row-windows.md). Native Map presentation and lookup coordination remain separate work.
 
 ## Context, starting state and goal
 

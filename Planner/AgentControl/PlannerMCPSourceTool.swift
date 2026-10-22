@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the local Planner prototype. calendarRows returns Schedule identities, live owner identities/titles and saved forms from a Calendar query generation.",
+        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the local Planner prototype. mapRows projects saved location inputs, Maps links and exact route/List context from an Item query, without provider lookups. calendarRows returns Schedule identities, live owner identities/titles and saved forms from a Calendar query generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -53,7 +53,7 @@
                 "properties": .object([
                   "kind": .object([
                     "type": .string("string"),
-                    "enum": .array([.string("rows"), .string("calendarRows")]),
+                    "enum": .array([.string("rows"), .string("mapRows"), .string("calendarRows")]),
                   ]),
                   "generation": .object(["type": .string("string"), "format": .string("uuid")]),
                   "offset": .object([
@@ -112,6 +112,8 @@
           structured = PlannerMCPRowValue.window(window)
         case .calendarRows(let window):
           structured = PlannerMCPRowValue.calendarWindow(window)
+        case .mapRows(let window):
+          structured = PlannerMCPRowValue.mapWindow(window)
         case .failed(let reason):
           return failure(reason)
         case .source(.schedule(let read)):
@@ -192,11 +194,17 @@
         return .source(
           PlannerEntityReference(
             kind: sourceKind, id: try identifier(source["id"], path: "/request/source/id")))
-      case .string("rows"), .string("calendarRows"):
+      case .string("rows"), .string("mapRows"), .string("calendarRows"):
         let request = try object(
           value, keys: ["kind", "generation", "offset", "limit"], path: "/request")
         if request["kind"] == .string("calendarRows") {
           return .calendarRows(
+            generation: try identifier(request["generation"], path: "/request/generation"),
+            offset: try count(request["offset"], minimum: 0, path: "/request/offset"),
+            limit: try count(request["limit"], minimum: 1, path: "/request/limit"))
+        }
+        if request["kind"] == .string("mapRows") {
+          return .mapRows(
             generation: try identifier(request["generation"], path: "/request/generation"),
             offset: try count(request["offset"], minimum: 0, path: "/request/offset"),
             limit: try count(request["limit"], minimum: 1, path: "/request/limit"))
@@ -208,7 +216,7 @@
       default:
         throw AdmissionFailure(
           code: "invalidInput", path: "/request/kind",
-          message: "Expected source, appearance, rows or calendarRows.")
+          message: "Expected source, appearance, rows, mapRows or calendarRows.")
       }
     }
 
