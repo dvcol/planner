@@ -1,0 +1,44 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "A6AE1E47-12D3-45C7-B893-9DB14D957A32.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Guide remains readable after returning from Apple Maps_0_1C4F7FF0-DADC-49B8-B8D7-41F722EF7FD9.png",
+        "timestamp": 1792704931.118
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "09602701-B646-42A7-B76F-4C8D21F90D75.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Apple Maps after explicit Planner Open_0_B319802C-11A9-4C81-A08C-5ED8F4F9FF8F.png",
+        "timestamp": 1792704923.963
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "FF116304-5C04-4FF9-9ACF-410BAAE46533.json",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Actual Maps foreground observation_0_B3FF39C7-34C0-43B9-AE9E-FE34D9D8C196.json",
+        "timestamp": 1792704923.819
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2297092E-9415-499B-A502-F72A102FE90D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Maps destination awaits explicit Planner Open_0_293642CB-5F6A-4477-A77B-A38ECDC14331.png",
+        "timestamp": 1792704922.824
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testConfirmedMapsLinkOpensMapsAndKeepsTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testConfirmedMapsLinkOpensMapsAndKeepsTheOriginalGuide"
+  }
+]

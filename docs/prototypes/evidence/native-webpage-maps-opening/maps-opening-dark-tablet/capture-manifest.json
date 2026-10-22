@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "maps-return-retained.png",
+      "originalName": "Guide remains readable after returning from Apple Maps_0_1C4F7FF0-DADC-49B8-B8D7-41F722EF7FD9.png",
+      "exportedFile": "A6AE1E47-12D3-45C7-B893-9DB14D957A32.png",
+      "sha256": "255bfcd08e790566defffe6b35a84ba9f14b78de759434599e7d4fb77bd565d4"
+    },
+    {
+      "file": "maps-opened.png",
+      "originalName": "Apple Maps after explicit Planner Open_0_B319802C-11A9-4C81-A08C-5ED8F4F9FF8F.png",
+      "exportedFile": "09602701-B646-42A7-B76F-4C8D21F90D75.png",
+      "sha256": "5b547bc50080fe2a3461885e18f56ce1f172095b43cdcd62720130d6f678edf9"
+    },
+    {
+      "file": "maps-opening-confirmation.png",
+      "originalName": "Maps destination awaits explicit Planner Open_0_293642CB-5F6A-4477-A77B-A38ECDC14331.png",
+      "exportedFile": "2297092E-9415-499B-A502-F72A102FE90D.png",
+      "sha256": "45d36f9ecbd811131158e86a0838678ad30222fc2d4e16082a32e783c2aa36bc"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

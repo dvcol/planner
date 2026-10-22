@@ -1,0 +1,7 @@
+{
+  "file": "maps-foreground.json",
+  "originalName": "Actual Maps foreground observation_0_B3FF39C7-34C0-43B9-AE9E-FE34D9D8C196.json",
+  "exportedFile": "FF116304-5C04-4FF9-9ACF-410BAAE46533.json",
+  "sha256": "68f895d49cd266774f491b4974984ee9ec7524efd75600c8da791aeb79af0a0d",
+  "meaning": "Unmodified native attachment with actual Maps foreground state and the confirmed Planner target; it does not establish coordinate rendering or completed onboarding."
+}

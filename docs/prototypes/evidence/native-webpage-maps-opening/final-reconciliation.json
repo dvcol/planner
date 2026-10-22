@@ -1,0 +1,38 @@
+{
+  "base": "5b3f88970077a0ee14f616746adfee452f0ec2e8",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "maps-opening-phone-trial",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 3,
+      "inspectedOriginalCaptures": 3,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "maps-opening-dark-tablet",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 3,
+      "inspectedOriginalCaptures": 3,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 2,
+  "distinctNativeFunctions": 1,
+  "totalRetainedOriginalCaptures": 6,
+  "totalInspectedOriginalCaptures": 6,
+  "productionChanged": false,
+  "existingJourneyBodiesUnchanged": true,
+  "macCompiler": {
+    "phase": "maps-opening-mac-compiler",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "limits": [
+    "The exact Planner Maps confirmation, actual Maps foreground transition and preserved reader/bookmark are qualified on phone/dark iPad.",
+    "External captures show black launch content; Maps coordinate rendering, completed onboarding and readiness are not claimed.",
+    "Mail/Phone activation, other content/owner handoffs, actual Mac UI, physical devices, broad accessibility and final whole-app polish remain open.",
+    "Existing cancellation/generated-redirect journeys are unchanged and keep their preceding checkpoint evidence without new execution credit."
+  ],
+  "meaning": "All final source inputs match; source/product boundaries validated before reuse, and original captures and state attachments reconcile. Only one native test method is added; shipping production and the HTTP helper are unchanged."
+}

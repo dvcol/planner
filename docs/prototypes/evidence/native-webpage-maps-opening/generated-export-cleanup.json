@@ -1,0 +1,20 @@
+{
+  "removedDuplicateExports": [
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-maps-opening-dark-tablet",
+      "nominalBytes": 386026,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-maps-opening-dark-tablet.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-maps-opening/maps-opening-dark-tablet",
+      "retainedDeliberateCaptures": 3
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-maps-opening-phone-trial",
+      "nominalBytes": 630763,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-maps-opening-phone-trial.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-maps-opening/maps-opening-phone-trial",
+      "retainedDeliberateCaptures": 3
+    }
+  ],
+  "totalNominalBytes": 1016789,
+  "meaning": "Only duplicate temporary xcresult attachment-export directories were removed after retained original captures, manifests and prior source/product boundaries verified. Original xcresult bundles, source roots, reusable build products and all user datasets remain. Nominal bytes do not promise equal APFS free-space recovery."
+}

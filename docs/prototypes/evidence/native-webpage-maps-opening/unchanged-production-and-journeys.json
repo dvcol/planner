@@ -1,0 +1,11 @@
+{
+  "precedingCommit": "5b3f88970077a0ee14f616746adfee452f0ec2e8",
+  "sourceInputCount": 1081,
+  "changedInputs": [
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+  ],
+  "existingJourneyBodiesUnchanged": true,
+  "previousWholeJourneySourceSha256": "e235feed190a6fba38d9bf8e64080521397f32a21f6145988b900099e2e19fa2",
+  "addedJourneySha256": "02e2307b8101af4986db76dd8775bca90378f0fc86622acef7caaf82d452ae0a",
+  "meaning": "Removing only the added journey exactly reproduces the preceding complete file. All other native/package/project/fixture inputs, including shipping code and the HTTP helper, match the preceding reconciled checkpoint. Existing cancellation/redirect test evidence keeps its original epoch; it is not rerun or counted as new credit."
+}

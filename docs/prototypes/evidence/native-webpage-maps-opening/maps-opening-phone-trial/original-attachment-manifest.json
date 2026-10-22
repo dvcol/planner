@@ -1,0 +1,44 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "C1916AB4-6298-49FC-9A6E-4D7F29AC1E56.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Guide remains readable after returning from Apple Maps_0_EF3D570C-EABD-4304-A630-B304CFD8914E.png",
+        "timestamp": 1792704856.525
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "FBB7DA38-ECE8-40DD-A0F7-B3FC2491C6CA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Apple Maps after explicit Planner Open_0_A2E9C283-9AF5-4B51-9E91-4ECD8F1117F4.png",
+        "timestamp": 1792704849.348
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0B6B17DF-BF25-4C6B-B5AE-1D12699FF82B.json",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Actual Maps foreground observation_0_CBD83470-9F24-4B91-89E2-F6FF57947261.json",
+        "timestamp": 1792704849.264
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5538A1FD-8C4C-4269-81A5-068FB4B7D20F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Maps destination awaits explicit Planner Open_0_11B5F1BE-814B-48B7-AECB-C4B2530F61C6.png",
+        "timestamp": 1792704848.375
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testConfirmedMapsLinkOpensMapsAndKeepsTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testConfirmedMapsLinkOpensMapsAndKeepsTheOriginalGuide"
+  }
+]

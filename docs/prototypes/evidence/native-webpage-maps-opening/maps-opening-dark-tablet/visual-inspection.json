@@ -1,0 +1,14 @@
+{
+  "inspectedOriginalFiles": [
+    "maps-opening-confirmation.png",
+    "maps-opened.png",
+    "maps-return-retained.png"
+  ],
+  "findings": [
+    "Planner shows a native dark Open another app sheet with the exact maps://?ll=35,139 destination.",
+    "The external capture shows Maps named in the system status bar with black launch content and the Planner return indicator; coordinate rendering, onboarding and Maps readiness are not established.",
+    "Returning to Planner shows the same rendered policy guide in its original split context with the Maps system-return indicator. The test separately asserts the saved bookmark identity and URL.",
+    "The narrow Items title remains truncated to It\u2026; final whole-app polish still owns that layout finding."
+  ],
+  "scope": "All three original native PNGs inspected without alteration. Only Planner controls were activated; this is launch/return evidence, not Maps UI or physical acceptance."
+}

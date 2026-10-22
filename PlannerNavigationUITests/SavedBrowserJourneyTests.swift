@@ -97,6 +97,72 @@ final class SavedBrowserJourneyTests: XCTestCase {
         application, name: "System browser handoff preserves the original saved bookmark")
     }
 
+    func testConfirmedMapsLinkOpensMapsAndKeepsTheOriginalGuide() async throws {
+      continueAfterFailure = false
+      let server = try BrowserJourneyServer()
+      let guideURL = try await server.start()
+      defer { server.stop() }
+      let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+        "external-app-policy")
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      createLinkedItem(in: application, destination: destination)
+      let bookmark = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+      let bookmarkIdentifier = bookmark.identifier
+      bookmark.activateForPlannerJourney()
+      let page = application.webViews.firstMatch
+      XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+      page.links["Maps link"].activateForPlannerJourney()
+      let confirmation = application.navigationBars["Open another app"].firstMatch
+      XCTAssertTrue(confirmation.waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        application.staticTexts["saved.browser.external.destination"].label, "maps://?ll=35,139")
+      let maps = XCUIApplication(bundleIdentifier: "com.apple.Maps")
+      XCTAssertNotEqual(maps.state, .runningForeground)
+      XCTAssertEqual(application.state, .runningForeground)
+      let offered = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+      offered.name = "Maps destination awaits explicit Planner Open"
+      offered.lifetime = .keepAlways
+      add(offered)
+      application.buttons["saved.browser.external.open"].activateForPlannerJourney()
+      let mapsBecameForeground = maps.wait(for: .runningForeground, timeout: 10)
+      let observation: [String: Any] = [
+        "originalBookmark": destination.absoluteString,
+        "confirmedExternalTarget": "maps://?ll=35,139",
+        "mapsBecameForeground": mapsBecameForeground,
+        "mapsState": maps.state.rawValue,
+        "plannerState": application.state.rawValue,
+      ]
+      let launch = XCTAttachment(
+        data: try JSONSerialization.data(withJSONObject: observation, options: .prettyPrinted),
+        uniformTypeIdentifier: "public.json")
+      launch.name = "Actual Maps foreground observation"
+      launch.lifetime = .keepAlways
+      add(launch)
+      let opened = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      opened.name = "Apple Maps after explicit Planner Open"
+      opened.lifetime = .keepAlways
+      add(opened)
+      XCTAssertTrue(mapsBecameForeground)
+      application.activate()
+      XCTAssertTrue(application.wait(for: .runningForeground, timeout: 10))
+      XCTAssertTrue(confirmation.waitForNonExistence(timeout: 5))
+      XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+      XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+      try await recordWindow(
+        application, name: "Guide remains readable after returning from Apple Maps")
+      application.buttons["saved.browser.return"].activateForPlannerJourney()
+      let retainedBookmark = application.descendants(matching: .any)
+        .matching(identifier: bookmarkIdentifier).firstMatch
+      XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+    }
+
     func testDismissingInitialAppConfirmationReturnsToTheExactSavedItem() async throws {
       continueAfterFailure = false
       let server = try BrowserJourneyServer()

@@ -1,0 +1,13 @@
+{
+  "inspectedOriginalFiles": [
+    "maps-opening-confirmation.png",
+    "maps-opened.png",
+    "maps-return-retained.png"
+  ],
+  "findings": [
+    "Planner shows a native Open another app sheet with the exact maps://?ll=35,139 destination.",
+    "The external screen capture catches the Maps launch transition with black content and the Planner system-return indicator; it does not establish coordinate rendering, completed onboarding or usable Maps UI. The separate native state observation records Maps foreground.",
+    "Returning to Planner shows the original rendered policy guide and the Maps system-return indicator. The complete test separately verifies the retained bookmark identity and URL."
+  ],
+  "scope": "Original native PNG attachments inspected without alteration. No Maps controls were activated. Launch evidence is separate from Maps rendering and physical/system acceptance."
+}
