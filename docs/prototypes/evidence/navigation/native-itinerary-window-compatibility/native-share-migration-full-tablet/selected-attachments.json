@@ -1,0 +1,26 @@
+[
+  {
+    "lifetime": "keepAlways",
+    "name": "Share directs genuine old-schema data to Planner_0_0883AD3B-FDF5-4676-89A6-18D1C9172DDB.png",
+    "payloadId": "0~u10_UnugSPl8bxQMWWeNm8ya--akumJZ0JsYQG4Xitn9XimY9xJfblwy8vKZt544dQCKwicQQ5yBSclPOlDUKg==",
+    "timestamp": 1792632034.564,
+    "uuid": "7EC41DA0-D576-42BA-80A8-2CDE9D9068EC",
+    "file": "7EC41DA0-D576-42BA-80A8-2CDE9D9068EC.png",
+    "sha256": "1cc40b57178788e267dec16aa30124c865183a0a507f11862751cc143cf83e58",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-migration-full-tablet.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-migration-full-tablet/7EC41DA0-D576-42BA-80A8-2CDE9D9068EC.png",
+      "--id",
+      "0~u10_UnugSPl8bxQMWWeNm8ya--akumJZ0JsYQG4Xitn9XimY9xJfblwy8vKZt544dQCKwicQQ5yBSclPOlDUKg==",
+      "--type",
+      "file"
+    ]
+  }
+]

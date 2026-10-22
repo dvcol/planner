@@ -1,0 +1,21 @@
+[
+  "xcodebuild",
+  "test-without-building",
+  "-xctestrun",
+  "/private/tmp/PlannerShareMigrationMacDerivedData/Build/Products/PlannerFixtures_macosx27.0-arm64.xctestrun",
+  "-destination",
+  "platform=macOS,arch=arm64",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-test-timeouts-enabled",
+  "YES",
+  "-default-test-execution-time-allowance",
+  "600",
+  "-maximum-test-execution-time-allowance",
+  "600",
+  "-only-testing:PlannerFixtureUITests/ShareCaptureJourneyTests/testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent",
+  "-resultBundlePath",
+  "/private/tmp/PlannerShareMigration-native-share-migration-first-mac.xcresult"
+]

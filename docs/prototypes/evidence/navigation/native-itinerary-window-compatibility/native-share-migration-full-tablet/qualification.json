@@ -1,0 +1,11 @@
+{
+  "overallInvocationPassed": false,
+  "passingFunctions": 5,
+  "failedFunctions": 1,
+  "failureBoundary": "The archive filter popover was absent after tapping the Items filter control.",
+  "migrationJourneyQualified": false,
+  "sourceEpoch": "85520780",
+  "frozenInputs": 1062,
+  "sourceAndProductsUnchanged": true,
+  "installedExtensionOrPhysicalCredit": false
+}

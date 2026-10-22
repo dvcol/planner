@@ -1,0 +1,35 @@
+{
+  "qualifiedCases": [
+    {
+      "test": "ShareCaptureJourneyTests/testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem()",
+      "result": "Passed"
+    },
+    {
+      "test": "ShareCaptureJourneyTests/testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain()",
+      "result": "Passed"
+    },
+    {
+      "test": "ShareCaptureJourneyTests/testShareRequiresMainApplicationSetupBeforeReviewingOrSaving()",
+      "result": "Passed"
+    },
+    {
+      "test": "ShareCaptureJourneyTests/testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent()",
+      "result": "Passed"
+    },
+    {
+      "test": "ShareCaptureJourneyTests/testShareWithExistingIncompleteRecoveryExplainsTheGateWithoutOfferingCapture()",
+      "result": "Passed"
+    },
+    {
+      "test": "ShareCaptureJourneyTests/testUnconfiguredShareFailsWithoutInventingAPrivateStoreOrPromisingSetup()",
+      "result": "Passed"
+    }
+  ],
+  "matchingSourceInputs": 1062,
+  "productsUnchanged": true,
+  "originalCapturesInspected": 3,
+  "appearance": "light",
+  "scope": "Disposable local Share fixture; migration, capture, recovery and configuration journeys.",
+  "installedExtensionOrPhysicalCredit": false,
+  "performanceOrWholeAppVisualCredit": false
+}
