@@ -3,6 +3,84 @@ import PlannerCore
 import Testing
 
 struct NativeImportBindingReviewTests {
+  @Test(arguments: [101, 201, 301, 501, 601], [PlannerImportMode.skip, .overwrite])
+  func emptyPlannerRestoresIncomingFamilyReferencesAndItsCompleteGraph(
+    sourceIdentifierSuffix: Int, mode: PlannerImportMode
+  ) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    let expectedFixture = try knownFamilyImportFixture()
+    let sourceIdentifier = knownFamilyFixtureIdentifier(sourceIdentifierSuffix)
+    let canonicalLifetime = knownFamilyFixtureIdentifier(sourceIdentifierSuffix + 1000)
+    let otherCandidateLifetime = knownFamilyFixtureIdentifier(sourceIdentifierSuffix + 2000)
+    let sources = try #require(expectedFixture["sources"] as? [[String: Any]])
+    let source = try #require(sources.first { $0["id"] as? String == sourceIdentifier })
+    let kind = try #require(source["kind"] as? String)
+    var incoming = try #require(
+      rebindingKnownFamilyFixture(
+        expectedFixture,
+        replacements: ["\(kind):\(sourceIdentifier):\(canonicalLifetime)": otherCandidateLifetime])
+        as? [String: Any])
+    incoming["sources"] = expectedFixture["sources"]
+    let incomingData = try JSONSerialization.data(withJSONObject: incoming)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let backup) = planner.decodeImport(incomingData),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: backup, mode: mode))
+    else { throw CancellationError() }
+    #expect(backup.externalBindings.isEmpty)
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(let result, .complete(let checkpoint)) = response.outcome,
+      case .exported(let exported) = await planner.exportData(session: session)
+    else {
+      Issue.record("Restore the complete self-contained family graph: \(response)")
+      return
+    }
+    let expected = try canonicalPortableFixtureExpectations(
+      JSONSerialization.data(withJSONObject: expectedFixture))
+    let actual = try #require(JSONSerialization.jsonObject(with: exported) as? [String: Any])
+    #expect(NSDictionary(dictionary: actual).isEqual(to: expected))
+    #expect(backup.backup.restorationFamilies.count == 5)
+    #expect(backup.backup.restorationFamilies.allSatisfy { $0.candidates.count == 2 })
+    guard
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let recovery) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else { throw CancellationError() }
+    let recovered = try #require(
+      JSONSerialization.jsonObject(with: recovery.portableData) as? [String: Any])
+    #expect(NSDictionary(dictionary: recovered).isEqual(to: expected))
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
+      ).outcome,
+      case .reviewed(let repeatedReview) = await reopened.prepareReview(
+        session: reopenedSession, command: .applyImport(backup: backup, mode: mode)),
+      case .applied(let repeated, .complete) = await reopened.execute(
+        .init(
+          operationId: UUID(), session: reopenedSession, command: repeatedReview.command,
+          reviewToken: repeatedReview.reviewToken)
+      ).outcome,
+      case .exported(let repeatedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == exported)
+    #expect(replayed == result && replayCheckpoint == checkpoint)
+    #expect(repeated.generated.isEmpty && repeatedData == exported)
+  }
+
   enum BindingCase: CaseIterable { case live, missing, wrongLifetime }
   enum KnownFamilyImportCase: CaseIterable { case externalSkip, externalOverwrite, declaredSkip }
 

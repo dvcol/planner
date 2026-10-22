@@ -1,0 +1,4 @@
+{
+  "runtimeStarted": false,
+  "reason": "The ordinary Xcode test invocation did not retain a Core xctestrun file. No runtime or test credit. The follow-up uses the same project and cached build through ordinary xcodebuild test."
+}

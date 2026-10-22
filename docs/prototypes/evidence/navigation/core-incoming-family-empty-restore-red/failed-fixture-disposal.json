@@ -1,0 +1,11 @@
+{
+  "disposition": "Post-failure disposal after terminal test process, exact ownership-marker and closed-host/database verification. Original test remains failed.",
+  "sourceLogSha256": "0f87f4e4ffdcba4afadaf539b3b9add22335c59b52bae32d6ff4d68da8a95b47",
+  "hostProcessIdentifiers": [
+    68200
+  ],
+  "nominalBytes": 238228,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/408ECDA5-AA13-4828-96BB-FB18A259288D"
+  ]
+}

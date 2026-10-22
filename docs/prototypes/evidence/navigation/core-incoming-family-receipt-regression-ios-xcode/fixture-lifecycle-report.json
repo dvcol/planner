@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/38FB2321-4327-42F0-8CAA-6144FD011006",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/E8010FE5-FE4E-4138-BFD3-948F97099160",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/753FBA47-1651-4974-AA9C-740CE19D46F6"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "f6b4762a2f5cad9735ec7dde0875be8a80d1564ec1d6b846bc946675823e3b1b",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 3,
+  "hostProcessIdentifiers": [
+    73894
+  ]
+}

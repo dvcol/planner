@@ -293,13 +293,19 @@ func plannerResolveImportReview(
       "missingReference", "The imported reference cannot resolve in this dataset.",
       propertyPath: path.propertyPath + (knownIdentity ? "/lifetimeId" : "/id"))
   }
-  for family in current.backup.restorationFamilies {
-    guard let kind = PlannerEntityKind(rawValue: family.predecessor.kind.rawValue),
-      let actual = currentSources[.init(kind: kind, id: family.predecessor.id)]
-    else { continue }
+  let incomingGraph = PlannerImportGraph(backup: incoming.backup)
+  let incomingSources = Dictionary(
+    uniqueKeysWithValues: incoming.backup.sources.map {
+      ($0.importBinding.reference, $0.importBinding)
+    })
+  for family in current.backup.restorationFamilies + incoming.backup.restorationFamilies {
+    guard let kind = PlannerEntityKind(rawValue: family.predecessor.kind.rawValue) else { continue }
+    let reference = PlannerEntityReference(kind: kind, id: family.predecessor.id)
+    guard let actual = currentSources[reference] ?? incomingSources[reference] else { continue }
+    let graph = currentSources[reference] == nil ? incomingGraph : currentGraph
     for candidate in family.candidates where candidate.lifetimeId != actual.lifetimeId {
       guard
-        currentGraph.resolves(
+        graph.resolves(
           .init(
             kind: family.predecessor.kind, id: actual.id, lifetimeId: candidate.lifetimeId),
           to: .init(

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000145625"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.049019375">
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="emptyPlannerRestoresIncomingFamilyReferencesAndItsCompleteGraph()" time="0.04867025">
+            <failure message="Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 0FE3C620-3E65-4E34-A45F-1AD597FC49E6, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;The label association has unresolved Item ownership.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

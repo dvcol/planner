@@ -1,0 +1,16 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 135.086,
+  "frozenInputsUnchanged": true,
+  "requestedClasses": [
+    "OwnedLinkEditResultTests"
+  ],
+  "sqliteUnlinkWarnings": 0,
+  "summary": {
+    "result": "Passed",
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

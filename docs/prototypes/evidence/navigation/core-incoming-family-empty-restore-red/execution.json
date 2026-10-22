@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 109.66,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "emptyPlannerRestoresIncomingFamilyReferencesAndItsCompleteGraph()",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.04867025,
+      "failures": [
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 0FE3C620-3E65-4E34-A45F-1AD597FC49E6, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The label association has unresolved Item ownership.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

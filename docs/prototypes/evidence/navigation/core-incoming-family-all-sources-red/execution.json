@@ -1,0 +1,27 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 15.764,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "emptyPlannerRestoresIncomingFamilyReferencesAndItsCompleteGraph(sourceIdentifierSuffix:mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.089429,
+      "failures": [
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: F3B7B6CC-AF40-41D6-A25C-FCE44EF460DC, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The Tag association has unresolved label bindings.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 42009A3F-24C4-4B2C-A1F0-B19FBC9C5493, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The Tag association has unresolved label bindings.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: E63508B6-FC09-422D-AF9F-99E536BC2A3F, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The Category association has unresolved label bindings.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 4993DF83-6211-4F73-A45E-FB444CD26C9F, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The label association has unresolved Item ownership.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 956D431B-432C-4ACD-83FD-9AC21DD9A645, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The entry has unresolved itinerary bindings.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: E107DC8C-2A71-4677-A2FB-60DD01994867, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The entry has unresolved itinerary bindings.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 13D57482-7E41-4633-8ADF-843032ED2576, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The Category association has unresolved label bindings.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 60E56E01-05F0-45C6-AEAA-790702FEDF1C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The label association has unresolved Item ownership.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 53D5D676-0878-454E-A52C-848FFBE1C4AC, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The entry has unresolved source bindings or completion.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Restore the complete self-contained family graph: PlannerOperationResult(operationId: 96DE722B-F626-4FC3-8B9C-D0200D4AB354, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The entry has unresolved source bindings or completion.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,20 @@
+{
+  "disposition": "Post-failure disposal after terminal test process, exact ownership-marker and closed-host/database verification. Original test remains failed.",
+  "sourceLogSha256": "56b800e01d478d492e9c4aca8a9b0304141ab47dcadf341434d54390f016b622",
+  "hostProcessIdentifiers": [
+    69400
+  ],
+  "nominalBytes": 2382280,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/C794140C-E665-4B5D-9A97-91458AFCEECE",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/D65A273E-FC3C-4389-B6AF-6558474A560F",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/9FC401D5-C8BF-41C0-9878-C2A83AC0355E",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4CCB8C9E-6691-4F50-AE34-43174EF9D79F",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/1547BCB7-2F9E-45C5-9AD1-3910DDF8A4F9",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/C7C6248E-9C0F-454A-8E8D-C53A807BAD75",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/2BDCBD30-AB4F-4AEA-A4F6-7F3304267EC3",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/59F939E5-AD23-45F6-ACF6-839D60F2F9A1",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/5CAAF51E-6CC6-4B6E-8124-C3380A00E1D3",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/14422EBD-52EB-48C4-92D5-EBE248267C69"
+  ]
+}

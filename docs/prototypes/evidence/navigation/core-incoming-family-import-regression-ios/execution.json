@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 363.269,
+  "frozenInputsUnchanged": true,
+  "requestedClasses": [
+    "NativeImportAdmissionTests",
+    "NativeImportApplyTests",
+    "NativeImportBindingReviewTests",
+    "NativeImportClosedHistoryTests",
+    "NativeImportConflictReviewTests",
+    "NativeImportDecodingTests",
+    "NativeImportDeletedReviewTests",
+    "NativeImportHistoryCollisionTests",
+    "NativeImportIncomingDeletionReviewTests",
+    "NativeImportLineageMigrationTests",
+    "NativeImportLineageTests",
+    "NativeImportMarkerTests",
+    "NativeImportMergeTests",
+    "NativeImportOmittedOwnerReviewTests",
+    "NativeImportOverwriteDeletionReviewTests",
+    "NativeImportOwnedAdditionTests",
+    "NativeImportOwnedRemovalTests",
+    "NativeImportProvenanceTests",
+    "NativeImportProviderTests",
+    "NativeImportRestorationTests",
+    "NativeImportResultTests",
+    "NativeImportReviewTests",
+    "NativeImportScaleTests",
+    "NativeImportSourceDeletionTests"
+  ],
+  "sqliteUnlinkWarnings": 0,
+  "summary": {
+    "result": "Passed",
+    "passedTests": 58,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}
