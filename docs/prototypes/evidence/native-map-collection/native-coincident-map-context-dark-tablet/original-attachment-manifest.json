@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "768DFEAF-73D3-46F1-9EF0-0D3A7340CE80.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted native Map marker keeps exact Item choices_0_60B0514C-84E4-45BC-9F89-5B1C4B816CC9.png",
+        "timestamp": 1792657884.038
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "F9F323FD-8966-4839-9B58-0BF6ED614F5A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_1BB8DFCC-864F-4215-B32C-A6814EC1C03B.png",
+        "timestamp": 1792657942.973
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation"
+  }
+]

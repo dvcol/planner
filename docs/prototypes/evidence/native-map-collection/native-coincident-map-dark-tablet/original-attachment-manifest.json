@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "69032C7B-6730-4CA3-B06F-14C707141C1E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted native Map marker keeps exact Item choices_0_A0767B4B-B3D1-4463-B2AC-C59BBD99F834.png",
+        "timestamp": 1792657398.447
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities"
+  }
+]

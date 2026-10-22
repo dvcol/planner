@@ -28,6 +28,24 @@ All three final native executions pass with zero failures/skips or SQLite unlink
 
 ## Remaining acceptance and observed limits
 
-Items and Inbox now expose List/Map, but the executed new journey covers Items. List/Itinerary integration, coincident-marker choice and repeated local-completion scope still need their own native slices. Native address/link-choice and Retry controls, provider failures, filter/scope refresh, draft protection, representation switching and resizing/accessibility also remain open.
+Items and Inbox now expose List/Map, but the executed new journey covers Items. List/Itinerary integration and repeated local-completion scope still need their own native slices. Native address/link-choice and Retry controls, provider failures, filter/scope refresh, draft protection, representation switching and resizing/accessibility also remain open.
 
-The inspected narrow portrait iPad capture truncates the inline Items title beside the four toolbar controls. That toolbar/column-width finding remains open. The fixture's exact single-point Map capture also does not establish useful geographic scale or tile-render readiness. These captures establish the represented workflow and ordinary light/dark presentation, not complete visual, increased-contrast, larger-text, VoiceOver, physical or whole-app acceptance. Signing remains deferred.
+The inspected narrow portrait iPad capture truncates the inline Items title beside the four toolbar controls. That toolbar/column-width finding remains open. The initial exact single-point capture exposed an overly close camera; the following refinement qualifies its initial geographic scale. These captures establish the represented workflow and ordinary light/dark presentation, not complete visual, increased-contrast, larger-text, VoiceOver, physical or whole-app acceptance. Signing remains deferred.
+
+## Coincident source choices
+
+The next native test saves two distinct Items with coordinate-bearing Maps links that have different retained fragments. It waits for one "2 items" marker, opens its native choice list and selects each Item. Both original URLs and distinct bookmark identities are checked through existing details. No new production change was needed for this behavior.
+
+The [phone](evidence/native-map-collection/native-coincident-map-phone/qualification.json) and [dark iPad](evidence/native-map-collection/native-coincident-map-dark-tablet/qualification.json) executions pass. Their original counted-marker captures are inspected, their 1,074 source inputs match, and each records four actual executable products with no SQLite unlink diagnostics. The [matching Mac build](evidence/native-map-collection/native-coincident-map-mac-compiler/qualification.json) records nine products and compiler credit only. This qualifies two distinct source Items at one coordinate; repeated appearances of one source and their local completion remain separate work.
+
+The captured detail map shows surrounding roads at the same coordinate where the collection Map is overly close. A following refinement reuses the existing detail map's initial region for a single-coordinate collection, including a coincident group. Multiple-coordinate collections retain native automatic fitting; a user-positioned camera stays untouched. Its runtime/visual qualification follows separately.
+
+## Next contextual slice
+
+The next List journey will reuse one saved Item, mark only its List membership Done through the existing row control, then select its pin from that List's Map. Details must show the List context and its retained completion. Opening the shared Item globally must still show Todo and the same bookmark identity. This establishes contextual Map routing before extending the same approach to repeated itinerary appearances. Current global-Items Map evidence does not establish that behavior.
+
+## Useful single-coordinate region
+
+The refined [phone run](evidence/native-map-collection/native-coincident-map-context-phone/qualification.json) and [dark iPad run](evidence/native-map-collection/native-coincident-map-context-dark-tablet/qualification.json) each pass both Map functions, four actual executions altogether. Counted choices retain both exact saved URLs and different bookmark identities; single-pin and unlocated selection also pass. All four original captures are inspected and show roads/terrain around the selected coordinate. The initial region now uses the existing detail-map span only when one coordinate group is present; multiple groups retain automatic fitting and a user-positioned camera is preserved.
+
+Both runs have matching 1,074 source hashes, four executable products each, zero failures/skips and no SQLite unlink diagnostics. Dark iPad appearance is observed and restored. The [Mac compiler check](evidence/native-map-collection/native-coincident-map-context-mac-compiler/qualification.json) matches those source inputs and records nine products, with no Mac UI runtime credit. The narrow iPad toolbar title remains truncated; this checkpoint does not close resizing, increased contrast, larger text or contextual List/Itinerary acceptance.

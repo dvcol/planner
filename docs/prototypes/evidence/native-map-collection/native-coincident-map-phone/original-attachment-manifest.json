@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "4DA10DF9-8643-43E4-8633-31768C170E12.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted native Map marker keeps exact Item choices_0_794F2228-1072-4774-8A49-078D9141E669.png",
+        "timestamp": 1792657233.603
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities"
+  }
+]

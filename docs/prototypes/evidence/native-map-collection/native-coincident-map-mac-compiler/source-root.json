@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerBrowserMacSource",
+  "base": "5c90da6f393d7bade834a24ba417fe2831acce33",
+  "overlays": [
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ]
+}

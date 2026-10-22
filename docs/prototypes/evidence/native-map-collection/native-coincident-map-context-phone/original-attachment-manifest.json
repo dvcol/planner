@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "59253474-F501-40D1-BEB2-3F7A4062A78A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted native Map marker keeps exact Item choices_0_80AEA450-2E6A-4438-9684-6DB345905F14.png",
+        "timestamp": 1792657690.138
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5C006991-515A-44E2-9C8A-497FFA195A39.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_15497A05-1B25-4EEB-9D45-9FFEC2FB26C2.png",
+        "timestamp": 1792657753.075
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation"
+  }
+]

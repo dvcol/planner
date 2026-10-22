@@ -1,0 +1,22 @@
+[
+  {
+    "file": "coincident-items-map.png",
+    "original": "Counted native Map marker keeps exact Item choices_0_80AEA450-2E6A-4438-9684-6DB345905F14.png",
+    "exportedFile": "59253474-F501-40D1-BEB2-3F7A4062A78A.png",
+    "sha256": "47a991ee866f779a15ec9c3e550b5bbc317d1ac946de703260d084df37868bff",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "items-map.png",
+    "original": "Native Items Map retains its pin and Locations control_0_15497A05-1B25-4EEB-9D45-9FFEC2FB26C2.png",
+    "exportedFile": "5C006991-515A-44E2-9C8A-497FFA195A39.png",
+    "sha256": "2675a01c9824759a923aca10da456784bb53eb48e2550626718761027da6b8d0",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

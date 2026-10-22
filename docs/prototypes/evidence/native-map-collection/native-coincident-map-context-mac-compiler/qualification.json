@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "sameSourcesAsPhoneAndTabletRuns": true,
+  "runtimeCredit": false,
+  "meaning": "Mac app/Share/navigation-test compilation only. Not native Mac UI acceptance."
+}

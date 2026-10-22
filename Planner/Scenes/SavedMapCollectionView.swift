@@ -121,8 +121,16 @@ struct SavedMapCollectionView: View {
       .padding()
       .background(.bar)
     }
-    .onChange(of: collection.groups.map(\.id)) {
-      if !camera.positionedByUser { camera = .automatic }
+    .onChange(of: collection.groups.map(\.id), initial: true) {
+      guard !camera.positionedByUser else { return }
+      if collection.groups.count == 1, let coordinate = collection.groups.first?.coordinate {
+        camera = .region(
+          .init(
+            center: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
+            span: .init(latitudeDelta: 0.025, longitudeDelta: 0.025)))
+      } else {
+        camera = .automatic
+      }
     }
     .sheet(item: $presentedSheet, onDismiss: finishSelection) { sheet in
       NavigationStack {
