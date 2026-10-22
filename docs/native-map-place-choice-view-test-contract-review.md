@@ -1,6 +1,6 @@
 # Native Map place-choice view test review
 
-Status: Q144 proposal. Not approved or implemented. Q143's loader and existing native UI seams remain accepted.
+Status: Q144 A accepted on 22 October 2026. The additional production-view test boundary and bounded runtime feasibility trial are approved; their execution remains pending. Q143's loader and existing native UI seams remain accepted.
 
 ## Context and evidence
 
