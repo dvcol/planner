@@ -213,9 +213,31 @@ extension XCUIApplication {
       XCTFail("Unknown Planner state filter: \(title)")
       return
     }
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad, !control.isHittable,
+        let sidebar = buttons.matching(identifier: "Hide Sidebar").allElementsBoundByIndex.first(
+          where: \.isHittable)
+      {
+        sidebar.activateForPlannerJourney()
+      }
+    #endif
+    XCTAssertTrue(control.waitForPlannerHittability())
     control.activateForPlannerJourney()
     let picker = plannerElement(pickerIdentifier)
-    XCTAssertTrue(picker.waitForExistence(timeout: 5))
+    let pickerExists = picker.waitForExistence(timeout: 5)
+    if !pickerExists {
+      XCTContext.runActivity(named: "Unavailable Planner state filter") { activity in
+        let capture = XCTAttachment(screenshot: screenshot())
+        capture.name = "Planner after the unavailable filter tap"
+        capture.lifetime = .keepAlways
+        activity.add(capture)
+        let hierarchy = XCTAttachment(string: windows.firstMatch.debugDescription)
+        hierarchy.name = "Unavailable Planner filter window hierarchy"
+        hierarchy.lifetime = .keepAlways
+        activity.add(hierarchy)
+      }
+    }
+    XCTAssertTrue(pickerExists)
     picker.activateForPlannerJourney()
     #if os(macOS)
       let option = menuItems.matching(NSPredicate(format: "title == %@", title)).firstMatch

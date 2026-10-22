@@ -48,6 +48,24 @@ The [current Mac fixture compilation](evidence/navigation/native-itinerary-windo
 
 This checkpoint does not close the full definition of done or installed/physical Share. Swift/project/Markdown checks pass for the represented source.
 
+## iPad sidebar diagnosis and corrected regression
+
+The [isolated diagnostic](evidence/navigation/native-itinerary-window-compatibility/native-share-filter-diagnostic-tablet/) reproduces the archive-picker failure in one function, without preceding Share cases. Its original screenshot and window hierarchy are retained. The screenshot taken after the tap has no filter form. It does not establish that the filter button received the intended action.
+
+The ranked probes preserve that distinction:
+
+1. Deferring only the fixture's store refresh until sheet dismissal still fails. Deferring main-view insertion as well still fails. Both fixture experiments are reverted; their [first](evidence/navigation/native-itinerary-window-compatibility/native-share-dismissal-probe-tablet/) and [second](evidence/navigation/native-itinerary-window-compatibility/native-share-main-insertion-probe-tablet/) results remain failed.
+2. Waiting at the existing native hittability boundary fails before tapping. Its [five retained control descriptions](evidence/navigation/native-itinerary-window-compatibility/native-share-filter-hittability-probe-tablet/selected-attachments.json) show the selected Items section and a visible Hide Sidebar control over the same left-hand region as the inaccessible Filters button. Selecting the section has left the portrait sidebar open. The original tap dismisses that covering sidebar rather than opening Filters.
+3. The driver now dismisses a hittable native Hide Sidebar control only when the requested filter control is inaccessible on iPad, then requires hittability before tapping. It adds failure-only screenshot/hierarchy attachments for an unavailable picker. The production filter and Share fixture are unchanged.
+
+The [corrected isolated iPad journey](evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-tablet/) passes in 84.225 seconds. The [complete iPad regression](evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-full-tablet/) and [complete iPhone regression](evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-full-phone/) each pass all six distinct Share functions with no failures or skips. Three original migration captures from the isolated dark iPad run and three from the full light iPhone run are inspected individually. They show the update instruction, original archived/completed Hotel with its notes, and the newly saved Museum with its original link. Exact identities, original notes/URL, one new row and duplicate-free relaunch are asserted by the actual journey.
+
+The [separate Mac fixture build](evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-mac-build/) passes without replacing the user's reopened title-comparison app. Both final builds retain all 14 genuine historical-schema files byte for byte. All 1,062 source/configuration inputs and frozen products reconcile for this epoch, based on `c08607ce` plus the retained test-driver overlay. The concurrent new Map interface work is outside these Share products. Strict affected Swift lint and Markdown checks pass.
+
+The initial sandboxed dismissal-probe build cannot access Xcode caches or CoreSimulator and executes no test. Its escalated retry compiles, then supplies the failed runtime above. The first sidebar-driver build has an invalid element-query expression; the corrected expression compiles before any passing runtime. Neither compiler attempt earns behavioral red or passing credit. The original runner also misspells the Simulator contrast query. That failed observation remains intact; a separate unchanged-settings read records ordinary contrast and Large text for the dark iPad. These checks do not qualify Increase Contrast or every text size.
+
+This resolves the represented tablet test-driver gap. Actual Mac execution, installed Share, protected shared storage and physical/system behavior retain their separate gates. A passing local fixture does not close those requirements or the final whole-app visual pass.
+
 ## Limits
 
 This remains a disposable local Share-role fixture. It does not establish installed extension invocation, App Group provisioning, real sender envelopes, physical extension memory/lifetime, signing, CloudKit/account ownership or system Shortcuts behavior. No signing or security setting is changed. Whole-app polish follows feature completion.
