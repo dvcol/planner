@@ -9,6 +9,52 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let downloadURL = destination.deletingLastPathComponent().appendingPathComponent(
+      "download-guide")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let guide = application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+    XCTAssertTrue(guide.waitForExistence(timeout: 10))
+    application.webViews.firstMatch.links["Download guide"].activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 5))
+    XCTAssertTrue(explanation.staticTexts["Open download in your browser"].exists)
+    let target = explanation.staticTexts.matching(
+      NSPredicate(format: "label CONTAINS %@", downloadURL.absoluteString)
+    ).firstMatch
+    XCTAssertTrue(target.exists)
+    XCTAssertTrue(target.isHittable)
+    XCTAssertTrue(explanation.buttons["Open in default browser"].isHittable)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Native requested download offers exact external target and keeps saved guide"
+    capture.lifetime = .keepAlways
+    add(capture)
+    explanation.buttons["Keep reading"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(guide.waitForExistence(timeout: 10))
+    XCTAssertTrue(guide.isHittable)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].firstMatch.exists)
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -1043,6 +1089,9 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
           <body><h1>\(heading)</h1>\(visitLinks)</body></html>
           """
+      } else if requestLine.contains(" /download-guide ") {
+        responseHeaders = "Content-Disposition: attachment; filename=\"guide.txt\"\r\n"
+        body = "Museum download fixture"
       } else if requestLine.contains(" /delayed-guide ") {
         body = """
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1063,7 +1112,8 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <meta name="color-scheme" content="light dark"><title>Museum guide</title></head>
           <body><h1>Museum guide fixture</h1><p>Meet at the garden entrance.</p>
           <a href="/garden">Garden guide</a> <a href="/delayed-guide">Delayed guide</a>
-          <a href="/garden" target="_blank">Garden in another window</a>\(cookieLinks)</body></html>
+          <a href="/garden" target="_blank">Garden in another window</a>
+          <a href="/download-guide" download="guide.txt">Download guide</a>\(cookieLinks)</body></html>
           """
       }
       let content = requestLine.hasPrefix("HEAD ") ? "" : body

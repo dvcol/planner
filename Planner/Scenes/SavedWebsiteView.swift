@@ -1,3 +1,4 @@
+import Observation
 import PlannerCore
 import SwiftUI
 import WebKit
@@ -15,10 +16,11 @@ extension EnvironmentValues {
   @Entry var savedWebsiteOpening: (@MainActor (SavedWebsiteRequest) -> Void)? = nil
 }
 
-@MainActor
+@MainActor @Observable
 private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
-  var requestedURL: URL?
-  weak var page: WebPage?
+  @ObservationIgnored var requestedURL: URL?
+  @ObservationIgnored weak var page: WebPage?
+  var downloadURL: URL?
 
   func decidePolicy(
     for action: WebPage.NavigationAction, preferences: inout WebPage.NavigationPreferences
@@ -26,8 +28,15 @@ private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
     guard let destination = action.request.url,
       ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
     else { return .allow }
+    if action.shouldPerformDownload {
+      downloadURL = destination
+      return .cancel
+    }
     let opensNewWindow = action.target == nil
-    if opensNewWindow || action.target?.isMainFrame == true { requestedURL = destination }
+    if opensNewWindow || action.target?.isMainFrame == true {
+      requestedURL = destination
+      downloadURL = nil
+    }
     guard opensNewWindow else { return .allow }
     page?.load(action.request)
     return .cancel
@@ -54,6 +63,10 @@ final class SavedWebsiteSession: Identifiable, Hashable {
 
   func retry() { page.load(navigation.requestedURL ?? request.destination) }
 
+  var requestedDownloadURL: URL? { navigation.downloadURL }
+
+  func dismissRequestedDownload() { navigation.downloadURL = nil }
+
   nonisolated static func == (first: SavedWebsiteSession, second: SavedWebsiteSession) -> Bool {
     first === second
   }
@@ -72,7 +85,24 @@ struct SavedWebsiteView: View {
   }
 
   var body: some View {
+    let downloadURL = session.requestedDownloadURL
     WebView(session.page)
+      .alert(
+        "Open download in your browser",
+        isPresented: Binding(
+          get: { downloadURL != nil },
+          set: { if !$0 { session.dismissRequestedDownload() } })
+      ) {
+        if let downloadURL {
+          Button("Open in default browser") { openURL(downloadURL) }
+            .accessibilityValue(downloadURL.absoluteString)
+        }
+        Button("Keep reading", role: .cancel) { session.dismissRequestedDownload() }
+      } message: {
+        if let downloadURL {
+          Text("Open this download in your default browser.\n\(downloadURL.absoluteString)")
+        }
+      }
       .overlay {
         if let failure {
           ContentUnavailableView {
