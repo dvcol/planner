@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "meaning": "Mac app, Share and native-test compilation with matching phone inputs. No Mac UI, actual app handoff or whole-scheme coverage credit."
+}

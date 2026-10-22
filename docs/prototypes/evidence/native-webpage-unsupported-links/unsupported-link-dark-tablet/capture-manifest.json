@@ -1,0 +1,42 @@
+[
+  {
+    "file": "requested-download-dialog.png",
+    "original": "Native requested download offers exact external target and keeps saved guide_0_F1430400-BEEE-48F1-ABF2-3FC188E2A8D5.png",
+    "exportedFile": "FFD72010-0C77-41C1-994E-EFF4995477AB.png",
+    "sha256": "462a5b1748baced7eacaf2f5ffa6dcf47239b198265e0bfc748d1ca4236917a9",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "failed-linked-target.png",
+    "original": "Failed linked webpage keeps its exact external target and readable error_0_D9BE80DE-D282-414E-AD46-9C6754EE8761.png",
+    "exportedFile": "DCA9DD95-2845-42E4-9ABD-4DF6C24A4D0A.png",
+    "sha256": "550ba767d20817ec507aa7c7615ff6bb0888f37292c8489de36caa6832d8055c",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "unsupported-linked-dialog.png",
+    "original": "Native unsupported linked content offers exact external target and keeps saved guide_0_AD4E6109-DCC7-4483-9A16-F60C8121C78C.png",
+    "exportedFile": "52BA79EC-8D69-466D-9D57-1DF8B0E4AFA8.png",
+    "sha256": "1ded26dfd5aed01db96beaa86af3b6e5f18a008f4f59b92e5faced0a4b2f0642",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "unsupported-link-dialog.png",
+    "original": "Unsupported website link retains its guide without an external action_0_6D2F694F-B357-453A-A87C-AC0BE6E153ED.png",
+    "exportedFile": "5D450BF7-31C3-4CAB-887A-9B0E6EAE34EC.png",
+    "sha256": "b81a9f2c9e360e068873e61d94cf3d4716526a20d4a247ec97be7b1d88a0f538",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

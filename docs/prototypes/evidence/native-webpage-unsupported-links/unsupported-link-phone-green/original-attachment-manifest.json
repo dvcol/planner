@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "045C2973-1789-4B74-8126-EF92692814AB.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unsupported website link retains its guide without an external action_0_A14A971B-8B4A-48CB-87B2-F3D34CDA6EA6.png",
+        "timestamp": 1792671010.574
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark"
+  }
+]

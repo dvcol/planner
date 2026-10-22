@@ -9,6 +9,52 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guideURL = try await server.start()
+    defer { server.stop() }
+    let destination = guideURL.deletingLastPathComponent().appendingPathComponent("link-policy")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Link policy fixture"].waitForExistence(timeout: 10))
+    page.links["Unavailable app link"].activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(explanation.staticTexts["Link unavailable"].exists)
+    let target = explanation.staticTexts.matching(
+      NSPredicate(format: "label CONTAINS %@", "planner-fixture-unsupported://guide")
+    ).firstMatch
+    XCTAssertTrue(target.isHittable)
+    XCTAssertFalse(explanation.buttons["Open in default browser"].exists)
+    XCTAssertTrue(explanation.buttons["Keep reading"].isHittable)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Unsupported website link retains its guide without an external action"
+    capture.lifetime = .keepAlways
+    add(capture)
+    explanation.buttons["Keep reading"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(page.staticTexts["Link policy fixture"].exists)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testUnavailableLinkedPageKeepsItsExactBrowserTargetAndReadableError() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -1234,6 +1280,14 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
           <body><h1>\(heading)</h1>\(visitLinks)</body></html>
+          """
+      } else if requestLine.contains(" /link-policy ") {
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Link policy</title></head>
+          <body><h1>Link policy fixture</h1>
+          <a href="planner-fixture-unsupported://guide">Unavailable app link</a>
+          <a href="/garden">Garden guide</a></body></html>
           """
       } else if requestLine.contains(" /unsupported-content ") {
         contentType = "application/x-planner-fixture"

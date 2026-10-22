@@ -1,0 +1,47 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0F9233D9-177B-477A-9E22-4DCC6A88F406.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native requested download offers exact external target and keeps saved guide_0_D580AC2B-A092-42E5-B491-7BCFA7847789.png",
+        "timestamp": 1792671334.946
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "BDF1D8BC-FBA3-4D1E-B53B-E375176C8948.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Failed linked webpage keeps its exact external target and readable error_0_4C629EFF-BF53-44E6-9671-7AB6E48816DD.png",
+        "timestamp": 1792671377.94
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnavailableLinkedPageKeepsItsExactBrowserTargetAndReadableError()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnavailableLinkedPageKeepsItsExactBrowserTargetAndReadableError"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D5BF16D4-0269-41F2-AC2E-0F27B6D54886.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native unsupported linked content offers exact external target and keeps saved guide_0_F0B2D9E6-F974-4970-B639-193971691848.png",
+        "timestamp": 1792671417.614
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  }
+]

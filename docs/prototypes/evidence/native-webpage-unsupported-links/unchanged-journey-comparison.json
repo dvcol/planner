@@ -1,0 +1,8 @@
+{
+  "unchangedNativeTestSource": "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+  "sha256": "cbbcc37ffead0f4d1808fcca82f203577a1fcc2faf4e64d12efe61cc083cfe66",
+  "redToGreenChangedInputs": [
+    "Planner/Scenes/SavedWebsiteView.swift"
+  ],
+  "meaning": "The same native journey fails before the production policy change and passes afterward."
+}

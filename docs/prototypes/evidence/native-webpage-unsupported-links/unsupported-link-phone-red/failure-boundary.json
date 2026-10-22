@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "The saved loopback guide renders and its unsupported custom-scheme link is selected. The required native explanation is absent at line 33. This is the expected feature failure, with no passing credit."
+}
