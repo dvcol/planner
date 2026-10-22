@@ -627,9 +627,11 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func isWebsiteOriginAvailable(_ request: SavedWebsiteRequest) async -> Bool {
+  func websiteReturnAvailability(_ request: SavedWebsiteRequest) async
+    -> (originAvailable: Bool, listAvailable: Bool)
+  {
     guard let planner, let session, devicePreferenceNamespace == request.namespace else {
-      return false
+      return (false, false)
     }
     let read: PlannerReadRequest
     if let appearance = request.appearance {
@@ -639,21 +641,35 @@ final class SavedPlannerStore {
     }
     let result = await planner.read(session: session, request: read)
     guard self.session == session, devicePreferenceNamespace == request.namespace else {
-      return false
+      return (false, false)
     }
+    let originAvailable: Bool
     switch result {
     case .appearance(let origin):
-      return origin.source == request.source
+      originAvailable =
+        origin.source == request.source
         && origin.sourceLifetimeId == request.sourceLifetimeIdentifier
         && origin.appearance == request.appearance
     case .source(.item(let origin)):
-      return origin.source == request.source
+      originAvailable =
+        origin.source == request.source
         && origin.sourceLifetimeId == request.sourceLifetimeIdentifier
     case .source(.itinerary(let origin)):
-      return origin.source == request.source
+      originAvailable =
+        origin.source == request.source
         && origin.sourceLifetimeId == request.sourceLifetimeIdentifier
-    default: return false
+    default: originAvailable = false
     }
+    if originAvailable { return (true, false) }
+    guard case .listMembership(let listIdentifier, _)? = request.appearance else {
+      return (false, false)
+    }
+    let parent = await planner.read(
+      session: session, request: .source(.init(kind: .list, id: listIdentifier)))
+    guard self.session == session, devicePreferenceNamespace == request.namespace,
+      case .source(.list) = parent
+    else { return (false, false) }
+    return (false, true)
   }
 
   func createItem(_ draft: SavedNewItemDraft) async -> PlannerAppliedResult? {
