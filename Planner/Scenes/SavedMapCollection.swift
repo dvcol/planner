@@ -292,6 +292,15 @@ final class SavedMapCollection {
     return mapsResults[request]
   }
 
+  func mapsLinkChoices(for identity: PlannerRowIdentity)
+    -> (selected: PlannerLinkPreviewRequest, links: [PlannerOwnedLinkRead])?
+  {
+    guard let index = rows.firstIndex(where: { $0.identity == identity }),
+      case .maps(let request) = inputs[index]
+    else { return nil }
+    return (request, rows[index].mapsLinks)
+  }
+
   func chooseMapsLink(_ request: PlannerLinkPreviewRequest, for identity: PlannerRowIdentity)
     -> Bool
   {

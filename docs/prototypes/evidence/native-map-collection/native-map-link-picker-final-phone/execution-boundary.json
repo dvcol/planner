@@ -1,0 +1,6 @@
+{
+  "result": "Not executed",
+  "exitCode": 74,
+  "reason": "The sandbox prevented Xcode from writing its normal Swift/Clang caches and accessing Simulator services. No behavioral test or compiler pass is claimed.",
+  "replacement": "native-map-link-picker-final-phone-authorized"
+}

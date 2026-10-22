@@ -1,0 +1,62 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "9E04BA4F-84C6-4546-A64E-773F5E04DD0B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted native Map marker keeps exact Item choices_0_AF0D1FD8-E3F2-4C8A-BF98-E579578764EC.png",
+        "timestamp": 1792663482.369
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "3828A44F-6FFD-4814-9A2A-4151183CDC5B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_F09AEEDD-BED5-4FC9-84A6-E694BBC5B1ED.png",
+        "timestamp": 1792663570.308
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "AC82C0B7-DEE4-4A55-ACC3-2BA572FB2657.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_05B86376-A912-4AE4-88CB-06F85224DB67.png",
+        "timestamp": 1792663685.57
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5B675D10-DF9F-44B6-9728-085D9EE25146.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native collection Maps link picker keeps original bookmarks_0_06468535-5681-47B6-B0A5-BDAFA633C717.png",
+        "timestamp": 1792663763.45
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks"
+  }
+]

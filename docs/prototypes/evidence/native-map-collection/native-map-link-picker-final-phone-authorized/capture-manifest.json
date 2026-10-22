@@ -1,0 +1,42 @@
+[
+  {
+    "file": "coincident-items-map.png",
+    "original": "Counted native Map marker keeps exact Item choices_0_194718D1-FA55-45EE-AD45-3C6000CA8811.png",
+    "exportedFile": "837B3F1F-0330-49C4-811F-2AAD9FBBCDBA.png",
+    "sha256": "2b93e8f15e6cc5cb306aa71022ce69e21c2b80173c4196ef32be18e3d78d6ca6",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "itinerary-map-choices.png",
+    "original": "Counted itinerary pin distinguishes independent repeated stops_0_E4354FED-6315-427D-87C6-AD4A4047B495.png",
+    "exportedFile": "575D17FE-381A-4FDD-ACF9-0A717A1840F6.png",
+    "sha256": "f3ecd67de3436aee3461b8d15631471dadc321f5fafa15ed0a75ed999c2de69b",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "itinerary-list-map-choices.png",
+    "original": "Counted itinerary List pin distinguishes independent child appearances_0_02B6E960-9EB5-4A7E-8734-030E9B03936B.png",
+    "exportedFile": "7D09E945-5F23-429C-A5CF-7E430169A4B5.png",
+    "sha256": "aa7a6cb2e8259a9116c30fec304cdbef248de95ecaa4004f71157c9dc1b45463",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "maps-link-picker.png",
+    "original": "Native collection Maps link picker keeps original bookmarks_0_1363EB7C-DDA1-42A2-9778-33A0F9966532.png",
+    "exportedFile": "534B8EB1-B58A-4CB7-9526-7BAFFD05BE98.png",
+    "sha256": "400dcb8a8ecf240f69f211149ca348515897567f9909fa457dbf9244f7b73afd",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

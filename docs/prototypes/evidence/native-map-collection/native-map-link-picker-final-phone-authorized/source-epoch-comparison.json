@@ -1,0 +1,11 @@
+{
+  "sourceInputCount": 1074,
+  "phases": [
+    "native-map-link-picker-final-phone-authorized",
+    "native-map-link-picker-dark-tablet",
+    "native-map-link-picker-mac-compiler-authorized",
+    "native-map-link-picker-loader-regressions-mac"
+  ],
+  "sourceDifferences": [],
+  "meaning": "Same final production and test source inputs across the four passed checks. Native Mac execution is the direct loader suite; the native Mac view has compilation-only credit."
+}

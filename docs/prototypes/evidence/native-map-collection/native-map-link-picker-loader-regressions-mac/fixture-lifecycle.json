@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/08D9D390-F2F9-48F7-A8A0-E0BCBCADE688",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E8A60B9B-F715-4E83-A1D3-3312CE4689D7",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/5A3D2C05-F529-4BD3-8AF8-1D84AF8FFF42",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/FBF97820-C2F8-416A-BE5D-377BC96724E3",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/3D96C003-6746-418D-AD99-07F8D29832D2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/E8F80D32-5F81-4A86-8D4D-D28B4349CDCB",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/78879CD9-42A6-4C95-B719-D37D438F00BF",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/1A373F32-6516-4481-B9E4-8CE4C63637B7",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/6F87B7C2-37BB-47AA-B323-F2D9ED189308",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/CB83AA47-82B8-4459-BCB0-B7A2C9C050E2",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/A3C6A70B-D0B1-4940-960B-2B4948B80395",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/7CACEB86-D1F1-4DCB-8026-51DEF0A1CDF8",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerIntentFixtures/D1E405D3-4005-46BA-B6CB-175C742764C5"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "b0d4f6252f2a66a6a817beb30fad18c2cd717ed49e5f849b906c969fa91629de",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 13,
+  "hostProcessIdentifiers": [
+    28497
+  ]
+}

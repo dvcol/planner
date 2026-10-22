@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "matchesDarkTabletSources": true,
+  "meaning": "Actual Mac app, Share and UI-test compilation only. No Mac native UI execution credit."
+}

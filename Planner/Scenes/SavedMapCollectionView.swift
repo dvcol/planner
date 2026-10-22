@@ -1,5 +1,6 @@
 import MapKit
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 
 enum SavedCollectionRepresentation: String {
@@ -84,6 +85,7 @@ struct SavedMapCollectionView: View {
   @State private var camera = MapCameraPosition.automatic
   @State private var presentedSheet: PresentedSheet?
   @State private var pendingSelection: PlannerMapRowRead?
+  @State private var locationChoiceMessage: String?
 
   var body: some View {
     Map(position: $camera) {
@@ -150,24 +152,31 @@ struct SavedMapCollectionView: View {
       NavigationStack {
         List {
           ForEach(choices(for: sheet)) { choice in
-            Button {
-              pendingSelection = choice.row
-              presentedSheet = nil
-            } label: {
-              VStack(alignment: .leading, spacing: 4) {
-                Text(choice.row.title).foregroundStyle(.primary)
-                if let context = choice.context {
-                  Text(context).font(.subheadline).foregroundStyle(.secondary)
+            HStack {
+              Button {
+                pendingSelection = choice.row
+                presentedSheet = nil
+              } label: {
+                VStack(alignment: .leading, spacing: 4) {
+                  Text(choice.row.title).foregroundStyle(.primary)
+                  if let context = choice.context {
+                    Text(context).font(.subheadline).foregroundStyle(.secondary)
+                  }
+                  Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
                 }
-                Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .contentShape(.rect)
               }
-              .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-              .contentShape(.rect)
+              .buttonStyle(.plain)
+              .accessibilityLabel(choice.accessibilityTitle)
+              .accessibilityValue(locationDescription(choice.row))
+              .accessibilityIdentifier("saved.map.location.\(choice.id)")
+              if let choices = collection.mapsLinkChoices(for: choice.row.identity),
+                choices.links.count > 1
+              {
+                locationOptions(for: choice, choices: choices)
+              }
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel(choice.accessibilityTitle)
-            .accessibilityValue(locationDescription(choice.row))
-            .accessibilityIdentifier("saved.map.location.\(choice.id)")
           }
         }
         .listStyle(.plain)
@@ -178,8 +187,59 @@ struct SavedMapCollectionView: View {
           }
         }
       }
+      .alert(
+        "Location changed",
+        isPresented: Binding(
+          get: { locationChoiceMessage != nil },
+          set: { if !$0 { locationChoiceMessage = nil } })
+      ) {
+        Button("OK") { locationChoiceMessage = nil }
+      } message: {
+        Text(locationChoiceMessage ?? "Choose this location again.")
+      }
       .presentationDetents([.medium, .large])
     }
+  }
+
+  private func locationOptions(
+    for choice: RowChoice,
+    choices: (selected: PlannerLinkPreviewRequest, links: [PlannerOwnedLinkRead])
+  ) -> some View {
+    Menu {
+      Picker(
+        "Map link",
+        selection: Binding(
+          get: {
+            collection.mapsLinkChoices(for: choice.row.identity)?.selected.linkId
+              ?? choices.selected.linkId
+          },
+          set: { selectedLinkIdentifier in
+            guard let link = choices.links.first(where: { $0.linkId == selectedLinkIdentifier })
+            else {
+              locationChoiceMessage = "The saved Maps links changed. Choose a link again."
+              return
+            }
+            let request = PlannerLinkPreviewRequest(
+              source: choices.selected.source, linkId: link.linkId, originalURL: link.originalUrl)
+            if !collection.chooseMapsLink(request, for: choice.row.identity) {
+              locationChoiceMessage = "This saved Maps link changed. Choose it again."
+            }
+          })
+      ) {
+        ForEach(choices.links, id: \.linkId) { link in
+          Text(link.label ?? link.originalUrl).tag(link.linkId)
+        }
+      }
+      .pickerStyle(.menu)
+      .accessibilityIdentifier("saved.map.link.selector.\(choice.id)")
+    } label: {
+      Label("Location options", systemImage: "ellipsis.circle")
+        .frame(minWidth: 44, minHeight: 44)
+    }
+    .labelStyle(.iconOnly)
+    .buttonStyle(.borderless)
+    .accessibilityLabel("Location options for \(choice.accessibilityTitle)")
+    .accessibilityIdentifier("saved.map.location.options.\(choice.id)")
   }
 
   @ViewBuilder
