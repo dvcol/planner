@@ -38,7 +38,15 @@ The [corrected single phone journey](evidence/navigation/native-itinerary-window
 
 Its three original light-mode captures were inspected individually. They show the genuine update instruction, the retained archived/completed Hotel with its Original notes and two-hour estimate, and the newly saved Migrated museum with its original bookmark. The journey checks Hotel's exact historical identity, the distinct new Item identity, one Museum row, exact `https://example.com/museum` link, and both identities after another relaunch without duplicate creation. The [existing real-store schema-1 migration test](evidence/navigation/native-share-migration-core-v1-check/) also passes separately. Neither result substitutes for installed Share capabilities.
 
-The affected full Share regression on phone/tablet, tablet migration journey, and current Mac fixture compilation/runtime remain open. This checkpoint does not close this report's full definition of done or the map's Share gate. Swift/project/Markdown checks pass for the represented source.
+## Full regression follow-up
+
+The [full phone invocation](evidence/navigation/native-itinerary-window-compatibility/native-share-migration-full-phone/) passes all six distinct Share functions, with zero failures or skips. The three original migration captures are inspected again. All 1,062 frozen inputs and products match the represented source epoch. The runtime includes substantial test-service startup/cleanup time and makes no performance claim.
+
+The [tablet invocation](evidence/navigation/native-itinerary-window-compatibility/native-share-migration-full-tablet/) fails overall: five existing Share functions pass, while the new migration function stops at the archive-filter interaction. It reaches the genuine migration-required warning and opens Items, but the expected archive picker is absent after the filter tap. The retained failure hierarchy still shows the Items filter as Active. No tablet migration-preservation or new-capture credit is assigned to this partial journey. Its original warning capture and failure hierarchy are retained; the five passing cases do not turn the invocation into a pass.
+
+The [current Mac fixture compilation](evidence/navigation/native-itinerary-window-compatibility/native-share-migration-final-mac-build/) succeeds against the same 1,062 inputs. Its 14 original historical-schema resource files match. The [new Mac fixture attempt](evidence/navigation/native-itinerary-window-compatibility/native-share-migration-first-mac/) reaches the runner but ends at its 720-second controller deadline, followed by 20 seconds of interruption handling. Its incomplete result cannot supply a usable case summary or fresh native capture, so it receives no runtime credit. The source and products remain unchanged. Mac runtime and the tablet interaction remain open; this outcome does not establish a signing cause and does not justify repeating the same startup attempt. These runs use the `85520780` production/test epoch; the later independent Core import correction does not rewrite their source claims.
+
+This checkpoint does not close the full definition of done or installed/physical Share. Swift/project/Markdown checks pass for the represented source.
 
 ## Limits
 
