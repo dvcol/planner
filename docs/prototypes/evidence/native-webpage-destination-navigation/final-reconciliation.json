@@ -1,0 +1,35 @@
+{
+  "base": "6affd71b3b1db6152f70fe8c5970e9787accc979",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "destination-navigation-phone-final",
+      "passedFunctions": 2,
+      "retainedOriginalCaptures": 5,
+      "inspectedOriginalCaptures": 5,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "destination-navigation-dark-tablet-final",
+      "passedFunctions": 2,
+      "retainedOriginalCaptures": 5,
+      "inspectedOriginalCaptures": 5,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 4,
+  "totalRetainedOriginalCaptures": 10,
+  "totalInspectedOriginalCaptures": 10,
+  "productionChanged": false,
+  "macCompiler": {
+    "phase": "destination-navigation-mac-compiler-final",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "limits": [
+    "These executions qualify the represented Items/Lists/Calendar transitions from an active reader and ordinary Calendar Return on phone/dark iPad, not every owner/appearance or gesture.",
+    "Actual Mac UI/resizing, physical devices, broad accessibility, other lifecycles and whole-app polish remain open.",
+    "The initial complete phone pass predates final test formatting and is excluded from these matched-source totals."
+  ],
+  "meaning": "Every final source input matches; source/product boundaries were validated before reuse and original capture bytes reconcile. Shipping production remains unchanged."
+}

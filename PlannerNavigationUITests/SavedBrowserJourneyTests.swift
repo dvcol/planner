@@ -1052,6 +1052,76 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
   }
 
+  func testDestinationNavigationClosesReaderAndPreservesTheBooking() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let links = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
+    XCTAssertTrue(links.firstMatch.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = links.firstMatch.identifier
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let schedule = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
+    ).firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    let scheduleIdentifier = schedule.identifier
+      .replacingOccurrences(of: "saved.item.schedule.", with: "")
+    application.openPlannerSection("Calendar")
+    let booking = application.descendants(matching: .any)
+      .matching(identifier: "saved.calendar.schedule.\(scheduleIdentifier)").firstMatch
+    XCTAssertTrue(booking.waitForExistence(timeout: 10))
+    booking.activateForPlannerJourney()
+    let bookmark = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+    for _ in 0..<6 where !bookmark.isHittable { application.swipeUp() }
+    bookmark.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    try await recordWindow(
+      application, name: "Calendar reader before explicit destination navigation")
+    application.openPlannerSection("Items")
+    XCTAssertEqual(application.state, .runningForeground)
+    try await recordWindow(application, name: "Items selected from an open Calendar reader")
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10), application.debugDescription)
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+    XCTAssertEqual(bookmark.value as? String, destination.absoluteString)
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    application.openPlannerSection("Calendar")
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    for _ in 0..<6 where !bookmark.isHittable { application.swipeUp() }
+    bookmark.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    application.openPlannerSection("Lists")
+    XCTAssertEqual(application.state, .runningForeground)
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10), application.debugDescription)
+    XCTAssertTrue(application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 10))
+    try await recordWindow(application, name: "Lists selected without inheriting the open reader")
+    application.openPlannerSection("Items")
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+    for _ in 0..<6 where !bookmark.isHittable { application.swipeUp() }
+    bookmark.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    application.openPlannerSection("Calendar")
+    XCTAssertEqual(application.state, .runningForeground)
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10), application.debugDescription)
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+    XCTAssertEqual(bookmark.value as? String, destination.absoluteString)
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    try await recordWindow(
+      application, name: "Calendar retains its exact booking after reader navigation")
+  }
+
   func testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()

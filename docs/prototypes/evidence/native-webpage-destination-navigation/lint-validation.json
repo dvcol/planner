@@ -1,0 +1,45 @@
+{
+  "commands": [
+    {
+      "name": "swift-lint",
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "markdown-lint",
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerBrowserLint/.markdownlint-cli2.jsonc",
+        "docs/prototypes/native-webpage-destination-navigation.md",
+        "docs/implementation-map.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": {
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift": "b9cf1b4d3f98f5b362e17f0e49a01ed6e633261caeaf14085ab13a37159fcb3e",
+    "docs/prototypes/native-webpage-destination-navigation.md": "187ef60d8f329ab9e13603f0896f5bc0090f3a253d16687257ec52ee87bf7b0e",
+    "docs/implementation-map.md": "a8b1327232f4cb82b2bca4cab6d99756a5e928488fa68b5d75bb07f90be6679e",
+    "docs/open-decisions.md": "7665d4f7c16b8358fad86c1b4b751ca5d90a68248b744bcbdbba2075ffdd1d7d"
+  },
+  "meaning": "Narrow strict lint and whitespace checks; type checking comes from the matched native executions and Mac compilation. Shipping production is unchanged."
+}

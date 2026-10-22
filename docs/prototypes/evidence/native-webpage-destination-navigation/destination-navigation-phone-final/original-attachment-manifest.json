@@ -1,0 +1,59 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "8A696A7F-CE9A-425F-8504-26124A90A324.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar source guide uses the existing navigation stack_0_D82AA783-E39C-4E18-B9EC-666374944148.png",
+        "timestamp": 1792703097.999
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A983DE3E-4E7A-43A9-ABBB-2FCF5D3E6590.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar retains its exact booking after reader navigation_0_1748E5BC-1728-4198-95C0-372DF07FB862.png",
+        "timestamp": 1792703213.621
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0CDCF96D-2EFB-4A19-B982-6A7FDA20BF2D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Lists selected without inheriting the open reader_0_6AB22751-764C-4C9C-9F76-59919AE36A5E.png",
+        "timestamp": 1792703194.538
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "4815E6E5-2FF3-4D73-910C-E8926323FD89.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Items selected from an open Calendar reader_0_2567E8AE-1287-4D34-8CB9-D160FFF87474.png",
+        "timestamp": 1792703174.889
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0B976D94-E509-42AD-AF4B-A1214432CF19.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar reader before explicit destination navigation_0_CA7B5F9F-ABDF-4A68-92D8-294D2DD42918.png",
+        "timestamp": 1792703170.091
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDestinationNavigationClosesReaderAndPreservesTheBooking()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDestinationNavigationClosesReaderAndPreservesTheBooking"
+  }
+]

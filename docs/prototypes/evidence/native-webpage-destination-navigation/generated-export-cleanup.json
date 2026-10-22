@@ -1,0 +1,27 @@
+{
+  "removedDuplicateExports": [
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-destination-navigation-dark-tablet-final",
+      "nominalBytes": 1101238,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-destination-navigation-dark-tablet-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-destination-navigation/destination-navigation-dark-tablet-final",
+      "retainedDeliberateCaptures": 5
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-destination-navigation-phone-final",
+      "nominalBytes": 941391,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-destination-navigation-phone-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-destination-navigation/destination-navigation-phone-final",
+      "retainedDeliberateCaptures": 5
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-destination-navigation-phone-initial",
+      "nominalBytes": 779548,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-destination-navigation-phone-initial.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-destination-navigation/destination-navigation-phone-initial",
+      "retainedDeliberateCaptures": 4
+    }
+  ],
+  "totalNominalBytes": 2822177,
+  "meaning": "Only duplicate temporary xcresult attachment-export directories were removed after retained original captures, manifests and prior source/product boundaries verified. Original xcresult bundles, source roots, reusable build products and all user datasets remain. Nominal bytes do not promise equal APFS free-space recovery."
+}

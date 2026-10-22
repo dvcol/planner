@@ -1,0 +1,44 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "72C37A0A-A21F-4C64-BC14-1EF5B4D059B1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar retains its exact booking after reader navigation_0_F27F847C-644E-41FB-BF5B-82166528BA38.png",
+        "timestamp": 1792702711.4
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "9BDF8A85-82B7-4B14-9A32-255245A1FD8D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Lists selected without inheriting the open reader_0_8F534B64-2D96-46DF-BF07-4E2DC16FBA11.png",
+        "timestamp": 1792702694.205
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "35FA1079-A773-4D41-9527-B70A91D7911C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Items selected from an open Calendar reader_0_3DF496C5-09F5-4340-81B4-825598E1FC7F.png",
+        "timestamp": 1792702674.471
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "88D1AE53-51E6-4223-A1B7-3749D8F8EA51.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar reader before explicit destination navigation_0_7808A783-B335-4835-8F82-54F515FFA657.png",
+        "timestamp": 1792702669.616
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDestinationNavigationClosesReaderAndPreservesTheBooking()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDestinationNavigationClosesReaderAndPreservesTheBooking"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2D3704F2-AA4A-4F20-A822-465C8F4CCC89.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar source guide uses the existing navigation stack_0_C09A7B41-CDDB-4F56-8C50-C7A088E87AD7.png",
+        "timestamp": 1792702817.955
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "40D7B110-1058-44B8-BE59-55E31203B361.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar retains its exact booking after reader navigation_0_7896EB56-AFE4-4DFA-BA5E-E8B11E2DDD25.png",
+        "timestamp": 1792702927.543
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "F1D77C43-1331-4262-8E2A-D3ED958BB37F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Lists selected without inheriting the open reader_0_443B60EE-4CC7-439F-96C7-A17A6E4951FE.png",
+        "timestamp": 1792702910.251
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "44898C3F-856A-49F1-A33F-5692886FE3D5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Items selected from an open Calendar reader_0_09E5E464-2646-46EE-B9F4-CC2BB356CCFC.png",
+        "timestamp": 1792702890.004
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "337B5931-BE19-412F-9B1D-404D3C0123F9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar reader before explicit destination navigation_0_68DF509A-1CB7-46B6-BDA6-37F834C08C62.png",
+        "timestamp": 1792702886.763
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDestinationNavigationClosesReaderAndPreservesTheBooking()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDestinationNavigationClosesReaderAndPreservesTheBooking"
+  }
+]

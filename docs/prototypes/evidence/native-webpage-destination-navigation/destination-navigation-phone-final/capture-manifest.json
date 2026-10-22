@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "healthy-calendar-guide.png",
+      "originalName": "Calendar source guide uses the existing navigation stack_0_D82AA783-E39C-4E18-B9EC-666374944148.png",
+      "exportedFile": "8A696A7F-CE9A-425F-8504-26124A90A324.png",
+      "sha256": "9c27b6c202bd6fb69553023622d92b47f8fbc12196e8190f7a6a663ecd85f560"
+    },
+    {
+      "file": "destination-calendar-retained.png",
+      "originalName": "Calendar retains its exact booking after reader navigation_0_1748E5BC-1728-4198-95C0-372DF07FB862.png",
+      "exportedFile": "A983DE3E-4E7A-43A9-ABBB-2FCF5D3E6590.png",
+      "sha256": "c06971c55ddfc74c81d9a0168e4ae0ad144865af825de97f4ae36149b931bcb4"
+    },
+    {
+      "file": "destination-lists.png",
+      "originalName": "Lists selected without inheriting the open reader_0_6AB22751-764C-4C9C-9F76-59919AE36A5E.png",
+      "exportedFile": "0CDCF96D-2EFB-4A19-B982-6A7FDA20BF2D.png",
+      "sha256": "e8ac131153e9b6cccce4086ed20812aa783f81fefe6e00c1d524a6255c8f629f"
+    },
+    {
+      "file": "destination-items.png",
+      "originalName": "Items selected from an open Calendar reader_0_2567E8AE-1287-4D34-8CB9-D160FFF87474.png",
+      "exportedFile": "4815E6E5-2FF3-4D73-910C-E8926323FD89.png",
+      "sha256": "d20bb596d6c572d65c5415c77a49ab9eaed2d9cf1a6fee5ab287f2d7fedfd33d"
+    },
+    {
+      "file": "destination-original-guide.png",
+      "originalName": "Calendar reader before explicit destination navigation_0_CA7B5F9F-ABDF-4A68-92D8-294D2DD42918.png",
+      "exportedFile": "0B976D94-E509-42AD-AF4B-A1214432CF19.png",
+      "sha256": "19665a027d0093a9f1a2ef2bdd0565687cd14be420553f98fa87847c23e8f7a3"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

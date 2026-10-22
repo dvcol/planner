@@ -1,0 +1,17 @@
+{
+  "inspectedOriginalFiles": [
+    "destination-original-guide.png",
+    "destination-items.png",
+    "destination-lists.png",
+    "destination-calendar-retained.png",
+    "healthy-calendar-guide.png"
+  ],
+  "observations": [
+    "The Calendar guide is readable before navigation with native reader controls.",
+    "Selecting Items replaces it with Museum reading details and the original booked Schedule and owned bookmark.",
+    "Selecting Lists replaces the reader with its actual empty catalog.",
+    "Selecting Calendar from an Item reader restores its original Schedule details without a webpage.",
+    "The ordinary Return regression retains its readable guide and native controls."
+  ],
+  "limits": "Five originals inspected from both complete passing phone functions. Actual Mac UI, physical devices, gestures and whole-app layout/accessibility acceptance remain separate."
+}

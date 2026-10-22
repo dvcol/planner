@@ -1,0 +1,17 @@
+{
+  "inspectedOriginalFiles": [
+    "destination-original-guide.png",
+    "destination-items.png",
+    "destination-lists.png",
+    "destination-calendar-retained.png",
+    "healthy-calendar-guide.png"
+  ],
+  "observations": [
+    "The original guide is readable in the dark Calendar inspector.",
+    "Explicit Items navigation shows the saved Museum reading details, original owned link and booked Schedule, without a webpage.",
+    "Explicit Lists navigation shows the actual empty Lists catalog rather than inheriting the reader.",
+    "Returning to Calendar restores the original Item details and its Schedule. The ordinary Return regression also retains its readable guide.",
+    "The portrait sidebar overlays Calendar content and the narrow Items toolbar truncates its title; retain these as whole-app layout/polish findings."
+  ],
+  "limits": "Five original captures inspected. Functional navigation passes do not establish complete layout/accessibility acceptance, actual Mac UI or physical-device behavior."
+}
