@@ -33,13 +33,13 @@ Every listed runtime starts one real journey and fails it, with zero skipped cas
 
 Apple documents the supported [inspector placement choices](https://developer.apple.com/videos/play/wwdc2023/10161/?time=536). Neither placement is assumed to guarantee this app's resize behavior. All unsuccessful production variants above are reverted. Mac screenshots deliberately use Planner's own window. Broad automatic failure diagnostics remain private; public manifests retain their hashes and exclusion reasons.
 
-## Q127, pending presentation decision
+## Q127 A, accepted 23 October 2026
 
-The question tool offers two concrete alternatives. A replaces only the Mac Calendar inspector with a hideable pre-made native split pane beside Calendar. The same selected Schedule and Item/Itinerary content remain live, and hiding details returns width to Calendar. Planner owns pane presentation instead of the inspector modifier. B opens Mac details in a native sheet, which blocks Calendar interaction while open and removes side-by-side comparison. Both retain the current iPad inspector and saved-data contracts. A is recommended; implementation waits for the human's answer.
+The user selects A, a hideable native split pane beside Calendar on Mac. The same selected Schedule and Item/Itinerary content remain live, and hiding details returns width to Calendar. Planner owns pane presentation instead of the Mac inspector modifier. The iPad inspector and saved-data contracts stay unchanged. Implementation and actual resize qualification remain open; the earlier failed inspector runs retain their original outcomes.
 
 ## Definition of ready
 
-- Q127 resolves the Mac presentation. Existing Q79 selection and scheduling behavior remain authoritative unless explicitly amended by that answer.
+- Q127 A resolves the Mac presentation. Existing Q79 selection and scheduling behavior remain authoritative.
 - Keep the existing native UI seam, actual window drag and exact-identity assertions. No new package, target, test-only production hook or signed-storage workaround is proposed.
 - Establish a failing actual resize journey before applying the chosen production change. The runs above already establish the current inspector failure.
 

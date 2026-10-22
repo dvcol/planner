@@ -111,6 +111,7 @@ final class BrowserJourneyServer: @unchecked Sendable {
       }
       let body: String
       var responseHeaders = ""
+      var responseStatus = "200 OK"
       var contentType = "text/html; charset=utf-8"
       let cookieName = lock.withLock { visitorCookieName }
       let visitLinks = """
@@ -146,6 +147,10 @@ final class BrowserJourneyServer: @unchecked Sendable {
           <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
           <body><h1>\(heading)</h1>\(visitLinks)</body></html>
           """
+      } else if requestLine.contains(" /initial-app-redirect ") {
+        responseStatus = "302 Found"
+        responseHeaders = "Location: maps://?ll=36,140\r\n"
+        body = ""
       } else if requestLine.contains(" /automatic-app-redirect ") {
         body = """
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -210,7 +215,7 @@ final class BrowserJourneyServer: @unchecked Sendable {
       }
       let content = requestLine.hasPrefix("HEAD ") ? "" : body
       let response =
-        "HTTP/1.1 200 OK\r\nContent-Type: \(contentType)\r\nCache-Control: no-store\r\n\(responseHeaders)Content-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
+        "HTTP/1.1 \(responseStatus)\r\nContent-Type: \(contentType)\r\nCache-Control: no-store\r\n\(responseHeaders)Content-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
       if requestLine == "GET /delayed-guide HTTP/1.1" {
         delayedResponses.append((connection, Data(response.utf8)))
         lock.withLock { observedDelayedRequests += 1 }

@@ -1,6 +1,6 @@
 # Q129: Skip when a new restoration candidate arrives
 
-Status: pending human choice. No mode-specific candidate-consolidation policy is inferred. Existing safeguards remain until the chosen contract is implemented and qualified.
+Status: Q129 A is accepted on 23 October 2026. Skip preserves the current complete owner and family, excludes the unknown incoming candidate, skips dependent owners and imports independent data. Review of the concrete family/provenance contract precedes implementation; existing safeguards remain until it is qualified.
 
 ## Context and starting state
 

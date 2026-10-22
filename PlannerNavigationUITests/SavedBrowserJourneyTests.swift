@@ -8,6 +8,102 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testDismissingInitialAppConfirmationReturnsToTheExactSavedItem() async throws {
+      continueAfterFailure = false
+      let server = try BrowserJourneyServer()
+      let guideURL = try await server.start()
+      defer { server.stop() }
+      let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+        "initial-app-redirect")
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      createLinkedItem(in: application, destination: destination)
+      let savedLink = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+      let savedLinkIdentifier = savedLink.identifier
+      savedLink.activateForPlannerJourney()
+      let explanation = application.navigationBars["Open another app"].firstMatch
+      XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.state, .runningForeground)
+      XCTAssertEqual(
+        application.staticTexts["saved.browser.external.destination"].label, "maps://?ll=36,140")
+      XCTAssertTrue(application.buttons["saved.browser.external.open"].isHittable)
+      let offered = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+      offered.name = "Initial app redirect awaits native confirmation before any page"
+      offered.lifetime = .keepAlways
+      add(offered)
+      dismissExternalAppSheetInteractively(in: application, header: explanation)
+      XCTAssertTrue(explanation.waitForNonExistence(timeout: 10))
+      let retainedLink = application.descendants(matching: .any)
+        .matching(identifier: savedLinkIdentifier).firstMatch
+      XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+      XCTAssertFalse(application.buttons["saved.browser.return"].exists)
+      XCTAssertEqual(application.state, .runningForeground)
+      let returned = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+      returned.name = "Dismissed initial app confirmation returns to its saved Item"
+      returned.lifetime = .keepAlways
+      add(returned)
+    }
+
+    func testDismissingLoadedAppConfirmationKeepsTheGuideAndBookmark() async throws {
+      continueAfterFailure = false
+      let server = try BrowserJourneyServer()
+      let guideURL = try await server.start()
+      defer { server.stop() }
+      let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+        "external-app-policy")
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      createLinkedItem(in: application, destination: destination)
+      let savedLink = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+      let savedLinkIdentifier = savedLink.identifier
+      savedLink.activateForPlannerJourney()
+      let page = application.webViews.firstMatch
+      XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+      page.links["Mail link"].activateForPlannerJourney()
+      let explanation = application.navigationBars["Open another app"].firstMatch
+      XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        application.staticTexts["saved.browser.external.destination"].label,
+        "mailto:planner-fixture@example.invalid?subject=Planning")
+      XCTAssertTrue(application.buttons["saved.browser.external.open"].isHittable)
+      dismissExternalAppSheetInteractively(in: application, header: explanation)
+      XCTAssertTrue(explanation.waitForNonExistence(timeout: 10))
+      XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+      XCTAssertEqual(application.state, .runningForeground)
+      XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+      try await recordWindow(application, name: "Interactive app-sheet dismissal keeps the guide")
+      page.links["Garden guide"].activateForPlannerJourney()
+      XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+      application.buttons["saved.browser.back"].activateForPlannerJourney()
+      XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+      application.buttons["saved.browser.return"].activateForPlannerJourney()
+      let retainedLink = application.descendants(matching: .any)
+        .matching(identifier: savedLinkIdentifier).firstMatch
+      XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+    }
+
+    private func dismissExternalAppSheetInteractively(
+      in application: XCUIApplication, header: XCUIElement
+    ) {
+      let start = header.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.05))
+      let lowerEdge = application.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.95))
+      start.press(forDuration: 0.05, thenDragTo: lowerEdge)
+    }
+  #endif
+
   func testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()

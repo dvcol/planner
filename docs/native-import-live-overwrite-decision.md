@@ -1,6 +1,6 @@
 # Older-backup Overwrite after restoration
 
-Status: Q128 is pending. This document proposes behavior; it does not approve a policy or weaken the current gate.
+Status: Q128 A is accepted on 23 October 2026. Apply represented older values to the current live lifetime, preserving current references. Separately authorize closed owned data. The concrete literal contract still needs review before tests and implementation; the current guard remains until then.
 
 ## Context and starting state
 
@@ -43,4 +43,4 @@ For B, review and approve the family and cross-owner reference contract first, t
 
 Every choice still requires affected import/deletion/lineage regressions, native presentation checks and platform compilation. Physical convergence, signing and final whole-app acceptance remain separate gates.
 
-The [grilling skill](/Users/dinh-van.colomban/.agents/skills/grilling/SKILL.md) says, "The decisions are the user's: put each to them and wait." This is an unresolved behavior choice, so its dependent implementation waits for the user's answer. Known-family binding work proceeds under the already accepted A20 rule.
+Q128 A settles the behavior choice. The agreed workflow still requires review of its concrete literal graph and before/after contract before dependent tests and implementation. Known-family binding work proceeds under the already accepted A20 rule.
