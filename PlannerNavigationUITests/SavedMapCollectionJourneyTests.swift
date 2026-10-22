@@ -25,7 +25,28 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     application.plannerElement("saved.items.representation").activateForPlannerJourney()
     application.chooseSavedPlannerCollectionRepresentation("Map")
     XCTAssertTrue(application.buttons["saved.map.pin.35.0,139.0"].waitForExistence(timeout: 10))
-    application.plannerElement("saved.map.locations").activateForPlannerJourney()
+    let locatedCount = application.staticTexts["1 of 1 items located"].firstMatch
+    let locations = application.plannerElement("saved.map.locations")
+    XCTAssertTrue(locatedCount.waitForExistence(timeout: 5))
+    XCTAssertTrue(locatedCount.isHittable)
+    XCTAssertTrue(locations.isHittable)
+    let footerCapture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    footerCapture.name = "Collection Map footer remains readable at accessibility text sizes"
+    footerCapture.lifetime = .keepAlways
+    add(footerCapture)
+    #if os(iOS)
+      if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        let map = application.descendants(matching: .any)
+          .matching(identifier: "saved.map.collection").firstMatch
+        XCTAssertTrue(map.waitForExistence(timeout: 5))
+        if map.frame.width <= 600 {
+          XCTAssertGreaterThanOrEqual(
+            locations.frame.minY, locatedCount.frame.maxY,
+            "A narrow accessibility footer must give the count and Locations their own rows.")
+        }
+      }
+    #endif
+    locations.activateForPlannerJourney()
     let provider = application.staticTexts.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.provider.")
     ).firstMatch
@@ -38,6 +59,16 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(uncertainty.waitForExistence(timeout: 5))
     XCTAssertEqual(uncertainty.label, "Place details haven't been verified for this search link.")
     XCTAssertTrue(uncertainty.isHittable)
+    #if os(iOS)
+      if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        XCTAssertGreaterThan(
+          uncertainty.frame.height, provider.frame.height * 1.5,
+          "The complete location warning must wrap visibly at accessibility text sizes.")
+        XCTAssertLessThanOrEqual(
+          uncertainty.frame.maxY, application.windows.firstMatch.frame.maxY,
+          "The complete warning must fit in the initial accessibility Locations sheet.")
+      }
+    #endif
     let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     capture.name = "Collection Map Locations retain provider and search uncertainty"
     capture.lifetime = .keepAlways
@@ -504,9 +535,15 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         XCTFail("The selected Item detail form is unavailable")
         return
       }
-      for _ in 0..<4 where !link.exists {
-        let start = form.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.75))
-        let end = form.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.25))
+      let usesAccessibilityText =
+        UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+      let maximumScrolls = usesAccessibilityText ? 12 : 4
+      let horizontalPosition = usesAccessibilityText ? 24 / form.frame.width : 0.98
+      for _ in 0..<maximumScrolls where !link.exists {
+        let start = form.coordinate(
+          withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.75))
+        let end = form.coordinate(
+          withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.25))
         start.press(forDuration: 0.05, thenDragTo: end)
       }
     #endif

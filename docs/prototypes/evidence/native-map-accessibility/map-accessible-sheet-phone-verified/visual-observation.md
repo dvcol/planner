@@ -1,0 +1,3 @@
+# Original phone capture inspection
+
+Both original XCTest PNG attachments were inspected. Dark appearance, Increase Contrast and the largest accessibility category are observed and restored by the runner. The located count wraps at word boundaries above the one-line Locations button. The initial large native Locations sheet shows the complete provider warning inside the viewport. The Map pin title still truncates at this extreme text size; the Locations row exposes the complete Item title. This run qualifies the represented warning/footer and retained-bookmark journey, not every Map/accessibility scene or VoiceOver.

@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "observedWarningBottom": 933.854063018242,
+  "observedWindowBottom": 874.0,
+  "meaning": "The actual largest-text phone journey reaches the Locations sheet and fails its initial complete-warning visibility assertion at line 67. No passing credit; original Simulator settings are restored."
+}

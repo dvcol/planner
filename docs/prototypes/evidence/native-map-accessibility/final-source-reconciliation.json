@@ -1,0 +1,16 @@
+{
+  "phases": [
+    "map-accessible-sheet-phone-verified",
+    "map-accessible-sheet-tablet-verified",
+    "map-accessibility-final-ordinary-phone",
+    "map-accessibility-final-ordinary-dark-tablet",
+    "map-accessibility-final-mac-compiler"
+  ],
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "nativeExecutions": 6,
+  "distinctNativeFunctions": 2,
+  "originalInspectedCaptures": 10,
+  "macCompilationProductCount": 9,
+  "limits": "The represented phone/iPad footer, warning, exact bookmark and repeated List branch journeys only. Not Mac runtime, all Dynamic Type sizes, VoiceOver, physical devices or whole-app polish."
+}

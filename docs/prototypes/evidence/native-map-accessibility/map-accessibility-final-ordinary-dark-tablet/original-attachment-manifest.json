@@ -1,0 +1,41 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "70B17988-A90F-47E4-95EC-F0EDF80A9986.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_798003EE-53F3-4C98-BABB-F3984C3AC226.png",
+        "timestamp": 1792674252.628
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "717A0E4A-EBE1-46F2-84E8-C8DD6653F2EE.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map Locations retain provider and search uncertainty_0_0AED73AE-324F-4140-A9A1-71EEF77AAE7E.png",
+        "timestamp": 1792674305.134
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "9E6FF5E4-2AE2-44E2-9538-EDCC3225D21C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map footer remains readable at accessibility text sizes_0_773D7714-8E8A-41EE-9124-1E1A0EBDAA48.png",
+        "timestamp": 1792674301.295
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty"
+  }
+]

@@ -1,0 +1,3 @@
+# Original ordinary-size capture inspection
+
+All three original XCTest PNG captures were inspected: the collection footer, provider/uncertainty Locations row and the two repeated List appearances. Count and Locations remain on one readable row at the ordinary text size. Both exact itinerary choices expose their Stop context and complete provider warning. The captured progress remains one of two appearances Done. The tests additionally reopen the exact appearances and original saved bookmark. The dark tablet's narrow catalog title remains truncated, a retained separate layout finding. These are represented functional/visual checks, not whole-app or physical acceptance.

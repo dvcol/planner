@@ -1,0 +1,26 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8B333A27-0E44-43DB-857D-5948411C86A3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map Locations retain provider and search uncertainty_0_1A61AE8F-A519-4E1C-B624-A06EC851BEEF.png",
+        "timestamp": 1792673889.425
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "4F702BB9-AFCE-45BE-9035-DE44736E1D66.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map footer remains readable at accessibility text sizes_0_5FBE6FE5-88A1-4273-8827-3CDCE7033EBD.png",
+        "timestamp": 1792673884.045
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty"
+  }
+]

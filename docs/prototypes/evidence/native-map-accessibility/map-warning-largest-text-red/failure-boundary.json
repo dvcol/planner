@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "observedWarningHeight": 51.5,
+  "requiredMinimumHeight": 77.25,
+  "meaning": "The actual largest-text native journey reaches Locations and fails its visible-wrap assertion at line 43. The warning remains exactly one provider-caption line high. No visual passing credit; original Simulator settings are restored."
+}

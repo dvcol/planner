@@ -1,0 +1,3 @@
+{
+  "meaning": "The selector mistakenly repeated the test target prefix. Xcode executed zero functions. This run gives compiler evidence only and no green or runtime acceptance. Re-run the unchanged source with the correct function selector."
+}

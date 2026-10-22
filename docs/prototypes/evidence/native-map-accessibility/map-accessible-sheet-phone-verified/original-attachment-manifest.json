@@ -1,0 +1,26 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A117A130-D3DA-4776-AC02-E7A3F0D65428.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map Locations retain provider and search uncertainty_0_2581D0BD-5DB5-4E42-9B3B-49B3D85DC15C.png",
+        "timestamp": 1792673792.816
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "280F3292-CA94-48A4-9F0E-DC392E01BDCD.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map footer remains readable at accessibility text sizes_0_FE311682-BCEE-4049-9E34-214B067F84D5.png",
+        "timestamp": 1792673787.778
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "1b87d9f69876717742a44a89d27ee23132b553df",
+  "overlays": [
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ]
+}

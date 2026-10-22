@@ -1,0 +1,3 @@
+# Original tablet capture inspection
+
+Both original XCTest PNG attachments were inspected at the recorded dark appearance, Increase Contrast and largest accessibility category. The narrow Map pane places the full located count above a one-line Locations button. The native initial Locations sheet shows the full provider warning on two lines within its viewport. The Item title remains available in Locations while its Map annotation truncates at this extreme size. The underlying detail column is scrolled; this is not a full detail-layout or whole-app accessibility audit. Original settings are restored.

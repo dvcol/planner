@@ -1,0 +1,27 @@
+{
+  "recording": {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C8A6592E-671F-43FB-849E-4CD17C0B19B5.mp4",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Screen Recording 2026-10-22 at 09.39.16 PM.mp4",
+    "timestamp": 1792672756.007
+  },
+  "recordingSha256": "f4eeb41c946efce2cc73020dad0a839ad103ae7252ea4267f9470783dc52ed4e",
+  "command": [
+    "/opt/homebrew/bin/ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-sseof",
+    "-1",
+    "-i",
+    "/private/tmp/PlannerMapUIAttachments-map-largest-text-phone-scroll-driver/C8A6592E-671F-43FB-849E-4CD17C0B19B5.mp4",
+    "-frames:v",
+    "1",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/native-map-accessibility/map-largest-text-phone-scroll-driver/failure-recording-frame.png"
+  ],
+  "frameSha256": "a0f4d3f2a8fbfee141a7fac942059d7d5da7b2bd1df6a01894de1fa11b4b9a56",
+  "meaning": "Decoded final-second original native recording frame. Diagnostic only."
+}

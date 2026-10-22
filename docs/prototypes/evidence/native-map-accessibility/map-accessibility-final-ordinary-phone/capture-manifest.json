@@ -1,0 +1,32 @@
+[
+  {
+    "file": "itinerary-list-map-choices.png",
+    "original": "Counted itinerary List pin distinguishes independent child appearances_0_46218EB5-D1D9-47FB-87FD-C824E7240238.png",
+    "exportedFile": "190B785A-94D0-4780-98BD-1E121902BB10.png",
+    "sha256": "7c8e76ce7957eb9d07bf978aa2bb670f5cd5bc1c5f8302192004a3e41d780395",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "map-provider-context.png",
+    "original": "Collection Map Locations retain provider and search uncertainty_0_5E6B8521-0EAE-4CB5-8DA3-7DE8FA13C511.png",
+    "exportedFile": "FA26657D-E366-4009-8D61-5728B37CEBE9.png",
+    "sha256": "124ea8f272e3686e5ade5a128fc146a33747d55b9f45f4de372e938db60edfa4",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "map-footer.png",
+    "original": "Collection Map footer remains readable at accessibility text sizes_0_517156A7-C7D8-4C6B-B1E0-62226B506DF4.png",
+    "exportedFile": "2450F437-3619-4202-8999-F7BA87C18390.png",
+    "sha256": "985bdcc7a80e83e0852c7ea75f6ced8e9d2b46063b89e4360b9856f0ec54a62b",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

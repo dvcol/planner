@@ -1,0 +1,7 @@
+{
+  "nativeTestSha256": "62c988ac5fdaf28aa76822432ee2b6c76b6c996da3987324b3e169a706436a67",
+  "redToGreenChangedInputs": [
+    "Planner/Scenes/SavedMapCollectionView.swift"
+  ],
+  "meaning": "The unchanged native footer-position assertion fails with the cramped horizontal layout and passes with the native accessibility stack. Original captures still show the icon squeezing Locations onto two lines; that visual refinement remains nonfinal."
+}

@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "observedLocationsTop": 616.5,
+  "observedCountBottom": 1000.75,
+  "meaning": "The actual largest-text native journey reaches the Map footer and fails its separate-row assertion at line 43. The count remains squeezed beside Locations. No passing credit; original Simulator settings are restored."
+}

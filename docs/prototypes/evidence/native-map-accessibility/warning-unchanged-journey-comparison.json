@@ -1,0 +1,7 @@
+{
+  "nativeTestSha256": "36d62fb6be8ec426c7ea486f7465c2ec53723a21d0dabe21516f211eae76461c",
+  "redToGreenChangedInputs": [
+    "Planner/Scenes/SavedMapCollectionView.swift"
+  ],
+  "meaning": "Unchanged native visible-wrap assertion fails before vertical ideal sizing and passes afterward. The original passing screenshot was inspected and the complete warning is visible."
+}

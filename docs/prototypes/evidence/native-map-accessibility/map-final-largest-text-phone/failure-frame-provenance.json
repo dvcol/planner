@@ -1,0 +1,27 @@
+{
+  "sourceRecording": {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "847AF6C9-3018-4084-A439-4FBB7E8DE4B5.mp4",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Screen Recording 2026-10-22 at 09.34.03 PM.mp4",
+    "timestamp": 1792672443.355
+  },
+  "recordingSha256": "f6cc6a1df06c976dd46fbd23931955543278ef9c6ddb4ecf9417c293c55b9ddd",
+  "command": [
+    "/opt/homebrew/bin/ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-sseof",
+    "-1",
+    "-i",
+    "/private/tmp/PlannerMapUIAttachments-map-final-largest-text-phone/847AF6C9-3018-4084-A439-4FBB7E8DE4B5.mp4",
+    "-frames:v",
+    "1",
+    "docs/prototypes/evidence/native-map-accessibility/map-final-largest-text-phone/failure-recording-frame.png"
+  ],
+  "frameSha256": "29c67acb55d3885e89b996fe45420095799dc56cc0fc3fc45f7b7980c9eb22e9",
+  "meaning": "A decoded final-second frame from the original native test recording for diagnosis. It is not a newly captured passing screenshot."
+}
