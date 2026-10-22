@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1072,
+  "sourceDifferences": [],
+  "actualProductCount": 5,
+  "productDifferences": [],
+  "sameSourcesAsTwelveFunctionMacRun": true,
+  "runtimeCredit": false,
+  "meaning": "Supported PlannerNavigation mobile build-for-testing compiles the actual app, embedded extension and UI test target. The Mac-only PlannerMCPTests direct cohort did not execute on mobile."
+}

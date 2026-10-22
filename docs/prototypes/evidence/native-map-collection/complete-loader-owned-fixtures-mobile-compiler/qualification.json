@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1072,
+  "sourceDifferences": [],
+  "actualProductCount": 5,
+  "productDifferences": [],
+  "sameSourcesAsTwelveFunctionMacRun": true,
+  "runtimeCredit": false,
+  "meaning": "Supported native mobile app/Share/navigation build-for-testing. No direct loader or Map UI runtime credit on mobile; PlannerMCPTests is explicitly Mac-only."
+}

@@ -1,0 +1,26 @@
+{
+  "sourceInputCount": 1072,
+  "actualProductCount": 3,
+  "sourceDifferences": [],
+  "productDifferences": [],
+  "passedFunctions": 12,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "fixtureDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/539B3A7A-5ABB-4181-A606-36E26C4FDDFD",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/76998BE7-8B59-486C-94F0-F07A4F82080E",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/D5E537B8-7255-407C-8EF6-6F4B4F176CCC",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/AFB0F807-C0CE-41B0-BC9A-3AD84D81B721",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/B849588E-9A18-491B-8499-A55A11A0A6BB",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/7D8BB294-8A2B-423C-A069-1756FC03F350",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/07448A6E-297E-4259-B634-641DFAAD7BE8",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/BB32342E-6F53-4B88-B6E8-BE1703218687",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/B7E0ABC1-BADA-4FAB-8FC2-72F281B81631",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/DF1168E4-C74F-402A-B950-DF3CD484A732",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/A8CFB0C7-65BB-4199-97B0-3F14929B9507",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/98F7B646-458E-4C72-88EC-989E51140CB5",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/5BF358DB-3137-4ADC-BA91-951AEE670734"
+  ],
+  "meaning": "Actual app-hosted production-interface execution using real Planner storage and existing provider boundaries. Not native Map UI, physical performance, signed CloudKit or system Shortcuts qualification."
+}

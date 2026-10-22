@@ -1,0 +1,66 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Planner · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792653903.323,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792653880.941,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertEqual failed: (\"failed(\"Run the query again before requesting this row window.\")\") is not equal to (\"ready\") - A real concurrent save must refresh stale Map reads.",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedMapCollectionTests/testARealConcurrentWriteRestartsTheCollectionInsteadOfPublishingAStaleFailure()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SavedMapCollectionTests/testARealConcurrentWriteRestartsTheCollectionInsteadOfPublishingAStaleFailure",
+      "testName" : "testARealConcurrentWriteRestartsTheCollectionInsteadOfPublishingAStaleFailure()"
+    }
+  ],
+  "title" : "Test - Planner",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "16 runs of 1 test failed with XCTAssertEqual failed: (\"0\") is not equal to (\"3\")"
+    },
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "8 runs of 1 test failed with XCTAssertEqual failed: (\"failed(\"Run the query again before requesting this row window.\")\") is not equal to (\"ready\") - A real concurrent save must refresh stale Map reads."
+    },
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "8 runs of 1 test failed with XCTAssertEqual failed: (\"[]\") is not equal to (\"[PlannerCore.PlannerRowIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 775F9F7F-B7D4-442F-8068-C9F31E9C0BF9)), PlannerCore.PlannerRowIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: ACB312A8-A486-4A14-8D9E-F82148C3E8E4)), PlannerCore.PlannerRowIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: B8D1FA6D-79DA-42EE-BBE8-BA1E0D76869D))]\")"
+    }
+  ],
+  "totalTestCount" : 1
+}

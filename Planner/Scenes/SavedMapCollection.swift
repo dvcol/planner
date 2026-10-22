@@ -11,6 +11,7 @@ enum SavedMapCollectionState: Equatable {
 enum SavedMapLocationResolution: Equatable {
   case noInput, loading, unavailable
   case located(PlannerCoordinate)
+  case addressCandidates(PlannerAddressPreviewRequest, [PlannerAddressCandidate])
 }
 
 struct SavedMapLocationGroup {
@@ -20,8 +21,14 @@ struct SavedMapLocationGroup {
 
 @MainActor @Observable
 final class SavedMapCollection {
-  private struct AddressOperation {
+  private enum LocationInput: Hashable {
+    case address(PlannerAddressPreviewRequest)
+    case maps(PlannerLinkPreviewRequest)
+  }
+
+  private struct PreviewOperation {
     let identifier: UUID
+    let epoch: UUID
     let deadline: Task<Void, Never>
     var timedOut = false
   }
@@ -44,13 +51,14 @@ final class SavedMapCollection {
   private(set) var noInputCount = 0
   @ObservationIgnored private var requestIdentifier = UUID()
   private var resolutions: [SavedMapLocationResolution] = []
-  @ObservationIgnored private var addressRequests: [PlannerAddressPreviewRequest?] = []
-  @ObservationIgnored private var pendingAddresses: [PlannerAddressPreviewRequest] = []
-  @ObservationIgnored private var nextPendingAddress = 0
-  @ObservationIgnored private var waitingAddresses: Set<PlannerAddressPreviewRequest> = []
-  @ObservationIgnored private var activeAddresses:
-    [PlannerAddressPreviewRequest: AddressOperation] = [:]
-  @ObservationIgnored private var retryAddresses: Set<PlannerAddressPreviewRequest> = []
+  private var mapsResults: [PlannerLinkPreviewRequest: PlannerCapturePreviewCandidate] = [:]
+  private var addressResults: [PlannerAddressPreviewRequest: [PlannerAddressCandidate]] = [:]
+  @ObservationIgnored private var inputs: [LocationInput?] = []
+  @ObservationIgnored private var pendingInputs: [LocationInput] = []
+  @ObservationIgnored private var nextPendingInput = 0
+  @ObservationIgnored private var waitingInputs: Set<LocationInput> = []
+  @ObservationIgnored private var activeInputs: [LocationInput: PreviewOperation] = [:]
+  @ObservationIgnored private var retryInputs: Set<LocationInput> = []
 
   init(addressPreviews: PlannerAddressPreviews, mapsPreviews: PlannerMapsPreviews) {
     self.addressPreviews = addressPreviews
@@ -66,151 +74,197 @@ final class SavedMapCollection {
     requestIdentifier = identifier
     clearPublication()
     state = .loading
-    let result = await planner.query(.init(session: session, request: .items(query)))
-    guard !Task.isCancelled, requestIdentifier == identifier else { return }
-    guard case .snapshot(let snapshot) = result else {
-      if case .failed(let reason) = result { state = .failed(reason.message) }
-      return
-    }
-    guard snapshot.matchingCount == Int64(snapshot.rows.count) else {
-      state = .failed("Planner could not resolve the complete Map collection.")
-      return
-    }
-    var loadedRows: [PlannerMapRowRead] = []
-    var firstWindow: PlannerMapRowWindow?
-    repeat {
-      let offset = loadedRows.count
-      let end = min(offset + 64, snapshot.rows.count)
-      let read = await planner.read(
-        session: session,
-        request: .mapRows(generation: snapshot.generation, offset: Int64(offset), limit: 64))
+    reloadSnapshot: while !Task.isCancelled, requestIdentifier == identifier {
+      let result = await planner.query(.init(session: session, request: .items(query)))
       guard !Task.isCancelled, requestIdentifier == identifier else { return }
-      guard case .mapRows(let window) = read else {
-        if case .failed(let reason) = read {
-          state = .failed(reason.message)
-        } else {
-          state = .failed("Planner could not read its Map locations.")
-        }
+      guard case .snapshot(let snapshot) = result else {
+        if case .failed(let reason) = result { state = .failed(reason.message) }
         return
       }
-      guard window.generation == snapshot.generation, window.offset == Int64(offset),
-        window.matchingCount == snapshot.matchingCount,
-        window.rows.map(\.identity) == Array(snapshot.rows[offset..<end])
-      else {
-        state = .failed("Planner could not read its complete Map page.")
+      guard snapshot.matchingCount == Int64(snapshot.rows.count) else {
+        state = .failed("Planner could not resolve the complete Map collection.")
         return
       }
-      if let firstWindow {
-        guard window.collection == firstWindow.collection,
-          window.listBranches == firstWindow.listBranches
-        else {
-          state = .failed("Planner's Map context changed while loading.")
+      var loadedRows: [PlannerMapRowRead] = []
+      var firstWindow: PlannerMapRowWindow?
+      repeat {
+        let offset = loadedRows.count
+        let end = min(offset + 64, snapshot.rows.count)
+        let read = await planner.read(
+          session: session,
+          request: .mapRows(generation: snapshot.generation, offset: Int64(offset), limit: 64))
+        guard !Task.isCancelled, requestIdentifier == identifier else { return }
+        guard case .mapRows(let window) = read else {
+          if case .failed(let reason) = read {
+            if reason.code == "staleSnapshot" { continue reloadSnapshot }
+            state = .failed(reason.message)
+          } else {
+            state = .failed("Planner could not read its Map locations.")
+          }
           return
         }
-      } else {
-        firstWindow = window
+        guard window.generation == snapshot.generation, window.offset == Int64(offset),
+          window.matchingCount == snapshot.matchingCount,
+          window.rows.map(\.identity) == Array(snapshot.rows[offset..<end])
+        else {
+          state = .failed("Planner could not read its complete Map page.")
+          return
+        }
+        if let firstWindow {
+          guard window.collection == firstWindow.collection,
+            window.listBranches == firstWindow.listBranches
+          else {
+            state = .failed("Planner's Map context changed while loading.")
+            return
+          }
+        } else {
+          firstWindow = window
+        }
+        loadedRows.append(contentsOf: window.rows)
+      } while loadedRows.count < snapshot.rows.count
+      rows = loadedRows
+      matchingCount = snapshot.matchingCount
+      collection = firstWindow?.collection
+      listBranches = firstWindow?.listBranches ?? []
+      resolutions = rows.map { row in
+        if let coordinate = row.ownedLocation?.coordinate { return .located(coordinate) }
+        return .noInput
       }
-      loadedRows.append(contentsOf: window.rows)
-    } while loadedRows.count < snapshot.rows.count
-    rows = loadedRows
-    matchingCount = snapshot.matchingCount
-    collection = firstWindow?.collection
-    listBranches = firstWindow?.listBranches ?? []
-    resolutions = rows.map { row in
-      if let coordinate = row.ownedLocation?.coordinate { return .located(coordinate) }
-      return .noInput
+      publishLocations()
+      state = .ready
+      prepareInputs(namespace: identity.namespace)
+      startLoads()
+      return
     }
-    publishLocations()
-    state = .ready
-    prepareAddresses(namespace: identity.namespace)
-    startAddressLoads()
   }
 
-  private func prepareAddresses(namespace: String) {
-    var seen: Set<PlannerAddressPreviewRequest> = []
-    addressRequests = rows.map { row in
-      guard row.ownedLocation?.coordinate == nil,
-        let address = row.ownedLocation?.formattedAddress,
+  private func prepareInputs(namespace: String) {
+    var seen: Set<LocationInput> = []
+    inputs = rows.map { row in
+      guard row.ownedLocation?.coordinate == nil else { return nil }
+      let previewSource = PlannerPreviewSource(
+        namespace: namespace, sourceId: source(for: row.identity).id,
+        sourceLifetimeId: row.sourceLifetimeId)
+      if let address = row.ownedLocation?.formattedAddress,
         !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-      else { return nil }
-      return PlannerAddressPreviewRequest(
-        source: .init(
-          namespace: namespace, sourceId: source(for: row.identity).id,
-          sourceLifetimeId: row.sourceLifetimeId), address: address)
-    }
-    for index in addressRequests.indices where addressRequests[index] != nil {
-      resolutions[index] = .loading
-    }
-    for request in addressRequests.compactMap({ $0 }) where seen.insert(request).inserted {
-      if activeAddresses[request] != nil {
-        waitingAddresses.insert(request)
-      } else {
-        pendingAddresses.append(request)
+      {
+        return .address(.init(source: previewSource, address: address))
       }
+      guard let link = row.mapsLinks.first else { return nil }
+      return .maps(.init(source: previewSource, linkId: link.linkId, originalURL: link.originalUrl))
+    }
+    for index in inputs.indices where inputs[index] != nil { resolutions[index] = .loading }
+    for input in inputs.compactMap({ $0 }) where seen.insert(input).inserted {
+      enqueue(input)
     }
   }
 
-  private func startAddressLoads() {
-    while activeAddresses.count < 4, nextPendingAddress < pendingAddresses.count {
-      let request = pendingAddresses[nextPendingAddress]
-      nextPendingAddress += 1
+  private func enqueue(_ input: LocationInput) {
+    guard inputs.contains(input) else { return }
+    if let operation = activeInputs[input] {
+      if operation.epoch != requestIdentifier || operation.timedOut { waitingInputs.insert(input) }
+      return
+    }
+    guard !pendingInputs[nextPendingInput...].contains(input) else { return }
+    pendingInputs.append(input)
+  }
+
+  private func startLoads() {
+    while activeInputs.count < 4, nextPendingInput < pendingInputs.count {
+      let input = pendingInputs[nextPendingInput]
+      nextPendingInput += 1
+      guard inputs.contains(input) else { continue }
       let operationIdentifier = UUID()
       let epoch = requestIdentifier
       let deadline = Task { [weak self] in
         do { try await Task.sleep(for: .seconds(10)) } catch { return }
-        self?.expireAddress(request, operationIdentifier: operationIdentifier, epoch: epoch)
+        self?.expireLoad(input, operationIdentifier: operationIdentifier, epoch: epoch)
       }
-      activeAddresses[request] = .init(identifier: operationIdentifier, deadline: deadline)
-      let retry = retryAddresses.remove(request) != nil
-      Task { [weak self, addressPreviews] in
-        if retry {
-          await addressPreviews.retryAddress(request)
-        } else {
-          await addressPreviews.loadAddress(request)
+      activeInputs[input] = .init(identifier: operationIdentifier, epoch: epoch, deadline: deadline)
+      let retry = retryInputs.remove(input) != nil
+      Task { [weak self, addressPreviews, mapsPreviews] in
+        var resolution = SavedMapLocationResolution.unavailable
+        var mapsPreview: PlannerCapturePreviewCandidate?
+        switch input {
+        case .address(let request):
+          if retry {
+            await addressPreviews.retryAddress(request)
+          } else {
+            await addressPreviews.loadAddress(request)
+          }
+          while addressPreviews.addressState(for: request) == .loading {
+            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+              withObservationTracking {
+                _ = addressPreviews.addressState(for: request)
+              } onChange: {
+                continuation.resume()
+              }
+            }
+          }
+          if case .available(let candidates) = addressPreviews.addressState(for: request) {
+            if candidates.count == 1, let candidate = candidates.first {
+              resolution = .located(
+                .init(latitude: candidate.latitude, longitude: candidate.longitude))
+            } else if candidates.count > 1 {
+              resolution = .addressCandidates(request, candidates)
+            }
+          }
+        case .maps(let request):
+          let result: PlannerMapsPreviewResult?
+          if retry {
+            result = await mapsPreviews.retry(request)
+          } else {
+            result = await mapsPreviews.load(request)
+          }
+          if case .available(let candidate) = result {
+            mapsPreview = candidate
+            if let coordinate = candidate.coordinate { resolution = .located(coordinate) }
+          }
         }
-        let result = addressPreviews.addressState(for: request)
-        self?.finishAddress(
-          request, operationIdentifier: operationIdentifier, epoch: epoch, result: result)
+        self?.finishLoad(
+          input, operationIdentifier: operationIdentifier, epoch: epoch, resolution: resolution,
+          mapsPreview: mapsPreview)
       }
     }
   }
 
-  private func finishAddress(
-    _ request: PlannerAddressPreviewRequest, operationIdentifier: UUID, epoch: UUID,
-    result: PlannerAddressPreviewState
+  private func finishLoad(
+    _ input: LocationInput, operationIdentifier: UUID, epoch: UUID,
+    resolution: SavedMapLocationResolution, mapsPreview: PlannerCapturePreviewCandidate?
   ) {
-    guard let operation = activeAddresses[request], operation.identifier == operationIdentifier
-    else {
+    guard let operation = activeInputs[input], operation.identifier == operationIdentifier else {
       return
     }
     operation.deadline.cancel()
-    activeAddresses.removeValue(forKey: request)
+    activeInputs.removeValue(forKey: input)
     if epoch == requestIdentifier, !operation.timedOut {
-      var resolution = SavedMapLocationResolution.unavailable
-      if case .available(let candidates) = result, candidates.count == 1,
-        let candidate = candidates.first
-      {
-        resolution = .located(.init(latitude: candidate.latitude, longitude: candidate.longitude))
+      if case .maps(let request) = input, let mapsPreview { mapsResults[request] = mapsPreview }
+      if case .address(let request) = input {
+        if case .addressCandidates(_, let candidates) = resolution {
+          addressResults[request] = candidates
+        } else {
+          addressResults.removeValue(forKey: request)
+        }
       }
-      updateAddress(request, resolution: resolution)
+      updateInput(input, resolution: resolution)
     }
-    if waitingAddresses.remove(request) != nil { pendingAddresses.append(request) }
-    startAddressLoads()
+    if waitingInputs.remove(input) != nil { enqueue(input) }
+    startLoads()
   }
 
-  private func expireAddress(
-    _ request: PlannerAddressPreviewRequest, operationIdentifier: UUID, epoch: UUID
+  private func expireLoad(
+    _ request: LocationInput, operationIdentifier: UUID, epoch: UUID
   ) {
-    guard activeAddresses[request]?.identifier == operationIdentifier else { return }
-    activeAddresses[request]?.timedOut = true
+    guard activeInputs[request]?.identifier == operationIdentifier else { return }
+    activeInputs[request]?.timedOut = true
     guard epoch == requestIdentifier else { return }
-    updateAddress(request, resolution: .unavailable)
+    updateInput(request, resolution: .unavailable)
   }
 
-  private func updateAddress(
-    _ request: PlannerAddressPreviewRequest, resolution: SavedMapLocationResolution
+  private func updateInput(
+    _ request: LocationInput, resolution: SavedMapLocationResolution
   ) {
-    for index in addressRequests.indices where addressRequests[index] == request {
+    for index in inputs.indices where inputs[index] == request {
       resolutions[index] = resolution
     }
     publishLocations()
@@ -227,18 +281,63 @@ final class SavedMapCollection {
     return resolutions[index]
   }
 
+  func mapsPreview(for identity: PlannerRowIdentity) -> PlannerCapturePreviewCandidate? {
+    guard let index = rows.firstIndex(where: { $0.identity == identity }),
+      case .maps(let request) = inputs[index]
+    else { return nil }
+    return mapsResults[request]
+  }
+
+  func chooseMapsLink(_ request: PlannerLinkPreviewRequest, for identity: PlannerRowIdentity)
+    -> Bool
+  {
+    guard let index = rows.firstIndex(where: { $0.identity == identity }),
+      case .maps(let current) = inputs[index], current.source == request.source,
+      rows[index].mapsLinks.contains(where: {
+        $0.linkId == request.linkId && Data($0.originalUrl.utf8) == Data(request.originalURL.utf8)
+      })
+    else { return false }
+    if current == request { return true }
+    let input = LocationInput.maps(request)
+    inputs[index] = input
+    resolutions[index] = .loading
+    publishLocations()
+    enqueue(input)
+    startLoads()
+    return true
+  }
+
   func retry(for identity: PlannerRowIdentity) {
     guard let index = rows.firstIndex(where: { $0.identity == identity }),
-      resolutions[index] == .unavailable, let request = addressRequests[index]
+      resolutions[index] == .unavailable, let request = inputs[index]
     else { return }
-    retryAddresses.insert(request)
-    updateAddress(request, resolution: .loading)
-    if activeAddresses[request] != nil {
-      waitingAddresses.insert(request)
-    } else {
-      pendingAddresses.append(request)
-    }
-    startAddressLoads()
+    retryInputs.insert(request)
+    updateInput(request, resolution: .loading)
+    enqueue(request)
+    startLoads()
+  }
+
+  func chooseAddressCandidate(
+    _ candidate: PlannerAddressCandidate, request: PlannerAddressPreviewRequest,
+    for identity: PlannerRowIdentity
+  ) -> Bool {
+    guard let index = rows.firstIndex(where: { $0.identity == identity }),
+      inputs[index] == .address(request),
+      addressResults[request]?.contains(candidate) == true
+    else { return false }
+    resolutions[index] = .located(
+      .init(latitude: candidate.latitude, longitude: candidate.longitude))
+    publishLocations()
+    return true
+  }
+
+  func addressChoices(for identity: PlannerRowIdentity)
+    -> (request: PlannerAddressPreviewRequest, candidates: [PlannerAddressCandidate])?
+  {
+    guard let index = rows.firstIndex(where: { $0.identity == identity }),
+      case .address(let request) = inputs[index], let candidates = addressResults[request]
+    else { return nil }
+    return (request, candidates)
   }
 
   private func source(for identity: PlannerRowIdentity) -> PlannerEntityReference {
@@ -257,11 +356,13 @@ final class SavedMapCollection {
     unresolvedCount = 0
     noInputCount = 0
     resolutions = []
-    retryAddresses = []
-    addressRequests = []
-    pendingAddresses = []
-    nextPendingAddress = 0
-    waitingAddresses = []
+    mapsResults = [:]
+    addressResults = [:]
+    retryInputs = []
+    inputs = []
+    pendingInputs = []
+    nextPendingInput = 0
+    waitingInputs = []
   }
 
   private func publishLocations() {

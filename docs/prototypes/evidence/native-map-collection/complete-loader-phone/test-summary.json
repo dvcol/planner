@@ -1,0 +1,27 @@
+{
+  "devicesAndConfigurations" : [
+
+  ],
+  "environmentDescription" : "Planner",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792654133.691,
+  "passedTests" : 0,
+  "result" : "unknown",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792654133.691,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - Planner",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 0
+}

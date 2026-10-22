@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerBrowserMacSource",
+  "base": "6fb2621071acb0a38a6327b35b4ed884f4c1ff55",
+  "overlays": [
+    "Planner/Scenes/SavedMapCollection.swift",
+    "PlannerMCPTests/SavedMapCollectionTests.swift"
+  ]
+}
