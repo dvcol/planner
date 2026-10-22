@@ -2,8 +2,278 @@ import XCTest
 
 @MainActor
 final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
+  func testDeletedCalendarSourceKeepsItsGuideAndReturnsToCalendar() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let list = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(list.waitForExistence(timeout: 20))
+    let listIdentifier = list.identifier
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    let sourceIdentifier = source.identifier
+    source.activateForPlannerJourney()
+    let originalLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    for _ in 0..<6 where !originalLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(originalLink.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = originalLink.identifier
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule item").activateForPlannerJourney()
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let schedule = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
+    ).firstMatch
+    for _ in 0..<6 where !schedule.isHittable { application.swipeUp() }
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    let scheduleIdentifier = schedule.identifier.replacingOccurrences(
+      of: "saved.item.schedule.", with: "")
+    application.openPlannerSection("Calendar")
+    let booking = application.descendants(matching: .any)
+      .matching(identifier: "saved.calendar.schedule.\(scheduleIdentifier)").firstMatch
+    XCTAssertTrue(booking.waitForExistence(timeout: 10))
+    booking.activateForPlannerJourney()
+    let calendarLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !calendarLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(calendarLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(calendarLink.value as? String, destination.absoluteString)
+    calendarLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    let returnToItem = application.buttons["saved.browser.return"]
+    XCTAssertEqual(returnToItem.label, "Return to item")
+    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
+    application.plannerElement("fixture.writer.deleteHotel").activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Deleted Hotel from another writer"),
+            object: application.staticTexts["fixture.writer.status"])
+        ], timeout: 10), .completed, application.debugDescription)
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    let reading = XCTAttachment(screenshot: application.screenshot())
+    reading.name = "Deleted Calendar source keeps its original guide open"
+    reading.lifetime = .keepAlways
+    add(reading)
+    returnToItem.activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      explanation.staticTexts[
+        "The original item is no longer available. Returned to Calendar."
+      ].exists)
+    explanation.buttons["OK"].activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    let mode = application.descendants(matching: .any)
+      .matching(identifier: "saved.calendar.mode").firstMatch
+    XCTAssertTrue(mode.waitForExistence(timeout: 10))
+    XCTAssertTrue(mode.isHittable)
+    XCTAssertTrue(booking.waitForNonExistence(timeout: 10))
+    let detailsToggle = application.buttons["saved.calendar.details.toggle"]
+    if detailsToggle.exists { XCTAssertFalse(detailsToggle.isEnabled) }
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    returned.name = "Deleted Calendar browser source returns to the surviving Calendar"
+    returned.lifetime = .keepAlways
+    add(returned)
+    application.openPlannerSection("Items")
+    XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(
+      application.descendants(matching: .any).matching(identifier: sourceIdentifier).firstMatch
+        .exists)
+    application.openPlannerSection("Lists")
+    let retainedList = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedList.identifier, listIdentifier)
+    retainedList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Hotel").count, 0)
+    let retained = XCTAttachment(screenshot: application.screenshot())
+    retained.name = "Deleted Calendar source preserves its original empty List"
+    retained.lifetime = .keepAlways
+    add(retained)
+  }
+
   func testDeletedItineraryKeepsItsGuideOpenAndPreservesItsSourcePlans() async throws {
     try await qualifyUnavailableItineraryGuide(opensItemAppearance: false)
+  }
+
+  func testDeletedCalendarItineraryKeepsItsGuideAndSharedSources() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString, "--fixture-itinerary",
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let list = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(list.waitForExistence(timeout: 20))
+    let listIdentifier = list.identifier
+    list.activateForPlannerJourney()
+    let membership = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(membership.waitForExistence(timeout: 10))
+    let membershipIdentifier = membership.identifier
+    application.openPlannerSection("Items")
+    let item = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(item.waitForExistence(timeout: 10))
+    let itemIdentifier = item.identifier
+    item.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    let itemLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.link.", "Museum guide")
+    ).firstMatch
+    for _ in 0..<6 where !itemLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(itemLink.waitForExistence(timeout: 10))
+    let itemBookmarkIdentifier = itemLink.identifier
+    application.openPlannerSection("Itineraries")
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+    let itineraryIdentifier = itinerary.identifier
+    itinerary.activateForPlannerJourney()
+    let itineraryLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.link.", "Itinerary guide")
+    ).firstMatch
+    for _ in 0..<6 where !itineraryLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(itineraryLink.waitForExistence(timeout: 10))
+    let itineraryBookmarkIdentifier = itineraryLink.identifier
+    let actions = application.plannerElement("saved.itinerary.actions")
+    if actions.exists {
+      actions.activateForPlannerJourney()
+    } else {
+      let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
+      XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+      overflow.activateForPlannerJourney()
+      let itineraryActions = application.plannerElement("Itinerary actions")
+      if itineraryActions.exists { itineraryActions.activateForPlannerJourney() }
+    }
+    application.plannerElement("Schedule itinerary").activateForPlannerJourney()
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let schedule = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.schedule.")
+    ).firstMatch
+    for _ in 0..<6 where !schedule.isHittable { application.swipeUp() }
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    let scheduleIdentifier = schedule.identifier.replacingOccurrences(
+      of: "saved.itinerary.schedule.", with: "")
+    application.openPlannerSection("Calendar")
+    let booking = application.descendants(matching: .any)
+      .matching(identifier: "saved.calendar.schedule.\(scheduleIdentifier)").firstMatch
+    XCTAssertTrue(booking.waitForExistence(timeout: 10))
+    booking.activateForPlannerJourney()
+    let savedGuide = application.descendants(matching: .any)
+      .matching(identifier: itineraryBookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !savedGuide.isHittable { application.swipeUp() }
+    XCTAssertTrue(savedGuide.waitForExistence(timeout: 10))
+    XCTAssertEqual(savedGuide.value as? String, destination.absoluteString)
+    savedGuide.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    let returnToItinerary = application.buttons["saved.browser.return"]
+    XCTAssertEqual(returnToItinerary.label, "Return to itinerary")
+    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
+    application.plannerElement("fixture.writer.deleteCityTrip").activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Deleted City trip from another writer"),
+            object: application.staticTexts["fixture.writer.status"])
+        ], timeout: 10), .completed, application.debugDescription)
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    let reading = XCTAttachment(screenshot: application.screenshot())
+    reading.name = "Deleted Calendar Itinerary keeps its owned guide open"
+    reading.lifetime = .keepAlways
+    add(reading)
+    returnToItinerary.activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      explanation.staticTexts[
+        "The original itinerary is no longer available. Returned to Calendar."
+      ].exists)
+    explanation.buttons["OK"].activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    let mode = application.descendants(matching: .any)
+      .matching(identifier: "saved.calendar.mode").firstMatch
+    XCTAssertTrue(mode.waitForExistence(timeout: 10))
+    XCTAssertTrue(mode.isHittable)
+    XCTAssertTrue(booking.waitForNonExistence(timeout: 10))
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    returned.name = "Deleted Calendar Itinerary returns to Calendar without its booking"
+    returned.lifetime = .keepAlways
+    add(returned)
+    application.openPlannerSection("Itineraries")
+    XCTAssertTrue(
+      application.staticTexts["No Itineraries yet"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(
+      application.descendants(matching: .any)
+        .matching(identifier: itineraryIdentifier).firstMatch.exists)
+    let catalog = XCTAttachment(screenshot: application.screenshot())
+    catalog.name = "Deleted Calendar Itinerary clears its shared catalog selection"
+    catalog.lifetime = .keepAlways
+    add(catalog)
+    application.openPlannerSection("Items")
+    for _ in 0..<6 where !application.staticTexts["Original notes"].exists {
+      application.swipeDown()
+    }
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    let retainedItemLink = application.descendants(matching: .any)
+      .matching(identifier: itemBookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !retainedItemLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(retainedItemLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedItemLink.value as? String, destination.absoluteString)
+    let retainedItem = application.savedPlannerItemRows("Hotel").firstMatch
+    if !retainedItem.exists {
+      let back = application.navigationBars.buttons["BackButton"].firstMatch
+      XCTAssertTrue(back.waitForExistence(timeout: 5))
+      back.activateForPlannerJourney()
+    }
+    XCTAssertTrue(retainedItem.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedItem.identifier, itemIdentifier)
+    application.openPlannerSection("Lists")
+    let retainedList = application.savedPlannerListRow("Weekend")
+    if !retainedList.exists {
+      let back = application.navigationBars.buttons["BackButton"].firstMatch
+      XCTAssertTrue(back.waitForExistence(timeout: 5))
+      back.activateForPlannerJourney()
+    }
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedList.identifier, listIdentifier)
+    retainedList.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(membershipIdentifier).waitForExistence(timeout: 10))
+    let membershipCompletion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertEqual(membershipCompletion.value as? String, "To do")
+    let retained = XCTAttachment(screenshot: application.screenshot())
+    retained.name = "Deleted Calendar Itinerary preserves its Item and original List membership"
+    retained.lifetime = .keepAlways
+    add(retained)
   }
 
   func testDeletedItineraryAppearanceKeepsItsGuideOpenAndReturnsToItineraries() async throws {

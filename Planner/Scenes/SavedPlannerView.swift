@@ -67,6 +67,7 @@ struct SavedPlannerView: View {
   @Environment(PlannerMapsPreviews.self) private var mapsPreviews
   @State private var associationUndo = SavedAssociationUndoHistory()
   @State private var website: SavedWebsiteSession?
+  @State private var websiteCalendarSelection: SavedCalendarSelection?
   @State private var mapCollection: SavedMapCollection?
   @State private var loadedMapRequest: SavedMapRequest?
   @State private var listRepresentation = SavedCollectionRepresentation.list
@@ -100,6 +101,7 @@ struct SavedPlannerView: View {
   @State private var itineraryPresentations: [UUID: SavedItineraryPresentation] = [:]
   @State private var itineraryColumnVisibility: NavigationSplitViewVisibility = .all
   @State private var itineraryPreferredCompactColumn = NavigationSplitViewColumn.sidebar
+  @State private var itineraryNavigationIdentifier = UUID()
   @State private var selectedListId: UUID?
   @State private var retainedListSource: PlannerListSourceRead?
   @State private var listWindow: SavedItemWindow?
@@ -256,7 +258,7 @@ struct SavedPlannerView: View {
       }
       .onChange(of: calendarSelection) {
         guard let selection = calendarSelection else {
-          calendarInspectorPresented = false
+          if website == nil { calendarInspectorPresented = false }
           return
         }
         calendarInspectorPresented = true
@@ -428,6 +430,14 @@ struct SavedPlannerView: View {
     #endif
   }
 
+  private var usesCompactCalendarStack: Bool {
+    #if os(iOS)
+      horizontalSizeClass != .regular
+    #else
+      false
+    #endif
+  }
+
   @ViewBuilder
   private var nativeLayout: some View {
     if usesSidebarNavigation {
@@ -479,6 +489,7 @@ struct SavedPlannerView: View {
                 itineraryAppearanceDetail
               }
             }
+            .id(itineraryNavigationIdentifier)
           }
         }
         .tabViewBottomAccessory(isEnabled: associationUndo.presentsControl) {
@@ -500,15 +511,47 @@ struct SavedPlannerView: View {
   }
 
   #if os(iOS)
+    private enum SavedCalendarDestination: Hashable {
+      case schedule(SavedCalendarSelection)
+      case website(SavedWebsiteSession)
+    }
+
+    private var calendarNavigationPath: Binding<[SavedCalendarDestination]> {
+      Binding(
+        get: {
+          var destinations: [SavedCalendarDestination] = []
+          if let selection = calendarSelection ?? websiteCalendarSelection {
+            destinations.append(.schedule(selection))
+          }
+          if selectedSection == .calendar, let website { destinations.append(.website(website)) }
+          return destinations
+        },
+        set: { destinations in
+          guard selectedSection == .calendar else { return }
+          switch destinations.last {
+          case .website?: break
+          default: websiteSelection.wrappedValue = nil
+          }
+          if destinations.isEmpty { calendarSelection = nil }
+        })
+    }
+
     @ViewBuilder
     private var calendarColumns: some View {
-      if horizontalSizeClass == .regular {
+      if !usesCompactCalendarStack {
         wideCalendar
       } else {
-        NavigationStack {
+        NavigationStack(path: calendarNavigationPath) {
           SavedCalendarView(store: store, selection: $calendarSelection)
             .safeAreaInset(edge: .top) { recoveryNotice }
-            .navigationDestination(item: $calendarSelection) { _ in calendarDetail }
+            .navigationDestination(for: SavedCalendarDestination.self) { destination in
+              switch destination {
+              case .schedule:
+                calendarDetail
+              case .website(let session):
+                SavedWebsiteView(session: session) { Task { await returnFromWebsite(session) } }
+              }
+            }
         }
       }
     }
@@ -519,7 +562,9 @@ struct SavedPlannerView: View {
       get: { calendarSelection },
       set: { selection in
         calendarSelection = selection
-        calendarInspectorPresented = selection != nil
+        if selection != nil || website == nil {
+          calendarInspectorPresented = selection != nil
+        }
       })
   }
 
@@ -567,7 +612,8 @@ struct SavedPlannerView: View {
           }
         }
     }
-    .id(calendarSelection)
+    // Keep the active reader's native host stable while Calendar refreshes.
+    .id(website == nil ? calendarSelection : nil)
   }
 
   private var calendarDetail: some View {
@@ -2109,7 +2155,10 @@ struct SavedPlannerView: View {
     Binding(
       get: { website },
       set: { replacement in
-        if replacement == nil { website?.page.stopLoading() }
+        if replacement == nil {
+          website?.page.stopLoading()
+          websiteCalendarSelection = nil
+        }
         website = replacement
       })
   }
@@ -2126,6 +2175,8 @@ struct SavedPlannerView: View {
       } else {
         content()
       }
+    } else if selectedSection == .calendar && usesCompactCalendarStack {
+      content()
     } else if selectedSection == .calendar {
       content().navigationDestination(item: websiteSelection) { session in
         SavedWebsiteView(session: session) { Task { await returnFromWebsite(session) } }
@@ -2146,6 +2197,9 @@ struct SavedPlannerView: View {
     let availability = await store.websiteReturnAvailability(session.request)
     guard website === session else { return }
     websiteSelection.wrappedValue = nil
+    if selectedSection == .calendar, calendarSelection == nil {
+      calendarInspectorPresented = false
+    }
     if availability.originAvailable {
       if session.request.appearance != nil {
         await loadSelectedAppearance()
@@ -2181,6 +2235,23 @@ struct SavedPlannerView: View {
     case .calendar:
       calendarSelection = nil
       calendarInspectorPresented = false
+      if session.request.appearance == nil, session.request.source.kind == .item,
+        selectedItemId == session.request.source.id
+      {
+        selectedItemId = nil
+        selectedItem = nil
+        isOpeningItem = false
+        preferredCompactColumn = .sidebar
+      } else if session.request.appearance == nil, session.request.source.kind == .itinerary,
+        selectedItineraryIdentifier == session.request.source.id
+      {
+        itineraryPresentations.removeValue(forKey: session.request.source.id)
+        selectedItineraryIdentifier = nil
+        selectedItineraryRow = nil
+        itineraryColumnVisibility = .all
+        itineraryPreferredCompactColumn = .sidebar
+        itineraryNavigationIdentifier = UUID()
+      }
       destination = "Calendar"
     }
     let subject: String
@@ -2196,12 +2267,14 @@ struct SavedPlannerView: View {
   private func closeWebsiteForNavigation() {
     website?.page.stopLoading()
     website = nil
+    websiteCalendarSelection = nil
   }
 
   private func openWebsite(_ request: SavedWebsiteRequest) {
     requestDraftNavigation {
       guard store.devicePreferenceNamespace == request.namespace else { return }
       website?.page.stopLoading()
+      websiteCalendarSelection = selectedSection == .calendar ? calendarSelection : nil
       website = SavedWebsiteSession(request: request)
       if selectedSection != .itineraries || usesSidebarNavigation {
         preferredCompactColumn = .detail

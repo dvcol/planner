@@ -1098,6 +1098,20 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    application.openPlannerSection("Items")
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    for _ in 0..<6 where !savedLink.isHittable { application.swipeUp() }
+    savedLink.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+        .waitForExistence(timeout: 10))
+    XCTAssertEqual(returnToPlanner.label, "Return to item")
+    returnToPlanner.activateForPlannerJourney()
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    application.openPlannerSection("Calendar")
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
   }
 
   func testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder() async throws {
