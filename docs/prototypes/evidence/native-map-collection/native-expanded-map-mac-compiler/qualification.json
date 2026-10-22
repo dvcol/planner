@@ -1,0 +1,10 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "sameSourcesAsPhone": true,
+  "productionChanges": [],
+  "runtimeCredit": false,
+  "meaning": "Mac app/Share/navigation-test compilation only. Production unchanged from 28f85532; no Mac UI runtime credit."
+}

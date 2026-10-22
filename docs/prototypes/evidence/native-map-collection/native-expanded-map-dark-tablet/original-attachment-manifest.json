@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "420396B6-B9DF-499A-9C29-4CB76096D01E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_9E49A601-3703-4985-8C62-9CC82B1B47A7.png",
+        "timestamp": 1792662490.881
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2C3CF64E-A728-43B8-86AA-DDF9566297F0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_81B62289-41B7-4972-8341-16DBB7A3A076.png",
+        "timestamp": 1792662605.932
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "ACF57E84-0DA5-45BA-8EA9-B79AACAEE7C7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_58159913-321D-4678-BF01-795BA1631AE2.png",
+        "timestamp": 1792662180.371
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0E6BA2D1-FA5E-4E0F-AB83-36ACFF9220BF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_43802423-5111-4FEC-8CE7-1420D7F33B33.png",
+        "timestamp": 1792662282.548
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList"
+  }
+]

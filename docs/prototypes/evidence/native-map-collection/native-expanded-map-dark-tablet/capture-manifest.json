@@ -1,0 +1,22 @@
+[
+  {
+    "file": "itinerary-map-choices.png",
+    "original": "Counted itinerary pin distinguishes independent repeated stops_0_9E49A601-3703-4985-8C62-9CC82B1B47A7.png",
+    "exportedFile": "420396B6-B9DF-499A-9C29-4CB76096D01E.png",
+    "sha256": "b561ad32f7d89a93c14fdebf4c482f32048fa5d5d6154823cc9fb7ff6f20e8eb",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "itinerary-list-map-choices.png",
+    "original": "Counted itinerary List pin distinguishes independent child appearances_0_81B62289-41B7-4972-8341-16DBB7A3A076.png",
+    "exportedFile": "2C3CF64E-A728-43B8-86AA-DDF9566297F0.png",
+    "sha256": "66ded50b993b3e1a27ccce7e22dc4db5d159f0257c77b221b56d6e8702194233",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]
