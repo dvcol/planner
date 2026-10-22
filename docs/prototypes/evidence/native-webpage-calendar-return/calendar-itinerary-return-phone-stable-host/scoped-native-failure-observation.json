@@ -1,0 +1,18 @@
+{
+  "observations": [
+    {
+      "originalSha256": "f34d6d2356088aacbee1f3d196d038fdcec1226d7e16ba00bc741a9ae4c49a2b",
+      "relevantNativeLines": [
+        "                          NavigationBar, 0x108aeb0c0, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'Museum guide' <AX element pid: 29110, elementOrHash.elementID: 4969748480.714>",
+        "                            Button, 0x108ae9f40, {{20.0, 66.0}, {36.0, 36.0}}, identifier: 'saved.browser.return', label: 'Return to itinerary' <AX element pid: 29110, elementOrHash.elementID: 5001981184.1067>",
+        "                                    WebView, 0x108cb0140, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 29110, elementOrHash.elementID: 4966449152.1075>",
+        "                                      WebView, 0x108cb0280, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 29110, elementOrHash.elementID: 4966451712.1076>",
+        "                                        WebView, 0x10880fac0, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 29110, elementOrHash.elementID: 4323135488.1078>",
+        "                                                  Other, 0x10880fc00, {{8.0, 141.0}, {386.0, 39.0}}, label: 'Museum guide fixture', value: 1, Focused <AX element pid: 29320, elementOrHash.elementID: 4375922336.6>",
+        "                                                    StaticText, 0x10880fe80, {{8.0, 142.0}, {302.0, 37.0}}, label: 'Museum guide fixture', value: Museum guide fixture, Focused <AX element pid: 29320, elementOrHash.elementID: 4375922656.13>",
+        "                          Button, 0x108cf6d00, {{216.9, 724.3}, {86.7, 54.0}}, identifier: 'calendar', label: 'Calendar', Selected <AX element pid: 29110, elementOrHash.elementID: 4322736128.42>"
+      ]
+    }
+  ],
+  "meaning": "Stable wrapper did not close the reader. Original failed native hierarchy still reports a full-screen reader and Calendar selected."
+}

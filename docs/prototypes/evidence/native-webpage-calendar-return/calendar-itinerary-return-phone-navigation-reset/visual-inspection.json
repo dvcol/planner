@@ -1,0 +1,15 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-calendar-itinerary-keeps-reading.png",
+    "deleted-calendar-itinerary-returned.png",
+    "deleted-calendar-itinerary-catalog.png",
+    "deleted-calendar-itinerary-membership-retained.png"
+  ],
+  "observations": [
+    "The original guide remains readable after City trip deletion, with native reader controls and Calendar selected.",
+    "Return shows a usable native Month calendar without the deleted booking. The empty-agenda description is partly under the floating tab bar, retained for whole-app polish.",
+    "Itineraries opens its empty catalog, without the stale unavailable/Choose an Itinerary detail.",
+    "Weekend retains its Hotel row and local Todo control, full progress/estimate warnings and native Add/Filters/More controls. The duplicate compact title remains a polish finding."
+  ],
+  "limits": "Four originals inspected from this complete passing phone function. Broader accessibility, interactive closure, physical devices and actual Mac UI are not qualified."
+}

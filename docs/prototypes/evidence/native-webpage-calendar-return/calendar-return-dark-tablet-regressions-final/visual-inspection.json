@@ -1,0 +1,13 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-calendar-keeps-reading.png",
+    "deleted-calendar-returned.png",
+    "deleted-calendar-list-retained.png"
+  ],
+  "observations": [
+    "The dark native inspector keeps Hotel\u2019s original guide readable after the independent Item deletion, with a positive writer status.",
+    "Return closes the inspector and leaves Calendar without its deleted booking. The portrait sidebar overlays Calendar\u2019s left content, retained as a layout/polish finding.",
+    "The original Weekend List is empty with zero full/remaining estimates and readable dark native controls; its identity survives the Item deletion."
+  ],
+  "limits": "Three new Calendar originals inspected. The two existing collection-return originals remain retained without additional visual credit. This does not establish complete layout/accessibility acceptance."
+}

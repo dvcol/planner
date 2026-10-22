@@ -1,0 +1,59 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "340A0F88-BA52-4D0D-8592-08350BD237E5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar source preserves its original empty List_0_9D707AD4-7468-4EC3-B082-E1FD93D8BBAD.png",
+        "timestamp": 1792701590.397
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "503571A1-ADF2-4E20-9AC0-CD2153102687.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar browser source returns to the surviving Calendar_0_331B4661-829F-4E40-8619-66A73F70E64C.png",
+        "timestamp": 1792701579.384
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "09A858DB-1721-47DB-A269-C3B9A3F68201.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar source keeps its original guide open_0_87C15104-0CC2-483B-ADA9-6A1BBA03407F.png",
+        "timestamp": 1792701571.451
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedCalendarSourceKeepsItsGuideAndReturnsToCalendar()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testDeletedCalendarSourceKeepsItsGuideAndReturnsToCalendar"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "93DB9D4A-D618-4B0C-AD58-A96C47A30C3A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted browser source returns to the surviving Items collection_0_EEBFAFFF-A5F9-4C9C-9ECB-AACA85C05DA1.png",
+        "timestamp": 1792701616.887
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "339FC90F-2C0E-43E8-B309-41994D57C3D4.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted source leaves the original guide open_0_0846475E-2DB7-45C6-A014-2BDBECD22931.png",
+        "timestamp": 1792701611.588
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedSourceKeepsItsGuideOpenAndReturnsToItsSurvivingCollection()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testDeletedSourceKeepsItsGuideOpenAndReturnsToItsSurvivingCollection"
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-calendar-list-retained.png",
+      "originalName": "Deleted Calendar source preserves its original empty List_0_9D707AD4-7468-4EC3-B082-E1FD93D8BBAD.png",
+      "exportedFile": "340A0F88-BA52-4D0D-8592-08350BD237E5.png",
+      "sha256": "1140239c73fdac4551ca6dbf1dec364e6ee91fc7176627877b3caa7acf90d6d1"
+    },
+    {
+      "file": "deleted-calendar-returned.png",
+      "originalName": "Deleted Calendar browser source returns to the surviving Calendar_0_331B4661-829F-4E40-8619-66A73F70E64C.png",
+      "exportedFile": "503571A1-ADF2-4E20-9AC0-CD2153102687.png",
+      "sha256": "b3eda27cdbe97a6fd5d750c002da1a754ca39754dc788c783146eb92baaa5c78"
+    },
+    {
+      "file": "deleted-calendar-keeps-reading.png",
+      "originalName": "Deleted Calendar source keeps its original guide open_0_87C15104-0CC2-483B-ADA9-6A1BBA03407F.png",
+      "exportedFile": "09A858DB-1721-47DB-A269-C3B9A3F68201.png",
+      "sha256": "38edeb0558718e7649100870f3edfa5afd222f6c8b79abba770aa344143d7d04"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_EEBFAFFF-A5F9-4C9C-9ECB-AACA85C05DA1.png",
+      "exportedFile": "93DB9D4A-D618-4B0C-AD58-A96C47A30C3A.png",
+      "sha256": "ce00d7631b282cf83c165e94c8b69334782b5f26dec6d9b8d956f02dd7b021b6"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_0846475E-2DB7-45C6-A014-2BDBECD22931.png",
+      "exportedFile": "339FC90F-2C0E-43E8-B309-41994D57C3D4.png",
+      "sha256": "87d8ef4c7fa1fb58c7449c995303dca4898d2ac085b5d31807fa6e983af37331"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

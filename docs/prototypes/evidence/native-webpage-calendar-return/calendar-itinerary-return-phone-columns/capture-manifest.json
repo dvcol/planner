@@ -1,0 +1,18 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-calendar-itinerary-returned.png",
+      "originalName": "Deleted Calendar Itinerary returns to Calendar without its booking_0_21746EE3-0CF4-4684-9057-D8C981018CD6.png",
+      "exportedFile": "927679AE-2454-45AE-B591-A6D21E5F9590.png",
+      "sha256": "f1a9bcc4967a62b03b537b470667b70fc32ebee5ad0eaa23adf1bfda86ceb957"
+    },
+    {
+      "file": "deleted-calendar-itinerary-keeps-reading.png",
+      "originalName": "Deleted Calendar Itinerary keeps its owned guide open_0_1C4FA662-71D4-4CEE-8E71-F46DAFF1FD31.png",
+      "exportedFile": "4D8FF2D7-A792-4E5F-90F8-49F16D52E67E.png",
+      "sha256": "26cc7a981fda005b4f0b4baead941b906245b1333d2afb102d5efc4c6d8430e4"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

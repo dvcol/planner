@@ -1,0 +1,589 @@
+{
+  "observations": [
+    {
+      "originalReport": "PlannerFixtures-2026-10-23-052514.ips",
+      "originalSha256": "98a79bab93c7ac1136de51ae0322e0209c30c15b92cdbcf0b989207a99f90d00",
+      "process": "PlannerFixtures",
+      "processIdentifier": 37407,
+      "captureTime": "2026-10-23 05:24:38.1741 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x0000000249bf20f0",
+        "rawCodes": [
+          1,
+          9827197168
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 37407
+      },
+      "topFrames": [
+        {
+          "imageOffset": 37104,
+          "imageIndex": 70,
+          "image": "_WebKit_SwiftUI",
+          "imageUUID": "6e129408-4ec8-3cf9-bab0-85ffa0a9fc69"
+        },
+        {
+          "imageOffset": 15044052,
+          "symbol": "PlatformViewRepresentableAdaptor.makeViewProvider(context:)",
+          "symbolLocation": 244,
+          "imageIndex": 71,
+          "image": "SwiftUI",
+          "imageUUID": "480ec830-2694-3017-bea4-230c8818dded"
+        },
+        {
+          "imageOffset": 15045276,
+          "symbol": "protocol witness for CoreViewRepresentable.makeViewProvider(context:) in conformance PlatformViewRepresentableAdaptor<A>",
+          "symbolLocation": 20,
+          "imageIndex": 71,
+          "image": "SwiftUI",
+          "imageUUID": "480ec830-2694-3017-bea4-230c8818dded"
+        },
+        {
+          "imageOffset": 3220564,
+          "symbol": "closure #1 in closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 192,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3220156,
+          "symbol": "closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 64,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3250484,
+          "symbol": "partial apply for closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 48,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 4662204,
+          "symbol": "RepresentableContextValues.asCurrent<A>(do:)",
+          "symbolLocation": 204,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3220012,
+          "symbol": "closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 424,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3215288,
+          "symbol": "closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 2944,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3053356,
+          "symbol": "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+          "symbolLocation": 28,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 49460,
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "symbolLocation": 512,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 51236,
+          "symbol": "AG::Graph::update_attribute(AG::data::ptr<AG::Node>, unsigned int)",
+          "symbolLocation": 352,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 82064,
+          "symbol": "AG::Graph::input_value_ref_slow(AG::data::ptr<AG::Node>, AG::AttributeID, unsigned int, unsigned int, AGSwiftMetadata const*, unsigned char&, long)",
+          "symbolLocation": 576,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 179672,
+          "symbol": "AGGraphGetValue",
+          "symbolLocation": 260,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 3235256,
+          "symbol": "InvalidatableLeafLayoutComputer.updateValue()",
+          "symbolLocation": 208,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3053356,
+          "symbol": "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+          "symbolLocation": 28,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 49460,
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "symbolLocation": 512,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 51236,
+          "symbol": "AG::Graph::update_attribute(AG::data::ptr<AG::Node>, unsigned int)",
+          "symbolLocation": 352,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 81736,
+          "symbol": "AG::Graph::input_value_ref_slow(AG::data::ptr<AG::Node>, AG::AttributeID, unsigned int, unsigned int, AGSwiftMetadata const*, unsigned char&, long)",
+          "symbolLocation": 248,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 179164,
+          "symbol": "AGGraphGetInputValue",
+          "symbolLocation": 276,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        }
+      ],
+      "plannerImages": [
+        {
+          "name": "PlannerFixtures",
+          "uuid": "3a1fef63-20f9-3fde-b806-685e3b467b21"
+        },
+        {
+          "name": "PlannerFixtures.debug.dylib",
+          "uuid": "d141602d-73f9-37da-b0bd-47aa9f968143"
+        }
+      ]
+    },
+    {
+      "originalReport": "PlannerFixtures-2026-10-23-052601.ips",
+      "originalSha256": "06a5b9b0cd4e289e12244958baefc781d5f7b10c588b27f80178dfe0d36ce37f",
+      "process": "PlannerFixtures",
+      "processIdentifier": 37697,
+      "captureTime": "2026-10-23 05:25:32.2398 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x0000000249bf20f0",
+        "rawCodes": [
+          1,
+          9827197168
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 37697
+      },
+      "topFrames": [
+        {
+          "imageOffset": 37104,
+          "imageIndex": 70,
+          "image": "_WebKit_SwiftUI",
+          "imageUUID": "6e129408-4ec8-3cf9-bab0-85ffa0a9fc69"
+        },
+        {
+          "imageOffset": 15044052,
+          "symbol": "PlatformViewRepresentableAdaptor.makeViewProvider(context:)",
+          "symbolLocation": 244,
+          "imageIndex": 71,
+          "image": "SwiftUI",
+          "imageUUID": "480ec830-2694-3017-bea4-230c8818dded"
+        },
+        {
+          "imageOffset": 15045276,
+          "symbol": "protocol witness for CoreViewRepresentable.makeViewProvider(context:) in conformance PlatformViewRepresentableAdaptor<A>",
+          "symbolLocation": 20,
+          "imageIndex": 71,
+          "image": "SwiftUI",
+          "imageUUID": "480ec830-2694-3017-bea4-230c8818dded"
+        },
+        {
+          "imageOffset": 3220564,
+          "symbol": "closure #1 in closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 192,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3220156,
+          "symbol": "closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 64,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3250484,
+          "symbol": "partial apply for closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 48,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 4662204,
+          "symbol": "RepresentableContextValues.asCurrent<A>(do:)",
+          "symbolLocation": 204,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3220012,
+          "symbol": "closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 424,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3215288,
+          "symbol": "closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 2944,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3053356,
+          "symbol": "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+          "symbolLocation": 28,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 49460,
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "symbolLocation": 512,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 51236,
+          "symbol": "AG::Graph::update_attribute(AG::data::ptr<AG::Node>, unsigned int)",
+          "symbolLocation": 352,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 82064,
+          "symbol": "AG::Graph::input_value_ref_slow(AG::data::ptr<AG::Node>, AG::AttributeID, unsigned int, unsigned int, AGSwiftMetadata const*, unsigned char&, long)",
+          "symbolLocation": 576,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 179672,
+          "symbol": "AGGraphGetValue",
+          "symbolLocation": 260,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 3235256,
+          "symbol": "InvalidatableLeafLayoutComputer.updateValue()",
+          "symbolLocation": 208,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3053356,
+          "symbol": "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+          "symbolLocation": 28,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 49460,
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "symbolLocation": 512,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 51236,
+          "symbol": "AG::Graph::update_attribute(AG::data::ptr<AG::Node>, unsigned int)",
+          "symbolLocation": 352,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 81736,
+          "symbol": "AG::Graph::input_value_ref_slow(AG::data::ptr<AG::Node>, AG::AttributeID, unsigned int, unsigned int, AGSwiftMetadata const*, unsigned char&, long)",
+          "symbolLocation": 248,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 179164,
+          "symbol": "AGGraphGetInputValue",
+          "symbolLocation": 276,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        }
+      ],
+      "plannerImages": [
+        {
+          "name": "PlannerFixtures",
+          "uuid": "3a1fef63-20f9-3fde-b806-685e3b467b21"
+        },
+        {
+          "name": "PlannerFixtures.debug.dylib",
+          "uuid": "d141602d-73f9-37da-b0bd-47aa9f968143"
+        }
+      ]
+    },
+    {
+      "originalReport": "PlannerFixtures-2026-10-23-053025.ips",
+      "originalSha256": "69f96ca1f4df5665c12b862de321b01979ec68c8ecf4ef16e0ac51c64668f0da",
+      "process": "PlannerFixtures",
+      "processIdentifier": 39183,
+      "captureTime": "2026-10-23 05:29:53.7459 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x0000000249bf20f0",
+        "rawCodes": [
+          1,
+          9827197168
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 39183
+      },
+      "topFrames": [
+        {
+          "imageOffset": 37104,
+          "imageIndex": 70,
+          "image": "_WebKit_SwiftUI",
+          "imageUUID": "6e129408-4ec8-3cf9-bab0-85ffa0a9fc69"
+        },
+        {
+          "imageOffset": 15044052,
+          "symbol": "PlatformViewRepresentableAdaptor.makeViewProvider(context:)",
+          "symbolLocation": 244,
+          "imageIndex": 71,
+          "image": "SwiftUI",
+          "imageUUID": "480ec830-2694-3017-bea4-230c8818dded"
+        },
+        {
+          "imageOffset": 15045276,
+          "symbol": "protocol witness for CoreViewRepresentable.makeViewProvider(context:) in conformance PlatformViewRepresentableAdaptor<A>",
+          "symbolLocation": 20,
+          "imageIndex": 71,
+          "image": "SwiftUI",
+          "imageUUID": "480ec830-2694-3017-bea4-230c8818dded"
+        },
+        {
+          "imageOffset": 3220564,
+          "symbol": "closure #1 in closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 192,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3220156,
+          "symbol": "closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 64,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3250484,
+          "symbol": "partial apply for closure #2 in closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 48,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 4662204,
+          "symbol": "RepresentableContextValues.asCurrent<A>(do:)",
+          "symbolLocation": 204,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3220012,
+          "symbol": "closure #1 in closure #6 in closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 424,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3215288,
+          "symbol": "closure #1 in PlatformViewChild.updateValue()",
+          "symbolLocation": 2944,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3053356,
+          "symbol": "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+          "symbolLocation": 28,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 49460,
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "symbolLocation": 512,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 51236,
+          "symbol": "AG::Graph::update_attribute(AG::data::ptr<AG::Node>, unsigned int)",
+          "symbolLocation": 352,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 82064,
+          "symbol": "AG::Graph::input_value_ref_slow(AG::data::ptr<AG::Node>, AG::AttributeID, unsigned int, unsigned int, AGSwiftMetadata const*, unsigned char&, long)",
+          "symbolLocation": 576,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 179672,
+          "symbol": "AGGraphGetValue",
+          "symbolLocation": 260,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 3235256,
+          "symbol": "InvalidatableLeafLayoutComputer.updateValue()",
+          "symbolLocation": 208,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 3053356,
+          "symbol": "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+          "symbolLocation": 28,
+          "imageIndex": 72,
+          "image": "SwiftUICore",
+          "imageUUID": "f15f494f-b1ff-392b-b682-b2f2dd366e23"
+        },
+        {
+          "imageOffset": 49460,
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "symbolLocation": 512,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 51236,
+          "symbol": "AG::Graph::update_attribute(AG::data::ptr<AG::Node>, unsigned int)",
+          "symbolLocation": 352,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 81736,
+          "symbol": "AG::Graph::input_value_ref_slow(AG::data::ptr<AG::Node>, AG::AttributeID, unsigned int, unsigned int, AGSwiftMetadata const*, unsigned char&, long)",
+          "symbolLocation": 248,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        },
+        {
+          "imageOffset": 179164,
+          "symbol": "AGGraphGetInputValue",
+          "symbolLocation": 276,
+          "imageIndex": 73,
+          "image": "AttributeGraph",
+          "imageUUID": "2b62913e-c889-35f4-98d9-fac049b8284a"
+        }
+      ],
+      "plannerImages": [
+        {
+          "name": "PlannerFixtures",
+          "uuid": "3a1fef63-20f9-3fde-b806-685e3b467b21"
+        },
+        {
+          "name": "PlannerFixtures.debug.dylib",
+          "uuid": "d141602d-73f9-37da-b0bd-47aa9f968143"
+        }
+      ]
+    }
+  ],
+  "meaning": "Actual PlannerFixtures SIGTRAP reports coincide with both first-cohort Calendar deletions and the single diagnostic rerun. Their top frames are renderer construction, not evidence of a writer-status accessibility failure. Original reports remain in the host DiagnosticReports directory; unrelated host identifiers are excluded here.",
+  "currentProductUUID": "D141602D-73F9-37DA-B0BD-47AA9F968143",
+  "uuidCheck": "Actual dwarfdump output for the current already hash-validated PlannerFixtures.debug.dylib matches all three own-app crash reports."
+}

@@ -1,0 +1,67 @@
+{
+  "base": "e87feedb48ac207ea9bdcf5974741ffae5c94064",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "calendar-return-phone-stable-reader-final",
+      "passedFunctions": 3,
+      "retainedOriginalCaptures": 9,
+      "inspectedOriginalCaptures": 7,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "calendar-itinerary-return-dark-tablet-stable-reader",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 4,
+      "inspectedOriginalCaptures": 4,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "calendar-return-dark-tablet-regressions-final",
+      "passedFunctions": 2,
+      "retainedOriginalCaptures": 5,
+      "inspectedOriginalCaptures": 3,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "calendar-return-phone-healthy-final",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 1,
+      "inspectedOriginalCaptures": 1,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "calendar-return-dark-tablet-healthy-final",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 1,
+      "inspectedOriginalCaptures": 1,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 8,
+  "totalRetainedOriginalCaptures": 20,
+  "totalInspectedOriginalCaptures": 16,
+  "macCompiler": {
+    "phase": "calendar-return-mac-compiler-final",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "changedProduction": [
+    "Planner/Scenes/SavedPlannerView.swift"
+  ],
+  "changedNativeTests": [
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+  ],
+  "limits": [
+    "These journeys qualify deleted Calendar Item/Itinerary origins, their surviving source containers and the represented existing healthy Calendar/Items returns. Other removal/replacement lifetimes remain separate.",
+    "Actual Mac UI/resizing, interactive reader closure, broad accessibility, physical devices and whole-app polish remain open.",
+    "Earlier driver/navigation failures and preliminary passes remain separate source epochs and are excluded from final totals."
+  ],
+  "meaning": "All final source inputs match. Each source/product boundary was validated before reuse. Original captures reconcile; only the explicitly listed subset receives visual-inspection credit."
+}

@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-calendar-itinerary-returned.png"
+  ],
+  "observations": [
+    "The native Month calendar is visible after Return, with no guide or deleted booking. The empty-agenda description is partly covered by the floating native tab bar, retained as a final-polish finding."
+  ],
+  "limits": "Only this returned-Calendar original is inspected. The complete function still fails on the stale Itinerary catalog selection; later source/List preservation remains unqualified."
+}

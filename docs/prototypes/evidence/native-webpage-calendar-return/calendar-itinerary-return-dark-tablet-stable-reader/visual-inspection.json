@@ -1,0 +1,15 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-calendar-itinerary-keeps-reading.png",
+    "deleted-calendar-itinerary-returned.png",
+    "deleted-calendar-itinerary-catalog.png",
+    "deleted-calendar-itinerary-membership-retained.png"
+  ],
+  "observations": [
+    "The dark native inspector keeps the original guide readable after City trip deletion; the independent writer reports success.",
+    "Return closes the reader/inspector and leaves Calendar without its deleted booking. In this portrait layout the native sidebar overlays/clips the Calendar\u2019s left content; retain that visual/layout finding for whole-app polish.",
+    "The empty Itineraries catalog is visible after Return with no stale deleted plan.",
+    "The original Weekend List still contains Hotel and its local Todo control; native progress/estimate warnings remain."
+  ],
+  "limits": "Four original captures inspected in the complete passing dark-iPad case. This is not a whole-layout or broad accessibility acceptance pass."
+}

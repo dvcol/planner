@@ -1,0 +1,18 @@
+{
+  "observations": [
+    {
+      "originalSha256": "5df9d6c0d642d22707b78c28e5a29f64206ce9caf225ea7e00bfd12f78bd3d4d",
+      "relevantNativeLines": [
+        "                          NavigationBar, 0x1062fb0c0, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'Museum guide' <AX element pid: 27579, elementOrHash.elementID: 5032843264.715>",
+        "                            Button, 0x1062f9f40, {{20.0, 66.0}, {36.0, 36.0}}, identifier: 'saved.browser.return', label: 'Return to itinerary' <AX element pid: 27579, elementOrHash.elementID: 5064929152.1068>",
+        "                                    WebView, 0x1070e0140, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 27579, elementOrHash.elementID: 5029543936.1076>",
+        "                                      WebView, 0x1070e0280, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 27579, elementOrHash.elementID: 5029546496.1077>",
+        "                                        WebView, 0x106031a40, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 27579, elementOrHash.elementID: 4390244352.1079>",
+        "                                                  Other, 0x106031b80, {{8.0, 141.0}, {386.0, 39.0}}, label: 'Museum guide fixture', value: 1, Focused <AX element pid: 28059, elementOrHash.elementID: 4362066176.6>",
+        "                                                    StaticText, 0x106031e00, {{8.0, 142.0}, {302.0, 37.0}}, label: 'Museum guide fixture', value: Museum guide fixture, Focused <AX element pid: 28059, elementOrHash.elementID: 4362064160.13>",
+        "                          Button, 0x107126d00, {{216.9, 724.3}, {86.7, 54.0}}, identifier: 'calendar', label: 'Calendar', Selected <AX element pid: 27579, elementOrHash.elementID: 4389795840.42>"
+      ]
+    }
+  ],
+  "meaning": "Inspect visible reader geometry, toolbar and Calendar controls after Return; no complete Itinerary-source workflow credit."
+}

@@ -1,0 +1,60 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-calendar-itinerary-membership-retained.png",
+      "originalName": "Deleted Calendar Itinerary preserves its Item and original List membership_0_4C835D10-6236-4CFD-B829-65D92F5D8C5A.png",
+      "exportedFile": "0C3B02B2-A6A1-410B-9D10-76E447910868.png",
+      "sha256": "54a2eb8a3854896cf43cc5e79c78c77143b8d08dcff00e77810d923e475686f5"
+    },
+    {
+      "file": "deleted-calendar-itinerary-catalog.png",
+      "originalName": "Deleted Calendar Itinerary clears its shared catalog selection_0_520A3102-E2B2-41FC-9888-E7240BFF6A92.png",
+      "exportedFile": "CE9ED1FE-463E-458D-8209-EEB8D3BAB54A.png",
+      "sha256": "dc640870c4f1fea2aba56f002604a43eacbe253b51f1c5ddd9dcc912ea82e2b7"
+    },
+    {
+      "file": "deleted-calendar-itinerary-returned.png",
+      "originalName": "Deleted Calendar Itinerary returns to Calendar without its booking_0_41CDF389-1B41-45CB-BFA6-5C26240747C8.png",
+      "exportedFile": "9350296D-4786-4B93-A2CF-3D64E72439EF.png",
+      "sha256": "b9396a8fc2e64bf0e4327d48e893bb02cfdd6b513f467d3b75e0be142b0ce108"
+    },
+    {
+      "file": "deleted-calendar-itinerary-keeps-reading.png",
+      "originalName": "Deleted Calendar Itinerary keeps its owned guide open_0_9336B19F-3702-472B-8D54-E74BABCCF3D9.png",
+      "exportedFile": "23F911D1-185B-457E-8F2D-942FA256B1B0.png",
+      "sha256": "4abfc9221137f1b8c6fd1dd117a017820686ab5e64bfd9d473378335033201a9"
+    },
+    {
+      "file": "deleted-calendar-list-retained.png",
+      "originalName": "Deleted Calendar source preserves its original empty List_0_870EE915-5A64-4360-B4C1-B2430ECE9B37.png",
+      "exportedFile": "F3BAD728-C4E5-4727-AADC-7C0484964C1F.png",
+      "sha256": "eebea6b78c9f3dbed82c482e70b03eb3eda8e5bcf39f44e625b647b1f98c3757"
+    },
+    {
+      "file": "deleted-calendar-returned.png",
+      "originalName": "Deleted Calendar browser source returns to the surviving Calendar_0_A44BA939-63F6-4ED5-8B49-FFB37D055B2C.png",
+      "exportedFile": "10A5A648-8AEF-4815-8451-857676D6C757.png",
+      "sha256": "3f206f8c6a40c48b1f8c5801644162a515113fb55523cc7b0c29d9eea1221da5"
+    },
+    {
+      "file": "deleted-calendar-keeps-reading.png",
+      "originalName": "Deleted Calendar source keeps its original guide open_0_11686A17-9164-4D75-8E40-9AA9687CBE34.png",
+      "exportedFile": "468895F4-0CC3-4372-9E3F-97EDB51F9E3A.png",
+      "sha256": "60eff3ce2312d15a78b6bca1261fbd3e3e00c53aef23895db48c0b88d7b9ca67"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_2D532F27-195D-4C3D-8289-F80FEDBFC936.png",
+      "exportedFile": "77E4BC25-4534-4BF7-AED6-EDEE336D2702.png",
+      "sha256": "45fc6ab57e2484834a535b96ecda92587cdc45b6516507189a3e46ed43656c21"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_F47AF6D8-8E1B-42EF-AA62-DA91733240D8.png",
+      "exportedFile": "3BA23D11-451D-43B7-80B7-A4F14D857ACA.png",
+      "sha256": "33951238e1a5ff0227e1b9a30babfe4b6476c77bd9093f3cd5f80c08adbe59c4"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

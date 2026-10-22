@@ -1,0 +1,101 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0C3B02B2-A6A1-410B-9D10-76E447910868.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar Itinerary preserves its Item and original List membership_0_4C835D10-6236-4CFD-B829-65D92F5D8C5A.png",
+        "timestamp": 1792702126.501
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "CE9ED1FE-463E-458D-8209-EEB8D3BAB54A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar Itinerary clears its shared catalog selection_0_520A3102-E2B2-41FC-9888-E7240BFF6A92.png",
+        "timestamp": 1792702099.44
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "9350296D-4786-4B93-A2CF-3D64E72439EF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar Itinerary returns to Calendar without its booking_0_41CDF389-1B41-45CB-BFA6-5C26240747C8.png",
+        "timestamp": 1792702093.274
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "23F911D1-185B-457E-8F2D-942FA256B1B0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar Itinerary keeps its owned guide open_0_9336B19F-3702-472B-8D54-E74BABCCF3D9.png",
+        "timestamp": 1792702086.445
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedCalendarItineraryKeepsItsGuideAndSharedSources()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testDeletedCalendarItineraryKeepsItsGuideAndSharedSources"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F3BAD728-C4E5-4727-AADC-7C0484964C1F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar source preserves its original empty List_0_870EE915-5A64-4360-B4C1-B2430ECE9B37.png",
+        "timestamp": 1792702199.889
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "10A5A648-8AEF-4815-8451-857676D6C757.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar browser source returns to the surviving Calendar_0_A44BA939-63F6-4ED5-8B49-FFB37D055B2C.png",
+        "timestamp": 1792702185.705
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "468895F4-0CC3-4372-9E3F-97EDB51F9E3A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Calendar source keeps its original guide open_0_11686A17-9164-4D75-8E40-9AA9687CBE34.png",
+        "timestamp": 1792702178.778
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedCalendarSourceKeepsItsGuideAndReturnsToCalendar()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testDeletedCalendarSourceKeepsItsGuideAndReturnsToCalendar"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "77E4BC25-4534-4BF7-AED6-EDEE336D2702.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted browser source returns to the surviving Items collection_0_2D532F27-195D-4C3D-8289-F80FEDBFC936.png",
+        "timestamp": 1792702228.633
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3BA23D11-451D-43B7-80B7-A4F14D857ACA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted source leaves the original guide open_0_F47AF6D8-8E1B-42EF-AA62-DA91733240D8.png",
+        "timestamp": 1792702223.367
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedSourceKeepsItsGuideOpenAndReturnsToItsSurvivingCollection()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testDeletedSourceKeepsItsGuideOpenAndReturnsToItsSurvivingCollection"
+  }
+]

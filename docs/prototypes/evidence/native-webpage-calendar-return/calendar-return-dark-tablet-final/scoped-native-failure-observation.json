@@ -1,0 +1,11 @@
+{
+  "observations": [
+    {
+      "originalSha256": "1cd6d2d3d553e0fe997860cf8d8157cb9add46e9dffdd3bd6f85e467ca029d17",
+      "relevantNativeLines": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"fixture.writer.status\" IN identifiers'"
+      ]
+    }
+  ],
+  "meaning": "The exported lookup traces lack an application hierarchy. Subsequent own-app crash reports establish renderer SIGTRAP; do not classify this as an accessibility-only status failure."
+}

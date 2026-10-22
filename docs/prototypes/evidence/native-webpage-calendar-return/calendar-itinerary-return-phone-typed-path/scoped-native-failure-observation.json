@@ -1,0 +1,14 @@
+{
+  "observations": [
+    {
+      "originalSha256": "d9ea5b4ab62163ac632565155e0cfbf95db13e0a81ba91ab877ef42d7c357e66",
+      "relevantNativeLines": [
+        "                                  NavigationBar, 0x108cbf840, {{0.0, 62.0}, {402.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting' <AX element pid: 32155, elementOrHash.elementID: 4683608064.359>",
+        "                                    Button, 0x108cbef80, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Itineraries' <AX element pid: 32155, elementOrHash.elementID: 5000555328.399>",
+        "                                          StaticText, 0x108cbc000, {{105.5, 327.7}, {191.0, 84.5}}, label: 'Itinerary unavailable' <AX element pid: 32155, elementOrHash.elementID: 5034156640.1175>",
+        "                          Button, 0x108afa440, {{283.6, 724.3}, {93.4, 54.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries', Selected <AX element pid: 32155, elementOrHash.elementID: 4638457856.43>"
+      ]
+    }
+  ],
+  "meaning": "Calendar return assertions pass before switching to Itineraries. Full invocation fails on empty catalog; original native hierarchy establishes the actual retained presentation."
+}

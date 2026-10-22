@@ -1,0 +1,14 @@
+{
+  "observations": [
+    {
+      "originalSha256": "2a8f58cb181ac90a4c9d231e7d280d02b3257c1aab6439a9b591f67e2d8a538a",
+      "relevantNativeLines": [
+        "                                  NavigationBar, 0x1094ca800, {{0.0, 62.0}, {402.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting' <AX element pid: 34648, elementOrHash.elementID: 4662211328.357>",
+        "                                    Button, 0x1094cb0c0, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Itineraries' <AX element pid: 34648, elementOrHash.elementID: 4992380480.397>",
+        "                                          StaticText, 0x1094c8500, {{109.3, 373.7}, {183.3, 89.5}}, label: 'Choose an Itinerary' <AX element pid: 34648, elementOrHash.elementID: 4661799712.1173>",
+        "                          Button, 0x108f03340, {{283.6, 724.3}, {93.4, 54.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries', Selected <AX element pid: 34648, elementOrHash.elementID: 4483596288.47>"
+      ]
+    }
+  ],
+  "meaning": "Column visibility alone does not reset the inactive compact Itinerary navigation stack. Full invocation remains failed."
+}

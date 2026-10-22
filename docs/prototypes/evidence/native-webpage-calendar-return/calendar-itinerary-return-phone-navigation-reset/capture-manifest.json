@@ -1,0 +1,30 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-calendar-itinerary-membership-retained.png",
+      "originalName": "Deleted Calendar Itinerary preserves its Item and original List membership_0_69E617C7-68CF-4065-860E-1D23C0FBEFFE.png",
+      "exportedFile": "C5535A31-38D6-46BD-85E2-A4BDCE2AD72A.png",
+      "sha256": "6caf3f36109cf397df72ddd173aa5cbea021653b5b8f1e4a96ef09aa503f5d24"
+    },
+    {
+      "file": "deleted-calendar-itinerary-catalog.png",
+      "originalName": "Deleted Calendar Itinerary clears its shared catalog selection_0_63C8BC1C-897B-43FA-9AC8-5CB083AD7725.png",
+      "exportedFile": "AD646598-2FAD-4704-A1C9-981547969DCF.png",
+      "sha256": "e5013142da805bd13101b2b3d1acb30b176807d2ee687d0de78fa86b43f76d81"
+    },
+    {
+      "file": "deleted-calendar-itinerary-returned.png",
+      "originalName": "Deleted Calendar Itinerary returns to Calendar without its booking_0_35D85CFD-6479-41A0-AEB0-005DC62FFEEF.png",
+      "exportedFile": "43BA8ECC-803F-4745-B4C1-18CD949D16CE.png",
+      "sha256": "0e576bf49eb2e440181df709755d44e45b72382db0bd32860266cc08e5d657ea"
+    },
+    {
+      "file": "deleted-calendar-itinerary-keeps-reading.png",
+      "originalName": "Deleted Calendar Itinerary keeps its owned guide open_0_FE008DF3-12B4-4704-8EFA-524C7735CCF7.png",
+      "exportedFile": "F33E4193-65BD-4584-B26C-4E06B5D2A46B.png",
+      "sha256": "45652dc9ff4a4ec04270b371aef8eacba07fcd4c5c7944b1cd281833e5bac5cd"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

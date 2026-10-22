@@ -1,0 +1,18 @@
+{
+  "observations": [
+    {
+      "originalSha256": "311998691f9ed3d04d0dadb4072a8c0766c2842996517a145c16cc47cf3ec046",
+      "relevantNativeLines": [
+        "                          NavigationBar, 0x10af070c0, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'Museum guide' <AX element pid: 30682, elementOrHash.elementID: 4969928704.713>",
+        "                            Button, 0x10af05f40, {{20.0, 66.0}, {36.0, 36.0}}, identifier: 'saved.browser.return', label: 'Return to itinerary' <AX element pid: 30682, elementOrHash.elementID: 5002079488.1066>",
+        "                                    WebView, 0x10b0c8140, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 30682, elementOrHash.elementID: 4966629376.1072>",
+        "                                      WebView, 0x10b0c8280, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 30682, elementOrHash.elementID: 4966631936.1073>",
+        "                                        WebView, 0x10ac45a40, {{0.0, 0.0}, {402.0, 720.0}} <AX element pid: 30682, elementOrHash.elementID: 4327329792.1075>",
+        "                                                  Other, 0x10ac45b80, {{8.0, 141.0}, {386.0, 39.0}}, label: 'Museum guide fixture', value: 1, Focused <AX element pid: 30932, elementOrHash.elementID: 4439641408.6>",
+        "                                                    StaticText, 0x10ac45e00, {{8.0, 142.0}, {302.0, 37.0}}, label: 'Museum guide fixture', value: Museum guide fixture, Focused <AX element pid: 30932, elementOrHash.elementID: 4439641056.13>",
+        "                          Button, 0x10b112d00, {{216.9, 724.3}, {86.7, 54.0}}, identifier: 'calendar', label: 'Calendar', Selected <AX element pid: 30682, elementOrHash.elementID: 4326897664.42>"
+      ]
+    }
+  ],
+  "meaning": "Persistent root registration alone also leaves the reader visible after Return. This failed invocation supplies no successful Return or later catalog credit."
+}

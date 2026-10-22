@@ -1,0 +1,18 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_EA598099-A41D-42E2-B14C-41E7E536E04C.png",
+      "exportedFile": "6B9B2865-0DD5-426F-868B-A5234D132D09.png",
+      "sha256": "f39c3e5fbc832a88b9da437c245c79cb17d742b76dbeac56908b540a5f43e292"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_CC534417-4E23-4DA5-9F13-3C6EC602F8E1.png",
+      "exportedFile": "67AAB613-5A8F-4FAB-BA9B-78CE3F1E1C9C.png",
+      "sha256": "d08ecad0f9a7f0fc532d2368df8f795f71fee03176ba179da3b2ed39b1aa5ff4"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

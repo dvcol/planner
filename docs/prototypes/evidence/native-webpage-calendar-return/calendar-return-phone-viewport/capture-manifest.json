@@ -1,0 +1,18 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-calendar-returned.png",
+      "originalName": "Deleted Calendar browser source returns to the surviving Calendar_0_A7CD47FF-9814-4DCB-A5FE-64D9DDB2CD65.png",
+      "exportedFile": "FC640530-D123-471B-9DB3-916BF2F62E8E.png",
+      "sha256": "6b2c6f14d6827c0a56f2c06cfed15806bd58d7ebb550af49890edcafd840383f"
+    },
+    {
+      "file": "deleted-calendar-keeps-reading.png",
+      "originalName": "Deleted Calendar source keeps its original guide open_0_A10BC0B8-278F-4334-9242-0EC9279402A8.png",
+      "exportedFile": "C4B85078-C24C-40C8-A914-072D936C1F76.png",
+      "sha256": "634d59c1798f9dfd590e4a835d58b40fdd38e344dff1741db560f53c96be4d6d"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

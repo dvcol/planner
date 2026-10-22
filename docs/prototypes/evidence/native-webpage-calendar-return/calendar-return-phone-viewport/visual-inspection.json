@@ -1,0 +1,11 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-calendar-keeps-reading.png",
+    "deleted-calendar-returned.png"
+  ],
+  "observations": [
+    "The guide stays readable with Calendar selected and the independent deletion reported in the fixture footer.",
+    "Calendar Return shows the native Month view without the removed booking. The empty agenda card is partly beneath the floating tab bar, a retained final-polish finding."
+  ],
+  "limits": "These two captures are inspected. The complete function remains failed at the later Items navigation check and has no complete passing credit."
+}

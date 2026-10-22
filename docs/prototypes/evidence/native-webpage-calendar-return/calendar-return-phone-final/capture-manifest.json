@@ -1,0 +1,48 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-calendar-itinerary-returned.png",
+      "originalName": "Deleted Calendar Itinerary returns to Calendar without its booking_0_3E7558E5-7FC7-480D-8246-A534ABF0D0EE.png",
+      "exportedFile": "480CBAB0-E239-44F0-BED2-7FBF48F7104C.png",
+      "sha256": "1311aacd5efb1f82c576b465f4332e781533fe59f9e57dc2bd2a203f2761a11e"
+    },
+    {
+      "file": "deleted-calendar-itinerary-keeps-reading.png",
+      "originalName": "Deleted Calendar Itinerary keeps its owned guide open_0_4FB533CE-031C-49AF-A83F-8D513F7ADD55.png",
+      "exportedFile": "7EA79C9A-B593-4349-802B-84135EB78EE9.png",
+      "sha256": "8bb28e08f36027b64e466740db2a9ffd942a3175ad351547fb215eb09809990a"
+    },
+    {
+      "file": "deleted-calendar-list-retained.png",
+      "originalName": "Deleted Calendar source preserves its original empty List_0_980C806D-3B1A-4CCD-8D8D-ED17D8935293.png",
+      "exportedFile": "B52CC1EA-8A3D-4AA9-8A0F-ADAEBEB8CA4E.png",
+      "sha256": "32f56c10167add35174e1e71a6eccd82f08e6ebf4ce49b7f5dcc9567cf0ff746"
+    },
+    {
+      "file": "deleted-calendar-returned.png",
+      "originalName": "Deleted Calendar browser source returns to the surviving Calendar_0_8DF59F41-4F99-4643-8026-FD90596D0E7F.png",
+      "exportedFile": "EC8E42A9-315F-46D5-B888-C8294BEBB53B.png",
+      "sha256": "394fdbe01631b11e7fb7820089091901258f3992c363a75157186d312b529f0a"
+    },
+    {
+      "file": "deleted-calendar-keeps-reading.png",
+      "originalName": "Deleted Calendar source keeps its original guide open_0_D94D32FA-CD66-41DF-8D45-4E6FDFEA1C91.png",
+      "exportedFile": "0292BC0E-91AC-4C4D-AFAF-6D2282B860BB.png",
+      "sha256": "9cfeae542af4e10e36493e6ac3feeb021b8f6af28cff18fd1c040d5ea3f9f284"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_6C6AFD06-9481-4077-9332-32DC95E8C938.png",
+      "exportedFile": "38FF21BB-C49A-48C5-A671-E0A1D3FA8A51.png",
+      "sha256": "d4aec530e5f3ad9f71b3b65ea305289fd726215f623586c327f9717ab5e4141c"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_5C21BB6E-1EC4-45A8-A4AD-4E27C0549024.png",
+      "exportedFile": "2BC1314D-7236-46AF-973F-75F835AEC8C7.png",
+      "sha256": "21f12e59e434789fa56a6d178783b7e7bfe556e9066a3752ff2152c4d88664fa"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

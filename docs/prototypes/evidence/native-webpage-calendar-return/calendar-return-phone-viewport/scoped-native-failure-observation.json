@@ -1,0 +1,19 @@
+{
+  "observations": [
+    {
+      "originalSha256": "22078459ff75f3e2f5e59dcc6996486959e95117d5f8999349473b9dc1c3b384",
+      "relevantNativeLines": [
+        "                                    Button, 0x109121b80, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Items' <AX element pid: 23791, elementOrHash.elementID: 4689338560.169>",
+        "                          Button, 0x10934abc0, {{89.0, 724.3}, {84.0, 54.0}}, identifier: 'square.stack', label: 'Items', Selected <AX element pid: 23791, elementOrHash.elementID: 4368852992.40>",
+        "                          Button, 0x10934b0c0, {{216.9, 724.3}, {86.7, 54.0}}, identifier: 'calendar', label: 'Calendar' <AX element pid: 23791, elementOrHash.elementID: 4368857088.42>"
+      ]
+    }
+  ],
+  "meaning": "The native trace establishes stale shared Item details after Calendar Return. It does not establish Item resurrection. Clear only the matching non-contextual Item selection after the origin has failed canonical validation.",
+  "confirmedObservations": [
+    "Items is the selected native tab and its Back button is labeled Items.",
+    "The active detail still shows Hotel and Original notes after the independent writer reports completed deletion.",
+    "Its Schedule section says the selected Schedule is missing or unresolved.",
+    "Calendar Return cleared calendarSelection but not the shared selectedItemId/selectedItem snapshot; loadSelectedItem deliberately deferred reads while the guide was open."
+  ]
+}

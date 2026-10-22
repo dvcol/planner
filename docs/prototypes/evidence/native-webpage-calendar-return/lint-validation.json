@@ -1,0 +1,49 @@
+{
+  "commands": [
+    {
+      "name": "swift-lint",
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+        "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "markdown-lint",
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerBrowserLint/.markdownlint-cli2.jsonc",
+        "docs/prototypes/native-webpage-calendar-return.md",
+        "docs/implementation-map.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": {
+    "Planner/Scenes/SavedPlannerView.swift": "d27c6912f9b6e334313700733106d64b6af86acd438b76c57b3ea596c059ab75",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift": "fd6cd816cb1f3f83fd7f9764e7fda4c5a9f0988a0ffaa32ba92303c5bb19f5c2",
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift": "b5cbbe68ad84d806d730ad50e5f98af914dd33abe8544cb3c28b28d25b2af900",
+    "docs/prototypes/native-webpage-calendar-return.md": "9ccf1199a28a3baf72c249bcc13513d1d426274b625388ca389d1b80b7d504b5",
+    "docs/implementation-map.md": "21f0e7c6a3820a9ef0bd613f4dd387ad975e147a3941e68099e9ada94115b5e5",
+    "docs/open-decisions.md": "d9bce6d74c0025eda64b69e7017cd1fa324d02df4e631784bd34bda2011c01d0"
+  },
+  "meaning": "Narrow strict lint and whitespace checks. Type checking is supplied by the matching retained native Simulator executions and Mac build, not this lint record."
+}

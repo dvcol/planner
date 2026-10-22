@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "healthy-calendar-guide.png"
+  ],
+  "observations": [
+    "The original Museum guide is readable in the dark native Calendar inspector with native Return/history/reload controls. The portrait sidebar overlays the left portion of Calendar, retained as an existing layout finding."
+  ],
+  "limits": "One original dark-iPad reader capture inspected. Later healthy Return, Items browsing and exact Schedule preservation are proven by the complete native assertions, not additional captures."
+}

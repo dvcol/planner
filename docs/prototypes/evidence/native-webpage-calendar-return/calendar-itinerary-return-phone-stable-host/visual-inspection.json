@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-calendar-itinerary-keeps-reading.png"
+  ],
+  "observations": [
+    "Guide text, native Return/history/reload controls and Calendar tab remain readable after City trip deletion. No alert interrupts this pre-Return reading state."
+  ],
+  "limits": "The complete native function fails because the reader stays visible after Return. No successful Return or subsequent catalog/source credit."
+}
