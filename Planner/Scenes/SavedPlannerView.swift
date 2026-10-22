@@ -434,10 +434,22 @@ struct SavedPlannerView: View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
           plannerSidebar
         } detail: {
-          calendarContent
+          #if os(macOS)
+            HSplitView {
+              calendarContent.frame(minWidth: 300)
+              if calendarInspectorPresented {
+                calendarDetailStack
+                  .frame(minWidth: 300, idealWidth: 360, maxWidth: 520)
+              }
+            }
+          #else
+            calendarContent
+          #endif
         }
         .navigationSplitViewStyle(.balanced)
-        .inspector(isPresented: $calendarInspectorPresented) { calendarInspector }
+        #if os(iOS)
+          .inspector(isPresented: $calendarInspectorPresented) { calendarInspector }
+        #endif
       } else {
         plannerColumns
       }

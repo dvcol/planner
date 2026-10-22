@@ -1,0 +1,16 @@
+{
+  "inspectedOriginalFiles": [
+    "month-reopened-wide.png",
+    "month-hidden-after-widening.png",
+    "month-details-narrow.png",
+    "month-selected-schedule.png",
+    "month-details-hidden.png",
+    "month-details-wide.png"
+  ],
+  "observations": [
+    "Month retains the same Item notes and Schedule caption through wide/narrow layouts, details closure and reopening.",
+    "Native mobile Month control and selected-day agenda stay inside their pane with readable dark surfaces and semantic labels.",
+    "Hidden details remain hidden after widening; reopening restores the exact saved context."
+  ],
+  "limits": "The final-source iPad execution does not display or qualify the Mac HSplitView or Month horizontal scrolling, actual Mac widths or physical accessibility."
+}

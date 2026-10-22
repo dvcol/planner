@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1081,
+  "sourceDifferences": [],
+  "retainedProductCount": 9,
+  "productDifferences": [],
+  "exitCode": 0,
+  "meaning": "Final Mac Calendar HSplitView and contained Month scroll viewport compile with matching app, Share and native test targets. Mac resize and scroll interaction remain unexecuted."
+}

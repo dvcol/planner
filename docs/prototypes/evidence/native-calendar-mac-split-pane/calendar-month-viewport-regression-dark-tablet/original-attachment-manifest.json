@@ -1,0 +1,80 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "A251B0AF-9DC9-4022-B8CF-9EE8B7D55E9A.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar layout observed Schedule_0_2C8277A9-263C-4E96-ACF2-4F89AB7AD5D3.txt",
+        "timestamp": 1792693054.892
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "498AF6D1-6EDE-482B-BE20-247440185E7E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar reopens the same Schedule after both layout changes_0_EE71FE47-65B3-486E-A371-8CC0815E9160.png",
+        "timestamp": 1792693054.891
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "A16C64D9-13E5-4BB1-B0BC-7F6699CAD3DC.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar keeps its inspector hidden after widening the layout_0_48A6594D-CA9E-4547-95E3-954628526B38.png",
+        "timestamp": 1792693048.871
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "F3FAAA33-8A22-43F0-ACC6-D0D76060CA6E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Selected Calendar details remain after narrowing the layout_0_AC87AE8F-6FF8-4F6C-A213-F3AD08B51245.png",
+        "timestamp": 1792693038.851
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "41274FCD-A8A9-4021-AFA8-CDCD24E283E1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar inspector retains the selected Schedule and Item_0_9604A821-ACC3-4DEA-B5D6-AFCEBB6F4C61.png",
+        "timestamp": 1792693035.479
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "71B9CE37-FACA-4689-8E6D-BDED0869A47B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar uses the main width with its inspector hidden_0_02B56E38-4623-46F8-B65C-F95F7FAB5163.png",
+        "timestamp": 1792693027.874
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "76B4D8AD-EFB9-4791-8C78-44F7DBA88089.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar inspector layout observations_0_B7E65223-E3FF-47DB-B5F4-00BD2E5E95FC.txt",
+        "timestamp": 1792693026.245
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8D158732-AA9F-4F39-ABC9-84711CE800F4.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Calendar inspector presentation before closing_0_C4F44220-D309-4F13-BFAF-27A7ED1DFCDA.png",
+        "timestamp": 1792693023.572
+      }
+    ],
+    "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "58b4ed412e8eec1f3aa64aaa9762b2858dc4879d",
+  "overlays": [
+    "Planner/Scenes/SavedPlannerView.swift"
+  ]
+}

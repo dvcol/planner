@@ -1,0 +1,114 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "month-reopened-wide.png",
+      "originalName": "Calendar reopens the same Schedule after both layout changes_0_4006273D-BB3A-4306-BB9E-3D5BD09D35E4.png",
+      "exportedFile": "FC43BCAD-C4D0-44EB-8EB4-93165388AA53.png",
+      "sha256": "a3209ccd49aaa58bbae22f9551828cb488b7a2c41d46e553f5d9c620bf9b9ae6"
+    },
+    {
+      "file": "month-hidden-after-widening.png",
+      "originalName": "Calendar keeps its inspector hidden after widening the layout_0_6B45C3BE-0B44-43CD-B526-65FB3B744DF1.png",
+      "exportedFile": "399A9D70-2D82-4025-9BCF-CC7C7526302E.png",
+      "sha256": "45d21e367e5be8f1c74b261aacd5e2bb60e05f843be9aa33211dd0725a44913f"
+    },
+    {
+      "file": "month-details-narrow.png",
+      "originalName": "Selected Calendar details remain after narrowing the layout_0_F2C4BFAE-6FFF-4E2A-9D13-FBD833E63E28.png",
+      "exportedFile": "A49BC11F-A80C-4655-A1B3-5F5D34A5E02C.png",
+      "sha256": "7d7dc45147ed5318359916a55a444e10caf49b12ba78c81cf921400bdcc2cff4"
+    },
+    {
+      "file": "month-selected-schedule.png",
+      "originalName": "Calendar inspector retains the selected Schedule and Item_0_CBB0F7A0-57BD-444C-B663-1A44DAFC1392.png",
+      "exportedFile": "6B083AC7-5B8A-4C10-A69C-E03F23B6408E.png",
+      "sha256": "05d8607b73194accd710ed5fc709175a5bcf1026c30b62c8cf7d3409263a1da8"
+    },
+    {
+      "file": "month-details-hidden.png",
+      "originalName": "Calendar uses the main width with its inspector hidden_0_08B93906-8352-4880-B82B-E3F2E65C1912.png",
+      "exportedFile": "3829B345-B34A-4323-A20F-111EE11EB841.png",
+      "sha256": "d74149b6d8db55e6785d024556b87a9ff4bdd3665c0617d11d9f724f53ede7db"
+    },
+    {
+      "file": "month-details-wide.png",
+      "originalName": "Native Calendar inspector presentation before closing_0_9491A195-9180-4503-85D1-8BFD06F85C13.png",
+      "exportedFile": "E4F23694-689B-410B-9325-46F0AB539EE6.png",
+      "sha256": "05d8607b73194accd710ed5fc709175a5bcf1026c30b62c8cf7d3409263a1da8"
+    },
+    {
+      "file": "day-reopened-wide.png",
+      "originalName": "Calendar reopens the same Schedule after both layout changes_0_941E1421-DC39-4A15-98E0-3F1214DE101F.png",
+      "exportedFile": "8CCE5425-2572-4300-BF79-4A1F89002D4E.png",
+      "sha256": "ac584bfaa3906a3d7ba5029e4af5448e5fda42df9dfe83445e4c8d7c32927a2e"
+    },
+    {
+      "file": "day-hidden-after-widening.png",
+      "originalName": "Calendar keeps its inspector hidden after widening the layout_0_C58EB726-2354-42B2-8136-5B6BB778BAA2.png",
+      "exportedFile": "418FDD75-228B-458F-989B-610482DC02F8.png",
+      "sha256": "81477eb56b642d343ec3df2972c122194f5a38c1944baf1c1ad09f3bc5de37ea"
+    },
+    {
+      "file": "day-details-narrow.png",
+      "originalName": "Selected Calendar details remain after narrowing the layout_0_A7329FB0-6E95-447F-B0D9-1365F9314D21.png",
+      "exportedFile": "909A648F-E3E4-4649-B615-F71AB1F5426F.png",
+      "sha256": "99f5ac330fbfa17c1b22103ce0ddd6b60aba59ea1c2bb4f1cb07a4ca570110ed"
+    },
+    {
+      "file": "day-selected-schedule.png",
+      "originalName": "Calendar inspector retains the selected Schedule and Item_0_E2A81D51-43DC-4DCB-974A-398EB4CD066D.png",
+      "exportedFile": "1B97E791-ABDB-4045-8DA7-8EEB8B73CCF3.png",
+      "sha256": "ac584bfaa3906a3d7ba5029e4af5448e5fda42df9dfe83445e4c8d7c32927a2e"
+    },
+    {
+      "file": "day-details-hidden.png",
+      "originalName": "Calendar uses the main width with its inspector hidden_0_D8E15777-90D8-497D-B69F-ECEF4B86F198.png",
+      "exportedFile": "0DA19E6A-AD9F-4354-B176-FDC536C8E8BC.png",
+      "sha256": "81477eb56b642d343ec3df2972c122194f5a38c1944baf1c1ad09f3bc5de37ea"
+    },
+    {
+      "file": "day-details-wide.png",
+      "originalName": "Native Calendar inspector presentation before closing_0_F9985376-1092-4BEB-B75C-4DDAA85DAD81.png",
+      "exportedFile": "A3F21009-7FD7-42F4-A3E0-216D2ECD9BC1.png",
+      "sha256": "ac584bfaa3906a3d7ba5029e4af5448e5fda42df9dfe83445e4c8d7c32927a2e"
+    },
+    {
+      "file": "week-reopened-wide.png",
+      "originalName": "Calendar reopens the same Schedule after both layout changes_0_D0A5C774-036E-4388-97F1-266F12488869.png",
+      "exportedFile": "31D4097C-3E54-4B78-B52A-6A3544150DA3.png",
+      "sha256": "97adeb40f18c99b68dc6f2e55a727686ed2aff21feb6bf0086d6a69e19639472"
+    },
+    {
+      "file": "week-hidden-after-widening.png",
+      "originalName": "Calendar keeps its inspector hidden after widening the layout_0_28496B04-55FB-49B5-A2E6-EE0F04542435.png",
+      "exportedFile": "99721985-087A-40A1-B374-021A34EE8FC7.png",
+      "sha256": "d08da66414a25862f4fe8c8d69282a157ac082365757ee061187482f076193fa"
+    },
+    {
+      "file": "week-details-narrow.png",
+      "originalName": "Selected Calendar details remain after narrowing the layout_0_FF8032F8-9C38-4218-8E5C-19BD40E6B3E6.png",
+      "exportedFile": "494E7970-BA3E-4AE0-B3FD-E2C08D4981E6.png",
+      "sha256": "4051a87846d06694837f20b9d457f80798bba0d7feef6f5a453fb0d89ec21760"
+    },
+    {
+      "file": "week-selected-schedule.png",
+      "originalName": "Calendar inspector retains the selected Schedule and Item_0_42D0D24D-718D-47DD-892F-A923AB01B997.png",
+      "exportedFile": "6518FE64-2B26-4642-B442-C5BD62600E62.png",
+      "sha256": "3a077f24f0b069bffccc3a8e54342e4a2c583995de1ec263b4eac32436cc8acf"
+    },
+    {
+      "file": "week-details-hidden.png",
+      "originalName": "Calendar uses the main width with its inspector hidden_0_1A363495-A2A7-4E3F-B0DF-F3640C43E432.png",
+      "exportedFile": "3F713DEA-3A6F-4D6F-8160-DD438234410D.png",
+      "sha256": "d08da66414a25862f4fe8c8d69282a157ac082365757ee061187482f076193fa"
+    },
+    {
+      "file": "week-details-wide.png",
+      "originalName": "Native Calendar inspector presentation before closing_0_E93FA5B7-C60D-44B6-A169-AF90A58AC1F6.png",
+      "exportedFile": "F44A9773-8A57-4435-A644-EC371769C462.png",
+      "sha256": "3a077f24f0b069bffccc3a8e54342e4a2c583995de1ec263b4eac32436cc8acf"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

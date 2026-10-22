@@ -1,0 +1,42 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "month-reopened-wide.png",
+      "originalName": "Calendar reopens the same Schedule after both layout changes_0_EE71FE47-65B3-486E-A371-8CC0815E9160.png",
+      "exportedFile": "498AF6D1-6EDE-482B-BE20-247440185E7E.png",
+      "sha256": "4ea8566cc6375f5e517d57fdb8ad99aa1e0bca6736f63b515ce28fa135578e8d"
+    },
+    {
+      "file": "month-hidden-after-widening.png",
+      "originalName": "Calendar keeps its inspector hidden after widening the layout_0_48A6594D-CA9E-4547-95E3-954628526B38.png",
+      "exportedFile": "A16C64D9-13E5-4BB1-B0BC-7F6699CAD3DC.png",
+      "sha256": "ff2e95682c5cb763fb74a7e66580e0aedc7fcb4ec19aefb2a7a4af10921b95d6"
+    },
+    {
+      "file": "month-details-narrow.png",
+      "originalName": "Selected Calendar details remain after narrowing the layout_0_AC87AE8F-6FF8-4F6C-A213-F3AD08B51245.png",
+      "exportedFile": "F3FAAA33-8A22-43F0-ACC6-D0D76060CA6E.png",
+      "sha256": "70a59dc86b8c8f598d89dd2b31a99b1c12d1de9d91f67c3698144f9376be6d1a"
+    },
+    {
+      "file": "month-selected-schedule.png",
+      "originalName": "Calendar inspector retains the selected Schedule and Item_0_9604A821-ACC3-4DEA-B5D6-AFCEBB6F4C61.png",
+      "exportedFile": "41274FCD-A8A9-4021-AFA8-CDCD24E283E1.png",
+      "sha256": "4ea8566cc6375f5e517d57fdb8ad99aa1e0bca6736f63b515ce28fa135578e8d"
+    },
+    {
+      "file": "month-details-hidden.png",
+      "originalName": "Calendar uses the main width with its inspector hidden_0_02B56E38-4623-46F8-B65C-F95F7FAB5163.png",
+      "exportedFile": "71B9CE37-FACA-4689-8E6D-BDED0869A47B.png",
+      "sha256": "ff2e95682c5cb763fb74a7e66580e0aedc7fcb4ec19aefb2a7a4af10921b95d6"
+    },
+    {
+      "file": "month-details-wide.png",
+      "originalName": "Native Calendar inspector presentation before closing_0_C4F44220-D309-4F13-BFAF-27A7ED1DFCDA.png",
+      "exportedFile": "8D158732-AA9F-4F39-ABC9-84711CE800F4.png",
+      "sha256": "4ea8566cc6375f5e517d57fdb8ad99aa1e0bca6736f63b515ce28fa135578e8d"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

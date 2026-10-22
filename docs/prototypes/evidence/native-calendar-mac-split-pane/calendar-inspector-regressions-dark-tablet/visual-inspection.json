@@ -1,0 +1,30 @@
+{
+  "inspectedOriginalFiles": [
+    "month-reopened-wide.png",
+    "month-hidden-after-widening.png",
+    "month-details-narrow.png",
+    "month-selected-schedule.png",
+    "month-details-hidden.png",
+    "month-details-wide.png",
+    "day-reopened-wide.png",
+    "day-hidden-after-widening.png",
+    "day-details-narrow.png",
+    "day-selected-schedule.png",
+    "day-details-hidden.png",
+    "day-details-wide.png",
+    "week-reopened-wide.png",
+    "week-hidden-after-widening.png",
+    "week-details-narrow.png",
+    "week-selected-schedule.png",
+    "week-details-hidden.png",
+    "week-details-wide.png"
+  ],
+  "observations": [
+    "Month, Day and Week each preserve readable selected Item notes and saved Schedule caption in wide and narrow native inspector presentations.",
+    "Hidden details give width back to the calendar; native date/zone/Today/details controls stay inside the visible pane.",
+    "After widening, hidden details remain hidden; reopening restores the selected Item and Schedule.",
+    "Dark native surfaces, semantic text, blue selections and links remain readable in the retained states.",
+    "Week keeps its horizontally scrollable date range; some selected-event cards are outside the viewport while the retained details remain visible. This is not proof of every calendar scroll/keyboard/accessibility state."
+  ],
+  "limits": "iPad inspector only. These images do not show or qualify the Mac HSplitView, Mac Month scroll viewport, physical devices, contrast modes or final whole-app polish."
+}

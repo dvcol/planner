@@ -50,3 +50,29 @@ The user selects A, a hideable native split pane beside Calendar on Mac. The sam
 - Calendar reclaims width when details close. Toolbar controls remain reachable in narrow and wide layouts. Existing List headers and draft navigation remain intact.
 - Preserve iPad inspector behavior through an affected native regression and compile the affected platform targets. Record every executed case, failure and skip, inspect deliberate owned-window captures, and run affected strict Swift/Markdown lint and whitespace checks.
 - Keep signed sync/account, physical devices, system Shortcuts and whole-app polish as separate open gates. A passing local resize journey cannot close them.
+
+## Accepted split-pane implementation, 23 October 2026
+
+Q127 A now replaces the Mac inspector with native `HSplitView` beside Calendar. The existing selected Schedule/source binding and details stack remain authoritative. Hiding details removes that pane; reopening uses the retained exact selection. The iPad inspector modifier remains on its existing platform branch.
+
+The [first matching Mac compiler packet](evidence/native-calendar-mac-split-pane/calendar-split-pane-mac-compiler/) builds the app, Share and existing native tests from 1,081 reconciled inputs. The [bounded Day runtime](evidence/native-calendar-mac-split-pane/calendar-split-pane-day-mac/) fails before the requested function starts because automation initialization times out. It has zero passing resize credit; the result bundle's failed runner entry is not an executed Calendar journey. No repeated unchanged broker/startup retry, signing setup or native Computer Use is requested.
+
+Actual Mac Day/Week/Month resizing, detail-pane geometry, reclaiming width and interactions remain open. The original inspector crash and unsuccessful experiments retain their historical outcomes. Compilation alone does not prove the selected replacement fixes the crash.
+
+## Local split-pane checkpoint
+
+The final Mac implementation also contains Month's existing seven-column minimum inside a native horizontal `ScrollView`. Its viewport follows the available pane width while retaining a 560-point readable grid. The agenda stays in the Calendar pane. This avoids making the grid's minimum a window-width requirement, but actual Mac scroll/resize behavior is still unexecuted. No custom drag handling or new navigation state is added.
+
+The [reconciliation](evidence/native-calendar-mac-split-pane/final-reconciliation.json) distinguishes two exact source epochs rather than crediting earlier results to changed inputs:
+
+| Invocation | Actual result | Evidence |
+| --- | --- | --- |
+| Initial Mac compiler | App, Share and native test targets compile; nine products reconciled. | [Compiler packet](evidence/native-calendar-mac-split-pane/calendar-split-pane-mac-compiler/) |
+| Bounded Mac Day journey | Zero requested functions start. Automation initialization times out, exit 65. No resize pass. | [Failed runtime](evidence/native-calendar-mac-split-pane/calendar-split-pane-day-mac/) |
+| Dark iPad Month, Day and Week | Three functions pass, eighteen original captures inspected. Exact saved Schedule, Item and caption survive hide/reopen and actual orientation changes. | [Initial iPad epoch](evidence/native-calendar-mac-split-pane/calendar-inspector-regressions-dark-tablet/) |
+| Final Mac compiler with Month viewport | App, Share and native tests compile; nine products reconciled. | [Final compiler](evidence/native-calendar-mac-split-pane/calendar-split-pane-month-viewport-mac-compiler/) |
+| Final-source dark iPad Month | One function passes, six original captures inspected. Its 1,081 inputs exactly match final Mac compilation. Original appearance is restored. | [Final Month regression](evidence/native-calendar-mac-split-pane/calendar-month-viewport-regression-dark-tablet/) |
+
+Only `SavedCalendarView.swift` changes between the initial iPad epoch and final sources, adding the Mac-only viewport. The final Month execution verifies the affected mobile regression on those exact final sources. The preceding three passing iPad functions retain their own epoch. Core, Share, fixture and test interfaces are unchanged. Affected strict Swift/Markdown lint and whitespace checks pass.
+
+Q127 A is implemented and compiled, with affected iPad regression evidence. Its Mac acceptance gate remains open. Actual 1,200-to-860-to-1,200-point Day/Week/Month resizing, detail divider movement, hidden-pane width recovery and keyboard/accessibility require actual Mac execution. Signing remains deferred and is not inferred as the startup failure's cause.

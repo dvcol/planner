@@ -1,0 +1,51 @@
+{
+  "base": "58b4ed412e8eec1f3aa64aaa9762b2858dc4879d",
+  "initialSourceInputs": 1081,
+  "finalSourceInputs": 1081,
+  "differenceBetweenEpochs": [
+    "Planner/Scenes/SavedCalendarView.swift"
+  ],
+  "meaningOfDifference": "Mac-only Month viewport change. The final iPad Month execution matches the final Mac compiler exactly; preceding iPad Day/Week/Month results remain a distinct epoch.",
+  "nativeExecutions": [
+    {
+      "phase": "calendar-inspector-regressions-dark-tablet",
+      "passedFunctions": 3,
+      "inspectedOriginalCaptures": 18,
+      "sourceInputs": 1081,
+      "productsReconciledBeforeReuse": 4
+    },
+    {
+      "phase": "calendar-month-viewport-regression-dark-tablet",
+      "passedFunctions": 1,
+      "inspectedOriginalCaptures": 6,
+      "sourceInputs": 1081,
+      "productsReconciledBeforeReuse": 4
+    }
+  ],
+  "totalPassedIpadExecutions": 4,
+  "totalInspectedOriginalCaptures": 24,
+  "macCompilers": [
+    {
+      "phase": "calendar-split-pane-mac-compiler",
+      "retainedProductCount": 9,
+      "runtimeCredit": false
+    },
+    {
+      "phase": "calendar-split-pane-month-viewport-mac-compiler",
+      "retainedProductCount": 9,
+      "runtimeCredit": false
+    }
+  ],
+  "macRuntime": {
+    "phase": "calendar-split-pane-day-mac",
+    "requestedFunctionsStarted": 0,
+    "exitCode": 65,
+    "reason": "Timed out while enabling automation mode before the requested Day function started.",
+    "finalViewportExecutionCredit": false
+  },
+  "limits": [
+    "No passing actual Mac HSplitView/Month scrolling/resize interaction. The original inspector crash is not claimed fixed by compiler or iPad results.",
+    "Actual Mac Day/Week/Month widths, keyboard/accessibility, physical devices, signing and final whole-app acceptance remain open.",
+    "Core, Share and test interfaces remain unchanged; Q147/Q148 import implementations wait for concrete review."
+  ]
+}

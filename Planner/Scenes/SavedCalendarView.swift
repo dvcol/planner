@@ -258,12 +258,18 @@ struct SavedCalendarView: View {
             }
           }
         #else
-          SavedCalendarMonthGrid(
-            selectedDate: $selectedDate, visibleDate: $visibleDate, selection: $selection,
-            calendar: displayCalendar,
-            entriesForDay: { date in
-              (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
-            })
+          ScrollView(.horizontal) {
+            SavedCalendarMonthGrid(
+              selectedDate: $selectedDate, visibleDate: $visibleDate, selection: $selection,
+              calendar: displayCalendar,
+              entriesForDay: { date in
+                (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
+              }
+            )
+            .containerRelativeFrame(.horizontal, alignment: .leading) { availableWidth, _ in
+              max(560, availableWidth)
+            }
+          }
           agenda
         #endif
       }
