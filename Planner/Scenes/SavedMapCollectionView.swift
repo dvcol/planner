@@ -50,6 +50,20 @@ struct SavedMapCollectionView: View {
   private struct RowChoice: Identifiable {
     let row: PlannerMapRowRead
 
+    var context: String? {
+      switch row.placement {
+      case .itineraryItem(_, let routePosition): return "Stop \(routePosition)"
+      case .itineraryListItem(_, let routePosition, let list, _, let childPosition):
+        return "\(list.title) · Stop \(routePosition) · Item \(childPosition)"
+      default: return nil
+      }
+    }
+
+    var accessibilityTitle: String {
+      guard let context else { return row.title }
+      return "\(row.title) · \(context)"
+    }
+
     var id: String {
       switch row.identity {
       case .source(let source): return "source.\(source.id.uuidString)"
@@ -142,13 +156,16 @@ struct SavedMapCollectionView: View {
             } label: {
               VStack(alignment: .leading, spacing: 4) {
                 Text(choice.row.title).foregroundStyle(.primary)
+                if let context = choice.context {
+                  Text(context).font(.subheadline).foregroundStyle(.secondary)
+                }
                 Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
               }
               .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
               .contentShape(.rect)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(choice.row.title)
+            .accessibilityLabel(choice.accessibilityTitle)
             .accessibilityValue(locationDescription(choice.row))
             .accessibilityIdentifier("saved.map.location.\(choice.id)")
           }

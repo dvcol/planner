@@ -1,0 +1,41 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8CA6B60F-2CE0-496D-9F83-8052AD2C9B58.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native itinerary appearance details_0_C5215B51-23C6-4361-A9DB-A6DE6314B551.png",
+        "timestamp": 1792661386.075
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "95115FB6-1FE5-48AA-8985-9637FAB7DA4B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native ordered itinerary with a List group_0_73F4DEEC-FD7F-43C0-83A7-AD7038BE53D5.png",
+        "timestamp": 1792661384.198
+      }
+    ],
+    "testIdentifier": "SavedItineraryEntriesJourneyTests/testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryEntriesJourneyTests/testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "026EB403-8756-4DBE-9601-F678F36C8365.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_5F2901B3-43C8-4E93-883C-417DDCA836A0.png",
+        "timestamp": 1792661469.439
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion"
+  }
+]

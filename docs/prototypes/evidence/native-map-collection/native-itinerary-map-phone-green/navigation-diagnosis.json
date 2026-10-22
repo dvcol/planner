@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "The actual itinerary Map and counted marker expose two exact Stop 1/Stop 2 choices. After Stop 1 selection the native phone hierarchy still shows Weekend route and the collection Map, without advancing to the detail column. Add a per-window preferred compact column binding to the native itinerary split view. This is a production navigation defect; no passing credit."
+}

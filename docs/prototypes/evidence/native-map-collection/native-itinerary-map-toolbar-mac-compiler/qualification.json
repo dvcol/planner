@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "meaning": "Mac app/Share/navigation-test compilation after native toolbar-priority correction only. No Mac UI runtime acceptance."
+}

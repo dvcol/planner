@@ -1,0 +1,12 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "passedFunctions": 4,
+  "failedFunctions": 2,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "cohortResult": "Failed",
+  "meaning": "Itinerary reader, coincident sources, Items pin/Locations and List-local Map cases pass. Ordinary itinerary and repeated-stop setup fail at Add Entry, which is absent from the narrow primary toolbar. Both actual hierarchies show View, Filters, disabled Edit and native More. Correct View priority using the native secondary placement. No passing cohort or itinerary-Map credit."
+}

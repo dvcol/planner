@@ -1,0 +1,11 @@
+--- before/Planner/Scenes/SavedItineraryViews.swift
++++ after/Planner/Scenes/SavedItineraryViews.swift
+@@ -323,7 +323,7 @@
+         }
+         .toolbar {
+           if let representation {
+-            ToolbarItem(placement: .primaryAction) {
++            ToolbarItem(placement: .secondaryAction) {
+               SavedCollectionRepresentationMenu(
+                 representation: representation,
+                 accessibilityIdentifier: "saved.itinerary.representation")

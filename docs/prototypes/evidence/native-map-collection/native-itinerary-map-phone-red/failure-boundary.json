@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "Actual shared Item and two itinerary stops are created. Their distinct identities, first-only local completion and full 1-of-2 progress pass before the missing itinerary View control fails. No passing credit."
+}

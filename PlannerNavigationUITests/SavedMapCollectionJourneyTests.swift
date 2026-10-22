@@ -6,6 +6,92 @@ import XCTest
 
 @MainActor
 final class SavedMapCollectionJourneyTests: XCTestCase {
+  func testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=35,139"
+    createItem("Map museum", link: originalURL, in: application)
+    application.openPlannerSection("Itineraries")
+    let newItinerary = application.plannerElement("saved.itinerary.new")
+    XCTAssertTrue(newItinerary.waitForExistence(timeout: 10))
+    newItinerary.activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    let addEntry = application.plannerElement("saved.itinerary.entry.new")
+    for _ in 0..<2 {
+      XCTAssertTrue(addEntry.waitForExistence(timeout: 10))
+      addEntry.activateForPlannerJourney()
+      let choice = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.",
+          "Map museum")
+      ).firstMatch
+      XCTAssertTrue(choice.waitForExistence(timeout: 5))
+      choice.activateForPlannerJourney()
+      application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    }
+    let rows = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+    XCTAssertTrue(rows.element(boundBy: 1).waitForExistence(timeout: 10))
+    XCTAssertEqual(rows.count, 2)
+    let firstIdentifier = rows.element(boundBy: 0).identifier
+    let secondIdentifier = rows.element(boundBy: 1).identifier
+    XCTAssertNotEqual(firstIdentifier, secondIdentifier)
+    let firstCheck = application.plannerElement(
+      firstIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+    let secondCheck = application.plannerElement(
+      secondIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+    firstCheck.activateForPlannerJourney()
+    XCTAssertTrue(firstCheck.waitForPlannerValue("Completed"))
+    XCTAssertEqual(secondCheck.value as? String, "To do")
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    application.openSavedPlannerItineraryViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let pin = application.buttons["saved.map.pin.35.0,139.0"]
+    XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    XCTAssertEqual(pin.label, "2 items")
+    pin.activateForPlannerJourney()
+    let firstStop = application.buttons["Map museum · Stop 1"].firstMatch
+    let secondStop = application.buttons["Map museum · Stop 2"].firstMatch
+    XCTAssertTrue(firstStop.waitForExistence(timeout: 5))
+    XCTAssertTrue(secondStop.exists)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Counted itinerary pin distinguishes independent repeated stops"
+    capture.lifetime = .keepAlways
+    add(capture)
+    firstStop.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.waitForExistence(timeout: 10))
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
+    ).firstMatch
+    revealDetailLink(link, in: application)
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    returnToCatalog(application, title: "Weekend route")
+    XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    pin.activateForPlannerJourney()
+    XCTAssertTrue(secondStop.waitForExistence(timeout: 5))
+    secondStop.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["To do"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.waitForNonExistence(timeout: 5))
+    XCTAssertFalse(application.plannerElement("saved.item.completion").exists)
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    revealDetailLink(retainedLink, in: application)
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, originalURL)
+  }
+
   func testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -195,10 +281,10 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
   }
 
-  private func returnToCatalog(_ application: XCUIApplication) {
+  private func returnToCatalog(_ application: XCUIApplication, title: String = "Items") {
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .phone {
-        let back = application.navigationBars.buttons["Items"].firstMatch
+        let back = application.navigationBars.buttons[title].firstMatch
         XCTAssertTrue(back.waitForExistence(timeout: 5))
         back.activateForPlannerJourney()
       }

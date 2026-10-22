@@ -1,0 +1,26 @@
+{
+  "sourceInputCount": 1074,
+  "comparisons": [
+    {
+      "beforePacket": "native-itinerary-map-phone-navigation",
+      "changedSources": [
+        "Planner/Scenes/SavedItineraryViews.swift"
+      ],
+      "meaning": "Only the recorded one-line View toolbar placement changes; every other source input is unchanged."
+    },
+    {
+      "beforePacket": "native-itinerary-map-phone-regressions",
+      "changedSources": [
+        "Planner/Scenes/SavedItineraryViews.swift"
+      ],
+      "meaning": "Only the recorded one-line View toolbar placement changes; every other source input is unchanged."
+    },
+    {
+      "beforePacket": "native-itinerary-map-dark-tablet",
+      "changedSources": [
+        "Planner/Scenes/SavedItineraryViews.swift"
+      ],
+      "meaning": "Only the recorded one-line View toolbar placement changes; every other source input is unchanged."
+    }
+  ]
+}

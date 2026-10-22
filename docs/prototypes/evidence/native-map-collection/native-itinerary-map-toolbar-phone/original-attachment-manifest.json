@@ -1,0 +1,41 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "091E5133-6590-4886-9A6D-D85E927FA079.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native itinerary appearance details_0_4420AAF4-7C11-48CD-874E-E0F06B06B2C9.png",
+        "timestamp": 1792661627.581
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "2C6A7BAC-1803-4659-89EC-F9594C6EF024.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native ordered itinerary with a List group_0_E817DCD5-2135-4FF5-B9A9-34FBE7B08130.png",
+        "timestamp": 1792661625.573
+      }
+    ],
+    "testIdentifier": "SavedItineraryEntriesJourneyTests/testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryEntriesJourneyTests/testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "41015A70-C245-42B5-8E97-9B4498CD9D45.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_2A115537-4965-4792-8416-F7BDED48CA65.png",
+        "timestamp": 1792661710.079
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion"
+  }
+]

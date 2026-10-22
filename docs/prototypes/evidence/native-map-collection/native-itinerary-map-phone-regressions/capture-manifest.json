@@ -1,0 +1,32 @@
+[
+  {
+    "file": "coincident-items-map.png",
+    "original": "Counted native Map marker keeps exact Item choices_0_8FD32518-D465-4E96-8A94-35B27CAD3451.png",
+    "exportedFile": "CB4FFA6D-CAA7-43F5-B328-6C2B0EE1EBCC.png",
+    "sha256": "1c3d5df6eef0e992902b2432ba581578e623b3e37330b0ebd2cc3c1e5f79bfa4",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "items-map.png",
+    "original": "Native Items Map retains its pin and Locations control_0_A34B4E4E-186A-4578-9456-2F658843219F.png",
+    "exportedFile": "A0C2E554-D808-4ED9-9F20-1C2EC683961C.png",
+    "sha256": "a9a566d0f260a930f769dd6316eb68ba69941dbf4d4dd95b502029cf6d43ce5e",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "list-map-membership.png",
+    "original": "List Map opens its exact completed membership_0_9496BBC2-9EF3-4EB6-9B58-7874466AC0AC.png",
+    "exportedFile": "29A65B70-E8AA-4FA6-AFB0-AA5411B196FC.png",
+    "sha256": "e44a6866cb67b87710b52079ccf79f910d9113aba25cdbec59bbd6344c157afb",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]
