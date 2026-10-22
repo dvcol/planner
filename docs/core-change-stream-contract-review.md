@@ -1,6 +1,6 @@
 # Core change stream contract review
 
-Status: Q130 proposal, not approved or implemented.
+Status: Q130 A accepted on 22 October 2026. The declaration and existing test boundaries are approved; implementation and qualification remain pending.
 
 ## Context, before and after
 
@@ -45,7 +45,7 @@ No exact native refresh call count is part of the interface. Qualify visible cur
 
 ## Definition of ready
 
-- Q130 accepts or revises this declaration, future-only/coalescing behavior and failure/cancellation contract.
+- Q130 A accepts this declaration, future-only/coalescing behavior and failure/cancellation contract.
 - Existing public Core operation/read/status seams and real temporary storage remain the test boundaries. No test-only production injection is proposed.
 - Existing writer/history and recovery-fault fixtures supply independent expected outcomes. The native UI uses its existing explicit-configuration fixture boundary.
 - Keep account/cloud integration and Q100 signed Agent Control separate from this local slice.

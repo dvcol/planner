@@ -1,6 +1,6 @@
 # Native webpage app-link policy review
 
-Status: Q145 proposal. Q140's accepted intent remains; the limitation below needs a policy choice before supported app handoff is implemented.
+Status: Q145 A accepted on 22 October 2026. Confirm every supported external-app link, revising Q140's direct-click convenience. Implementation and qualification remain pending.
 
 ## Observed API limit
 
@@ -16,7 +16,7 @@ A. Require one native Open action for every supported external-app URL, includin
 
 B. Use reported `.linkActivated` as the direct-opening rule and confirm other reported app navigations. Ordinary clicks stay immediate, but autonomous generated clicks may also switch apps. This retains the convenient interaction with an explicit limitation to the automatic-navigation policy. It must not be described as proof of human initiation.
 
-Recommendation: A. The user chooses the behavior; no new supported-app routing implementation or dependent test is written before the answer. Unknown, executable and file URL schemes remain unsupported under either option, and website browsing does not create Planner data commands or bookmarks.
+Accepted: A. The user approved one native Open action for every supported external-app URL. The existing native UI and real loopback HTTP boundaries are authorized for implementation and tests. Unknown, executable and file URL schemes remain unsupported under either option, and website browsing does not create Planner data commands or bookmarks.
 
 ## Existing test boundaries and remaining gates
 
