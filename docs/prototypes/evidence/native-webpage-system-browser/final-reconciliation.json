@@ -1,0 +1,45 @@
+{
+  "base": "f01f5637db5c9d0a15c9386c058c72b09a437471",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "system-browser-phone-direct-failure-capture",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 3,
+      "inspectedOriginalCaptures": 3,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "system-browser-phone-retry-final",
+      "passedFunctions": 2,
+      "retainedOriginalCaptures": 2,
+      "inspectedOriginalCaptures": 2,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "system-browser-dark-tablet-final",
+      "passedFunctions": 3,
+      "retainedOriginalCaptures": 5,
+      "inspectedOriginalCaptures": 5,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 6,
+  "distinctNativeFunctions": 3,
+  "totalRetainedOriginalCaptures": 10,
+  "totalInspectedOriginalCaptures": 10,
+  "productionChanged": false,
+  "actualSystemHandoffExecutions": 2,
+  "macCompiler": {
+    "phase": "system-browser-mac-compiler-final",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "limits": [
+    "The represented explicit failure fallback opens the exact linked Garden target in Safari and preserves the original Museum bookmark on phone/dark iPad.",
+    "Foreground and exact attributed HTTP requests establish handoff; screenshots do not establish completed Safari page rendering.",
+    "Other content/owner fallbacks, actual Mail/Phone/Maps activation, Mac runtime, physical devices, broad accessibility and whole-app polish remain open.",
+    "The initial screenshot-helper failure and pre-test sandbox failure are excluded from passing totals."
+  ],
+  "meaning": "All final source inputs match; source/product boundaries were validated before reuse, and original captures and request attachments reconcile. Shipping production remains unchanged."
+}

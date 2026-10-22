@@ -1,0 +1,12 @@
+{
+  "inspectedOriginalFiles": [
+    "linked-retry-bookmark-retained.png",
+    "repeated-retry-bookmark-retained.png"
+  ],
+  "findings": [
+    "The linked-page recovery capture shows the rendered Garden guide, with Back available and the native reader toolbar.",
+    "The repeated-failure recovery capture shows the rendered Museum guide and its links in the same reader.",
+    "The complete tests separately assert the original saved bookmark identity/URL; these article captures alone do not prove retained storage or whole-app visual/accessibility acceptance."
+  ],
+  "scope": "Original native PNG attachments inspected without alteration. Broader layout/accessibility and final polish remain separate."
+}

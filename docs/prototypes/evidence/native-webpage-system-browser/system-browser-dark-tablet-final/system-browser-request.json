@@ -1,0 +1,17 @@
+{
+  "plannerUserAgents" : [
+    "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/605.1.15 (KHTML, like Gecko)",
+    "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/605.1.15 (KHTML, like Gecko)",
+    "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/605.1.15 (KHTML, like Gecko)",
+    "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/605.1.15 (KHTML, like Gecko)"
+  ],
+  "requestedExternalTarget" : "http:\/\/localhost:64699\/garden",
+  "browserBecameForeground" : true,
+  "requestLine" : "GET \/garden HTTP\/1.1",
+  "originalBookmark" : "http:\/\/localhost:64699\/guide",
+  "externalUserAgents" : [
+    "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/27.0 Safari\/605.1.15"
+  ],
+  "plannerState" : 3,
+  "browserState" : 4
+}

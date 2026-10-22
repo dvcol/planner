@@ -1,0 +1,18 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "linked-retry-bookmark-retained.png",
+      "originalName": "Linked guide recovers without changing its bookmark_0_BB6885A3-3EF9-4ACA-B1D4-ED7D0E45A382.png",
+      "exportedFile": "EE7A138B-747F-49E9-AED9-75C4A938B0C2.png",
+      "sha256": "b2cd8fc1e21c61b715d18bede9cbbd37563914875c1f669a1f4045b4671b4c45"
+    },
+    {
+      "file": "repeated-retry-bookmark-retained.png",
+      "originalName": "Saved guide recovers after repeated failure_0_748C7D81-7478-416B-91F6-A22537EC245E.png",
+      "exportedFile": "BD2C23DD-34B7-4BD2-839A-4590E5DADDA4.png",
+      "sha256": "49a25772ea35b2d0c5a592d0b56857def8149f4f61178943eb5fe98e020f0f32"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

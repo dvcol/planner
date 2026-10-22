@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "system-browser-bookmark-retained.png",
+      "originalName": "System browser handoff preserves the original saved bookmark_0_FA5A52AD-0737-44B5-882A-8F1D65EB4308.png",
+      "exportedFile": "5F53AA52-2A98-46F9-8A9F-E9E9EA0495A2.png",
+      "sha256": "a18192f35fc9e96b5d508abab8e72dd526908ea21ac75eab47dab1982ca85669"
+    },
+    {
+      "file": "system-browser-opened.png",
+      "originalName": "System browser after explicit Planner external action_0_6948A7F8-96B6-4475-90A9-E068E6030B00.png",
+      "exportedFile": "809531CE-B3F9-4D3B-BB4A-68BC13B3B77E.png",
+      "sha256": "ac3d5ce3a3a3ce7833676645af4affd6a366cbadac586c2f6d0541701d950fd6"
+    },
+    {
+      "file": "system-browser-offered-target.png",
+      "originalName": "Failed linked guide offers its exact external target_0_C9E8FD15-DEB1-4A90-9CC8-DD2BCB31402A.png",
+      "exportedFile": "87B55850-A8BB-476B-A629-7939454E1253.png",
+      "sha256": "3595d6c7548f030551fff7fe4dae7861e423b6cf66f3c0fec22d34d9d7db74b9"
+    },
+    {
+      "file": "linked-retry-bookmark-retained.png",
+      "originalName": "Linked guide recovers without changing its bookmark_0_5D8603CC-2168-4E43-8448-171622AB0504.png",
+      "exportedFile": "25287611-7A15-4328-8A91-4123AE2730C0.png",
+      "sha256": "dd5bedd2572bb807c1ccc0b38e86cb8f02a5a9ac8890f2b06dc0653df8c79153"
+    },
+    {
+      "file": "repeated-retry-bookmark-retained.png",
+      "originalName": "Saved guide recovers after repeated failure_0_D636C315-0519-4C88-A998-838524238C1C.png",
+      "exportedFile": "A6F83C0F-158F-4B74-A47B-5C144C2F36DB.png",
+      "sha256": "b80fef8a1323e5e1386ebfbcd5cb357480a03536235b9ab1ae8a56d6194f79a8"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

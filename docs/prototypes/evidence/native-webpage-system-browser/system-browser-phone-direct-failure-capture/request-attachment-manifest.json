@@ -1,0 +1,7 @@
+{
+  "file": "system-browser-request.json",
+  "originalName": "Actual system browser request provenance_0_CD3BE2F9-4DDC-4947-9722-72892C222071.json",
+  "exportedFile": "B46B900C-9547-4FB2-80FF-317E4DC8BC2C.json",
+  "sha256": "b1b7ad7e1771e31200daaed2af0ff97bd62c437df47077006bbd07ba210e8042",
+  "meaning": "Unmodified native attachment with actual fixture HTTP User-Agent and foreground observations; it does not establish page rendering."
+}

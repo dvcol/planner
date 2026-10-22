@@ -1,0 +1,17 @@
+{
+  "inspectedOriginalFiles": [
+    "system-browser-offered-target.png",
+    "system-browser-opened.png",
+    "system-browser-bookmark-retained.png",
+    "linked-retry-bookmark-retained.png",
+    "repeated-retry-bookmark-retained.png"
+  ],
+  "findings": [
+    "Planner failed-page state shows the exact Garden URL and native Retry/external controls on a dark background.",
+    "Safari screenshot shows Start Page chrome and a focused address field while the test separately observes its exact Garden GET and foreground state. This screenshot does not establish rendered Garden content, and no Safari control was activated.",
+    "Returning to Planner shows the same Museum Item and saved localhost bookmark; its rich preview is still loading in this capture.",
+    "The linked-retry and repeated-retry captures show rendered Garden and Museum pages respectively, using the native dark reader.",
+    "The narrow Items column still truncates its navigation title to It\u2026; this retained layout finding remains open for final UI polish."
+  ],
+  "scope": "All five original native PNGs inspected without alteration. Local functional handoff/retry evidence does not replace broad visual/accessibility or physical acceptance."
+}

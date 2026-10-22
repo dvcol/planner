@@ -1,0 +1,13 @@
+{
+  "inspectedOriginalFiles": [
+    "system-browser-offered-target.png",
+    "system-browser-opened.png",
+    "system-browser-bookmark-retained.png"
+  ],
+  "findings": [
+    "Planner failure state shows exact /garden target and native Retry/external actions.",
+    "Safari screenshot shows the localhost address bar while content is still loading; this capture does not prove completed page rendering. Exact Safari GET and foreground evidence are retained separately.",
+    "Returning to Planner shows the original Museum Item and saved guide card. Bookmark identity and URL assertions pass."
+  ],
+  "scope": "Original native attachments visually inspected without cropping, recoloring or content replacement. This is represented local functional evidence, not whole-app polish or broad accessibility acceptance."
+}

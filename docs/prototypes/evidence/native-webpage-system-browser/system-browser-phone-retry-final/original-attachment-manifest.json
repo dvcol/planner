@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "EE7A138B-747F-49E9-AED9-75C4A938B0C2.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Linked guide recovers without changing its bookmark_0_BB6885A3-3EF9-4ACA-B1D4-ED7D0E45A382.png",
+        "timestamp": 1792704305.483
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "BD2C23DD-34B7-4BD2-839A-4590E5DADDA4.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide recovers after repeated failure_0_748C7D81-7478-416B-91F6-A22537EC245E.png",
+        "timestamp": 1792704344.848
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark"
+  }
+]

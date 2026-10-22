@@ -1,0 +1,12 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "system-browser-offered-target.png",
+      "originalName": "Failed linked guide offers its exact external target_0_1B13F09C-2D23-41B1-9319-48368451D708.png",
+      "exportedFile": "6F89649B-AB92-415D-AB79-1D629D63A689.png",
+      "sha256": "c39b437b0a6cd73b1bd436f0c0d69d13258cd89a3e8e0fcef995a71817b7ea54"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5F53AA52-2A98-46F9-8A9F-E9E9EA0495A2.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "System browser handoff preserves the original saved bookmark_0_FA5A52AD-0737-44B5-882A-8F1D65EB4308.png",
+        "timestamp": 1792704444.101
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "809531CE-B3F9-4D3B-BB4A-68BC13B3B77E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "System browser after explicit Planner external action_0_6948A7F8-96B6-4475-90A9-E068E6030B00.png",
+        "timestamp": 1792704438.79
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "CE5E3A03-E908-4A61-A9A4-43713AF60B3C.json",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Actual system browser request provenance_0_3F1F4E93-6184-400A-A0DD-E723948B74BE.json",
+        "timestamp": 1792704438.298
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "87B55850-A8BB-476B-A629-7939454E1253.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Failed linked guide offers its exact external target_0_C9E8FD15-DEB1-4A90-9CC8-DD2BCB31402A.png",
+        "timestamp": 1792704431.244
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "25287611-7A15-4328-8A91-4123AE2730C0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Linked guide recovers without changing its bookmark_0_5D8603CC-2168-4E43-8448-171622AB0504.png",
+        "timestamp": 1792704481.563
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "A6F83C0F-158F-4B74-A47B-5C144C2F36DB.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide recovers after repeated failure_0_D636C315-0519-4C88-A998-838524238C1C.png",
+        "timestamp": 1792704520.308
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark"
+  }
+]

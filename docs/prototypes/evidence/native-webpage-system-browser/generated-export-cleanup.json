@@ -1,0 +1,34 @@
+{
+  "removedDuplicateExports": [
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-system-browser-dark-tablet-final",
+      "nominalBytes": 978525,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-system-browser-dark-tablet-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-system-browser/system-browser-dark-tablet-final",
+      "retainedDeliberateCaptures": 5
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-system-browser-phone-direct-failure-capture",
+      "nominalBytes": 475985,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-system-browser-phone-direct-failure-capture.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-system-browser/system-browser-phone-direct-failure-capture",
+      "retainedDeliberateCaptures": 3
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-system-browser-phone-initial",
+      "nominalBytes": 7125193,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-system-browser-phone-initial.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-system-browser/system-browser-phone-initial",
+      "retainedDeliberateCaptures": 1
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-system-browser-phone-retry-final",
+      "nominalBytes": 305492,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-system-browser-phone-retry-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-system-browser/system-browser-phone-retry-final",
+      "retainedDeliberateCaptures": 2
+    }
+  ],
+  "totalNominalBytes": 8885195,
+  "meaning": "Only duplicate temporary xcresult attachment-export directories were removed after retained original captures, manifests and prior source/product boundaries verified. Original xcresult bundles, source roots, reusable build products and all user datasets remain. Nominal bytes do not promise equal APFS free-space recovery."
+}

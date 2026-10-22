@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "system-browser-bookmark-retained.png",
+      "originalName": "System browser handoff preserves the original saved bookmark_0_03D9B88D-6663-4B63-96BD-657F9D8DF9ED.png",
+      "exportedFile": "50354666-7167-4315-B5C2-045BB1CD52B0.png",
+      "sha256": "89e000a85449ac6269fcaabb140615365ad31ae4569f94559a64cfe82a6085d1"
+    },
+    {
+      "file": "system-browser-opened.png",
+      "originalName": "System browser after explicit Planner external action_0_5BFEC12D-EA6B-4DE4-A3C8-509F90DA4402.png",
+      "exportedFile": "D972255D-C6E4-4851-9E0A-075C0FA7CBF9.png",
+      "sha256": "761b4dbdf2419c6077f8d2714d8daddc9aa1b6f7be0ad98d625586363e66b1aa"
+    },
+    {
+      "file": "system-browser-offered-target.png",
+      "originalName": "Failed linked guide offers its exact external target_0_AACAC935-A539-4894-8F2C-7F253CE2D99C.png",
+      "exportedFile": "0CDBB989-F62D-4F8F-8F0F-9D169B2E2A95.png",
+      "sha256": "efb03954332465295aa865651dd513225512101fc4a089d8fe5c32c1712f7dec"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

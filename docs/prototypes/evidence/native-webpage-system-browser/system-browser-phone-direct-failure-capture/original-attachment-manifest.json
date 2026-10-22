@@ -1,0 +1,44 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "50354666-7167-4315-B5C2-045BB1CD52B0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "System browser handoff preserves the original saved bookmark_0_03D9B88D-6663-4B63-96BD-657F9D8DF9ED.png",
+        "timestamp": 1792704036.668
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D972255D-C6E4-4851-9E0A-075C0FA7CBF9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "System browser after explicit Planner external action_0_5BFEC12D-EA6B-4DE4-A3C8-509F90DA4402.png",
+        "timestamp": 1792704031.948
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B46B900C-9547-4FB2-80FF-317E4DC8BC2C.json",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Actual system browser request provenance_0_CD3BE2F9-4DDC-4947-9722-72892C222071.json",
+        "timestamp": 1792704031.799
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0CDBB989-F62D-4F8F-8F0F-9D169B2E2A95.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Failed linked guide offers its exact external target_0_AACAC935-A539-4894-8F2C-7F253CE2D99C.png",
+        "timestamp": 1792704030.305
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser"
+  }
+]

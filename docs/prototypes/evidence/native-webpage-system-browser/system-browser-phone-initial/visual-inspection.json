@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "system-browser-offered-target.png"
+  ],
+  "observations": [
+    "The native Page unavailable component, connection-lost explanation, exact Garden URL and accessible Retry/external icons are visible. Its top reading area is intentionally blank."
+  ],
+  "limits": "This failed function stopped at the generic article-paint assertion before activating external Open. No actual browser handoff credit."
+}

@@ -1,0 +1,54 @@
+{
+  "sourceInputCount": 1081,
+  "sourceDifferences": [],
+  "retainedProductCount": 4,
+  "productDifferences": [],
+  "exitCode": 65,
+  "testResult": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+          "deviceName": "iPhone 18 Pro",
+          "modelName": "iPhone 18 Pro",
+          "osBuildNumber": "24A434",
+          "osVersion": "27.0",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1792703875.105,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1792703812.153,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "XCTAssertTrue failed - The native reading pane must visibly paint the fixture content.",
+        "targetName": "PlannerNavigationUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser",
+        "testName": "testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()"
+      }
+    ],
+    "title": "Test - PlannerNavigation",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "meaning": "Trial stops before external activation at the generic article-paint screenshot assertion; no handoff credit"
+}
