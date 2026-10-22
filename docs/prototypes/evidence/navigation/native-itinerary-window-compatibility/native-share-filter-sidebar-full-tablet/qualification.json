@@ -1,0 +1,47 @@
+{
+  "native-share-filter-sidebar-tablet": {
+    "passedFunctions": [
+      "testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent"
+    ],
+    "failed": 0,
+    "skipped": 0,
+    "sourceAndProductsUnchanged": true,
+    "sourceInputs": 1062,
+    "sqliteUnlinkWarnings": 0
+  },
+  "native-share-filter-sidebar-full-tablet": {
+    "passedFunctions": [
+      "testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem",
+      "testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain",
+      "testShareRequiresMainApplicationSetupBeforeReviewingOrSaving",
+      "testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent",
+      "testShareWithExistingIncompleteRecoveryExplainsTheGateWithoutOfferingCapture",
+      "testUnconfiguredShareFailsWithoutInventingAPrivateStoreOrPromisingSetup"
+    ],
+    "failed": 0,
+    "skipped": 0,
+    "sourceAndProductsUnchanged": true,
+    "sourceInputs": 1062,
+    "sqliteUnlinkWarnings": 0
+  },
+  "native-share-filter-sidebar-full-phone": {
+    "passedFunctions": [
+      "testNativeProviderShareReviewCreatesNothingUntilSaveAndOpensTheSavedItem",
+      "testShareKeepsAppliedCaptureOpenWithVisibleRecoveryFailureAndDoesNotCreateAgain",
+      "testShareRequiresMainApplicationSetupBeforeReviewingOrSaving",
+      "testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent",
+      "testShareWithExistingIncompleteRecoveryExplainsTheGateWithoutOfferingCapture",
+      "testUnconfiguredShareFailsWithoutInventingAPrivateStoreOrPromisingSetup"
+    ],
+    "failed": 0,
+    "skipped": 0,
+    "sourceAndProductsUnchanged": true,
+    "sourceInputs": 1062,
+    "sqliteUnlinkWarnings": 0
+  },
+  "inspectedCaptures": {
+    "native-share-filter-sidebar-tablet": 3,
+    "native-share-filter-sidebar-full-phone": 3
+  },
+  "limits": "Disposable local Share-role fixture; no new Mac runtime, installed extension, App Group, CloudKit or physical acceptance."
+}

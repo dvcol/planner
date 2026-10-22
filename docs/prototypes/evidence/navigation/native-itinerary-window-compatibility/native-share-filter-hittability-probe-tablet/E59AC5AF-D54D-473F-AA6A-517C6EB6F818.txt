@@ -1,0 +1,21 @@
+Attributes: Button, 0x11040f340, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+Element subtree:
+ →Button, 0x11040f340, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+Path to element:
+ →Application, 0x11040e440, pid: 85575, label: 'Planner fixtures'
+  ↳Window (Main), 0x11040e580, {{0.0, 0.0}, {820.0, 1180.0}}
+   ↳Other, 0x11040e6c0, {{0.0, 0.0}, {820.0, 1180.0}}
+    ↳Other, 0x11040e800, {{0.0, 0.0}, {820.0, 1180.0}}
+     ↳Other, 0x11040e940, {{0.0, 0.0}, {820.0, 1180.0}}
+      ↳Other, 0x11040ea80, {{0.0, 0.0}, {820.0, 1180.0}}
+       ↳Other, 0x11040ebc0, {{0.0, 0.0}, {820.0, 1180.0}}
+        ↳Other, 0x11040ed00, {{0.0, 0.0}, {820.0, 1180.0}}
+         ↳Other, 0x11040ee40, {{0.0, 0.0}, {820.0, 1180.0}}
+          ↳Other, 0x11040ef80, {{0.0, 0.0}, {340.0, 1180.0}}
+           ↳Other, 0x11040f0c0, {{0.0, 0.0}, {340.0, 1180.0}}
+            ↳NavigationBar, 0x11040f200, {{0.0, 32.0}, {340.0, 108.0}}, identifier: 'Items'
+             ↳Button, 0x11040f340, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+Query chain:
+ →Find: Target Application 'org.example.PlannerFixtures'
+  ↪︎Find: Descendants matching type Button
+    ↪︎Find: Elements matching predicate '"saved.items.filters" IN identifiers'

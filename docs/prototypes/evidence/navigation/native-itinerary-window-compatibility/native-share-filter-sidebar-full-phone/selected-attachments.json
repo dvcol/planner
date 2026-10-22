@@ -1,0 +1,74 @@
+[
+  {
+    "lifetime": "keepAlways",
+    "name": "Share directs genuine old-schema data to Planner_0_BD68593E-E420-465E-9E82-DC42631D27A3.png",
+    "payloadId": "0~_oa7VUPoVtVlZvWYyXLwFvABHQIf05iyfZbPUiSssgAL60A7HnG9Pc_lr4zgHU3AEzaLcyT22lPrSCZQlKxfqQ==",
+    "timestamp": 1792635920.624,
+    "uuid": "B58CFDC7-7811-4172-A13B-90BB3AB6F87E",
+    "path": "B58CFDC7-7811-4172-A13B-90BB3AB6F87E.png",
+    "sha256": "63788c7e5eda11a78fbddb8a581c4a9a72f3c82693e26812f3e132bb290038db",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-sidebar-full-phone.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-full-phone/B58CFDC7-7811-4172-A13B-90BB3AB6F87E.png",
+      "--id",
+      "0~_oa7VUPoVtVlZvWYyXLwFvABHQIf05iyfZbPUiSssgAL60A7HnG9Pc_lr4zgHU3AEzaLcyT22lPrSCZQlKxfqQ==",
+      "--type",
+      "file"
+    ]
+  },
+  {
+    "lifetime": "keepAlways",
+    "name": "Main-app migration retains the original Item_0_5E4A2CF3-7E14-4418-83CC-C2B15CB44CEA.png",
+    "payloadId": "0~jlG_5UuGPJOE29SceV1k20t29-aCGvgoc4dOTXPM2jxbjGSpaay2s4b8JGqpUrYdfyEi36J9YJNo9l_j9kAPAg==",
+    "timestamp": 1792635942.036,
+    "uuid": "AEDC7596-13AE-4AF1-B56B-47CC78475CE0",
+    "path": "AEDC7596-13AE-4AF1-B56B-47CC78475CE0.png",
+    "sha256": "ed8708474b44c6e0954226bb2e20e23c81117b2cbc93b402788c2f06a5fc791a",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-sidebar-full-phone.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-full-phone/AEDC7596-13AE-4AF1-B56B-47CC78475CE0.png",
+      "--id",
+      "0~jlG_5UuGPJOE29SceV1k20t29-aCGvgoc4dOTXPM2jxbjGSpaay2s4b8JGqpUrYdfyEi36J9YJNo9l_j9kAPAg==",
+      "--type",
+      "file"
+    ]
+  },
+  {
+    "lifetime": "keepAlways",
+    "name": "Share saves a new Item after main-app migration_0_DEEBB00F-45D3-469C-8F1A-27C5CE996707.png",
+    "payloadId": "0~-Q4vgtKpOo-YWmoNmlIwboUGBkTJ9NJ0dLDI4w4ZRG3Gwe-I7lCC1zsvP9kfWofNjkTKIok-JTrlK7lcMhquEA==",
+    "timestamp": 1792635970.634,
+    "uuid": "C4AEF9AD-ED6B-47FF-B5D3-2F367528E93E",
+    "path": "C4AEF9AD-ED6B-47FF-B5D3-2F367528E93E.png",
+    "sha256": "2248f9797712d16dc38ca3c97065a905b703804cb99fc268741fd0633be868e0",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-sidebar-full-phone.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-filter-sidebar-full-phone/C4AEF9AD-ED6B-47FF-B5D3-2F367528E93E.png",
+      "--id",
+      "0~-Q4vgtKpOo-YWmoNmlIwboUGBkTJ9NJ0dLDI4w4ZRG3Gwe-I7lCC1zsvP9kfWofNjkTKIok-JTrlK7lcMhquEA==",
+      "--type",
+      "file"
+    ]
+  }
+]

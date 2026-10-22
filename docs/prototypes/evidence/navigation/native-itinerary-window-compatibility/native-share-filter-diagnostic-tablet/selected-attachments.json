@@ -1,0 +1,74 @@
+[
+  {
+    "lifetime": "keepAlways",
+    "name": "Share directs genuine old-schema data to Planner_0_C578F50F-4E23-4F41-9DA2-F40003A0E357.png",
+    "payloadId": "0~2x1B-kAiMK6O1lb9kGIlrcZlwy0-Rbjz0MdPGPkWplQ41jUrgvIj3mdtSABA0RhLWXQ4UWnRA8aSouL-M7WO8w==",
+    "timestamp": 1792634483.749,
+    "uuid": "78441805-365F-495F-989E-2D7A78C9AE7E",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-diagnostic-tablet.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-filter-diagnostic-tablet/78441805-365F-495F-989E-2D7A78C9AE7E.png",
+      "--id",
+      "0~2x1B-kAiMK6O1lb9kGIlrcZlwy0-Rbjz0MdPGPkWplQ41jUrgvIj3mdtSABA0RhLWXQ4UWnRA8aSouL-M7WO8w==",
+      "--type",
+      "file"
+    ],
+    "path": "78441805-365F-495F-989E-2D7A78C9AE7E.png",
+    "sha256": "0f803f061a3b02913c9b3b64fbfacbd227eb1eaedccf55ccd4ae78c1b08d9ff0"
+  },
+  {
+    "lifetime": "keepAlways",
+    "name": "Planner after the unavailable filter tap_0_DA34B9DD-D758-43A3-86D0-7C6C36793449.png",
+    "payloadId": "0~_5USPgN80iZZINibjPmK5qU1k4wcVZtqz_BI5zyy0ImD-DlFo4pACYDFLl59_N_n5mE3rUstv3vsICXs9iOIIA==",
+    "timestamp": 1792634500.054,
+    "uuid": "432F7767-A7CD-4946-9A14-CFFEB691618B",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-diagnostic-tablet.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-filter-diagnostic-tablet/432F7767-A7CD-4946-9A14-CFFEB691618B.png",
+      "--id",
+      "0~_5USPgN80iZZINibjPmK5qU1k4wcVZtqz_BI5zyy0ImD-DlFo4pACYDFLl59_N_n5mE3rUstv3vsICXs9iOIIA==",
+      "--type",
+      "file"
+    ],
+    "path": "432F7767-A7CD-4946-9A14-CFFEB691618B.png",
+    "sha256": "c9fb2c7fc5cdd0c80fc9cb874110fd0abbb770138c12f95507a59e79856548cb"
+  },
+  {
+    "lifetime": "keepAlways",
+    "name": "Unavailable Planner filter window hierarchy_1_DA34B9DD-D758-43A3-86D0-7C6C36793449.txt",
+    "payloadId": "0~TaQqN3NBMR-zkCdJUycT9rugOeMFaV9iX5gXbtWRRfHUO-gnB_ku4eLohJcjCzBooXFxd5U-pBNr1jl0DOKZWQ==",
+    "timestamp": 1792634500.425,
+    "uuid": "7B75C31C-1F58-451D-AE18-1370E78169B6",
+    "exportCommand": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "object",
+      "--legacy",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-diagnostic-tablet.xcresult",
+      "--output-path",
+      "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-share-filter-diagnostic-tablet/7B75C31C-1F58-451D-AE18-1370E78169B6.txt",
+      "--id",
+      "0~TaQqN3NBMR-zkCdJUycT9rugOeMFaV9iX5gXbtWRRfHUO-gnB_ku4eLohJcjCzBooXFxd5U-pBNr1jl0DOKZWQ==",
+      "--type",
+      "file"
+    ],
+    "path": "7B75C31C-1F58-451D-AE18-1370E78169B6.txt",
+    "sha256": "29f1cc49b78f413cd893f104a20c955d638251e8a7b432cf5b0850898aae9247"
+  }
+]

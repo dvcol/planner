@@ -1,0 +1,23 @@
+{
+  "capturedAfterTabletRun": true,
+  "appearance": "dark",
+  "increaseContrast": "disabled",
+  "contentSize": "large",
+  "commands": [
+    [
+      "xcrun",
+      "simctl",
+      "ui",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "increase_contrast"
+    ],
+    [
+      "xcrun",
+      "simctl",
+      "ui",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "content_size"
+    ]
+  ],
+  "limitations": "The original runner used an unsupported increasecontrast spelling. This follow-up reads the unchanged simulator settings; it does not rewrite that failed observation."
+}

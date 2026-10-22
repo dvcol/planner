@@ -1,0 +1,43 @@
+Attributes: Button, 0x11040f340, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+Element subtree:
+ →Button, 0x11040f340, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+Path to element:
+ →Application, 0x11040e440, pid: 85575, label: 'Planner fixtures'
+  ↳Window (Main), 0x11040e580, {{0.0, 0.0}, {820.0, 1180.0}}
+   ↳Other, 0x11040e6c0, {{0.0, 0.0}, {820.0, 1180.0}}
+    ↳Other, 0x11040e800, {{0.0, 0.0}, {820.0, 1180.0}}
+     ↳Other, 0x11040e940, {{0.0, 0.0}, {820.0, 1180.0}}
+      ↳Other, 0x11040ea80, {{0.0, 0.0}, {820.0, 1180.0}}
+       ↳Other, 0x11040ebc0, {{0.0, 0.0}, {820.0, 1180.0}}
+        ↳Other, 0x11040ed00, {{0.0, 0.0}, {820.0, 1180.0}}
+         ↳Other, 0x11040ee40, {{0.0, 0.0}, {820.0, 1180.0}}
+          ↳Other, 0x11040ef80, {{0.0, 0.0}, {340.0, 1180.0}}
+           ↳Other, 0x11040f0c0, {{0.0, 0.0}, {340.0, 1180.0}}
+            ↳NavigationBar, 0x11040f200, {{0.0, 32.0}, {340.0, 108.0}}, identifier: 'Items'
+             ↳Button, 0x11040f340, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+Query chain:
+ →Find: Target Application 'org.example.PlannerFixtures'
+  Output: {
+    Application, 0x107fd6440, pid: 85575, label: 'Planner fixtures'
+  }
+  ↪︎Find: Descendants matching type Button
+    Output: {
+      Button, 0x107df3340, {{14.0, 36.0}, {36.0, 36.0}}, label: 'Hide Sidebar'
+      Button, 0x107df35c0, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+      Button, 0x107df3700, {{228.5, 36.0}, {44.5, 36.0}}, identifier: 'saved.items.sort', label: 'Sort: Title · Ascending'
+      Button, 0x107df3840, {{289.0, 36.0}, {37.0, 36.0}}, identifier: 'saved.item.addMenu', label: 'Add'
+      Button, 0x107fd4000, {{65.5, 36.0}, {44.5, 36.0}}, identifier: 'saved.lists.sort', label: 'Sort: Title · Ascending'
+      Button, 0x107fd4140, {{126.0, 36.0}, {38.0, 36.0}}, identifier: 'OverflowBarButtonItem', label: 'More'
+      Button, 0x107fd4280, {{184.0, 36.0}, {36.0, 36.0}}, label: 'Hide Sidebar'
+      Button, 0x107fd5b80, {{72.0, 1120.0}, {39.0, 36.0}}, identifier: 'saved.categories.manage', label: 'Manage labels'
+      Button, 0x107fd6080, {{127.0, 1120.0}, {41.5, 36.0}}, identifier: 'saved.settings.open', label: 'Settings'
+      Button, 0x107fafac0, {{16.0, 86.0}, {208.0, 52.0}}, identifier: 'saved.section.lists', label: 'Lists'
+      Button, 0x107fec140, {{16.0, 138.0}, {208.0, 52.0}}, identifier: 'saved.section.items', label: 'Items', Selected
+      Button, 0x107fed680, {{16.0, 190.0}, {208.0, 52.0}}, identifier: 'saved.section.inbox', label: 'Inbox'
+      Button, 0x107fedb80, {{16.0, 242.0}, {208.0, 52.0}}, identifier: 'saved.section.itineraries', label: 'Itineraries'
+      Button, 0x107f9e580, {{16.0, 294.0}, {208.0, 52.0}}, identifier: 'saved.section.calendar', label: 'Calendar'
+    }
+    ↪︎Find: Elements matching predicate '"saved.items.filters" IN identifiers'
+      Output: {
+        Button, 0x107f9d400, {{171.5, 36.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+      }

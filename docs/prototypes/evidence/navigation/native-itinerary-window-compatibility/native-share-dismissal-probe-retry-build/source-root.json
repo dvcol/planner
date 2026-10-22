@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "717d90a9412b18923d9507409b0bf525f83d8787",
+  "overlays": [
+    "PlannerFixtures/PlannerShareFixtureView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift"
+  ]
+}

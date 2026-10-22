@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-sidebar-full-phone.xcresult"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerShareMigration-native-share-filter-sidebar-full-phone.xcresult"
+    ],
+    "exitCode": 0
+  }
+]
