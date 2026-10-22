@@ -1,0 +1,18 @@
+{
+  "root": "/private/tmp/PlannerMapNativeSource",
+  "base": "341fa4b73702a21e705ca89e1bd3286d5fa4ed0c",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMapValues.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapContextWindowTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapReadAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapReadIntegrityTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapRowWindowTests.swift",
+    "Planner/AgentControl/PlannerMCPRowValue.swift",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift",
+    "PlannerMCPTests/ItemListQueryRoutingTests.swift",
+    "PlannerMCPTests/ItineraryItemQueryRoutingTests.swift",
+    "PlannerMCPTests/MapWindowRoutingTests.swift"
+  ]
+}

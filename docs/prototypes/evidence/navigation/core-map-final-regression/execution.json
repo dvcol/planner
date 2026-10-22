@@ -1,0 +1,79 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 3.458,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()",
+      "className": "PlannerCoreStoreTests.MapContextWindowTests",
+      "seconds": 0.4252035,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()",
+      "className": "PlannerCoreStoreTests.MapRowWindowTests",
+      "seconds": 0.727659084,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyCalendarWindowHasAReadableEmptyPage()",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.056415333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "allDayWindowUsesInclusiveCivilDatesAcrossDisplayZones(displayTimeZone:)",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.2278055,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "timedWindowIncludesOverlapsAndStartOnlyEntriesAtExactBoundaries()",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.249261291,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "itineraryQueriesRetainIndependentAppearancesFullProgressAndLiveMemberships()",
+      "className": "PlannerCoreStoreTests.ItineraryItemQueryTests",
+      "seconds": 0.516378791,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "defaultQueryReturnsEveryCreatedItemIdentityInTitleOrderAfterReopen()",
+      "className": "PlannerCoreStoreTests.ItemQueryTests",
+      "seconds": 0.102303917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anotherWriterInvalidatesCachedMapInputsAndContextWithoutRetargeting()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 0.277901917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyMapQueriesAndRejectedRequestsPreserveDataAndGeneration()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 0.103001916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unresolvedOwnedMapsLinkRejectsThePageInsteadOfOmittingItsLocationInput()",
+      "className": "PlannerCoreStoreTests.MapReadIntegrityTests",
+      "seconds": 0.086494583,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

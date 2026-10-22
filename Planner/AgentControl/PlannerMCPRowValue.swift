@@ -3,6 +3,70 @@
   import PlannerCore
 
   enum PlannerMCPRowValue {
+    static func mapWindow(_ window: PlannerMapRowWindow) -> Value {
+      .object([
+        "formatVersion": .int(1), "kind": .string("mapRows"),
+        "generation": .string(window.generation.uuidString),
+        "offset": .string(String(window.offset)),
+        "matchingCount": .string(String(window.matchingCount)),
+        "collection": window.collection.map(mapCollection) ?? .null,
+        "listBranches": .array(
+          window.listBranches.map { branch in
+            .object([
+              "entryId": .string(branch.entryId.uuidString),
+              "routePosition": .string(String(branch.routePosition)),
+              "list": mapCollection(branch.list), "matchesHeader": .bool(branch.matchesHeader),
+              "matchingChildCount": .string(String(branch.matchingChildCount)),
+            ])
+          }),
+        "rows": .array(
+          window.rows.map { row in
+            .object([
+              "identity": identity(row.identity),
+              "sourceLifetimeId": .string(row.sourceLifetimeId.uuidString),
+              "title": .string(row.title),
+              "ownedLocation": row.ownedLocation.map(PlannerMCPSourceTool.locationValue) ?? .null,
+              "mapsLinks": .array(row.mapsLinks.map(link)),
+              "placement": row.placement.map(mapPlacement) ?? .null,
+            ])
+          }),
+      ])
+    }
+
+    private static func mapCollection(_ collection: PlannerMapCollection) -> Value {
+      .object([
+        "source": .object([
+          "kind": .string(collection.source.kind.rawValue),
+          "id": .string(collection.source.id.uuidString),
+        ]),
+        "sourceLifetimeId": .string(collection.sourceLifetimeId.uuidString),
+        "title": .string(collection.title),
+      ])
+    }
+
+    private static func mapPlacement(_ placement: PlannerMapPlacement) -> Value {
+      switch placement {
+      case .listMembership(let membership, let position):
+        return .object([
+          "kind": .string("listMembership"), "membershipId": .string(membership.uuidString),
+          "childPosition": .string(String(position)),
+        ])
+      case .itineraryItem(let entry, let position):
+        return .object([
+          "kind": .string("itineraryItem"), "entryId": .string(entry.uuidString),
+          "routePosition": .string(String(position)),
+        ])
+      case .itineraryListItem(
+        let entry, let routePosition, let list, let membership, let childPosition):
+        return .object([
+          "kind": .string("itineraryListItem"), "entryId": .string(entry.uuidString),
+          "routePosition": .string(String(routePosition)), "list": mapCollection(list),
+          "membershipId": .string(membership.uuidString),
+          "childPosition": .string(String(childPosition)),
+        ])
+      }
+    }
+
     static func calendarWindow(_ window: PlannerCalendarRowWindow) -> Value {
       .object([
         "formatVersion": .int(1), "kind": .string("calendarRows"),

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000100792"/>
+    <testsuite name="TestResults" errors="0" tests="7" failures="0" skipped="0" time="0.733894125">
+        <testcase classname="PlannerCoreStoreTests.MapReadAdmissionTests" name="anotherWriterInvalidatesCachedMapInputsAndContextWithoutRetargeting()" time="0.273950042"/>
+        <testcase classname="PlannerCoreStoreTests.MapReadAdmissionTests" name="emptyMapQueriesAndRejectedRequestsPreserveDataAndGeneration()" time="0.076592125"/>
+        <testcase classname="PlannerCoreStoreTests.MapRowWindowTests" name="mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()" time="0.733477792"/>
+        <testcase classname="PlannerCoreStoreTests.CalendarWindowQueryTests" name="emptyCalendarWindowHasAReadableEmptyPage()" time="0.05220375"/>
+        <testcase classname="PlannerCoreStoreTests.CalendarWindowQueryTests" name="allDayWindowUsesInclusiveCivilDatesAcrossDisplayZones(displayTimeZone:)" time="0.222090875"/>
+        <testcase classname="PlannerCoreStoreTests.CalendarWindowQueryTests" name="timedWindowIncludesOverlapsAndStartOnlyEntriesAtExactBoundaries()" time="0.250938125"/>
+        <testcase classname="PlannerCoreStoreTests.MapContextWindowTests" name="contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()" time="0.443395416"/>
+    </testsuite>
+</testsuites>

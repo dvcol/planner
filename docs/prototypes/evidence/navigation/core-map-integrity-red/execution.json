@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 6.949,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "unresolvedOwnedMapsLinkRejectsThePageInsteadOfOmittingItsLocationInput()",
+      "className": "PlannerCoreStoreTests.MapReadIntegrityTests",
+      "seconds": 0.056677625,
+      "failures": [
+        "Issue recorded (error): Reject the unresolved saved link instead of claiming a complete Map page: .mapRows(PlannerCore.PlannerMapRowWindow(generation: 584106E8-48C8-452E-B661-65A7D4C84206, offset: 0, matchingCount: 1, collection: nil, listBranches: [], rows: [PlannerCore.PlannerMapRowRead(identity: PlannerCore.PlannerRowIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: EEDC8EAD-9941-42E3-929A-D495529866B5)), sourceLifetimeId: 2B23AC75-4589-45A0-B8FD-55075743B397, title: \"Museum\", ownedLocation: nil, mapsLinks: [], placement: nil)]))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

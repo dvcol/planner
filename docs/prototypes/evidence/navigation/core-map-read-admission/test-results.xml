@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.1292e-05"/>
+    <testsuite name="TestResults" errors="0" tests="4" failures="0" skipped="0" time="0.330203583">
+        <testcase classname="PlannerCoreStoreTests.MapContextWindowTests" name="contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()" time="0.329848959"/>
+        <testcase classname="PlannerCoreStoreTests.MapReadAdmissionTests" name="anotherWriterInvalidatesCachedMapInputsAndContextWithoutRetargeting()" time="0.187334416"/>
+        <testcase classname="PlannerCoreStoreTests.MapReadAdmissionTests" name="emptyMapQueriesAndRejectedRequestsPreserveDataAndGeneration()" time="0.054881416"/>
+        <testcase classname="PlannerCoreStoreTests.MapRowWindowTests" name="mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()" time="0.208752"/>
+    </testsuite>
+</testsuites>

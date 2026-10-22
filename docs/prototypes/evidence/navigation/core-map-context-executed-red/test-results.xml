@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.8042e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.181918791">
+        <testcase classname="PlannerCoreStoreTests.MapContextWindowTests" name="contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()" time="0.181589417">
+            <failure message="Issue recorded (error): Read the contextual Map inputs: .failed(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;The Map appearance is not yet supported.&quot;, details: nil))"/>
+            <failure message="Caught error: CancellationError() (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

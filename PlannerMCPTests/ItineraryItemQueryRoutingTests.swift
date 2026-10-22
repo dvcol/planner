@@ -4,18 +4,13 @@ import Testing
 
 @testable import Planner
 
+@MainActor
 struct ItineraryItemQueryRoutingTests {
   @Test func itineraryScopeOverHTTPKeepsExactAppearancesFullProgressAndStrictAdmission()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let planner = PlannerCore.Planner(
-      configuration: .init(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+    let fixture = try makePlannerIntentStorage()
+    let planner = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let datasetSession) = await planner.bootstrap() else {
       throw CancellationError()
     }
@@ -210,14 +205,8 @@ struct ItineraryItemQueryRoutingTests {
 
   @Test func explicitManualItineraryHTTPQueriesKeepRouteOrderAndAlphabeticalDefaults() async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let planner = PlannerCore.Planner(
-      configuration: .init(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+    let fixture = try makePlannerIntentStorage()
+    let planner = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let datasetSession) = await planner.bootstrap() else {
       throw CancellationError()
     }

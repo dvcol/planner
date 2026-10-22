@@ -1,0 +1,65 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 20.266,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()",
+      "className": "PlannerCoreStoreTests.MapContextWindowTests",
+      "seconds": 0.438147083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyMapQueriesAndRejectedRequestsPreserveDataAndGeneration()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 0.070942459,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anotherWriterInvalidatesCachedMapInputsAndContextWithoutRetargeting()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 0.253501583,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyCalendarWindowHasAReadableEmptyPage()",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.049492875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "allDayWindowUsesInclusiveCivilDatesAcrossDisplayZones(displayTimeZone:)",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.204268791,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "timedWindowIncludesOverlapsAndStartOnlyEntriesAtExactBoundaries()",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.239014375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unresolvedOwnedMapsLinkRejectsThePageInsteadOfOmittingItsLocationInput()",
+      "className": "PlannerCoreStoreTests.MapReadIntegrityTests",
+      "seconds": 0.079177833,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()",
+      "className": "PlannerCoreStoreTests.MapRowWindowTests",
+      "seconds": 0.732982083,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

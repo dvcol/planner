@@ -1,0 +1,60 @@
+{
+  "packets": {
+    "core-map-final-regression": {
+      "manifestInputs": 745,
+      "workspaceDifferences": [],
+      "recordedProducts": 2,
+      "changedProducts": [],
+      "sqliteUnlinkWarnings": 0
+    },
+    "core-map-window-ios": {
+      "manifestInputs": 1068,
+      "workspaceDifferences": [
+        "PlannerMCPTests/ItemListQueryRoutingTests.swift",
+        "PlannerMCPTests/ItineraryItemQueryRoutingTests.swift",
+        "PlannerMCPTests/MapWindowRoutingTests.swift",
+        "Planner/AgentControl/PlannerMCPSourceTool.swift",
+        "Planner/AgentControl/PlannerMCPRowValue.swift"
+      ],
+      "recordedProducts": 2,
+      "changedProducts": [],
+      "sqliteUnlinkWarnings": 0,
+      "selectedCoreInputs": 745,
+      "selectedCoreDifferences": [],
+      "scope": "Core package execution only; native adapters and HTTP tests in this archive were not selected or compiled."
+    },
+    "native-itinerary-window-compatibility/map-window-http-corrected-regression": {
+      "manifestInputs": 1068,
+      "workspaceDifferences": [],
+      "recordedProducts": 3,
+      "changedProducts": [],
+      "sqliteUnlinkWarnings": 0
+    }
+  },
+  "redGreenTests": [
+    {
+      "red": "core-map-rows-valid-fixture-red",
+      "green": "core-map-rows-global-green",
+      "test": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapRowWindowTests.swift",
+      "unchangedSha256": "055a495ccce497627da637c47d1a2dcc50e3e29917d3458e6f31c9964c598716"
+    },
+    {
+      "red": "core-map-context-executed-red",
+      "green": "core-map-context-first-green",
+      "test": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapContextWindowTests.swift",
+      "unchangedSha256": "2884c8c3f8ba5558f5cea9a8e515731cce531169fb61039f45606d2c57998804"
+    },
+    {
+      "red": "core-map-integrity-red",
+      "green": "core-map-integrity-green",
+      "test": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MapReadIntegrityTests.swift",
+      "unchangedSha256": "860e2669058c74a49d160fbace77fc2a5ff347bc4a9c0014e654f879fd39be8e"
+    },
+    {
+      "red": "native-itinerary-window-compatibility/map-window-http-admission-red",
+      "green": "native-itinerary-window-compatibility/map-window-http-first-green",
+      "test": "PlannerMCPTests/MapWindowRoutingTests.swift",
+      "unchangedSha256": "2a090c27954f28d4312ab4fd32dc36b4cd0a09bbbe15035e893c182d492f0158"
+    }
+  ]
+}

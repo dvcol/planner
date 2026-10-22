@@ -11,6 +11,22 @@ public actor Planner {
     let snapshot: PlannerQuerySnapshot
     let historyToken: DefaultHistoryToken?
     var calendarEntries: [PlannerCalendarEntry]? = nil
+    var itemQuery: PlannerItemQuery? = nil
+    var mapContext: MapQueryContext? = nil
+  }
+  private enum MapAppearanceKey: Hashable {
+    case membership(UUID)
+    case entry(UUID)
+    case expanded(entryId: UUID, membershipId: UUID)
+  }
+  private struct MapQueryAppearance {
+    let source: PlannerBoundIdentity
+    let placement: PlannerMapPlacement
+  }
+  private struct MapQueryContext {
+    var collection: PlannerMapCollection?
+    var branches: [PlannerMapListBranch] = []
+    var appearances: [MapAppearanceKey: MapQueryAppearance] = [:]
   }
   private var querySnapshots: [UUID: QueryBinding] = [:]
   private struct ReviewBinding {
@@ -1279,6 +1295,13 @@ public actor Planner {
             try readCalendarRows(
               session: session, context: context, generation: generation, offset: offset,
               limit: limit))
+        case .mapRows(let generation, let offset, let limit):
+          let context = ModelContext(try openContainer())
+          context.autosaveEnabled = false
+          return .mapRows(
+            try readMapRows(
+              session: session, context: context, generation: generation, offset: offset,
+              limit: limit))
         case .source(let source):
           let context = ModelContext(try openContainer())
           context.autosaveEnabled = false
@@ -1621,7 +1644,7 @@ public actor Planner {
             }
             querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
             querySnapshots[snapshot.generation] = QueryBinding(
-              snapshot: snapshot, historyToken: historyToken)
+              snapshot: snapshot, historyToken: historyToken, itemQuery: itemQuery)
             return .snapshot(snapshot)
           case .itinerary(let itineraryId):
             let snapshot = try itineraryItemQuerySnapshot(
@@ -1634,7 +1657,7 @@ public actor Planner {
             }
             querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
             querySnapshots[snapshot.generation] = QueryBinding(
-              snapshot: snapshot, historyToken: historyToken)
+              snapshot: snapshot, historyToken: historyToken, itemQuery: itemQuery)
             return .snapshot(snapshot)
           }
           let textTerms = itemQuery.text.split(whereSeparator: \.isWhitespace).map(String.init)
@@ -1738,7 +1761,7 @@ public actor Planner {
           }
           querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
           querySnapshots[snapshot.generation] = QueryBinding(
-            snapshot: snapshot, historyToken: historyToken)
+            snapshot: snapshot, historyToken: historyToken, itemQuery: itemQuery)
           return .snapshot(snapshot)
         }
       }
@@ -2524,6 +2547,275 @@ public actor Planner {
     return PlannerCalendarRowWindow(
       generation: generation, offset: offset, matchingCount: binding.snapshot.matchingCount,
       rows: rows)
+  }
+
+  private func readMapRows(
+    session: PlannerDatasetSession, context: ModelContext, generation: UUID, offset: Int64,
+    limit: Int64
+  ) throws -> PlannerMapRowWindow {
+    guard offset >= 0, limit > 0 else {
+      throw PlannerFailure("invalidInput", "Map row offset must be nonnegative and limit positive.")
+    }
+    guard let binding = querySnapshots[generation], binding.snapshot.session == session else {
+      throw staleSnapshot(generation)
+    }
+    guard let query = binding.itemQuery else {
+      throw PlannerFailure("invalidInput", "Map rows require an Item query generation.")
+    }
+    guard try latestHistoryToken(in: context) == binding.historyToken else {
+      querySnapshots.removeValue(forKey: generation)
+      throw staleSnapshot(generation)
+    }
+    let snapshot = binding.snapshot
+    let mapContext: MapQueryContext
+    if let retained = binding.mapContext {
+      mapContext = retained
+    } else {
+      mapContext = try mapQueryContext(query: query, snapshot: snapshot, context: context)
+    }
+    let identities: [PlannerRowIdentity]
+    if offset >= snapshot.matchingCount {
+      identities = []
+    } else {
+      let count = min(limit, snapshot.matchingCount - offset)
+      identities = Array(snapshot.rows.dropFirst(Int(offset)).prefix(Int(count)))
+    }
+    let rows = try identities.map { identity in
+      switch identity {
+      case .source(let source):
+        guard source.kind == .item, mapContext.collection == nil else {
+          throw PlannerFailure("readUnavailable", "The Map source has inconsistent scope.")
+        }
+        return try mapItemRow(identity: identity, source: source, context: context)
+      case .appearance(let source, let appearance):
+        let key = try mapAppearanceKey(appearance, scope: query.scope)
+        guard let saved = mapContext.appearances[key], saved.source.kind == "item",
+          saved.source.id == source.id, source.kind == .item
+        else {
+          throw PlannerFailure("readUnavailable", "The Map appearance has unresolved bindings.")
+        }
+        return try mapItemRow(
+          identity: identity, source: source, expectedLifetime: saved.source.lifetimeId,
+          placement: saved.placement, context: context)
+      }
+    }
+    guard try latestHistoryToken(in: context) == binding.historyToken else {
+      querySnapshots.removeValue(forKey: generation)
+      throw staleSnapshot(generation)
+    }
+    var retained = binding
+    retained.mapContext = mapContext
+    querySnapshots[generation] = retained
+    return PlannerMapRowWindow(
+      generation: generation, offset: offset, matchingCount: snapshot.matchingCount,
+      collection: mapContext.collection, listBranches: mapContext.branches, rows: rows)
+  }
+
+  private func mapItemRow(
+    identity: PlannerRowIdentity, source: PlannerEntityReference, expectedLifetime: UUID? = nil,
+    placement: PlannerMapPlacement? = nil, context: ModelContext
+  ) throws -> PlannerMapRowRead {
+    let identifier = source.id
+    var descriptor = FetchDescriptor<PlannerSchemaV18.Item>(
+      predicate: #Predicate { $0.id == identifier })
+    descriptor.fetchLimit = 2
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.locationData]
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let item = records.first, let lifetime = item.lifetimeId,
+      expectedLifetime == nil || expectedLifetime == lifetime
+    else {
+      throw PlannerFailure("readUnavailable", "The Map Item is missing or unresolved.")
+    }
+    let location = try item.locationData.map {
+      try JSONDecoder().decode(PlannerOwnedLocation.self, from: $0)
+    }
+    try PlannerItemContentInput(title: item.title, location: location).validate()
+    let ownedLinks = try (item.links ?? []).map {
+      try $0.value(ownerId: identifier, ownerLifetimeId: lifetime)
+    }.sorted { first, second in
+      if first.rank != second.rank { return first.rank < second.rank }
+      return first.id.uuidString < second.id.uuidString
+    }
+    guard Set(ownedLinks.map(\.id)).count == ownedLinks.count else {
+      throw PlannerFailure("readUnavailable", "The Map Item has duplicate owned links.")
+    }
+    let savedLinks = ownedLinks.filter { $0.kind == .appleMaps || $0.kind == .googleMaps }.map(
+      \.read)
+    return PlannerMapRowRead(
+      identity: identity, sourceLifetimeId: lifetime, title: item.title,
+      ownedLocation: location, mapsLinks: savedLinks, placement: placement)
+  }
+
+  private func mapAppearanceKey(_ appearance: PlannerAppearance, scope: PlannerItemQuery.Scope)
+    throws -> MapAppearanceKey
+  {
+    switch (scope, appearance) {
+    case (.list(let owner), .listMembership(let list, let membership)) where owner == list:
+      return .membership(membership)
+    case (.itinerary(let owner), .directItineraryItem(let itinerary, let entry))
+    where owner == itinerary:
+      return .entry(entry)
+    case (.itinerary(let owner), .expandedListItem(let itinerary, let entry, let membership))
+    where owner == itinerary:
+      return .expanded(entryId: entry, membershipId: membership)
+    default:
+      throw PlannerFailure("readUnavailable", "The Map appearance belongs to another scope.")
+    }
+  }
+
+  private func mapList(
+    identifier: UUID, expectedLifetime: UUID? = nil, context: ModelContext
+  ) throws -> (collection: PlannerMapCollection, archived: Bool) {
+    var descriptor = FetchDescriptor<PlannerSchemaV18.List>(
+      predicate: #Predicate { $0.id == identifier })
+    descriptor.fetchLimit = 2
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let list = records.first, let lifetime = list.lifetimeId,
+      expectedLifetime == nil || expectedLifetime == lifetime,
+      !list.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    else { throw PlannerFailure("readUnavailable", "The Map List is missing or unresolved.") }
+    return (
+      .init(
+        source: .init(kind: .list, id: identifier), sourceLifetimeId: lifetime, title: list.name),
+      list.archived
+    )
+  }
+
+  private func mapMemberships(list: PlannerMapCollection, context: ModelContext) throws
+    -> [MembershipSnapshot]
+  {
+    let identifier = list.source.id
+    let lifetime = list.sourceLifetimeId
+    let descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
+      predicate: #Predicate { $0.listId == identifier && $0.listLifetimeId == lifetime },
+      sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+    let memberships = try context.fetch(descriptor).map { try $0.value() }
+    guard Set(memberships.map(\.id)).count == memberships.count,
+      Set(memberships.map { $0.item.id }).count == memberships.count
+    else { throw PlannerFailure("readUnavailable", "The Map List has unresolved memberships.") }
+    return memberships
+  }
+
+  private func mapQueryContext(
+    query: PlannerItemQuery, snapshot: PlannerQuerySnapshot, context: ModelContext
+  ) throws -> MapQueryContext {
+    switch query.scope {
+    case .global, .inbox: return MapQueryContext()
+    case .list(let identifier):
+      let list = try mapList(identifier: identifier, context: context).collection
+      var result = MapQueryContext(collection: list)
+      for (index, membership) in try mapMemberships(list: list, context: context).enumerated() {
+        result.appearances[.membership(membership.id)] = .init(
+          source: membership.item,
+          placement: .listMembership(membershipId: membership.id, childPosition: Int64(index) + 1))
+      }
+      return result
+    case .itinerary(let identifier):
+      return try itineraryMapContext(
+        identifier: identifier, query: query, snapshot: snapshot, context: context)
+    }
+  }
+
+  private func itineraryMapContext(
+    identifier: UUID, query: PlannerItemQuery, snapshot: PlannerQuerySnapshot, context: ModelContext
+  ) throws -> MapQueryContext {
+    var descriptor = FetchDescriptor<PlannerSchemaV18.Itinerary>(
+      predicate: #Predicate { $0.id == identifier })
+    descriptor.fetchLimit = 2
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title]
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let itinerary = records.first, let lifetime = itinerary.lifetimeId,
+      !itinerary.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+      let presentation = snapshot.rowPresentation
+    else { throw PlannerFailure("readUnavailable", "The Map Itinerary is missing or unresolved.") }
+    let entriesDescriptor = FetchDescriptor<PlannerSchemaV18.ItineraryEntry>(
+      predicate: #Predicate { $0.itineraryId == identifier && $0.itineraryLifetimeId == lifetime },
+      sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+    let entries = try context.fetch(entriesDescriptor).map { try $0.value() }
+    guard Set(entries.map(\.id)).count == entries.count else {
+      throw PlannerFailure("readUnavailable", "The Map Itinerary has duplicate entries.")
+    }
+    var result = MapQueryContext(
+      collection: .init(
+        source: .init(kind: .itinerary, id: identifier), sourceLifetimeId: lifetime,
+        title: itinerary.title))
+    var matchingChildren: [UUID: Int64] = [:]
+    for identity in snapshot.rows {
+      if case .appearance(_, .expandedListItem(let owner, let entry, _)) = identity,
+        owner == identifier
+      {
+        matchingChildren[entry, default: 0] += 1
+      }
+    }
+    let hasItemRestrictions =
+      query.categories?.ids.isEmpty == false || query.tags?.ids.isEmpty == false
+      || query.lists?.ids.isEmpty == false || query.duration != nil || query.hasAddress
+      || query.hasLinks
+      || query.scheduled != .all
+    var matchingLists: Set<UUID> = []
+    if !hasItemRestrictions {
+      let headers = try listCatalogSnapshot(
+        session: snapshot.session,
+        query: .init(sourceKind: .list, text: query.text, archive: query.archive), context: context)
+      matchingLists = Set(
+        headers.rows.compactMap { identity in
+          guard case .source(let source) = identity else { return nil }
+          return source.id
+        })
+    }
+    for (index, entry) in entries.enumerated() {
+      let position = Int64(index) + 1
+      if entry.source.kind == "item" {
+        result.appearances[.entry(entry.id)] = .init(
+          source: entry.source,
+          placement: .itineraryItem(entryId: entry.id, routePosition: position))
+        continue
+      }
+      let savedList = try mapList(
+        identifier: entry.source.id, expectedLifetime: entry.source.lifetimeId, context: context)
+      let list = savedList.collection
+      let children = try mapMemberships(list: list, context: context)
+      var appearances: [ContextualQueryAppearance] = []
+      for (childIndex, membership) in children.enumerated() {
+        let localDone =
+          entry.expandedCompletions.first {
+            $0.context.membershipId == membership.id
+              && $0.context.membershipLifetimeId == membership.lifetimeId
+          }?.localDone ?? false
+        appearances.append(
+          .init(
+            item: membership.item,
+            appearance: .expandedListItem(
+              itineraryId: identifier, listEntryId: entry.id, membershipId: membership.id),
+            localDone: localDone, branchArchived: savedList.archived))
+        result.appearances[.expanded(entryId: entry.id, membershipId: membership.id)] = .init(
+          source: membership.item,
+          placement: .itineraryListItem(
+            entryId: entry.id, routePosition: position, list: list,
+            membershipId: membership.id, childPosition: Int64(childIndex) + 1))
+      }
+      let fullBranch = try contextualItemQuerySnapshot(
+        session: snapshot.session, container: list.source, appearances: appearances,
+        query: .init(
+          scope: query.scope, completion: .all, archive: .all, sort: .init(mode: .manual)),
+        presentation: presentation, membershipListsByItem: [:], context: context)
+      let matchesCompletion: Bool
+      switch query.completion {
+      case .all: matchesCompletion = true
+      case .todo: matchesCompletion = fullBranch.progress.first?.state != .complete
+      case .done: matchesCompletion = fullBranch.progress.first?.state == .complete
+      }
+      let matchesHeader = matchingLists.contains(list.source.id) && matchesCompletion
+      let count = matchingChildren[entry.id, default: 0]
+      if matchesHeader || count > 0 {
+        result.branches.append(
+          .init(
+            entryId: entry.id, routePosition: position, list: list,
+            matchesHeader: matchesHeader, matchingChildCount: count))
+      }
+    }
+    return result
   }
 
   private func readRows(

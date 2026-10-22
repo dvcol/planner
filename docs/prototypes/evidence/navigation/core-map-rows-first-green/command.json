@@ -1,0 +1,17 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "/private/tmp/PlannerMapRowsSource/Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerMapRowsBuild",
+  "--jobs",
+  "1",
+  "--disable-xctest",
+  "--enable-swift-testing",
+  "--filter",
+  "MapRowWindowTests",
+  "--xunit-output",
+  "/private/tmp/PlannerImportLifetime-core-map-rows-first-green.xml"
+]

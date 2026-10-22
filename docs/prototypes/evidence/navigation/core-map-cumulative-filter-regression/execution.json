@@ -1,0 +1,58 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.141,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "anotherWriterInvalidatesCachedMapInputsAndContextWithoutRetargeting()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 0.273950042,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyMapQueriesAndRejectedRequestsPreserveDataAndGeneration()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 0.076592125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()",
+      "className": "PlannerCoreStoreTests.MapRowWindowTests",
+      "seconds": 0.733477792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyCalendarWindowHasAReadableEmptyPage()",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.05220375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "allDayWindowUsesInclusiveCivilDatesAcrossDisplayZones(displayTimeZone:)",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.222090875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "timedWindowIncludesOverlapsAndStartOnlyEntriesAtExactBoundaries()",
+      "className": "PlannerCoreStoreTests.CalendarWindowQueryTests",
+      "seconds": 0.250938125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()",
+      "className": "PlannerCoreStoreTests.MapContextWindowTests",
+      "seconds": 0.443395416,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

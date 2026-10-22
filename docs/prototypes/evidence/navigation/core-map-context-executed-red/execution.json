@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 6.84,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()",
+      "className": "PlannerCoreStoreTests.MapContextWindowTests",
+      "seconds": 0.181589417,
+      "failures": [
+        "Issue recorded (error): Read the contextual Map inputs: .failed(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The Map appearance is not yet supported.\", details: nil))",
+        "Caught error: CancellationError() (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

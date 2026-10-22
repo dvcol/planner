@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000106833"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.170259">
+        <testcase classname="PlannerCoreStoreTests.MapRowWindowTests" name="mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()" time="0.169875834">
+            <failure message="Issue recorded (error): Read the complete saved Map inputs at offset 0: .failed(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;Map rows are not implemented yet.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

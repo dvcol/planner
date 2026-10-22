@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/6C6CBA68-2612-4522-BCAD-77A2E7171881",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/6D8DF241-9969-4723-B0F2-F4B22D2F2D74",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/2213FC2F-E12F-412F-8BE6-5C5300BD512F",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/D3B30E2B-FD81-4AE0-A311-875A06CA276A",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/CC20F427-E783-4525-9493-B2C21EEB0037"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "b972ca708c546ab031a7979f6941631707fd55c2b57834d11d9d30ef2486753c",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 5,
+  "hostProcessIdentifiers": [
+    7290
+  ]
+}

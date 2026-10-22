@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 6.692,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()",
+      "className": "PlannerCoreStoreTests.MapRowWindowTests",
+      "seconds": 0.03806825,
+      "failures": [
+        "Issue recorded (error): Decode the Map fixture: .invalid(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/sources/0/contentOrigins/notes\"), message: \"A declared backup property is missing.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

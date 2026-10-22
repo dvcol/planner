@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 6.758,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()",
+      "className": "PlannerCoreStoreTests.MapRowWindowTests",
+      "seconds": 0.169875834,
+      "failures": [
+        "Issue recorded (error): Read the complete saved Map inputs at offset 0: .failed(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"Map rows are not implemented yet.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

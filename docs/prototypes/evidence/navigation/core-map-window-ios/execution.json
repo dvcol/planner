@@ -1,0 +1,20 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 191.066,
+  "frozenInputsUnchanged": true,
+  "requestedClasses": [
+    "MapRowWindowTests",
+    "MapContextWindowTests",
+    "MapReadAdmissionTests",
+    "MapReadIntegrityTests",
+    "CalendarWindowQueryTests"
+  ],
+  "sqliteUnlinkWarnings": 0,
+  "summary": {
+    "result": "Passed",
+    "passedTests": 8,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

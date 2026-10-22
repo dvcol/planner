@@ -4,16 +4,11 @@ import Testing
 
 @testable import Planner
 
+@MainActor
 struct ItemListQueryRoutingTests {
   @Test func listGroupsOverHTTPNarrowLiveMembershipsAndPreserveContextualProgress() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let planner = PlannerCore.Planner(
-      configuration: PlannerStorageConfiguration(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+    let fixture = try makePlannerIntentStorage()
+    let planner = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await planner.bootstrap() else {
       Issue.record("Initialize the real graph before querying live List groups over HTTP.")
       return
