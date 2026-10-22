@@ -1,0 +1,14 @@
+{
+  "function": "testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark",
+  "unchanged": true,
+  "runs": [
+    {
+      "phase": "native-browser-linked-failure-red",
+      "sha256": "6c98e68660dfebaaee76ea35432d7986808255527af10b0ed7d03cce8c8ccd26"
+    },
+    {
+      "phase": "native-browser-linked-failure-green",
+      "sha256": "6c98e68660dfebaaee76ea35432d7986808255527af10b0ed7d03cce8c8ccd26"
+    }
+  ]
+}

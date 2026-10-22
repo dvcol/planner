@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "53289C6E-AC41-4C12-B0E4-9CFEBF026B85.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Linked guide recovers without changing its bookmark_0_7D454431-E700-4A1F-BFA4-6D0A2C4B6307.png",
+        "timestamp": 1792645980.836
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark"
+  }
+]

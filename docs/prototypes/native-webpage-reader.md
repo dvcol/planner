@@ -57,7 +57,7 @@ The [final Mac build-for-testing](evidence/navigation/native-itinerary-window-co
 ## Remaining acceptance
 
 - Add and qualify the ordinary browser external-opening control and rich-card secondary action.
-- Exercise load failure, repeated Retry, cancellations and a late response.
+- [Failure/Retry qualification](native-webpage-recovery.md) now passes nine affected reader functions per simulator, including repeated failure, failed linked-page targeting, toolbar recovery and Back history. Cancellation, late responses and live session/layout replacement remain open.
 - Prove website cookie/login persistence across reader closure and app relaunch without changing Planner backups.
 - Implement and qualify reported new-window navigation, download/unsupported-content fallback and direct-click versus automatic external-app handoff.
 - Keep reading after source/appearance removal, then return to the valid collection with an explanation and no retargeted action.

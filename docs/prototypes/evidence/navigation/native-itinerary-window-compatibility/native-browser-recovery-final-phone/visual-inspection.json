@@ -1,0 +1,26 @@
+{
+  "captures": [
+    {
+      "file": "recovered-linked-guide.png",
+      "sha256": "5e289c97f4fbbd7cd31b600c5e553f73cbd405259935bd01cee703af94c901e4",
+      "inspection": "Original own-window PNG inspected; the expected recovered guide is visibly rendered with native controls."
+    },
+    {
+      "file": "recovered-guide.png",
+      "sha256": "2bd44bc756b6d9867ed0f71c0fa7687c9db0410e46c490121cd4023f6b5bf609",
+      "inspection": "Original own-window PNG inspected; the expected recovered guide is visibly rendered with native controls."
+    },
+    {
+      "file": "recovered-history.png",
+      "sha256": "d8eb1cc9b25ca9b6829110a285ff7931410e288c398384f63d5b6d64129d99b2",
+      "inspection": "Original own-window PNG inspected; the expected recovered guide is visibly rendered with native controls."
+    },
+    {
+      "file": "toolbar-recovered-guide.png",
+      "sha256": "7ed5b6b570b6dca36e7de919b5fe6619dbf4245bd38d235238b83392e42e39f2",
+      "inspection": "Original own-window PNG inspected; the expected recovered guide is visibly rendered with native controls."
+    }
+  ],
+  "appearance": "Light, observed in original captures.",
+  "limits": "Four recovery captures inspected individually. Other five captures retain the affected ordinary reader journeys and paint assertions. No full-app, Mac runtime, accessibility, resize or physical acceptance is inferred."
+}

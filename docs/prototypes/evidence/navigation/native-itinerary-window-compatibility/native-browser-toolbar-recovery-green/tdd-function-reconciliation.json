@@ -1,0 +1,14 @@
+{
+  "function": "testToolbarReloadRecoversUnavailableSavedAndLinkedWebsites",
+  "unchanged": true,
+  "runs": [
+    {
+      "phase": "native-browser-toolbar-recovery-red",
+      "sha256": "0e0ea3ab1caf5f4992ff6e15901beb8db3d29500dee72a827957437f0adfa0ad"
+    },
+    {
+      "phase": "native-browser-toolbar-recovery-green",
+      "sha256": "0e0ea3ab1caf5f4992ff6e15901beb8db3d29500dee72a827957437f0adfa0ad"
+    }
+  ]
+}

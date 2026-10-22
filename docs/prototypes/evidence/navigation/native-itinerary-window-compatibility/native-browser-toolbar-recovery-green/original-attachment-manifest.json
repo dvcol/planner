@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "18F9F640-86CD-4DD2-AB8C-F5DF6CBBC131.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Toolbar reload recovers saved and linked guides_0_0FDFCD35-4E01-4B68-8FFB-8E36C6ED1148.png",
+        "timestamp": 1792646192.886
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testToolbarReloadRecoversUnavailableSavedAndLinkedWebsites()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testToolbarReloadRecoversUnavailableSavedAndLinkedWebsites"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "231C8C39-26D4-4915-A00D-B9FE5818EB21.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovered reload preserves native Back history_0_E594D252-D77D-4224-8E4C-ECF25F61B4F1.png",
+        "timestamp": 1792646302.297
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory"
+  }
+]

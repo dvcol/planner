@@ -1,0 +1,92 @@
+[
+  {
+    "file": "calendar-reader.png",
+    "original": "Calendar source guide uses the existing navigation stack_0_95C29484-AFDD-4689-9F98-35D95BC004CC.png",
+    "exportedFile": "E4C1BEE9-C61C-40CA-A785-8401746E6561.png",
+    "sha256": "4e7585fe9c02c2d9b621707c0779e67282a23df6f412e2f6acc840639e8548a2",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-linked-guide.png",
+    "original": "Linked guide recovers without changing its bookmark_0_6B88AC01-67BB-4B44-86E7-E241CF316ADC.png",
+    "exportedFile": "41E7681B-5059-4504-8E7B-EDFB45FC66A5.png",
+    "sha256": "d1b9e36f19ace4abff8c0ce385bd3647eb5d8a768684ee3b6e65f8ee2afc8323",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-guide.png",
+    "original": "Saved guide recovers after repeated failure_0_D66BFFDB-53DB-466F-AA0C-3FE9B274A226.png",
+    "exportedFile": "9ED22833-B05C-4C03-AFB2-95CC04379A3C.png",
+    "sha256": "62d6a9808db9e9345dc0d9768ea9894dc52128635462692d6388126b681d4323",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "itinerary-reader.png",
+    "original": "Itinerary guide keeps its plan return context_0_BB1D247C-C2CD-47A3-B74D-DE4D26566557.png",
+    "exportedFile": "F21C0AD2-6BEE-4A13-BA7C-D9D671FEB221.png",
+    "sha256": "a517d2f08c3654f9ba86875d94fe14c2ae6e1ab7f6be2a444d678bfa8ea5b610",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "list-appearance-return.png",
+    "original": "Browser return preserves the completed List appearance_0_B1D5B907-6AD2-4084-AA1E-AFBB0EFAF92D.png",
+    "exportedFile": "24C3B46B-7559-4C1B-A7A7-C2DC15AA1176.png",
+    "sha256": "4e50a7becc304a01eca0c73764d8786100ce897339f1377e1786419cda53d934",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "history-reader.png",
+    "original": "Native webpage history and reload preserve the original bookmark_0_05FB0107-396A-4703-ABF7-43E9BE6CFDF9.png",
+    "exportedFile": "80E3D7A0-514A-46D5-9E36-93A5C13EF9F6.png",
+    "sha256": "5c10108ce41c39aa6097cf7e72b1dd0be01dda42e6443ffe1cec01a5a35d09cb",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-history.png",
+    "original": "Recovered reload preserves native Back history_0_3CBA91DC-55BF-4197-8A65-2E427D90BE43.png",
+    "exportedFile": "8F6657D8-4BA2-419D-A7CB-02847947AE26.png",
+    "sha256": "b43c96c28d7c4dabe44d9916a216a0f687ca34fe7504af483e8dd550bcb902f4",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "item-reader.png",
+    "original": "Saved guide opens in native Planner webpage_0_C3C64C0A-4037-45C9-9D35-563D3D667FED.png",
+    "exportedFile": "F85A2D0C-AC06-4880-96C8-EBFB5F31E1E3.png",
+    "sha256": "1c3b5eea471ebf1c0eef8d835054e0bd4c63f6dba3b01445aac1db895accb7ef",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "toolbar-recovered-guide.png",
+    "original": "Toolbar reload recovers saved and linked guides_0_51B1E347-98A5-459E-A73D-5E8DC6C15511.png",
+    "exportedFile": "C844F616-CE7F-4E80-9021-8B8A0BAAD08B.png",
+    "sha256": "6ff30954ef2d217aa34a6f77d5c1c7593b9f11484c7e102f363ba1e02dd84c01",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "function": "testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark",
+  "unchanged": true,
+  "runs": [
+    {
+      "phase": "native-browser-repeated-failure-red",
+      "sha256": "5940a6bf23d0715978eafdcf100bd40cd0f180cbeec22abd81d05de4d7e143d5"
+    },
+    {
+      "phase": "native-browser-retry-request-red",
+      "sha256": "5940a6bf23d0715978eafdcf100bd40cd0f180cbeec22abd81d05de4d7e143d5"
+    },
+    {
+      "phase": "native-browser-repeated-failure-green",
+      "sha256": "5940a6bf23d0715978eafdcf100bd40cd0f180cbeec22abd81d05de4d7e143d5"
+    }
+  ]
+}
