@@ -1,0 +1,41 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "354A822C-8381-418C-AB94-92B2372A46EB.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native row completion preserves the same saved Item_0_00F9AB34-215B-4625-86E1-493E4A3BF927.png",
+        "timestamp": 1792656386.075
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "E92E5258-2A43-4A35-BEF1-D95FA4B20084.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native row completion in the Item catalog_0_F88573F9-1E72-4444-BBDB-9E538B02732B.png",
+        "timestamp": 1792656370.655
+      }
+    ],
+    "testIdentifier": "SavedItemJourneyTests/testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemJourneyTests/testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "E0D76549-0B7A-48F1-9D48-88307950F467.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_E3878D0C-8611-4042-A3DD-4276749C97C9.png",
+        "timestamp": 1792656439.007
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation"
+  }
+]

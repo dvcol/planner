@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2273A110-5880-42A4-8BC2-4EB09E66E937.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_6C3E6155-9AD3-49D9-B4E4-8983DC058B46.png",
+        "timestamp": 1792656659.704
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation"
+  }
+]

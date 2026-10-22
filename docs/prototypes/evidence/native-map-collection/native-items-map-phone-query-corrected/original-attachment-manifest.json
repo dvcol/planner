@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "143130FF-C23A-4862-A727-AA5EE57C0B73.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_F7B771B3-4237-4417-A84F-A0811A49E65E.png",
+        "timestamp": 1792655944.583
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation"
+  }
+]

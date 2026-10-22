@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "sameSourcesAsPhoneRun": true,
+  "runtimeCredit": false,
+  "meaning": "Actual Mac app/Share/navigation-test compilation. No native Mac UI interaction is claimed."
+}

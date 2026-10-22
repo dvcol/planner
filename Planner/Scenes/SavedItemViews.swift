@@ -14,6 +14,7 @@ enum SavedItemCatalogScope: String {
 struct SavedItemCatalog: View {
   private struct Request: Equatable {
     let scope: SavedItemCatalogScope
+    let representation: SavedCollectionRepresentation
     let filters: SavedItemFilters
     let searchText: String
     let sort: SavedItemSort
@@ -26,6 +27,9 @@ struct SavedItemCatalog: View {
   let store: SavedPlannerStore
   let scope: SavedItemCatalogScope
   let isActive: Bool
+  let mapCollection: SavedMapCollection?
+  let selectMapRow: (PlannerMapRowRead) -> Void
+  @Binding var representation: SavedCollectionRepresentation
   @Binding var selection: UUID?
   @Binding var filters: SavedItemFilters
   @Binding var searchText: String
@@ -41,7 +45,8 @@ struct SavedItemCatalog: View {
 
   private var request: Request {
     .init(
-      scope: scope, filters: filters, searchText: searchText, sort: sort,
+      scope: scope, representation: representation, filters: filters, searchText: searchText,
+      sort: sort,
       namespace: store.devicePreferenceNamespace, revision: store.changeRevision,
       isActive: isActive, retryIdentifier: retryIdentifier)
   }
@@ -55,23 +60,21 @@ struct SavedItemCatalog: View {
   }
 
   var body: some View {
-    List(selection: $selection) {
-      if let window {
-        ForEach(sourceRows, id: \.identifier) { index, identifier in
-          row(window.presentation(at: index), index: index, identifier: identifier)
-            .onScrollVisibilityChange { visible in
-              if visible {
-                visibleIdentifiers.insert(identifier)
-              } else {
-                visibleIdentifiers.remove(identifier)
-              }
-            }
+    Group {
+      if representation == .map {
+        if let mapCollection {
+          SavedMapCollectionView(collection: mapCollection, select: selectMapRow)
+        } else {
+          ProgressView("Opening Map")
         }
+      } else {
+        listContent
       }
     }
-    .listStyle(.plain)
-    .accessibilityIdentifier("\(scope.identifierPrefix).catalog")
-    .overlay { catalogStatus }
+    .navigationSplitViewColumnWidth(
+      min: representation == .map ? 320 : 220,
+      ideal: representation == .map ? 560 : 320, max: 800
+    )
     .task(id: request) { await reload() }
     .task(id: visibleIdentifiers) {
       guard let window, !visibleIdentifiers.isEmpty else { return }
@@ -88,6 +91,11 @@ struct SavedItemCatalog: View {
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
+      ToolbarItem {
+        SavedCollectionRepresentationMenu(
+          representation: $representation,
+          accessibilityIdentifier: "\(scope.identifierPrefix).representation")
+      }
       ToolbarItem {
         SavedItemFilterControl(
           filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
@@ -110,6 +118,26 @@ struct SavedItemCatalog: View {
         .accessibilityIdentifier("saved.item.addMenu")
       }
     }
+  }
+
+  private var listContent: some View {
+    List(selection: $selection) {
+      if let window {
+        ForEach(sourceRows, id: \.identifier) { index, identifier in
+          row(window.presentation(at: index), index: index, identifier: identifier)
+            .onScrollVisibilityChange { visible in
+              if visible {
+                visibleIdentifiers.insert(identifier)
+              } else {
+                visibleIdentifiers.remove(identifier)
+              }
+            }
+        }
+      }
+    }
+    .listStyle(.plain)
+    .accessibilityIdentifier("\(scope.identifierPrefix).catalog")
+    .overlay { catalogStatus }
   }
 
   @ViewBuilder
@@ -201,7 +229,8 @@ struct SavedItemCatalog: View {
   private func reload() async {
     guard !Task.isCancelled else { return }
     let request = request
-    guard request.isActive, let namespace = request.namespace else {
+    guard request.isActive, request.representation == .list, let namespace = request.namespace
+    else {
       window?.cancel()
       visibleIdentifiers = []
       return
@@ -215,15 +244,8 @@ struct SavedItemCatalog: View {
     visibleIdentifiers = []
     let identity = SavedItemWindowIdentity(namespace: namespace, savedRevision: request.revision)
     await window.reload(
-      query: .init(
-        scope: request.scope.queryValue, text: request.searchText,
-        completion: request.filters.completion.queryValue,
-        archive: request.filters.archive.queryValue,
-        categories: request.filters.categoryQuery, tags: request.filters.tagQuery,
-        lists: request.filters.listQuery, duration: request.filters.durationQuery,
-        hasAddress: request.filters.hasAddress,
-        hasLinks: request.filters.hasLinks, scheduled: request.filters.scheduled,
-        sort: request.sort.queryValue),
+      query: request.filters.itemQuery(
+        scope: request.scope.queryValue, text: request.searchText, sort: request.sort),
       identity: identity)
     guard !Task.isCancelled, self.request == request, window.state == .ready else { return }
     didLoad(request.scope, identity, sourceRows.first?.identifier)

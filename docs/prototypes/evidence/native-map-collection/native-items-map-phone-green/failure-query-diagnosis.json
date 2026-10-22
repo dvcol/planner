@@ -1,0 +1,11 @@
+{
+  "originalBoundary": "First implementation attempt, not passing credit",
+  "failedLine": 24,
+  "driverQueryType": "Button, selected by plannerElement fallback",
+  "actualContainerType": "Other",
+  "mapIdentifierPresent": true,
+  "pinIdentifierPresent": "saved.map.pin.35.0,139.0",
+  "locatedSummary": "1 of 2 items located",
+  "hierarchySha256": "a804dbadde6eb7e752638dd8f0470d41775deb887bdd3bc6e7a94fe46e19cd05",
+  "correction": "Query the identified Map container through the native any-element hierarchy. Production remains unchanged."
+}
