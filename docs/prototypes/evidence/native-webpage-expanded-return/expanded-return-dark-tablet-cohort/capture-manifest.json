@@ -1,0 +1,60 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "removed-itinerary-appearance-membership-retained.png",
+      "originalName": "Removed Itinerary appearance preserves its original List membership_0_D9467FBD-E5B1-4859-B7E4-079554E12E50.png",
+      "exportedFile": "851DBB38-C186-41B9-A63B-7747BC9B7A18.png",
+      "sha256": "7eb7b14a99df81cbbdce5716894c3e5d15998b3b0e201d9067a06ce7e188279b"
+    },
+    {
+      "file": "removed-itinerary-appearance-returned.png",
+      "originalName": "Removed Itinerary appearance returns to its plan_0_A15B6132-A26D-47C5-BD45-6C2EDF8238F5.png",
+      "exportedFile": "7D3F7536-DCB3-4CE3-8D15-0E73F696C92F.png",
+      "sha256": "e36d9591696af3f0f98fbae4217b2295d0c9d7d7b3f22560b6f96645d1a1b13f"
+    },
+    {
+      "file": "removed-itinerary-appearance-keeps-reading.png",
+      "originalName": "Removed Itinerary appearance leaves its guide open_0_5745FEA6-889D-448C-9E1F-89B6E38BDBD7.png",
+      "exportedFile": "964A2C54-B449-4088-A610-66D2DB5E0ABD.png",
+      "sha256": "3402c122a7aaddc062de85b1b0862c91344e1fa5a2b617343ab7d4fe85e08710"
+    },
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_98CC56E3-468B-42D4-B340-DD3592F86AF7.png",
+      "exportedFile": "748807EE-2C8F-4CFF-BDF4-F870BCA3B55E.png",
+      "sha256": "7c3cfebad63623bc04730988f665c4ba75993e70b3a459513af3137ff2865e18"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_2E9F4960-7EFE-4F05-B42E-65AC8483B79D.png",
+      "exportedFile": "F2F93497-11C1-4449-9DCD-F897921476C3.png",
+      "sha256": "5c7dff5842573c76c5b2dac2822243b2d7b75389b0ad3191fe9648693b730c70"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_42D92BC8-67FD-4DB6-BE00-284EBB297E15.png",
+      "exportedFile": "2320EF95-3C3B-4458-B3D4-C66065E1FF3D.png",
+      "sha256": "efb33a01325e3aed36b362c4762648b0a81a380ab23403f79cf4966dcb539290"
+    },
+    {
+      "file": "removed-branch-membership-retained.png",
+      "originalName": "Repeated List removal preserves standalone completion and original membership_0_B12FF21C-1975-4A4B-B732-E005106A0643.png",
+      "exportedFile": "DD06DF58-77CE-4D82-965D-9AFFA6BA9282.png",
+      "sha256": "fd7469d872d541ca7fc430a4e9a08ad0922b28a8cdbc4eca1c6d6969b3d5a6f8"
+    },
+    {
+      "file": "removed-branch-returned.png",
+      "originalName": "Repeated List return preserves the other appearance completion_0_7B1B1641-BCFD-4B2E-8B63-D0651EE32A0C.png",
+      "exportedFile": "7B2C1607-6DFE-4719-9EBF-0C4DD0B4EC41.png",
+      "sha256": "d77049c14a48ccbb4d4a1527efa1d26835ba2d1bb1760b0832abe752473d488c"
+    },
+    {
+      "file": "removed-branch-keeps-reading.png",
+      "originalName": "Removed repeated List branch keeps its exact guide open_0_A9A265FC-E27A-461F-9931-F3112A8E6C1D.png",
+      "exportedFile": "5DD693C8-7623-4B2A-ABA7-9436604FF198.png",
+      "sha256": "9525ee02a2b62f07734922d688d9b6e5687123744de8bde38d09641a3f06a4ea"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

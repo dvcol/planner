@@ -1,0 +1,42 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "removed-itinerary-appearance-membership-retained.png",
+      "originalName": "Removed Itinerary appearance preserves its original List membership_0_3A5FC9B9-631D-4A20-83EF-B6F75B99F775.png",
+      "exportedFile": "37918856-162C-4E54-A896-2F676A3420D9.png",
+      "sha256": "d7e3c367d5ad7940e59db4e8de0c7f14294abca6d4d7df11d48822dbd76d5778"
+    },
+    {
+      "file": "removed-itinerary-appearance-returned.png",
+      "originalName": "Removed Itinerary appearance returns to its plan_0_5014B08A-A627-42FD-AA09-74037E741617.png",
+      "exportedFile": "5C701A04-4A1E-4B35-ACDB-83A60FFA8654.png",
+      "sha256": "a4f5577b63d246d27c7d9190466629d022c8e80df30541b7f1845f35ea85105a"
+    },
+    {
+      "file": "removed-itinerary-appearance-keeps-reading.png",
+      "originalName": "Removed Itinerary appearance leaves its guide open_0_6CA1C8A6-E416-4D64-846F-C52C89345C28.png",
+      "exportedFile": "BEDFC978-5916-4EA2-91A4-D1AAD01A36E2.png",
+      "sha256": "7d141c5326039fd492e01a8900bbde68a0d60af20435eb814c887ae26322838a"
+    },
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_3E558AFB-F2CB-4B29-9531-8D446D6428BA.png",
+      "exportedFile": "AF966929-7116-4FDB-B4E3-4CCB43D39061.png",
+      "sha256": "27e623bd33ecc6a6ad915eeb67148cd7eee46e72254b86f47bdecff759fc2678"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_B16B5C47-F3C1-47CD-BB61-EC750A6BB780.png",
+      "exportedFile": "471C091F-5DC9-44BD-B98E-9462A092F3A1.png",
+      "sha256": "8fdf4f6aa46fb6769de3d1ef438637bfd48cf8ea329e9f5116994fbfe8bb1adf"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_3C019821-FE8F-4A45-84B9-5B55D56C3E81.png",
+      "exportedFile": "5DEC3366-10D3-41C0-A57F-77D6A48FFFEA.png",
+      "sha256": "ec19a86cbc963d86a841f25e356468b3a32b2de14999c96a163a983b254647e8"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

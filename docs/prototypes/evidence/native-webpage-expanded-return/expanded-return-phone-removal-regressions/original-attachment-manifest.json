@@ -1,0 +1,68 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "37918856-162C-4E54-A896-2F676A3420D9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance preserves its original List membership_0_3A5FC9B9-631D-4A20-83EF-B6F75B99F775.png",
+        "timestamp": 1792697578.548
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5C701A04-4A1E-4B35-ACDB-83A60FFA8654.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance returns to its plan_0_5014B08A-A627-42FD-AA09-74037E741617.png",
+        "timestamp": 1792697559.227
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "BEDFC978-5916-4EA2-91A4-D1AAD01A36E2.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance leaves its guide open_0_6CA1C8A6-E416-4D64-846F-C52C89345C28.png",
+        "timestamp": 1792697550.395
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedItineraryAppearanceKeepsItsGuideAndReturnsToTheSurvivingPlan()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedItineraryAppearanceKeepsItsGuideAndReturnsToTheSurvivingPlan"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "AF966929-7116-4FDB-B4E3-4CCB43D39061.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed browser appearance preserves its shared Todo Item_0_3E558AFB-F2CB-4B29-9531-8D446D6428BA.png",
+        "timestamp": 1792697619.412
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "471C091F-5DC9-44BD-B98E-9462A092F3A1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed browser appearance returns to its original List_0_B16B5C47-F3C1-47CD-BB61-EC750A6BB780.png",
+        "timestamp": 1792697609.848
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5DEC3366-10D3-41C0-A57F-77D6A48FFFEA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed List appearance leaves the original guide open_0_3C019821-FE8F-4A45-84B9-5B55D56C3E81.png",
+        "timestamp": 1792697604.734
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem"
+  }
+]

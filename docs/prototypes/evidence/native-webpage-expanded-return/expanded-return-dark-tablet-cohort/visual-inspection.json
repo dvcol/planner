@@ -1,0 +1,14 @@
+{
+  "inspectedOriginalFiles": [
+    "removed-branch-keeps-reading.png",
+    "removed-branch-returned.png",
+    "removed-branch-membership-retained.png"
+  ],
+  "observations": [
+    "The dark guide remains beside the live itinerary after exact branch removal, with no interrupting alert.",
+    "Return displays City trip with 1 of 2 items done, the direct Hotel unchecked, the surviving Weekend child checked and the third pane showing Choose an Item. The distinct itinerary-owned guide remains.",
+    "The standalone Weekend membership remains checked with 1 of 1 item done and its original guide/location metadata; the third pane remains empty.",
+    "Native semantic surfaces, text and controls use dark appearance. This is not a complete visual/accessibility acceptance pass."
+  ],
+  "limits": "Three new-case originals inspected out of nine retained captures. Six regression originals are retained without additional visual-inspection credit. Actual Mac UI and physical-device gates remain open."
+}

@@ -1,0 +1,45 @@
+{
+  "base": "62439582c8de73eea669a780c5e39a13b82d8e06",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "expanded-return-phone-typed-controls",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 3,
+      "inspectedOriginalCaptures": 3,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "expanded-return-phone-removal-regressions",
+      "passedFunctions": 2,
+      "retainedOriginalCaptures": 6,
+      "inspectedOriginalCaptures": 0,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "expanded-return-dark-tablet-cohort",
+      "passedFunctions": 3,
+      "retainedOriginalCaptures": 9,
+      "inspectedOriginalCaptures": 3,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 6,
+  "totalRetainedOriginalCaptures": 18,
+  "totalInspectedOriginalCaptures": 6,
+  "macCompiler": {
+    "phase": "expanded-return-mac-compiler",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "productionChanged": false,
+  "limits": [
+    "This qualifies one exact expanded-branch removal with a distinct surviving repeated-branch Done state and standalone Done membership. It does not qualify every source-removal/replacement lifetime.",
+    "Actual Mac UI/resizing, interactive reader closure, broad accessibility, physical devices and final whole-app polish remain open.",
+    "Both initial driver failures remain failed and are not counted in the final totals."
+  ],
+  "meaning": "All final inputs match and each source/product boundary was validated before reuse. Original native capture bytes reconcile. Only the explicitly listed subset receives visual-inspection credit."
+}

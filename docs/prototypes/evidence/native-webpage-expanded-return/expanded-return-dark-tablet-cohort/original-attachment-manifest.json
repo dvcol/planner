@@ -1,0 +1,101 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "851DBB38-C186-41B9-A63B-7747BC9B7A18.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance preserves its original List membership_0_D9467FBD-E5B1-4859-B7E4-079554E12E50.png",
+        "timestamp": 1792697346.727
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "7D3F7536-DCB3-4CE3-8D15-0E73F696C92F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance returns to its plan_0_A15B6132-A26D-47C5-BD45-6C2EDF8238F5.png",
+        "timestamp": 1792697330.264
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "964A2C54-B449-4088-A610-66D2DB5E0ABD.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance leaves its guide open_0_5745FEA6-889D-448C-9E1F-89B6E38BDBD7.png",
+        "timestamp": 1792697323.018
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedItineraryAppearanceKeepsItsGuideAndReturnsToTheSurvivingPlan()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedItineraryAppearanceKeepsItsGuideAndReturnsToTheSurvivingPlan"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "748807EE-2C8F-4CFF-BDF4-F870BCA3B55E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed browser appearance preserves its shared Todo Item_0_98CC56E3-468B-42D4-B340-DD3592F86AF7.png",
+        "timestamp": 1792697383.917
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "F2F93497-11C1-4449-9DCD-F897921476C3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed browser appearance returns to its original List_0_2E9F4960-7EFE-4F05-B42E-65AC8483B79D.png",
+        "timestamp": 1792697375.032
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2320EF95-3C3B-4458-B3D4-C66065E1FF3D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed List appearance leaves the original guide open_0_42D92BC8-67FD-4DB6-BE00-284EBB297E15.png",
+        "timestamp": 1792697369.81
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "DD06DF58-77CE-4D82-965D-9AFFA6BA9282.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated List removal preserves standalone completion and original membership_0_B12FF21C-1975-4A4B-B732-E005106A0643.png",
+        "timestamp": 1792697473.953
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "7B2C1607-6DFE-4719-9EBF-0C4DD0B4EC41.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated List return preserves the other appearance completion_0_7B1B1641-BCFD-4B2E-8B63-D0651EE32A0C.png",
+        "timestamp": 1792697454.991
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5DD693C8-7623-4B2A-ABA7-9436604FF198.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed repeated List branch keeps its exact guide open_0_A9A265FC-E27A-461F-9931-F3112A8E6C1D.png",
+        "timestamp": 1792697448.698
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion"
+  }
+]

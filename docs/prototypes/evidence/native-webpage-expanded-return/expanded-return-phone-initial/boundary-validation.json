@@ -1,0 +1,54 @@
+{
+  "sourceInputCount": 1081,
+  "sourceDifferences": [],
+  "retainedProductCount": 4,
+  "productDifferences": [],
+  "exitCode": 65,
+  "testResult": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+          "deviceName": "iPhone 18 Pro",
+          "modelName": "iPhone 18 Pro",
+          "osBuildNumber": "24A434",
+          "osVersion": "27.0",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerFixtures \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1792696869.106,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1792696798.578,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Failed to swipe up \"saved.itinerary.contents\" Button: No matches found for Elements matching predicate '\"saved.itinerary.contents\" IN identifiers' from input {(\n    Button, identifier: 'fixture.writer.menu', label: 'Fixture writer',\n    Button,\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar',\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries', Selected,\n    Button, identifier: 'BackButton', label: 'Itineraries',\n    Button, identifier: 'saved.itinerary.filters', label: 'All',\n    Button, identifier: 'saved.itinerary.reorder', label: 'Edit',\n    Button, identifier: 'saved.itinerary.entry.new', label: 'Add entry',\n    Button, identifier: 'saved.itinerary.edit', label: 'Edit itinerary',\n    Button, identifier: 'OverflowBarButtonItem', label: 'More',\n    Button, identifier: 'saved.itinerary.completion.DE826267-1DCA-404B-9627-9F3E6EF4C7D0', label: 'Mark Hotel done in this Itinerary', value: To do,\n    Button, identifier: 'saved.itinerary.appearance.DE826267-1DCA-404B-9627-9F3E6EF4C7D0', label: 'Hotel', value: Hotel, Museum guide,\n    Button, identifier: 'saved.itinerary.entry.estimate.9DD9DFF9-CBE9-4D99-893E-9CF566E5B388.full-saved.itinerary.entry.estimate.9DD9DFF9-CBE9-4D99-893E-9CF566E5B388.remaining-saved.itinerary.entry.estimate.9DD9DFF9-CBE9-4D99-893E-9CF566E5B388.warning.missing-saved.itinerary.entry.progress.9DD9DFF9-CBE9-4D99-893E-9CF566E5B388', label: 'Weekend, Estimate, Remaining, 1 estimate missing, 0 of 1 item done', value: At least 0 minutes...,\n    Button\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 14;\n    \"XC_kAXXCAttributeElementBaseType\" = NSObject;\n    \"XC_kAXXCAttributeElementType\" = \"SwiftUI.AccessibilityNode\";\n    \"XC_kAXXCAttributeTraits\" = 1108101562369;\n}\nSee test report attachments for more detail.",
+        "targetName": "PlannerFixtureUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "SavedBrowserSourceReturnJourneyTests/testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion",
+        "testName": "testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion()"
+      }
+    ],
+    "title": "Test - PlannerFixtures",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "meaning": "The new native function fails before the independent removal because the driver looks for a contents Button. The assertion failure remains failed, including its later empty-suite result."
+}

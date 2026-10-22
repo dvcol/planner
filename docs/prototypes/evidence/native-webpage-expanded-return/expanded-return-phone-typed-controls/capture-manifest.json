@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "removed-branch-membership-retained.png",
+      "originalName": "Repeated List removal preserves standalone completion and original membership_0_A73DEEEC-22BE-4AC2-82F5-36E00826C74B.png",
+      "exportedFile": "EBA31AEE-48AC-41FD-875C-7B8C5918EB96.png",
+      "sha256": "de3f2522f04f2e30e437d988a3e90c1f3475e82e6bd6bc83de6d976f947b489e"
+    },
+    {
+      "file": "removed-branch-returned.png",
+      "originalName": "Repeated List return preserves the other appearance completion_0_0CCB2454-5711-459A-994D-963DBB526B03.png",
+      "exportedFile": "B3EB0C9A-7362-483B-AE82-AC282FF083ED.png",
+      "sha256": "339d98808c5a91a9b0f749bbedf90226b93abb856b7ccf851c08b298220405cf"
+    },
+    {
+      "file": "removed-branch-keeps-reading.png",
+      "originalName": "Removed repeated List branch keeps its exact guide open_0_6A19C018-F026-49D8-9CCD-43BAEE96C82E.png",
+      "exportedFile": "165CFA7D-D011-4B0B-BEDC-EEDEE886ABA1.png",
+      "sha256": "7e87de9d940498b27846b0b14f26e62f83b2a8d02b9a98769de48e105c28ff58"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

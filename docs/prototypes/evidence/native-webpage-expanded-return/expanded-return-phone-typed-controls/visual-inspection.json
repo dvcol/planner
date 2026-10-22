@@ -1,0 +1,14 @@
+{
+  "inspectedOriginalFiles": [
+    "removed-branch-keeps-reading.png",
+    "removed-branch-returned.png",
+    "removed-branch-membership-retained.png"
+  ],
+  "observations": [
+    "The original guide remains readable after the exact first Weekend branch is removed, with no interrupting alert.",
+    "The returned route shows the direct Hotel unchecked and the other Weekend child still checked with its full branch progress. The removed appearance is absent and Item details are not selected.",
+    "The original standalone Weekend membership is still checked with its bookmark/location metadata and complete progress.",
+    "The duplicate compact List title and crowded scrolled Itinerary toolbar remain final UI-polish findings."
+  ],
+  "limits": "All three original captures inspected. The complete native function separately verifies global Todo and the exact original bookmark/List/membership identities. No Mac UI or physical-device credit."
+}

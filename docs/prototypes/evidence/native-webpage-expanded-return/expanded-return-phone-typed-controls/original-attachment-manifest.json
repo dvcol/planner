@@ -1,0 +1,35 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "EBA31AEE-48AC-41FD-875C-7B8C5918EB96.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated List removal preserves standalone completion and original membership_0_A73DEEEC-22BE-4AC2-82F5-36E00826C74B.png",
+        "timestamp": 1792697238.538
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B3EB0C9A-7362-483B-AE82-AC282FF083ED.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated List return preserves the other appearance completion_0_0CCB2454-5711-459A-994D-963DBB526B03.png",
+        "timestamp": 1792697212.837
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "165CFA7D-D011-4B0B-BEDC-EEDEE886ABA1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed repeated List branch keeps its exact guide open_0_6A19C018-F026-49D8-9CCD-43BAEE96C82E.png",
+        "timestamp": 1792697206.391
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion"
+  }
+]

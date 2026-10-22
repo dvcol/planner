@@ -1,0 +1,9 @@
+{
+  "nativeFailure": "The actual log repeatedly resolves saved.item.completion as a Button before the Boolean wait fails.",
+  "productionControl": {
+    "file": "Planner/Scenes/SavedItemViews.swift",
+    "declaration": "Toggle, accessibility identifier saved.item.completion"
+  },
+  "limits": "This failure does not retain a full native hierarchy or prove the global completion value. The corrected driver must execute the complete assertion.",
+  "meaning": "Use descendant queries for the global Toggle and saved bookmark, as existing native journeys already do. No product change follows from the Button-only helper failure."
+}

@@ -1,0 +1,18 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "removed-branch-returned.png",
+      "originalName": "Repeated List return preserves the other appearance completion_0_E4E1C243-31AB-4C70-AD3F-8938F595632E.png",
+      "exportedFile": "950DC2B7-2477-4599-91D8-F94B0E9A92F5.png",
+      "sha256": "90c165960f8f9ea171f3ca2e5c5ec89471913f0fdf827734fcf4ed3d7554efe8"
+    },
+    {
+      "file": "removed-branch-keeps-reading.png",
+      "originalName": "Removed repeated List branch keeps its exact guide open_0_C9FA2AC7-376E-4CE9-8A81-F4F13E14CF79.png",
+      "exportedFile": "C2658F91-E1D1-45BB-8A79-F15F99850280.png",
+      "sha256": "34b80594cd6b2ce4c56f604bff1f04aed4756a566dce462ecc235e0cbae5b5cb"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

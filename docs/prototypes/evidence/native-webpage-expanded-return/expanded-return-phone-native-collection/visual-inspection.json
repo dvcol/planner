@@ -1,0 +1,12 @@
+{
+  "inspectedOriginalFiles": [
+    "removed-branch-keeps-reading.png",
+    "removed-branch-returned.png"
+  ],
+  "observations": [
+    "The guide stays readable with no alert after independent branch removal.",
+    "Return leaves the direct Hotel unchecked and the surviving Weekend child checked, with no selected Item detail.",
+    "Crowded scrolled controls remain a final UI-polish finding."
+  ],
+  "limits": "Two original captures inspected; the full function remains failed at a later driver lookup and has no complete passing credit."
+}

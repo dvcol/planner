@@ -14,6 +14,167 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     try await qualifyUnavailableItineraryGuide(opensItemAppearance: true, removesEntryOnly: true)
   }
 
+  func testRemovedRepeatedListBranchKeepsItsGuideAndOtherCompletion() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString, "--fixture-itinerary",
+      "--fixture-repeated-itinerary-list",
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let list = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(list.waitForExistence(timeout: 20))
+    let listIdentifier = list.identifier
+    list.activateForPlannerJourney()
+    application.chooseSavedPlannerStateFilter(
+      "All completion states", control: application.plannerElement("saved.list.filters"))
+    let membership = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(membership.waitForExistence(timeout: 10))
+    let membershipIdentifier = membership.identifier
+    let membershipCompletion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    membershipCompletion.activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", "Completed"),
+            object: membershipCompletion)
+        ], timeout: 10), .completed)
+    application.openPlannerSection("Itineraries")
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+    itinerary.activateForPlannerJourney()
+    application.chooseSavedPlannerStateFilter(
+      "All completion states", control: application.plannerElement("saved.itinerary.filters"))
+    let contents = application.descendants(matching: .any)
+      .matching(identifier: "saved.itinerary.contents").firstMatch
+    XCTAssertTrue(contents.waitForExistence(timeout: 10))
+    let appearances = application.buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.appearance.", "Hotel"))
+    var expandedIdentifiers: [String] = []
+    for _ in 0..<12 {
+      for appearance in appearances.allElementsBoundByIndex
+      where appearance.identifier.split(separator: ".").count == 5 && appearance.isHittable {
+        if !expandedIdentifiers.contains(appearance.identifier) {
+          expandedIdentifiers.append(appearance.identifier)
+        }
+      }
+      if expandedIdentifiers.count == 2 { break }
+      contents.swipeUp()
+    }
+    XCTAssertEqual(expandedIdentifiers.count, 2)
+    let removedIdentifier = try XCTUnwrap(expandedIdentifiers.first)
+    let survivingIdentifier = try XCTUnwrap(expandedIdentifiers.last)
+    XCTAssertNotEqual(removedIdentifier, survivingIdentifier)
+    let survivingCompletion = application.buttons[
+      survivingIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+    survivingCompletion.activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", "Completed"),
+            object: survivingCompletion)
+        ], timeout: 10), .completed)
+    let removedAppearance = application.buttons[removedIdentifier]
+    for _ in 0..<8 where !removedAppearance.isHittable { contents.swipeDown() }
+    XCTAssertTrue(removedAppearance.isHittable)
+    let removedCompletion = application.buttons[
+      removedIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+    XCTAssertEqual(removedCompletion.value as? String, "To do")
+    removedAppearance.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.link.", "Museum guide")
+    ).firstMatch
+    for _ in 0..<6 where !link.isHittable { application.swipeUp() }
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    XCTAssertEqual(link.value as? String, destination.absoluteString)
+    link.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    let returnToItem = application.buttons["saved.browser.return"]
+    XCTAssertEqual(returnToItem.label, "Return to item")
+    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
+    application.plannerElement("fixture.writer.removeWeekendBranch").activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(
+              format: "label == %@", "Removed first Weekend branch from City trip"),
+            object: application.staticTexts["fixture.writer.status"])
+        ], timeout: 10), .completed)
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    let reading = XCTAttachment(screenshot: application.screenshot())
+    reading.name = "Removed repeated List branch keeps its exact guide open"
+    reading.lifetime = .keepAlways
+    add(reading)
+    returnToItem.activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      explanation.staticTexts[
+        "The original itinerary entry is no longer available. Returned to the Itinerary."
+      ].exists)
+    explanation.buttons["OK"].activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.buttons[removedIdentifier].exists)
+    for _ in 0..<8 where !application.buttons[survivingIdentifier].isHittable { contents.swipeUp() }
+    XCTAssertTrue(application.buttons[survivingIdentifier].waitForExistence(timeout: 10))
+    XCTAssertEqual(survivingCompletion.value as? String, "Completed")
+    XCTAssertFalse(application.staticTexts["Original notes"].exists)
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    returned.name = "Repeated List return preserves the other appearance completion"
+    returned.lifetime = .keepAlways
+    add(returned)
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    source.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    let retainedBookmark = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !retainedBookmark.isHittable { application.swipeUp() }
+    XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+    application.openPlannerSection("Lists")
+    let retainedList = application.savedPlannerListRow("Weekend")
+    if !retainedList.exists {
+      let back = application.navigationBars.buttons["BackButton"].firstMatch
+      XCTAssertTrue(back.waitForExistence(timeout: 5))
+      back.activateForPlannerJourney()
+    }
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedList.identifier, listIdentifier)
+    retainedList.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(membershipIdentifier).waitForExistence(timeout: 10))
+    XCTAssertEqual(membershipCompletion.value as? String, "Completed")
+    let retained = XCTAttachment(screenshot: application.screenshot())
+    retained.name = "Repeated List removal preserves standalone completion and original membership"
+    retained.lifetime = .keepAlways
+    add(retained)
+  }
+
   private func qualifyUnavailableItineraryGuide(
     opensItemAppearance: Bool, removesEntryOnly: Bool = false
   ) async throws {

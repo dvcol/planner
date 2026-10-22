@@ -1,0 +1,8 @@
+{
+  "originalHierarchySha256": "f8e0d2ddba0ef2cbdb1d0fe69e9d6e6d12f6c652c77b0436bc100fa39b774083",
+  "relevantNativeLines": [
+    "                                          CollectionView, 0x107aafd40, {{0.0, 0.0}, {402.0, 803.3}}, identifier: 'saved.itinerary.contents' <AX element pid: 15778, elementOrHash.elementID: 4700635136.456>",
+    "                                                      Button, 0x107b03200, {{68.0, 664.0}, {315.7, 58.7}}, identifier: 'saved.itinerary.appearance.DE826267-1DCA-404B-9627-9F3E6EF4C7D0', label: 'Hotel', value: Hotel, Museum guide <AX element pid: 15778, elementOrHash.elementID: 4705610208.557>"
+  ],
+  "meaning": "Inspect actual roles and visible branch rows before changing the test driver. No removal or browser Return is reached."
+}
