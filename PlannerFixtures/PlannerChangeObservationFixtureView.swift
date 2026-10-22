@@ -34,6 +34,10 @@ struct PlannerChangeObservationFixtureView: View {
                 .accessibilityIdentifier("fixture.writer.deleteCityTrip")
               Button("Remove Hotel from City trip") { Task { await fixture.removeCityTripEntry() } }
                 .accessibilityIdentifier("fixture.writer.removeCityTripEntry")
+              Button("Remove first Weekend branch") {
+                Task { await fixture.removeFirstWeekendBranch() }
+              }
+              .accessibilityIdentifier("fixture.writer.removeWeekendBranch")
               Button("Damage recovery checkpoint") { Task { await fixture.damageRecovery() } }
                 .accessibilityIdentifier("fixture.writer.damageRecovery")
               Button("Repair recovery checkpoint") { Task { await fixture.repairRecovery() } }
@@ -154,6 +158,10 @@ private final class PlannerChangeObservationFixture {
           .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last))
         _ = try await save(
           .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+        if arguments.contains("--fixture-repeated-itinerary-list") {
+          _ = try await save(
+            .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+        }
       }
     }
     return .init(configuration: configuration, writer: writer, session: session, source: source)
@@ -268,6 +276,45 @@ private final class PlannerChangeObservationFixture {
       return
     }
     status = "No Hotel Itinerary entry to remove"
+  }
+
+  func removeFirstWeekendBranch() async {
+    guard
+      case .source(.item(let current)) = await writer.read(
+        session: session, request: .source(source)),
+      let itinerary = current.references.compactMap({ reference -> PlannerEntityReference? in
+        guard case .itineraryEntry(_, let owner, let item) = reference, item == source else {
+          return nil
+        }
+        return owner
+      }).first,
+      case .snapshot(let snapshot) = await writer.query(
+        .init(
+          session: session,
+          request: .items(
+            .init(
+              scope: .itinerary(itinerary.id), completion: .all, archive: .all,
+              sort: .init(mode: .manual)))))
+    else {
+      status = "Independent writer could not read the ordered Weekend branches"
+      return
+    }
+    for row in snapshot.rows {
+      guard case .appearance(_, .expandedListItem(_, let entryIdentifier, _)) = row else {
+        continue
+      }
+      let result = await writer.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .removeItineraryEntry(itineraryId: itinerary.id, entryId: entryIdentifier)))
+      if case .applied(_, .complete) = result.outcome {
+        status = "Removed first Weekend branch from City trip"
+      } else {
+        status = "Independent writer did not remove the first Weekend branch"
+      }
+      return
+    }
+    status = "No Weekend branch to remove"
   }
 
   private func deleteSource(_ target: PlannerEntityReference, name: String) async {
