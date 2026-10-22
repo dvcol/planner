@@ -1,0 +1,13 @@
+{
+  "processIdentifier": 19278,
+  "observedAt": "2026-10-22 09:54:52.665 +0900",
+  "launchTime": "2026-10-22 08:16:50.861 +0900",
+  "libraryPath": "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib",
+  "loadedImageUUID": "FA29A83E-B4D7-3006-9927-4FD0D1E622EC",
+  "onDiskImageUUID": "B8FF861C-DF73-3A2E-9EEC-4D689D46C009",
+  "imagesDiffer": true,
+  "onDiskSha256": "1f42e5597eb98c379871b06ab9ec64d4c125b5ce8d61ab6d010a51ae1292adca",
+  "localOriginalSamplePath": "/private/tmp/PlannerRunningTitleAppSample.txt",
+  "localOriginalSampleSha256": "2bebbc25f32d5a2c881e3b48b585934365a424a72dfb1fbd92e0d771155fd63d",
+  "interpretation": "The existing process does not execute the exact library currently on disk. This invalidates path-only freshness evidence. It does not by itself establish which layout behavior the new build has."
+}
