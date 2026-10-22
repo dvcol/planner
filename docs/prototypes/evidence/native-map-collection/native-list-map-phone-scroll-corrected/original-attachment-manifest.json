@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "16A621AA-811D-4FF5-9BBF-91941CB7E764.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "List Map opens its exact completed membership_0_A18A9D54-86E5-4E14-83FE-3C921BE26793.png",
+        "timestamp": 1792659149.407
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource"
+  }
+]

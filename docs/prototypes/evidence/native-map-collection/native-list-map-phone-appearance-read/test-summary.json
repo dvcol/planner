@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792658789.1,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792658692.036,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to tap \"saved.collection.showMap\" Button: No matches found for Elements matching predicate '\"saved.collection.showMap\" IN identifiers' from input {(\n    Button, label: 'View',\n    Button, label: 'List',\n    Button, label: 'Map',\n    Button, identifier: 'list.bullet', label: 'Lists', Selected,\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar',\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'BackButton', label: 'Planner',\n    Button, identifier: 'saved.appearance.completion.B0A18827-FDB1-4AF9-8697-CC60C1125BFD', label: 'Mark Map museum undone in this List', value: Completed, Selected,\n    Button, identifier: 'saved.appearance.B0A18827-FDB1-4AF9-8697-CC60C1125BFD', label: 'Map museum', value: Maps\n)}",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource",
+      "testName" : "testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "87B1054A-B3E2-4481-BB66-AED2F52E4AFC.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted native Map marker keeps exact Item choices_0_C6D9C853-71A4-43AA-BACF-0D3A624460FA.png",
+        "timestamp": 1792659462.86
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5DB6E5E0-F98D-43B5-B594-DE18244D82B0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_DE187060-D1F4-43AB-AE94-5BFC5C5D9ACC.png",
+        "timestamp": 1792659521.726
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "C371A231-07A2-4AB8-A0D3-D64CE15D37E0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "List Map opens its exact completed membership_0_43B77A38-B27A-4096-823D-7375DF7FE430.png",
+        "timestamp": 1792659599.352
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource"
+  }
+]

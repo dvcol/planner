@@ -38,8 +38,20 @@ private struct SavedListWindowInputs: Equatable {
   let isReviewingDeletion: Bool
 }
 
-private struct SavedMapCatalogRequest: Equatable {
-  let scope: SavedItemCatalogScope
+private enum SavedMapScope: Equatable {
+  case catalog(SavedItemCatalogScope)
+  case list(UUID)
+
+  var queryValue: PlannerItemQuery.Scope {
+    switch self {
+    case .catalog(let scope): scope.queryValue
+    case .list(let identifier): .list(identifier)
+    }
+  }
+}
+
+private struct SavedMapRequest: Equatable {
+  let scope: SavedMapScope
   let filters: SavedItemFilters
   let searchText: String
   let sort: SavedItemSort
@@ -54,6 +66,8 @@ struct SavedPlannerView: View {
   @State private var associationUndo = SavedAssociationUndoHistory()
   @State private var website: SavedWebsiteSession?
   @State private var mapCollection: SavedMapCollection?
+  @State private var loadedMapRequest: SavedMapRequest?
+  @State private var listRepresentation = SavedCollectionRepresentation.list
   @State private var itemsRepresentation = SavedCollectionRepresentation.list
   @State private var inboxRepresentation = SavedCollectionRepresentation.list
   #if os(iOS)
@@ -197,7 +211,7 @@ struct SavedPlannerView: View {
 
   var body: some View {
     ZStack { listLifecycleContent }
-      .task(id: mapCatalogRequest) { await reloadCatalogMap() }
+      .task(id: mapRequest) { await reloadMap() }
       .environment(\.savedWebsiteOpening, openWebsite)
       .disabled(isResolvingOpening)
       .overlay { if isResolvingOpening { ProgressView("Opening plan") } }
@@ -708,7 +722,7 @@ struct SavedPlannerView: View {
   private func itemCatalog(scope: SavedItemCatalogScope) -> some View {
     SavedItemCatalog(
       store: store, scope: scope, isActive: selectedSection == (scope == .inbox ? .inbox : .items),
-      mapCollection: mapCollection, selectMapRow: selectCatalogMapRow,
+      mapCollection: loadedMapCollection(for: .catalog(scope)), selectMapRow: selectCatalogMapRow,
       representation: scope == .inbox ? $inboxRepresentation : $itemsRepresentation,
       selection: itemSelection,
       filters: scope == .inbox ? $inboxFilters : $itemFilters,
@@ -720,25 +734,38 @@ struct SavedPlannerView: View {
     .safeAreaInset(edge: .top) { recoveryNotice }
   }
 
-  private var mapCatalogRequest: SavedMapCatalogRequest? {
+  private var mapRequest: SavedMapRequest? {
     guard store.isReady, let namespace = store.devicePreferenceNamespace else { return nil }
     switch selectedSection {
     case .items where itemsRepresentation == .map:
       return .init(
-        scope: .items, filters: itemFilters, searchText: itemSearchText,
+        scope: .catalog(.items), filters: itemFilters, searchText: itemSearchText,
         sort: itemSort(scope: .items).wrappedValue, namespace: namespace,
         revision: store.changeRevision)
     case .inbox where inboxRepresentation == .map:
       return .init(
-        scope: .inbox, filters: inboxFilters, searchText: inboxSearchText,
+        scope: .catalog(.inbox), filters: inboxFilters, searchText: inboxSearchText,
         sort: itemSort(scope: .inbox).wrappedValue, namespace: namespace,
         revision: store.changeRevision)
+    case .lists where listRepresentation == .map:
+      guard let selectedListId else { return nil }
+      return .init(
+        scope: .list(selectedListId), filters: listFilters, searchText: listSearchText,
+        sort: listSort.wrappedValue, namespace: namespace, revision: store.changeRevision)
     default: return nil
     }
   }
 
-  private func reloadCatalogMap() async {
-    guard let request = mapCatalogRequest else {
+  private func loadedMapCollection(for scope: SavedMapScope) -> SavedMapCollection? {
+    guard let request = mapRequest, request.scope == scope, loadedMapRequest == request else {
+      return nil
+    }
+    return mapCollection
+  }
+
+  private func reloadMap() async {
+    loadedMapRequest = nil
+    guard let request = mapRequest else {
       mapCollection?.cancel()
       return
     }
@@ -753,15 +780,15 @@ struct SavedPlannerView: View {
       query: request.filters.itemQuery(
         scope: request.scope.queryValue, text: request.searchText, sort: request.sort),
       identity: identity)
-    guard !Task.isCancelled, mapCatalogRequest == request, mapCollection.state == .ready else {
-      return
-    }
+    guard !Task.isCancelled, mapRequest == request else { return }
+    loadedMapRequest = request
+    guard mapCollection.state == .ready, case .catalog(let scope) = request.scope else { return }
     var firstIdentifier: UUID?
     if case .source(let source)? = mapCollection.rows.first?.identity {
       firstIdentifier = source.id
     }
     replaceDeletedCatalogSelection(
-      scope: request.scope, identity: identity, firstIdentifier: firstIdentifier)
+      scope: scope, identity: identity, firstIdentifier: firstIdentifier)
   }
 
   private func selectCatalogMapRow(_ row: PlannerMapRowRead) {
@@ -769,6 +796,11 @@ struct SavedPlannerView: View {
       let namespace = store.devicePreferenceNamespace
     else { return }
     let scope = catalogScope
+    guard let collection = loadedMapCollection(for: .catalog(scope)),
+      collection.rows.contains(where: {
+        $0.identity == row.identity && $0.sourceLifetimeId == row.sourceLifetimeId
+      })
+    else { return }
     requestDraftNavigation {
       Task {
         guard let item = await store.readItem(source.id),
@@ -781,6 +813,40 @@ struct SavedPlannerView: View {
         }
         recordSelectionChange()
         selectedItemId = source.id
+        preferredCompactColumn = .detail
+      }
+    }
+  }
+
+  private func selectListMapRow(_ row: PlannerMapRowRead) {
+    guard case .appearance(let source, let appearance) = row.identity,
+      case .listMembership(let listIdentifier, _) = appearance,
+      source.kind == .item, selectedSection == .lists, selectedListId == listIdentifier,
+      let namespace = store.devicePreferenceNamespace,
+      let collection = loadedMapCollection(for: .list(listIdentifier)),
+      collection.rows.contains(where: {
+        $0.identity == row.identity && $0.sourceLifetimeId == row.sourceLifetimeId
+      })
+    else { return }
+    requestDraftNavigation {
+      Task {
+        guard store.devicePreferenceNamespace == namespace, selectedSection == .lists,
+          selectedListId == listIdentifier
+        else { return }
+        let item = await store.readAppearance(appearance)
+        guard store.devicePreferenceNamespace == namespace, selectedSection == .lists,
+          selectedListId == listIdentifier
+        else { return }
+        guard let item, item.appearance == appearance, item.source == source,
+          item.sourceLifetimeId == row.sourceLifetimeId
+        else {
+          store.alertMessage = "This item is no longer available in this List."
+          return
+        }
+        recordSelectionChange()
+        appearanceChangeMessage = nil
+        selectedAppearanceIdentity = appearance
+        selectedAppearance = item
         preferredCompactColumn = .detail
       }
     }
@@ -1463,7 +1529,22 @@ struct SavedPlannerView: View {
 
   @ViewBuilder
   private func listContents(_ list: PlannerListSourceRead) -> some View {
-    if let window = listWindow {
+    if listRepresentation == .map {
+      VStack(spacing: 0) {
+        #if os(iOS)
+          SavedListProgress(
+            listName: list.content.name, progress: list.progress, estimates: list.estimates,
+            manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
+            isArchived: list.state.archived == true
+          ).padding()
+        #endif
+        if let collection = loadedMapCollection(for: .list(list.source.id)) {
+          SavedMapCollectionView(collection: collection, select: selectListMapRow)
+        } else {
+          ProgressView("Opening Map").frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+      }
+    } else if let window = listWindow {
       switch window.state {
       case .ready:
         let rows = listRows
@@ -1656,6 +1737,10 @@ struct SavedPlannerView: View {
         itemCatalog(scope: catalogScope)
       } else if let selectedList {
         listContents(selectedList)
+          .navigationSplitViewColumnWidth(
+            min: listRepresentation == .map ? 320 : 220,
+            ideal: listRepresentation == .map ? 560 : 320, max: 800
+          )
           .navigationTitle(selectedList.content.name)
           .toolbarTitleDisplayMode(.inline)
           #if os(macOS)
@@ -1664,6 +1749,7 @@ struct SavedPlannerView: View {
             }
             .toolbar {
               ToolbarItemGroup(placement: .primaryAction) {
+                listRepresentationMenu
                 SavedItemFilterControl(
                   filters: $listFilters, accessibilityIdentifier: "saved.list.filters",
                   showsSummary: newItemDraft == nil)
@@ -1710,11 +1796,13 @@ struct SavedPlannerView: View {
               }
               if horizontalSizeClass == .compact {
                 ToolbarOverflowMenu {
+                  listRepresentationMenu
                   listSortMenu
                   listEditButton
                   listActionsMenu(selectedList)
                 }
               } else {
+                ToolbarItem { listRepresentationMenu }
                 ToolbarItem { listSortMenu }
                 ToolbarItem { listEditButton }
                 ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
@@ -1781,6 +1869,11 @@ struct SavedPlannerView: View {
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
     }
+  }
+
+  private var listRepresentationMenu: some View {
+    SavedCollectionRepresentationMenu(
+      representation: $listRepresentation, accessibilityIdentifier: "saved.list.representation")
   }
 
   private var listSortMenu: some View {

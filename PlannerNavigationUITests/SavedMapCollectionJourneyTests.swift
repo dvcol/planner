@@ -6,6 +6,68 @@ import XCTest
 
 @MainActor
 final class SavedMapCollectionJourneyTests: XCTestCase {
+  func testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=35,139"
+    createItem("Map museum", link: originalURL, in: application)
+    application.beginPlannerListCreation()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Garden visits")
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.openSavedPlannerListAddMenu()
+    application.plannerElement("saved.list.add").activateForPlannerJourney()
+    let candidate = application.staticTexts["Map museum"].firstMatch
+    XCTAssertTrue(candidate.waitForExistence(timeout: 10))
+    candidate.activateForPlannerJourney()
+    application.plannerElement("saved.membership.add").activateForPlannerJourney()
+    let markDone = application.buttons["Mark Map museum done in this List"].firstMatch
+    XCTAssertTrue(markDone.waitForExistence(timeout: 10))
+    markDone.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.buttons["Mark Map museum undone in this List"].firstMatch
+        .waitForExistence(timeout: 10))
+    application.openSavedPlannerListViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let pin = application.buttons["saved.map.pin.35.0,139.0"]
+    XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    pin.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Garden visits"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.exists)
+    XCTAssertTrue(application.plannerElement("saved.appearance.actions").exists)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "List Map opens its exact completed membership"
+    capture.lifetime = .keepAlways
+    add(capture)
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
+    ).firstMatch
+    revealDetailLink(link, in: application)
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    application.openPlannerSection("Items")
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    if !completion.waitForExistence(timeout: 2) {
+      let source = application.savedPlannerItemRows("Map museum").firstMatch
+      XCTAssertTrue(source.waitForExistence(timeout: 10))
+      source.activateForPlannerJourney()
+    }
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    revealDetailLink(retainedLink, in: application)
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, originalURL)
+  }
+
   func testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -94,6 +156,21 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     XCTAssertTrue(savedLink.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["Unlocated note"].firstMatch.exists)
+  }
+
+  private func revealDetailLink(_ link: XCUIElement, in application: XCUIApplication) {
+    #if os(iOS)
+      guard let form = application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable)
+      else {
+        XCTFail("The selected Item detail form is unavailable")
+        return
+      }
+      for _ in 0..<4 where !link.exists {
+        let start = form.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.75))
+        let end = form.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.25))
+        start.press(forDuration: 0.05, thenDragTo: end)
+      }
+    #endif
   }
 
   private func createItem(_ name: String, link: String?, in application: XCUIApplication) {

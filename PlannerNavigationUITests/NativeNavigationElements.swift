@@ -66,6 +66,23 @@ extension XCUIApplication {
     savedPlannerMenu(identifier: "saved.list.addMenu", title: "Add")
   }
 
+  func chooseSavedPlannerCollectionRepresentation(_ title: String) {
+    var option = plannerElement("saved.collection.show\(title)")
+    if !option.exists {
+      #if os(macOS)
+        option = menuItems[title].firstMatch
+      #else
+        option = collectionViews.buttons[title].firstMatch
+      #endif
+    }
+    XCTAssertTrue(option.waitForExistence(timeout: 5))
+    option.activateForPlannerJourney()
+  }
+
+  func openSavedPlannerListViewMenu() {
+    openSavedPlannerMenu(identifier: "saved.list.representation", title: "View")
+  }
+
   func openSavedPlannerListActionsMenu() {
     openSavedPlannerMenu(identifier: "saved.list.actions", title: "List actions")
   }

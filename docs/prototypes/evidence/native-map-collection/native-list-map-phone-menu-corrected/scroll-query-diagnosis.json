@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "actualProductCount": 4,
+  "sourceDifferences": [],
+  "productDifferences": [],
+  "meaning": "Native More/View/Map and pin selection succeed. Exact Completed and In Garden visits assertions pass. The form hierarchy places Links at y=851 below the phone viewport/tab overlay, with the bookmark row not materialized. Add a bounded native detail-form scroll before the saved-link assertion. No production change for this driver correction and no passing credit for this run."
+}

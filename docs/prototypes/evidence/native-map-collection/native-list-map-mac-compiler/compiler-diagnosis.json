@@ -1,0 +1,3 @@
+{
+  "meaning": "Compilation failed before any UI execution. PlannerListSourceRead has no sourceLifetimeId. Remove the unsupported summary-field check; retain the fresh exact appearance/source-lifetime read and namespace/owner-selection guards. No runtime or TDD red credit."
+}

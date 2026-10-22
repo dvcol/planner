@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "actualProductCount": 4,
+  "sourceDifferences": [],
+  "productDifferences": [],
+  "meaning": "The native More menu opens View, then exposes actual List and Map Buttons without their SwiftUI accessibility identifiers. The test looked only for saved.collection.showMap. Correct the driver to use the actual native menu label fallback. Production is unchanged for this correction; this failed run has no passing credit."
+}

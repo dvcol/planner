@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "meaning": "Affected Mac app/Share/navigation-test compilation only. No native Mac UI runtime credit."
+}

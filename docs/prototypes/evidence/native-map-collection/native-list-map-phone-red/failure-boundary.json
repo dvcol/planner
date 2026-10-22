@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "Actual Item creation, List creation, membership addition and local completion pass before the missing List View control fails. No passing credit. The later simctl diagnostic follows the UI assertion."
+}

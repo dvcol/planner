@@ -1,0 +1,12 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "passedFunctions": 2,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "originalCaptureCount": 2,
+  "meaning": "Actual native creation and represented Map selection assertions on the named Simulator. Inspect the executed test names for exact source/List coverage. Not repeated itinerary appearances, full visual/accessibility, Mac UI or physical acceptance."
+}
