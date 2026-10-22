@@ -1,0 +1,22 @@
+[
+  {
+    "file": "recovered-history.png",
+    "original": "Recovered reload preserves native Back history_0_0359096A-2238-4264-982B-AFF3AF272BFF.png",
+    "exportedFile": "5122F778-576A-4597-84D8-E19992E64C52.png",
+    "sha256": "8b8b05433760b3a95477bd6c021cae3993495f464a1b7f3a54d83c7690a2cb00",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "new-window-reader.png",
+    "original": "Reported new-window link reuses native reader_0_6AE7032D-512F-42E5-846F-98A384A733C4.png",
+    "exportedFile": "5DA1DE0A-1739-4F69-9489-9775B47C5D15.png",
+    "sha256": "2b8081b0bfdb5ec0944830465da410cfaa14ddbf8db082df7ce7d9f368b5561d",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

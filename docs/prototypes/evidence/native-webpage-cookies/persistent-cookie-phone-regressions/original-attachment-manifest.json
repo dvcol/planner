@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5122F778-576A-4597-84D8-E19992E64C52.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovered reload preserves native Back history_0_0359096A-2238-4264-982B-AFF3AF272BFF.png",
+        "timestamp": 1792666370.608
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5DA1DE0A-1739-4F69-9489-9775B47C5D15.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reported new-window link reuses native reader_0_6AE7032D-512F-42E5-846F-98A384A733C4.png",
+        "timestamp": 1792666406.037
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory"
+  }
+]

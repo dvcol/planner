@@ -1,0 +1,32 @@
+[
+  {
+    "file": "persistent-cookie-reader.png",
+    "original": "Persistent website cookie survives closing reader and app relaunch_0_E329949A-A17D-474C-9395-57175FA79BB7.png",
+    "exportedFile": "44809C1A-1C9D-4F25-876A-C37AB97906F0.png",
+    "sha256": "7ae98a016d02c800837b0ab51a836a771825e5ec777792cd1135c520ae731b39",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-history.png",
+    "original": "Recovered reload preserves native Back history_0_0ECAA9B5-364A-4E8F-95BE-02F3303FB32E.png",
+    "exportedFile": "A470029F-3ED1-4BD9-95E4-93582B1BB0C3.png",
+    "sha256": "5c722fbf3ddfd43f412fe5d596c5290c1d6e099300e7a57b2e77cb918911c734",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "new-window-reader.png",
+    "original": "Reported new-window link reuses native reader_0_A6985CE0-B10B-4BB2-8062-A8147A92C632.png",
+    "exportedFile": "69688171-5B50-43AE-8184-855B3873ED6F.png",
+    "sha256": "3de0506fba19707ecb6aa4f486309ddd90eaf06539703b0b0371bbad89c483f6",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

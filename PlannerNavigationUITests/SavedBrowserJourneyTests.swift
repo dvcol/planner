@@ -9,6 +9,83 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    server.setVisitorCookieName(
+      "planner_visit_" + UUID().uuidString.replacingOccurrences(of: "-", with: ""))
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+        .waitForExistence(timeout: 10))
+    checkRememberedVisit(
+      in: application, server: server, expectedHeading: "Visit not remembered",
+      expectedCookie: "absent")
+    application.buttons["saved.browser.back"].activateForPlannerJourney()
+    let remember = application.webViews.firstMatch.links["Remember visit"]
+    XCTAssertTrue(remember.waitForExistence(timeout: 5))
+    remember.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Visit remembered"].waitForExistence(timeout: 10))
+    checkRememberedVisit(
+      in: application, server: server, expectedHeading: "Returning visitor",
+      expectedCookie: "remembered")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    savedLink.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+        .waitForExistence(timeout: 10))
+    checkRememberedVisit(
+      in: application, server: server, expectedHeading: "Returning visitor",
+      expectedCookie: "remembered")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    application.terminate()
+    XCTAssertEqual(application.state, .notRunning)
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    if !retainedLink.waitForExistence(timeout: 2) {
+      let item = application.savedPlannerItemRows("Museum reading").firstMatch
+      XCTAssertTrue(item.waitForExistence(timeout: 10))
+      item.activateForPlannerJourney()
+    }
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+    retainedLink.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+        .waitForExistence(timeout: 10))
+    checkRememberedVisit(
+      in: application, server: server, expectedHeading: "Returning visitor",
+      expectedCookie: "remembered")
+    try await recordWindow(
+      application, name: "Persistent website cookie survives closing reader and app relaunch")
+    application.webViews.firstMatch.links["Forget visit"].activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Visit forgotten"].waitForExistence(timeout: 10))
+    checkRememberedVisit(
+      in: application, server: server, expectedHeading: "Visit not remembered",
+      expectedCookie: "absent")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testPendingReaderSurvivesRotationAndKeepsNativeHistory() async throws {
     #if os(iOS)
       continueAfterFailure = false
@@ -677,6 +754,18 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertTrue(completion.waitForPlannerBooleanState(false))
   }
 
+  private func checkRememberedVisit(
+    in application: XCUIApplication, server: BrowserJourneyServer,
+    expectedHeading: String, expectedCookie: String
+  ) {
+    let check = application.webViews.firstMatch.links["Check visit"]
+    XCTAssertTrue(check.waitForExistence(timeout: 5))
+    check.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts[expectedHeading].waitForExistence(timeout: 10))
+    XCTAssertEqual(server.visitorCookieValues.last, expectedCookie)
+  }
+
   private func recordWindow(_ application: XCUIApplication, name: String) async throws {
     let window = application.windows.firstMatch
     let windowFrame = window.frame
@@ -817,6 +906,8 @@ private final class BrowserJourneyServer: @unchecked Sendable {
   private var port: NWEndpoint.Port?
   private var failure: NWError?
   private var observedRequestLines: [String] = []
+  private var visitorCookieName: String?
+  private var observedVisitorCookieValues: [String] = []
   private var isGuideAvailable = true
   private var isGardenAvailable = true
   private var connections: [NWConnection] = []
@@ -831,11 +922,13 @@ private final class BrowserJourneyServer: @unchecked Sendable {
   }
 
   var requestLines: [String] { lock.withLock { observedRequestLines } }
+  var visitorCookieValues: [String] { lock.withLock { observedVisitorCookieValues } }
   var delayedRequestCount: Int { lock.withLock { observedDelayedRequests } }
   var delayedResponseOutcomes: [String] { lock.withLock { observedDelayedResponseOutcomes } }
 
   func setGuideAvailable(_ available: Bool) { lock.withLock { isGuideAvailable = available } }
   func setGardenAvailable(_ available: Bool) { lock.withLock { isGardenAvailable = available } }
+  func setVisitorCookieName(_ name: String) { lock.withLock { visitorCookieName = name } }
 
   func releaseDelayedResponses() {
     queue.async { [self] in
@@ -915,7 +1008,42 @@ private final class BrowserJourneyServer: @unchecked Sendable {
         return
       }
       let body: String
-      if requestLine.contains(" /delayed-guide ") {
+      var responseHeaders = ""
+      let cookieName = lock.withLock { visitorCookieName }
+      let visitLinks = """
+        <a href="/verify-visit">Check visit</a> <a href="/forget-visit">Forget visit</a>
+        """
+      if let cookieName,
+        requestLine.contains(" /remember-visit ") || requestLine.contains(" /forget-visit ")
+          || requestLine.contains(" /verify-visit ")
+      {
+        let heading: String
+        if requestLine.contains(" /remember-visit ") {
+          responseHeaders =
+            "Set-Cookie: \(cookieName)=remembered; Path=/; Max-Age=3600; HttpOnly; SameSite=Lax\r\n"
+          heading = "Visit remembered"
+        } else if requestLine.contains(" /forget-visit ") {
+          responseHeaders =
+            "Set-Cookie: \(cookieName)=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax\r\n"
+          heading = "Visit forgotten"
+        } else {
+          let cookies =
+            header.components(separatedBy: "\r\n").first(where: {
+              $0.lowercased().hasPrefix("cookie:")
+            })?.dropFirst("Cookie:".count).split(separator: ";") ?? []
+          let cookie = cookies.map { $0.trimmingCharacters(in: .whitespaces) }.first(where: {
+            $0.hasPrefix(cookieName + "=")
+          })
+          let value = cookie.map { String($0.dropFirst(cookieName.count + 1)) }
+          lock.withLock { observedVisitorCookieValues.append(value ?? "absent") }
+          heading = value == "remembered" ? "Returning visitor" : "Visit not remembered"
+        }
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
+          <body><h1>\(heading)</h1>\(visitLinks)</body></html>
+          """
+      } else if requestLine.contains(" /delayed-guide ") {
         body = """
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Delayed guide</title></head>
@@ -928,17 +1056,19 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <body><h1>Garden guide fixture</h1><p>Enter through the east gate.</p></body></html>
           """
       } else {
+        let cookieLinks =
+          cookieName == nil ? "" : "<a href=\"/remember-visit\">Remember visit</a> " + visitLinks
         body = """
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Museum guide</title></head>
           <body><h1>Museum guide fixture</h1><p>Meet at the garden entrance.</p>
           <a href="/garden">Garden guide</a> <a href="/delayed-guide">Delayed guide</a>
-          <a href="/garden" target="_blank">Garden in another window</a></body></html>
+          <a href="/garden" target="_blank">Garden in another window</a>\(cookieLinks)</body></html>
           """
       }
       let content = requestLine.hasPrefix("HEAD ") ? "" : body
       let response =
-        "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\nContent-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
+        "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\n\(responseHeaders)Content-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
       if requestLine == "GET /delayed-guide HTTP/1.1" {
         delayedResponses.append((connection, Data(response.utf8)))
         lock.withLock { observedDelayedRequests += 1 }

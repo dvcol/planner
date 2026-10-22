@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "9DA0F4B5-F2A0-4291-9EB5-B36B2FFC8AAE.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Persistent website cookie survives closing reader and app relaunch_0_277BC36A-A860-44CE-A699-775176674B52.png",
+        "timestamp": 1792666011.538
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner"
+  }
+]

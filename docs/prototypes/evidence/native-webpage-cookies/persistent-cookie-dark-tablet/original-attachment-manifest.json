@@ -1,0 +1,47 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "44809C1A-1C9D-4F25-876A-C37AB97906F0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Persistent website cookie survives closing reader and app relaunch_0_E329949A-A17D-474C-9395-57175FA79BB7.png",
+        "timestamp": 1792666129.355
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "A470029F-3ED1-4BD9-95E4-93582B1BB0C3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovered reload preserves native Back history_0_0ECAA9B5-364A-4E8F-95BE-02F3303FB32E.png",
+        "timestamp": 1792666174.788
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "69688171-5B50-43AE-8184-855B3873ED6F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reported new-window link reuses native reader_0_A6985CE0-B10B-4BB2-8062-A8147A92C632.png",
+        "timestamp": 1792666205.956
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory"
+  }
+]

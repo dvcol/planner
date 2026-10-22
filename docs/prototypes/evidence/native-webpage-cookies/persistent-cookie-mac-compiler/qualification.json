@@ -1,0 +1,9 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "productionChanges": [],
+  "meaning": "Mac app/Share/native-test compilation. Only the UI-test HTTP fixture and journey changed; no Mac UI or cookie runtime credit."
+}

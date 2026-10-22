@@ -1,0 +1,14 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "phases": [
+    "persistent-cookie-phone",
+    "persistent-cookie-dark-tablet",
+    "persistent-cookie-phone-regressions",
+    "persistent-cookie-mac-compiler"
+  ],
+  "passedNativeExecutions": 6,
+  "distinctNativeFunctions": 3,
+  "productionChanges": [],
+  "meaning": "First-party cookie viewer/relaunch persistence and affected history/recovery pass on phone/dark iPad. Production unchanged; Mac compiler-only."
+}
