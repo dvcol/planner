@@ -1,0 +1,12 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "passedFunctions": 4,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "originalCaptureCount": 4,
+  "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. The new download alert capture is the original native window screenshot; affected existing reader functions retain their own paint assertions. A server send outcome does not prove client delivery. Inspect the executed functions for exact cookie/lifecycle coverage. Not physical, Mac UI, third-party login/cookies, cross-window or broader navigation-policy acceptance."
+}

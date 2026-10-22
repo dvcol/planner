@@ -1,0 +1,42 @@
+[
+  {
+    "file": "persistent-cookie-reader.png",
+    "original": "Persistent website cookie survives closing reader and app relaunch_0_0B605F13-D83F-4808-B64A-56BF3F1D977C.png",
+    "exportedFile": "A809DF92-9C93-495C-B272-0A858AF3374E.png",
+    "sha256": "3fc4159733daf2649d943390681fb59f8622270f479d4544c36207a02d2bddaf",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-history.png",
+    "original": "Recovered reload preserves native Back history_0_D371B91A-3A4E-4BB3-8740-4D4167319C15.png",
+    "exportedFile": "B79D29ED-6AE3-4E27-BDE9-8597DA14280B.png",
+    "sha256": "4874b50c4a1720c5199169cfca17a9e8ea4eaf7a441bfb3c31690217993f7d52",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "new-window-reader.png",
+    "original": "Reported new-window link reuses native reader_0_35A42C8E-22B4-4C1D-ACAD-34FC1B08E181.png",
+    "exportedFile": "D7F64AC6-5A27-43DD-BD8D-1004E661102D.png",
+    "sha256": "04d652e9591358b85aa4ea87d0020795eb862d18aa4d86704aa0b47f56302dba",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "requested-download-dialog.png",
+    "original": "Native requested download offers exact external target and keeps saved guide_0_68757CF9-C4BB-4F9C-B990-1537B22F399F.png",
+    "exportedFile": "A91B2E6F-F1E3-4051-AE53-13BAA1013618.png",
+    "sha256": "610c81c6277046e12c2011ff63c844a3e7be58a0a49230c4ffbd2e0a4a6a14c5",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "phases": [
+    "requested-download-phone-green",
+    "requested-download-dark-tablet",
+    "requested-download-phone-regressions",
+    "requested-download-mac-compiler"
+  ],
+  "passedNativeExecutions": 8,
+  "distinctNativeFunctions": 4,
+  "meaning": "Requested-download explanation/cancellation and affected cookie/history/recovery pass on phone/dark iPad. Mac compiler-only. No actual external-browser handoff or file-saving credit."
+}

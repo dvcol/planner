@@ -1,0 +1,47 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "4819771A-873C-4A35-827C-F0AB7855D22A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Persistent website cookie survives closing reader and app relaunch_0_4E32551E-55DB-426E-BFEF-16F099629AC3.png",
+        "timestamp": 1792667187.231
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testPersistentWebsiteCookieSurvivesClosingTheReaderAndRelaunchingPlanner"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "AFDCA224-4528-4C6E-85E7-AB139397DCF8.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovered reload preserves native Back history_0_E5F05EC9-9444-4C1B-9352-EEE80F46E36A.png",
+        "timestamp": 1792667237.031
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "EA57523B-D2CA-43F1-952C-E6F180FC5E89.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reported new-window link reuses native reader_0_DAE9B63E-A96E-451D-917B-608684160663.png",
+        "timestamp": 1792667273.082
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory"
+  }
+]

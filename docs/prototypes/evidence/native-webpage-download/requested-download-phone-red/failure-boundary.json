@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "Actual saved guide renders and its same-origin HTML download link is activated. The native journey fails at the absent fallback alert at line 34. XCTest summary records one failed function and xcodebuild returns 65. No passing credit."
+}
