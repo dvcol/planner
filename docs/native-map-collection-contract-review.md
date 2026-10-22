@@ -1,6 +1,6 @@
 # Native Map collection contract review
 
-Status: Q143 A accepted. Q131-Q142 settle the collection workflow and shared saved-data read. The user approves the app-internal loader, temporary resolution lifecycle and additional direct test seam described here. Implementation and qualification remain open.
+Status: Q143 A accepted. Q131-Q142 settle the collection workflow and shared saved-data read. The user approves the app-internal loader, temporary resolution lifecycle and additional direct test seam described here. The [production loader](prototypes/native-map-collection.md#final-local-qualification) is implemented with twelve passing app-hosted Mac functions. [Native collection UI](prototypes/native-map-collection-ui.md) is partially qualified; remaining controls and broader UI/device acceptance stay open.
 
 ## Context, before and after
 

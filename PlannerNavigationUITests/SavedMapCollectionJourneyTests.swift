@@ -6,6 +6,98 @@ import XCTest
 
 @MainActor
 final class SavedMapCollectionJourneyTests: XCTestCase {
+  func testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=35,139"
+    let alternateURL = "https://www.google.com/maps/search/?api=1&query=36,140"
+    createItem("Map museum", link: originalURL, in: application)
+    let originalLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
+    ).firstMatch
+    revealDetailLink(originalLink, in: application)
+    XCTAssertTrue(originalLink.waitForExistence(timeout: 10))
+    let originalIdentifier = originalLink.identifier
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["saved.item.edit.title"].waitForExistence(timeout: 5))
+    let addLink = application.plannerElement("saved.item.edit.link.add")
+    for _ in 0..<8 where !addLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(addLink.isHittable)
+    addLink.activateForPlannerJourney()
+    guard
+      let alternateInput = application.textFields.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.edit.link.url.")
+      ).allElementsBoundByIndex.last
+    else {
+      XCTFail("The new saved bookmark input is unavailable")
+      return
+    }
+    alternateInput.activateForPlannerJourney()
+    alternateInput.typeText(alternateURL)
+    let draftIdentifier = alternateInput.identifier.replacingOccurrences(
+      of: "saved.item.edit.link.url.", with: "")
+    let label = application.textFields["saved.item.edit.link.label.\(draftIdentifier)"]
+    XCTAssertTrue(label.waitForExistence(timeout: 5))
+    label.activateForPlannerJourney()
+    label.typeText("Alternate pin")
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let alternateLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", alternateURL)
+    ).firstMatch
+    revealDetailLink(alternateLink, in: application)
+    XCTAssertTrue(alternateLink.waitForExistence(timeout: 10))
+    let alternateIdentifier = alternateLink.identifier
+    XCTAssertNotEqual(originalIdentifier, alternateIdentifier)
+    returnToCatalog(application)
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let originalPin = application.buttons["saved.map.pin.35.0,139.0"]
+    let alternatePin = application.buttons["saved.map.pin.36.0,140.0"]
+    XCTAssertTrue(originalPin.waitForExistence(timeout: 10))
+    XCTAssertFalse(alternatePin.exists)
+    application.plannerElement("saved.map.locations").activateForPlannerJourney()
+    let options = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.options.")
+    ).firstMatch
+    XCTAssertTrue(options.waitForExistence(timeout: 5))
+    options.activateForPlannerJourney()
+    let mapLinkChoice = application.buttons.matching(
+      NSPredicate(format: "label BEGINSWITH %@", "Map link")
+    ).firstMatch
+    XCTAssertTrue(mapLinkChoice.waitForExistence(timeout: 5))
+    mapLinkChoice.activateForPlannerJourney()
+    let alternateChoice = application.buttons["Alternate pin"].firstMatch
+    XCTAssertTrue(alternateChoice.waitForExistence(timeout: 5))
+    alternateChoice.activateForPlannerJourney()
+    let close = application.buttons["Close"].firstMatch
+    XCTAssertTrue(close.waitForPlannerHittability())
+    close.activateForPlannerJourney()
+    XCTAssertTrue(alternatePin.waitForExistence(timeout: 10))
+    XCTAssertTrue(originalPin.waitForNonExistence(timeout: 5))
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Native collection Maps link picker keeps original bookmarks"
+    capture.lifetime = .keepAlways
+    add(capture)
+    alternatePin.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    for (identifier, expectedURL) in [
+      (originalIdentifier, originalURL), (alternateIdentifier, alternateURL),
+    ] {
+      let retainedLink = application.descendants(matching: .any).matching(identifier: identifier)
+        .firstMatch
+      revealDetailLink(retainedLink, in: application)
+      XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedLink.value as? String, expectedURL)
+    }
+  }
+
   func testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion() {
     continueAfterFailure = false
     let application = XCUIApplication()
