@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000146125"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.39228675">
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory()" time="0.391932625"/>
+    </testsuite>
+</testsuites>

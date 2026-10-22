@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "appearance"
+    ],
+    "exitCode": 0,
+    "output": "light",
+    "error": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "increasecontrast"
+    ],
+    "exitCode": 117,
+    "output": "",
+    "error": "Get or Set UI options\nUsage: simctl ui <device> <option> [<arguments>]\n\nSupported Options:\n    appearance\n\tWhen invoked without arguments prints the current user interface appearance style:\n\t     light\n\t     The Light appearance style.\n\t     dark\n\t     The Dark appearance style.\n\t     unsupported\n\t     The platform or runtime version do not support appearance styles.\n\t     unknown\n\t     The current style is unknown or there was an error detecting it.\n\n    appearance [light | dark]\n\tSet the user interface apperance style to light or dark.\n\n    increase_contrast\n\tWhen invoked without arguments prints whether the Increase Contrast mode is currently enabled:\n\t     enabled\n\t     Increase Contrast is enabled.\n\t     disabled\n\t     Increase Contrast is disabled.\n\t     unsupported\n\t     The platform or runtime version do not support the Increase Contrast setting.\n\t     unknown\n\t     The current setting is unknown or there was an error detecting it.\n\n    increase_contrast [enabled | disabled]\n\tEnable or disable Increase Contrast mode.\n\n    content_size\n\tWhen invoked without arguments prints the current preferred content size category, from the following possible values:\n\t     Standard sizes: extra-small, small, medium, large, extra-large, extra-extra-large, extra-extra-extra-large.\n\t     Extended range sizes: accessibility-medium, accessibility-large, accessibility-extra-large, accessibility-extra-extra-large, accessibility-extra-extra-extra-large.\n\t     Other values: unknown, unsupported.\n\n    content_size [increment | decrement | desired_size]\n\tSet the preferred content size category. If 'increment' or 'decrement' is passed, the preferred content size will beset to the category one increment larger or smaller than the currently set value respectively."
+  }
+]

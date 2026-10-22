@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "DE934D5F-F396-474D-B6D9-A2B99F9EE236.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share saves a new Item after main-app migration_0_E0421173-5354-4732-8DFF-BFB8B32ED7B2.png",
+    "timestamp": 1792630606.386,
+    "sha256": "2d847916be648fb851d22b8c4cbc687b309460ee88f6dada6e8f1fdb7c95fb2d"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "348AB613-D92A-4F04-8FE1-BD7F5EEDDB26.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Main-app migration retains the original Item_0_DB6A746D-8480-428B-B5EC-8DFEAA4D1CD2.png",
+    "timestamp": 1792630578.588,
+    "sha256": "2f9dbab7a82e90b6515bb5ed20a407a068c1b6ac906fcd807700c1bbc47bc4b6"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8EE0F45F-79F8-4D92-9E27-A06A1E2F69DD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Share directs genuine old-schema data to Planner_0_C863D597-3A91-4350-B4BD-000D42C38C9E.png",
+    "timestamp": 1792630558.476,
+    "sha256": "3383e2f35daaed75cfbbf22b14c946d49e92ce99faf1def6ce9823e3d7b08c84"
+  }
+]

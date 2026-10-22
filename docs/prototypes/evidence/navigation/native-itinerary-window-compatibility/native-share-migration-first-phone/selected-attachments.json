@@ -1,0 +1,17 @@
+{
+  "31783D88-B246-44FB-BDE9-B3C1CFAC6938.png": {
+    "sha256": "5aebad1d979dbf3cbaa3c7d39aac16530601b836ad116a7144164c0c5f205918",
+    "bytes": 114568,
+    "retainedInRepository": true
+  },
+  "18BBE618-6CB2-4CA6-92FF-26A29F68025C.txt": {
+    "sha256": "abfef073eb75c0e779e6f68d0700eb834537e8f523879617220b1684626051de",
+    "bytes": 14830,
+    "retainedInRepository": true
+  },
+  "DAD9FCBD-3D8A-4C6D-A538-D9504DFA4488.mp4": {
+    "sha256": "b0d2a79f7492fe3d6f0a04adf246ce0c1ddaf4934b7991cceaa416b63e3b81d4",
+    "bytes": 2418193,
+    "retainedInRepository": false
+  }
+}

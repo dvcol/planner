@@ -63,11 +63,20 @@ struct PlannerShareFixtureView: View {
     else { throw CancellationError() }
     let directory = FileManager.default.temporaryDirectory
       .appending(path: "PlannerShareFixtures/\(identifier.uuidString)", directoryHint: .isDirectory)
+    let startsBeforeMigration = arguments.contains("--share-before-main-migration")
+    if startsBeforeMigration, !FileManager.default.fileExists(atPath: directory.path) {
+      guard let archivedStore = Bundle.main.url(forResource: "SchemaV1", withExtension: nil) else {
+        throw CocoaError(.fileNoSuchFile)
+      }
+      try FileManager.default.createDirectory(
+        at: directory.deletingLastPathComponent(), withIntermediateDirectories: true)
+      try FileManager.default.copyItem(at: archivedStore, to: directory)
+    }
     let mainConfiguration = makeConfiguration(directory, role: .mainApplication)
     let obstruction = FixtureRecoverySaveObstruction(configuration: mainConfiguration)
     try obstruction.restore()
     let planner = PlannerCore.Planner(configuration: mainConfiguration)
-    if !arguments.contains("--share-without-main-setup") {
+    if !arguments.contains("--share-without-main-setup"), !startsBeforeMigration {
       guard case .ready = await planner.bootstrap() else { throw CancellationError() }
     }
     if arguments.contains("--share-recovery-failure") {

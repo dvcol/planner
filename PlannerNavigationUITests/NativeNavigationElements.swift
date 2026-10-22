@@ -346,20 +346,23 @@ extension XCUIApplication {
       case "Itineraries": identifier = "point.topleft.down.to.point.bottomright.curvepath"
       default: identifier = nil
       }
-      if let identifier,
-        let tab = buttons.matching(identifier: identifier).allElementsBoundByIndex.first(
-          where: \.isHittable)
-      {
-        tab.tap()
-        XCTAssertEqual(
-          XCTWaiter.wait(
-            for: [
-              XCTNSPredicateExpectation(
-                predicate: NSPredicate(format: "selected == true"), object: tab)
-            ], timeout: 5), .completed)
-        let sidebar = buttons["Show Sidebar"]
-        if sidebar.exists { sidebar.tap() }
-        return
+      if let identifier {
+        let tabButtons = buttons.matching(identifier: identifier)
+        if UIDevice.current.userInterfaceIdiom == .phone {
+          _ = tabButtons.firstMatch.waitForPlannerHittability()
+        }
+        if let tab = tabButtons.allElementsBoundByIndex.first(where: \.isHittable) {
+          tab.tap()
+          XCTAssertEqual(
+            XCTWaiter.wait(
+              for: [
+                XCTNSPredicateExpectation(
+                  predicate: NSPredicate(format: "selected == true"), object: tab)
+              ], timeout: 5), .completed)
+          let sidebar = buttons["Show Sidebar"]
+          if sidebar.exists { sidebar.tap() }
+          return
+        }
       }
     #endif
     #if os(macOS)

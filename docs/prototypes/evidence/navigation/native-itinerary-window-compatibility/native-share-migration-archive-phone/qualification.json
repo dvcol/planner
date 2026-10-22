@@ -1,0 +1,18 @@
+{
+  "nativePhoneMigrationJourney": true,
+  "passedTests": 1,
+  "failedTests": 0,
+  "skippedTests": 0,
+  "testFunctionSeconds": 196.021,
+  "matchingWorkspaceInputs": 1062,
+  "inspectedOriginalCaptures": [
+    "8EE0F45F-79F8-4D92-9E27-A06A1E2F69DD.png",
+    "348AB613-D92A-4F04-8FE1-BD7F5EEDDB26.png",
+    "DE934D5F-F396-474D-B6D9-A2B99F9EE236.png"
+  ],
+  "fullShareRegressionQualified": false,
+  "tabletMigrationQualified": false,
+  "macFixtureMigrationQualified": false,
+  "installedExtensionQualified": false,
+  "physicalSigningAndSyncQualified": false
+}

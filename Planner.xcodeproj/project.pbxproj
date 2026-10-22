@@ -23,7 +23,7 @@
         };
         000000000000000000000101 = {
             isa = PBXGroup;
-            children = (A00000000000000000000321, A00000000000000000000322, A00000000000000000000323, 000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000128, 000000000000000000000129, 000000000000000000000130, 000000000000000000000104);
+            children = (A00000000000000000000321, A00000000000000000000322, A00000000000000000000323, 000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000128, 000000000000000000000129, 000000000000000000000130, A00000000000000000000910, 000000000000000000000104);
             sourceTree = "<group>";
         };
         000000000000000000000102 = { isa = PBXFileSystemSynchronizedRootGroup; path = Planner; sourceTree = "<group>"; };
@@ -185,6 +185,8 @@
         000000000000000000000127 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerFixtureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000000128 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerFixtures; sourceTree = "<group>"; };
         000000000000000000000129 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerFixtureUITests; sourceTree = "<group>"; };
+        A00000000000000000000910 = { isa = PBXFileReference; lastKnownFileType = folder; path = Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV1; sourceTree = SOURCE_ROOT; };
+        A00000000000000000000911 = { isa = PBXBuildFile; fileRef = A00000000000000000000910; };
         000000000000000000000206 = {
             isa = PBXNativeTarget;
             buildConfigurationList = 000000000000000000000507;
@@ -213,7 +215,7 @@
         };
         000000000000000000000281 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000282 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000461, 000000000000000000000462, 000000000000000000000463, 000000000000000000000464, 000000000000000000000465, 000000000000000000000466); runOnlyForDeploymentPostprocessing = 0; };
-        000000000000000000000283 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000283 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000911); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000291 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000467); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000292 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000293 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
