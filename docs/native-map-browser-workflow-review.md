@@ -6,7 +6,7 @@ The [product brief](product-brief.md) retains a filtered native Apple map with a
 
 The goal is a native secondary representation of the same Planner data, with live identities, coherent filters and useful webpage navigation. No new completion, archive, schedule, backup or provider-content policy is proposed by these workflow choices.
 
-This review is a proposal. Q127-Q130 retain their separate pending questions. The Share regression and compiler checks proceed independently.
+The user accepts Q131 A, Q132 A and Q133 A: collection List/Map modes, SwiftUI browsing in the detail area or compact pushed page, and ordinary website taps opening inside Planner. The alternatives below retain the reviewed context. The dependent frontier in Definition of ready remains to be settled. Q127-Q130 retain their separate pending questions; independent implementation and qualification continue.
 
 ## Verified implementation facts
 
@@ -49,6 +49,25 @@ B. Keep normal tap opening the default browser. Add an explicit Open in Planner 
 C. A normal tap opens a native menu containing Open in Planner and Open in default browser. Both paths are explicit every time, at the cost of an additional selection for every website. This adds no remembered opening preference.
 
 Recommendation: A to make the accepted in-app browsing capability directly useful. No device preference or backup field is needed for these choices.
+
+## Next frontier, Q134-Q141
+
+Q131-Q133 are settled. The question tool now presents the following independent choices with context, alternatives and impacts. A is recommended in each row; none is accepted yet.
+
+| Question | A | B | Main consequence |
+| --- | --- | --- | --- |
+| Q134, Map width/details | Wider preferred native collection pane with existing third-pane details; compact details push. | Main-width Map with selected details in a native popover/sheet. | Persistent side-by-side context versus more map width. |
+| Q135, unresolved locations | Start bounded, cancellable temporary resolution while Map is open. | Require an explicit Resolve missing locations action. | Automatic usefulness versus control over provider requests. Both retain the complete matching set and explain unresolved/ambiguous results. |
+| Q136, coincident locations | Counted marker with an exact native appearance-choice list. | Individual markers with a Locations-list fallback. | Clear overlap selection versus more direct individual markers. Both preserve exact contextual identities and an accessible location list. |
+| Q137, website state | Apple's default persistent website store shared within Planner. | Memory-only website storage per Planner window. | Retained site logins versus state cleared when its window closes. Neither restores browser tabs/history or enters backups. |
+| Q138, new-window links | Open reported requests in the current Planner browser page. | Open reported requests in the default browser. | Planning context versus external browsing. Unsupported scripted popups retain the native component's limitations. |
+| Q139, downloads | Explanation and explicit external-browser fallback for downloads/unsupported content. | Integrated downloading and native file saving. | A focused reader versus additional native integration, file lifetime and failure handling. Displayable content remains inline. |
+| Q140, external apps | Direct supported Mail/Phone/Maps clicks use the system; automatic app redirects offer an explicit Open action. | Immediately hand all reported supported app navigations to the system. | User-controlled automatic app switching versus fewer steps. Unknown/executable/file schemes remain unsupported. |
+| Q141, removed source context | Keep reading, then return to the valid containing collection with an explanation. | Close browsing immediately and apply existing selection rules. | Preserved reading position versus strict attachment to a live source context. Neither recreates data or retargets contextual actions. |
+
+The delegated SDK/source check confirms native exact-value [Map tags](https://developer.apple.com/documentation/mapkit/mapcontent/tag%28_%3A%29), configurable [website storage](https://developer.apple.com/documentation/webkit/webpage/configuration/websitedatastore), and WebPage navigation controls. It finds no general SwiftUI new-window-creation or download-result delegate. Ordinary new-window links and scripted popups therefore need actual qualification, not an assumed Safari-equivalent window manager. Existing socket fixtures serve HEAD responses; they do not prove WebKit GET rendering, cookies or history. Current app configuration contains no ATS exception. Transport/component qualification must preserve that distinction.
+
+The complete map read contract follows the location choice: row windows already carry owned locations, but not all saved Maps links/provider references. A map built only from retained native pages would omit matches. Review any new shared projection and its concrete generation/paging contract before implementation or additional direct tests.
 
 ## Definition of ready
 
