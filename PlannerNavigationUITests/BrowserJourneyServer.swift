@@ -8,6 +8,7 @@ final class BrowserJourneyServer: @unchecked Sendable {
   private var port: NWEndpoint.Port?
   private var failure: NWError?
   private var observedRequestLines: [String] = []
+  private var observedRequestUserAgents: [String: [String]] = [:]
   private var visitorCookieName: String?
   private var observedVisitorCookieValues: [String] = []
   private var isGuideAvailable = true
@@ -24,6 +25,9 @@ final class BrowserJourneyServer: @unchecked Sendable {
   }
 
   var requestLines: [String] { lock.withLock { observedRequestLines } }
+  func userAgents(for requestLine: String) -> [String] {
+    lock.withLock { observedRequestUserAgents[requestLine] ?? [] }
+  }
   var visitorCookieValues: [String] { lock.withLock { observedVisitorCookieValues } }
   var delayedRequestCount: Int { lock.withLock { observedDelayedRequests } }
   var delayedResponseOutcomes: [String] { lock.withLock { observedDelayedResponseOutcomes } }
@@ -100,7 +104,14 @@ final class BrowserJourneyServer: @unchecked Sendable {
         return
       }
       let requestLine = header.components(separatedBy: "\r\n").first ?? ""
-      lock.withLock { observedRequestLines.append(requestLine) }
+      let userAgent =
+        header.components(separatedBy: "\r\n").first(where: {
+          $0.lowercased().hasPrefix("user-agent:")
+        })?.dropFirst("User-Agent:".count).trimmingCharacters(in: .whitespaces) ?? ""
+      lock.withLock {
+        observedRequestLines.append(requestLine)
+        observedRequestUserAgents[requestLine, default: []].append(userAgent)
+      }
       if requestLine == "GET /guide HTTP/1.1", !lock.withLock({ isGuideAvailable }) {
         connection.cancel()
         return
