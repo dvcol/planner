@@ -20,7 +20,8 @@ extension EnvironmentValues {
 private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
   @ObservationIgnored var requestedURL: URL?
   @ObservationIgnored weak var page: WebPage?
-  var downloadURL: URL?
+  @ObservationIgnored var cancelledResponseURL: URL?
+  var externalContent: (destination: URL, isDownload: Bool)?
 
   func decidePolicy(
     for action: WebPage.NavigationAction, preferences: inout WebPage.NavigationPreferences
@@ -29,16 +30,25 @@ private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
       ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
     else { return .allow }
     if action.shouldPerformDownload {
-      downloadURL = destination
+      externalContent = (destination, true)
       return .cancel
     }
     let opensNewWindow = action.target == nil
     if opensNewWindow || action.target?.isMainFrame == true {
       requestedURL = destination
-      downloadURL = nil
+      externalContent = nil
     }
     guard opensNewWindow else { return .allow }
     page?.load(action.request)
+    return .cancel
+  }
+
+  func decidePolicy(for response: WebPage.NavigationResponse) async -> WKNavigationResponsePolicy {
+    guard !response.canShowMimeType, let destination = response.response.url,
+      ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
+    else { return .allow }
+    externalContent = (destination, false)
+    cancelledResponseURL = destination
     return .cancel
   }
 }
@@ -63,9 +73,23 @@ final class SavedWebsiteSession: Identifiable, Hashable {
 
   func retry() { page.load(navigation.requestedURL ?? request.destination) }
 
-  var requestedDownloadURL: URL? { navigation.downloadURL }
+  var externalContent: (destination: URL, isDownload: Bool)? { navigation.externalContent }
 
-  func dismissRequestedDownload() { navigation.downloadURL = nil }
+  func dismissExternalContent() { navigation.externalContent = nil }
+
+  func consumeResponseCancellation(_ error: any Error) -> Bool {
+    guard case WebPage.NavigationError.failedProvisionalNavigation(let underlying) = error else {
+      return false
+    }
+    let failure = underlying as NSError
+    // WebKit reports a cancelled response policy as its legacy frame-interruption error.
+    guard failure.domain == "WebKitErrorDomain", failure.code == 102,
+      let destination = failure.userInfo[NSURLErrorFailingURLErrorKey] as? URL,
+      destination == navigation.cancelledResponseURL
+    else { return false }
+    navigation.cancelledResponseURL = nil
+    return true
+  }
 
   nonisolated static func == (first: SavedWebsiteSession, second: SavedWebsiteSession) -> Bool {
     first === second
@@ -84,23 +108,36 @@ struct SavedWebsiteView: View {
     session.request.source.kind == .itinerary ? "Return to itinerary" : "Return to item"
   }
 
+  private var contentTitle: String {
+    if session.externalContent?.isDownload == true { return "Open download in your browser" }
+    return "Open content in your browser"
+  }
+
   var body: some View {
-    let downloadURL = session.requestedDownloadURL
+    let externalContent = session.externalContent
+    let canKeepReading = session.page.backForwardList.currentItem != nil
     WebView(session.page)
+      .webViewContentBackground(canKeepReading ? .automatic : .hidden)
+      .background(.background)
       .alert(
-        "Open download in your browser",
+        contentTitle,
         isPresented: Binding(
-          get: { downloadURL != nil },
-          set: { if !$0 { session.dismissRequestedDownload() } })
+          get: { externalContent != nil },
+          set: { if !$0 { session.dismissExternalContent() } })
       ) {
-        if let downloadURL {
-          Button("Open in default browser") { openURL(downloadURL) }
-            .accessibilityValue(downloadURL.absoluteString)
+        if let externalContent {
+          Button("Open in default browser") { openURL(externalContent.destination) }
+            .accessibilityValue(externalContent.destination.absoluteString)
         }
-        Button("Keep reading", role: .cancel) { session.dismissRequestedDownload() }
+        Button(canKeepReading ? "Keep reading" : returnTitle, role: .cancel) {
+          session.dismissExternalContent()
+          if !canKeepReading { returnToPlanner() }
+        }
       } message: {
-        if let downloadURL {
-          Text("Open this download in your default browser.\n\(downloadURL.absoluteString)")
+        if let externalContent {
+          Text(
+            "Open this content in your default browser.\n\(externalContent.destination.absoluteString)"
+          )
         }
       }
       .overlay {
@@ -181,6 +218,10 @@ struct SavedWebsiteView: View {
             return
           } catch {
             guard !Task.isCancelled else { return }
+            if session.consumeResponseCancellation(error) {
+              failure = nil
+              continue
+            }
             failure = error.localizedDescription
           }
         }
