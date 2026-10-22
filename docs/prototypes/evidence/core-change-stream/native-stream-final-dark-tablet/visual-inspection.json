@@ -1,0 +1,12 @@
+{
+  "inspectedOriginalFiles": [
+    "selected-item-updated.png",
+    "collection-map-updated.png"
+  ],
+  "findings": [
+    "Dark-mode selected details and its still-selected row show Hotel updated and Other writer notes, with global completion off and a native location map.",
+    "The native collection Map shows the southern pin while the unrelated empty detail pane remains unchanged.",
+    "The narrow Items toolbar title is visibly truncated; retain this for the whole-app polish pass."
+  ],
+  "limits": "The complete invocation fails both draft setup functions at native Add overflow. These two captures do not convert the invocation to a pass or qualify draft behavior."
+}

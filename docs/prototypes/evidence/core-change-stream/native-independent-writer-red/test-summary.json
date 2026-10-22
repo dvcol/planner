@@ -1,0 +1,27 @@
+{
+  "devicesAndConfigurations" : [
+
+  ],
+  "environmentDescription" : "PlannerFixtures · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792682776.555,
+  "passedTests" : 0,
+  "result" : "unknown",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792682756.214,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - PlannerFixtures",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 0
+}

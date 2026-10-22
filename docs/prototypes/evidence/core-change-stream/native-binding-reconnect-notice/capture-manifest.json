@@ -1,0 +1,12 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "draft-reconnected.png",
+      "originalName": "Validated reconnection preserves the edited draft_0_4321CEB0-B0E7-4611-A81F-8E7CA1067AF0.png",
+      "exportedFile": "D7470327-BCEA-49DC-82FA-14DC7B8EB7AE.png",
+      "sha256": "31b7daa158767dd7353687ae394bdf2866cde05922998ede29a1509064515652"
+    }
+  ],
+  "meaning": "Original selected-detail capture only; the complete function result remains in test-summary.json and is not changed by exporting."
+}

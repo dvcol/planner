@@ -1,0 +1,62 @@
+{
+  "boundaries": [
+    {
+      "phase": "native-stream-final-core",
+      "validatedInputs": 748,
+      "validatedProducts": 2,
+      "differencesFromCurrent": [],
+      "meaning": "All recorded inputs match current source.",
+      "boundarySha256": "a6ede367235c9c910c8cd0e36b88015d4ab43c78c7127b44798f5a1d1a4414bc",
+      "passingFunctions": 12,
+      "ownedFixturesRemovedAfterHostAndHandleClosure": 14
+    },
+    {
+      "phase": "native-stream-final-controller",
+      "validatedInputs": 1079,
+      "validatedProducts": 3,
+      "differencesFromCurrent": [
+        "PlannerFixtureUITests/ChangeObservationJourneyTests.swift"
+      ],
+      "meaning": "The controller run predates only the UI-test Add-overflow driver correction; its production and exercised controller/Intent test sources are unchanged.",
+      "boundarySha256": "76b41e03f464feb9088cc86999214355a6f8bd72a66390caecea948314e3adcb",
+      "passingFunctions": 38,
+      "ownedFixturesRemovedAfterHostAndHandleClosure": 51
+    },
+    {
+      "phase": "native-stream-phone-overflow",
+      "validatedInputs": 1079,
+      "validatedProducts": 4,
+      "differencesFromCurrent": [],
+      "meaning": "All recorded inputs match current source.",
+      "boundarySha256": "f934e338cd3d5bd3e79afb3906458d35001978ab1d2f7af95779eab95eb4692f",
+      "passingFunctions": 4,
+      "inspectedOriginalCaptures": 5
+    },
+    {
+      "phase": "native-stream-dark-tablet-overflow",
+      "validatedInputs": 1079,
+      "validatedProducts": 4,
+      "differencesFromCurrent": [],
+      "meaning": "All recorded inputs match current source.",
+      "boundarySha256": "08c145087abc0b1c3d6f001f6198ef1c51266fe34efd13b114fdd5fadf813e52",
+      "passingFunctions": 4,
+      "inspectedOriginalCaptures": 5
+    },
+    {
+      "phase": "native-stream-final-mac-compiler",
+      "validatedInputs": 1079,
+      "validatedProducts": 9,
+      "differencesFromCurrent": [],
+      "meaning": "All recorded inputs match current source.",
+      "boundarySha256": "e9be873d585bad74fbd32d937373a9ecd0221b8177ac0852e52d60ee1d9d0a13"
+    }
+  ],
+  "limits": [
+    "Original failed invocations and rejected cleanup remain unqualified.",
+    "Mac build is compilation only; controller execution is not external Mac UI.",
+    "Fixture footer is outside the shipping layout.",
+    "Broader view/window/source-deletion lifecycle, account/cloud/system invocation, physical scale and final UI polish remain open."
+  ],
+  "sourceAndProductValidation": "Each phase was validated at completion before staged roots/products were reused. Recorded product hashes are not re-read after later builds overwrite derived products.",
+  "staticChecks": "Strict swift-format passes for all eight affected Swift files; Markdown and diff checks are separate before commit."
+}

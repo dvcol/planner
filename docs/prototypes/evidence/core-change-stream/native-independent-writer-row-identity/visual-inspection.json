@@ -1,0 +1,10 @@
+{
+  "originalCapture": "selected-item-updated.png",
+  "wholeFunctionPassed": true,
+  "observations": [
+    "Still-selected native details show the independently saved title and notes.",
+    "Native Item completion remains off.",
+    "The test subsequently returns to the catalog and verifies its original source identity."
+  ],
+  "limits": "Existing fixture composition adds a footer. This is one light-iPhone functional journey, not ordinary production layout, dark iPad, native failure/reconnect or final polish qualification."
+}

@@ -7,6 +7,68 @@ import Testing
 #endif
 
 struct PlannerChangeStreamTests {
+  @Test(arguments: [false, true])
+  func recoveryDirectoryRepairKeepsTheSubscriptionAndSavedContent(
+    subscribeWhileUnavailable: Bool
+  ) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = configuration(directory: directory)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let saved, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Hotel", notes: "Original notes")))
+      ).outcome,
+      let source = saved.generated.first,
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(source))
+    else { throw CancellationError() }
+    let existing = subscribeWhileUnavailable ? nil : await planner.changes(session: session)
+    try await Task.sleep(for: .milliseconds(100))
+    let recovery = configuration.recoveryDirectoryURL
+    let retained = directory.appendingPathComponent("retained-recovery")
+    try FileManager.default.moveItem(at: recovery, to: retained)
+    try Data("Recovery is temporarily unavailable.".utf8).write(to: recovery)
+    defer {
+      if FileManager.default.fileExists(atPath: retained.path) {
+        try? FileManager.default.removeItem(at: recovery)
+        try? FileManager.default.moveItem(at: retained, to: recovery)
+      }
+    }
+    let changes: AsyncThrowingStream<PlannerChange, any Error>
+    if let existing {
+      changes = existing
+    } else {
+      changes = await planner.changes(session: session)
+    }
+    if !subscribeWhileUnavailable {
+      _ = try await waitForRecoveryObservation(changes) {
+        if case .unavailable = $0 { return true }
+        return false
+      }
+    }
+    guard case .status(let unavailable) = await planner.read(session: session, request: .status),
+      case .unavailable(let reason) = unavailable.recovery
+    else { throw CancellationError() }
+    #expect(!reason.message.isEmpty)
+    try FileManager.default.removeItem(at: recovery)
+    try FileManager.default.moveItem(at: retained, to: recovery)
+    _ = try await waitForRecoveryObservation(changes) {
+      if case .known(let generation, let incomplete, let blocked) = $0 {
+        return generation == 1 && incomplete.isEmpty && !blocked
+      }
+      return false
+    }
+    guard
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(source))
+    else { throw CancellationError() }
+    #expect(current.source == source)
+    #expect(current.content.title == "Hotel" && current.content.notes == "Original notes")
+    #expect(current.updatedAt == original.updatedAt && current.fieldHashes == original.fieldHashes)
+  }
+
   @Test func reviewedBulkInvalidatesLocalProgressAndCompleteReplayDoesNotInventADataChange()
     async throws
   {

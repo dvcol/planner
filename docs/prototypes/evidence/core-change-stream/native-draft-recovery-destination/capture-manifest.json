@@ -1,0 +1,18 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "draft-recovery-repaired.png",
+      "originalName": "Independent recovery repair preserves the edited draft_0_4C883AA9-4C42-499F-B2B4-D286ACD82E04.png",
+      "exportedFile": "24996739-7162-4CF9-9070-B4AA6A581C59.png",
+      "sha256": "500cb02361de6817a97d186d92605ca5e902fab7a153702ae6b8377c1a257f5b"
+    },
+    {
+      "file": "draft-recovery-unavailable.png",
+      "originalName": "Independent recovery damage preserves the edited draft_0_6D292ED9-EC0F-4A21-A684-07AA9C01BF98.png",
+      "exportedFile": "76EF9678-3930-4628-A66E-FAD11B51751A.png",
+      "sha256": "82b1f5980e9ff52be756ff580082fd862c513cc625e6d673047321b392f814c1"
+    }
+  ],
+  "meaning": "Original selected-detail capture only; the complete function result remains in test-summary.json and is not changed by exporting."
+}

@@ -1,0 +1,64 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 36,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Planner · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1792685756.122,
+  "passedTests" : 36,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792685649.896,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "failed: caught error: \"Error Domain=NSCocoaErrorDomain Code=512 \"The operation couldn’t be completed. Not a directory\" UserInfo={NSLocalizedDescription=The operation couldn’t be completed. Not a directory}\"",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 17,
+      "testIdentifierString" : "PlannerItemIntentTests/testAppliedEditWithIncompleteRecoveryRetainsItsContentAndBlocksTheNextEdit()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/PlannerItemIntentTests/testAppliedEditWithIncompleteRecoveryRetainsItsContentAndBlocksTheNextEdit",
+      "testName" : "testAppliedEditWithIncompleteRecoveryRetainsItsContentAndBlocksTheNextEdit()"
+    },
+    {
+      "failureText" : "XCTAssertEqual failed: (\"[]\") is not equal to (\"[B2970EE1-E60D-4629-9CD4-00D7D45B7F11, B6B63FAF-1D66-4971-8EB2-1023507DA0C2]\")",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 37,
+      "testIdentifierString" : "SavedAssociationUndoHistoryTests/testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SavedAssociationUndoHistoryTests/testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair",
+      "testName" : "testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair()"
+    }
+  ],
+  "title" : "Test - Planner",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "28% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 3.47s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 38
+}

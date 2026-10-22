@@ -1,0 +1,14 @@
+{
+  "originalCaptures": [
+    "draft-recovery-unavailable.png",
+    "draft-recovery-repaired.png"
+  ],
+  "wholeFunctionPassed": true,
+  "observations": [
+    "Damage presents the actual native Recovery status unavailable notice with disabled Save.",
+    "Repair removes the notice and enables Save.",
+    "Both original captures retain Unsaved visit, Keep this draft and Weekend.",
+    "The complete test subsequently saves into the original List."
+  ],
+  "limits": "One light-iPhone journey with a fixture footer; no dark iPad, Mac UI, reconnect, or final layout/polish credit."
+}

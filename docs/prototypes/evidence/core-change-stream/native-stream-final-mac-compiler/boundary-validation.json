@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1079,
+  "sourceDifferences": [],
+  "retainedProductCount": 9,
+  "productDifferences": [],
+  "exitCode": 0,
+  "meaning": "Matching final-source Mac app, Share, fixture and UI test compilation; no actual Mac UI runtime credit"
+}

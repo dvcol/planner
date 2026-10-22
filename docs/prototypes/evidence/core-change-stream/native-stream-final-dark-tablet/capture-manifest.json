@@ -1,0 +1,18 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "collection-map-updated.png",
+      "originalName": "Independent writer refreshes the open collection Map_0_BC2F4E59-AED1-4F60-A967-8A591ED34A76.png",
+      "exportedFile": "B3B4AA20-E0D1-41B6-B842-CA33272808DB.png",
+      "sha256": "bf832b8aeab1197717c1e3095332b1f4762f189a7ca73cce1597b463eb65741d"
+    },
+    {
+      "file": "selected-item-updated.png",
+      "originalName": "Independent writer refreshes the selected Item_0_2BA3B970-E7F8-42C0-BE21-A8B841088D3D.png",
+      "exportedFile": "3CD2DE6B-69E0-486C-B3BE-7BF42676A8C3.png",
+      "sha256": "400ac0b31729c55b1c877ee7abce01f81f3a64a1d43c51a5d8137b4c14e5dab3"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

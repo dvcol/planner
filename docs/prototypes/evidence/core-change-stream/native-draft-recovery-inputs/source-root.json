@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "e31e888a8ab53a89f1a3a9a6e3f06cbcfb103fee",
+  "overlays": [
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerFixtures/PlannerFixtureApp.swift"
+  ]
+}

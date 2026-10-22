@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "draft-reconnected.png",
+      "originalName": "Validated reconnection preserves the edited draft_0_410E641F-5170-4E38-8552-91C234CC2B9B.png",
+      "exportedFile": "59E74F49-B4A8-4AF4-B30F-0299753E1DEF.png",
+      "sha256": "7bc5a04aa70d271015256ab8b3e9f696017ea81ba3d97fdd680a8057b5a1cb87"
+    },
+    {
+      "file": "collection-map-updated.png",
+      "originalName": "Independent writer refreshes the open collection Map_0_7A5B9890-9F1E-48E2-A497-BBD87C6F5240.png",
+      "exportedFile": "4283127E-B622-4A0A-B264-F67D3260D8AF.png",
+      "sha256": "dd7291b6b9c09e89d44ec2cd18298ded6960bf5adf08998e7ce4d369097ef9b3"
+    },
+    {
+      "file": "selected-item-updated.png",
+      "originalName": "Independent writer refreshes the selected Item_0_636B9C54-7ACA-432A-8371-FD3DCC61CD77.png",
+      "exportedFile": "901BF567-C43B-4165-BFD9-B373F4A7EABE.png",
+      "sha256": "6bcbbce13f8281fe3d5620528ec8a72d2b26affb892b19632d990c0a25e012bf"
+    },
+    {
+      "file": "draft-recovery-repaired.png",
+      "originalName": "Independent recovery repair preserves the edited draft_0_2038EED6-D0BE-409A-8583-B432C9B50E6A.png",
+      "exportedFile": "F2936D72-C06A-4BB1-BD60-073AC4FD4CBF.png",
+      "sha256": "28e5a175aefd1fc25029fbc257cfc5f2b811a5e8689137033182aad6eb99d258"
+    },
+    {
+      "file": "draft-recovery-unavailable.png",
+      "originalName": "Independent recovery damage preserves the edited draft_0_BE638FB1-6B61-4993-B7B1-1D542D9A741F.png",
+      "exportedFile": "8A61BE02-12EE-4A98-BB36-CC0B2858E57F.png",
+      "sha256": "541b0f0ce17e591c0ec94757ffeb615dea54a6eadacfb4ae3f4a5464820ab043"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

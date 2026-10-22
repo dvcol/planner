@@ -1,0 +1,168 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "CBC20A60-61DB-4441-9167-0C85F2039B24",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 01.35.02 AM",
+        "timestamp": 1792686902.598
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "948D7F5B-0895-4928-BF2E-A415E44B0B99",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 01.35.00 AM",
+        "timestamp": 1792686900.717
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5562AD00-ADD4-4943-B58B-1814C05CF160",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 01.34.57 AM",
+        "timestamp": 1792686897.868
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "0E58C851-7DDD-4F9D-9AEF-126DC3E2F8D6.mp4",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Screen Recording 2026-10-23 at 01.34.51 AM.mp4",
+        "timestamp": 1792686891.987
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "98706FB2-45D9-45F5-8A85-7F0D6B5E0523.txt",
+        "isAssociatedWithFailure": true,
+        "suggestedHumanReadableName": "Complete Issue Description.txt"
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "CD9D79FB-798F-4C85-8DA3-EDC423CF03CC.txt",
+        "isAssociatedWithFailure": true,
+        "suggestedHumanReadableName": "App UI hierarchy for org.example_0_FC0F00FC-1E32-4EE2-9149-3ACBED3D0EF8.PlannerFixtures",
+        "timestamp": 1792686905.39
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "1D286727-2AB2-45A4-B317-7627955F1153",
+        "isAssociatedWithFailure": true,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 01.35.05 AM",
+        "timestamp": 1792686905.39
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "B3B4AA20-E0D1-41B6-B842-CA33272808DB.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent writer refreshes the open collection Map_0_BC2F4E59-AED1-4F60-A967-8A591ED34A76.png",
+        "timestamp": 1792686928.19
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "3CD2DE6B-69E0-486C-B3BE-7BF42676A8C3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent writer refreshes the selected Item_0_2BA3B970-E7F8-42C0-BE21-A8B841088D3D.png",
+        "timestamp": 1792686950.675
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterRefreshesTheSelectedItemWithoutNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAnIndependentWriterRefreshesTheSelectedItemWithoutNavigation"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "BDF85F67-11D3-465A-8782-CF23198369FD",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 01.36.02 AM",
+        "timestamp": 1792686962.526
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "D57471A7-CC86-4314-983F-78E5A095495D",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 01.36.00 AM",
+        "timestamp": 1792686960.581
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "07000E8B-DC42-4673-9257-DC7A96B3FCC0",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 01.35.57 AM",
+        "timestamp": 1792686957.802
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "959226D2-CAAD-459A-A8E8-E99B84CB28AF.mp4",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Screen Recording 2026-10-23 at 01.35.52 AM.mp4",
+        "timestamp": 1792686952.327
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "4CED91FF-CD03-4715-A1C8-68CCFCBE743E.txt",
+        "isAssociatedWithFailure": true,
+        "suggestedHumanReadableName": "Complete Issue Description.txt"
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "E56F8828-4FF6-4459-8191-D3E9A7BCED1D.txt",
+        "isAssociatedWithFailure": true,
+        "suggestedHumanReadableName": "App UI hierarchy for org.example_0_1F66845C-CFA8-48E2-926B-6E938D26A2F1.PlannerFixtures",
+        "timestamp": 1792686965.222
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "907D38EB-C935-4B6B-88AA-2F2EE89BA9ED",
+        "isAssociatedWithFailure": true,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 01.36.05 AM",
+        "timestamp": 1792686965.222
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "24996739-7162-4CF9-9070-B4AA6A581C59.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent recovery repair preserves the edited draft_0_4C883AA9-4C42-499F-B2B4-D286ACD82E04.png",
+        "timestamp": 1792684304.081
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "76EF9678-3930-4628-A66E-FAD11B51751A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent recovery damage preserves the edited draft_0_6D292ED9-EC0F-4A21-A684-07AA9C01BF98.png",
+        "timestamp": 1792684297.836
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination"
+  }
+]

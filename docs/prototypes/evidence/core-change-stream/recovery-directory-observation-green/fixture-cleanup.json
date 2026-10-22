@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A0228B00-C52D-4F34-BCD0-3D09F4811379",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/83A348F7-FE88-4E04-B9ED-3D9E8164E444",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/7699ED29-9B50-4CAD-9A33-F414C4FA9249",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/9B835F03-184A-40AD-BC99-17CF039EF117",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/BBE09BE1-9D9F-4A0A-AAC5-15D308FD65AA",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/786B24DF-1BFE-4E81-90B4-E0A4305B293A",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/294021FF-487C-4B2F-B963-78B8C61D1899",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/366AD11A-846A-4A41-ACC1-76BDED269A25",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/DC8759DB-A55E-4772-8758-E2814F542C6C",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/58ED46A8-040A-45CF-8403-CB93E2E9012C",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/FB6A4878-B352-499D-86C3-03EF232BEEE2",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AEA60E67-FED8-4CE2-A21C-85CE2BE7B1E6",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/E48DA4B8-D273-46BC-8C4A-54A84101E68D",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/270A5C59-9DEB-4FAE-9038-15696C257906"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "f5c1f7cf8acebdbb95570955ff2c36a7aef577999ca225ed8b175c9e2992ac43",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 14,
+  "hostProcessIdentifiers": [
+    26670
+  ]
+}

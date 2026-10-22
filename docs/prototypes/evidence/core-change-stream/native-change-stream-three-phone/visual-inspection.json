@@ -1,0 +1,15 @@
+{
+  "inspectedOriginalFiles": [
+    "draft-reconnected.png",
+    "selected-item-updated.png",
+    "draft-recovery-repaired.png",
+    "draft-recovery-unavailable.png"
+  ],
+  "findings": [
+    "Selected detail shows Hotel updated and Other writer notes with global completion off.",
+    "Recovery damage displays a native recovery notice and disabled Save while title, notes and Weekend destination remain.",
+    "Recovery repair removes the notice and enables Save without losing the draft.",
+    "Validated reconnection preserves Connection draft, Retain connection notes and Weekend with Save enabled."
+  ],
+  "limits": "Fixture footer is present. These captures qualify status/draft projection, not production toolbar spacing, whole-app polish or physical devices."
+}

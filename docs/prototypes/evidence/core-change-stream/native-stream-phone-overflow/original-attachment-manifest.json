@@ -1,0 +1,71 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5A57A5DB-E54C-4AF7-B3A4-9B92F0927BC3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Validated reconnection preserves the edited draft_0_AF229B1E-6D27-4049-8EDB-C89F2284554E.png",
+        "timestamp": 1792687273.642
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A8377242-0C28-4494-81C5-E93B8D3DCA02.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent writer refreshes the open collection Map_0_803B32D8-1060-4D23-8F69-51B64FA46610.png",
+        "timestamp": 1792687298.584
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "580D648A-1445-428B-8C54-6B34D5CF7579.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent writer refreshes the selected Item_0_D652F8C2-6D69-4BCD-AC9D-41E276C17A2F.png",
+        "timestamp": 1792687321.923
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterRefreshesTheSelectedItemWithoutNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAnIndependentWriterRefreshesTheSelectedItemWithoutNavigation"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "66987818-4B5E-4C55-A9A7-7A98D1AE9FF7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent recovery repair preserves the edited draft_0_FEC38BA1-FEEF-45D4-9612-0A863F132489.png",
+        "timestamp": 1792687366.373
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "187F76AF-3471-469D-879A-0314CD027620.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent recovery damage preserves the edited draft_0_2DFA44B6-37A9-48DE-B218-7DCEDBCC9CEA.png",
+        "timestamp": 1792687360.138
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination"
+  }
+]

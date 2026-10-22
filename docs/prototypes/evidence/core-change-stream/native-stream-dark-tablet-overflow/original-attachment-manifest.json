@@ -1,0 +1,71 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2D8AB688-84C3-42F0-8E38-375746E233E6.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Validated reconnection preserves the edited draft_0_F26175B6-D887-4545-9BF3-F0EF68083C22.png",
+        "timestamp": 1792687072.238
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "1A780BA3-CF72-4B83-88AA-03B1404E0D92.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent writer refreshes the open collection Map_0_302FB8C1-E595-4F54-9392-E775BDA5764D.png",
+        "timestamp": 1792687095.595
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8DEF5996-E760-4EE2-94CA-04FE062B86AC.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent writer refreshes the selected Item_0_133518E8-B382-48D6-AD43-78D89F9B2660.png",
+        "timestamp": 1792687117.89
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterRefreshesTheSelectedItemWithoutNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAnIndependentWriterRefreshesTheSelectedItemWithoutNavigation"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "1BC051B5-FCEC-423C-B657-BE1E38202FD7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent recovery repair preserves the edited draft_0_10B330AE-E2BD-4E82-AF57-F755A68E1112.png",
+        "timestamp": 1792687170.189
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "6B6A050B-B918-4858-B09B-25936B6FCA5A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Independent recovery damage preserves the edited draft_0_099979F8-4A44-4D35-B82B-633EEFC085CA.png",
+        "timestamp": 1792687163.363
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testRecoveryOnlyDamageAndRepairPreserveAnEditedDraftAndItsListDestination"
+  }
+]

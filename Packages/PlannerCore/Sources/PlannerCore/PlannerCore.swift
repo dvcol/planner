@@ -130,10 +130,11 @@ public actor Planner {
         let identity = try validateSession(session)
         let container = try openContainer()
         let observer = try HistoryObserver(modelContainer: container)
-        let fileObservations = try observeBoundFiles(identity, for: identifier)
+        let recovery = readRecoveryObservation(identity)
+        let fileObservations = try observeBoundFiles(identity, recovery: recovery, for: identifier)
         return (
           observer, try latestHistoryToken(in: ModelContext(container)), fileObservations,
-          readRecoveryObservation(identity)
+          recovery
         )
       }
       let observation = Task { [weak self] in
@@ -159,11 +160,12 @@ public actor Planner {
     do {
       let (historyToken, fileObservations, recovery) = try coordinated {
         let identity = try validateSession(subscription.session)
-        let fileObservations = try observeBoundFiles(identity, for: identifier)
+        let recovery = readRecoveryObservation(identity)
+        let fileObservations = try observeBoundFiles(identity, recovery: recovery, for: identifier)
         return (
           try latestHistoryToken(in: ModelContext(try openContainer())),
           fileObservations,
-          readRecoveryObservation(identity)
+          recovery
         )
       }
       let dataChanged = historyToken != subscription.historyToken
@@ -190,23 +192,34 @@ public actor Planner {
     changeSubscriptions.removeValue(forKey: identifier)?.observation.cancel()
   }
 
-  private func observeBoundFiles(_ identity: PlannerStoreIdentity, for identifier: UUID) throws
+  private func observeBoundFiles(
+    _ identity: PlannerStoreIdentity, recovery: PlannerRecoveryObservation, for identifier: UUID
+  ) throws
     -> [PlannerFileObservation]
   {
     let directory = recoveryArchive(identity).namespaceURL
-    let bindingAndRecoveryPaths = [
+    let requiredPaths = [
       configuration.controlURL.deletingLastPathComponent(), configuration.controlURL,
-      configuration.storeURL.deletingLastPathComponent(), directory,
+      configuration.storeURL.deletingLastPathComponent(),
+      configuration.recoveryDirectoryURL.deletingLastPathComponent(),
     ]
     var observations: [PlannerFileObservation] = []
-    for path in bindingAndRecoveryPaths {
+    for path in requiredPaths {
       observations.append(try observeBoundFile(path, for: identifier))
     }
-    let checkpoints = try FileManager.default.contentsOfDirectory(
-      at: directory, includingPropertiesForKeys: nil
-    ).filter { $0.lastPathComponent.hasPrefix("checkpoint-") && $0.pathExtension == "json" }
-    for checkpoint in checkpoints {
-      observations.append(try observeBoundFile(checkpoint, for: identifier))
+    // Recovery can be temporarily unavailable; its parent still observes replacement and repair.
+    do {
+      for path in [configuration.recoveryDirectoryURL, directory] {
+        observations.append(try observeBoundFile(path, for: identifier))
+      }
+      let checkpoints = try FileManager.default.contentsOfDirectory(
+        at: directory, includingPropertiesForKeys: nil
+      ).filter { $0.lastPathComponent.hasPrefix("checkpoint-") && $0.pathExtension == "json" }
+      for checkpoint in checkpoints {
+        observations.append(try observeBoundFile(checkpoint, for: identifier))
+      }
+    } catch {
+      guard case .unavailable = recovery else { throw error }
     }
     return observations
   }

@@ -1,0 +1,10 @@
+{
+  "originalCapture": "selected-item-updated.png",
+  "observations": [
+    "The still-selected detail shows Hotel updated and Other writer notes.",
+    "The actual separate-writer footer reports Saved another-writer change.",
+    "Native Item completion remains off."
+  ],
+  "wholeFunctionPassed": false,
+  "limit": "Later catalog lookup failed because tab switching preserves pushed detail navigation. Native Back must reveal the catalog. This capture is not complete-function or production-layout acceptance."
+}

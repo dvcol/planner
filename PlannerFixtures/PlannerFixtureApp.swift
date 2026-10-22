@@ -14,7 +14,14 @@ struct PlannerFixtureApp: App {
     WindowGroup(id: SavedPlanOpeningCoordinator.mainWindowSceneIdentifier, for: UUID.self) {
       $windowIdentifier in
       Group {
-        if ProcessInfo.processInfo.arguments.contains("--share-extension-fixture") {
+        if ProcessInfo.processInfo.arguments.contains("--change-stream-fixture") {
+          PlannerChangeObservationFixtureView(
+            planOpening: planOpening, windowIdentifier: windowIdentifier
+          )
+          .environment(previews)
+          .environment(addressPreviews)
+          .environment(mapsPreviews)
+        } else if ProcessInfo.processInfo.arguments.contains("--share-extension-fixture") {
           PlannerShareFixtureView(planOpening: planOpening, windowIdentifier: windowIdentifier)
             .environment(previews)
             .environment(addressPreviews)
@@ -36,7 +43,9 @@ struct PlannerFixtureApp: App {
         }
       }
       .task {
-        guard !ProcessInfo.processInfo.arguments.contains("--share-extension-fixture") else {
+        guard !ProcessInfo.processInfo.arguments.contains("--share-extension-fixture"),
+          !ProcessInfo.processInfo.arguments.contains("--change-stream-fixture")
+        else {
           return
         }
         guard store == nil, failure == nil else { return }

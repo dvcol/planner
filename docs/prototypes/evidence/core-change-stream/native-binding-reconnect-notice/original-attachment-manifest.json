@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D7470327-BCEA-49DC-82FA-14DC7B8EB7AE.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Validated reconnection preserves the edited draft_0_4321CEB0-B0E7-4611-A81F-8E7CA1067AF0.png",
+        "timestamp": 1792684794.152
+      }
+    ],
+    "testIdentifier": "ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testAChangedBindingOffersValidatedReconnectionWithoutReplacingTheDraft"
+  }
+]

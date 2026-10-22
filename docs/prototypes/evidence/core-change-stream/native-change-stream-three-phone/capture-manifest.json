@@ -1,0 +1,30 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "draft-reconnected.png",
+      "originalName": "Validated reconnection preserves the edited draft_0_E295CC68-F515-47AF-A65A-4992D047D8FC.png",
+      "exportedFile": "E9BA4658-541A-4B89-8D6C-F4FFE45C9D07.png",
+      "sha256": "018a808342ee3c9f4c3de20774381857cf31c0a0bdb2dd968ef52352a6da0e3b"
+    },
+    {
+      "file": "selected-item-updated.png",
+      "originalName": "Independent writer refreshes the selected Item_0_9FBFCEA6-3B60-420A-B01C-51A680693BBA.png",
+      "exportedFile": "267ACBC4-1A07-49A4-9F59-BAAE35ABC891.png",
+      "sha256": "e09f569d8ab1baacd67261fdc5da93613f22ce7ec56154d5af06651a647b8ed5"
+    },
+    {
+      "file": "draft-recovery-repaired.png",
+      "originalName": "Independent recovery repair preserves the edited draft_0_F43CB974-7863-4A40-8E18-36FF89D30616.png",
+      "exportedFile": "5BD131FB-CA9B-4DAE-A7F5-E93C5E703F97.png",
+      "sha256": "b877ccc67bb0b7797484c347212a49daf29ef424dd3a5955b973c9caccd34b5f"
+    },
+    {
+      "file": "draft-recovery-unavailable.png",
+      "originalName": "Independent recovery damage preserves the edited draft_0_03EFBB59-D8DF-4E66-BDAF-4EB84AB15AF4.png",
+      "exportedFile": "6458BF8E-11E4-47E3-9D86-8977A2646DFC.png",
+      "sha256": "aa82c94be9b99a6e93a11b92ce35e9df699bbfe983f488355d32d5a450f58fb0"
+    }
+  ],
+  "meaning": "Original selected-detail capture only; the complete function result remains in test-summary.json and is not changed by exporting."
+}

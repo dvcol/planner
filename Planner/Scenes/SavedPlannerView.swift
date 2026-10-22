@@ -379,7 +379,29 @@ struct SavedPlannerView: View {
 
   @ViewBuilder
   private var recoveryNotice: some View {
-    if store.isReady && store.recoveryBlocked {
+    if store.isReady && (store.changeObservationFailure != nil || store.isReconnectingChanges) {
+      let failure = store.changeObservationFailure ?? "Reconnecting to saved data."
+      HStack {
+        if store.isReconnectingChanges {
+          ProgressView().controlSize(.small)
+            .accessibilityLabel("Reconnecting saved data")
+        }
+        Label("Live updates unavailable", systemImage: "exclamationmark.triangle")
+          .font(.callout)
+          .help(failure)
+          .accessibilityHint(failure)
+          .accessibilityIdentifier("saved.changes.failure")
+        Spacer()
+        Button(store.isReconnectingChanges ? "Reconnecting" : "Reconnect") {
+          Task { await store.reconnectChanges() }
+        }
+        .buttonStyle(.bordered)
+        .disabled(!store.canReconnectChanges)
+        .accessibilityIdentifier("saved.changes.retry")
+      }
+      .padding(.horizontal).padding(.vertical, 8)
+      .background(.bar)
+    } else if store.isReady && store.recoveryBlocked {
       HStack {
         Label(store.recoveryStatusTitle, systemImage: "exclamationmark.triangle")
           .font(.callout)
@@ -2135,7 +2157,9 @@ struct SavedPlannerView: View {
     SavedNewItemForm(
       store: store, draft: draft, isSaving: isSavingNewItem,
       cancel: { requestDraftNavigation {} },
-      save: { Task { await saveNewItem(continuingNavigation: false) } })
+      save: { Task { await saveNewItem(continuingNavigation: false) } }
+    )
+    .safeAreaInset(edge: .top, spacing: 0) { recoveryNotice }
   }
 
   private func requestDraftNavigation(_ navigation: @escaping () -> Void) {

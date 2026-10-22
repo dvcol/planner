@@ -51,6 +51,9 @@ final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
   private var session: PlannerDatasetSession?
   @ObservationIgnored private var openingTask: Task<Void, Never>?
+  @ObservationIgnored private var changeObservationTask: Task<Void, Never>?
+  private(set) var changeObservationFailure: String?
+  private(set) var isReconnectingChanges = false
   private(set) var isOpening = false
   private var activeSaveCount = 0
   var isSaving: Bool { activeSaveCount > 0 }
@@ -58,6 +61,12 @@ final class SavedPlannerStore {
   private(set) var recoveryStatusTitle = "Checking local recovery"
   private(set) var recoveryStatusFailure: String?
   private(set) var isCheckingRecovery = false
+  private struct RecoveryRefresh: Sendable {
+    let identifier: UUID
+    let session: PlannerDatasetSession
+    let task: Task<PlannerReadResult, Never>
+  }
+  @ObservationIgnored private var recoveryRefresh: RecoveryRefresh?
   private(set) var isRetryingRecovery = false
   private(set) var incompleteRecoveryOperationIdentifiers: [UUID] = []
   private var requiresRecoveryReview = false
@@ -66,9 +75,16 @@ final class SavedPlannerStore {
   private(set) var openingFailure: String?
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
-  var canCreate: Bool { isReady && !isSaving && !isCheckingRecovery && !recoveryBlocked }
+  var canCreate: Bool {
+    isReady && !isSaving && !recoveryBlocked
+      && !isReconnectingChanges && changeObservationFailure == nil
+  }
+  var canReconnectChanges: Bool {
+    isReady && !isSaving && !isCheckingRecovery && !isReconnectingChanges
+      && changeObservationFailure != nil
+  }
   var canRetryRecovery: Bool {
-    isReady && !isSaving && !isCheckingRecovery && !requiresRecoveryReview
+    isReady && !isSaving && !requiresRecoveryReview
       && !incompleteRecoveryOperationIdentifiers.isEmpty
   }
   var currentDatasetIdentifier: UUID? { session?.datasetId }
@@ -121,6 +137,11 @@ final class SavedPlannerStore {
         processRole: .mainApplication, storageMode: .localOnly))
   }
 
+  deinit {
+    changeObservationTask?.cancel()
+    recoveryRefresh?.task.cancel()
+  }
+
   func open() async {
     if let openingTask {
       await openingTask.value
@@ -140,12 +161,64 @@ final class SavedPlannerStore {
     switch await planner.bootstrap() {
     case .ready(let ready):
       session = ready
+      await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired:
       openingFailure = "Open Planner once to set up its shared data before using Share."
     case .mainAppMigrationRequired:
       openingFailure = "Open Planner to update its shared data before using Share."
+    }
+  }
+
+  private func observeChanges(_ planner: PlannerCore.Planner, session: PlannerDatasetSession) async
+  {
+    changeObservationTask?.cancel()
+    changeObservationFailure = nil
+    let changes = await planner.changes(session: session)
+    changeObservationTask = Task { [weak self] in
+      do {
+        for try await change in changes {
+          guard !Task.isCancelled, self?.session == session else { return }
+          switch change.payload {
+          case .dataChanged: self?.changeRevision = UUID()
+          case .recoveryStatusChanged: await self?.refreshRecoveryStatus()
+          case .accountStatusChanged, .cloudActivityChanged: break
+          }
+        }
+        guard !Task.isCancelled, self?.session == session else { return }
+        self?.changeObservationFailure = "Live updates stopped. Reconnect to refresh this window."
+      } catch {
+        guard !Task.isCancelled, self?.session == session else { return }
+        self?.changeObservationFailure =
+          (error as? PlannerFailure)?.message ?? "Planner could not observe saved changes."
+      }
+    }
+  }
+
+  func reconnectChanges() async {
+    guard let planner, let expected = session, canReconnectChanges else { return }
+    isReconnectingChanges = true
+    defer { isReconnectingChanges = false }
+    changeObservationTask?.cancel()
+    switch await planner.bootstrap() {
+    case .ready(let ready):
+      guard ready.datasetId == expected.datasetId,
+        ready.ownershipBinding == expected.ownershipBinding
+      else {
+        changeObservationFailure =
+          "The available Planner data changed. Reopen this window to continue."
+        return
+      }
+      session = ready
+      await observeChanges(planner, session: ready)
+      await refreshRecoveryStatus()
+      changeRevision = UUID()
+    case .unavailable(let reason): changeObservationFailure = reason.message
+    case .mainAppSetupRequired:
+      changeObservationFailure = "Open Planner to finish setting up its shared data."
+    case .mainAppMigrationRequired:
+      changeObservationFailure = "Open Planner to finish updating its shared data."
     }
   }
 
@@ -166,12 +239,14 @@ final class SavedPlannerStore {
   ) async throws -> PlannerOperationResult {
     let (planner, session) = try await appIntentContext()
     try Task.checkCancellation()
-    guard !isCheckingRecovery, !recoveryBlocked else {
+    guard !recoveryBlocked, !isReconnectingChanges,
+      changeObservationFailure == nil
+    else {
       throw CocoaError(
         .fileWriteUnknown,
         userInfo: [
           NSLocalizedDescriptionKey:
-            recoveryStatusFailure
+            changeObservationFailure ?? recoveryStatusFailure
             ?? "Planner cannot make this change now. Open Planner to review its status."
         ])
     }
@@ -184,11 +259,13 @@ final class SavedPlannerStore {
   {
     let (planner, session) = try await appIntentContext()
     try Task.checkCancellation()
-    guard !isCheckingRecovery, !recoveryBlocked else {
+    guard !recoveryBlocked, !isReconnectingChanges,
+      changeObservationFailure == nil
+    else {
       throw CocoaError(
         .fileWriteUnknown,
         userInfo: [
-          NSLocalizedDescriptionKey: recoveryStatusFailure
+          NSLocalizedDescriptionKey: changeObservationFailure ?? recoveryStatusFailure
             ?? "Planner cannot make this change now. Open Planner to review its status."
         ])
     }
@@ -202,10 +279,33 @@ final class SavedPlannerStore {
   }
 
   func refreshRecoveryStatus() async {
-    guard let planner, let session, !isCheckingRecovery else { return }
+    guard let planner else { return }
+    while let active = recoveryRefresh {
+      let result = await active.task.value
+      finishRecoveryRefresh(active, result: result)
+    }
+    guard let session, !Task.isCancelled else { return }
+    let refresh = RecoveryRefresh(
+      identifier: UUID(), session: session,
+      task: Task { await planner.read(session: session, request: .status) })
+    recoveryRefresh = refresh
     isCheckingRecovery = true
-    defer { isCheckingRecovery = false }
-    switch await planner.read(session: session, request: .status) {
+    let result = await refresh.task.value
+    finishRecoveryRefresh(refresh, result: result)
+  }
+
+  private func invalidateRecoveryRefresh() {
+    recoveryRefresh?.task.cancel()
+    recoveryRefresh = nil
+    isCheckingRecovery = false
+  }
+
+  private func finishRecoveryRefresh(_ refresh: RecoveryRefresh, result: PlannerReadResult) {
+    guard recoveryRefresh?.identifier == refresh.identifier else { return }
+    recoveryRefresh = nil
+    isCheckingRecovery = false
+    guard session == refresh.session else { return }
+    switch result {
     case .status(let status):
       switch status.recovery {
       case .known(let checkpoint, let incompleteIdentifiers, let mutationBlocked):
@@ -250,6 +350,7 @@ final class SavedPlannerStore {
       }
       break
     }
+    invalidateRecoveryRefresh()
     await refreshRecoveryStatus()
     if recoveryBlocked, let retryFailure { recoveryStatusFailure = retryFailure }
   }
@@ -692,7 +793,13 @@ final class SavedPlannerStore {
   func restoreAssociation(
     _ snapshot: PlannerAssociationUndoSnapshot, operationIdentifier: UUID
   ) async -> PlannerOperationResult? {
-    await executeChangeResponse(
+    if recoveryBlocked {
+      await refreshRecoveryStatus()
+      if recoveryBlocked {
+        alertMessage = recoveryStatusFailure ?? "Undo must wait for local recovery review."
+      }
+    }
+    return await executeChangeResponse(
       .restoreAssociation(snapshot: snapshot), operationId: operationIdentifier)
   }
 
@@ -877,12 +984,14 @@ final class SavedPlannerStore {
       if reason.code == "mutationBlocked" { await refreshRecoveryStatus() }
       return nil
     case .unverified:
+      invalidateRecoveryRefresh()
       requiresRecoveryReview = true
       recoveryBlocked = true
       recoveryStatusTitle = "Recovery review needed"
       alertMessage = "The change could not be verified. Further changes need recovery review."
       return nil
     case .applied(let applied, let recovery):
+      invalidateRecoveryRefresh()
       changeRevision = UUID()
       if case .incomplete(let reason) = recovery {
         recoveryBlocked = true

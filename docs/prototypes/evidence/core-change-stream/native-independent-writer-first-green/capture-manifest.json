@@ -1,0 +1,12 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "selected-item-updated.png",
+      "originalName": "Independent writer refreshes the selected Item_0_BB4EB1DC-5492-4D6E-9967-2788A6434C2C.png",
+      "exportedFile": "21C1CBE7-5312-48A8-9E71-9E9EC67DF075.png",
+      "sha256": "dcd11952e4231a272d3fed43bf51df5c59b936a31febe2c23def11f4901e89a1"
+    }
+  ],
+  "meaning": "Original selected-detail capture only; the complete function result remains in test-summary.json and is not changed by exporting."
+}

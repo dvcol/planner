@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 14.438,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "recoveryDirectoryRepairKeepsTheSubscriptionAndSavedContent(subscribeWhileUnavailable:)",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 5.174604416999999,
+      "failures": [
+        "Caught error: PlannerFailure(code: \"observationUnavailable\", propertyPath: nil, message: \"The operation couldn\u2019t be completed. Not a directory\", details: nil) (error)",
+        "Caught error: .noInvalidationBeforeTestDeadline (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

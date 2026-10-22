@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000165667"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="5.1749775">
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="recoveryDirectoryRepairKeepsTheSubscriptionAndSavedContent(subscribeWhileUnavailable:)" time="5.174604416999999">
+            <failure message="Caught error: PlannerFailure(code: &quot;observationUnavailable&quot;, propertyPath: nil, message: &quot;The operation couldn’t be completed. Not a directory&quot;, details: nil) (error)"/>
+            <failure message="Caught error: .noInvalidationBeforeTestDeadline (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,17 @@
+{
+  "inspectedOriginalFiles": [
+    "draft-reconnected.png",
+    "collection-map-updated.png",
+    "selected-item-updated.png",
+    "draft-recovery-repaired.png",
+    "draft-recovery-unavailable.png"
+  ],
+  "findings": [
+    "Selected Item details show independently updated title and notes; global completion remains off and the owned-location map is present.",
+    "The open collection Map shows the independently moved Hotel pin and one located Item.",
+    "Recovery damage displays the notice with disabled Save and intact title, notes and Weekend destination.",
+    "Repair removes the notice and re-enables Save with the same draft.",
+    "Validated reconnection preserves the second draft and originating List with Save enabled."
+  ],
+  "limits": "Fixture footer is visible. These final overflow-aware light-phone captures qualify the represented functional states, not whole-app polish, exhaustive accessibility or physical devices."
+}

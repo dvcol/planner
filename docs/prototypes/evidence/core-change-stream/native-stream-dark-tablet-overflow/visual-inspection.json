@@ -1,0 +1,19 @@
+{
+  "inspectedOriginalFiles": [
+    "draft-reconnected.png",
+    "collection-map-updated.png",
+    "selected-item-updated.png",
+    "draft-recovery-repaired.png",
+    "draft-recovery-unavailable.png"
+  ],
+  "findings": [
+    "Dark-mode selected row/details show Hotel updated and Other writer notes with completion off and a native owned-location map.",
+    "The collection Map moves Hotel to the southern coordinate while its empty details pane stays unchanged.",
+    "Recovery damage shows a readable notice and disabled Save in the actual detail-column editor, with title, notes and Weekend intact.",
+    "Repair removes the notice and enables Save without replacing the editor.",
+    "Validated reconnection preserves Connection draft, Retain connection notes and Weekend with Save enabled.",
+    "The native Items toolbar title is truncated in this narrow iPad pane; it remains a whole-app polish finding."
+  ],
+  "limits": "Fixture footer and iPad keyboard are visible. These functional captures do not qualify exhaustive layout, contrast/accessibility or physical devices.",
+  "appearanceRestored": true
+}

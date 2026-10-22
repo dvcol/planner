@@ -1,0 +1,25 @@
+{
+  "sourceInputCount": 1079,
+  "sourceDifferences": [],
+  "retainedProductCount": 4,
+  "productDifferences": [],
+  "exitCode": 65,
+  "testResult": {
+    "devicesAndConfigurations": [],
+    "environmentDescription": "PlannerFixtures \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1792682776.555,
+    "passedTests": 0,
+    "result": "unknown",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1792682756.214,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerFixtures",
+    "topInsights": [],
+    "totalTestCount": 0
+  },
+  "meaning": "Fixture compilation failed at editItem argument labels. No native test started; retained products are not runtime or rebuilt-product proof."
+}

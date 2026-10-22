@@ -1,0 +1,10 @@
+{
+  "originalCapture": "draft-reconnected.png",
+  "wholeFunctionPassed": true,
+  "observations": [
+    "Validated reconnection retains Connection draft, Retain connection notes and Weekend.",
+    "Save is enabled after the failure notice disappears.",
+    "The complete function subsequently saves the retained draft."
+  ],
+  "limits": "One light-iPhone journey before the final loading-indicator refinement; no dark iPad, actual Mac window, account/cloud or final polish credit."
+}

@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerMapRowsSource",
+  "base": "e31e888a8ab53a89f1a3a9a6e3f06cbcfb103fee",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PlannerChangeStreamTests.swift"
+  ]
+}
