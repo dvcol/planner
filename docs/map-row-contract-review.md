@@ -1,6 +1,6 @@
 # Shared Map row contract review
 
-Status: proposed for Q142. Q131-Q141 already settle the workflow. This review concerns the added public read declaration and its tests. No Map query or implementation is added before the answer.
+Status: accepted under Q142 A on 22 October 2026. Q131-Q141 already settle the workflow. This declaration governs the added public read and its tests. Implementation and qualification are in progress.
 
 ## Context, starting state and goal
 
@@ -42,7 +42,7 @@ Native Map reads every matching page, separately from the List presentation cach
 
 ## Definition of ready
 
-Accept Q142 A or revise the concrete fields, eligibility, matching or wire behavior first. The production public Core query/read/store and real MCP HTTP boundaries are already approved. No additional direct controller seam, test hook, package or target is proposed. Q127-Q130 remain separate pending choices.
+Q142 A accepts the concrete fields, eligibility, matching and wire behavior below. The production public Core query/read/store and real MCP HTTP boundaries are already approved. No additional direct controller seam, test hook, package or target is proposed. Q127-Q130 remain separate pending choices.
 
 ## Required /tdd and definition of done
 
