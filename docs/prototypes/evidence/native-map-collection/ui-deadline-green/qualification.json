@@ -1,0 +1,18 @@
+{
+  "sourceInputCount": 1072,
+  "actualProductCount": 3,
+  "sourceDifferences": [],
+  "productDifferences": [],
+  "passedFunctions": 4,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "fixtureDirectories": [
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/1132076F-F7D4-4EBC-BED2-6205C285C1FE",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/8006912E-4A2A-4DD8-AE27-9EAE7B4204F0",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/A82A6C67-4E58-43C6-B9E4-2112213ADF2E",
+    "/Users/dinh-van.colomban/Library/Containers/org.example.PlannerMCPPrototype/Data/tmp/PlannerMapCollectionFixtures/9638BEAF-412C-4ACB-AE0E-0C8393C9ED23"
+  ],
+  "meaning": "Actual app-hosted production-interface execution using real Planner storage and existing provider boundaries. Not native Map UI, physical performance, signed CloudKit or system Shortcuts qualification.",
+  "unchangedRedGreenTestSha256": "bc06d27a84be396a818d2af1359d30dc7f464b2f4f0e0df2ea1effb988fb2951"
+}
