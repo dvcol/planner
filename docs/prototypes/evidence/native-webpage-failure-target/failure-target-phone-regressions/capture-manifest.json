@@ -1,0 +1,22 @@
+[
+  {
+    "file": "toolbar-recovered-guide.png",
+    "original": "Toolbar reload recovers saved and linked guides_0_6FF4FB5A-004E-42D2-8C5B-9FF5ECEED0FD.png",
+    "exportedFile": "8FBB8911-E492-4ABF-90E1-E02A65CF9D51.png",
+    "sha256": "9d3ce399ca78cf26d0527839e124ba4001d461a9751d072ed9acd54e21072221",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "unsupported-linked-dialog.png",
+    "original": "Native unsupported linked content offers exact external target and keeps saved guide_0_0CF856CA-483F-4BE9-BBBF-52EDC92D5FE4.png",
+    "exportedFile": "2D5B46D0-88B7-418E-8EFF-223F32F270DF.png",
+    "sha256": "a167242e405d18c2acacb92a37fba373b7cb52b42f7ed12b2e86168fe92ed1ba",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

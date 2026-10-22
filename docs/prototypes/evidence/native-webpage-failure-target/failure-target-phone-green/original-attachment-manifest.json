@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "8D71620D-3C0D-4073-9AFD-75A87A594C53.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Failed linked webpage keeps its exact external target and readable error_0_E6A6BE73-6A71-4551-AC9F-C35A055B4F98.png",
+        "timestamp": 1792669865.426
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnavailableLinkedPageKeepsItsExactBrowserTargetAndReadableError()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnavailableLinkedPageKeepsItsExactBrowserTargetAndReadableError"
+  }
+]

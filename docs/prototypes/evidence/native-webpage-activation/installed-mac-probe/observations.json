@@ -1,0 +1,36 @@
+{
+  "observedActions": [
+    {
+      "case": "element-click",
+      "navigationType": 0,
+      "buttonNumber": 0,
+      "policy": "cancel"
+    },
+    {
+      "case": "dispatch-mouse-click",
+      "navigationType": 0,
+      "buttonNumber": 0,
+      "policy": "cancel"
+    },
+    {
+      "case": "location-assign",
+      "navigationType": -1,
+      "buttonNumber": 0,
+      "policy": "cancel"
+    },
+    {
+      "case": "blank-element-click",
+      "navigationType": 0,
+      "buttonNumber": 0,
+      "policy": "cancel"
+    }
+  ],
+  "sourceSHA256": {
+    "ActivationProbe.swift": "8e75aedd24fddd59ea71dd8b74d07297d0dbd3005aced7429f72680f6dd51023",
+    "run_probe.py": "f197daa4ddbe6af8743c66c9b9bce7dbe8cc645fb61f0bc5b1aece7d9be4db31"
+  },
+  "binarySHA256": "3d4367680f7021ea15527583651bd0b33f2a29321a6f70cce740270f793601d6",
+  "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "systemVersion": "27.0.1",
+  "meaning": "Installed-SDK fact probe with real private loopback HTTP. Autonomous script activations report linkActivated without user activation. Every mailto action is cancelled. No actual app handoff, genuine mouse/touch/keyboard/accessibility comparison or Planner UI qualification."
+}

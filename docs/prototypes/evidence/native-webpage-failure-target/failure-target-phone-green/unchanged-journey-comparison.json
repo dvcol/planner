@@ -1,0 +1,6 @@
+{
+  "testFile": "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+  "redAndGreenSHA256": "6c943e4df28b82d0010aca79fe96d698ff1dfdc078cf5481471e6c014d3390c0",
+  "sameTestFileBytes": true,
+  "meaning": "The unchanged failure-context journey now passes its exact target, readable connection error, real Retry and original bookmark assertions."
+}

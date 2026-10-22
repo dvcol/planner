@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "Museum renders, its Garden link fails, and the native failure action exposes an empty target instead of the required exact Garden URL. The native assertion fails at line 37. No passing credit."
+}

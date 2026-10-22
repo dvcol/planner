@@ -1,0 +1,32 @@
+[
+  {
+    "file": "toolbar-recovered-guide.png",
+    "original": "Toolbar reload recovers saved and linked guides_0_6F7995EF-0D5E-4E1C-87CC-10B455F12426.png",
+    "exportedFile": "B6586DB9-48CA-4894-9862-49A1BFA61F30.png",
+    "sha256": "a0337acd7a4ff30a49827f8342fc0473b8ab59a70afc66310ee63d87a4242a7a",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "failed-linked-target.png",
+    "original": "Failed linked webpage keeps its exact external target and readable error_0_F0F2E09D-480E-454B-85D6-4663C4597156.png",
+    "exportedFile": "96ECB9F2-59EB-4FB0-B653-9427E463BB4F.png",
+    "sha256": "fe6f0f4634e289cbcb7eb834a3fdb41d6713c7644a451c952a247155dfbd1cd5",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "unsupported-linked-dialog.png",
+    "original": "Native unsupported linked content offers exact external target and keeps saved guide_0_7DF698DA-23B8-4E8B-8CF9-0292628B9511.png",
+    "exportedFile": "452C3448-87E9-44A0-848F-83F0B8B003A9.png",
+    "sha256": "a9eb76ae94039772d17d103d7a28bff01193e50f10729069b4c7a7280efeae98",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

@@ -1,0 +1,4 @@
+"GET /element-click HTTP/1.1" 200 -
+"GET /dispatch-mouse-click HTTP/1.1" 200 -
+"GET /location-assign HTTP/1.1" 200 -
+"GET /blank-element-click HTTP/1.1" 200 -

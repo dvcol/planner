@@ -1,0 +1,16 @@
+{
+  "sourceInputCount": 1074,
+  "phases": [
+    "failure-target-phone-green",
+    "failure-target-dark-tablet",
+    "failure-target-phone-regressions",
+    "failure-target-mac-compiler"
+  ],
+  "identicalSourceInputs": true,
+  "passedNativeExecutions": 6,
+  "distinctNativeFunctions": 3,
+  "originalCapturesInspected": 6,
+  "macCompilationProductCount": 9,
+  "actualExternalHandoff": false,
+  "macRuntimeCredit": false
+}
