@@ -6,6 +6,54 @@ import XCTest
 
 @MainActor
 final class SavedMapCollectionJourneyTests: XCTestCase {
+  func testCoincidentMarkerChoicesKeepDistinctSavedItemIdentities() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let museumURL = "https://www.google.com/maps/search/?api=1&query=35,139#museum"
+    let cafeURL = "https://www.google.com/maps/search/?api=1&query=35,139#cafe"
+    createItem("Map museum", link: museumURL, in: application)
+    returnToCatalog(application)
+    createItem("Map cafe", link: cafeURL, in: application)
+    returnToCatalog(application)
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    let pin = application.buttons.matching(identifier: "saved.map.pin.35.0,139.0")
+      .matching(NSPredicate(format: "label == %@", "2 items")).firstMatch
+    XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    XCTAssertTrue(pin.waitForPlannerHittability())
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Counted native Map marker keeps exact Item choices"
+    capture.lifetime = .keepAlways
+    add(capture)
+    pin.activateForPlannerJourney()
+    let museum = application.buttons["Map museum"].firstMatch
+    let cafe = application.buttons["Map cafe"].firstMatch
+    XCTAssertTrue(museum.waitForExistence(timeout: 5))
+    XCTAssertTrue(cafe.exists)
+    museum.activateForPlannerJourney()
+    let museumLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", museumURL)
+    ).firstMatch
+    XCTAssertTrue(museumLink.waitForExistence(timeout: 10))
+    let museumLinkIdentifier = museumLink.identifier
+    returnToCatalog(application)
+    XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    pin.activateForPlannerJourney()
+    XCTAssertTrue(cafe.waitForExistence(timeout: 5))
+    cafe.activateForPlannerJourney()
+    let cafeLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", cafeURL)
+    ).firstMatch
+    XCTAssertTrue(cafeLink.waitForExistence(timeout: 10))
+    XCTAssertNotEqual(cafeLink.identifier, museumLinkIdentifier)
+    XCTAssertTrue(museumLink.waitForNonExistence(timeout: 5))
+  }
+
   func testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation() {
     continueAfterFailure = false
     let application = XCUIApplication()
