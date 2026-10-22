@@ -1,0 +1,18 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "generated-app-confirmation.png",
+      "originalName": "Generated external-app link awaits an exact native Open action_0_2A9B9C80-3B9C-471D-9FD1-8689C578C738.png",
+      "exportedFile": "E9E50778-56D6-4045-83BE-8CF3DC4308F8.png",
+      "sha256": "3b5d99f9fa784fb00d795da7aecc3a989d580df638c9c35bb084889515648345"
+    },
+    {
+      "file": "direct-app-confirmation.png",
+      "originalName": "Supported external-app link awaits an exact native Open action_0_72DEA3B3-DE8C-47CC-92B4-4C95AC50BEDB.png",
+      "exportedFile": "90606DEF-AADC-4ED6-870D-1B41908409D4.png",
+      "sha256": "91a3459a61af47f184c30671e03a5906440cac3d406065465ffa6d735f60fcd7"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

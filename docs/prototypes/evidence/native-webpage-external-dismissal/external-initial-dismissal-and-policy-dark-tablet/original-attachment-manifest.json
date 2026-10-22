@@ -1,0 +1,80 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "468CF963-81D1-4D50-9631-7D2CB3C89ADB.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Dismissed initial app confirmation returns to its saved Item_0_B22C831B-1D31-4F24-85A2-6816AE1AFB9A.png",
+        "timestamp": 1792692105.152
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "3C901EA3-E193-4F96-BD72-BC6FFB01A551.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Initial app redirect awaits native confirmation before any page_0_A2451CD4-904C-4B3F-BC52-E53A7BC7E855.png",
+        "timestamp": 1792692099.725
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDismissingInitialAppConfirmationReturnsToTheExactSavedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDismissingInitialAppConfirmationReturnsToTheExactSavedItem"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "87894BFC-1F5C-4872-A8F2-41BE32C4D0C4.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Interactive app-sheet dismissal keeps the guide_0_D665FCA3-BA19-4325-8E26-7424FD39F7DB.png",
+        "timestamp": 1792692144.024
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDismissingLoadedAppConfirmationKeepsTheGuideAndBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDismissingLoadedAppConfirmationKeepsTheGuideAndBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "BA25A0F5-B65D-4BA3-B918-80F5BC5ED618.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Generated external-app link awaits an exact native Open action_0_66D2282C-1FE7-48C9-9F52-6A7DD351D45B.png",
+        "timestamp": 1792692185.353
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2D8622B9-EEEA-46D1-B74E-93944F71C2E5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native WebKit Phone actions await an explicit choice_0_3DB9624D-14BF-4DA3-BCCC-777B46A50ADB.png",
+        "timestamp": 1792692234.808
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "CCC19913-3F63-4E25-9391-5B7DDE9D439B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Supported external-app link awaits an exact native Open action_0_EDAF6F12-E769-4BFB-BF32-139BC20BEFE2.png",
+        "timestamp": 1792692230.095
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "initial-app-dismissed-item.png",
+      "originalName": "Dismissed initial app confirmation returns to its saved Item_0_B22C831B-1D31-4F24-85A2-6816AE1AFB9A.png",
+      "exportedFile": "468CF963-81D1-4D50-9631-7D2CB3C89ADB.png",
+      "sha256": "2c93d33b19cfccd47a5439852d52effd61fadf1a936a5a9b622d119b51c47249"
+    },
+    {
+      "file": "initial-app-confirmation.png",
+      "originalName": "Initial app redirect awaits native confirmation before any page_0_A2451CD4-904C-4B3F-BC52-E53A7BC7E855.png",
+      "exportedFile": "3C901EA3-E193-4F96-BD72-BC6FFB01A551.png",
+      "sha256": "e6c315eacf8a4d8256bcfa2a80adbd6f87ec1b5ba637a59040cf6ab10997b51b"
+    },
+    {
+      "file": "loaded-app-dismissed-guide.png",
+      "originalName": "Interactive app-sheet dismissal keeps the guide_0_D665FCA3-BA19-4325-8E26-7424FD39F7DB.png",
+      "exportedFile": "87894BFC-1F5C-4872-A8F2-41BE32C4D0C4.png",
+      "sha256": "e72d9d28e426aefd9624ff6fdc88c2dd9397468f7ab4081622120f98d37c6742"
+    },
+    {
+      "file": "generated-app-confirmation.png",
+      "originalName": "Generated external-app link awaits an exact native Open action_0_66D2282C-1FE7-48C9-9F52-6A7DD351D45B.png",
+      "exportedFile": "BA25A0F5-B65D-4BA3-B918-80F5BC5ED618.png",
+      "sha256": "83e7d9755b8fca90b0dd27965f2a21b171543dce79a024ad4593bc346afaf2f3"
+    },
+    {
+      "file": "native-phone-menu.png",
+      "originalName": "Native WebKit Phone actions await an explicit choice_0_3DB9624D-14BF-4DA3-BCCC-777B46A50ADB.png",
+      "exportedFile": "2D8622B9-EEEA-46D1-B74E-93944F71C2E5.png",
+      "sha256": "8293f9db57e707c39fb277ccfccfd89acfe9dea5df7aa70816d7d2c9368e0535"
+    },
+    {
+      "file": "direct-app-confirmation.png",
+      "originalName": "Supported external-app link awaits an exact native Open action_0_EDAF6F12-E769-4BFB-BF32-139BC20BEFE2.png",
+      "exportedFile": "CCC19913-3F63-4E25-9391-5B7DDE9D439B.png",
+      "sha256": "83e7d9755b8fca90b0dd27965f2a21b171543dce79a024ad4593bc346afaf2f3"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

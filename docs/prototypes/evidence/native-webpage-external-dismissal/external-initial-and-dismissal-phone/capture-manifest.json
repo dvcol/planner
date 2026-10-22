@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "initial-app-dismissed-item.png",
+      "originalName": "Dismissed initial app confirmation returns to its saved Item_0_50B9E4FE-945D-49FD-8A1B-5AFBBADA2498.png",
+      "exportedFile": "54C6002C-9C4B-4FE1-B13A-8D3FCBFF82AF.png",
+      "sha256": "8ebc02cdc090f383ca65fa36e5106dc677eb6f14d8df59fe9ffa8ee1809c4c16"
+    },
+    {
+      "file": "initial-app-confirmation.png",
+      "originalName": "Initial app redirect awaits native confirmation before any page_0_7552B5F0-8CC9-4D28-BB7A-45F4F2AF0A0F.png",
+      "exportedFile": "3B2FDC32-93DE-4E89-B34D-CEAEE1AF7B29.png",
+      "sha256": "67377538c3446dc5c4c358f58c9cd040ff568f81e56bf3729d100eb12ac6b669"
+    },
+    {
+      "file": "loaded-app-dismissed-guide.png",
+      "originalName": "Interactive app-sheet dismissal keeps the guide_0_B50EF0C9-FACC-4BC5-8E37-BC247F0104CE.png",
+      "exportedFile": "62D98D33-4654-4CAD-B6D9-AF15D7031E04.png",
+      "sha256": "c0cb17854477e687b28278963642cb74107e1ffe08bc5c453e974a1520506637"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

@@ -1,0 +1,11 @@
+{
+  "inspectedOriginalFiles": [
+    "generated-app-confirmation.png",
+    "direct-app-confirmation.png"
+  ],
+  "observations": [
+    "Native confirmation retains loaded guide and exact Mail target.",
+    "Script-generated link also waits for explicit native Open; exact target is visible."
+  ],
+  "limits": "Original captures inspected. No external Open selected; screenshots do not establish external system handoff, Mac interaction or physical acceptance."
+}

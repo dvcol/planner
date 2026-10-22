@@ -1,0 +1,41 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "54C6002C-9C4B-4FE1-B13A-8D3FCBFF82AF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Dismissed initial app confirmation returns to its saved Item_0_50B9E4FE-945D-49FD-8A1B-5AFBBADA2498.png",
+        "timestamp": 1792691782.052
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3B2FDC32-93DE-4E89-B34D-CEAEE1AF7B29.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Initial app redirect awaits native confirmation before any page_0_7552B5F0-8CC9-4D28-BB7A-45F4F2AF0A0F.png",
+        "timestamp": 1792691777.02
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDismissingInitialAppConfirmationReturnsToTheExactSavedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDismissingInitialAppConfirmationReturnsToTheExactSavedItem"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "62D98D33-4654-4CAD-B6D9-AF15D7031E04.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Interactive app-sheet dismissal keeps the guide_0_B50EF0C9-FACC-4BC5-8E37-BC247F0104CE.png",
+        "timestamp": 1792691822.109
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDismissingLoadedAppConfirmationKeepsTheGuideAndBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDismissingLoadedAppConfirmationKeepsTheGuideAndBookmark"
+  }
+]

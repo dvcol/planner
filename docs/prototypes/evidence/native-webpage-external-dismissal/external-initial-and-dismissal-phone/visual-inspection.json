@@ -1,0 +1,13 @@
+{
+  "inspectedOriginalFiles": [
+    "initial-app-dismissed-item.png",
+    "initial-app-confirmation.png",
+    "loaded-app-dismissed-guide.png"
+  ],
+  "observations": [
+    "Initial sheet shows exact Maps app URL with native Cancel/Open while Planner remains underneath.",
+    "Interactive dismissal returns to Museum reading with its owned HTTP link, semantic light Form and native tabs.",
+    "Loaded external-app guide remains readable with navigation controls after sheet dismissal."
+  ],
+  "limits": "Original captures inspected. No external Open selected; screenshots do not establish external system handoff, Mac interaction or physical acceptance."
+}

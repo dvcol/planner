@@ -1,0 +1,19 @@
+{
+  "inspectedOriginalFiles": [
+    "initial-app-dismissed-item.png",
+    "initial-app-confirmation.png",
+    "loaded-app-dismissed-guide.png",
+    "generated-app-confirmation.png",
+    "native-phone-menu.png",
+    "direct-app-confirmation.png"
+  ],
+  "observations": [
+    "Initial redirect shows the exact Maps target in a native dark sheet; Cancel/Open remain separate.",
+    "After interactive dismissal the exact Item and owned HTTP bookmark reappear in the detail pane.",
+    "The loaded guide stays readable in its detail pane after dismissal, with native history controls.",
+    "Direct and generated Mail targets both wait in the native confirmation sheet.",
+    "Intercepted Phone tap shows Apple's Call, Message, Add to Contacts and Copy Phone Number actions. Cancellation only was exercised.",
+    "Existing narrow iPad Items title is still truncated to It...; whole-app toolbar polish remains open."
+  ],
+  "limits": "No external Open, Call, Message or Contacts action selected. These captures do not qualify actual Mac interaction, external-system handoff or physical devices."
+}
