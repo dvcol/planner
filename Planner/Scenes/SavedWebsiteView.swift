@@ -16,18 +16,39 @@ extension EnvironmentValues {
 }
 
 @MainActor
+private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
+  var requestedURL: URL?
+
+  func decidePolicy(
+    for action: WebPage.NavigationAction, preferences: inout WebPage.NavigationPreferences
+  ) async -> WKNavigationActionPolicy {
+    if action.target?.isMainFrame == true, let destination = action.request.url,
+      ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
+    {
+      requestedURL = destination
+    }
+    return .allow
+  }
+}
+
+@MainActor
 final class SavedWebsiteSession: Identifiable, Hashable {
   let request: SavedWebsiteRequest
   let page: WebPage
+  private let navigation: SavedWebsiteNavigation
   var hasStarted = false
   nonisolated var id: ObjectIdentifier { ObjectIdentifier(self) }
 
   init(request: SavedWebsiteRequest) {
     self.request = request
+    let navigation = SavedWebsiteNavigation()
+    self.navigation = navigation
     var configuration = WebPage.Configuration()
     configuration.websiteDataStore = .default()
-    page = WebPage(configuration: configuration)
+    page = WebPage(configuration: configuration, navigationDecider: navigation)
   }
+
+  func retry() { page.load(navigation.requestedURL ?? request.destination) }
 
   nonisolated static func == (first: SavedWebsiteSession, second: SavedWebsiteSession) -> Bool {
     first === second
@@ -56,7 +77,7 @@ struct SavedWebsiteView: View {
             Text(failure)
           } actions: {
             Button("Retry", systemImage: "arrow.clockwise") {
-              session.page.reload()
+              session.retry()
               self.failure = nil
             }
             Button("Open in default browser", systemImage: "arrow.up.right.square") {
@@ -87,9 +108,16 @@ struct SavedWebsiteView: View {
           .disabled(session.page.backForwardList.forwardList.isEmpty)
           .help("Forward")
           .accessibilityIdentifier("saved.browser.forward")
-          Button("Reload", systemImage: "arrow.clockwise") { session.page.reload() }
-            .help("Reload")
-            .accessibilityIdentifier("saved.browser.reload")
+          Button("Reload", systemImage: "arrow.clockwise") {
+            if failure != nil {
+              session.retry()
+              failure = nil
+            } else {
+              session.page.reload()
+            }
+          }
+          .help("Reload")
+          .accessibilityIdentifier("saved.browser.reload")
         }
         ToolbarItem(placement: .navigation) {
           Button(returnTitle, systemImage: "chevron.backward", action: returnToPlanner)
@@ -105,18 +133,22 @@ struct SavedWebsiteView: View {
         .toolbarTitleDisplayMode(.inline)
       #endif
       .task {
-        if !session.hasStarted {
-          session.hasStarted = true
-          session.page.load(session.request.destination)
-        }
-        do {
-          for try await _ in session.page.navigations {
-            guard !Task.isCancelled else { return }
-            failure = nil
+        while !Task.isCancelled {
+          let navigations = session.page.navigations
+          if !session.hasStarted {
+            session.hasStarted = true
+            session.page.load(session.request.destination)
           }
-        } catch {
-          guard !Task.isCancelled else { return }
-          failure = error.localizedDescription
+          do {
+            for try await _ in navigations {
+              guard !Task.isCancelled else { return }
+              failure = nil
+            }
+            return
+          } catch {
+            guard !Task.isCancelled else { return }
+            failure = error.localizedDescription
+          }
         }
       }
   }

@@ -5,6 +5,156 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testRecoveringAFailedReloadPreservesThePreviousPageInHistory() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    server.setGardenAvailable(false)
+    application.buttons["saved.browser.reload"].activateForPlannerJourney()
+    let unavailable = application.staticTexts["Page unavailable"].firstMatch
+    XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+    server.setGardenAvailable(true)
+    application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 15))
+    XCTAssertTrue(unavailable.waitForNonExistence(timeout: 5))
+    application.buttons["saved.browser.back"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    try await recordWindow(application, name: "Recovered reload preserves native Back history")
+  }
+
+  func testToolbarReloadRecoversUnavailableSavedAndLinkedWebsites() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    server.setGuideAvailable(false)
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let unavailable = application.staticTexts["Page unavailable"].firstMatch
+    XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+    server.setGuideAvailable(true)
+    application.buttons["saved.browser.reload"].activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 15))
+    XCTAssertTrue(unavailable.waitForNonExistence(timeout: 5))
+    server.setGardenAvailable(false)
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+    server.setGardenAvailable(true)
+    application.buttons["saved.browser.reload"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 15))
+    XCTAssertTrue(unavailable.waitForNonExistence(timeout: 5))
+    try await recordWindow(application, name: "Toolbar reload recovers saved and linked guides")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
+  func testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    server.setGardenAvailable(false)
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    page.links["Garden guide"].activateForPlannerJourney()
+    let unavailable = application.staticTexts["Page unavailable"].firstMatch
+    XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+    XCTAssertTrue(server.requestLines.contains("GET /garden HTTP/1.1"))
+    server.setGardenAvailable(true)
+    application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 15))
+    XCTAssertTrue(unavailable.waitForNonExistence(timeout: 5))
+    try await recordWindow(application, name: "Linked guide recovers without changing its bookmark")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
+  func testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    server.setGuideAvailable(false)
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let unavailable = application.staticTexts["Page unavailable"].firstMatch
+    XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+    let requestsBeforeRetry = server.requestLines.filter { $0 == "GET /guide HTTP/1.1" }.count
+    XCTAssertGreaterThan(requestsBeforeRetry, 0)
+    application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+    let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while ContinuousClock.now < deadline,
+      server.requestLines.filter({ $0 == "GET /guide HTTP/1.1" }).count <= requestsBeforeRetry
+    {
+      try await Task.sleep(for: .milliseconds(20))
+    }
+    XCTAssertGreaterThan(
+      server.requestLines.filter { $0 == "GET /guide HTTP/1.1" }.count, requestsBeforeRetry)
+    XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+    server.setGuideAvailable(true)
+    application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+        .waitForExistence(timeout: 15))
+    try await recordWindow(application, name: "Saved guide recovers after repeated failure")
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -370,6 +520,8 @@ private final class BrowserJourneyServer: @unchecked Sendable {
   private var port: NWEndpoint.Port?
   private var failure: NWError?
   private var observedRequestLines: [String] = []
+  private var isGuideAvailable = true
+  private var isGardenAvailable = true
   private var connections: [NWConnection] = []
 
   init() throws {
@@ -379,6 +531,9 @@ private final class BrowserJourneyServer: @unchecked Sendable {
   }
 
   var requestLines: [String] { lock.withLock { observedRequestLines } }
+
+  func setGuideAvailable(_ available: Bool) { lock.withLock { isGuideAvailable = available } }
+  func setGardenAvailable(_ available: Bool) { lock.withLock { isGardenAvailable = available } }
 
   func start() async throws -> URL {
     listener.stateUpdateHandler = { [weak self] state in
@@ -432,6 +587,14 @@ private final class BrowserJourneyServer: @unchecked Sendable {
       }
       let requestLine = header.components(separatedBy: "\r\n").first ?? ""
       lock.withLock { observedRequestLines.append(requestLine) }
+      if requestLine == "GET /guide HTTP/1.1", !lock.withLock({ isGuideAvailable }) {
+        connection.cancel()
+        return
+      }
+      if requestLine == "GET /garden HTTP/1.1", !lock.withLock({ isGardenAvailable }) {
+        connection.cancel()
+        return
+      }
       let body: String
       if requestLine.contains(" /garden ") {
         body = """
