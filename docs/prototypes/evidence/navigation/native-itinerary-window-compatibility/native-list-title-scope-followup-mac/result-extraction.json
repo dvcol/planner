@@ -1,0 +1,7 @@
+{
+  "exitCode": 64,
+  "summaryAvailable": false,
+  "reason": "The incomplete result bundle has no Info.plist after bounded termination.",
+  "actualTestCaseStarts": 0,
+  "layoutPassingCredit": false
+}

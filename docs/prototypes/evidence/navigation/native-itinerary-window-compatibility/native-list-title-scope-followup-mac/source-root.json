@@ -1,0 +1,9 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "bd25816e836e24c571c7ea15c5f9d7d86c989568",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/BulkCompletionAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/BulkCompletionTests.swift"
+  ]
+}

@@ -83,6 +83,10 @@ The [internally declared known-candidate correction](prototypes/core-native-impo
 
 The [map](https://github.com/dvcol/planner/issues/1) and open prototype issues retain their original Context, DoR, DoD and required tests. This register separates human choices from implementation and platform evidence; it grants no new test boundary or feature approval.
 
+The [22 October scope audit](local-scope-audit-2026-10-22.md) identifies additional unfinished local scope: a filtered native map with Item selection, embedded linked webpages, the accepted Core change stream and native Share migration-required presentation. Existing compact map/link cards and writer-local refresh updates do not close these features. Their concrete presentation/interface work can proceed independently of signing and Q127-Q129.
+
+The [genuine bulk-save follow-up](prototypes/core-bulk-native-save-rollback.md) reproduces a failed database save leaving an unverified proposal, then corrects cleanup after known rollback. All three bulk scopes retry safely; final affected Mac and iPhone suites pass with matching inputs and zero SQLite lifecycle diagnostics. A first iPhone assertion pass exposes unsafe teardown in a companion legacy test; the corrected marked-fixture runs retain separate evidence. Actual iOS filesystem failure, native confirmation and physical/system gates remain separate.
+
 ## Local qualification follow-up, 22 October 2026
 
 The [22 October scale reconciliation](prototypes/native-item-windows.md#scale-evidence-and-current-fixture-follow-up-22-october-2026) verifies that both retained 5,000-identity traversals already used the windowed loader. The current fixture also compiles and passes the existing page-boundary/selection/rotation case on light phone and dark iPad, with 1,061 matching inputs. Historical exhaustive results retain their original epoch; physical performance, Mac UI and final polish remain open. The [native HTTP follow-up](prototypes/native-capture-http-transport.md#real-socket-follow-up-22-october-2026) separately adds real-socket Mac/iOS outcomes and two live Mac HTTPS observations. No pending choice or signing decision is consumed.
