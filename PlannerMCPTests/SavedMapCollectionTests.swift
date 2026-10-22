@@ -207,8 +207,10 @@ final class SavedMapCollectionTests: XCTestCase {
       throw CancellationError()
     }
     XCTAssertTrue(collection.chooseAddressCandidate(first, request: request, for: .source(source)))
+    XCTAssertEqual(collection.addressChoices(for: .source(source))?.selectedCandidateId, "first")
     XCTAssertEqual(collection.groups.map(\.coordinate), [.init(latitude: 35, longitude: 139)])
     XCTAssertTrue(collection.chooseAddressCandidate(second, request: request, for: .source(source)))
+    XCTAssertEqual(collection.addressChoices(for: .source(source))?.selectedCandidateId, "second")
     XCTAssertEqual(collection.groups.map(\.coordinate), [.init(latitude: 36, longitude: 140)])
     XCTAssertEqual(provider.requests, ["Two places"])
   }

@@ -246,16 +246,27 @@ enum PlannerFixtureDataset {
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .addressCandidates {
+      var ambiguousSource: PlannerEntityReference?
       for (title, address) in [
         ("Unmatched place", "Fixture no matches"),
         ("Ambiguous place", "Fixture multiple matches"),
       ] {
-        _ = try await save(
+        let result = try await save(
           .createItem(
             content: .init(
               title: title, notes: "Original notes",
               location: .init(
                 displayName: "Saved location", formattedAddress: address, coordinate: nil))))
+        if title == "Ambiguous place" { ambiguousSource = result.generated.first }
+      }
+      guard let ambiguousSource,
+        let itinerary = try await save(
+          .createItinerary(content: .init(title: "Ambiguous route"))
+        ).generated.first
+      else { throw CancellationError() }
+      for _ in 0..<2 {
+        _ = try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: ambiguousSource, placement: .last))
       }
       return SavedPlannerStore(configuration: configuration)
     }

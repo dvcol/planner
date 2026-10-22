@@ -2,6 +2,146 @@ import XCTest
 
 @MainActor
 final class AddressCandidateJourneyTests: XCTestCase {
+  func testCollectionMapChoicesStayTemporaryAndCanBeChanged() {
+    continueAfterFailure = false
+    let application = launchFixture()
+    let row = application.savedPlannerItemRows("Ambiguous place").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 20))
+    let sourceIdentifier = row.identifier
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    let locations = application.plannerElement("saved.map.locations")
+    XCTAssertTrue(locations.waitForExistence(timeout: 10))
+    locations.activateForPlannerJourney()
+    let choice = application.buttons.matching(
+      NSPredicate(format: "label == %@", "Ambiguous place")
+    ).firstMatch
+    XCTAssertTrue(choice.waitForExistence(timeout: 5))
+    XCTAssertTrue(choice.waitForPlannerValue("Choose a place"))
+    let options = application.buttons.matching(
+      NSPredicate(format: "label == %@", "Location options for Ambiguous place")
+    ).firstMatch
+    XCTAssertTrue(options.waitForExistence(timeout: 5))
+    options.activateForPlannerJourney()
+    let matching = candidatePicker(application)
+    XCTAssertTrue(matching.waitForExistence(timeout: 5))
+    matching.activateForPlannerJourney()
+    application.plannerElement("North entrance, 1 Fixture Way").activateForPlannerJourney()
+    XCTAssertTrue(choice.waitForPlannerValue("Location available"))
+    application.plannerElement("Close").activateForPlannerJourney()
+    let north = application.buttons["saved.map.pin.35.662,139.717"]
+    XCTAssertTrue(north.waitForExistence(timeout: 10))
+    capture(application, name: "Collection Map uses the explicit temporary North choice")
+    locations.activateForPlannerJourney()
+    options.activateForPlannerJourney()
+    matching.activateForPlannerJourney()
+    application.plannerElement("South entrance, 2 Fixture Way").activateForPlannerJourney()
+    application.plannerElement("Close").activateForPlannerJourney()
+    XCTAssertTrue(application.buttons["saved.map.pin.35.655,139.717"].waitForExistence(timeout: 10))
+    XCTAssertFalse(north.exists)
+    capture(
+      application, name: "Collection Map changes the same source to the temporary South choice")
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.plannerElement("saved.collection.showList").activateForPlannerJourney()
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertEqual(row.identifier, sourceIdentifier)
+    row.activateForPlannerJourney()
+    assertOwnedLocation("Fixture multiple matches", application: application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit item").activateForPlannerJourney()
+    assertUnchangedLocationEditor("Fixture multiple matches", application: application)
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    XCTAssertTrue(row.waitForExistence(timeout: 20))
+    XCTAssertEqual(row.identifier, sourceIdentifier)
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    locations.activateForPlannerJourney()
+    XCTAssertTrue(choice.waitForPlannerValue("Choose a place"))
+    XCTAssertFalse(application.buttons["saved.map.pin.35.655,139.717"].exists)
+  }
+
+  func testRepeatedMapAppearancesKeepIndependentTemporaryAddressChoices() {
+    continueAfterFailure = false
+    let application = launchFixture()
+    application.openPlannerSection("Itineraries")
+    let route = application.buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.",
+        "Ambiguous route")
+    ).firstMatch
+    XCTAssertTrue(route.waitForExistence(timeout: 10))
+    let routeIdentifier = route.identifier
+    route.activateForPlannerJourney()
+    application.openSavedPlannerItineraryViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let locations = application.plannerElement("saved.map.locations")
+    XCTAssertTrue(locations.waitForExistence(timeout: 10))
+    locations.activateForPlannerJourney()
+    let first = application.buttons["Ambiguous place · Stop 1"].firstMatch
+    let second = application.buttons["Ambiguous place · Stop 2"].firstMatch
+    XCTAssertTrue(first.waitForExistence(timeout: 10))
+    XCTAssertTrue(second.exists)
+    let firstIdentifier = first.identifier
+    let secondIdentifier = second.identifier
+    XCTAssertNotEqual(firstIdentifier, secondIdentifier)
+    XCTAssertTrue(first.waitForPlannerValue("Choose a place"))
+    XCTAssertTrue(second.waitForPlannerValue("Choose a place"))
+    chooseMapPlace("South entrance, 2 Fixture Way", row: first, application: application)
+    XCTAssertTrue(first.waitForPlannerValue("Location available"))
+    XCTAssertTrue(second.waitForPlannerValue("Choose a place"))
+    application.plannerElement("Close").activateForPlannerJourney()
+    let south = application.buttons["saved.map.pin.35.655,139.717"]
+    let north = application.buttons["saved.map.pin.35.662,139.717"]
+    XCTAssertTrue(south.waitForExistence(timeout: 10))
+    XCTAssertFalse(north.exists)
+    locations.activateForPlannerJourney()
+    XCTAssertEqual(first.identifier, firstIdentifier)
+    XCTAssertEqual(second.identifier, secondIdentifier)
+    chooseMapPlace("North entrance, 1 Fixture Way", row: second, application: application)
+    application.plannerElement("Close").activateForPlannerJourney()
+    XCTAssertTrue(north.waitForExistence(timeout: 10))
+    XCTAssertTrue(south.exists)
+    XCTAssertTrue(application.staticTexts["2 of 2 items located"].exists)
+    capture(application, name: "Repeated Map appearances keep independent temporary place choices")
+    locations.activateForPlannerJourney()
+    chooseMapPlace("North entrance, 1 Fixture Way", row: first, application: application)
+    application.plannerElement("Close").activateForPlannerJourney()
+    XCTAssertTrue(north.waitForExistence(timeout: 10))
+    XCTAssertEqual(north.label, "2 items")
+    XCTAssertTrue(south.waitForNonExistence(timeout: 5))
+    capture(application, name: "Repeated Map appearances can share the same chosen place")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Itineraries")
+    XCTAssertTrue(route.waitForExistence(timeout: 20))
+    XCTAssertEqual(route.identifier, routeIdentifier)
+    route.activateForPlannerJourney()
+    application.openSavedPlannerItineraryViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    locations.activateForPlannerJourney()
+    XCTAssertTrue(first.waitForPlannerValue("Choose a place"))
+    XCTAssertTrue(second.waitForPlannerValue("Choose a place"))
+    XCTAssertEqual(first.identifier, firstIdentifier)
+    XCTAssertEqual(second.identifier, secondIdentifier)
+  }
+
+  private func chooseMapPlace(_ title: String, row: XCUIElement, application: XCUIApplication) {
+    let optionsIdentifier = row.identifier.replacingOccurrences(
+      of: "saved.map.location.", with: "saved.map.location.options.")
+    let options = application.plannerElement(optionsIdentifier)
+    XCTAssertTrue(options.waitForExistence(timeout: 5))
+    options.activateForPlannerJourney()
+    let picker = candidatePicker(application)
+    XCTAssertTrue(picker.waitForExistence(timeout: 5))
+    picker.activateForPlannerJourney()
+    let place = application.plannerElement(title)
+    XCTAssertTrue(place.waitForExistence(timeout: 5))
+    place.activateForPlannerJourney()
+  }
+
   func testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch() {
     continueAfterFailure = false
     let application = launchFixture()

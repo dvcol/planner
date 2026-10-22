@@ -181,7 +181,8 @@ struct SavedMapCollectionView: View {
                 .accessibilityLabel(choice.accessibilityTitle)
                 .accessibilityValue(locationDescription(choice.row))
                 .accessibilityIdentifier("saved.map.location.\(choice.id)")
-                if (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
+                if (collection.addressChoices(for: choice.row.identity)?.candidates.count ?? 0) > 1
+                  || (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
                   || collection.resolution(for: choice.row.identity) == .unavailable
                 {
                   locationOptions(for: choice)
@@ -231,6 +232,33 @@ struct SavedMapCollectionView: View {
 
   private func locationOptions(for choice: RowChoice) -> some View {
     Menu {
+      if let choices = collection.addressChoices(for: choice.row.identity),
+        choices.candidates.count > 1
+      {
+        Picker(
+          "Matching places",
+          selection: Binding(
+            get: { collection.addressChoices(for: choice.row.identity)?.selectedCandidateId },
+            set: { selectedIdentifier in
+              guard let candidate = choices.candidates.first(where: { $0.id == selectedIdentifier })
+              else { return }
+              if !collection.chooseAddressCandidate(
+                candidate, request: choices.request, for: choice.row.identity)
+              {
+                locationChoiceMessage = "The saved address changed. Choose a place again."
+              }
+            })
+        ) {
+          Text("Choose a place").tag(nil as String?).disabled(true)
+          ForEach(choices.candidates) { candidate in
+            Text(candidate.address.map { "\(candidate.name), \($0)" } ?? candidate.name)
+              .tag(Optional(candidate.id))
+          }
+        }
+        .pickerStyle(.menu)
+        .accessibilityIdentifier("saved.map.address.selector.\(choice.id)")
+      }
+
       if let choices = collection.mapsLinkChoices(for: choice.row.identity), choices.links.count > 1
       {
         Picker(

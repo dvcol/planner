@@ -57,6 +57,7 @@ final class SavedMapCollection {
   private var resolutions: [SavedMapLocationResolution] = []
   private var mapsResults: [PlannerLinkPreviewRequest: PlannerCapturePreviewCandidate] = [:]
   private var addressResults: [PlannerAddressPreviewRequest: [PlannerAddressCandidate]] = [:]
+  private var selectedAddressCandidateIdentifiers: [String?] = []
   @ObservationIgnored private var inputs: [LocationInput?] = []
   @ObservationIgnored private var pendingInputs: [LocationInput] = []
   @ObservationIgnored private var nextPendingInput = 0
@@ -127,6 +128,7 @@ final class SavedMapCollection {
         loadedRows.append(contentsOf: window.rows)
       } while loadedRows.count < snapshot.rows.count
       rows = loadedRows
+      selectedAddressCandidateIdentifiers = Array(repeating: nil, count: rows.count)
       matchingCount = snapshot.matchingCount
       collection = firstWindow?.collection
       listBranches = firstWindow?.listBranches ?? []
@@ -338,6 +340,7 @@ final class SavedMapCollection {
       inputs[index] == .address(request),
       addressResults[request]?.contains(candidate) == true
     else { return false }
+    selectedAddressCandidateIdentifiers[index] = candidate.id
     resolutions[index] = .located(
       .init(latitude: candidate.latitude, longitude: candidate.longitude))
     publishLocations()
@@ -345,12 +348,15 @@ final class SavedMapCollection {
   }
 
   func addressChoices(for identity: PlannerRowIdentity)
-    -> (request: PlannerAddressPreviewRequest, candidates: [PlannerAddressCandidate])?
+    -> (
+      request: PlannerAddressPreviewRequest, candidates: [PlannerAddressCandidate],
+      selectedCandidateId: String?
+    )?
   {
     guard let index = rows.firstIndex(where: { $0.identity == identity }),
       case .address(let request) = inputs[index], let candidates = addressResults[request]
     else { return nil }
-    return (request, candidates)
+    return (request, candidates, selectedAddressCandidateIdentifiers[index])
   }
 
   private func source(for identity: PlannerRowIdentity) -> PlannerEntityReference {
@@ -360,6 +366,7 @@ final class SavedMapCollection {
   }
 
   private func clearPublication() {
+    selectedAddressCandidateIdentifiers = []
     matchingCount = 0
     rows = []
     collection = nil
