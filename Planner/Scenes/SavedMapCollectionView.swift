@@ -82,10 +82,18 @@ struct SavedMapCollectionView: View {
 
   let collection: SavedMapCollection
   let select: (PlannerMapRowRead) -> Void
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @State private var camera = MapCameraPosition.automatic
   @State private var presentedSheet: PresentedSheet?
   @State private var pendingSelection: PlannerMapRowRead?
   @State private var locationChoiceMessage: String?
+
+  private var footerLayout: AnyLayout {
+    if dynamicTypeSize.isAccessibilitySize {
+      return AnyLayout(VStackLayout(alignment: .leading, spacing: 12))
+    }
+    return AnyLayout(HStackLayout())
+  }
 
   var body: some View {
     Map(position: $camera) {
@@ -125,15 +133,16 @@ struct SavedMapCollectionView: View {
     .accessibilityIdentifier("saved.map.collection")
     .overlay { status }
     .safeAreaInset(edge: .bottom, spacing: 0) {
-      HStack {
+      footerLayout {
         Text("\(collection.locatedCount) of \(collection.matchingCount) items located")
           .font(.callout).foregroundStyle(.secondary)
-        Spacer()
-        Button("Locations", systemImage: "list.bullet") { presentedSheet = .locations }
+        if !dynamicTypeSize.isAccessibilitySize { Spacer() }
+        Button("Locations") { presentedSheet = .locations }
           .buttonStyle(.bordered)
           .controlSize(.large)
           .accessibilityIdentifier("saved.map.locations")
       }
+      .frame(maxWidth: .infinity, alignment: .leading)
       .padding()
       .background(.bar)
     }
@@ -187,6 +196,7 @@ struct SavedMapCollectionView: View {
                   ForEach(Array(preview.uncertaintyReasons.enumerated()), id: \.offset) {
                     index, reason in
                     Text(reason)
+                      .fixedSize(horizontal: false, vertical: true)
                       .accessibilityIdentifier(
                         "saved.map.location.uncertainty.\(choice.id).\(index)")
                   }
@@ -215,7 +225,7 @@ struct SavedMapCollectionView: View {
       } message: {
         Text(locationChoiceMessage ?? "Choose this location again.")
       }
-      .presentationDetents([.medium, .large])
+      .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.medium, .large])
     }
   }
 
