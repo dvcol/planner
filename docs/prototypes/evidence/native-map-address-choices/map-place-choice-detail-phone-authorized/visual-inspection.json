@@ -1,0 +1,14 @@
+{
+  "inspectedOriginals": [
+    "unchanged-owned-editor.png",
+    "detail-south.png",
+    "detail-north.png",
+    "empty-address.png"
+  ],
+  "observations": [
+    "Native North/South detail previews show their expected pin and candidate name.",
+    "Unchanged editor retains owned name/address and disabled Save.",
+    "Empty address retains original notes, completion and native Retry fallback."
+  ],
+  "limits": "Four original iPhone captures only. No external app, live provider, VoiceOver or physical-device credit."
+}

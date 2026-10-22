@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "64f326197ae8bdb386e3cd56a2fbdeb202ddf595",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerChangeValues.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PlannerChangeStreamTests.swift",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift"
+  ]
+}

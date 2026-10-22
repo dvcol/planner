@@ -1,0 +1,42 @@
+[
+  {
+    "file": "unchanged-owned-editor.png",
+    "original": "Preview selection does not save candidate coordinates or text_0_C965436C-C48B-46EA-9987-6C9D7108853A.png",
+    "exportedFile": "855DA7DB-54B3-47CF-A8D0-6D2384AF1209.png",
+    "sha256": "2574f7e0bcf52b5d35e731944eb01ecbb84acd420864f0e01d15a082a48a3425",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "detail-south.png",
+    "original": "Explicit South candidate replaces the temporary map pin_0_85B9CD08-6740-474F-8325-00EB419AFB9A.png",
+    "exportedFile": "6B672289-D771-4531-B604-6A60668016F1.png",
+    "sha256": "7131ce197e02d2c44f3133929b81e3abbb35e565762509492fe310d81d07b004",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "detail-north.png",
+    "original": "Explicit North candidate paints its temporary map pin_0_266EF368-A33A-48FC-9892-9A374E665E16.png",
+    "exportedFile": "29F97C0A-9C5D-4C0D-9C49-77889178B1EA.png",
+    "sha256": "f51790dd8246dd9cf11c0d1ecec75dc3606f77e79a78c52819d30783c71e4613",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "empty-address.png",
+    "original": "Controlled empty address keeps the owned location_0_27307869-4082-419F-813E-7B1A5320DC7F.png",
+    "exportedFile": "A7D6839A-5AA5-454E-981C-24C8E6261C0B.png",
+    "sha256": "eee7a21188884793d81cc8fdf5263c905d902b642d0dd4cd47a9f195287e272c",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

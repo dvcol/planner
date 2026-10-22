@@ -1,0 +1,26 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "E16FD17C-E624-4B77-AF1D-DF4B7309193C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map changes the same source to the temporary South choice_0_88627F3D-0C4C-4D93-907F-8012E7E2713E.png",
+        "timestamp": 1792679333.928
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "75ADF83D-7819-40B6-AE41-48F0C20F1418.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map uses the explicit temporary North choice_0_50E65790-E627-439A-A760-9177ACE0C761.png",
+        "timestamp": 1792679325.855
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged"
+  }
+]

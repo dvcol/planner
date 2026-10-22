@@ -1,0 +1,50 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "37134ECE-FD82-44D1-BE32-8317D71638CA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map changes the same source to the temporary South choice_0_9D582E8A-2819-4C1C-9F76-844ECC2903DA.png",
+        "timestamp": 1792679586.457
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "933F0BD1-5552-4C15-8218-4FADAD873FBB.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map uses the explicit temporary North choice_0_30855765-090A-4C28-82DC-394270D3EA17.png",
+        "timestamp": 1792679578.388
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "62AFE5F5-0453-4418-822B-B0D04A65DB32.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated Map appearances can share the same chosen place_0_9C77D20E-A274-4A95-BAFE-AB2C7EE39F82.png",
+        "timestamp": 1792679689.606
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3C0E5CAA-45E5-4101-81C0-ED7EB8B4AF79.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated Map appearances keep independent temporary place choices_0_F615CB15-EC36-4213-AE2C-EA71E3B9C2E5.png",
+        "timestamp": 1792679676.973
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testRepeatedMapAppearancesKeepIndependentTemporaryAddressChoices()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testRepeatedMapAppearancesKeepIndependentTemporaryAddressChoices"
+  }
+]

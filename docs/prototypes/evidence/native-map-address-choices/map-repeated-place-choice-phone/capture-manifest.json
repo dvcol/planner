@@ -1,0 +1,42 @@
+[
+  {
+    "file": "south-choice.png",
+    "original": "Collection Map changes the same source to the temporary South choice_0_9D582E8A-2819-4C1C-9F76-844ECC2903DA.png",
+    "exportedFile": "37134ECE-FD82-44D1-BE32-8317D71638CA.png",
+    "sha256": "1967e7bdb020a220a55ac4fbf3de23a124af2e1aeacaa62116e108065fd5143f",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "north-choice.png",
+    "original": "Collection Map uses the explicit temporary North choice_0_30855765-090A-4C28-82DC-394270D3EA17.png",
+    "exportedFile": "933F0BD1-5552-4C15-8218-4FADAD873FBB.png",
+    "sha256": "8bede268e9a11af3026dc8b4cb5798a83dac69c48b9f6e6b8eb6f84e686bb493",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "coincident-stop-choices.png",
+    "original": "Repeated Map appearances can share the same chosen place_0_9C77D20E-A274-4A95-BAFE-AB2C7EE39F82.png",
+    "exportedFile": "62AFE5F5-0453-4418-822B-B0D04A65DB32.png",
+    "sha256": "709e3d79788774bfda9a513c0eecad87f1ffe4abb7ff54c5342c8ebc2f6d747c",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "independent-stop-choices.png",
+    "original": "Repeated Map appearances keep independent temporary place choices_0_F615CB15-EC36-4213-AE2C-EA71E3B9C2E5.png",
+    "exportedFile": "3C0E5CAA-45E5-4101-81C0-ED7EB8B4AF79.png",
+    "sha256": "c979f27954bd3a4549d26ccc0f9d12c7595625c8f81ce0ab773d4640c98260f5",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

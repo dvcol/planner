@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1076,
+  "sourceDifferences": [],
+  "retainedProductCount": 4,
+  "productDifferences": [],
+  "result": "Exit 74 at package manifest caches under filesystem sandbox. No compilation or runtime qualification. Retained products are not new evidence."
+}

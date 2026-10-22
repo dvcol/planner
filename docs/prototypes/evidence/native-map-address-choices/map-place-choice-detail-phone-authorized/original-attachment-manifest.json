@@ -1,0 +1,50 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "855DA7DB-54B3-47CF-A8D0-6D2384AF1209.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Preview selection does not save candidate coordinates or text_0_C965436C-C48B-46EA-9987-6C9D7108853A.png",
+        "timestamp": 1792680525.746
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "6B672289-D771-4531-B604-6A60668016F1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Explicit South candidate replaces the temporary map pin_0_85B9CD08-6740-474F-8325-00EB419AFB9A.png",
+        "timestamp": 1792680517.296
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "29F97C0A-9C5D-4C0D-9C49-77889178B1EA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Explicit North candidate paints its temporary map pin_0_266EF368-A33A-48FC-9892-9A374E665E16.png",
+        "timestamp": 1792680497.653
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A7D6839A-5AA5-454E-981C-24C8E6261C0B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Controlled empty address keeps the owned location_0_27307869-4082-419F-813E-7B1A5320DC7F.png",
+        "timestamp": 1792680558.366
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch"
+  }
+]

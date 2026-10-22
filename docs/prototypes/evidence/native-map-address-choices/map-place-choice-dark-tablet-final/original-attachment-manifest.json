@@ -1,0 +1,98 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "320E957A-4A55-48AC-8F8F-F86D04F3EBA1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Preview selection does not save candidate coordinates or text_0_4D32D37A-00F2-462E-A081-BFF4CDC425BD.png",
+        "timestamp": 1792679967.054
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "F1054749-4965-4E60-B2AB-CC5608187F37.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Explicit South candidate replaces the temporary map pin_0_9BB9A8D0-3946-42D2-AB0F-06990778FC29.png",
+        "timestamp": 1792679957.852
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "004226EC-6E9D-4B8D-9339-3C9AC5EC0415.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Explicit North candidate paints its temporary map pin_0_F9529C00-4CB5-4FC8-AB3C-6BB31BA4DC0B.png",
+        "timestamp": 1792679938.537
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "34EF633D-8DE6-4134-B377-A9942D183C81.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map changes the same source to the temporary South choice_0_A84FB3A2-2F7B-4553-B1DC-4C3D5E53B131.png",
+        "timestamp": 1792680016.762
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2BFB1ABC-2196-49AA-8030-A903BD08174C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map uses the explicit temporary North choice_0_D9CF4111-C641-4156-9AFA-0580E3186595.png",
+        "timestamp": 1792680009.009
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "3C51BD17-BFFE-47D8-B8E0-98B64286F3B7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Controlled empty address keeps the owned location_0_BAD94DE9-0444-40EB-8726-F62206218063.png",
+        "timestamp": 1792680063.128
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "9D54D510-6F17-431A-93E8-8559C4B665A7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated Map appearances can share the same chosen place_0_6105441D-640C-437A-B996-04DF2214D418.png",
+        "timestamp": 1792680152.361
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "49E60BD3-FE7D-4D8F-B16F-76D8D6A5B45F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Repeated Map appearances keep independent temporary place choices_0_D289A280-AF9D-4D0B-A386-A0EA93400A48.png",
+        "timestamp": 1792680140.141
+      }
+    ],
+    "testIdentifier": "AddressCandidateJourneyTests/testRepeatedMapAppearancesKeepIndependentTemporaryAddressChoices()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testRepeatedMapAppearancesKeepIndependentTemporaryAddressChoices"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "file": "unchanged-owned-editor.png",
+    "original": "Preview selection does not save candidate coordinates or text_0_4D32D37A-00F2-462E-A081-BFF4CDC425BD.png",
+    "exportedFile": "320E957A-4A55-48AC-8F8F-F86D04F3EBA1.png",
+    "sha256": "48d2017baf517ee1a64f48524988b326502b94dbd8f1de28a6ab94bc64435a7d",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "detail-south.png",
+    "original": "Explicit South candidate replaces the temporary map pin_0_9BB9A8D0-3946-42D2-AB0F-06990778FC29.png",
+    "exportedFile": "F1054749-4965-4E60-B2AB-CC5608187F37.png",
+    "sha256": "45fe75cea6aee89c53b139996b63ee43e9bdf6ecde988396d6411b90452c383d",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "detail-north.png",
+    "original": "Explicit North candidate paints its temporary map pin_0_F9529C00-4CB5-4FC8-AB3C-6BB31BA4DC0B.png",
+    "exportedFile": "004226EC-6E9D-4B8D-9339-3C9AC5EC0415.png",
+    "sha256": "0962fbe5939f7fea2ceb3bc2f042788158958e1c50fd445a3090eca368cdbb8e",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "south-choice.png",
+    "original": "Collection Map changes the same source to the temporary South choice_0_A84FB3A2-2F7B-4553-B1DC-4C3D5E53B131.png",
+    "exportedFile": "34EF633D-8DE6-4134-B377-A9942D183C81.png",
+    "sha256": "d36242beebc2ea33e0c35f85114119a19777ad1e2030ebe2d114d6849873e32e",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "north-choice.png",
+    "original": "Collection Map uses the explicit temporary North choice_0_D9CF4111-C641-4156-9AFA-0580E3186595.png",
+    "exportedFile": "2BFB1ABC-2196-49AA-8030-A903BD08174C.png",
+    "sha256": "02ab6a9bf8fa52ffa6e31376a51993a72c1925ec90099c917eeec5d5eed9b420",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "empty-address.png",
+    "original": "Controlled empty address keeps the owned location_0_BAD94DE9-0444-40EB-8726-F62206218063.png",
+    "exportedFile": "3C51BD17-BFFE-47D8-B8E0-98B64286F3B7.png",
+    "sha256": "29327a7acf716225fd46de255a6e70df1afe5683b036020e409b49fa3103ad9b",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "coincident-stop-choices.png",
+    "original": "Repeated Map appearances can share the same chosen place_0_6105441D-640C-437A-B996-04DF2214D418.png",
+    "exportedFile": "9D54D510-6F17-431A-93E8-8559C4B665A7.png",
+    "sha256": "ef0ed122d80c91a3ab4ef3e2b381dead2c8851a2e5007119715ea4d8e09546d0",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "independent-stop-choices.png",
+    "original": "Repeated Map appearances keep independent temporary place choices_0_D289A280-AF9D-4D0B-A386-A0EA93400A48.png",
+    "exportedFile": "49E60BD3-FE7D-4D8F-B16F-76D8D6A5B45F.png",
+    "sha256": "c40397dddc7b8e3e924c554a14a0768cc91941c7ec6b1629b4c232acac4c956f",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

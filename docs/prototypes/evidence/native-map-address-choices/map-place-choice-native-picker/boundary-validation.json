@@ -1,0 +1,7 @@
+{
+  "sourceCount": 1076,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productDifferences": [],
+  "meaning": "Compiler failure: PlannerRowIdentity is not Hashable. No native execution or passing control credit. Preserve the public identity type and use the loader\u2019s existing row-indexed storage pattern."
+}

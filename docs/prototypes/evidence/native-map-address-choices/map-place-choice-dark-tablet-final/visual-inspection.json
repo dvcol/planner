@@ -1,0 +1,20 @@
+{
+  "inspectedOriginals": [
+    "unchanged-owned-editor.png",
+    "detail-south.png",
+    "detail-north.png",
+    "south-choice.png",
+    "north-choice.png",
+    "empty-address.png",
+    "coincident-stop-choices.png",
+    "independent-stop-choices.png"
+  ],
+  "observations": [
+    "North and South collection pins show distinct expected regions.",
+    "Repeated appearances show two distinct pins, then one counted two-item marker.",
+    "Native detail preview switches North to South; owned editor retains original name/address and disabled Save.",
+    "Unmatched owned address keeps its fallback and native Retry.",
+    "Dark appearance uses legible native text and backgrounds. Narrow iPad title truncation remains part of broader UI polish."
+  ],
+  "limits": "Visual inspection covers these eight retained captures only, not VoiceOver, larger text, contrast variants or complete app polish."
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "south-choice.png",
+    "original": "Collection Map changes the same source to the temporary South choice_0_88627F3D-0C4C-4D93-907F-8012E7E2713E.png",
+    "exportedFile": "E16FD17C-E624-4B77-AF1D-DF4B7309193C.png",
+    "sha256": "df0c6d7be1dc588cc58c5e38f7b45bd8f3d34ae0bc6af228457d6e55adb7ae1c",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "north-choice.png",
+    "original": "Collection Map uses the explicit temporary North choice_0_50E65790-E627-439A-A760-9177ACE0C761.png",
+    "exportedFile": "75ADF83D-7819-40B6-AE41-48F0C20F1418.png",
+    "sha256": "85b964abf5907a5bd3e36d4c697bd8060cef898107a311693decbdc41ea2df10",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

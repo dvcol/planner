@@ -1,0 +1,91 @@
+{
+  "phases": [
+    {
+      "phase": "map-repeated-place-choice-phone",
+      "sourceInputCount": 1076,
+      "currentSourceDifferences": [],
+      "result": {
+        "sourceInputCount": 1076,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 2,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 4,
+        "meaning": "Actual native collection Map controls with the existing controlled provider and real Planner storage. Captures retain chosen native pins and exact appearance contexts. Inspect each function for its saved-field and relaunch assertions. Not live provider, Mac UI, VoiceOver, physical scale or complete Map refresh qualification."
+      },
+      "originalCaptures": 4
+    },
+    {
+      "phase": "map-place-choice-detail-phone-authorized",
+      "sourceInputCount": 1076,
+      "currentSourceDifferences": [],
+      "result": {
+        "sourceInputCount": 1076,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 2,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 4,
+        "meaning": "Actual native collection Map controls with the existing controlled provider and real Planner storage. Captures retain chosen native pins and exact appearance contexts. Inspect each function for its saved-field and relaunch assertions. Not live provider, Mac UI, VoiceOver, physical scale or complete Map refresh qualification."
+      },
+      "originalCaptures": 4
+    },
+    {
+      "phase": "map-place-choice-dark-tablet-final",
+      "sourceInputCount": 1076,
+      "currentSourceDifferences": [],
+      "result": {
+        "sourceInputCount": 1076,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 4,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 8,
+        "meaning": "Actual native collection Map controls with the existing controlled provider and real Planner storage. Captures retain chosen native pins and exact appearance contexts. Inspect each function for its saved-field and relaunch assertions. Not live provider, Mac UI, VoiceOver, physical scale or complete Map refresh qualification."
+      },
+      "originalCaptures": 8
+    },
+    {
+      "phase": "map-place-choice-loader-authorized",
+      "sourceInputCount": 1076,
+      "currentSourceDifferences": [],
+      "result": {
+        "sourceInputCount": 1076,
+        "sourceDifferences": [],
+        "actualProductCount": 3,
+        "productDifferences": [],
+        "passedFunctions": 12,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "meaning": "Existing production Map loader boundary with real Planner stores and controlled provider I/O. No Mac window/hosted-view UI credit."
+      }
+    },
+    {
+      "phase": "map-place-choice-mac-compiler",
+      "sourceInputCount": 1076,
+      "currentSourceDifferences": [],
+      "result": {
+        "sourceCount": 1076,
+        "workspaceDifferences": [],
+        "frozenDifferences": [],
+        "productCount": 9,
+        "productDifferences": [],
+        "meaning": "Matching Mac app, Share, fixture and UI-test compilation only. No Mac UI runtime credit."
+      }
+    }
+  ],
+  "nativeUIExecutions": 8,
+  "originalNativeCapturesInspected": 16,
+  "loaderFunctions": 12,
+  "limits": "The additional Q144 hosted-view trial remains failed. Existing fixture/provider boundary only; Mac compilation and app-hosted loader tests do not qualify actual Mac UI, physical devices, live geocoding or final accessibility/polish."
+}
