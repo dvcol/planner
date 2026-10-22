@@ -21,3 +21,7 @@ Accepted: A. The user approved one native Open action for every supported extern
 ## Existing test boundaries and remaining gates
 
 Use the already approved native UI and real loopback HTTP seams for the selected behavior, including a generated click and an ordinary redirect, exact targets, cancellation, retained guide and original bookmark. No new direct controller test or production injection is proposed. Actual system handoff and supported mouse/touch/keyboard/accessibility journeys remain separate executed gates. SDK facts do not replace those tests.
+
+## Q146 native Phone-menu refinement
+
+Q146 A accepted on 22 October 2026: allow Apple’s native Phone action menu when WebKit intercepts a telephone tap before navigation is reported. Planner still requires its explicit confirmation for app-link navigations that WebKit reports. This revises Q145’s uniform presentation requirement without enabling unsolicited system opening. Actual menu cancellation must be qualified without selecting Call or Message. The [investigation](prototypes/native-webpage-phone-link-preview.md) retains the failed iPad case, failed preview workaround and public API limits. No private API or webpage script rewriting is added.

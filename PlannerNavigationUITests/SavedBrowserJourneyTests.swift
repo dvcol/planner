@@ -9,6 +9,129 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guideURL = try await server.start()
+    defer { server.stop() }
+    let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+      "external-app-policy")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+    let choices = [
+      ("Mail link", "mailto:planner-fixture@example.invalid?subject=Planning"),
+      ("Phone link", "tel:+810000000000"),
+      ("Maps link", "maps://?ll=35,139"),
+    ]
+    for (title, target) in choices {
+      page.links[title].activateForPlannerJourney()
+      #if os(iOS)
+        if title == "Phone link", UIDevice.current.userInterfaceIdiom == .pad {
+          XCTAssertEqual(application.state, .runningForeground)
+          XCTAssertFalse(application.navigationBars["Open another app"].exists)
+          let capture = XCTAttachment(screenshot: application.screenshot())
+          capture.name = "Native WebKit Phone actions await an explicit choice"
+          capture.lifetime = .keepAlways
+          add(capture)
+          application.coordinate(withNormalizedOffset: .init(dx: 0.9, dy: 0.85)).tap()
+          XCTAssertEqual(application.state, .runningForeground)
+          XCTAssertTrue(page.staticTexts["External app policy fixture"].exists)
+          XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+          continue
+        }
+      #endif
+      let explanation = application.navigationBars["Open another app"].firstMatch
+      XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+      let opening = application.buttons["saved.browser.external.open"]
+      XCTAssertTrue(opening.isHittable)
+      let displayedTarget = application.staticTexts["saved.browser.external.destination"]
+      XCTAssertTrue(displayedTarget.isHittable)
+      XCTAssertEqual(displayedTarget.label, target)
+      XCTAssertFalse(application.buttons["Open in default browser"].exists)
+      if title == "Mail link" {
+        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+        capture.name = "Supported external-app link awaits an exact native Open action"
+        capture.lifetime = .keepAlways
+        add(capture)
+      }
+      application.buttons["saved.browser.external.cancel"].activateForPlannerJourney()
+      XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+      XCTAssertTrue(page.staticTexts["External app policy fixture"].exists)
+      XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+    }
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
+  func testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark()
+    async throws
+  {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guideURL = try await server.start()
+    defer { server.stop() }
+    let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+      "external-app-policy")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["External app policy fixture"].waitForExistence(timeout: 10))
+    page.buttons["Generated Mail link"].activateForPlannerJourney()
+    let explanation = application.navigationBars["Open another app"].firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    let mailTarget = "mailto:planner-fixture@example.invalid?subject=Planning"
+    XCTAssertEqual(application.staticTexts["saved.browser.external.destination"].label, mailTarget)
+    XCTAssertTrue(application.buttons["saved.browser.external.open"].isHittable)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Generated external-app link awaits an exact native Open action"
+    capture.lifetime = .keepAlways
+    add(capture)
+    application.buttons["saved.browser.external.cancel"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(page.staticTexts["External app policy fixture"].exists)
+    page.links["Automatic Maps redirect"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertEqual(
+      application.staticTexts["saved.browser.external.destination"].label, "maps://?ll=36,140")
+    XCTAssertTrue(application.buttons["saved.browser.external.open"].isHittable)
+    application.buttons["saved.browser.external.cancel"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(page.staticTexts["Automatic redirect fixture"].exists)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -1280,6 +1403,28 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
           <body><h1>\(heading)</h1>\(visitLinks)</body></html>
+          """
+      } else if requestLine.contains(" /automatic-app-redirect ") {
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Automatic app redirect</title></head>
+          <body><h1>Automatic redirect fixture</h1><a href="/garden">Garden guide</a>
+          <script>window.addEventListener('load', () => { window.location.assign('maps://?ll=36,140'); });</script>
+          </body></html>
+          """
+      } else if requestLine.contains(" /external-app-policy ") {
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>External app policy</title></head>
+          <body><h1>External app policy fixture</h1>
+          <p><a href="mailto:planner-fixture@example.invalid?subject=Planning">Mail link</a></p>
+          <p><a href="tel:+810000000000">Phone link</a></p>
+          <p><a href="maps://?ll=35,139">Maps link</a></p>
+          <a id="generated-mail" href="mailto:planner-fixture@example.invalid?subject=Planning"
+            hidden target="_blank">Generated target</a>
+          <p><button onclick="document.getElementById('generated-mail').click()">Generated Mail link</button></p>
+          <p><a href="/automatic-app-redirect">Automatic Maps redirect</a></p>
+          <a href="/garden">Garden guide</a></body></html>
           """
       } else if requestLine.contains(" /link-policy ") {
         body = """

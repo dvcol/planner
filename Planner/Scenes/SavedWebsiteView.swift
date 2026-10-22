@@ -18,6 +18,7 @@ extension EnvironmentValues {
 
 enum SavedWebsiteNoticeKind {
   case download
+  case externalApp
   case unsupportedContent
   case unsupportedLink
 }
@@ -35,8 +36,9 @@ private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
     guard let destination = action.request.url else { return .cancel }
     let scheme = destination.scheme?.lowercased() ?? ""
     guard ["http", "https"].contains(scheme) else {
-      if ["mailto", "tel", "maps"].contains(scheme) { return .allow }
-      externalContent = (destination, .unsupportedLink)
+      let kind: SavedWebsiteNoticeKind =
+        ["mailto", "tel", "maps"].contains(scheme) ? .externalApp : .unsupportedLink
+      externalContent = (destination, kind)
       return .cancel
     }
     if action.shouldPerformDownload {
@@ -125,6 +127,7 @@ struct SavedWebsiteView: View {
   private var contentTitle: String {
     switch session.externalContent?.kind {
     case .download: return "Open download in your browser"
+    case .externalApp: return "Open another app"
     case .unsupportedLink: return "Link unavailable"
     default: return "Open content in your browser"
     }
@@ -140,12 +143,14 @@ struct SavedWebsiteView: View {
       .alert(
         contentTitle,
         isPresented: Binding(
-          get: { externalContent != nil },
+          get: { externalContent != nil && externalContent?.kind != .externalApp },
           set: { if !$0 { session.dismissExternalContent() } })
       ) {
         if let externalContent, externalContent.kind != .unsupportedLink {
-          Button("Open in default browser") { openURL(externalContent.destination) }
-            .accessibilityValue(externalContent.destination.absoluteString)
+          Button("Open in default browser") {
+            openURL(externalContent.destination)
+          }
+          .accessibilityValue(externalContent.destination.absoluteString)
         }
         Button(canKeepReading ? "Keep reading" : returnTitle, role: .cancel) {
           session.dismissExternalContent()
@@ -162,6 +167,47 @@ struct SavedWebsiteView: View {
               "Open this content in your default browser.\n\(externalContent.destination.absoluteString)"
             )
           }
+        }
+      }
+      .sheet(
+        isPresented: Binding(
+          get: { externalContent?.kind == .externalApp },
+          set: { if !$0 { session.dismissExternalContent() } }),
+        onDismiss: { if !canKeepReading { returnToPlanner() } }
+      ) {
+        if let externalContent, externalContent.kind == .externalApp {
+          NavigationStack {
+            Form {
+              Section("Link") {
+                Text(externalContent.destination.absoluteString)
+                  .fixedSize(horizontal: false, vertical: true)
+                  .textSelection(.enabled)
+                  .accessibilityIdentifier("saved.browser.external.destination")
+              }
+            }
+            .formStyle(.grouped)
+            .navigationTitle("Open another app")
+            .toolbar {
+              ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") { session.dismissExternalContent() }
+                  .accessibilityIdentifier("saved.browser.external.cancel")
+              }
+              ToolbarItem(placement: .confirmationAction) {
+                Button("Open") {
+                  openURL(externalContent.destination)
+                  session.dismissExternalContent()
+                }
+                .accessibilityIdentifier("saved.browser.external.open")
+              }
+            }
+            #if os(iOS)
+              .toolbarTitleDisplayMode(.inline)
+            #endif
+          }
+          .presentationDetents([.medium, .large])
+          #if os(macOS)
+            .frame(minWidth: 440, minHeight: 240)
+          #endif
         }
       }
       .overlay {
