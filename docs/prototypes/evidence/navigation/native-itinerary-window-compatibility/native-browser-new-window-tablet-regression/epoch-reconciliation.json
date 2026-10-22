@@ -1,0 +1,71 @@
+{
+  "allSourceManifestsMatch": true,
+  "sourceInputCount": 1070,
+  "records": [
+    {
+      "phase": "native-browser-new-window-green",
+      "sourceManifestSha256": "6301634182d54ef7bd7d956657168f757af80c3f6bfc88e8a9d79c7b051f3d6f",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 1,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 1,
+        "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. Reader captures include the native-pane pixel-contrast assertion. A server send outcome does not prove client delivery. Not physical, Mac UI, persistent-cookie or broader navigation-policy acceptance."
+      },
+      "harnessRestartOrDiagnosticFailures": []
+    },
+    {
+      "phase": "native-browser-new-window-phone-regression",
+      "sourceManifestSha256": "6301634182d54ef7bd7d956657168f757af80c3f6bfc88e8a9d79c7b051f3d6f",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 2,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 2,
+        "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. Reader captures include the native-pane pixel-contrast assertion. A server send outcome does not prove client delivery. Not physical, Mac UI, persistent-cookie or broader navigation-policy acceptance."
+      },
+      "harnessRestartOrDiagnosticFailures": []
+    },
+    {
+      "phase": "native-browser-new-window-tablet-regression",
+      "sourceManifestSha256": "6301634182d54ef7bd7d956657168f757af80c3f6bfc88e8a9d79c7b051f3d6f",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 3,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 3,
+        "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. Reader captures include the native-pane pixel-contrast assertion. A server send outcome does not prove client delivery. Not physical, Mac UI, persistent-cookie or broader navigation-policy acceptance."
+      },
+      "harnessRestartOrDiagnosticFailures": []
+    },
+    {
+      "phase": "native-browser-new-window-mac-compiler",
+      "sourceManifestSha256": "6301634182d54ef7bd7d956657168f757af80c3f6bfc88e8a9d79c7b051f3d6f",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "productCount": 9,
+        "productDifferences": [],
+        "runtimeCredit": false,
+        "scope": "Actual affected Mac app/Share/UI-test compilation; no Mac UI automation or signing/capability qualification."
+      },
+      "harnessRestartOrDiagnosticFailures": []
+    }
+  ],
+  "productVerification": "Products match at their collection time, before another run reuses the mobile build directory. Mac uses a separate directory."
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "late-response-reader.png",
+    "original": "Delayed previous guide cannot replace Garden_0_2931A792-D4FA-47FB-B609-F4E24951C62F.png",
+    "exportedFile": "54A63C36-470A-4B2F-9D15-7917BEE9B05D.png",
+    "sha256": "3a998b487f14457190322609fc68f8225099fd1dc6ea389ae54a6baf68b6c11f",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "replaced-reader.png",
+    "original": "Another saved link replaces the visible reader_0_3DCAE1DF-F0C4-4471-A8FA-E233D9D15CFC.png",
+    "exportedFile": "7C27EDCD-F8BD-4D14-817C-91913AB0643E.png",
+    "sha256": "999197574b01dd1a0e77874b70b9bc6b3aa6e9689f67252047fa73363f7aaabe",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "new-window-reader.png",
+    "original": "Reported new-window link reuses native reader_0_90CD9D9E-4855-48B3-A93C-EC7A7D53370E.png",
+    "exportedFile": "BFD51E4D-B9E9-427B-B20E-4CB824FD9770.png",
+    "sha256": "14699e9ad64ca038dcd6ae76f9e19e5b69c1b20fe271b985250e7fcc81712985",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

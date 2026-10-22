@@ -9,6 +9,37 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testReportedNewWindowLinkReusesReaderAndNativeHistory() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    page.links["Garden in another window"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    XCTAssertTrue(server.requestLines.contains("GET /garden HTTP/1.1"))
+    try await recordWindow(application, name: "Reported new-window link reuses native reader")
+    application.buttons["saved.browser.back"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
+    XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
+    XCTAssertTrue(application.staticTexts["Museum reading"].firstMatch.exists)
+  }
+
   func testDelayedPreviousGuideCannotReplaceTheNewItineraryReader() async throws {
     #if os(iOS)
       guard UIDevice.current.userInterfaceIdiom == .pad else {
@@ -770,7 +801,8 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Museum guide</title></head>
           <body><h1>Museum guide fixture</h1><p>Meet at the garden entrance.</p>
-          <a href="/garden">Garden guide</a> <a href="/delayed-guide">Delayed guide</a></body></html>
+          <a href="/garden">Garden guide</a> <a href="/delayed-guide">Delayed guide</a>
+          <a href="/garden" target="_blank">Garden in another window</a></body></html>
           """
       }
       let content = requestLine.hasPrefix("HEAD ") ? "" : body

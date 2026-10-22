@@ -1,0 +1,56 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "54A63C36-470A-4B2F-9D15-7917BEE9B05D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Delayed previous guide cannot replace Garden_0_2931A792-D4FA-47FB-B609-F4E24951C62F.png",
+        "timestamp": 1792650029.176
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "9BC394FC-6CE3-4FA8-B585-9007FE396AFD.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Old guide socket response outcome_0_3D3A1D61-749D-4C33-8A76-23B937F1C34E.txt",
+        "timestamp": 1792650028.319
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDelayedPreviousGuideCannotReplaceTheNewItineraryReader()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDelayedPreviousGuideCannotReplaceTheNewItineraryReader"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "7C27EDCD-F8BD-4D14-817C-91913AB0643E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Another saved link replaces the visible reader_0_3DCAE1DF-F0C4-4471-A8FA-E233D9D15CFC.png",
+        "timestamp": 1792650066.694
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testOpeningAnotherSavedItineraryLinkReplacesTheVisibleReader()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testOpeningAnotherSavedItineraryLinkReplacesTheVisibleReader"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "BFD51E4D-B9E9-427B-B20E-4CB824FD9770.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reported new-window link reuses native reader_0_90CD9D9E-4855-48B3-A93C-EC7A7D53370E.png",
+        "timestamp": 1792650099.843
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory"
+  }
+]

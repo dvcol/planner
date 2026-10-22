@@ -1,0 +1,12 @@
+[
+  {
+    "phase": "native-browser-new-window-red",
+    "functionSha256": "39c34f4ec4fb76ff980f2b24a746d48f9a7582bbe8d83ad0a8223f08c0f8c312",
+    "summary": "Failed"
+  },
+  {
+    "phase": "native-browser-new-window-green",
+    "functionSha256": "39c34f4ec4fb76ff980f2b24a746d48f9a7582bbe8d83ad0a8223f08c0f8c312",
+    "summary": "Passed"
+  }
+]

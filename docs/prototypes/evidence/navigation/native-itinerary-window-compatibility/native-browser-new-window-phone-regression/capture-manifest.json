@@ -1,0 +1,22 @@
+[
+  {
+    "file": "recovered-linked-guide.png",
+    "original": "Linked guide recovers without changing its bookmark_0_84D34156-C192-4219-9520-56E5BCE2B9CD.png",
+    "exportedFile": "D2200ACC-F675-40A0-B8EA-EC5104DCE9A5.png",
+    "sha256": "4f09eae4b23e7d815cb51d53a470e2f1c5be54ead7772371f08410413c77bd1b",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "toolbar-recovered-guide.png",
+    "original": "Toolbar reload recovers saved and linked guides_0_AFDD4933-9FB2-4D7C-9493-BE3DA2B3FE6B.png",
+    "exportedFile": "67B465ED-EB07-460F-87B5-94F51DC4387A.png",
+    "sha256": "452a164f2c6fb330b2c8d1030bd9101961b15615e9693705e73999a0b596c048",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

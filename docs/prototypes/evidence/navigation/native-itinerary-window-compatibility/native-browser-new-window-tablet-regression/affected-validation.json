@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedWebsiteView.swift",
+      "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "/private/tmp/PlannerMarkdownlintConfig.json",
+      "docs/prototypes/native-webpage-new-window.md",
+      "docs/implementation-map.md",
+      "docs/open-decisions.md"
+    ],
+    "exitCode": 0,
+    "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-webpage-new-window.md docs/implementation-map.md docs/open-decisions.md\nLinting: 3 files\nSummary: 0 issues in 0 files\n",
+    "stderr": "Done in 279ms using pnpm v12.14.0\n"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]
