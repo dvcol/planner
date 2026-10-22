@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-list-keeps-reading.png"
+  ],
+  "findings": [
+    "Museum guide remains visibly readable after the independent writer reports actual Weekend deletion."
+  ],
+  "limits": "The complete native function remains failed at the Return-destination explanation. This capture precedes Return and gives no passing return-flow credit."
+}

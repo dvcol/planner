@@ -2130,10 +2130,10 @@ struct SavedPlannerView: View {
   }
 
   private func returnFromWebsite(_ session: SavedWebsiteSession) async {
-    let originAvailable = await store.isWebsiteOriginAvailable(session.request)
+    let availability = await store.websiteReturnAvailability(session.request)
     guard website === session else { return }
     websiteSelection.wrappedValue = nil
-    if originAvailable {
+    if availability.originAvailable {
       if session.request.appearance != nil {
         await loadSelectedAppearance()
       } else if session.request.source.kind == .item {
@@ -2153,8 +2153,13 @@ struct SavedPlannerView: View {
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
       isOpeningAppearance = false
-      preferredCompactColumn = selectedList == nil ? .sidebar : .content
-      destination = "the List"
+      if !availability.listAvailable {
+        selectedListId = nil
+        retainedListSource = nil
+        isOpeningList = false
+      }
+      preferredCompactColumn = availability.listAvailable ? .content : .sidebar
+      destination = availability.listAvailable ? "the List" : "Lists"
     case .itineraries:
       selectedItineraryRow = nil
       if session.request.source.kind == .itinerary { selectedItineraryIdentifier = nil }

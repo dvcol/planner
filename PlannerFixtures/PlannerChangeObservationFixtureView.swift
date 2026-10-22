@@ -28,6 +28,8 @@ struct PlannerChangeObservationFixtureView: View {
                 .accessibilityIdentifier("fixture.writer.deleteHotel")
               Button("Remove Hotel from Weekend") { Task { await fixture.removeHotelMembership() } }
                 .accessibilityIdentifier("fixture.writer.removeMembership")
+              Button("Delete Weekend") { Task { await fixture.deleteWeekend() } }
+                .accessibilityIdentifier("fixture.writer.deleteWeekend")
               Button("Damage recovery checkpoint") { Task { await fixture.damageRecovery() } }
                 .accessibilityIdentifier("fixture.writer.damageRecovery")
               Button("Repair recovery checkpoint") { Task { await fixture.repairRecovery() } }
@@ -187,12 +189,32 @@ private final class PlannerChangeObservationFixture {
   }
 
   func deleteHotel() async {
-    let command = PlannerCommand.deleteSource(source: source)
+    await deleteSource(source, name: "Hotel")
+  }
+
+  func deleteWeekend() async {
+    guard
+      case .source(.item(let current)) = await writer.read(
+        session: session, request: .source(source))
+    else {
+      status = "Independent writer could not read Hotel's List"
+      return
+    }
+    for reference in current.references {
+      guard case .membership(_, let list, let item) = reference, item == source else { continue }
+      await deleteSource(list, name: "Weekend")
+      return
+    }
+    status = "No Weekend List to delete"
+  }
+
+  private func deleteSource(_ target: PlannerEntityReference, name: String) async {
+    let command = PlannerCommand.deleteSource(source: target)
     guard
       case .reviewed(let review) = await writer.prepareReview(
         session: session, command: command)
     else {
-      status = "Independent writer could not review Hotel deletion"
+      status = "Independent writer could not review \(name) deletion"
       return
     }
     let result = await writer.execute(
@@ -200,8 +222,8 @@ private final class PlannerChangeObservationFixture {
         operationId: UUID(), session: session, command: command,
         reviewToken: review.reviewToken))
     switch result.outcome {
-    case .applied(_, .complete): status = "Deleted Hotel from another writer"
-    default: status = "Independent writer did not delete Hotel"
+    case .applied(_, .complete): status = "Deleted \(name) from another writer"
+    default: status = "Independent writer did not delete \(name)"
     }
   }
 

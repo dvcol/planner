@@ -1,0 +1,13 @@
+{
+  "inspectedOriginalFiles": [
+    "healthy-itinerary-guide.png",
+    "healthy-list-return.png",
+    "healthy-item-guide.png"
+  ],
+  "findings": [
+    "Item and Itinerary guides visibly paint beside their native planning panes in dark mode.",
+    "Healthy List return preserves its completed contextual appearance and saved link.",
+    "Narrow Items title truncation remains a whole-app polish finding."
+  ],
+  "limits": "Three represented healthy contexts on dark iPad Simulator. Earlier Calendar/initial-content evidence remains separately versioned. Actual Mac UI, broad accessibility and physical acceptance remain open."
+}

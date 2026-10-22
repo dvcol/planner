@@ -1,0 +1,47 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5EB42189-7400-4281-8297-9B52CC819FFC.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Itinerary guide keeps its plan return context_0_9ACC7797-F890-42E6-9399-8CC4621998B2.png",
+        "timestamp": 1792691120.784
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "DAF2B1E3-0C4E-4F15-9DA2-DAF348D7E145.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Browser return preserves the completed List appearance_0_60C992FE-392E-42FE-BDD6-6BF96BCD86B6.png",
+        "timestamp": 1792691182.881
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D62718FB-A0C1-45E4-ABF0-6611433130C5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide opens in native Planner webpage_0_07BD7D4D-9451-4091-A1D8-5BE41D3BC879.png",
+        "timestamp": 1792691224.675
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem"
+  }
+]

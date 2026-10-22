@@ -1,0 +1,20 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-list-source-retained.png",
+    "deleted-list-returned.png",
+    "deleted-list-keeps-reading.png",
+    "deleted-source-returned.png",
+    "deleted-source-keeps-reading.png",
+    "removed-appearance-source-retained.png",
+    "removed-appearance-returned.png",
+    "removed-appearance-keeps-reading.png"
+  ],
+  "findings": [
+    "The guide remains visibly readable after containing-List deletion.",
+    "Return reaches the native Lists catalog with no stale Weekend header.",
+    "Hotel remains globally Todo with Original notes after either List deletion or membership removal.",
+    "Item-source deletion still returns to the filtered Items catalog.",
+    "Membership-only removal still returns to the surviving Weekend List."
+  ],
+  "limits": "Light phone Simulator evidence. The fixture footer is not shipping layout. Actual Mac UI, itinerary-owner removal, replaced lifetimes, accessibility and physical acceptance remain separate."
+}

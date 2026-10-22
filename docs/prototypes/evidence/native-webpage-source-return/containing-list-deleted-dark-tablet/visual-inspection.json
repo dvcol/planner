@@ -1,0 +1,20 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-list-source-retained.png",
+    "deleted-list-returned.png",
+    "deleted-list-keeps-reading.png",
+    "deleted-source-returned.png",
+    "deleted-source-keeps-reading.png",
+    "removed-appearance-source-retained.png",
+    "removed-appearance-returned.png",
+    "removed-appearance-keeps-reading.png"
+  ],
+  "findings": [
+    "The guide remains visibly readable while the deleted containing List is unavailable in the adjacent pane.",
+    "Return reaches Lists with no stale Weekend header, leaving native empty collection/detail states.",
+    "The shared Hotel remains globally Todo with Original notes, its saved link and native map.",
+    "Source deletion returns to filtered Items; membership removal returns to the surviving Weekend List.",
+    "Narrow Items title truncation remains a whole-app polish finding."
+  ],
+  "limits": "Dark iPad Simulator evidence. Actual Mac UI, itinerary-owner removal, replaced lifetimes, accessibility, resizing and physical acceptance remain separate."
+}

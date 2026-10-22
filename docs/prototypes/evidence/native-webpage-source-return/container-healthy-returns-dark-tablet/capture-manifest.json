@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "healthy-itinerary-guide.png",
+      "originalName": "Itinerary guide keeps its plan return context_0_BF8934BC-1CB9-402E-ADA4-8A313AC98F84.png",
+      "exportedFile": "2C01A203-5AA0-487C-9EA8-C8E385D02C29.png",
+      "sha256": "a334b4c9118be60ce42fde9c07c72ce1478336d9dcd702d83c5a298a87d357f0"
+    },
+    {
+      "file": "healthy-list-return.png",
+      "originalName": "Browser return preserves the completed List appearance_0_2B110777-E2F3-4439-8403-F402F07B38A8.png",
+      "exportedFile": "17B2EA46-7116-4A47-8435-5F2F2E65FFD6.png",
+      "sha256": "a619dc8c149d36905f41d0d75edf57a539be3c52fea93c08554b813f604515d4"
+    },
+    {
+      "file": "healthy-item-guide.png",
+      "originalName": "Saved guide opens in native Planner webpage_0_88484F19-AEBA-47D8-8D9A-BC0AC2F97D1E.png",
+      "exportedFile": "E5CCA486-A71D-4A70-9958-01008ECBE94E.png",
+      "sha256": "42840edb89744a835fc3c0e7884df01955ea337febe67d29a90d8df86df30a8f"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

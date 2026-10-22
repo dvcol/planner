@@ -1,0 +1,47 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2C01A203-5AA0-487C-9EA8-C8E385D02C29.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Itinerary guide keeps its plan return context_0_BF8934BC-1CB9-402E-ADA4-8A313AC98F84.png",
+        "timestamp": 1792691301.568
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "17B2EA46-7116-4A47-8435-5F2F2E65FFD6.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Browser return preserves the completed List appearance_0_2B110777-E2F3-4439-8403-F402F07B38A8.png",
+        "timestamp": 1792691374.084
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "E5CCA486-A71D-4A70-9958-01008ECBE94E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide opens in native Planner webpage_0_88484F19-AEBA-47D8-8D9A-BC0AC2F97D1E.png",
+        "timestamp": 1792691414.26
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem"
+  }
+]

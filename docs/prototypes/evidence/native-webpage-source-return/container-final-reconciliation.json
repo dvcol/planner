@@ -1,0 +1,47 @@
+{
+  "base": "d8196dc0f27cec9662342c9706fc84bc55e45ef4",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "containing-list-deleted-phone-green",
+      "passedFunctions": 3,
+      "inspectedOriginalCaptures": 8,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "containing-list-deleted-dark-tablet",
+      "passedFunctions": 3,
+      "inspectedOriginalCaptures": 8,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "container-healthy-returns-phone",
+      "passedFunctions": 3,
+      "inspectedOriginalCaptures": 3,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "container-healthy-returns-dark-tablet",
+      "passedFunctions": 3,
+      "inspectedOriginalCaptures": 3,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 12,
+  "totalInspectedOriginalCaptures": 22,
+  "macCompiler": {
+    "phase": "browser-container-return-mac-compiler",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "limits": [
+    "Represented Item source deletion, containing-List deletion and List membership removal only. Itinerary deletion, restored lifetimes and every repeated appearance are not all covered.",
+    "Actual Mac UI, full accessibility/resizing, external-system opening, physical devices and final whole-app polish remain open.",
+    "Earlier failed functions and the sandbox-denied invocation retain their original outcomes."
+  ],
+  "meaning": "Each product boundary was validated before reuse. Earlier mobile products need not equal the subsequently rebuilt shared output directory; exact source and original capture bytes reconcile here."
+}

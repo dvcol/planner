@@ -1,0 +1,54 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-list-source-retained.png",
+      "originalName": "Deleted containing List preserves its shared Todo Item_0_47501AEA-AAC7-4834-9198-C417BF36D94B.png",
+      "exportedFile": "536228E0-194F-42DE-8658-10FAAB0CA3E9.png",
+      "sha256": "fd37fb4ab66dacb6fb02505e80caa7e75a36128af383bdb5532489b3d9ebb91d"
+    },
+    {
+      "file": "deleted-list-returned.png",
+      "originalName": "Deleted containing List returns to Lists_0_C0BD6836-305D-4256-968F-E7A969DDFEC2.png",
+      "exportedFile": "1E827916-BA50-4E8F-98DB-0FE0FDEB9F47.png",
+      "sha256": "3c324a0e52623b1e1e649d82c658f8f089d7fcffd44d1a194eec9a450463960e"
+    },
+    {
+      "file": "deleted-list-keeps-reading.png",
+      "originalName": "Deleted containing List leaves its guide open_0_975B2FAC-BE6C-48FB-BC87-5C5176F85519.png",
+      "exportedFile": "966DFAC9-26E1-43A6-AB5E-08E0524E0E98.png",
+      "sha256": "fc9c0c40a9c4d74dd29df1fc03a0085cee2bb572132dc1c06fa440946eb5aa80"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_DF894043-1C2D-42EA-8A6F-870788229663.png",
+      "exportedFile": "08228108-426B-4BC6-A190-3DA9AD71F7B6.png",
+      "sha256": "66bfecb14e9248b06c6fc170496349ea5f86c5a5fbecdaaf6e210a1d60ffac8b"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_84F79B92-3FCA-4C39-95ED-E1A262C01778.png",
+      "exportedFile": "54ED5BB2-1571-4036-8C60-EC35F824F5C0.png",
+      "sha256": "6c38ad51a71af768f36ebb97b00d514a1f2bdb120cf593a7331c6aed8b4f3585"
+    },
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_F856988D-D415-4487-9A8B-1959085F6E98.png",
+      "exportedFile": "9368C0A0-A7EC-44AD-B6EE-22C29E5C602F.png",
+      "sha256": "93b294d217a70fc7bb92582c7e9d7c96e21708c25ae5f79de70887f23a418f52"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_86CE0C5C-3C4A-4915-86AD-FA6CE7C6C228.png",
+      "exportedFile": "EF5C13F7-D102-4E5A-8F25-9FA23A5F594D.png",
+      "sha256": "d1dd9ed27c01a591563d4e593b48205ff6e802a2e44d7c8bc5d751242bbca112"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_EAEBC2C2-0F4A-4A4B-9D31-6D5163F403CA.png",
+      "exportedFile": "23AC8265-C2BE-441C-97A1-823ED470AEFD.png",
+      "sha256": "62951bce2354f68a27504060470a929ed00e213f802e570a52cb6c4bc373d1d2"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

@@ -1,0 +1,12 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-list-keeps-reading.png",
+      "originalName": "Deleted containing List leaves its guide open_0_14BF0EB1-D78E-42B5-896F-0910D11A0190.png",
+      "exportedFile": "BF970A7D-5A6B-4CAB-A81F-CDA0F5BE3765.png",
+      "sha256": "1440759f4c88a7120292519ef03d84fd6b8c6a4e8b0e197623414660c4826b38"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}
