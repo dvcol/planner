@@ -1,0 +1,112 @@
+[
+  {
+    "file": "calendar-reader.png",
+    "original": "Calendar source guide uses the existing navigation stack_0_865F5916-1AD7-412A-B8D3-0691D45128C5.png",
+    "exportedFile": "F6A6F499-5267-4482-899B-AE61E1F05D52.png",
+    "sha256": "f220eabbb7e13916d45e1a3289fbb72c0e0cbd8e27a56334ae14467dc52350e0",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "late-response-reader.png",
+    "original": "Delayed previous guide cannot replace Garden_0_4C811AE1-3884-44B2-8524-C855E784BC52.png",
+    "exportedFile": "4F8BD349-6068-47D9-83B3-192F4465C11A.png",
+    "sha256": "c3e51f388f2bd3cc02bacb5d997e3831d1d034605e527b543009bac20841c5a5",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-linked-guide.png",
+    "original": "Linked guide recovers without changing its bookmark_0_73C169AD-BA48-4CCD-98B4-3D00E2B4E7F2.png",
+    "exportedFile": "914972E2-6254-4D2B-9D4A-60793224BD5A.png",
+    "sha256": "12c66419a099f112c78d3c2132e00dd9cad2d4411fb56916aa9dfad426e205eb",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-guide.png",
+    "original": "Saved guide recovers after repeated failure_0_C512BF2C-5CD9-42BE-830D-027C6898EEB3.png",
+    "exportedFile": "E64CBB20-83AB-4D03-A189-04AA36262D54.png",
+    "sha256": "859167e12f3ae969f2ea186fe9fb2c94290165ecaf62409efdd365c5b75f9a0d",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "itinerary-reader.png",
+    "original": "Itinerary guide keeps its plan return context_0_294ED008-D105-4249-8C0F-48EDE3CA81B0.png",
+    "exportedFile": "0C8291A5-0951-4F70-971D-63518D887D3B.png",
+    "sha256": "db3ffa85a56b55cae89c94df4d68537a22e4706e449c83d0c312f0712c20bd08",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "list-appearance-return.png",
+    "original": "Browser return preserves the completed List appearance_0_A7D891B1-6AB9-44AF-AE21-43B549BDFCC8.png",
+    "exportedFile": "87A9FA94-99E5-407A-81CB-91236C580F1C.png",
+    "sha256": "4702826e613abd9fdef18105d052c63a3b5ff3b1847982da88bc29fe78bfd49d",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "history-reader.png",
+    "original": "Native webpage history and reload preserve the original bookmark_0_B4152BC6-7E9A-48FB-AA91-BFC36290DC3E.png",
+    "exportedFile": "5D78CF73-6566-4D3A-97A6-CB403C593495.png",
+    "sha256": "a07e61917fa75889bc1c55d7d74ed9b9e9b70a3e455761ac939e6da2765049da",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "replaced-reader.png",
+    "original": "Another saved link replaces the visible reader_0_92E30F44-69A3-4A8C-A3CC-3C93D6717F9C.png",
+    "exportedFile": "914352E0-88C4-4CCE-804A-28C1C6EDF83A.png",
+    "sha256": "a9d355fa90e8f55f13c5ea760036914681e965aeaf47151b6bb17bede52c842f",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "recovered-history.png",
+    "original": "Recovered reload preserves native Back history_0_BEF11814-1F5F-4CC9-9A78-57DC207123A8.png",
+    "exportedFile": "4F641259-4FAD-4AD6-8E54-FCEE1757B8AC.png",
+    "sha256": "2010827e7ef6782e12ba5ea87fefe4e20b94cf7daf959ff035f55571d4303f98",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "item-reader.png",
+    "original": "Saved guide opens in native Planner webpage_0_0E902D2A-AC55-438D-8D1B-99AC19D6E0FD.png",
+    "exportedFile": "8FD4D5EA-EE6F-4070-98A3-2DE9C0C089CC.png",
+    "sha256": "1aaebf6194f36bd699e3170062b518e1e7eab7ddde859a47fd9208667815edcb",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "toolbar-recovered-guide.png",
+    "original": "Toolbar reload recovers saved and linked guides_0_E0D78FF2-98C3-4E6B-BF9E-840CD5E0C069.png",
+    "exportedFile": "C9FDCE7B-0DA4-4939-9D2D-F8318F9C6CAB.png",
+    "sha256": "06ab3c36f8a36c957f56f61794339d374712e167fad31f48eb77aba57d60e238",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

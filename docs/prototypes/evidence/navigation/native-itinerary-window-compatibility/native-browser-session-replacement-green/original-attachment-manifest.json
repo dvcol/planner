@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "BB3A3D75-E346-413A-8D11-6B77D78AD142.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Another saved link replaces the visible reader_0_61CD8A46-25FD-4BE7-BA32-5D7E86D7A664.png",
+        "timestamp": 1792647944.593
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testOpeningAnotherSavedItineraryLinkReplacesTheVisibleReader()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testOpeningAnotherSavedItineraryLinkReplacesTheVisibleReader"
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "allSourceManifestsMatch": true,
+  "sourceInputCount": 1070,
+  "records": [
+    {
+      "phase": "native-browser-lifecycle-final-phone",
+      "sourceManifestSha256": "14839c063e70e532202a7c515d7e486cc8eec1aef024f372b92acbc5a85c915b",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 9,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 9,
+        "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. Reader captures include the native-pane pixel-contrast assertion. A server send outcome does not prove client delivery. Not physical, Mac UI, persistent-cookie or broader navigation-policy acceptance."
+      }
+    },
+    {
+      "phase": "native-browser-lifecycle-final-tablet",
+      "sourceManifestSha256": "14839c063e70e532202a7c515d7e486cc8eec1aef024f372b92acbc5a85c915b",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "actualProductCount": 4,
+        "productDifferences": [],
+        "passedFunctions": 11,
+        "failedFunctions": 0,
+        "skippedFunctions": 0,
+        "sqliteUnlinkDiagnostics": [],
+        "originalCaptureCount": 11,
+        "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. Reader captures include the native-pane pixel-contrast assertion. A server send outcome does not prove client delivery. Not physical, Mac UI, persistent-cookie or broader navigation-policy acceptance."
+      }
+    },
+    {
+      "phase": "native-browser-lifecycle-mac-compiler",
+      "sourceManifestSha256": "14839c063e70e532202a7c515d7e486cc8eec1aef024f372b92acbc5a85c915b",
+      "qualification": {
+        "sourceInputCount": 1070,
+        "sourceDifferences": [],
+        "productCount": 9,
+        "productDifferences": [],
+        "runtimeCredit": false,
+        "scope": "Actual affected Mac app/Share/UI-test compilation; no Mac UI automation or signing/capability qualification."
+      }
+    }
+  ],
+  "productVerification": "Each qualification verifies actual products at collection time, before the next run reuses its build directory. Mac uses a separate build directory."
+}

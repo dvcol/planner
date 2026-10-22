@@ -1,0 +1,12 @@
+{
+  "sourceInputCount": 1070,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "passedFunctions": 9,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "originalCaptureCount": 9,
+  "meaning": "Actual native UI execution with real loopback WebKit requests and the represented source, recovery and lifecycle assertions. Reader captures include the native-pane pixel-contrast assertion. A server send outcome does not prove client delivery. Not physical, Mac UI, persistent-cookie or broader navigation-policy acceptance."
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "phase": "native-browser-session-setup-corrected-red",
+    "functionSha256": "f0146ebbfe0a6f3318e51ee498d6e17968e32f3f43cec6db0883d4486d13018b",
+    "summary": "Failed"
+  },
+  {
+    "phase": "native-browser-session-replacement-green",
+    "functionSha256": "f0146ebbfe0a6f3318e51ee498d6e17968e32f3f43cec6db0883d4486d13018b",
+    "summary": "Passed"
+  }
+]

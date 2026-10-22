@@ -1,0 +1,26 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "F10A265A-4E63-42AE-9821-EFD5D1914362.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Delayed previous guide cannot replace Garden_0_9501A430-7732-4402-928C-2D486196021E.png",
+        "timestamp": 1792648415.277
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5AC8FCFE-75E7-43D1-A768-16EA348DCE80.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Old guide socket response outcome_0_FE9B76C6-8D05-477B-91BF-D87540339744.txt",
+        "timestamp": 1792648414.417
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDelayedPreviousGuideCannotReplaceTheNewItineraryReader()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDelayedPreviousGuideCannotReplaceTheNewItineraryReader"
+  }
+]

@@ -132,7 +132,7 @@ struct SavedWebsiteView: View {
         .navigationTitle(session.page.title)
         .toolbarTitleDisplayMode(.inline)
       #endif
-      .task {
+      .task(id: session.id) {
         while !Task.isCancelled {
           let navigations = session.page.navigations
           if !session.hasStarted {

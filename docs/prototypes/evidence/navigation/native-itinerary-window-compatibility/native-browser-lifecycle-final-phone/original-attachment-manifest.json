@@ -1,0 +1,137 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0525A510-F399-48AB-8F51-349403F22FA6.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar source guide uses the existing navigation stack_0_4CADFE2B-BC7D-446A-B575-9367693303A8.png",
+        "timestamp": 1792648507.756
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "652214AE-2DC6-4AAE-9129-7EDA131A4C18.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Linked guide recovers without changing its bookmark_0_29BF79E9-3D6B-478E-B584-B5B360AB8F48.png",
+        "timestamp": 1792648548.215
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedLinkedWebsiteRetriesThatPageAndKeepsItsOriginalBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3BD9ADC0-AC20-4CCA-827C-7BA22B71E8EF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide recovers after repeated failure_0_F77908FF-217E-43D6-9C57-73D768402A96.png",
+        "timestamp": 1792648586.649
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedWebsiteCanRetryRepeatedlyWithoutChangingItsSavedBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "021CFDDD-37F6-4ED6-9274-0DE712F97E52.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Itinerary guide keeps its plan return context_0_E7A10C70-9423-47C1-A4BD-6B53718DC2D2.png",
+        "timestamp": 1792648616.93
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0C59C0E8-2136-40F7-BC22-048139CC6764.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Browser return preserves the completed List appearance_0_F6135FBE-295A-4A2A-BCF1-CF75D569B449.png",
+        "timestamp": 1792648678.539
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "C435B090-9CC5-46D3-B3C8-177CA4C5EDDF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native webpage history and reload preserve the original bookmark_0_C644BC6F-3A0C-4D51-AA66-17B0DC9E2F5E.png",
+        "timestamp": 1792648727.394
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testNativeWebpageHistoryAndReloadKeepTheSavedBookmarkUnchanged()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testNativeWebpageHistoryAndReloadKeepTheSavedBookmarkUnchanged"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "EB43360F-E697-46E2-9662-89780B6AD9C5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovered reload preserves native Back history_0_13BEA1CE-D561-4F03-9E4A-C78C9296B9AC.png",
+        "timestamp": 1792648772.079
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B90B2E63-C3D2-4FB2-95A7-6EE197177D3A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide opens in native Planner webpage_0_602493C1-6E9F-4029-B35F-3D757156610B.png",
+        "timestamp": 1792648809.658
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "4D4E7DDB-911B-4385-B849-11E57626A70D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Toolbar reload recovers saved and linked guides_0_0FC9772C-C174-4DB0-B651-FE834FA70820.png",
+        "timestamp": 1792648861.656
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testToolbarReloadRecoversUnavailableSavedAndLinkedWebsites()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testToolbarReloadRecoversUnavailableSavedAndLinkedWebsites"
+  }
+]
