@@ -1,0 +1,6 @@
+{
+  "testFile": "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+  "redAndGreenSHA256": "ae83b86c8df0b9151114f6fa0dd0b793c3689b059bd6d16a9b2ca462a8443004",
+  "sameTestFileBytes": true,
+  "meaning": "The exact initial-bookmark test that failed at Return to item now passes."
+}

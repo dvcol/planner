@@ -1,0 +1,6 @@
+{
+  "testFile": "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+  "redAndGreenSHA256": "f093e84ab556d92b61acddb980aeea299b27d6abc018cd6be3a588f73f69c0e0",
+  "sameTestFileBytes": true,
+  "meaning": "The cancellation correction passes the exact test file that previously failed at the retained Page unavailable overlay."
+}

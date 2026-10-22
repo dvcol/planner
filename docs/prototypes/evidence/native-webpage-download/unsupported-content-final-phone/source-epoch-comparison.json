@@ -1,0 +1,14 @@
+{
+  "sourceInputCount": 1074,
+  "phases": [
+    "unsupported-content-final-dark-tablet",
+    "unsupported-content-final-phone",
+    "unsupported-content-final-mac-compiler"
+  ],
+  "sourceDifferences": [],
+  "finalNativeExecutions": 8,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "originalFinalCapturesInspected": 8,
+  "meaning": "Final phone/dark-tablet native UI and Mac compiler inputs match. Native network recovery after unsupported-response cancellation passes. Compiler evidence supplies no Mac UI or external-system handoff credit."
+}

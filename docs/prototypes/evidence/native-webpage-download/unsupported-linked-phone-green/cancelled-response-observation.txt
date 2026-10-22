@@ -1,0 +1,6 @@
+Installed macOS WebKit 27 probe with the same unsupported MIME and response cancellation:
+Navigation starts, canShowMimeType is false, and cancelling yields failedProvisionalNavigation.
+Underlying NSError: WebKitErrorDomain 102, Frame load interrupted.
+NSErrorFailingURLKey contains the exact cancelled response URL.
+The deprecated SDK WebKitErrors.h names code 102 WebKitErrorFrameLoadInterruptedByPolicyChange.
+This probe identifies the error; it supplies no app UI passing credit.

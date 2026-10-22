@@ -9,6 +9,106 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guideURL = try await server.start()
+    defer { server.stop() }
+    let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+      "unsupported-content")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(explanation.staticTexts["Open content in your browser"].exists)
+    let target = explanation.staticTexts.matching(
+      NSPredicate(format: "label CONTAINS %@", destination.absoluteString)
+    ).firstMatch
+    XCTAssertTrue(target.isHittable)
+    XCTAssertTrue(explanation.buttons["Open in default browser"].isHittable)
+    XCTAssertTrue(explanation.buttons["Return to item"].isHittable)
+    XCTAssertFalse(explanation.buttons["Keep reading"].exists)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Initial unsupported bookmark offers exact target and returns to Item"
+    capture.lifetime = .keepAlways
+    add(capture)
+    explanation.buttons["Return to item"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+    XCTAssertFalse(application.buttons["saved.browser.return"].exists)
+  }
+
+  func testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let unsupportedURL = destination.deletingLastPathComponent().appendingPathComponent(
+      "unsupported-content")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let guide = application.webViews.firstMatch.staticTexts["Museum guide fixture"]
+    XCTAssertTrue(guide.waitForExistence(timeout: 10))
+    application.webViews.firstMatch.links["Unsupported content"].activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 5))
+    XCTAssertTrue(explanation.staticTexts["Open content in your browser"].exists)
+    let target = explanation.staticTexts.matching(
+      NSPredicate(format: "label CONTAINS %@", unsupportedURL.absoluteString)
+    ).firstMatch
+    XCTAssertTrue(target.exists)
+    XCTAssertTrue(target.isHittable)
+    XCTAssertTrue(explanation.buttons["Open in default browser"].isHittable)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name =
+      "Native unsupported linked content offers exact external target and keeps saved guide"
+    capture.lifetime = .keepAlways
+    add(capture)
+    explanation.buttons["Keep reading"].activateForPlannerJourney()
+    XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(guide.waitForExistence(timeout: 10))
+    XCTAssertTrue(guide.isHittable)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].firstMatch.exists)
+    server.setGardenAvailable(false)
+    application.webViews.firstMatch.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Page unavailable"].firstMatch.waitForExistence(timeout: 10))
+    server.setGardenAvailable(true)
+    application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.webViews.firstMatch.staticTexts["Garden guide fixture"]
+        .waitForExistence(timeout: 10))
+    application.buttons["saved.browser.back"].activateForPlannerJourney()
+    XCTAssertTrue(guide.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.staticTexts["Page unavailable"].firstMatch.exists)
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -1055,6 +1155,7 @@ private final class BrowserJourneyServer: @unchecked Sendable {
       }
       let body: String
       var responseHeaders = ""
+      var contentType = "text/html; charset=utf-8"
       let cookieName = lock.withLock { visitorCookieName }
       let visitLinks = """
         <a href="/verify-visit">Check visit</a> <a href="/forget-visit">Forget visit</a>
@@ -1089,6 +1190,10 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
           <body><h1>\(heading)</h1>\(visitLinks)</body></html>
           """
+      } else if requestLine.contains(" /unsupported-content ") {
+        contentType = "application/x-planner-fixture"
+        responseHeaders = "X-Content-Type-Options: nosniff\r\n"
+        body = "Unsupported museum content fixture"
       } else if requestLine.contains(" /download-guide ") {
         responseHeaders = "Content-Disposition: attachment; filename=\"guide.txt\"\r\n"
         body = "Museum download fixture"
@@ -1113,12 +1218,13 @@ private final class BrowserJourneyServer: @unchecked Sendable {
           <body><h1>Museum guide fixture</h1><p>Meet at the garden entrance.</p>
           <a href="/garden">Garden guide</a> <a href="/delayed-guide">Delayed guide</a>
           <a href="/garden" target="_blank">Garden in another window</a>
+          <a href="/unsupported-content">Unsupported content</a>
           <a href="/download-guide" download="guide.txt">Download guide</a>\(cookieLinks)</body></html>
           """
       }
       let content = requestLine.hasPrefix("HEAD ") ? "" : body
       let response =
-        "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\n\(responseHeaders)Content-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
+        "HTTP/1.1 200 OK\r\nContent-Type: \(contentType)\r\nCache-Control: no-store\r\n\(responseHeaders)Content-Length: \(body.utf8.count)\r\nConnection: close\r\n\r\n\(content)"
       if requestLine == "GET /delayed-guide HTTP/1.1" {
         delayedResponses.append((connection, Data(response.utf8)))
         lock.withLock { observedDelayedRequests += 1 }

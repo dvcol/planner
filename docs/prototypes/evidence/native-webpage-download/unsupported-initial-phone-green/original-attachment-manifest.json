@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B54844B9-C494-4732-A379-B4D0783A95AF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Initial unsupported bookmark offers exact target and returns to Item_0_1301C543-714C-4B17-80AA-42F3F87516F9.png",
+        "timestamp": 1792668335.539
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem"
+  }
+]

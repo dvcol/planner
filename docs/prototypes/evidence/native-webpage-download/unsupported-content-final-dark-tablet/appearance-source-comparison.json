@@ -1,0 +1,7 @@
+{
+  "changedInputs": [
+    "Planner/Scenes/SavedWebsiteView.swift"
+  ],
+  "sameTestFileBytes": true,
+  "meaning": "The final dark cohort repeats the exact previous test file; only the native WebView background presentation changed. Runtime and capture acceptance must still be collected."
+}

@@ -1,0 +1,3 @@
+# Final original capture review
+
+All four original captures were inspected. The initial unsupported-bookmark prompt now sits over the semantic dark reading pane. The earlier white backing is absent. The requested-download and linked-content prompts retain readable native controls and the dark rendered guide; the recovered-history capture still paints that guide. The exact previous test file is unchanged, and the source comparison isolates the background presentation change. Normal dark appearance is qualified for these represented states only. Increase Contrast, larger accessibility text, physical devices, Mac runtime and whole-app polish retain their separate gates. The previously recorded narrow-iPad Items-title truncation remains visible and open.

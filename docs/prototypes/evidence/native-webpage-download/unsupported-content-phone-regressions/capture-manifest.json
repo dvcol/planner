@@ -1,0 +1,42 @@
+[
+  {
+    "file": "unsupported-initial-dialog.png",
+    "original": "Initial unsupported bookmark offers exact target and returns to Item_0_271B980A-B960-40FD-BBB0-2BAA49DD8514.png",
+    "exportedFile": "F1BE3739-AA69-4AB5-8C67-C97F7FA00206.png",
+    "sha256": "5f097c36bfd19e0ce9ac50e36bfdbb8bf59d8cabc671cfc2839178a82637a899",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "new-window-reader.png",
+    "original": "Reported new-window link reuses native reader_0_EECEC403-35BD-4295-AD28-562B2177AE61.png",
+    "exportedFile": "ADE4EC1B-E521-49A8-8B75-FDE538816801.png",
+    "sha256": "960edebb539512925ab6b09236cb6a9b300e5e27bf2fe22020b0349c5bf04b84",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "requested-download-dialog.png",
+    "original": "Native requested download offers exact external target and keeps saved guide_0_D25F3002-BC1A-48FF-B7BD-033F24BC1AC6.png",
+    "exportedFile": "5A4411B3-F330-4E16-BF8F-B1F5D6E1F139.png",
+    "sha256": "702ae778175aa6865f153f2d919a876d77b088a31884029d6e715d3917c5c60e",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "unsupported-linked-dialog.png",
+    "original": "Native unsupported linked content offers exact external target and keeps saved guide_0_870DD3B5-5AF8-40E2-92E0-88FEC303C441.png",
+    "exportedFile": "C2CAD1EF-2CF3-41CF-8FF3-ABBB4191876F.png",
+    "sha256": "740bb63381c1329da9c4f68b14a3a538e9da0c2f4cfd9d020336c0f78b7ace01",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

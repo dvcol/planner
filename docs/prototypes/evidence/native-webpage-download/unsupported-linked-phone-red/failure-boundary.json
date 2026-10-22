@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "Actual native guide and ordinary unsupported-content link are activated, then the absent native explanation fails at line 34. The structured result has one failed function and xcodebuild exits 65. No passing credit."
+}

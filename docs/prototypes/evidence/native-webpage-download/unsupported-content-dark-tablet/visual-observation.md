@@ -1,0 +1,3 @@
+# Original capture review
+
+All four native functions pass. The initial unsupported-bookmark capture still shows WebKit's empty white backing in the right pane under the dark native alert, against the dark Planner collection. This is a visual defect, not final dark-mode acceptance. The loaded guide, requested-download prompt and linked-content prompt render with their dark website/native colors. The previously recorded narrow-iPad Items-title truncation also remains visible. A native WebView background correction and another source-matched cohort follow; these original captures remain unchanged.

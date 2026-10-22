@@ -1,0 +1,62 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "1261A85B-065C-4635-BBD8-A6A701C8D938.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Initial unsupported bookmark offers exact target and returns to Item_0_6A52DD8F-F911-461E-AF64-59B5F9ADFC12.png",
+        "timestamp": 1792669140.461
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "325E120B-0C7A-4FE2-990B-6EFFFC518C3B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reported new-window link reuses native reader_0_A54FEABE-3ECD-473D-8D3D-174DFA531C06.png",
+        "timestamp": 1792669180.668
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "42D8BE91-DE0E-4751-A945-B804F861BD4D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native requested download offers exact external target and keeps saved guide_0_2E75DCFD-4354-4DCC-9239-C610265D7F41.png",
+        "timestamp": 1792669220.008
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "85849F43-B338-41CC-9EBA-6AB7527827A3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native unsupported linked content offers exact external target and keeps saved guide_0_D2412C3F-8140-461A-8F83-632F0AA6FB41.png",
+        "timestamp": 1792669263.364
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  }
+]

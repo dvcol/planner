@@ -1,0 +1,62 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "B4CD1E66-26B9-4C1F-9CE1-A080F767A0BD.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Initial unsupported bookmark offers exact target and returns to Item_0_5092D002-FA51-402F-AECE-6B490CB6448A.png",
+        "timestamp": 1792668924.51
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "47831085-5626-4219-8CA2-13FBBE6BB56B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovered reload preserves native Back history_0_B2188B0E-BB8C-4763-AFA9-31ED5F68B4F5.png",
+        "timestamp": 1792668969.078
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRecoveringAFailedReloadPreservesThePreviousPageInHistory"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "B115CFF9-A0A1-4698-B542-C68CE3FC5315.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native requested download offers exact external target and keeps saved guide_0_E44342F0-A79D-433B-8D5D-4F9369AF7569.png",
+        "timestamp": 1792669001.254
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8157CE1C-B8A7-45AB-968C-25EDF89FAD3B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native unsupported linked content offers exact external target and keeps saved guide_0_E3F62C54-B953-42DF-AECA-54840D4B6397.png",
+        "timestamp": 1792669039.097
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  }
+]
