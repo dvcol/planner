@@ -1,0 +1,9 @@
+NSWindow role=Optional(__C.NSAccessibilityRole(_rawValue: AXWindow)) identifier=nil label=Owned Map place-choice test children=5
+_NSThemeWidgetCell role=Optional(__C.NSAccessibilityRole(_rawValue: AXButton)) identifier=nil label=nil children=0
+_NSThemeZoomWidgetCell role=Optional(__C.NSAccessibilityRole(_rawValue: AXButton)) identifier=nil label=nil children=1
+NSThemeWidgetZoomMenuRemoteView role=Optional(__C.NSAccessibilityRole(_rawValue: AXGroup)) identifier=nil label=nil children=0
+_NSThemeCloseWidgetCell role=Optional(__C.NSAccessibilityRole(_rawValue: AXButton)) identifier=nil label=nil children=0
+NSHostingView<ModifiedContent<SavedMapCollectionView, _EnvironmentKeyWritingModifier<Bool>>> role=Optional(__C.NSAccessibilityRole(_rawValue: AXGroup)) identifier=nil label=nil children=3
+_SwiftUIMKMapView role=Optional(__C.NSAccessibilityRole(_rawValue: AXImage)) identifier=nil label=nil children=0
+NSHostingView<ModifiedContent<SavedMapCollectionView, _EnvironmentKeyWritingModifier<Bool>>> role=Optional(__C.NSAccessibilityRole(_rawValue: AXGroup)) identifier=nil label=nil children=3
+_SwiftUIMKMapView role=Optional(__C.NSAccessibilityRole(_rawValue: AXImage)) identifier=nil label=nil children=0

@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "exportedFileName": "7C7BB485-179F-40A9-B6D8-21B1EA82D54D.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Owned Map window accessibility tree_0_3DAEE0E3-1B8D-4041-8295-C4E26FEBF33E.txt",
+        "timestamp": 1792677051.739
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionTests/testOwnedMapWindowCanOpenLocationsAndItsNativeOptionsMenu()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/SavedMapCollectionTests/testOwnedMapWindowCanOpenLocationsAndItsNativeOptionsMenu"
+  }
+]

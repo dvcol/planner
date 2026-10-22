@@ -1,0 +1,8 @@
+{
+  "sourceCount": 1074,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productCount": 3,
+  "productDifferences": [],
+  "meaning": "Scoped public accessibility environment does not establish control access. Failed feasibility only, no behavioral red or positive candidate-control coverage."
+}

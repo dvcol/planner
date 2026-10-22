@@ -1,6 +1,6 @@
 # Native Map place-choice view test review
 
-Status: Q144 A accepted on 22 October 2026. The additional production-view test boundary and bounded runtime feasibility trial are approved; their execution remains pending. Q143's loader and existing native UI seams remain accepted.
+Status: Q144 A accepted on 22 October 2026. The additional production-view test boundary and bounded runtime feasibility trial are approved. The bounded trials have now failed to reach Locations; they receive no candidate-control credit. Q143's loader and existing native UI seams remain accepted.
 
 ## Context and evidence
 
@@ -42,3 +42,9 @@ If the user keeps only the existing seams, native ambiguity controls and their p
 - [NSHostingView](https://developer.apple.com/documentation/swiftui/nshostingview).
 - [NSAccessibilityProtocol](https://developer.apple.com/documentation/appkit/nsaccessibilityprotocol).
 - [accessibilityPerformPress](https://developer.apple.com/documentation/appkit/nsaccessibilityprotocol/accessibilityperformpress()). An action's return value alone does not establish its final effect.
+
+## Executed feasibility result and existing-boundary alternative
+
+The [owned-window trials](prototypes/native-map-place-choice-view.md) start actual app-hosted tests but cannot reach Locations through their public protocol traversal. A scoped public accessibility environment exposes additional hosting children but still does not establish control access. Complete source/results are retained and the prototype test is removed. No global activation, private API or permission change is attempted. This additional direct boundary remains unqualified.
+
+The existing PlannerFixtures target already compiles the production Planner sources and opens SavedPlannerMainWindow with the accepted external preview-provider protocols. Its existing address-candidates dataset and provider supply North entrance at 35.662,139.717 and South entrance at 35.655,139.717. AddressCandidateJourneyTests already exercises this deterministic provider through real native controls. Continue the missing Map chooser through that previously established native UI boundary, without a new target, dependency, shipping launch flag, production hook or interface. Use these existing literal candidates rather than introduce duplicate East/West provider data. Native UI checks will cover exact appearances, visible pin changes, unchanged owned fields and relaunch; the already accepted loader/Core tests retain exact before/after export checks. This does not turn the failed direct-window trial into passing evidence.
