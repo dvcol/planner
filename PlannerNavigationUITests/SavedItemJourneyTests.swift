@@ -1324,7 +1324,18 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
     title.typeText("Canceled visit")
-    application.plannerElement("saved.item.cancel").activateForPlannerJourney()
+    let cancel = application.windows.firstMatch.buttons.matching(
+      NSPredicate(
+        format: "identifier == %@ OR identifier == %@", "saved.item.cancel", "saved.item.back")
+    ).firstMatch
+    XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+    cancel.activateForPlannerJourney()
+    let discard = application.windows.firstMatch.buttons["Discard"].firstMatch
+    XCTAssertTrue(discard.waitForExistence(timeout: 5))
+    discard.activateForPlannerJourney()
+    let addAfterDiscard = application.plannerElement("saved.item.addMenu")
+    XCTAssertTrue(addAfterDiscard.waitForExistence(timeout: 10))
+    XCTAssertTrue(addAfterDiscard.waitForPlannerHittability())
     XCTAssertFalse(application.staticTexts["Canceled visit"].exists)
 
     application.openSavedPlannerNewItemEditor()
@@ -1364,13 +1375,7 @@ final class SavedItemJourneyTests: XCTestCase {
   }
 
   private func openItems(_ application: XCUIApplication) {
-    #if os(macOS)
-      let items = application.plannerElement("saved.section.items")
-    #else
-      let items = application.buttons["Items"].firstMatch
-    #endif
-    XCTAssertTrue(items.waitForExistence(timeout: 10))
-    items.activateForPlannerJourney()
+    application.openPlannerSection("Items")
   }
 
   private func activateCompletion(_ element: XCUIElement) {

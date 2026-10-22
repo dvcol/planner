@@ -281,7 +281,7 @@ struct SavedItemDetail: View {
         title: item.content.title, location: item.content.location, previewSource: previewSource,
         links: item.content.links)
       ItemLinksSection(
-        links: item.content.links, sourceId: item.source.id,
+        links: item.content.links, source: item.source,
         sourceLifetimeId: item.sourceLifetimeId)
     }
     .formStyle(.grouped)
