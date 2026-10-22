@@ -1,4 +1,5 @@
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 
 #if os(iOS)
@@ -37,10 +38,24 @@ private struct SavedListWindowInputs: Equatable {
   let isReviewingDeletion: Bool
 }
 
+private struct SavedMapCatalogRequest: Equatable {
+  let scope: SavedItemCatalogScope
+  let filters: SavedItemFilters
+  let searchText: String
+  let sort: SavedItemSort
+  let namespace: String
+  let revision: UUID
+}
+
 struct SavedPlannerView: View {
   @Environment(\.undoManager) private var undoManager
+  @Environment(PlannerAddressPreviews.self) private var addressPreviews
+  @Environment(PlannerMapsPreviews.self) private var mapsPreviews
   @State private var associationUndo = SavedAssociationUndoHistory()
   @State private var website: SavedWebsiteSession?
+  @State private var mapCollection: SavedMapCollection?
+  @State private var itemsRepresentation = SavedCollectionRepresentation.list
+  @State private var inboxRepresentation = SavedCollectionRepresentation.list
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
@@ -169,6 +184,7 @@ struct SavedPlannerView: View {
     }
     .onDisappear {
       listWindow?.cancel()
+      mapCollection?.cancel()
       visibleMembershipIdentifiers = []
     }
     #if os(iOS)
@@ -181,6 +197,7 @@ struct SavedPlannerView: View {
 
   var body: some View {
     ZStack { listLifecycleContent }
+      .task(id: mapCatalogRequest) { await reloadCatalogMap() }
       .environment(\.savedWebsiteOpening, openWebsite)
       .disabled(isResolvingOpening)
       .overlay { if isResolvingOpening { ProgressView("Opening plan") } }
@@ -691,6 +708,8 @@ struct SavedPlannerView: View {
   private func itemCatalog(scope: SavedItemCatalogScope) -> some View {
     SavedItemCatalog(
       store: store, scope: scope, isActive: selectedSection == (scope == .inbox ? .inbox : .items),
+      mapCollection: mapCollection, selectMapRow: selectCatalogMapRow,
+      representation: scope == .inbox ? $inboxRepresentation : $itemsRepresentation,
       selection: itemSelection,
       filters: scope == .inbox ? $inboxFilters : $itemFilters,
       searchText: scope == .inbox ? $inboxSearchText : $itemSearchText,
@@ -699,6 +718,72 @@ struct SavedPlannerView: View {
       capture: { captureEntryPoint = .global }, didLoad: replaceDeletedCatalogSelection
     )
     .safeAreaInset(edge: .top) { recoveryNotice }
+  }
+
+  private var mapCatalogRequest: SavedMapCatalogRequest? {
+    guard store.isReady, let namespace = store.devicePreferenceNamespace else { return nil }
+    switch selectedSection {
+    case .items where itemsRepresentation == .map:
+      return .init(
+        scope: .items, filters: itemFilters, searchText: itemSearchText,
+        sort: itemSort(scope: .items).wrappedValue, namespace: namespace,
+        revision: store.changeRevision)
+    case .inbox where inboxRepresentation == .map:
+      return .init(
+        scope: .inbox, filters: inboxFilters, searchText: inboxSearchText,
+        sort: itemSort(scope: .inbox).wrappedValue, namespace: namespace,
+        revision: store.changeRevision)
+    default: return nil
+    }
+  }
+
+  private func reloadCatalogMap() async {
+    guard let request = mapCatalogRequest else {
+      mapCollection?.cancel()
+      return
+    }
+    if mapCollection == nil {
+      mapCollection = .init(addressPreviews: addressPreviews, mapsPreviews: mapsPreviews)
+    }
+    guard let mapCollection else { return }
+    let identity = SavedItemWindowIdentity(
+      namespace: request.namespace, savedRevision: request.revision)
+    await store.reloadMapCollection(
+      mapCollection,
+      query: request.filters.itemQuery(
+        scope: request.scope.queryValue, text: request.searchText, sort: request.sort),
+      identity: identity)
+    guard !Task.isCancelled, mapCatalogRequest == request, mapCollection.state == .ready else {
+      return
+    }
+    var firstIdentifier: UUID?
+    if case .source(let source)? = mapCollection.rows.first?.identity {
+      firstIdentifier = source.id
+    }
+    replaceDeletedCatalogSelection(
+      scope: request.scope, identity: identity, firstIdentifier: firstIdentifier)
+  }
+
+  private func selectCatalogMapRow(_ row: PlannerMapRowRead) {
+    guard case .source(let source) = row.identity, source.kind == .item,
+      let namespace = store.devicePreferenceNamespace
+    else { return }
+    let scope = catalogScope
+    requestDraftNavigation {
+      Task {
+        guard let item = await store.readItem(source.id),
+          item.sourceLifetimeId == row.sourceLifetimeId,
+          store.devicePreferenceNamespace == namespace, catalogScope == scope,
+          selectedSection == .items || selectedSection == .inbox
+        else {
+          store.alertMessage = "This item is no longer available here."
+          return
+        }
+        recordSelectionChange()
+        selectedItemId = source.id
+        preferredCompactColumn = .detail
+      }
+    }
   }
 
   private func replaceDeletedCatalogSelection(

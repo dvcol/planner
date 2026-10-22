@@ -14,9 +14,18 @@ enum SavedMapLocationResolution: Equatable {
   case addressCandidates(PlannerAddressPreviewRequest, [PlannerAddressCandidate])
 }
 
-struct SavedMapLocationGroup {
+struct SavedMapCoordinateIdentity: Hashable {
+  let latitude: Double
+  let longitude: Double
+}
+
+struct SavedMapLocationGroup: Identifiable {
   let coordinate: PlannerCoordinate
   var rows: [PlannerMapRowRead]
+
+  var id: SavedMapCoordinateIdentity {
+    .init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+  }
 }
 
 @MainActor @Observable
@@ -31,11 +40,6 @@ final class SavedMapCollection {
     let epoch: UUID
     let deadline: Task<Void, Never>
     var timedOut = false
-  }
-
-  private struct CoordinateKey: Hashable {
-    let latitude: Double
-    let longitude: Double
   }
 
   @ObservationIgnored private let addressPreviews: PlannerAddressPreviews
@@ -369,7 +373,7 @@ final class SavedMapCollection {
     locatedCount = 0
     noInputCount = 0
     unresolvedCount = 0
-    var groupIndices: [CoordinateKey: Int] = [:]
+    var groupIndices: [SavedMapCoordinateIdentity: Int] = [:]
     var locationGroups: [SavedMapLocationGroup] = []
     for (index, row) in rows.enumerated() {
       guard case .located(let coordinate) = resolutions[index] else {
@@ -383,7 +387,8 @@ final class SavedMapCollection {
         continue
       }
       locatedCount += 1
-      let key = CoordinateKey(latitude: coordinate.latitude, longitude: coordinate.longitude)
+      let key = SavedMapCoordinateIdentity(
+        latitude: coordinate.latitude, longitude: coordinate.longitude)
       if let index = groupIndices[key] {
         locationGroups[index].rows.append(row)
       } else {

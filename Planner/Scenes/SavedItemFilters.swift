@@ -48,6 +48,15 @@ struct SavedItemFilters: Equatable {
   var hasAddress = false
   var hasLinks = false
 
+  func itemQuery(scope: PlannerItemQuery.Scope, text: String, sort: SavedItemSort)
+    -> PlannerItemQuery
+  {
+    .init(
+      scope: scope, text: text, completion: completion.queryValue, archive: archive.queryValue,
+      categories: categoryQuery, tags: tagQuery, lists: listQuery, duration: durationQuery,
+      hasAddress: hasAddress, hasLinks: hasLinks, scheduled: scheduled, sort: sort.queryValue)
+  }
+
   var hasItemOnlyRestrictions: Bool {
     !categoryIdentifiers.isEmpty || !tagIdentifiers.isEmpty || !listIdentifiers.isEmpty
       || maximumDuration != nil || hasAddress || hasLinks || scheduled != .all

@@ -494,6 +494,16 @@ final class SavedPlannerStore {
     return SavedItemWindow(planner: planner, session: session)
   }
 
+  func reloadMapCollection(
+    _ collection: SavedMapCollection, query: PlannerItemQuery, identity: SavedItemWindowIdentity
+  ) async {
+    guard let planner, let session, isReady, devicePreferenceNamespace == identity.namespace else {
+      collection.cancel()
+      return
+    }
+    await collection.reload(planner: planner, session: session, query: query, identity: identity)
+  }
+
   func readItem(_ identifier: UUID) async -> PlannerItemSourceRead? {
     guard let planner, let session else { return nil }
     switch await planner.read(
