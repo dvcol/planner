@@ -1,0 +1,10 @@
+{
+  "path": "/private/tmp/PlannerMapRowsBuild",
+  "removed": true,
+  "allocatedBytesBeforeRemoval": 519700480,
+  "productsVerifiedBeforeRemoval": {
+    "/private/tmp/PlannerMapRowsBuild/out/Products/Debug/PlannerCoreTests.xctest/Contents/MacOS/PlannerCoreTests": "c8854dca7cad56cd828f7d64de36b762053a8d7cad2e3648ec18ccd5f5868904",
+    "/private/tmp/PlannerMapRowsBuild/out/Products/Debug/PlannerCoreStoreTests.xctest/Contents/MacOS/PlannerCoreStoreTests": "0b5e131326ef8ce1c11261946d726b0208ff5ec3747187c09213b58153a16a1e"
+  },
+  "scope": "Completed disposable standalone Map Core build only. User comparison app, active browser build, native MCP cache and compact evidence retained."
+}
