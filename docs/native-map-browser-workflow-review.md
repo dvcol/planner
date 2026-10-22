@@ -6,7 +6,7 @@ The [product brief](product-brief.md) retains a filtered native Apple map with a
 
 The goal is a native secondary representation of the same Planner data, with live identities, coherent filters and useful webpage navigation. No new completion, archive, schedule, backup or provider-content policy is proposed by these workflow choices.
 
-The user accepts Q131 A, Q132 A and Q133 A: collection List/Map modes, SwiftUI browsing in the detail area or compact pushed page, and ordinary website taps opening inside Planner. The alternatives below retain the reviewed context. The dependent frontier in Definition of ready remains to be settled. Q127-Q130 retain their separate pending questions; independent implementation and qualification continue.
+The user accepts Q131 A, Q132 A and Q133 A: collection List/Map modes, SwiftUI browsing in the detail area or compact pushed page, and ordinary website taps opening inside Planner. The alternatives below retain the reviewed context. Q134-Q141 also accept A. The concrete shared read and component qualification contracts follow those choices. Q127-Q130 retain their separate pending questions; independent implementation and qualification continue.
 
 ## Verified implementation facts
 
@@ -52,7 +52,7 @@ Recommendation: A to make the accepted in-app browsing capability directly usefu
 
 ## Next frontier, Q134-Q141
 
-Q131-Q133 are settled. The question tool now presents the following independent choices with context, alternatives and impacts. A is recommended in each row; none is accepted yet.
+Q131-Q133 are settled. The user also accepts A for every question Q134-Q141 below. The alternatives retain the reviewed impacts. Concrete data/component contracts and qualification follow these choices.
 
 | Question | A | B | Main consequence |
 | --- | --- | --- | --- |
@@ -71,7 +71,9 @@ The complete map read contract follows the location choice: row windows already 
 
 ## Definition of ready
 
-Review Q131-Q133 before implementing their dependent navigation. Then settle the next dependent frontier: complete map-location loading, overlapping appearances and missing/ambiguous-location presentation; browser website-session lifetime and navigation policies; and any changed public read interface or additional direct-test boundary.
+Q131-Q141 settle the navigation, location and browsing policies. Review the added public read declaration before its tests and implementation. The [Q142 Map-row proposal](map-row-contract-review.md) reuses existing Item-query generations and the approved public Core/HTTP test boundaries.
+
+Q131-Q141 now settle those workflow choices. The remaining preparation is the concrete shared Map projection and generation/paging declaration, plus supported WebPage integration and controlled native network qualification. Reuse existing public Core query/read and native UI test boundaries where sufficient. Broader direct testing requires its own concrete boundary review, rather than being added automatically.
 
 Reuse the existing public Core query/read and native UI seams wherever sufficient. Do not add production test-only controls. A new public declaration or direct app-hosted interface must receive its concrete review before tests. Keep the accepted contextual completion, draft protection, generation checks and manual administration boundaries intact.
 
@@ -80,6 +82,8 @@ Reuse the existing public Core query/read and native UI seams wherever sufficien
 For the map, exercise real saved data through the selected workflow. Cover cumulative search/List filters across every matching identity, offscreen matches, owned and temporary locations under the reviewed policy, missing/ambiguous results, co-located appearances and exact selection/action scope. Live edits, removal/deletion, dataset changes, cancellation and stale pages must not retarget actions. Qualify actual phone/tablet interaction and Mac resizing/keyboard behavior, with explicit empty/loading/error states. Physical allocation, latency and provider behavior retain their own gates.
 
 For webpages, load an actual page through the chosen native component and exercise history, reload/failure, return/close and explicit external opening. Keep the original saved URL and selected owner/appearance identity truthful through source edits/removal and navigation. Test the reviewed external navigation, new-window and download policies at their actual boundary. Confirm website data remains outside Planner content/backups. Controlled HTTP/native-UI fixtures need a concrete plan rather than an ATS bypass or a live-website-only failure test.
+
+Browser controls must also preserve the corrected shared Mac toolbar ownership: repeat the long-List-title selection/available-width checks with browsing open. Wide/compact navigation must protect edited drafts and preserve the exact source context; a removed origin follows Q141 A instead of retargeting an action.
 
 Use the agreed production public interfaces for behavioral tests and the existing native UI boundary for rendered workflows. Inspect original captures on phone/tablet and qualify actual Mac layouts when its runner is available. Compilation, metadata previews, a single pin, a partially loaded viewport or opening the external browser supplies no aggregate-map/embedded-browser completion credit. Whole-app light/dark and accessibility polish remains after feature completion.
 
