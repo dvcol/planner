@@ -1,0 +1,11 @@
+{
+  "inputCount": 1070,
+  "productionResourceDifferences": [],
+  "excludedUnbuiltTestInputs": 165,
+  "currentTestDifference": [
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+  ],
+  "productCount": 6,
+  "productDifferences": [],
+  "scope": "Mac app and Share build only. Later changes are confined to the unbuilt browser UI-test screenshot helper."
+}

@@ -40,6 +40,7 @@ private struct SavedListWindowInputs: Equatable {
 struct SavedPlannerView: View {
   @Environment(\.undoManager) private var undoManager
   @State private var associationUndo = SavedAssociationUndoHistory()
+  @State private var website: SavedWebsiteSession?
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
@@ -180,6 +181,7 @@ struct SavedPlannerView: View {
 
   var body: some View {
     ZStack { listLifecycleContent }
+      .environment(\.savedWebsiteOpening, openWebsite)
       .disabled(isResolvingOpening)
       .overlay { if isResolvingOpening { ProgressView("Opening plan") } }
       .task(id: planOpening.readyRequestIdentifier(for: windowIdentifier)) {
@@ -400,7 +402,9 @@ struct SavedPlannerView: View {
             } content: {
               itineraryDetail
             } detail: {
-              itineraryAppearanceDetail
+              websiteHost(isActive: selectedSection == .itineraries) {
+                itineraryAppearanceDetail
+              }
             }
           }
         }
@@ -416,7 +420,9 @@ struct SavedPlannerView: View {
     NavigationSplitView(preferredCompactColumn: compactColumnSelection) {
       itemCatalog(scope: scope)
     } detail: {
-      if let newItemDraft { newItemEditor(newItemDraft) } else { itemDetail }
+      websiteHost(isActive: selectedSection == (scope == .items ? .items : .inbox)) {
+        if let newItemDraft { newItemEditor(newItemDraft) } else { itemDetail }
+      }
     }
   }
 
@@ -491,8 +497,12 @@ struct SavedPlannerView: View {
     .id(calendarSelection)
   }
 
-  @ViewBuilder
   private var calendarDetail: some View {
+    websiteHost(isActive: selectedSection == .calendar) { calendarSourceDetail }
+  }
+
+  @ViewBuilder
+  private var calendarSourceDetail: some View {
     if let selection = calendarSelection {
       if selection.source.kind == .item {
         if selectedItemId == selection.source.id,
@@ -1659,14 +1669,16 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      if let newItemDraft {
-        newItemEditor(newItemDraft)
-      } else if usesItineraryColumns {
-        itineraryAppearanceDetail
-      } else if isItemSection {
-        itemDetail
-      } else {
-        appearanceDetail
+      websiteHost(isActive: usesSidebarNavigation || selectedSection == .lists) {
+        if let newItemDraft {
+          newItemEditor(newItemDraft)
+        } else if usesItineraryColumns {
+          itineraryAppearanceDetail
+        } else if isItemSection {
+          itemDetail
+        } else {
+          appearanceDetail
+        }
       }
     }
     .navigationSplitViewStyle(.balanced)
@@ -1784,6 +1796,7 @@ struct SavedPlannerView: View {
         guard section != selectedSection else { return }
         requestDraftNavigation {
           recordSelectionChange()
+          if section == .lists, selectedListId == nil { preferredCompactColumn = .sidebar }
           selectedSection = section
         }
       })
@@ -1812,6 +1825,54 @@ struct SavedPlannerView: View {
           preferredCompactColumn = column
         }
       })
+  }
+
+  private var websiteSelection: Binding<SavedWebsiteSession?> {
+    Binding(
+      get: { website },
+      set: { replacement in
+        if replacement == nil { website?.page.stopLoading() }
+        website = replacement
+      })
+  }
+
+  @ViewBuilder
+  private func websiteHost<Content: View>(
+    isActive: Bool, @ViewBuilder content: () -> Content
+  ) -> some View {
+    if !isActive {
+      content()
+    } else if usesSidebarNavigation {
+      if let website {
+        SavedWebsiteView(session: website) { websiteSelection.wrappedValue = nil }
+      } else {
+        content()
+      }
+    } else if selectedSection == .calendar {
+      content().navigationDestination(item: websiteSelection) { session in
+        SavedWebsiteView(session: session) { websiteSelection.wrappedValue = nil }
+      }
+    } else {
+      NavigationStack {
+        content().navigationDestination(item: websiteSelection) { session in
+          SavedWebsiteView(session: session) { websiteSelection.wrappedValue = nil }
+        }
+      }
+    }
+  }
+
+  private func closeWebsiteForNavigation() {
+    website?.page.stopLoading()
+    website = nil
+  }
+
+  private func openWebsite(_ request: SavedWebsiteRequest) {
+    requestDraftNavigation {
+      guard store.devicePreferenceNamespace == request.namespace else { return }
+      website?.page.stopLoading()
+      website = SavedWebsiteSession(request: request)
+      preferredCompactColumn = .detail
+    }
   }
 
   private func beginNewItem(listIdentifier: UUID?) {
@@ -1847,6 +1908,7 @@ struct SavedPlannerView: View {
         self.newItemDraft = nil
         preferredCompactColumn = selectedSection == .lists ? .content : .sidebar
       }
+      closeWebsiteForNavigation()
       navigation()
       return
     }

@@ -1,0 +1,7 @@
+{
+  "base": "cb0eafcc4c315a07fd4b716bed1b8affa935db08",
+  "inputs": 1068,
+  "workspaceOverlays": [],
+  "committedBlobDifferences": [],
+  "meaning": "Every executed source/config/resource input matches the exact committed pre-browser version; the same obsolete Cancel lookup fails there."
+}

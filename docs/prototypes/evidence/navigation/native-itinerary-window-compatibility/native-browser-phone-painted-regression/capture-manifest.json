@@ -1,0 +1,72 @@
+[
+  {
+    "file": "calendar-reader.png",
+    "original": "Calendar source guide uses the existing navigation stack_0_9ED8EB55-0FED-44E4-93BC-F0C7E3AA806A.png",
+    "exportedFile": "0330F3FE-4EB8-4A66-B4E1-FE696A8FDD4E.png",
+    "sha256": "8590b3df078fa639e6d462c96fc1605995d2008d3e5283202cc4831b3c38c5bf",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "itinerary-reader.png",
+    "original": "Itinerary guide keeps its plan return context_0_588D4F88-537E-436F-A981-550F924BD251.png",
+    "exportedFile": "221061F2-B39B-4BE9-A455-E072B1E03E35.png",
+    "sha256": "73065e27b191c5cfed9af23ace2f3325e8ad9c37d1c36e95e03f48bb989e3fde",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "list-appearance-return.png",
+    "original": "Browser return preserves the completed List appearance_0_1A8917D0-3519-4461-8F80-9E48BFF4083B.png",
+    "exportedFile": "16022B19-07F9-4745-BF0D-E2A466791161.png",
+    "sha256": "8d0526da9d7ba659cdf6ed6986b5a1097477d498145959b3f7bb6b822ceb91d1",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "history-reader.png",
+    "original": "Native webpage history and reload preserve the original bookmark_0_13E382F7-5E32-4F7D-9EEF-FA458819B2AB.png",
+    "exportedFile": "4E0AA3D3-F7A8-49D9-9376-025E10AE2E81.png",
+    "sha256": "c74ddb6c74bce8027486601c9e27084a9521764d780828e90475341d3adb35df",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "item-reader.png",
+    "original": "Saved guide opens in native Planner webpage_0_13D13D32-BC86-4D87-8AF1-06546E43B1DB.png",
+    "exportedFile": "5358CAF4-FB55-474C-AD85-FEC8DD9E751D.png",
+    "sha256": "263c911b68bf529c79b3ece6c22da69dc80837ff02f2d22969feb35a417c2844",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "global-reopen.png",
+    "original": "Saved Item reopened globally after relaunch_0_B7FA27A0-F307-40C4-BDDE-09245F60259D.png",
+    "exportedFile": "9EDECC26-B08E-4A3A-83DB-5C7F0B6F16EE.png",
+    "sha256": "9f7959c516930b97f44ca0c047c41b3489c0edfa243c511768d837060dfd937f",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "global-completion.png",
+    "original": "Saved Item with global completion_0_B105D503-D76A-4050-AB95-D103391E1CF3.png",
+    "exportedFile": "FBB73BD2-9023-4A74-878D-28E2B3651115.png",
+    "sha256": "17b46ab2ae1a395c0c04c83d90b65a126e1d457997280cde75b4f2722a7a7213",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

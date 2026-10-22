@@ -1,0 +1,12 @@
+{
+  "sourceInputCount": 1070,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "passedFunctions": 7,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteUnlinkDiagnostics": [],
+  "originalCaptureCount": 7,
+  "meaning": "Actual native UI execution with real loopback WebKit GET requests. Browser captures include the native-pane pixel-contrast assertion. Not physical, Mac UI, persistence or broader navigation-policy acceptance."
+}

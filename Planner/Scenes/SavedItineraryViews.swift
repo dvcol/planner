@@ -257,7 +257,7 @@ struct SavedItineraryDetail: View {
               title: itinerary.content.title, location: itinerary.content.location,
               previewSource: previewSource(for: itinerary))
             ItemLinksSection(
-              links: itinerary.content.links, sourceId: itinerary.source.id,
+              links: itinerary.content.links, source: itinerary.source,
               sourceLifetimeId: itinerary.sourceLifetimeId)
             SavedSchedulesSection(
               source: itinerary.source, references: itinerary.references, canChange: store.canCreate

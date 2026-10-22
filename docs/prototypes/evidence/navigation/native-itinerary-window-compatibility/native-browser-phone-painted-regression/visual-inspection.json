@@ -1,0 +1,35 @@
+{
+  "captures": [
+    {
+      "file": "calendar-reader.png",
+      "sha256": "8590b3df078fa639e6d462c96fc1605995d2008d3e5283202cc4831b3c38c5bf",
+      "inspection": "Original own-window PNG inspected; visible page text or valid contextual completion on Return."
+    },
+    {
+      "file": "itinerary-reader.png",
+      "sha256": "73065e27b191c5cfed9af23ace2f3325e8ad9c37d1c36e95e03f48bb989e3fde",
+      "inspection": "Original own-window PNG inspected; visible page text or valid contextual completion on Return."
+    },
+    {
+      "file": "list-appearance-return.png",
+      "sha256": "8d0526da9d7ba659cdf6ed6986b5a1097477d498145959b3f7bb6b822ceb91d1",
+      "inspection": "Original own-window PNG inspected; visible page text or valid contextual completion on Return."
+    },
+    {
+      "file": "history-reader.png",
+      "sha256": "c74ddb6c74bce8027486601c9e27084a9521764d780828e90475341d3adb35df",
+      "inspection": "Original own-window PNG inspected; visible page text or valid contextual completion on Return."
+    },
+    {
+      "file": "item-reader.png",
+      "sha256": "263c911b68bf529c79b3ece6c22da69dc80837ff02f2d22969feb35a417c2844",
+      "inspection": "Original own-window PNG inspected; visible page text or valid contextual completion on Return."
+    }
+  ],
+  "additionalCaptures": [
+    "global-completion.png",
+    "global-reopen.png"
+  ],
+  "appearance": "Original captures show light chrome and fixture content; no appearance mutation was performed.",
+  "limits": "Fixture reader and List return only. This does not close whole-app accessibility, large-text, website-policy, Mac UI or physical acceptance."
+}

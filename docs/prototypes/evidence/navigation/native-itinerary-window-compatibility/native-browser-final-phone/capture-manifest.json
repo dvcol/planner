@@ -1,0 +1,65 @@
+[
+  {
+    "file": "calendar-reader.png",
+    "original": "Calendar source guide uses the existing navigation stack_0_C358C612-3966-4127-BFBB-93EED384A608.png",
+    "sha256": "25a08650f4b0e8b2ffb585223ae76d5cae9a76dc2831d6c88167f403fe3a32de",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "itinerary-reader.png",
+    "original": "Itinerary guide keeps its plan return context_0_4718C028-A2EC-4A68-9BFB-80BB1B16F3F6.png",
+    "sha256": "3917f8104e5c4b8f2235d658ca112c4517c82c861c7ec2a40cd58e1715cbea51",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "list-appearance-return.png",
+    "original": "Browser return preserves the completed List appearance_0_92B6452C-8B0D-4A8A-A5F6-261F21C4D7D9.png",
+    "sha256": "9a5097176c709b5c15ac763ee1c46025c9d9a2ee90f323366b12fe205fe8a445",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "history-reader.png",
+    "original": "Native webpage history and reload preserve the original bookmark_0_01345DC4-E687-4A02-91FE-A4D89ABFB3B7.png",
+    "sha256": "c072a00860743249e43560e829602e3e6c10e28e27968b5dc8249337033bed33",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "item-reader.png",
+    "original": "Saved guide opens in native Planner webpage_0_4F442C1B-2671-46ED-A9D1-EFC269736915.png",
+    "sha256": "411ad4ef742f94705ee37f8857f0ca39ce2faff8a7dabeef2b87d557ee4fd9c3",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "global-reopen.png",
+    "original": "Saved Item reopened globally after relaunch_0_0739F124-8199-4F47-A7AD-615CC25DC85B.png",
+    "sha256": "3de47612f1bd13a4627f53b789df1a36eef17046f5715a0c08c862bd10eec377",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "global-completion.png",
+    "original": "Saved Item with global completion_0_82DAB44B-AB92-4A1C-8349-18C0765EE511.png",
+    "sha256": "4758d05d6879bd44272a504e3f57ba120799e44568630af15d62e1fcace343df",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

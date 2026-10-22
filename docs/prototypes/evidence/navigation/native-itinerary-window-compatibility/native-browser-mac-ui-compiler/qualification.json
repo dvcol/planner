@@ -1,0 +1,8 @@
+{
+  "inputCount": 1070,
+  "sourceDifferences": [],
+  "productCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "meaning": "Actual Mac build-for-testing compiles the app, Share dependency and UI-test target. No Mac UI test starts; signing/capability acceptance is not inferred."
+}

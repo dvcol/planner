@@ -1,0 +1,32 @@
+[
+  {
+    "function": "testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails",
+    "red": "native-browser-calendar-red",
+    "green": "native-browser-calendar-existing-stack",
+    "sha256": [
+      "190c33a748d833db0abb02014f1e483b45aaff5a95af451d5e18af5906841e8d",
+      "190c33a748d833db0abb02014f1e483b45aaff5a95af451d5e18af5906841e8d"
+    ],
+    "unchanged": true
+  },
+  {
+    "function": "testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder",
+    "red": "native-browser-itinerary-red",
+    "green": "native-browser-itinerary-return-scope",
+    "sha256": [
+      "d2a0782c224fdbe14e3dc4f48b1738032cdf2db522550c1f68f64a9de58e28ad",
+      "d2a0782c224fdbe14e3dc4f48b1738032cdf2db522550c1f68f64a9de58e28ad"
+    ],
+    "unchanged": true
+  },
+  {
+    "function": "testNativeWebpageHistoryAndReloadKeepTheSavedBookmarkUnchanged",
+    "red": "native-browser-history-red",
+    "green": "native-browser-history-and-draft-green",
+    "sha256": [
+      "6d443b956a411dc9cfeb7da1ac94c8c40ad885db522326f7007cd8101252d2ec",
+      "6d443b956a411dc9cfeb7da1ac94c8c40ad885db522326f7007cd8101252d2ec"
+    ],
+    "unchanged": true
+  }
+]

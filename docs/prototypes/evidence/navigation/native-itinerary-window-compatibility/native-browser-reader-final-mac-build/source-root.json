@@ -1,0 +1,16 @@
+{
+  "root": "/private/tmp/PlannerBrowserMacSource",
+  "base": "f29a943569e50b9e0810888f317217f23c093984",
+  "overlays": [
+    "Planner/Scenes/ItemLinksSection.swift",
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "Planner/Scenes/SavedWebsiteView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift"
+  ]
+}

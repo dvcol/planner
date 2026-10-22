@@ -97,7 +97,15 @@ extension XCUIApplication {
 
   private func savedPlannerMenu(identifier: String, title: String) -> XCUIElement {
     var menu = plannerElement(identifier)
-    if !menu.exists || !menu.isHittable {
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad, !menu.isHittable,
+        let sidebar = buttons.matching(identifier: "Hide Sidebar").allElementsBoundByIndex.first(
+          where: \.isHittable)
+      {
+        sidebar.activateForPlannerJourney()
+      }
+    #endif
+    if !menu.waitForExistence(timeout: 5) || !menu.waitForPlannerHittability() {
       #if os(macOS)
         let overflow = windows.firstMatch.popUpButtons["more toolbar items"].firstMatch
         XCTAssertTrue(overflow.waitForExistence(timeout: 5))

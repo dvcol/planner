@@ -1,0 +1,77 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "624DF6D9-E713-40A5-978D-4A95A5D5F435.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Calendar source guide uses the existing navigation stack_0_8014EE7A-DF47-43FC-81EF-D5D13D5B88C9.png",
+        "timestamp": 1792644423.283
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "7D886B36-D652-40F1-B8CA-16950B9A6670.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Itinerary guide keeps its plan return context_0_945DD17B-2A2E-4E3F-8CE5-CB4B5AC41769.png",
+        "timestamp": 1792644451.412
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "C1140BF0-4338-4781-83B5-FF4A20B5D892.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Browser return preserves the completed List appearance_0_EB8BC976-31E4-4806-ADD9-41181D6C384F.png",
+        "timestamp": 1792644524.906
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testListGuideReturnsToTheSameLocallyCompletedAppearance"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "39E81F40-88F9-4211-930C-F949BB980763.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native webpage history and reload preserve the original bookmark_0_137035E6-EB55-4BD9-BF9B-1E847A2FEB90.png",
+        "timestamp": 1792644570.788
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testNativeWebpageHistoryAndReloadKeepTheSavedBookmarkUnchanged()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testNativeWebpageHistoryAndReloadKeepTheSavedBookmarkUnchanged"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5BD3FD6F-46D9-4F88-9B97-3CA32F97BBD1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved guide opens in native Planner webpage_0_CCA86260-2C23-4902-8A22-626D218DD836.png",
+        "timestamp": 1792644605.201
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSavedWebsiteOpensInsidePlannerAndReturnsToTheSameItem"
+  }
+]

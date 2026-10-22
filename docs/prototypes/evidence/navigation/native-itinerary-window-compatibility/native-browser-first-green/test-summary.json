@@ -1,0 +1,27 @@
+{
+  "devicesAndConfigurations" : [
+
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792639299.756,
+  "passedTests" : 0,
+  "result" : "unknown",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792639294.744,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 0
+}

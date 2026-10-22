@@ -1,0 +1,34 @@
+{
+  "captures": [
+    {
+      "file": "calendar-reader.png",
+      "sha256": "9f4bff14b8f4ce8357ddab6dc50cef9aa4680802cf1d652565aa0808ef27830b",
+      "inspection": "Original own-window PNG inspected. Reader text is visibly painted; List return retains its locally completed appearance."
+    },
+    {
+      "file": "itinerary-reader.png",
+      "sha256": "f393f96aedea4d26340fd514fcc1e9469c4bfcb41d71b206ccef9faa437a0dcf",
+      "inspection": "Original own-window PNG inspected. Reader text is visibly painted; List return retains its locally completed appearance."
+    },
+    {
+      "file": "list-appearance-return.png",
+      "sha256": "b17eb9bcf3c4d581b4aaf89c8289a769e455f4c4f02478d28045e6fcf9244d8e",
+      "inspection": "Original own-window PNG inspected. Reader text is visibly painted; List return retains its locally completed appearance."
+    },
+    {
+      "file": "history-reader.png",
+      "sha256": "b88cc8066255ec87602a0aaace0286122ec1573ad62ee6f51f8dbbec4d20b217",
+      "inspection": "Original own-window PNG inspected. Reader text is visibly painted; List return retains its locally completed appearance."
+    },
+    {
+      "file": "item-reader.png",
+      "sha256": "4abac285978a661acfe49f6fbd54705ea54b1ca42f806eb6fca9caf7f5c100c9",
+      "inspection": "Original own-window PNG inspected. Reader text is visibly painted; List return retains its locally completed appearance."
+    }
+  ],
+  "observedLimitations": [
+    "Calendar portrait capture retains its open sidebar overlay and crowded inspector/browser controls; this is not final width or toolbar polish acceptance.",
+    "No Mac runtime, increased-contrast, large-text, keyboard/VoiceOver, multiwindow or physical-device acceptance is inferred."
+  ],
+  "appearance": "Dark, normal contrast, large content-size category, from appearance-observation.json; prior appearance retained."
+}

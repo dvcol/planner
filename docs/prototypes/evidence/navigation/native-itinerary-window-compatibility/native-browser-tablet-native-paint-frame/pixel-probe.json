@@ -1,0 +1,43 @@
+{
+  "sourcePacket": "native-browser-final-tablet",
+  "nativeReadingFrames": {
+    "item-reader-painted.png": {
+      "x": 341,
+      "y": 94,
+      "width": 479,
+      "height": 200
+    },
+    "itinerary-reader-first-frame-blank.png": {
+      "x": 371,
+      "y": 94,
+      "width": 449,
+      "height": 200
+    }
+  },
+  "scale": 2,
+  "sampleGrid": [
+    32,
+    32
+  ],
+  "results": [
+    {
+      "capture": "item-reader-painted.png",
+      "brightnessRange": [
+        0,
+        146
+      ],
+      "pixelsDifferentFromMedianByMoreThan40": 86,
+      "pureWhitePixels": 0
+    },
+    {
+      "capture": "itinerary-reader-first-frame-blank.png",
+      "brightnessRange": [
+        0,
+        23
+      ],
+      "pixelsDifferentFromMedianByMoreThan40": 0,
+      "pureWhitePixels": 0
+    }
+  ],
+  "meaning": "The original pure-white/pure-black criterion rejects an actually readable downsampled dark screenshot. Median contrast distinguishes that original from the observed blank frame; it does not establish the next UI run."
+}
