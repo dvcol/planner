@@ -16,21 +16,31 @@ extension EnvironmentValues {
   @Entry var savedWebsiteOpening: (@MainActor (SavedWebsiteRequest) -> Void)? = nil
 }
 
+enum SavedWebsiteNoticeKind {
+  case download
+  case unsupportedContent
+  case unsupportedLink
+}
+
 @MainActor @Observable
 private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
   @ObservationIgnored var requestedURL: URL?
   @ObservationIgnored weak var page: WebPage?
   @ObservationIgnored var cancelledResponseURL: URL?
-  var externalContent: (destination: URL, isDownload: Bool)?
+  var externalContent: (destination: URL, kind: SavedWebsiteNoticeKind)?
 
   func decidePolicy(
     for action: WebPage.NavigationAction, preferences: inout WebPage.NavigationPreferences
   ) async -> WKNavigationActionPolicy {
-    guard let destination = action.request.url,
-      ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
-    else { return .allow }
+    guard let destination = action.request.url else { return .cancel }
+    let scheme = destination.scheme?.lowercased() ?? ""
+    guard ["http", "https"].contains(scheme) else {
+      if ["mailto", "tel", "maps"].contains(scheme) { return .allow }
+      externalContent = (destination, .unsupportedLink)
+      return .cancel
+    }
     if action.shouldPerformDownload {
-      externalContent = (destination, true)
+      externalContent = (destination, .download)
       return .cancel
     }
     let opensNewWindow = action.target == nil
@@ -47,7 +57,7 @@ private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
     guard !response.canShowMimeType, let destination = response.response.url,
       ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
     else { return .allow }
-    externalContent = (destination, false)
+    externalContent = (destination, .unsupportedContent)
     cancelledResponseURL = destination
     return .cancel
   }
@@ -75,7 +85,9 @@ final class SavedWebsiteSession: Identifiable, Hashable {
 
   func retry() { page.load(requestedDestination) }
 
-  var externalContent: (destination: URL, isDownload: Bool)? { navigation.externalContent }
+  var externalContent: (destination: URL, kind: SavedWebsiteNoticeKind)? {
+    navigation.externalContent
+  }
 
   func dismissExternalContent() { navigation.externalContent = nil }
 
@@ -111,8 +123,11 @@ struct SavedWebsiteView: View {
   }
 
   private var contentTitle: String {
-    if session.externalContent?.isDownload == true { return "Open download in your browser" }
-    return "Open content in your browser"
+    switch session.externalContent?.kind {
+    case .download: return "Open download in your browser"
+    case .unsupportedLink: return "Link unavailable"
+    default: return "Open content in your browser"
+    }
   }
 
   var body: some View {
@@ -128,7 +143,7 @@ struct SavedWebsiteView: View {
           get: { externalContent != nil },
           set: { if !$0 { session.dismissExternalContent() } })
       ) {
-        if let externalContent {
+        if let externalContent, externalContent.kind != .unsupportedLink {
           Button("Open in default browser") { openURL(externalContent.destination) }
             .accessibilityValue(externalContent.destination.absoluteString)
         }
@@ -138,9 +153,15 @@ struct SavedWebsiteView: View {
         }
       } message: {
         if let externalContent {
-          Text(
-            "Open this content in your default browser.\n\(externalContent.destination.absoluteString)"
-          )
+          if externalContent.kind == .unsupportedLink {
+            Text(
+              "Planner cannot open this type of link.\n\(externalContent.destination.absoluteString)"
+            )
+          } else {
+            Text(
+              "Open this content in your default browser.\n\(externalContent.destination.absoluteString)"
+            )
+          }
         }
       }
       .overlay {
