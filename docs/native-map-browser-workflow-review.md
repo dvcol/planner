@@ -71,7 +71,7 @@ The complete map read contract follows the location choice: row windows already 
 
 ## Definition of ready
 
-Q131-Q141 settle the navigation, location and browsing policies. Review the added public read declaration before its tests and implementation. The [Q142 Map-row proposal](map-row-contract-review.md) reuses existing Item-query generations and the approved public Core/HTTP test boundaries.
+Q131-Q141 settle the navigation, location and browsing policies. Q142 A accepts the added public read declaration before its tests and implementation. The [Map-row contract](map-row-contract-review.md) reuses existing Item-query generations and the approved public Core/HTTP test boundaries.
 
 Q131-Q141 now settle those workflow choices. The remaining preparation is the concrete shared Map projection and generation/paging declaration, plus supported WebPage integration and controlled native network qualification. Reuse existing public Core query/read and native UI test boundaries where sufficient. Broader direct testing requires its own concrete boundary review, rather than being added automatically.
 
