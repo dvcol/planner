@@ -1,6 +1,6 @@
 # Native Map collection contract review
 
-Status: proposed for Q143. Q131-Q142 settle the collection workflow and shared saved-data read. This review concerns its app-internal loader, temporary resolution lifecycle and additional direct test seam.
+Status: Q143 A accepted. Q131-Q142 settle the collection workflow and shared saved-data read. The user approves the app-internal loader, temporary resolution lifecycle and additional direct test seam described here. Implementation and qualification remain open.
 
 ## Context, before and after
 
@@ -48,9 +48,9 @@ Temporary results and choices stay outside Core data, JSON backups, operation re
 
 ## Definition of ready
 
-Q143 must approve this concrete app-internal interface and its direct tests before those tests are written. The existing public Core/HTTP seam remains unchanged. Native Map UI testing is already approved, but it cannot deterministically establish every delayed-provider case.
+Q143 A approves this concrete app-internal interface and its direct tests. The existing public Core/HTTP seam remains unchanged. Native Map UI testing is also approved, but it cannot deterministically establish every delayed-provider case.
 
-The proposed additional seam is the production `SavedMapCollection` interface in the existing app-hosted `PlannerMCPTests` target, using disposable real Planner storage and the existing controlled address/Maps provider protocols. Observe public state/results and actual external-provider calls. Do not inspect private task registries or replace Core with a fake.
+The approved additional seam is the production `SavedMapCollection` interface in the existing app-hosted `PlannerMCPTests` target, using disposable real Planner storage and the existing controlled address/Maps provider protocols. Observe public state/results and actual external-provider calls. Do not inspect private task registries or replace Core with a fake.
 
 ## Required /tdd and definition of done
 
