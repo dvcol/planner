@@ -1,0 +1,32 @@
+[
+  {
+    "file": "late-response-reader.png",
+    "original": "Delayed previous guide cannot replace Garden_0_F8C16499-6507-4D85-9442-68045FF02A3D.png",
+    "exportedFile": "41A3CCE1-FA56-411C-8F5E-56F1D6DEA71A.png",
+    "sha256": "5c2240863a7dfff1544ec24245d73422251fcebb5cbaf5af400264a2ca192d8e",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "rotated-failure-reader.png",
+    "original": "Rotated failed reader recovers the original guide_0_02F5360B-FBAC-4A82-9DC7-91ED2C87161A.png",
+    "exportedFile": "62952CB1-44D7-42B2-B441-F4A887A682CF.png",
+    "sha256": "78012c2f6cefaec4afdb8d50bdb94599d40dcfdb470f78fa5413fb27a26b5cb1",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "rotated-pending-reader.png",
+    "original": "Pending reader renders delayed guide after rotation_0_7DC5E9A0-B77D-406A-B4E4-E21AA53946CA.png",
+    "exportedFile": "7B9A4149-3A72-4391-91B2-84B3D27A06F1.png",
+    "sha256": "f4fb7dbd769139ba1ef8393354c0b3965aa5fa85f99539e61428ec224af27dd5",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

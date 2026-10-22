@@ -9,6 +9,131 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testPendingReaderSurvivesRotationAndKeepsNativeHistory() async throws {
+    #if os(iOS)
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      let server = try BrowserJourneyServer()
+      let destination = try await server.start()
+      defer { server.stop() }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      createLinkedItem(in: application, destination: destination)
+      let savedLink = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+      let savedLinkIdentifier = savedLink.identifier
+      savedLink.activateForPlannerJourney()
+      let page = application.webViews.firstMatch
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+      page.links["Delayed guide"].activateForPlannerJourney()
+      let requestDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+      while server.delayedRequestCount == 0, ContinuousClock.now < requestDeadline {
+        try await Task.sleep(for: .milliseconds(10))
+      }
+      XCTAssertEqual(server.delayedRequestCount, 1)
+      let loading = application.progressIndicators["Loading webpage"].firstMatch
+      XCTAssertTrue(loading.waitForExistence(timeout: 5))
+      XCUIDevice.shared.orientation = .landscapeLeft
+      let landscape = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        return frame.width > frame.height
+      }
+      await fulfillment(
+        of: [XCTNSPredicateExpectation(predicate: landscape, object: application)], timeout: 5)
+      XCTAssertTrue(loading.waitForExistence(timeout: 5))
+      XCTAssertTrue(application.buttons["saved.browser.return"].isHittable)
+      XCUIDevice.shared.orientation = .portrait
+      let portrait = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        return frame.height > frame.width
+      }
+      await fulfillment(
+        of: [XCTNSPredicateExpectation(predicate: portrait, object: application)], timeout: 5)
+      XCTAssertTrue(loading.waitForExistence(timeout: 5))
+      server.releaseDelayedResponses()
+      XCTAssertTrue(page.staticTexts["Delayed guide fixture"].waitForExistence(timeout: 10))
+      XCTAssertTrue(loading.waitForNonExistence(timeout: 5))
+      XCTAssertEqual(server.delayedResponseOutcomes.count, 1)
+      try await recordWindow(
+        application, name: "Pending reader renders delayed guide after rotation")
+      application.buttons["saved.browser.back"].activateForPlannerJourney()
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+      application.buttons["saved.browser.return"].activateForPlannerJourney()
+      XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+      XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
+      XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
+      XCTAssertTrue(application.staticTexts["Museum reading"].firstMatch.exists)
+    #else
+      throw XCTSkip("Device rotation is qualified through the phone/tablet native journey.")
+    #endif
+  }
+
+  func testFailedReaderSurvivesRotationAndRetriesTheSameSavedWebsite() async throws {
+    #if os(iOS)
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      let server = try BrowserJourneyServer()
+      server.setGuideAvailable(false)
+      let destination = try await server.start()
+      defer { server.stop() }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      createLinkedItem(in: application, destination: destination)
+      let savedLink = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+      let savedLinkIdentifier = savedLink.identifier
+      savedLink.activateForPlannerJourney()
+      let unavailable = application.staticTexts["Page unavailable"].firstMatch
+      XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+      XCUIDevice.shared.orientation = .landscapeLeft
+      let landscape = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        return frame.width > frame.height
+      }
+      await fulfillment(
+        of: [XCTNSPredicateExpectation(predicate: landscape, object: application)], timeout: 5)
+      XCTAssertTrue(unavailable.waitForExistence(timeout: 5))
+      XCTAssertTrue(unavailable.isHittable)
+      XCTAssertTrue(application.buttons["Retry"].firstMatch.isHittable)
+      XCTAssertTrue(application.buttons["saved.browser.return"].isHittable)
+      XCUIDevice.shared.orientation = .portrait
+      let portrait = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        return frame.height > frame.width
+      }
+      await fulfillment(
+        of: [XCTNSPredicateExpectation(predicate: portrait, object: application)], timeout: 5)
+      XCTAssertTrue(unavailable.waitForExistence(timeout: 5))
+      server.setGuideAvailable(true)
+      application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+      let page = application.webViews.firstMatch
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 15))
+      XCTAssertTrue(unavailable.waitForNonExistence(timeout: 5))
+      try await recordWindow(application, name: "Rotated failed reader recovers the original guide")
+      application.buttons["saved.browser.return"].activateForPlannerJourney()
+      XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+      XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
+      XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
+      XCTAssertTrue(application.staticTexts["Museum reading"].firstMatch.exists)
+    #else
+      throw XCTSkip("Device rotation is qualified through the phone/tablet native journey.")
+    #endif
+  }
+
   func testReportedNewWindowLinkReusesReaderAndNativeHistory() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -790,7 +915,13 @@ private final class BrowserJourneyServer: @unchecked Sendable {
         return
       }
       let body: String
-      if requestLine.contains(" /garden ") {
+      if requestLine.contains(" /delayed-guide ") {
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Delayed guide</title></head>
+          <body><h1>Delayed guide fixture</h1><p>The pending response is now available.</p></body></html>
+          """
+      } else if requestLine.contains(" /garden ") {
         body = """
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Garden guide</title></head>

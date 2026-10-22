@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A0EE2664-8BF7-418E-88A3-36A44574D5A3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Rotated failed reader recovers the original guide_0_0BAE95D6-655C-4047-A6F2-A0E5C79ABEC2.png",
+        "timestamp": 1792650630.739
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedReaderSurvivesRotationAndRetriesTheSameSavedWebsite()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedReaderSurvivesRotationAndRetriesTheSameSavedWebsite"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "E6CD8BA2-BFF7-48A3-AC93-EEA904DD2FE0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pending reader renders delayed guide after rotation_0_5EA84B6A-9766-4E21-972A-5994B6D158E2.png",
+        "timestamp": 1792650675.413
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testPendingReaderSurvivesRotationAndKeepsNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testPendingReaderSurvivesRotationAndKeepsNativeHistory"
+  }
+]

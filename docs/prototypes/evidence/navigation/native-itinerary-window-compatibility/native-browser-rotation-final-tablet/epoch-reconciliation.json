@@ -1,0 +1,11 @@
+{
+  "allSourceManifestsMatch": true,
+  "sourceInputCount": 1070,
+  "phases": [
+    "native-browser-rotation-final-phone",
+    "native-browser-rotation-final-tablet",
+    "native-browser-rotation-mac-compiler"
+  ],
+  "productVerification": "Each qualification checks actual products at collection time before reuse of that build directory. Mac uses a separate directory.",
+  "productionChange": "No Planner production code changes for these rotation cases."
+}

@@ -1,0 +1,11 @@
+{
+  "sourceInputCount": 1070,
+  "sourceDifferences": [],
+  "productCount": 5,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "runtimeInputDifferences": [
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+  ],
+  "scope": "Exact current formatted iOS source compiles. The separately retained exact-replacement comparison accounts for the sole test-source whitespace change after the runtime epoch."
+}

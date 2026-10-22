@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1070,
+  "sourceDifferences": [],
+  "productCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "scope": "Affected Mac app/Share/UI-test compilation. Device-orientation bodies are iOS-only; actual Mac resizing remains open."
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "41A3CCE1-FA56-411C-8F5E-56F1D6DEA71A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Delayed previous guide cannot replace Garden_0_F8C16499-6507-4D85-9442-68045FF02A3D.png",
+        "timestamp": 1792650809.775
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "34CADA47-01A1-4E09-8BB9-0CFB0C927B0A.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Old guide socket response outcome_0_752B9D14-C5BD-4F65-9AAE-F871E7A20A74.txt",
+        "timestamp": 1792650808.906
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testDelayedPreviousGuideCannotReplaceTheNewItineraryReader()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testDelayedPreviousGuideCannotReplaceTheNewItineraryReader"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "62952CB1-44D7-42B2-B441-F4A887A682CF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Rotated failed reader recovers the original guide_0_02F5360B-FBAC-4A82-9DC7-91ED2C87161A.png",
+        "timestamp": 1792650853.168
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testFailedReaderSurvivesRotationAndRetriesTheSameSavedWebsite()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testFailedReaderSurvivesRotationAndRetriesTheSameSavedWebsite"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "7B9A4149-3A72-4391-91B2-84B3D27A06F1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pending reader renders delayed guide after rotation_0_7DC5E9A0-B77D-406A-B4E4-E21AA53946CA.png",
+        "timestamp": 1792650895.563
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testPendingReaderSurvivesRotationAndKeepsNativeHistory()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testPendingReaderSurvivesRotationAndKeepsNativeHistory"
+  }
+]

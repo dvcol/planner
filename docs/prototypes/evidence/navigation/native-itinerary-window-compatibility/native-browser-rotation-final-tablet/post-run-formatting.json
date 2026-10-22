@@ -1,0 +1,9 @@
+{
+  "file": "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+  "runtimeSourceSha256": "7a4a3e933852d524b361437fe23e9292269ed6f6e63495e10797c12cb3478666",
+  "formattedSourceSha256": "69ff53698a73cffbee6e69ff831bb9fddab27da048a5d9b82a1ee4a6414372db",
+  "before": "      try await recordWindow(application, name: \"Pending reader renders delayed guide after rotation\")",
+  "after": "      try await recordWindow(\n        application, name: \"Pending reader renders delayed guide after rotation\")",
+  "exactReplacementExplainsEntireDifference": true,
+  "meaning": "Post-run line wrapping only. Statement, argument values and assertions are unchanged. Original runtime inputs/products remain preserved; current source receives separate mobile compilation."
+}

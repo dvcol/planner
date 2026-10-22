@@ -1,0 +1,22 @@
+[
+  {
+    "file": "rotated-failure-reader.png",
+    "original": "Rotated failed reader recovers the original guide_0_0BAE95D6-655C-4047-A6F2-A0E5C79ABEC2.png",
+    "exportedFile": "A0EE2664-8BF7-418E-88A3-36A44574D5A3.png",
+    "sha256": "4d0040556c0a8bbb4d050846481c721f0967fe489ac62e9daf8f4d3982208f6b",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "rotated-pending-reader.png",
+    "original": "Pending reader renders delayed guide after rotation_0_5EA84B6A-9766-4E21-972A-5994B6D158E2.png",
+    "exportedFile": "E6CD8BA2-BFF7-48A3-AC93-EEA904DD2FE0.png",
+    "sha256": "64ac3b14e02a11e52ce7f861a8c12b99a4aa3e0c4d4676733f7fa7940ff60f35",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]
