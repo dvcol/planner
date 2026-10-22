@@ -1,0 +1,19 @@
+{
+  "originalRecordingFile": "FCA3A3EE-D497-421C-92DC-08B52413B86A.mp4",
+  "originalRecordingSHA256": "6c95f08a191db5f8827ce96bc8ccc8c4010fb118e99bea7461e740df719ef207",
+  "derivedFrameSHA256": "a887b18a9e89507072df8c7f5851993422cc165d3033e6b461939ba7e02bcd29",
+  "command": [
+    "/opt/homebrew/bin/ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-sseof",
+    "-1",
+    "-i",
+    "/private/tmp/PlannerExternalAppTabletFailureAttachments/FCA3A3EE-D497-421C-92DC-08B52413B86A.mp4",
+    "-frames:v",
+    "1",
+    "docs/prototypes/evidence/native-webpage-external-apps/external-app-final-dark-tablet-review/failure-recording-frame.png"
+  ],
+  "meaning": "Derived final frame from the original failed native XCTest recording. It shows the native Phone action menu after the tap. Not an original passing screenshot or system handoff."
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "file": "generated-app-dialog.png",
+    "original": "Generated external-app link awaits an exact native Open action_0_3F1EB1D3-4C13-4BE7-890D-79F722F46F1D.png",
+    "exportedFile": "755D544A-0015-4055-B82E-6791B8BFA9BD.png",
+    "sha256": "869ab985f6b4b5f3c9bbcf54443056c1bc7af8a2ab01217ac235440d4021cf61",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "requested-download-dialog.png",
+    "original": "Native requested download offers exact external target and keeps saved guide_0_2FA738C7-409D-40B1-BEBB-D47E27DEAE9B.png",
+    "exportedFile": "1FC7C5F9-7526-43B8-8807-AE8DF1D637A0.png",
+    "sha256": "7200474ad684775866c270605c1d071260c22580b44f3e994c66195d874b47da",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "external-app-dialog.png",
+    "original": "Supported external-app link awaits an exact native Open action_0_F0D97DE1-BE1D-427E-ABD8-73E5F76D5C9C.png",
+    "exportedFile": "BDC80EE9-AA53-4EA6-9446-35120BDA2EE7.png",
+    "sha256": "ba7d15e14ef80420df17c046e050e7145ecc4385b87d6e38c05166df3db39c14",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "unsupported-linked-dialog.png",
+    "original": "Native unsupported linked content offers exact external target and keeps saved guide_0_0CEA789B-D7D2-439C-A3C2-A819165BB45D.png",
+    "exportedFile": "431A2285-F123-4C3B-ACE6-195C97829A71.png",
+    "sha256": "46f290c353e02fb1714630cf48e6724d4401647d9b9c9000c076c910f492c944",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "unsupported-link-dialog.png",
+    "original": "Unsupported website link retains its guide without an external action_0_54400092-CCCB-43E6-9159-8D5EFC7AE20E.png",
+    "exportedFile": "09F57E74-8760-468C-9A0E-EA9003315324.png",
+    "sha256": "ec4232146cd78e33924731a32dc805201e89ee5fcfef4fa5da951ab40b41b046",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

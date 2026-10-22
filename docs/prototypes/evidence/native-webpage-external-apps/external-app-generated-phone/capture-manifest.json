@@ -1,0 +1,22 @@
+[
+  {
+    "file": "generated-app-dialog.png",
+    "original": "Generated external-app link awaits an exact native Open action_0_755B8CF7-89E8-4EF5-A500-4F1B7111B2EC.png",
+    "exportedFile": "A5B36827-7E5C-4532-A158-2D69425449C7.png",
+    "sha256": "20df8c22061dbb98bb6f9c61613e5351794a6bc503bd65d9a9c362199789c80a",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "external-app-dialog.png",
+    "original": "Supported external-app link awaits an exact native Open action_0_9150C087-71E8-4853-B287-74BC8A92EB84.png",
+    "exportedFile": "2C90FF1B-8EDB-492D-B817-B486B57EF3DF.png",
+    "sha256": "5a907d7c195ca22cc9a6413e88bf71657ec0bef03ed209fd0ca32126b7895c5d",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

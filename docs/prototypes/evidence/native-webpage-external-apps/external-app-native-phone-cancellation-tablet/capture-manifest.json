@@ -1,0 +1,22 @@
+[
+  {
+    "file": "native-phone-actions.png",
+    "original": "Native WebKit Phone actions await an explicit choice_0_A4F85169-8D95-4A90-AB15-5BF1AB6F5EE9.png",
+    "exportedFile": "2D1CF68C-0BB8-4F47-9719-F7BFC91C6CD5.png",
+    "sha256": "3dd8fba359e79f990d6fffa5380d18011ba495ce73d7540d70f79a3fcdcb826d",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "external-app-dialog.png",
+    "original": "Supported external-app link awaits an exact native Open action_0_6A7BF30E-26AF-4DF3-A644-A72CCC28C4A9.png",
+    "exportedFile": "58B1B21D-CDF2-43DA-A86D-4DDE45173426.png",
+    "sha256": "fbe92cca8f05987652b13d0c5d88aba9630767ad5a6c9349a10b431710a45035",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

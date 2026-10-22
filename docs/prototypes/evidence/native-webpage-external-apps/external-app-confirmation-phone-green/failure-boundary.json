@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "The real Mail navigation now reaches the native Open another app alert. Its Open button has an empty native accessibility value despite the modifier; line 44 fails. Exact visible message and subsequent cancellation are not yet qualified by this failed run."
+}

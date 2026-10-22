@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Target Application 'org.example.PlannerMCPPrototype'
+  ↪︎Find: Descendants matching type NavigationBar
+    ↪︎Find: Elements matching predicate '"Open another app" IN identifiers'
+      ↪︎Find: First Match

@@ -1,0 +1,260 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "C55FA5E9-F007-47C4-B970-45EC519F4674",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.43 PM",
+        "timestamp": 1792677223.705
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "BC736660-9816-4639-ADD2-55261B3FCA99",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.43 PM",
+        "timestamp": 1792677223.995
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "0A3AEB00-A2C4-43B8-8972-7D627E89B42C",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.41 PM",
+        "timestamp": 1792677221.398
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "AAE50C00-01E0-4AF8-A213-1903DB2F37A3",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.41 PM",
+        "timestamp": 1792677221.697
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8A70134B-3F40-45A5-BFA3-8B70DAD1B102.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Supported external-app link awaits an exact native Open action_0_A5214FA7-4048-46C9-87AD-3107CA779BC7.png",
+        "timestamp": 1792677221.144
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "64B45DE2-5B01-4C31-AA68-55AB65FCF1C1",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.38 PM",
+        "timestamp": 1792677218.898
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8168E1CE-66D2-4A8B-BAB1-58CA9E409259",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.39 PM",
+        "timestamp": 1792677219.212
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "C3EE3C8E-A40E-4D22-859E-657535E847D1.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `\"External app policy fixture\" StaticText`_0_669993B5-BBDE-4EFE-9E09-E9806BFCF1DA.txt",
+        "timestamp": 1792677217.774
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5BD83C43-56B1-414C-AA40-51024A1710EB.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `\"External app policy fixture\" StaticText`_0_F9CDCC55-A097-4E55-B2BF-93086CB263AB.txt",
+        "timestamp": 1792677216.695
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "B9D2FE5C-EA95-4789-9470-C1E4E24C6642",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.35 PM",
+        "timestamp": 1792677215.023
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "B6176BA2-8E4C-4A51-AD22-F99894E9D73F",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.35 PM",
+        "timestamp": 1792677215.329
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "7A0BD43A-F414-46E5-9138-1DF151FCE3DE",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.32 PM",
+        "timestamp": 1792677212.228
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2F6AC642-2E3F-408A-AF2C-AB9346AA0007",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.32 PM",
+        "timestamp": 1792677212.526
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "6A514D46-390C-481B-8BD4-A9C7F281DBEA",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.31 PM",
+        "timestamp": 1792677211.052
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "B7CA24B0-5FE5-40FC-BCD4-FE8816F19C80",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.31 PM",
+        "timestamp": 1792677211.956
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "E093A637-DE82-417B-9284-59E25AB85E6C",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.30 PM",
+        "timestamp": 1792677210.294
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5D9578B1-E188-4A39-B4E6-8FA5B382E010",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.30 PM",
+        "timestamp": 1792677210.59
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2FCF3969-F24E-44EC-B65D-AE0E8E69A69E",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.28 PM",
+        "timestamp": 1792677208.341
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "AD195E14-505F-4E0C-92FA-A7663571C3FE",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.28 PM",
+        "timestamp": 1792677208.636
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "52F83837-8C7F-415E-8159-6E0E575B06C0",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-22 at 10.53.25 PM",
+        "timestamp": 1792677205.799
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2A2FD5AE-1A94-4ADD-81F9-CD4FF3B82A8F",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.26 PM",
+        "timestamp": 1792677206.246
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "C44073BB-36AC-45AD-934F-BCDD9D27DC4C",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.25 PM",
+        "timestamp": 1792677205.288
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "21A5614B-D4CE-47B2-896F-6B37507A4D2A",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.22 PM",
+        "timestamp": 1792677202.705
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "8E7CDF5F-63E5-4BEB-8A79-A1F9258DFD7F",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.19 PM",
+        "timestamp": 1792677199.693
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "A5F58355-3453-44C0-994C-05D956374E2B",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.17 PM",
+        "timestamp": 1792677197.35
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "4F9DD7D7-337A-413E-B1C4-8BD76F354F33",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.12 PM",
+        "timestamp": 1792677192.22
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "6A021D1D-7074-4C56-9BBB-287AAA6F7E85",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-22 at 10.53.09 PM",
+        "timestamp": 1792677189.333
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "1F9418CB-25E5-4CB9-B12E-02D7F7B08942.mp4",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Screen Recording 2026-10-22 at 10.52.59 PM.mp4",
+        "timestamp": 1792677179.977
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide"
+  }
+]

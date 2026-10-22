@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "19178FFB-A2A7-403E-BFF9-EFC00DCE0ED0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Generated external-app link awaits an exact native Open action_0_6FEBEA13-761A-4600-91EA-E590E11E4E29.png",
+        "timestamp": 1792675770.485
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "09D66A05-48E6-470E-8717-CDF659860C37.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Supported external-app link awaits an exact native Open action_0_A2B202E4-C0D6-4E13-8F94-A1C7D0B32B88.png",
+        "timestamp": 1792675816.65
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide"
+  }
+]

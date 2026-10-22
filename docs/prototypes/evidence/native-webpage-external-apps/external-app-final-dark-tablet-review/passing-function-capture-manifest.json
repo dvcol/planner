@@ -1,0 +1,42 @@
+[
+  {
+    "file": "generated-app-dialog.png",
+    "original": "Generated external-app link awaits an exact native Open action_0_8FFA999A-3094-4CA6-A0A1-9366A9EFBFB3.png",
+    "exportedFile": "9901C827-42CC-438E-ACB6-374314C36782.png",
+    "sha256": "7aed16c5d0b018c05e1d2d97029b587bd510cf8cd5d7137bc02e926cb540fd92",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "requested-download-dialog.png",
+    "original": "Native requested download offers exact external target and keeps saved guide_0_BD47DDDF-F26A-4360-94E1-C6F2B604699B.png",
+    "exportedFile": "BE015F20-A025-4485-B03E-E314A4665B2E.png",
+    "sha256": "c7724a067f3c9761f97553802d9a28d7125305dd9ce75d5ffb2a82b712a9934e",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "unsupported-linked-dialog.png",
+    "original": "Native unsupported linked content offers exact external target and keeps saved guide_0_9856AD05-9998-4900-B5EF-136CB5151C30.png",
+    "exportedFile": "87B4DA0C-71FD-4501-AF56-CDC029AF23C1.png",
+    "sha256": "7211bda9c87fcc6c135cd3baadbf0c0f0071b93d72dbdadead647dcf4acff966",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "unsupported-link-dialog.png",
+    "original": "Unsupported website link retains its guide without an external action_0_B798ECBE-4EE4-46C8-B874-9749F4FD690D.png",
+    "exportedFile": "70434E45-9661-4E71-B56E-C1A6E9458F45.png",
+    "sha256": "2bd98cb2d236e89400aad58bed8f55834253bb0605cd4919b48e43c5521ee1dc",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

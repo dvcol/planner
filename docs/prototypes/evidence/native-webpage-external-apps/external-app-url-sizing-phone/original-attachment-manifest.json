@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "343ACA93-75F0-4A35-AD2E-BA74DA9EAC8C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Supported external-app link awaits an exact native Open action_0_B8010F97-D35E-4485-8234-F914FD2447E7.png",
+        "timestamp": 1792675312.105
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide"
+  }
+]

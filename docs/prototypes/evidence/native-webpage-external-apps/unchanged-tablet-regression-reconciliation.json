@@ -1,0 +1,27 @@
+{
+  "priorPhase": "external-app-final-dark-tablet-review",
+  "currentInputsPhase": "external-app-final-native-phone",
+  "sourceInputCount": 1074,
+  "differences": [
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+  ],
+  "unchangedExecutedFunctions": {
+    "testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark": {
+      "unchanged": true,
+      "sha256": "d6fc831c707719e9f8f9362427354abb4f4f78b7424bd5c14689784c0a6a5bd2"
+    },
+    "testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide": {
+      "unchanged": true,
+      "sha256": "ad282f53449478c119a1ce94e6587fd4dcda55746973c5d25be2b0758aad0042"
+    },
+    "testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide": {
+      "unchanged": true,
+      "sha256": "ac81ed1799a3045840d54fcf9a0f53a86b964bad5a2198aa46dbdf8985248c8a"
+    },
+    "testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark": {
+      "unchanged": true,
+      "sha256": "b88b62d98d4ab729db1e10ee52a6ca12bc066389e64566b2b881ca0a71abcda4"
+    }
+  },
+  "meaning": "All production/configuration inputs match. The only changed input is the direct Phone test\u2019s Q146 adaptation. The four other actual iPad passing functions retain exact source bodies; the prior whole invocation remains failed, with no waived failure."
+}

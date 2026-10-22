@@ -1,0 +1,34 @@
+{
+  "phone": {
+    "phase": "external-app-final-native-phone",
+    "passedFunctions": 5,
+    "originalCaptures": 5
+  },
+  "tabletDirect": {
+    "phase": "external-app-native-phone-cancellation-tablet",
+    "passedFunctions": 1,
+    "originalCaptures": 2
+  },
+  "tabletUnchangedRegressions": {
+    "phase": "external-app-final-dark-tablet-review",
+    "passedFunctions": 4,
+    "originalCaptures": 4,
+    "wholeInvocationResult": "Failed",
+    "failureResolvedSeparately": "Q146 native Phone-menu cancellation; the original failure is retained",
+    "reconciliation": "unchanged-tablet-regression-reconciliation.json"
+  },
+  "mac": {
+    "phase": "external-app-final-native-mac",
+    "productCount": 9,
+    "runtimeCredit": false
+  },
+  "passedNativeExecutions": 10,
+  "originalCapturesInspected": 11,
+  "productionAndConfigurationInputsMatch": true,
+  "testInputDifference": "Only the direct Phone test changed for Q146. Four prior iPad passing function bodies match exactly. No claim that the failed whole invocation passed.",
+  "limits": [
+    "No Call/Message/Open external action invoked",
+    "No actual system handoff, physical device or Mac UI credit",
+    "No interactive-dismissal, initial uncommitted redirect, source deletion or whole-browser acceptance"
+  ]
+}

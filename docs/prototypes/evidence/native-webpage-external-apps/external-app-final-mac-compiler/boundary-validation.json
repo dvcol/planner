@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "meaning": "Exact source/product boundary validation only. Inspect actual test summary for the failed tablet cohort; Mac is compilation only."
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "755D544A-0015-4055-B82E-6791B8BFA9BD.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Generated external-app link awaits an exact native Open action_0_3F1EB1D3-4C13-4BE7-890D-79F722F46F1D.png",
+        "timestamp": 1792677511.878
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testGeneratedAndRedirectedAppLinksWaitForConfirmationWithoutChangingTheBookmark"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "1FC7C5F9-7526-43B8-8807-AE8DF1D637A0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native requested download offers exact external target and keeps saved guide_0_2FA738C7-409D-40B1-BEBB-D47E27DEAE9B.png",
+        "timestamp": 1792677556.641
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testRequestedDownloadOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "BDC80EE9-AA53-4EA6-9446-35120BDA2EE7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Supported external-app link awaits an exact native Open action_0_F0D97DE1-BE1D-427E-ABD8-73E5F76D5C9C.png",
+        "timestamp": 1792677598.253
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "431A2285-F123-4C3B-ACE6-195C97829A71.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native unsupported linked content offers exact external target and keeps saved guide_0_0CEA789B-D7D2-439C-A3C2-A819165BB45D.png",
+        "timestamp": 1792677649.178
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnsupportedLinkedContentOffersItsExactBrowserTargetAndKeepsTheSavedGuide"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "09F57E74-8760-468C-9A0E-EA9003315324.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unsupported website link retains its guide without an external action_0_54400092-CCCB-43E6-9159-8D5EFC7AE20E.png",
+        "timestamp": 1792677694.768
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark"
+  }
+]

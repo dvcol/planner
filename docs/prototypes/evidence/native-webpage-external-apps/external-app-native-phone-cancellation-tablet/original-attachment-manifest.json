@@ -1,0 +1,26 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "2D1CF68C-0BB8-4F47-9719-F7BFC91C6CD5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native WebKit Phone actions await an explicit choice_0_A4F85169-8D95-4A90-AB15-5BF1AB6F5EE9.png",
+        "timestamp": 1792677391.099
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "58B1B21D-CDF2-43DA-A86D-4DDE45173426.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Supported external-app link awaits an exact native Open action_0_6A7BF30E-26AF-4DF3-A644-A72CCC28C4A9.png",
+        "timestamp": 1792677386.403
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testSupportedExternalAppLinksWaitForConfirmationAndKeepTheOriginalGuide"
+  }
+]

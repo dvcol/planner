@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "The real HTTP guide loads and its Mail link is activated. The test fails at line 39 because no native confirmation appears. A later failure-diagnostic simctl lookup also reports an unavailable utility; it is not the asserted policy failure and gives no passing credit."
+}
