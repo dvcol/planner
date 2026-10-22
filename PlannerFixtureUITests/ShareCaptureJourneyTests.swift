@@ -2,6 +2,78 @@ import XCTest
 
 @MainActor
 final class ShareCaptureJourneyTests: XCTestCase {
+  func testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--share-extension-fixture", "--share-before-main-migration", "--fixture-dataset",
+      UUID().uuidString,
+    ]
+    application.launchSavedPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Open Planner to prepare Share"].waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.staticTexts["Open Planner to update its shared data before using Share."].exists)
+    XCTAssertFalse(application.plannerElement("saved.capture.add").exists)
+    XCTAssertFalse(application.plannerElement("saved.capture.review").exists)
+    XCTAssertFalse(application.textFields["saved.capture.title"].exists)
+    recordShareScreenshot(application, name: "Share directs genuine old-schema data to Planner")
+    application.plannerElement("saved.share.cancel").activateForPlannerJourney()
+    application.openPlannerSection("Items")
+    application.chooseSavedPlannerStateFilter(
+      "All archive states", control: application.plannerElement("saved.items.filters"))
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    let originalIdentifier = "saved.item.1E549C08-3282-4A8C-88E3-A61D49CB3E9D"
+    XCTAssertEqual(hotel.identifier, originalIdentifier)
+    XCTAssertFalse(application.savedPlannerItemRows("Saved link").firstMatch.exists)
+    hotel.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    recordShareScreenshot(application, name: "Main-app migration retains the original Item")
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    let title = application.textFields["saved.capture.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 10))
+    XCTAssertEqual(title.value as? String, "Saved link")
+    title.activateForPlannerJourney()
+    #if os(macOS)
+      title.typeKey("a", modifierFlags: .command)
+    #else
+      title.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: "Saved link".count))
+    #endif
+    title.typeText("Migrated museum")
+    XCTAssertTrue(title.waitForPlannerValue("Migrated museum"))
+    application.plannerElement("saved.capture.add").activateForPlannerJourney()
+    application.openPlannerSection("Items")
+    application.chooseSavedPlannerStateFilter(
+      "All archive states", control: application.plannerElement("saved.items.filters"))
+    let museum = application.savedPlannerItemRows("Migrated museum").firstMatch
+    XCTAssertTrue(museum.waitForExistence(timeout: 10))
+    let museumIdentifier = museum.identifier
+    XCTAssertNotEqual(museumIdentifier, originalIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Migrated museum").count, 1)
+    XCTAssertEqual(hotel.identifier, originalIdentifier)
+    museum.activateForPlannerJourney()
+    let link = application.links.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    XCTAssertEqual(link.value as? String, "https://example.com/museum")
+    recordShareScreenshot(application, name: "Share saves a new Item after main-app migration")
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.capture.choice").waitForExistence(timeout: 10))
+    application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
+    application.openPlannerSection("Items")
+    application.chooseSavedPlannerStateFilter(
+      "All archive states", control: application.plannerElement("saved.items.filters"))
+    XCTAssertEqual(hotel.identifier, originalIdentifier)
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Migrated museum").count, 1)
+  }
+
   func testUnconfiguredShareFailsWithoutInventingAPrivateStoreOrPromisingSetup() {
     continueAfterFailure = false
     let application = XCUIApplication()
