@@ -1,0 +1,16 @@
+{
+  "inspectedOriginalFiles": [
+    "healthy-calendar-guide.png",
+    "initial-unsupported-return.png",
+    "healthy-itinerary-guide.png",
+    "healthy-list-return.png",
+    "healthy-item-guide.png"
+  ],
+  "findings": [
+    "The native reader visibly paints the saved guide in Item, Itinerary and Calendar contexts.",
+    "Return preserves the completed Reading list appearance and its original link.",
+    "The unsupported initial bookmark presents its exact URL with external opening or Return, without claiming a loaded page.",
+    "Native bottom tabs and browser controls remain available on compact phone."
+  ],
+  "limits": "Original phone Simulator captures. Test assertions establish saved identity and global/local completion; these images alone do not. Broader source lifecycles, accessibility and physical acceptance remain open."
+}

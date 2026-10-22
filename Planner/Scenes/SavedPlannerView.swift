@@ -1199,6 +1199,7 @@ struct SavedPlannerView: View {
   }
 
   private func loadSelectedItem() async {
+    guard website == nil else { return }
     guard let identifier = selectedItemId else {
       selectedItem = nil
       isOpeningItem = false
@@ -1339,6 +1340,7 @@ struct SavedPlannerView: View {
   }
 
   private func loadSelectedAppearance() async {
+    guard website == nil else { return }
     guard let identity = selectedAppearanceIdentity else {
       selectedAppearance = nil
       isOpeningAppearance = false
@@ -2107,21 +2109,70 @@ struct SavedPlannerView: View {
       content()
     } else if usesSidebarNavigation {
       if let website {
-        SavedWebsiteView(session: website) { websiteSelection.wrappedValue = nil }
+        SavedWebsiteView(session: website) { Task { await returnFromWebsite(website) } }
       } else {
         content()
       }
     } else if selectedSection == .calendar {
       content().navigationDestination(item: websiteSelection) { session in
-        SavedWebsiteView(session: session) { websiteSelection.wrappedValue = nil }
+        SavedWebsiteView(session: session) { Task { await returnFromWebsite(session) } }
       }
     } else {
       NavigationStack {
-        content().navigationDestination(item: websiteSelection) { session in
-          SavedWebsiteView(session: session) { websiteSelection.wrappedValue = nil }
-        }
+        // Keep destination registration stable when selected details become an empty view.
+        VStack(spacing: 0) { content() }
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .navigationDestination(item: websiteSelection) { session in
+            SavedWebsiteView(session: session) { Task { await returnFromWebsite(session) } }
+          }
       }
     }
+  }
+
+  private func returnFromWebsite(_ session: SavedWebsiteSession) async {
+    let originAvailable = await store.isWebsiteOriginAvailable(session.request)
+    guard website === session else { return }
+    websiteSelection.wrappedValue = nil
+    if originAvailable {
+      if session.request.appearance != nil {
+        await loadSelectedAppearance()
+      } else if session.request.source.kind == .item {
+        await loadSelectedItem()
+      }
+      return
+    }
+    let destination: String
+    switch selectedSection {
+    case .items, .inbox:
+      selectedItemId = nil
+      selectedItem = nil
+      isOpeningItem = false
+      preferredCompactColumn = .sidebar
+      destination = selectedSection == .inbox ? "Inbox" : "Items"
+    case .lists:
+      selectedAppearanceIdentity = nil
+      selectedAppearance = nil
+      isOpeningAppearance = false
+      preferredCompactColumn = selectedList == nil ? .sidebar : .content
+      destination = "the List"
+    case .itineraries:
+      selectedItineraryRow = nil
+      if session.request.source.kind == .itinerary { selectedItineraryIdentifier = nil }
+      itineraryPreferredCompactColumn = selectedItineraryIdentifier == nil ? .sidebar : .content
+      destination = "Itineraries"
+    case .calendar:
+      calendarSelection = nil
+      calendarInspectorPresented = false
+      destination = "Calendar"
+    }
+    let subject: String
+    switch session.request.appearance {
+    case .listMembership?: subject = "List entry"
+    case .directItineraryItem?, .expandedListItem?: subject = "itinerary entry"
+    case nil: subject = session.request.source.kind == .itinerary ? "itinerary" : "item"
+    }
+    store.alertMessage =
+      "The original \(subject) is no longer available. Returned to \(destination)."
   }
 
   private func closeWebsiteForNavigation() {

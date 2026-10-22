@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "99e6ee6f0102bcf65ad4a5ef40a183bf6f34bc54",
+  "overlays": [
+    "Planner.xcodeproj/project.pbxproj",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerNavigationUITests/BrowserJourneyServer.swift",
+    "PlannerNavigationUITests/SavedBrowserJourneyTests.swift"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "inspectedOriginalFiles": [
+    "removed-appearance-keeps-reading.png",
+    "removed-appearance-returned.png",
+    "removed-appearance-source-retained.png"
+  ],
+  "findings": [
+    "Museum guide remains readable after the writer removes Hotel from Weekend.",
+    "Return reveals the same Weekend List with No items.",
+    "Hotel survives in Items with Original notes, completion off and its owned location map.",
+    "The compact List repeats Weekend in its inline navigation title and content header; retain this for the whole-app polish pass."
+  ],
+  "limits": "One light-phone exact-membership case, not repeated itinerary/parent deletion, all layouts or physical acceptance."
+}

@@ -1,0 +1,8 @@
+{
+  "messages": [
+    "PlannerBrowserReturnDiagnostic binding current=true replacement=false",
+    "PlannerBrowserReturnDiagnostic cleared=true available=false"
+  ],
+  "meaning": "The model receives nil and is cleared before the unavailable-origin route is applied. The actual native hierarchy still contains the reader. No non-nil binding write or user content is logged.",
+  "fullJourneyPassed": false
+}

@@ -1,0 +1,23 @@
+{
+  "inspectedOriginalFiles": [
+    "draft-reconnected.png",
+    "collection-map-updated.png",
+    "selected-item-updated.png",
+    "draft-recovery-repaired.png",
+    "draft-recovery-unavailable.png",
+    "deleted-source-returned.png",
+    "deleted-source-keeps-reading.png",
+    "removed-appearance-source-retained.png",
+    "removed-appearance-returned.png",
+    "removed-appearance-keeps-reading.png"
+  ],
+  "findings": [
+    "Deleted and removed-association guides remain readable without interruption.",
+    "Explicit return reaches the preserved filtered Items collection or original Weekend List.",
+    "Hotel survives List removal with Original notes and global completion off.",
+    "Selected details and collection Map show independent-writer updates.",
+    "Draft damage/repair and validated reconnection retain title, notes and originating List while Save availability reflects the actual state.",
+    "Compact List inline/content title duplication remains a whole-app polish finding."
+  ],
+  "limits": "Functional light-phone fixture review, not shipping-footer layout, exhaustive accessibility, all source lifecycles or physical devices."
+}

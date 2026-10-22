@@ -1,0 +1,12 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_ED36FFC7-3008-44E9-BFDF-E1BD740400C6.png",
+      "exportedFile": "2542BEFC-73C7-43A2-990C-7F996EB5F5A0.png",
+      "sha256": "7f08a26b0e11dc3f70764c2fcc8809f08d5cfc58ee7706fe184904632966344f"
+    }
+  ],
+  "meaning": "One original capture; the whole function still fails at collection return."
+}

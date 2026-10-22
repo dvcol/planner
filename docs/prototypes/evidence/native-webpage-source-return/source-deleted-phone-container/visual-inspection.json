@@ -1,0 +1,11 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-source-keeps-reading.png",
+    "deleted-source-returned.png"
+  ],
+  "findings": [
+    "The original guide stays readable after the independent writer deletes Hotel, without an interruption alert.",
+    "After explicit Return and explanation, the actual Items catalog shows its retained filtered empty state."
+  ],
+  "limits": "This is a light-phone deleted-Item journey; List/itinerary appearances, other layouts and full browser acceptance remain separate."
+}

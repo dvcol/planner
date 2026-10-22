@@ -1,0 +1,19 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerBrowserLint/.markdownlint-cli2.jsonc",
+    "-"
+  ],
+  "expected": {
+    "exitCode": 1,
+    "contains": "MD001",
+    "excludes": "MD013"
+  },
+  "exitCode": 1,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: \nLinting: 1 file\nSummary: 2 issues in 1 file\n",
+  "stderr": "stdin:3 error MD001/heading-increment Heading levels should only increment by one level at a time [Expected: h2; Actual: h3]\nstdin:5:330 error MD009/no-trailing-spaces Trailing spaces [Expected: 0 or 2; Actual: 1]\n",
+  "meaning": "A deliberately invalid stdin control proves the linter executes enabled rules. Its summary counts files with issues, not total inspected files."
+}

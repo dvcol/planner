@@ -1,0 +1,10 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-source-keeps-reading.png"
+  ],
+  "findings": [
+    "The original Museum guide remains visible after the separate writer reports deletion; no native alert covers it.",
+    "The retained post-Return native hierarchy shows the Items navigation bar, saved.items.catalog and No matching items under the retained Active filter."
+  ],
+  "limits": "The full function still fails its incorrect No Items yet label assertion. The inspected capture is before Return, and no return screenshot is claimed."
+}

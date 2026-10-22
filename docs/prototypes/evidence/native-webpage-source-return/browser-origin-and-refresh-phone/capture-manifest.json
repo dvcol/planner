@@ -1,0 +1,66 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "draft-reconnected.png",
+      "originalName": "Validated reconnection preserves the edited draft_0_D5F5952B-7747-4EC8-89D6-BCB46FFEC9F7.png",
+      "exportedFile": "16EDB7F3-9EE7-4CF1-9F98-74E9BD04271D.png",
+      "sha256": "abb8db427ffc1d4dd7acd623466ad5abb71fea2d5812610e068c98a0c9097a02"
+    },
+    {
+      "file": "collection-map-updated.png",
+      "originalName": "Independent writer refreshes the open collection Map_0_A142AACA-4D92-4181-BABC-A18F6F7A5D4B.png",
+      "exportedFile": "E2754060-9427-4F33-B311-D6D4C791DE42.png",
+      "sha256": "78daea6a46f976bb0e37baa11c6d5db7c1f870dddf7db7f505a5a05f56728fc8"
+    },
+    {
+      "file": "selected-item-updated.png",
+      "originalName": "Independent writer refreshes the selected Item_0_2F1E49E5-D200-4539-B730-3AB217C252B8.png",
+      "exportedFile": "FBE60747-A24C-4C56-99A6-406415CF0BC5.png",
+      "sha256": "564258b93e509b4a03bcfcdd99859456726bcd67870c2a52e84139e5b0e88c1f"
+    },
+    {
+      "file": "draft-recovery-repaired.png",
+      "originalName": "Independent recovery repair preserves the edited draft_0_FC6D7054-BCF8-4976-A34A-4907C735A65F.png",
+      "exportedFile": "AE9D6332-9FE2-4140-A251-240E58A8D308.png",
+      "sha256": "b828226ef644366fc5ccd1f736f39dccace8f80ab595ac05e2968a641d9d332f"
+    },
+    {
+      "file": "draft-recovery-unavailable.png",
+      "originalName": "Independent recovery damage preserves the edited draft_0_42AB0327-1587-4619-92B2-F59769BD1BF5.png",
+      "exportedFile": "D8D4C8D3-C1C5-403E-8038-0DF11962BB98.png",
+      "sha256": "834a40074e0590054fd2b0f4438117e626017546a5cae787c317a5ef2530f970"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_7BC43507-8865-44A7-9FC9-25FA50BD777C.png",
+      "exportedFile": "D47A1149-47FF-41DA-8DBE-B1B69917DB09.png",
+      "sha256": "7d34f5b272ced476760c40563011745c5a7962674644e55fd01d2c75f6f35daa"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_EC95B5A7-FC4A-4408-BA93-2D8DA4017133.png",
+      "exportedFile": "1035E741-7D34-4CFE-8127-50DD406193DC.png",
+      "sha256": "3be7ac386e953e62e303bb5c8eff40bdd111bcaee730f58b0b75af5db69f7382"
+    },
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_46E48BBA-625D-430E-A2C9-8A9F311B9BAD.png",
+      "exportedFile": "21BE3C71-D279-442E-B1FB-EE31EAEF8F75.png",
+      "sha256": "d74852a51a8a9c9e164326b126cbc66b0086a26e163b17695ce8436e4c7db7da"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_2B8C265A-4CCF-4388-8767-AEF922152241.png",
+      "exportedFile": "0B9925EC-5A2A-430B-9CD8-414D1D028A1B.png",
+      "sha256": "5baf6d518126670c5d8e121b5d2939ce983271895dc6f2d7274759d0a0fec3fd"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_F2557F25-3177-4A69-9226-9D612544BA6D.png",
+      "exportedFile": "8CBAA824-1246-4A7C-9F10-6374C8249578.png",
+      "sha256": "863346e7da1736c1d1be684c2669e7f928695fecccf315138d7209bd81c42f2e"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

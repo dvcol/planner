@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_1A7B017B-1AB1-435A-85EA-43FE0C50BE32.png",
+      "exportedFile": "496EE3E5-D892-49F6-9ABE-4774962DD960.png",
+      "sha256": "5a0f3c38bb945b182a7c46055cdb5ac3a32e5884fcb9b38eaf75f40f433caf86"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_2C2B5BF9-2BE3-4F87-B201-2EF793D9314F.png",
+      "exportedFile": "74C7E9BA-F223-480A-B575-43A871EC585E.png",
+      "sha256": "b430b368fa651aba202c61ca6173d45d3add066072c585c3764e2e9fa2bef185"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_D3B51B6B-F03B-4A07-9BE3-AC389FC8878F.png",
+      "exportedFile": "47E5AB55-D269-4C82-B0FC-D67B7FF3A18A.png",
+      "sha256": "234f8bd212f0c34ba55dc04e0a8affcab20414ccbfe197c1dfb1f68e45da09ba"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

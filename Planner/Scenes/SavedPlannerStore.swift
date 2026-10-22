@@ -627,6 +627,35 @@ final class SavedPlannerStore {
     return nil
   }
 
+  func isWebsiteOriginAvailable(_ request: SavedWebsiteRequest) async -> Bool {
+    guard let planner, let session, devicePreferenceNamespace == request.namespace else {
+      return false
+    }
+    let read: PlannerReadRequest
+    if let appearance = request.appearance {
+      read = .appearance(appearance)
+    } else {
+      read = .source(request.source)
+    }
+    let result = await planner.read(session: session, request: read)
+    guard self.session == session, devicePreferenceNamespace == request.namespace else {
+      return false
+    }
+    switch result {
+    case .appearance(let origin):
+      return origin.source == request.source
+        && origin.sourceLifetimeId == request.sourceLifetimeIdentifier
+        && origin.appearance == request.appearance
+    case .source(.item(let origin)):
+      return origin.source == request.source
+        && origin.sourceLifetimeId == request.sourceLifetimeIdentifier
+    case .source(.itinerary(let origin)):
+      return origin.source == request.source
+        && origin.sourceLifetimeId == request.sourceLifetimeIdentifier
+    default: return false
+    }
+  }
+
   func createItem(_ draft: SavedNewItemDraft) async -> PlannerAppliedResult? {
     guard devicePreferenceNamespace == draft.namespace else {
       alertMessage = "This draft belongs to another dataset. Discard it to create an Item here."

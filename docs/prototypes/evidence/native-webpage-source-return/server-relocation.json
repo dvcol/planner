@@ -1,0 +1,8 @@
+{
+  "originalFile": "PlannerNavigationUITests/SavedBrowserJourneyTests.swift",
+  "sharedFile": "PlannerNavigationUITests/BrowserJourneyServer.swift",
+  "originalServerSha256": "3306d45552a9fab8651067ad83c2d985548b2b8fed2a76f103f7c2ba0bd605f3",
+  "normalizedSharedServerSha256": "3306d45552a9fab8651067ad83c2d985548b2b8fed2a76f103f7c2ba0bd605f3",
+  "onlyServerChange": "Private visibility becomes test-target-internal so the existing loopback HTTP boundary can be shared; server implementation bytes are unchanged.",
+  "newTargets": false
+}

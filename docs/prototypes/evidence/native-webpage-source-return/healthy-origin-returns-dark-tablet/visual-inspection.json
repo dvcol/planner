@@ -1,0 +1,16 @@
+{
+  "inspectedOriginalFiles": [
+    "healthy-calendar-guide.png",
+    "initial-unsupported-return.png",
+    "healthy-itinerary-guide.png",
+    "healthy-list-return.png",
+    "healthy-item-guide.png"
+  ],
+  "findings": [
+    "The saved webpage visibly paints inside the native Item, Itinerary and Calendar detail presentations in dark mode.",
+    "Reading list returns to the same completed appearance while the test separately confirms global Todo.",
+    "Unsupported initial content presents its exact target and native Return action.",
+    "The narrow Items title remains truncated and is retained for whole-app polish."
+  ],
+  "limits": "Dark iPad Simulator evidence. These five original captures do not qualify every width, accessibility setting, provider, actual Mac UI or physical device."
+}

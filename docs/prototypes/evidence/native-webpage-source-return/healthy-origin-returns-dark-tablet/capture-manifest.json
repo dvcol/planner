@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "healthy-calendar-guide.png",
+      "originalName": "Calendar source guide uses the existing navigation stack_0_B1D76441-46D9-4376-BD90-37CFBE3674AC.png",
+      "exportedFile": "D3A00F76-379E-43A0-B2EF-B82657023B72.png",
+      "sha256": "bc83154809692ddeecda2219ba53b7af4050e03ba4826d9d8886463f04310d17"
+    },
+    {
+      "file": "initial-unsupported-return.png",
+      "originalName": "Initial unsupported bookmark offers exact target and returns to Item_0_77CBBCF0-9545-42A4-B4D1-761465B4B97C.png",
+      "exportedFile": "0FBAFA8D-392E-44B3-B6BA-B448F4CDD24F.png",
+      "sha256": "52235f4435cb2f494bead893136a3b4befd14f2244261d53dae3549dc973629a"
+    },
+    {
+      "file": "healthy-itinerary-guide.png",
+      "originalName": "Itinerary guide keeps its plan return context_0_FD436166-4C8B-4CA3-B77A-9ED047FF5970.png",
+      "exportedFile": "8B70C6EC-FCC9-4515-AD41-6ADA2F15915C.png",
+      "sha256": "e629db20a4fd466483312d3445972450efa4bff0ca54e65feb19bca038a1a66b"
+    },
+    {
+      "file": "healthy-list-return.png",
+      "originalName": "Browser return preserves the completed List appearance_0_5B218D2D-F3ED-4D4C-9BA5-41E095FB61B1.png",
+      "exportedFile": "F70C47A1-5428-453E-9689-ADB05EB46569.png",
+      "sha256": "1f954e1aeb0bf3238f6d79c1f54dbbd283a64a9356cdb933e3d375f1c83efea1"
+    },
+    {
+      "file": "healthy-item-guide.png",
+      "originalName": "Saved guide opens in native Planner webpage_0_69AAEA39-C15E-4A76-AD3E-AACA4876A043.png",
+      "exportedFile": "53B62691-FC8E-4E33-BB7A-463FD97F9368.png",
+      "sha256": "02c8fd6c4b479d2b805b75644a98db898ef1253ef6873f657723f42643fbecba"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}
