@@ -18,16 +18,19 @@ extension EnvironmentValues {
 @MainActor
 private final class SavedWebsiteNavigation: WebPage.NavigationDeciding {
   var requestedURL: URL?
+  weak var page: WebPage?
 
   func decidePolicy(
     for action: WebPage.NavigationAction, preferences: inout WebPage.NavigationPreferences
   ) async -> WKNavigationActionPolicy {
-    if action.target?.isMainFrame == true, let destination = action.request.url,
+    guard let destination = action.request.url,
       ["http", "https"].contains(destination.scheme?.lowercased() ?? "")
-    {
-      requestedURL = destination
-    }
-    return .allow
+    else { return .allow }
+    let opensNewWindow = action.target == nil
+    if opensNewWindow || action.target?.isMainFrame == true { requestedURL = destination }
+    guard opensNewWindow else { return .allow }
+    page?.load(action.request)
+    return .cancel
   }
 }
 
@@ -46,6 +49,7 @@ final class SavedWebsiteSession: Identifiable, Hashable {
     var configuration = WebPage.Configuration()
     configuration.websiteDataStore = .default()
     page = WebPage(configuration: configuration, navigationDecider: navigation)
+    navigation.page = page
   }
 
   func retry() { page.load(navigation.requestedURL ?? request.destination) }
