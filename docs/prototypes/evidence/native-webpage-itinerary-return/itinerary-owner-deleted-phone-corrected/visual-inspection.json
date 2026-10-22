@@ -1,0 +1,11 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-keeps-reading.png",
+    "deleted-itinerary-returned.png"
+  ],
+  "observations": [
+    "Guide remains readable after City trip deletion.",
+    "After the explanation is dismissed, the Itineraries catalog shows No Itineraries yet."
+  ],
+  "limits": "This complete function remains failed at its later Items navigation step. The scoped native hierarchy retains that state separately."
+}

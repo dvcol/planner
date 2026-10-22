@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-itinerary-membership-retained.png",
+      "originalName": "Deleted Itinerary preserves its original List membership_0_BAA79975-6830-4AE2-A689-3758E3C34919.png",
+      "exportedFile": "673CC016-5089-406A-BC7F-45840E0770B0.png",
+      "sha256": "e8eea032163d774721abc679c304acf33200369ba9fcbf38895791d1e94a45dd"
+    },
+    {
+      "file": "deleted-itinerary-returned.png",
+      "originalName": "Deleted Itinerary returns to its catalog_0_A5869DE9-67FB-4D58-96A3-702ABEAD4053.png",
+      "exportedFile": "07AC12E6-A36C-40FD-A4D5-0CDB34BD6B22.png",
+      "sha256": "bfe59140ca315c3751801a33a52ae1eef7e262ae2d16158e289cdd221d7a6858"
+    },
+    {
+      "file": "deleted-itinerary-keeps-reading.png",
+      "originalName": "Deleted Itinerary leaves its owned guide open_0_FBFA7AA2-532D-4A73-B7DB-9A1D3B97C614.png",
+      "exportedFile": "163BE8E4-7DA4-4FAC-BFA1-5B775A60AFA2.png",
+      "sha256": "44688454bb287526111ef1d02d88968a1de0d9a887631445dfada1e29789979d"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

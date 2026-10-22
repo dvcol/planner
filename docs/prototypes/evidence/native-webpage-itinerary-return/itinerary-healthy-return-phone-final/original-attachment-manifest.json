@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "06775E0E-8A33-4F6E-A6A7-7C913E3E08E9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Itinerary guide keeps its plan return context_0_1FEA2EB0-2E0B-4AAE-8A36-3596515F646E.png",
+        "timestamp": 1792696133.408
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder"
+  }
+]

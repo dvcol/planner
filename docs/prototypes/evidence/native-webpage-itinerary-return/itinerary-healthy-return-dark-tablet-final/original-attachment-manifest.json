@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "9758EF4B-6254-4F02-986C-8FD7D8F7480B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Itinerary guide keeps its plan return context_0_EED08456-8584-4039-A3F8-4D6A990C3829.png",
+        "timestamp": 1792696191.28
+      }
+    ],
+    "testIdentifier": "SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBrowserJourneyTests/testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder"
+  }
+]

@@ -1,0 +1,97 @@
+{
+  "removedDuplicateExports": [
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-appearance-deleted-phone-initial",
+      "nominalBytes": 20294707,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-appearance-deleted-phone-initial.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-appearance-deleted-phone-initial",
+      "retainedDeliberateCaptures": 1
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-appearance-removed-phone-initial",
+      "nominalBytes": 21041835,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-appearance-removed-phone-initial.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-appearance-removed-phone-initial",
+      "retainedDeliberateCaptures": 1
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-deleted-phone-pair-corrected",
+      "nominalBytes": 1373031,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-deleted-phone-pair-corrected.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-deleted-phone-pair-corrected",
+      "retainedDeliberateCaptures": 6
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-healthy-return-dark-tablet-final",
+      "nominalBytes": 167151,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-healthy-return-dark-tablet-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-healthy-return-dark-tablet-final",
+      "retainedDeliberateCaptures": 1
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-healthy-return-phone-final",
+      "nominalBytes": 164088,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-healthy-return-phone-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-healthy-return-phone-final",
+      "retainedDeliberateCaptures": 1
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-origin-loss-dark-tablet-final",
+      "nominalBytes": 19370056,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-origin-loss-dark-tablet-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-origin-loss-dark-tablet-final",
+      "retainedDeliberateCaptures": 13
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-origin-loss-dark-tablet-scoped",
+      "nominalBytes": 4106149,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-origin-loss-dark-tablet-scoped.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-origin-loss-dark-tablet-scoped",
+      "retainedDeliberateCaptures": 17
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-origin-loss-phone-final",
+      "nominalBytes": 5252163,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-origin-loss-phone-final.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-origin-loss-phone-final",
+      "retainedDeliberateCaptures": 17
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-origin-loss-phone-scoped",
+      "nominalBytes": 5236938,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-origin-loss-phone-scoped.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-origin-loss-phone-scoped",
+      "retainedDeliberateCaptures": 17
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-owner-deleted-phone-context-corrected",
+      "nominalBytes": 15127684,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-owner-deleted-phone-context-corrected.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-owner-deleted-phone-context-corrected",
+      "retainedDeliberateCaptures": 2
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-owner-deleted-phone-corrected",
+      "nominalBytes": 12567609,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-owner-deleted-phone-corrected.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-owner-deleted-phone-corrected",
+      "retainedDeliberateCaptures": 2
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-owner-deleted-phone-initial",
+      "nominalBytes": 10845846,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-owner-deleted-phone-initial.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-owner-deleted-phone-initial",
+      "retainedDeliberateCaptures": 1
+    },
+    {
+      "path": "/private/tmp/PlannerChangeCaptures-itinerary-owner-deleted-phone-native-back",
+      "nominalBytes": 686268,
+      "retainedBundle": "/private/tmp/PlannerItemWindow-itinerary-owner-deleted-phone-native-back.xcresult",
+      "retainedPacket": "docs/prototypes/evidence/native-webpage-itinerary-return/itinerary-owner-deleted-phone-native-back",
+      "retainedDeliberateCaptures": 3
+    }
+  ],
+  "totalNominalBytes": 116233525,
+  "meaning": "Only duplicate temporary xcresult attachment-export directories were removed after retained original captures, manifests and prior source/product boundaries verified. Original xcresult bundles, source roots, reusable build products and all user datasets remain. Nominal bytes do not promise equal APFS free-space recovery."
+}

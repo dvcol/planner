@@ -1,0 +1,13 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-membership-retained.png",
+    "deleted-itinerary-returned.png",
+    "deleted-itinerary-keeps-reading.png"
+  ],
+  "observations": [
+    "The owned guide remains readable after City trip is deleted.",
+    "Return reaches the empty Itineraries catalog after the exact native explanation.",
+    "Weekend still shows the original Hotel membership, local Todo, link/location preview and source-derived content. The earlier native Item assertions also verify Original notes/global Todo."
+  ],
+  "limits": "One phone workflow and source epoch only; dark iPad and exact-appearance cases remain separate. Duplicate compact List title stays on the final polish list."
+}

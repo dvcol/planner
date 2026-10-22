@@ -1,0 +1,314 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "1A028ECF-4E86-465D-A641-E98DFDC32450.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "App UI hierarchy for org.example_0_A67A6DA8-580A-4FF9-8BED-C04324FBE2E0.PlannerFixtures",
+        "timestamp": 1792694634.674
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "6293CDDE-907C-4B2A-B461-05700CDAAF99",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.54 AM",
+        "timestamp": 1792694634.674
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A218A6C6-C433-4372-93B0-BFF3E0750941.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_B3535F06-5B5A-41C4-93D1-FCF3E0675403.txt",
+        "timestamp": 1792694634.415
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F2E9A044-AB1E-41BD-9C37-0C85E384C118.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_D9A7E8B6-6BCB-450D-A7E5-9746794C3F6E.txt",
+        "timestamp": 1792694633.46
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "2D33C81B-2BE6-4019-83CD-3DBE227B64F8.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_3CD9F53D-1C07-4059-97F0-B2F26E86D341.txt",
+        "timestamp": 1792694632.491
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "95676345-BDF2-4241-A5E4-05A756DD2EBB.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_C7F15AAE-5C32-492A-9ECB-3D92BDA2BBA7.txt",
+        "timestamp": 1792694631.413
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D56D1453-D8E7-445C-A09D-F33D5D845740.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_1FD64934-2E0B-49C2-97F8-6FBB1376A680.txt",
+        "timestamp": 1792694630.425
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "C7ABA651-1EE4-421A-B79D-E917248EF4A5.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_3990F4E8-5017-48CC-9B4D-AE7FE614D2DA.txt",
+        "timestamp": 1792694629.512
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B6E68358-8331-489F-B58B-6B975FD1DE3B.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_B88A1C62-EFCB-40EE-BEC6-713112AF0E92.txt",
+        "timestamp": 1792694628.477
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0AE7FACD-614E-431B-888B-789D4D8E884C.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_6266A5FD-CFCE-41FF-A04E-98D0E735DA69.txt",
+        "timestamp": 1792694627.496
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B6E49721-D4C7-47B7-8EEB-FD50C17701B4.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_34197F9B-CCE1-415B-97DE-0BD1A688E5AA.txt",
+        "timestamp": 1792694626.48
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F68C48E0-8C10-40A3-9375-D0F666B17FCC.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_B5C251CC-B472-42EC-BB46-763199F200DB.txt",
+        "timestamp": 1792694625.457
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "700EA1FD-3DEB-42DF-8724-DB35AC36BACD",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.41 AM",
+        "timestamp": 1792694621.112
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F86AD84E-5D08-4938-92A1-D9729047C008",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.41 AM",
+        "timestamp": 1792694621.411
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D2574FAB-B2B5-4EBF-A935-A6648ED9171A",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.38 AM",
+        "timestamp": 1792694618.885
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "E3205939-0340-4FF5-A914-AB1877803122",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.39 AM",
+        "timestamp": 1792694619.2
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "DFF9898A-40CF-44C0-BB84-0D0C82B7616C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Removed Itinerary appearance leaves its guide open_0_E1A71A57-730C-4768-BD96-C578EBFEE3D0.png",
+        "timestamp": 1792694618.769
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "BEBC6F06-4B47-4865-A42C-86D025512198",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.38 AM",
+        "timestamp": 1792694618.466
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "2E7C83F0-38F1-469E-BC7C-C93C3EF3F6E2",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.35 AM",
+        "timestamp": 1792694615.625
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "825CB46B-DCD4-42A8-AE1B-8334A71B469D",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.35 AM",
+        "timestamp": 1792694615.923
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "DC3E60B3-9A70-4C48-A396-854325BDA82B",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.33 AM",
+        "timestamp": 1792694613.897
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "9C30AE58-2E8D-46BF-B9BB-9C78E4CE60E0",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.34 AM",
+        "timestamp": 1792694614.196
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "33777A35-03A9-4FEB-B339-C075C4B21178.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `\"Museum guide fixture\" StaticText`_0_42007B0C-862A-4B69-8729-290C20C2559D.txt",
+        "timestamp": 1792694612.644
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "2AB6B75A-9DAF-4A8E-8CB6-84F89446141D.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Debug description for `\"Museum guide fixture\" StaticText`_0_7A7F8785-88FB-484C-9FCA-7DDB2E986CC8.txt",
+        "timestamp": 1792694611.832
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0359C79E-3D49-462F-BC1C-3E072280E2C1",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.29 AM",
+        "timestamp": 1792694609.752
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "650A904C-2A91-4513-819C-00CCCA9CDA8A",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.30 AM",
+        "timestamp": 1792694610.048
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B02E7526-5C83-415B-850B-BF1F23D3853A",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "UI Snapshot 2026-10-23 at 03.43.26 AM",
+        "timestamp": 1792694606.828
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "1026BD0F-3662-4E9F-921C-39658EF5E3E5",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.27 AM",
+        "timestamp": 1792694607.255
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "734C9BF1-EF03-4D84-AD1E-BF978FA01490",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.24 AM",
+        "timestamp": 1792694604.873
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F0BB17FA-65F9-4116-99EF-074AF1F1B059",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.22 AM",
+        "timestamp": 1792694602.258
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "4BC59AEB-D4FB-46ED-9797-6F0F61C73AE6",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.17 AM",
+        "timestamp": 1792694597.538
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "6EBBB3C9-BCB0-4C16-A7E5-A524750725DA",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.14 AM",
+        "timestamp": 1792694594.209
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "2975310B-3935-47C2-9B1E-321B8EA3CB50",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Synthesized Event 2026-10-23 at 03.43.09 AM",
+        "timestamp": 1792694589.684
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "E07FD468-19FF-425C-B155-3317087FB70F.mp4",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Screen Recording 2026-10-23 at 03.43.02 AM.mp4",
+        "timestamp": 1792694582.282
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedItineraryAppearanceKeepsItsGuideAndReturnsToTheSurvivingPlan()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testRemovedItineraryAppearanceKeepsItsGuideAndReturnsToTheSurvivingPlan"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-keeps-reading.png"
+  ],
+  "observations": [
+    "The Museum guide remains readable inside Planner with Itineraries selected after the writer reports deletion of City trip. No alert overlays the retained page."
+  ],
+  "limits": "The function fails later because Return does not expose its required explanation alert. This reading capture does not make the failed function pass."
+}

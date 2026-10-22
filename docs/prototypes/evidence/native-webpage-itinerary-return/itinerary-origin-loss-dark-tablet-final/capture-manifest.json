@@ -1,0 +1,84 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-list-source-retained.png",
+      "originalName": "Deleted containing List preserves its shared Todo Item_0_FA29AC90-3513-4BBE-AE90-EFBA1E72E50F.png",
+      "exportedFile": "EC67A859-8D59-41A2-B782-85CFAAF5B6C1.png",
+      "sha256": "dfc69e5e23615c63a773f7a64a05ec447aee70bd5bad9f5aaa44a115ec10ceab"
+    },
+    {
+      "file": "deleted-list-returned.png",
+      "originalName": "Deleted containing List returns to Lists_0_075C2B84-78F9-481C-93E9-90D19AC84E89.png",
+      "exportedFile": "3CB3A791-0CAE-414B-AD17-A753D339698E.png",
+      "sha256": "d18ca6f64a373b16a8daaa87539bd176ede5ea18a4e00912998ee9067aae636d"
+    },
+    {
+      "file": "deleted-list-keeps-reading.png",
+      "originalName": "Deleted containing List leaves its guide open_0_931A33DD-33DB-4E35-BF55-F286D2F867D0.png",
+      "exportedFile": "A3A142E7-5715-44E6-8A65-C274D5D83082.png",
+      "sha256": "5bb0c895feef3bd60ecffd643be53b2e57f776cd2f0fbf9e40966565ea4e51ea"
+    },
+    {
+      "file": "deleted-itinerary-appearance-keeps-reading.png",
+      "originalName": "Deleted Itinerary appearance leaves its guide open_0_DA95D307-5299-4906-9A98-9CB66B6247FB.png",
+      "exportedFile": "98128B6A-A5E7-4035-8BE4-54B30BF0874F.png",
+      "sha256": "4e6c72ff5799a3ea4bc6ec528a2e9a20bc035d942b94f3ded0f0c1a038170eaf"
+    },
+    {
+      "file": "deleted-itinerary-membership-retained.png",
+      "originalName": "Deleted Itinerary preserves its original List membership_0_78C602BE-AD56-4C01-9DCC-CF0C885F3678.png",
+      "exportedFile": "6BC4EB8A-656A-4B69-BC8F-E1CC78142C20.png",
+      "sha256": "ad893d55f192e62394479e05025f4efd23b8891a3b55326783fe4feb37ca6531"
+    },
+    {
+      "file": "deleted-itinerary-returned.png",
+      "originalName": "Deleted Itinerary returns to its catalog_0_E17DD364-45DF-469A-B476-270DD32698BF.png",
+      "exportedFile": "180B9F75-D1ED-40A9-896E-87ADED0828CC.png",
+      "sha256": "965a35e52fe4c4a5df0eb58db9d2453ec889b3563a0ceabda9e4732b5d6b495d"
+    },
+    {
+      "file": "deleted-itinerary-keeps-reading.png",
+      "originalName": "Deleted Itinerary leaves its guide open_0_785C3B86-E39F-4044-9809-A1ED93CCC328.png",
+      "exportedFile": "656CB92F-E321-455B-BCEE-B4EB9D62ACD8.png",
+      "sha256": "6b13250816d99ddc611f4e4adc168e3bebc404e3e3ebdff2b8daf1e14f84b6b7"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_C113CA21-12DE-459A-B28A-BB2EECDA1CE3.png",
+      "exportedFile": "63F3EE8D-FA23-4654-B7EE-AB81F314AF48.png",
+      "sha256": "751c00b915a8564449642ab61f9c4c44a37c75264271b3392d46fdd67f03fcd2"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_68980E2C-05FB-4CDA-9683-D381E8050B81.png",
+      "exportedFile": "731C8254-249C-4F12-8C6E-DDF313A70BFF.png",
+      "sha256": "0c198eeb26b3f88550cc9e30f0b0e920415952bdb81a6ce5035848273c28e0a1"
+    },
+    {
+      "file": "removed-itinerary-appearance-keeps-reading.png",
+      "originalName": "Removed Itinerary appearance leaves its guide open_0_FE4FE8F1-F707-4737-B12A-25F9E0830219.png",
+      "exportedFile": "786F73ED-4B43-4E2E-BA2C-92B04703EF8F.png",
+      "sha256": "5fbbc1aa7f79062b14613d99ffa7ab9ff895645c611b33a9de74516b4fea0692"
+    },
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_823D1DF5-6995-4EF2-84BE-5529591CA435.png",
+      "exportedFile": "706A1083-B7C5-44AE-B034-C4EB4A26A2D8.png",
+      "sha256": "a2b18a469d96fd704af1ec1db9fb3b6acd1b0cbc1929f4bccb2a80eab6750023"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_D7263676-F06B-4535-BEDD-569C725FE25B.png",
+      "exportedFile": "34AD9A24-1B37-4400-8753-3495A6C5498E.png",
+      "sha256": "0b0ee1a1c5f7b8c5b5c3a22f751d5350c95981298e8dffd4424396f06a5b2e45"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_BA9ABD8A-B2FA-4D64-8F2F-479E0C0840B9.png",
+      "exportedFile": "801895C7-C952-4E50-A194-91FBD218290A.png",
+      "sha256": "3f00522f4ea72a63633512368b21d38cf37af677b13bf77e50a203041ff9f539"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

@@ -30,6 +30,10 @@ struct PlannerChangeObservationFixtureView: View {
                 .accessibilityIdentifier("fixture.writer.removeMembership")
               Button("Delete Weekend") { Task { await fixture.deleteWeekend() } }
                 .accessibilityIdentifier("fixture.writer.deleteWeekend")
+              Button("Delete City trip") { Task { await fixture.deleteCityTrip() } }
+                .accessibilityIdentifier("fixture.writer.deleteCityTrip")
+              Button("Remove Hotel from City trip") { Task { await fixture.removeCityTripEntry() } }
+                .accessibilityIdentifier("fixture.writer.removeCityTripEntry")
               Button("Damage recovery checkpoint") { Task { await fixture.damageRecovery() } }
                 .accessibilityIdentifier("fixture.writer.damageRecovery")
               Button("Repair recovery checkpoint") { Task { await fixture.repairRecovery() } }
@@ -137,6 +141,20 @@ private final class PlannerChangeObservationFixture {
       else { throw CancellationError() }
       source = created
       _ = try await save(.addMembership(itemId: source.id, listId: list.id, placement: .last))
+      if arguments.contains("--fixture-itinerary") {
+        let itineraryLinks = links.map {
+          PlannerLinkInput(originalUrl: $0.originalUrl, label: "Itinerary guide")
+        }
+        guard
+          let itinerary = try await save(
+            .createItinerary(content: .init(title: "City trip", links: itineraryLinks))
+          ).generated.first
+        else { throw CancellationError() }
+        _ = try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last))
+        _ = try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+      }
     }
     return .init(configuration: configuration, writer: writer, session: session, source: source)
   }
@@ -206,6 +224,50 @@ private final class PlannerChangeObservationFixture {
       return
     }
     status = "No Weekend List to delete"
+  }
+
+  func deleteCityTrip() async {
+    guard
+      case .source(.item(let current)) = await writer.read(
+        session: session, request: .source(source))
+    else {
+      status = "Independent writer could not read Hotel's Itinerary"
+      return
+    }
+    for reference in current.references {
+      guard case .itineraryEntry(_, let itinerary, let item) = reference, item == source else {
+        continue
+      }
+      await deleteSource(itinerary, name: "City trip")
+      return
+    }
+    status = "No City trip Itinerary to delete"
+  }
+
+  func removeCityTripEntry() async {
+    guard
+      case .source(.item(let current)) = await writer.read(
+        session: session, request: .source(source))
+    else {
+      status = "Independent writer could not read Hotel's Itinerary entry"
+      return
+    }
+    for reference in current.references {
+      guard case .itineraryEntry(let entryIdentifier, let itinerary, let item) = reference,
+        item == source
+      else { continue }
+      let result = await writer.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .removeItineraryEntry(itineraryId: itinerary.id, entryId: entryIdentifier)))
+      if case .applied(_, .complete) = result.outcome {
+        status = "Removed Hotel from City trip"
+      } else {
+        status = "Independent writer did not remove Hotel's Itinerary entry"
+      }
+      return
+    }
+    status = "No Hotel Itinerary entry to remove"
   }
 
   private func deleteSource(_ target: PlannerEntityReference, name: String) async {

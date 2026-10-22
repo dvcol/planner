@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "904431ef2f518307e2467b2b4824412b60754c48",
+  "overlays": [
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift"
+  ]
+}

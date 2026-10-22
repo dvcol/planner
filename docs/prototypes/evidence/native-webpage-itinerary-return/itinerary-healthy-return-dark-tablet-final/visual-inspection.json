@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "healthy-itinerary-guide.png"
+  ],
+  "observations": [
+    "The dark main-app reader remains beside Museum route, its saved guide/preview and empty Entries section. Native Return/history/reload controls remain visible, with no fixture footer. The complete passing native function verifies the exact retained bookmark after Return."
+  ],
+  "limits": "One original native capture inspected; this does not close broader layout, accessibility, resizing or physical-device acceptance."
+}

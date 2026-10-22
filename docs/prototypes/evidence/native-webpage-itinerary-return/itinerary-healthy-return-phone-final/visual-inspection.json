@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "healthy-itinerary-guide.png"
+  ],
+  "observations": [
+    "The main-app guide renders legibly with native Return, history and reload controls above the ordinary Itineraries tab selection; there is no fixture-writer footer. The complete passing function separately verifies the exact retained plan/bookmark after Return."
+  ],
+  "limits": "One original native capture inspected; this is not a whole-app layout or physical-device acceptance pass."
+}

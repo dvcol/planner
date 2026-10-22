@@ -1,0 +1,17 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-keeps-reading.png",
+    "deleted-itinerary-returned.png",
+    "deleted-itinerary-appearance-returned.png",
+    "removed-itinerary-appearance-returned.png",
+    "removed-itinerary-appearance-membership-retained.png"
+  ],
+  "observations": [
+    "The dark guide remains readable beside the unavailable itinerary with no interruption; the actual fixture writer reports City trip deletion.",
+    "Both deleted-parent returns reach the empty Itineraries catalog and clear Item details.",
+    "The surviving-plan return retains City trip, its distinct Itinerary guide link, Weekend and an unchecked Hotel child; the third pane has no selected Item.",
+    "The original standalone Weekend membership remains unchecked with its Museum guide and location preview. Native controls and semantic surfaces adapt to dark appearance.",
+    "These captures do not qualify complete toolbar/title/accessibility or physical-device acceptance."
+  ],
+  "limits": "Five of seventeen original captures visually inspected; all six actual native functions pass. Remaining original captures are retained without additional visual-inspection credit."
+}

@@ -1,0 +1,56 @@
+{
+  "base": "904431ef2f518307e2467b2b4824412b60754c48",
+  "sourceInputs": 1081,
+  "nativeExecutions": [
+    {
+      "phase": "itinerary-origin-loss-phone-scoped",
+      "passedFunctions": 6,
+      "retainedOriginalCaptures": 17,
+      "inspectedOriginalCaptures": 5,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "itinerary-origin-loss-dark-tablet-scoped",
+      "passedFunctions": 6,
+      "retainedOriginalCaptures": 17,
+      "inspectedOriginalCaptures": 5,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "itinerary-healthy-return-phone-final",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 1,
+      "inspectedOriginalCaptures": 1,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    },
+    {
+      "phase": "itinerary-healthy-return-dark-tablet-final",
+      "passedFunctions": 1,
+      "retainedOriginalCaptures": 1,
+      "inspectedOriginalCaptures": 1,
+      "sourceInputs": 1081,
+      "retainedProducts": 4
+    }
+  ],
+  "totalPassedNativeExecutions": 14,
+  "totalRetainedOriginalCaptures": 36,
+  "totalInspectedOriginalCaptures": 12,
+  "macCompiler": {
+    "phase": "itinerary-return-mac-compiler-final",
+    "retainedProducts": 9,
+    "runtimeCredit": false
+  },
+  "productionChanges": [
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift"
+  ],
+  "limits": [
+    "Only represented Item/List/Itinerary deletion and List/direct-Itinerary association removal are qualified here; expanded/repeated removal and replacement lifetimes remain open.",
+    "Actual Mac UI/window resizing, broader accessibility, physical devices and final whole-app polish remain open.",
+    "Earlier failures and corrected preliminary runs have distinct source epochs and are not counted in the final totals."
+  ],
+  "meaning": "All final source inputs match. Each runtime product boundary was validated before its staged roots or products were reused. Original native capture bytes reconcile; the inspected subset is explicitly listed per packet."
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "673CC016-5089-406A-BC7F-45840E0770B0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Itinerary preserves its original List membership_0_BAA79975-6830-4AE2-A689-3758E3C34919.png",
+        "timestamp": 1792694107.832
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "07AC12E6-A36C-40FD-A4D5-0CDB34BD6B22.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Itinerary returns to its catalog_0_A5869DE9-67FB-4D58-96A3-702ABEAD4053.png",
+        "timestamp": 1792694088.021
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "163BE8E4-7DA4-4FAC-BFA1-5B775A60AFA2.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Deleted Itinerary leaves its owned guide open_0_FBFA7AA2-532D-4A73-B7DB-9A1D3B97C614.png",
+        "timestamp": 1792694081.962
+      }
+    ],
+    "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedItineraryKeepsItsGuideOpenAndPreservesItsSourcePlans()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests/testDeletedItineraryKeepsItsGuideOpenAndPreservesItsSourcePlans"
+  }
+]

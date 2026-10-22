@@ -628,7 +628,7 @@ final class SavedPlannerStore {
   }
 
   func websiteReturnAvailability(_ request: SavedWebsiteRequest) async
-    -> (originAvailable: Bool, listAvailable: Bool)
+    -> (originAvailable: Bool, containerAvailable: Bool)
   {
     guard let planner, let session, devicePreferenceNamespace == request.namespace else {
       return (false, false)
@@ -661,15 +661,25 @@ final class SavedPlannerStore {
     default: originAvailable = false
     }
     if originAvailable { return (true, false) }
-    guard case .listMembership(let listIdentifier, _)? = request.appearance else {
-      return (false, false)
+    let container: PlannerEntityReference
+    switch request.appearance {
+    case .listMembership(let listIdentifier, _)?:
+      container = .init(kind: .list, id: listIdentifier)
+    case .directItineraryItem(let itineraryIdentifier, _)?,
+      .expandedListItem(let itineraryIdentifier, _, _)?:
+      container = .init(kind: .itinerary, id: itineraryIdentifier)
+    case nil: return (false, false)
     }
     let parent = await planner.read(
-      session: session, request: .source(.init(kind: .list, id: listIdentifier)))
-    guard self.session == session, devicePreferenceNamespace == request.namespace,
-      case .source(.list) = parent
-    else { return (false, false) }
-    return (false, true)
+      session: session, request: .source(container))
+    guard self.session == session, devicePreferenceNamespace == request.namespace else {
+      return (false, false)
+    }
+    switch parent {
+    case .source(.list(let list)): return (false, list.source == container)
+    case .source(.itinerary(let itinerary)): return (false, itinerary.source == container)
+    default: return (false, false)
+    }
   }
 
   func createItem(_ draft: SavedNewItemDraft) async -> PlannerAppliedResult? {

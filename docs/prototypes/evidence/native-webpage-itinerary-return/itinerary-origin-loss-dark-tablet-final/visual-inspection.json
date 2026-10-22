@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-appearance-keeps-reading.png"
+  ],
+  "observations": [
+    "The dark webpage stays readable beside the unavailable Itinerary. The footer reports the real independent deletion; no alert interrupts reading."
+  ],
+  "limits": "The overall six-function invocation failed with two native assertions; this capture is not a passing appearance-return result."
+}

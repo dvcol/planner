@@ -1,0 +1,9 @@
+{
+  "originalHierarchySha256": "99606463ced8b2d6c563f67caa1f438b5efa471b6a1a406595a3ea8cc18f3da4",
+  "observations": [
+    "City trip remains the native navigation title.",
+    "The plan reports 0 of 1 item done after the direct entry is removed.",
+    "Weekend's expanded List header reaches the bottom of the visible scroll area; its child Hotel is below that viewport."
+  ],
+  "meaning": "Return and the surviving plan are present. The test must scroll the actual native list to qualify its remaining offscreen child."
+}

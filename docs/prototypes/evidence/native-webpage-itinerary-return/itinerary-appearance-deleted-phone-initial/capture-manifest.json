@@ -1,0 +1,12 @@
+{
+  "exitCode": 65,
+  "captures": [
+    {
+      "file": "deleted-itinerary-appearance-keeps-reading.png",
+      "originalName": "Deleted Itinerary appearance leaves its guide open_0_07A774BD-1494-490C-975F-B3163743C8CE.png",
+      "exportedFile": "AFA99389-B892-46CE-A3CD-037C5C5AC088.png",
+      "sha256": "adf01ab598a6992e98b1417e7cb649b6a779aa92c69a56525f52d33bcef3ce3c"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

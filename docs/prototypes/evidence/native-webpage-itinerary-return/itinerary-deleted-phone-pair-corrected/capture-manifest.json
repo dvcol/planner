@@ -1,0 +1,42 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-itinerary-appearance-membership-retained.png",
+      "originalName": "Deleted Itinerary appearance preserves its original List membership_0_4103159B-A7DA-4B27-9285-3BAA20A03FB1.png",
+      "exportedFile": "324FE7D8-06BB-4D67-ADF5-17B974524401.png",
+      "sha256": "450adf7bdd9a0175ace9929352e2232614752570f02cabe2d0c7eaae1e51413a"
+    },
+    {
+      "file": "deleted-itinerary-appearance-returned.png",
+      "originalName": "Deleted Itinerary appearance returns to its catalog_0_067E8F45-4E75-41F7-9773-4A9CC86BFBBD.png",
+      "exportedFile": "2F3F0431-329C-44F0-8943-578B5F95EC6B.png",
+      "sha256": "a03a54782a1623e2f25ea4dbb89be4a22253f6aecc0ebb0d503044711af354fa"
+    },
+    {
+      "file": "deleted-itinerary-appearance-keeps-reading.png",
+      "originalName": "Deleted Itinerary appearance leaves its guide open_0_FE0E8461-41F9-4AF2-B129-B3A07BDCC9CF.png",
+      "exportedFile": "6DE7FA47-F00E-47F8-9D02-719DC56843B7.png",
+      "sha256": "40959e4caaa0f7b81d65dbb292d9e237027316c20b74bc466141c94caeb55b73"
+    },
+    {
+      "file": "deleted-itinerary-membership-retained.png",
+      "originalName": "Deleted Itinerary preserves its original List membership_0_E398E32D-8CD5-4539-A7D0-2B5D2F345076.png",
+      "exportedFile": "C4F6D227-17EA-4A2A-B8C8-A1BEFC6969A4.png",
+      "sha256": "1ffd4c8e32c99a09895ba7a9d032bc73fffae8df5a8483d90d85abdeda6d1bbc"
+    },
+    {
+      "file": "deleted-itinerary-returned.png",
+      "originalName": "Deleted Itinerary returns to its catalog_0_88D78CEA-9938-4481-B447-C763B70894FE.png",
+      "exportedFile": "31B28D58-96DB-4999-A74A-A2ACC10C9328.png",
+      "sha256": "9ee70b69f6d6165eef95862161c3398ff5031106fac9196fbc707c1e905893d1"
+    },
+    {
+      "file": "deleted-itinerary-keeps-reading.png",
+      "originalName": "Deleted Itinerary leaves its guide open_0_CE267AF0-2E80-4D0D-9631-E0758D5A71FB.png",
+      "exportedFile": "7B39DBE2-5AFE-40BD-B8BF-59F7C7112444.png",
+      "sha256": "c0f3767e446d6b68a0d83748ae67b9d668ac2e680c8dc0c82d0e00cee87aeb66"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}

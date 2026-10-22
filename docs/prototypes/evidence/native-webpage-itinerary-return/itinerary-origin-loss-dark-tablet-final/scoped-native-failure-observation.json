@@ -1,0 +1,9 @@
+{
+  "originalHierarchySha256": "557f46367b9614bf0345120096518fcd42fe1ef3b7bacf131a9f62c586a12952",
+  "observations": [
+    "The removed-entry journey taps saved.item.link.01E4B180-80A7-47BE-8B17-EA2F4C454C81.",
+    "After Return, that same bookmark is still rendered in City trip\u2019s owned Links section, while the remaining expanded Hotel appearance has a different identifier.",
+    "The driver used the first saved.item.link match across both panes; both the itinerary and Item links were called Museum guide. This does not qualify Item-appearance return on iPad."
+  ],
+  "meaning": "Scope the fixture link names and native link query, then assert the reader return label before deletion/removal. No additional production behavior follows from this incorrect test target."
+}

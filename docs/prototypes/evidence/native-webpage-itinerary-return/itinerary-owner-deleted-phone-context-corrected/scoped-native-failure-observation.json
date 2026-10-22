@@ -1,0 +1,9 @@
+{
+  "originalHierarchySha256": "75d703ae639e5ed35bad89889e87bf6ffb1d04db3428710148f15e1d06fcee10",
+  "observations": [
+    "Lists tab is selected and Weekend is the native navigation title.",
+    "The visible Hotel membership retains its original identity and To do completion control.",
+    "The native BackButton is labeled Planner; the List catalog is not the active compact column."
+  ],
+  "meaning": "The failed catalog-row lookup is an incorrect test navigation assumption. The complete source-survival assertions must finish through native Back and the retained List."
+}

@@ -1,0 +1,18 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-keeps-reading.png",
+    "deleted-itinerary-returned.png",
+    "deleted-itinerary-appearance-returned.png",
+    "removed-itinerary-appearance-returned.png",
+    "removed-itinerary-appearance-membership-retained.png"
+  ],
+  "observations": [
+    "The guide remains readable with native return/history/reload controls and no deletion alert; the fixture footer reports the independent itinerary deletion.",
+    "Both deleted-parent returns show the Itineraries catalog empty state rather than a stale Item placeholder.",
+    "The surviving-plan return shows Weekend and its different Hotel appearance with an unchecked completion control after native scrolling; no Item detail is selected.",
+    "The standalone Weekend membership remains unchecked with its guide/location preview. Its duplicate compact navigation/content title remains a final-polish finding.",
+    "The scrolled itinerary capture retains crowded top controls and content beneath the native scroll-edge area; this checkpoint does not claim whole-app layout acceptance."
+  ],
+  "limits": "Five of seventeen original captures visually inspected. Function assertions qualify represented data/identity outcomes; remaining captures are retained without additional visual-inspection credit.",
+  "sourceEpoch": "Corrected distinct-guide fixture and explicit native Return-label assertions; these five final originals were viewed separately."
+}

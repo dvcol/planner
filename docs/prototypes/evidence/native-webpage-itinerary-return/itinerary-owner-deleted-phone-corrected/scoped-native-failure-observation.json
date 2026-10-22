@@ -1,0 +1,9 @@
+{
+  "originalHierarchySha256": "af428286a541c19c1a0cd735ca86e048950e5ee61baa12c1d0831b75db99fdf8",
+  "observations": [
+    "Items tab is selected.",
+    "The native BackButton is labeled Items.",
+    "The visible detail says Choose an Item; Hotel is not a visible catalog row."
+  ],
+  "meaning": "The failing source-survival step is blocked by compact column navigation, not evidence that container deletion removed Hotel. Full source-survival assertions still need to execute."
+}

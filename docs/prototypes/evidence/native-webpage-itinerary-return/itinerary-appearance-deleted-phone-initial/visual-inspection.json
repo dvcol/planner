@@ -1,0 +1,9 @@
+{
+  "inspectedOriginalFiles": [
+    "deleted-itinerary-appearance-keeps-reading.png"
+  ],
+  "observations": [
+    "The guide opened from Hotel's Itinerary appearance remains readable with Itineraries selected after City trip deletion."
+  ],
+  "limits": "Return later fails to show the expected explanation. The whole journey remains failed."
+}

@@ -1,0 +1,108 @@
+{
+  "exitCode": 0,
+  "captures": [
+    {
+      "file": "deleted-list-source-retained.png",
+      "originalName": "Deleted containing List preserves its shared Todo Item_0_DEF0D252-3C11-4A2C-B139-29C3836C95A6.png",
+      "exportedFile": "A15F6E03-5021-4BA8-9DC5-652AA856B174.png",
+      "sha256": "684520bb107813ccef77d90eaed86d85e69509ccdcf9d3c0cfe9e088971e255c"
+    },
+    {
+      "file": "deleted-list-returned.png",
+      "originalName": "Deleted containing List returns to Lists_0_1EC7E901-2864-44A5-AD90-9B1F2027126A.png",
+      "exportedFile": "BC5FCEAB-4A76-40E7-BBF0-205F18C5944F.png",
+      "sha256": "97561707f34153ff05ac3e8f1617c5ac697868de07c14f4944bbc06463f192ea"
+    },
+    {
+      "file": "deleted-list-keeps-reading.png",
+      "originalName": "Deleted containing List leaves its guide open_0_F814FD00-D66F-43E7-820E-4D617938A76F.png",
+      "exportedFile": "93925814-3007-4DFF-8C6D-DDCCA43595CE.png",
+      "sha256": "b38791eb65e82c70563bdda50f8ec7f8c866c9688fe2b26e84cdfc0897ae82ce"
+    },
+    {
+      "file": "deleted-itinerary-appearance-membership-retained.png",
+      "originalName": "Deleted Itinerary appearance preserves its original List membership_0_837C57B7-4045-4B86-ABB8-14E7E6714E77.png",
+      "exportedFile": "1E84E565-055C-408C-9E1C-479724DE00F1.png",
+      "sha256": "7cb49d12565b8c68f90ee5356782b57bb781987bd91f65e622c2d18d621fcb50"
+    },
+    {
+      "file": "deleted-itinerary-appearance-returned.png",
+      "originalName": "Deleted Itinerary appearance returns to its catalog_0_373786F4-AA0C-425E-8CE2-C01C45F3DC4B.png",
+      "exportedFile": "49EFC651-A461-4829-8BC7-D9810FE25202.png",
+      "sha256": "0d9286831c2a2eb37b70fc16608c32ccce2a8d5c50248802f1566833b32066f5"
+    },
+    {
+      "file": "deleted-itinerary-appearance-keeps-reading.png",
+      "originalName": "Deleted Itinerary appearance leaves its guide open_0_4ECFF44B-056E-42A6-AEBE-148868B8BD8B.png",
+      "exportedFile": "B02CB9BC-14FA-4A43-84A0-8CA2DE8CDC9C.png",
+      "sha256": "0c5f7f021915fb0204245a4ebe051f4317d562d01dd9a8fb4a3e9e0fd8748c5a"
+    },
+    {
+      "file": "deleted-itinerary-membership-retained.png",
+      "originalName": "Deleted Itinerary preserves its original List membership_0_D8A0BEA5-E2EE-4927-BC6B-E768476A4E0B.png",
+      "exportedFile": "AC8580F5-65D0-4A53-86C4-FD44FF90ACD0.png",
+      "sha256": "552f9539a7d7e6b634bfd2f18a8664fd48d7bd6052a713d34b09c4d3a4709b3e"
+    },
+    {
+      "file": "deleted-itinerary-returned.png",
+      "originalName": "Deleted Itinerary returns to its catalog_0_55B470B4-8A51-4703-ABB8-4E5072B7DF19.png",
+      "exportedFile": "38BF8B33-53DE-48B7-A828-77E3F80AA96F.png",
+      "sha256": "4dee9cf02ae0bf4e8bca321f42a2f4eedd182444bd47e05d44f1828328b5016c"
+    },
+    {
+      "file": "deleted-itinerary-keeps-reading.png",
+      "originalName": "Deleted Itinerary leaves its guide open_0_01047D1D-95AD-43F5-8F5B-F4C977F61A16.png",
+      "exportedFile": "C09E74EF-8744-4A58-8929-2E3739CD684D.png",
+      "sha256": "ccff9c61094b8ede897fd36068ecb9c0dfb8b76f28ae1f2b0ca07880696fc6ca"
+    },
+    {
+      "file": "deleted-source-returned.png",
+      "originalName": "Deleted browser source returns to the surviving Items collection_0_F5EA9C4A-62BC-4D4C-B3A1-9AC49DEF2F44.png",
+      "exportedFile": "499A06AF-7B57-4CE1-B5B7-D6765071C613.png",
+      "sha256": "d9ab0ff073f6c355ac502dfbe81f2281f051f873ec604ae6780cefc347cc36ba"
+    },
+    {
+      "file": "deleted-source-keeps-reading.png",
+      "originalName": "Deleted source leaves the original guide open_0_2B706945-DFCC-4A73-987F-C76F10C02FEF.png",
+      "exportedFile": "BCCB349B-C8D2-496A-9525-9F24E7B9775F.png",
+      "sha256": "7b9afe23133041222579fbb3624722c14efacfc010f7c5127172e4dfd767aa37"
+    },
+    {
+      "file": "removed-itinerary-appearance-membership-retained.png",
+      "originalName": "Removed Itinerary appearance preserves its original List membership_0_3C2466BC-E25D-4004-A26D-5307C99018B6.png",
+      "exportedFile": "AD98F026-A1E9-45E8-9C38-C541CA9E4571.png",
+      "sha256": "f083195ae814e6649acf2ef3c3dbb2b6bc1a9eddc3aa7e4cef019f52862f3b61"
+    },
+    {
+      "file": "removed-itinerary-appearance-returned.png",
+      "originalName": "Removed Itinerary appearance returns to its plan_0_36F9120F-46D3-475F-A36D-EFA50BA8DA00.png",
+      "exportedFile": "35250DDC-146D-4AFD-9393-3E86F085165F.png",
+      "sha256": "3f81e71a592f0a3d91878aada216d5de84c3c54600506cc011b6642a3ccf73c7"
+    },
+    {
+      "file": "removed-itinerary-appearance-keeps-reading.png",
+      "originalName": "Removed Itinerary appearance leaves its guide open_0_7477BCB9-FB10-4786-ABCD-6C1B4DA9A9CC.png",
+      "exportedFile": "8551460E-3B36-4D9C-AAE0-1B389EC4A1AA.png",
+      "sha256": "ef73ec73ce9b431f772d0fd693a5a3be57437b3e0f8c2b38836e27c37fb8f9a6"
+    },
+    {
+      "file": "removed-appearance-source-retained.png",
+      "originalName": "Removed browser appearance preserves its shared Todo Item_0_1D0861A1-5B17-4306-8AC4-335F5E2E22BB.png",
+      "exportedFile": "83299C88-98D7-4122-8D6C-C0AFFE711B36.png",
+      "sha256": "e42f710fd824dad281638585a486e8ce5f80f64fbb6f6f2ba7678650c2e6a27a"
+    },
+    {
+      "file": "removed-appearance-returned.png",
+      "originalName": "Removed browser appearance returns to its original List_0_EE4EF9E8-B94F-4514-A719-C1DACBE945FD.png",
+      "exportedFile": "378A271B-BE1E-47EA-BDF2-B6F8628B96E8.png",
+      "sha256": "9f5c3fee7172c345909cf762482aa7573ac1fbb395148c138e872a18fb70aa37"
+    },
+    {
+      "file": "removed-appearance-keeps-reading.png",
+      "originalName": "Removed List appearance leaves the original guide open_0_13B322E8-7BC1-45CB-8583-96A62FF6AF5E.png",
+      "exportedFile": "06BECF9A-A18D-438D-B9B1-4D3607E5620D.png",
+      "sha256": "bb843f4856703b7c55880fe9c47e2b6f6cdc09f474c4fa7dae7031c6c92e4d2e"
+    }
+  ],
+  "meaning": "Original native capture bytes; the complete function result remains in test-summary.json and is not changed by exporting."
+}
