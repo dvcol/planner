@@ -9,6 +9,51 @@ import XCTest
 
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
+  func testUnavailableLinkedPageKeepsItsExactBrowserTargetAndReadableError() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    server.setGardenAvailable(false)
+    let destination = try await server.start()
+    defer { server.stop() }
+    let gardenURL = destination.deletingLastPathComponent().appendingPathComponent("garden")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Page unavailable"].firstMatch.waitForExistence(timeout: 15))
+    let externalOpening = application.buttons["Open in default browser"].firstMatch
+    XCTAssertTrue(externalOpening.waitForExistence(timeout: 5))
+    XCTAssertEqual(externalOpening.value as? String, gardenURL.absoluteString)
+    XCTAssertTrue(application.staticTexts[gardenURL.absoluteString].firstMatch.isHittable)
+    let connectionError = application.staticTexts.matching(
+      NSPredicate(format: "label CONTAINS[cd] %@", "connect")
+    ).firstMatch
+    XCTAssertTrue(connectionError.isHittable)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Failed linked webpage keeps its exact external target and readable error"
+    capture.lifetime = .keepAlways
+    add(capture)
+    server.setGardenAvailable(true)
+    application.buttons["Retry"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 15))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testInitialUnsupportedBookmarkCanReturnToItsExactSavedItem() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()

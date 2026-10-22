@@ -71,7 +71,9 @@ final class SavedWebsiteSession: Identifiable, Hashable {
     navigation.page = page
   }
 
-  func retry() { page.load(navigation.requestedURL ?? request.destination) }
+  var requestedDestination: URL { navigation.requestedURL ?? request.destination }
+
+  func retry() { page.load(requestedDestination) }
 
   var externalContent: (destination: URL, isDownload: Bool)? { navigation.externalContent }
 
@@ -116,6 +118,7 @@ struct SavedWebsiteView: View {
   var body: some View {
     let externalContent = session.externalContent
     let canKeepReading = session.page.backForwardList.currentItem != nil
+    let requestedDestination = session.requestedDestination
     WebView(session.page)
       .webViewContentBackground(canKeepReading ? .automatic : .hidden)
       .background(.background)
@@ -145,15 +148,21 @@ struct SavedWebsiteView: View {
           ContentUnavailableView {
             Label("Page unavailable", systemImage: "network.slash")
           } description: {
-            Text(failure)
+            VStack(spacing: 8) {
+              Text(failure)
+              Text(requestedDestination.absoluteString)
+                .font(.caption)
+                .textSelection(.enabled)
+            }
           } actions: {
             Button("Retry", systemImage: "arrow.clockwise") {
               session.retry()
               self.failure = nil
             }
             Button("Open in default browser", systemImage: "arrow.up.right.square") {
-              openURL(session.page.url ?? session.request.destination)
+              openURL(requestedDestination)
             }
+            .accessibilityValue(requestedDestination.absoluteString)
           }
           .background(.background)
         }
@@ -222,7 +231,11 @@ struct SavedWebsiteView: View {
               failure = nil
               continue
             }
-            failure = error.localizedDescription
+            if case WebPage.NavigationError.failedProvisionalNavigation(let underlying) = error {
+              failure = underlying.localizedDescription
+            } else {
+              failure = error.localizedDescription
+            }
           }
         }
       }
