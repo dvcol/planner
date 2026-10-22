@@ -41,11 +41,13 @@ private struct SavedListWindowInputs: Equatable {
 private enum SavedMapScope: Equatable {
   case catalog(SavedItemCatalogScope)
   case list(UUID)
+  case itinerary(UUID)
 
   var queryValue: PlannerItemQuery.Scope {
     switch self {
     case .catalog(let scope): scope.queryValue
     case .list(let identifier): .list(identifier)
+    case .itinerary(let identifier): .itinerary(identifier)
     }
   }
 }
@@ -97,6 +99,7 @@ struct SavedPlannerView: View {
   @State private var itineraryCatalogArchive = SavedItemFilters.Archive.active
   @State private var itineraryPresentations: [UUID: SavedItineraryPresentation] = [:]
   @State private var itineraryColumnVisibility: NavigationSplitViewVisibility = .all
+  @State private var itineraryPreferredCompactColumn = NavigationSplitViewColumn.sidebar
   @State private var selectedListId: UUID?
   @State private var retainedListSource: PlannerListSourceRead?
   @State private var listWindow: SavedItemWindow?
@@ -248,6 +251,7 @@ struct SavedPlannerView: View {
       }
       .onChange(of: selectedItineraryIdentifier) {
         selectedItineraryRow = nil
+        itineraryPreferredCompactColumn = selectedItineraryIdentifier == nil ? .sidebar : .content
         if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
       }
       .onChange(of: calendarSelection) {
@@ -428,7 +432,10 @@ struct SavedPlannerView: View {
             "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
             value: .itineraries
           ) {
-            NavigationSplitView(columnVisibility: $itineraryColumnVisibility) {
+            NavigationSplitView(
+              columnVisibility: $itineraryColumnVisibility,
+              preferredCompactColumn: $itineraryPreferredCompactColumn
+            ) {
               itineraryCatalog
             } content: {
               itineraryDetail
@@ -635,8 +642,17 @@ struct SavedPlannerView: View {
     let presentation = Binding(
       get: { itineraryPresentations[identifier] ?? SavedItineraryPresentation() },
       set: { itineraryPresentations[identifier] = $0 })
+    let representation: Binding<SavedCollectionRepresentation>?
+    if selectedSection == .itineraries {
+      representation = presentation.representation
+    } else {
+      representation = nil
+    }
     return SavedItineraryDetail(
       store: store, identifier: identifier, selection: $selectedItineraryRow,
+      representation: representation,
+      mapCollection: loadedMapCollection(for: .itinerary(identifier)),
+      selectMapRow: selectItineraryMapRow,
       searchText: presentation.searchText, filters: presentation.filters,
       collapsedEntries: presentation.collapsedEntries,
       isPreparingDeletion: isPreparingItineraryDeletion,
@@ -752,6 +768,14 @@ struct SavedPlannerView: View {
       return .init(
         scope: .list(selectedListId), filters: listFilters, searchText: listSearchText,
         sort: listSort.wrappedValue, namespace: namespace, revision: store.changeRevision)
+    case .itineraries:
+      guard let identifier = selectedItineraryIdentifier else { return nil }
+      let presentation = itineraryPresentations[identifier] ?? SavedItineraryPresentation()
+      guard presentation.representation == .map else { return nil }
+      return .init(
+        scope: .itinerary(identifier), filters: presentation.filters,
+        searchText: presentation.searchText, sort: .init(mode: .manual), namespace: namespace,
+        revision: store.changeRevision)
     default: return nil
     }
   }
@@ -848,6 +872,45 @@ struct SavedPlannerView: View {
         selectedAppearanceIdentity = appearance
         selectedAppearance = item
         preferredCompactColumn = .detail
+      }
+    }
+  }
+
+  private func selectItineraryMapRow(_ row: PlannerMapRowRead) {
+    guard case .appearance(let source, let appearance) = row.identity, source.kind == .item,
+      selectedSection == .itineraries, let identifier = selectedItineraryIdentifier,
+      let selection = SavedItineraryRowSelection(appearance, itineraryId: identifier),
+      let namespace = store.devicePreferenceNamespace,
+      let collection = loadedMapCollection(for: .itinerary(identifier)),
+      let itineraryLifetime = collection.collection?.sourceLifetimeId,
+      collection.rows.contains(where: {
+        $0.identity == row.identity && $0.sourceLifetimeId == row.sourceLifetimeId
+      })
+    else { return }
+    requestDraftNavigation {
+      Task {
+        guard selectedSection == .itineraries, selectedItineraryIdentifier == identifier,
+          store.devicePreferenceNamespace == namespace
+        else { return }
+        let item = await store.readAppearance(appearance)
+        let itinerary = await store.readItinerary(identifier)
+        guard selectedSection == .itineraries, selectedItineraryIdentifier == identifier,
+          store.devicePreferenceNamespace == namespace
+        else { return }
+        guard let item, item.appearance == appearance, item.source == source,
+          item.sourceLifetimeId == row.sourceLifetimeId,
+          itinerary?.sourceLifetimeId == itineraryLifetime
+        else {
+          store.alertMessage = "This stop is no longer available in this Itinerary."
+          return
+        }
+        recordSelectionChange()
+        selectedItineraryRow = selection
+        if usesSidebarNavigation {
+          preferredCompactColumn = .detail
+        } else {
+          itineraryPreferredCompactColumn = .detail
+        }
       }
     }
   }

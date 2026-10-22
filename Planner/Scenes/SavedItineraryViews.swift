@@ -173,6 +173,7 @@ private struct SavedItineraryWindowRow: Identifiable {
 }
 
 struct SavedItineraryPresentation {
+  var representation = SavedCollectionRepresentation.list
   var searchText = ""
   var filters = SavedItemFilters()
   var collapsedEntries: Set<UUID> = []
@@ -182,6 +183,9 @@ struct SavedItineraryDetail: View {
   let store: SavedPlannerStore
   let identifier: UUID
   @Binding var selection: SavedItineraryRowSelection?
+  let representation: Binding<SavedCollectionRepresentation>?
+  let mapCollection: SavedMapCollection?
+  let selectMapRow: (PlannerMapRowRead) -> Void
   @Binding var searchText: String
   @Binding var filters: SavedItemFilters
   @Binding var collapsedEntries: Set<UUID>
@@ -212,84 +216,92 @@ struct SavedItineraryDetail: View {
     Group {
       if let contents {
         let itinerary = contents.itinerary
-        ScrollViewReader { proxy in
-          List(selection: $selection) {
-            Section {
-              Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
-                .accessibilityAddTraits(.isHeader)
-              if itinerary.state.archived == true {
-                Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(.secondary)
-              }
-              if itinerary.progress.state == .empty {
-                Text("No items").foregroundStyle(.secondary)
-              } else if let done = itinerary.progress.doneCount,
-                let archived = itinerary.progress.archivedCount,
-                let total = itinerary.progress.totalCount, total > 0
-              {
-                SavedCompletionProgress(
-                  doneCount: done, archivedCount: archived, totalCount: total,
-                  accessibilityIdentifier: "saved.itinerary.progress")
-              } else {
-                Text("Progress unavailable").foregroundStyle(.secondary)
-              }
-              SavedContainerEstimates(
-                estimates: itinerary.estimates,
-                manualEstimate: itinerary.content.manualEstimate,
-                accessibilityIdentifierPrefix: "saved.itinerary.estimate")
-              let directCount = contents.entries.filter { $0.source.kind == .item }.count
-              let listCount = contents.entries.filter { $0.source.kind == .list }.count
-              Text(
-                "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
-              )
-              .font(.caption).foregroundStyle(Color.primary)
-              if let total = itinerary.progress.totalCount,
-                (window?.matchingCount ?? 0) != total
-              {
-                Text("Matching \(window?.matchingCount ?? 0) of \(total) items")
+        Group {
+          if usesMapRepresentation {
+            itineraryMap(itinerary)
+          } else {
+            ScrollViewReader { proxy in
+              List(selection: $selection) {
+                Section {
+                  Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
+                    .accessibilityAddTraits(.isHeader)
+                  if itinerary.state.archived == true {
+                    Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(
+                      .secondary)
+                  }
+                  if itinerary.progress.state == .empty {
+                    Text("No items").foregroundStyle(.secondary)
+                  } else if let done = itinerary.progress.doneCount,
+                    let archived = itinerary.progress.archivedCount,
+                    let total = itinerary.progress.totalCount, total > 0
+                  {
+                    SavedCompletionProgress(
+                      doneCount: done, archivedCount: archived, totalCount: total,
+                      accessibilityIdentifier: "saved.itinerary.progress")
+                  } else {
+                    Text("Progress unavailable").foregroundStyle(.secondary)
+                  }
+                  SavedContainerEstimates(
+                    estimates: itinerary.estimates,
+                    manualEstimate: itinerary.content.manualEstimate,
+                    accessibilityIdentifierPrefix: "saved.itinerary.estimate")
+                  let directCount = contents.entries.filter { $0.source.kind == .item }.count
+                  let listCount = contents.entries.filter { $0.source.kind == .list }.count
+                  Text(
+                    "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
+                  )
                   .font(.caption).foregroundStyle(Color.primary)
+                  if let total = itinerary.progress.totalCount,
+                    (window?.matchingCount ?? 0) != total
+                  {
+                    Text("Matching \(window?.matchingCount ?? 0) of \(total) items")
+                      .font(.caption).foregroundStyle(Color.primary)
+                  }
+                }
+                if let notes = itinerary.content.notes, !notes.isEmpty {
+                  Section("Notes") { Text(notes).textSelection(.enabled) }
+                }
+                ItemLabelsSection(labels: itinerary.labels)
+                ItemLocationSection(
+                  title: itinerary.content.title, location: itinerary.content.location,
+                  previewSource: previewSource(for: itinerary))
+                ItemLinksSection(
+                  links: itinerary.content.links, source: itinerary.source,
+                  sourceLifetimeId: itinerary.sourceLifetimeId)
+                SavedSchedulesSection(
+                  source: itinerary.source, references: itinerary.references,
+                  canChange: store.canCreate
+                ) { scheduleToEdit = $0 }
+                Section {
+                  if contents.visibleEntries.isEmpty && !contents.entries.isEmpty {
+                    Text("No matching entries").foregroundStyle(.secondary)
+                  }
+                  ForEach(contents.visibleEntries) { entry in
+                    itineraryEntry(entry, in: contents)
+                  }
+                  .onMove { offsets, destination in
+                    moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
+                  }
+                } header: {
+                  Text("Entries").foregroundStyle(Color.primary)
+                }
+              }
+              .accessibilityIdentifier("saved.itinerary.contents")
+              .task(id: pendingScrollAnchor) {
+                guard let anchor = pendingScrollAnchor, let window,
+                  let row = expandedRows.first(where: { $0.id == anchor })
+                else {
+                  pendingScrollAnchor = nil
+                  return
+                }
+                await window.requestRows(at: [row.index])
+                guard !Task.isCancelled, pendingScrollAnchor == anchor, self.window === window,
+                  window.state == .ready, expandedRows.contains(where: { $0.id == anchor })
+                else { return }
+                proxy.scrollTo(anchor, anchor: .center)
+                pendingScrollAnchor = nil
               }
             }
-            if let notes = itinerary.content.notes, !notes.isEmpty {
-              Section("Notes") { Text(notes).textSelection(.enabled) }
-            }
-            ItemLabelsSection(labels: itinerary.labels)
-            ItemLocationSection(
-              title: itinerary.content.title, location: itinerary.content.location,
-              previewSource: previewSource(for: itinerary))
-            ItemLinksSection(
-              links: itinerary.content.links, source: itinerary.source,
-              sourceLifetimeId: itinerary.sourceLifetimeId)
-            SavedSchedulesSection(
-              source: itinerary.source, references: itinerary.references, canChange: store.canCreate
-            ) { scheduleToEdit = $0 }
-            Section {
-              if contents.visibleEntries.isEmpty && !contents.entries.isEmpty {
-                Text("No matching entries").foregroundStyle(.secondary)
-              }
-              ForEach(contents.visibleEntries) { entry in
-                itineraryEntry(entry, in: contents)
-              }
-              .onMove { offsets, destination in
-                moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
-              }
-            } header: {
-              Text("Entries").foregroundStyle(Color.primary)
-            }
-          }
-          .accessibilityIdentifier("saved.itinerary.contents")
-          .task(id: pendingScrollAnchor) {
-            guard let anchor = pendingScrollAnchor, let window,
-              let row = expandedRows.first(where: { $0.id == anchor })
-            else {
-              pendingScrollAnchor = nil
-              return
-            }
-            await window.requestRows(at: [row.index])
-            guard !Task.isCancelled, pendingScrollAnchor == anchor, self.window === window,
-              window.state == .ready, expandedRows.contains(where: { $0.id == anchor })
-            else { return }
-            proxy.scrollTo(anchor, anchor: .center)
-            pendingScrollAnchor = nil
           }
         }
         #if os(iOS)
@@ -299,7 +311,10 @@ struct SavedItineraryDetail: View {
         .toolbarTitleDisplayMode(.inline)
         .searchable(text: $searchText, prompt: "Search this Itinerary")
         .searchPresentationToolbarBehavior(.avoidHidingContent)
-        .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
+        .navigationSplitViewColumnWidth(
+          min: usesMapRepresentation ? 320 : 260,
+          ideal: usesMapRepresentation ? 560 : 400, max: 800
+        )
         .overlay(alignment: .topTrailing) {
           if isPreparingBulkCompletion || isPreparingDeletion || isLoading {
             ProgressView(isLoading ? "Updating entries" : "Preparing review")
@@ -307,6 +322,13 @@ struct SavedItineraryDetail: View {
           }
         }
         .toolbar {
+          if let representation {
+            ToolbarItem(placement: .secondaryAction) {
+              SavedCollectionRepresentationMenu(
+                representation: representation,
+                accessibilityIdentifier: "saved.itinerary.representation")
+            }
+          }
           ToolbarItem(placement: .primaryAction) {
             SavedItemFilterControl(
               filters: $filters, accessibilityIdentifier: "saved.itinerary.filters")
@@ -318,7 +340,8 @@ struct SavedItineraryDetail: View {
                 .accessibilityLabel("Reorder entries")
                 .accessibilityIdentifier("saved.itinerary.reorder")
                 .disabled(
-                  !store.canCreate || isLoading || isPreparingBulkCompletion
+                  usesMapRepresentation || !store.canCreate || isLoading
+                    || isPreparingBulkCompletion
                     || (contents.entries.count < 2 && !entryEditMode.isEditing))
             }
           #endif
@@ -448,6 +471,33 @@ struct SavedItineraryDetail: View {
       }
     } message: {
       Text(alertDescription)
+    }
+  }
+
+  private var usesMapRepresentation: Bool { representation?.wrappedValue == .map }
+
+  private func itineraryMap(_ itinerary: PlannerItinerarySourceRead) -> some View {
+    VStack(spacing: 0) {
+      VStack(alignment: .leading, spacing: 8) {
+        if let done = itinerary.progress.doneCount, let archived = itinerary.progress.archivedCount,
+          let total = itinerary.progress.totalCount, total > 0
+        {
+          SavedCompletionProgress(
+            doneCount: done, archivedCount: archived, totalCount: total,
+            accessibilityIdentifier: "saved.itinerary.progress")
+        }
+        SavedContainerEstimates(
+          estimates: itinerary.estimates, manualEstimate: itinerary.content.manualEstimate,
+          accessibilityIdentifierPrefix: "saved.itinerary.estimate")
+      }
+      .padding()
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .background(.bar)
+      if let mapCollection {
+        SavedMapCollectionView(collection: mapCollection, select: selectMapRow)
+      } else {
+        ProgressView("Opening Map").frame(maxWidth: .infinity, maxHeight: .infinity)
+      }
     }
   }
 

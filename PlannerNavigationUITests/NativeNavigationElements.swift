@@ -79,6 +79,10 @@ extension XCUIApplication {
     option.activateForPlannerJourney()
   }
 
+  func openSavedPlannerItineraryViewMenu() {
+    openSavedPlannerMenu(identifier: "saved.itinerary.representation", title: "View")
+  }
+
   func openSavedPlannerListViewMenu() {
     openSavedPlannerMenu(identifier: "saved.list.representation", title: "View")
   }
