@@ -1,0 +1,62 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3CD081A8-88BF-4068-A831-1294385EB901.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_D49E6E7B-8B61-4B23-B6E5-19B0250B195E.png",
+        "timestamp": 1792665208.563
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A470C3BC-DB26-40ED-BD45-A9E7C7930E02.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Collection Map Locations retain provider and search uncertainty_0_2AFD6E3F-A4E0-42D1-A88F-25D2C6828B85.png",
+        "timestamp": 1792665263.603
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "A0929E43-3873-40B5-B31A-FE89961C9AE6.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native collection Maps link picker keeps original bookmarks_0_3C5671D5-8999-4DF4-A882-2E74B22754AD.png",
+        "timestamp": 1792665337.735
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "21B59B29-8D1E-477A-8FE8-F11CBD58301A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unresolved collection Map search retains Retry and saved link_0_53C0D7B6-26E9-4DD5-BE9C-63047C1B3253.png",
+        "timestamp": 1792665390.357
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark"
+  }
+]

@@ -152,29 +152,47 @@ struct SavedMapCollectionView: View {
       NavigationStack {
         List {
           ForEach(choices(for: sheet)) { choice in
-            HStack {
-              Button {
-                pendingSelection = choice.row
-                presentedSheet = nil
-              } label: {
-                VStack(alignment: .leading, spacing: 4) {
-                  Text(choice.row.title).foregroundStyle(.primary)
-                  if let context = choice.context {
-                    Text(context).font(.subheadline).foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 4) {
+              HStack {
+                Button {
+                  pendingSelection = choice.row
+                  presentedSheet = nil
+                } label: {
+                  VStack(alignment: .leading, spacing: 4) {
+                    Text(choice.row.title).foregroundStyle(.primary)
+                    if let context = choice.context {
+                      Text(context).font(.subheadline).foregroundStyle(.secondary)
+                    }
+                    Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
                   }
-                  Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
+                  .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                  .contentShape(.rect)
                 }
-                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                .contentShape(.rect)
+                .buttonStyle(.plain)
+                .accessibilityLabel(choice.accessibilityTitle)
+                .accessibilityValue(locationDescription(choice.row))
+                .accessibilityIdentifier("saved.map.location.\(choice.id)")
+                if (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
+                  || collection.resolution(for: choice.row.identity) == .unavailable
+                {
+                  locationOptions(for: choice)
+                }
               }
-              .buttonStyle(.plain)
-              .accessibilityLabel(choice.accessibilityTitle)
-              .accessibilityValue(locationDescription(choice.row))
-              .accessibilityIdentifier("saved.map.location.\(choice.id)")
-              if (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
-                || collection.resolution(for: choice.row.identity) == .unavailable
-              {
-                locationOptions(for: choice)
+              if let preview = collection.mapsPreview(for: choice.row.identity) {
+                VStack(alignment: .leading, spacing: 4) {
+                  if let attribution = preview.attributionText {
+                    Text(attribution)
+                      .accessibilityIdentifier("saved.map.location.provider.\(choice.id)")
+                  }
+                  ForEach(Array(preview.uncertaintyReasons.enumerated()), id: \.offset) {
+                    index, reason in
+                    Text(reason)
+                      .accessibilityIdentifier(
+                        "saved.map.location.uncertainty.\(choice.id).\(index)")
+                  }
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
               }
             }
           }

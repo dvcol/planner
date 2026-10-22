@@ -1,0 +1,42 @@
+[
+  {
+    "file": "itinerary-list-map-choices.png",
+    "original": "Counted itinerary List pin distinguishes independent child appearances_0_D49E6E7B-8B61-4B23-B6E5-19B0250B195E.png",
+    "exportedFile": "3CD081A8-88BF-4068-A831-1294385EB901.png",
+    "sha256": "b26cf4142cb94209b89e93a6233245db97450fd87aa31d1d38c397837b0c8027",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "map-provider-context.png",
+    "original": "Collection Map Locations retain provider and search uncertainty_0_2AFD6E3F-A4E0-42D1-A88F-25D2C6828B85.png",
+    "exportedFile": "A470C3BC-DB26-40ED-BD45-A9E7C7930E02.png",
+    "sha256": "9990529271bb11ba6dbc8057c1ba81b7e0ffef459c26bd2ec27e59821bb0670c",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "maps-link-picker.png",
+    "original": "Native collection Maps link picker keeps original bookmarks_0_3C5671D5-8999-4DF4-A882-2E74B22754AD.png",
+    "exportedFile": "A0929E43-3873-40B5-B31A-FE89961C9AE6.png",
+    "sha256": "493b031811d934f810371eeb666c3a05136d60ed0e7867ef4a8d424a47959aca",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  },
+  {
+    "file": "unresolved-map-retry.png",
+    "original": "Unresolved collection Map search retains Retry and saved link_0_53C0D7B6-26E9-4DD5-BE9C-63047C1B3253.png",
+    "exportedFile": "21B59B29-8D1E-477A-8FE8-F11CBD58301A.png",
+    "sha256": "3d4addb0258161cfa3b065b5ad59ad9042a8f2350b5ec580b6ac3c140c3dbdaa",
+    "dimensions": [
+      1206,
+      2622
+    ]
+  }
+]

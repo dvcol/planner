@@ -1,0 +1,12 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "phases": [
+    "native-map-provider-context-phone-green",
+    "native-map-provider-context-dark-tablet",
+    "native-map-provider-context-mac-compiler"
+  ],
+  "passedNativeExecutions": 8,
+  "distinctNativeFunctions": 4,
+  "meaning": "Provider attribution/uncertainty, repeated List branches, Maps-link selection and Retry pass on phone/dark iPad. Mac is compiler-only."
+}

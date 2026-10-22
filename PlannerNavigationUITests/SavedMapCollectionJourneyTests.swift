@@ -6,6 +6,55 @@ import XCTest
 
 @MainActor
 final class SavedMapCollectionJourneyTests: XCTestCase {
+  func testMapLocationsRetainProviderAttributionAndSearchUncertainty() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=35,139"
+    createItem("Map museum", link: originalURL, in: application)
+    let originalLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
+    ).firstMatch
+    revealDetailLink(originalLink, in: application)
+    XCTAssertTrue(originalLink.waitForExistence(timeout: 10))
+    let originalIdentifier = originalLink.identifier
+    returnToCatalog(application)
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    XCTAssertTrue(application.buttons["saved.map.pin.35.0,139.0"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.map.locations").activateForPlannerJourney()
+    let provider = application.staticTexts.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.provider.")
+    ).firstMatch
+    XCTAssertTrue(provider.waitForExistence(timeout: 5))
+    XCTAssertEqual(provider.label, "Google Maps")
+    XCTAssertTrue(provider.isHittable)
+    let uncertainty = application.staticTexts.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.uncertainty.")
+    ).firstMatch
+    XCTAssertTrue(uncertainty.waitForExistence(timeout: 5))
+    XCTAssertEqual(uncertainty.label, "Place details haven't been verified for this search link.")
+    XCTAssertTrue(uncertainty.isHittable)
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Collection Map Locations retain provider and search uncertainty"
+    capture.lifetime = .keepAlways
+    add(capture)
+    application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.source.")
+    ).firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let retainedLink = application.descendants(matching: .any).matching(
+      identifier: originalIdentifier
+    )
+    .firstMatch
+    revealDetailLink(retainedLink, in: application)
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, originalURL)
+  }
+
   func testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark() {
     continueAfterFailure = false
     let application = XCUIApplication()

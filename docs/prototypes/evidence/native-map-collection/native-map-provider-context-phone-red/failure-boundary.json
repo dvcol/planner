@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "Actual saved coordinate-bearing Maps search displays its pin and opens Locations. The test then fails at the missing collection-specific provider label at line 32. No passing credit."
+}
