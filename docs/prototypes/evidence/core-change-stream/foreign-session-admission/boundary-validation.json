@@ -1,0 +1,8 @@
+{
+  "sourceCount": 747,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productCount": 2,
+  "productDifferences": [],
+  "meaning": "Four top-level Core tests and an actual writer child pass for local/cross-process data invalidation, cancellation isolation, own writes and structured foreign-session rejection. Recovery/control-file observation and native integration remain open."
+}

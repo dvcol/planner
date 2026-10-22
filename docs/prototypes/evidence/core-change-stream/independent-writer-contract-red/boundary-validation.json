@@ -1,0 +1,6 @@
+{
+  "sourceCount": 746,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "meaning": "The first approved public-interface test fails to compile because changes(session:) is absent. No runtime or behavioral passing credit."
+}

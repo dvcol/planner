@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 import SwiftData
 
 public actor Planner {
@@ -7,6 +8,13 @@ public actor Planner {
   private var nativeContainer:
     (container: ModelContainer, fileNumber: UInt64, systemNumber: UInt64)?
   private var sessions: [UUID: PlannerDatasetSession] = [:]
+  private struct ChangeSubscription: Sendable {
+    let session: PlannerDatasetSession
+    let continuation: AsyncThrowingStream<PlannerChange, any Error>.Continuation
+    let observation: Task<Void, Never>
+    var historyToken: DefaultHistoryToken?
+  }
+  private var changeSubscriptions: [UUID: ChangeSubscription] = [:]
   private struct QueryBinding {
     let snapshot: PlannerQuerySnapshot
     let historyToken: DefaultHistoryToken?
@@ -101,6 +109,65 @@ public actor Planner {
   ) {
     self.configuration = configuration
     self.captureHTTPTransport = captureHTTPTransport
+  }
+
+  deinit {
+    for subscription in changeSubscriptions.values {
+      subscription.observation.cancel()
+      subscription.continuation.finish()
+    }
+  }
+
+  public func changes(session: PlannerDatasetSession)
+    -> AsyncThrowingStream<PlannerChange, any Error>
+  {
+    let (stream, continuation) = AsyncThrowingStream<PlannerChange, any Error>.makeStream()
+    do {
+      let (observer, historyToken) = try coordinated {
+        _ = try validateSession(session)
+        let container = try openContainer()
+        let observer = try HistoryObserver(modelContainer: container)
+        return (observer, try latestHistoryToken(in: ModelContext(container)))
+      }
+      let identifier = UUID()
+      let observation = Task { [weak self] in
+        for await _ in Observations({ observer.eventCounter }) {
+          guard !Task.isCancelled else { return }
+          await self?.publishObservedChanges(for: identifier)
+        }
+      }
+      changeSubscriptions[identifier] = .init(
+        session: session, continuation: continuation, observation: observation,
+        historyToken: historyToken)
+      continuation.onTermination = { [weak self] _ in
+        Task { await self?.endChangeSubscription(identifier) }
+      }
+    } catch {
+      continuation.finish(throwing: failure(error, code: "observationUnavailable"))
+    }
+    return stream
+  }
+
+  private func publishObservedChanges(for identifier: UUID) {
+    guard var subscription = changeSubscriptions[identifier] else { return }
+    do {
+      let historyToken = try coordinated {
+        _ = try validateSession(subscription.session)
+        return try latestHistoryToken(in: ModelContext(try openContainer()))
+      }
+      guard historyToken != subscription.historyToken else { return }
+      subscription.historyToken = historyToken
+      changeSubscriptions[identifier] = subscription
+      subscription.continuation.yield(
+        .init(notificationId: UUID(), payload: .dataChanged(affected: nil)))
+    } catch {
+      subscription.continuation.finish(throwing: failure(error, code: "observationUnavailable"))
+      endChangeSubscription(identifier)
+    }
+  }
+
+  private func endChangeSubscription(_ identifier: UUID) {
+    changeSubscriptions.removeValue(forKey: identifier)?.observation.cancel()
   }
 
   public func bootstrap() -> PlannerBootstrapResult {

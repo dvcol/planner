@@ -1,0 +1,7 @@
+{
+  "sourceCount": 747,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productDifferences": [],
+  "meaning": "Test helper compiler failure: semaphore wait is unavailable in an async context. No new process or behavior executed."
+}

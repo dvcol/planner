@@ -1,0 +1,8 @@
+{
+  "sourceCount": 747,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productCount": 2,
+  "productDifferences": [],
+  "meaning": "Three top-level behaviors pass, plus the actual writer child. Cancelling one consumer preserves the other subscription and own-instance writes."
+}

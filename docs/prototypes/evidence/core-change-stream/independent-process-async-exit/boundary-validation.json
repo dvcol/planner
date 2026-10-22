@@ -1,0 +1,8 @@
+{
+  "sourceCount": 747,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productCount": 2,
+  "productDifferences": [],
+  "meaning": "Two top-level Core behaviors pass, including an actual separately launched writer test with asynchronous exit collection. The child runs one additional test invocation. Recovery/lifetime/native integration remain open."
+}

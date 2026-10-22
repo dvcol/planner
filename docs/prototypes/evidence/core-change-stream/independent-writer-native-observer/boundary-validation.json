@@ -1,0 +1,8 @@
+{
+  "sourceCount": 747,
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "productCount": 2,
+  "productDifferences": [],
+  "meaning": "One public Core stream behavior passes through real storage and canonical reads. Cross-process, lifetime, recovery and native integration remain unqualified."
+}
