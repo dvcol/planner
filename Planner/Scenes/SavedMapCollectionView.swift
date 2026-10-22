@@ -171,10 +171,10 @@ struct SavedMapCollectionView: View {
               .accessibilityLabel(choice.accessibilityTitle)
               .accessibilityValue(locationDescription(choice.row))
               .accessibilityIdentifier("saved.map.location.\(choice.id)")
-              if let choices = collection.mapsLinkChoices(for: choice.row.identity),
-                choices.links.count > 1
+              if (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
+                || collection.resolution(for: choice.row.identity) == .unavailable
               {
-                locationOptions(for: choice, choices: choices)
+                locationOptions(for: choice)
               }
             }
           }
@@ -201,37 +201,43 @@ struct SavedMapCollectionView: View {
     }
   }
 
-  private func locationOptions(
-    for choice: RowChoice,
-    choices: (selected: PlannerLinkPreviewRequest, links: [PlannerOwnedLinkRead])
-  ) -> some View {
+  private func locationOptions(for choice: RowChoice) -> some View {
     Menu {
-      Picker(
-        "Map link",
-        selection: Binding(
-          get: {
-            collection.mapsLinkChoices(for: choice.row.identity)?.selected.linkId
-              ?? choices.selected.linkId
-          },
-          set: { selectedLinkIdentifier in
-            guard let link = choices.links.first(where: { $0.linkId == selectedLinkIdentifier })
-            else {
-              locationChoiceMessage = "The saved Maps links changed. Choose a link again."
-              return
-            }
-            let request = PlannerLinkPreviewRequest(
-              source: choices.selected.source, linkId: link.linkId, originalURL: link.originalUrl)
-            if !collection.chooseMapsLink(request, for: choice.row.identity) {
-              locationChoiceMessage = "This saved Maps link changed. Choose it again."
-            }
-          })
-      ) {
-        ForEach(choices.links, id: \.linkId) { link in
-          Text(link.label ?? link.originalUrl).tag(link.linkId)
+      if let choices = collection.mapsLinkChoices(for: choice.row.identity), choices.links.count > 1
+      {
+        Picker(
+          "Map link",
+          selection: Binding(
+            get: {
+              collection.mapsLinkChoices(for: choice.row.identity)?.selected.linkId
+                ?? choices.selected.linkId
+            },
+            set: { selectedLinkIdentifier in
+              guard let link = choices.links.first(where: { $0.linkId == selectedLinkIdentifier })
+              else {
+                locationChoiceMessage = "The saved Maps links changed. Choose a link again."
+                return
+              }
+              let request = PlannerLinkPreviewRequest(
+                source: choices.selected.source, linkId: link.linkId, originalURL: link.originalUrl)
+              if !collection.chooseMapsLink(request, for: choice.row.identity) {
+                locationChoiceMessage = "This saved Maps link changed. Choose it again."
+              }
+            })
+        ) {
+          ForEach(choices.links, id: \.linkId) { link in
+            Text(link.label ?? link.originalUrl).tag(link.linkId)
+          }
         }
+        .pickerStyle(.menu)
+        .accessibilityIdentifier("saved.map.link.selector.\(choice.id)")
       }
-      .pickerStyle(.menu)
-      .accessibilityIdentifier("saved.map.link.selector.\(choice.id)")
+      if collection.resolution(for: choice.row.identity) == .unavailable {
+        Button("Retry location", systemImage: "arrow.clockwise") {
+          collection.retry(for: choice.row.identity)
+        }
+        .accessibilityIdentifier("saved.map.location.retry.\(choice.id)")
+      }
     } label: {
       Label("Location options", systemImage: "ellipsis.circle")
         .frame(minWidth: 44, minHeight: 44)

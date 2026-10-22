@@ -1,0 +1,8 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 9,
+  "productDifferences": [],
+  "runtimeCredit": false,
+  "meaning": "Affected Mac app, Share extension and native UI-test target compile. No Mac UI execution credit."
+}

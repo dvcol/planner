@@ -1,0 +1,32 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "E7FC6611-E9B6-452D-9354-7AB37D96920C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native collection Maps link picker keeps original bookmarks_0_BC1BC394-2526-411D-AAA1-B16ABB6E54FD.png",
+        "timestamp": 1792664714.707
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "05C58B54-546D-4484-A2D4-A57B352D7663.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unresolved collection Map search retains Retry and saved link_0_FDDAC087-C48A-4E22-AB9E-40E9C5952EAA.png",
+        "timestamp": 1792664762.624
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark"
+  }
+]

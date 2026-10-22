@@ -1,0 +1,13 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "phases": [
+    "native-map-retry-phone-green",
+    "native-map-retry-dark-tablet",
+    "native-map-retry-picker-phone-regression",
+    "native-map-retry-mac-compiler"
+  ],
+  "passedNativeExecutions": 4,
+  "distinctNativeFunctions": 2,
+  "meaning": "Native Retry and the affected Maps-link picker pass on phone and dark iPad; Mac is compiler-only."
+}

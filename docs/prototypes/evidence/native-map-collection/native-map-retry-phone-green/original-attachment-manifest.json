@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "5F4CED6F-C6F2-42E5-A138-C4E2E4174950.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unresolved collection Map search retains Retry and saved link_0_4EC34561-8687-4263-BE6A-2A4C13CB2BBA.png",
+        "timestamp": 1792664596.347
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark"
+  }
+]

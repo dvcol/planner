@@ -6,6 +6,62 @@ import XCTest
 
 @MainActor
 final class SavedMapCollectionJourneyTests: XCTestCase {
+  func testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=Museum"
+    createItem("Map search", link: originalURL, in: application)
+    let originalLink = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
+    ).firstMatch
+    revealDetailLink(originalLink, in: application)
+    XCTAssertTrue(originalLink.waitForExistence(timeout: 10))
+    let originalIdentifier = originalLink.identifier
+    returnToCatalog(application)
+    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    XCTAssertTrue(application.staticTexts["0 of 1 items located"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.map.locations").activateForPlannerJourney()
+    let location = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.source.")
+    ).firstMatch
+    XCTAssertTrue(location.waitForExistence(timeout: 5))
+    let unavailable = NSPredicate(format: "value == %@", "Location unavailable")
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: unavailable, object: location)], timeout: 10),
+      .completed)
+    let options = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.options.")
+    ).firstMatch
+    XCTAssertTrue(options.waitForExistence(timeout: 5))
+    options.activateForPlannerJourney()
+    let retry = application.plannerElement("Retry location")
+    XCTAssertTrue(retry.waitForExistence(timeout: 5))
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    capture.name = "Unresolved collection Map search retains Retry and saved link"
+    capture.lifetime = .keepAlways
+    add(capture)
+    retry.activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: unavailable, object: location)], timeout: 10),
+      .completed)
+    location.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let retainedLink = application.descendants(matching: .any).matching(
+      identifier: originalIdentifier
+    )
+    .firstMatch
+    revealDetailLink(retainedLink, in: application)
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, originalURL)
+  }
+
   func testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks() {
     continueAfterFailure = false
     let application = XCUIApplication()

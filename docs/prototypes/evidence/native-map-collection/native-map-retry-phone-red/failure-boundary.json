@@ -1,0 +1,7 @@
+{
+  "sourceInputCount": 1074,
+  "sourceDifferences": [],
+  "actualProductCount": 4,
+  "productDifferences": [],
+  "meaning": "The actual saved textual Maps search has no pin, Locations opens and its exact row is Location unavailable. The native test then fails at the absent location-options control at line 41. No passing credit."
+}

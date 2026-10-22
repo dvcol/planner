@@ -1,0 +1,22 @@
+[
+  {
+    "file": "maps-link-picker.png",
+    "original": "Native collection Maps link picker keeps original bookmarks_0_BC1BC394-2526-411D-AAA1-B16ABB6E54FD.png",
+    "exportedFile": "E7FC6611-E9B6-452D-9354-7AB37D96920C.png",
+    "sha256": "1cd2d8486a58123e72c4e74a7795dfdfb1c23c45cd2b5f6b93da162f421ebb8f",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  },
+  {
+    "file": "unresolved-map-retry.png",
+    "original": "Unresolved collection Map search retains Retry and saved link_0_FDDAC087-C48A-4E22-AB9E-40E9C5952EAA.png",
+    "exportedFile": "05C58B54-546D-4484-A2D4-A57B352D7663.png",
+    "sha256": "9f9bacab922819e4dcf898028a59967d96c5075c8299965d218d373e44494e60",
+    "dimensions": [
+      1640,
+      2360
+    ]
+  }
+]

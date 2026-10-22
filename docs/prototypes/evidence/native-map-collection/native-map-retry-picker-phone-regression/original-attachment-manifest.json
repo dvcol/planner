@@ -1,0 +1,17 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "CD6CD4C6-FE4E-4F8E-9E47-409A5DB5EB04.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native collection Maps link picker keeps original bookmarks_0_DADE5528-E111-40C8-8E59-6F671F1C7014.png",
+        "timestamp": 1792664887.754
+      }
+    ],
+    "testIdentifier": "SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks"
+  }
+]
