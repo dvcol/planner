@@ -12,7 +12,9 @@ public actor Planner {
     let session: PlannerDatasetSession
     let continuation: AsyncThrowingStream<PlannerChange, any Error>.Continuation
     let observation: Task<Void, Never>
+    var fileObservations: [PlannerFileObservation]
     var historyToken: DefaultHistoryToken?
+    var recovery: PlannerRecoveryObservation
   }
   private var changeSubscriptions: [UUID: ChangeSubscription] = [:]
   private struct QueryBinding {
@@ -123,13 +125,17 @@ public actor Planner {
   {
     let (stream, continuation) = AsyncThrowingStream<PlannerChange, any Error>.makeStream()
     do {
-      let (observer, historyToken) = try coordinated {
-        _ = try validateSession(session)
+      let identifier = UUID()
+      let (observer, historyToken, fileObservations, recovery) = try coordinated {
+        let identity = try validateSession(session)
         let container = try openContainer()
         let observer = try HistoryObserver(modelContainer: container)
-        return (observer, try latestHistoryToken(in: ModelContext(container)))
+        let fileObservations = try observeBoundFiles(identity, for: identifier)
+        return (
+          observer, try latestHistoryToken(in: ModelContext(container)), fileObservations,
+          readRecoveryObservation(identity)
+        )
       }
-      let identifier = UUID()
       let observation = Task { [weak self] in
         for await _ in Observations({ observer.eventCounter }) {
           guard !Task.isCancelled else { return }
@@ -138,7 +144,7 @@ public actor Planner {
       }
       changeSubscriptions[identifier] = .init(
         session: session, continuation: continuation, observation: observation,
-        historyToken: historyToken)
+        fileObservations: fileObservations, historyToken: historyToken, recovery: recovery)
       continuation.onTermination = { [weak self] _ in
         Task { await self?.endChangeSubscription(identifier) }
       }
@@ -151,15 +157,29 @@ public actor Planner {
   private func publishObservedChanges(for identifier: UUID) {
     guard var subscription = changeSubscriptions[identifier] else { return }
     do {
-      let historyToken = try coordinated {
-        _ = try validateSession(subscription.session)
-        return try latestHistoryToken(in: ModelContext(try openContainer()))
+      let (historyToken, fileObservations, recovery) = try coordinated {
+        let identity = try validateSession(subscription.session)
+        let fileObservations = try observeBoundFiles(identity, for: identifier)
+        return (
+          try latestHistoryToken(in: ModelContext(try openContainer())),
+          fileObservations,
+          readRecoveryObservation(identity)
+        )
       }
-      guard historyToken != subscription.historyToken else { return }
+      let dataChanged = historyToken != subscription.historyToken
+      let recoveryChanged = !recoveryObservationsMatch(recovery, subscription.recovery)
       subscription.historyToken = historyToken
+      subscription.fileObservations = fileObservations
+      subscription.recovery = recovery
       changeSubscriptions[identifier] = subscription
-      subscription.continuation.yield(
-        .init(notificationId: UUID(), payload: .dataChanged(affected: nil)))
+      if dataChanged {
+        subscription.continuation.yield(
+          .init(notificationId: UUID(), payload: .dataChanged(affected: nil)))
+      }
+      if recoveryChanged {
+        subscription.continuation.yield(
+          .init(notificationId: UUID(), payload: .recoveryStatusChanged(value: recovery)))
+      }
     } catch {
       subscription.continuation.finish(throwing: failure(error, code: "observationUnavailable"))
       endChangeSubscription(identifier)
@@ -168,6 +188,51 @@ public actor Planner {
 
   private func endChangeSubscription(_ identifier: UUID) {
     changeSubscriptions.removeValue(forKey: identifier)?.observation.cancel()
+  }
+
+  private func observeBoundFiles(_ identity: PlannerStoreIdentity, for identifier: UUID) throws
+    -> [PlannerFileObservation]
+  {
+    let directory = recoveryArchive(identity).namespaceURL
+    let bindingAndRecoveryPaths = [
+      configuration.controlURL.deletingLastPathComponent(), configuration.controlURL,
+      configuration.storeURL.deletingLastPathComponent(), directory,
+    ]
+    var observations: [PlannerFileObservation] = []
+    for path in bindingAndRecoveryPaths {
+      observations.append(try observeBoundFile(path, for: identifier))
+    }
+    let checkpoints = try FileManager.default.contentsOfDirectory(
+      at: directory, includingPropertiesForKeys: nil
+    ).filter { $0.lastPathComponent.hasPrefix("checkpoint-") && $0.pathExtension == "json" }
+    for checkpoint in checkpoints {
+      observations.append(try observeBoundFile(checkpoint, for: identifier))
+    }
+    return observations
+  }
+
+  private func observeBoundFile(_ url: URL, for identifier: UUID) throws
+    -> PlannerFileObservation
+  {
+    try PlannerFileObservation(url: url) { [weak self] in
+      Task { await self?.publishObservedChanges(for: identifier) }
+    }
+  }
+
+  private func recoveryObservationsMatch(
+    _ first: PlannerRecoveryObservation, _ second: PlannerRecoveryObservation
+  ) -> Bool {
+    switch (first, second) {
+    case (
+      .known(let firstGeneration, let firstIncomplete, let firstBlocked),
+      .known(let secondGeneration, let secondIncomplete, let secondBlocked)
+    ):
+      return firstGeneration == secondGeneration && firstIncomplete == secondIncomplete
+        && firstBlocked == secondBlocked
+    case (.unavailable(let firstFailure), .unavailable(let secondFailure)):
+      return firstFailure == secondFailure
+    default: return false
+    }
   }
 
   public func bootstrap() -> PlannerBootstrapResult {
