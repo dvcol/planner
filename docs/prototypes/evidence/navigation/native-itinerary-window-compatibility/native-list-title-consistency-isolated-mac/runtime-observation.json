@@ -1,0 +1,22 @@
+{
+  "hasFinalResultInfo": false,
+  "diagnostics": {
+    "testmanagerd.log": {
+      "bytes": 1548,
+      "retained": "testmanagerd.log.gz"
+    },
+    "scheduling.log": {
+      "bytes": 549,
+      "retained": "scheduling.log.gz"
+    },
+    "Session-PlannerNavigationUITests-2026-10-22_093925-LMvBLH.log": {
+      "bytes": 3890,
+      "retained": "Session-PlannerNavigationUITests-2026-10-22_093925-LMvBLH.log.gz"
+    },
+    "StandardOutputAndStandardError.txt": {
+      "bytes": 268,
+      "retained": "StandardOutputAndStandardError.txt.gz"
+    }
+  },
+  "interpretation": "No title test result or screenshot confirmed. Buffered stdout is insufficient to prove that no case ever executed. No passing credit."
+}

@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerTitleConsistencySource",
+  "base": "42796062ab1d980a3419848e39e1b3e5dcad7dd0",
+  "overlays": [
+    "Planner.xcodeproj/project.pbxproj",
+    "PlannerFixtureUITests/ShareCaptureJourneyTests.swift",
+    "PlannerFixtures/PlannerShareFixtureView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift"
+  ]
+}
