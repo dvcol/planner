@@ -3,13 +3,161 @@ import PlannerCore
 import SwiftData
 import Testing
 
+#if os(macOS)
+  import Darwin
+#endif
+
 struct BulkCompletionAdmissionTests {
+  #if os(macOS)
+    @Test func failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() async throws {
+      guard ProcessInfo.processInfo.environment["PLANNER_BULK_WRITE_FAULT_CHILD"] == "1" else {
+        try runIsolatedWriteFailure()
+        return
+      }
+      for scopeName in ["list", "itinerary", "itineraryListEntry"] {
+        let fixture = try await BulkCompletionFixture.create()
+        let scope: PlannerBulkScope
+        let expectedListDone: Int64
+        let expectedItineraryDone: Int64
+        switch scopeName {
+        case "list":
+          scope = .list(listId: fixture.list.id)
+          expectedListDone = 2
+          expectedItineraryDone = 0
+        case "itinerary":
+          scope = .itinerary(itineraryId: fixture.itinerary.id)
+          expectedListDone = 0
+          expectedItineraryDone = 3
+        default:
+          scope = .itineraryListEntry(
+            itineraryId: fixture.itinerary.id, listEntryId: fixture.listEntryId)
+          expectedListDone = 0
+          expectedItineraryDone = 2
+        }
+        let command = PlannerCommand.setBulkCompletion(scope: scope, done: true)
+        let review = try await fixture.review(command)
+        guard
+          case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+        else { throw CancellationError() }
+        let beforeRecovery = try await fixture.recovery()
+        let obstruction = NativeSaveFileSizeObstruction(
+          configuration: fixture.configuration, maximumFileSize: 1)
+        let observer = NotificationCenter.default.addObserver(
+          forName: ModelContext.willSave, object: nil, queue: nil
+        ) { notification in obstruction.observe(notification) }
+        defer {
+          NotificationCenter.default.removeObserver(observer)
+          try? obstruction.restore()
+        }
+        let operationIdentifier = UUID()
+        let operation = PlannerOperation(
+          operationId: operationIdentifier, session: fixture.session, command: command,
+          reviewToken: review.reviewToken)
+        let failed = await fixture.planner.execute(operation)
+        try obstruction.restore()
+        #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+        guard case .rejected(let failure) = failed.outcome else {
+          Issue.record(
+            "A genuine failed native save must reject the whole \(scopeName) completion.")
+          return
+        }
+        #expect(failure.code == "persistenceFailure")
+        let reopened = Planner(configuration: fixture.configuration)
+        let reopenedBootstrap = await reopened.bootstrap()
+        guard case .ready(let reopenedSession) = reopenedBootstrap else {
+          Issue.record("Bulk failed-save reopen must remain ready: \(reopenedBootstrap)")
+          return
+        }
+        let reopenedExport = await reopened.exportData(session: reopenedSession)
+        guard case .exported(let after) = reopenedExport else {
+          Issue.record("Bulk failed-save export must remain readable: \(reopenedExport)")
+          return
+        }
+        let status = await reopened.operationStatus(
+          session: reopenedSession, operationId: operationIdentifier)
+        guard case .noReliableEvidence = status else {
+          Issue.record("A known failed bulk save must discard its prepared evidence: \(status)")
+          return
+        }
+        #expect(after == before)
+        #expect(try await fixture.recovery() == beforeRecovery)
+        try await fixture.expectProgress(
+          listDone: 0, listTotal: 2, itineraryDone: 0, itineraryTotal: 3)
+        let retry = await fixture.planner.execute(operation)
+        guard case .applied(let applied, .complete) = retry.outcome else {
+          Issue.record(
+            "The unchanged reviewed \(scopeName) action must succeed after fault removal.")
+          return
+        }
+        try await fixture.expectProgress(
+          listDone: expectedListDone, listTotal: 2, itineraryDone: expectedItineraryDone,
+          itineraryTotal: 3)
+        guard case .exported(let saved) = await reopened.exportData(session: reopenedSession),
+          case .applied(let replayed, .complete) = await fixture.planner.execute(operation).outcome,
+          case .exported(let replayedData) = await reopened.exportData(session: reopenedSession)
+        else { throw CancellationError() }
+        #expect(replayed == applied)
+        #expect(replayedData == saved && saved != before)
+        let savedRecovery = try await fixture.recovery()
+        let savedGraph = try #require(JSONSerialization.jsonObject(with: saved) as? NSDictionary)
+        let recoveryGraph = try #require(
+          JSONSerialization.jsonObject(with: savedRecovery) as? NSDictionary)
+        #expect(recoveryGraph == savedGraph)
+      }
+    }
+
+    private func runIsolatedWriteFailure() throws {
+      let directory = FileManager.default.temporaryDirectory.appendingPathComponent(
+        "PlannerBulkWriteFailure-" + UUID().uuidString)
+      try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+      let outputURL = directory.appendingPathComponent("child.log")
+      try Data().write(to: outputURL)
+      let output = try FileHandle(forWritingTo: outputURL)
+      defer { try? output.close() }
+      let process = Process()
+      process.executableURL = URL(fileURLWithPath: CommandLine.arguments[0])
+      var runnerArguments: [String] = []
+      if let index = CommandLine.arguments.firstIndex(of: "--test-bundle-path"),
+        CommandLine.arguments.indices.contains(index + 1)
+      {
+        runnerArguments = ["--test-bundle-path", CommandLine.arguments[index + 1]]
+      }
+      process.arguments =
+        runnerArguments + [
+          "--testing-library", "swift-testing", "--filter",
+          "BulkCompletionAdmissionTests/failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry",
+        ]
+      var environment = ProcessInfo.processInfo.environment
+      environment["PLANNER_BULK_WRITE_FAULT_CHILD"] = "1"
+      process.environment = environment
+      process.standardOutput = output
+      process.standardError = output
+      let completion = DispatchSemaphore(value: 0)
+      process.terminationHandler = { _ in completion.signal() }
+      try process.run()
+      let finished = completion.wait(timeout: .now() + 45) == .success
+      if !finished {
+        kill(process.processIdentifier, SIGKILL)
+        process.waitUntilExit()
+      }
+      try output.close()
+      let transcript = try String(contentsOf: outputURL, encoding: .utf8)
+      print("Bulk isolated write-fault child log: \(outputURL.path)")
+      for line in transcript.split(separator: "\n") where line.hasPrefix("PLANNER_STORE_FIXTURE ") {
+        print(line)
+      }
+      #expect(finished, "The isolated bulk save fault must finish within its deadline.")
+      #expect(process.terminationReason == .exit)
+      #expect(process.terminationStatus == 0, Comment(rawValue: String(transcript.suffix(12_000))))
+      #expect(transcript.contains("Test run with 1 test"))
+    }
+  #endif
+
   @Test(arguments: ["list", "itinerary", "itineraryListEntry"])
   func postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_ scopeName: String)
     async throws
   {
     let fixture = try await BulkCompletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let scope: PlannerBulkScope
     let listDone: Int64
     let itineraryDone: Int64
@@ -86,7 +234,6 @@ struct BulkCompletionAdmissionTests {
 
   @Test func canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() async throws {
     let fixture = try await BulkCompletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let originalRecovery = try await fixture.recovery()
     let command = PlannerCommand.setBulkCompletion(
       scope: .list(listId: fixture.list.id), done: true)
@@ -173,7 +320,6 @@ struct BulkCompletionAdmissionTests {
 
   @Test func emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() async throws {
     let fixture = try await BulkCompletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     for command in [
       PlannerCommand.createList(content: .init(name: "Empty")),
       .createItinerary(content: .init(title: "Empty")),
@@ -237,7 +383,7 @@ private struct BulkCompletionFixture {
   let listEntryId: UUID
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

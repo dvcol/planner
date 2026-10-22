@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 19.108,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.220911542,
+      "failures": [
+        "Expectation failed: process.terminationStatus == 0 (error): \u25c7 Test run started. \u21b3 Testing Library Version: 2084 \u21b3 Target Platform: arm64e-apple-macos14.0 \u25c7 Suite BulkCompletionAdmissionTests started. \u25c7 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() started. PLANNER_STORE_FIXTURE {\"directory\":\"\\/private\\/var\\/folders\\/4y\\/5mvy0qfx6yd8z1lllg4_n5340000gp\\/T\\/PlannerStoreFixtures\\/117AFC2C-9F27-4030-950D-DA9C84D26E1D\",\"hostProcessIdentifier\":36813,\"formatVersion\":1} \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:79:23: Issue recorded \u21b3 A known failed bulk save must discard its prepared evidence: .preparedUnverified(PlannerCore.PlannerProposalSummary(proposalId: A804948D-D55A-48ED-B7AD-4D8F15BE3EFD, originalOperationId: 672A5DB5-2854-4F47-84F1-AF3DBA55A922, evidence: \"preparedUnverified\", requiresFreshReview: true)) \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() failed after 0.133 seconds with 1 issue. \u2718 Suite BulkCompletionAdmissionTests failed after 0.133 seconds with 1 issue. \u2718 Test run with 1 test in 1 suite failed after 0.133 seconds with 1 issue. SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 \"(null)\" UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/117AFC2C-9F27-4030-950D-DA9C84D26E1D/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778} "
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

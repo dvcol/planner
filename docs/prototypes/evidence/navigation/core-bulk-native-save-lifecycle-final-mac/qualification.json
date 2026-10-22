@@ -1,0 +1,29 @@
+{
+  "mac": {
+    "functions": 5,
+    "topLevelExecutions": 7,
+    "additionalIsolatedChildFunctions": 1,
+    "scopesCheckedSequentiallyInChild": [
+      "list",
+      "itinerary",
+      "itineraryListEntry"
+    ]
+  },
+  "iPhoneSimulator": {
+    "functions": 4,
+    "executions": 6,
+    "genuineFilesystemFaultExecuted": false
+  },
+  "matchingCoreInputs": 740,
+  "matchingNativeInputs": 1062,
+  "unchangedFinalRegressionFailsPreFix": true,
+  "sqliteUnlinkWarnings": 0,
+  "removedMarkedFixtures": {
+    "mac": 9,
+    "iPhoneSimulator": 6
+  },
+  "productionFilesChanged": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift"
+  ],
+  "nativeUiOrPhysicalCredit": false
+}

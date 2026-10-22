@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 16.59,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.334302042,
+      "failures": [
+        "Expectation failed: process.terminationStatus == 0 (error): \u25c7 Test run started. \u21b3 Testing Library Version: 2084 \u21b3 Target Platform: arm64e-apple-macos14.0 \u25c7 Suite BulkCompletionAdmissionTests started. \u25c7 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() started. PLANNER_STORE_FIXTURE {\"formatVersion\":1,\"hostProcessIdentifier\":34962,\"directory\":\"\\/private\\/var\\/folders\\/4y\\/5mvy0qfx6yd8z1lllg4_n5340000gp\\/T\\/PlannerStoreFixtures\\/ED433349-6DA2-44F2-9F75-B7F54E4C541A\"} \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:12:6: Caught error: CancellationError() \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() failed after 0.202 seconds with 1 issue. \u2718 Suite BulkCompletionAdmissionTests failed after 0.202 seconds with 1 issue. \u2718 Test run with 1 test in 1 suite failed after 0.202 seconds with 1 issue. SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 \"(null)\" UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/ED433349-6DA2-44F2-9F75-B7F54E4C541A/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778} "
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

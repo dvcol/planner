@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.5959e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.569512125">
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()" time="0.569200875">
+            <failure message="Expectation failed: process.terminationStatus == 0 (error): ◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite BulkCompletionAdmissionTests started.
+◇ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() started.
+PLANNER_STORE_FIXTURE {&quot;directory&quot;:&quot;\/private\/var\/folders\/4y\/5mvy0qfx6yd8z1lllg4_n5340000gp\/T\/PlannerStoreFixtures\/AF3CE47B-A83D-4876-8760-E07DCEBA1DBC&quot;,&quot;formatVersion&quot;:1,&quot;hostProcessIdentifier&quot;:36136}
+SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 &quot;(null)&quot; UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AF3CE47B-A83D-4876-8760-E07DCEBA1DBC/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778}
+Bulk recovery comparison: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AF3CE47B-A83D-4876-8760-E07DCEBA1DBC/dataset
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:108:9: Expectation failed: savedRecovery == saved
+↳ savedRecovery == saved → false
+↳   savedRecovery → 3114 bytes
+↳     count → 3114
+↳     pointer → 0x0000007242104e00
+↳       pointerValue → 490734636544
+↳   saved → 4492 bytes
+↳     count → 4492
+↳     pointer → 0x000000724203fc00
+↳       pointerValue → 490733829120
+PLANNER_STORE_FIXTURE {&quot;formatVersion&quot;:1,&quot;hostProcessIdentifier&quot;:36136,&quot;directory&quot;:&quot;\/private\/var\/folders\/4y\/5mvy0qfx6yd8z1lllg4_n5340000gp\/T\/PlannerStoreFixtures\/42C9F349-9675-4E2E-8C52-5BC3A26CA13B&quot;}
+SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 &quot;(null)&quot; UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/42C9F349-9675-4E2E-8C52-5BC3A26CA13B/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778}
+Bulk recovery comparison: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/42C9F349-9675-4E2E-8C52-5BC3A26CA13B/dataset
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:108:9: Expectation failed: savedRecovery == saved
+↳ savedRecovery == saved → false
+↳   savedRecovery → 3633 bytes
+↳     count → 3633
+↳     pointer → 0x000000724208c000
+↳       pointerValue → 490734141440
+↳   saved → 5168 bytes
+↳     count → 5168
+↳     pointer → 0x000000724217c000
+↳       pointerValue → 490735124480
+PLANNER_STORE_FIXTURE {&quot;directory&quot;:&quot;\/private\/var\/folders\/4y\/5mvy0qfx6yd8z1lllg4_n5340000gp\/T\/PlannerStoreFixtures\/451405BA-AB55-46C1-832A-32A69F581384&quot;,&quot;formatVersion&quot;:1,&quot;hostProcessIdentifier&quot;:36136}
+SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 &quot;(null)&quot; UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/451405BA-AB55-46C1-832A-32A69F581384/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778}
+Bulk recovery comparison: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/451405BA-AB55-46C1-832A-32A69F581384/dataset
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:108:9: Expectation failed: savedRecovery == saved
+↳ savedRecovery == saved → false
+↳   savedRecovery → 3636 bytes
+↳     count → 3636
+↳     pointer → 0x000000724208c000
+↳       pointerValue → 490734141440
+↳   saved → 5171 bytes
+↳     count → 5171
+↳     pointer → 0x000000724217c000
+↳       pointerValue → 490735124480
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() failed after 0.480 seconds with 3 issues.
+✘ Suite BulkCompletionAdmissionTests failed after 0.480 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.481 seconds with 3 issues.
+"/>
+        </testcase>
+    </testsuite>
+</testsuites>

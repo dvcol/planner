@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.0917e-05"/>
+    <testsuite name="TestResults" errors="0" tests="5" failures="0" skipped="0" time="0.636941125">
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()" time="0.636626458"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:)" time="0.226974708"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="canceledMissingChangedAndForeignReviewsNeverMutateThePlanner()" time="0.308832833"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged()" time="0.281429167"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionTests" name="reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates()" time="0.487883542"/>
+    </testsuite>
+</testsuites>

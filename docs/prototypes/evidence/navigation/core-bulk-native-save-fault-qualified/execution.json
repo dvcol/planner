@@ -1,0 +1,16 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 18.723,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.62111675,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

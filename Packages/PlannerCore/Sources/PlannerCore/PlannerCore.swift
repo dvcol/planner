@@ -7540,9 +7540,10 @@ public actor Planner {
       generatedIdentities: [],
       affectedIdentities: [.source(resolution.reference)]
         + resolution.targets.map { .reference($0.reference) })
+    let proposalIdentifier = UUID()
     try archive.prepare(
       .init(
-        proposalId: UUID(), originalOperationId: operation.operationId,
+        proposalId: proposalIdentifier, originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
           itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
@@ -7564,6 +7565,12 @@ public actor Planner {
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
+      do { try archive.discardPreparedProposal(proposalIdentifier) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The bulk save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
       throw PlannerFailure(
         "persistenceFailure",
         "The complete bulk action was not committed: \(error.localizedDescription)")

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000118"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.221305208">
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()" time="0.220911542">
+            <failure message="Expectation failed: process.terminationStatus == 0 (error): ◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite BulkCompletionAdmissionTests started.
+◇ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() started.
+PLANNER_STORE_FIXTURE {&quot;directory&quot;:&quot;\/private\/var\/folders\/4y\/5mvy0qfx6yd8z1lllg4_n5340000gp\/T\/PlannerStoreFixtures\/117AFC2C-9F27-4030-950D-DA9C84D26E1D&quot;,&quot;hostProcessIdentifier&quot;:36813,&quot;formatVersion&quot;:1}
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:79:23: Issue recorded
+↳ A known failed bulk save must discard its prepared evidence: .preparedUnverified(PlannerCore.PlannerProposalSummary(proposalId: A804948D-D55A-48ED-B7AD-4D8F15BE3EFD, originalOperationId: 672A5DB5-2854-4F47-84F1-AF3DBA55A922, evidence: &quot;preparedUnverified&quot;, requiresFreshReview: true))
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() failed after 0.133 seconds with 1 issue.
+✘ Suite BulkCompletionAdmissionTests failed after 0.133 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.133 seconds with 1 issue.
+SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 &quot;(null)&quot; UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/117AFC2C-9F27-4030-950D-DA9C84D26E1D/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778}
+"/>
+        </testcase>
+    </testsuite>
+</testsuites>

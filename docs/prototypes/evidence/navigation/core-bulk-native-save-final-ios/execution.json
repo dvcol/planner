@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 170.723,
+  "frozenInputsUnchanged": true,
+  "requestedClasses": [
+    "BulkCompletionAdmissionTests",
+    "BulkCompletionTests"
+  ],
+  "sqliteUnlinkWarnings": 5,
+  "summary": {
+    "result": "Passed",
+    "passedTests": 4,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

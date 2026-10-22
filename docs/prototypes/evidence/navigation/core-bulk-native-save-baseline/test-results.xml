@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000153459"/>
+    <testsuite name="TestResults" errors="0" tests="3" failures="0" skipped="0" time="0.30976275">
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="canceledMissingChangedAndForeignReviewsNeverMutateThePlanner()" time="0.309423417"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged()" time="0.27952275"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:)" time="0.225082708"/>
+    </testsuite>
+</testsuites>

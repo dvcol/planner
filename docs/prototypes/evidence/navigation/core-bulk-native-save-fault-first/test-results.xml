@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000109292"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.334614208">
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()" time="0.334302042">
+            <failure message="Expectation failed: process.terminationStatus == 0 (error): ◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite BulkCompletionAdmissionTests started.
+◇ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() started.
+PLANNER_STORE_FIXTURE {&quot;formatVersion&quot;:1,&quot;hostProcessIdentifier&quot;:34962,&quot;directory&quot;:&quot;\/private\/var\/folders\/4y\/5mvy0qfx6yd8z1lllg4_n5340000gp\/T\/PlannerStoreFixtures\/ED433349-6DA2-44F2-9F75-B7F54E4C541A&quot;}
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:12:6: Caught error: CancellationError()
+✘ Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() failed after 0.202 seconds with 1 issue.
+✘ Suite BulkCompletionAdmissionTests failed after 0.202 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.202 seconds with 1 issue.
+SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 &quot;(null)&quot; UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/ED433349-6DA2-44F2-9F75-B7F54E4C541A/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778}
+"/>
+        </testcase>
+    </testsuite>
+</testsuites>

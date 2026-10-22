@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 19.058,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.634300583,
+      "failures": [
+        "Expectation failed: process.terminationStatus == 0 (error): \u25c7 Test run started. \u21b3 Testing Library Version: 2084 \u21b3 Target Platform: arm64e-apple-macos14.0 \u25c7 Suite BulkCompletionAdmissionTests started. \u25c7 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() started. PLANNER_STORE_FIXTURE {\"formatVersion\":1,\"hostProcessIdentifier\":35911,\"directory\":\"\\/private\\/var\\/folders\\/4y\\/5mvy0qfx6yd8z1lllg4_n5340000gp\\/T\\/PlannerStoreFixtures\\/A91C3ED8-7E38-478F-8973-DEB6F85A578A\"} \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:101:9: Expectation failed: try await fixture.recovery() == saved \u21b3 try await fixture.recovery() == saved \u2192 <not evaluated> SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 \"(null)\" UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A91C3ED8-7E38-478F-8973-DEB6F85A578A/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778} PLANNER_STORE_FIXTURE {\"directory\":\"\\/private\\/var\\/folders\\/4y\\/5mvy0qfx6yd8z1lllg4_n5340000gp\\/T\\/PlannerStoreFixtures\\/908340E6-7EDD-448D-8AA6-8904BB7A9220\",\"hostProcessIdentifier\":35911,\"formatVersion\":1} \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:101:9: Expectation failed: try await fixture.recovery() == saved \u21b3 try await fixture.recovery() == saved \u2192 <not evaluated> SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 \"(null)\" UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/908340E6-7EDD-448D-8AA6-8904BB7A9220/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778} PLANNER_STORE_FIXTURE {\"hostProcessIdentifier\":35911,\"directory\":\"\\/private\\/var\\/folders\\/4y\\/5mvy0qfx6yd8z1lllg4_n5340000gp\\/T\\/PlannerStoreFixtures\\/D157EC2B-2564-494C-889E-32E70DC9F815\",\"formatVersion\":1} \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() recorded an issue at BulkCompletionAdmissionTests.swift:101:9: Expectation failed: try await fixture.recovery() == saved \u21b3 try await fixture.recovery() == saved \u2192 <not evaluated> \u2718 Test failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry() failed after 0.542 seconds with 3 issues. \u2718 Suite BulkCompletionAdmissionTests failed after 0.542 seconds with 3 issues. \u2718 Test run with 1 test in 1 suite failed after 0.543 seconds with 3 issues. SwiftData.DefaultStore save failed with error: Error Domain=NSSQLiteErrorDomain Code=778 \"(null)\" UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/D157EC2B-2564-494C-889E-32E70DC9F815/dataset/store/Planner.sqlite, NSSQLiteErrorDomain=778} "
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

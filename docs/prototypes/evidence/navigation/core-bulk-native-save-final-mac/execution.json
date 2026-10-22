@@ -1,0 +1,44 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 20.122,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates()",
+      "className": "PlannerCoreStoreTests.BulkCompletionTests",
+      "seconds": 0.505997875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "failedNativeSaveRollsBackEveryBulkTargetAndAllowsTheReviewedRetry()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.669819167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "canceledMissingChangedAndForeignReviewsNeverMutateThePlanner()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.30221325,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.281470667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:)",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.223194458,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

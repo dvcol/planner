@@ -1,0 +1,30 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 2.507,
+  "frozenInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "canceledMissingChangedAndForeignReviewsNeverMutateThePlanner()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.309423417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.27952275,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:)",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.225082708,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

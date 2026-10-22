@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "revision": "workspace",
+  "changedFiles": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/BulkCompletionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PlannerStoreFixture.swift"
+  ]
+}
