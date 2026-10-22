@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/7D5F571A-0A20-4B1D-A41B-238CEB417DF2",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/F09A003F-7B18-4F74-AFE6-AB9D4D9E7F99",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/2D3C6662-1735-4388-B47C-2DA1190A74E4",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/9C6169C1-0C20-4D7E-9D73-5B448D8C058C",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/387C71C4-3863-47F5-A805-3BB92DC651D8",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/6E67A585-3F27-4B70-8A33-0253CCD918BF",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A5CE88DD-C4ED-4824-A18F-AA99EC9F0DE8",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/0ADDAB5C-6811-4DB5-B14D-DE22D387908F",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A5FA71C3-6BE4-4853-B45D-C2420A472674",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/1D6936F2-0A9D-445C-BF5B-161A29FEEE89",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/D1995D6D-50EA-4ACE-86B7-FB632C366626"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "33c0cb8723480f5456d5cd03bf344b5dca7b9eb8ef8748288451c3ead24b4de0",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 11,
+  "hostProcessIdentifiers": [
+    91215
+  ]
+}

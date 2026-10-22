@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000102917"/>
+    <testsuite name="TestResults" errors="0" tests="7" failures="0" skipped="0" time="0.1928375">
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="aForeignInstanceSessionFailsWithoutPoisoningTheValidSubscription()" time="0.071208416"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anIndependentLocalWriterInvalidatesCanonicalReadsAfterSubscription()" time="0.0732995"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="changingTheControlBindingEndsTheStreamAndAValidatedReopeningCanObserve()" time="0.18439175"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="cancellingOneSubscriberKeepsTheOtherLiveForOwnWrites()" time="0.072660584"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="losingTheStoreEndsObservationWithoutRecreatingItAndCanReopenAfterRepair()" time="0.192526834"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="recoveryOnlyDamageAndRepairInvalidateStatusWithoutChangingTheItem(atomicReplacement:)" time="0.084690958"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anIndependentProcessInvalidatesTheSubscribedDataset()" time="0.173858"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.725e-05"/>
+    <testsuite name="TestResults" errors="0" tests="11" failures="0" skipped="0" time="5.349934125">
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anIndependentLocalWriterInvalidatesCanonicalReadsAfterSubscription()" time="0.091762042"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="retainingAStreamDoesNotRetainItsDiscardedPlanner()" time="0.046535708"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="aForeignInstanceSessionFailsWithoutPoisoningTheValidSubscription()" time="0.089666"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="recoveryOnlyDamageAndRepairInvalidateStatusWithoutChangingTheItem(atomicReplacement:)" time="0.104791208"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="reviewedBulkInvalidatesLocalProgressAndCompleteReplayDoesNotInventADataChange()" time="5.323080042"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anIndependentProcessInvalidatesTheSubscribedDataset()" time="0.180509792"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anotherDatasetAndRecoveryNamespaceCannotInvalidateTheSubscribedDataset()" time="5.349536542"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="losingTheStoreEndsObservationWithoutRecreatingItAndCanReopenAfterRepair()" time="0.211374667"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="aBurstOverlappingInitialReadsStillInvalidatesTheFinalCanonicalGeneration()" time="1.162995583"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="cancellingOneSubscriberKeepsTheOtherLiveForOwnWrites()" time="0.089961625"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="changingTheControlBindingEndsTheStreamAndAValidatedReopeningCanObserve()" time="0.201330666"/>
+    </testsuite>
+</testsuites>

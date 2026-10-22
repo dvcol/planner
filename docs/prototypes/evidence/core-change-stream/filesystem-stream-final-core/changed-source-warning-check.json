@@ -1,0 +1,4 @@
+{
+  "changedSourceWarnings": [],
+  "note": "The introduced weak-variable warning in the preceding run was fixed using the compiler-supported immutable weak reference. Other fixture macro warnings retain their previously established baseline."
+}

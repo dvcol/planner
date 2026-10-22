@@ -1,0 +1,31 @@
+{
+  "publicCoreRuntime": {
+    "sourceInputCount": 748,
+    "sourceDifferences": [],
+    "productCount": 2,
+    "productDifferences": [],
+    "exitCode": 0,
+    "functions": 11,
+    "failedFunctions": 0,
+    "sqliteUnlinkDiagnostics": 0
+  },
+  "nativeCompilers": [
+    {
+      "phase": "filesystem-stream-mobile-compiler",
+      "sourceInputCount": 1077,
+      "sourceDifferences": [],
+      "productCount": 13,
+      "productDifferences": [],
+      "runtimeCredit": false
+    },
+    {
+      "phase": "filesystem-stream-mac-compiler",
+      "sourceInputCount": 1077,
+      "sourceDifferences": [],
+      "productCount": 9,
+      "productDifferences": [],
+      "runtimeCredit": false
+    }
+  ],
+  "scope": "Local data/filesystem Core slice only. Native Store integration, mobile runtime observation, account/cloud, installed/signed/physical and final acceptance remain open."
+}

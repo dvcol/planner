@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.7333e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="5.285303667000001">
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="changingTheControlBindingEndsTheStreamAndAValidatedReopeningCanObserve()" time="5.284868875000001">
+            <failure message="Caught error: .noInvalidationBeforeTestDeadline (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

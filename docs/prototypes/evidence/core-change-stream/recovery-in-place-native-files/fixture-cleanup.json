@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/F1229C2B-FBA4-4E40-BE67-C341DE54096E",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4D1F3C50-6F09-4788-A700-B25B376F33D7",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/DE0C85F5-967D-4DFC-A4EA-4052C98E53B5",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/E9CA5747-8826-4E45-99E3-00B9B8B7F085",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/74335EC8-85F6-4FA3-831F-6B6B92F8195C",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/033909AC-1584-48B7-9FDB-F54EA0D06E87"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "fea54ac996dbe7f0388a1400a23f6c3f88e9c19b65c9a7f2375847e42c9abb7d",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 6,
+  "hostProcessIdentifiers": [
+    85963
+  ]
+}

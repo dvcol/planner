@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.3792e-05"/>
+    <testsuite name="TestResults" errors="0" tests="10" failures="0" skipped="0" time="5.213961291">
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="recoveryOnlyDamageAndRepairInvalidateStatusWithoutChangingTheItem(atomicReplacement:)" time="0.11002075"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="cancellingOneSubscriberKeepsTheOtherLiveForOwnWrites()" time="0.098481916"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anIndependentProcessInvalidatesTheSubscribedDataset()" time="0.197771292"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="aForeignInstanceSessionFailsWithoutPoisoningTheValidSubscription()" time="0.099355583"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anIndependentLocalWriterInvalidatesCanonicalReadsAfterSubscription()" time="0.102180875"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="aBurstOverlappingInitialReadsStillInvalidatesTheFinalCanonicalGeneration()" time="1.179681958"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="anotherDatasetAndRecoveryNamespaceCannotInvalidateTheSubscribedDataset()" time="5.213494375000001"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="losingTheStoreEndsObservationWithoutRecreatingItAndCanReopenAfterRepair()" time="0.206385625"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="changingTheControlBindingEndsTheStreamAndAValidatedReopeningCanObserve()" time="0.201266042"/>
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="retainingAStreamDoesNotRetainItsDiscardedPlanner()" time="0.058158875"/>
+    </testsuite>
+</testsuites>

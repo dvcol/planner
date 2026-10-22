@@ -1,6 +1,6 @@
 # Core change stream contract review
 
-Status: Q130 A accepted on 22 October 2026. The declaration and existing test boundaries are approved; implementation and qualification remain pending.
+Status: Q130 A accepted on 22 October 2026. The declaration and existing test boundaries are approved. The local Core slice is implemented and qualified in [the checkpoint](prototypes/core-change-stream.md#final-filesystemdata-core-checkpoint); native integration and the remaining acceptance gates stay open.
 
 ## Context, before and after
 

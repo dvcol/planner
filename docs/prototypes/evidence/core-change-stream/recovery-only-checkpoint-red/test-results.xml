@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000157041"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="5.102637875">
+        <testcase classname="PlannerCoreStoreTests.PlannerChangeStreamTests" name="recoveryOnlyDamageAndRepairInvalidateStatusWithoutChangingTheItem()" time="5.102148124999999">
+            <failure message="Caught error: .noInvalidationBeforeTestDeadline (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>
