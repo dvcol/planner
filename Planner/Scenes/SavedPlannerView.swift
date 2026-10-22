@@ -353,7 +353,8 @@ struct SavedPlannerView: View {
               && !showSettings
               && newItemDraft == nil
               && captureEntryPoint == nil
-              && (selectedSection != .itineraries || showNewList || newItemDraft != nil)
+              && (selectedSection != .itineraries || selectedItineraryIdentifier == nil
+                || showNewList || newItemDraft != nil)
           },
           set: { if !$0 { store.alertMessage = nil } })
       ) {
@@ -2165,18 +2166,18 @@ struct SavedPlannerView: View {
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
       isOpeningAppearance = false
-      if !availability.listAvailable {
+      if !availability.containerAvailable {
         selectedListId = nil
         retainedListSource = nil
         isOpeningList = false
       }
-      preferredCompactColumn = availability.listAvailable ? .content : .sidebar
-      destination = availability.listAvailable ? "the List" : "Lists"
+      preferredCompactColumn = availability.containerAvailable ? .content : .sidebar
+      destination = availability.containerAvailable ? "the List" : "Lists"
     case .itineraries:
       selectedItineraryRow = nil
-      if session.request.source.kind == .itinerary { selectedItineraryIdentifier = nil }
+      if !availability.containerAvailable { selectedItineraryIdentifier = nil }
       itineraryPreferredCompactColumn = selectedItineraryIdentifier == nil ? .sidebar : .content
-      destination = "Itineraries"
+      destination = availability.containerAvailable ? "the Itinerary" : "Itineraries"
     case .calendar:
       calendarSelection = nil
       calendarInspectorPresented = false
@@ -2202,7 +2203,9 @@ struct SavedPlannerView: View {
       guard store.devicePreferenceNamespace == request.namespace else { return }
       website?.page.stopLoading()
       website = SavedWebsiteSession(request: request)
-      preferredCompactColumn = .detail
+      if selectedSection != .itineraries || usesSidebarNavigation {
+        preferredCompactColumn = .detail
+      }
     }
   }
 
