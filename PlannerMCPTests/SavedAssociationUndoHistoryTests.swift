@@ -12,7 +12,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
     for itinerary in [false, true] {
       for removalKind in ["links", "labels", "both"] {
         let fixture = try await Fixture()
-        defer { try? FileManager.default.removeItem(at: fixture.directory) }
         func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
           let response = await fixture.planner.execute(
             .init(operationId: UUID(), session: fixture.session, command: command))
@@ -123,7 +122,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
 
   func testNativeMoveResponseRegistersOneWholeInverseWithItsActionName() async throws {
     let fixture = try await Fixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let creation = await fixture.planner.execute(
       .init(
         operationId: UUID(), session: fixture.session,
@@ -158,7 +156,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
 
   func testSeparateHistoriesRestoreOnlyTheirOwnRemovalAndPreserveOrdinaryUndo() async throws {
     let fixture = try await Fixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let firstHistory = SavedAssociationUndoHistory()
     let secondHistory = SavedAssociationUndoHistory()
     let firstManager = UndoManager()
@@ -205,7 +202,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
 
   func testNativeUndoQueuesDistinctRemovalsAndDoesNotRegisterRedo() async throws {
     let fixture = try await Fixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let history = SavedAssociationUndoHistory()
     let manager = UndoManager()
     manager.groupsByEvent = false
@@ -236,7 +232,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
 
   func testRecoveryPreparationFailureRetainsRetryAndRestoresOnceAfterRepair() async throws {
     let fixture = try await Fixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let history = SavedAssociationUndoHistory()
     let manager = UndoManager()
     manager.groupsByEvent = false
@@ -285,7 +280,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
 
   func testNewerMembershipRejectsOldUndoWithExplanationAndPreservesCurrentData() async throws {
     let fixture = try await Fixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let history = SavedAssociationUndoHistory()
     let manager = UndoManager()
     manager.groupsByEvent = false
@@ -313,7 +307,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
 
   func testExplicitUndoDeduplicatesRemovalAndPreservesOtherManagerTargets() async throws {
     let fixture = try await Fixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let history = SavedAssociationUndoHistory()
     let manager = UndoManager()
     manager.groupsByEvent = false
@@ -364,16 +357,10 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
     let membershipIdentifiers: [UUID]
 
     init() async throws {
-      let directory = FileManager.default.temporaryDirectory
-        .appendingPathComponent("PlannerAssociationHistoryFixtures")
-        .appendingPathComponent(UUID().uuidString)
+      let (directory, configuration, store) = try makePlannerIntentStorage()
       self.directory = directory
-      let configuration = PlannerStorageConfiguration(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly)
       self.configuration = configuration
+      self.store = store
       let planner = PlannerCore.Planner(configuration: configuration)
       self.planner = planner
       guard case .ready(let ready) = await planner.bootstrap() else {
@@ -411,8 +398,6 @@ final class SavedAssociationUndoHistoryTests: XCTestCase {
       }
       items = createdItems
       membershipIdentifiers = createdMemberships
-      let store = SavedPlannerStore(configuration: configuration)
-      self.store = store
       await store.open()
       XCTAssertTrue(store.canCreate)
       XCTAssertEqual(store.currentDatasetIdentifier, ready.datasetId)
