@@ -24,6 +24,10 @@ struct PlannerChangeObservationFixtureView: View {
                 .accessibilityIdentifier("fixture.writer.update")
               Button("Move Hotel's pin") { Task { await fixture.moveHotel() } }
                 .accessibilityIdentifier("fixture.writer.moveHotel")
+              Button("Delete Hotel") { Task { await fixture.deleteHotel() } }
+                .accessibilityIdentifier("fixture.writer.deleteHotel")
+              Button("Remove Hotel from Weekend") { Task { await fixture.removeHotelMembership() } }
+                .accessibilityIdentifier("fixture.writer.removeMembership")
               Button("Damage recovery checkpoint") { Task { await fixture.damageRecovery() } }
                 .accessibilityIdentifier("fixture.writer.damageRecovery")
               Button("Repair recovery checkpoint") { Task { await fixture.repairRecovery() } }
@@ -110,6 +114,14 @@ private final class PlannerChangeObservationFixture {
     if case .source(let existingSource)? = existing.rows.first {
       source = existingSource
     } else {
+      var links: [PlannerLinkInput] = []
+      if let websiteIndex = arguments.firstIndex(of: "--fixture-website-url") {
+        guard arguments.indices.contains(websiteIndex + 1),
+          let website = URL(string: arguments[websiteIndex + 1]),
+          ["http", "https"].contains(website.scheme?.lowercased() ?? "")
+        else { throw CancellationError() }
+        links = [.init(originalUrl: arguments[websiteIndex + 1], label: "Museum guide")]
+      }
       guard
         let created = try await save(
           .createItem(
@@ -117,7 +129,7 @@ private final class PlannerChangeObservationFixture {
               title: "Hotel", notes: "Original notes",
               location: .init(
                 displayName: "Hotel", formattedAddress: nil,
-                coordinate: .init(latitude: 35.662, longitude: 139.717))))
+                coordinate: .init(latitude: 35.662, longitude: 139.717)), links: links))
         ).generated.first,
         let list = try await save(.createList(content: .init(name: "Weekend"))).generated.first
       else { throw CancellationError() }
@@ -172,6 +184,51 @@ private final class PlannerChangeObservationFixture {
     case .applied(_, .complete): status = "Saved another-writer location"
     default: status = "Independent writer did not move Hotel's pin"
     }
+  }
+
+  func deleteHotel() async {
+    let command = PlannerCommand.deleteSource(source: source)
+    guard
+      case .reviewed(let review) = await writer.prepareReview(
+        session: session, command: command)
+    else {
+      status = "Independent writer could not review Hotel deletion"
+      return
+    }
+    let result = await writer.execute(
+      .init(
+        operationId: UUID(), session: session, command: command,
+        reviewToken: review.reviewToken))
+    switch result.outcome {
+    case .applied(_, .complete): status = "Deleted Hotel from another writer"
+    default: status = "Independent writer did not delete Hotel"
+    }
+  }
+
+  func removeHotelMembership() async {
+    guard
+      case .source(.item(let current)) = await writer.read(
+        session: session, request: .source(source))
+    else {
+      status = "Independent writer could not read Hotel's membership"
+      return
+    }
+    for reference in current.references {
+      guard case .membership(let membershipIdentifier, let list, let item) = reference,
+        item == source
+      else { continue }
+      let result = await writer.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .removeMembership(listId: list.id, membershipId: membershipIdentifier)))
+      if case .applied(_, .complete) = result.outcome {
+        status = "Removed Hotel from Weekend"
+      } else {
+        status = "Independent writer did not remove Hotel's membership"
+      }
+      return
+    }
+    status = "No Hotel membership to remove"
   }
 
   func damageRecovery() async {
