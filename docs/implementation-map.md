@@ -6,6 +6,8 @@ This map remains open. Signing is deferred, and it is not the only remaining gat
 
 ## Decisions and external actions needed
 
+- **Contextual Map compatibility qualified.** The [final checkpoint](prototypes/native-map-context-compatibility.md#final-local-checkpoint) passes fourteen phone/iPad executions across seven functions, including List and repeated-Itinerary rotation, full bookmark-row visibility and largest-text/Increase Contrast controls. All 1,094 inputs match Mac compilation; seventeen originals are inspected. Itinerary title crowding, Mac UI and broader physical/final polish remain open. Twelve prior duplicate export directories are safely removed, retaining original results and captures.
+
 - **Q151 pending, no-live restoration policy.** A valid backup can contain a restored candidate while the current Item is deleted. Current execution rejects that case; Q149 requires a live owner. The [concrete choices](import-no-live-restored-values-decision.md) distinguish fresh local restoration, incoming-family admission and keeping the restriction. Only that transformation waits.
 
 - **Known-candidate Overwrite qualified.** The [follow-up](prototypes/core-native-import-known-values.md#final-local-checkpoint) applies reviewed incoming values to the current live identity for omitted/full/subset known-family metadata. All five kinds, exact graphs and recovery failures pass; final Mac/iPhone cohorts each pass 80 functions/329 fixtures, with matching Core inputs and Mac app compilation. Broader family admission and actual Mac/physical acceptance remain open.

@@ -236,6 +236,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   func testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion() {
     continueAfterFailure = false
+    prepareTabletOrientation()
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -252,6 +253,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   func testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList() {
     continueAfterFailure = false
+    prepareTabletOrientation()
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -287,6 +289,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   func testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource() {
     continueAfterFailure = false
+    prepareTabletOrientation()
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -331,6 +334,9 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(link, in: application)
     XCTAssertTrue(link.waitForExistence(timeout: 10))
     let bookmarkIdentifier = link.identifier
+    verifyTabletMapViewport(
+      in: application, pin: pin, savedLink: link, originalURL: originalURL, context: "List")
+    XCTAssertTrue(application.plannerElement("saved.appearance.actions").exists)
     application.openPlannerSection("Items")
     let completion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
@@ -397,14 +403,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   func testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation() {
     continueAfterFailure = false
-    #if os(iOS)
-      if UIDevice.current.userInterfaceIdiom == .pad {
-        XCUIDevice.shared.orientation = .portrait
-        addTeardownBlock {
-          await MainActor.run { XCUIDevice.shared.orientation = .portrait }
-        }
-      }
-    #endif
+    prepareTabletOrientation()
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -433,9 +432,38 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, originalURL)
     XCTAssertTrue(application.plannerElement("saved.item.actions").exists)
+    verifyTabletMapViewport(
+      in: application, pin: pin, savedLink: savedLink, originalURL: originalURL, context: "Items")
+    returnToCatalog(application)
+    application.plannerElement("saved.map.locations").activateForPlannerJourney()
+    let unlocated = application.buttons["Unlocated note"].firstMatch
+    XCTAssertTrue(unlocated.waitForExistence(timeout: 5))
+    unlocated.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    XCTAssertTrue(savedLink.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Unlocated note"].firstMatch.exists)
+  }
+
+  private func prepareTabletOrientation() {
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock {
+          await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+        }
+      }
+    #endif
+  }
+
+  private func verifyTabletMapViewport(
+    in application: XCUIApplication, pin: XCUIElement, savedLink: XCUIElement,
+    originalURL: String, context: String
+  ) {
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .pad {
         let savedLinkIdentifier = savedLink.identifier
+        let map = application.descendants(matching: .any)
+          .matching(identifier: "saved.map.collection").firstMatch
         for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
           XCUIDevice.shared.orientation = orientation
           let settled = NSPredicate { _, _ in
@@ -448,7 +476,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           let result = XCTWaiter.wait(
             for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
           let window = application.windows.firstMatch
-          for _ in 0..<4 where !savedLink.isHittable {
+          for _ in 0..<4
+          where !savedLink.isHittable || savedLink.frame.maxY > window.frame.maxY {
             let start = window.coordinate(
               withNormalizedOffset: CGVector(dx: 0.99, dy: 0.75))
             let end = window.coordinate(
@@ -458,7 +487,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           let orientationName = orientation == .portrait ? "portrait" : "landscape"
           let viewportCapture = XCTAttachment(
             screenshot: application.windows.firstMatch.screenshot())
-          viewportCapture.name = "Collection Map viewport and exact details in \(orientationName)"
+          viewportCapture.name =
+            "Collection Map \(context) viewport and exact details in \(orientationName)"
           viewportCapture.lifetime = .keepAlways
           add(viewportCapture)
           let locations = application.plannerElement("saved.map.locations")
@@ -468,7 +498,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
             string:
               "window=\(windowFrame)\nmap=\(mapFrame)\npin=\(pin.frame)\nlocations=\(locations.frame)\nlink=\(savedLink.frame)"
           )
-          geometry.name = "Collection Map navigation frames in \(orientationName)"
+          geometry.name = "Collection Map \(context) navigation frames in \(orientationName)"
           geometry.lifetime = .keepAlways
           add(geometry)
           XCTAssertEqual(result, .completed)
@@ -480,20 +510,14 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           XCTAssertLessThanOrEqual(mapFrame.maxY, windowFrame.maxY + 1)
           XCTAssertTrue(locations.isHittable)
           XCTAssertTrue(savedLink.isHittable)
+          XCTAssertGreaterThanOrEqual(savedLink.frame.minY, windowFrame.minY - 1)
+          XCTAssertLessThanOrEqual(savedLink.frame.maxY, windowFrame.maxY + 1)
           XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
           XCTAssertEqual(savedLink.value as? String, originalURL)
           XCTAssertLessThanOrEqual(mapFrame.maxX, savedLink.frame.minX + 1)
         }
       }
     #endif
-    returnToCatalog(application)
-    application.plannerElement("saved.map.locations").activateForPlannerJourney()
-    let unlocated = application.buttons["Unlocated note"].firstMatch
-    XCTAssertTrue(unlocated.waitForExistence(timeout: 5))
-    unlocated.activateForPlannerJourney()
-    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
-    XCTAssertTrue(savedLink.waitForNonExistence(timeout: 5))
-    XCTAssertTrue(application.staticTexts["Unlocated note"].firstMatch.exists)
   }
 
   private func createWeekendRoute(referencing sources: [String], in application: XCUIApplication) {
@@ -572,6 +596,17 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(link, in: application)
     XCTAssertTrue(link.waitForExistence(timeout: 10))
     let bookmarkIdentifier = link.identifier
+    verifyTabletMapViewport(
+      in: application, pin: pin, savedLink: link, originalURL: originalURL,
+      context: firstChoiceLabel)
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        pin.activateForPlannerJourney()
+        XCTAssertTrue(firstStop.waitForExistence(timeout: 5))
+        firstStop.activateForPlannerJourney()
+        XCTAssertTrue(application.staticTexts["Completed"].firstMatch.waitForExistence(timeout: 10))
+      }
+    #endif
     returnToCatalog(application, title: "Weekend route")
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
     pin.activateForPlannerJourney()
@@ -589,19 +624,28 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   private func revealDetailLink(_ link: XCUIElement, in application: XCUIApplication) {
     #if os(iOS)
-      guard let form = application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable)
-      else {
-        XCTFail("The selected Item detail form is unavailable")
-        return
-      }
       let usesAccessibilityText =
         UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-      let maximumScrolls = usesAccessibilityText ? 12 : 4
-      let horizontalPosition = usesAccessibilityText ? 24 / form.frame.width : 0.98
-      for _ in 0..<maximumScrolls where !link.exists {
-        let start = form.coordinate(
+      var scrollContainer = application.windows.firstMatch
+      let window = application.windows.firstMatch
+      var horizontalPosition = 0.99
+      var maximumScrolls = 4
+      if usesAccessibilityText {
+        guard
+          let form = application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable)
+        else {
+          XCTFail("The selected Item detail form is unavailable: \(application.debugDescription)")
+          return
+        }
+        scrollContainer = form
+        horizontalPosition = 24 / form.frame.width
+        maximumScrolls = 12
+      }
+      for _ in 0..<maximumScrolls
+      where !link.isHittable || link.frame.maxY > window.frame.maxY {
+        let start = scrollContainer.coordinate(
           withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.75))
-        let end = form.coordinate(
+        let end = scrollContainer.coordinate(
           withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.25))
         start.press(forDuration: 0.05, thenDragTo: end)
       }
