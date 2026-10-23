@@ -1,0 +1,121 @@
+{
+  "format": "planner-data",
+  "formatVersion": 2,
+  "sources": [
+    {
+      "kind": "item",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "lifetimeId": "$restored-lifetime",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "title": "Other museum",
+        "subtitle": null,
+        "notes": "Incoming restored notes",
+        "location": null,
+        "estimate": {
+          "minutes": "120",
+          "displayUnit": "hour"
+        }
+      },
+      "globalDone": false,
+      "archived": true,
+      "contentOrigins": {
+        "title": "independent",
+        "notes": "independent"
+      }
+    },
+    {
+      "kind": "list",
+      "id": "00000000-0000-4000-8000-000000000277",
+      "lifetimeId": "00000000-0000-4000-8000-000000000827",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "name": "Tour",
+        "notes": null,
+        "color": null,
+        "iconName": null,
+        "manualEstimate": null
+      },
+      "globalDone": null,
+      "archived": false,
+      "contentOrigins": {
+        "name": "independent"
+      }
+    },
+    {
+      "kind": "tag",
+      "id": "00000000-0000-4000-8000-000000000602",
+      "lifetimeId": "00000000-0000-4000-8000-000000000862",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "name": "Rainy day",
+        "color": null,
+        "iconName": null
+      },
+      "globalDone": null,
+      "archived": null,
+      "contentOrigins": {
+        "name": "independent"
+      }
+    }
+  ],
+  "memberships": [
+    {
+      "id": "00000000-0000-4000-8000-000000000477",
+      "lifetimeId": "00000000-0000-4000-8000-000000000477",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000277",
+        "lifetimeId": "00000000-0000-4000-8000-000000000827"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "$restored-lifetime"
+      },
+      "rank": "1024",
+      "localDone": true
+    }
+  ],
+  "itineraryEntries": [],
+  "expandedCompletions": [],
+  "schedules": [],
+  "labelAssociations": [],
+  "ownedLinks": [],
+  "deletionMarkers": [
+    {
+      "deletionId": "00000000-0000-4000-8000-000000000892",
+      "operationId": "00000000-0000-4000-8000-000000000992",
+      "target": {
+        "kind": "source",
+        "source": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        }
+      },
+      "closedFamilyId": null
+    }
+  ],
+  "contextAliases": [],
+  "completionChanges": [],
+  "restorationFamilies": [
+    {
+      "familyId": "BF4CA8D3-7AFB-8BF5-A2C3-7F67C76178EC",
+      "predecessor": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "candidates": [
+        {
+          "lifetimeId": "$restored-lifetime",
+          "operationId": "00000000-0000-4000-8000-000000000998"
+        }
+      ]
+    }
+  ]
+}

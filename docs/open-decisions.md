@@ -2,7 +2,7 @@
 
 ## Current frontier
 
-Q150 A and Q151 A are accepted on 23 October 2026. The [Q152 concrete lineage/reference contract](import-no-live-restored-values-contract-review.md) requires review before implementation. [No-live incoming restoration](import-no-live-restored-values-decision.md) needs a policy distinct from Q149’s current-live value copy. Only its dependent transformation waits for that concrete review.
+Q150 A, Q151 A and Q152 A are accepted on 23 October 2026. The [Q152 concrete lineage/reference contract](import-no-live-restored-values-contract-review.md) is approved for implementation. [No-live incoming restoration](import-no-live-restored-values-decision.md) creates a fresh local lifetime under current retained history, with separately authorized references and all-or-nothing validation. The [first Core checkpoint](prototypes/core-native-import-fresh-local-values.md#first-local-checkpoint) implements Item/Tour restoration and passes matching 81-function, 331-fixture Mac/iPhone cohorts. Broader lineage, kinds, references, failure and native administration qualification remain open; no policy answer blocks this slice.
 
 Q150 A is accepted. [Browser Return after association restoration](native-browser-restored-context-decision.md) distinguishes restoring an original public appearance through Undo from requiring its old internal lifetime. The fresh-Item-lifetime rule is already accepted; its [native restoration checkpoint](prototypes/native-webpage-restored-source.md#final-local-checkpoint) now passes phone/dark-iPad journeys and matching Mac compilation. Signing is separate.
 

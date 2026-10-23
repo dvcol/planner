@@ -1,0 +1,29 @@
+{
+  "format": "planner-data",
+  "formatVersion": 2,
+  "sources": [],
+  "memberships": [],
+  "itineraryEntries": [],
+  "expandedCompletions": [],
+  "schedules": [],
+  "labelAssociations": [],
+  "ownedLinks": [],
+  "deletionMarkers": [
+    {
+      "deletionId": "00000000-0000-4000-8000-000000000892",
+      "operationId": "00000000-0000-4000-8000-000000000992",
+      "target": {
+        "kind": "source",
+        "source": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        }
+      },
+      "closedFamilyId": null
+    }
+  ],
+  "contextAliases": [],
+  "completionChanges": [],
+  "restorationFamilies": []
+}

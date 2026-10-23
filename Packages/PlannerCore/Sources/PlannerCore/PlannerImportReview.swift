@@ -366,17 +366,21 @@ func plannerResolveImportReview(
       resolvedSourceLifetimes[source.importBinding] = actual.lifetimeId
     }
     for source in incoming.backup.sources {
-      guard let actual = currentSources[source.importBinding.reference],
+      let actual = currentSources[source.importBinding.reference]
+      let live = actual.map {
+        PlannerPortableBoundIdentity(
+          kind: source.importIdentity.kind, id: $0.id, lifetimeId: $0.lifetimeId)
+      }
+      guard
         let family = try currentGraph.restoredValueFamily(
-          for: source.importIdentity,
-          to: .init(kind: source.importIdentity.kind, id: actual.id, lifetimeId: actual.lifetimeId),
-          in: incoming.backup)
+          for: source.importIdentity, to: live, in: incoming.backup)
       else { continue }
-      replacementSourceLifetimes[source.importBinding] = actual.lifetimeId
+      let targetLifetime = actual?.lifetimeId ?? family.predecessor.lifetimeId
+      replacementSourceLifetimes[source.importBinding] = targetLifetime
       for candidate in family.candidates {
         resolvedSourceLifetimes[
-          .init(kind: actual.kind, id: actual.id, lifetimeId: candidate.lifetimeId)] =
-          actual.lifetimeId
+          .init(kind: source.importBinding.kind, id: source.id, lifetimeId: candidate.lifetimeId)] =
+          targetLifetime
       }
       selectedIncomingFamilies.removeAll {
         $0.predecessor.kind == source.importIdentity.kind && $0.predecessor.id == source.id

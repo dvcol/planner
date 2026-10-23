@@ -809,21 +809,82 @@ struct NativeImportRestorationTests {
     else { throw CancellationError() }
     #expect(skipData == deletedData)
     let candidateOperationIdentifier = UUID()
+    let candidateResponse = await admission.execute(
+      .init(
+        operationId: candidateOperationIdentifier, session: admissionSession,
+        command: candidateReview.command, reviewToken: candidateReview.reviewToken))
     guard
-      case .rejected = await admission.execute(
-        .init(
-          operationId: candidateOperationIdentifier, session: admissionSession,
-          command: candidateReview.command, reviewToken: candidateReview.reviewToken)
-      ).outcome,
-      case .noReliableEvidence = await admission.operationStatus(
-        session: admissionSession, operationId: candidateOperationIdentifier),
-      case .exported(let rejectedCandidateData) = await admission.exportData(
-        session: admissionSession)
+      case .applied(let candidateResult, .complete(let candidateCheckpoint)) = candidateResponse
+        .outcome,
+      case .exported(let candidateData) = await admission.exportData(session: admissionSession),
+      case .decoded(let candidateBackup) = admission.decodeImport(candidateData),
+      let candidateItem = candidateBackup.backup.items.first
     else {
-      Issue.record("Incoming candidate reconciliation must stay gated without any partial import.")
+      Issue.record(
+        "Q152 must restore incoming values under a fresh local lifetime: \(candidateResponse)")
       return
     }
-    #expect(rejectedCandidateData == deletedData)
+    #expect(candidateItem.id == item.id)
+    #expect(candidateItem.content.title == "Museum" && candidateItem.content.notes == "Saved notes")
+    #expect(candidateItem.lifetimeId != originalItem.lifetimeId)
+    #expect(candidateItem.lifetimeId != restoredItem.lifetimeId)
+    let candidateFamily = try #require(candidateBackup.backup.restorationFamilies.first)
+    #expect(candidateFamily.familyId == family.familyId)
+    #expect(candidateFamily.predecessor == family.predecessor)
+    #expect(candidateFamily.candidates.count == 1)
+    #expect(candidateFamily.candidates.first?.lifetimeId == candidateItem.lifetimeId)
+    #expect(candidateFamily.candidates.first?.operationId == candidateOperationIdentifier)
+    var expectedCandidateObject = restoredObject
+    var expectedCandidateSources = try #require(
+      expectedCandidateObject["sources"] as? [[String: Any]])
+    #expect(expectedCandidateSources.count == 1)
+    expectedCandidateSources[0]["lifetimeId"] = candidateItem.lifetimeId.uuidString
+    expectedCandidateObject["sources"] = expectedCandidateSources
+    var expectedCandidateFamilies = try #require(
+      expectedCandidateObject["restorationFamilies"] as? [[String: Any]])
+    #expect(expectedCandidateFamilies.count == 1)
+    expectedCandidateFamilies[0]["candidates"] = [
+      [
+        "lifetimeId": candidateItem.lifetimeId.uuidString,
+        "operationId": candidateOperationIdentifier.uuidString,
+      ]
+    ]
+    expectedCandidateObject["restorationFamilies"] = expectedCandidateFamilies
+    let candidateObject = try #require(
+      JSONSerialization.jsonObject(with: candidateData) as? [String: Any])
+    #expect(NSDictionary(dictionary: candidateObject).isEqual(to: expectedCandidateObject))
+    guard
+      case .listedNamespaces(let candidateNamespaces) = await admission.inspectRecovery(
+        request: .namespaces),
+      let candidateNamespace = candidateNamespaces.first,
+      case .selected(let candidateRecovery) = await admission.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: candidateNamespace.namespaceId, checkpointGeneration: candidateCheckpoint)),
+      case .applied(let candidateReplay, .complete(let candidateReplayCheckpoint)) =
+        await admission.execute(
+          .init(
+            operationId: candidateOperationIdentifier, session: admissionSession,
+            command: candidateReview.command)
+        ).outcome,
+      case .reviewed(let repeatedCandidateReview) = await admission.prepareReview(
+        session: admissionSession,
+        command: .applyImport(backup: restored, mode: .overwrite, restoreDeletedData: true)),
+      case .applied(_, .complete) = await admission.execute(
+        .init(
+          operationId: UUID(), session: admissionSession, command: repeatedCandidateReview.command,
+          reviewToken: repeatedCandidateReview.reviewToken)
+      ).outcome,
+      case .exported(let repeatedCandidateData) = await admission.exportData(
+        session: admissionSession)
+    else {
+      Issue.record("Fresh local restoration must recover, replay and permit repeat import.")
+      return
+    }
+    let candidateRecoveryObject = try #require(
+      JSONSerialization.jsonObject(with: candidateRecovery.portableData) as? [String: Any])
+    #expect(NSDictionary(dictionary: candidateRecoveryObject).isEqual(to: expectedCandidateObject))
+    #expect(candidateReplay == candidateResult && candidateReplayCheckpoint == candidateCheckpoint)
+    #expect(repeatedCandidateData == candidateData)
     var conflicting = restoredObject
     var conflictingFamilies = try #require(conflicting["restorationFamilies"] as? [[String: Any]])
     var candidates = try #require(conflictingFamilies[0]["candidates"] as? [[String: Any]])
