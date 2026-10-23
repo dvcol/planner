@@ -1,6 +1,10 @@
 # Decision register
 
-## Current frontier, 23 October 2026
+## Current frontier
+
+Q149 A is accepted on 23 October 2026. The [approved contract](import-competing-candidate-values-contract-review.md) copies represented incoming values onto the current live owner and binds explicitly imported dependent owners there, preserving the complete current family. It does not adopt unknown candidates or change Skip. Implementation and qualification remain open. Signing is separate; native narrow-toolbar compatibility work continues independently.
+
+## Approved checkpoints, 23 October 2026
 
 Q127 A is accepted. Replace only the Mac Calendar inspector with a hideable native split pane. Preserve exact Schedule/source selection and the iPad inspector. The [local split-pane checkpoint](prototypes/native-calendar-mac-inspector-resize.md#local-split-pane-checkpoint) implements that presentation and contains the Mac Month grid. Matching compilation and four iPad regression executions pass across retained epochs with twenty-four inspected captures. Actual Mac resizing stays open: the bounded requested Day test never starts because automation initialization times out. Signing is separate from the reproduced resize defect.
 
