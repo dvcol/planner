@@ -737,7 +737,7 @@ struct SavedPlannerView: View {
       representation = nil
     }
     return SavedItineraryDetail(
-      store: store, identifier: identifier, selection: $selectedItineraryRow,
+      store: store, identifier: identifier, selection: itineraryRowSelection,
       representation: representation,
       mapCollection: loadedMapCollection(for: .itinerary(identifier)),
       selectMapRow: selectItineraryMapRow,
@@ -755,6 +755,25 @@ struct SavedPlannerView: View {
       }
     )
     .id(identifier)
+  }
+
+  private var itineraryRowSelection: Binding<SavedItineraryRowSelection?> {
+    Binding(
+      get: {
+        #if os(iOS)
+          guard
+            usesSidebarNavigation || selectedSection != .itineraries
+              || itineraryPreferredCompactColumn == .detail
+          else { return nil }
+        #endif
+        return selectedItineraryRow
+      },
+      set: { selection in
+        selectedItineraryRow = selection
+        if selection != nil, !usesSidebarNavigation, selectedSection == .itineraries {
+          itineraryPreferredCompactColumn = .detail
+        }
+      })
   }
 
   @ViewBuilder
