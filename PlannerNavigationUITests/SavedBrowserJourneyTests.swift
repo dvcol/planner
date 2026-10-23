@@ -381,6 +381,64 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
   }
 
+  func testWebsiteFileLinkKeepsTheGuideAndItsOriginalBookmark() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guideURL = try await server.start()
+    defer { server.stop() }
+    let destination = guideURL.deletingLastPathComponent().appendingPathComponent("link-policy")
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Link policy fixture"].waitForExistence(timeout: 10))
+    page.links["Unavailable file link"].activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    let reportedNavigation = explanation.waitForExistence(timeout: 2)
+    if reportedNavigation {
+      XCTAssertTrue(explanation.staticTexts["Link unavailable"].exists)
+      XCTAssertTrue(
+        explanation.staticTexts.matching(
+          NSPredicate(format: "label CONTAINS %@", "file:///planner-fixture-unavailable.txt")
+        ).firstMatch.exists)
+      XCTAssertFalse(explanation.buttons["Open in default browser"].exists)
+      explanation.buttons["Keep reading"].activateForPlannerJourney()
+      XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    }
+    XCTAssertTrue(page.staticTexts["File link activated"].waitForExistence(timeout: 5))
+    XCTAssertTrue(page.staticTexts["Link policy fixture"].exists)
+    XCTAssertEqual(application.state, .runningForeground)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+    let observation = XCTAttachment(
+      data: try JSONSerialization.data(
+        withJSONObject: [
+          "target": "file:///planner-fixture-unavailable.txt",
+          "plannerNoticePresented": reportedNavigation,
+          "guideStillReadable": page.staticTexts["Link policy fixture"].exists,
+        ], options: .prettyPrinted),
+      uniformTypeIdentifier: "public.json")
+    observation.name = "Native file link activation outcome"
+    observation.lifetime = .keepAlways
+    add(observation)
+    try await recordWindow(application, name: "Native file link keeps the saved guide readable")
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    XCTAssertTrue(server.requestLines.contains("GET /garden HTTP/1.1"))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
