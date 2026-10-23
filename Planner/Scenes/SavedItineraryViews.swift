@@ -209,6 +209,8 @@ struct SavedItineraryDetail: View {
   @State private var isPreparingBulkCompletion = false
   @State private var removedSelectionMessage: String?
   #if os(iOS)
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var contentWidth: CGFloat = 0
     @State private var entryEditMode: EditMode = .inactive
   #endif
 
@@ -223,8 +225,7 @@ struct SavedItineraryDetail: View {
             ScrollViewReader { proxy in
               List(selection: $selection) {
                 Section {
-                  Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
-                    .accessibilityAddTraits(.isHeader)
+                  itineraryTitle(itinerary)
                   if itinerary.state.archived == true {
                     Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(
                       .secondary)
@@ -315,6 +316,13 @@ struct SavedItineraryDetail: View {
           min: usesMapRepresentation ? 320 : 260,
           ideal: usesMapRepresentation ? 560 : 400, max: 800
         )
+        #if os(iOS)
+          .onGeometryChange(for: CGFloat.self) { geometry in
+            geometry.size.width
+          } action: { width in
+            contentWidth = width
+          }
+        #endif
         .overlay(alignment: .topTrailing) {
           if isPreparingBulkCompletion || isPreparingDeletion || isLoading {
             ProgressView(isLoading ? "Updating entries" : "Preparing review")
@@ -322,28 +330,30 @@ struct SavedItineraryDetail: View {
           }
         }
         .toolbar {
-          if let representation {
-            ToolbarItem(placement: .secondaryAction) {
-              SavedCollectionRepresentationMenu(
-                representation: representation,
-                accessibilityIdentifier: "saved.itinerary.representation")
-            }
-          }
           ToolbarItem(placement: .primaryAction) {
             SavedItemFilterControl(
               filters: $filters, accessibilityIdentifier: "saved.itinerary.filters")
           }
           #if os(iOS)
-            ToolbarItem(placement: .primaryAction) {
-              EditButton()
-                .environment(\.editMode, $entryEditMode)
-                .accessibilityLabel("Reorder entries")
-                .accessibilityIdentifier("saved.itinerary.reorder")
-                .disabled(
-                  usesMapRepresentation || !store.canCreate || isLoading
-                    || isPreparingBulkCompletion
-                    || (contents.entries.count < 2 && !entryEditMode.isEditing))
+            if horizontalSizeClass == .compact || contentWidth < 440 {
+              ToolbarOverflowMenu {
+                representationMenu
+                reorderButton(entryCount: contents.entries.count)
+                editButton(itinerary)
+                actionsMenu(itinerary)
+              }
+            } else {
+              ToolbarItem(placement: .secondaryAction) { representationMenu }
+              ToolbarItem(placement: .primaryAction) {
+                reorderButton(entryCount: contents.entries.count)
+              }
+              ToolbarItem(placement: .primaryAction) { editButton(itinerary) }
+              ToolbarItem(placement: .primaryAction) { actionsMenu(itinerary) }
             }
+          #else
+            ToolbarItem(placement: .secondaryAction) { representationMenu }
+            ToolbarItem(placement: .primaryAction) { editButton(itinerary) }
+            ToolbarItem(placement: .primaryAction) { actionsMenu(itinerary) }
           #endif
           ToolbarItem(placement: .primaryAction) {
             Button("Add entry", systemImage: "plus") { showAddEntry = true }
@@ -351,52 +361,6 @@ struct SavedItineraryDetail: View {
               .help("Add an itinerary entry")
               .disabled(!store.canCreate || isLoading)
               .accessibilityIdentifier("saved.itinerary.entry.new")
-          }
-          ToolbarItem(placement: .primaryAction) {
-            Button("Edit itinerary", systemImage: "pencil") {
-              editDraft = .init(itinerary: itinerary)
-            }
-            .labelStyle(.iconOnly)
-            .help("Edit itinerary")
-            .disabled(!store.canCreate || isLoading)
-            .accessibilityIdentifier("saved.itinerary.edit")
-          }
-          ToolbarItem(placement: .primaryAction) {
-            Menu {
-              Button("Schedule itinerary") { showNewSchedule = true }
-              Button(itinerary.state.archived == true ? "Unarchive itinerary" : "Archive itinerary")
-              {
-                Task {
-                  _ = await store.setItineraryArchived(
-                    identifier, archived: itinerary.state.archived != true)
-                }
-              }
-              Divider()
-              Group {
-                Button("Mark all done") {
-                  prepareBulkCompletion(
-                    .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
-                    done: true)
-                }
-                Button("Mark all undone") {
-                  prepareBulkCompletion(
-                    .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
-                    done: false)
-                }
-              }
-              .disabled(itinerary.progress.totalCount == 0)
-              Divider()
-              Button("Delete itinerary", role: .destructive) { prepareDeletion(itinerary) }
-                .accessibilityIdentifier("saved.itinerary.delete")
-            } label: {
-              Label("Itinerary actions", systemImage: "ellipsis")
-            }
-            .labelStyle(.iconOnly)
-            .disabled(
-              !store.canCreate || isLoading || isPreparingBulkCompletion || isPreparingDeletion
-            )
-            .help("Itinerary actions")
-            .accessibilityIdentifier("saved.itinerary.actions")
           }
         }
       } else if let loadingFailure {
@@ -474,25 +438,102 @@ struct SavedItineraryDetail: View {
     }
   }
 
+  @ViewBuilder
+  private var representationMenu: some View {
+    if let representation {
+      SavedCollectionRepresentationMenu(
+        representation: representation,
+        accessibilityIdentifier: "saved.itinerary.representation")
+    }
+  }
+
+  #if os(iOS)
+    private func reorderButton(entryCount: Int) -> some View {
+      EditButton()
+        .environment(\.editMode, $entryEditMode)
+        .accessibilityLabel("Reorder entries")
+        .accessibilityIdentifier("saved.itinerary.reorder")
+        .disabled(
+          usesMapRepresentation || !store.canCreate || isLoading
+            || isPreparingBulkCompletion || (entryCount < 2 && !entryEditMode.isEditing))
+    }
+  #endif
+
+  private func editButton(_ itinerary: PlannerItinerarySourceRead) -> some View {
+    Button("Edit itinerary", systemImage: "pencil") {
+      editDraft = .init(itinerary: itinerary)
+    }
+    .labelStyle(.iconOnly)
+    .help("Edit itinerary")
+    .disabled(!store.canCreate || isLoading)
+    .accessibilityIdentifier("saved.itinerary.edit")
+  }
+
+  private func actionsMenu(_ itinerary: PlannerItinerarySourceRead) -> some View {
+    Menu {
+      Button("Schedule itinerary") { showNewSchedule = true }
+      Button(itinerary.state.archived == true ? "Unarchive itinerary" : "Archive itinerary") {
+        Task {
+          _ = await store.setItineraryArchived(
+            identifier, archived: itinerary.state.archived != true)
+        }
+      }
+      Divider()
+      Group {
+        Button("Mark all done") {
+          prepareBulkCompletion(
+            .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
+            done: true)
+        }
+        Button("Mark all undone") {
+          prepareBulkCompletion(
+            .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
+            done: false)
+        }
+      }
+      .disabled(itinerary.progress.totalCount == 0)
+      Divider()
+      Button("Delete itinerary", role: .destructive) { prepareDeletion(itinerary) }
+        .accessibilityIdentifier("saved.itinerary.delete")
+    } label: {
+      Label("Itinerary actions", systemImage: "ellipsis")
+    }
+    .labelStyle(.iconOnly)
+    .disabled(
+      !store.canCreate || isLoading || isPreparingBulkCompletion || isPreparingDeletion
+    )
+    .help("Itinerary actions")
+    .accessibilityIdentifier("saved.itinerary.actions")
+  }
+
   private var usesMapRepresentation: Bool { representation?.wrappedValue == .map }
 
+  private func itineraryTitle(_ itinerary: PlannerItinerarySourceRead) -> some View {
+    Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
+      .accessibilityAddTraits(.isHeader)
+      .accessibilityIdentifier("saved.itinerary.title")
+  }
+
   private func itineraryMap(_ itinerary: PlannerItinerarySourceRead) -> some View {
-    VStack(spacing: 0) {
-      VStack(alignment: .leading, spacing: 8) {
-        if let done = itinerary.progress.doneCount, let archived = itinerary.progress.archivedCount,
-          let total = itinerary.progress.totalCount, total > 0
-        {
-          SavedCompletionProgress(
-            doneCount: done, archivedCount: archived, totalCount: total,
-            accessibilityIdentifier: "saved.itinerary.progress")
-        }
-        SavedContainerEstimates(
-          estimates: itinerary.estimates, manualEstimate: itinerary.content.manualEstimate,
-          accessibilityIdentifierPrefix: "saved.itinerary.estimate")
+    let summary = VStack(alignment: .leading, spacing: 8) {
+      itineraryTitle(itinerary)
+      if let done = itinerary.progress.doneCount, let archived = itinerary.progress.archivedCount,
+        let total = itinerary.progress.totalCount, total > 0
+      {
+        SavedCompletionProgress(
+          doneCount: done, archivedCount: archived, totalCount: total,
+          accessibilityIdentifier: "saved.itinerary.progress")
       }
-      .padding()
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .background(.bar)
+      SavedContainerEstimates(
+        estimates: itinerary.estimates, manualEstimate: itinerary.content.manualEstimate,
+        accessibilityIdentifierPrefix: "saved.itinerary.estimate")
+    }
+    .padding()
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .background(.bar)
+    return SavedMapCollectionLayout {
+      summary
+    } mapContent: {
       if let mapCollection {
         SavedMapCollectionView(collection: mapCollection, select: selectMapRow)
       } else {

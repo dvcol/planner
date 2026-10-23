@@ -5,6 +5,231 @@ import XCTest
 
   @MainActor
   final class CatalogTitleLayoutJourneyTests: XCTestCase {
+    func testAccessibleItineraryMapKeepsItsPinAndFooterDuringRotation() throws {
+      try XCTSkipUnless(
+        UIDevice.current.userInterfaceIdiom == .pad, "This journey compares iPad panes.")
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-itinerary", "--fixture-map-search-coordinate",
+        "--fixture-dataset", UUID().uuidString,
+      ]
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Itineraries")
+      let itinerary = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+      ).firstMatch
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+      var previousFrame = CGRect.null
+      let settledCatalog = NSPredicate { _, _ in
+        let frame = itinerary.frame
+        let settled = frame == previousFrame && itinerary.isHittable
+        previousFrame = frame
+        return settled
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: settledCatalog, object: application)],
+          timeout: 10), .completed)
+      itinerary.staticTexts["City trip"].firstMatch.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.plannerElement("saved.itinerary.filters").waitForExistence(timeout: 10))
+      application.openSavedPlannerItineraryViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("Map")
+      let pin = application.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.pin.")
+      ).firstMatch
+      XCTAssertTrue(pin.waitForExistence(timeout: 10))
+      if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        let summary = application.scrollViews["saved.map.summary"]
+        XCTAssertTrue(summary.waitForExistence(timeout: 5))
+        let warning = summary.staticTexts["2 estimates missing"].firstMatch
+        for _ in 0..<8 {
+          if warning.exists && warning.isHittable { break }
+          summary.swipeUp(velocity: .slow)
+        }
+        XCTAssertTrue(warning.isHittable)
+        XCTAssertTrue(pin.isHittable)
+      }
+      pin.activateForPlannerJourney()
+      let firstStop = application.buttons["Hotel · Stop 1"].firstMatch
+      XCTAssertTrue(firstStop.waitForExistence(timeout: 5))
+      firstStop.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
+        XCUIDevice.shared.orientation = orientation
+        let settled = NSPredicate { _, _ in
+          let frame = application.windows.firstMatch.frame
+          let matchesOrientation: Bool
+          if orientation == .portrait {
+            matchesOrientation = frame.height > frame.width
+          } else {
+            matchesOrientation = frame.width > frame.height
+          }
+          return matchesOrientation && pin.exists && pin.isHittable
+        }
+        let result = XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
+        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+        capture.name = "Itinerary native accessible Map rotation \(orientation.rawValue)"
+        capture.lifetime = .keepAlways
+        add(capture)
+        let hierarchy = XCTAttachment(string: application.debugDescription)
+        hierarchy.name = "Itinerary native accessible Map viewport hierarchy"
+        hierarchy.lifetime = .keepAlways
+        add(hierarchy)
+        XCTAssertEqual(result, .completed)
+        let map = application.descendants(matching: .any)
+          .matching(identifier: "saved.map.collection").firstMatch
+        let summary = application.scrollViews["saved.map.summary"]
+        let visibleTop = summary.exists ? max(map.frame.minY, summary.frame.maxY) : map.frame.minY
+        XCTAssertGreaterThanOrEqual(pin.frame.minY, visibleTop - 1)
+        XCTAssertLessThanOrEqual(pin.frame.maxY, map.frame.maxY + 1)
+        XCTAssertGreaterThanOrEqual(pin.frame.minX, map.frame.minX - 1)
+        XCTAssertLessThanOrEqual(pin.frame.maxX, map.frame.maxX + 1)
+        let locations = application.plannerElement("saved.map.locations")
+        XCTAssertTrue(locations.isHittable)
+        XCTAssertEqual(locations.label, "Locations")
+        XCTAssertTrue(application.staticTexts["2 of 2 items located"].firstMatch.isHittable)
+        XCTAssertTrue(application.staticTexts["Original notes"].exists)
+      }
+    }
+
+    func testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-itinerary", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Itineraries")
+      let itinerary = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+      ).firstMatch
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+      itinerary.activateForPlannerJourney()
+      let filters = application.plannerElement("saved.itinerary.filters")
+      XCTAssertTrue(filters.waitForExistence(timeout: 10))
+      let title = application.navigationBars.staticTexts["City trip"].firstMatch
+      let titleExists = title.waitForExistence(timeout: 5)
+      let capture = XCTAttachment(screenshot: application.screenshot())
+      capture.name = "Itinerary title beside native Filters Add and More"
+      capture.lifetime = .keepAlways
+      add(capture)
+      let frames = XCTAttachment(string: application.navigationBars.debugDescription)
+      frames.name = "Itinerary native title and toolbar frames"
+      frames.lifetime = .keepAlways
+      add(frames)
+      XCTAssertTrue(titleExists, "The selected Itinerary title must remain visible.")
+      let minimumWidth = ("City trip" as NSString).size(
+        withAttributes: [.font: UIFont.preferredFont(forTextStyle: .headline)]).width
+      if application.windows.firstMatch.frame.width < 600 {
+        XCTAssertGreaterThanOrEqual(title.frame.width, minimumWidth)
+      } else {
+        XCTAssertTrue(
+          application.collectionViews["saved.itinerary.contents"].staticTexts["City trip"].exists)
+      }
+      XCTAssertTrue(filters.isHittable)
+      let addEntry = application.plannerElement("saved.itinerary.entry.new")
+      XCTAssertTrue(addEntry.isHittable, "Add must remain directly visible beside Filters.")
+      for button in application.navigationBars.buttons.allElementsBoundByIndex
+      where button.isHittable {
+        XCTAssertFalse(
+          title.frame.intersects(button.frame), "The Itinerary title overlaps \(button.label).")
+      }
+      addEntry.activateForPlannerJourney()
+      let cancel = application.plannerElement("saved.itinerary.entry.cancel")
+      XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+      cancel.activateForPlannerJourney()
+      XCTAssertTrue(filters.waitForExistence(timeout: 5))
+      XCTAssertTrue(title.exists)
+      application.openSavedPlannerItineraryViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("Map")
+      let mapTitle = application.staticTexts["saved.itinerary.title"].firstMatch
+      XCTAssertTrue(mapTitle.waitForExistence(timeout: 10))
+      XCTAssertEqual(mapTitle.label, "City trip")
+      XCTAssertTrue(mapTitle.isHittable)
+      let mapCapture = XCTAttachment(screenshot: application.screenshot())
+      mapCapture.name = "Itinerary title retained above its native collection Map"
+      mapCapture.lifetime = .keepAlways
+      add(mapCapture)
+    }
+
+    func testItineraryMoreKeepsReorderEditingAndSchedulingReachable() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-itinerary", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Itineraries")
+      let itinerary = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+      ).firstMatch
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+      let itineraryIdentifier = itinerary.identifier
+      itinerary.activateForPlannerJourney()
+      let rows = application.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+      XCTAssertTrue(rows.element(boundBy: 1).waitForExistence(timeout: 10))
+      XCTAssertEqual(rows.count, 2)
+      let identities = rows.allElementsBoundByIndex.map(\.identifier)
+      let reorder = application.savedPlannerItineraryReorderControl()
+      XCTAssertTrue(reorder.isEnabled)
+      reorder.activateForPlannerJourney()
+      application.savedPlannerItineraryReorderControl().activateForPlannerJourney()
+      XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), identities)
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
+      let titleField = application.textFields["saved.itinerary.title"]
+      XCTAssertTrue(titleField.waitForExistence(timeout: 5))
+      XCTAssertEqual(titleField.value as? String, "City trip")
+      application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
+      application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
+      application.plannerElement("Schedule itinerary").activateForPlannerJourney()
+      let cancelSchedule = application.plannerElement("saved.schedule.cancel")
+      XCTAssertTrue(cancelSchedule.waitForExistence(timeout: 5))
+      cancelSchedule.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["0 of 2 items done"].waitForExistence(timeout: 5))
+      XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), identities)
+      application.openSavedPlannerItineraryViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("Map")
+      XCTAssertTrue(application.staticTexts["saved.itinerary.title"].waitForExistence(timeout: 10))
+      let mapReorder = application.savedPlannerItineraryReorderControl()
+      XCTAssertFalse(mapReorder.isEnabled)
+      application.dismissSavedPlannerItineraryOverflow()
+      let mapCapture = XCTAttachment(screenshot: application.screenshot())
+      mapCapture.name = "Itinerary toolbar preserves Map after canceled Edit and Schedule"
+      mapCapture.lifetime = .keepAlways
+      add(mapCapture)
+      application.openSavedPlannerItineraryViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("List")
+      XCTAssertTrue(rows.element(boundBy: 1).waitForExistence(timeout: 10))
+      XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), identities)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Itineraries")
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+      XCTAssertEqual(itinerary.identifier, itineraryIdentifier)
+      itinerary.activateForPlannerJourney()
+      XCTAssertTrue(rows.element(boundBy: 1).waitForExistence(timeout: 10))
+      XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), identities)
+      XCTAssertTrue(application.staticTexts["0 of 2 items done"].exists)
+      let capture = XCTAttachment(screenshot: application.screenshot())
+      capture.name = "Itinerary toolbar and exact route survive relaunch"
+      capture.lifetime = .keepAlways
+      add(capture)
+    }
+
     func testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions() {
       continueAfterFailure = false
       let application = XCUIApplication()

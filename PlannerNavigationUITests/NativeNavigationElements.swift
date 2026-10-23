@@ -83,6 +83,29 @@ extension XCUIApplication {
     openSavedPlannerMenu(identifier: "saved.itinerary.representation", title: "View")
   }
 
+  func savedPlannerItineraryEditControl() -> XCUIElement {
+    savedPlannerMenu(identifier: "saved.itinerary.edit", title: "Edit itinerary")
+  }
+
+  func savedPlannerItineraryActionsControl() -> XCUIElement {
+    savedPlannerMenu(identifier: "saved.itinerary.actions", title: "Itinerary actions")
+  }
+
+  func savedPlannerItineraryReorderControl() -> XCUIElement {
+    savedPlannerMenu(identifier: "saved.itinerary.reorder", title: "Reorder entries")
+  }
+
+  func dismissSavedPlannerItineraryOverflow() {
+    #if os(iOS)
+      let edit = collectionViews.buttons["Edit itinerary"].firstMatch
+      guard edit.exists else { return }
+      let window = windows.firstMatch
+      XCTAssertTrue(window.exists)
+      window.coordinate(withNormalizedOffset: CGVector(dx: 0.99, dy: 0.6)).tap()
+      XCTAssertTrue(edit.waitForNonExistence(timeout: 5))
+    #endif
+  }
+
   func openSavedPlannerListViewMenu() {
     openSavedPlannerMenu(identifier: "saved.list.representation", title: "View")
   }
@@ -180,6 +203,13 @@ extension XCUIApplication {
             menu =
               collectionViews.buttons.matching(
                 NSPredicate(format: "label BEGINSWITH %@", "Sort: ")
+              ).firstMatch
+          case "saved.itinerary.reorder":
+            menu =
+              collectionViews.buttons.matching(
+                NSPredicate(
+                  format: "label == %@ OR label == %@ OR label == %@",
+                  "Reorder entries", "Edit", "Done")
               ).firstMatch
           case "saved.list.edit":
             menu =

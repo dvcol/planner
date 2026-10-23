@@ -11,7 +11,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     let newIdentifier = createItinerary("New plan", application: application)
     XCTAssertNotEqual(originalIdentifier, newIdentifier)
     XCTAssertTrue(application.staticTexts["No items"].exists)
-    XCTAssertTrue(application.plannerElement("saved.itinerary.actions").exists)
+    XCTAssertTrue(application.savedPlannerItineraryActionsControl().exists)
     recordScreenshot(application, name: "New itinerary opens independently of the prior selection")
   }
 
@@ -166,7 +166,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     appearance.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Museum booking"].waitForExistence(timeout: 10))
     #if os(iOS)
-      if !application.plannerElement("saved.itinerary.actions").exists {
+      if !application.savedPlannerItineraryActionsControl().exists {
         let back = application.navigationBars.buttons["Selected plan"].firstMatch
         if back.exists {
           back.activateForPlannerJourney()

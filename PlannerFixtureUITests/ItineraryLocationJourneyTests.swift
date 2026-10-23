@@ -42,7 +42,7 @@ import XCTest
       XCTAssertTrue(row.waitForExistence(timeout: 10))
       let identity = row.identifier
       row.activateForPlannerJourney()
-      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
       XCTAssertFalse(application.plannerElement("saved.itinerary.save").isEnabled)
       reveal(address, application: application)
       replace(address, with: "Canceled address")
@@ -58,7 +58,7 @@ import XCTest
       row.activateForPlannerJourney()
       reveal(savedName, application: application)
       XCTAssertTrue(application.staticTexts["Fixture no matches"].firstMatch.exists)
-      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
       reveal(name, application: application)
       replace(name, with: "")
       reveal(address, application: application)
@@ -78,7 +78,7 @@ import XCTest
         application.staticTexts["Keep these route notes"].firstMatch.waitForExistence(timeout: 10))
       XCTAssertFalse(savedName.exists)
       capture("Itinerary location is cleared while its identity and notes survive")
-      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
       XCTAssertFalse(application.plannerElement("saved.itinerary.save").isEnabled)
       reveal(name, application: application)
       XCTAssertEqual(name.value as? String, "Place name")
@@ -119,7 +119,7 @@ import XCTest
         .firstMatch
       reveal(map, application: application)
       capture("Itinerary details display their saved coordinate map")
-      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
       let save = application.plannerElement("saved.itinerary.save")
       XCTAssertFalse(save.isEnabled)
       let pin = application.descendants(matching: .any).matching(
@@ -128,7 +128,7 @@ import XCTest
       chooseRemove(pin, application: application)
       application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
       reveal(map, application: application)
-      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
       let name = application.textFields["saved.itinerary.location.name"]
       let address = application.textFields["saved.itinerary.location.address"]
       reveal(name, application: application)
@@ -139,7 +139,7 @@ import XCTest
       reveal(map, application: application)
       XCTAssertTrue(application.staticTexts["Updated route entrance"].firstMatch.exists)
       XCTAssertTrue(application.staticTexts["Fixture no matches"].firstMatch.exists)
-      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
       XCTAssertFalse(save.isEnabled)
       chooseRemove(pin, application: application)
       capture("Itinerary pin removal remains staged until Save")

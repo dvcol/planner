@@ -31,7 +31,7 @@ import XCTest
         childIdentity.replacingOccurrences(
           of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
       XCTAssertTrue(completion.waitForPlannerValue("To do"))
-      application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+      application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
       let archive = application.plannerElement("Archive itinerary")
       capture("Itinerary action menu before archive")
       XCTAssertTrue(archive.waitForExistence(timeout: 5), application.debugDescription)
@@ -82,7 +82,7 @@ import XCTest
       chooseArchive("Archived Itineraries", application: application)
       XCTAssertTrue(row.waitForExistence(timeout: 10))
       row.activateForPlannerJourney()
-      application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+      application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
       application.plannerElement("Unarchive itinerary").activateForPlannerJourney()
       XCTAssertTrue(archived.waitForNonExistence(timeout: 10))
       reveal(child, application: application)

@@ -30,6 +30,11 @@ struct PlannerChangeObservationFixtureView: View {
                 .accessibilityIdentifier("fixture.writer.restoreHotel")
               Button("Remove Hotel from Weekend") { Task { await fixture.removeHotelMembership() } }
                 .accessibilityIdentifier("fixture.writer.removeMembership")
+              Button("Restore removed Hotel membership") {
+                Task { await fixture.restoreHotelMembership() }
+              }
+              .disabled(!fixture.canRestoreHotelMembership)
+              .accessibilityIdentifier("fixture.writer.restoreMembership")
               Button("Delete Weekend") { Task { await fixture.deleteWeekend() } }
                 .accessibilityIdentifier("fixture.writer.deleteWeekend")
               Button("Delete City trip") { Task { await fixture.deleteCityTrip() } }
@@ -83,7 +88,10 @@ private final class PlannerChangeObservationFixture {
   private let source: PlannerEntityReference
   private var damagedCheckpoint: (url: URL, bytes: Data)?
   private var originalControl: Data?
+  private var removedHotelMembership: PlannerAssociationUndoSnapshot?
   private(set) var status = "Independent writer ready"
+
+  var canRestoreHotelMembership: Bool { removedHotelMembership != nil }
 
   private init(
     configuration: PlannerStorageConfiguration, writer: PlannerCore.Planner,
@@ -134,6 +142,12 @@ private final class PlannerChangeObservationFixture {
         else { throw CancellationError() }
         links = [.init(originalUrl: arguments[websiteIndex + 1], label: "Museum guide")]
       }
+      let locationCoordinate: PlannerCoordinate
+      if arguments.contains("--fixture-map-search-coordinate") {
+        locationCoordinate = .init(latitude: 35, longitude: 139)
+      } else {
+        locationCoordinate = .init(latitude: 35.662, longitude: 139.717)
+      }
       guard
         let created = try await save(
           .createItem(
@@ -141,7 +155,7 @@ private final class PlannerChangeObservationFixture {
               title: "Hotel", notes: "Original notes",
               location: .init(
                 displayName: "Hotel", formattedAddress: nil,
-                coordinate: .init(latitude: 35.662, longitude: 139.717)), links: links))
+                coordinate: locationCoordinate), links: links))
         ).generated.first,
         let list = try await save(.createList(content: .init(name: "Weekend"))).generated.first
       else { throw CancellationError() }
@@ -378,6 +392,7 @@ private final class PlannerChangeObservationFixture {
   }
 
   func removeHotelMembership() async {
+    removedHotelMembership = nil
     guard
       case .source(.item(let current)) = await writer.read(
         session: session, request: .source(source))
@@ -394,6 +409,7 @@ private final class PlannerChangeObservationFixture {
           operationId: UUID(), session: session,
           command: .removeMembership(listId: list.id, membershipId: membershipIdentifier)))
       if case .applied(_, .complete) = result.outcome {
+        removedHotelMembership = result.associationUndoSnapshot
         status = "Removed Hotel from Weekend"
       } else {
         status = "Independent writer did not remove Hotel's membership"
@@ -401,6 +417,39 @@ private final class PlannerChangeObservationFixture {
       return
     }
     status = "No Hotel membership to remove"
+  }
+
+  func restoreHotelMembership() async {
+    guard let snapshot = removedHotelMembership,
+      case .membership(let original) = snapshot.originalRecord,
+      case .source(.item(let before)) = await writer.read(
+        session: session, request: .source(source))
+    else {
+      status = "No original Hotel membership to restore"
+      return
+    }
+    let result = await writer.execute(
+      .init(operationId: UUID(), session: session, command: .restoreAssociation(snapshot: snapshot))
+    )
+    guard case .applied(_, .complete) = result.outcome,
+      case .exported(let data) = await writer.exportData(session: session),
+      case .decoded(let restored) = writer.decodeImport(data),
+      let membership = restored.backup.memberships.first(where: { $0.id == original.id }),
+      membership.lifetimeId != original.lifetimeId,
+      membership.list == original.list, membership.listLifetimeId == original.listLifetimeId,
+      membership.item == original.item, membership.itemLifetimeId == original.itemLifetimeId,
+      membership.rank == original.rank, membership.localDone == original.localDone,
+      case .source(.item(let after)) = await writer.read(
+        session: session, request: .source(source)),
+      after.sourceLifetimeId == before.sourceLifetimeId,
+      after.sourceLifetimeId == original.itemLifetimeId,
+      after.fieldHashes == before.fieldHashes, after.updatedAt == before.updatedAt
+    else {
+      status = "Independent writer did not restore the original membership safely"
+      return
+    }
+    removedHotelMembership = nil
+    status = "Restored original Hotel membership"
   }
 
   func damageRecovery() async {

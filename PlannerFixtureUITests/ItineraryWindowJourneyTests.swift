@@ -199,7 +199,7 @@ final class ItineraryWindowJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["Matching 2 of 3 items"].exists)
     XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
     #if os(iOS)
-      let edit = application.plannerElement("saved.itinerary.reorder")
+      let edit = application.savedPlannerItineraryReorderControl()
       XCTAssertTrue(edit.waitForExistence(timeout: 5))
       edit.activateForPlannerJourney()
     #endif
@@ -215,7 +215,7 @@ final class ItineraryWindowJourneyTests: XCTestCase {
     }
     XCTAssertTrue(reordered)
     #if os(iOS)
-      edit.activateForPlannerJourney()
+      application.savedPlannerItineraryReorderControl().activateForPlannerJourney()
     #endif
     XCTAssertFalse(first.exists)
     capture(application, "Filtered itinerary native drag keeps hidden completion and full progress")

@@ -39,11 +39,11 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         let map = application.descendants(matching: .any)
           .matching(identifier: "saved.map.collection").firstMatch
         XCTAssertTrue(map.waitForExistence(timeout: 5))
-        if map.frame.width <= 600 {
-          XCTAssertGreaterThanOrEqual(
-            locations.frame.minY, locatedCount.frame.maxY,
-            "A narrow accessibility footer must give the count and Locations their own rows.")
-        }
+        XCTAssertFalse(locations.frame.intersects(locatedCount.frame))
+        XCTAssertEqual(locatedCount.label, "1 of 1 items located")
+        XCTAssertEqual(locations.label, "Locations")
+        XCTAssertGreaterThanOrEqual(locations.frame.width, 44)
+        XCTAssertGreaterThanOrEqual(locations.frame.height, 44)
       }
     #endif
     locations.activateForPlannerJourney()
@@ -274,7 +274,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     candidate.activateForPlannerJourney()
     application.plannerElement("saved.membership.add").activateForPlannerJourney()
     let standaloneCompletion = application.buttons["Mark Map museum done in this List"].firstMatch
-    XCTAssertTrue(standaloneCompletion.waitForExistence(timeout: 10))
+    revealCollectionControl(
+      standaloneCompletion, in: application, collectionIdentifier: "saved.list.contents")
     standaloneCompletion.activateForPlannerJourney()
     XCTAssertTrue(
       application.buttons["Mark Map museum undone in this List"].firstMatch
@@ -549,24 +550,49 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
   private func completeOnlyFirstRouteAppearance(in application: XCUIApplication) {
     let rows = application.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
-    XCTAssertTrue(rows.element(boundBy: 1).waitForExistence(timeout: 10))
-    XCTAssertEqual(rows.count, 2)
-    let firstIdentifier = rows.element(boundBy: 0).identifier
-    let secondIdentifier = rows.element(boundBy: 1).identifier
-    XCTAssertNotEqual(firstIdentifier, secondIdentifier)
+    XCTAssertTrue(application.staticTexts["0 of 2 items done"].exists)
+    let first = rows.firstMatch
+    revealCollectionControl(
+      first, in: application, collectionIdentifier: "saved.itinerary.contents")
+    let firstIdentifier = first.identifier
     let firstCheck = application.plannerElement(
       firstIdentifier.replacingOccurrences(
         of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+    XCTAssertEqual(firstCheck.value as? String, "To do")
+    firstCheck.activateForPlannerJourney()
+    XCTAssertTrue(firstCheck.waitForPlannerValue("Completed"))
+    let second = rows.matching(NSPredicate(format: "identifier != %@", firstIdentifier)).firstMatch
+    revealCollectionControl(
+      second, in: application, collectionIdentifier: "saved.itinerary.contents")
+    let secondIdentifier = second.identifier
+    XCTAssertNotEqual(firstIdentifier, secondIdentifier)
     let secondCheck = application.plannerElement(
       secondIdentifier.replacingOccurrences(
         of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
-    XCTAssertEqual(firstCheck.value as? String, "To do")
     XCTAssertEqual(secondCheck.value as? String, "To do")
-    XCTAssertTrue(application.staticTexts["0 of 2 items done"].exists)
-    firstCheck.activateForPlannerJourney()
-    XCTAssertTrue(firstCheck.waitForPlannerValue("Completed"))
-    XCTAssertEqual(secondCheck.value as? String, "To do")
-    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    let progress = application.staticTexts["1 of 2 items done"]
+    let collection = application.collectionViews["saved.itinerary.contents"]
+    for _ in 0..<8 {
+      if progress.exists { break }
+      collection.swipeDown(velocity: .slow)
+    }
+    XCTAssertTrue(progress.exists)
+  }
+
+  private func revealCollectionControl(
+    _ control: XCUIElement, in application: XCUIApplication, collectionIdentifier: String
+  ) {
+    let collection = application.collectionViews[collectionIdentifier]
+    XCTAssertTrue(collection.waitForExistence(timeout: 10))
+    for _ in 0..<8 {
+      if control.exists && control.isHittable { return }
+      collection.swipeUp()
+    }
+    let capture = XCTAttachment(screenshot: application.screenshot())
+    capture.name = "Itinerary toolbar control remains unavailable after native scrolling"
+    capture.lifetime = .keepAlways
+    add(capture)
+    XCTFail("The collection control remains unavailable after scrolling: \(control.identifier)")
   }
 
   private func verifyRepeatedMapStops(
@@ -577,6 +603,24 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     application.chooseSavedPlannerCollectionRepresentation("Map")
     let pin = application.buttons["saved.map.pin.35.0,139.0"]
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    #if os(iOS)
+      if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        let summary = application.scrollViews["saved.map.summary"]
+        XCTAssertTrue(summary.waitForExistence(timeout: 5))
+        let warning = summary.staticTexts["2 estimates missing"].firstMatch
+        for _ in 0..<8 {
+          if warning.exists && warning.isHittable { break }
+          summary.swipeUp(velocity: .slow)
+        }
+        XCTAssertTrue(warning.isHittable)
+        XCTAssertTrue(pin.isHittable)
+        XCTAssertTrue(application.plannerElement("saved.map.locations").isHittable)
+        let summaryCapture = XCTAttachment(screenshot: application.screenshot())
+        summaryCapture.name = "Native accessible Map summary scrolls without displacing its pins"
+        summaryCapture.lifetime = .keepAlways
+        add(summaryCapture)
+      }
+    #endif
     XCTAssertEqual(pin.label, "2 items")
     pin.activateForPlannerJourney()
     let firstStop = application.buttons[firstChoiceLabel].firstMatch
@@ -604,6 +648,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         pin.activateForPlannerJourney()
         XCTAssertTrue(firstStop.waitForExistence(timeout: 5))
         firstStop.activateForPlannerJourney()
+        XCTAssertTrue(firstStop.waitForNonExistence(timeout: 5))
+        revealDetailStatus("Completed", in: application)
         XCTAssertTrue(application.staticTexts["Completed"].firstMatch.waitForExistence(timeout: 10))
       }
     #endif
@@ -620,6 +666,30 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(retainedLink, in: application)
     XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(retainedLink.value as? String, originalURL)
+  }
+
+  private func revealDetailStatus(_ title: String, in application: XCUIApplication) {
+    #if os(iOS)
+      guard UIDevice.current.userInterfaceIdiom == .pad,
+        UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+      else { return }
+      let status = application.staticTexts[title].firstMatch
+      if status.exists && status.isHittable { return }
+      guard let form = application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable)
+      else {
+        XCTFail("The selected Item detail form is unavailable.")
+        return
+      }
+      for _ in 0..<8 {
+        if status.exists && status.isHittable { return }
+        let horizontalPosition = 24 / form.frame.width
+        let start = form.coordinate(
+          withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.25))
+        let end = form.coordinate(withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.75))
+        start.press(forDuration: 0.05, thenDragTo: end)
+      }
+      XCTAssertTrue(status.isHittable)
+    #endif
   }
 
   private func revealDetailLink(_ link: XCUIElement, in application: XCUIApplication) {
