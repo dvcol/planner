@@ -6,6 +6,8 @@ This map remains open. Signing is deferred, and it is not the only remaining gat
 
 ## Decisions and external actions needed
 
+- **Collection Map rotation qualified locally.** The [viewport checkpoint](prototypes/native-map-viewport-compatibility.md#final-local-checkpoint) passes iPad portrait/landscape containment and exact pin/bookmark selection, plus phone navigation and matching Mac compilation. Native iPad width remains 340 points within the flexible preferred range. Failed scrolling diagnostics remain separate; Mac divider/window interaction and broader compatibility remain open.
+
 - **Narrow List actions corrected.** The [pane-width checkpoint](prototypes/native-list-toolbar-compatibility.md#final-local-checkpoint) keeps Filters/Add direct and secondary actions in native More on narrow iPad panes. Six passing native executions cover controls, filtered phone drag and repeated iPad moves with relaunch; matching Mac compilation passes. The failed default-velocity drag remains a stability finding. Duplicate title tiers/top spacing, actual Mac UI and final polish remain open.
 
 - **Native Items/Inbox toolbar corrected.** Narrow mobile panes keep Filters and Add direct, with View/Sort in the native More menu. The [compatibility checkpoint](prototypes/native-catalog-toolbar-compatibility.md#affected-native-regressions-and-final-compilation) passes four dark-iPad functions and five distinct phone functions across retained epochs, plus matching Mac compilation. The selected-List toolbar has its separate checkpoint above. Map viewport/resize qualification, Mac interaction and final whole-app polish remain open.

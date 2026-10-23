@@ -397,6 +397,14 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   func testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation() {
     continueAfterFailure = false
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock {
+          await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+        }
+      }
+    #endif
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -425,6 +433,59 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, originalURL)
     XCTAssertTrue(application.plannerElement("saved.item.actions").exists)
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        let savedLinkIdentifier = savedLink.identifier
+        for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
+          XCUIDevice.shared.orientation = orientation
+          let settled = NSPredicate { _, _ in
+            let windowFrame = application.windows.firstMatch.frame
+            if orientation == .portrait {
+              return windowFrame.height > windowFrame.width && pin.isHittable
+            }
+            return windowFrame.width > windowFrame.height && pin.isHittable
+          }
+          let result = XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
+          let window = application.windows.firstMatch
+          for _ in 0..<4 where !savedLink.isHittable {
+            let start = window.coordinate(
+              withNormalizedOffset: CGVector(dx: 0.99, dy: 0.75))
+            let end = window.coordinate(
+              withNormalizedOffset: CGVector(dx: 0.99, dy: 0.25))
+            start.press(forDuration: 0.05, thenDragTo: end)
+          }
+          let orientationName = orientation == .portrait ? "portrait" : "landscape"
+          let viewportCapture = XCTAttachment(
+            screenshot: application.windows.firstMatch.screenshot())
+          viewportCapture.name = "Collection Map viewport and exact details in \(orientationName)"
+          viewportCapture.lifetime = .keepAlways
+          add(viewportCapture)
+          let locations = application.plannerElement("saved.map.locations")
+          let windowFrame = application.windows.firstMatch.frame
+          let mapFrame = map.frame
+          let geometry = XCTAttachment(
+            string:
+              "window=\(windowFrame)\nmap=\(mapFrame)\npin=\(pin.frame)\nlocations=\(locations.frame)\nlink=\(savedLink.frame)"
+          )
+          geometry.name = "Collection Map navigation frames in \(orientationName)"
+          geometry.lifetime = .keepAlways
+          add(geometry)
+          XCTAssertEqual(result, .completed)
+          XCTAssertGreaterThan(mapFrame.width, 0)
+          XCTAssertGreaterThan(mapFrame.height, 0)
+          XCTAssertGreaterThanOrEqual(mapFrame.minX, windowFrame.minX - 1)
+          XCTAssertGreaterThanOrEqual(mapFrame.minY, windowFrame.minY - 1)
+          XCTAssertLessThanOrEqual(mapFrame.maxX, windowFrame.maxX + 1)
+          XCTAssertLessThanOrEqual(mapFrame.maxY, windowFrame.maxY + 1)
+          XCTAssertTrue(locations.isHittable)
+          XCTAssertTrue(savedLink.isHittable)
+          XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
+          XCTAssertEqual(savedLink.value as? String, originalURL)
+          XCTAssertLessThanOrEqual(mapFrame.maxX, savedLink.frame.minX + 1)
+        }
+      }
+    #endif
     returnToCatalog(application)
     application.plannerElement("saved.map.locations").activateForPlannerJourney()
     let unlocated = application.buttons["Unlocated note"].firstMatch
