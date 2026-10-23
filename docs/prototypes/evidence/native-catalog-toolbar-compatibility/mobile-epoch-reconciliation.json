@@ -1,0 +1,58 @@
+{
+  "epochs": {
+    "catalog-toolbar-dark-tablet-corrected": {
+      "inputs": 1093,
+      "differencesFromFinalPhone": [
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValuesTests.swift",
+        "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+        "docs/fixtures/native-competing-values-overwrite.json"
+      ],
+      "boundary": {
+        "workspaceDifferences": [],
+        "stagedDifferences": [],
+        "productDifferences": [],
+        "inputCount": 1093,
+        "productCount": 4,
+        "exitCode": 0,
+        "passedTests": 4,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    },
+    "catalog-toolbar-light-phone-regression": {
+      "inputs": 1094,
+      "differencesFromFinalPhone": [
+        "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift"
+      ],
+      "boundary": {
+        "workspaceDifferences": [],
+        "stagedDifferences": [],
+        "productDifferences": [],
+        "inputCount": 1094,
+        "productCount": 4,
+        "exitCode": 65,
+        "passedTests": 4,
+        "failedTests": 1,
+        "skippedTests": 0
+      }
+    },
+    "catalog-toolbar-light-phone-controls-corrected": {
+      "inputs": 1094,
+      "differencesFromFinalPhone": [],
+      "boundary": {
+        "workspaceDifferences": [],
+        "stagedDifferences": [],
+        "productDifferences": [],
+        "inputCount": 1094,
+        "productCount": 4,
+        "exitCode": 0,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    }
+  },
+  "productionInputsIdentical": true,
+  "scope": "Native catalog toolbar compatibility; no actual Mac UI or physical acceptance."
+}

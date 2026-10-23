@@ -8,8 +8,8 @@ final class AddressCandidateJourneyTests: XCTestCase {
     let row = application.savedPlannerItemRows("Ambiguous place").firstMatch
     XCTAssertTrue(row.waitForExistence(timeout: 20))
     let sourceIdentifier = row.identifier
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
-    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
     let locations = application.plannerElement("saved.map.locations")
     XCTAssertTrue(locations.waitForExistence(timeout: 10))
     locations.activateForPlannerJourney()
@@ -41,8 +41,8 @@ final class AddressCandidateJourneyTests: XCTestCase {
     XCTAssertFalse(north.exists)
     capture(
       application, name: "Collection Map changes the same source to the temporary South choice")
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
-    application.plannerElement("saved.collection.showList").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("List")
     XCTAssertTrue(row.waitForExistence(timeout: 10))
     XCTAssertEqual(row.identifier, sourceIdentifier)
     row.activateForPlannerJourney()
@@ -56,8 +56,8 @@ final class AddressCandidateJourneyTests: XCTestCase {
     application.openPlannerSection("Items")
     XCTAssertTrue(row.waitForExistence(timeout: 20))
     XCTAssertEqual(row.identifier, sourceIdentifier)
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
-    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
     locations.activateForPlannerJourney()
     XCTAssertTrue(choice.waitForPlannerValue("Choose a place"))
     XCTAssertFalse(application.buttons["saved.map.pin.35.655,139.717"].exists)

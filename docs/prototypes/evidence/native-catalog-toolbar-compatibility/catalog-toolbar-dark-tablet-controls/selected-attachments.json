@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-catalog-toolbar-dark-tablet-controls.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-toolbar-dark-tablet-controls"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "6B0C9102-F06F-4730-8834-C97D3241E685.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Inbox catalog toolbar after Map Sort Filters and canceled New Item_0_4FE48E5E-35FF-4127-893C-FDDABEBFC833.png",
+      "timestamp": 1792731039.064,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCatalogViewSortFiltersAndAddRemainReachableThroughNativeOverflow()",
+      "retainedFileName": "6B0C9102-F06F-4730-8834-C97D3241E685.png",
+      "originalSha256": "24ba730d564f091ba24d5b22d4227865dacabd67893415bd7cf6702d222fbd4b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "1EF84B3F-EA88-448F-8E57-26B58463780E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items catalog toolbar after Map Sort Filters and canceled New Item_0_C2F34C4C-3888-4C0C-9BDD-70EDBB4EACAE.png",
+      "timestamp": 1792730959.483,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCatalogViewSortFiltersAndAddRemainReachableThroughNativeOverflow()",
+      "retainedFileName": "1EF84B3F-EA88-448F-8E57-26B58463780E.png",
+      "originalSha256": "cb4e69c9df482f838fd8ebb116f93cd0955c7d533e84dd269c489384754776b7"
+    }
+  ],
+  "videoPublished": false
+}

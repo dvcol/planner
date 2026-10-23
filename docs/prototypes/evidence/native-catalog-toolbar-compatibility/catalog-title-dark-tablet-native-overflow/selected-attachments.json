@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-catalog-title-dark-tablet-native-overflow.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-title-dark-tablet-native-overflow"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "27B97E09-01B0-446D-AC50-308B3583DABF.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Inbox native navigation frames_0_8A446324-362B-4447-8A0A-B0897AE427A7.txt",
+      "timestamp": 1792730693.552,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "27B97E09-01B0-446D-AC50-308B3583DABF.txt.gz",
+      "originalSha256": "1fc574501ac7bba6ae51af111ef106ee2b51f5289e8f8f63ee88b1fc3d787e47"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "FFC9081A-3FAF-4770-BC64-51AC7E8F3405.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Inbox title beside native catalog actions_0_92FE2D47-3CA3-4685-9A2C-FC34CE5B4BEB.png",
+      "timestamp": 1792730693.304,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "FFC9081A-3FAF-4770-BC64-51AC7E8F3405.png",
+      "originalSha256": "7aee9b8d9b08ed70146468ac7fe2b12a2f480d67dea157add4219909ef5b0ccc"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9A1DED02-6090-48C4-878F-4D26D8670A49.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items native navigation frames_0_0DFB3364-AB48-4451-A663-3A389C83C28D.txt",
+      "timestamp": 1792730686.656,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "9A1DED02-6090-48C4-878F-4D26D8670A49.txt.gz",
+      "originalSha256": "e7ab66f44ef1f887bfdd1ca5778adef8b6ccd3c43be4579feb859e2b29a04935"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C763557C-5D02-44FB-831E-C54B37CABED7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items title beside native catalog actions_0_C79B58F6-D6A8-4E83-B525-D8518A35F380.png",
+      "timestamp": 1792730686.326,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "C763557C-5D02-44FB-831E-C54B37CABED7.png",
+      "originalSha256": "12422dc562c7a4cc508b2e1ba69dca706a7c7f4fd323bf90ba13deee78e187dc"
+    }
+  ],
+  "videoPublished": false
+}

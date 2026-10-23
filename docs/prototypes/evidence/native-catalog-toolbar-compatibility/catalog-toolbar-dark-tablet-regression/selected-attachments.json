@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-catalog-toolbar-dark-tablet-regression.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-toolbar-dark-tablet-regression"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9D223955-FD3F-40C2-8677-2A88E349D59D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items catalog toolbar after Map Sort Filters and canceled New Item_0_5985BE20-6DDB-4795-AC0A-018DC30E3294.png",
+      "timestamp": 1792731283.076,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCatalogViewSortFiltersAndAddRemainReachableThroughNativeOverflow()",
+      "retainedFileName": "9D223955-FD3F-40C2-8677-2A88E349D59D.png",
+      "originalSha256": "2147c1b3d4cd68bf828c3be08532502df747bc0bfd49f846595f0d0363e8df7a"
+    }
+  ],
+  "videoPublished": false
+}

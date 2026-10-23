@@ -1,0 +1,17 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "24929fe74bc780ebe7f624108a1a9ec2ba21caf9",
+  "overlays": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValuesTests.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+    "PlannerFixtureUITests/LargeCollectionJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift",
+    "docs/fixtures/native-competing-values-overwrite.json"
+  ]
+}

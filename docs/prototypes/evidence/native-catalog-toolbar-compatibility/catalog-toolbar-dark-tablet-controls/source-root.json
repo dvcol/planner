@@ -1,0 +1,14 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "b627fb07706c4f8a9ee392dd60b0b88d2c39f708",
+  "overlays": [
+    "Planner/Scenes/SavedItemViews.swift",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+    "PlannerFixtureUITests/LargeCollectionJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ]
+}

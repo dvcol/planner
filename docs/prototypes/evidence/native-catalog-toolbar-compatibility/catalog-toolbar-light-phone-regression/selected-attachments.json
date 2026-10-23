@@ -1,0 +1,99 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-catalog-toolbar-light-phone-regression.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-toolbar-light-phone-regression"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9EF78B6E-5AB9-492F-9EA6-F3DB3D309FCC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map changes the same source to the temporary South choice_0_1564689F-614F-4083-9E80-6A7F8A6C028B.png",
+      "timestamp": 1792732982.419,
+      "testIdentifier": "AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged()",
+      "retainedFileName": "9EF78B6E-5AB9-492F-9EA6-F3DB3D309FCC.png",
+      "originalSha256": "2fabbd0e5fced0c2f680d9b18559efdbcafdb150d9c5eb9dc9a62cf22ed425d6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "4FEF9EE4-D427-4ECC-BB51-71B613DE5ECB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map uses the explicit temporary North choice_0_C648D790-47B0-4E48-A745-B3CA0EA88F65.png",
+      "timestamp": 1792732974.496,
+      "testIdentifier": "AddressCandidateJourneyTests/testCollectionMapChoicesStayTemporaryAndCanBeChanged()",
+      "retainedFileName": "4FEF9EE4-D427-4ECC-BB51-71B613DE5ECB.png",
+      "originalSha256": "a7403359b306813aa484f06e4c4fd1a0efb44d67d72070f251a62cb4d189a5a4"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A2A36F3D-CE8D-438F-9C64-A1B1022AD97C.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Inbox native navigation frames_0_C383A0B5-900D-43C7-9D08-94753472A085.txt",
+      "timestamp": 1792733133.497,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "A2A36F3D-CE8D-438F-9C64-A1B1022AD97C.txt.gz",
+      "originalSha256": "19c77bd09b145708cc1e3eb89063a686bed65fdbdc640c8ae6771b67fabc8f55"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "10A553B9-F66E-43F6-A25A-03EFEBF23048.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Inbox title beside native catalog actions_0_712A006C-65D1-42B0-B4A4-0528622270F9.png",
+      "timestamp": 1792733133.282,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "10A553B9-F66E-43F6-A25A-03EFEBF23048.png",
+      "originalSha256": "a7cd05002e34fb9f741efbe25af6ecc2241436074daf7ab11749558898a09ed9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "CE46DE5C-1AF7-4F9D-8442-22FC24377C39.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items native navigation frames_0_2E77C502-5D7F-4B94-B46E-B3DF02D50D27.txt",
+      "timestamp": 1792733125.984,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "CE46DE5C-1AF7-4F9D-8442-22FC24377C39.txt.gz",
+      "originalSha256": "231ccd0697ebbb5c34c2bd1309ca2b9d9099fa07326bc02af7fc154b0685160d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "639C5A30-4BB3-418A-8BDC-9908EC4BCDAB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items title beside native catalog actions_0_FA6D3D19-8240-469A-973D-342D54500AC5.png",
+      "timestamp": 1792733125.719,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+      "retainedFileName": "639C5A30-4BB3-418A-8BDC-9908EC4BCDAB.png",
+      "originalSha256": "698b0e67b8bf6376fb0031908a47873cf403ed3c5951b147a422304e058c87b5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1258B4DA-EC78-4C00-9026-922F74527A22.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent writer refreshes the open collection Map_0_7383CA0C-69D0-4373-9901-5AD54A8FB36D.png",
+      "timestamp": 1792733165.289,
+      "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource()",
+      "retainedFileName": "1258B4DA-EC78-4C00-9026-922F74527A22.png",
+      "originalSha256": "61a75aec953f56fc9c178a3ded7657bf8130029027905d69d179333915bcf7d7"
+    }
+  ],
+  "videoPublished": false
+}

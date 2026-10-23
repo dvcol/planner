@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-catalog-toolbar-light-phone-controls-corrected.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-toolbar-light-phone-controls-corrected"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C4452157-48B9-4205-BC92-21A01468F642.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Inbox catalog toolbar after Map Sort Filters and canceled New Item_0_F22B309C-CF29-45AE-A08C-C358C4DAD992.png",
+      "timestamp": 1792734089.046,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCatalogViewSortFiltersAndAddRemainReachableThroughNativeOverflow()",
+      "retainedFileName": "C4452157-48B9-4205-BC92-21A01468F642.png",
+      "originalSha256": "6b793f8548c8c16c9e9de0f10923513de62559ee872ae4d2b76a07b831663faf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0B82F575-BC9C-448D-9CE7-255D3DDBC34B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Items catalog toolbar after Map Sort Filters and canceled New Item_0_F08958F1-09F6-46C4-BC01-6C7EF2D6E1BD.png",
+      "timestamp": 1792734024.936,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCatalogViewSortFiltersAndAddRemainReachableThroughNativeOverflow()",
+      "retainedFileName": "0B82F575-BC9C-448D-9CE7-255D3DDBC34B.png",
+      "originalSha256": "02643fd8f048cf39bf815a9ad6028b32d80bd482c3978b0469b2fd7a44808ee5"
+    }
+  ],
+  "videoPublished": false
+}

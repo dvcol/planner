@@ -1,0 +1,66 @@
+{
+  "observations": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "appearance"
+      ],
+      "exitCode": 0,
+      "output": "light",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "increase_contrast"
+      ],
+      "exitCode": 0,
+      "output": "disabled",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "content_size"
+      ],
+      "exitCode": 0,
+      "output": "large",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "appearance"
+      ],
+      "exitCode": 0,
+      "output": "light",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "appearance"
+      ],
+      "exitCode": 0,
+      "output": "light",
+      "error": ""
+    }
+  ],
+  "changedForTest": false,
+  "restoredToOriginal": true
+}

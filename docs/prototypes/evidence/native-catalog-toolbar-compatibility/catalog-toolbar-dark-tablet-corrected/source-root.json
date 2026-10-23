@@ -1,0 +1,19 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "561e059c09af6259365e8e7683e03c2de68b6772",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValueKindsTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValuesTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportUnknownCandidateKindsTests.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+    "PlannerFixtureUITests/LargeCollectionJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ]
+}
