@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.578,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "skipKeepsTheCurrentFamilyAndRejectsUnknownCandidateDependents()",
+      "className": "PlannerCoreStoreTests.NativeImportUnknownCandidateSkipTests",
+      "seconds": 0.07498775,
+      "failures": [
+        "Expectation failed: details.imports.map(\\.owner.id.uuidString) == [unknownCandidateIdentifier(601)] (error)",
+        "Expectation failed: details.skippedDependents.first (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

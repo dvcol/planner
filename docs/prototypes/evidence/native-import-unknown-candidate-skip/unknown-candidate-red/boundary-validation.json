@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 750,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 1,
+  "failedFunctions": 1,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "One literal Q148 workflow executes and fails because Tour is imported instead of skipped for its unknown D binding."
+}

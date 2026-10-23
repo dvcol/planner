@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 750,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Four cases pass transitive complete-owner skips, omitted current membership/history retention, provenance, recovery, replay and stale review."
+}

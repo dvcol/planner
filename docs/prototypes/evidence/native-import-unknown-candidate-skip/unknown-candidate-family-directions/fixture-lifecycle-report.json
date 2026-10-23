@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4D3F061F-F575-4217-BFA8-FF8F54728C11",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/36FB735E-9ECA-424A-8665-B22B50066610",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/8F8EA08B-D005-46B5-95AD-4AD3172A2895",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/35C15BDA-8E81-439A-93D9-A2EFC884A0EE"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "a1112fd2ce5b07df61fcd02c5e9b27e1da2810222779b9101dc7895ea7988134",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 4,
+  "hostProcessIdentifiers": [
+    73896
+  ]
+}

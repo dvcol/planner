@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerIncomingFamilyNativeSource",
+  "base": "30d1cf07331d90c14928c56072ce5acda43b7405",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportUnknownCandidateSkipTests.swift"
+  ]
+}

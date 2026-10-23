@@ -316,6 +316,42 @@ func plannerResolveImportReview(
     }
   }
   var replacementSourceLifetimes: [PlannerBoundSource: UUID] = [:]
+  var excludedSourceBindings: Set<PlannerBoundSource> = []
+  var selectedIncomingFamilies = incoming.backup.restorationFamilies
+  if mode == .skip {
+    selectedIncomingFamilies = try selectedIncomingFamilies.filter { family in
+      if let known = current.backup.restorationFamilies.first(where: {
+        $0.familyId == family.familyId
+      }), known.predecessor != family.predecessor {
+        throw PlannerFailure(
+          "unavailable", "A known restoration family names another predecessor.")
+      }
+      guard let kind = PlannerEntityKind(rawValue: family.predecessor.kind.rawValue),
+        let actual = currentSources[.init(kind: kind, id: family.predecessor.id)],
+        let known = current.backup.restorationFamilies.first(where: { currentFamily in
+          currentFamily.predecessor == family.predecessor
+            && currentFamily.candidates.contains { $0.lifetimeId == actual.lifetimeId }
+            && !current.backup.deletionMarkers.contains {
+              $0.closedFamilyId == currentFamily.familyId
+            }
+        })
+      else { return true }
+      for candidate in family.candidates {
+        if let knownCandidate = known.candidates.first(where: {
+          $0.lifetimeId == candidate.lifetimeId
+        }) {
+          guard knownCandidate.operationId == candidate.operationId else {
+            throw PlannerFailure(
+              "unavailable", "A known restoration candidate has conflicting provenance.")
+          }
+        } else {
+          excludedSourceBindings.insert(
+            .init(kind: kind, id: actual.id, lifetimeId: candidate.lifetimeId))
+        }
+      }
+      return false
+    }
+  }
   if mode == .overwrite {
     for source in incoming.backup.sources {
       guard let actual = currentSources[source.importBinding.reference],
@@ -332,7 +368,8 @@ func plannerResolveImportReview(
     }
   }
   let resolvedIncoming = incoming.backup.resolvingImportSourceLifetimes(
-    resolvedSourceLifetimes, replacingSources: replacementSourceLifetimes)
+    resolvedSourceLifetimes, replacingSources: replacementSourceLifetimes,
+    selectingFamilies: selectedIncomingFamilies)
   let projection = try PlannerImportProjection(backup: resolvedIncoming)
   let currentProjection = try PlannerImportProjection(backup: current.backup)
   let deletedSources = Set(
@@ -383,6 +420,7 @@ func plannerResolveImportReview(
       guard
         (mode == .skip
           && (ownsClosedRecord || dependsOnClosedSource
+            || dependencies.contains { excludedSourceBindings.contains($0) }
             || closedContextOwners.contains(sourceReference)))
           || dependencies.contains(where: { unavailableSources.contains($0.reference) })
       else {
@@ -686,9 +724,12 @@ func plannerResolveImportReview(
 
 extension PlannerPortableBackup {
   fileprivate func resolvingImportSourceLifetimes(
-    _ lifetimes: [PlannerBoundSource: UUID], replacingSources: [PlannerBoundSource: UUID]
+    _ lifetimes: [PlannerBoundSource: UUID], replacingSources: [PlannerBoundSource: UUID],
+    selectingFamilies: [PlannerPortableRestorationFamily]
   ) -> PlannerPortableBackup {
-    guard !lifetimes.isEmpty else { return self }
+    guard !lifetimes.isEmpty || selectingFamilies.count != restorationFamilies.count else {
+      return self
+    }
     func lifetime(_ source: PlannerEntityReference, _ original: UUID) -> UUID {
       lifetimes[.init(kind: source.kind, id: source.id, lifetimeId: original)] ?? original
     }
@@ -734,6 +775,6 @@ extension PlannerPortableBackup {
           providerReference: $0.providerReference)
       },
       contextAliases: contextAliases, completionChanges: completionChanges,
-      restorationFamilies: restorationFamilies)
+      restorationFamilies: selectingFamilies)
   }
 }

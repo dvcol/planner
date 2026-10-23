@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 750,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 65,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Affected import/deletion/lineage cohort passes after Q148 family selection changes."
+}

@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 750,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "The unchanged first Q148 tracer passes complete graph, independent import, recovery, replay and idempotent Skip."
+}

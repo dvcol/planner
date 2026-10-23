@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 750,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "All four candidate-direction/family-identity cases pass the full selected graph and lifecycle workflow."
+}

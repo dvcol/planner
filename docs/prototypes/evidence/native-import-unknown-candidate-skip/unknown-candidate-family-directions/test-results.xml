@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000110125"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.122260708">
+        <testcase classname="PlannerCoreStoreTests.NativeImportUnknownCandidateSkipTests" name="skipKeepsTheCurrentFamilyAndRejectsUnknownCandidateDependents(incomingLifetimeSuffix:sharesFamilyIdentifier:)" time="0.121952166"/>
+    </testsuite>
+</testsuites>
