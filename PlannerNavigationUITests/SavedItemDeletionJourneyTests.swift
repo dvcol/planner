@@ -49,7 +49,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
       ).activateForPlannerJourney()
     }
     XCTAssertTrue(application.staticTexts["2 of 4 items done"].waitForExistence(timeout: 10))
-    application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+    application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
     application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.schedule.save").waitForExistence(timeout: 5))
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()

@@ -2,6 +2,109 @@ import XCTest
 
 @MainActor
 final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
+  func testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let list = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(list.waitForExistence(timeout: 20))
+    list.activateForPlannerJourney()
+    let appearance = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    let appearanceIdentifier = appearance.identifier
+    let completion = application.buttons[
+      appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Completed"].waitForExistence(timeout: 10))
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    for _ in 0..<6 where !link.isHittable { application.swipeUp() }
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    XCTAssertEqual(link.value as? String, destination.absoluteString)
+    link.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    for (action, status) in [
+      ("removeMembership", "Removed Hotel from Weekend"),
+      ("update", "Saved another-writer change"),
+      ("restoreMembership", "Restored original Hotel membership"),
+    ] {
+      application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
+      application.plannerElement("fixture.writer.\(action)").activateForPlannerJourney()
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "label == %@", status),
+              object: application.staticTexts["fixture.writer.status"])
+          ], timeout: 15), .completed, application.debugDescription)
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+      XCTAssertFalse(application.alerts.firstMatch.exists)
+    }
+    let reading = XCTAttachment(screenshot: application.screenshot())
+    reading.name = "Restored List membership preserves the open guide and exact public context"
+    reading.lifetime = .keepAlways
+    add(reading)
+    application.plannerElement("saved.browser.return").activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    XCTAssertTrue(
+      application.plannerElement("saved.appearance.actions").waitForExistence(timeout: 10))
+    XCTAssertTrue(application.collectionViews.firstMatch.waitForExistence(timeout: 10))
+    let detailForm = try XCTUnwrap(
+      application.collectionViews.allElementsBoundByIndex.last)
+    for _ in 0..<6 where !application.staticTexts["Completed"].isHittable {
+      let horizontalPosition = 24 / detailForm.frame.width
+      detailForm.coordinate(withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.25))
+        .press(
+          forDuration: 0.05,
+          thenDragTo: detailForm.coordinate(
+            withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.75)))
+    }
+    XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["In Weekend"].exists)
+    XCTAssertTrue(application.staticTexts["Completed"].exists)
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    returned.name = "Restored List reader Return shows local completion and current shared content"
+    returned.lifetime = .keepAlways
+    add(returned)
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !retainedLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    let restored = application.savedPlannerItemRows("Hotel updated").firstMatch
+    XCTAssertTrue(restored.waitForExistence(timeout: 10))
+    XCTAssertEqual(restored.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel updated").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    XCTAssertNotEqual(source.identifier, appearanceIdentifier)
+    source.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+  }
+
   func testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -226,7 +329,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     for _ in 0..<6 where !itineraryLink.isHittable { application.swipeUp() }
     XCTAssertTrue(itineraryLink.waitForExistence(timeout: 10))
     let itineraryBookmarkIdentifier = itineraryLink.identifier
-    let actions = application.plannerElement("saved.itinerary.actions")
+    let actions = application.savedPlannerItineraryActionsControl()
     if actions.exists {
       actions.activateForPlannerJourney()
     } else {

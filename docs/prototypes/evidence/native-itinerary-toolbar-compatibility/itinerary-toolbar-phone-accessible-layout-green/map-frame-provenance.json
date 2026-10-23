@@ -1,0 +1,17 @@
+{
+  "command": [
+    "ffmpeg",
+    "-loglevel",
+    "error",
+    "-ss",
+    "87.326667",
+    "-i",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-accessible-layout-green/7605F656-D3BC-48ED-A8DC-079B68E8D6E9.mp4",
+    "-frames:v",
+    "1",
+    "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-phone-accessible-layout-green/map-canvas-failure-frame.png"
+  ],
+  "durationSeconds": 87.826667,
+  "frameSha256": "851bac7975e19ae93fe8c6b723766aa0f6a4b58dd85f98acd54f2f5ed7177d3a",
+  "videoSha256": "1d8767f4e570ca7d00514c00b633205464194b097c9d8942738cd9701cc45541"
+}

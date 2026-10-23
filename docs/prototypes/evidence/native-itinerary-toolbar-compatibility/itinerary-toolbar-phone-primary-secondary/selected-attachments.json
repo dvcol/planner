@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-primary-secondary.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-primary-secondary"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "8EC1AA16-7D79-45BC-89C5-A846B8A385E0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary toolbar and exact route survive relaunch_0_0D1A77B7-037B-41E7-871E-1C51125180F1.png",
+      "timestamp": 1792742906.7,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "8EC1AA16-7D79-45BC-89C5-A846B8A385E0.png",
+      "originalSha256": "ec7b2b2f36d3c2d850ffb8436240faa0384d74f28eaf9451554ed9988f748457"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "10712C27-B5D1-4657-A6F8-3D900F4EACAC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary toolbar preserves Map after canceled Edit and Schedule_0_110662BC-F59C-49D0-94C1-4E46D792B5E1.png",
+      "timestamp": 1792742875.762,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "10712C27-B5D1-4657-A6F8-3D900F4EACAC.png",
+      "originalSha256": "8106f28df822c48eda56445c356f3551f5e3e1dbea4e47ac888c09ba5b8dc0a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C9013745-E0BC-4E57-8805-2FEECFCE3D4A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title retained above its native collection Map_0_C452177A-9A3E-4729-A963-DD203A7862F5.png",
+      "timestamp": 1792742942.32,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "C9013745-E0BC-4E57-8805-2FEECFCE3D4A.png",
+      "originalSha256": "9a387c870a63545f27d5290f5ca2de0141e1bad9f98729c4493a1a8381d25980"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2283278B-953C-4A87-97FD-95626C1FA9CC.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary native title and toolbar frames_0_C6BF9DB1-3C98-477E-8765-E2FBA5FE111D.txt",
+      "timestamp": 1792742923.031,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "2283278B-953C-4A87-97FD-95626C1FA9CC.txt.gz",
+      "originalSha256": "aa4e2fc9a52392c884f6560c4ef37558d0c834c4f2fb0b6e847c250589370fb3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E152944F-5165-45C8-B3AC-94D6178218C0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title beside native Filters Add and More_0_0E456E58-3F35-4B04-9C2F-139FEBBA1DE4.png",
+      "timestamp": 1792742922.767,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "E152944F-5165-45C8-B3AC-94D6178218C0.png",
+      "originalSha256": "ec7b2b2f36d3c2d850ffb8436240faa0384d74f28eaf9451554ed9988f748457"
+    }
+  ],
+  "videoPublished": false
+}

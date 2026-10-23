@@ -20,7 +20,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
     chooseEntry("Hotel", application: application)
     application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
-    application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+    application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
     application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     XCTAssertTrue(itineraryRows(application).firstMatch.waitForExistence(timeout: 10))
@@ -144,7 +144,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     XCTAssertTrue(contextualRow.waitForExistence(timeout: 10))
     let appearanceIdentity = contextualRow.identifier
     XCTAssertFalse((contextualRow.value as? String ?? "").contains("Scheduled:"))
-    application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+    application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
     application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch

@@ -1,0 +1,135 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-map-contexts.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-map-contexts"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "62620D08-3497-4AEC-BB4C-E535757F2D67.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 navigation frames in portrait_0_8B6DF688-C8C7-44DC-AC50-F9B2C3DC4B62.txt",
+      "timestamp": 1792743368.427,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "62620D08-3497-4AEC-BB4C-E535757F2D67.txt.gz",
+      "originalSha256": "cf08847172ab9e080dc64cc87a2d4771151b73f641f0ff3110e0ffbbc618149f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "49F0BD21-C746-4F21-8B1E-8666D0456F61.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 viewport and exact details in portrait_0_DC9F2ADD-1B0A-409E-B09E-753F12335687.png",
+      "timestamp": 1792743368.124,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "49F0BD21-C746-4F21-8B1E-8666D0456F61.png",
+      "originalSha256": "3a078e5d3ddc1357a890a76d4ea771c6f8ee7f6c22b91527c2e3abb83f1fe7f8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "D9DABAED-AE1E-492D-88F6-997BF542BE19.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 navigation frames in landscape_0_B93BF952-59BA-4184-BF5B-62EA43530C9A.txt",
+      "timestamp": 1792743364.398,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "D9DABAED-AE1E-492D-88F6-997BF542BE19.txt.gz",
+      "originalSha256": "a4717ca39900135c5fb55df1ccc79cee1a37c407ad99d153fec9d141580a1df6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A663E9BB-7A81-406F-A4D1-B95BCE968439.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 viewport and exact details in landscape_0_C296D74E-71EE-4E2D-9592-F398E4BB3030.png",
+      "timestamp": 1792743364.061,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "A663E9BB-7A81-406F-A4D1-B95BCE968439.png",
+      "originalSha256": "7b77bafeed248210ca3f22129e8cd4ba1f0c8388e7c7953ef38bdda6f2bfedef"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F4D16E1C-C390-492B-B213-53B53465C506.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_B6FA5FB6-B118-44B0-867F-CB5A923D589F.png",
+      "timestamp": 1792743354.857,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "F4D16E1C-C390-492B-B213-53B53465C506.png",
+      "originalSha256": "d8275bd82adf994916f1e4e508c0902dc0c1795d73a4879c243ca994cbf87c6a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "64218683-7638-43FE-AB51-B06D02713D1C.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 navigation frames in portrait_0_7A506A30-42EC-4602-A543-E202253E9501.txt",
+      "timestamp": 1792743493.461,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "64218683-7638-43FE-AB51-B06D02713D1C.txt.gz",
+      "originalSha256": "cf08847172ab9e080dc64cc87a2d4771151b73f641f0ff3110e0ffbbc618149f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "D4EDF161-2A0B-400E-BBAD-2604D0F805CC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 viewport and exact details in portrait_0_02576689-2CDA-4363-A809-48CEB5255A28.png",
+      "timestamp": 1792743493.168,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "D4EDF161-2A0B-400E-BBAD-2604D0F805CC.png",
+      "originalSha256": "08ed88339e651c4829caff5f953f0e5650818f69a105097d42af1c30b16b5d1e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F400E6FD-7B68-46F8-AE7F-975CFC038CE0.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 navigation frames in landscape_0_1859A876-E8B6-4AE3-A4A2-EDF0C1417537.txt",
+      "timestamp": 1792743489.413,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "F400E6FD-7B68-46F8-AE7F-975CFC038CE0.txt.gz",
+      "originalSha256": "a4717ca39900135c5fb55df1ccc79cee1a37c407ad99d153fec9d141580a1df6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8F91873D-C908-443A-BFCA-3E11E2A5F043.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 viewport and exact details in landscape_0_6F2C62A4-F581-405E-8BC4-4E3BB2F4AF30.png",
+      "timestamp": 1792743489.116,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "8F91873D-C908-443A-BFCA-3E11E2A5F043.png",
+      "originalSha256": "5c0afeb7793debaa7e3b926ccb4976de9b83de9a3d99c2730deece75697f5e9c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4B078183-3D36-41F4-926D-8724356FF44B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_8CC1C5CA-1E04-428A-99FD-2801F21AAD5E.png",
+      "timestamp": 1792743479.806,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "4B078183-3D36-41F4-926D-8724356FF44B.png",
+      "originalSha256": "21a23871c56d579c254f95f8a3031ca64088de47e70314b6a71c10aef2d85006"
+    }
+  ],
+  "videoPublished": false
+}

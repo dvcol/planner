@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-secondary-actions.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-secondary-actions"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "51844318-FB3A-4B17-AE37-F3FF2B04BC4D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unavailable catalog toolbar owned window_0_FDE1D85A-64D4-4004-91FA-2F3A55B1CE78.png",
+      "timestamp": 1792742433.804,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "51844318-FB3A-4B17-AE37-F3FF2B04BC4D.png",
+      "originalSha256": "d0281a0415877f7bd9999c5208d6b8aa7b7893ca95a3b1833c2b9183a7e41794"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "308243D6-69AF-445E-94AC-CECFC792B60D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unavailable catalog toolbar owned-window hierarchy_1_FDE1D85A-64D4-4004-91FA-2F3A55B1CE78.txt",
+      "timestamp": 1792742434.181,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "308243D6-69AF-445E-94AC-CECFC792B60D.txt.gz",
+      "originalSha256": "c4106edf70821ef14571b8bc0b67356d9a7a74961390075c1d329f7b390ad420"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "76939771-66E8-402C-A02F-7E7F60827295.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary toolbar preserves Map after canceled Edit and Schedule_0_C5AD195F-90D5-4624-A49B-0AAB7DC0F8A6.png",
+      "timestamp": 1792742421.645,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "76939771-66E8-402C-A02F-7E7F60827295.png",
+      "originalSha256": "d0281a0415877f7bd9999c5208d6b8aa7b7893ca95a3b1833c2b9183a7e41794"
+    }
+  ],
+  "videoPublished": false
+}

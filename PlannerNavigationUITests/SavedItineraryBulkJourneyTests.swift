@@ -358,7 +358,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     assertProgress("1 of 3 items done", application: application)
     assertChecks(["Completed", "To do", "To do"], application: application)
     #if os(iOS)
-      let reorder = application.plannerElement("saved.itinerary.reorder")
+      let reorder = application.savedPlannerItineraryReorderControl()
       reorder.activateForPlannerJourney()
     #endif
     let lastItem = application.plannerElement(originalIdentifiers[2])
@@ -388,7 +388,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     assertChecks(["To do", "To do", "Completed"], application: application)
     assertProgress("1 of 3 items done", application: application)
     #if os(iOS)
-      reorder.activateForPlannerJourney()
+      application.savedPlannerItineraryReorderControl().activateForPlannerJourney()
     #endif
     application.terminate()
     application.launchSavedPlannerJourney()

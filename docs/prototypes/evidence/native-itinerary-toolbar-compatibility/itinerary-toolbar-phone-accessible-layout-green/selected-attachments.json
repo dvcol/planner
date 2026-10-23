@@ -1,0 +1,14 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-accessible-layout-green.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-accessible-layout-green"
+  ],
+  "attachments": [],
+  "videoPublished": false
+}

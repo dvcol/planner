@@ -1,0 +1,50 @@
+[
+  {
+    "original": "836E6BB3-85AD-484B-86D2-CDD41826DAC8.txt",
+    "sha256": "8c8c2cf3c70b225e21dacf70ac3adc5b22f898b93d47d185f90be3e3bdd34e66",
+    "retained": "836E6BB3-85AD-484B-86D2-CDD41826DAC8.txt.gz"
+  },
+  {
+    "original": "F2D18DA6-2822-4FF9-AE84-5368E6650FFA.txt",
+    "sha256": "77e08d1e2f952d6f2566fabeff1e8f41347ba91a8aeb14d66dff4e021e367663",
+    "retained": "F2D18DA6-2822-4FF9-AE84-5368E6650FFA.txt.gz"
+  },
+  {
+    "video": "5111B825-9BDA-4B4B-86B3-AC37216A5FAC.mp4",
+    "videoSha256": "8e9d00135052ecb0eb04da888d50ec123c91993c051e5fb4afc0493f63771453",
+    "seekSeconds": 54,
+    "frame": "list-before-54.png",
+    "frameSha256": "8c4e183d3083ebf6490a27876287817795cf10d96f4b31a61dbf941e64326922",
+    "command": [
+      "ffmpeg",
+      "-loglevel",
+      "error",
+      "-ss",
+      "54",
+      "-i",
+      "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-largest-text/5111B825-9BDA-4B4B-86B3-AC37216A5FAC.mp4",
+      "-frames:v",
+      "1",
+      "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-phone-largest-text/list-before-54.png"
+    ]
+  },
+  {
+    "video": "3CDAA540-F1D7-420E-BBDA-72E267EC0A18.mp4",
+    "videoSha256": "9e88a5c360381aeadae4d17e6f3b84efe7599fc173dffc0d29c8da249e985efe",
+    "seekSeconds": 55,
+    "frame": "itinerary-before-55.png",
+    "frameSha256": "4f34bf830de6690f75ffa1fd6e83b2c235ffde7c0c3328b6dd50dbe7f7eec37f",
+    "command": [
+      "ffmpeg",
+      "-loglevel",
+      "error",
+      "-ss",
+      "55",
+      "-i",
+      "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-largest-text/3CDAA540-F1D7-420E-BBDA-72E267EC0A18.mp4",
+      "-frames:v",
+      "1",
+      "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-phone-largest-text/itinerary-before-55.png"
+    ]
+  }
+]

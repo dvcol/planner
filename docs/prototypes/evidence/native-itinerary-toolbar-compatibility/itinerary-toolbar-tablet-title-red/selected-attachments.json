@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-title-red.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-title-red"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "61DD0588-E89B-465E-91D2-3608824C0EC0.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary native title and toolbar frames_0_58D84A9F-775A-4911-9FD7-133CC8432BD1.txt",
+      "timestamp": 1792741810.57,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "61DD0588-E89B-465E-91D2-3608824C0EC0.txt.gz",
+      "originalSha256": "4239e8cb687c6c07b02f9d3108d029e09dc67ebad75ec96611eeb6d073f6d6a0"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3B0B1F75-8598-4E39-8499-37B6CC1945E7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title beside native Filters Add and More_0_868EBA5F-B0C6-48C4-9C0A-4F9878FE87D3.png",
+      "timestamp": 1792741810.233,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "3B0B1F75-8598-4E39-8499-37B6CC1945E7.png",
+      "originalSha256": "a86e0515170f52b8a62d3767e7cb099e14e8761aa17c5eacda9c4298088603ed"
+    }
+  ],
+  "videoPublished": false
+}

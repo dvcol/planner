@@ -1,0 +1,11 @@
+{
+  "changedInputs": [
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedMapCollectionView.swift",
+    "Planner/Scenes/SavedPlannerView.swift"
+  ],
+  "unchangedTracer": "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift",
+  "tracerSha256": "dacf9571ae1bc46effae56549ef687283da73fbd38d09800a7335143aab10265",
+  "directStopPassed": true,
+  "listBranchStillToQualify": true
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-membership-phone-visible.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-visible"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "8EA85A9C-781C-40FB-BAEB-F0C7FB201E6E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List membership preserves the open guide and exact public context_0_8D963BAE-D874-4CF3-9C02-25FFA10E94F8.png",
+      "timestamp": 1792751986.607,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "8EA85A9C-781C-40FB-BAEB-F0C7FB201E6E.png",
+      "originalSha256": "cb3bd48cf835dbbcde0db6bde314e5e2800799e912aba6deaab4c9b3f2a36020"
+    }
+  ],
+  "videoPublished": false
+}

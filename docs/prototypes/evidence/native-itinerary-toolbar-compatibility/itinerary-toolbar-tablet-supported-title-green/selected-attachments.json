@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-supported-title-green.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-supported-title-green"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F53549CD-8161-4BA4-9591-4A945B9D2810.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title retained above its native collection Map_0_D219507E-E281-46F2-B0B4-0E555E29B65D.png",
+      "timestamp": 1792742212.834,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "F53549CD-8161-4BA4-9591-4A945B9D2810.png",
+      "originalSha256": "1abf58f3532f441d8b1cc69ac1fd61b72e256313db46a509c73dceee9affdb62"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3C58EEB2-A2FF-4F42-B4E5-0DA630FC2387.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary native title and toolbar frames_0_1BBD7998-402F-4B73-9B2E-03847D915AA0.txt",
+      "timestamp": 1792742188.836,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "3C58EEB2-A2FF-4F42-B4E5-0DA630FC2387.txt.gz",
+      "originalSha256": "aa88a6f95f230e2dc6c80e8c8507e7046196f16b8a52d9e37ebac3faef4b15d0"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "46BFB6C4-1321-4280-9E1E-88BAAB578682.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title beside native Filters Add and More_0_22C0D6FF-67B1-4A59-87E6-7A32CC0832B5.png",
+      "timestamp": 1792742188.516,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "46BFB6C4-1321-4280-9E1E-88BAAB578682.png",
+      "originalSha256": "672754bf4a55ffeb143e00c33999a4d212ee3b19bda9983307925020b7cb7a50"
+    }
+  ],
+  "videoPublished": false
+}

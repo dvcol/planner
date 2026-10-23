@@ -867,7 +867,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
   }
 
   private func openItineraryEditor(_ application: XCUIApplication) {
-    var editor = application.plannerElement("saved.itinerary.edit")
+    var editor = application.savedPlannerItineraryEditControl()
     #if os(iOS)
       if !editor.exists || !editor.isHittable {
         let overflow = application.navigationBars.buttons["OverflowBarButtonItem"].firstMatch

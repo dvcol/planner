@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-largest-scrolling.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-largest-scrolling"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "BC5E456E-3C2B-4838-B5EB-2794A3F83477.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary toolbar control remains unavailable after native scrolling_0_532D6D6C-7B91-41FD-BC53-F3E4785067E0.png",
+      "timestamp": 1792744242.9,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "BC5E456E-3C2B-4838-B5EB-2794A3F83477.png",
+      "originalSha256": "5198f72620ea41ffb4be59010efb81b5158aa5813da3ce4381a711c26e987be8"
+    }
+  ],
+  "videoPublished": false
+}

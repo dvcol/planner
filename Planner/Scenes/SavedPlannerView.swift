@@ -1677,20 +1677,26 @@ struct SavedPlannerView: View {
   @ViewBuilder
   private func listContents(_ list: PlannerListSourceRead) -> some View {
     if listRepresentation == .map {
-      VStack(spacing: 0) {
-        #if os(iOS)
-          SavedListProgress(
-            listName: list.content.name, progress: list.progress, estimates: list.estimates,
-            manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
-            isArchived: list.state.archived == true
-          ).padding()
-        #endif
+      let mapContent = Group {
         if let collection = loadedMapCollection(for: .list(list.source.id)) {
           SavedMapCollectionView(collection: collection, select: selectListMapRow)
         } else {
           ProgressView("Opening Map").frame(maxWidth: .infinity, maxHeight: .infinity)
         }
       }
+      #if os(iOS)
+        SavedMapCollectionLayout {
+          SavedListProgress(
+            listName: list.content.name, progress: list.progress, estimates: list.estimates,
+            manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
+            isArchived: list.state.archived == true
+          ).padding()
+        } mapContent: {
+          mapContent
+        }
+      #else
+        mapContent
+      #endif
     } else if let window = listWindow {
       switch window.state {
       case .ready:
@@ -1727,6 +1733,13 @@ struct SavedPlannerView: View {
             ScrollViewReader { proxy in
               List(selection: membershipSelection) {
                 Section {
+                  SavedListProgress(
+                    listName: list.content.name, progress: list.progress, estimates: list.estimates,
+                    manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
+                    isArchived: list.state.archived == true
+                  )
+                  .selectionDisabled()
+                  .listRowSeparator(.hidden)
                   ForEach(rows) { row in
                     membershipRow(row, list: list, window: window)
                       .id(row.id)
@@ -1737,12 +1750,6 @@ struct SavedPlannerView: View {
                   .onMove { offsets, destination in
                     moveMembership(from: offsets, to: destination, in: rows, listId: list.source.id)
                   }
-                } header: {
-                  SavedListProgress(
-                    listName: list.content.name, progress: list.progress, estimates: list.estimates,
-                    manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
-                    isArchived: list.state.archived == true
-                  ).textCase(nil)
                 }
               }
               .listStyle(.plain)

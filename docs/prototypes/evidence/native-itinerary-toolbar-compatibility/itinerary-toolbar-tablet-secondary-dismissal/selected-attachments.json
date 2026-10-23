@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-secondary-dismissal.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-secondary-dismissal"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "FD1035FA-92B7-4149-97CA-3925D87390B8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary toolbar and exact route survive relaunch_0_45D3F226-A922-443A-B6D4-4CA2A21B51DC.png",
+      "timestamp": 1792742717.703,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "FD1035FA-92B7-4149-97CA-3925D87390B8.png",
+      "originalSha256": "46035a4e390319915ff364fce5b54e13a078489feec1ed3027bf645376007d84"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "052E4EC7-2831-4296-805F-38E413E366A9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary toolbar preserves Map after canceled Edit and Schedule_0_0F7A8595-EB59-42A3-ABD2-0543D71C62D9.png",
+      "timestamp": 1792742687.602,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryMoreKeepsReorderEditingAndSchedulingReachable()",
+      "retainedFileName": "052E4EC7-2831-4296-805F-38E413E366A9.png",
+      "originalSha256": "ee048572904279a2b7519b8eb2c6c9689d6708543ab4a7dd75309b4abb4ff428"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "0AB06CD4-EEC0-4435-BED0-655BA71B1348.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title retained above its native collection Map_0_8CC5B9AF-DF46-415B-84A3-B657FA6AFBC4.png",
+      "timestamp": 1792742755.657,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "0AB06CD4-EEC0-4435-BED0-655BA71B1348.png",
+      "originalSha256": "f693c836e6fca5a3a516d8f20cce97c02b8bc77b6cec39df2cea494df4e6211b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "394FD263-10DA-4CB3-AF70-8FE68F5CF83E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary native title and toolbar frames_0_9292586D-94AB-4B84-932C-9E6F133DF509.txt",
+      "timestamp": 1792742731.766,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "394FD263-10DA-4CB3-AF70-8FE68F5CF83E.txt.gz",
+      "originalSha256": "ebe85091d03d128823dce24d8423b1cf1015986bfd972dce33ef181b00c92bf4"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "81B2E640-8282-497B-B160-99D97E05E6BA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Itinerary title beside native Filters Add and More_0_8A7E472D-22F8-4CEE-AC6C-BD4AF238879E.png",
+      "timestamp": 1792742731.387,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testItineraryTitleAndPrimaryActionsRemainVisibleInTheCollectionPane()",
+      "retainedFileName": "81B2E640-8282-497B-B160-99D97E05E6BA.png",
+      "originalSha256": "46035a4e390319915ff364fce5b54e13a078489feec1ed3027bf645376007d84"
+    }
+  ],
+  "videoPublished": false
+}

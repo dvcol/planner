@@ -103,7 +103,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     ).firstMatch
     XCTAssertTrue(childRow.waitForExistence(timeout: 10))
     let childIdentifier = childRow.identifier
-    application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+    application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
     application.plannerElement("Schedule itinerary").activateForPlannerJourney()
     let allDay = application.descendants(matching: .any)
       .matching(identifier: "saved.schedule.allDay").firstMatch
@@ -128,7 +128,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     XCTAssertTrue((entry.value as? String)?.contains("All day") == true)
     entry.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Live route notes"].waitForExistence(timeout: 5))
-    let actions = application.plannerElement("saved.itinerary.actions")
+    let actions = application.savedPlannerItineraryActionsControl()
     if actions.exists {
       actions.activateForPlannerJourney()
     } else {

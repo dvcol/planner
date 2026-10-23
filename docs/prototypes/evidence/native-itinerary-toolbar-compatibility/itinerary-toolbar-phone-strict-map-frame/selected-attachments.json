@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-strict-map-frame.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-strict-map-frame"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F77A496E-38FA-4391-AE48-287F6A39356E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_5F73C5DC-B091-4E1A-AD64-5D22316FFCA7.png",
+      "timestamp": 1792745098.417,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "F77A496E-38FA-4391-AE48-287F6A39356E.png",
+      "originalSha256": "fbeb854d83e2920050abb5bd55139499eee631435cc8747f422f5ccfa96075d2"
+    }
+  ],
+  "videoPublished": false
+}

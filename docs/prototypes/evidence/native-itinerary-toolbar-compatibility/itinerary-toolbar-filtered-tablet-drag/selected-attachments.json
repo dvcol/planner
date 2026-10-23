@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-filtered-tablet-drag.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-filtered-tablet-drag"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "744A15C9-454D-4CAC-83B8-F1520CE6D724.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary drag preserves exact entries and completion after relaunch_0_3BF31A78-0A9E-4912-BBD2-FE6CB3A35FF8.png",
+      "timestamp": 1792743124.841,
+      "testIdentifier": "ItineraryWindowJourneyTests/testFilteredEntryDragPreservesHiddenCompletionAndFullOrderAfterRelaunch()",
+      "retainedFileName": "744A15C9-454D-4CAC-83B8-F1520CE6D724.png",
+      "originalSha256": "774b9662a78954b0245b3d4e2e04b8ef381f81e5e9a97328eb6f11335f4b55fe"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8F32E55C-684E-4A87-BEAC-0B4C52DB9FF8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary native drag keeps hidden completion and full progress_0_0BBBAECA-17B0-4CC8-85D0-7A58771D2F95.png",
+      "timestamp": 1792743092.44,
+      "testIdentifier": "ItineraryWindowJourneyTests/testFilteredEntryDragPreservesHiddenCompletionAndFullOrderAfterRelaunch()",
+      "retainedFileName": "8F32E55C-684E-4A87-BEAC-0B4C52DB9FF8.png",
+      "originalSha256": "27b974f4e603c0a54746ca3cf83f0a20eb8ae2448fb8b4a08449a75c7fa5d770"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "5BE13CCB-E09E-4CB4-99EF-4DE2C0CECE32.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary entries before native drag_0_00134308-4743-4CFD-ADED-832E6B3CD36B.png",
+      "timestamp": 1792743070.766,
+      "testIdentifier": "ItineraryWindowJourneyTests/testFilteredEntryDragPreservesHiddenCompletionAndFullOrderAfterRelaunch()",
+      "retainedFileName": "5BE13CCB-E09E-4CB4-99EF-4DE2C0CECE32.png",
+      "originalSha256": "610840cab7b3e707d9c9f57d06b337514f188fc9284bb4d1ec978a4616c551eb"
+    }
+  ],
+  "videoPublished": false
+}

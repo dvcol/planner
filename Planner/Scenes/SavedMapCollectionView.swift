@@ -35,6 +35,39 @@ struct SavedCollectionRepresentationMenu: View {
   }
 }
 
+struct SavedMapCollectionLayout<Summary: View, MapContent: View>: View {
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+  let summary: Summary
+  let mapContent: MapContent
+
+  init(@ViewBuilder summary: () -> Summary, @ViewBuilder mapContent: () -> MapContent) {
+    self.summary = summary()
+    self.mapContent = mapContent()
+  }
+
+  var body: some View {
+    GeometryReader { geometry in
+      Group {
+        if dynamicTypeSize.isAccessibilitySize {
+          mapContent.safeAreaInset(edge: .top, spacing: 0) {
+            ScrollView { summary }
+              .scrollBounceBehavior(.basedOnSize)
+              .frame(height: geometry.size.height / 3)
+              .accessibilityLabel("Plan summary")
+              .accessibilityIdentifier("saved.map.summary")
+          }
+        } else {
+          VStack(spacing: 0) {
+            summary
+            mapContent.frame(maxWidth: .infinity, maxHeight: .infinity)
+          }
+        }
+      }
+      .frame(width: geometry.size.width, height: geometry.size.height)
+    }
+  }
+}
+
 struct SavedMapCollectionView: View {
   private enum PresentedSheet: Identifiable {
     case locations
@@ -88,11 +121,46 @@ struct SavedMapCollectionView: View {
   @State private var pendingSelection: PlannerMapRowRead?
   @State private var locationChoiceMessage: String?
 
-  private var footerLayout: AnyLayout {
-    if dynamicTypeSize.isAccessibilitySize {
-      return AnyLayout(VStackLayout(alignment: .leading, spacing: 12))
+  private var locatedCountDescription: String {
+    "\(collection.locatedCount) of \(collection.matchingCount) items located"
+  }
+
+  private var locationsButton: some View {
+    Button {
+      presentedSheet = .locations
+    } label: {
+      Label("Locations", systemImage: "list.bullet")
     }
-    return AnyLayout(HStackLayout())
+    .buttonStyle(.bordered)
+    .controlSize(.large)
+    .accessibilityIdentifier("saved.map.locations")
+    .help("Locations")
+  }
+
+  @ViewBuilder
+  private var footer: some View {
+    if dynamicTypeSize.isAccessibilitySize {
+      ViewThatFits(in: .horizontal) {
+        HStack(spacing: 12) {
+          Text("\(collection.locatedCount)/\(collection.matchingCount)")
+            .font(.callout).foregroundStyle(.secondary)
+            .fixedSize(horizontal: true, vertical: false)
+            .accessibilityLabel(locatedCountDescription)
+          Spacer(minLength: 0)
+          locationsButton.labelStyle(.iconOnly)
+        }
+        VStack(alignment: .leading, spacing: 12) {
+          Text(locatedCountDescription).font(.callout).foregroundStyle(.secondary)
+          locationsButton.labelStyle(.iconOnly)
+        }
+      }
+    } else {
+      HStack {
+        Text(locatedCountDescription).font(.callout).foregroundStyle(.secondary)
+        Spacer()
+        locationsButton.labelStyle(.titleOnly)
+      }
+    }
   }
 
   var body: some View {
@@ -133,18 +201,10 @@ struct SavedMapCollectionView: View {
     .accessibilityIdentifier("saved.map.collection")
     .overlay { status }
     .safeAreaInset(edge: .bottom, spacing: 0) {
-      footerLayout {
-        Text("\(collection.locatedCount) of \(collection.matchingCount) items located")
-          .font(.callout).foregroundStyle(.secondary)
-        if !dynamicTypeSize.isAccessibilitySize { Spacer() }
-        Button("Locations") { presentedSheet = .locations }
-          .buttonStyle(.bordered)
-          .controlSize(.large)
-          .accessibilityIdentifier("saved.map.locations")
-      }
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding()
-      .background(.bar)
+      footer
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(.bar)
     }
     .onChange(of: collection.groups.map(\.id), initial: true) {
       guard !camera.positionedByUser else { return }

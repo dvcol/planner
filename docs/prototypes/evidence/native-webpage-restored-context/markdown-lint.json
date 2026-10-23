@@ -1,0 +1,22 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerBrowserLint/.markdownlint-cli2.jsonc",
+    "docs/prototypes/core-native-import-fresh-local-values.md",
+    "docs/prototypes/native-webpage-restored-context.md",
+    "docs/prototypes/native-itinerary-toolbar-compatibility.md",
+    "docs/implementation-map.md",
+    "docs/open-decisions.md"
+  ],
+  "exitCode": 0,
+  "sourceSha256": {
+    "docs/prototypes/core-native-import-fresh-local-values.md": "1c6a79588feaf6ed673c4d977e46e1f6cc97dc1d0d862480a984cac78b53500a",
+    "docs/prototypes/native-webpage-restored-context.md": "ea5fdd2dd52d1a1fb4ecd3ed2fb2a558c3290e40db5d642baed356ad25423c23",
+    "docs/prototypes/native-itinerary-toolbar-compatibility.md": "be702b3a0f54c3ed16cd60db15df833751f95ee09d26201d16e14b7d67338437",
+    "docs/implementation-map.md": "4373d12964da7f76d7165db44880df5e1a2411f00da1c3c88e5d6b31b2e60146",
+    "docs/open-decisions.md": "1b1cf5c082a24cdb92e6723059b3fcbbca80843538d42241e48ad1f6d846a30a"
+  }
+}

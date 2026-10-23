@@ -1,0 +1,7 @@
+{
+  "processIdentifier": 79824,
+  "inspectedCommand": "",
+  "signal": null,
+  "reason": "Repeated native idle waits during scroll before Map, with retained process sample.",
+  "sampleSha256": "65285897c86ebea357f5360468464963bb4187713b95baaac52494b79a436ffa"
+}

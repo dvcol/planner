@@ -1,0 +1,10 @@
+{
+  "before": "itinerary-toolbar-tablet-natural-branch-scroll",
+  "after": "itinerary-toolbar-tablet-compact-map-footer",
+  "inputCount": 1094,
+  "changedInputs": [
+    "Planner/Scenes/SavedMapCollectionView.swift"
+  ],
+  "unchangedNativeJourneySha256": "5307c2fe971dcd9d1aa513d680a97a5e806d5473d3c71b10768a116016000ebb",
+  "runtimeOutcome": "Read the independent retained test summary; this comparison grants no passing credit."
+}

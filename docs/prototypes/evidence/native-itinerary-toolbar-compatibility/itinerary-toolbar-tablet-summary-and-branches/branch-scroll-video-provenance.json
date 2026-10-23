@@ -1,0 +1,57 @@
+{
+  "source": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-and-branches/7DC312F4-D3AE-4842-8CBD-E8694B550815.mp4",
+  "sourceSha256": "f860090ba694c3ad285eb77f8f065b6ecae48a35dc6fee911807b923c341bf4e",
+  "frames": [
+    {
+      "command": [
+        "/opt/homebrew/bin/ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-ss",
+        "86",
+        "-i",
+        "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-and-branches/7DC312F4-D3AE-4842-8CBD-E8694B550815.mp4",
+        "-frames:v",
+        "1",
+        "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-summary-and-branches/branch-scroll-86s.png"
+      ],
+      "frame": "branch-scroll-86s.png",
+      "sha256": "ad4458492c743ba523f6ab4a5b1b69e1ab617b3c128f0819e54ac148d4e1ffb9"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-ss",
+        "96",
+        "-i",
+        "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-and-branches/7DC312F4-D3AE-4842-8CBD-E8694B550815.mp4",
+        "-frames:v",
+        "1",
+        "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-summary-and-branches/branch-scroll-96s.png"
+      ],
+      "frame": "branch-scroll-96s.png",
+      "sha256": "9cc3318b39b2f2f27a589e126e956e1d18d533dadae718f5b10027ebef350b86"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-ss",
+        "104",
+        "-i",
+        "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-and-branches/7DC312F4-D3AE-4842-8CBD-E8694B550815.mp4",
+        "-frames:v",
+        "1",
+        "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-summary-and-branches/branch-scroll-104s.png"
+      ],
+      "frame": "branch-scroll-104s.png",
+      "sha256": "a6fda8dfd414c9177ce0d5aae7de6816562ac14b792240bbc2dfad6f923554fc"
+    }
+  ]
+}

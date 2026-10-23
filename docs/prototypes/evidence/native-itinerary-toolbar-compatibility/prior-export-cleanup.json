@@ -1,0 +1,146 @@
+{
+  "candidates": [
+    {
+      "phase": "itinerary-toolbar-filtered-tablet-drag",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-filtered-tablet-drag",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-filtered-tablet-drag.xcresult",
+      "nominalBytes": 430093,
+      "files": 4,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-phone-accessible-layout-green",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-accessible-layout-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-accessible-layout-green.xcresult",
+      "nominalBytes": 138505026,
+      "files": 212,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-phone-largest-scrolling",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-largest-scrolling",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-largest-scrolling.xcresult",
+      "nominalBytes": 91201050,
+      "files": 145,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-phone-largest-text",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-largest-text",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-largest-text.xcresult",
+      "nominalBytes": 51166011,
+      "files": 109,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-phone-primary-secondary",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-primary-secondary",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-primary-secondary.xcresult",
+      "nominalBytes": 4187251,
+      "files": 6,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-phone-strict-map-frame",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-strict-map-frame",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-strict-map-frame.xcresult",
+      "nominalBytes": 37234309,
+      "files": 4,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-map-contexts",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-map-contexts",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-map-contexts.xcresult",
+      "nominalBytes": 9018780,
+      "files": 11,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-native-placement",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-native-placement",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-native-placement.xcresult",
+      "nominalBytes": 2739858,
+      "files": 7,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-secondary-actions",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-secondary-actions",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-secondary-actions.xcresult",
+      "nominalBytes": 26899347,
+      "files": 106,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-secondary-dismissal",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-secondary-dismissal",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-secondary-dismissal.xcresult",
+      "nominalBytes": 3626541,
+      "files": 6,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-supported-title-green",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-supported-title-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-supported-title-green.xcresult",
+      "nominalBytes": 1814193,
+      "files": 4,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-supported-title-red",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-supported-title-red",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-supported-title-red.xcresult",
+      "nominalBytes": 2920991,
+      "files": 14,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-title-green",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-title-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-title-green.xcresult",
+      "nominalBytes": 3143614,
+      "files": 7,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    },
+    {
+      "phase": "itinerary-toolbar-tablet-title-red",
+      "duplicateExport": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-title-red",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-title-red.xcresult",
+      "nominalBytes": 2988588,
+      "files": 14,
+      "noOpenHandles": true,
+      "selectedCopiesVerified": true,
+      "removed": true
+    }
+  ],
+  "totalNominalBytes": 375875652,
+  "action": "removed verified duplicate generated exports; original xcresults and retained packet artifacts preserved"
+}

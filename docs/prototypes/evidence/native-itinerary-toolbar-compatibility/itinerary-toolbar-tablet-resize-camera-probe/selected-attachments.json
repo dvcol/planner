@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-resize-camera-probe.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-resize-camera-probe"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "361CAAFC-26B7-4569-85BF-E49EC068EE53.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 viewport and exact details in landscape_0_38DD91E7-E12A-4899-A29B-EB499B730B15.png",
+      "timestamp": 1792747072.819,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "361CAAFC-26B7-4569-85BF-E49EC068EE53.png",
+      "originalSha256": "370725c477b2fb5f095d01ece0dec84a595068a7053621c49f027f435677572e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "04678865-A1A7-4E83-8C69-2396D84F51A1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_98052B51-F985-4F97-84A6-465D571DFB7E.png",
+      "timestamp": 1792747048.053,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "04678865-A1A7-4E83-8C69-2396D84F51A1.png",
+      "originalSha256": "2ecadbe450325299af4a7a76b06666d258c07f6951faf787a623dece656bb3b6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F31D1348-A511-408D-A07F-1D06E8224D89.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native accessible Map summary scrolls without displacing its pins_0_AD8BE379-441C-4AFC-972A-E5C87D0D132B.png",
+      "timestamp": 1792747045.729,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "F31D1348-A511-408D-A07F-1D06E8224D89.png",
+      "originalSha256": "c749f48a6650c1b02c666d90f959b33929b8e65d5da0b2757605848a3b230aa2"
+    }
+  ],
+  "videoPublished": false
+}

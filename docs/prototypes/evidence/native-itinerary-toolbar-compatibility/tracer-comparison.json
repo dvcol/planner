@@ -1,0 +1,10 @@
+{
+  "changedInputs": [
+    "Planner/Scenes/SavedItineraryViews.swift"
+  ],
+  "unchangedTracer": "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+  "tracerSha256": "6de40fc046dab395d5f27452c9afd37c61df3f90612a48aa9e5c10ef19f55133",
+  "inputCount": 1094,
+  "redFailedTests": 1,
+  "greenPassedTests": 1
+}
