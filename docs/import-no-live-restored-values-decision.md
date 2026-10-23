@@ -1,6 +1,6 @@
 # Incoming restored values when the current source is deleted
 
-Status: Q151 pending. Q149 A and its known-candidate follow-up require a current live owner. Their implementation does not admit an incoming restored lifetime over a currently deleted source. Independent local qualification continues; signing is separate.
+Status: Q151 A accepted on 23 October 2026. The concrete lineage/reference contract requires review before implementation. Q149 A and its known-candidate follow-up require a current live owner. Their implementation does not admit an incoming restored lifetime over a currently deleted source. Independent local qualification continues; signing is separate.
 
 ## Concrete case and current gate
 
@@ -20,4 +20,8 @@ Recommend A, consistent with deliberate manual restoration and retaining authori
 
 ## Existing boundaries and prerequisite policy
 
-Use the already accepted public import review/execute, canonical export/read, recovery, receipt and reopen seams. No additional direct test boundary is proposed by the policy question. A later concrete review must settle exact declarations and literal expected graphs for the selected behavior. Q150's unrelated browser Return question remains pending independently.
+Use the already accepted public import review/execute, canonical export/read, recovery, receipt and reopen seams. No additional direct test boundary is proposed by the policy question. A later concrete review must settle exact declarations and literal expected graphs for the selected behavior. Q150 A's browser Return policy is accepted independently; its native qualification remains separate.
+
+## Concrete review
+
+The [Q152 contract](import-no-live-restored-values-contract-review.md) specifies current-lineage construction, represented dependencies, owned/contextual guards, truthful preview/results and real-storage qualification. Its approval is the remaining prerequisite for this transformation. Q150 A is accepted separately.
