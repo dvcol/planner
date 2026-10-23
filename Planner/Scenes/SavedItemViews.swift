@@ -42,6 +42,9 @@ struct SavedItemCatalog: View {
   @State private var windowNamespace: String?
   @State private var visibleIdentifiers: Set<UUID> = []
   @State private var retryIdentifier = UUID()
+  #if os(iOS)
+    @State private var contentWidth: CGFloat = 0
+  #endif
 
   private var request: Request {
     .init(
@@ -90,19 +93,32 @@ struct SavedItemCatalog: View {
     .toolbarTitleDisplayMode(.inline)
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
-    .toolbar {
-      ToolbarItem {
-        SavedCollectionRepresentationMenu(
-          representation: $representation,
-          accessibilityIdentifier: "\(scope.identifierPrefix).representation")
+    #if os(iOS)
+      .onGeometryChange(for: CGFloat.self) { geometry in
+        geometry.size.width
+      } action: { width in
+        contentWidth = width
       }
+    #endif
+    .toolbar {
       ToolbarItem {
         SavedItemFilterControl(
           filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
       }
-      ToolbarItem {
-        SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "\(scope.identifierPrefix).sort")
-      }
+      #if os(iOS)
+        if contentWidth < 440 {
+          ToolbarOverflowMenu {
+            representationMenu
+            sortMenu
+          }
+        } else {
+          ToolbarItem { representationMenu }
+          ToolbarItem { sortMenu }
+        }
+      #else
+        ToolbarItem { representationMenu }
+        ToolbarItem { sortMenu }
+      #endif
       ToolbarItem {
         Menu {
           Button("New item", systemImage: "square.and.pencil", action: create)
@@ -118,6 +134,16 @@ struct SavedItemCatalog: View {
         .accessibilityIdentifier("saved.item.addMenu")
       }
     }
+  }
+
+  private var representationMenu: some View {
+    SavedCollectionRepresentationMenu(
+      representation: $representation,
+      accessibilityIdentifier: "\(scope.identifierPrefix).representation")
+  }
+
+  private var sortMenu: some View {
+    SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "\(scope.identifierPrefix).sort")
   }
 
   private var listContent: some View {

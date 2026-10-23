@@ -22,7 +22,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(originalLink.waitForExistence(timeout: 10))
     let originalIdentifier = originalLink.identifier
     returnToCatalog(application)
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
     application.chooseSavedPlannerCollectionRepresentation("Map")
     XCTAssertTrue(application.buttons["saved.map.pin.35.0,139.0"].waitForExistence(timeout: 10))
     let locatedCount = application.staticTexts["1 of 1 items located"].firstMatch
@@ -102,7 +102,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(originalLink.waitForExistence(timeout: 10))
     let originalIdentifier = originalLink.identifier
     returnToCatalog(application)
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
     application.chooseSavedPlannerCollectionRepresentation("Map")
     XCTAssertTrue(application.staticTexts["0 of 1 items located"].waitForExistence(timeout: 10))
     application.plannerElement("saved.map.locations").activateForPlannerJourney()
@@ -192,7 +192,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     let alternateIdentifier = alternateLink.identifier
     XCTAssertNotEqual(originalIdentifier, alternateIdentifier)
     returnToCatalog(application)
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
     application.chooseSavedPlannerCollectionRepresentation("Map")
     let originalPin = application.buttons["saved.map.pin.35.0,139.0"]
     let alternatePin = application.buttons["saved.map.pin.36.0,140.0"]
@@ -359,8 +359,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     returnToCatalog(application)
     createItem("Map cafe", link: cafeURL, in: application)
     returnToCatalog(application)
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
-    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
     let pin = application.buttons.matching(identifier: "saved.map.pin.35.0,139.0")
       .matching(NSPredicate(format: "label == %@", "2 items")).firstMatch
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
@@ -406,10 +406,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     returnToCatalog(application)
     createItem("Unlocated note", link: nil, in: application)
     returnToCatalog(application)
-    let representation = application.plannerElement("saved.items.representation")
-    XCTAssertTrue(representation.waitForExistence(timeout: 5))
-    representation.activateForPlannerJourney()
-    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
     let map = application.descendants(matching: .any).matching(identifier: "saved.map.collection")
       .firstMatch
     XCTAssertTrue(map.waitForExistence(timeout: 10))

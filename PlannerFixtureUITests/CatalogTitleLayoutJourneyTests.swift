@@ -179,5 +179,48 @@ import XCTest
         }
       }
     }
+
+    func testCatalogViewSortFiltersAndAddRemainReachableThroughNativeOverflow() {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "catalog-overflow", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      for section in ["Items", "Inbox"] {
+        application.openPlannerSection(section)
+        let prefix = "saved.\(section.lowercased())"
+        let filters = application.plannerElement("\(prefix).filters")
+        XCTAssertTrue(filters.waitForExistence(timeout: 15))
+        application.openSavedPlannerCatalogViewMenu(identifierPrefix: prefix)
+        application.chooseSavedPlannerCollectionRepresentation("Map")
+        application.openSavedPlannerCatalogViewMenu(identifierPrefix: prefix)
+        application.chooseSavedPlannerCollectionRepresentation("List")
+        application.savedPlannerCatalogSortControl(identifierPrefix: prefix)
+          .activateForPlannerJourney()
+        application.plannerElement("Descending").activateForPlannerJourney()
+        let sort = application.savedPlannerCatalogSortControl(identifierPrefix: prefix)
+        XCTAssertEqual(sort.label, "Sort: Title · Descending")
+        application.dismissSavedPlannerCatalogOverflow()
+        filters.activateForPlannerJourney()
+        let done = application.plannerElement("saved.filters.done")
+        XCTAssertTrue(done.waitForExistence(timeout: 5))
+        done.activateForPlannerJourney()
+        application.openSavedPlannerNewItemEditor()
+        let cancel = application.buttons.matching(
+          NSPredicate(
+            format: "identifier == %@ OR identifier == %@", "saved.item.cancel", "saved.item.back")
+        ).firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+        cancel.activateForPlannerJourney()
+        XCTAssertTrue(filters.waitForExistence(timeout: 5))
+        let capture = XCTAttachment(screenshot: application.screenshot())
+        capture.name = "\(section) catalog toolbar after Map Sort Filters and canceled New Item"
+        capture.lifetime = .keepAlways
+        add(capture)
+      }
+    }
   }
 #endif

@@ -13,8 +13,8 @@ final class ChangeObservationJourneyTests: XCTestCase {
     let source = application.savedPlannerItemRows("Hotel").firstMatch
     XCTAssertTrue(source.waitForExistence(timeout: 20))
     let sourceIdentifier = source.identifier
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
-    application.plannerElement("saved.collection.showMap").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
     let original = application.buttons["saved.map.pin.35.662,139.717"]
     XCTAssertTrue(original.waitForExistence(timeout: 10))
     performFixtureAction(
@@ -26,8 +26,8 @@ final class ChangeObservationJourneyTests: XCTestCase {
     attachment.name = "Independent writer refreshes the open collection Map"
     attachment.lifetime = .keepAlways
     add(attachment)
-    application.plannerElement("saved.items.representation").activateForPlannerJourney()
-    application.plannerElement("saved.collection.showList").activateForPlannerJourney()
+    application.openSavedPlannerCatalogViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("List")
     XCTAssertTrue(source.waitForExistence(timeout: 10))
     XCTAssertEqual(source.identifier, sourceIdentifier)
   }

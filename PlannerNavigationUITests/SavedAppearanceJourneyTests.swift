@@ -1559,9 +1559,12 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #endif
     recordScreenshot(application, name: "Cleared Inbox search before native tab switch")
     openCatalogSection("Items", application: application)
-    let itemSort = application.plannerElement("saved.items.sort")
+    var itemSort: XCUIElement {
+      application.savedPlannerCatalogSortControl(identifierPrefix: "saved.items")
+    }
     XCTAssertTrue(itemSort.waitForExistence(timeout: 5))
     XCTAssertTrue(itemSort.waitForPlannerHittability())
+    application.dismissSavedPlannerCatalogOverflow()
     #if os(iOS)
       XCTAssertTrue(application.buttons["Items"].firstMatch.isSelected)
     #endif
@@ -1588,7 +1591,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     localCompletion.activateForPlannerJourney()
     XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
     openCatalogSection("Inbox", application: application)
-    let sort = application.plannerElement("saved.inbox.sort")
+    var sort: XCUIElement {
+      application.savedPlannerCatalogSortControl(identifierPrefix: "saved.inbox")
+    }
     let filters = application.plannerElement("saved.inbox.filters")
     XCTAssertTrue(sort.waitForExistence(timeout: 5))
     assertSortChoice("Title · Ascending", menu: sort)
@@ -1662,7 +1667,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       }
     #endif
     openCatalogSection("Items", application: application)
-    let itemSort = application.plannerElement("saved.items.sort")
+    var itemSort: XCUIElement {
+      application.savedPlannerCatalogSortControl(identifierPrefix: "saved.items")
+    }
     assertSortChoice("Title · Ascending", menu: itemSort)
     XCTAssertEqual(application.plannerElement("saved.items.filters").label, "Active")
     chooseSort("Created", menu: itemSort, application: application)
@@ -1718,7 +1725,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     if !application.savedPlannerItemRows("Alpha").firstMatch.isHittable {
       application.plannerElement("BackButton").activateForPlannerJourney()
     }
-    let sort = application.plannerElement("saved.items.sort")
+    var sort: XCUIElement {
+      application.savedPlannerCatalogSortControl(identifierPrefix: "saved.items")
+    }
     XCTAssertTrue(sort.waitForExistence(timeout: 5))
     assertSortChoice("Title · Ascending", menu: sort)
     assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
@@ -3154,6 +3163,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       XCTWaiter.wait(
         for: [XCTNSPredicateExpectation(predicate: selected, object: menu)], timeout: 5), .completed
     )
+    XCUIApplication().dismissSavedPlannerCatalogOverflow()
   }
 
   private func assertItemOrder(_ titles: [String], application: XCUIApplication) {
@@ -3628,7 +3638,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.plannerElement("Archive item").activateForPlannerJourney()
     openCatalogSection("Items", application: application)
     chooseSort(
-      "Descending", menu: application.plannerElement("saved.items.sort"), application: application)
+      "Descending", menu: application.savedPlannerCatalogSortControl(), application: application)
     XCTAssertFalse(application.savedPlannerItemRows("Zzz archived").firstMatch.exists)
     let removed = application.savedPlannerItemRows("Delta").firstMatch
     let surviving = application.savedPlannerItemRows("Zulu").firstMatch

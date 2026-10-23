@@ -57,13 +57,16 @@ import XCTest
       XCTAssertEqual(
         requireSoleItem("Scale Item 05000", application: application).identifier, lastIdentifier)
       replaceSearch("Scale Item 0499", in: search)
-      let sort = application.plannerElement("saved.items.sort")
+      var sort: XCUIElement {
+        application.savedPlannerCatalogSortControl(identifierPrefix: "saved.items")
+      }
       chooseSort("Created", menu: sort, application: application)
       chooseSort("Descending", menu: sort, application: application)
       requireVisibleOrder(
         ["Scale Item 04998", "Scale Item 04997", "Scale Item 04999"],
         application: application)
       XCTAssertEqual(sort.label, "Sort: Created · Descending")
+      application.dismissSavedPlannerCatalogOverflow()
       capture("Created descending orders the filtered near-end sources in the large dataset")
       chooseSort("Title", menu: sort, application: application)
       chooseSort("Ascending", menu: sort, application: application)
@@ -71,6 +74,7 @@ import XCTest
         ["Scale Item 04997", "Scale Item 04998", "Scale Item 04999"], towardEnd: true,
         application: application)
       XCTAssertEqual(sort.label, "Sort: Title · Ascending")
+      application.dismissSavedPlannerCatalogOverflow()
       capture("Title ascending restores the filtered source order after changing native sort")
       replaceSearch("Scale Item 05000", in: search)
       XCTAssertEqual(

@@ -87,6 +87,27 @@ extension XCUIApplication {
     openSavedPlannerMenu(identifier: "saved.list.representation", title: "View")
   }
 
+  func openSavedPlannerCatalogViewMenu(identifierPrefix: String = "saved.items") {
+    openSavedPlannerMenu(identifier: "\(identifierPrefix).representation", title: "View")
+  }
+
+  func savedPlannerCatalogSortControl(identifierPrefix: String = "saved.items") -> XCUIElement {
+    savedPlannerMenu(identifier: "\(identifierPrefix).sort", title: "Sort")
+  }
+
+  func dismissSavedPlannerCatalogOverflow() {
+    #if os(iOS)
+      let sort = collectionViews.buttons.matching(
+        NSPredicate(format: "label BEGINSWITH %@", "Sort: ")
+      ).firstMatch
+      guard sort.exists else { return }
+      let title = navigationBars.staticTexts.firstMatch
+      XCTAssertTrue(title.exists)
+      title.activateForPlannerJourney()
+      XCTAssertTrue(sort.waitForNonExistence(timeout: 5))
+    #endif
+  }
+
   func openSavedPlannerListActionsMenu() {
     openSavedPlannerMenu(identifier: "saved.list.actions", title: "List actions")
   }
@@ -155,7 +176,7 @@ extension XCUIApplication {
         contentBar.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()
         if !menu.exists {
           switch identifier {
-          case "saved.list.sort":
+          case "saved.list.sort", "saved.items.sort", "saved.inbox.sort":
             menu =
               collectionViews.buttons.matching(
                 NSPredicate(format: "label BEGINSWITH %@", "Sort: ")
