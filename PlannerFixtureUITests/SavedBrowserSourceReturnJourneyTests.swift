@@ -2,6 +2,75 @@ import XCTest
 
 @MainActor
 final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
+  func testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 20))
+    let sourceIdentifier = source.identifier
+    source.activateForPlannerJourney()
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    for _ in 0..<6 where !link.isHittable { application.swipeUp() }
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    XCTAssertEqual(link.value as? String, destination.absoluteString)
+    link.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
+    application.plannerElement("fixture.writer.restoreHotel").activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Restored Hotel with a new lifetime"),
+            object: application.staticTexts["fixture.writer.status"])
+        ], timeout: 15), .completed, application.debugDescription)
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    let reading = XCTAttachment(screenshot: application.screenshot())
+    reading.name = "Fresh restored Item lifetime keeps the original guide readable"
+    reading.lifetime = .keepAlways
+    add(reading)
+    application.plannerElement("saved.browser.return").activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      explanation.staticTexts["The original item is no longer available. Returned to Items."].exists
+    )
+    explanation.buttons["OK"].activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    let catalog = application.descendants(matching: .any)
+      .matching(identifier: "saved.items.catalog").firstMatch
+    XCTAssertTrue(catalog.waitForExistence(timeout: 10))
+    let restored = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(restored.waitForExistence(timeout: 10))
+    XCTAssertTrue(restored.waitForPlannerHittability())
+    XCTAssertEqual(restored.identifier, sourceIdentifier)
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    returned.name = "Old reader returns to the collection containing the restored public Item"
+    returned.lifetime = .keepAlways
+    add(returned)
+    restored.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !retainedLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testDeletedCalendarSourceKeepsItsGuideAndReturnsToCalendar() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()

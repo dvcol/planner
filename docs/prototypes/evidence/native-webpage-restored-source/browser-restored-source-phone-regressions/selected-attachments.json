@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-source-phone-regressions.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-source-phone-regressions"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0CFF8404-221B-467B-8280-594FCF236236.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Deleted browser source returns to the surviving Items collection_0_18C7A6AB-4E9B-4774-A589-DB6690AFBF1E.png",
+      "timestamp": 1792734623.926,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedSourceKeepsItsGuideOpenAndReturnsToItsSurvivingCollection()",
+      "retainedFileName": "0CFF8404-221B-467B-8280-594FCF236236.png",
+      "originalSha256": "0e316fd593ed7a5a42b782c590b636220a9fdb63bd03b9b0db6307fc80cb260d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "CF8E841A-ED4C-4E17-BDFC-FCFA95EAF801.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Deleted source leaves the original guide open_0_470F5E62-0609-4B9D-81D1-1DCFBF7E7D4E.png",
+      "timestamp": 1792734618.807,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testDeletedSourceKeepsItsGuideOpenAndReturnsToItsSurvivingCollection()",
+      "retainedFileName": "CF8E841A-ED4C-4E17-BDFC-FCFA95EAF801.png",
+      "originalSha256": "296d49fe5dbaef3b9e515ae789fb0132d0169f551986c0d147a16635e838ae47"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F372A1D9-A177-416A-BFEB-FDFDB3B86E7A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Removed browser appearance preserves its shared Todo Item_0_E7C05232-379D-4ACC-AD59-BE7410DB6422.png",
+      "timestamp": 1792734662.463,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem()",
+      "retainedFileName": "F372A1D9-A177-416A-BFEB-FDFDB3B86E7A.png",
+      "originalSha256": "370a928fc7d7d8f5eb60d586c72d9878e4d80ea57998dbc4ab40c8a82604d9e9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F7737725-D643-400B-8544-21D861CBFE1B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Removed browser appearance returns to its original List_0_A0E845D1-957A-4829-A07A-3538366A5EA6.png",
+      "timestamp": 1792734653.234,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem()",
+      "retainedFileName": "F7737725-D643-400B-8544-21D861CBFE1B.png",
+      "originalSha256": "c823b4c50db7af2cccc71b5d1485ac41c11509edebcf47d0d741ade946eb41a9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E50C3B2D-0C57-4FB5-816E-1740ED746F17.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Removed List appearance leaves the original guide open_0_F34B9A32-3590-4DA6-A10B-F7182CBA44E3.png",
+      "timestamp": 1792734648.179,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedListAppearanceReturnsToItsListAndPreservesTheSharedItem()",
+      "retainedFileName": "E50C3B2D-0C57-4FB5-816E-1740ED746F17.png",
+      "originalSha256": "f1d4fcd4d2761367fa31363c71b923a1331e2ae4c8a2db5ed27ea1db2df8e356"
+    }
+  ],
+  "videoPublished": false
+}

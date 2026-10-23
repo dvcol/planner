@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-source-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-source-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "832EDE8D-0F28-45DC-808B-F14F0E39BAA1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh restored Item lifetime keeps the original guide readable_0_A39DF47E-CB83-409C-B6E5-F1A3853A7453.png",
+      "timestamp": 1792734316.558,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext()",
+      "retainedFileName": "832EDE8D-0F28-45DC-808B-F14F0E39BAA1.png",
+      "originalSha256": "073fac26b04c126b10253b50c5370e2eacc594c1e1b6ea9b9e3f5d0f8fa72a89"
+    }
+  ],
+  "videoPublished": false
+}
