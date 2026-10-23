@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 13.734,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredMembershipHistoryTransformsExactLifetimesOrRejectsRetainedIdentityCollisions(collidesWithRetainedHistory:restoresIncomingValuesIntoDeletedSource:)",
+      "className": "PlannerCoreStoreTests.NativeImportPredecessorHistoryTests",
+      "seconds": 0.556846833,
+      "failures": [
+        "Caught error: CancellationError() (error)",
+        "Caught error: CancellationError() (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

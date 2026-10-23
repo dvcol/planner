@@ -3,10 +3,12 @@ import PlannerCore
 import Testing
 
 struct NativeImportFreshLocalValuesTests {
-  @Test(arguments: [false, true])
+  @Test(arguments: [false, true], [false, true])
   func restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(
-    sharesLocalFamilyIdentity: Bool
+    usesPredecessorDerivedFamilyIdentity: Bool, hasClosedLineage: Bool
   ) async throws {
+    let currentFixture = hasClosedLineage ? "current-deep" : "current"
+    let expectedFixture = hasClosedLineage ? "expected-deep" : "expected"
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -16,7 +18,7 @@ struct NativeImportFreshLocalValuesTests {
     let planner = Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .decoded(let current) = planner.decodeImport(
-        try freshLocalValuesFixture("current")),
+        try freshLocalValuesFixture(currentFixture)),
       case .reviewed(let initialReview) = await planner.prepareReview(
         session: session, command: .applyImport(backup: current)),
       case .applied(_, .complete) = await planner.execute(
@@ -27,9 +29,10 @@ struct NativeImportFreshLocalValuesTests {
       case .exported(let before) = await planner.exportData(session: session)
     else { throw CancellationError() }
     #expect(
-      try competingValueGraph(before) == competingValueGraph(freshLocalValuesFixture("current")))
+      try competingValueGraph(before)
+        == competingValueGraph(freshLocalValuesFixture(currentFixture)))
     var incomingData = try freshLocalValuesFixture("incoming")
-    if sharesLocalFamilyIdentity {
+    if usesPredecessorDerivedFamilyIdentity {
       let incomingText = try #require(String(data: incomingData, encoding: .utf8))
       incomingData = Data(
         incomingText.replacingOccurrences(
@@ -107,7 +110,7 @@ struct NativeImportFreshLocalValuesTests {
     #expect(tourSummary.dependencies.first?.id == museumIdentifier)
     #expect(tourSummary.dependencies.first?.lifetimeId == museum.lifetimeId)
     let expectedText = try #require(
-      String(data: freshLocalValuesFixture("expected"), encoding: .utf8))
+      String(data: freshLocalValuesFixture(expectedFixture), encoding: .utf8))
     let expected = Data(
       expectedText.replacingOccurrences(
         of: "$restored-lifetime", with: museum.lifetimeId.uuidString
@@ -126,10 +129,17 @@ struct NativeImportFreshLocalValuesTests {
       case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
       case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
         .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
-      ).outcome,
-      case .reviewed(let repeatedReview) = await reopened.prepareReview(
-        session: reopenedSession,
-        command: .applyImport(backup: incoming, mode: .overwrite, restoreDeletedData: true)),
+      ).outcome
+    else { throw CancellationError() }
+    let repeatedOutcome = await reopened.prepareReview(
+      session: reopenedSession,
+      command: .applyImport(backup: incoming, mode: .overwrite, restoreDeletedData: true))
+    guard case .reviewed(let repeatedReview) = repeatedOutcome else {
+      Issue.record(
+        "Reimport must retain the fresh lifetime and complete current history: \(repeatedOutcome)")
+      return
+    }
+    guard
       case .applied(_, .complete) = await reopened.execute(
         .init(
           operationId: UUID(), session: reopenedSession, command: repeatedReview.command,

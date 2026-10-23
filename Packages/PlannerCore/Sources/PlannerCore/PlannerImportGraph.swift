@@ -161,9 +161,7 @@ struct PlannerImportGraph {
       }
     }
     guard let family = selectedFamily else { return nil }
-    let closedFamilies = Set(backup.deletionMarkers.compactMap(\.closedFamilyId))
-    guard live == nil || !closedFamilies.contains(family.familyId),
-      !incoming.deletionMarkers.contains(where: { $0.closedFamilyId == family.familyId })
+    guard !incoming.deletionMarkers.contains(where: { $0.closedFamilyId == family.familyId })
     else {
       throw PlannerFailure("unavailable", "A closed competing family cannot replace live values.")
     }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000173875"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.188014792">
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalValuesTests" name="restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(usesPredecessorDerivedFamilyIdentity:hasClosedLineage:)" time="0.187599">
+            <failure message="Issue recorded (error): Reimport must retain the fresh lifetime and complete current history: .failed(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: nil, message: &quot;A closed competing family cannot replace live values.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

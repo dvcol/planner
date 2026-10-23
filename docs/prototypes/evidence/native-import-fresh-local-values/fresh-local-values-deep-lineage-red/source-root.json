@@ -1,0 +1,9 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "c9ba98d19992b6d7c7b2a98c0c6b61a7f2072b30",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-current-deep-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-expected-deep-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalValuesTests.swift"
+  ]
+}

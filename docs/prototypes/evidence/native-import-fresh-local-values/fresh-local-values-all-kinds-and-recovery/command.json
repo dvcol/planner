@@ -1,0 +1,17 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "/private/tmp/PlannerImportLifetimeAuditSource/Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerImportLifetimeAuditBuild",
+  "--jobs",
+  "1",
+  "--disable-xctest",
+  "--enable-swift-testing",
+  "--filter",
+  "NativeImportFreshLocalKindTests",
+  "--xunit-output",
+  "/private/tmp/PlannerImportLifetime-fresh-local-values-all-kinds-and-recovery.xml"
+]

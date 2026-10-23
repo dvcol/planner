@@ -1,0 +1,31 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "c9ba98d19992b6d7c7b2a98c0c6b61a7f2072b30",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-current-deep-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-expected-deep-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalKindTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalValuesTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportPredecessorHistoryTests.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedMapCollectionView.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryArchiveJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryLocationJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryWindowJourneyTests.swift",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedCalendarJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItemDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryBulkJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryJourneyTests.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ]
+}

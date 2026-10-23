@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 11.05,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredSourceValuesPreserveOmittedReferencesAndTruthfulRecovery(sourceSuffix:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalKindTests",
+      "seconds": 0.426741333,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 12.593,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(usesPredecessorDerivedFamilyIdentity:hasClosedLineage:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalValuesTests",
+      "seconds": 0.187599,
+      "failures": [
+        "Issue recorded (error): Reimport must retain the fresh lifetime and complete current history: .failed(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"A closed competing family cannot replace live values.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}
