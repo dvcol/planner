@@ -385,10 +385,15 @@ struct SavedMapCollectionView: View {
     case .idle, .loading: ProgressView("Opening Map")
     case .failed(let reason):
       ContentUnavailableView(
-        "Map unavailable", systemImage: "exclamationmark.triangle", description: Text(reason))
+        "Map unavailable", systemImage: "exclamationmark.triangle", description: Text(reason)
+      )
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .background(.background)
     case .ready:
       if collection.rows.isEmpty {
         ContentUnavailableView("No matching items", systemImage: "map")
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .background(.background)
       }
     }
   }

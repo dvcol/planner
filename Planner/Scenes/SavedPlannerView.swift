@@ -1389,6 +1389,10 @@ struct SavedPlannerView: View {
   private var membershipSelection: Binding<UUID?> {
     Binding(
       get: {
+        #if os(iOS)
+          // Back must not become a fresh push when filtered rows reappear.
+          guard usesSidebarNavigation || preferredCompactColumn == .detail else { return nil }
+        #endif
         guard case .listMembership(let listId, let membershipId) = selectedAppearanceIdentity,
           listId == selectedListId
         else { return nil }
