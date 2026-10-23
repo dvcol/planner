@@ -1,0 +1,116 @@
+{
+  "records": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-dark-tablet-direct-add-red",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-dark-tablet-direct-add-red",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-dark-tablet-direct-add-red.xcresult",
+      "selectedAttachmentsVerified": 1,
+      "fileCount": 13,
+      "nominalBytes": 3356480,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-dark-tablet-pane-contract-red",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-dark-tablet-pane-contract-red",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-dark-tablet-pane-contract-red.xcresult",
+      "selectedAttachmentsVerified": 1,
+      "fileCount": 13,
+      "nominalBytes": 2858840,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-dark-tablet-pane-green",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-dark-tablet-pane-green",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-dark-tablet-pane-green.xcresult",
+      "selectedAttachmentsVerified": 2,
+      "fileCount": 3,
+      "nominalBytes": 275959,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-light-phone-pane-green",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-light-phone-pane-green",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-light-phone-pane-green.xcresult",
+      "selectedAttachmentsVerified": 4,
+      "fileCount": 5,
+      "nominalBytes": 546847,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-phone-deliberate-drag",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-phone-deliberate-drag",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-phone-deliberate-drag.xcresult",
+      "selectedAttachmentsVerified": 4,
+      "fileCount": 5,
+      "nominalBytes": 680843,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-phone-filtered-drag",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-phone-filtered-drag",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-phone-filtered-drag.xcresult",
+      "selectedAttachmentsVerified": 2,
+      "fileCount": 110,
+      "nominalBytes": 31611907,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-tablet-manual-drag",
+      "packet": "docs/prototypes/evidence/native-list-toolbar-compatibility/list-toolbar-tablet-manual-drag",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-list-toolbar-tablet-manual-drag.xcresult",
+      "selectedAttachmentsVerified": 2,
+      "fileCount": 3,
+      "nominalBytes": 300236,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-dark-tablet-detail-gesture",
+      "packet": "docs/prototypes/evidence/native-map-viewport-compatibility/map-viewport-dark-tablet-detail-gesture",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-map-viewport-dark-tablet-detail-gesture.xcresult",
+      "selectedAttachmentsVerified": 3,
+      "fileCount": 56,
+      "nominalBytes": 63900818,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-dark-tablet-margin-scroll",
+      "packet": "docs/prototypes/evidence/native-map-viewport-compatibility/map-viewport-dark-tablet-margin-scroll",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-map-viewport-dark-tablet-margin-scroll.xcresult",
+      "selectedAttachmentsVerified": 5,
+      "fileCount": 6,
+      "nominalBytes": 5489533,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-dark-tablet-rotation",
+      "packet": "docs/prototypes/evidence/native-map-viewport-compatibility/map-viewport-dark-tablet-rotation",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-map-viewport-dark-tablet-rotation.xcresult",
+      "selectedAttachmentsVerified": 3,
+      "fileCount": 48,
+      "nominalBytes": 50066322,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-dark-tablet-scroll-qualified",
+      "packet": "docs/prototypes/evidence/native-map-viewport-compatibility/map-viewport-dark-tablet-scroll-qualified",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-map-viewport-dark-tablet-scroll-qualified.xcresult",
+      "selectedAttachmentsVerified": 3,
+      "fileCount": 48,
+      "nominalBytes": 45628336,
+      "removed": true
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-light-phone-regression",
+      "packet": "docs/prototypes/evidence/native-map-viewport-compatibility/map-viewport-light-phone-regression",
+      "retainedBundle": "/private/tmp/PlannerItemWindow-map-viewport-light-phone-regression.xcresult",
+      "selectedAttachmentsVerified": 1,
+      "fileCount": 2,
+      "nominalBytes": 2210068,
+      "removed": true
+    }
+  ],
+  "totalNominalBytes": 206926189,
+  "originalBundlesRetained": true,
+  "retainedAttachmentsVerified": true,
+  "physicalFreeSpaceClaim": false
+}

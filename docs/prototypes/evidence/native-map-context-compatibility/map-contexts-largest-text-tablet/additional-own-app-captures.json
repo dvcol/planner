@@ -1,0 +1,29 @@
+{
+  "originalExport": "/private/tmp/PlannerApprovedAdminAttachments-map-contexts-largest-text-tablet",
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "CF5EE4E6-4858-4FC7-835E-2148E92971F3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native collection Maps link picker keeps original bookmarks_0_FFAEBC55-7BEB-4831-9495-D4E9CD248A51.png",
+      "timestamp": 1792740408.146,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks()",
+      "retainedFileName": "CF5EE4E6-4858-4FC7-835E-2148E92971F3.png",
+      "originalSha256": "2951ea8006e0828936295ca6e1925c5d0912fc822fae018c6f15d3bdfb8dc41a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C07A80AF-DB65-4940-87E8-C9FAFE8EB3BA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unresolved collection Map search retains Retry and saved link_0_92593F30-C373-4E8B-99E2-690C62F58531.png",
+      "timestamp": 1792740488.752,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark()",
+      "retainedFileName": "C07A80AF-DB65-4940-87E8-C9FAFE8EB3BA.png",
+      "originalSha256": "c3270882ef106e62e650c72af2a23276c515e5cb274cf8acddb4fc9509124506"
+    }
+  ]
+}

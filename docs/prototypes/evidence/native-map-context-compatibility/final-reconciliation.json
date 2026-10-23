@@ -1,0 +1,32 @@
+{
+  "phases": {
+    "map-contexts-dark-tablet-complete-link": {
+      "inputCount": 1094,
+      "sourceDifferences": [],
+      "passedFunctions": 4
+    },
+    "map-contexts-light-phone-complete-link": {
+      "inputCount": 1094,
+      "sourceDifferences": [],
+      "passedFunctions": 4
+    },
+    "map-contexts-largest-text-tablet": {
+      "inputCount": 1094,
+      "sourceDifferences": [],
+      "passedFunctions": 3
+    },
+    "map-contexts-largest-text-phone": {
+      "inputCount": 1094,
+      "sourceDifferences": [],
+      "passedFunctions": 3
+    },
+    "map-contexts-mac-compiler": {
+      "inputCount": 1094,
+      "sourceDifferences": []
+    }
+  },
+  "verifiedMacProducts": 9,
+  "productionChanges": false,
+  "finalNativeExecutions": 14,
+  "distinctNativeFunctions": 7
+}

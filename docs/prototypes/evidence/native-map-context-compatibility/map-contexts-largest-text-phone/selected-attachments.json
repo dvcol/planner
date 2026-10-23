@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-contexts-largest-text-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-contexts-largest-text-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2338372B-3CB9-48C1-8B49-6B3B338E8CA0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Locations retain provider and search uncertainty_0_595D9A84-6B48-4E4A-A605-13E15D8A05F8.png",
+      "timestamp": 1792740921.642,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty()",
+      "retainedFileName": "2338372B-3CB9-48C1-8B49-6B3B338E8CA0.png",
+      "originalSha256": "35d76221575c99af8304c870fb463953bc31409962a31257a8dd677bbf3c80ca"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6756C6DA-7A68-4CD7-B4A5-CBCDDAA9DB79.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map footer remains readable at accessibility text sizes_0_CEC62779-0D35-482B-ACA2-C3B9D28C11FA.png",
+      "timestamp": 1792740916.702,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testMapLocationsRetainProviderAttributionAndSearchUncertainty()",
+      "retainedFileName": "6756C6DA-7A68-4CD7-B4A5-CBCDDAA9DB79.png",
+      "originalSha256": "98edcbeab26b34faa4f6d9b19ac872314a86e42287d9ca27accd905b1be53429"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "8DB3CB89-581A-48FF-92E5-1E80041EC88B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native collection Maps link picker keeps original bookmarks_0_239D6AEA-D2F3-4478-BB88-F380CEFF381E.png",
+      "timestamp": 1792741047.779,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testNativeMapLinkChoiceMovesThePinWithoutChangingSavedBookmarks()",
+      "retainedFileName": "8DB3CB89-581A-48FF-92E5-1E80041EC88B.png",
+      "originalSha256": "f2ce61aa42e6f1ba3dcdbdcfe972282b9410fb88953bf512115d18710be72493"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0A876E9B-7FED-4A45-8106-7C8EC5AD45AB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unresolved collection Map search retains Retry and saved link_0_005016B9-FA4E-4AE2-A4AF-05E25CBC5D67.png",
+      "timestamp": 1792741142.187,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testUnresolvedMapSearchCanRetryWithoutInventingAPinOrChangingItsBookmark()",
+      "retainedFileName": "0A876E9B-7FED-4A45-8106-7C8EC5AD45AB.png",
+      "originalSha256": "c165b016bf9146d41849420432767fb6723d02eaa4cf7cddc1f857e09e198450"
+    }
+  ],
+  "videoPublished": false
+}
