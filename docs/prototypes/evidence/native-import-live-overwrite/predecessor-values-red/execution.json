@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 189.513,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList()",
+      "className": "PlannerCoreStoreTests.NativeImportLiveOverwriteTests",
+      "seconds": 0.335238709,
+      "failures": [
+        "Issue recorded (error): Overwrite must target the restored live Item without restoring it: .failed(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: Optional(\"/sources/0/lifetimeId\"), message: \"Source-lifetime import reconciliation is not implemented yet.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

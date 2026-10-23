@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 749,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "The unchanged first tracer passes: predecessor values replace the current restored owner, preserving its lifetime and complete omitted List/history graph, recovery, reopen/replay and repeated import."
+}

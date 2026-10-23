@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 15.286,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList()",
+      "className": "PlannerCoreStoreTests.NativeImportLiveOverwriteTests",
+      "seconds": 0.205469167,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

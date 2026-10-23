@@ -183,7 +183,7 @@ extension PlannerPortableDeletionMarker {
 }
 
 extension PlannerPortableSource {
-  fileprivate func replacingImportLifetime(_ lifetimeIdentifier: UUID) -> PlannerPortableSource {
+  func replacingImportLifetime(_ lifetimeIdentifier: UUID) -> PlannerPortableSource {
     switch self {
     case .item(let value):
       return .item(

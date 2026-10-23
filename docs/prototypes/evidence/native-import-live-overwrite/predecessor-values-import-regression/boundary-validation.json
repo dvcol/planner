@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 749,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 59,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "The affected real-storage import family passes after the scoped predecessor projection; source/product boundaries remain unchanged."
+}

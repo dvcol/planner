@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 225.33,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "requestedClasses": [
+    "NativeImportLiveOverwriteTests"
+  ],
+  "sqliteUnlinkWarnings": 0,
+  "summary": {
+    "result": "Passed",
+    "passedTests": 1,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}
