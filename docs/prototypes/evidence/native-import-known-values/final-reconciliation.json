@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "known-values-final-phone": {
+      "coreInputCount": 757,
+      "wholeInputCount": 1090,
+      "coreDifferences": []
+    },
+    "known-values-final-mac-compiler": {
+      "coreInputCount": 757,
+      "wholeInputCount": 1094,
+      "coreDifferences": []
+    }
+  },
+  "verifiedMacCompilerProducts": 9,
+  "coreInputs": 757,
+  "publicContractChanges": false
+}

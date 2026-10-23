@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 757,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 80,
+  "failedFunctions": 1,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "The broader affected cohort executes 80 functions, with one restoration regression failure retained for diagnosis; no lifecycle warnings."
+}

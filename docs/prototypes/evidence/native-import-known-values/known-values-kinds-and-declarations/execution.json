@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 12.929,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(declaration:mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 1.235371875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportCompetingValueKindsTests",
+      "seconds": 1.55357925,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

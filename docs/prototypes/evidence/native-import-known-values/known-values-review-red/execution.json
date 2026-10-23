@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 10.859,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(declaresCurrentCandidate:mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.155221667,
+      "failures": [
+        "Issue recorded (error): Resolve an already-known open-family candidate in .overwrite: .failed(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: Optional(\"/sources/0/lifetimeId\"), message: \"Source-lifetime import reconciliation is not implemented yet.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

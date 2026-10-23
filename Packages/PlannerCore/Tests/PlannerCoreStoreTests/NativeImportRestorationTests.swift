@@ -842,18 +842,14 @@ struct NativeImportRestorationTests {
     guard
       case .decoded(let conflictingBackup) = planner.decodeImport(
         try JSONSerialization.data(withJSONObject: conflicting)),
-      case .reviewed(let conflictingReview) = await planner.prepareReview(
+      case .failed(let conflictingFailure) = await planner.prepareReview(
         session: session, command: .applyImport(backup: conflictingBackup, mode: .overwrite))
-    else { throw CancellationError() }
-    let conflictingOperationIdentifier = UUID()
+    else {
+      Issue.record("Conflicting known restoration provenance must fail before issuing a review.")
+      return
+    }
+    #expect(conflictingFailure.code == "unavailable")
     guard
-      case .rejected = await planner.execute(
-        .init(
-          operationId: conflictingOperationIdentifier, session: session,
-          command: conflictingReview.command, reviewToken: conflictingReview.reviewToken)
-      ).outcome,
-      case .noReliableEvidence = await planner.operationStatus(
-        session: session, operationId: conflictingOperationIdentifier),
       case .exported(let unchangedData) = await planner.exportData(session: session)
     else { throw CancellationError() }
     #expect(unchangedData == restoredData)

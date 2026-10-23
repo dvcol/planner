@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.5625e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.15687775">
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(declaration:mode:)" time="0.156522958"/>
+    </testsuite>
+</testsuites>

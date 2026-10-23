@@ -367,7 +367,7 @@ func plannerResolveImportReview(
     }
     for source in incoming.backup.sources {
       guard let actual = currentSources[source.importBinding.reference],
-        let family = try currentGraph.competingValueFamily(
+        let family = try currentGraph.restoredValueFamily(
           for: source.importIdentity,
           to: .init(kind: source.importIdentity.kind, id: actual.id, lifetimeId: actual.lifetimeId),
           in: incoming.backup)

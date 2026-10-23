@@ -83,10 +83,13 @@ struct NativeImportBindingReviewTests {
 
   enum BindingCase: CaseIterable { case live, missing, wrongLifetime }
   enum KnownFamilyImportCase: CaseIterable { case externalSkip, externalOverwrite, declaredSkip }
+  enum KnownCandidateDeclaration: CaseIterable {
+    case omittedFamily, currentFamily, candidateSubset
+  }
 
-  @Test(arguments: [false, true])
-  func skipResolvesAnInternallyDeclaredKnownCandidateWithoutReplacingTheLiveOwner(
-    declaresCurrentCandidate: Bool
+  @Test(arguments: KnownCandidateDeclaration.allCases, [PlannerImportMode.skip, .overwrite])
+  func internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(
+    declaration: KnownCandidateDeclaration, mode: PlannerImportMode
   ) async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
@@ -154,16 +157,30 @@ struct NativeImportBindingReviewTests {
     }
     var declaredMuseum = museum
     let declaredLifetime: String
-    if declaresCurrentCandidate {
+    if declaration == .currentFamily {
       declaredLifetime = "00000000-0000-4000-8000-000000000814"
       incoming["deletionMarkers"] = seed["deletionMarkers"]
       incoming["restorationFamilies"] = seed["restorationFamilies"]
     } else {
       declaredLifetime = "00000000-0000-4000-8000-000000000815"
+      if declaration == .candidateSubset {
+        incoming["deletionMarkers"] = seed["deletionMarkers"]
+        incoming["restorationFamilies"] = [
+          [
+            "familyId": "00000000-0000-4000-8000-000000000890", "predecessor": predecessor,
+            "candidates": [
+              [
+                "lifetimeId": "00000000-0000-4000-8000-000000000815",
+                "operationId": "00000000-0000-4000-8000-000000000995",
+              ]
+            ],
+          ]
+        ]
+      }
     }
     declaredMuseum["lifetimeId"] = declaredLifetime
     var declaredContent = try #require(declaredMuseum["content"] as? [String: Any])
-    declaredContent["title"] = "Ignored candidate title"
+    declaredContent["title"] = "Backup museum"
     declaredMuseum["content"] = declaredContent
     var list = try #require(fixtureSources.first { $0["kind"] as? String == "list" })
     list["id"] = "00000000-0000-4000-8000-000000000277"
@@ -190,25 +207,33 @@ struct NativeImportBindingReviewTests {
       return
     }
     #expect(backup.externalBindings.isEmpty && backup.originPaths.isEmpty)
-    #expect(backup.backup.restorationFamilies.isEmpty == !declaresCurrentCandidate)
+    #expect(backup.backup.restorationFamilies.isEmpty == (declaration == .omittedFamily))
     let outcome = await planner.prepareReview(
-      session: session, command: .applyImport(backup: backup, mode: .skip))
+      session: session, command: .applyImport(backup: backup, mode: mode))
     guard case .reviewed(let review) = outcome else {
-      Issue.record("Skip must resolve an already-known open-family candidate: \(outcome)")
+      Issue.record("Resolve an already-known open-family candidate in \(mode): \(outcome)")
       return
     }
     let details = try #require(review.impact.importDetails)
     #expect(details.imports.map(\.owner.id.uuidString) == ["00000000-0000-4000-8000-000000000277"])
-    #expect(
-      details.skippedConflicts.map(\.owner.id.uuidString) == [
-        "00000000-0000-4000-8000-000000000101"
-      ])
-    #expect(
-      details.skippedConflicts.first?.owner.lifetimeId.uuidString
-        == "00000000-0000-4000-8000-000000000814")
-    #expect(
-      details.skippedDependents.isEmpty && details.replacements.isEmpty
-        && details.restorations.isEmpty)
+    if mode == .skip {
+      #expect(
+        details.skippedConflicts.map(\.owner.id.uuidString) == [
+          "00000000-0000-4000-8000-000000000101"
+        ])
+      #expect(
+        details.skippedConflicts.first?.owner.lifetimeId.uuidString
+          == "00000000-0000-4000-8000-000000000814")
+      #expect(details.replacements.isEmpty)
+    } else {
+      #expect(details.skippedConflicts.isEmpty && details.replacements.count == 1)
+      #expect(
+        details.replacements.first?.owner.lifetimeId.uuidString
+          == "00000000-0000-4000-8000-000000000814")
+      #expect(details.replacements.first?.before?.title == "Nezu Museum")
+      #expect(details.replacements.first?.after?.title == "Backup museum")
+    }
+    #expect(details.skippedDependents.isEmpty && details.restorations.isEmpty)
     #expect(
       details.imports.first?.dependencies.first?.lifetimeId.uuidString
         == "00000000-0000-4000-8000-000000000814")
@@ -225,7 +250,7 @@ struct NativeImportBindingReviewTests {
       case .exported(let after) = await planner.exportData(session: session),
       case .decoded(let saved) = planner.decodeImport(after)
     else {
-      Issue.record("Apply the complete new List without replacing its current Item: \(response)")
+      Issue.record("Apply the reviewed values and new List using the current Item: \(response)")
       return
     }
     #expect(saved.backup.memberships.count == 1)
@@ -239,7 +264,12 @@ struct NativeImportBindingReviewTests {
       $0["id"] as? String != "00000000-0000-4000-8000-000000000277"
     }
     retainedGraph["memberships"] = []
-    let currentGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    var currentGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    if mode == .overwrite {
+      var expectedMuseum = declaredMuseum
+      expectedMuseum["lifetimeId"] = "00000000-0000-4000-8000-000000000814"
+      currentGraph["sources"] = [expectedMuseum]
+    }
     #expect(NSDictionary(dictionary: retainedGraph).isEqual(to: currentGraph))
     let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000277")!
     guard
@@ -256,7 +286,8 @@ struct NativeImportBindingReviewTests {
           namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
     #expect(snapshot.matchingCount == 1 && snapshot.progress.first?.totalCount == 1)
-    #expect(page.rows.map(\.title) == ["Nezu Museum"])
+    let expectedTitle = mode == .skip ? "Nezu Museum" : "Backup museum"
+    #expect(page.rows.map(\.title) == [expectedTitle])
     #expect(page.rows.first?.effectiveDone == true)
     let recoveredGraph = try #require(
       JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
@@ -274,7 +305,7 @@ struct NativeImportBindingReviewTests {
         .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
       ).outcome,
       case .reviewed(let repeatedReview) = await reopened.prepareReview(
-        session: reopenedSession, command: .applyImport(backup: backup, mode: .skip)),
+        session: reopenedSession, command: .applyImport(backup: backup, mode: mode)),
       case .applied(let repeated, .complete) = await reopened.execute(
         .init(
           operationId: UUID(), session: reopenedSession, command: repeatedReview.command,

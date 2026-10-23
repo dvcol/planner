@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 23.95,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(declaresCurrentCandidate:mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 0.140885375,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 757,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Six literal declaration/mode cases pass, including independently valid known-candidate-only family metadata; current complete family, recovery and replay stay exact."
+}

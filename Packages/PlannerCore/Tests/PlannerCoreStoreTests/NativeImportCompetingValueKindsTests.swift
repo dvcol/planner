@@ -5,7 +5,8 @@ import Testing
 
 struct NativeImportCompetingValueKindsTests {
   @Test(
-    arguments: [101, 201, 301, 501, 601], [(813, false), (813, true), (816, false), (816, true)])
+    arguments: [101, 201, 301, 501, 601],
+    [(813, false), (813, true), (816, false), (816, true), (815, false)])
   func overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(
     sourceSuffix: Int, incomingCase: (Int, Bool)
   ) async throws {
@@ -27,12 +28,19 @@ struct NativeImportCompetingValueKindsTests {
     let originalLifetime = try #require(original["lifetimeId"] as? String)
     let retainedLifetime = candidateKindIdentifier(814)
     let incomingLifetime = candidateKindIdentifier(incomingLifetimeSuffix)
+    let usesKnownCandidate = incomingLifetimeSuffix == 815
     let predecessor: [String: Any] = [
       "kind": kind, "id": sourceIdentifier, "lifetimeId": originalLifetime,
     ]
     let retainedCandidate = [
       "lifetimeId": retainedLifetime, "operationId": candidateKindIdentifier(994),
     ]
+    var currentCandidates = [retainedCandidate]
+    if usesKnownCandidate {
+      currentCandidates.append([
+        "lifetimeId": incomingLifetime, "operationId": candidateKindIdentifier(996),
+      ])
+    }
     var current = try #require(
       candidateKindRebinding(
         fixture, kind: kind, identifier: sourceIdentifier,
@@ -46,7 +54,7 @@ struct NativeImportCompetingValueKindsTests {
     current["restorationFamilies"] = [
       [
         "familyId": candidateKindIdentifier(890), "predecessor": predecessor,
-        "candidates": [retainedCandidate],
+        "candidates": currentCandidates,
       ]
     ]
     guard
@@ -196,9 +204,11 @@ struct NativeImportCompetingValueKindsTests {
       ]
     ]
     try await reject(contradictory, code: "unavailable")
-    var omitted = incoming
-    omitted["sources"] = incomingSources.filter { $0["id"] as? String != sourceIdentifier }
-    try await reject(omitted, code: "missingReference")
+    if !usesKnownCandidate {
+      var omitted = incoming
+      omitted["sources"] = incomingSources.filter { $0["id"] as? String != sourceIdentifier }
+      try await reject(omitted, code: "missingReference")
+    }
     var closingCurrent = incoming
     var closingSources = incomingSources
     closingSources[sourceIndex]["lifetimeId"] = incomingLifetime

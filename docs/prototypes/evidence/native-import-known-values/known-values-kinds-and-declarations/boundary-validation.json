@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 757,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 2,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "All five source kinds preserve complete retained families and owned/contextual graphs; known/current declarations, guarded invalid inputs and recovery failures pass."
+}

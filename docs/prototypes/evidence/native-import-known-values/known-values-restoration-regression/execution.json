@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 2.381,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 0.145056166,
+      "failures": [
+        "Caught error: CancellationError() (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

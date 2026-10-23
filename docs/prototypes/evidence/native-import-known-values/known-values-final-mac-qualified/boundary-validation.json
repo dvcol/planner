@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 757,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 80,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "All 80 affected import/deletion/receipt/recovery functions pass after asserting explicit preview-time provenance rejection; no source or product differences and no SQLite lifetime warnings."
+}

@@ -6,6 +6,10 @@ This map remains open. Signing is deferred, and it is not the only remaining gat
 
 ## Decisions and external actions needed
 
+- **Q151 pending, no-live restoration policy.** A valid backup can contain a restored candidate while the current Item is deleted. Current execution rejects that case; Q149 requires a live owner. The [concrete choices](import-no-live-restored-values-decision.md) distinguish fresh local restoration, incoming-family admission and keeping the restriction. Only that transformation waits.
+
+- **Known-candidate Overwrite qualified.** The [follow-up](prototypes/core-native-import-known-values.md#final-local-checkpoint) applies reviewed incoming values to the current live identity for omitted/full/subset known-family metadata. All five kinds, exact graphs and recovery failures pass; final Mac/iPhone cohorts each pass 80 functions/329 fixtures, with matching Core inputs and Mac app compilation. Broader family admission and actual Mac/physical acceptance remain open.
+
 - **Collection Map rotation qualified locally.** The [viewport checkpoint](prototypes/native-map-viewport-compatibility.md#final-local-checkpoint) passes iPad portrait/landscape containment and exact pin/bookmark selection, plus phone navigation and matching Mac compilation. Native iPad width remains 340 points within the flexible preferred range. Failed scrolling diagnostics remain separate; Mac divider/window interaction and broader compatibility remain open.
 
 - **Narrow List actions corrected.** The [pane-width checkpoint](prototypes/native-list-toolbar-compatibility.md#final-local-checkpoint) keeps Filters/Add direct and secondary actions in native More on narrow iPad panes. Six passing native executions cover controls, filtered phone drag and repeated iPad moves with relaunch; matching Mac compilation passes. The failed default-velocity drag remains a stability finding. Duplicate title tiers/top spacing, actual Mac UI and final polish remain open.
