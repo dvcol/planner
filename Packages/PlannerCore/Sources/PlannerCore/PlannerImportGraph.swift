@@ -141,6 +141,71 @@ struct PlannerImportGraph {
     return context.importContextIdentities.contains(where: isClosed)
   }
 
+  func competingValueFamily(
+    for source: PlannerPortableBoundIdentity, to live: PlannerPortableBoundIdentity,
+    in incoming: PlannerPortableBackup
+  ) throws -> PlannerPortableRestorationFamily? {
+    guard
+      let family = incoming.restorationFamilies.first(where: {
+        $0.predecessor.kind == source.kind && $0.predecessor.id == source.id
+          && $0.candidates.contains { $0.lifetimeId == source.lifetimeId }
+          && authorizesPredecessorValues($0.predecessor, for: live)
+          && $0.candidates.contains {
+            !resolves(.init(kind: source.kind, id: source.id, lifetimeId: $0.lifetimeId), to: live)
+          }
+      })
+    else { return nil }
+    let closedFamilies = Set(backup.deletionMarkers.compactMap(\.closedFamilyId))
+    guard !closedFamilies.contains(family.familyId),
+      !incoming.deletionMarkers.contains(where: { $0.closedFamilyId == family.familyId })
+    else {
+      throw PlannerFailure("unavailable", "A closed competing family cannot replace live values.")
+    }
+    for related in incoming.restorationFamilies
+    where related.predecessor.kind == source.kind && related.predecessor.id == source.id {
+      let knownFamily = backup.restorationFamilies.first { $0.familyId == related.familyId }
+      if let knownFamily, knownFamily.predecessor != related.predecessor {
+        throw PlannerFailure("unavailable", "A known restoration family names another predecessor.")
+      }
+      if related.familyId != family.familyId {
+        guard let knownFamily,
+          Set(knownFamily.candidates.map { $0.lifetimeId.uuidString + $0.operationId.uuidString })
+            == Set(related.candidates.map { $0.lifetimeId.uuidString + $0.operationId.uuidString })
+        else {
+          throw PlannerFailure("unavailable", "Other incoming restoration history is not retained.")
+        }
+      }
+      for candidate in related.candidates {
+        guard
+          let known = backup.restorationFamilies.first(where: {
+            $0.predecessor.kind == source.kind && $0.predecessor.id == source.id
+              && $0.candidates.contains { $0.lifetimeId == candidate.lifetimeId }
+          }),
+          let knownCandidate = known.candidates.first(where: {
+            $0.lifetimeId == candidate.lifetimeId
+          })
+        else { continue }
+        guard known.predecessor == related.predecessor,
+          knownCandidate.operationId == candidate.operationId
+        else {
+          throw PlannerFailure(
+            "unavailable", "A known restoration candidate has conflicting provenance.")
+        }
+      }
+    }
+    for marker in incoming.deletionMarkers
+    where marker.target.importIdentity.map({ $0.kind == source.kind && $0.id == source.id }) == true
+    {
+      guard let known = backup.deletionMarkers.first(where: { $0.deletionId == marker.deletionId }),
+        known.operationId == marker.operationId, known.closedFamilyId == marker.closedFamilyId,
+        known.target.importCanonicalValue.encoded() == marker.target.importCanonicalValue.encoded()
+      else {
+        throw PlannerFailure("unavailable", "Incoming values cannot add source-deletion authority.")
+      }
+    }
+    return family
+  }
+
   private func validateRestorations() throws {
     try unique(backup.restorationFamilies.map(\.predecessor), "/restorationFamilies", "predecessor")
     var candidateFamilies: [PlannerPortableBoundIdentity: Int] = [:]

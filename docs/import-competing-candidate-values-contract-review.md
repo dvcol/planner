@@ -1,10 +1,10 @@
 # Incoming restored values under a current live owner
 
-Status: Q149 A accepted on 23 October 2026. Q147 A and Q148 A have their scoped local Core and native administration checkpoints. The incoming-value projection below is approved; its implementation and qualification remain open.
+Status: Q149 A accepted on 23 October 2026. Q147 A and Q148 A have their scoped local Core and native administration checkpoints. The incoming-value projection below has a [first local real-store checkpoint](prototypes/core-native-import-competing-values.md). Remaining lineage, matching iOS and native administration qualification stay open.
 
 ## Concrete case
 
-Current Museum X101 has live lifetime B814, Current museum, and current family F890 rooted in closed A811. A separately valid backup represents the same public Item as unknown candidate D813, Other museum, under competing G893. It also contains new Tour277 bound exactly to X/D and independent Rainy day602. Q148 A keeps current B/F and skips Tour under Skip. Inspection of the existing review guards establishes that ordinary Overwrite rejects the unknown-D source transformation. For a valid shared-family input already representing B, review may proceed but execute rejects the expanded incoming candidate set. No new unknown-candidate Overwrite test has been executed for this proposal.
+Current Museum X101 has live lifetime B814, Current museum, and current family F890 rooted in closed A811. A separately valid backup represents the same public Item as unknown candidate D813, Other museum, under competing G893. It also contains new Tour277 bound exactly to X/D and independent Rainy day602. Q148 A keeps current B/F and skips Tour under Skip. Before Q149 implementation, ordinary Overwrite rejected the unknown-D source transformation. A shared-family input already representing B could pass review but failed execution on the expanded candidate set. The linked checkpoint retains the original real-store failure and subsequent qualification.
 
 The proposed manual Overwrite treats the incoming values as the user's deliberate replacement of current X/B. It does not admit D or G. This extends the already implemented predecessor-value projection to a valid competing candidate with a shared, currently authorized predecessor.
 

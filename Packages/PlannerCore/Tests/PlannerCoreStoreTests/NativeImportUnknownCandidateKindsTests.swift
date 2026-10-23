@@ -286,11 +286,11 @@ struct NativeImportUnknownCandidateKindsTests {
   }
 }
 
-private func candidateKindIdentifier(_ suffix: Int) -> String {
+func candidateKindIdentifier(_ suffix: Int) -> String {
   String(format: "00000000-0000-4000-8000-%012d", suffix)
 }
 
-private func candidateKindRebinding(
+func candidateKindRebinding(
   _ value: Any, kind: String, identifier: String, oldLifetime: String, newLifetime: String
 ) -> Any {
   if let array = value as? [Any] {
