@@ -1,0 +1,15 @@
+{
+  "workspaceDifferences": [],
+  "frozenDifferences": [],
+  "inputCount": 766,
+  "productCount": 2,
+  "exitCode": 1,
+  "expectedBehaviorUnimplemented": true,
+  "observedFailureCode": "readUnavailable",
+  "observedFailureMessage": "List memberships are duplicated and unresolved.",
+  "executedFunctions": 1,
+  "failedFunctions": 1,
+  "sqliteUnlinkWarnings": 0,
+  "productionChanges": false,
+  "shippingTestSourceDisposition": "Removed after preserving this executed source and failing result while the dependent policy/contract remains pending."
+}

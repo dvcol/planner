@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000162"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.638337458">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.637854792">
+            <failure message="Issue recorded (error): Independent Todo/Done memberships must resolve to one Done context: .failed(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;List memberships are duplicated and unresolved.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>
