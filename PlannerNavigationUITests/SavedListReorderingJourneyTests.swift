@@ -258,7 +258,9 @@ final class SavedListReorderingJourneyTests: XCTestCase {
         .firstMatch
       XCTAssertTrue(handle.waitForExistence(timeout: 5), application.debugDescription)
       handle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        .press(forDuration: 1, thenDragTo: destination)
+        .press(
+          forDuration: 1, thenDragTo: destination, withVelocity: .slow,
+          thenHoldForDuration: 1)
     #endif
   }
 

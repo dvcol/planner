@@ -27,6 +27,9 @@ import XCTest
       screenshot.lifetime = .keepAlways
       add(screenshot)
       XCTAssertTrue(filters.isHittable)
+      XCTAssertTrue(
+        application.plannerElement("saved.list.addMenu").isHittable,
+        "Add must remain directly visible beside Filters in a narrow List pane.")
       if application.windows.firstMatch.frame.width < 600 {
         XCTAssertTrue(titleExists)
         XCTAssertTrue(application.savedPlannerListAddControl().isHittable)
@@ -50,8 +53,6 @@ import XCTest
         let header = application.collectionViews["saved.list.contents"].staticTexts[
           "Overflow budget"]
         XCTAssertTrue(header.exists)
-        XCTAssertTrue(application.plannerElement("saved.list.sort").isHittable)
-        XCTAssertTrue(application.plannerElement("saved.list.edit").isHittable)
       }
       application.openSavedPlannerListAddMenu()
       let existing = application.plannerElement("saved.list.add")

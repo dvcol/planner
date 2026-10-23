@@ -75,6 +75,7 @@ struct SavedPlannerView: View {
   @State private var inboxRepresentation = SavedCollectionRepresentation.list
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var listPaneWidth: CGFloat = 0
   #endif
 
   private var secondaryToolbarPlacement: ToolbarItemPlacement {
@@ -1889,6 +1890,13 @@ struct SavedPlannerView: View {
           )
           .navigationTitle(selectedList.content.name)
           .toolbarTitleDisplayMode(.inline)
+          #if os(iOS)
+            .onGeometryChange(for: CGFloat.self) { geometry in
+              geometry.size.width
+            } action: { width in
+              listPaneWidth = width
+            }
+          #endif
           #if os(macOS)
             .safeAreaInset(edge: .top, spacing: 0) {
               listPaneHeader(selectedList)
@@ -1940,7 +1948,7 @@ struct SavedPlannerView: View {
                 SavedItemFilterControl(
                   filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
               }
-              if horizontalSizeClass == .compact {
+              if horizontalSizeClass == .compact || listPaneWidth < 440 {
                 ToolbarOverflowMenu {
                   listRepresentationMenu
                   listSortMenu
