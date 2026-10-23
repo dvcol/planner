@@ -1,0 +1,14 @@
+{
+  "phases": {
+    "map-viewport-light-phone-regression": {
+      "inputCount": 1094,
+      "differences": []
+    },
+    "map-viewport-mac-compiler": {
+      "inputCount": 1094,
+      "differences": []
+    }
+  },
+  "verifiedMacProducts": 9,
+  "productionChanges": false
+}

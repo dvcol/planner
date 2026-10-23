@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-viewport-dark-tablet-detail-gesture.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-dark-tablet-detail-gesture"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "EBA2B7FA-4BCE-4F53-B801-F96B90D174C4.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map navigation frames in landscape_0_4407882E-B3F4-4C1E-AF4A-982FD1AE17D2.txt",
+      "timestamp": 1792736837.851,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "EBA2B7FA-4BCE-4F53-B801-F96B90D174C4.txt.gz",
+      "originalSha256": "a96e706224eaf36cf957616b51422a5fea15b3136c0899792bf8d71157df3583"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "6F8879BE-B7A8-41D4-BCE1-73DDFB452615.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map viewport and exact details in landscape_0_6B0C8730-1CF0-4234-ADEE-FE1C96B14D9F.png",
+      "timestamp": 1792736837.532,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "6F8879BE-B7A8-41D4-BCE1-73DDFB452615.png",
+      "originalSha256": "839fb2a833a62931539e6a31f2a8ef3fcdb31247614f6d1b68278387325d50e1"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E4E4AC65-9270-41B3-A9D5-E1BB9C68E82F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_38E0C098-6F80-490D-AD0A-4F1B0E8F01B5.png",
+      "timestamp": 1792736827.185,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "E4E4AC65-9270-41B3-A9D5-E1BB9C68E82F.png",
+      "originalSha256": "144d4965216999491e082b3de9b36a8768efc440e6330c1b39bb6d7e97897cb2"
+    }
+  ],
+  "videoPublished": false
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-viewport-light-phone-regression.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-light-phone-regression"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0F5529E2-96CD-48AA-8168-FE8D2A50B81C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_18DE1006-FEB0-41CC-809F-D81C474825E6.png",
+      "timestamp": 1792737100.091,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "0F5529E2-96CD-48AA-8168-FE8D2A50B81C.png",
+      "originalSha256": "901a77f3e2f158863513aed1ffb57376448441736f4123ae4236ebaf6d1ef825"
+    }
+  ],
+  "videoPublished": false
+}

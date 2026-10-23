@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-viewport-dark-tablet-margin-scroll.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-viewport-dark-tablet-margin-scroll"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "457615B1-2644-4162-96DB-DF07E9DC2CFC.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map navigation frames in portrait_0_ABFBCBA3-D7BA-468D-9CB8-D313958CDA92.txt",
+      "timestamp": 1792736976.96,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "457615B1-2644-4162-96DB-DF07E9DC2CFC.txt.gz",
+      "originalSha256": "b88d278aefd58343e31d9b786c6523a726100e82a4492ef543b17dbb9595d709"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "548C163F-FD37-47FF-A7AF-E42C1AE8751D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map viewport and exact details in portrait_0_21C3315E-B31B-4AFC-9C54-357550AA2A62.png",
+      "timestamp": 1792736976.671,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "548C163F-FD37-47FF-A7AF-E42C1AE8751D.png",
+      "originalSha256": "a82f1f01b06a9b72bbdc1b03fee116d262cf01d809b3d10a28a098385c0f39da"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9248D2A0-49CB-4FE7-8E42-D0342ADCF669.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map navigation frames in landscape_0_FBF433BB-FCBB-4016-92BC-AA46D00FB378.txt",
+      "timestamp": 1792736973.752,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "9248D2A0-49CB-4FE7-8E42-D0342ADCF669.txt.gz",
+      "originalSha256": "700d7e3f0bcde27420b51959afe01fb76e3e796e239ef7ec9b5f5619da30cc23"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A03465A2-8B20-409C-88E6-45FF5F95F8C2.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map viewport and exact details in landscape_0_83E266D6-FE96-4F69-83E5-6EBDA5DCA881.png",
+      "timestamp": 1792736973.46,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "A03465A2-8B20-409C-88E6-45FF5F95F8C2.png",
+      "originalSha256": "40d6bb22cae52cdc8706f282d6ae00432d174744b5d86ff08235224606f47254"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E65D6B21-5EAC-4EB3-8E20-6C756E859D78.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_5498C3C1-8ADD-4CA5-AF96-230E8CFECDA1.png",
+      "timestamp": 1792736967.368,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "E65D6B21-5EAC-4EB3-8E20-6C756E859D78.png",
+      "originalSha256": "704d5186c1fc5fb86c36687d361d36b599aba15afc584df6192e015ebf298ab0"
+    }
+  ],
+  "videoPublished": false
+}
