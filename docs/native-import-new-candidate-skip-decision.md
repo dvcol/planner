@@ -1,6 +1,6 @@
 # Q129: Skip when a new restoration candidate arrives
 
-Status: Q129 A is accepted on 23 October 2026. Skip preserves the current complete owner and family, excludes the unknown incoming candidate, skips dependent owners and imports independent data. Review of the concrete family/provenance contract precedes implementation; existing safeguards remain until it is qualified.
+Status: Q129 A is accepted on 23 October 2026. Q148 A now approves the concrete family/provenance contract for implementation. Skip preserves the current complete owner and family, excludes the unknown incoming candidate, skips dependent owners and imports independent data. Implementation and qualification remain required.
 
 ## Context and starting state
 

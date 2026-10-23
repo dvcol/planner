@@ -1,6 +1,6 @@
 # Skip of an unknown restoration candidate
 
-Status: concrete review for accepted Q129 A. Keep the current complete owner and family, skip unavailable dependent owners and import independent data. Synchronization/consolidation remains separately required.
+Status: Q148 A approved on 23 October 2026, following Q129 A. Keep the current complete owner and family, skip unavailable dependent owners and import independent data under the concrete contract below. Implementation and qualification remain required. Synchronization/consolidation remains separately required.
 
 ## Existing interfaces and scope
 
