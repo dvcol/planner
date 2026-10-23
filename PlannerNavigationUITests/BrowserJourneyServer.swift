@@ -190,6 +190,9 @@ final class BrowserJourneyServer: @unchecked Sendable {
           <meta name="color-scheme" content="light dark"><title>Link policy</title></head>
           <body><h1>Link policy fixture</h1>
           <a href="planner-fixture-unsupported://guide">Unavailable app link</a>
+          <p><a href="file:///planner-fixture-unavailable.txt"
+            onclick="document.getElementById('file-activation').textContent = 'File link activated'">Unavailable file link</a></p>
+          <p id="file-activation">File link idle</p>
           <a href="/garden">Garden guide</a></body></html>
           """
       } else if requestLine.contains(" /unsupported-content ") {

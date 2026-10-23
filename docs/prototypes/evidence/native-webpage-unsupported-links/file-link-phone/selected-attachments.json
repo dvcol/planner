@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-file-link-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-file-link-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "154B20A8-722A-4A3F-8C94-3FF03DC4B31D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native file link keeps the saved guide readable_0_59270411-56E0-41E2-8A03-206E96DAEA4A.png",
+      "timestamp": 1792763629.715,
+      "testIdentifier": "SavedBrowserJourneyTests/testWebsiteFileLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "154B20A8-722A-4A3F-8C94-3FF03DC4B31D.png",
+      "originalSha256": "ac44b820bc57e02ddb355cb055e82059caa327f4061e215b6ac488acd74bc882"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "285C49B5-664E-4AA5-A68D-59877CB6C523.json",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native file link activation outcome_0_BE5B9F5D-7F7A-469B-A918-33DC4D0335FB.json",
+      "timestamp": 1792763629.346,
+      "testIdentifier": "SavedBrowserJourneyTests/testWebsiteFileLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "285C49B5-664E-4AA5-A68D-59877CB6C523.json",
+      "originalSha256": "fc290b2194d0562fdd9504b1c9188e63c8f9685cdc801cae6cda08e5f2b31c0f"
+    }
+  ],
+  "videoPublished": false
+}

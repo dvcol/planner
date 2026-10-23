@@ -1,0 +1,73 @@
+{
+  "nativeInputs": 1102,
+  "nativeExecutions": [
+    {
+      "phase": "file-link-phone",
+      "passedFunctions": 1,
+      "sqliteUnlinkDiagnostics": 0
+    },
+    {
+      "phase": "file-link-phone-regression",
+      "passedFunctions": 1,
+      "sqliteUnlinkDiagnostics": 0
+    },
+    {
+      "phase": "file-link-dark-tablet",
+      "passedFunctions": 2,
+      "sqliteUnlinkDiagnostics": 0
+    }
+  ],
+  "totalPassedFunctions": 4,
+  "macBuild": {
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "elapsedSeconds": 10.965,
+    "inputCount": 1102,
+    "workspaceDifferences": [],
+    "stagedDifferences": []
+  },
+  "macProductCount": 9,
+  "fileLinkOutcomes": [
+    {
+      "phase": "file-link-phone",
+      "originalAttachment": "285C49B5-664E-4AA5-A68D-59877CB6C523.json",
+      "target": "file:///planner-fixture-unavailable.txt",
+      "plannerNoticePresented": false,
+      "guideStillReadable": true
+    },
+    {
+      "phase": "file-link-dark-tablet",
+      "originalAttachment": "A04CD9A2-7A9C-46DF-9E10-5CCD0C844C6C.json",
+      "target": "file:///planner-fixture-unavailable.txt",
+      "guideStillReadable": true,
+      "plannerNoticePresented": false
+    }
+  ],
+  "originalCaptures": [
+    {
+      "path": "file-link-phone/154B20A8-722A-4A3F-8C94-3FF03DC4B31D.png",
+      "sha256": "ac44b820bc57e02ddb355cb055e82059caa327f4061e215b6ac488acd74bc882",
+      "visuallyInspected": true
+    },
+    {
+      "path": "file-link-phone-regression/D494CD79-BC24-423F-8AAF-40CFF917537A.png",
+      "sha256": "49e99102fa45d0f0573f04ceb9c3f36eeb23dadfe6a5fad291e76e2bf72a8d77",
+      "visuallyInspected": true
+    },
+    {
+      "path": "file-link-dark-tablet/B3A2E1CA-3347-4C42-BC77-076176334DF6.png",
+      "sha256": "7cb2ec04d5dfff534eba8a88908607a7922bac0e8dcc6f0e7624315c77113630",
+      "visuallyInspected": true
+    },
+    {
+      "path": "file-link-dark-tablet/1251682A-6A05-4214-AFFE-52F9EF6797EF.png",
+      "sha256": "4cd951e5b9714cc466bcb474f297d35e6ce7410dab3e8c3bf1b84361934104fe",
+      "visuallyInspected": true
+    }
+  ],
+  "productionChanges": false,
+  "appearanceRestored": true,
+  "actualMacRuntimeCredit": false,
+  "physicalDeviceCredit": false,
+  "scope": "An activated nonexistent file URL leaves the guide readable and its bookmark unchanged; custom-scheme regressions remain distinct. No claim about every file, executable script, provider or native WebKit navigation."
+}

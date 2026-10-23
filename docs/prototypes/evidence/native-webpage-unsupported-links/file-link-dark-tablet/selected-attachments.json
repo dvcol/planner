@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-file-link-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-file-link-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B3A2E1CA-3347-4C42-BC77-076176334DF6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported website link retains its guide without an external action_0_D6BBE716-1A27-4CC4-9A9A-8C9FA0743B75.png",
+      "timestamp": 1792763760.338,
+      "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "B3A2E1CA-3347-4C42-BC77-076176334DF6.png",
+      "originalSha256": "7cb2ec04d5dfff534eba8a88908607a7922bac0e8dcc6f0e7624315c77113630"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "1251682A-6A05-4214-AFFE-52F9EF6797EF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native file link keeps the saved guide readable_0_9420A0A0-90BE-448A-8773-BC2DBF31ED82.png",
+      "timestamp": 1792763801.862,
+      "testIdentifier": "SavedBrowserJourneyTests/testWebsiteFileLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "1251682A-6A05-4214-AFFE-52F9EF6797EF.png",
+      "originalSha256": "4cd951e5b9714cc466bcb474f297d35e6ce7410dab3e8c3bf1b84361934104fe"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A04CD9A2-7A9C-46DF-9E10-5CCD0C844C6C.json",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native file link activation outcome_0_6BBA4C40-D829-4B3E-9AE6-41D72857ABBC.json",
+      "timestamp": 1792763801.431,
+      "testIdentifier": "SavedBrowserJourneyTests/testWebsiteFileLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "A04CD9A2-7A9C-46DF-9E10-5CCD0C844C6C.json",
+      "originalSha256": "0b2350cd62ac660acab6be5e4d1e25adbd56ca366bc02e46a097e68ecc1d5321"
+    }
+  ],
+  "videoPublished": false
+}
