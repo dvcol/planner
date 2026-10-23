@@ -6,8 +6,7 @@ struct ItemDeletionTests {
   @Test func reviewedItemDeletionRemovesItsCompleteClosureAndPreservesTheRemainingPlan()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -190,7 +189,18 @@ struct ItemDeletionTests {
       backup.itineraryEntries.sorted { $0.rank < $1.rank }.map(\.id) == Array(entries.suffix(2)))
     #expect(backup.expandedCompletions.isEmpty && backup.labelAssociations.count == 4)
     #expect(backup.schedules.count == 1 && backup.schedules.first?.id == retainedSchedule.id)
-    #expect(backup.deletionMarkers.count == 9)
+    #expect(backup.deletionMarkers.count == 10)
+    #expect(
+      Set(
+        backup.deletionMarkers.compactMap { marker -> UUID? in
+          guard case .ownedLink(let identifier, _) = marker.target else { return nil }
+          return identifier
+        })
+        == Set(
+          beforeRemovedItem.references.compactMap { reference -> UUID? in
+            guard case .ownedLink(let identifier, _) = reference else { return nil }
+            return identifier
+          }))
     #expect(
       backup.deletionMarkers.contains {
         $0.target == .source(removedItem, lifetimeId: beforeRemovedItem.sourceLifetimeId)

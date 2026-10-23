@@ -6,8 +6,7 @@ struct ItineraryDeletionTests {
   @Test func reviewedItineraryDeletionRemovesOwnedDataAndRetainsSourcesAndOtherPlansAfterReopening()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -252,7 +251,14 @@ struct ItineraryDeletionTests {
         == memberships.sorted { $0.uuidString < $1.uuidString })
     #expect(backup.itineraryEntries.sorted { $0.rank < $1.rank }.map(\.id) == retainedEntries)
     #expect(backup.expandedCompletions.count == 1)
-    #expect(backup.schedules.count == 2 && backup.deletionMarkers.count == 9)
+    #expect(backup.schedules.count == 2 && backup.deletionMarkers.count == 11)
+    #expect(
+      Set(
+        backup.deletionMarkers.compactMap { marker -> UUID? in
+          guard case .ownedLink(let identifier, _) = marker.target else { return nil }
+          return identifier
+        })
+        == Set(beforeRemoved.content.links.map(\.linkId)))
     #expect(
       backup.deletionMarkers.contains {
         $0.target == .source(removedItinerary, lifetimeId: portableRemoved.lifetimeId)
