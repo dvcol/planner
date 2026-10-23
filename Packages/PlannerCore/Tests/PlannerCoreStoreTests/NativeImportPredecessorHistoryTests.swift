@@ -3,9 +3,9 @@ import PlannerCore
 import Testing
 
 struct NativeImportPredecessorHistoryTests {
-  @Test(arguments: [false, true])
+  @Test(arguments: [false, true], [false, true])
   func restoredMembershipHistoryTransformsExactLifetimesOrRejectsRetainedIdentityCollisions(
-    collidesWithRetainedHistory: Bool
+    collidesWithRetainedHistory: Bool, restoresIncomingValuesIntoDeletedSource: Bool
   ) async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
@@ -48,21 +48,26 @@ struct NativeImportPredecessorHistoryTests {
       sourceOnly[key] = []
     }
     sourceOnly["sources"] = [originalList]
-    guard
-      case .decoded(let sourceOnlyBackup) = planner.decodeImport(
-        try JSONSerialization.data(withJSONObject: sourceOnly)),
-      case .reviewed(let restoration) = await planner.prepareReview(
-        session: session,
-        command: .applyImport(backup: sourceOnlyBackup, mode: .overwrite, restoreDeletedData: true)),
-      case .applied(_, .complete) = await planner.execute(
-        .init(
-          operationId: UUID(), session: session, command: restoration.command,
-          reviewToken: restoration.reviewToken)
-      ).outcome,
-      case .exported(let before) = await planner.exportData(session: session),
-      case .decoded(let current) = planner.decodeImport(before),
-      let currentList = current.backup.lists.first(where: { $0.id == list.id })
+    if !restoresIncomingValuesIntoDeletedSource {
+      guard
+        case .decoded(let sourceOnlyBackup) = planner.decodeImport(
+          try JSONSerialization.data(withJSONObject: sourceOnly)),
+        case .reviewed(let restoration) = await planner.prepareReview(
+          session: session,
+          command: .applyImport(
+            backup: sourceOnlyBackup, mode: .overwrite, restoreDeletedData: true)),
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: restoration.command,
+            reviewToken: restoration.reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let current) = planner.decodeImport(before)
     else { throw CancellationError() }
+    let currentList = current.backup.lists.first(where: { $0.id == list.id })
+    #expect((currentList == nil) == restoresIncomingValuesIntoDeletedSource)
     var incoming = sourceOnly
     var independentTag = try #require(originalSources.first { $0["kind"] as? String == "tag" })
     independentTag["id"] = predecessorHistoryIdentifier(602)
@@ -74,6 +79,38 @@ struct NativeImportPredecessorHistoryTests {
     let originalMembership = try #require(
       (originalObject["memberships"] as? [[String: Any]])?.first)
     incoming["memberships"] = [originalMembership]
+    if restoresIncomingValuesIntoDeletedSource {
+      let currentObject = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+      let markers = try #require(currentObject["deletionMarkers"] as? [[String: Any]])
+      incoming["deletionMarkers"] = markers.filter {
+        guard let target = $0["target"] as? [String: Any],
+          let source = target["source"] as? [String: Any]
+        else { return false }
+        return source["kind"] as? String == "list" && source["id"] as? String == list.id.uuidString
+      }
+      var incomingList = originalList
+      incomingList["lifetimeId"] = predecessorHistoryIdentifier(881)
+      incoming["sources"] = [incomingList, independentTag]
+      var incomingMembership = originalMembership
+      var owner = try #require(incomingMembership["list"] as? [String: Any])
+      owner["lifetimeId"] = predecessorHistoryIdentifier(881)
+      incomingMembership["list"] = owner
+      incoming["memberships"] = [incomingMembership]
+      let predecessor: [String: Any] = [
+        "kind": "list", "id": list.id.uuidString, "lifetimeId": oldList.lifetimeId.uuidString,
+      ]
+      incoming["restorationFamilies"] = [
+        [
+          "familyId": predecessorHistoryIdentifier(893), "predecessor": predecessor,
+          "candidates": [
+            [
+              "lifetimeId": predecessorHistoryIdentifier(881),
+              "operationId": predecessorHistoryIdentifier(996),
+            ]
+          ],
+        ]
+      ]
+    }
     var alias = try #require((originalObject["contextAliases"] as? [[String: Any]])?.first)
     var change = try #require((originalObject["completionChanges"] as? [[String: Any]])?.first)
     var earlierChanges: [[String: Any]] = []
@@ -90,9 +127,12 @@ struct NativeImportPredecessorHistoryTests {
     }
     incoming["contextAliases"] = [alias]
     incoming["completionChanges"] = earlierChanges + [change]
+    let decodedOutcome = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+    guard case .decoded(let backup) = decodedOutcome else {
+      Issue.record("The represented List and membership history must decode: \(decodedOutcome)")
+      return
+    }
     guard
-      case .decoded(let backup) = planner.decodeImport(
-        try JSONSerialization.data(withJSONObject: incoming)),
       case .reviewed(let ordinary) = await planner.prepareReview(
         session: session, command: .applyImport(backup: backup, mode: .overwrite)),
       case .rejected = await planner.execute(
@@ -106,9 +146,14 @@ struct NativeImportPredecessorHistoryTests {
         command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true))
     else { throw CancellationError() }
     #expect(afterDenied == before)
-    #expect(review.impact.importDetails?.restorations.isEmpty == true)
-    #expect(
-      review.impact.importDetails?.replacements.first?.owner.lifetimeId == currentList.lifetimeId)
+    if let currentList {
+      #expect(review.impact.importDetails?.restorations.isEmpty == true)
+      #expect(
+        review.impact.importDetails?.replacements.first?.owner.lifetimeId == currentList.lifetimeId)
+    } else {
+      #expect(review.impact.importDetails?.restorations.map(\.owner.id) == [list.id])
+      #expect(review.impact.importDetails?.replacements.isEmpty == true)
+    }
     let operationIdentifier = UUID()
     let response = await planner.execute(
       .init(
@@ -136,6 +181,7 @@ struct NativeImportPredecessorHistoryTests {
     guard case .applied(let result, .complete(let checkpoint)) = response.outcome,
       case .exported(let after) = await planner.exportData(session: session),
       case .decoded(let restored) = planner.decodeImport(after),
+      let savedList = restored.backup.lists.first(where: { $0.id == list.id }),
       let membership = restored.backup.memberships.first(where: { $0.id == oldMembership.id }),
       let restoredAlias = restored.backup.contextAliases.first(where: {
         $0.aliasId.uuidString == predecessorHistoryIdentifier(691)
@@ -151,14 +197,14 @@ struct NativeImportPredecessorHistoryTests {
       case .source(.list(let listRead)) = await planner.read(
         session: session, request: .source(list))
     else {
-      Issue.record("Restore fresh contextual history under the retained live List: \(response)")
+      Issue.record("Restore exact contextual history under the saved List: \(response)")
       return
     }
     let context = PlannerPortableCompletionContext.listMembership(
       membershipId: membership.id, membershipLifetimeId: membership.lifetimeId)
     #expect(
       membership.lifetimeId != oldMembership.lifetimeId
-        && membership.listLifetimeId == currentList.lifetimeId)
+        && membership.listLifetimeId == savedList.lifetimeId)
     #expect(
       membership.localDone && listRead.progress.doneCount == 1 && listRead.progress.totalCount == 1)
     #expect(restoredAlias.context == context && restoredAlias.canonicalContext == context)
@@ -176,17 +222,23 @@ struct NativeImportPredecessorHistoryTests {
     var expected = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
     var expectedSources = try #require(expected["sources"] as? [[String: Any]])
     var expectedList = originalList
-    expectedList["lifetimeId"] = currentList.lifetimeId.uuidString
-    let listIndex = try #require(
-      expectedSources.firstIndex { $0["id"] as? String == list.id.uuidString })
-    expectedSources[listIndex] = expectedList
+    expectedList["lifetimeId"] = savedList.lifetimeId.uuidString
+    if let listIndex = expectedSources.firstIndex(where: {
+      $0["id"] as? String == list.id.uuidString
+    }) {
+      expectedSources[listIndex] = expectedList
+    } else {
+      expectedSources.append(expectedList)
+      #expect(savedList.lifetimeId != oldList.lifetimeId)
+      #expect(savedList.lifetimeId.uuidString != predecessorHistoryIdentifier(881))
+    }
     expectedSources.append(independentTag)
     expectedSources.sort { ($0["id"] as? String ?? "") < ($1["id"] as? String ?? "") }
     expected["sources"] = expectedSources
     var expectedMembership = originalMembership
     expectedMembership["lifetimeId"] = membership.lifetimeId.uuidString
     var expectedListBinding = try #require(expectedMembership["list"] as? [String: Any])
-    expectedListBinding["lifetimeId"] = currentList.lifetimeId.uuidString
+    expectedListBinding["lifetimeId"] = savedList.lifetimeId.uuidString
     expectedMembership["list"] = expectedListBinding
     var expectedMemberships = try #require(expected["memberships"] as? [[String: Any]])
     expectedMemberships.append(expectedMembership)
@@ -226,6 +278,20 @@ struct NativeImportPredecessorHistoryTests {
       actualFamilies.first { $0["familyId"] as? String == family.familyId.uuidString })
     var expectedFamilies = try #require(expected["restorationFamilies"] as? [[String: Any]])
     expectedFamilies.append(newFamily)
+    if restoresIncomingValuesIntoDeletedSource {
+      expectedFamilies.append([
+        "familyId": "DE6D0B08-E4DF-8F2A-9DBD-91424DB6CEFB",
+        "predecessor": [
+          "kind": "list", "id": list.id.uuidString, "lifetimeId": oldList.lifetimeId.uuidString,
+        ],
+        "candidates": [
+          [
+            "lifetimeId": savedList.lifetimeId.uuidString,
+            "operationId": operationIdentifier.uuidString,
+          ]
+        ],
+      ])
+    }
     expectedFamilies.sort { ($0["familyId"] as? String ?? "") < ($1["familyId"] as? String ?? "") }
     expected["restorationFamilies"] = expectedFamilies
     #expect(NSDictionary(dictionary: actual).isEqual(to: expected))

@@ -1,0 +1,84 @@
+{
+  "format": "planner-data",
+  "formatVersion": 2,
+  "sources": [],
+  "memberships": [],
+  "itineraryEntries": [],
+  "expandedCompletions": [],
+  "schedules": [],
+  "labelAssociations": [],
+  "ownedLinks": [],
+  "deletionMarkers": [
+    {
+      "deletionId": "00000000-0000-4000-8000-000000000892",
+      "operationId": "00000000-0000-4000-8000-000000000992",
+      "target": {
+        "kind": "source",
+        "source": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        }
+      },
+      "closedFamilyId": null
+    },
+    {
+      "deletionId": "00000000-0000-4000-8000-000000000894",
+      "operationId": "00000000-0000-4000-8000-000000000994",
+      "target": {
+        "kind": "source",
+        "source": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000814"
+        }
+      },
+      "closedFamilyId": "BF4CA8D3-7AFB-8BF5-A2C3-7F67C76178EC"
+    },
+    {
+      "deletionId": "00000000-0000-4000-8000-000000000895",
+      "operationId": "00000000-0000-4000-8000-000000000995",
+      "target": {
+        "kind": "source",
+        "source": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000815"
+        }
+      },
+      "closedFamilyId": "90C4A91E-B752-8728-A7B7-4281FDFC1AC2"
+    }
+  ],
+  "contextAliases": [],
+  "completionChanges": [],
+  "restorationFamilies": [
+    {
+      "familyId": "BF4CA8D3-7AFB-8BF5-A2C3-7F67C76178EC",
+      "predecessor": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "candidates": [
+        {
+          "lifetimeId": "00000000-0000-4000-8000-000000000814",
+          "operationId": "00000000-0000-4000-8000-000000000991"
+        }
+      ]
+    },
+    {
+      "familyId": "90C4A91E-B752-8728-A7B7-4281FDFC1AC2",
+      "predecessor": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000814"
+      },
+      "candidates": [
+        {
+          "lifetimeId": "00000000-0000-4000-8000-000000000815",
+          "operationId": "00000000-0000-4000-8000-000000000993"
+        }
+      ]
+    }
+  ]
+}
