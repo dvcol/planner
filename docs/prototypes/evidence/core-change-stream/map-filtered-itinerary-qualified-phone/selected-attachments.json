@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-itinerary-qualified-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-qualified-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "DF51BFE6-421B-4F46-A3CB-A0EDDA80AEF6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary Map removes all old pins without changing branch state_0_77224E56-0173-4072-9AD7-C024FBFF904E.png",
+      "timestamp": 1792767617.47,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredItineraryMapKeepsItsExactRepeatedBranchAfterAnIndependentContentEdit()",
+      "retainedFileName": "DF51BFE6-421B-4F46-A3CB-A0EDDA80AEF6.png",
+      "originalSha256": "5c200bbd5d64521fbfa53bd56b4784c0d5be2648fd8a1beea0bc7b06557c5cfb"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6B01B4DA-258D-4F69-AB60-3CCACA5386B6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary Map retains its exact completed repeated branch_0_1A47FABA-483F-4561-AB3D-3D72E4C9380E.png",
+      "timestamp": 1792767614.32,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredItineraryMapKeepsItsExactRepeatedBranchAfterAnIndependentContentEdit()",
+      "retainedFileName": "6B01B4DA-258D-4F69-AB60-3CCACA5386B6.png",
+      "originalSha256": "0845f9142b63704f3f6bbfbb3a9fa43c13a0f2aabbc8f4c07347138fa529c8eb"
+    }
+  ],
+  "videoPublished": false
+}

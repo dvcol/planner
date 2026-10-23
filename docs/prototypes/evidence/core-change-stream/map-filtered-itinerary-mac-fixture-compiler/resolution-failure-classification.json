@@ -1,0 +1,9 @@
+{
+  "exitCode": 74,
+  "testFunctionsStarted": 0,
+  "sourceCompilationReached": false,
+  "currentSourceProductCredit": false,
+  "runtimeCredit": false,
+  "failure": "Shared temporary package manifests unavailable; see retained raw log.",
+  "retryRequiresFreshVerifiedPinnedCache": true
+}

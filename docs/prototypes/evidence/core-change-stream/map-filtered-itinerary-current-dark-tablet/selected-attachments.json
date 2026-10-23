@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-itinerary-current-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-current-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8E606EAA-3391-4AFE-B281-E8257EEAFC4B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary Map removes all old pins without changing branch state_0_9E1F72BC-C024-436F-9118-CFD3C8FB3228.png",
+      "timestamp": 1792768440.287,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredItineraryMapKeepsItsExactRepeatedBranchAfterAnIndependentContentEdit()",
+      "retainedFileName": "8E606EAA-3391-4AFE-B281-E8257EEAFC4B.png",
+      "originalSha256": "278d5f585e92ca9c038599023bbd431d533077bf05e0c4ebce3d56a8a131e086"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "63604C8E-4F6D-4063-86ED-07AC91090A86.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered itinerary Map retains its exact completed repeated branch_0_FB190431-6887-424A-B36D-9B735151FCD5.png",
+      "timestamp": 1792768437.685,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredItineraryMapKeepsItsExactRepeatedBranchAfterAnIndependentContentEdit()",
+      "retainedFileName": "63604C8E-4F6D-4063-86ED-07AC91090A86.png",
+      "originalSha256": "cc479cc87270a9e35c5fd2ee6dbccd5bd6e4e7e88fab711986853624cf604e9a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8A90B4BD-9FDE-418F-9A75-05154DE363DD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored repeated List reader returns to exact branch completion_0_56F7DAD1-FC0F-4935-8547-F8118D78B059.png",
+      "timestamp": 1792768525.905,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredRepeatedListBranchReturnsToItsExactLocalState()",
+      "retainedFileName": "8A90B4BD-9FDE-418F-9A75-05154DE363DD.png",
+      "originalSha256": "d37ef7da4b38c568f96d14e77ff7bc811adb641a99e862f653e92a2eea72ed06"
+    }
+  ],
+  "videoPublished": false
+}

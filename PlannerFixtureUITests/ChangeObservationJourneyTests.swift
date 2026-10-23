@@ -2,6 +2,114 @@ import XCTest
 
 @MainActor
 final class ChangeObservationJourneyTests: XCTestCase {
+  func testFilteredItineraryMapKeepsItsExactRepeatedBranchAfterAnIndependentContentEdit() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-itinerary", "--fixture-repeated-itinerary-list",
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Itineraries")
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+    XCTAssertTrue(itinerary.waitForPlannerHittability())
+    itinerary.staticTexts["City trip"].firstMatch.activateForPlannerJourney()
+    let contents = application.descendants(matching: .any)
+      .matching(identifier: "saved.itinerary.contents").firstMatch
+    let appearances = application.buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.appearance.", "Hotel"))
+    XCTAssertTrue(appearances.firstMatch.waitForExistence(timeout: 10))
+    var identifiers: [String] = []
+    for _ in 0..<8 {
+      for row in appearances.allElementsBoundByIndex where !identifiers.contains(row.identifier) {
+        identifiers.append(row.identifier)
+      }
+      if identifiers.count == 3 { break }
+      contents.swipeUp()
+    }
+    XCTAssertEqual(identifiers.count, 3)
+    let selectedIdentifier = try XCTUnwrap(
+      identifiers.first { $0.split(separator: ".").count == 5 })
+    let selected = application.buttons[selectedIdentifier]
+    for _ in 0..<8 where !selected.isHittable { contents.swipeDown() }
+    let completion = application.buttons[
+      selectedIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    let search = application.searchFields["Search this Itinerary"]
+    if !search.exists { contents.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 10))
+    search.activateForPlannerJourney()
+    search.typeText("Original notes\n")
+    XCTAssertTrue(search.waitForPlannerValue("Original notes"))
+    application.openSavedPlannerItineraryViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let pin = application.buttons["saved.map.pin.35.662,139.717"]
+    XCTAssertTrue(pin.waitForExistence(timeout: 15))
+    XCTAssertEqual(pin.label, "3 items")
+    pin.activateForPlannerJourney()
+    let branch = application.buttons["Hotel · Weekend · Stop 2 · Item 1"].firstMatch
+    XCTAssertTrue(branch.waitForExistence(timeout: 5))
+    branch.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.waitForExistence(timeout: 10))
+    performFixtureAction(
+      "fixture.writer.update", expecting: "Saved another-writer change", in: application)
+    XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 15))
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.exists)
+    XCTAssertFalse(application.plannerElement("saved.item.completion").exists)
+    let details = XCTAttachment(screenshot: application.screenshot())
+    details.name = "Filtered itinerary Map retains its exact completed repeated branch"
+    details.lifetime = .keepAlways
+    add(details)
+    if application.windows.firstMatch.frame.width < 600 {
+      application.plannerElement("BackButton").activateForPlannerJourney()
+    }
+    XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 15))
+    XCTAssertTrue(pin.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["0 of 0 items located"].exists)
+    let empty = XCTAttachment(screenshot: application.screenshot())
+    empty.name = "Filtered itinerary Map removes all old pins without changing branch state"
+    empty.lifetime = .keepAlways
+    add(empty)
+    application.openSavedPlannerItineraryViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("List")
+    XCTAssertTrue(search.waitForExistence(timeout: 10))
+    search.activateForPlannerJourney()
+    search.buttons["Clear text"].activateForPlannerJourney()
+    search.activateForPlannerJourney()
+    search.typeText("Hotel updated\n")
+    let current = application.buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.appearance.",
+        "Hotel updated"))
+    XCTAssertTrue(current.firstMatch.waitForExistence(timeout: 10))
+    var restoredIdentifiers: Set<String> = []
+    for _ in 0..<8 {
+      for row in current.allElementsBoundByIndex {
+        restoredIdentifiers.insert(row.identifier)
+        let control = application.buttons[
+          row.identifier.replacingOccurrences(
+            of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+        XCTAssertEqual(
+          control.value as? String, row.identifier == selectedIdentifier ? "Completed" : "To do")
+      }
+      if restoredIdentifiers.count == 3 { break }
+      contents.swipeUp()
+    }
+    XCTAssertEqual(restoredIdentifiers, Set(identifiers))
+    for _ in 0..<8 where !selected.isHittable { contents.swipeDown() }
+    XCTAssertTrue(selected.isHittable)
+    selected.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Other writer notes"].exists)
+  }
+
   func testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit() {
     continueAfterFailure = false
     for section in ["Items", "Inbox"] {

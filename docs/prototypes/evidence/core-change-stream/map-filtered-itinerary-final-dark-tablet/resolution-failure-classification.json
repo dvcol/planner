@@ -1,0 +1,10 @@
+{
+  "exitCode": 74,
+  "testFunctionsStarted": 0,
+  "sourceCompilationReached": false,
+  "currentSourceProductCredit": false,
+  "runtimeCredit": false,
+  "failure": "The appearance wrapper still invoked the earlier tablet runtime, which used the unavailable cache. The nested runner path is corrected for the separate current-dark-tablet retry.",
+  "productionChanges": false,
+  "testSourceChanges": false
+}

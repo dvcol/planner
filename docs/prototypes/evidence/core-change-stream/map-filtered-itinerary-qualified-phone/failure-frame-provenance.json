@@ -1,0 +1,11 @@
+{
+  "originalVideo": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-qualified-phone/BA21B66E-56B3-4D97-A389-B1D66CDE12DF.mp4",
+  "originalSha256": "1d35e5437765e67730586acdff8f79d37c15dade4cd8bca52784f24a3242a9bc",
+  "frameSeconds": "63.501667",
+  "derivedImage": "failure-reopened-stop.png",
+  "derivedSha256": "7b641821f8362d9b594c4892f6318c53825306365c8a20dacbb54ed7f0574e72",
+  "failureLine": 82,
+  "productionChanged": false,
+  "originalResultBundle": "/private/tmp/PlannerItemWindow-map-filtered-itinerary-qualified-phone.xcresult",
+  "recoveryAfterExportCleanup": "The original video remains in the retained xcresult. Its exported filename, hash and complete export manifest identify the attachment for re-export."
+}

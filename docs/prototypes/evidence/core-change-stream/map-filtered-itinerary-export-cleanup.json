@@ -1,0 +1,44 @@
+{
+  "scope": "Only four explicitly enumerated duplicate attachment-export directories. All original xcresults, retained attachments, sources/products, complete exported manifests and datasets remain. Nominal bytes do not promise an equal APFS free-space change.",
+  "candidates": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-itinerary-phone.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-itinerary-phone",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 37507402,
+      "exportManifestSha256": "fff69d4062762b751e17e2c1599cf59320495a734b8647e7a17fcef68d66c197"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-qualified-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-itinerary-qualified-phone.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-itinerary-qualified-phone",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 50568532,
+      "exportManifestSha256": "adf6f7b8dcdba001b4ccaf2abc2d45579fd031c253009fb5caa9628eb92ee67c"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-final-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-itinerary-final-phone.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-itinerary-final-phone",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 2506781,
+      "exportManifestSha256": "98adbb59116e97dc6c4cb592af68d8621208be4e8f8d8e64d1201e78a299d153"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-current-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-itinerary-current-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-itinerary-current-dark-tablet",
+      "selectedAttachmentsVerified": 3,
+      "nominalBytes": 2684320,
+      "exportManifestSha256": "c7361ecdbf12fe4c6edc3142f788bc368331aa92877189aa012fcae322382727"
+    }
+  ],
+  "removedDirectories": [
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-qualified-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-final-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-itinerary-current-dark-tablet"
+  ],
+  "nominalBytes": 93267035
+}
