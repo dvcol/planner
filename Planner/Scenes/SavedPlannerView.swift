@@ -2160,13 +2160,21 @@ struct SavedPlannerView: View {
 
   private var itemSelection: Binding<UUID?> {
     Binding(
-      get: { selectedItemId },
+      get: {
+        #if os(iOS)
+          guard usesSidebarNavigation || preferredCompactColumn == .detail else { return nil }
+        #endif
+        return selectedItemId
+      },
       set: { identifier in
-        guard identifier != selectedItemId else { return }
+        let needsCompactDetailNavigation =
+          !usesSidebarNavigation && identifier != nil && preferredCompactColumn != .detail
+        guard identifier != selectedItemId || needsCompactDetailNavigation else { return }
         if identifier == nil && newItemDraft != nil { return }
         requestDraftNavigation {
           recordSelectionChange()
           selectedItemId = identifier
+          if identifier != nil { preferredCompactColumn = .detail }
         }
       })
   }
