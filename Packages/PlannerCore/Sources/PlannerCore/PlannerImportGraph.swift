@@ -110,6 +110,32 @@ struct PlannerImportGraph {
     closedIdentities.contains(identity)
   }
 
+  func authorizesPredecessorValues(
+    _ predecessor: PlannerPortableBoundIdentity, for live: PlannerPortableBoundIdentity
+  ) -> Bool {
+    guard predecessor.kind == live.kind, predecessor.id == live.id, isClosed(predecessor) else {
+      return false
+    }
+    let closedFamilies = Set(backup.deletionMarkers.compactMap(\.closedFamilyId))
+    var pendingPredecessors = [predecessor]
+    var visitedPredecessors: Set<PlannerPortableBoundIdentity> = []
+    while let currentPredecessor = pendingPredecessors.popLast() {
+      guard visitedPredecessors.insert(currentPredecessor).inserted else { continue }
+      for family in backup.restorationFamilies where family.predecessor == currentPredecessor {
+        for candidate in family.candidates {
+          let identity = PlannerPortableBoundIdentity(
+            kind: predecessor.kind, id: predecessor.id, lifetimeId: candidate.lifetimeId)
+          if closedFamilies.contains(family.familyId) {
+            pendingPredecessors.append(identity)
+          } else if identity == live {
+            return true
+          }
+        }
+      }
+    }
+    return false
+  }
+
   func isClosed(_ context: PlannerPortableCompletionContext) -> Bool {
     if backup.deletionMarkers.contains(where: { $0.target.closes(context) }) { return true }
     return context.importContextIdentities.contains(where: isClosed)

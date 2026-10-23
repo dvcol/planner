@@ -22,7 +22,7 @@ The [four family cases](evidence/native-import-unknown-candidate-skip/unknown-ca
 
 ## Remaining qualification
 
-This slice represents unknown Item candidates and new List/Itinerary dependents. Unknown List, Itinerary, Category and Tag source fixtures, precommit/recovery failures, native import presentation and broader family/reference/history consolidation remain separate work. It does not qualify signed synchronization, physical convergence or whole-app acceptance.
+This slice represents unknown Item candidates and new List/Itinerary dependents. Unknown List, Itinerary, Category and Tag source fixtures, precommit/recovery failures, native import presentation (including unavailable-dependency wording) and broader family/reference/history consolidation remain separate work. It does not qualify signed synchronization, physical convergence or whole-app acceptance.
 
 ## Affected Mac regression
 
