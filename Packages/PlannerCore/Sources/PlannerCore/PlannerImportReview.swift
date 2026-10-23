@@ -238,6 +238,7 @@ struct PlannerImportProjection {
 
 struct PlannerImportReviewResolution {
   let incoming: PlannerPortableBackup
+  let predecessorValueOwners: Set<PlannerEntityReference>
   let details: PlannerImportReview
   let targets: [PlannerReviewTarget]
   let sourceDeletes: [PlannerEntityReference]
@@ -710,6 +711,7 @@ func plannerResolveImportReview(
   }
   return .init(
     incoming: resolvedIncoming,
+    predecessorValueOwners: Set(replacementSourceLifetimes.keys.map(\.reference)),
     details: .init(
       imports: imports, unchanged: unchanged, skippedConflicts: skippedConflicts,
       skippedDependents: skippedDependents,
