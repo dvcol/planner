@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "561e059c09af6259365e8e7683e03c2de68b6772",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValueKindsTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValuesTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportUnknownCandidateKindsTests.swift"
+  ]
+}

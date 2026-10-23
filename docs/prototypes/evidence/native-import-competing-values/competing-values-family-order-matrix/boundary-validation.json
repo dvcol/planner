@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 756,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Four valid Item cases, both candidate orders and family identities; complete graph, recovery, exact replay and reimport."
+}

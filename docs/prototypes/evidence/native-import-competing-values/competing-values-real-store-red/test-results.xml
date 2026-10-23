@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000174375"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.146394">
+        <testcase classname="PlannerCoreStoreTests.NativeImportCompetingValuesTests" name="overwriteAppliesCompetingValuesWithoutAdoptingItsFamily()" time="0.14603375">
+            <failure message="Issue recorded (error): Explicit Overwrite must project the competing values onto current B: .failed(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: Optional(&quot;/sources/0/lifetimeId&quot;), message: &quot;Source-lifetime import reconciliation is not implemented yet.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

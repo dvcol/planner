@@ -1,0 +1,7 @@
+{
+  "testPath": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportCompetingValuesTests.swift",
+  "unchangedTestSha256": "b81a4192f7cf85c841f0fb75268c7e68646ead548dead087f549363c252320e0",
+  "redFailure": "unavailable at /sources/0/lifetimeId",
+  "greenApplied": true,
+  "publicRealStoreBoundary": true
+}

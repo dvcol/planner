@@ -365,6 +365,23 @@ func plannerResolveImportReview(
       replacementSourceLifetimes[source.importBinding] = actual.lifetimeId
       resolvedSourceLifetimes[source.importBinding] = actual.lifetimeId
     }
+    for source in incoming.backup.sources {
+      guard let actual = currentSources[source.importBinding.reference],
+        let family = try currentGraph.competingValueFamily(
+          for: source.importIdentity,
+          to: .init(kind: source.importIdentity.kind, id: actual.id, lifetimeId: actual.lifetimeId),
+          in: incoming.backup)
+      else { continue }
+      replacementSourceLifetimes[source.importBinding] = actual.lifetimeId
+      for candidate in family.candidates {
+        resolvedSourceLifetimes[
+          .init(kind: actual.kind, id: actual.id, lifetimeId: candidate.lifetimeId)] =
+          actual.lifetimeId
+      }
+      selectedIncomingFamilies.removeAll {
+        $0.predecessor.kind == source.importIdentity.kind && $0.predecessor.id == source.id
+      }
+    }
   }
   let resolvedIncoming = incoming.backup.resolvingImportSourceLifetimes(
     resolvedSourceLifetimes, replacingSources: replacementSourceLifetimes,

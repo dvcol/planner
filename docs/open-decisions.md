@@ -2,7 +2,7 @@
 
 ## Current frontier
 
-Q149 A is accepted on 23 October 2026. The [approved contract](import-competing-candidate-values-contract-review.md) copies represented incoming values onto the current live owner and binds explicitly imported dependent owners there, preserving the complete current family. It does not adopt unknown candidates or change Skip. Implementation and qualification remain open. Signing is separate; native narrow-toolbar compatibility work continues independently.
+Q149 A is accepted on 23 October 2026. The [approved contract](import-competing-candidate-values-contract-review.md) copies represented incoming values onto the current live owner and binds explicitly imported dependent owners there, preserving the complete current family. It does not adopt unknown candidates or change Skip. The [local real-store checkpoint](prototypes/core-native-import-competing-values.md) passes the four-case Item matrix, twenty all-kind/recovery cases and affected 80-function Mac cohort. Matching iOS execution, native administration and remaining lineage qualification stay open. Signing is separate; native narrow-toolbar compatibility work continues independently.
 
 ## Approved checkpoints, 23 October 2026
 
