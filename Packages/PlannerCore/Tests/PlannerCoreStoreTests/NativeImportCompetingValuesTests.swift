@@ -3,10 +3,11 @@ import PlannerCore
 import Testing
 
 struct NativeImportCompetingValuesTests {
-  @Test(arguments: [true, false], [false, true])
+  @Test(arguments: [(true, false), (true, true), (false, false), (false, true)], [1, 2])
   func overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(
-    incomingSortsBeforeCurrent: Bool, sharesFamilyIdentifier: Bool
+    incomingCase: (Bool, Bool), restorationCount: Int
   ) async throws {
+    let (incomingSortsBeforeCurrent, sharesFamilyIdentifier) = incomingCase
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -30,17 +31,21 @@ struct NativeImportCompetingValuesTests {
       try await save(.createItem(content: .init(title: "Current museum", notes: "Current notes")))
         .generated.first)
     guard case .exported(let originalData) = await planner.exportData(session: session),
-      case .decoded(let original) = planner.decodeImport(originalData),
-      case .reviewed(let deletion) = await planner.prepareReview(
-        session: session, command: .deleteSource(source: item))
+      case .decoded(let original) = planner.decodeImport(originalData)
     else { throw CancellationError() }
-    _ = try await save(deletion.command, reviewToken: deletion.reviewToken)
-    guard
-      case .reviewed(let restoration) = await planner.prepareReview(
-        session: session,
-        command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true))
-    else { throw CancellationError() }
-    _ = try await save(restoration.command, reviewToken: restoration.reviewToken)
+    for _ in 0..<restorationCount {
+      guard
+        case .reviewed(let deletion) = await planner.prepareReview(
+          session: session, command: .deleteSource(source: item))
+      else { throw CancellationError() }
+      _ = try await save(deletion.command, reviewToken: deletion.reviewToken)
+      guard
+        case .reviewed(let restoration) = await planner.prepareReview(
+          session: session,
+          command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true))
+      else { throw CancellationError() }
+      _ = try await save(restoration.command, reviewToken: restoration.reviewToken)
+    }
     let keptList = try #require(
       try await save(.createList(content: .init(name: "Kept list"))).generated.first)
     _ = try await save(.addMembership(itemId: item.id, listId: keptList.id, placement: .last))
@@ -55,7 +60,10 @@ struct NativeImportCompetingValuesTests {
     guard case .exported(let before) = await planner.exportData(session: session),
       case .decoded(let current) = planner.decodeImport(before),
       let currentItem = current.backup.items.first,
-      let currentFamily = current.backup.restorationFamilies.first
+      let currentFamily = current.backup.restorationFamilies.first(where: { family in
+        family.candidates.contains { $0.lifetimeId == currentItem.lifetimeId }
+          && !current.backup.deletionMarkers.contains { $0.closedFamilyId == family.familyId }
+      })
     else { throw CancellationError() }
     let currentObject = try #require(
       JSONSerialization.jsonObject(with: before) as? [String: Any])
@@ -108,20 +116,24 @@ struct NativeImportCompetingValuesTests {
       "item": ["kind": "item", "id": item.id.uuidString, "lifetimeId": incomingLifetime],
       "rank": "1024", "localDone": true,
     ]
+    let currentFamilies = try #require(currentObject["restorationFamilies"] as? [[String: Any]])
     let family = try #require(
-      (currentObject["restorationFamilies"] as? [[String: Any]])?.first)
+      currentFamilies.first { $0["familyId"] as? String == currentFamily.familyId.uuidString })
     var incoming = currentObject
     for key in incoming.keys where key != "format" && key != "formatVersion" { incoming[key] = [] }
     incoming["sources"] = [museum, tour, tag]
     incoming["memberships"] = [incomingMembership]
     incoming["deletionMarkers"] = currentObject["deletionMarkers"]
-    incoming["restorationFamilies"] = [
-      [
-        "familyId": familyIdentifier,
-        "predecessor": try #require(family["predecessor"]),
-        "candidates": candidates,
+    incoming["restorationFamilies"] =
+      currentFamilies.filter {
+        $0["familyId"] as? String != currentFamily.familyId.uuidString
+      } + [
+        [
+          "familyId": familyIdentifier,
+          "predecessor": try #require(family["predecessor"]),
+          "candidates": candidates,
+        ]
       ]
-    ]
     let incomingData = try JSONSerialization.data(withJSONObject: incoming)
     guard case .decoded(let backup) = planner.decodeImport(incomingData) else {
       Issue.record("The competing candidate and its declared Tour must form a valid backup.")
@@ -185,8 +197,10 @@ struct NativeImportCompetingValuesTests {
     let expectedData = try JSONSerialization.data(withJSONObject: expected)
     #expect(try competingValueGraph(after) == competingValueGraph(expectedData))
     #expect(try competingValueGraph(recovered.portableData) == competingValueGraph(expectedData))
-    #expect(applied.backup.restorationFamilies.count == 1)
-    #expect(applied.backup.restorationFamilies.first?.familyId == currentFamily.familyId)
+    #expect(applied.backup.restorationFamilies.count == restorationCount)
+    #expect(
+      Set(applied.backup.restorationFamilies.map(\.familyId))
+        == Set(current.backup.restorationFamilies.map(\.familyId)))
     #expect(applied.backup.memberships.first { $0.id == membership.id }?.localDone == true)
     #expect(result.importSummary?.replacements.first?.owner.lifetimeId == currentItem.lifetimeId)
     let reopened = Planner(configuration: configuration)
