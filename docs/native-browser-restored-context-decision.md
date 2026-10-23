@@ -1,6 +1,6 @@
 # Browser Return after association restoration
 
-Status: Q150 pending. Source-lifetime rejection is already accepted and implemented; its native restoration journey can proceed independently. Signing is separate.
+Status: Q150 A accepted on 23 October 2026. Source-lifetime rejection is already accepted and implemented; its native restoration journey can proceed independently. Signing is separate.
 
 ## Settled behavior and current distinction
 
