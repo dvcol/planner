@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 1090,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 80,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Matching iPhone app-hosted Core cohort; 80 passed functions, 320 fixtures, no skips or SQLite lifetime warnings."
+}

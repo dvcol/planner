@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.0002015"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.346673083">
+        <testcase classname="PlannerCoreStoreTests.NativeImportCompetingValuesTests" name="overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)" time="0.346313917"/>
+    </testsuite>
+</testsuites>

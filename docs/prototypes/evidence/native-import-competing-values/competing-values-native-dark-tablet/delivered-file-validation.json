@@ -1,0 +1,13 @@
+{
+  "result": {
+    "filename": "Planner Backup 2026-10-23T05-19-52Z.json",
+    "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-23T05-19-52Z.json",
+    "bytes": 17815,
+    "sha256": "c8e744d917a32fb2c51284e8b2d3c7d12ac227756a26ac8dbe53167c0079a324",
+    "completeGraphMatches": true,
+    "duplicatesRetainedInComparison": true,
+    "nestedSequencesComparedExactly": true
+  },
+  "nativeTestPassed": true,
+  "scope": "Current B/F, all omitted owners/history and complete retained Museum data; incoming values and exact new Tour/Itinerary/Tag references, without D/G."
+}

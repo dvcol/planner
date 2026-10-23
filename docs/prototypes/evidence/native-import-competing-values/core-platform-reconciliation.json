@@ -1,0 +1,9 @@
+{
+  "matchingCoreInputs": 757,
+  "nativeInputCount": 1090,
+  "macFunctions": 80,
+  "iosFunctions": 80,
+  "macFixtureInvocations": 320,
+  "iosFixtureInvocations": 320,
+  "productionChangedAfterFirstGreen": false
+}

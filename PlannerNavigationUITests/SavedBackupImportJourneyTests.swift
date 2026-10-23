@@ -697,6 +697,74 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         application, name: "Approved import preserves the omitted List and local completion")
     }
 
+    func testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner approved current family.json", application: application)
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      selectBackup("Planner competing values.json", application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      for (identifier, label) in [
+        ("additions", "Additions, 3"), ("replacements", "Replacements, 1"),
+        ("restorations", "Restorations, 0"),
+      ] {
+        let summary = application.staticTexts["saved.import.summary.\(identifier)"]
+        revealImportElement(summary, application: application)
+        XCTAssertEqual(summary.label, label)
+      }
+      recordImport(application, name: "Competing values review retains the live owner")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      let exported = XCTAttachment(string: exportBackup(application))
+      exported.name = "Competing values delivered backup filename"
+      exported.lifetime = .keepAlways
+      add(exported)
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Incoming restored notes"].waitForExistence(timeout: 10))
+      let globalCompletion = application.descendants(matching: .any).matching(
+        identifier: "saved.item.completion"
+      ).firstMatch
+      XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+      recordImport(
+        application, name: "Competing values retain the Item and owned location after relaunch")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(
+        application.savedPlannerListRow("Tokyo Food"), application: application)
+      let filters = application.plannerElement("saved.list.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: filters)
+      XCTAssertTrue(application.staticTexts["2 of 2 items finished"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000401"
+        ).waitForPlannerValue("Completed"))
+      recordImport(application, name: "Competing values preserve the omitted List completion")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(
+        application.savedPlannerListRow("Imported Tour"), application: application)
+      application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: filters)
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000477"
+        ).waitForPlannerValue("Completed"))
+      recordImport(application, name: "Competing values keep the imported Tour appearance Done")
+    }
+
     func testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState() {
       continueAfterFailure = false
       let application = XCUIApplication()

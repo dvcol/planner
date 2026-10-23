@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-competing-values-native-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-competing-values-native-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8BF7CE7E-A1CA-4D80-AC08-A6D95047A1EF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values keep the imported Tour appearance Done_0_64B08363-A941-467B-A249-2A2EE6CCFCE9.png",
+      "timestamp": 1792732878.732,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "8BF7CE7E-A1CA-4D80-AC08-A6D95047A1EF.png",
+      "originalSha256": "61dbc99297acf25a859f3bbe5b04f212f23442f0802261942e2bd34cfa98eec3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "DA01F1CE-7BD8-400C-B8D2-C5909AADA01F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values preserve the omitted List completion_0_75E37F61-BDDE-4231-B422-E2AF0152ECE0.png",
+      "timestamp": 1792732848.891,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "DA01F1CE-7BD8-400C-B8D2-C5909AADA01F.png",
+      "originalSha256": "f2b0e7fe69b83c34ab1af3370bb94d1e94f970ba3cbfa97da345ec012f6ed3c0"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B45D7CBB-EA71-4E79-94E7-F3525C96DE8E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values retain the Item and owned location after relaunch_0_8A8E72CF-E891-47A6-B3A6-28021BF331E8.png",
+      "timestamp": 1792732817.603,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "B45D7CBB-EA71-4E79-94E7-F3525C96DE8E.png",
+      "originalSha256": "2a76ac5c1dc6aaa3414226b8215f4b11661499f1512e6b24d5a14891b19a251c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9981F3A3-E9B3-43CB-B6E5-2C7C250E6640.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values delivered backup filename_0_F4C5E115-E3FA-4CDB-8826-A7531E3229DE.txt",
+      "timestamp": 1792732802.364,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "9981F3A3-E9B3-43CB-B6E5-2C7C250E6640.txt.gz",
+      "originalSha256": "679eeb3731cb1d38035a9d0668e7d487b01bf09746fea2e6c1652f1eeecc6846"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "AE514AE3-1BF2-4EC9-9182-639B06A06C10.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values review retains the live owner_0_C01CB9F4-681E-4F7B-BA6A-62DC8BC818BC.png",
+      "timestamp": 1792732789.349,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "AE514AE3-1BF2-4EC9-9182-639B06A06C10.png",
+      "originalSha256": "bc3b9f406d743b24a7ba3a0a120270c65b23e2a4a4a201bee38762d11f141223"
+    }
+  ],
+  "videoPublished": false
+}

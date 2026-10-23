@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerIncomingFamily-competing-values-final-affected-ios.xcresult"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerIncomingFamily-competing-values-final-affected-ios.xcresult"
+    ],
+    "exitCode": 0
+  }
+]

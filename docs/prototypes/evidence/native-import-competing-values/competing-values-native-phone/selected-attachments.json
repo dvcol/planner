@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-competing-values-native-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-competing-values-native-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B80E20B5-8FD1-4175-BCEC-04166EBA99C0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values keep the imported Tour appearance Done_0_FAF22A10-782D-49EB-BBD0-67550E832673.png",
+      "timestamp": 1792732658.908,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "B80E20B5-8FD1-4175-BCEC-04166EBA99C0.png",
+      "originalSha256": "53e5b7712e341fa0052116971fa3dddadb9e87b7d53cb97f85c3d0a9cb2a2952"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "BF99C371-B2F6-44A3-8B2C-4F01A2D16022.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values preserve the omitted List completion_0_98251F9A-5226-4C04-97B8-29C5B668A554.png",
+      "timestamp": 1792732629.73,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "BF99C371-B2F6-44A3-8B2C-4F01A2D16022.png",
+      "originalSha256": "b5ee0dbf9b748a80d576374182bd5c274c2dbf34feb61f1995cb801ed3a5e2ab"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "4B3290A2-6CB5-4178-B6B4-ECFC293B36F0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values retain the Item and owned location after relaunch_0_4164966C-B2AB-41F1-8175-BB24F25673EB.png",
+      "timestamp": 1792732598.015,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "4B3290A2-6CB5-4178-B6B4-ECFC293B36F0.png",
+      "originalSha256": "ba0f4c73c152e3657a7f08e0d70b2d204011e72086efec6d801191660904d011"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "70AA6EC4-E4C5-45D9-9F83-084DB1D11D30.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values delivered backup filename_0_29484DC0-1B9A-44C1-B23D-B10B8F66DB6F.txt",
+      "timestamp": 1792732582.393,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "70AA6EC4-E4C5-45D9-9F83-084DB1D11D30.txt.gz",
+      "originalSha256": "bf7a7e80855c664e0d877b1ca21b550eaa6fcdc0e469b48edd907310bf54321d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "8DEACA82-A31A-407C-A701-78CDD959F6AA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Competing values review retains the live owner_0_FD0FE5B2-D677-4446-96A6-61628D8E5F21.png",
+      "timestamp": 1792732571.226,
+      "testIdentifier": "SavedBackupImportJourneyTests/testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope()",
+      "retainedFileName": "8DEACA82-A31A-407C-A701-78CDD959F6AA.png",
+      "originalSha256": "8f53e0ccefa64fbd302fffa6f79091c1f2ff06c61beccde81b3955b983ec7f76"
+    }
+  ],
+  "videoPublished": false
+}

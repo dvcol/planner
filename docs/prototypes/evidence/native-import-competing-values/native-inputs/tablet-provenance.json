@@ -1,0 +1,25 @@
+{
+  "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+  "containerCommand": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "com.apple.DocumentsApp",
+    "groups"
+  ],
+  "inputs": [
+    {
+      "source": "docs/fixtures/native-current-restoration-family.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner approved current family.json",
+      "sha256": "7186a94f67afc89d025a6784d4ea8617200202fca2d1bf3b8b4ac759a17dcd84",
+      "bytes": 12510
+    },
+    {
+      "source": "docs/fixtures/native-competing-values-overwrite.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner competing values.json",
+      "sha256": "20c74fcce61209803b3df949e805836c36599963ba92f4c1f57c61957996f46f",
+      "bytes": 8934
+    }
+  ]
+}

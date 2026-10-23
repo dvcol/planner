@@ -1,6 +1,6 @@
 # Competing restored values under a current live owner
 
-Status: Q149 A has a local real-store implementation checkpoint. Native administration, matching iOS execution and remaining lineage qualification are still open. [Approved contract](../import-competing-candidate-values-contract-review.md).
+Status: Q149 A has matching Mac/iPhone Core qualification and passing manual administration journeys on phone and dark iPad. Actual Mac interaction, automatic family synchronization/consolidation and physical account testing remain open. [Approved contract](../import-competing-candidate-values-contract-review.md).
 
 ## Behavior
 
@@ -18,6 +18,22 @@ The [all-kind matrix](evidence/native-import-competing-values/competing-values-s
 
 The [affected Mac cohort](evidence/native-import-competing-values/competing-values-affected-mac/boundary-validation.json) passes 80 functions in 38 suites, including 316 marked fixture invocations. All 757 Core inputs match the frozen source, both product hashes are verified before reuse, and no SQLite lifetime diagnostic appears. The existing verifier removes only those 316 marked disposable stores after the test host and handles close. It separately removes the four-case and twenty-case matrix stores. User datasets and native UI datasets are retained.
 
+## Retained lineage and matching Core execution
+
+The [real-lineage extension](evidence/native-import-competing-values/competing-values-retained-lineage/boundary-validation.json) runs eight cases with one or two actual Delete/Restore cycles, both incoming candidate orders and shared/different family identities. It retains the current complete family graph and omitted local Done membership while projecting the incoming represented values. This directly covers the latest closed predecessor after each cycle; it does not claim every older-ancestor or automatic consolidation scenario.
+
+The final affected cohort passes the same 80 functions in 38 suites on [Mac](evidence/native-import-competing-values/competing-values-final-affected-mac/boundary-validation.json) and the [iPhone Simulator app-hosted target](evidence/native-import-competing-values/competing-values-final-affected-ios/boundary-validation.json). Each executes 320 marked fixture invocations, with zero failures, skips or SQLite lifetime warnings. All 757 Core inputs match. The [platform reconciliation](evidence/native-import-competing-values/core-platform-reconciliation.json) distinguishes this final epoch from the earlier 316-fixture run. Each final run's 320 disposable stores are removed only after its host and file handles close; lifecycle reports retain the exact verified paths. No production Core code changes after the first green tracer.
+
+## Native review, apply, export and relaunch
+
+`SavedBackupImportJourneyTests.testCompetingValuesOverwriteKeepsCurrentFamiliesAndImportedAppearanceScope` uses the real Files picker to import the fixed current family, then the [fixed competing backup](../fixtures/native-competing-values-overwrite.json) with explicit Overwrite. It verifies three additions, one replacement and zero restorations before applying, then exports and relaunches. Incoming Museum notes survive, global Done stays false, the omitted Tokyo Food membership stays locally Done, and Imported Tour retains its independent Done appearance.
+
+The [phone journey](evidence/native-import-competing-values/competing-values-native-phone/boundary-validation.json) passes in 159.111 seconds; the [dark iPad journey](evidence/native-import-competing-values/competing-values-native-dark-tablet/boundary-validation.json) passes in 158.103 seconds. Both delivered exports are byte-identical at 17,815 bytes, SHA-256 `c8e744d917a32fb2c51284e8b2d3c7d12ac227756a26ac8dbe53167c0079a324`. Complete typed graph comparison retains duplicate detection and compares nested sequences exactly. The expected v1-to-v2 envelope and optional manual-estimate defaults are accounted for explicitly. Current B/F, all omitted owners/history and retained Museum-owned references remain; D/G is not admitted. The [export and source reconciliation](evidence/native-import-competing-values/native-platform-reconciliation.json) records the exact comparison.
+
+All eight original native captures are inspected. The dark iPad Item capture includes the actual embedded owned-coordinate map. The phone capture does not show that below-scroll map and provides no map-paint credit. Mobile duplicate title tiers/top spacing and the review's retained-deletion count remain visual polish observations; the exact export verifies that no new deletion occurs.
+
+The [matching Mac build-for-testing](evidence/native-import-competing-values/competing-values-final-mac-compiler/boundary-validation.json) passes in 12.557 seconds at the same 1,094 native inputs, with nine retained product hashes verified. This supplies compiler credit only. It changes no account/team signing setup and does not establish actual Mac UI or protected-storage access.
+
 ## Remaining gates
 
-Qualify the same affected functions on the iPhone Simulator and the representative native file review/apply/export workflow on phone/dark iPad. Extend the explicit competing-value workflow through older retained lineage before closing that part of Q149. Actual Mac interaction, automatic family synchronization/consolidation and physical account/CloudKit convergence retain their separate gates. No signing or account setup is performed for this checkpoint.
+Automatic restoration-family synchronization/consolidation, broader older-ancestor transformations, actual Mac interaction and physical account/CloudKit convergence retain their separate gates. Final whole-app polish remains open. This checkpoint covers the represented explicit manual Overwrite; it does not adopt competing versions or expose backup administration to agents.
