@@ -2,7 +2,7 @@
 
 ## Current frontier
 
-Q150 is pending. [Browser Return after association restoration](native-browser-restored-context-decision.md) distinguishes restoring an original public appearance through Undo from requiring its old internal lifetime. The fresh-Item-lifetime rule is already accepted; its native restoration journey can proceed independently. Signing is separate.
+Q150 is pending. [Browser Return after association restoration](native-browser-restored-context-decision.md) distinguishes restoring an original public appearance through Undo from requiring its old internal lifetime. The fresh-Item-lifetime rule is already accepted; its [native restoration checkpoint](prototypes/native-webpage-restored-source.md#final-local-checkpoint) now passes phone/dark-iPad journeys and matching Mac compilation. Signing is separate.
 
 Q149 A is accepted on 23 October 2026. The [approved contract](import-competing-candidate-values-contract-review.md) copies represented incoming values onto the current live owner without adopting competing history or changing Skip. The [qualified local checkpoint](prototypes/core-native-import-competing-values.md) passes eight real one/two-cycle lineage cases, twenty all-kind/recovery cases and matching 80-function/320-fixture Mac/iPhone cohorts. Phone/dark-iPad manual review/apply/export/relaunch journeys pass with byte-identical complete exports and matching Mac compilation. Actual Mac interaction, broader lineage/consolidation and physical convergence remain separate gates. Native narrow-toolbar compatibility work continues independently.
 

@@ -26,6 +26,8 @@ struct PlannerChangeObservationFixtureView: View {
                 .accessibilityIdentifier("fixture.writer.moveHotel")
               Button("Delete Hotel") { Task { await fixture.deleteHotel() } }
                 .accessibilityIdentifier("fixture.writer.deleteHotel")
+              Button("Delete and restore Hotel") { Task { await fixture.replaceHotelLifetime() } }
+                .accessibilityIdentifier("fixture.writer.restoreHotel")
               Button("Remove Hotel from Weekend") { Task { await fixture.removeHotelMembership() } }
                 .accessibilityIdentifier("fixture.writer.removeMembership")
               Button("Delete Weekend") { Task { await fixture.deleteWeekend() } }
@@ -216,6 +218,45 @@ private final class PlannerChangeObservationFixture {
 
   func deleteHotel() async {
     await deleteSource(source, name: "Hotel")
+  }
+
+  func replaceHotelLifetime() async {
+    guard
+      case .source(.item(let original)) = await writer.read(
+        session: session, request: .source(source)),
+      case .exported(let data) = await writer.exportData(session: session),
+      case .decoded(let backup) = writer.decodeImport(data),
+      case .reviewed(let deletion) = await writer.prepareReview(
+        session: session, command: .deleteSource(source: source))
+    else {
+      status = "Independent writer could not prepare Hotel replacement"
+      return
+    }
+    let deleted = await writer.execute(
+      .init(
+        operationId: UUID(), session: session, command: deletion.command,
+        reviewToken: deletion.reviewToken))
+    guard case .applied(_, .complete) = deleted.outcome,
+      case .reviewed(let restoration) = await writer.prepareReview(
+        session: session,
+        command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true))
+    else {
+      status = "Independent writer could not review Hotel restoration"
+      return
+    }
+    let restored = await writer.execute(
+      .init(
+        operationId: UUID(), session: session, command: restoration.command,
+        reviewToken: restoration.reviewToken))
+    guard case .applied(_, .complete) = restored.outcome,
+      case .source(.item(let current)) = await writer.read(
+        session: session, request: .source(source)),
+      current.source == original.source, current.sourceLifetimeId != original.sourceLifetimeId
+    else {
+      status = "Independent writer did not restore a fresh Hotel lifetime"
+      return
+    }
+    status = "Restored Hotel with a new lifetime"
   }
 
   func deleteWeekend() async {
