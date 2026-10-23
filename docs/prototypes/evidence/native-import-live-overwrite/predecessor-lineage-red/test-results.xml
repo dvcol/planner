@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000172125"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="1" skipped="0" time="0.228429375">
+        <testcase classname="PlannerCoreStoreTests.NativeImportLiveOverwriteTests" name="olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList(restorationCount:)" time="0.22806075">
+            <failure message="Issue recorded (error): Overwrite must target the restored live Item without restoring it: .failed(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: Optional(&quot;/sources/0/lifetimeId&quot;), message: &quot;Source-lifetime import reconciliation is not implemented yet.&quot;, details: nil))"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLiveOverwriteTests" name="olderOwnedLinksAndSchedulesNeedFreshRestorationAuthorization()" time="0.189822834"/>
+    </testsuite>
+</testsuites>

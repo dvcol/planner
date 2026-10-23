@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000159458"/>
+    <testsuite name="TestResults" errors="0" tests="6" failures="0" skipped="0" time="0.219458375">
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="malformedPortableLineageIsRejectedBeforeRecoverySelection(_:)" time="0.152777542"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:)" time="0.154685209"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData()" time="0.154719"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:)" time="0.219052"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing()" time="0.152838209"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt()" time="0.17151625"/>
+    </testsuite>
+</testsuites>

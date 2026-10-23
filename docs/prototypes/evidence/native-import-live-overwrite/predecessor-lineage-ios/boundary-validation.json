@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 1084,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 74,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 3,
+  "meaning": "Not accepted: all 74 functions report passing, but the missing-store test unlinks its live SQLite store and emits three lifetime diagnostics. No passing or cleanup credit."
+}

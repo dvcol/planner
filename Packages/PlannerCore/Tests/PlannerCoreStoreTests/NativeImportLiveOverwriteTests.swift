@@ -188,9 +188,10 @@ struct NativeImportLiveOverwriteTests {
     #expect(replayed == result && replayCheckpoint == checkpoint)
   }
 
-  @Test func olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList()
-    async throws
-  {
+  @Test(arguments: [1, 2])
+  func olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList(
+    restorationCount: Int
+  ) async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -215,23 +216,27 @@ struct NativeImportLiveOverwriteTests {
       .generated.first)
     guard case .exported(let originalData) = await planner.exportData(session: session),
       case .decoded(let original) = planner.decodeImport(originalData),
-      let originalItem = original.backup.items.first,
-      case .reviewed(let deletion) = await planner.prepareReview(
-        session: session, command: .deleteSource(source: item)),
-      case .applied(_, .complete) = await planner.execute(
-        .init(
-          operationId: UUID(), session: session, command: deletion.command,
-          reviewToken: deletion.reviewToken)
-      ).outcome,
-      case .reviewed(let restoration) = await planner.prepareReview(
-        session: session,
-        command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true)),
-      case .applied(_, .complete) = await planner.execute(
-        .init(
-          operationId: UUID(), session: session, command: restoration.command,
-          reviewToken: restoration.reviewToken)
-      ).outcome
+      let originalItem = original.backup.items.first
     else { throw CancellationError() }
+    for _ in 0..<restorationCount {
+      guard
+        case .reviewed(let deletion) = await planner.prepareReview(
+          session: session, command: .deleteSource(source: item)),
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: deletion.command,
+            reviewToken: deletion.reviewToken)
+        ).outcome,
+        case .reviewed(let restoration) = await planner.prepareReview(
+          session: session,
+          command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true)),
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: restoration.command,
+            reviewToken: restoration.reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+    }
     let list = try #require(
       try await save(.createList(content: .init(name: "Other"))).generated.first)
     _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))

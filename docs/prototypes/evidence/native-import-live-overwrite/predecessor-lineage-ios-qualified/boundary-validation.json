@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 1084,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 74,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Final matching 74-function iPhone cohort passes with safe missing-store recovery and retained predecessor-value lineage."
+}

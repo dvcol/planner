@@ -8,7 +8,6 @@ struct RecoveryProposalSelectionTests {
   @Test(arguments: ["emptyRestorationCandidates", "duplicateObservedChanges"])
   func malformedPortableLineageIsRejectedBeforeRecoverySelection(_ scenario: String) async throws {
     let fixture = try await PreparedNotesProposalFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let proposalURL = fixture.configuration.recoveryDirectoryURL
       .appendingPathComponent(fixture.namespace.namespaceId.uuidString)
       .appendingPathComponent("proposal-\(fixture.proposal.proposalId.uuidString).json")
@@ -76,7 +75,6 @@ struct RecoveryProposalSelectionTests {
     includeRestorationFamily: Bool
   ) async throws {
     let fixture = try await PreparedNotesProposalFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let proposalURL = fixture.configuration.recoveryDirectoryURL
       .appendingPathComponent(fixture.namespace.namespaceId.uuidString)
       .appendingPathComponent("proposal-\(fixture.proposal.proposalId.uuidString).json")
@@ -136,8 +134,7 @@ struct RecoveryProposalSelectionTests {
   func selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -245,7 +242,6 @@ struct RecoveryProposalSelectionTests {
     async throws
   {
     let fixture = try await PreparedNotesProposalFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let namespaceDirectory = fixture.configuration.recoveryDirectoryURL
       .appendingPathComponent(fixture.namespace.namespaceId.uuidString)
     let proposalURL =
@@ -354,7 +350,6 @@ struct RecoveryProposalSelectionTests {
     async throws
   {
     let fixture = try await PreparedNotesProposalFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let separateConfiguration = PlannerStorageConfiguration(
       storeURL: fixture.directory.appendingPathComponent("separate-store/Planner.sqlite"),
       controlURL: fixture.directory.appendingPathComponent("separate-control/writer"),
@@ -389,10 +384,21 @@ struct RecoveryProposalSelectionTests {
 
   @Test func preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() async throws {
     let fixture = try await PreparedNotesProposalFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
-    try FileManager.default.removeItem(
-      at: fixture.configuration.storeURL.deletingLastPathComponent())
-    let reopened = Planner(configuration: fixture.configuration)
+    let missingStoreDirectory = try makePlannerStoreFixtureDirectory()
+    try FileManager.default.createDirectory(
+      at: missingStoreDirectory, withIntermediateDirectories: true)
+    let missingStoreConfiguration = PlannerStorageConfiguration(
+      storeURL: missingStoreDirectory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: missingStoreDirectory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: missingStoreDirectory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    try FileManager.default.copyItem(
+      at: fixture.configuration.controlURL.deletingLastPathComponent(),
+      to: missingStoreConfiguration.controlURL.deletingLastPathComponent())
+    try FileManager.default.copyItem(
+      at: fixture.configuration.recoveryDirectoryURL,
+      to: missingStoreConfiguration.recoveryDirectoryURL)
+    let reopened = Planner(configuration: missingStoreConfiguration)
     guard case .unavailable = await reopened.bootstrap(),
       case .selected(let selection) = await reopened.inspectRecovery(
         request: .proposal(
@@ -407,7 +413,8 @@ struct RecoveryProposalSelectionTests {
     #expect(selection.decodedBackup.backup.items.first?.content.notes == "Monday booking")
     #expect(acknowledged.portableData == fixture.acknowledged.portableData)
     #expect(acknowledged.decodedBackup.backup.items.first?.content.notes == "Original notes")
-    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: missingStoreConfiguration.storeURL.path))
+    #expect(FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
   }
 }
 
@@ -423,7 +430,7 @@ private struct PreparedNotesProposalFixture {
   let acknowledged: PlannerRecoverySelection
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

@@ -356,12 +356,10 @@ func plannerResolveImportReview(
     for source in incoming.backup.sources {
       guard let actual = currentSources[source.importBinding.reference],
         actual.lifetimeId != source.importBinding.lifetimeId,
-        currentGraph.isClosed(source.importIdentity),
-        current.backup.restorationFamilies.contains(where: { family in
-          family.predecessor == source.importIdentity
-            && family.candidates.contains { $0.lifetimeId == actual.lifetimeId }
-            && !current.backup.deletionMarkers.contains { $0.closedFamilyId == family.familyId }
-        })
+        currentGraph.authorizesPredecessorValues(
+          source.importIdentity,
+          for: .init(
+            kind: source.importIdentity.kind, id: actual.id, lifetimeId: actual.lifetimeId))
       else { continue }
       replacementSourceLifetimes[source.importBinding] = actual.lifetimeId
       resolvedSourceLifetimes[source.importBinding] = actual.lifetimeId
