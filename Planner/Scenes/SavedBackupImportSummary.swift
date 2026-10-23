@@ -88,6 +88,9 @@ struct SavedBackupImportSummary: View {
             Text(entry.owner.kind.rawValue.capitalized).font(.caption).foregroundStyle(.secondary)
           }
         }
+        .accessibilityIdentifier(
+          "saved.import.entry.\(identifier).\(entry.owner.kind.rawValue).\(entry.owner.id.uuidString)"
+        )
       }
     }
   }
@@ -230,7 +233,8 @@ struct SavedBackupImportSummary: View {
   private func reasonDescription(_ reason: String?) -> String? {
     switch reason {
     case "matchingRecordConflict": "Keep the current record and its complete contents."
-    case "deletedDependency": "A required record was deleted, so this dependent record is skipped."
+    case "deletedDependency":
+      "A required record is unavailable in this import, so this dependent record is skipped."
     case "deletedSource": "Previously deleted data is not restored by this import."
     case "omittedOwner": "The backup omits the owner, so its partial contents are skipped."
     case "unchanged": "The represented record matches the current data."

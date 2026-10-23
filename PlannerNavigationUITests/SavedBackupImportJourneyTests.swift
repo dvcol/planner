@@ -613,6 +613,90 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         application, name: "Full graph Itinerary keeps its independent three appearances")
     }
 
+    func testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner approved current family.json", application: application)
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      selectBackup("Planner unknown candidate.json", application: application)
+      let additions = application.staticTexts["saved.import.summary.additions"]
+      revealImportElement(additions, application: application)
+      XCTAssertEqual(additions.label, "Additions, 1")
+      let conflicts = application.staticTexts["saved.import.summary.conflicts"]
+      revealImportElement(conflicts, application: application)
+      XCTAssertEqual(conflicts.label, "Skipped conflicts, 1")
+      let dependents = application.staticTexts["saved.import.summary.dependents"]
+      revealImportElement(dependents, application: application)
+      XCTAssertEqual(dependents.label, "Skipped dependents, 2")
+      let tour = application.plannerElement(
+        "saved.import.entry.dependents.list.00000000-0000-4000-8000-000000000277")
+      revealImportElement(tour, application: application)
+      for _ in 0..<4 {
+        if tour.frame.maxY < application.windows.firstMatch.frame.maxY - 100 { break }
+        application.collectionViews["saved.import.form"].swipeUp(velocity: .slow)
+      }
+      tour.activateForPlannerJourney()
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Approved import dependency hierarchy"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      recordImport(
+        application, name: "Approved import Skip explains unavailable candidate dependencies")
+      let explanation = application.staticTexts[
+        "A required record is unavailable in this import, so this dependent record is skipped."]
+      revealImportElement(explanation, application: application)
+      XCTAssertTrue(explanation.exists)
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      let skipped = XCTAttachment(string: exportBackup(application))
+      skipped.name = "Approved import Skip delivered backup filename"
+      skipped.lifetime = .keepAlways
+      add(skipped)
+      selectBackup("Planner closed predecessor.json", application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      let replacements = application.staticTexts["saved.import.summary.replacements"]
+      revealImportElement(replacements, application: application)
+      XCTAssertEqual(replacements.label, "Replacements, 1")
+      recordImport(application, name: "Approved import Overwrite reviews the current live owner")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      let overwritten = XCTAttachment(string: exportBackup(application))
+      overwritten.name = "Approved import Overwrite delivered backup filename"
+      overwritten.lifetime = .keepAlways
+      add(overwritten)
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      recordImport(application, name: "Approved import restored values survive relaunch")
+      application.openPlannerSection("Lists")
+      openImportedCatalogRow(
+        application.savedPlannerListRow("Tokyo Food"), application: application)
+      let filters = application.plannerElement("saved.list.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: filters)
+      XCTAssertTrue(application.staticTexts["2 of 2 items finished"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000401"
+        )
+        .waitForPlannerValue("Completed"))
+      recordImport(
+        application, name: "Approved import preserves the omitted List and local completion")
+    }
+
     func testFullGraphSkipPreservesCurrentOwnersAndOverwriteReplacesScopedState() {
       continueAfterFailure = false
       let application = XCUIApplication()
