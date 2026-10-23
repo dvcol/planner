@@ -1,6 +1,6 @@
 # Older-backup Overwrite after restoration
 
-Status: Q128 A is accepted on 23 October 2026. Apply represented older values to the current live lifetime, preserving current references. Separately authorize closed owned data. The concrete literal contract still needs review before tests and implementation; the current guard remains until then.
+Status: Q128 A is accepted on 23 October 2026. Q147 A now approves the concrete literal contract for implementation. Apply represented older values to the current live lifetime, preserving current references. Separately authorize closed owned data. Implementation and qualification remain required.
 
 ## Context and starting state
 
@@ -43,4 +43,4 @@ For B, review and approve the family and cross-owner reference contract first, t
 
 Every choice still requires affected import/deletion/lineage regressions, native presentation checks and platform compilation. Physical convergence, signing and final whole-app acceptance remain separate gates.
 
-Q128 A settles the behavior choice. The agreed workflow still requires review of its concrete literal graph and before/after contract before dependent tests and implementation. Known-family binding work proceeds under the already accepted A20 rule.
+Q128 A settles the behavior choice. Q147 A approves its concrete literal graph and before/after contract. Dependent tests and implementation may proceed through the existing public real-storage seams. Known-family binding work retains the already accepted A20 rule.

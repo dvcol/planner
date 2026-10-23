@@ -1,6 +1,6 @@
 # Older-backup live Overwrite contract
 
-Status: concrete review for accepted Q128 A. The policy is settled; this document specifies the transformations and observable results before their tests and implementation. Q129's Skip contract is separate.
+Status: Q147 A approved on 23 October 2026, following Q128 A. The concrete transformations and observable results below are accepted for implementation through the existing public real-storage boundaries. Implementation and qualification remain required. Q148's Skip contract is separate.
 
 ## Existing interfaces and scope
 
