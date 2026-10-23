@@ -315,7 +315,24 @@ func plannerResolveImportReview(
         .init(kind: kind, id: actual.id, lifetimeId: candidate.lifetimeId)] = actual.lifetimeId
     }
   }
-  let resolvedIncoming = incoming.backup.resolvingImportSourceLifetimes(resolvedSourceLifetimes)
+  var replacementSourceLifetimes: [PlannerBoundSource: UUID] = [:]
+  if mode == .overwrite {
+    for source in incoming.backup.sources {
+      guard let actual = currentSources[source.importBinding.reference],
+        actual.lifetimeId != source.importBinding.lifetimeId,
+        currentGraph.isClosed(source.importIdentity),
+        current.backup.restorationFamilies.contains(where: { family in
+          family.predecessor == source.importIdentity
+            && family.candidates.contains { $0.lifetimeId == actual.lifetimeId }
+            && !current.backup.deletionMarkers.contains { $0.closedFamilyId == family.familyId }
+        })
+      else { continue }
+      replacementSourceLifetimes[source.importBinding] = actual.lifetimeId
+      resolvedSourceLifetimes[source.importBinding] = actual.lifetimeId
+    }
+  }
+  let resolvedIncoming = incoming.backup.resolvingImportSourceLifetimes(
+    resolvedSourceLifetimes, replacingSources: replacementSourceLifetimes)
   let projection = try PlannerImportProjection(backup: resolvedIncoming)
   let currentProjection = try PlannerImportProjection(backup: current.backup)
   let deletedSources = Set(
@@ -383,7 +400,7 @@ func plannerResolveImportReview(
   var restorations: [PlannerImportEntry] = []
   var changes: [PlannerImportReferenceChange] = []
   var globalFlagsChanged = false
-  for (index, source) in incoming.backup.sources.enumerated() {
+  for (index, source) in resolvedIncoming.sources.enumerated() {
     let references = projection.ownedReferences[source.importBinding.reference] ?? []
     let propertyPaths =
       ["/sources/\(index)"] + references.map(\.propertyPath)
@@ -668,15 +685,18 @@ func plannerResolveImportReview(
 }
 
 extension PlannerPortableBackup {
-  fileprivate func resolvingImportSourceLifetimes(_ lifetimes: [PlannerBoundSource: UUID])
-    -> PlannerPortableBackup
-  {
+  fileprivate func resolvingImportSourceLifetimes(
+    _ lifetimes: [PlannerBoundSource: UUID], replacingSources: [PlannerBoundSource: UUID]
+  ) -> PlannerPortableBackup {
     guard !lifetimes.isEmpty else { return self }
     func lifetime(_ source: PlannerEntityReference, _ original: UUID) -> UUID {
       lifetimes[.init(kind: source.kind, id: source.id, lifetimeId: original)] ?? original
     }
     return .init(
-      sources: sources,
+      sources: sources.map { source in
+        guard let lifetimeIdentifier = replacingSources[source.importBinding] else { return source }
+        return source.replacingImportLifetime(lifetimeIdentifier)
+      },
       labelAssociations: labelAssociations.map {
         .init(
           id: $0.id, lifetimeId: $0.lifetimeId, owner: $0.owner,
