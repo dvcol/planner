@@ -34,6 +34,8 @@ All eight original native captures are inspected. The dark iPad Item capture inc
 
 The [matching Mac build-for-testing](evidence/native-import-competing-values/competing-values-final-mac-compiler/boundary-validation.json) passes in 12.557 seconds at the same 1,094 native inputs, with nine retained product hashes verified. This supplies compiler credit only. It changes no account/team signing setup and does not establish actual Mac UI or protected-storage access.
 
+The [input cleanup report](evidence/native-import-competing-values/native-inputs/input-cleanup-report.json) verifies removal of the four staged Simulator import-input copies after exact size/hash and open-handle checks. This removes 42,888 nominal bytes. Delivered exports, source fixtures and Planner datasets remain; no equal APFS free-space change is claimed.
+
 ## Remaining gates
 
 Automatic restoration-family synchronization/consolidation, broader older-ancestor transformations, actual Mac interaction and physical account/CloudKit convergence retain their separate gates. Final whole-app polish remains open. This checkpoint covers the represented explicit manual Overwrite; it does not adopt competing versions or expose backup administration to agents.
