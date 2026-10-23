@@ -1,0 +1,21 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.471,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "freshOwnerRestoresExactOwnedReferencesButRejectsForeignCandidates(referenceKind:hasForeignReferenceCandidate:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalOwnedTests",
+      "seconds": 0.279178667,
+      "failures": [
+        "Issue recorded (error): Retain exact saved labelAssociation lifetimes on reimport: PlannerOperationResult(operationId: FF21B63B-C9DD-4B0D-B866-6D72F1420E30, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Rebinding reference or history identities still needs closure reconciliation.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain exact saved schedule lifetimes on reimport: PlannerOperationResult(operationId: 034AE655-CB2C-478D-90FE-209AAB35755E, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Rebinding reference or history identities still needs closure reconciliation.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain exact saved ownedLink lifetimes on reimport: PlannerOperationResult(operationId: 07B87DEA-F34A-46E1-8B55-843EAB77A346, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Rebinding reference or history identities still needs closure reconciliation.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

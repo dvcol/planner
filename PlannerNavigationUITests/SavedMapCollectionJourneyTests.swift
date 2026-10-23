@@ -469,10 +469,18 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           XCUIDevice.shared.orientation = orientation
           let settled = NSPredicate { _, _ in
             let windowFrame = application.windows.firstMatch.frame
-            if orientation == .portrait {
-              return windowFrame.height > windowFrame.width && pin.isHittable
+            if orientation == .portrait, windowFrame.height <= windowFrame.width { return false }
+            if orientation != .portrait, windowFrame.width <= windowFrame.height { return false }
+            guard pin.exists, pin.isHittable else { return false }
+            let mapFrame = map.frame
+            let pinFrame = pin.frame
+            let summary = application.scrollViews["saved.map.summary"]
+            var visibleTop = mapFrame.minY
+            if summary.exists {
+              visibleTop = max(visibleTop, summary.frame.maxY)
             }
-            return windowFrame.width > windowFrame.height && pin.isHittable
+            return pinFrame.minY >= visibleTop - 1 && pinFrame.maxY <= mapFrame.maxY + 1
+              && pinFrame.minX >= mapFrame.minX - 1 && pinFrame.maxX <= mapFrame.maxX + 1
           }
           let result = XCTWaiter.wait(
             for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
@@ -495,9 +503,11 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           let locations = application.plannerElement("saved.map.locations")
           let windowFrame = application.windows.firstMatch.frame
           let mapFrame = map.frame
+          let summary = application.scrollViews["saved.map.summary"]
+          let summaryFrame = summary.exists ? summary.frame : CGRect.null
           let geometry = XCTAttachment(
             string:
-              "window=\(windowFrame)\nmap=\(mapFrame)\npin=\(pin.frame)\nlocations=\(locations.frame)\nlink=\(savedLink.frame)"
+              "window=\(windowFrame)\nmap=\(mapFrame)\nsummary=\(summaryFrame)\npin=\(pin.frame)\nlocations=\(locations.frame)\nlink=\(savedLink.frame)"
           )
           geometry.name = "Collection Map \(context) navigation frames in \(orientationName)"
           geometry.lifetime = .keepAlways

@@ -1,0 +1,20 @@
+{
+  "recording": "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-resize/1E3994B0-5B06-44C2-A8BA-FA526F468E56.mp4",
+  "recordingSha256": "937ef1aef47eef0ca0a8951883a56c11b8ffc1e9bf1eed426fb9630727ab6ec6",
+  "frame": "native-compass-probe-frame.png",
+  "frameSha256": "d84c348f98c71be609a49933f94bca65eb8cdee78e6f23cd4ad185a0ca3d23b2",
+  "command": [
+    "ffmpeg",
+    "-sseof",
+    "-5",
+    "-i",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-resize/1E3994B0-5B06-44C2-A8BA-FA526F468E56.mp4",
+    "-frames:v",
+    "1",
+    "-update",
+    "1",
+    "-y",
+    "/private/tmp/PlannerMapCompassFailure.png"
+  ],
+  "observation": "The visible native compass is present after the rotation gesture; the test query by attached SwiftUI accessibility identifier does not find a hittable control. Native hierarchy qualification remains open."
+}

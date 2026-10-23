@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.7833e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="3" skipped="0" time="0.279483209">
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalOwnedTests" name="freshOwnerRestoresExactOwnedReferencesButRejectsForeignCandidates(referenceKind:hasForeignReferenceCandidate:)" time="0.279178667">
+            <failure message="Issue recorded (error): Retain exact saved labelAssociation lifetimes on reimport: PlannerOperationResult(operationId: FF21B63B-C9DD-4B0D-B866-6D72F1420E30, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: nil, message: &quot;Rebinding reference or history identities still needs closure reconciliation.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+            <failure message="Issue recorded (error): Retain exact saved schedule lifetimes on reimport: PlannerOperationResult(operationId: 034AE655-CB2C-478D-90FE-209AAB35755E, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: nil, message: &quot;Rebinding reference or history identities still needs closure reconciliation.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+            <failure message="Issue recorded (error): Retain exact saved ownedLink lifetimes on reimport: PlannerOperationResult(operationId: 07B87DEA-F34A-46E1-8B55-843EAB77A346, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: nil, message: &quot;Rebinding reference or history identities still needs closure reconciliation.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

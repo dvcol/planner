@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000185959"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="3" skipped="0" time="0.46621175">
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalOwnedTests" name="freshOwnerRestoresExactOwnedReferencesButRejectsForeignCandidates(referenceKind:hasForeignReferenceCandidate:)" time="0.4655735">
+            <failure message="Caught error: CancellationError() (error)"/>
+            <failure message="Caught error: CancellationError() (error)"/>
+            <failure message="Caught error: CancellationError() (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

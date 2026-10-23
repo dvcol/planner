@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-repeated-branch-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-repeated-branch-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "039133D0-01DC-4677-A2EA-34B5531B177D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored direct itinerary reader returns to current content and original local Done_0_7AEF7F34-610D-4FB4-B8AF-416E48D38BFB.png",
+      "timestamp": 1792754202.573,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredDirectItineraryAppearanceReturnsToItsOriginalLocalState()",
+      "retainedFileName": "039133D0-01DC-4677-A2EA-34B5531B177D.png",
+      "originalSha256": "44c88d56d1202716796af9ead91f689602f5c25bd5b5561c1a26006253e5e50e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E5B9B099-4721-47FD-BB45-7A6737BEF196.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored repeated List reader returns to exact branch completion_0_5F29665E-B836-4241-A232-3411CC9B437A.png",
+      "timestamp": 1792754275.092,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredRepeatedListBranchReturnsToItsExactLocalState()",
+      "retainedFileName": "E5B9B099-4721-47FD-BB45-7A6737BEF196.png",
+      "originalSha256": "7759c5aca8b35670824babda8336522d93d2fa7ac7f328d40e10936ccebe585b"
+    }
+  ],
+  "videoPublished": false
+}

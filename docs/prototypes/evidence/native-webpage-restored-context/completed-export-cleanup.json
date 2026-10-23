@@ -1,0 +1,224 @@
+{
+  "scope": "Completed duplicate xcresult attachment exports only; original results, retained captures, products, sources and all datasets preserved.",
+  "candidates": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-phone-regressions",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-contexts-phone-regressions.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-contexts-phone-regressions",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 1667266,
+      "exportManifestSha256": "a0bb4b9d90a0f91188f1996c84590e9b81540ce7f1e372a94ef568c45bcad64a"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-direct-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-direct-dark-tablet",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 829378,
+      "exportManifestSha256": "a56b60f85f3de2ef10f6f7f799724997183b1f917842a3f93d8c30536a279840"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-direct-phone.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-direct-phone",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 3016726,
+      "exportManifestSha256": "505ef8742352fb1ef9ddb7d610998c10742a3df89fd26c2cb5be4fbd597f4edb"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-phone-visible-branch",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-direct-phone-visible-branch.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-direct-phone-visible-branch",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 878644,
+      "exportManifestSha256": "66d999402f938b412348ec9534f14c793d4501362518d0f0edb5fa801a274e0e"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-membership-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-membership-dark-tablet",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 975011,
+      "exportManifestSha256": "a7254170f65844a3b5303526b882b1c9469dc919a6ad9e035eaa7c0274aab8ab"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-membership-phone.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-membership-phone",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 470487,
+      "exportManifestSha256": "856b67309540914c1bfc68f616532aab446e348ad7cea3dbf9120b2d73b114bf"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-form-scroll",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-membership-phone-form-scroll.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-membership-phone-form-scroll",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 29507934,
+      "exportManifestSha256": "4fb23e6242c684ddb9fbbba1a6e5569e208710a909d350fe0d8984a0f3a73217"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-qualified",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-membership-phone-qualified.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-membership-phone-qualified",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 1240441,
+      "exportManifestSha256": "4be70c77dc36bd93ab43df04d667e501f5e1616919697e7745e51d9dab129b0c"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-ready-form",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-membership-phone-ready-form.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-membership-phone-ready-form",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 48012676,
+      "exportManifestSha256": "cd82b3aa969169326901f47a457c9effd00cbd4dd16f4bab0d8458c1cd139054"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-visible",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-membership-phone-visible.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-membership-phone-visible",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 76521496,
+      "exportManifestSha256": "249a69b6765328fd0b661d279369a48c048a1068ed841bde13a187977b9e01d1"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-summary-and-branches",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-phone-summary-and-branches.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-phone-summary-and-branches",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 3798726,
+      "exportManifestSha256": "c756d1bd01381356e85f3e7fe83ae0467718496949b8c5f868b6592551a6acb1"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-accessible-viewport-qualified",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-accessible-viewport-qualified.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-accessible-viewport-qualified",
+      "selectedAttachmentsVerified": 14,
+      "nominalBytes": 15771521,
+      "exportManifestSha256": "4ee8a659e821aa4e9a652372820dd70abc1edcba328d176419717733e39df174"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-compact-map-footer",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-compact-map-footer.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-compact-map-footer",
+      "selectedAttachmentsVerified": 6,
+      "nominalBytes": 213758636,
+      "exportManifestSha256": "6334a7e92b33532115b4e24a934c5a2d4dd0770bfa4a892bf9899dec5aaa651b"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-detail-scroll-diagnostic",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-detail-scroll-diagnostic.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-detail-scroll-diagnostic",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 84238698,
+      "exportManifestSha256": "be350472390bc6e6a275926e26c785a04ad2c5ab7c920a2452edc780d5248f80"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-native-summary-inset",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-native-summary-inset.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-native-summary-inset",
+      "selectedAttachmentsVerified": 7,
+      "nominalBytes": 118367585,
+      "exportManifestSha256": "d89aace9233f680d77a11c7375db58b2681e4b420b44cc534a9888793ccac166"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-natural-branch-scroll",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-natural-branch-scroll.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-natural-branch-scroll",
+      "selectedAttachmentsVerified": 3,
+      "nominalBytes": 120389074,
+      "exportManifestSha256": "4cf152fd720c8e0d207eb4f4204b630da3d2b7e3eb0184e3863df9c8fa7f64e2"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-resize-camera-probe",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-resize-camera-probe.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-resize-camera-probe",
+      "selectedAttachmentsVerified": 3,
+      "nominalBytes": 98459674,
+      "exportManifestSha256": "0bb91f97fdcd54c8f5b42776a562045ecfb4279663ceb6c041fa453971a14457"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-rotation-title-tap-red",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-rotation-title-tap-red.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-rotation-title-tap-red",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 2628589,
+      "exportManifestSha256": "b1d8ddce6df24d168771075fdf4c87a3220144006334d1738f7751a1cf777af9"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-rotation-tracer-red",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-rotation-tracer-red.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-rotation-tracer-red",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 7918390,
+      "exportManifestSha256": "9ed3ce7fe2399d855098ae4588871801999fa387739c9a54822e72877889f007"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-and-branches",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-summary-and-branches.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-summary-and-branches",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 167419438,
+      "exportManifestSha256": "7a04a1d61938d8fe526ae67205c24845aec471ba3e7959277e49d2b0bece8aba"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-rotation-tracer",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-summary-rotation-tracer.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-summary-rotation-tracer",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 2898501,
+      "exportManifestSha256": "47b9779acde55572292367690594cb0f57c5ec9d2002554a18f4c375eb54768d"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-whole-marker-red",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-whole-marker-red.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-whole-marker-red",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 7611818,
+      "exportManifestSha256": "4a46687132046b79829987d606adced58c28c40eb7483799bd1fd6ecb9fae3b4"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-whole-marker-settled",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-toolbar-tablet-whole-marker-settled.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-toolbar-tablet-whole-marker-settled",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 2890194,
+      "exportManifestSha256": "872c4253f5bc1c252d687b8af79b2686766d07bf8b4a3b97348c70e87ce8b04b"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-list-flowing-summary-tablet-regression",
+      "originalResult": "/private/tmp/PlannerItemWindow-list-flowing-summary-tablet-regression.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/list-flowing-summary-tablet-regression",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 512314,
+      "exportManifestSha256": "0310df3fbcf11d86acf72055a192d23776ec061dbddd5eefc6942a8e78346403"
+    }
+  ],
+  "removedDirectories": [
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-phone-regressions",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-dark-tablet",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-phone-visible-branch",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-dark-tablet",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-form-scroll",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-qualified",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-ready-form",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-membership-phone-visible",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-phone-summary-and-branches",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-accessible-viewport-qualified",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-compact-map-footer",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-detail-scroll-diagnostic",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-native-summary-inset",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-natural-branch-scroll",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-resize-camera-probe",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-rotation-title-tap-red",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-rotation-tracer-red",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-and-branches",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-summary-rotation-tracer",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-whole-marker-red",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-toolbar-tablet-whole-marker-settled",
+    "/private/tmp/PlannerApprovedAdminAttachments-list-flowing-summary-tablet-regression"
+  ],
+  "nominalBytes": 1009783217
+}

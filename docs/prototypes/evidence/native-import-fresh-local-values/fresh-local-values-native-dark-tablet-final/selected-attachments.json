@@ -1,0 +1,147 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-fresh-local-values-native-dark-tablet-final.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-dark-tablet-final"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "27F5FA5D-2FEA-4178-A2AE-8A890CB16D53.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Relaunched delivered backup filename_0_EF2C33B2-C617-400B-A607-DD04574D0A04.txt",
+      "timestamp": 1792758396.034,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "27F5FA5D-2FEA-4178-A2AE-8A890CB16D53.txt.gz",
+      "originalSha256": "cf31e3557272cf29cd01fd17e48aaf9277b06d377c2f25ef0b285b5d32291286"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "7075FF3D-65A4-4738-A30B-4F769471DDE4.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import keeps global Todo independent from Tour_0_73E022A5-424B-4DBB-B1B6-881E1640BB85.png",
+      "timestamp": 1792758373.523,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "7075FF3D-65A4-4738-A30B-4F769471DDE4.png",
+      "originalSha256": "603abf048bc6fc76fedc9bd6883906fda5824273e94ff1be5b6b19a00312e861"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "58C11B20-4D98-436E-88DA-2B52CE88D5ED.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import retains Tour and local Done after relaunch_0_65F36C32-25C8-465C-980B-F957B5813C13.png",
+      "timestamp": 1792758342.696,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "58C11B20-4D98-436E-88DA-2B52CE88D5ED.png",
+      "originalSha256": "cfb0c4e2049d487a1a7007879ffcdf03aea7ee2d6012f0f042a62dc154ef72ea"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E7089D78-7B18-4572-ACC0-F5FDEB78A8E4.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Repeated delivered backup filename_0_EED1A665-D89F-4AF0-9FA2-9728496FE169.txt",
+      "timestamp": 1792758299.292,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "E7089D78-7B18-4572-ACC0-F5FDEB78A8E4.txt.gz",
+      "originalSha256": "f2527e3a671b0b641a65b3ef2da03efc22de3a0d8dea063e34f4f6dab94558cc"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "34286D67-CE1C-4ABE-AC71-1063AA49DCE8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Repeated explicitly reviews restoration_0_C47AEBAF-9B67-419B-B00F-31F9242CFAFE.png",
+      "timestamp": 1792758286.265,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "34286D67-CE1C-4ABE-AC71-1063AA49DCE8.png",
+      "originalSha256": "765852e4537f8145e9677854c2a539d7ad5cdc7ca9e8370806293e3c9b19d6b3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8D2FB727-2555-4DA2-82CE-89E770C01FC2.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Restored delivered backup filename_0_03E77A54-7DE3-43C0-BBDC-04F10BA259CA.txt",
+      "timestamp": 1792758246.602,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "8D2FB727-2555-4DA2-82CE-89E770C01FC2.txt.gz",
+      "originalSha256": "3a57df64b0e0764e28909e9977e42b80bdb3b3f27a887a39f2f6a2ded2c4597c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "559D0999-CFE7-4D4A-9EE6-026D9BB8C28E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Restored explicitly reviews restoration_0_88464C17-AB6C-427E-9AE5-BF62D3D5A5BB.png",
+      "timestamp": 1792758233.181,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "559D0999-CFE7-4D4A-9EE6-026D9BB8C28E.png",
+      "originalSha256": "1469d7200c3e4d5b69cac32f23ef89d851ec6964afe989bf14fa73a9bafbe881"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "7517B459-F2B9-4817-96CA-86106765C501.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Denied delivered backup filename_0_8716035C-180C-4DFF-8366-33371C86D539.txt",
+      "timestamp": 1792758192.978,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "7517B459-F2B9-4817-96CA-86106765C501.txt.gz",
+      "originalSha256": "77ed660adb72c466afc5ec1b603c01bc1d06ef7d9761892d73f266146dccf6f9"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "CFDE18EC-548A-45D8-8531-FF4B58292D90.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import refuses unreviewed restoration_0_065E673B-7C3B-4861-AF44-06893FF826ED.png",
+      "timestamp": 1792758180.876,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "CFDE18EC-548A-45D8-8531-FF4B58292D90.png",
+      "originalSha256": "6cc83378aed0631207af0c7b4f5769ef71255dc3fe769c5c5c6d603b942c82e8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "608C877A-61EC-466F-ACB2-6A9DFF83D684.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Skip delivered backup filename_0_578D0BD7-A455-4D5D-8572-1D6E5CC6B6B3.txt",
+      "timestamp": 1792758141.682,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "608C877A-61EC-466F-ACB2-6A9DFF83D684.txt.gz",
+      "originalSha256": "c9b0c7e9957c9a90f9af020a884bd4f367314076ab6ce5b274808c040b0bbb3e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8FC22800-73DB-4F31-BE94-4681C8575A59.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Skip preserves deletion and skips Tour_0_061C02CF-69EA-413D-ABC0-24BA4A0E5683.png",
+      "timestamp": 1792758127.984,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "8FC22800-73DB-4F31-BE94-4681C8575A59.png",
+      "originalSha256": "08759ee243342d5eb7694999da69a9b84f65bdb511c0978316d25c40f35ba4ef"
+    }
+  ],
+  "videoPublished": false
+}

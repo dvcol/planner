@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerFreshLocalValuesOwnedTabletCore.xcresult",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerFreshLocalValuesOwnedTabletCore.xcresult",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,17 @@
+[
+  "xcrun",
+  "swift",
+  "format",
+  "lint",
+  "--strict",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalOwnedTests.swift",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportPredecessorItineraryHistoryTests.swift",
+  "Planner/Scenes/SavedPlannerView.swift",
+  "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+  "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+  "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+  "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+  "PlannerNavigationUITests/NativeNavigationElements.swift",
+  "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+]

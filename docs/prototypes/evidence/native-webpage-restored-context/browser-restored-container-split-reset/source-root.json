@@ -1,0 +1,14 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "60343cfc6631be2aff66d93756f06aa812a6840e",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalOwnedTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportPredecessorItineraryHistoryTests.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift"
+  ]
+}

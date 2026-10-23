@@ -1,0 +1,113 @@
+{
+  "core": [
+    {
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-contexts-affected-mac",
+      "inputs": 765,
+      "functions": 83,
+      "fixtures": 352,
+      "sqliteUnlinkWarnings": 0
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-contexts-affected-tablet",
+      "inputs": 765,
+      "functions": 83,
+      "fixtures": 352,
+      "sqliteUnlinkWarnings": 0
+    }
+  ],
+  "nativeCurrent": [
+    {
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-observed-camera-live-refresh-qualified",
+      "inputs": 1102,
+      "passedTests": 2,
+      "products": 4
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-phone-regressions",
+      "inputs": 1102,
+      "passedTests": 2,
+      "products": 4
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-repeated-tablet",
+      "inputs": 1102,
+      "passedTests": 1,
+      "products": 4
+    }
+  ],
+  "macCompiler": [
+    {
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-mac-compiler",
+      "inputs": 1102,
+      "products": 9,
+      "runtimeCredit": false
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-mac-fixture-compiler",
+      "inputs": 1102,
+      "products": 5,
+      "runtimeCredit": false
+    }
+  ],
+  "manualImports": [
+    {
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-phone-root-export",
+      "completeGraphComparisons": 5,
+      "restoredRepeatedRelaunchedByteIdentical": true
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-dark-tablet-final",
+      "completeGraphComparisons": 5,
+      "restoredRepeatedRelaunchedByteIdentical": true
+    }
+  ],
+  "earlierNativeSourceDeltas": [
+    {
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-phone-root-export",
+      "changedPaths": [
+        "Planner/Scenes/SavedMapCollectionView.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift"
+      ],
+      "explanation": "Later production changes are Map projection/camera refresh. UI-test differences include camera/marker checks, wide-layout browser setup and manual import relaunch-export ordering. Core restoration and represented browser Return production remain unchanged; each original execution keeps its captured test source."
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-dark-tablet-final",
+      "changedPaths": [
+        "Planner/Scenes/SavedMapCollectionView.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+        "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+      ],
+      "explanation": "Later production changes are Map projection/camera refresh. UI-test differences include camera/marker checks, wide-layout browser setup and manual import relaunch-export ordering. Core restoration and represented browser Return production remain unchanged; each original execution keeps its captured test source."
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-contexts-phone-final",
+      "changedPaths": [
+        "Planner/Scenes/SavedMapCollectionView.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+        "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+        "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+      ],
+      "explanation": "Later production changes are Map projection/camera refresh. UI-test differences include camera/marker checks, wide-layout browser setup and manual import relaunch-export ordering. Core restoration and represented browser Return production remain unchanged; each original execution keeps its captured test source."
+    },
+    {
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-entries-dark-tablet-final",
+      "changedPaths": [
+        "Planner/Scenes/SavedMapCollectionView.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+        "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+        "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+      ],
+      "explanation": "Later production changes are Map projection/camera refresh. UI-test differences include camera/marker checks, wide-layout browser setup and manual import relaunch-export ordering. Core restoration and represented browser Return production remain unchanged; each original execution keeps its captured test source."
+    }
+  ],
+  "limitations": [
+    "No actual Mac UI, protected signing, physical convergence or complete whole-app polish credit."
+  ],
+  "strictFormatSwiftFileCount": 12
+}

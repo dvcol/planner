@@ -1,0 +1,20 @@
+{
+  "inputCount": 1102,
+  "matchingCoreInputCount": 765,
+  "workspaceDifferences": [],
+  "stagedDifferences": [],
+  "productCount": 2,
+  "productDifferences": [],
+  "bundleFixtureSha256": {
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-current-deep-v2.json": "9940858f6437a79f5357ab8aa6057857b1c9d19b2d088fb3447b74654bfa655d",
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-expected-deep-v2.json": "da995bd5f56f0c4cecdba2b1f161a84d543115ffb00189e7c8cfd7b70025e2ec",
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-current-v2.json": "5b1ed4ffc0754df2bd9ea2361695a74f52dcc710229639fac17bf2ff2b11f3a5",
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-incoming-v2.json": "02625b5603bb4993fafda66ab75be4e7526814c9fce067173cb7d5ad5b73334b",
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-expected-v2.json": "640823a2812527301c651dee13f641810753ce17c5e96e3664a3c4175c73dd36"
+  },
+  "exitCode": 0,
+  "macFixtureCount": 352,
+  "macSqliteUnlinkWarnings": 0,
+  "tabletFixtureCount": 352,
+  "tabletSqliteUnlinkWarnings": 0
+}

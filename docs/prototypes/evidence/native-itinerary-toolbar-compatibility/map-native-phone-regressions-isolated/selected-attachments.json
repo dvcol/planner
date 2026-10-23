@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-native-phone-regressions-isolated.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-phone-regressions-isolated"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9A5B9488-1953-4C7F-8FAF-89C4F81FA458.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Items Map retains its pin and Locations control_0_D93B702A-AD2B-40D8-86AA-15318897FC22.png",
+      "timestamp": 1792759502.565,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItemsMapOpensTheExactPinAndAnUnlocatedItemThroughNativeNavigation()",
+      "retainedFileName": "9A5B9488-1953-4C7F-8FAF-89C4F81FA458.png",
+      "originalSha256": "960268ce5b83c671b05c17e5b6b7c823faba8bd232bf81ffcb5642e06c556ccc"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "629156A9-B250-4168-AFC8-4F6D4430A7C1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List Map opens its exact completed membership_0_29B1BA51-8438-425B-AEBE-6FB0BA7BBE9F.png",
+      "timestamp": 1792759578.116,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource()",
+      "retainedFileName": "629156A9-B250-4168-AFC8-4F6D4430A7C1.png",
+      "originalSha256": "24c2086f2c31f59a1526b9cdb21d1a5302b4b68f968104cf4bb3f96d6d67bd3a"
+    }
+  ],
+  "videoPublished": false
+}

@@ -1,0 +1,37 @@
+{
+  "exitCode": 0,
+  "command": [
+    "xcrun",
+    "swift",
+    "format",
+    "lint",
+    "--strict",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalOwnedTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportPredecessorItineraryHistoryTests.swift",
+    "Planner/Scenes/SavedMapCollectionView.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ],
+  "sourceSha256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift": "31ffded7036f0b2f39762137d16a5a78c19831062de5458dec47e5ccf239c3df",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalOwnedTests.swift": "bffb90218adc0b6610ee4ceea2e129a8654b256ef4bea502f1eefe436b7b9b1b",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportPredecessorItineraryHistoryTests.swift": "a09d9c8dd1c6527e24969b6faba7159e4148a8b9111ada0a3bb55a5aaa5cd3ad",
+    "Planner/Scenes/SavedMapCollectionView.swift": "2105af01634d403f7c2dbbdfa4382e06b04184417d12e20ceb7de70d152ca91a",
+    "Planner/Scenes/SavedPlannerView.swift": "ede9d5e5fb28f755a0f313760b088c31e6243ae75fb64f201deb25a4edf3fd34",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift": "4e641a87d7d5f67b8f14f5ceec52003b538f729307cc1974685406bf05715f26",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift": "ab7a41dbda9af983d57da7ff57063a2297a2a719f68b0245ccf6c1ce3ebf9cca",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift": "2149321f223f7228adc12680de8d5695b22dd22f19bbdf22f035e4f7115222cf",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift": "2b7472fcee5881577961db6d4106bb776d1c0b2785f5d3e3ccb3d415b7fad278",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "9026146d6409b88461ba2c8be10973cff7c521a33b408db5690911efc12629f7",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "eb010d7654fb87f1996ba7195f04fb1e5e95c0055e816d9a18effa77e63365d3",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift": "edd6d4c42b330c69cd4104d03993bd98ff772f726dd6443119de14457a0e609e"
+  },
+  "diffCheckExitCode": 0
+}

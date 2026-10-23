@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-native-heading-native-control.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-native-control"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8AC13836-03EA-476F-B268-EBE59E28344B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Map rotation before querying the compass_0_2DFBF9B8-F4BD-4E2A-8A4F-A4107159E151.png",
+      "timestamp": 1792760020.795,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize()",
+      "retainedFileName": "8AC13836-03EA-476F-B268-EBE59E28344B.png",
+      "originalSha256": "6ebaaec262bfc5c7f4a9759d4f1f5a117ea1811c112460cc8876d5a27ad134a7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A885FB29-809E-4F5B-B377-14390A68F6CC.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Map rotation exposes its actual compass accessibility_0_C816DA1D-E980-4142-93A0-56914E7303F5.txt",
+      "timestamp": 1792760020.626,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize()",
+      "retainedFileName": "A885FB29-809E-4F5B-B377-14390A68F6CC.txt.gz",
+      "originalSha256": "2b506fea6ef73df921a664467941c39765b54f234de9ca7635cbdc64c02e0543"
+    }
+  ],
+  "videoPublished": false
+}

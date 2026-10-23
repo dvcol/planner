@@ -1,0 +1,87 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-live-refresh-final-repeated-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-live-refresh-final-repeated-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "95647519-FC09-47BB-993B-74D570595445.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 navigation frames in portrait_0_DE78CBAB-9BB1-45C1-8BDE-A95E2D5D6E06.txt",
+      "timestamp": 1792761795.728,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "95647519-FC09-47BB-993B-74D570595445.txt.gz",
+      "originalSha256": "7c096e024adfb0bb906554f75385157e8039d710311a01ad2e620b46ceb24316"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8A53EE57-8EC7-4209-AD41-F489EBE6B7DB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 viewport and exact details in portrait_0_B4981F0F-8993-4DE5-9F81-A781D5B7D6EE.png",
+      "timestamp": 1792761795.331,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "8A53EE57-8EC7-4209-AD41-F489EBE6B7DB.png",
+      "originalSha256": "8b5cd4b8791fa7398e802493f55b54ff1b746384f245174d247fa8a0c76e77da"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4D4FE83B-8505-4DD1-AD04-AB09BC8EF501.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 navigation frames in landscape_0_E08BB6A5-0F5D-4730-A40D-58C81D09316D.txt",
+      "timestamp": 1792761789.419,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "4D4FE83B-8505-4DD1-AD04-AB09BC8EF501.txt.gz",
+      "originalSha256": "6555fa4c58d140e15bd42f549be6e60f978e9d17cd397959f2bc87bab3c8df73"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A58CD470-60C7-4966-9E4D-9F48CCEEF20A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Food stops \u00b7 Stop 1 \u00b7 Item 1 viewport and exact details in landscape_0_36DA00CC-4D4A-4272-954E-DFA5CEDFAB67.png",
+      "timestamp": 1792761789.008,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "A58CD470-60C7-4966-9E4D-9F48CCEEF20A.png",
+      "originalSha256": "8c1224ef389acd27ad125f6effaa7b23c1b96217f6c9ff7540f8572042544b78"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "89CE151E-FE40-4312-8DC2-0D458B5EE4FA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary List pin distinguishes independent child appearances_0_E54844D7-AAD7-4387-BB05-9B1B06EA1A74.png",
+      "timestamp": 1792761773.452,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "89CE151E-FE40-4312-8DC2-0D458B5EE4FA.png",
+      "originalSha256": "fb0ba1891a54ce71a336ac7b2f7e1610b6a98b88b6d51bb9006bbc2d7cdefe57"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "324BE8E4-B9D7-4739-8A7F-1C97413732E6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native accessible Map summary scrolls without displacing its pins_0_E4F60360-EEBF-46A5-9CC0-AF2CE449A35D.png",
+      "timestamp": 1792761771.204,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList()",
+      "retainedFileName": "324BE8E4-B9D7-4739-8A7F-1C97413732E6.png",
+      "originalSha256": "83337a310d6c93653a4b1237ecdc4daa2f00a8facc7bfb5b9721aac3421fe812"
+    }
+  ],
+  "videoPublished": false
+}

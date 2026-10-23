@@ -1,0 +1,161 @@
+{
+  "scope": "Completed duplicate xcresult attachment exports only; original results, retained captures, products, sources and all datasets preserved.",
+  "candidates": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-accessibility-probe",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-heading-accessibility-probe.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-native-heading-accessibility-probe",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 29168292,
+      "exportManifestSha256": "e7809b3afe6e90ba98958dac00725eba2c0364b06c50574b8073a44a2fdad69e"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-native-control",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-heading-native-control.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-native-heading-native-control",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 40633384,
+      "exportManifestSha256": "8ce9dff49a7d81fb28df53f90444d680a78c58dec8ac86889e4877aa543c7acf"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-resize",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-heading-resize.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-native-heading-resize",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 26596456,
+      "exportManifestSha256": "94b7bee9187b1527f2332b6488282ebdc97fa2c8f362d87de2f698e20eb224e2"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-observed-camera-resize",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-observed-camera-resize.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-native-observed-camera-resize",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 5168716,
+      "exportManifestSha256": "5e2be995c0e48ad9acfa02bf1397335de7d49473e43d5f9b284462525858b6d6"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-observed-camera-live-refresh.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-observed-camera-live-refresh",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 61889853,
+      "exportManifestSha256": "4232498c2d0948f09e5b0acf91cfebb6b2aafff508badd3b4438d149c9f4f090"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-observed-camera-live-refresh-green.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-observed-camera-live-refresh-green",
+      "selectedAttachmentsVerified": 5,
+      "nominalBytes": 63890167,
+      "exportManifestSha256": "cf4de99d7a997a4f0eb3fb2adc4cfabc3b7e3c287425ed65944c256da4c969f4"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh-qualified",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-observed-camera-live-refresh-qualified.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/map-observed-camera-live-refresh-qualified",
+      "selectedAttachmentsVerified": 6,
+      "nominalBytes": 8841364,
+      "exportManifestSha256": "8a0d541e471dcf9fb10465671c3a663bb428cc366eb82ef4b69db0766f4a107e"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-native-projection-resize",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-map-native-projection-resize.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-map-native-projection-resize",
+      "selectedAttachmentsVerified": 6,
+      "nominalBytes": 6364200,
+      "exportManifestSha256": "73a2263f0a04bb92167f79ca0a1f463d0a275e0c708e67254308e1a9959f3815"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-observed-camera-viewport",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-map-observed-camera-viewport.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-map-observed-camera-viewport",
+      "selectedAttachmentsVerified": 6,
+      "nominalBytes": 6363886,
+      "exportManifestSha256": "08aa46c05cd48f461c732ca69b6c269c4ef45a3cbc07c8d7e4750d5feca16017"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-live-refresh-final-phone-regressions",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-live-refresh-final-phone-regressions.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-phone-regressions",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 3124168,
+      "exportManifestSha256": "5d8f9a68994b53e42f4a2d854337855dc0d3d81ad3df627522fb226ed405a9a5"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-live-refresh-final-repeated-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-live-refresh-final-repeated-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-repeated-tablet",
+      "selectedAttachmentsVerified": 6,
+      "nominalBytes": 6375635,
+      "exportManifestSha256": "4cc19fdcd51240d07eb2a6290834b7c10e8c8cb161533c8c1cfbff0dc189faef"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-observed-camera-phone-count",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-observed-camera-phone-count.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-native-observed-camera-phone-count",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 2522815,
+      "exportManifestSha256": "e35d27cb38fb049d48093212ac9c41ba193082ed743f113ba8e58fe889139228"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-phone-accessible-count",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-phone-accessible-count.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-native-phone-accessible-count",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 2522460,
+      "exportManifestSha256": "e8c2b1e88bd123c9b10a8a6a0a1093ae4b7c74c9258ce29fa9a404104c707d54"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-phone-regressions-isolated",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-phone-regressions-isolated.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-native-phone-regressions-isolated",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 3125940,
+      "exportManifestSha256": "7124649b95fc1a921b41fff65a417be82ccc7621a69c9f7f26b93ee9cf529331"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-native-single-membership-regression",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-native-single-membership-regression.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-native-single-membership-regression",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 915137,
+      "exportManifestSha256": "54fafd29ef0cf7f0a12f6f8dd19e86ce837770c98ff5a757a4b69a3bbe29667f"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-final-phone-regressions",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-observed-camera-final-phone-regressions.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-observed-camera-final-phone-regressions",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 3126765,
+      "exportManifestSha256": "e98610724785708f471a828f67547898e0f4d3cc174247ab7ee1413a823de9bc"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-final-tablet-regressions",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-observed-camera-final-tablet-regressions.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-observed-camera-final-tablet-regressions",
+      "selectedAttachmentsVerified": 8,
+      "nominalBytes": 9414975,
+      "exportManifestSha256": "d95369809bc50028239144389e6afe2d7b2147f26224cdc3fac1e9345c3543a0"
+    }
+  ],
+  "removedDirectories": [
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-accessibility-probe",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-native-control",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-heading-resize",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-observed-camera-resize",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh-green",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh-qualified",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-native-projection-resize",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-observed-camera-viewport",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-live-refresh-final-phone-regressions",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-live-refresh-final-repeated-tablet",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-observed-camera-phone-count",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-phone-accessible-count",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-phone-regressions-isolated",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-single-membership-regression",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-final-phone-regressions",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-final-tablet-regressions"
+  ],
+  "nominalBytes": 280044213
+}

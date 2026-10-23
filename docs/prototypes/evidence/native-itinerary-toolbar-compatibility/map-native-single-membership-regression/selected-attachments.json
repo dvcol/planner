@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-native-single-membership-regression.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-single-membership-regression"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "990A56E7-72EE-46E6-A238-73EED15B5867.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List Map opens its exact completed membership_0_D6654C54-2F88-43E8-AD79-F676DB21F68C.png",
+      "timestamp": 1792760060.986,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource()",
+      "retainedFileName": "990A56E7-72EE-46E6-A238-73EED15B5867.png",
+      "originalSha256": "fe052930779aa5863d0098fabda4850f2d9aec8e9caadb241eef70a07a9663af"
+    }
+  ],
+  "videoPublished": false
+}

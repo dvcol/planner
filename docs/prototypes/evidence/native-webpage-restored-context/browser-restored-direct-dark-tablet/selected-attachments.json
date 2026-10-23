@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-direct-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "AB3BBFE1-D564-4B5A-A5E2-DAD8D1241693.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored direct itinerary reader returns to current content and original local Done_0_61C01ABF-BD1D-44FA-B555-B67C0129819E.png",
+      "timestamp": 1792753881.803,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredDirectItineraryAppearanceReturnsToItsOriginalLocalState()",
+      "retainedFileName": "AB3BBFE1-D564-4B5A-A5E2-DAD8D1241693.png",
+      "originalSha256": "a82c47f111677421d7a290f1bef457c817f3331f3d62bfea784366b9b3715105"
+    }
+  ],
+  "videoPublished": false
+}

@@ -1,6 +1,6 @@
 # Fresh local restoration from restored backup values
 
-Status: the first Item/Tour slice is qualified on Mac and iPhone simulator. The expanded closed-lineage and five-source-kind cohorts now pass on Mac; matching simulator qualification is next. Q151/Q152 remain incomplete for owned/contextual references and native administration. Signing is deferred.
+Status: the affected 83-function Core cohorts pass on Mac and iPad simulator, with 352 marked fixtures each. They cover closed lineages, all five source kinds, exact owned/contextual restoration, foreign-history rejection, genuine persistence/recovery failures and original-file reimport. Q151/Q152 native manual review/apply/export/relaunch now passes phone and dark-iPad journeys, with ten fully validated delivered backups. Broader family consolidation and physical/system qualification remain separate. Signing is deferred.
 
 ## Approved scope and boundary
 
@@ -47,3 +47,41 @@ Extend the existing predecessor-history test to both a current live restored Lis
 ## Expanded local checkpoint
 
 The affected Mac and iPhone cohorts both pass all 82 functions with 340 marked fixtures each after the membership-history extension. Mac takes 31.501 seconds including compilation; iPhone takes 120.229 seconds including compilation and test startup. All 764 Core input hashes match, all five literal JSON files match inside the actual iPhone test bundle, and both cohorts report zero SQLite unlink warnings. The current native Mac app/Share build-for-testing passes in 10.001 seconds against the same 1,101-input native epoch with nine captured products. It provides compiler credit only. Other owned references, expanded itinerary contexts, foreign owned candidates and native manual administration remain open for the no-live source transformation.
+
+## Owned-reference repeat import
+
+A new real-storage cohort covers exact closed bookmarks, schedules and label associations under a fresh Item lifetime, plus independently valid foreign owned-reference candidates. The first six-case run restores all three exact references with complete expected saved/recovery graphs, but fails on importing the original file again. Explicit public-outcome diagnostics locate the defect at repeated execute: the allocator assigns another reference lifetime and the merge correctly rejects rebinding. Unknown foreign reference candidates already reject without applying their owner or independent Tag.
+
+Reuse a current reference lifetime only when retained restoration history authorizes that exact descendant. After transforming all bindings, require the complete reference value to equal its current saved value. Differing older content/bindings retain the unavailable reconciliation gate. No foreign family is adopted, no new reference is issued on exact reimport, and source/history validation stays unchanged. The unchanged six-case test passes. Extend it with valid changed older bookmark labels, timed schedule starts and label bindings; all six cases still pass, preserving full data and truthful missing-operation evidence on rejection. Independent canonical vectors supply literal family identities for each reference kind.
+
+Broader affected Core, simulator and native administration qualification are in progress. Exact expanded itinerary history remains open for this no-live transformation. This narrow idempotence correction does not authorize overwriting a current restored reference with differing older values or general reference-family reconciliation.
+
+The owned-reference correction now passes the affected 83-function cohorts on Mac and iPad simulator, with 346 marked fixtures each and zero SQLite unlink warnings. All 765 Core inputs match; the five literal resources match the actual iOS test bundle. Mac takes 22.350 seconds including compilation, and iPad takes 122.977 seconds including compilation/startup. The matching native Mac app/Share compiler checkpoint passes in 24.667 seconds with 1,102 inputs and nine recorded products. This provides compiler and iOS Core credit; actual Mac UI and physical convergence remain separate.
+
+## Exact itinerary contexts
+
+Extend the existing itinerary-history cohort to both a current live owner and an incoming restored owner with no live current Itinerary, with either an unchanged or previously restored referenced List. The first trial fails compilation because the test assumes a portable-backup itineraries accessor; retain its zero-runtime result. Use the existing typed source enum instead. All twelve cases then pass through real storage, including exact direct and expanded contexts, fresh source/entry/membership lifetimes, independent List state, whole-action retained-history collision rejection, full saved/recovery graphs, reopen and replay. Reimport now uses the original file, rather than an export of the restored graph, and preserves every saved identity. No additional production change is needed.
+
+The resulting affected Mac and iPad cohorts pass all 83 functions with 352 fixtures each and zero SQLite unlink warnings. All 765 Core inputs and the actual bundled literal files match. Mac takes 29.445 seconds including compilation; iPad takes 99.569 seconds including compilation/startup. Native manual review/apply/export/relaunch remains open. Actual Mac UI, physical convergence and broader incoming-family consolidation remain separate.
+
+## Completed reference-fixture cleanup
+
+The existing ownership/lifecycle verifier removes 2,076 disposable stores from six completed passing Mac/mobile cohorts after checking host exit, directory ownership and closed database handles. Their regular files total 1,510,349,753 nominal bytes. Original logs, results, source/product manifests, failure evidence and user data remain. This is not a measurement of APFS free-space gain. The per-cohort reports and original-log hashes are retained in completed-reference-fixture-cleanup.json.
+
+## First native manual administration journey
+
+Stage the exact reviewed current-deletion and incoming-values JSON resources in each Simulator's native Files provider, recording byte hashes and destinations. The phone uses the production app's real file picker, preview, Skip, explicit Overwrite, restoration Toggle and file exporter. Skip imports only the independent Tag. Overwrite without separate restoration authority rejects and leaves the complete graph unchanged. Explicit restoration creates the expected fresh local Item lifetime and imported Tour membership. Reimport preserves the complete restored graph byte-for-byte. All four delivered backups independently match the full literal expected graph, substituting only the new local lifetime and issuing operation in the restoration vector. Incoming D and its candidate operation remain absent.
+
+The journey then relaunches, finds Tour's exact public identity and original local Done membership, and reads the represented notes. It fails afterward because switching from that List appearance to Items opens an empty detail column and hides the catalog's filter. The original recording's inspected final frame proves the wrong visible destination. This is a native navigation defect, not a restoration mismatch. Retain the complete failed result and the four validated delivered files; a short public UI regression will isolate the transition before its production correction. No relaunch export was produced yet, so this is not final native administration credit.
+
+The short phone regression independently reproduces the empty destination in 32.135 seconds, without any import. A global Item has not been selected, but the shared compact-column preference still points at the List's Detail column. When entering Items or Inbox with no selected Item, select its catalog column. Keep any valid Item selection and the existing draft guard. The unchanged focused regression is running against that narrow correction.
+
+## Dark-iPad manual administration checkpoint
+
+The full dark-iPad native journey passes in 353.496 seconds through the same verified universal mobile products, with all 1,102 captured inputs matching. It proves explicit refusal without authority, successful restoration and duplicate-free reimport, then exact Tour/membership identities, local Done and independent global Todo after real Planner relaunch. All five actual Files exports match complete independently expected graphs. Skip and denied exports are byte-identical; restored, repeated and relaunched exports are also byte-identical. Their single local restoration candidate retains current deletion history and excludes incoming D and its operation.
+
+The phone also reaches and verifies the restored Tour and global Item after relaunch, but its last Settings step cannot reach the root administration control from selected details. Preserve both failed setup variants and their validated four-file outputs. Move only the relaunch export to root Settings immediately after startup, before selecting details; the same data and UI assertions remain. The final phone run is in progress. Mac production sources remain unchanged from the passing compiler checkpoint; actual Mac interaction, broader family consolidation and physical/system qualification remain open.
+
+## Phone manual administration checkpoint
+
+The corrected phone journey passes in 228.770 seconds. Its relaunch export runs from root Settings before opening the restored plan; all subsequent public identity, local Done, global Todo and notes assertions remain. All five delivered files match the complete literal graphs. As on iPad, restored, repeated and relaunched exports are byte-identical. The two current native passes therefore supply ten independently validated files, with only each run's fresh local lifetime and issuing operation captured into the expected vector. No additional Core production change is needed.

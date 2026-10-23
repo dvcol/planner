@@ -1,0 +1,70 @@
+{
+  "originalCaptures": [
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-map-observed-camera-viewport/25C92513-4D9E-4F94-A0E3-DFA49D65DD67.png",
+      "sha256": "2fcebed28bb0f5344d9cc313b8bd98d4b3561b90db0b5e38d8f3bcabd4332b8a",
+      "inspection": "Landscape counted marker is entirely below the accessible summary and inside the Map."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-map-observed-camera-viewport/E6F7EF99-87CA-4147-B3AD-A751C2C0A556.png",
+      "sha256": "7f77e915e28668470cc25634baa2f209268c59928f47bf130b390363e1622943",
+      "inspection": "Portrait counted marker shows the complete compact number without truncation."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-webpage-restored-context/map-native-observed-camera-resize/DA1A4D70-8C92-4A91-A633-3C57062104CA.png",
+      "sha256": "461e45ee16271a24b22f7af0b370ab3c15c3c25402dbf34aab3df7a096aa7c2a",
+      "inspection": "Native west Compass and original Hotel marker remain visible after resize."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-native-observed-camera-phone-count/9AC613DF-7F76-4960-8413-D047DAC065B7.png",
+      "sha256": "0aa60414174276f58c10b5b874b2f5796f4d0d30408be8552dbe55e18f50b68c",
+      "inspection": "Phone native Locations sheet distinguishes Stop 1 and Stop 2 with provider uncertainty."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-observed-camera-final-tablet-regressions/62BE49BF-C345-48DE-A73D-7EA60F078DF3.png",
+      "sha256": "074ee2c1893fee6909d41754209dab60b455e75e75a5b89ce81fdd13003e47a9",
+      "inspection": "Repeated-List landscape marker is fully visible; provider detail remains readable."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-observed-camera-final-tablet-regressions/B8E1D792-3434-422B-A6CB-74DDF53B0832.png",
+      "sha256": "c3515b7706ea085646abccfd80982281615cd340900f1acd1ca8d32330fba150",
+      "inspection": "Largest-text count and native Locations icon do not overlap."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-observed-camera-final-phone-regressions/1DDD2256-0344-40D6-8385-3684351B466E.png",
+      "sha256": "353d8907bfdbb17b19da6411918401b6dc3a238248fa96f24ed2de309f8bfa65",
+      "inspection": "Light phone details retain the completed local appearance, List context and embedded provider map."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-entries-dark-tablet-final/32E8F6A1-0CEE-4E09-AF85-B58036689F68.png",
+      "sha256": "067cc46d414afc027645571f836eda0c1de9137c570ef53da8110b6db0ead829",
+      "inspection": "Restored direct entry retains local Done, current notes and independent Todo List child."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-entries-dark-tablet-final/8E383189-D978-4E2E-AF5E-CD953EFF0863.png",
+      "sha256": "af5a8d52073bc8a89499e8d2a1217480ef935b4febbb83982f899f9cb34f7254",
+      "inspection": "Restored repeated branch is selected and Done; direct and sibling branches remain Todo."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-webpage-restored-context/map-observed-camera-live-refresh-qualified/B14D508F-5AEE-4535-9A15-EFE081A6B8DC.png",
+      "sha256": "da9fb9a4f14cd76643f8f8566fc22c3019d3d25d3aad84779eba5124ca6e0300",
+      "inspection": "Writer refresh preserves the west Compass and chosen viewport; offscreen moved location remains counted."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-webpage-restored-context/map-observed-camera-live-refresh-qualified/C4A78A45-61FD-4B18-8A05-2A0B051AD692.png",
+      "sha256": "27f8838b30cef48e4f2a08d35268d74e696e449ca878da4cbcab4f351f5d0fc9",
+      "inspection": "Independent automatic-camera refresh fits the moved Hotel marker."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-repeated-tablet/A58CD470-60C7-4966-9E4D-9F48CCEEF20A.png",
+      "sha256": "8c1224ef389acd27ad125f6effaa7b23c1b96217f6c9ff7540f8572042544b78",
+      "inspection": "Final-source repeated-List landscape marker is fully inside its pane with compact count."
+    },
+    {
+      "path": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/map-live-refresh-final-phone-regressions/21515208-4955-450A-9BEC-33BCE9B254EB.png",
+      "sha256": "096a5c6ef0de1fb0c0934686052b819972afa760267f6bc3e0fe87227308e75e",
+      "inspection": "Final-source light phone retains local Done, source details, original Google Maps attribution and native tabs."
+    }
+  ],
+  "scope": "Manual inspection through view_image of retained original native screenshots. Derived failure video frame has its separate retained provenance."
+}

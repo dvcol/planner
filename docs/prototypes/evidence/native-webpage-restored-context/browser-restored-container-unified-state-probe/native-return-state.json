@@ -1,0 +1,112 @@
+[{
+  "timezoneName" : "",
+  "messageType" : "Default",
+  "eventType" : "logEvent",
+  "source" : null,
+  "launchPersonaName" : "",
+  "formatString" : "PLANNER_WEBSITE_RETURN_STATE websiteCleared=%{bool,public}d hasSelectedList=%{bool,public}d showsContent=%{bool,public}d",
+  "userID" : 502,
+  "activityIdentifier" : 129167117,
+  "subsystem" : "org.example.Planner",
+  "category" : "WebsiteReturn",
+  "personaType" : -1,
+  "threadID" : 46200924,
+  "launchPersonaType" : -1,
+  "senderImageUUID" : "3838AA7B-D2A5-389E-B92A-6535291364D4",
+  "launchPersonaID" : 4294967295,
+  "backtrace" : {
+    "frames" : [
+      {
+        "imageOffset" : 7637560,
+        "imageUUID" : "3838AA7B-D2A5-389E-B92A-6535291364D4"
+      }
+    ]
+  },
+  "bootUUID" : "468D67B7-EECC-4EE3-B4E7-44FEA22C01AC",
+  "processImagePath" : "\/Users\/dinh-van.colomban\/Library\/Developer\/CoreSimulator\/Devices\/2A49C66C-C8A4-435F-B98A-9A90706780DE\/data\/Containers\/Bundle\/Application\/502C4BC1-FFC9-496D-87B3-B359A4428837\/PlannerFixtures.app\/PlannerFixtures",
+  "senderImagePath" : "\/Users\/dinh-van.colomban\/Library\/Developer\/CoreSimulator\/Devices\/2A49C66C-C8A4-435F-B98A-9A90706780DE\/data\/Containers\/Bundle\/Application\/512A7084-DEC0-4383-8765-03556FF12C06\/PlannerFixtures.app\/PlannerFixtures.debug.dylib",
+  "personaID" : 4294967295,
+  "timestamp" : "2026-10-23 20:43:18.858832+0900",
+  "machTimestamp" : 18823082264365,
+  "personaName" : "",
+  "eventMessage" : "PLANNER_WEBSITE_RETURN_STATE websiteCleared=true hasSelectedList=true showsContent=true",
+  "processImageUUID" : "3A1FEF63-20F9-3FDE-B806-685E3B467B21",
+  "traceID" : 111512469323186180,
+  "processID" : 45004,
+  "senderProgramCounter" : 7637560,
+  "parentActivityIdentifier" : 0
+},{
+  "timezoneName" : "",
+  "messageType" : "Default",
+  "eventType" : "logEvent",
+  "source" : null,
+  "launchPersonaName" : "",
+  "formatString" : "",
+  "userID" : 2863311530,
+  "activityIdentifier" : 0,
+  "subsystem" : "com.apple.log",
+  "category" : "",
+  "personaType" : 0,
+  "threadID" : 0,
+  "launchPersonaType" : 0,
+  "senderImageUUID" : "BC190773-6AA1-3F0F-B539-52E66F0931E6",
+  "launchPersonaID" : 0,
+  "backtrace" : {
+    "frames" : [
+      {
+        "imageOffset" : 0,
+        "imageUUID" : "BC190773-6AA1-3F0F-B539-52E66F0931E6"
+      }
+    ]
+  },
+  "bootUUID" : "468D67B7-EECC-4EE3-B4E7-44FEA22C01AC",
+  "processImagePath" : "\/Library\/Developer\/CoreSimulator\/Volumes\/iOS_24A434\/Library\/Developer\/CoreSimulator\/Profiles\/Runtimes\/iOS 27.0.simruntime\/Contents\/Resources\/RuntimeRoot\/usr\/bin\/log",
+  "senderImagePath" : "\/Library\/Developer\/CoreSimulator\/Volumes\/iOS_24A434\/Library\/Developer\/CoreSimulator\/Profiles\/Runtimes\/iOS 27.0.simruntime\/Contents\/Resources\/RuntimeRoot\/usr\/bin\/log",
+  "personaID" : 0,
+  "timestamp" : "2026-10-23 20:47:01.908891+0900",
+  "machTimestamp" : 18828435465761,
+  "personaName" : "",
+  "eventMessage" : "log run noninteractively, parent: 21539 (launchd_sim), args: 'log' 'show' '--style' 'json' '--last' '20m' '--predicate' 'eventMessage CONTAINS \"PLANNER_WEBSITE_RETURN_STATE\"'",
+  "processImageUUID" : "BC190773-6AA1-3F0F-B539-52E66F0931E6",
+  "traceID" : 0,
+  "processID" : 53743,
+  "senderProgramCounter" : 0,
+  "parentActivityIdentifier" : 0
+},{
+  "timezoneName" : "",
+  "messageType" : "Default",
+  "eventType" : "logEvent",
+  "source" : null,
+  "launchPersonaName" : "",
+  "formatString" : "",
+  "userID" : 2863311530,
+  "activityIdentifier" : 0,
+  "subsystem" : "com.apple.log",
+  "category" : "",
+  "personaType" : 0,
+  "threadID" : 0,
+  "launchPersonaType" : 0,
+  "senderImageUUID" : "BC190773-6AA1-3F0F-B539-52E66F0931E6",
+  "launchPersonaID" : 0,
+  "backtrace" : {
+    "frames" : [
+      {
+        "imageOffset" : 0,
+        "imageUUID" : "BC190773-6AA1-3F0F-B539-52E66F0931E6"
+      }
+    ]
+  },
+  "bootUUID" : "468D67B7-EECC-4EE3-B4E7-44FEA22C01AC",
+  "processImagePath" : "\/Library\/Developer\/CoreSimulator\/Volumes\/iOS_24A434\/Library\/Developer\/CoreSimulator\/Profiles\/Runtimes\/iOS 27.0.simruntime\/Contents\/Resources\/RuntimeRoot\/usr\/bin\/log",
+  "senderImagePath" : "\/Library\/Developer\/CoreSimulator\/Volumes\/iOS_24A434\/Library\/Developer\/CoreSimulator\/Profiles\/Runtimes\/iOS 27.0.simruntime\/Contents\/Resources\/RuntimeRoot\/usr\/bin\/log",
+  "personaID" : 0,
+  "timestamp" : "2026-10-23 20:47:39.862640+0900",
+  "machTimestamp" : 18829346355750,
+  "personaName" : "",
+  "eventMessage" : "log run noninteractively, parent: 21539 (launchd_sim), args: 'log' 'show' '--style' 'json' '--last' '30m' '--predicate' 'eventMessage CONTAINS \"PLANNER_WEBSITE_RETURN_STATE\"'",
+  "processImageUUID" : "BC190773-6AA1-3F0F-B539-52E66F0931E6",
+  "traceID" : 0,
+  "processID" : 54875,
+  "senderProgramCounter" : 0,
+  "parentActivityIdentifier" : 0
+}]

@@ -53,6 +53,8 @@ struct PlannerImportRestoration {
       throw PlannerFailure("unavailable", "Incoming restored lifetimes need family reconciliation.")
     }
     var lifetimes: [PlannerPortableBoundIdentity: UUID] = [:]
+    let referenceIdentities = Set(projection.references.compactMap(\.identity))
+    var reusedReferences: Set<PlannerPortableBoundIdentity> = []
     let selectedIdentities = Set(identities.map(PlannerImportClosedIdentity.init))
     let incomingGraph = PlannerImportGraph(backup: incoming)
     var families = incoming.restorationFamilies.filter { family in
@@ -63,6 +65,13 @@ struct PlannerImportRestoration {
     let closedFamilies = Set(current.deletionMarkers.compactMap(\.closedFamilyId))
     for identity in identities where graph.isClosed(identity) {
       guard lifetimes[identity] == nil else { continue }
+      if referenceIdentities.contains(identity), let live = graph.liveIdentity(for: identity),
+        graph.authorizesPredecessorValues(identity, for: live)
+      {
+        lifetimes[identity] = live.lifetimeId
+        reusedReferences.insert(live)
+        continue
+      }
       var predecessor = identity
       var seen: Set<PlannerPortableBoundIdentity> = [identity]
       while let family = current.restorationFamilies.first(where: {
@@ -192,6 +201,23 @@ struct PlannerImportRestoration {
           done: change.done, observedChangeIds: change.observedChangeIds)
       },
       restorationFamilies: families)
+    if !reusedReferences.isEmpty {
+      let currentReferences = try PlannerImportProjection(backup: current).references
+      let currentValues = Dictionary(
+        uniqueKeysWithValues: currentReferences.compactMap { reference in
+          reference.identity.map { ($0, reference.value.encoded()) }
+        })
+      let restoredReferences = try PlannerImportProjection(backup: self.incoming).references
+      for reference in restoredReferences {
+        guard let identity = reference.identity, reusedReferences.contains(identity) else {
+          continue
+        }
+        guard currentValues[identity] == reference.value.encoded() else {
+          throw PlannerFailure(
+            "unavailable", "Reusing a restored reference requires its current saved values.")
+        }
+      }
+    }
   }
 }
 

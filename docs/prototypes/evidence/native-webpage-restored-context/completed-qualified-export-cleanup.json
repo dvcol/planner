@@ -1,0 +1,170 @@
+{
+  "scope": "Completed duplicate xcresult attachment exports only; original results, retained captures, products, sources and all datasets preserved.",
+  "candidates": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-container-phone.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-container-phone",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 69642130,
+      "exportManifestSha256": "9b02bc2dc8bce98997a637055c5720164761bde0ec0d1b5c8124039c30bec51f"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-split-reset",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-container-split-reset.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-container-split-reset",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 225263,
+      "exportManifestSha256": "ba0cf67a7f0e26e709d873bc5dd51fca84e88ba512a9d31eb31252cd68dc8906"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-stack-reset",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-container-stack-reset.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-container-stack-reset",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 26412268,
+      "exportManifestSha256": "73d3d20c7deefbc4c7d1d6696b88389b6fa5783fccbed1509076b99ee1753da7"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-state-probe",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-container-state-probe.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-container-state-probe",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 26872419,
+      "exportManifestSha256": "0d180d770888a47491083cc10ca9106cf2d4bca7bfd554a3797a5976bca67561"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-unified-state-probe",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-container-unified-state-probe.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-container-unified-state-probe",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 27155609,
+      "exportManifestSha256": "ed4f4225dbcdfd7cac75d3b46a40108e4a0291928bba3e06be03b8aef91055a1"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-dark-tablet-final",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-contexts-dark-tablet-final.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-contexts-dark-tablet-final",
+      "selectedAttachmentsVerified": 6,
+      "nominalBytes": 6394838,
+      "exportManifestSha256": "b0e3217e082bd466ae8fac21fbe554320dda5b782d00e508d42eaf1f57e50343"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-phone-final",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-contexts-phone-final.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-contexts-phone-final",
+      "selectedAttachmentsVerified": 7,
+      "nominalBytes": 3654777,
+      "exportManifestSha256": "2bb387f42f75a537e034e31cd1b422f9e9c4f0d8df65aababcf89fb887fec5bd"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-entries-dark-tablet-final",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-entries-dark-tablet-final.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-entries-dark-tablet-final",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 1682020,
+      "exportManifestSha256": "e473422c901b4871c9f9423ac4ee651a0a8a3f515db89b05513114d8cc35934d"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-entries-dark-tablet-qualified",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-entries-dark-tablet-qualified.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-entries-dark-tablet-qualified",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 5219923,
+      "exportManifestSha256": "24f149cedc9d1e3f103a88abe4136490a383600fbe1363fda2c1c4b77acbd46f"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-repeated-branch-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-browser-restored-repeated-branch-phone.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/browser-restored-repeated-branch-phone",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 1758095,
+      "exportManifestSha256": "8d591e0a069aff44fecef6d624fc888fdb8e8b8a2f431b0fee437260648083c5"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-catalog-empty-selection-phone-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-catalog-empty-selection-phone-green.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/catalog-empty-selection-phone-green",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 192047,
+      "exportManifestSha256": "223c14c2b19c85b43bb347b64d1358c5561e491028e2cc361d82fb2d7318e0b4"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-catalog-empty-selection-phone-red",
+      "originalResult": "/private/tmp/PlannerItemWindow-catalog-empty-selection-phone-red.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-restored-context/catalog-empty-selection-phone-red",
+      "selectedAttachmentsVerified": 0,
+      "nominalBytes": 5504576,
+      "exportManifestSha256": "76ba9abfd1e5883950c18c8e86efc907d929d5ba02e4446e475fa5bbaeb84490"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-whole-marker-production",
+      "originalResult": "/private/tmp/PlannerItemWindow-itinerary-map-whole-marker-production.xcresult",
+      "packet": "docs/prototypes/evidence/native-itinerary-toolbar-compatibility/itinerary-map-whole-marker-production",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 100379553,
+      "exportManifestSha256": "478911ba4fa80c0fd3de5b71e6da4471cc44490449244d1de114c8f4554947de"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-dark-tablet-final",
+      "originalResult": "/private/tmp/PlannerItemWindow-fresh-local-values-native-dark-tablet-final.xcresult",
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-dark-tablet-final",
+      "selectedAttachmentsVerified": 11,
+      "nominalBytes": 1807188,
+      "exportManifestSha256": "d4333f6bd6b71302fae5bc26168190638d50e24ce1faf1923e25350b0c7c90dc"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-fresh-local-values-native-phone.xcresult",
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-phone",
+      "selectedAttachmentsVerified": 9,
+      "nominalBytes": 127375333,
+      "exportManifestSha256": "79d6a43ed0dd44b65a9fabf37682bb1751189619e988daaee1157e63839df864"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone-final",
+      "originalResult": "/private/tmp/PlannerItemWindow-fresh-local-values-native-phone-final.xcresult",
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-phone-final",
+      "selectedAttachmentsVerified": 10,
+      "nominalBytes": 129560494,
+      "exportManifestSha256": "3dce88cbe43de382c932145a52fec155456727153338671dfed549fab194b436"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone-qualified",
+      "originalResult": "/private/tmp/PlannerItemWindow-fresh-local-values-native-phone-qualified.xcresult",
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-phone-qualified",
+      "selectedAttachmentsVerified": 10,
+      "nominalBytes": 127720527,
+      "exportManifestSha256": "a554fbc9bd2e03a6f688200dbb880090a1e240588b1afb0fd9385b973fb5f8b2"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone-root-export",
+      "originalResult": "/private/tmp/PlannerItemWindow-fresh-local-values-native-phone-root-export.xcresult",
+      "packet": "docs/prototypes/evidence/native-import-fresh-local-values/fresh-local-values-native-phone-root-export",
+      "selectedAttachmentsVerified": 11,
+      "nominalBytes": 1613929,
+      "exportManifestSha256": "a3c96194141da139546c61529d88f6b21d4af8feb6a133e1021a9bbed2d098fe"
+    }
+  ],
+  "removedDirectories": [
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-split-reset",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-stack-reset",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-state-probe",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-unified-state-probe",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-dark-tablet-final",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-phone-final",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-entries-dark-tablet-final",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-entries-dark-tablet-qualified",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-repeated-branch-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-empty-selection-phone-green",
+    "/private/tmp/PlannerApprovedAdminAttachments-catalog-empty-selection-phone-red",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-whole-marker-production",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-dark-tablet-final",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone-final",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone-qualified",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone-root-export"
+  ],
+  "nominalBytes": 663170989
+}

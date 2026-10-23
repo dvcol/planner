@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-contexts-phone-regressions.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-phone-regressions"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "CD676604-2624-472C-84B6-583297D31465.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List reader Return shows local completion and current shared content_0_4A9C6DAE-200C-445F-9E06-5242C695881A.png",
+      "timestamp": 1792753773.53,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "CD676604-2624-472C-84B6-583297D31465.png",
+      "originalSha256": "eaec66f54ebcb8147ef9db864599d862387fd8fedad9ee13893a1342017955e4"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0D3C9E42-51E7-4D1A-B36B-B015B8FC035D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List membership preserves the open guide and exact public context_0_28015350-5155-4A29-B823-C09D32BEDBB1.png",
+      "timestamp": 1792753763.941,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "0D3C9E42-51E7-4D1A-B36B-B015B8FC035D.png",
+      "originalSha256": "ab9a4cfbcf18143b5a6a27ac38aeb1f2a6a29dec9df98e82ac07ec40d24bf421"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6150B230-6DE3-4E2D-B078-4C2E94979C75.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Old reader returns to the collection containing the restored public Item_0_F66F73DB-D9EE-4D4B-9D9B-96601BD5B25B.png",
+      "timestamp": 1792753824.428,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext()",
+      "retainedFileName": "6150B230-6DE3-4E2D-B078-4C2E94979C75.png",
+      "originalSha256": "86b26cf0003ea9ecdfd9489b6b8d9d1feee53084dfe6cbd628abc563e94ea263"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "72E362CB-1BD1-42E1-9F60-CF784D1E0B43.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh restored Item lifetime keeps the original guide readable_0_D1F8E68F-FC32-48A6-9652-09AFFC0B6C48.png",
+      "timestamp": 1792753817.033,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext()",
+      "retainedFileName": "72E362CB-1BD1-42E1-9F60-CF784D1E0B43.png",
+      "originalSha256": "763edbc30bafb999f446f1b0caefd412d7572820c564bc2294ae6556326c1a34"
+    }
+  ],
+  "videoPublished": false
+}

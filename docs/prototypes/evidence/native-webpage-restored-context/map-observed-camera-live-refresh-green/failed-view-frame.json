@@ -1,0 +1,8 @@
+{
+  "video": "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh-green/7360FC43-911C-4A53-9A98-0E5D13B2CD9E.mp4",
+  "videoSha256": "768ccfad9b44d3cd8f8444c87b85445a5ebc7d34eef602b5121c0f64d384eb16",
+  "retainedFrame": "failed-view-frame.png",
+  "frameSha256": "f8c12cf1a951405076fc7ebf6a3f08942c09d3dffa3ba0e7fcdc97f2f165cd8c",
+  "extraction": "ffmpeg -sseof -1 -frames:v 1",
+  "inspection": "Original failure frame retains the rotated west Compass, current writer success and 1 of 1 items located. The moved marker is mostly outside the left edge of the unchanged user-positioned camera."
+}

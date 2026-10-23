@@ -3,10 +3,13 @@ import PlannerCore
 import Testing
 
 struct NativeImportPredecessorItineraryHistoryTests {
-  @Test(arguments: ["none", "direct", "expanded"], [false, true])
+  @Test(
+    arguments: ["none", "direct", "expanded"],
+    [(false, false), (false, true), (true, false), (true, true)])
   func restoredItineraryKeepsExactDirectAndExpandedHistoryOrRejectsTheWholeCollision(
-    collision: String, restoreListParent: Bool
+    collision: String, restorationCase: (Bool, Bool)
   ) async throws {
+    let (restoreListParent, restoresIncomingValuesIntoDeletedSource) = restorationCase
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -108,23 +111,30 @@ struct NativeImportPredecessorItineraryHistoryTests {
           reviewToken: deletion.reviewToken)
       ).outcome
     else { throw CancellationError() }
-    guard
-      case .decoded(let sourceOnlyBackup) = planner.decodeImport(
-        try JSONSerialization.data(withJSONObject: sourceOnly)),
-      case .reviewed(let restoration) = await planner.prepareReview(
-        session: session,
-        command: .applyImport(backup: sourceOnlyBackup, mode: .overwrite, restoreDeletedData: true)),
-      case .applied(_, .complete) = await planner.execute(
-        .init(
-          operationId: UUID(), session: session, command: restoration.command,
-          reviewToken: restoration.reviewToken)
-      ).outcome,
-      case .exported(let before) = await planner.exportData(session: session),
-      case .decoded(let current) = planner.decodeImport(before),
-      case .itinerary(let currentItinerary)? = current.backup.sources.first(where: {
-        $0.kind == .itinerary
-      })
+    if !restoresIncomingValuesIntoDeletedSource {
+      guard
+        case .decoded(let sourceOnlyBackup) = planner.decodeImport(
+          try JSONSerialization.data(withJSONObject: sourceOnly)),
+        case .reviewed(let restoration) = await planner.prepareReview(
+          session: session,
+          command: .applyImport(
+            backup: sourceOnlyBackup, mode: .overwrite, restoreDeletedData: true)),
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: restoration.command,
+            reviewToken: restoration.reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let current) = planner.decodeImport(before)
     else { throw CancellationError() }
+    let currentItinerary = current.backup.sources.compactMap {
+      portableSource -> PlannerPortableItinerary? in
+      guard case .itinerary(let portableItinerary) = portableSource else { return nil }
+      return portableItinerary
+    }.first { $0.id == itinerary.id }
+    #expect((currentItinerary == nil) == restoresIncomingValuesIntoDeletedSource)
     let currentList = try #require(
       current.backup.lists.first { $0.id.uuidString == itineraryHistoryIdentifier(201) })
     var incoming = sourceOnly
@@ -171,6 +181,43 @@ struct NativeImportPredecessorItineraryHistoryTests {
         "done": true, "observedChangeIds": [],
       ])
     }
+    if restoresIncomingValuesIntoDeletedSource {
+      var representedItinerary = itineraryRecord
+      representedItinerary["lifetimeId"] = itineraryHistoryIdentifier(881)
+      incoming["sources"] = [representedItinerary, tag]
+      if restoreListParent { incoming["sources"] = [representedItinerary, listRecord, tag] }
+      incoming["itineraryEntries"] = try [directEntry, listEntry].map { originalEntry in
+        var entry = originalEntry
+        var owner = try #require(entry["itinerary"] as? [String: Any])
+        owner["lifetimeId"] = itineraryHistoryIdentifier(881)
+        entry["itinerary"] = owner
+        return entry
+      }
+      let currentObject = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+      let markers = try #require(currentObject["deletionMarkers"] as? [[String: Any]])
+      incoming["deletionMarkers"] = markers.filter {
+        guard let target = $0["target"] as? [String: Any],
+          let source = target["source"] as? [String: Any]
+        else { return false }
+        return source["kind"] as? String == "itinerary"
+          && source["id"] as? String == itinerary.id.uuidString
+      }
+      incoming["restorationFamilies"] = [
+        [
+          "familyId": itineraryHistoryIdentifier(893),
+          "predecessor": [
+            "kind": "itinerary", "id": itinerary.id.uuidString,
+            "lifetimeId": originalItinerary.lifetimeId.uuidString,
+          ],
+          "candidates": [
+            [
+              "lifetimeId": itineraryHistoryIdentifier(881),
+              "operationId": itineraryHistoryIdentifier(996),
+            ]
+          ],
+        ]
+      ]
+    }
     incoming["contextAliases"] = aliases
     incoming["completionChanges"] = changes
     guard
@@ -189,10 +236,14 @@ struct NativeImportPredecessorItineraryHistoryTests {
         command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true))
     else { throw CancellationError() }
     #expect(afterDenied == before)
-    #expect(review.impact.importDetails?.restorations.isEmpty == true)
-    #expect(
-      review.impact.importDetails?.replacements.first?.owner.lifetimeId
-        == currentItinerary.lifetimeId)
+    if let currentItinerary {
+      #expect(review.impact.importDetails?.restorations.isEmpty == true)
+      #expect(
+        review.impact.importDetails?.replacements.first?.owner.lifetimeId
+          == currentItinerary.lifetimeId)
+    } else {
+      #expect(review.impact.importDetails?.restorations.map(\.owner.id) == [itinerary.id])
+    }
     let operationIdentifier = UUID()
     let response = await planner.execute(
       .init(
@@ -215,6 +266,11 @@ struct NativeImportPredecessorItineraryHistoryTests {
     guard case .applied(let result, .complete(let checkpoint)) = response.outcome,
       case .exported(let after) = await planner.exportData(session: session),
       case .decoded(let restored) = planner.decodeImport(after),
+      let savedItinerary = restored.backup.sources.compactMap({
+        portableSource -> PlannerPortableItinerary? in
+        guard case .itinerary(let portableItinerary) = portableSource else { return nil }
+        return portableItinerary
+      }).first(where: { $0.id == itinerary.id }),
       let restoredDirect = restored.backup.itineraryEntries.first(where: {
         $0.id.uuidString == itineraryHistoryIdentifier(451)
       }),
@@ -258,10 +314,16 @@ struct NativeImportPredecessorItineraryHistoryTests {
     var expected = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
     var expectedSources = try #require(expected["sources"] as? [[String: Any]])
     var expectedItinerary = itineraryRecord
-    expectedItinerary["lifetimeId"] = currentItinerary.lifetimeId.uuidString
-    let itineraryIndex = try #require(
-      expectedSources.firstIndex { $0["id"] as? String == itinerary.id.uuidString })
-    expectedSources[itineraryIndex] = expectedItinerary
+    expectedItinerary["lifetimeId"] = savedItinerary.lifetimeId.uuidString
+    if let itineraryIndex = expectedSources.firstIndex(where: {
+      $0["id"] as? String == itinerary.id.uuidString
+    }) {
+      expectedSources[itineraryIndex] = expectedItinerary
+    } else {
+      expectedSources.append(expectedItinerary)
+      #expect(savedItinerary.lifetimeId != originalItinerary.lifetimeId)
+      #expect(savedItinerary.lifetimeId.uuidString != itineraryHistoryIdentifier(881))
+    }
     if restoreListParent {
       var expectedList = listRecord
       expectedList["lifetimeId"] = currentList.lifetimeId.uuidString
@@ -286,7 +348,7 @@ struct NativeImportPredecessorItineraryHistoryTests {
       var entry = record
       entry["lifetimeId"] = restoredEntry.lifetimeId.uuidString
       var owner = try #require(entry["itinerary"] as? [String: Any])
-      owner["lifetimeId"] = currentItinerary.lifetimeId.uuidString
+      owner["lifetimeId"] = savedItinerary.lifetimeId.uuidString
       entry["itinerary"] = owner
       if restoredEntry.source.kind == .list {
         var dependency = try #require(entry["source"] as? [String: Any])
@@ -345,6 +407,21 @@ struct NativeImportPredecessorItineraryHistoryTests {
         try #require(
           actualFamilies.first { $0["familyId"] as? String == family.familyId.uuidString }))
     }
+    if restoresIncomingValuesIntoDeletedSource {
+      expectedFamilies.append([
+        "familyId": "C85169EF-4FEE-86AD-AC31-84374FA3B761",
+        "predecessor": [
+          "kind": "itinerary", "id": itinerary.id.uuidString,
+          "lifetimeId": originalItinerary.lifetimeId.uuidString,
+        ],
+        "candidates": [
+          [
+            "lifetimeId": savedItinerary.lifetimeId.uuidString,
+            "operationId": operationIdentifier.uuidString,
+          ]
+        ],
+      ])
+    }
     expectedFamilies.sort { ($0["familyId"] as? String ?? "") < ($1["familyId"] as? String ?? "") }
     expected["restorationFamilies"] = expectedFamilies
     if !NSDictionary(dictionary: actual).isEqual(to: expected) {
@@ -364,7 +441,8 @@ struct NativeImportPredecessorItineraryHistoryTests {
         .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
       ).outcome,
       case .reviewed(let repeated) = await reopened.prepareReview(
-        session: reopenedSession, command: .applyImport(backup: restored, mode: .overwrite)),
+        session: reopenedSession,
+        command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true)),
       case .applied(_, .complete) = await reopened.execute(
         .init(
           operationId: UUID(), session: reopenedSession, command: repeated.command,

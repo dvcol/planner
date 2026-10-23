@@ -117,6 +117,8 @@ struct SavedMapCollectionView: View {
   let select: (PlannerMapRowRead) -> Void
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @State private var camera = MapCameraPosition.automatic
+  @State private var observedCamera: MapCamera?
+  @State private var preservesUserCamera = false
   @State private var presentedSheet: PresentedSheet?
   @State private var pendingSelection: PlannerMapRowRead?
   @State private var locationChoiceMessage: String?
@@ -166,8 +168,15 @@ struct SavedMapCollectionView: View {
   var body: some View {
     Map(position: $camera) {
       ForEach(collection.groups) { group in
+        let markerTitle = group.rows.count == 1 ? group.rows[0].title : "\(group.rows.count) items"
+        let visibleMarkerTitle =
+          if group.rows.count > 1 && dynamicTypeSize.isAccessibilitySize {
+            String(group.rows.count)
+          } else {
+            markerTitle
+          }
         Annotation(
-          group.rows.count == 1 ? group.rows[0].title : "\(group.rows.count) items",
+          markerTitle,
           coordinate: .init(
             latitude: group.coordinate.latitude, longitude: group.coordinate.longitude)
         ) {
@@ -178,22 +187,28 @@ struct SavedMapCollectionView: View {
               presentedSheet = .group(group.id)
             }
           } label: {
-            Label(
-              group.rows.count == 1 ? group.rows[0].title : "\(group.rows.count) items",
-              systemImage: "mappin.circle.fill"
-            )
-            .lineLimit(2)
-            .frame(maxWidth: 220)
+            Label(visibleMarkerTitle, systemImage: "mappin.circle.fill")
+              .lineLimit(2)
+              .frame(maxWidth: 220)
           }
           .buttonStyle(.borderedProminent)
           .buttonBorderShape(.capsule)
           .controlSize(.large)
+          .accessibilityLabel(markerTitle)
           .accessibilityIdentifier(
             "saved.map.pin.\(group.coordinate.latitude),\(group.coordinate.longitude)")
         }
         .annotationTitles(.hidden)
       }
     }
+    .onGeometryChange(for: CGSize.self) { geometry in
+      geometry.size
+    } action: { _ in
+      guard let observedCamera else { return }
+      preservesUserCamera = preservesUserCamera || camera.positionedByUser
+      camera = .camera(observedCamera)
+    }
+    .onMapCameraChange { context in observedCamera = context.camera }
     .mapControls {
       MapCompass()
       MapScaleView()
@@ -207,7 +222,7 @@ struct SavedMapCollectionView: View {
         .background(.bar)
     }
     .onChange(of: collection.groups.map(\.id), initial: true) {
-      guard !camera.positionedByUser else { return }
+      guard !camera.positionedByUser && !preservesUserCamera else { return }
       if collection.groups.count == 1, let coordinate = collection.groups.first?.coordinate {
         camera = .region(
           .init(

@@ -1,0 +1,128 @@
+{
+  "observations": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "appearance"
+      ],
+      "exitCode": 0,
+      "output": "light",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "increase_contrast"
+      ],
+      "exitCode": 0,
+      "output": "disabled",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "content_size"
+      ],
+      "exitCode": 0,
+      "output": "large",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "appearance"
+      ],
+      "exitCode": 0,
+      "output": "dark",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "increase_contrast"
+      ],
+      "exitCode": 0,
+      "output": "enabled",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "content_size"
+      ],
+      "exitCode": 0,
+      "output": "accessibility-extra-extra-extra-large",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "appearance"
+      ],
+      "exitCode": 0,
+      "output": "light",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "increase_contrast"
+      ],
+      "exitCode": 0,
+      "output": "disabled",
+      "error": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "ui",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "content_size"
+      ],
+      "exitCode": 0,
+      "output": "large",
+      "error": ""
+    }
+  ],
+  "requested": {
+    "appearance": "dark",
+    "increase_contrast": "enabled",
+    "content_size": "accessibility-extra-extra-extra-large"
+  },
+  "original": {
+    "appearance": "light",
+    "increase_contrast": "disabled",
+    "content_size": "large"
+  },
+  "restored": {
+    "appearance": "light",
+    "increase_contrast": "disabled",
+    "content_size": "large"
+  },
+  "restoredToOriginal": true
+}

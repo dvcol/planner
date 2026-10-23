@@ -1,0 +1,25 @@
+{
+  "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+  "containerCommand": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "com.apple.DocumentsApp",
+    "groups"
+  ],
+  "inputs": [
+    {
+      "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-current-v2.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner fresh local deleted owner.json",
+      "sha256": "5b1ed4ffc0754df2bd9ea2361695a74f52dcc710229639fac17bf2ff2b11f3a5",
+      "bytes": 710
+    },
+    {
+      "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-incoming-v2.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner fresh local incoming values.json",
+      "sha256": "02625b5603bb4993fafda66ab75be4e7526814c9fce067173cb7d5ad5b73334b",
+      "bytes": 3120
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-entries-dark-tablet-final.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-entries-dark-tablet-final"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "32E8F6A1-0CEE-4E09-AF85-B58036689F68.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored direct itinerary reader returns to current content and original local Done_0_9FEBCB74-17D9-4C20-83C6-7CD904604EC4.png",
+      "timestamp": 1792757672.404,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredDirectItineraryAppearanceReturnsToItsOriginalLocalState()",
+      "retainedFileName": "32E8F6A1-0CEE-4E09-AF85-B58036689F68.png",
+      "originalSha256": "067cc46d414afc027645571f836eda0c1de9137c570ef53da8110b6db0ead829"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8E383189-D978-4E2E-AF5E-CD953EFF0863.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored repeated List reader returns to exact branch completion_0_20626B8E-AABE-4C01-9785-6B33906AF5BF.png",
+      "timestamp": 1792757749.225,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredRepeatedListBranchReturnsToItsExactLocalState()",
+      "retainedFileName": "8E383189-D978-4E2E-AF5E-CD953EFF0863.png",
+      "originalSha256": "af5a8d52073bc8a89499e8d2a1217480ef935b4febbb83982f899f9cb34f7254"
+    }
+  ],
+  "videoPublished": false
+}

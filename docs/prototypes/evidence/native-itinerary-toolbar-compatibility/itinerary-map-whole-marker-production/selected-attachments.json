@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-itinerary-map-whole-marker-production.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-itinerary-map-whole-marker-production"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "45AB73F0-7BDE-4841-931F-0DDAE11E4D1D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 navigation frames in landscape_0_A980ED67-5D4B-47A8-9D40-989F85FF44CD.txt",
+      "timestamp": 1792758692.778,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "45AB73F0-7BDE-4841-931F-0DDAE11E4D1D.txt.gz",
+      "originalSha256": "e8e2a491ecdbde1b08703c450fcb252aa727b2d82faf53b5db6ea495f41e3830"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B5883682-2CC5-4304-99B3-F811185B35EB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Collection Map Map museum \u00b7 Stop 1 viewport and exact details in landscape_0_C2E16775-E1AD-4FBB-AC33-86D4D21F65E8.png",
+      "timestamp": 1792758692.329,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "B5883682-2CC5-4304-99B3-F811185B35EB.png",
+      "originalSha256": "c8ec50a0a0bddb774d2d8bdff665cb9154393a120e7e75714c52b5a66bd3ecf7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "28095A94-839B-45A8-B283-9A72F5E545D4.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_B3F1AF6E-BD73-4B3B-B90D-9B65B87C524E.png",
+      "timestamp": 1792758666.957,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "28095A94-839B-45A8-B283-9A72F5E545D4.png",
+      "originalSha256": "b00a813ccdd33c8c7c03d6c078ea6b838b430ff48a7828a3f15177384f5a5c26"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A349A6F0-53F1-45D7-A5B1-EA593E0BEF43.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native accessible Map summary scrolls without displacing its pins_0_19895460-90B4-4DBD-8DD0-9AD5DFE34BB8.png",
+      "timestamp": 1792758664.671,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "A349A6F0-53F1-45D7-A5B1-EA593E0BEF43.png",
+      "originalSha256": "94e7308354ad3e634b27a65a3c7b02b84391f63abd4c3848fbb318df3e30d80f"
+    }
+  ],
+  "videoPublished": false
+}

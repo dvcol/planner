@@ -1,0 +1,43 @@
+{
+  "scope": "Completed passing owned Core fixtures only; original runtime logs, results, sources, products, failed fixtures and user datasets retained.",
+  "phases": [
+    {
+      "phase": "fresh-local-values-references-affected-mac",
+      "fixtureCount": 340,
+      "nominalBytes": 246576463,
+      "sourceLogSha256": "b0842eba8e0860b0b4ce47f073d9d6b7a13f87a4a33cb5e59a21748f92a26609"
+    },
+    {
+      "phase": "fresh-local-values-references-affected-phone",
+      "fixtureCount": 340,
+      "nominalBytes": 246591767,
+      "sourceLogSha256": "fc1a34f78e96f1706040ce64e5ecfafd28df5e02053968c5e70e63bbb2865c98"
+    },
+    {
+      "phase": "fresh-local-values-owned-affected-mac",
+      "fixtureCount": 346,
+      "nominalBytes": 251365383,
+      "sourceLogSha256": "1fa403141ed16d5650c9e3a40ddd3512e80d2725cfc2ff5b2cdc6e399891bf57"
+    },
+    {
+      "phase": "fresh-local-values-owned-affected-tablet",
+      "fixtureCount": 346,
+      "nominalBytes": 251381418,
+      "sourceLogSha256": "71b9a2d2d4147149ae54d760b20a52068e4fa199d9a6633ed299c3550aefbb13"
+    },
+    {
+      "phase": "fresh-local-values-contexts-affected-mac",
+      "fixtureCount": 352,
+      "nominalBytes": 257203120,
+      "sourceLogSha256": "0c21e843cba4a4b39e20b43ca25a8c0a3f41ea4ee118f942b6c876c16549736f"
+    },
+    {
+      "phase": "fresh-local-values-contexts-affected-tablet",
+      "fixtureCount": 352,
+      "nominalBytes": 257231602,
+      "sourceLogSha256": "4129bf788173b668630b10408d16a2054b22430e967861e39b3919f6d9d563eb"
+    }
+  ],
+  "removedFixtures": 2076,
+  "nominalBytes": 1510349753
+}

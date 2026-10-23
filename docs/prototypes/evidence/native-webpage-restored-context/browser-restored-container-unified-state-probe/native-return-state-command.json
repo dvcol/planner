@@ -1,0 +1,14 @@
+[
+  "xcrun",
+  "simctl",
+  "spawn",
+  "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+  "log",
+  "show",
+  "--style",
+  "json",
+  "--last",
+  "30m",
+  "--predicate",
+  "eventMessage CONTAINS \"PLANNER_WEBSITE_RETURN_STATE\""
+]

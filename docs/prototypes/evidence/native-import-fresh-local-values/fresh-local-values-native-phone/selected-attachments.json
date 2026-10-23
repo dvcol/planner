@@ -1,0 +1,123 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-fresh-local-values-native-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A8E96BF8-CEC4-429A-ADEC-3C06759B9B28.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import retains Tour and local Done after relaunch_0_02DB8E68-DEC9-4F3A-B73E-E66B1FE8AB3A.png",
+      "timestamp": 1792757152.777,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "A8E96BF8-CEC4-429A-ADEC-3C06759B9B28.png",
+      "originalSha256": "8ae3526612c173262cdb6215101d6e02f8c117eeab7d7eeaedbc36a4e5a58f26"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "C112D480-36FA-40C0-8D20-A053A29D41AE.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Repeated delivered backup filename_0_8986E0BF-9246-4654-9106-6D0FBA47D77F.txt",
+      "timestamp": 1792757111.991,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "C112D480-36FA-40C0-8D20-A053A29D41AE.txt.gz",
+      "originalSha256": "c51b953a541f2cd641117cf7a160bb709f4bc43d693cf90f0425d7c42819ffe3"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "AD6CA3B4-1BD4-43A1-9647-492F77FA2FE4.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Repeated explicitly reviews restoration_0_97C40347-F1DB-48AC-93C2-A54FD8D6BDFD.png",
+      "timestamp": 1792757101.614,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "AD6CA3B4-1BD4-43A1-9647-492F77FA2FE4.png",
+      "originalSha256": "0f5c958b2f461482129c7c03e4a1eb9202cddc196f979d0b9a73019bc181a688"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1EF2683C-4FD7-4632-87FE-49A7F43309FE.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Restored delivered backup filename_0_20D0CB41-4313-4C25-BC96-9648E34B480A.txt",
+      "timestamp": 1792757082.971,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "1EF2683C-4FD7-4632-87FE-49A7F43309FE.txt.gz",
+      "originalSha256": "52aed2c4e78f3ca8ab90c33c0029aa78b56032a46cba5e6d5184c37b1bf99daa"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6BEB0E08-2C2B-4D8A-A4A9-4A7813DAB32B.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Restored explicitly reviews restoration_0_B152ABFB-E656-4D63-B3B7-C3934898B55D.png",
+      "timestamp": 1792757072.096,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "6BEB0E08-2C2B-4D8A-A4A9-4A7813DAB32B.png",
+      "originalSha256": "9dec59f634e9412bb4f768f844a315f5569eac5bf0d8a512051f52b4c04a141b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "F281A3CE-ADCC-4578-8F31-BC75F5FD4DDB.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Denied delivered backup filename_0_FC8CAC01-8AC8-4999-94A5-30C972DB815C.txt",
+      "timestamp": 1792757053.825,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "F281A3CE-ADCC-4578-8F31-BC75F5FD4DDB.txt.gz",
+      "originalSha256": "92f02c806e7acab21c8a7226b0ee1cde035bd4ffd5e29c77c90e71a8e7902a7f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "79CC9D68-9686-4ACA-A2B4-65D97C843746.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import refuses unreviewed restoration_0_E08328A8-62E8-4F0D-8D3E-A094061F8CB4.png",
+      "timestamp": 1792757045.754,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "79CC9D68-9686-4ACA-A2B4-65D97C843746.png",
+      "originalSha256": "23aea68445d06959211cb589388b793be6ef58722e591cb746f22c8a866b98ef"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E0CCA80B-F7E6-4A25-BB49-1B20C9E9B6A8.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Skip delivered backup filename_0_562C3E4A-175B-47A6-9440-E34801142225.txt",
+      "timestamp": 1792757027.126,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "E0CCA80B-F7E6-4A25-BB49-1B20C9E9B6A8.txt.gz",
+      "originalSha256": "60080b3850d97b64a388eda53ef20ff1a2220d689ca17d61d66a3e23d9ebc24d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6ABCCD39-D154-4DE7-AD7D-C10D7180B7EF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh local import Skip preserves deletion and skips Tour_0_6C9A6BB0-76FE-4F0C-994C-A0E64557B3CA.png",
+      "timestamp": 1792757015.069,
+      "testIdentifier": "SavedBackupImportJourneyTests/testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch()",
+      "retainedFileName": "6ABCCD39-D154-4DE7-AD7D-C10D7180B7EF.png",
+      "originalSha256": "d68ae5260687cf74facd386919676ede9886ba455f83d91839e5f8aed45ccd67"
+    }
+  ],
+  "videoPublished": false
+}

@@ -54,8 +54,7 @@ final class ChangeObservationJourneyTests: XCTestCase {
     notes.typeText("Retain connection notes")
     let save = application.plannerElement("saved.item.save")
     XCTAssertTrue(save.isEnabled)
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.changeBinding").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.changeBinding")
     let legacyAlert = application.alerts.firstMatch
     if legacyAlert.waitForExistence(timeout: 2) {
       legacyAlert.buttons["OK"].activateForPlannerJourney()
@@ -173,8 +172,7 @@ final class ChangeObservationJourneyTests: XCTestCase {
     let sourceIdentifier = original.identifier
     original.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.update").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.update")
     let status = application.staticTexts["fixture.writer.status"]
     XCTAssertEqual(
       XCTWaiter.wait(

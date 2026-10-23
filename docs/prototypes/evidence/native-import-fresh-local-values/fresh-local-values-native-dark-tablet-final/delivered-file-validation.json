@@ -1,0 +1,51 @@
+{
+  "results": {
+    "Skip": {
+      "filename": "Planner Backup 2026-10-23T12-22-11Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-23T12-22-11Z.json",
+      "retained": "skip-delivered.json.gz",
+      "bytes": 1200,
+      "sha256": "954a31737a1437f00994897451f2501d77315556a8e36d7ea003ab62b6d486f2",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    },
+    "Denied": {
+      "filename": "Planner Backup 2026-10-23T12-23-02Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-23T12-23-02Z.json",
+      "retained": "denied-delivered.json.gz",
+      "bytes": 1200,
+      "sha256": "954a31737a1437f00994897451f2501d77315556a8e36d7ea003ab62b6d486f2",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    },
+    "Restored": {
+      "filename": "Planner Backup 2026-10-23T12-23-56Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-23T12-23-56Z.json",
+      "retained": "restored-delivered.json.gz",
+      "bytes": 3235,
+      "sha256": "dd06ba6e3d36c993ce834789e8787e44144d02e2cc90fefcaf2908da48734701",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    },
+    "Repeated": {
+      "filename": "Planner Backup 2026-10-23T12-24-49Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-23T12-24-49Z.json",
+      "retained": "repeated-delivered.json.gz",
+      "bytes": 3235,
+      "sha256": "dd06ba6e3d36c993ce834789e8787e44144d02e2cc90fefcaf2908da48734701",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    },
+    "Relaunched": {
+      "filename": "Planner Backup 2026-10-23T12-26-21Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-23T12-26-21Z.json",
+      "retained": "relaunched-delivered.json.gz",
+      "bytes": 3235,
+      "sha256": "dd06ba6e3d36c993ce834789e8787e44144d02e2cc90fefcaf2908da48734701",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    }
+  },
+  "nativeTestPassed": true,
+  "scope": "Complete literal graphs; only fresh local lifetime and issuing operation are captured; Skip and denied preserve closure; restored, repeated and relaunched exports remain identical"
+}

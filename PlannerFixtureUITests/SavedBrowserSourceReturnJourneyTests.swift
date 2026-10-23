@@ -2,6 +2,281 @@ import XCTest
 
 @MainActor
 final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
+  func testRemovedAppearanceReturnsToItsRestoredPublicListWithoutRecreatingMembership()
+    async throws
+  {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let list = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(list.waitForExistence(timeout: 20))
+    let listIdentifier = list.identifier
+    list.activateForPlannerJourney()
+    let appearance = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    let appearanceIdentifier = appearance.identifier
+    appearance.activateForPlannerJourney()
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    for _ in 0..<6 where !link.isHittable { application.swipeUp() }
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    link.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    for (action, status) in [
+      ("removeMembership", "Removed Hotel from Weekend"),
+      ("update", "Saved another-writer change"),
+      ("restoreWeekend", "Restored Weekend with a new lifetime"),
+    ] {
+      application.activatePlannerFixtureWriterAction("fixture.writer.\(action)")
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "label == %@", status),
+              object: application.staticTexts["fixture.writer.status"])
+          ], timeout: 15), .completed, application.debugDescription)
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+      XCTAssertFalse(application.alerts.firstMatch.exists)
+    }
+    application.plannerElement("saved.browser.return").activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      explanation.staticTexts[
+        "The original List entry is no longer available. Returned to the List."
+      ].exists)
+    explanation.buttons["OK"].activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Weekend"].exists)
+    XCTAssertFalse(application.buttons[appearanceIdentifier].exists)
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    returned.name = "Restored public List receives reader fallback without an omitted membership"
+    returned.lifetime = .keepAlways
+    add(returned)
+    if !list.exists {
+      let sidebar = application.plannerElement("Show Sidebar")
+      if sidebar.exists {
+        sidebar.activateForPlannerJourney()
+      } else {
+        application.plannerElement("BackButton").activateForPlannerJourney()
+      }
+    }
+    XCTAssertTrue(list.waitForExistence(timeout: 10))
+    XCTAssertEqual(list.identifier, listIdentifier)
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel updated").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    source.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !retainedLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
+  func testRestoredDirectItineraryAppearanceReturnsToItsOriginalLocalState() async throws {
+    try await qualifyRestoredItineraryGuide(restoresListBranch: false)
+  }
+
+  func testRestoredRepeatedListBranchReturnsToItsExactLocalState() async throws {
+    try await qualifyRestoredItineraryGuide(restoresListBranch: true)
+  }
+
+  private func qualifyRestoredItineraryGuide(restoresListBranch: Bool) async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-website-url", destination.absoluteString, "--fixture-itinerary",
+    ]
+    if restoresListBranch {
+      application.launchArguments.append("--fixture-repeated-itinerary-list")
+    }
+    application.launchSavedPlannerJourney()
+    if application.windows.firstMatch.frame.width >= 600 {
+      let section = application.plannerElement("saved.section.itineraries")
+      if !section.exists || !section.isHittable {
+        let sidebar = application.plannerElement("Show Sidebar")
+        XCTAssertTrue(sidebar.waitForExistence(timeout: 10))
+        sidebar.activateForPlannerJourney()
+      }
+      XCTAssertTrue(section.waitForExistence(timeout: 10))
+      XCTAssertTrue(section.waitForPlannerHittability())
+      section.activateForPlannerJourney()
+    } else {
+      application.openPlannerSection("Itineraries")
+    }
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "City trip")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 20))
+    var previousFrame = CGRect.null
+    let settledCatalog = NSPredicate { _, _ in
+      let frame = itinerary.frame
+      let settled = frame == previousFrame && itinerary.isHittable
+      previousFrame = frame
+      return settled
+    }
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: settledCatalog, object: application)],
+        timeout: 10),
+      .completed)
+    let itineraryTitle = itinerary.staticTexts["City trip"].firstMatch
+    XCTAssertTrue(itineraryTitle.waitForPlannerHittability())
+    itineraryTitle.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement("saved.itinerary.filters").waitForExistence(timeout: 10))
+    let appearances = application.buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.appearance.", "Hotel"))
+    XCTAssertTrue(appearances.firstMatch.waitForExistence(timeout: 10))
+    let contents = application.descendants(matching: .any)
+      .matching(identifier: "saved.itinerary.contents").firstMatch
+    let direct = try XCTUnwrap(
+      appearances.allElementsBoundByIndex.first {
+        $0.identifier.split(separator: ".").count == 4
+      })
+    var expandedIdentifiers: [String] = []
+    for _ in 0..<8 {
+      for row in appearances.allElementsBoundByIndex
+      where row.identifier.split(separator: ".").count == 5 {
+        if !expandedIdentifiers.contains(row.identifier) {
+          expandedIdentifiers.append(row.identifier)
+        }
+      }
+      if expandedIdentifiers.count == (restoresListBranch ? 2 : 1) { break }
+      contents.swipeUp()
+    }
+    let selectedIdentifier: String
+    let otherIdentifier: String
+    if restoresListBranch {
+      XCTAssertEqual(expandedIdentifiers.count, 2)
+      selectedIdentifier = try XCTUnwrap(expandedIdentifiers.first)
+      otherIdentifier = try XCTUnwrap(expandedIdentifiers.last)
+      XCTAssertNotEqual(selectedIdentifier, otherIdentifier)
+    } else {
+      selectedIdentifier = direct.identifier
+      otherIdentifier = try XCTUnwrap(expandedIdentifiers.first)
+    }
+    let selectedAppearance = application.buttons[selectedIdentifier]
+    for _ in 0..<8 where !selectedAppearance.isHittable { contents.swipeDown() }
+    XCTAssertTrue(selectedAppearance.isHittable)
+    let selectedCompletion = application.buttons[
+      selectedIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+    selectedCompletion.activateForPlannerJourney()
+    XCTAssertTrue(selectedCompletion.waitForPlannerValue("Completed"))
+    selectedAppearance.activateForPlannerJourney()
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.link.", "Museum guide")
+    ).firstMatch
+    for _ in 0..<6 where !link.isHittable { application.swipeUp() }
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = link.identifier
+    XCTAssertEqual(link.value as? String, destination.absoluteString)
+    link.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    let removalAction = restoresListBranch ? "removeWeekendBranch" : "removeCityTripEntry"
+    let removalStatus: String
+    if restoresListBranch {
+      removalStatus = "Removed first Weekend branch from City trip"
+    } else {
+      removalStatus = "Removed Hotel from City trip"
+    }
+    for (action, status) in [
+      (removalAction, removalStatus),
+      ("update", "Saved another-writer change"),
+      ("restoreItineraryEntry", "Restored original City trip entry"),
+    ] {
+      application.activatePlannerFixtureWriterAction("fixture.writer.\(action)")
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "label == %@", status),
+              object: application.staticTexts["fixture.writer.status"])
+          ], timeout: 15), .completed, application.debugDescription)
+      if action == removalAction {
+        let removedIdentifier = try XCTUnwrap(
+          application.staticTexts["fixture.writer.status"].value as? String)
+        XCTAssertFalse(removedIdentifier.isEmpty)
+        XCTAssertEqual(selectedIdentifier.split(separator: ".")[3], Substring(removedIdentifier))
+      }
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].exists)
+      XCTAssertFalse(application.alerts.firstMatch.exists)
+    }
+    application.plannerElement("saved.browser.return").activateForPlannerJourney()
+    XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    XCTAssertTrue(application.navigationBars["Hotel updated"].waitForExistence(timeout: 10))
+    let detailForm = try XCTUnwrap(application.collectionViews.allElementsBoundByIndex.last)
+    for _ in 0..<6 where !application.staticTexts["Completed"].isHittable {
+      let horizontalPosition = 24 / detailForm.frame.width
+      detailForm.coordinate(withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.25))
+        .press(
+          forDuration: 0.05,
+          thenDragTo: detailForm.coordinate(
+            withNormalizedOffset: CGVector(dx: horizontalPosition, dy: 0.75)))
+    }
+    XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Completed"].exists)
+    let returned = XCTAttachment(screenshot: application.screenshot())
+    if restoresListBranch {
+      returned.name = "Restored repeated List reader returns to exact branch completion"
+    } else {
+      returned.name =
+        "Restored direct itinerary reader returns to current content and original local Done"
+    }
+    returned.lifetime = .keepAlways
+    add(returned)
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: bookmarkIdentifier).firstMatch
+    for _ in 0..<6 where !retainedLink.isHittable { application.swipeUp() }
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    XCTAssertTrue(application.buttons[selectedIdentifier].waitForExistence(timeout: 10))
+    XCTAssertTrue(selectedCompletion.waitForPlannerValue("Completed"))
+    let expandedCompletion = application.buttons[
+      otherIdentifier.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+    for _ in 0..<8 where !expandedCompletion.isHittable { contents.swipeUp() }
+    XCTAssertTrue(expandedCompletion.waitForPlannerValue("To do"))
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel updated").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    source.activateForPlannerJourney()
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+  }
+
   func testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
@@ -42,8 +317,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
       ("update", "Saved another-writer change"),
       ("restoreMembership", "Restored original Hotel membership"),
     ] {
-      application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-      application.plannerElement("fixture.writer.\(action)").activateForPlannerJourney()
+      application.activatePlannerFixtureWriterAction("fixture.writer.\(action)")
       XCTAssertEqual(
         XCTWaiter.wait(
           for: [
@@ -131,8 +405,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     link.activateForPlannerJourney()
     let page = application.webViews.firstMatch
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.restoreHotel").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.restoreHotel")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [
@@ -225,8 +498,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
     let returnToItem = application.buttons["saved.browser.return"]
     XCTAssertEqual(returnToItem.label, "Return to item")
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.deleteHotel").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.deleteHotel")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [
@@ -363,8 +635,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
     let returnToItinerary = application.buttons["saved.browser.return"]
     XCTAssertEqual(returnToItinerary.label, "Return to itinerary")
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.deleteCityTrip").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.deleteCityTrip")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [
@@ -552,8 +823,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
     let returnToItem = application.buttons["saved.browser.return"]
     XCTAssertEqual(returnToItem.label, "Return to item")
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.removeWeekendBranch").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.removeWeekendBranch")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [
@@ -804,8 +1074,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     link.activateForPlannerJourney()
     let page = application.webViews.firstMatch
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.deleteWeekend").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.deleteWeekend")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [
@@ -879,8 +1148,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     link.activateForPlannerJourney()
     let page = application.webViews.firstMatch
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.removeMembership").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.removeMembership")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [
@@ -951,8 +1219,7 @@ final class SavedBrowserSourceReturnJourneyTests: XCTestCase {
     link.activateForPlannerJourney()
     let page = application.webViews.firstMatch
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
-    application.plannerElement("fixture.writer.menu").activateForPlannerJourney()
-    application.plannerElement("fixture.writer.deleteHotel").activateForPlannerJourney()
+    application.activatePlannerFixtureWriterAction("fixture.writer.deleteHotel")
     XCTAssertEqual(
       XCTWaiter.wait(
         for: [

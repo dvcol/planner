@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-direct-phone-visible-branch.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-direct-phone-visible-branch"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "ABF62FBC-990E-4D18-BB9D-2D3ACB648A37.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored direct itinerary reader returns to current content and original local Done_0_7CBD1B65-08EB-4628-87DF-C6A0122F610A.png",
+      "timestamp": 1792753649.24,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredDirectItineraryAppearanceReturnsToItsOriginalLocalState()",
+      "retainedFileName": "ABF62FBC-990E-4D18-BB9D-2D3ACB648A37.png",
+      "originalSha256": "8ed8cb9073de7bea396f4d4e1755a452203cda0a4f38941bccdf951cf12762a6"
+    }
+  ],
+  "videoPublished": false
+}

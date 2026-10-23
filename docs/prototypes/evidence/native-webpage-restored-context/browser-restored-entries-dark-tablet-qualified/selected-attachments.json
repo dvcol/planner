@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-entries-dark-tablet-qualified.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-entries-dark-tablet-qualified"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "0E638EB4-A2F9-464F-928A-3176BB4D9D5E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored repeated List reader returns to exact branch completion_0_A38AF55A-5372-4594-9952-A784A084D1FA.png",
+      "timestamp": 1792754571.575,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredRepeatedListBranchReturnsToItsExactLocalState()",
+      "retainedFileName": "0E638EB4-A2F9-464F-928A-3176BB4D9D5E.png",
+      "originalSha256": "93fe5fabf5399548e88240ae12eef1dbade52f5634a33fc2e939e6fa4c1ac17d"
+    }
+  ],
+  "videoPublished": false
+}

@@ -1,0 +1,8 @@
+{
+  "runtimeCredit": false,
+  "testFunctionsStarted": 0,
+  "cause": "The phone invocation mistakenly reused the active tablet build directory; Xcode rejected its build database connection before tests.",
+  "correction": "Use the separate existing phone/mobile build directory.",
+  "inputCount": 1102,
+  "sourceDifferences": []
+}

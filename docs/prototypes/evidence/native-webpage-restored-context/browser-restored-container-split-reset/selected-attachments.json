@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-container-split-reset.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-container-split-reset"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B6BF974D-05AE-4694-9649-32B2D2844645.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored public List receives reader fallback without an omitted membership_0_C8343836-870A-4FB8-85DE-73C7FCF89FC5.png",
+      "timestamp": 1792756289.542,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedAppearanceReturnsToItsRestoredPublicListWithoutRecreatingMembership()",
+      "retainedFileName": "B6BF974D-05AE-4694-9649-32B2D2844645.png",
+      "originalSha256": "fd3a01d49627056323d9a59b8578e59080fa69c15ef1218df01108d396073135"
+    }
+  ],
+  "videoPublished": false
+}

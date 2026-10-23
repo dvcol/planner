@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "inputs": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift": "31ffded7036f0b2f39762137d16a5a78c19831062de5458dec47e5ccf239c3df",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalOwnedTests.swift": "bffb90218adc0b6610ee4ceea2e129a8654b256ef4bea502f1eefe436b7b9b1b",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportPredecessorItineraryHistoryTests.swift": "a09d9c8dd1c6527e24969b6faba7159e4148a8b9111ada0a3bb55a5aaa5cd3ad",
+    "Planner/Scenes/SavedPlannerView.swift": "2948ea8c23d55fb9c250950b7c91ca5739bfffcccef34676eab301733f5b2f5e",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift": "99c1a00b7c567b3a4adfe828ca00d327b78d8fc167c6f954dfabca1ed17967f6",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift": "ab7a41dbda9af983d57da7ff57063a2297a2a719f68b0245ccf6c1ce3ebf9cca",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift": "2149321f223f7228adc12680de8d5695b22dd22f19bbdf22f035e4f7115222cf",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift": "2b7472fcee5881577961db6d4106bb776d1c0b2785f5d3e3ccb3d415b7fad278",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "9026146d6409b88461ba2c8be10973cff7c521a33b408db5690911efc12629f7",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "2bc7d7306cb6a87ccf9bf82807ba40ea2fabb095ab54d10603ba61fc2736e84e"
+  }
+}

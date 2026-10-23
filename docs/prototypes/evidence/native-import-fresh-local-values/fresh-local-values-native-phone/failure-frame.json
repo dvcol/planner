@@ -1,0 +1,19 @@
+{
+  "originalRecording": "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone/A9A53D3D-970E-4C58-AB11-EC2164083DCC.mp4",
+  "recordingSha256": "414d24657da3793b69ab554ce42248827a2d54aa5e469a516080532caf5e20a9",
+  "retainedFrame": "catalog-transition-failure.png",
+  "frameSha256": "10bbd4eb8ecdb7f0cc6af0d411da6c96d21dd4503d480ecad1a6137ed5e3551f",
+  "command": [
+    "ffmpeg",
+    "-sseof",
+    "-5",
+    "-i",
+    "/private/tmp/PlannerApprovedAdminAttachments-fresh-local-values-native-phone/A9A53D3D-970E-4C58-AB11-EC2164083DCC.mp4",
+    "-frames:v",
+    "1",
+    "-update",
+    "1",
+    "-y",
+    "/private/tmp/PlannerFreshLocalImportPhoneFailure.png"
+  ]
+}

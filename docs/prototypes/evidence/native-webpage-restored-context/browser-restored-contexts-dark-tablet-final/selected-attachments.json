@@ -1,0 +1,87 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-browser-restored-contexts-dark-tablet-final.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-browser-restored-contexts-dark-tablet-final"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "613C712D-42ED-4C26-9FF5-23417BAFE5BF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored public List receives reader fallback without an omitted membership_0_582367E0-B0D0-43E4-90E1-09272FE55A10.png",
+      "timestamp": 1792756800.177,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRemovedAppearanceReturnsToItsRestoredPublicListWithoutRecreatingMembership()",
+      "retainedFileName": "613C712D-42ED-4C26-9FF5-23417BAFE5BF.png",
+      "originalSha256": "786998b65bee63665914ed1b48086ee62245c23f2249495f885a345b84352cc8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "4C4F07AE-6EB8-411B-9518-CF4613D09E7E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List reader Return shows local completion and current shared content_0_CBF801DB-6287-418E-8FE3-2A061BDF880C.png",
+      "timestamp": 1792756898.294,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "4C4F07AE-6EB8-411B-9518-CF4613D09E7E.png",
+      "originalSha256": "e1e7242c0345b25f0f3796dd78100466d10ef23d5115bfed6ab78f53eab8cdcb"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "F815464F-CB7E-49FD-AFA4-D2F0462584BA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List membership preserves the open guide and exact public context_0_13DA341A-5129-48D2-8D59-505F03426585.png",
+      "timestamp": 1792756892.104,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "F815464F-CB7E-49FD-AFA4-D2F0462584BA.png",
+      "originalSha256": "46d9cd25872132051bbdb15a653f87f02398798efd959401b263a3009d8ba5b0"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "AF311CB0-2ED7-4DC9-B336-96D08A084861.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored repeated List reader returns to exact branch completion_0_7A4C49EC-CDB1-4B4F-AAE0-2B9787FB2178.png",
+      "timestamp": 1792756978.302,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredRepeatedListBranchReturnsToItsExactLocalState()",
+      "retainedFileName": "AF311CB0-2ED7-4DC9-B336-96D08A084861.png",
+      "originalSha256": "edffaeab35aafbb74b9bdf8e37bd565d95e4bb28ddcf13a899aa51d60c65d98d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A5DF138D-220A-42AD-93F3-6E675BAB0E7D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Old reader returns to the collection containing the restored public Item_0_6D733F0D-D130-44CF-945E-B766FEFDA961.png",
+      "timestamp": 1792757033.034,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext()",
+      "retainedFileName": "A5DF138D-220A-42AD-93F3-6E675BAB0E7D.png",
+      "originalSha256": "0b270b6865358d629ec0e6a5a78ad1240d8046b326667babd6530e8fa2da3a8c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9A7D483E-9982-42C5-8B70-850B14F4D25D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Fresh restored Item lifetime keeps the original guide readable_0_BADCFA44-5A6E-407D-8E1A-DDA9095E6384.png",
+      "timestamp": 1792757025.507,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredSourceKeepsItsGuideButDoesNotReuseTheOldReaderContext()",
+      "retainedFileName": "9A7D483E-9982-42C5-8B70-850B14F4D25D.png",
+      "originalSha256": "e488688a5ce7be0765137d1dfe98586a6582c2afa2f8cc9fb94e24c69b2ecfd8"
+    }
+  ],
+  "videoPublished": false
+}

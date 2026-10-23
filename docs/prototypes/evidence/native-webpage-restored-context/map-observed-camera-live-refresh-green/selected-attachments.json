@@ -1,0 +1,75 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-observed-camera-live-refresh-green.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-observed-camera-live-refresh-green"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "62467365-377E-4CE1-840E-DC820637CEE8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Map heading and compass survive viewport resize 1_0_E41805F4-A177-4278-AFEE-9B5860E2A077.png",
+      "timestamp": 1792761314.285,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize()",
+      "retainedFileName": "62467365-377E-4CE1-840E-DC820637CEE8.png",
+      "originalSha256": "d23090f33e0c711557bcb40acf38b77957e735413f33cb5b776d72f570fa5eb8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "D48F2791-4226-4D79-99CD-1E2F6D4C33CC.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Map heading and compass survive viewport resize 3_0_FEDD7AE8-1968-419E-BBAD-EC4BCFEBDEF0.png",
+      "timestamp": 1792761312.33,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize()",
+      "retainedFileName": "D48F2791-4226-4D79-99CD-1E2F6D4C33CC.png",
+      "originalSha256": "5adb3c156aafbfb2ce6af15d58fce48fbef264ac13971fec7f34b325beb31243"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "95223FFA-F6A6-4750-A26A-EE77D6B4A4A0.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Map rotation before querying the compass_0_7E621A10-C3A6-4151-AB62-CCE5BD647CD4.png",
+      "timestamp": 1792761306.649,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize()",
+      "retainedFileName": "95223FFA-F6A6-4750-A26A-EE77D6B4A4A0.png",
+      "originalSha256": "1e5d893faf8980035d097a938bebc7df563d04141acc056d84cc43f86a8d869f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "350D6B3A-C589-4D00-9EEB-5A34E4620484.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native Map rotation exposes its actual compass accessibility_0_BB8D9921-3FD6-4F59-9582-B1CD5CD23048.txt",
+      "timestamp": 1792761306.467,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize()",
+      "retainedFileName": "350D6B3A-C589-4D00-9EEB-5A34E4620484.txt.gz",
+      "originalSha256": "94d872e300b2acb175351f07016e013baded8629e0f8adc499b001f0b0c742be"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "FBA9EF64-6A4A-43AF-8AC5-5BF97A840BAD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent writer refreshes the open collection Map_0_50C8F5EB-678E-474A-A443-EE3AC1776FBA.png",
+      "timestamp": 1792761370.252,
+      "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource()",
+      "retainedFileName": "FBA9EF64-6A4A-43AF-8AC5-5BF97A840BAD.png",
+      "originalSha256": "4caff655afb9ee70369a7c2ab78e64723c7629d95293ca982a40e020a4d2b1df"
+    }
+  ],
+  "videoPublished": false
+}

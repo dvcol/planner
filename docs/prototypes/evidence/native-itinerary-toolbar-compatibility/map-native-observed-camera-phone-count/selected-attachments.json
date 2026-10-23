@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-native-observed-camera-phone-count.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-native-observed-camera-phone-count"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "9AC613DF-7F76-4960-8413-D047DAC065B7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Counted itinerary pin distinguishes independent repeated stops_0_E54B20CF-F105-4544-AFE5-123C119464EF.png",
+      "timestamp": 1792760397.829,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "9AC613DF-7F76-4960-8413-D047DAC065B7.png",
+      "originalSha256": "0aa60414174276f58c10b5b874b2f5796f4d0d30408be8552dbe55e18f50b68c"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "94066801-13A8-4A11-BFFE-A61C3A87A03E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native accessible Map summary scrolls without displacing its pins_0_6FD8B942-C5F7-42B3-8DD8-961263F6BA73.png",
+      "timestamp": 1792760395.399,
+      "testIdentifier": "SavedMapCollectionJourneyTests/testItineraryMapDistinguishesRepeatedStopsAndPreservesTheirLocalCompletion()",
+      "retainedFileName": "94066801-13A8-4A11-BFFE-A61C3A87A03E.png",
+      "originalSha256": "a506c24cf3d5db0c81d335f01b2031c9f31e1d04c1363f5b3335f75452d48a0c"
+    }
+  ],
+  "videoPublished": false
+}
