@@ -1,0 +1,114 @@
+{
+  "nativeInputs": 1102,
+  "finalNativeExecutions": [
+    {
+      "phase": "map-filtered-catalog-phone-green",
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "sqliteUnlinkDiagnostics": 0,
+      "productsValidatedBeforeReuse": true,
+      "productsRecheckedAtFinalCheckpoint": false
+    },
+    {
+      "phase": "map-filtered-catalog-dark-tablet",
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "sqliteUnlinkDiagnostics": 0,
+      "productsValidatedBeforeReuse": true,
+      "productsRecheckedAtFinalCheckpoint": true
+    },
+    {
+      "phase": "map-filtered-catalog-phone-regressions",
+      "passedFunctions": 2,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "sqliteUnlinkDiagnostics": 0,
+      "productsValidatedBeforeReuse": true,
+      "productsRecheckedAtFinalCheckpoint": true
+    }
+  ],
+  "totalFinalPassedFunctions": 4,
+  "distinctFinalFunctions": 3,
+  "catalogScopesOnEachDevice": [
+    "Items",
+    "Inbox"
+  ],
+  "inspectedOriginalCaptures": [
+    {
+      "path": "map-filtered-catalog-phone-green/6D1F2D26-9DEA-4BD9-AE3D-AC56BA42FE97.png",
+      "sha256": "2ef3ca161baf410c9402f42847c1f0639779812e28d0554a995a0ea083aaade5",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-phone-green/E493B403-91A0-4309-A3D5-8D3102222D35.png",
+      "sha256": "2334ff99a1772d10f6f57b3884349369478f0eb384bb34a6673c269f54d48ceb",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-phone-green/65006365-D284-4255-81AA-7058284DDFBB.png",
+      "sha256": "b0a2984f992fc0c816110c4fb09ab47eb94dd322f2820a8a47a3df563ebc31b6",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-phone-green/1D400E0D-1C1E-4937-B66F-E62A75A15DDB.png",
+      "sha256": "b49bd0f4701d797c9e9608942f16fccd53eb273437df9ad4f2be3001559dd04b",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-dark-tablet/6A768066-5761-4F93-A199-081A68982C19.png",
+      "sha256": "2eef940631f862bf094f1279222689cf2d15dd6625907c085725ac6fc52ddf67",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-dark-tablet/5805F3D5-E46F-4129-95FB-B55494B0DB84.png",
+      "sha256": "2eef940631f862bf094f1279222689cf2d15dd6625907c085725ac6fc52ddf67",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-dark-tablet/E78FD864-C785-4D9A-94CD-10E695E95E5D.png",
+      "sha256": "f08c07e7501e78135d4024ed4ff1d69d77a548f2d2c307e8fd2d6232052a2f4a",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-dark-tablet/E3CFF0A5-0B27-445D-8046-D06F9F84FB15.png",
+      "sha256": "f08c07e7501e78135d4024ed4ff1d69d77a548f2d2c307e8fd2d6232052a2f4a",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-phone-regressions/D137E684-AA28-444E-B453-9AB3074E58D1.png",
+      "sha256": "3ed7f31b6a5029f56961ceeb972fc7353038718879f65bb029a21752383359a5",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-catalog-phone-regressions/E3927679-0225-4BC3-811B-4FE98520AED1.png",
+      "sha256": "7bbc04fc17cbee9574dc8e172b8c60e4f0ea7e2325bcfd20910b7efffa6ef337",
+      "visuallyInspected": true
+    }
+  ],
+  "initialRedPreserved": true,
+  "redInboxLoopReached": false,
+  "entireRedGreenTestSourceIdentical": true,
+  "onlyRedGreenProductionDifference": [
+    "Planner/Scenes/SavedPlannerView.swift"
+  ],
+  "currentMacCompilers": [
+    {
+      "phase": "map-filtered-catalog-mac-compiler",
+      "productCount": 9,
+      "elapsedSeconds": 27.238,
+      "runtimeCredit": false
+    },
+    {
+      "phase": "map-filtered-catalog-mac-fixture-compiler",
+      "productCount": 5,
+      "elapsedSeconds": 28.532,
+      "runtimeCredit": false
+    }
+  ],
+  "appearanceRestored": true,
+  "actualMacRuntimeCredit": false,
+  "physicalDeviceCredit": false,
+  "scope": "Retained source selection in Items/Inbox Map stays valid after independent content edits; compact Back and representation changes do not automatically push details. Explicit selection of that same source still opens current details. Standalone List and Items/Inbox editor cancellation regressions pass. No Core/MCP, schema, backup, signing, conflict-policy or new test-boundary changes."
+}

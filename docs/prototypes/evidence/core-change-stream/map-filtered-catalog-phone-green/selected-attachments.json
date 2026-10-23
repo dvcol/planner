@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-catalog-phone-green.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone-green"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "6D1F2D26-9DEA-4BD9-AE3D-AC56BA42FE97.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map removes the old Inbox pin and keeps source details valid_0_90624052-1319-4236-BAD0-1F96A6590523.png",
+      "timestamp": 1792766179.884,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "6D1F2D26-9DEA-4BD9-AE3D-AC56BA42FE97.png",
+      "originalSha256": "2ef3ca161baf410c9402f42847c1f0639779812e28d0554a995a0ea083aaade5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E493B403-91A0-4309-A3D5-8D3102222D35.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map retains its selected Inbox source after a writer edit_0_A78B174D-143F-482B-B40D-151E9CB2B112.png",
+      "timestamp": 1792766176.698,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "E493B403-91A0-4309-A3D5-8D3102222D35.png",
+      "originalSha256": "2334ff99a1772d10f6f57b3884349369478f0eb384bb34a6673c269f54d48ceb"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "65006365-D284-4255-81AA-7058284DDFBB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map removes the old Items pin and keeps source details valid_0_DA62638A-51FC-4A4E-8E22-B2ADB2AF38D8.png",
+      "timestamp": 1792766108.361,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "65006365-D284-4255-81AA-7058284DDFBB.png",
+      "originalSha256": "b0a2984f992fc0c816110c4fb09ab47eb94dd322f2820a8a47a3df563ebc31b6"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1D400E0D-1C1E-4937-B66F-E62A75A15DDB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map retains its selected Items source after a writer edit_0_5305513A-EAB4-415F-8890-8EDA9365B2E3.png",
+      "timestamp": 1792766105.134,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "1D400E0D-1C1E-4937-B66F-E62A75A15DDB.png",
+      "originalSha256": "b49bd0f4701d797c9e9608942f16fccd53eb273437df9ad4f2be3001559dd04b"
+    }
+  ],
+  "videoPublished": false
+}

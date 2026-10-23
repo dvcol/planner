@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-catalog-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "6A768066-5761-4F93-A199-081A68982C19.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map removes the old Inbox pin and keeps source details valid_0_B0B0D582-90A2-4D52-937E-156465A4EAA9.png",
+      "timestamp": 1792766481.503,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "6A768066-5761-4F93-A199-081A68982C19.png",
+      "originalSha256": "2eef940631f862bf094f1279222689cf2d15dd6625907c085725ac6fc52ddf67"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "5805F3D5-E46F-4129-95FB-B55494B0DB84.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map retains its selected Inbox source after a writer edit_0_1F9CB9E9-409D-487C-8C59-E5C624F5053C.png",
+      "timestamp": 1792766478.97,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "5805F3D5-E46F-4129-95FB-B55494B0DB84.png",
+      "originalSha256": "2eef940631f862bf094f1279222689cf2d15dd6625907c085725ac6fc52ddf67"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E78FD864-C785-4D9A-94CD-10E695E95E5D.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map removes the old Items pin and keeps source details valid_0_CFA7D786-704A-4567-813F-180593099F34.png",
+      "timestamp": 1792766405.976,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "E78FD864-C785-4D9A-94CD-10E695E95E5D.png",
+      "originalSha256": "f08c07e7501e78135d4024ed4ff1d69d77a548f2d2c307e8fd2d6232052a2f4a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "E3CFF0A5-0B27-445D-8046-D06F9F84FB15.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered catalog Map retains its selected Items source after a writer edit_0_261919F4-41E1-4699-AB81-60908D30D52C.png",
+      "timestamp": 1792766403.422,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit()",
+      "retainedFileName": "E3CFF0A5-0B27-445D-8046-D06F9F84FB15.png",
+      "originalSha256": "f08c07e7501e78135d4024ed4ff1d69d77a548f2d2c307e8fd2d6232052a2f4a"
+    }
+  ],
+  "videoPublished": false
+}

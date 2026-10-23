@@ -2,6 +2,78 @@ import XCTest
 
 @MainActor
 final class ChangeObservationJourneyTests: XCTestCase {
+  func testFilteredCatalogMapsKeepTheirSelectedSourceAfterAnIndependentContentEdit() {
+    continueAfterFailure = false
+    for section in ["Items", "Inbox"] {
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      if section == "Inbox" {
+        performFixtureAction(
+          "fixture.writer.removeMembership", expecting: "Removed Hotel from Weekend",
+          in: application)
+      }
+      application.openPlannerSection(section)
+      let source = application.savedPlannerItemRows("Hotel").firstMatch
+      XCTAssertTrue(source.waitForExistence(timeout: 20))
+      let sourceIdentifier = source.identifier
+      let search = application.searchFields["Search \(section)"]
+      if !search.exists { application.swipeDown() }
+      XCTAssertTrue(search.waitForExistence(timeout: 10))
+      search.activateForPlannerJourney()
+      search.typeText("Original notes\n")
+      XCTAssertTrue(search.waitForPlannerValue("Original notes"))
+      XCTAssertTrue(source.waitForExistence(timeout: 10))
+      application.openSavedPlannerCatalogViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("Map")
+      let pin = application.buttons["saved.map.pin.35.662,139.717"]
+      XCTAssertTrue(pin.waitForExistence(timeout: 15))
+      pin.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      let completion = application.descendants(matching: .any)
+        .matching(identifier: "saved.item.completion").firstMatch
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      performFixtureAction(
+        "fixture.writer.update", expecting: "Saved another-writer change", in: application)
+      XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 15))
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      XCTAssertTrue(application.plannerElement("saved.item.actions").exists)
+      XCTAssertFalse(application.alerts.firstMatch.exists)
+      let details = XCTAttachment(screenshot: application.screenshot())
+      details.name =
+        "Filtered catalog Map retains its selected \(section) source after a writer edit"
+      details.lifetime = .keepAlways
+      add(details)
+      if application.windows.firstMatch.frame.width < 600 {
+        application.plannerElement("BackButton").activateForPlannerJourney()
+      }
+      XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 15))
+      XCTAssertTrue(pin.waitForNonExistence(timeout: 5))
+      XCTAssertTrue(application.staticTexts["0 of 0 items located"].exists)
+      let empty = XCTAttachment(screenshot: application.screenshot())
+      empty.name =
+        "Filtered catalog Map removes the old \(section) pin and keeps source details valid"
+      empty.lifetime = .keepAlways
+      add(empty)
+      application.openSavedPlannerCatalogViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("List")
+      XCTAssertTrue(search.waitForExistence(timeout: 10))
+      search.activateForPlannerJourney()
+      search.buttons["Clear text"].activateForPlannerJourney()
+      search.activateForPlannerJourney()
+      search.typeText("Hotel updated\n")
+      let updated = application.savedPlannerItemRows("Hotel updated").firstMatch
+      XCTAssertTrue(updated.waitForExistence(timeout: 10))
+      XCTAssertEqual(updated.identifier, sourceIdentifier)
+      updated.activateForPlannerJourney()
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      XCTAssertTrue(application.staticTexts["Other writer notes"].exists)
+      application.terminate()
+    }
+  }
+
   func testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit() {
     continueAfterFailure = false
     let application = XCUIApplication()

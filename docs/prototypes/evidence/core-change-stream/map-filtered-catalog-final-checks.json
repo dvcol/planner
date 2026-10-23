@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerFixtureUITests/ChangeObservationJourneyTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2",
+        "--config",
+        "/private/tmp/PlannerBrowserLint/.markdownlint-cli2.jsonc",
+        "docs/prototypes/native-change-observation.md",
+        "docs/implementation-map.md",
+        "docs/open-decisions.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": {
+    "Planner/Scenes/SavedPlannerView.swift": "240b3e07bf9f9c99cc7af700c65ae0766055ad044657d0b69299d0c48a9bc12c",
+    "PlannerFixtureUITests/ChangeObservationJourneyTests.swift": "71a39b2005d9025481e225ae0ab84cdfd85757e794186395fa255b87a11531e3",
+    "docs/prototypes/native-change-observation.md": "169fa5b931655de49fcb2236183e89acab3c79526e38678b9d3d6a029f0c0cdc",
+    "docs/implementation-map.md": "0191777afadc34f97ed36104295419c8b4dca5a4223694b69731ff8a93dcf279",
+    "docs/open-decisions.md": "b205aa4fd0ec17b3f1acf23af45c07a538edf1cc4ca099b8d81d38b982d8467b"
+  },
+  "existingLocalLinkCount": 309,
+  "linksExist": true,
+  "typeCheckEvidence": "Both current-source Mac app/Share/UI-test and actual fixture-target builds pass; mobile test products executed successfully. See map-filtered-catalog-checkpoint-reconciliation.json."
+}

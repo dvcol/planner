@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-10-23T14:49:34.643720+00:00",
+  "observations": [
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "kern.boottime"
+      ],
+      "exitCode": 0,
+      "output": "{ sec = 1791971509, usec = 83221 } Wed Oct 14 18:51:49 2026"
+    },
+    {
+      "command": [
+        "/bin/launchctl",
+        "print",
+        "gui/502/com.apple.testmanagerd"
+      ],
+      "exitCode": 0,
+      "output": "state = running\npid = 97031\nstate = active\nstate = active"
+    }
+  ],
+  "knownRecordedBootSeconds": 1791971509,
+  "knownRecordedBrokerPid": 97031,
+  "newUiTestAttempt": false,
+  "signingChanged": false,
+  "interpretation": "Read-only host/broker facts match the retained failed-startup context. This does not establish a cause or prove paid signing would repair automation."
+}

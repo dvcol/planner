@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-catalog-phone-regressions.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone-regressions"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "D137E684-AA28-444E-B453-9AB3074E58D1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Map removes the old pin without deleting its selected appearance_0_FF68377A-AD3B-427B-A7B5-98C38ED39DB6.png",
+      "timestamp": 1792766379.23,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "retainedFileName": "D137E684-AA28-444E-B453-9AB3074E58D1.png",
+      "originalSha256": "3ed7f31b6a5029f56961ceeb972fc7353038718879f65bb029a21752383359a5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "E3927679-0225-4BC3-811B-4FE98520AED1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Map retains the exact completed List appearance after a writer edit_0_686A142B-ED8F-437C-9832-608E8CFCA822.png",
+      "timestamp": 1792766375.945,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "retainedFileName": "E3927679-0225-4BC3-811B-4FE98520AED1.png",
+      "originalSha256": "7bbc04fc17cbee9574dc8e172b8c60e4f0ea7e2325bcfd20910b7efffa6ef337"
+    }
+  ],
+  "videoPublished": false
+}

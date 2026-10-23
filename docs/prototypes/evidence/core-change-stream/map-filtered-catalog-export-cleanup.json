@@ -1,0 +1,44 @@
+{
+  "scope": "Only four explicitly enumerated duplicate attachment-export directories. All original xcresults, retained attachments, sources/products, complete exported manifests and datasets remain. Nominal bytes do not promise an equal APFS free-space change.",
+  "candidates": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-catalog-phone.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-catalog-phone",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 29513900,
+      "exportManifestSha256": "460d5775b20ae404a423c4dded881fd38ce1e30a3fc20131f948058c2c331bc7"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-catalog-phone-green.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-catalog-phone-green",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 2314110,
+      "exportManifestSha256": "09776192fe432c24fd491739d09d7b72f77beafb3e390a28d2cebb3fad5df95a"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-catalog-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-catalog-dark-tablet",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 3171971,
+      "exportManifestSha256": "0cc480b78035fd6500758f0fb6087d072530bf69adfd570eac67d8737bde4784"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone-regressions",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-catalog-phone-regressions.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-catalog-phone-regressions",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 1508329,
+      "exportManifestSha256": "4925840daa82fc0d168bbf90b865cecb7290cca59c707daea38d0d85aa8df51c"
+    }
+  ],
+  "removedDirectories": [
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone-green",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-dark-tablet",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone-regressions"
+  ],
+  "nominalBytes": 36508310
+}

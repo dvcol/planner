@@ -1,0 +1,24 @@
+{
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-ss",
+    "58.820667",
+    "-i",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-catalog-phone/0D42D89E-9337-4A33-8666-F79E410DDA9A.mp4",
+    "-frames:v",
+    "1",
+    "docs/prototypes/evidence/core-change-stream/map-filtered-catalog-phone/failure-reopened-source.png"
+  ],
+  "lastEncodedFrameSeconds": 58.821667,
+  "originalVideo": "0D42D89E-9337-4A33-8666-F79E410DDA9A.mp4",
+  "originalVideoSha256": "2804ba9cdb7c3a664159ada480eb4023d379dedd32692100dfebf08f38be6f79",
+  "retainedFrame": "failure-reopened-source.png",
+  "frameSha256": "bc91927b178658be6b423a63a495bddeee05512e5746405c15ce31c1d661e2b8",
+  "originalHierarchy": "3D586CFE-CDB7-46CD-BC03-BBA1F51DFCC1.txt",
+  "originalHierarchySha256": "dbb69d2b5f778012d6ffea451dca0c1c0c74c2ddc5f1e80ee2fe18057ac2b677",
+  "inboxLoopReached": false,
+  "firstFractionalEndSeekProducedNoFrame": true
+}
