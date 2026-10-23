@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000171333"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="3" skipped="0" time="0.243339083">
+        <testcase classname="PlannerCoreStoreTests.NativeImportLiveOverwriteTests" name="olderOwnedLinksAndSchedulesNeedFreshRestorationAuthorization()" time="0.183253625">
+            <failure message="Expectation failed: Set(details.referenceChanges.filter { $0.change == .restore }.map(\.reference)) == [
+        .ownedLink(id: oldLink.id, owner: item), .schedule(id: oldSchedule.id, source: item),
+      ] (error)"/>
+            <failure message="Expectation failed: link.id == oldLink.id &amp;&amp; link.lifetimeId != oldLink.lifetimeId (error)"/>
+            <failure message="Expectation failed: referenceFamilies.count == 2 (error)"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLiveOverwriteTests" name="olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList()" time="0.242963667"/>
+    </testsuite>
+</testsuites>

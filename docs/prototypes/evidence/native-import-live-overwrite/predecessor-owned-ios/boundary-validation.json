@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 1081,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 3,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 10,
+  "meaning": "Not accepted: only three functions executed; the new tracked test was missing from the manifest and stale, and deletion tests emitted ten SQLite lifetime warnings. No passing or cleanup credit."
+}

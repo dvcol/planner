@@ -7045,6 +7045,11 @@ public actor Planner {
           target: .source(.init(kind: "schedule", id: $0.id, lifetimeId: $0.lifetimeId)),
           closedFamilyId: nil)
       }
+      + resolution.snapshot.links.map {
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .ownedLink(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
+      }
       + resolution.entries.map {
         PortableDeletionMarker(
           deletionId: UUID(), operationId: operation.operationId,
@@ -7587,6 +7592,11 @@ public actor Planner {
           deletionId: UUID(), operationId: operation.operationId,
           target: .source(.init(kind: "schedule", id: $0.id, lifetimeId: $0.lifetimeId)),
           closedFamilyId: nil)
+      }
+      + resolution.snapshot.links.map {
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .ownedLink(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
       }
       + resolution.memberships.map {
         PortableDeletionMarker(

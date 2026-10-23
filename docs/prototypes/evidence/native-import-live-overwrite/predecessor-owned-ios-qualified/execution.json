@@ -1,0 +1,19 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 22.918,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "requestedClasses": [
+    "NativeImportLiveOverwriteTests",
+    "ItemDeletionTests",
+    "ItineraryDeletionTests"
+  ],
+  "sqliteUnlinkWarnings": 0,
+  "summary": {
+    "result": "Passed",
+    "passedTests": 4,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "executedFunctions": 0,
+  "reason": "New staged-file assertion also counted Package.swift, which is outside its Sources/Tests scan. No build or test started."
+}

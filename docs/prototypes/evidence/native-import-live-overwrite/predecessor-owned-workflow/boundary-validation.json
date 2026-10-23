@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 749,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 0,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Compilation failure: the reference-enum assertion was not replaced by the previous edit; no test executed."
+}

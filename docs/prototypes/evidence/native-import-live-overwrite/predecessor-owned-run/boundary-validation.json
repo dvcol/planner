@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 749,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 2,
+  "failedFunctions": 1,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Two functions executed; new owned-reference workflow exposes old owned-link lifetime reuse and one missing family, with three assertion failures."
+}

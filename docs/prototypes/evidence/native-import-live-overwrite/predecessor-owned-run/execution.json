@@ -1,0 +1,28 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 10.109,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "olderOwnedLinksAndSchedulesNeedFreshRestorationAuthorization()",
+      "className": "PlannerCoreStoreTests.NativeImportLiveOverwriteTests",
+      "seconds": 0.183253625,
+      "failures": [
+        "Expectation failed: Set(details.referenceChanges.filter { $0.change == .restore }.map(\\.reference)) == [         .ownedLink(id: oldLink.id, owner: item), .schedule(id: oldSchedule.id, source: item),       ] (error)",
+        "Expectation failed: link.id == oldLink.id && link.lifetimeId != oldLink.lifetimeId (error)",
+        "Expectation failed: referenceFamilies.count == 2 (error)"
+      ],
+      "skipped": false
+    },
+    {
+      "name": "olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList()",
+      "className": "PlannerCoreStoreTests.NativeImportLiveOverwriteTests",
+      "seconds": 0.242963667,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

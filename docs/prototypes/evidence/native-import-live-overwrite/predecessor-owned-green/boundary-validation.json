@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 749,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 2,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "The unchanged owned-reference workflow now passes; both functions execute with fresh link/Schedule lifetimes and separately reviewed authorization."
+}

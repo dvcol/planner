@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 1082,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 4,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Four actual iPhone Simulator workflows pass with the complete manifest and safe store lifecycle."
+}
