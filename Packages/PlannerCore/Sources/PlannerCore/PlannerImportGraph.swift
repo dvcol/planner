@@ -142,15 +142,17 @@ struct PlannerImportGraph {
   }
 
   func restoredValueFamily(
-    for source: PlannerPortableBoundIdentity, to live: PlannerPortableBoundIdentity,
+    for source: PlannerPortableBoundIdentity, to live: PlannerPortableBoundIdentity?,
     in incoming: PlannerPortableBackup
   ) throws -> PlannerPortableRestorationFamily? {
-    var selectedFamily = incoming.restorationFamilies.first(where: {
-      $0.predecessor.kind == source.kind && $0.predecessor.id == source.id
-        && $0.candidates.contains { $0.lifetimeId == source.lifetimeId }
-        && authorizesPredecessorValues($0.predecessor, for: live)
+    var selectedFamily = incoming.restorationFamilies.first(where: { family in
+      guard family.predecessor.kind == source.kind, family.predecessor.id == source.id,
+        family.candidates.contains(where: { $0.lifetimeId == source.lifetimeId })
+      else { return false }
+      if let live { return authorizesPredecessorValues(family.predecessor, for: live) }
+      return isClosed(family.predecessor)
     })
-    if selectedFamily == nil, source != live, resolves(source, to: live) {
+    if selectedFamily == nil, let live, source != live, resolves(source, to: live) {
       selectedFamily = backup.restorationFamilies.first { family in
         family.predecessor.kind == source.kind && family.predecessor.id == source.id
           && family.candidates.contains { $0.lifetimeId == source.lifetimeId }
@@ -160,7 +162,7 @@ struct PlannerImportGraph {
     }
     guard let family = selectedFamily else { return nil }
     let closedFamilies = Set(backup.deletionMarkers.compactMap(\.closedFamilyId))
-    guard !closedFamilies.contains(family.familyId),
+    guard live == nil || !closedFamilies.contains(family.familyId),
       !incoming.deletionMarkers.contains(where: { $0.closedFamilyId == family.familyId })
     else {
       throw PlannerFailure("unavailable", "A closed competing family cannot replace live values.")

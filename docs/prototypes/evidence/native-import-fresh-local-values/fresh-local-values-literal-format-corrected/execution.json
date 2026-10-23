@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 10.366,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(sharesLocalFamilyIdentity:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalValuesTests",
+      "seconds": 0.159498625,
+      "failures": [
+        "Issue recorded (error): The literal incoming backup must decode: .invalid(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/sources/0/contentOrigins/estimate\"), message: \"This backup property is not supported.\", details: nil))",
+        "Issue recorded (error): The literal incoming backup must decode: .invalid(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/sources/0/contentOrigins/estimate\"), message: \"This backup property is not supported.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,13 @@
+{
+  "workspaceDifferences": [],
+  "stagedDifferences": [],
+  "productDifferences": [],
+  "inputCount": 1095,
+  "productCount": 2,
+  "omittedCoreResourceInputs": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-current-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-expected-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-incoming-v2.json"
+  ],
+  "runtimeCreditForNewLiteralCase": false
+}

@@ -1,0 +1,6 @@
+{
+  "predecessorCanonicalHex": "18000000000000000300000000000000026964140000000000004000800000000000010100000000000000046b696e641000000000000000046974656d000000000000000a6c69666574696d6549641400000000000040008000000000000811",
+  "domain": "PlannerRestorationFamily-v1",
+  "expectedLocalFamilyId": "BF4CA8D3-7AFB-8BF5-A2C3-7F67C76178EC",
+  "note": "Independent Python SHA-256 calculation for the fixed literal predecessor. Tests use the literal UUID and do not calculate their expectation through production."
+}

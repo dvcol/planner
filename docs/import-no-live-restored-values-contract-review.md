@@ -1,6 +1,6 @@
 # Fresh local restoration from incoming restored values
 
-Status: Q151 A is accepted. Q152 reviews this concrete contract before implementation. Signing remains deferred; independent native qualification continues.
+Status: Q151 A and Q152 A are accepted on 23 October 2026. This concrete contract is approved for implementation through the existing interfaces and test boundaries. Signing remains deferred; independent native qualification continues.
 
 ## Existing interfaces and authority
 

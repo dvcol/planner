@@ -1,0 +1,22 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.802,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(sharesLocalFamilyIdentity:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalValuesTests",
+      "seconds": 0.091079417,
+      "failures": [
+        "Expectation failed: try competingValueGraph(before) == competingValueGraph(freshLocalValuesFixture(\"current\")) (error)",
+        "Expectation failed: try competingValueGraph(before) == competingValueGraph(freshLocalValuesFixture(\"current\")) (error)",
+        "Caught error: CancellationError() (error)",
+        "Caught error: CancellationError() (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

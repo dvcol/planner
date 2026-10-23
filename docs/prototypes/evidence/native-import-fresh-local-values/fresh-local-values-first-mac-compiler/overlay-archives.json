@@ -1,0 +1,132 @@
+[
+  {
+    "source": "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "archive": "PlannerImportGraph.swift.gz",
+    "sha256": "f0ad08fec9e3c0efa511f4b2a1950fd9b95072a5ca560dbf5ef7e1c2f50ff41c"
+  },
+  {
+    "source": "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "archive": "PlannerImportReview.swift.gz",
+    "sha256": "055de1724d28eb6e48052b62050754a62a904156383279ede16d5647d74fe454"
+  },
+  {
+    "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-current-v2.json",
+    "archive": "fresh-local-restoration-current-v2.json.gz",
+    "sha256": "5b1ed4ffc0754df2bd9ea2361695a74f52dcc710229639fac17bf2ff2b11f3a5"
+  },
+  {
+    "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-expected-v2.json",
+    "archive": "fresh-local-restoration-expected-v2.json.gz",
+    "sha256": "640823a2812527301c651dee13f641810753ce17c5e96e3664a3c4175c73dd36"
+  },
+  {
+    "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-incoming-v2.json",
+    "archive": "fresh-local-restoration-incoming-v2.json.gz",
+    "sha256": "02625b5603bb4993fafda66ab75be4e7526814c9fce067173cb7d5ad5b73334b"
+  },
+  {
+    "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalValuesTests.swift",
+    "archive": "NativeImportFreshLocalValuesTests.swift.gz",
+    "sha256": "d19b0f356a15c1a79152cac97073c943e3468c1970c292810fe84d8b3a55ca80"
+  },
+  {
+    "source": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportRestorationTests.swift",
+    "archive": "NativeImportRestorationTests.swift.gz",
+    "sha256": "872aa4302e475d40403ab292771e1e32d3e00cc523c5ef1021b7d6883c4161d6"
+  },
+  {
+    "source": "Planner/Scenes/SavedItineraryViews.swift",
+    "archive": "SavedItineraryViews.swift.gz",
+    "sha256": "cfd88e02fd7d5502a33cca9e830a39a6078cd496f98882cf9667029af109427c"
+  },
+  {
+    "source": "Planner/Scenes/SavedMapCollectionView.swift",
+    "archive": "SavedMapCollectionView.swift.gz",
+    "sha256": "787c6c1714adb39e3a2e9aeb3ab911780c72b95bdddd2e75ff0698b8e49a1339"
+  },
+  {
+    "source": "Planner/Scenes/SavedPlannerView.swift",
+    "archive": "SavedPlannerView.swift.gz",
+    "sha256": "872320f49596c09036492f4ad7b9a17bbae8d977de37755c3acf31f7ec950a05"
+  },
+  {
+    "source": "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "archive": "CatalogTitleLayoutJourneyTests.swift.gz",
+    "sha256": "a9cd9ad1df31fc58165902ca579fc49839830a1c3c890a49f5c6003c1e6bce04"
+  },
+  {
+    "source": "PlannerFixtureUITests/ItineraryArchiveJourneyTests.swift",
+    "archive": "ItineraryArchiveJourneyTests.swift.gz",
+    "sha256": "f72ad9dd84925dabc9cd013f659a7e146f386a69f716a8bb4d46c44381b4aa0a"
+  },
+  {
+    "source": "PlannerFixtureUITests/ItineraryLocationJourneyTests.swift",
+    "archive": "ItineraryLocationJourneyTests.swift.gz",
+    "sha256": "1369b438072a5c10ffb0b3c837550236ada13d01a9c83e0a8e360eaa558e2317"
+  },
+  {
+    "source": "PlannerFixtureUITests/ItineraryWindowJourneyTests.swift",
+    "archive": "ItineraryWindowJourneyTests.swift.gz",
+    "sha256": "cf79ae9ebab860f51ee646d30e3e0e9d8fda0d5056736b428dce63eed393157f"
+  },
+  {
+    "source": "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "archive": "SavedBrowserSourceReturnJourneyTests.swift.gz",
+    "sha256": "15c68095d1299139f5fe3746e9a0e97c405c852ffb39a6929ee96b85645f14ca"
+  },
+  {
+    "source": "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "archive": "PlannerChangeObservationFixtureView.swift.gz",
+    "sha256": "f21b5bfe224f9b4270012aa4b8617732f690e7efbb4bab6c05f231bac6f2782c"
+  },
+  {
+    "source": "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "archive": "NativeNavigationElements.swift.gz",
+    "sha256": "12d22642509abd9ae96d947494fbe88c348cc836d72b5bbe45033098c9a953dc"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedCalendarJourneyTests.swift",
+    "archive": "SavedCalendarJourneyTests.swift.gz",
+    "sha256": "cb9ead8951a0aff676d38097709206ec36e2b68fd6a90da04d0a51b4c5004025"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedItemDeletionJourneyTests.swift",
+    "archive": "SavedItemDeletionJourneyTests.swift.gz",
+    "sha256": "20b9980318b1317bbe8a177338329ba656d625531a0b1d2d1207925da7f5c528"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedItineraryBulkJourneyTests.swift",
+    "archive": "SavedItineraryBulkJourneyTests.swift.gz",
+    "sha256": "182ccb7927f16e1fe180d1a09ba05eefeb7208885e0b209a79fdfab1bac9bc84"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedItineraryDeletionJourneyTests.swift",
+    "archive": "SavedItineraryDeletionJourneyTests.swift.gz",
+    "sha256": "1a3d807b44b0ee69ccaf46013adf5c332528b335090c8a087ce7c48ceb9b6188"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift",
+    "archive": "SavedItineraryEntriesJourneyTests.swift.gz",
+    "sha256": "df3780ba02bb3f0a1849d5217361e699f61c4aae37957c6214c6865aee81ffaf"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedItineraryJourneyTests.swift",
+    "archive": "SavedItineraryJourneyTests.swift.gz",
+    "sha256": "b4721dd184de1625f52ad3bbbefde1f6669004ac34418e06845ece8e028d75d5"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedLabelsJourneyTests.swift",
+    "archive": "SavedLabelsJourneyTests.swift.gz",
+    "sha256": "34fadbdff0de60e6bc3ea0dbe8b6382c81c3c351bbdf4a385981ce206f285467"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedListDeletionJourneyTests.swift",
+    "archive": "SavedListDeletionJourneyTests.swift.gz",
+    "sha256": "769fe2f85f5de27d2ce3337db646baffd8e83805e3bf60c553be71f69b54a314"
+  },
+  {
+    "source": "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift",
+    "archive": "SavedMapCollectionJourneyTests.swift.gz",
+    "sha256": "c8c384012e9adab132e146320475d85e43a6c2fe2bba4455d2a8a6921332c896"
+  }
+]

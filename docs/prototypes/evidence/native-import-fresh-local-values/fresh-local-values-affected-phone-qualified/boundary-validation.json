@@ -1,0 +1,16 @@
+{
+  "inputCount": 1098,
+  "matchingCoreInputCount": 761,
+  "productCount": 2,
+  "workspaceDifferences": [],
+  "stagedDifferences": [],
+  "productDifferences": [],
+  "bundleFixtureSha256": {
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-current-v2.json": "5b1ed4ffc0754df2bd9ea2361695a74f52dcc710229639fac17bf2ff2b11f3a5",
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-expected-v2.json": "640823a2812527301c651dee13f641810753ce17c5e96e3664a3c4175c73dd36",
+    "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/Fixtures/PortableImport/fresh-local-restoration-incoming-v2.json": "02625b5603bb4993fafda66ab75be4e7526814c9fce067173cb7d5ad5b73334b"
+  },
+  "sqliteUnlinkWarnings": 0,
+  "macFixtureCount": 331,
+  "phoneFixtureCount": 331
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000157875"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.161050625">
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalValuesTests" name="restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(sharesLocalFamilyIdentity:)" time="0.159498625">
+            <failure message="Issue recorded (error): The literal incoming backup must decode: .invalid(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/sources/0/contentOrigins/estimate&quot;), message: &quot;This backup property is not supported.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): The literal incoming backup must decode: .invalid(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/sources/0/contentOrigins/estimate&quot;), message: &quot;This backup property is not supported.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

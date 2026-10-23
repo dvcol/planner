@@ -1,0 +1,32 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "3faf5e052e024cdb026c81e431b70ba088a90b58",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-current-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-expected-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/PortableImport/fresh-local-restoration-incoming-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalValuesTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportRestorationTests.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedMapCollectionView.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/CatalogTitleLayoutJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryArchiveJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryLocationJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryWindowJourneyTests.swift",
+    "PlannerFixtureUITests/SavedBrowserSourceReturnJourneyTests.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedCalendarJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItemDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryBulkJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryJourneyTests.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedMapCollectionJourneyTests.swift"
+  ]
+}

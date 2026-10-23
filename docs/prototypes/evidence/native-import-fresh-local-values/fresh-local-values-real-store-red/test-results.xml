@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00014725"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.1812945">
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()" time="0.180913209">
+            <failure message="Issue recorded (error): Q152 must restore incoming values under a fresh local lifetime: PlannerOperationResult(operationId: E84FDBFD-D43B-4338-B2E7-006E18DE4F5C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;unavailable&quot;, propertyPath: nil, message: &quot;Incoming restored lifetimes need family reconciliation.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+        </testcase>
+    </testsuite>
+</testsuites>
