@@ -1,0 +1,34 @@
+{
+  "epochs": {
+    "list-toolbar-dark-tablet-pane-green": {
+      "sourceCount": 1094,
+      "differencesFromFinal": [
+        "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift"
+      ]
+    },
+    "list-toolbar-light-phone-pane-green": {
+      "sourceCount": 1094,
+      "differencesFromFinal": [
+        "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift"
+      ]
+    },
+    "list-toolbar-phone-deliberate-drag": {
+      "sourceCount": 1094,
+      "differencesFromFinal": []
+    },
+    "list-toolbar-tablet-manual-drag": {
+      "sourceCount": 1094,
+      "differencesFromFinal": []
+    },
+    "list-toolbar-final-mac-compiler": {
+      "sourceCount": 1094,
+      "differencesFromFinal": []
+    }
+  },
+  "productionInputsIdentical": true,
+  "sourceCount": 1094,
+  "passingNativeExecutions": 6,
+  "uniqueNativeFunctions": 4,
+  "macRuntimeCredit": false,
+  "verifiedMacProducts": 9
+}

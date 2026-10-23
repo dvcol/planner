@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-list-toolbar-phone-deliberate-drag.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-phone-deliberate-drag"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1AFF9382-7A9A-43A1-9422-1639FCF679BB.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Hidden membership retained after filtered drag and relaunch_0_3175B0E7-5A4C-4A75-AC12-1E8111D9AD0A.png",
+      "timestamp": 1792735768.898,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "1AFF9382-7A9A-43A1-9422-1639FCF679BB.png",
+      "originalSha256": "9288aa239ecc28e0c32bde96cd3c2528c2dbb65f2ff74ef7d1e5bc9cf2626b66"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "86197D14-0F79-446C-8FDF-BCB7CE0B741F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Manual drag keeps full List progress_0_87230E6B-8BD3-46EB-B85F-A0D402C8D90D.png",
+      "timestamp": 1792735735.02,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "86197D14-0F79-446C-8FDF-BCB7CE0B741F.png",
+      "originalSha256": "737f971139a10ad68244615199d670874d9d43462ba91f77353b71290030f602"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "FCA4DEF5-9487-443C-B0E9-0A674436B4F2.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered List after native drag_0_53402A04-1764-4276-9B29-A2234C24553E.png",
+      "timestamp": 1792735724.119,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "FCA4DEF5-9487-443C-B0E9-0A674436B4F2.png",
+      "originalSha256": "2e85e39f71a8872340beb7a2b6e54bce4828b4c2b89c479eb307d6662e33a768"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "157DA5CB-4E9F-4E1C-BD34-A017BF751BA1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered List before native drag_0_3B68070D-E019-46AB-AE23-3DDD619DAC49.png",
+      "timestamp": 1792735717.125,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "157DA5CB-4E9F-4E1C-BD34-A017BF751BA1.png",
+      "originalSha256": "a0e81a56519fb88d4239f2130478a50980b56cb799edaeaca81b1509dad2ac24"
+    }
+  ],
+  "videoPublished": false
+}

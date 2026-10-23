@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-list-toolbar-phone-filtered-drag.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-phone-filtered-drag"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "D35D37C0-F634-4D78-AF62-EBDBD13AB534.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered List after native drag_0_8F4DEBF6-7431-4209-BC5C-888084AB059F.png",
+      "timestamp": 1792735434.749,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "D35D37C0-F634-4D78-AF62-EBDBD13AB534.png",
+      "originalSha256": "56e41d6b9e45ca1b7efddd384f4ecc6aaa0f6cee79cee38c8bdf6df309f69c3d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "D216441A-2094-4BCA-8C3D-79F8B7E0A871.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered List before native drag_0_80C738F4-AC40-48C6-B17C-559584642806.png",
+      "timestamp": 1792735428.262,
+      "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()",
+      "retainedFileName": "D216441A-2094-4BCA-8C3D-79F8B7E0A871.png",
+      "originalSha256": "56e41d6b9e45ca1b7efddd384f4ecc6aaa0f6cee79cee38c8bdf6df309f69c3d"
+    }
+  ],
+  "videoPublished": false
+}

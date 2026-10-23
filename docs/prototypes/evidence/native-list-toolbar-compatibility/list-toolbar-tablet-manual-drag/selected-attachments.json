@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-list-toolbar-tablet-manual-drag.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-tablet-manual-drag"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "FD171C2E-997A-4B6F-9997-DABE9806F40F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Saved List after native drag_0_D47A43A6-6B62-4B59-A3D7-7715B5D6640A.png",
+      "timestamp": 1792736104.877,
+      "testIdentifier": "SavedListReorderingJourneyTests/testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+      "retainedFileName": "FD171C2E-997A-4B6F-9997-DABE9806F40F.png",
+      "originalSha256": "98a3c31080c6940570a5b3e9393875bd787c791ff63bb65466464cd7949047a2"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "CCDE5C45-DE9B-47E7-BA12-022C8240C722.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Saved List after Manual move_0_D9C0494D-2454-459D-BB8C-45338A7A2F92.png",
+      "timestamp": 1792736033.765,
+      "testIdentifier": "SavedListReorderingJourneyTests/testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+      "retainedFileName": "CCDE5C45-DE9B-47E7-BA12-022C8240C722.png",
+      "originalSha256": "4e50774bba1aa78fd4b0183428b0c64847ef864ff0e6f8ed275a911923a6884f"
+    }
+  ],
+  "videoPublished": false
+}

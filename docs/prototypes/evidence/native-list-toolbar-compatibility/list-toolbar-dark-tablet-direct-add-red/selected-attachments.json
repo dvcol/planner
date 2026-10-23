@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-list-toolbar-dark-tablet-direct-add-red.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-list-toolbar-dark-tablet-direct-add-red"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "2DB2C47C-6D01-484F-9A5A-58387C3FD37E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "List title beside compact native Filters Add and More_0_054E08AE-5644-432E-9AF5-48F23BDA21E7.png",
+      "timestamp": 1792734785.214,
+      "testIdentifier": "CatalogTitleLayoutJourneyTests/testListTitleRemainsReadableAndItsAddMenuStillOpensBesideNativeActions()",
+      "retainedFileName": "2DB2C47C-6D01-484F-9A5A-58387C3FD37E.png",
+      "originalSha256": "48c5bbc4134f666dbc21762c6cbc05ff2b69f8f2f428c30555af29fbbec152e5"
+    }
+  ],
+  "videoPublished": false
+}
