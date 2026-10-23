@@ -95,6 +95,40 @@ struct PlannerImportRestoration {
       }
       return lifetime(kind, source.id, original)
     }
+    func expandedContext(_ original: PlannerExpandedContext) -> PlannerExpandedContext {
+      .init(
+        listEntryId: original.listEntryId,
+        listEntryLifetimeId: lifetime(
+          .itineraryEntry, original.listEntryId, original.listEntryLifetimeId),
+        membershipId: original.membershipId,
+        membershipLifetimeId: lifetime(
+          .membership, original.membershipId, original.membershipLifetimeId))
+    }
+    func completionContext(_ original: PlannerPortableCompletionContext)
+      -> PlannerPortableCompletionContext
+    {
+      switch original {
+      case .listMembership(let identifier, let originalLifetime):
+        return .listMembership(
+          membershipId: identifier,
+          membershipLifetimeId: lifetime(.membership, identifier, originalLifetime))
+      case .directItineraryItem(let identifier, let originalLifetime):
+        return .directItineraryItem(
+          entryId: identifier,
+          entryLifetimeId: lifetime(.itineraryEntry, identifier, originalLifetime))
+      case .expandedListItem(let context): return .expandedListItem(expandedContext(context))
+      }
+    }
+    let transformedAliasIdentifiers = Set(
+      incoming.contextAliases.compactMap { alias -> UUID? in
+        guard
+          let owner = plannerImportCompletionOwner(
+            alias.canonicalContext, memberships: projection.membershipsById,
+            entries: projection.entriesById),
+          resolution.predecessorValueOwners.contains(owner)
+        else { return nil }
+        return alias.aliasId
+      })
     self.incoming = try .init(
       sources: incoming.sources.map {
         $0.replacingImportLifetime(lifetimes[$0.importIdentity] ?? $0.importBinding.lifetimeId)
@@ -122,13 +156,7 @@ struct PlannerImportRestoration {
       },
       expandedCompletions: incoming.expandedCompletions.map {
         .init(
-          context: .init(
-            listEntryId: $0.context.listEntryId,
-            listEntryLifetimeId: lifetime(
-              .itineraryEntry, $0.context.listEntryId, $0.context.listEntryLifetimeId),
-            membershipId: $0.context.membershipId,
-            membershipLifetimeId: lifetime(
-              .membership, $0.context.membershipId, $0.context.membershipLifetimeId)),
+          context: expandedContext($0.context),
           localDone: $0.localDone)
       },
       schedules: incoming.schedules.map {
@@ -149,7 +177,20 @@ struct PlannerImportRestoration {
           rank: $0.rank, originalUrl: $0.originalUrl, label: $0.label, kind: $0.kind,
           providerReference: $0.providerReference)
       },
-      contextAliases: incoming.contextAliases, completionChanges: incoming.completionChanges,
+      contextAliases: incoming.contextAliases.map { alias in
+        guard transformedAliasIdentifiers.contains(alias.aliasId) else { return alias }
+        return .init(
+          aliasId: alias.aliasId, context: completionContext(alias.context),
+          canonicalContext: completionContext(alias.canonicalContext),
+          initialDone: alias.initialDone,
+          currentChangeId: alias.currentChangeId)
+      },
+      completionChanges: incoming.completionChanges.map { change in
+        guard transformedAliasIdentifiers.contains(change.aliasId) else { return change }
+        return .init(
+          id: change.id, aliasId: change.aliasId, context: completionContext(change.context),
+          done: change.done, observedChangeIds: change.observedChangeIds)
+      },
       restorationFamilies: families)
   }
 }

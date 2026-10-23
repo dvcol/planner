@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 753,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 0,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Test compilation failure: PortableBackup has no itineraries convenience collection; no function executed."
+}

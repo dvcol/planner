@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 753,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 76,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "All 76 affected Mac functions pass after scoped contextual-history restoration and retained-collision rejection."
+}

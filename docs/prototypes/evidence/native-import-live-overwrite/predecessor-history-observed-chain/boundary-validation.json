@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 753,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 2,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "All eight contextual cases pass with a preserved nonempty observed-change chain and subsequent exact local completion."
+}

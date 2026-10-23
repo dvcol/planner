@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.9667e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="1.211855584">
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorItineraryHistoryTests" name="restoredItineraryKeepsExactDirectAndExpandedHistoryOrRejectsTheWholeCollision(collision:restoreListParent:)" time="1.211508375">
+            <failure message="Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)"/>
+            <failure message="Expectation failed: NSDictionary(dictionary: recoveredObject).isEqual(to: expected) (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

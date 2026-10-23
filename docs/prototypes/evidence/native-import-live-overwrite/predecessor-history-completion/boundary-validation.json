@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 752,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Membership history restoration and retained-history collision both pass; subsequent local completion observes the restored change and keeps global Item Todo."
+}

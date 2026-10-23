@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 753,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 2,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "All eight membership/direct/expanded context cases pass, including simultaneous entry/membership restoration and exact retained-family/source bindings."
+}

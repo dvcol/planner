@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 752,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 1,
+  "failedFunctions": 1,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Both membership-history cases execute and fail: fresh contexts remain old, and retained alias identity collision incorrectly applies the whole import."
+}

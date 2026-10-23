@@ -1,0 +1,8 @@
+{
+  "matchingCoreInputs": 753,
+  "nativeInputs": 1086,
+  "passedFunctionsPerPlatform": 76,
+  "sqliteUnlinkWarningsPerPlatform": 0,
+  "unchangedRedGreenTest": true,
+  "scope": "Authorized predecessor membership/direct/expanded history; retained-ID rejection; observed chain and contextual follow-up commands"
+}
