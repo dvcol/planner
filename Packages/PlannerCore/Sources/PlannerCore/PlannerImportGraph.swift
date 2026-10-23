@@ -141,20 +141,24 @@ struct PlannerImportGraph {
     return context.importContextIdentities.contains(where: isClosed)
   }
 
-  func competingValueFamily(
+  func restoredValueFamily(
     for source: PlannerPortableBoundIdentity, to live: PlannerPortableBoundIdentity,
     in incoming: PlannerPortableBackup
   ) throws -> PlannerPortableRestorationFamily? {
-    guard
-      let family = incoming.restorationFamilies.first(where: {
-        $0.predecessor.kind == source.kind && $0.predecessor.id == source.id
-          && $0.candidates.contains { $0.lifetimeId == source.lifetimeId }
-          && authorizesPredecessorValues($0.predecessor, for: live)
-          && $0.candidates.contains {
-            !resolves(.init(kind: source.kind, id: source.id, lifetimeId: $0.lifetimeId), to: live)
-          }
-      })
-    else { return nil }
+    var selectedFamily = incoming.restorationFamilies.first(where: {
+      $0.predecessor.kind == source.kind && $0.predecessor.id == source.id
+        && $0.candidates.contains { $0.lifetimeId == source.lifetimeId }
+        && authorizesPredecessorValues($0.predecessor, for: live)
+    })
+    if selectedFamily == nil, source != live, resolves(source, to: live) {
+      selectedFamily = backup.restorationFamilies.first { family in
+        family.predecessor.kind == source.kind && family.predecessor.id == source.id
+          && family.candidates.contains { $0.lifetimeId == source.lifetimeId }
+          && family.candidates.contains { $0.lifetimeId == live.lifetimeId }
+          && !backup.deletionMarkers.contains { $0.closedFamilyId == family.familyId }
+      }
+    }
+    guard let family = selectedFamily else { return nil }
     let closedFamilies = Set(backup.deletionMarkers.compactMap(\.closedFamilyId))
     guard !closedFamilies.contains(family.familyId),
       !incoming.deletionMarkers.contains(where: { $0.closedFamilyId == family.familyId })

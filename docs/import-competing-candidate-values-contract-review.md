@@ -38,3 +38,7 @@ Preview reports the current X/B in replacements, with B in both before/after sum
 First retain the failing literal current-B versus unknown-D workflow through the already approved public real-store boundary. Prove full expected exports, omitted-owner scope, independent import, canonical reads, complete current family retention, recovery, reopen, exact replay and duplicate-free reimport. Extend both candidate orderings/family-ID cases through all five source kinds and owned/contextual reference forms. Preserve no-authority, contradictory provenance, omitted-D, stale-review, precommit and truthful incomplete-recovery outcomes. Reuse native file review/apply/export qualification. No additional direct test boundary is proposed.
 
 Automatic synchronization/consolidation remains a separate requirement. This proposal copies deliberately selected manual backup values onto a current live owner without adopting the backup's competing lifetime.
+
+## Already-known candidate continuation
+
+The [known-candidate follow-up](prototypes/core-native-import-known-values.md#final-local-checkpoint) applies the same deliberate value-copy policy to an already-authorized candidate, retaining the complete current family even when incoming metadata is omitted or a valid subset. Both modes and complete all-kind graphs are qualified through the existing public store/recovery seams. This adds no family admission or new public contract. No-live incoming-candidate restoration remains the separate pending Q151 decision.
