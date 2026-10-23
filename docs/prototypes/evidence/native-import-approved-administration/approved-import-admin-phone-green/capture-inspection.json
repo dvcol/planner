@@ -1,0 +1,35 @@
+{
+  "captures": [
+    {
+      "file": "3BA94105-437E-449A-A4CA-DF4A4C3278C9.png",
+      "sha256": "a109db4fa3054122c52c31125aa34fc5b965f51e819612775aea9816af61311c",
+      "inspected": true,
+      "scope": "Exact original phone review/detail/List capture; no whole-app UI acceptance"
+    },
+    {
+      "file": "4F41DEE0-70D5-4A1F-B304-1B020D598630.png",
+      "sha256": "f8d396f284602f6431d696cdb2db51d9d33207eff266c18482dc3854716ee882",
+      "inspected": true,
+      "scope": "Exact original phone review/detail/List capture; no whole-app UI acceptance"
+    },
+    {
+      "file": "36F54420-462A-4D9A-A40A-629D4433EB34.png",
+      "sha256": "3d9ac0f9920eef58a144a12a32bb87411f759f347e34cfc330cacbac0d39e8e8",
+      "inspected": true,
+      "scope": "Exact original phone review/detail/List capture; no whole-app UI acceptance"
+    },
+    {
+      "file": "BD34E12B-7F2F-4FBB-8C81-7667305E8123.png",
+      "sha256": "895ee610fb11799c739e110f6474d421c1261292dc23760dca6357480e6296a9",
+      "inspected": true,
+      "scope": "Exact original phone review/detail/List capture; no whole-app UI acceptance"
+    }
+  ],
+  "findings": [
+    "Correct unavailable-dependency explanation is readable.",
+    "Overwrite shows one replacement, zero source restorations, and retained references.",
+    "Relaunch shows original notes and a retained timed Schedule; global completion is off.",
+    "Omitted List keeps local Done, archived child and 2/2 finished progress.",
+    "Repeated compact heading and floating-bar clearance remain whole-app polish findings."
+  ]
+}

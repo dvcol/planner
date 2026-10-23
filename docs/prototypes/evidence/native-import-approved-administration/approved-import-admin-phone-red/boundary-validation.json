@@ -1,0 +1,9 @@
+{
+  "inputCount": 1091,
+  "workspaceDifferences": [],
+  "stagedDifferences": [],
+  "productDifferences": [],
+  "exitCode": 75,
+  "passingCredit": false,
+  "meaning": "Interrupted before native UI execution because required external input staging failed."
+}

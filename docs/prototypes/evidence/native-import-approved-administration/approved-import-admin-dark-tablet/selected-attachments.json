@@ -1,0 +1,99 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-approved-import-admin-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-approved-import-admin-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B302A483-11CB-4319-AC88-1EA37EEBCDED.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import preserves the omitted List and local completion_0_A2EB1967-A46A-447A-9928-2147EBD49C52.png",
+      "timestamp": 1792729716.023,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "B302A483-11CB-4319-AC88-1EA37EEBCDED.png",
+      "originalSha256": "4cc768afc1b14415c72be263e406210b0ce8c326ef7f69ee29119cb67a8ca532"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "CE6CB5E4-5E02-496A-AFA6-BAF2B62FBA99.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import restored values survive relaunch_0_AD020AC9-7811-4089-8714-6382B1AB38FA.png",
+      "timestamp": 1792729683.164,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "CE6CB5E4-5E02-496A-AFA6-BAF2B62FBA99.png",
+      "originalSha256": "a667c3645acbc47c2011629da8e1dbf5747c77f952f556ab6b668e1f4e31a26d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3EBF5E9A-5518-4197-A401-7FAD3C7E4266.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import Overwrite delivered backup filename_0_96660E12-93B0-436B-868D-E8E4EE659AF0.txt",
+      "timestamp": 1792729666.352,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "3EBF5E9A-5518-4197-A401-7FAD3C7E4266.txt.gz",
+      "originalSha256": "2bd44b42c30f5025bb28326d9f2567eb80158f9ac4e11ec42425db528f2ff5c5"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "BFD48034-2668-4C14-A2CB-9B653A542A15.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import Overwrite reviews the current live owner_0_5995A586-9D2C-4225-9FDC-B2586107C739.png",
+      "timestamp": 1792729650.661,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "BFD48034-2668-4C14-A2CB-9B653A542A15.png",
+      "originalSha256": "2822d207009ad8afe120578059803e51ecd0943d975342f938839bcd3403fb3d"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "30555539-9C06-4E7F-8378-23B5AF01CD68.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import Skip delivered backup filename_0_BBEE4149-C5CF-436C-AB79-D2F4D92144EC.txt",
+      "timestamp": 1792729610.537,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "30555539-9C06-4E7F-8378-23B5AF01CD68.txt.gz",
+      "originalSha256": "cd6a615da0bc752ff574ccbbba1d2c159e958c4991c2252ddb2d67bea888ffda"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "CEF336F8-F554-4231-B05E-5EB86C125C5C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import Skip explains unavailable candidate dependencies_0_2CEA33EE-B93B-4ED4-A940-00035B067F60.png",
+      "timestamp": 1792729593.107,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "CEF336F8-F554-4231-B05E-5EB86C125C5C.png",
+      "originalSha256": "f1773f79e5de013f68fe703a50476b235ae3e02cd46f75a6aa34c73bfaf20402"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "30903059-5DC2-4622-8D84-5050AC03144D.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Approved import dependency hierarchy_0_FEA5523F-D974-4FF5-9A56-FB6161973C31.txt",
+      "timestamp": 1792729592.923,
+      "testIdentifier": "SavedBackupImportJourneyTests/testApprovedRestorationImportsKeepCurrentFamiliesAndOverwritePredecessorValues()",
+      "retainedFileName": "30903059-5DC2-4622-8D84-5050AC03144D.txt.gz",
+      "originalSha256": "08abb515f4191dc6503cfc0daa119e3a17316d4192e8e4d833c9925f8d539ad2"
+    }
+  ],
+  "videoPublished": false
+}

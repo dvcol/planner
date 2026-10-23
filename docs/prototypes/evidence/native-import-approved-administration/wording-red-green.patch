@@ -1,0 +1,12 @@
+--- native-red/SavedBackupImportSummary.swift
++++ native-green/SavedBackupImportSummary.swift
+@@ -233,7 +233,8 @@
+   private func reasonDescription(_ reason: String?) -> String? {
+     switch reason {
+     case "matchingRecordConflict": "Keep the current record and its complete contents."
+-    case "deletedDependency": "A required record was deleted, so this dependent record is skipped."
++    case "deletedDependency":
++      "A required record is unavailable in this import, so this dependent record is skipped."
+     case "deletedSource": "Previously deleted data is not restored by this import."
+     case "omittedOwner": "The backup omits the owner, so its partial contents are skipped."
+     case "unchanged": "The represented record matches the current data."

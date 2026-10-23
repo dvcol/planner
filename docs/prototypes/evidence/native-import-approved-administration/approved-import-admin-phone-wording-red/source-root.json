@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "54e0ffd6592bc1b28ff5b5b9c160f2007c57ab3e",
+  "overlays": [
+    "Planner/Scenes/SavedBackupImportSummary.swift",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift",
+    "docs/fixtures/native-closed-predecessor-values.json",
+    "docs/fixtures/native-current-restoration-family.json",
+    "docs/fixtures/native-unknown-restoration-candidate.json"
+  ]
+}

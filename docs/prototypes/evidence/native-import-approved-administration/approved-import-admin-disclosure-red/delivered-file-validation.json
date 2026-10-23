@@ -1,0 +1,12 @@
+{
+  "results": {
+    "Skip": {
+      "notProduced": true
+    },
+    "Overwrite": {
+      "notProduced": true
+    }
+  },
+  "nativeTestPassed": false,
+  "scope": "Complete current family and omitted graph; independent Skip addition; predecessor values under live B; version migration only"
+}

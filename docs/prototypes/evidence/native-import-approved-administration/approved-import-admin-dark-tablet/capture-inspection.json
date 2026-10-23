@@ -1,0 +1,31 @@
+{
+  "captures": [
+    {
+      "file": "B302A483-11CB-4319-AC88-1EA37EEBCDED.png",
+      "sha256": "4cc768afc1b14415c72be263e406210b0ce8c326ef7f69ee29119cb67a8ca532",
+      "inspected": true
+    },
+    {
+      "file": "CE6CB5E4-5E02-496A-AFA6-BAF2B62FBA99.png",
+      "sha256": "a667c3645acbc47c2011629da8e1dbf5747c77f952f556ab6b668e1f4e31a26d",
+      "inspected": true
+    },
+    {
+      "file": "BFD48034-2668-4C14-A2CB-9B653A542A15.png",
+      "sha256": "2822d207009ad8afe120578059803e51ecd0943d975342f938839bcd3403fb3d",
+      "inspected": true
+    },
+    {
+      "file": "CEF336F8-F554-4231-B05E-5EB86C125C5C.png",
+      "sha256": "f1773f79e5de013f68fe703a50476b235ae3e02cd46f75a6aa34c73bfaf20402",
+      "inspected": true
+    }
+  ],
+  "findings": [
+    "Dark native review shows the corrected explanation and one current-owner replacement.",
+    "Relaunched Item retains original notes, labels, schedule and embedded owned-pin Map.",
+    "Omitted List keeps exact local Done and archived-child progress.",
+    "Narrow Items title truncation and upper collection spacing remain whole-app polish findings."
+  ],
+  "scope": "Represented native import flow only; no complete dark-mode acceptance"
+}

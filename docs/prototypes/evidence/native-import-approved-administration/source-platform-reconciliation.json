@@ -1,0 +1,15 @@
+{
+  "matchingNativeInputs": 1091,
+  "phases": [
+    "approved-import-admin-phone-green",
+    "approved-import-admin-dark-tablet",
+    "approved-import-admin-mac-compiler"
+  ],
+  "phoneNativePasses": 1,
+  "tabletNativePasses": 1,
+  "macRuntimeCredit": false,
+  "macProducts": 9,
+  "tabletAppearanceRestored": true,
+  "matchingCoreInputs": 755,
+  "coreAffectedFunctionCount": 78
+}

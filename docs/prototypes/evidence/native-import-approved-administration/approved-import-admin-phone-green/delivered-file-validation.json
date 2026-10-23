@@ -1,0 +1,24 @@
+{
+  "results": {
+    "Skip": {
+      "filename": "Planner Backup 2026-10-23T04-22-01Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-23T04-22-01Z.json",
+      "retained": "skip-delivered.json.gz",
+      "bytes": 13378,
+      "sha256": "df9dbc3d2e36fc95179486325793a6da232a527d938a66bf46ab72b14e6b6b89",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    },
+    "Overwrite": {
+      "filename": "Planner Backup 2026-10-23T04-22-46Z.json",
+      "delivered": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Backup 2026-10-23T04-22-46Z.json",
+      "retained": "overwrite-delivered.json.gz",
+      "bytes": 13367,
+      "sha256": "8f34ea742e0afab6329eb0ee2f26d43ee7106fade32d39026977d1070f745cab",
+      "completeGraphMatches": true,
+      "tableOrderingOnlyNormalized": true
+    }
+  },
+  "nativeTestPassed": true,
+  "scope": "Complete current family and omitted graph; independent Skip addition; predecessor values under live B; version migration only"
+}

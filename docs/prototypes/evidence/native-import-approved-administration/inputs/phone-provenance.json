@@ -1,0 +1,31 @@
+{
+  "device": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+  "containerCommand": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "com.apple.DocumentsApp",
+    "groups"
+  ],
+  "inputs": [
+    {
+      "source": "docs/fixtures/native-current-restoration-family.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner approved current family.json",
+      "sha256": "7186a94f67afc89d025a6784d4ea8617200202fca2d1bf3b8b4ac759a17dcd84",
+      "bytes": 12510
+    },
+    {
+      "source": "docs/fixtures/native-unknown-restoration-candidate.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner unknown candidate.json",
+      "sha256": "3895793d761e9140e39f62c1a62237241fb1c401d910de8b730ea6a94be98852",
+      "bytes": 6663
+    },
+    {
+      "source": "docs/fixtures/native-closed-predecessor-values.json",
+      "destination": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner closed predecessor.json",
+      "sha256": "018a60a4fdcd7ae9917157c5422b25cd85fc0cb2be268b10e6a94f3b37c12d87",
+      "bytes": 3413
+    }
+  ]
+}

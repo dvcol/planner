@@ -1,0 +1,9 @@
+{
+  "red": "approved-import-admin-disclosure-red",
+  "green": "approved-import-admin-phone-green",
+  "unchangedNativeJourneyBytes": true,
+  "productionChange": "Unavailable-dependency explanation only between these epochs.",
+  "redNativeFailures": 1,
+  "greenNativePasses": 1,
+  "earlierScrollAttemptRetainsFailure": true
+}
