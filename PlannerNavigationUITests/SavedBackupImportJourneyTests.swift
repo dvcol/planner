@@ -3,6 +3,121 @@ import XCTest
 @MainActor
 final class SavedBackupImportJourneyTests: XCTestCase {
   #if os(iOS)
+    func testFreshLocalRestorationRequiresAuthorityAndKeepsItsImportedAppearanceAfterRelaunch() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      selectBackup("Planner fresh local deleted owner.json", application: application)
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+
+      selectBackup("Planner fresh local incoming values.json", application: application)
+      for (identifier, label) in [
+        ("additions", "Additions, 1"), ("conflicts", "Skipped conflicts, 1"),
+        ("dependents", "Skipped dependents, 1"),
+      ] {
+        let summary = application.staticTexts["saved.import.summary.\(identifier)"]
+        revealImportElement(summary, application: application)
+        XCTAssertEqual(summary.label, label)
+      }
+      recordImport(application, name: "Fresh local import Skip preserves deletion and skips Tour")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      recordFreshLocalBackup(application, phase: "Skip")
+
+      selectBackup("Planner fresh local incoming values.json", application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      let authorizationFailure = application.staticTexts[
+        "Deleted data needs separate reviewed restoration."]
+      revealImportElement(authorizationFailure, application: application)
+      XCTAssertTrue(authorizationFailure.waitForExistence(timeout: 15))
+      XCTAssertFalse(application.staticTexts["saved.import.applied"].exists)
+      recordImport(application, name: "Fresh local import refuses unreviewed restoration")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      recordFreshLocalBackup(application, phase: "Denied")
+
+      for phase in ["Restored", "Repeated"] {
+        selectBackup("Planner fresh local incoming values.json", application: application)
+        application.plannerElement("saved.import.mode").activateForPlannerJourney()
+        application.plannerElement("Overwrite").activateForPlannerJourney()
+        let restore = application.descendants(matching: .any).matching(
+          identifier: "saved.import.restore"
+        ).firstMatch
+        revealImportElement(restore, application: application)
+        restore.switches.firstMatch.activateForPlannerJourney()
+        let restorations = application.staticTexts["saved.import.summary.restorations"]
+        revealImportElement(restorations, application: application)
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [
+              XCTNSPredicateExpectation(
+                predicate: NSPredicate(
+                  format: "label == %@", phase == "Restored" ? "Restorations, 1" : "Restorations, 0"
+                ),
+                object: restorations)
+            ], timeout: 15), .completed)
+        recordImport(
+          application, name: "Fresh local import \(phase) explicitly reviews restoration")
+        application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+        XCTAssertTrue(application.staticTexts["saved.import.applied"].waitForExistence(timeout: 15))
+        application.plannerElement("saved.import.close").activateForPlannerJourney()
+        recordFreshLocalBackup(application, phase: phase)
+      }
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      recordFreshLocalBackup(application, phase: "Relaunched")
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Lists")
+      let tour = application.savedPlannerListRow("Tour")
+      XCTAssertTrue(tour.waitForExistence(timeout: 15))
+      XCTAssertEqual(tour.identifier, "saved.list.00000000-0000-4000-8000-000000000277")
+      openImportedCatalogRow(tour, application: application)
+      let filters = application.plannerElement("saved.list.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: filters)
+      let appearance = application.plannerElement(
+        "saved.appearance.00000000-0000-4000-8000-000000000477")
+      XCTAssertTrue(appearance.waitForExistence(timeout: 15))
+      XCTAssertTrue(
+        application.plannerElement(
+          "saved.appearance.completion.00000000-0000-4000-8000-000000000477"
+        ).waitForPlannerValue("Completed"))
+      appearance.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Incoming restored notes"].waitForExistence(timeout: 10))
+      recordImport(
+        application, name: "Fresh local import retains Tour and local Done after relaunch")
+      application.openPlannerSection("Items")
+      let itemFilters = application.plannerElement("saved.items.filters")
+      application.chooseSavedPlannerStateFilter("All completion states", control: itemFilters)
+      application.chooseSavedPlannerStateFilter("All archive states", control: itemFilters)
+      let museum = application.plannerElement("saved.item.00000000-0000-4000-8000-000000000101")
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Incoming restored notes"].waitForExistence(timeout: 10))
+      let globalCompletion = application.descendants(matching: .any).matching(
+        identifier: "saved.item.completion"
+      ).firstMatch
+      XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+      recordImport(application, name: "Fresh local import keeps global Todo independent from Tour")
+    }
+
+    private func recordFreshLocalBackup(_ application: XCUIApplication, phase: String) {
+      let exported = XCTAttachment(string: exportBackup(application))
+      exported.name = "Fresh local import \(phase) delivered backup filename"
+      exported.lifetime = .keepAlways
+      add(exported)
+    }
+
     func testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft() throws {
       continueAfterFailure = false
       let application = XCUIApplication()

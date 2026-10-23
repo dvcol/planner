@@ -37,6 +37,11 @@ struct PlannerChangeObservationFixtureView: View {
               .accessibilityIdentifier("fixture.writer.restoreMembership")
               Button("Delete Weekend") { Task { await fixture.deleteWeekend() } }
                 .accessibilityIdentifier("fixture.writer.deleteWeekend")
+              Button("Delete and restore Weekend") {
+                Task { await fixture.replaceWeekendLifetime() }
+              }
+              .disabled(!fixture.canRestoreHotelMembership)
+              .accessibilityIdentifier("fixture.writer.restoreWeekend")
               Button("Delete City trip") { Task { await fixture.deleteCityTrip() } }
                 .accessibilityIdentifier("fixture.writer.deleteCityTrip")
               Button("Remove Hotel from City trip") { Task { await fixture.removeCityTripEntry() } }
@@ -45,6 +50,11 @@ struct PlannerChangeObservationFixtureView: View {
                 Task { await fixture.removeFirstWeekendBranch() }
               }
               .accessibilityIdentifier("fixture.writer.removeWeekendBranch")
+              Button("Restore removed City trip entry") {
+                Task { await fixture.restoreCityTripEntry() }
+              }
+              .disabled(!fixture.canRestoreCityTripEntry)
+              .accessibilityIdentifier("fixture.writer.restoreItineraryEntry")
               Button("Damage recovery checkpoint") { Task { await fixture.damageRecovery() } }
                 .accessibilityIdentifier("fixture.writer.damageRecovery")
               Button("Repair recovery checkpoint") { Task { await fixture.repairRecovery() } }
@@ -57,6 +67,7 @@ struct PlannerChangeObservationFixtureView: View {
             .accessibilityIdentifier("fixture.writer.menu")
             Text(fixture.status).font(.caption)
               .accessibilityIdentifier("fixture.writer.status")
+              .accessibilityValue(fixture.removedCityTripEntryIdentifier ?? "")
           }
           .padding(8)
           .frame(maxWidth: .infinity)
@@ -89,9 +100,12 @@ private final class PlannerChangeObservationFixture {
   private var damagedCheckpoint: (url: URL, bytes: Data)?
   private var originalControl: Data?
   private var removedHotelMembership: PlannerAssociationUndoSnapshot?
+  private var removedCityTripEntry: PlannerAssociationUndoSnapshot?
   private(set) var status = "Independent writer ready"
 
   var canRestoreHotelMembership: Bool { removedHotelMembership != nil }
+  var canRestoreCityTripEntry: Bool { removedCityTripEntry != nil }
+  var removedCityTripEntryIdentifier: String? { removedCityTripEntry?.identity.id.uuidString }
 
   private init(
     configuration: PlannerStorageConfiguration, writer: PlannerCore.Planner,
@@ -289,6 +303,64 @@ private final class PlannerChangeObservationFixture {
     status = "No Weekend List to delete"
   }
 
+  func replaceWeekendLifetime() async {
+    guard let snapshot = removedHotelMembership,
+      case .membership(let originalMembership) = snapshot.originalRecord,
+      case .source(.item(let originalItem)) = await writer.read(
+        session: session, request: .source(source)),
+      case .exported(let before) = await writer.exportData(session: session),
+      case .decoded(let current) = writer.decodeImport(before),
+      let originalList = current.backup.lists.first(where: { $0.id == originalMembership.list.id })
+    else {
+      status = "Independent writer could not prepare Weekend restoration"
+      return
+    }
+    do {
+      guard var sourceOnly = try JSONSerialization.jsonObject(with: before) as? [String: Any],
+        let sources = sourceOnly["sources"] as? [[String: Any]],
+        let listRecord = sources.first(where: {
+          $0["id"] as? String == originalMembership.list.id.uuidString
+        })
+      else { throw CancellationError() }
+      for key in sourceOnly.keys where key != "format" && key != "formatVersion" {
+        sourceOnly[key] = []
+      }
+      sourceOnly["sources"] = [listRecord]
+      guard
+        case .decoded(let backup) = writer.decodeImport(
+          try JSONSerialization.data(withJSONObject: sourceOnly)),
+        case .reviewed(let deletion) = await writer.prepareReview(
+          session: session, command: .deleteSource(source: originalMembership.list)),
+        case .applied(_, .complete) = await writer.execute(
+          .init(
+            operationId: UUID(), session: session, command: deletion.command,
+            reviewToken: deletion.reviewToken)
+        ).outcome,
+        case .reviewed(let restoration) = await writer.prepareReview(
+          session: session,
+          command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true)),
+        case .applied(_, .complete) = await writer.execute(
+          .init(
+            operationId: UUID(), session: session, command: restoration.command,
+            reviewToken: restoration.reviewToken)
+        ).outcome,
+        case .exported(let after) = await writer.exportData(session: session),
+        case .decoded(let restored) = writer.decodeImport(after),
+        let restoredList = restored.backup.lists.first(where: { $0.id == originalList.id }),
+        restoredList.lifetimeId != originalList.lifetimeId,
+        !restored.backup.memberships.contains(where: { $0.list.id == originalList.id }),
+        case .source(.item(let retainedItem)) = await writer.read(
+          session: session, request: .source(source)),
+        retainedItem.sourceLifetimeId == originalItem.sourceLifetimeId,
+        retainedItem.fieldHashes == originalItem.fieldHashes,
+        retainedItem.updatedAt == originalItem.updatedAt
+      else { throw CancellationError() }
+      status = "Restored Weekend with a new lifetime"
+    } catch {
+      status = "Independent writer did not restore Weekend without its omitted membership"
+    }
+  }
+
   func deleteCityTrip() async {
     guard
       case .source(.item(let current)) = await writer.read(
@@ -308,6 +380,7 @@ private final class PlannerChangeObservationFixture {
   }
 
   func removeCityTripEntry() async {
+    removedCityTripEntry = nil
     guard
       case .source(.item(let current)) = await writer.read(
         session: session, request: .source(source))
@@ -324,6 +397,7 @@ private final class PlannerChangeObservationFixture {
           operationId: UUID(), session: session,
           command: .removeItineraryEntry(itineraryId: itinerary.id, entryId: entryIdentifier)))
       if case .applied(_, .complete) = result.outcome {
+        removedCityTripEntry = result.associationUndoSnapshot
         status = "Removed Hotel from City trip"
       } else {
         status = "Independent writer did not remove Hotel's Itinerary entry"
@@ -334,6 +408,7 @@ private final class PlannerChangeObservationFixture {
   }
 
   func removeFirstWeekendBranch() async {
+    removedCityTripEntry = nil
     guard
       case .source(.item(let current)) = await writer.read(
         session: session, request: .source(source)),
@@ -363,6 +438,7 @@ private final class PlannerChangeObservationFixture {
           operationId: UUID(), session: session,
           command: .removeItineraryEntry(itineraryId: itinerary.id, entryId: entryIdentifier)))
       if case .applied(_, .complete) = result.outcome {
+        removedCityTripEntry = result.associationUndoSnapshot
         status = "Removed first Weekend branch from City trip"
       } else {
         status = "Independent writer did not remove the first Weekend branch"
@@ -370,6 +446,48 @@ private final class PlannerChangeObservationFixture {
       return
     }
     status = "No Weekend branch to remove"
+  }
+
+  func restoreCityTripEntry() async {
+    guard let snapshot = removedCityTripEntry,
+      case .itineraryEntry(let original) = snapshot.originalRecord,
+      case .source(.item(let before)) = await writer.read(
+        session: session, request: .source(source))
+    else {
+      status = "No original City trip entry to restore"
+      return
+    }
+    let result = await writer.execute(
+      .init(operationId: UUID(), session: session, command: .restoreAssociation(snapshot: snapshot))
+    )
+    guard case .applied(_, .complete) = result.outcome,
+      case .exported(let data) = await writer.exportData(session: session),
+      case .decoded(let restored) = writer.decodeImport(data),
+      let entry = restored.backup.itineraryEntries.first(where: { $0.id == original.id }),
+      entry.lifetimeId != original.lifetimeId,
+      entry.itinerary == original.itinerary,
+      entry.itineraryLifetimeId == original.itineraryLifetimeId,
+      entry.source == original.source, entry.sourceLifetimeId == original.sourceLifetimeId,
+      entry.rank == original.rank, entry.localDone == original.localDone,
+      snapshot.originalExpandedStates.allSatisfy({ originalState in
+        restored.backup.expandedCompletions.contains { state in
+          state.context.listEntryId == entry.id
+            && state.context.listEntryLifetimeId == entry.lifetimeId
+            && state.context.membershipId == originalState.context.membershipId
+            && state.context.membershipLifetimeId == originalState.context.membershipLifetimeId
+            && state.localDone == originalState.localDone
+        }
+      }),
+      case .source(.item(let after)) = await writer.read(
+        session: session, request: .source(source)),
+      after.sourceLifetimeId == before.sourceLifetimeId,
+      after.fieldHashes == before.fieldHashes, after.updatedAt == before.updatedAt
+    else {
+      status = "Independent writer did not restore the original City trip entry safely"
+      return
+    }
+    removedCityTripEntry = nil
+    status = "Restored original City trip entry"
   }
 
   private func deleteSource(_ target: PlannerEntityReference, name: String) async {

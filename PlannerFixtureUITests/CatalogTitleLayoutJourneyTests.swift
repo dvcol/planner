@@ -5,6 +5,132 @@ import XCTest
 
   @MainActor
   final class CatalogTitleLayoutJourneyTests: XCTestCase {
+    func testCollectionMapRetainsItsRotatedHeadingAndNativeCompassDuringResize() throws {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(
+        application.savedPlannerItemRows("Hotel").firstMatch.waitForExistence(timeout: 20))
+      application.openSavedPlannerCatalogViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("Map")
+      let map = application.descendants(matching: .any)
+        .matching(identifier: "saved.map.collection").firstMatch
+      let pin = application.buttons["saved.map.pin.35.662,139.717"]
+      XCTAssertTrue(pin.waitForExistence(timeout: 10))
+      let compass = map.buttons["Compass"].firstMatch
+      XCTAssertFalse(compass.isHittable)
+      map.rotate(.pi / 3, withVelocity: 0.5)
+      let nativeHierarchy = XCTAttachment(string: application.debugDescription)
+      nativeHierarchy.name = "Native Map rotation exposes its actual compass accessibility"
+      nativeHierarchy.lifetime = .keepAlways
+      add(nativeHierarchy)
+      let nativeCapture = XCTAttachment(screenshot: application.screenshot())
+      nativeCapture.name = "Native Map rotation before querying the compass"
+      nativeCapture.lifetime = .keepAlways
+      add(nativeCapture)
+      XCTAssertTrue(compass.waitForPlannerHittability())
+      var precedingHeading: String?
+      let settledHeading = NSPredicate { _, _ in
+        guard compass.isHittable, let heading = compass.value as? String else { return false }
+        defer { precedingHeading = heading }
+        return !heading.isEmpty && heading == precedingHeading
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: settledHeading, object: application)],
+          timeout: 10), .completed)
+      let rotatedHeading = try XCTUnwrap(compass.value as? String)
+      for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
+        XCUIDevice.shared.orientation = orientation
+        let settled = NSPredicate { _, _ in
+          let frame = application.windows.firstMatch.frame
+          let matchesOrientation =
+            orientation == .portrait ? frame.height > frame.width : frame.width > frame.height
+          return matchesOrientation && compass.isHittable && pin.isHittable
+            && (compass.value as? String) == rotatedHeading
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10),
+          .completed)
+        let capture = XCTAttachment(screenshot: application.screenshot())
+        capture.name =
+          "Native Map heading and compass survive viewport resize \(orientation.rawValue)"
+        capture.lifetime = .keepAlways
+        add(capture)
+      }
+      application.activatePlannerFixtureWriterAction("fixture.writer.moveHotel")
+      XCTAssertTrue(
+        application.staticTexts["Saved another-writer location"].waitForExistence(timeout: 10))
+      XCTAssertTrue(pin.waitForNonExistence(timeout: 5))
+      let locations = application.plannerElement("saved.map.locations")
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "enabled == true"), object: locations)
+          ], timeout: 15), .completed)
+      XCTAssertEqual(compass.value as? String, rotatedHeading)
+      let refreshed = XCTAttachment(screenshot: application.screenshot())
+      refreshed.name = "Native Map heading survives an independent location refresh after resize"
+      refreshed.lifetime = .keepAlways
+      add(refreshed)
+      compass.activateForPlannerJourney()
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "hittable == false"), object: compass)
+          ], timeout: 10), .completed)
+      locations.activateForPlannerJourney()
+      application.buttons["Hotel"].firstMatch.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.descendants(matching: .any).matching(identifier: "saved.item.completion")
+          .firstMatch.waitForPlannerBooleanState(false))
+    }
+
+    func testSwitchingFromAListAppearanceToItemsWithoutAnItemSelectionShowsItsCatalog() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      guard application.windows.firstMatch.frame.width < 600 else {
+        throw XCTSkip("This journey qualifies collapsed phone columns.")
+      }
+      application.openPlannerSection("Lists")
+      let list = application.savedPlannerListRow("Weekend")
+      XCTAssertTrue(list.waitForExistence(timeout: 20))
+      list.activateForPlannerJourney()
+      let appearance = application.savedPlannerItemRows("Hotel").firstMatch
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      appearance.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+      application.openPlannerSection("Items")
+      XCTAssertTrue(
+        application.plannerElement("saved.items.filters").waitForExistence(timeout: 10),
+        application.debugDescription)
+      let item = application.savedPlannerItemRows("Hotel").firstMatch
+      XCTAssertTrue(item.waitForExistence(timeout: 10))
+      XCTAssertTrue(item.identifier.hasPrefix("saved.item."))
+      let capture = XCTAttachment(screenshot: application.screenshot())
+      capture.name = "Collection destination opens its catalog instead of an empty detail column"
+      capture.lifetime = .keepAlways
+      add(capture)
+      item.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    }
+
     func testAccessibleItineraryMapKeepsItsPinAndFooterDuringRotation() throws {
       try XCTSkipUnless(
         UIDevice.current.userInterfaceIdiom == .pad, "This journey compares iPad panes.")

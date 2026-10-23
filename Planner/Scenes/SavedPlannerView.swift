@@ -59,6 +59,11 @@ private struct SavedMapRequest: Equatable {
   let sort: SavedItemSort
   let namespace: String
   let revision: UUID
+
+  func hasSameCollection(as request: SavedMapRequest) -> Bool {
+    scope == request.scope && filters == request.filters && searchText == request.searchText
+      && sort == request.sort && namespace == request.namespace
+  }
 }
 
 struct SavedPlannerView: View {
@@ -104,6 +109,7 @@ struct SavedPlannerView: View {
   @State private var itineraryPreferredCompactColumn = NavigationSplitViewColumn.sidebar
   @State private var itineraryNavigationIdentifier = UUID()
   @State private var selectedListId: UUID?
+  @State private var listNavigationIdentifier = UUID()
   @State private var retainedListSource: PlannerListSourceRead?
   @State private var listWindow: SavedItemWindow?
   @State private var listWindowNamespace: String?
@@ -863,18 +869,21 @@ struct SavedPlannerView: View {
   }
 
   private func loadedMapCollection(for scope: SavedMapScope) -> SavedMapCollection? {
-    guard let request = mapRequest, request.scope == scope, loadedMapRequest == request else {
+    guard let request = mapRequest, request.scope == scope,
+      loadedMapRequest?.hasSameCollection(as: request) == true
+    else {
       return nil
     }
     return mapCollection
   }
 
   private func reloadMap() async {
-    loadedMapRequest = nil
     guard let request = mapRequest else {
+      loadedMapRequest = nil
       mapCollection?.cancel()
       return
     }
+    if loadedMapRequest?.hasSameCollection(as: request) != true { loadedMapRequest = nil }
     if mapCollection == nil {
       mapCollection = .init(addressPreviews: addressPreviews, mapsPreviews: mapsPreviews)
     }
@@ -2015,6 +2024,7 @@ struct SavedPlannerView: View {
         }
       }
     }
+    .id(listNavigationIdentifier)
     .navigationSplitViewStyle(.balanced)
     .onChange(of: selectedListId) { _, identifier in
       appearanceChangeMessage = nil
@@ -2136,6 +2146,9 @@ struct SavedPlannerView: View {
         requestDraftNavigation {
           recordSelectionChange()
           if section == .lists, selectedListId == nil { preferredCompactColumn = .sidebar }
+          if section == .items || section == .inbox, selectedItemId == nil {
+            preferredCompactColumn = .sidebar
+          }
           selectedSection = section
         }
       })
@@ -2241,11 +2254,13 @@ struct SavedPlannerView: View {
         isOpeningList = false
       }
       preferredCompactColumn = availability.containerAvailable ? .content : .sidebar
+      if !usesSidebarNavigation { listNavigationIdentifier = UUID() }
       destination = availability.containerAvailable ? "the List" : "Lists"
     case .itineraries:
       selectedItineraryRow = nil
       if !availability.containerAvailable { selectedItineraryIdentifier = nil }
       itineraryPreferredCompactColumn = selectedItineraryIdentifier == nil ? .sidebar : .content
+      if !usesSidebarNavigation { itineraryNavigationIdentifier = UUID() }
       destination = availability.containerAvailable ? "the Itinerary" : "Itineraries"
     case .calendar:
       calendarSelection = nil

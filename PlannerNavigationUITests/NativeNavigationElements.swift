@@ -7,6 +7,48 @@ import XCTest
 #endif
 
 extension XCUIApplication {
+  func activatePlannerFixtureWriterAction(_ identifier: String) {
+    plannerElement("fixture.writer.menu").activateForPlannerJourney()
+    let action = plannerElement(identifier)
+    #if os(iOS)
+      let window = windows.firstMatch
+      for scrollDirection in [1.0, -1.0] {
+        if action.exists && action.isHittable { break }
+        for _ in 0..<6 {
+          if action.exists && action.isHittable { break }
+          guard let menu = collectionViews.allElementsBoundByIndex.last else {
+            XCTFail("The native fixture action menu is unavailable.")
+            return
+          }
+          let visibleFrame = menu.frame.intersection(window.frame).insetBy(dx: 4, dy: 12)
+          guard visibleFrame.width > 0, visibleFrame.height > 44 else {
+            XCTFail("The native fixture menu has no scrollable visible area.")
+            return
+          }
+          let horizontalPosition = (visibleFrame.midX - window.frame.minX) / window.frame.width
+          let upperPosition =
+            (visibleFrame.minY + visibleFrame.height * 0.3 - window.frame.minY)
+            / window.frame.height
+          let lowerPosition =
+            (visibleFrame.minY + visibleFrame.height * 0.7 - window.frame.minY)
+            / window.frame.height
+          let upper = window.coordinate(
+            withNormalizedOffset: CGVector(dx: horizontalPosition, dy: upperPosition))
+          let lower = window.coordinate(
+            withNormalizedOffset: CGVector(dx: horizontalPosition, dy: lowerPosition))
+          if scrollDirection > 0 {
+            upper.press(forDuration: 0.05, thenDragTo: lower)
+          } else {
+            lower.press(forDuration: 0.05, thenDragTo: upper)
+          }
+        }
+      }
+    #endif
+    XCTAssertTrue(action.waitForExistence(timeout: 10))
+    XCTAssertTrue(action.waitForPlannerHittability())
+    action.activateForPlannerJourney()
+  }
+
   /// Check the colorful fixture pixels inside the preview rather than its availability label.
   func hasPaintedPlannerPreview(_ card: XCUIElement) -> Bool {
     guard card.exists else { return false }
