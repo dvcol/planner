@@ -1,0 +1,35 @@
+{
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-sseof",
+    "-2",
+    "-i",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-phone/DF75E1BF-3130-4479-9179-C9A47E11EB9C.mp4",
+    "-frames:v",
+    "1",
+    "docs/prototypes/evidence/core-change-stream/map-filtered-selection-phone/failure-automatic-detail.png"
+  ],
+  "originalVideo": "DF75E1BF-3130-4479-9179-C9A47E11EB9C.mp4",
+  "originalVideoSha256": "ae3bd41e41035327f6355a1e260cc8784a8b1e95147a6aac6b11c1357344a4b5",
+  "originalHierarchy": "19AAC934-C227-4368-8C2A-C60CBDE1ABE5.txt",
+  "originalHierarchySha256": "789eb8affdec57fb9a3436d6a2d3bba858c33fb75d0720ff8b48bbeea10076cb",
+  "derivedFrames": [
+    {
+      "retainedFile": "failure-before-clear.png",
+      "secondsBeforeVideoEnd": 2,
+      "observed": "Filtered List before clearing the query",
+      "sha256": "9d85e6656f49d5b54116ac4042d4b8415779fcd2621e9862f871832df22c7697"
+    },
+    {
+      "retainedFile": "failure-reopened-detail.png",
+      "secondsBeforeVideoEnd": 0.1,
+      "observed": "Hotel updated details reopened after clearing the query",
+      "sha256": "ec17d131305009a053415e355e6b3d33ceb87a446fa06314a13af3781372ecf8"
+    }
+  ],
+  "originalVideoDurationSeconds": 65.421667,
+  "originalCommandRetainedOutput": "failure-before-clear.png"
+}

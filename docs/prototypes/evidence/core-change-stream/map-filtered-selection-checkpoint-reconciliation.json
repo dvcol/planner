@@ -1,0 +1,92 @@
+{
+  "nativeInputs": 1102,
+  "finalNativeExecutions": [
+    {
+      "phase": "map-filtered-selection-final-phone",
+      "passedFunctions": 2,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "sqliteUnlinkDiagnostics": 0
+    },
+    {
+      "phase": "map-filtered-selection-final-dark-tablet",
+      "passedFunctions": 2,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "sqliteUnlinkDiagnostics": 0
+    }
+  ],
+  "totalFinalPassedFunctions": 4,
+  "distinctFinalFunctions": 3,
+  "inspectedOriginalCaptures": [
+    {
+      "path": "map-filtered-selection-final-phone/58905CC4-C84E-4093-9DCC-4AB2ACDF308C.png",
+      "sha256": "1deff9a7097f9a45b1fd22c79a38f89ed5b1da396700c98ab135535d1a0dfdcf",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-selection-final-phone/2A3A02DF-C566-4D57-BB1D-4594B587F8B8.png",
+      "sha256": "b8d8708aa52c2bd01900ba2e0853405093dcb5e73f80479f4346b3d1c0a78ebe",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-selection-final-phone/2052C36C-F5C6-498F-B5E1-D8154616FD24.png",
+      "sha256": "b0d61819dfd1738ce25bac91b8e3cc83e70a4d4ab45d5a441e6e850da1669b5b",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-selection-final-phone/0F4AAEEB-7C9D-4061-AA6D-93B5BC0DD036.png",
+      "sha256": "8f75deb05c4663bdc9fb2a946cbcc6b598f5d01a0e5231fef850c3c5689828e5",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-selection-final-dark-tablet/8AE51255-06EE-4A34-8C68-261F1067218A.png",
+      "sha256": "95047b09a70cb6b42cf96e7bf25bc9bea18aeb3e001cedff813f930eff24a563",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-selection-final-dark-tablet/004BAB93-DD83-42DE-A827-47E39522192C.png",
+      "sha256": "85d2582dc4c460ae8fe5d262b8ad3c34ad9d465cbc0d6c68507fbfc3c78993f0",
+      "visuallyInspected": true
+    },
+    {
+      "path": "map-filtered-selection-final-dark-tablet/43A1DB5C-A05F-4FEF-BA80-C6E5643B9BF6.png",
+      "sha256": "85d2582dc4c460ae8fe5d262b8ad3c34ad9d465cbc0d6c68507fbfc3c78993f0",
+      "visuallyInspected": true
+    }
+  ],
+  "initialRedPreserved": true,
+  "unchangedFirstRedGreenJourney": true,
+  "laterTestChange": "Reactivate the actual search field after Clear, using the established native UI interaction. No invariant or observation removed.",
+  "failedTabletInvocationPreserved": true,
+  "formattingOnlyRuntimeToCurrentDifference": [
+    "Planner/Scenes/SavedMapCollectionView.swift"
+  ],
+  "formatValidation": {
+    "file": "Planner/Scenes/SavedMapCollectionView.swift",
+    "runtimeInputSha256": "354d1cc823d66608fb6834d81173a2f490fdc5c44dbbaabb04ebe2dcd8b3d721",
+    "formattedInputSha256": "d1df1cdb9a0e75bb0b704f685201e93ce08b34dd4265efd2715fa54f4d81bfe6",
+    "formattedRuntimeSourceEqualsCurrent": true,
+    "nonWhitespaceBytesUnchanged": true,
+    "otherInputsUnchanged": 1101,
+    "runtimeManifestsEdited": false
+  },
+  "currentMacCompilers": [
+    {
+      "phase": "map-filtered-selection-final-mac-compiler",
+      "productCount": 9,
+      "elapsedSeconds": 23.144,
+      "runtimeCredit": false
+    },
+    {
+      "phase": "map-filtered-selection-final-mac-fixture-compiler",
+      "productCount": 5,
+      "elapsedSeconds": 14.498,
+      "runtimeCredit": false
+    }
+  ],
+  "appearanceRestored": true,
+  "actualMacRuntimeCredit": false,
+  "physicalDeviceCredit": false,
+  "scope": "Exact selected standalone List appearance survives a filtered Map refresh. Compact Back does not become an automatic push when its row returns. Native empty-state contrast is inspected in light/dark. Error-view styling has compiler coverage only; broader lifecycles and final whole-app polish stay open."
+}

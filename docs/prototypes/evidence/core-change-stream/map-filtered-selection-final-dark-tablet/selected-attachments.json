@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-selection-final-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-final-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8AE51255-06EE-4A34-8C68-261F1067218A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Independent writer refreshes the open collection Map_0_305E5F37-B5FC-4957-8942-8E904D20D57C.png",
+      "timestamp": 1792765028.094,
+      "testIdentifier": "ChangeObservationJourneyTests/testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource()",
+      "retainedFileName": "8AE51255-06EE-4A34-8C68-261F1067218A.png",
+      "originalSha256": "95047b09a70cb6b42cf96e7bf25bc9bea18aeb3e001cedff813f930eff24a563"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "004BAB93-DD83-42DE-A827-47E39522192C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Map removes the old pin without deleting its selected appearance_0_477274F4-49A2-40EE-B520-188FC5A22A25.png",
+      "timestamp": 1792765096.027,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "retainedFileName": "004BAB93-DD83-42DE-A827-47E39522192C.png",
+      "originalSha256": "85d2582dc4c460ae8fe5d262b8ad3c34ad9d465cbc0d6c68507fbfc3c78993f0"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "43A1DB5C-A05F-4FEF-BA80-C6E5643B9BF6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Map retains the exact completed List appearance after a writer edit_0_C5050C60-02DA-4935-BD45-15B0DD135DBF.png",
+      "timestamp": 1792765093.427,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "retainedFileName": "43A1DB5C-A05F-4FEF-BA80-C6E5643B9BF6.png",
+      "originalSha256": "85d2582dc4c460ae8fe5d262b8ad3c34ad9d465cbc0d6c68507fbfc3c78993f0"
+    }
+  ],
+  "videoPublished": false
+}

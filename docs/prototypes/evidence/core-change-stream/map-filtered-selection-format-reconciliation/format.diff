@@ -1,0 +1,12 @@
+--- executed-runtime-source
++++ formatted-workspace-source
+@@ -385,7 +385,8 @@
+     case .idle, .loading: ProgressView("Opening Map")
+     case .failed(let reason):
+       ContentUnavailableView(
+-        "Map unavailable", systemImage: "exclamationmark.triangle", description: Text(reason))
++        "Map unavailable", systemImage: "exclamationmark.triangle", description: Text(reason)
++      )
+       .frame(maxWidth: .infinity, maxHeight: .infinity)
+       .background(.background)
+     case .ready:

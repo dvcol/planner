@@ -2,6 +2,88 @@ import XCTest
 
 @MainActor
 final class ChangeObservationJourneyTests: XCTestCase {
+  func testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let list = application.savedPlannerListRow("Weekend")
+    XCTAssertTrue(list.waitForExistence(timeout: 20))
+    list.activateForPlannerJourney()
+    let appearance = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    let appearanceIdentifier = appearance.identifier
+    let completion = application.buttons[
+      appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    let search = application.searchFields["Search this List"]
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 10))
+    search.activateForPlannerJourney()
+    search.typeText("Original notes\n")
+    XCTAssertTrue(search.waitForPlannerValue("Original notes"))
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    application.openSavedPlannerListViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let pin = application.buttons["saved.map.pin.35.662,139.717"]
+    XCTAssertTrue(pin.waitForExistence(timeout: 15))
+    pin.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Weekend"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.exists)
+    application.activatePlannerFixtureWriterAction("fixture.writer.update")
+    let status = application.staticTexts["fixture.writer.status"]
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Saved another-writer change"),
+            object: status)
+        ], timeout: 15), .completed)
+    XCTAssertTrue(application.staticTexts["Other writer notes"].waitForExistence(timeout: 15))
+    XCTAssertTrue(application.staticTexts["In Weekend"].exists)
+    XCTAssertTrue(application.staticTexts["Completed"].firstMatch.exists)
+    XCTAssertTrue(application.plannerElement("saved.appearance.actions").exists)
+    XCTAssertFalse(application.alerts.firstMatch.exists)
+    let details = XCTAttachment(screenshot: application.screenshot())
+    details.name = "Filtered Map retains the exact completed List appearance after a writer edit"
+    details.lifetime = .keepAlways
+    add(details)
+    if application.windows.firstMatch.frame.width < 600 {
+      application.plannerElement("BackButton").activateForPlannerJourney()
+    }
+    XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 15))
+    XCTAssertTrue(pin.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["0 of 0 items located"].exists)
+    let empty = XCTAttachment(screenshot: application.screenshot())
+    empty.name = "Filtered Map removes the old pin without deleting its selected appearance"
+    empty.lifetime = .keepAlways
+    add(empty)
+    application.openSavedPlannerListViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("List")
+    XCTAssertTrue(search.waitForExistence(timeout: 10))
+    search.activateForPlannerJourney()
+    search.buttons["Clear text"].activateForPlannerJourney()
+    search.activateForPlannerJourney()
+    search.typeText("Hotel updated\n")
+    let current = application.savedPlannerItemRows("Hotel updated").firstMatch
+    XCTAssertTrue(current.waitForExistence(timeout: 10))
+    XCTAssertEqual(current.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel updated").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    source.activateForPlannerJourney()
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Other writer notes"].exists)
+  }
+
   func testAnIndependentWriterMovesTheOpenCollectionMapPinWithoutChangingItsSource() {
     continueAfterFailure = false
     let application = XCUIApplication()

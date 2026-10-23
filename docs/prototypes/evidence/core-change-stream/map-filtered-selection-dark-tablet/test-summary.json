@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "modelName" : "iPad Air 11-inch (M4)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 1,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerFixtures · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792764882.951,
+  "passedTests" : 1,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792764719.328,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: SearchField, {{16.0, 86.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List'\nElement debug description:\nAttributes: SearchField, 0x10f5c5680, {{16.0, 86.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List'\nElement subtree:\n →SearchField, 0x10f5c5680, {{16.0, 86.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List'\n    Image, 0x10f5c57c0, {{28.0, 97.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'\nPath to element:\n →Application, 0x10f63ef80, pid: 37870, label: 'Planner fixtures'\n  ↳Window (Main), 0x10f63f0c0, {{0.0, 0.0}, {820.0, 1180.0}}\n   ↳Other, 0x10f63f200, {{0.0, 0.0}, {820.0, 1180.0}}\n    ↳Other, 0x10f63f340, {{0.0, 0.0}, {820.0, 1180.0}}\n     ↳Other, 0x10f63f480, {{0.0, 0.0}, {820.0, 1180.0}}\n      ↳Other, 0x10f63f5c0, {{0.0, 0.0}, {820.0, 1180.0}}\n       ↳Other, 0x10f63f840, {{0.0, 0.0}, {820.0, 1123.0}}\n        ↳Other, 0x10f63f700, {{0.0, 0.0}, {820.0, 1123.0}}\n         ↳Other, 0x10f63f980, {{0.0, 0.0}, {820.0, 1123.0}}\n          ↳Other, 0x10f63fac0, {{0.0, 0.0}, {340.0, 1123.0}}\n           ↳Other, 0x10f63fc00, {{0.0, 0.0}, {340.0, 1123.0}}\n            ↳NavigationBar, 0x10f63fd40, {{0.0, 32.0}, {340.0, 108.0}}, identifier: 'Weekend'\n             ↳SearchField, 0x10f5c5680, {{16.0, 86.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List'\nQuery chain:\n →Find: Target Application 'org.example.PlannerFixtures'\n  Output: {\n    Application, 0x10f60b480, pid: 37870, label: 'Planner fixtures'\n  }\n  ↪︎Find: Descendants matching type SearchField\n    Output: {\n      SearchField, 0x10f4e3480, {{16.0, 86.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List'\n    }\n    ↪︎Find: Elements matching predicate '\"Search this List\" IN identifiers'\n      Output: {\n        SearchField, 0x10f6530c0, {{16.0, 86.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List'\n      }\n",
+      "targetName" : "PlannerFixtureUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit",
+      "testName" : "testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()"
+    }
+  ],
+  "title" : "Test - PlannerFixtures",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 2
+}

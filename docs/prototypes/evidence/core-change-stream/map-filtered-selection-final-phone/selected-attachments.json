@@ -1,0 +1,63 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-map-filtered-selection-final-phone.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-final-phone"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "58905CC4-C84E-4093-9DCC-4AB2ACDF308C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Map removes the old pin without deleting its selected appearance_0_BECC43F8-908A-4DFD-A5AF-1496897BB062.png",
+      "timestamp": 1792765042.429,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "retainedFileName": "58905CC4-C84E-4093-9DCC-4AB2ACDF308C.png",
+      "originalSha256": "1deff9a7097f9a45b1fd22c79a38f89ed5b1da396700c98ab135535d1a0dfdcf"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2A3A02DF-C566-4D57-BB1D-4594B587F8B8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Filtered Map retains the exact completed List appearance after a writer edit_0_61E1246A-D791-4B13-9062-7606CEFC0263.png",
+      "timestamp": 1792765039.157,
+      "testIdentifier": "ChangeObservationJourneyTests/testFilteredMapKeepsItsSelectedListAppearanceAfterAnIndependentContentEdit()",
+      "retainedFileName": "2A3A02DF-C566-4D57-BB1D-4594B587F8B8.png",
+      "originalSha256": "b8d8708aa52c2bd01900ba2e0853405093dcb5e73f80479f4346b3d1c0a78ebe"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "2052C36C-F5C6-498F-B5E1-D8154616FD24.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List reader Return shows local completion and current shared content_0_188AF205-7D2F-47C2-826C-FE2A05B56713.png",
+      "timestamp": 1792765125.826,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "2052C36C-F5C6-498F-B5E1-D8154616FD24.png",
+      "originalSha256": "b0d61819dfd1738ce25bac91b8e3cc83e70a4d4ab45d5a441e6e850da1669b5b"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "0F4AAEEB-7C9D-4061-AA6D-93B5BC0DD036.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Restored List membership preserves the open guide and exact public context_0_B7680A6D-4D48-4B07-9DB5-7EBE9AF234AA.png",
+      "timestamp": 1792765116.323,
+      "testIdentifier": "SavedBrowserSourceReturnJourneyTests/testRestoredListAppearanceReturnsToItsOriginalLocalStateAndLiveContent()",
+      "retainedFileName": "0F4AAEEB-7C9D-4061-AA6D-93B5BC0DD036.png",
+      "originalSha256": "8f75deb05c4663bdc9fb2a946cbcc6b598f5d01a0e5231fef850c3c5689828e5"
+    }
+  ],
+  "videoPublished": false
+}

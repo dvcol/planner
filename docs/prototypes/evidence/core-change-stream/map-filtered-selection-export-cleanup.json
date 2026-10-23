@@ -1,0 +1,89 @@
+{
+  "scope": "Only nine explicitly enumerated duplicate attachment-export directories. All original xcresults, retained attachments, sources/products, complete exported manifests and datasets remain. Nominal bytes do not promise an equal APFS free-space change.",
+  "candidates": [
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-selection-phone.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-selection-phone",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 40194110,
+      "exportManifestSha256": "819236f41ec40e9c199ff134d096a7e103cf9720ed8e4d17dc7a815d4cd40516"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-phone-green",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-selection-phone-green.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-selection-phone-green",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 2285926,
+      "exportManifestSha256": "8c3b4bd42d70c6a31bfd41b52fed26f3a6334e7888e3c4d80dd91013c45ea66a"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-browser-regression",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-selection-browser-regression.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-selection-browser-regression",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 1238747,
+      "exportManifestSha256": "4f1e82584467cda0a80e744ea2845ff1b0bc37169426aef5ee16f4c87cd57d4b"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-selection-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-selection-dark-tablet",
+      "selectedAttachmentsVerified": 3,
+      "nominalBytes": 35171965,
+      "exportManifestSha256": "1bb2442128ab6133e6629cc53765954e44fbe2367090e73a5585e61c65441225"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-final-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-selection-final-phone.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-selection-final-phone",
+      "selectedAttachmentsVerified": 4,
+      "nominalBytes": 2337440,
+      "exportManifestSha256": "f123453cb8e418bca1d2bd095a9ecafbfcb67cbe850c68ddeb1143f300acfd46"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-final-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-map-filtered-selection-final-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/core-change-stream/map-filtered-selection-final-dark-tablet",
+      "selectedAttachmentsVerified": 3,
+      "nominalBytes": 3546730,
+      "exportManifestSha256": "c3bf730dfa965f3f3f102aac338eea6bf43374d4293101be0f8a2a307b2c2fb3"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-file-link-phone",
+      "originalResult": "/private/tmp/PlannerItemWindow-file-link-phone.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-unsupported-links/file-link-phone",
+      "selectedAttachmentsVerified": 2,
+      "nominalBytes": 157422,
+      "exportManifestSha256": "4f152e7b67bc9ddfbe56db6cfce7c9ee6ec0adf6b70dbc0e7af45d9439dc9ce7"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-file-link-phone-regression",
+      "originalResult": "/private/tmp/PlannerItemWindow-file-link-phone-regression.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-unsupported-links/file-link-phone-regression",
+      "selectedAttachmentsVerified": 1,
+      "nominalBytes": 215935,
+      "exportManifestSha256": "99074b40851246c30892df631fd8a2699e6fd4272be16ac11b7eeec1c375c394"
+    },
+    {
+      "directory": "/private/tmp/PlannerApprovedAdminAttachments-file-link-dark-tablet",
+      "originalResult": "/private/tmp/PlannerItemWindow-file-link-dark-tablet.xcresult",
+      "packet": "docs/prototypes/evidence/native-webpage-unsupported-links/file-link-dark-tablet",
+      "selectedAttachmentsVerified": 3,
+      "nominalBytes": 290887,
+      "exportManifestSha256": "fc96b8ff43c86677f9111b331dfcfc23b38cc5d5daeca6c6e958832017a3b1df"
+    }
+  ],
+  "removedDirectories": [
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-phone-green",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-browser-regression",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-dark-tablet",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-final-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-map-filtered-selection-final-dark-tablet",
+    "/private/tmp/PlannerApprovedAdminAttachments-file-link-phone",
+    "/private/tmp/PlannerApprovedAdminAttachments-file-link-phone-regression",
+    "/private/tmp/PlannerApprovedAdminAttachments-file-link-dark-tablet"
+  ],
+  "nominalBytes": 85439162
+}
