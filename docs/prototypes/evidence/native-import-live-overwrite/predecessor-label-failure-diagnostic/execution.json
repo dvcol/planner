@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.684,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredOwnerLabelsRequireRepresentedAuthorizedDependencies(ownerSuffix:obstructRecovery:)",
+      "className": "PlannerCoreStoreTests.NativeImportPredecessorLabelTests",
+      "seconds": 0.754526625,
+      "failures": [
+        "Issue recorded (error): Inspect saved incomplete operation while the recovery filesystem is blocked: .unavailable(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The file \u201c0C96B97D-FBD9-41F8-B38C-61027A8EB09C\u201d couldn\u2019t be opened.\", details: nil))",
+        "Issue recorded (error): Inspect saved incomplete operation while the recovery filesystem is blocked: .unavailable(PlannerCore.PlannerFailure(code: \"readUnavailable\", propertyPath: nil, message: \"The file \u201cFDA6A6E8-F2F5-4DAC-928A-8EB9A6015C4B\u201d couldn\u2019t be opened.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

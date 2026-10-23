@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.2417e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.637321292">
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorLabelTests" name="restoredOwnerLabelsRequireRepresentedAuthorizedDependencies(ownerSuffix:obstructRecovery:)" time="0.636793833">
+            <failure message="Caught error: CancellationError() (error)"/>
+            <failure message="Caught error: CancellationError() (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

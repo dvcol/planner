@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.0001955"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.544572834">
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorLabelTests" name="restoredOwnerLabelsRequireRepresentedAuthorizedDependencies(ownerSuffix:)" time="0.54412675"/>
+    </testsuite>
+</testsuites>

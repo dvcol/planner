@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 755,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 1,
+  "executedFunctions": 1,
+  "failedFunctions": 1,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Four cases executed; two post-save recovery cases fail during qualification, no passing credit"
+}

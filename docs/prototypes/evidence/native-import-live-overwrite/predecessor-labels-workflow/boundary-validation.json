@@ -1,0 +1,11 @@
+{
+  "sourceInputs": 754,
+  "sourceDifferences": [],
+  "retainedProducts": 2,
+  "productDifferences": [],
+  "exitCode": 0,
+  "executedFunctions": 1,
+  "failedFunctions": 0,
+  "sqliteUnlinkWarnings": 0,
+  "meaning": "Both Item and Itinerary owned-label workflows pass with explicit dependency authority and complete retained graphs"
+}

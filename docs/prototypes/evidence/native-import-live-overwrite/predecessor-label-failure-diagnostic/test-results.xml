@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.9833e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.754918625">
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorLabelTests" name="restoredOwnerLabelsRequireRepresentedAuthorizedDependencies(ownerSuffix:obstructRecovery:)" time="0.754526625">
+            <failure message="Issue recorded (error): Inspect saved incomplete operation while the recovery filesystem is blocked: .unavailable(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;The file “0C96B97D-FBD9-41F8-B38C-61027A8EB09C” couldn’t be opened.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): Inspect saved incomplete operation while the recovery filesystem is blocked: .unavailable(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;The file “FDA6A6E8-F2F5-4DAC-928A-8EB9A6015C4B” couldn’t be opened.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>
