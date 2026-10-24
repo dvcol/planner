@@ -335,7 +335,8 @@ struct PlannerImportGraph {
   }
 
   private func contextState(
-    _ context: PlannerPortableCompletionContext, path: String, allowClosed: Bool = false
+    _ context: PlannerPortableCompletionContext, path: String, allowClosed: Bool = false,
+    allowRetiredMembership: Bool = false
   ) throws -> Bool? {
     if allowClosed && isClosed(context) { return nil }
     switch context {
@@ -347,6 +348,7 @@ struct PlannerImportGraph {
           binding,
           to: .init(kind: .membership, id: membership.id, lifetimeId: membership.lifetimeId))
       else {
+        if allowRetiredMembership, retainedMembershipProvenance(for: binding) != nil { return nil }
         throw failure(
           "The completion context has no declared membership lifetime.", path + "/membershipId")
       }
@@ -377,22 +379,32 @@ struct PlannerImportGraph {
         throw failure(
           "The expanded context has no declared List entry lifetime.", path + "/listEntryId")
       }
-      guard let membership = backup.memberships.first(where: { $0.id == context.membershipId }),
+      let membership: PlannerPortableMembershipProvenance
+      let retired: Bool
+      if let live = backup.memberships.first(where: { $0.id == context.membershipId }),
         resolves(
-          membershipBinding,
-          to: .init(kind: .membership, id: membership.id, lifetimeId: membership.lifetimeId))
-      else {
+          membershipBinding, to: .init(kind: .membership, id: live.id, lifetimeId: live.lifetimeId))
+      {
+        membership = live.baselineProvenance
+        retired = false
+      } else if allowRetiredMembership,
+        let retained = retainedMembershipProvenance(for: membershipBinding)
+      {
+        membership = retained
+        retired = true
+      } else {
         throw failure(
           "The expanded context has no declared membership lifetime.", path + "/membershipId")
       }
       guard
         resolves(
-          .init(kind: .list, id: membership.list.id, lifetimeId: membership.listLifetimeId),
+          .init(kind: .list, id: membership.list.id, lifetimeId: membership.list.lifetimeId),
           to: .init(kind: .list, id: entry.source.id, lifetimeId: entry.sourceLifetimeId))
       else {
         throw failure(
           "The membership belongs to a different List than this entry.", path + "/membershipId")
       }
+      if retired { return nil }
       return backup.expandedCompletions.first(where: { $0.context == context })?.localDone ?? false
     }
   }
@@ -409,6 +421,16 @@ struct PlannerImportGraph {
         return resolves(
           .init(kind: .membership, id: firstId, lifetimeId: firstLifetime),
           to: .init(kind: .membership, id: secondId, lifetimeId: secondLifetime))
+      }
+      if backup.usesMembershipProvenanceFormat {
+        guard
+          let first = membershipProvenance(
+            for: .init(kind: .membership, id: firstId, lifetimeId: firstLifetime)),
+          let second = membershipProvenance(
+            for: .init(kind: .membership, id: secondId, lifetimeId: secondLifetime))
+        else { return false }
+        return first.pair == second.pair
+          && first.normalized.observedRemovalIds == second.normalized.observedRemovalIds
       }
       if let firstMember = backup.memberships.first(where: { $0.id == firstId }),
         let secondMember = backup.memberships.first(where: { $0.id == secondId })
@@ -447,7 +469,8 @@ struct PlannerImportGraph {
     let changes = Dictionary(uniqueKeysWithValues: backup.completionChanges.map { ($0.id, $0) })
     for (index, alias) in backup.contextAliases.enumerated() {
       let path = "/contextAliases/\(index)"
-      _ = try contextState(alias.context, path: path + "/context", allowClosed: true)
+      _ = try contextState(
+        alias.context, path: path + "/context", allowClosed: true, allowRetiredMembership: true)
       _ = try contextState(
         alias.canonicalContext, path: path + "/canonicalContext", allowClosed: true)
       guard sameLogicalContext(alias.context, alias.canonicalContext) else {

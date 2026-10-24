@@ -1,0 +1,303 @@
+{
+  "format": "planner-data",
+  "formatVersion": 3,
+  "sources": [
+    {
+      "kind": "item",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "lifetimeId": "00000000-0000-4000-8000-000000000811",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "title": "Hotel",
+        "subtitle": null,
+        "notes": "A shared stop",
+        "location": null,
+        "estimate": {
+          "minutes": "30",
+          "displayUnit": "minute"
+        }
+      },
+      "globalDone": false,
+      "archived": false,
+      "contentOrigins": {
+        "title": "independent",
+        "notes": "independent"
+      }
+    },
+    {
+      "kind": "list",
+      "id": "00000000-0000-4000-8000-000000000201",
+      "lifetimeId": "00000000-0000-4000-8000-000000000821",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "name": "Tokyo",
+        "notes": null,
+        "color": null,
+        "iconName": null,
+        "manualEstimate": null
+      },
+      "globalDone": null,
+      "archived": false,
+      "contentOrigins": {
+        "name": "independent"
+      }
+    },
+    {
+      "kind": "itinerary",
+      "id": "00000000-0000-4000-8000-000000000301",
+      "lifetimeId": "00000000-0000-4000-8000-000000000831",
+      "createdAt": 10.25,
+      "updatedAt": 20.125,
+      "content": {
+        "title": "Tokyo Weekend",
+        "notes": null,
+        "color": null,
+        "iconName": null,
+        "location": null,
+        "manualEstimate": null
+      },
+      "globalDone": null,
+      "archived": false,
+      "contentOrigins": {
+        "title": "independent"
+      }
+    }
+  ],
+  "memberships": [
+    {
+      "id": "00000000-0000-4000-8000-000000000401",
+      "lifetimeId": "00000000-0000-4000-8000-000000000841",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "rank": "1024",
+      "localDone": true
+    }
+  ],
+  "itineraryEntries": [
+    {
+      "id": "00000000-0000-4000-8000-000000000451",
+      "lifetimeId": "00000000-0000-4000-8000-000000000851",
+      "itinerary": {
+        "kind": "itinerary",
+        "id": "00000000-0000-4000-8000-000000000301",
+        "lifetimeId": "00000000-0000-4000-8000-000000000831"
+      },
+      "source": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "rank": "1024",
+      "localDone": null
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000452",
+      "lifetimeId": "00000000-0000-4000-8000-000000000852",
+      "itinerary": {
+        "kind": "itinerary",
+        "id": "00000000-0000-4000-8000-000000000301",
+        "lifetimeId": "00000000-0000-4000-8000-000000000831"
+      },
+      "source": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "rank": "2048",
+      "localDone": null
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000453",
+      "lifetimeId": "00000000-0000-4000-8000-000000000853",
+      "itinerary": {
+        "kind": "itinerary",
+        "id": "00000000-0000-4000-8000-000000000301",
+        "lifetimeId": "00000000-0000-4000-8000-000000000831"
+      },
+      "source": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "rank": "3072",
+      "localDone": false
+    }
+  ],
+  "expandedCompletions": [
+    {
+      "context": {
+        "listEntryId": "00000000-0000-4000-8000-000000000451",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000851",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "localDone": false
+    },
+    {
+      "context": {
+        "listEntryId": "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000852",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "localDone": true
+    }
+  ],
+  "labelAssociations": [],
+  "ownedLinks": [],
+  "schedules": [],
+  "deletionMarkers": [],
+  "contextAliases": [
+    {
+      "aliasId": "00000000-0000-4000-8000-000000000851",
+      "context": {
+        "kind": "listMembership",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "canonicalContext": {
+        "kind": "listMembership",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": false,
+      "currentChangeId": null
+    },
+    {
+      "aliasId": "00000000-0000-4000-8000-000000000852",
+      "context": {
+        "kind": "listMembership",
+        "membershipId": "00000000-0000-4000-8000-000000000402",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000842"
+      },
+      "canonicalContext": {
+        "kind": "listMembership",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": true,
+      "currentChangeId": null
+    },
+    {
+      "aliasId": "00000000-0000-4000-8000-000000000861",
+      "context": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000451",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000851",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "canonicalContext": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000451",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000851",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": false,
+      "currentChangeId": null
+    },
+    {
+      "aliasId": "00000000-0000-4000-8000-000000000862",
+      "context": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000451",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000851",
+        "membershipId": "00000000-0000-4000-8000-000000000402",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000842"
+      },
+      "canonicalContext": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000451",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000851",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": false,
+      "currentChangeId": null
+    },
+    {
+      "aliasId": "00000000-0000-4000-8000-000000000871",
+      "context": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000852",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "canonicalContext": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000852",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": false,
+      "currentChangeId": null
+    },
+    {
+      "aliasId": "00000000-0000-4000-8000-000000000872",
+      "context": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000852",
+        "membershipId": "00000000-0000-4000-8000-000000000402",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000842"
+      },
+      "canonicalContext": {
+        "kind": "expandedListItem",
+        "listEntryId": "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId": "00000000-0000-4000-8000-000000000852",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": true,
+      "currentChangeId": null
+    }
+  ],
+  "completionChanges": [],
+  "restorationFamilies": [],
+  "membershipProvenance": [
+    {
+      "membershipId": "00000000-0000-4000-8000-000000000401",
+      "membershipLifetimeId": "00000000-0000-4000-8000-000000000841",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "observedRemovalIds": []
+    },
+    {
+      "membershipId": "00000000-0000-4000-8000-000000000402",
+      "membershipLifetimeId": "00000000-0000-4000-8000-000000000842",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "observedRemovalIds": []
+    }
+  ],
+  "membershipRemovals": []
+}

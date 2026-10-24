@@ -30,7 +30,7 @@ After verified host and SQLite closure, 423 marked fixtures from passing Mac pha
 
 ## Remaining contract work
 
-- Qualify the nonempty-provenance combinations with Skip, legacy Overwrite, restored associations and historical aliases. Existing legacy restoration tests do not prove all new-metadata combinations.
+- The [retired-context follow-up](native-membership-portable-aliases.md) qualifies nonempty-provenance Skip/legacy Overwrite and historical aliases with matching 100-function, 390-invocation Mac/iPhone cohorts. Fresh restoration and closed-source combinations still need broader provenance qualification. Existing legacy restoration tests do not prove all new-metadata combinations.
 - Implement shared canonical membership resolution, observed removal issuance for new Add/Remove/Move/Overwrite/Undo paths, and the approved legacy binding baseline. The original duplicate-membership query remains unresolved.
 - Implement separate automatic-maintenance preparation, native commit evidence, recovery-envelope v2, status/retry/inspection and native recovery controls. This slice still publishes envelope v1 containing the new portable-v3 payload.
 - Execute the frozen fingerprint vectors and implement the remaining affected-command fingerprint and versioned result/preparation evidence. Existing replay tests do not constitute execution of every new literal vector.

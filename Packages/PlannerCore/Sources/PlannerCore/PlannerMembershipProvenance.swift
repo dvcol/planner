@@ -48,6 +48,22 @@ struct PlannerMembershipPair: Hashable {
 }
 
 extension PlannerImportGraph {
+  func retainedMembershipProvenance(for identity: PlannerPortableBoundIdentity)
+    -> PlannerPortableMembershipProvenance?
+  {
+    guard backup.usesMembershipProvenanceFormat else { return nil }
+    return backup.membershipProvenance.first { $0.membership == identity }
+  }
+
+  func membershipProvenance(for identity: PlannerPortableBoundIdentity)
+    -> PlannerPortableMembershipProvenance?
+  {
+    if let retained = retainedMembershipProvenance(for: identity) { return retained }
+    return backup.memberships.first {
+      $0.id == identity.id && $0.lifetimeId == identity.lifetimeId
+    }?.baselineProvenance
+  }
+
   func validateMembershipProvenance() throws {
     try unique(
       backup.membershipProvenance.map(\.membership), "/membershipProvenance", "membershipId")
