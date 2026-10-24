@@ -367,6 +367,7 @@ final class SavedPlannerStore {
       }
     }
     invalidateRecoveryRefresh()
+    if retryFailure == nil { changeRevision = UUID() }
     await refreshRecoveryStatus()
     if recoveryBlocked, let retryFailure { recoveryStatusFailure = retryFailure }
   }

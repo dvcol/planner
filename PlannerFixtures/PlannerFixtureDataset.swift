@@ -24,6 +24,7 @@ enum PlannerFixtureDataset {
     case graphRecovery = "graph-recovery"
     case preparedMaintenanceRecovery = "prepared-maintenance-recovery"
     case committedMaintenanceRecovery = "committed-maintenance-recovery"
+    case maintenanceLateInput = "maintenance-late-input"
     case maintenanceRetryFailure = "maintenance-retry-failure"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
@@ -98,9 +99,12 @@ enum PlannerFixtureDataset {
     if scenario == .preparedMaintenanceRecovery {
       return try await PlannerPreparedMaintenanceRecoveryFixture.makeStore(directory: directory)
     }
-    if scenario == .committedMaintenanceRecovery || scenario == .maintenanceRetryFailure {
+    if scenario == .committedMaintenanceRecovery || scenario == .maintenanceRetryFailure
+      || scenario == .maintenanceLateInput
+    {
       return try await PlannerCommittedMaintenanceRecoveryFixture.makeStore(
-        directory: directory, readOnly: scenario == .maintenanceRetryFailure)
+        directory: directory, readOnly: scenario == .maintenanceRetryFailure,
+        lateInputOnReopen: scenario == .maintenanceLateInput)
     }
     if let recoveryAccess = scenario.recoveryAccess {
       return try await PlannerRecoveryFixture.makeStore(

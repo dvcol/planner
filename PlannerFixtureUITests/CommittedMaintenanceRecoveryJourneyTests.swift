@@ -3,6 +3,63 @@ import XCTest
 #if os(iOS)
   @MainActor
   final class CommittedMaintenanceRecoveryJourneyTests: XCTestCase {
+    func testLaterNativeInputRetainsRecoveryRetryAndTheOriginalItemAfterRelaunch() {
+      continueAfterFailure = false
+      let application = launch("maintenance-late-input")
+      let museum = application.savedPlannerItemRows("Maintenance museum").firstMatch
+      XCTAssertTrue(museum.waitForExistence(timeout: 15))
+      let museumIdentifier = museum.identifier
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").isEnabled)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").isEnabled)
+      openRecoveryStatus(in: application)
+      let status = application.staticTexts["saved.recovery.status"]
+      XCTAssertEqual(status.label, "Recovery copy incomplete")
+      let retry = application.plannerElement("saved.recovery.retry")
+      XCTAssertTrue(retry.waitForExistence(timeout: 10))
+      XCTAssertTrue(retry.isEnabled)
+      capture("Later native input retains committed recovery Retry after relaunch")
+      retry.activateForPlannerJourney()
+      let saved = XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Saved on this device"), object: status)
+        ], timeout: 15)
+      capture("Native recovery result after Retry with later input")
+      XCTAssertEqual(saved, .completed, application.debugDescription)
+      XCTAssertFalse(retry.exists)
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      let restored = application.plannerElement(museumIdentifier)
+      XCTAssertTrue(restored.waitForExistence(timeout: 15))
+      XCTAssertEqual(application.savedPlannerItemRows("Maintenance museum").count, 1)
+      XCTAssertTrue(application.plannerElement("saved.item.addMenu").isEnabled)
+      restored.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Keep the original maintenance note"].waitForExistence(
+          timeout: 10))
+      application.beginPlannerListCreation()
+      let name = application.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 10))
+      name.activateForPlannerJourney()
+      name.typeText("After later input")
+      application.plannerElement("saved.list.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(application.plannerElement(museumIdentifier).waitForExistence(timeout: 15))
+      XCTAssertEqual(application.savedPlannerItemRows("Maintenance museum").count, 1)
+      XCTAssertFalse(application.plannerElement("saved.recovery.status.open").exists)
+      application.plannerElement(museumIdentifier).activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Keep the original maintenance note"].waitForExistence(
+          timeout: 10))
+      capture("Recovered later input preserves the original Item after another save and relaunch")
+      application.terminate()
+    }
+
     func testCommittedMaintenanceRetriesAfterRelaunchWithoutRepeatingTheSavedData() {
       continueAfterFailure = false
       let application = launch("committed-maintenance-recovery")

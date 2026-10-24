@@ -5,12 +5,21 @@ import SwiftData
 
 @MainActor
 enum PlannerCommittedMaintenanceRecoveryFixture {
-  static func makeStore(directory: URL, readOnly: Bool) async throws -> SavedPlannerStore {
+  static func makeStore(directory: URL, readOnly: Bool, lateInputOnReopen: Bool = false)
+    async throws
+    -> SavedPlannerStore
+  {
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
       recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
       processRole: .mainApplication, storageMode: .localOnly)
+    if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
+      if lateInputOnReopen {
+        try await deliverLaterMembership(configuration: configuration, directory: directory)
+      }
+      return SavedPlannerStore(configuration: configuration)
+    }
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .snapshot(let snapshot) = await planner.query(
@@ -79,6 +88,25 @@ enum PlannerCommittedMaintenanceRecoveryFixture {
           .appendingPathComponent(namespace.namespaceId.uuidString).path)
     }
     return SavedPlannerStore(configuration: configuration)
+  }
+
+  private static func deliverLaterMembership(
+    configuration: PlannerStorageConfiguration, directory: URL
+  ) async throws {
+    let marker = directory.appendingPathComponent("late-membership-delivered")
+    guard !FileManager.default.fileExists(atPath: marker.path) else { return }
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .exported(let data) = await planner.exportData(session: session),
+      case .decoded(let decoded) = planner.decodeImport(data),
+      let item = decoded.backup.items.first, decoded.backup.items.count == 1,
+      let list = decoded.backup.lists.first, decoded.backup.lists.count == 1
+    else { throw CancellationError() }
+    try insertIndependentMembership(
+      configuration: configuration,
+      item: .init(kind: .item, id: item.id), list: .init(kind: .list, id: list.id))
+    try Data("Delivered one independent native membership.".utf8).write(
+      to: marker, options: .atomic)
   }
 
   private static func insertIndependentMembership(
