@@ -5,6 +5,30 @@ import SwiftData
 struct PlannerMembershipConsolidation {
   let backup: PlannerPortableBackup
 
+  static func aliasesRequiringCanonicalRootResolution(
+    memberships: [PlannerPortableMembershipProvenance], aliases: [PlannerPortableContextAlias],
+    provenance: [PlannerPortableMembershipProvenance]
+  ) -> [PlannerPortableContextAlias] {
+    let retained = Dictionary(
+      uniqueKeysWithValues: provenance.map { ($0.membership, $0.normalized) })
+    let liveIdentities = Set(memberships.map(\.membership))
+    let available = memberships.map { retained[$0.membership] ?? $0.normalized }
+    return aliases.filter { alias in
+      guard sameScope(alias.context, alias.canonicalContext),
+        let original = membership(in: alias.context),
+        let root = membership(in: alias.canonicalContext), !liveIdentities.contains(root),
+        let originalBinding = retained[original]
+          ?? available.first(where: { $0.membership == original }),
+        let rootBinding = retained[root], originalBinding.pair == rootBinding.pair,
+        originalBinding.observedRemovalIds == rootBinding.observedRemovalIds
+      else { return false }
+      return available.contains {
+        $0.membershipId != root.id && $0.pair == rootBinding.pair
+          && $0.observedRemovalIds == rootBinding.observedRemovalIds
+      }
+    }
+  }
+
   private struct Generation: Hashable {
     let pair: PlannerMembershipPair
     let basis: [UUID]
@@ -132,7 +156,20 @@ struct PlannerMembershipConsolidation {
       }
     }
     let groups = Dictionary(grouping: eligible, by: { $0.baselineProvenance.pair })
-    for (pair, contributions) in groups where contributions.count > 1 {
+    let rootResolutionAliases = Self.aliasesRequiringCanonicalRootResolution(
+      memberships: eligible.map(\.baselineProvenance), aliases: current.contextAliases,
+      provenance: Array(provenance.values))
+    let resolvingAliases = rootResolutionAliases.filter {
+      !graph.isClosed($0.context) && !graph.isClosed($0.canonicalContext)
+    }
+    let rootResolutionPairs = Set(
+      resolvingAliases.compactMap { alias -> PlannerMembershipPair? in
+        guard let root = Self.membership(in: alias.canonicalContext) else { return nil }
+        return provenance[root]?.pair
+      })
+    var consolidatedMembershipIdentities: Set<PlannerPortableBoundIdentity> = []
+    for (pair, contributions) in groups
+    where contributions.count > 1 || rootResolutionPairs.contains(pair) {
       let ordered = contributions.sorted {
         if $0.id != $1.id { return $0.id.uuidString < $1.id.uuidString }
         return $0.rank < $1.rank
@@ -141,6 +178,15 @@ struct PlannerMembershipConsolidation {
       let canonicalBinding = canonical.baselineProvenance.membership
       let basis = try Self.binding(canonicalBinding, in: provenance).normalized.observedRemovalIds
       let membershipBindings = Set(contributions.map { $0.baselineProvenance.membership })
+      consolidatedMembershipIdentities.formUnion(membershipBindings)
+      func requiresRootResolution(for context: PlannerPortableCompletionContext) -> Bool {
+        resolvingAliases.contains { alias in
+          guard Self.sameScope(alias.canonicalContext, context),
+            let root = Self.membership(in: alias.canonicalContext)
+          else { return false }
+          return provenance[root]?.pair == pair
+        }
+      }
       for alias in current.contextAliases {
         if graph.isClosed(alias.canonicalContext),
           let original = Self.membership(in: alias.context),
@@ -154,6 +200,7 @@ struct PlannerMembershipConsolidation {
           binding.normalized.observedRemovalIds == basis,
           !graph.isClosed(root), !membershipBindings.contains(root)
         else { continue }
+        if root.id.uuidString > canonical.id.uuidString { continue }
         throw Self.unresolved("The known canonical membership has not fully arrived.")
       }
       for member in contributions {
@@ -166,12 +213,20 @@ struct PlannerMembershipConsolidation {
       }
       let canonicalContext = PlannerPortableCompletionContext.listMembership(
         membershipId: canonical.id, membershipLifetimeId: canonical.lifetimeId)
-      let done = try Self.normalize(
-        canonical: canonicalContext,
-        contributions: contributions.map {
-          (.listMembership(membershipId: $0.id, membershipLifetimeId: $0.lifetimeId), $0.localDone)
-        }, pair: pair, basis: basis, provenance: provenance, graph: graph,
-        aliases: &aliases, changes: changes)
+      let done: Bool
+      if contributions.count > 1 || requiresRootResolution(for: canonicalContext) {
+        done = try Self.normalize(
+          canonical: canonicalContext,
+          contributions: contributions.map {
+            (
+              .listMembership(membershipId: $0.id, membershipLifetimeId: $0.lifetimeId),
+              $0.localDone
+            )
+          }, pair: pair, basis: basis, provenance: provenance, graph: graph,
+          aliases: &aliases, changes: changes)
+      } else {
+        done = canonical.localDone
+      }
       members.removeAll { membershipBindings.contains($0.baselineProvenance.membership) }
       members.append(
         .init(
@@ -185,6 +240,10 @@ struct PlannerMembershipConsolidation {
         let canonicalExpanded = PlannerExpandedContext(
           listEntryId: entry.id, listEntryLifetimeId: entry.lifetimeId,
           membershipId: canonical.id, membershipLifetimeId: canonical.lifetimeId)
+        guard
+          contributions.count > 1
+            || requiresRootResolution(for: .expandedListItem(canonicalExpanded))
+        else { continue }
         var initial: [(PlannerPortableCompletionContext, Bool)] = []
         for member in contributions {
           let context = PlannerExpandedContext(
@@ -254,11 +313,8 @@ struct PlannerMembershipConsolidation {
       else { continue }
       expanded.append(.init(context: context, localDone: done))
     }
-    let consolidatedMembershipIdentities = Set(
-      groups.values.filter { $0.count > 1 }.flatMap {
-        $0.map { $0.baselineProvenance.membership }
-      }
-    ).union(suppressed.values.flatMap { $0.map { $0.baselineProvenance.membership } })
+    consolidatedMembershipIdentities.formUnion(
+      suppressed.values.flatMap { $0.map { $0.baselineProvenance.membership } })
     let represented = Set(current.membershipProvenance.map(\.membership))
       .union(
         aliases.flatMap { $0.context.importContextIdentities }.filter {

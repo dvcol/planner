@@ -670,7 +670,12 @@ struct NativeMembershipConsolidationTests {
       (afterGraph["itineraryEntries"] as? NSArray) == (beforeGraph["itineraryEntries"] as? NSArray))
   }
 
-  @Test func aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes() async throws {
+  @Test(arguments: [
+    "none", "list", "firstBranch", "secondBranch", "all", "newBranch", "preparationFailure",
+  ])
+  func aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes(delayedScope: String)
+    async throws
+  {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -850,6 +855,470 @@ struct NativeMembershipConsolidationTests {
       case .exported(let freshExport) = await fresh.exportData(session: freshSession)
     else { throw CancellationError() }
     #expect(freshExport == after)
+    if delayedScope == "none" { return }
+    var expectedLateData = after
+    var independentBranchIdentifier: UUID?
+    if delayedScope == "newBranch" {
+      guard
+        case .applied(let addition, .complete) = await fresh.execute(
+          .init(
+            operationId: UUID(), session: freshSession,
+            command: .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+        )
+        .outcome,
+        case .itineraryEntry(let identifier, _, _)? = addition.generatedReferences.first,
+        case .exported(let enriched) = await fresh.exportData(session: freshSession)
+      else { throw CancellationError() }
+      independentBranchIdentifier = identifier
+      expectedLateData = enriched
+    }
+    let resolvedDelayedScope: String
+    if delayedScope == "newBranch" || delayedScope == "preparationFailure" {
+      resolvedDelayedScope = "all"
+    } else {
+      resolvedDelayedScope = delayedScope
+    }
+    guard case .decoded(let earlier) = planner.decodeImport(before) else {
+      throw CancellationError()
+    }
+    let delayedAliases = earlier.backup.contextAliases.filter { alias in
+      switch alias.canonicalContext {
+      case .listMembership: return resolvedDelayedScope == "list" || resolvedDelayedScope == "all"
+      case .expandedListItem(let context):
+        return resolvedDelayedScope == "all"
+          || (resolvedDelayedScope == "firstBranch" && context.listEntryId == firstEntry)
+          || (resolvedDelayedScope == "secondBranch" && context.listEntryId == secondEntry)
+      case .directItineraryItem: return false
+      }
+    }
+    #expect(!delayedAliases.isEmpty)
+    for alias in delayedAliases {
+      try await setNativeCompletionLineageRecord(
+        storeURL: configuration.storeURL, identifier: alias.aliasId, kind: "contextAlias",
+        content: nil)
+      try await setNativeCompletionLineageRecord(
+        storeURL: configuration.storeURL, identifier: alias.aliasId, kind: "contextAlias",
+        content: JSONEncoder().encode(alias))
+    }
+    if delayedScope == "preparationFailure" {
+      guard
+        case .listedNamespaces(let namespaces) = await fresh.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first
+      else { throw CancellationError() }
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespace.namespaceId.uuidString)
+      let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: namespaceDirectory.path)
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+      }
+      let failedQuery = await fresh.query(
+        .init(
+          session: freshSession,
+          request: .items(.init(scope: .list(list.id), completion: .all, archive: .all))))
+      guard case .failed(let failure) = failedQuery,
+        case .status(let status) = await fresh.read(session: freshSession, request: .status),
+        case .unavailable(let reason) = status.recovery
+      else {
+        Issue.record("Unprepared root normalization must stay unavailable: \(failedQuery)")
+        return
+      }
+      #expect(failure.code == "maintenanceRequired" && reason.code == "maintenanceRequired")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+    }
+    let lateQuery = await fresh.query(
+      .init(
+        session: freshSession,
+        request: .items(
+          .init(scope: .list(list.id), completion: .all, archive: .all, sort: .init(mode: .manual)))
+      ))
+    let lateExport = await fresh.exportData(session: freshSession)
+    guard case .snapshot(let lateWindow) = lateQuery, case .exported(let lateData) = lateExport
+    else {
+      Issue.record("Valid delayed canonical roots must converge: \(lateQuery), \(lateExport)")
+      return
+    }
+    #expect(lateWindow.rows == current.rows)
+    #expect(lateWindow.progress.first?.doneCount == 0 && lateWindow.progress.first?.totalCount == 1)
+    #expect(lateData == expectedLateData)
+    if let independentBranchIdentifier {
+      guard
+        case .appearance(let independent) = await fresh.read(
+          session: freshSession,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itinerary.id, listEntryId: independentBranchIdentifier,
+              membershipId: smallerIdentifier)))
+      else { throw CancellationError() }
+      #expect(!independent.localDone && !independent.effectiveDone && !independent.globalDone)
+    }
+    for identifier in [smallerIdentifier, originalIdentifier, losingIdentifier] {
+      for (appearance, expectedDone) in [
+        (PlannerAppearance.listMembership(listId: list.id, membershipId: identifier), false),
+        (
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: firstEntry, membershipId: identifier), false
+        ),
+        (
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: secondEntry, membershipId: identifier), true
+        ),
+      ] {
+        guard
+          case .appearance(let retained) = await fresh.read(
+            session: freshSession, request: .appearance(appearance))
+        else { throw CancellationError() }
+        #expect(retained.source == item && !retained.globalDone)
+        #expect(retained.localDone == expectedDone && retained.effectiveDone == expectedDone)
+      }
+    }
+    guard
+      case .failed(let lateStale) = await fresh.read(
+        session: freshSession, request: .rows(generation: current.generation, offset: 0, limit: 1)),
+      case .applied(let lateReplay, .complete(let lateCheckpoint)) = await fresh.execute(
+        .init(operationId: reopening.operationId, session: freshSession, command: reopening.command)
+      )
+      .outcome,
+      case .exported(let afterLateReplay) = await fresh.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(lateStale.code == "staleSnapshot")
+    #expect(lateReplay == reopened && lateCheckpoint == reopenCheckpoint)
+    #expect(afterLateReplay == expectedLateData)
+    let reopenedPlanner = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopenedPlanner.bootstrap(),
+      case .exported(let reopenedExport) = await reopenedPlanner.exportData(
+        session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedExport == expectedLateData)
+  }
+
+  @Test func aKnownSmallerCanonicalRootWaitsForItsMembershipWithoutPublishingAGuess() async throws {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    func restore(_ data: Data) async throws -> (
+      planner: Planner, configuration: PlannerStorageConfiguration, session: PlannerDatasetSession
+    ) {
+      let directory = try makePlannerStoreFixtureDirectory()
+      let configuration = PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly)
+      let planner = Planner(configuration: configuration)
+      guard case .ready(let session) = await planner.bootstrap(),
+        case .decoded(let decoded) = planner.decodeImport(data),
+        case .reviewed(let review) = await planner.prepareReview(
+          session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: review.command,
+            reviewToken: review.reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+      return (planner, configuration, session)
+    }
+    let current = try await restore(Data(contentsOf: fixture))
+    guard case .exported(let before) = await current.planner.exportData(session: current.session),
+      case .decoded(let original) = current.planner.decodeImport(before)
+    else { throw CancellationError() }
+    let member = try #require(original.backup.memberships.first)
+    let future = try await restore(before)
+    guard case .exported(let clone) = await future.planner.exportData(session: future.session)
+    else {
+      throw CancellationError()
+    }
+    #expect(clone == before)
+    let smallerIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000400")!
+    try await insertIndependentMemberships(
+      storeURL: future.configuration.storeURL, itemIdentifier: member.item.id,
+      listIdentifier: member.list.id,
+      contributions: [
+        (smallerIdentifier.uuidString, "00000000-0000-4000-8000-000000000840", 8192, true)
+      ])
+    guard
+      case .snapshot(let futureWindow) = await future.planner.query(
+        .init(
+          session: future.session,
+          request: .items(.init(scope: .list(member.list.id), completion: .all, archive: .all)))),
+      case .exported(let expected) = await future.planner.exportData(session: future.session),
+      case .decoded(let delivered) = future.planner.decodeImport(expected),
+      case .listedNamespaces(let namespaces) = await current.planner.inspectRecovery(
+        request: .namespaces), let namespace = namespaces.first
+    else { throw CancellationError() }
+    let arriving = try #require(delivered.backup.memberships.first)
+    #expect(arriving.id == smallerIdentifier && arriving.rank == 8192)
+    let originalGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    let deliveredGraph = try #require(
+      JSONSerialization.jsonObject(with: expected) as? [String: Any])
+    let originalChanges = try #require(originalGraph["completionChanges"] as? NSArray)
+    let deliveredChanges = try #require(deliveredGraph["completionChanges"] as? NSArray)
+    #expect(deliveredChanges == originalChanges)
+    let namespaceDirectory = current.configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    try await deliverIndependentMembershipHistory(
+      storeURL: current.configuration.storeURL, backup: delivered.backup)
+    let pending = await current.planner.query(
+      .init(
+        session: current.session,
+        request: .items(.init(scope: .list(member.list.id), completion: .all, archive: .all))))
+    guard case .failed(let failure) = pending else {
+      Issue.record(
+        "A known smaller root needs its actual membership before normalization: \(pending)")
+      return
+    }
+    #expect(failure.code == "readUnavailable")
+    let waiting = PlannerOperation(
+      operationId: UUID(), session: current.session,
+      command: .createTag(content: .init(name: "Must remain unapplied")))
+    guard case .rejected(let rejected) = await current.planner.execute(waiting).outcome,
+      case .noReliableEvidence = await current.planner.operationStatus(
+        session: current.session, operationId: waiting.operationId)
+    else { throw CancellationError() }
+    #expect(rejected.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    try await insertIndependentMemberships(
+      storeURL: current.configuration.storeURL, itemIdentifier: arriving.item.id,
+      listIdentifier: arriving.list.id,
+      contributions: [
+        (arriving.id.uuidString, arriving.lifetimeId.uuidString, arriving.rank, arriving.localDone)
+      ])
+    guard
+      case .snapshot(let window) = await current.planner.query(
+        .init(
+          session: current.session,
+          request: .items(.init(scope: .list(member.list.id), completion: .all, archive: .all)))),
+      case .exported(let after) = await current.planner.exportData(session: current.session)
+    else { throw CancellationError() }
+    #expect(window.rows == futureWindow.rows && window.matchingCount == 1)
+    #expect(after == expected)
+    for (entryIdentifier, expectedDone) in [
+      (UUID(uuidString: "00000000-0000-4000-8000-000000000451")!, false),
+      (UUID(uuidString: "00000000-0000-4000-8000-000000000452")!, true),
+    ] {
+      let entry = try #require(delivered.backup.itineraryEntries.first { $0.id == entryIdentifier })
+      guard
+        case .appearance(let read) = await current.planner.read(
+          session: current.session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: entry.itinerary.id, listEntryId: entryIdentifier,
+              membershipId: smallerIdentifier)))
+      else { throw CancellationError() }
+      #expect(
+        !read.globalDone && read.localDone == expectedDone && read.effectiveDone == expectedDone)
+    }
+    let reopened = Planner(configuration: current.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let retained) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(retained == expected)
+  }
+
+  @Test func closedLegacyAliasRootsDoNotPublishMaintenanceForAnIndependentLiveMembership()
+    async throws
+  {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    var graph = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: fixture)) as? [String: Any])
+    var membership = try #require((graph["memberships"] as? [[String: Any]])?.first)
+    membership["id"] = "00000000-0000-4000-8000-000000000400"
+    membership["lifetimeId"] = "00000000-0000-4000-8000-000000000840"
+    membership["rank"] = "8192"
+    graph["memberships"] = [membership]
+    graph["expandedCompletions"] = []
+    graph["deletionMarkers"] = [
+      [
+        "deletionId": "00000000-0000-4000-8000-000000000891",
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": [
+          "kind": "membership", "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000841",
+        ], "closedFamilyId": NSNull(),
+      ]
+    ]
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: graph)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete(let checkpoint)) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let retained) = planner.decodeImport(before),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    #expect(retained.backup.contextAliases.count == 6)
+    #expect(
+      retained.backup.expandedCompletions.isEmpty && retained.backup.membershipRemovals.isEmpty)
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    let membershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000400")!
+    for _ in 0..<2 {
+      guard
+        case .snapshot(let contents) = await planner.query(
+          .init(
+            session: session,
+            request: .items(.init(scope: .list(listIdentifier), completion: .all, archive: .all)))),
+        case .appearance(let read) = await planner.read(
+          session: session,
+          request: .appearance(
+            .listMembership(listId: listIdentifier, membershipId: membershipIdentifier))),
+        case .status(let status) = await planner.read(session: session, request: .status),
+        case .known(let currentCheckpoint, let operations, let maintenance, let blocked) = status
+          .recovery,
+        case .exported(let after) = await planner.exportData(session: session)
+      else { throw CancellationError() }
+      #expect(
+        contents.matchingCount == 1 && read.localDone && read.effectiveDone && !read.globalDone)
+      #expect(
+        currentCheckpoint == checkpoint && operations.isEmpty && maintenance.isEmpty && !blocked)
+      #expect(after == before)
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    }
+  }
+
+  @Test func restoredMembershipFamilyAliasesDoNotRequireAnotherCanonicalIdentity() async throws {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    var graph = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: fixture)) as? [String: Any])
+    var membership = try #require((graph["memberships"] as? [[String: Any]])?.first)
+    membership["lifetimeId"] = "00000000-0000-4000-8000-000000000840"
+    graph["memberships"] = [membership]
+    graph["expandedCompletions"] = []
+    var aliases = try #require(graph["contextAliases"] as? [[String: Any]])
+    for index in aliases.indices {
+      let context = try #require(aliases[index]["context"] as? [String: Any])
+      if context["kind"] as? String == "expandedListItem" {
+        aliases[index]["initialDone"] = false
+      }
+      aliases[index]["currentChangeId"] = NSNull()
+    }
+    graph["contextAliases"] = aliases
+    graph["completionChanges"] = []
+    graph["deletionMarkers"] = [
+      [
+        "deletionId": "00000000-0000-4000-8000-000000000891",
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": [
+          "kind": "membership", "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000839",
+        ], "closedFamilyId": NSNull(),
+      ]
+    ]
+    graph["restorationFamilies"] = [
+      [
+        "familyId": "00000000-0000-4000-8000-000000000894",
+        "predecessor": [
+          "kind": "membership", "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000839",
+        ],
+        "candidates": [
+          [
+            "lifetimeId": "00000000-0000-4000-8000-000000000840",
+            "operationId": "00000000-0000-4000-8000-000000000992",
+          ],
+          [
+            "lifetimeId": "00000000-0000-4000-8000-000000000841",
+            "operationId": "00000000-0000-4000-8000-000000000993",
+          ],
+        ],
+      ]
+    ]
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    let input = planner.decodeImport(try JSONSerialization.data(withJSONObject: graph))
+    guard case .decoded(let decoded) = input else {
+      Issue.record("The represented open restoration family must validate: \(input)")
+      return
+    }
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete(let checkpoint)) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let acknowledged) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else { throw CancellationError() }
+    let family = try #require(acknowledged.decodedBackup.backup.restorationFamilies.first)
+    #expect(family.familyId == UUID(uuidString: "00000000-0000-4000-8000-000000000894")!)
+    #expect(family.candidates.count == 2)
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    try await deliverIndependentMembershipHistory(
+      storeURL: configuration.storeURL, backup: decoded.backup)
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(
+            scope: .list(UUID(uuidString: "00000000-0000-4000-8000-000000000201")!),
+            completion: .all, archive: .all))))
+    guard case .snapshot(let window) = query,
+      case .exported(let exported) = await planner.exportData(session: session),
+      case .decoded(let retained) = planner.decodeImport(exported)
+    else {
+      Issue.record("An accepted same-identity family needs no UUID rotation: \(query)")
+      return
+    }
+    #expect(window.matchingCount == 1)
+    #expect(
+      retained.backup.memberships.first?.lifetimeId == UUID(
+        uuidString: "00000000-0000-4000-8000-000000000840")!)
+    #expect(retained.backup.contextAliases.count == 6)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
   }
 
   @Test(arguments: ["missingMembershipHistory", "differentList"])
@@ -2242,6 +2711,47 @@ struct NativeMembershipConsolidationTests {
       })
     context.insert(
       PlannerSchemaV18.ExpandedCompletion(listEntry: entry, membership: member, localDone: true))
+    try context.save()
+  }
+
+  /// Model access constructs the actual persisted input; all behavioral observations use Planner.
+  @MainActor private func deliverIndependentMembershipHistory(
+    storeURL: URL, backup: PlannerPortableBackup
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
+    for alias in backup.contextAliases {
+      let data = try JSONEncoder().encode(alias)
+      if let record = records.first(where: {
+        $0.recordIdentifier == alias.aliasId && $0.recordKind == "contextAlias"
+      }) {
+        record.recordData = data
+      } else {
+        context.insert(
+          PlannerSchemaV16.LineageRecord(
+            identifier: alias.aliasId, kind: "contextAlias", data: data))
+      }
+    }
+    let provenance = try context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>())
+    for binding in backup.membershipProvenance {
+      let data = try JSONEncoder().encode(binding)
+      if let record = provenance.first(where: {
+        $0.membershipId == binding.membershipId
+          && $0.membershipLifetimeId == binding.membershipLifetimeId
+      }) {
+        record.recordData = data
+      } else {
+        context.insert(
+          PlannerSchemaV19.MembershipProvenance(
+            membershipId: binding.membershipId, membershipLifetimeId: binding.membershipLifetimeId,
+            recordData: data))
+      }
+    }
     try context.save()
   }
 

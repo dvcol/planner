@@ -3985,6 +3985,20 @@ public actor Planner {
         }
       }
     }
+    if !lineage.contextAliases.isEmpty && !lineage.membershipProvenance.isEmpty {
+      let aliases = PlannerMembershipConsolidation.aliasesRequiringCanonicalRootResolution(
+        memberships: try records.map { try $0.value().baselineProvenance },
+        aliases: lineage.contextAliases, provenance: lineage.membershipProvenance)
+      if !aliases.isEmpty {
+        let graph = PlannerImportGraph(
+          backup: try maintenanceSnapshot(context).decodedRecords().backup)
+        if aliases.contains(where: {
+          !graph.isClosed($0.context) && !graph.isClosed($0.canonicalContext)
+        }) {
+          return true
+        }
+      }
+    }
     let completionStates = try plannerCompletionHistoryStates(
       aliases: lineage.contextAliases, changes: lineage.completionChanges)
     for record in records {
