@@ -8,7 +8,6 @@ struct NativeStatusAdmissionTests {
     async throws
   {
     let fixture = try await NativeStatusFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
     let observer = NotificationCenter.default.addObserver(
       forName: ModelContext.didSave, object: nil, queue: nil
@@ -76,7 +75,6 @@ struct NativeStatusAdmissionTests {
     async throws
   {
     let fixture = try await NativeStatusFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let checkpointURL = fixture.configuration.recoveryDirectoryURL
       .appendingPathComponent(fixture.recovery.namespaceId.uuidString)
       .appendingPathComponent("checkpoint-1.json")
@@ -105,8 +103,9 @@ struct NativeStatusAdmissionTests {
       let recoveryDirectory = fixture.configuration.recoveryDirectoryURL
       let retainedDirectory = fixture.directory.appendingPathComponent("retained-recovery")
       if scenario == "missingStore" {
-        try FileManager.default.removeItem(
-          at: fixture.configuration.storeURL.deletingLastPathComponent())
+        try FileManager.default.moveItem(
+          at: fixture.configuration.storeURL.deletingLastPathComponent(),
+          to: fixture.directory.appendingPathComponent("retained-store"))
       } else if scenario == "unreadableRecovery" {
         try FileManager.default.moveItem(at: recoveryDirectory, to: retainedDirectory)
         try Data("Unreadable recovery.".utf8).write(to: recoveryDirectory)
@@ -165,7 +164,6 @@ struct NativeStatusAdmissionTests {
     async throws
   {
     let fixture = try await NativeStatusFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let proposalIdentifier = UUID()
     let operationIdentifier = UUID()
     var backup = try #require(
@@ -215,7 +213,7 @@ private struct NativeStatusFixture {
   let recovery: PlannerRecoverySelection
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
