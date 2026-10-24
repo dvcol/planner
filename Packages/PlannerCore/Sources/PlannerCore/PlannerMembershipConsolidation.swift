@@ -641,6 +641,19 @@ func plannerStageDetachedExpandedRetirements(
 ) throws -> [PlannerPortableExpandedCompletion] {
   let liveMembershipBindings = Set(memberships.map { $0.baselineProvenance.membership })
   let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+  let markers =
+    try context.fetch(FetchDescriptor<PlannerSchemaV4.DeletionMarker>()).map { try $0.value() }
+    + lineage.deletionMarkers
+  let closures = PlannerImportGraph(
+    backup: .init(
+      sources: [], labelAssociations: [], memberships: [], itineraryEntries: [],
+      expandedCompletions: [],
+      deletionMarkers: try markers.map {
+        try $0.validated(
+          items: [], lists: [], itineraries: [], schedules: [], categories: [], tags: [],
+          labelAssociations: [], entries: [], ownedLinks: [], expandedCompletions: [])
+      },
+      restorationFamilies: lineage.restorationFamilies))
   var retainedLiveContexts: [PlannerExpandedContext: Bool] = [:]
   var contributedLiveContexts: Set<PlannerExpandedContext> = []
   var contributions: [PlannerPortableExpandedCompletion] = []
@@ -654,15 +667,6 @@ func plannerStageDetachedExpandedRetirements(
     }
     let identity = PlannerPortableBoundIdentity(
       kind: .membership, id: membershipIdentifier, lifetimeId: membershipLifetime)
-    if liveMembershipBindings.contains(identity), let value = try? record.value() {
-      guard let retainedDone = retainedLiveContexts[value.context] else {
-        retainedLiveContexts[value.context] = value.localDone
-        continue
-      }
-      if contributedLiveContexts.insert(value.context).inserted {
-        contributions.append(.init(context: value.context, localDone: retainedDone))
-      }
-    }
     if let entry = record.listEntry,
       entry.id != entryIdentifier || entry.lifetimeId != entryLifetime
     {
@@ -674,24 +678,37 @@ func plannerStageDetachedExpandedRetirements(
       throw PlannerFailure(
         "readUnavailable", "The completion has contradictory membership bindings.")
     }
+    let expandedContext = PlannerExpandedContext(
+      listEntryId: entryIdentifier, listEntryLifetimeId: entryLifetime,
+      membershipId: membershipIdentifier, membershipLifetimeId: membershipLifetime)
+    let contextIsClosed = closures.isClosed(.expandedListItem(expandedContext))
+    if !contextIsClosed, liveMembershipBindings.contains(identity), let value = try? record.value()
+    {
+      guard let retainedDone = retainedLiveContexts[value.context] else {
+        retainedLiveContexts[value.context] = value.localDone
+        continue
+      }
+      if contributedLiveContexts.insert(value.context).inserted {
+        contributions.append(.init(context: value.context, localDone: retainedDone))
+      }
+    }
+    let retainedEntry = entries.first {
+      $0.id == entryIdentifier && $0.lifetimeId == entryLifetime
+    }
     guard
       let binding = lineage.membershipProvenance.first(where: { $0.membership == identity })
         ?? memberships.first(where: { $0.baselineProvenance.membership == identity })?
         .baselineProvenance,
-      entries.contains(where: {
-        $0.id == entryIdentifier && $0.lifetimeId == entryLifetime && $0.sourceKind == "list"
-          && $0.sourceId == binding.list.id && $0.sourceLifetimeId == binding.list.lifetimeId
-      })
+      (contextIsClosed && retainedEntry == nil)
+        || (retainedEntry?.sourceKind == "list" && retainedEntry?.sourceId == binding.list.id
+          && retainedEntry?.sourceLifetimeId == binding.list.lifetimeId)
     else {
       throw PlannerFailure(
         "readUnavailable", "The unresolved completion has no retained scope binding.")
     }
-    contributions.append(
-      .init(
-        context: .init(
-          listEntryId: entryIdentifier, listEntryLifetimeId: entryLifetime,
-          membershipId: membershipIdentifier, membershipLifetimeId: membershipLifetime),
-        localDone: record.localDone))
+    if !contextIsClosed {
+      contributions.append(.init(context: expandedContext, localDone: record.localDone))
+    }
     record.listEntry = nil
     context.delete(record)
   }

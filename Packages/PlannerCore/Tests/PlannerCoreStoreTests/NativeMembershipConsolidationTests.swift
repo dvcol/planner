@@ -10,6 +10,206 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(arguments: ["removed", "restored", "unproven", "preparationFailure", "publicationFailure"])
+  func delayedCompletionForARemovedItineraryStopDoesNotBlockTheSurvivingPlan(delivery: String)
+    async throws
+  {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(try Data(contentsOf: fixture)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let removedEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let survivingEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000452")!
+    let membershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let removal = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .removeItineraryEntry(
+        itineraryId: itineraryIdentifier, entryId: removedEntryIdentifier))
+    let removed = await planner.execute(removal)
+    guard case .applied(let result, .complete(let checkpoint)) = removed.outcome else {
+      throw CancellationError()
+    }
+    if delivery == "restored" {
+      let snapshot = try #require(removed.associationUndoSnapshot)
+      guard
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: .restoreAssociation(snapshot: snapshot))
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard
+      case .exported(let before) = await planner.exportData(session: session),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    try await insertDetachedExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: survivingEntryIdentifier,
+      membershipIdentifier: membershipIdentifier,
+      membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000841")!,
+      retainMembershipRelationship: true, detachEntryRelationship: true,
+      entryLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000851")!,
+      retainedEntryIdentifier: removedEntryIdentifier)
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    if delivery == "unproven" {
+      let unknownIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000999")!
+      try await insertDetachedExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: survivingEntryIdentifier,
+        membershipIdentifier: unknownIdentifier,
+        membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000899")!,
+        detachEntryRelationship: true,
+        entryLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000851")!,
+        retainedEntryIdentifier: removedEntryIdentifier)
+      let unresolved = await planner.query(
+        .init(session: session, request: .items(.init(scope: .itinerary(itineraryIdentifier)))))
+      guard case .failed(let reason) = unresolved else {
+        Issue.record("A closed stop cannot authorize an unknown membership binding: \(unresolved)")
+        return
+      }
+      #expect(reason.code == "readUnavailable")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+      try await removeNativeExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: removedEntryIdentifier,
+        membershipIdentifier: unknownIdentifier)
+    }
+    if delivery == "preparationFailure" {
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: namespaceDirectory.path)
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+      }
+      guard
+        case .failed(let reason) = await planner.query(
+          .init(session: session, request: .items(.init(scope: .itinerary(itineraryIdentifier))))),
+        case .status(let pending) = await planner.read(session: session, request: .status),
+        case .unavailable(let failure) = pending.recovery
+      else { throw CancellationError() }
+      #expect(reason.code == "maintenanceRequired" && failure.code == "maintenanceRequired")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+    }
+    if delivery == "publicationFailure" {
+      let obstruction = NativeSaveRecoveryObstruction(configuration: configuration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let waiting = PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .createTag(content: .init(name: "Must stay unapplied")))
+      guard case .rejected = await planner.execute(waiting).outcome,
+        case .snapshot(let readable) = await planner.query(
+          .init(
+            session: session,
+            request: .items(
+              .init(scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all)))),
+        case .exported(let committed) = await planner.exportData(session: session)
+      else { throw CancellationError() }
+      #expect(obstruction.didObstruct && obstruction.failure == nil)
+      #expect(readable.matchingCount == 2 && committed == before)
+      try obstruction.restore()
+      guard
+        case .noReliableEvidence = await planner.operationStatus(
+          session: session, operationId: waiting.operationId),
+        case .status(let status) = await planner.read(session: session, request: .status),
+        case .known(let pendingCheckpoint, let operations, let maintenance, let blocked) = status
+          .recovery,
+        let maintenanceIdentifier = maintenance.first
+      else { throw CancellationError() }
+      #expect(
+        pendingCheckpoint == checkpoint && operations.isEmpty && maintenance.count == 1 && blocked)
+      guard
+        case .complete(let repaired) = await planner.retryMaintenanceRecovery(
+          session: session, maintenanceId: maintenanceIdentifier)
+      else { throw CancellationError() }
+      #expect(repaired > checkpoint)
+    }
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all))))
+    guard case .snapshot(let contents) = query,
+      case .appearance(let surviving) = await planner.read(
+        session: session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: survivingEntryIdentifier,
+            membershipId: membershipIdentifier))),
+      case .exported(let after) = await planner.exportData(session: session),
+      case .status(let status) = await planner.read(session: session, request: .status),
+      case .known(let latest, let operations, let maintenance, let blocked) = status.recovery,
+      let latest
+    else {
+      Issue.record("An exactly removed stop's delayed completion must not block its plan: \(query)")
+      return
+    }
+    #expect(contents.matchingCount == (delivery == "restored" ? 3 : 2))
+    #expect(surviving.localDone && surviving.effectiveDone && !surviving.globalDone)
+    if delivery == "restored" {
+      guard
+        case .appearance(let restored) = await planner.read(
+          session: session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itineraryIdentifier, listEntryId: removedEntryIdentifier,
+              membershipId: membershipIdentifier)))
+      else { throw CancellationError() }
+      #expect(!restored.localDone && !restored.effectiveDone && !restored.globalDone)
+    }
+    #expect(after == before)
+    #expect(latest > checkpoint && operations.isEmpty && maintenance.isEmpty && !blocked)
+    guard
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: latest)),
+      case .applied(let replayResult, .complete(let replayCheckpoint)) = await planner.execute(
+        removal
+      )
+      .outcome
+    else { throw CancellationError() }
+    let recoveredGraph = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    let expectedGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    #expect(NSDictionary(dictionary: recoveredGraph).isEqual(to: expectedGraph))
+    #expect(replayResult == result && replayCheckpoint == checkpoint)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let retained) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(retained == before)
+  }
+
   @Test func maintenanceRetryCopiesLaterCanonicalDataWithoutApplyingTheWaitingCommand() async throws
   {
     #if SWIFT_PACKAGE
@@ -3817,7 +4017,7 @@ struct NativeMembershipConsolidationTests {
   @MainActor private func insertDetachedExpandedCompletion(
     storeURL: URL, entryIdentifier: UUID, membershipIdentifier: UUID, membershipLifetime: UUID,
     retainMembershipRelationship: Bool = false, detachEntryRelationship: Bool = false,
-    entryLifetime: UUID? = nil
+    entryLifetime: UUID? = nil, retainedEntryIdentifier: UUID? = nil
   ) throws {
     let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let container = try ModelContainer(
@@ -3842,6 +4042,7 @@ struct NativeMembershipConsolidationTests {
     if !retainMembershipRelationship { completion.membership = nil }
     if detachEntryRelationship { completion.listEntry = nil }
     if let entryLifetime { completion.listEntryLifetimeId = entryLifetime }
+    if let retainedEntryIdentifier { completion.listEntryId = retainedEntryIdentifier }
     context.insert(completion)
     try context.save()
   }
