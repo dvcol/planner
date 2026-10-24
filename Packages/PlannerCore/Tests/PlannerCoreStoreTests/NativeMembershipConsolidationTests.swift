@@ -2231,7 +2231,11 @@ struct NativeMembershipConsolidationTests {
 
   @Test(
     arguments: [false, true],
-    ["none", "membership", "expanded", "detached", "preparationFailure", "publicationFailure"])
+    [
+      "none", "membership", "expanded", "detached", "preparationFailure", "publicationFailure",
+      "retiredAlias:membership", "retiredAlias:expanded", "retiredAlias:detached",
+      "retiredAlias:preparationFailure", "retiredAlias:publicationFailure",
+    ])
   func closedLegacyAliasRootsPreserveIndependentLiveMemberships(
     currentDone: Bool, delivery: String
   )
@@ -2318,33 +2322,39 @@ struct NativeMembershipConsolidationTests {
       #expect(after == before)
       #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
     }
-    if delivery == "none" { return }
-    let closedIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
-    let closedLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
-    if delivery != "detached" {
+    let deliversRetiredAlias = delivery.hasPrefix("retiredAlias:")
+    let deliveryMode = delivery.replacingOccurrences(of: "retiredAlias:", with: "")
+    if deliveryMode == "none" { return }
+    var deliveredIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    var deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
+    if deliversRetiredAlias {
+      deliveredIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000402")!
+      deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000842")!
+    }
+    if deliveryMode != "detached" {
       try await insertIndependentMemberships(
         storeURL: configuration.storeURL,
         itemIdentifier: UUID(uuidString: "00000000-0000-4000-8000-000000000101")!,
         listIdentifier: listIdentifier,
-        contributions: [(closedIdentifier.uuidString, closedLifetime.uuidString, 1024, true)])
+        contributions: [(deliveredIdentifier.uuidString, deliveredLifetime.uuidString, 1024, true)])
     }
-    if delivery == "expanded" || delivery == "detached" {
+    if deliveryMode == "expanded" || deliveryMode == "detached" {
       for entryIdentifier in [
         UUID(uuidString: "00000000-0000-4000-8000-000000000451")!,
         UUID(uuidString: "00000000-0000-4000-8000-000000000452")!,
       ] {
-        if delivery == "expanded" {
+        if deliveryMode == "expanded" {
           try await insertIndependentExpandedCompletion(
             storeURL: configuration.storeURL, entryIdentifier: entryIdentifier,
-            membershipIdentifier: closedIdentifier, membershipLifetime: closedLifetime)
+            membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime)
         } else {
           try await insertDetachedExpandedCompletion(
             storeURL: configuration.storeURL, entryIdentifier: entryIdentifier,
-            membershipIdentifier: closedIdentifier, membershipLifetime: closedLifetime)
+            membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime)
         }
       }
     }
-    if delivery == "preparationFailure" {
+    if deliveryMode == "preparationFailure" {
       try FileManager.default.setAttributes(
         [.posixPermissions: 0o500], ofItemAtPath: namespaceDirectory.path)
       defer {
@@ -2367,7 +2377,7 @@ struct NativeMembershipConsolidationTests {
       try FileManager.default.setAttributes(
         [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
     }
-    if delivery == "publicationFailure" {
+    if deliveryMode == "publicationFailure" {
       let obstruction = NativeSaveRecoveryObstruction(configuration: configuration)
       let observer = NotificationCenter.default.addObserver(
         forName: ModelContext.didSave, object: nil, queue: nil
@@ -2475,7 +2485,7 @@ struct NativeMembershipConsolidationTests {
     #expect(reopenedData == before)
   }
 
-  @Test(arguments: ["identity", "family", "missingFamily"])
+  @Test(arguments: ["identity", "family", "missingFamily", "retiredAlias"])
   func aLegacyClosureRetiresASoleLateCopyWithoutCreatingAStrictBarrier(closure: String)
     async throws
   {
@@ -2502,7 +2512,12 @@ struct NativeMembershipConsolidationTests {
         ], "closedFamilyId": NSNull(),
       ]
     ]
+    var deliveredMembership = "00000000-0000-4000-8000-000000000401"
     var deliveredLifetime = "00000000-0000-4000-8000-000000000841"
+    if closure == "retiredAlias" {
+      deliveredMembership = "00000000-0000-4000-8000-000000000402"
+      deliveredLifetime = "00000000-0000-4000-8000-000000000842"
+    }
     if closure == "family" {
       deliveredLifetime = "00000000-0000-4000-8000-000000000840"
       var marker = try #require((graph["deletionMarkers"] as? [[String: Any]])?.first)
@@ -2574,8 +2589,7 @@ struct NativeMembershipConsolidationTests {
       listIdentifier: listIdentifier,
       contributions: [
         (
-          "00000000-0000-4000-8000-000000000401",
-          deliveredLifetime, 1024, true
+          deliveredMembership, deliveredLifetime, 1024, true
         )
       ])
     var query = await planner.query(
@@ -2682,8 +2696,7 @@ struct NativeMembershipConsolidationTests {
       listIdentifier: listIdentifier,
       contributions: [
         (
-          "00000000-0000-4000-8000-000000000401",
-          deliveredLifetime, 1024, true
+          deliveredMembership, deliveredLifetime, 1024, true
         )
       ])
     guard

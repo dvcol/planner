@@ -29,6 +29,26 @@ struct PlannerMembershipConsolidation {
     }
   }
 
+  static func membershipsRetiredByClosedCanonicalAliases(
+    aliases: [PlannerPortableContextAlias], provenance: [PlannerPortableMembershipProvenance],
+    graph: PlannerImportGraph
+  ) -> Set<PlannerPortableBoundIdentity> {
+    let retained = Dictionary(
+      uniqueKeysWithValues: provenance.map { ($0.membership, $0.normalized) })
+    return Set(
+      aliases.compactMap { alias in
+        guard case .listMembership = alias.context,
+          case .listMembership = alias.canonicalContext,
+          let original = membership(in: alias.context),
+          let canonical = membership(in: alias.canonicalContext), original.id != canonical.id,
+          graph.isClosed(canonical), let originalBinding = retained[original],
+          let canonicalBinding = retained[canonical], originalBinding.pair == canonicalBinding.pair,
+          originalBinding.observedRemovalIds == canonicalBinding.observedRemovalIds
+        else { return nil }
+        return original
+      })
+  }
+
   private struct Generation: Hashable {
     let pair: PlannerMembershipPair
     let basis: [UUID]
@@ -58,11 +78,13 @@ struct PlannerMembershipConsolidation {
     }
     var eligible: [PlannerPortableMembership] = []
     var eligibleLifetimes: [UUID: UUID] = [:]
+    let retiredMemberships = Self.membershipsRetiredByClosedCanonicalAliases(
+      aliases: current.contextAliases, provenance: current.membershipProvenance, graph: graph)
     var closedMembershipIdentities: Set<PlannerPortableBoundIdentity> = []
     var suppressed: [Generation: [PlannerPortableMembership]] = [:]
     for member in current.memberships {
       let binding = try Self.binding(member.baselineProvenance.membership, in: provenance)
-      if graph.isClosed(binding.membership) {
+      if graph.isClosed(binding.membership) || retiredMemberships.contains(binding.membership) {
         closedMembershipIdentities.insert(binding.membership)
         continue
       }
@@ -84,7 +106,7 @@ struct PlannerMembershipConsolidation {
         kind: .membership, id: completion.context.membershipId,
         lifetimeId: completion.context.membershipLifetimeId)
       let binding = try Self.binding(identity, in: provenance)
-      if graph.isClosed(identity) { continue }
+      if graph.isClosed(identity) || retiredMemberships.contains(identity) { continue }
       guard
         current.itineraryEntries.contains(where: {
           $0.id == completion.context.listEntryId

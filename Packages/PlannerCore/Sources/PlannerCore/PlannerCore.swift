@@ -4053,15 +4053,20 @@ public actor Planner {
       }
     }
     if !lineage.contextAliases.isEmpty && !lineage.membershipProvenance.isEmpty {
+      let memberships = try records.map { try $0.value().baselineProvenance }
       let aliases = PlannerMembershipConsolidation.aliasesRequiringCanonicalRootResolution(
-        memberships: try records.map { try $0.value().baselineProvenance },
+        memberships: memberships,
         aliases: lineage.contextAliases, provenance: lineage.membershipProvenance)
       if !aliases.isEmpty {
         let graph = PlannerImportGraph(
           backup: try maintenanceSnapshot(context).decodedRecords().backup)
-        if aliases.contains(where: {
-          !graph.isClosed($0.context) && !graph.isClosed($0.canonicalContext)
-        }) {
+        let retired = PlannerMembershipConsolidation.membershipsRetiredByClosedCanonicalAliases(
+          aliases: lineage.contextAliases, provenance: lineage.membershipProvenance, graph: graph)
+        if memberships.contains(where: { retired.contains($0.membership) })
+          || aliases.contains(where: {
+            !graph.isClosed($0.context) && !graph.isClosed($0.canonicalContext)
+          })
+        {
           return true
         }
       }
