@@ -9,6 +9,122 @@ import XCTest
 @MainActor
 final class SavedBrowserJourneyTests: XCTestCase {
   #if os(iOS)
+    func testRequestedDownloadOpensItsExactTargetInTheSystemBrowserAndPreservesTheGuide()
+      async throws
+    {
+      try await qualifySystemBrowserFallback(
+        linkTitle: "Download guide", targetPath: "download-guide",
+        noticeTitle: "Open download in your browser", fetchesBeforeHandoff: false)
+    }
+
+    func testUnsupportedContentOpensItsExactTargetInTheSystemBrowserAndPreservesTheGuide()
+      async throws
+    {
+      try await qualifySystemBrowserFallback(
+        linkTitle: "Unsupported content", targetPath: "unsupported-content",
+        noticeTitle: "Open content in your browser", fetchesBeforeHandoff: true)
+    }
+
+    private func qualifySystemBrowserFallback(
+      linkTitle: String, targetPath: String, noticeTitle: String, fetchesBeforeHandoff: Bool
+    ) async throws {
+      continueAfterFailure = false
+      let server = try BrowserJourneyServer()
+      let destination = try await server.start()
+      defer { server.stop() }
+      let externalDestination = destination.deletingLastPathComponent().appendingPathComponent(
+        targetPath)
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      createLinkedItem(in: application, destination: destination)
+      let bookmark = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+      let bookmarkIdentifier = bookmark.identifier
+      bookmark.activateForPlannerJourney()
+      let page = application.webViews.firstMatch
+      let guide = page.staticTexts["Museum guide fixture"]
+      XCTAssertTrue(guide.waitForExistence(timeout: 10))
+      page.links[linkTitle].activateForPlannerJourney()
+      let explanation = application.alerts.firstMatch
+      XCTAssertTrue(explanation.waitForExistence(timeout: 10))
+      XCTAssertTrue(explanation.staticTexts[noticeTitle].exists)
+      XCTAssertTrue(
+        explanation.staticTexts.matching(
+          NSPredicate(format: "label CONTAINS %@", externalDestination.absoluteString)
+        ).firstMatch.exists)
+      let requestLine = "GET /\(targetPath) HTTP/1.1"
+      let plannerUserAgents = server.userAgents(for: "GET /guide HTTP/1.1")
+      let priorTargetUserAgents = server.userAgents(for: requestLine)
+      XCTAssertFalse(plannerUserAgents.isEmpty)
+      XCTAssertEqual(!priorTargetUserAgents.isEmpty, fetchesBeforeHandoff)
+      let browser = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
+      XCTAssertNotEqual(browser.state, .runningForeground)
+      XCTAssertEqual(application.state, .runningForeground)
+      try await recordWindow(
+        application, name: "\(linkTitle) offers its exact default-browser target")
+      explanation.buttons["Open in default browser"].activateForPlannerJourney()
+      let browserBecameForeground = browser.wait(for: .runningForeground, timeout: 10)
+      let deadline = ContinuousClock.now.advanced(by: .seconds(10))
+      while ContinuousClock.now < deadline,
+        !server.userAgents(for: requestLine).dropFirst(priorTargetUserAgents.count).contains(
+          where: {
+            $0.contains(" Safari/") && !plannerUserAgents.contains($0)
+          })
+      {
+        try await Task.sleep(for: .milliseconds(20))
+      }
+      let externalUserAgents = Array(
+        server.userAgents(for: requestLine).dropFirst(priorTargetUserAgents.count))
+      let observation: [String: Any] = [
+        "originalBookmark": destination.absoluteString,
+        "requestedExternalTarget": externalDestination.absoluteString,
+        "requestLine": requestLine,
+        "plannerUserAgents": plannerUserAgents,
+        "requestsBeforeHandoff": priorTargetUserAgents,
+        "externalUserAgents": externalUserAgents,
+        "browserBecameForeground": browserBecameForeground,
+        "browserState": browser.state.rawValue,
+        "plannerState": application.state.rawValue,
+      ]
+      let requests = XCTAttachment(
+        data: try JSONSerialization.data(withJSONObject: observation, options: .prettyPrinted),
+        uniformTypeIdentifier: "public.json")
+      requests.name = "\(linkTitle) actual system-browser request provenance"
+      requests.lifetime = .keepAlways
+      add(requests)
+      let opened = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      opened.name = "System browser after explicit \(linkTitle) handoff"
+      opened.lifetime = .keepAlways
+      add(opened)
+      XCTAssertTrue(browserBecameForeground)
+      XCTAssertTrue(
+        externalUserAgents.contains {
+          $0.contains(" Safari/") && !plannerUserAgents.contains($0)
+        })
+      application.activate()
+      XCTAssertTrue(application.wait(for: .runningForeground, timeout: 10))
+      XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+      XCTAssertTrue(guide.waitForExistence(timeout: 10))
+      XCTAssertFalse(application.staticTexts["Page unavailable"].firstMatch.exists)
+      page.links["Garden guide"].activateForPlannerJourney()
+      XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+      application.buttons["saved.browser.back"].activateForPlannerJourney()
+      XCTAssertTrue(guide.waitForExistence(timeout: 10))
+      application.buttons["saved.browser.return"].activateForPlannerJourney()
+      let retainedBookmark = application.descendants(matching: .any)
+        .matching(identifier: bookmarkIdentifier).firstMatch
+      XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+      try await recordWindow(
+        application,
+        name: "\(linkTitle) handoff preserves guide history and original bookmark")
+      application.terminate()
+    }
+
     func testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser() async throws {
       continueAfterFailure = false
       let server = try BrowserJourneyServer()
