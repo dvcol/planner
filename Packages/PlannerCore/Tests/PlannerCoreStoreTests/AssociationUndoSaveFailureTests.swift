@@ -16,7 +16,6 @@ import SwiftData
       for ownerKind in ["item", "itinerary"] {
         for restoring in [false, true] {
           let fixture = try await AssociationUndoFixture()
-          defer { try? FileManager.default.removeItem(at: fixture.directory) }
           let tag = try #require(
             try await fixture.save(.createTag(content: .init(name: "Indoor"))).generated.first)
           let links: [PlannerLinkInput] = [
@@ -112,7 +111,6 @@ import SwiftData
       }
       for restoring in [false, true] {
         let fixture = try await AssociationUndoFixture()
-        defer { try? FileManager.default.removeItem(at: fixture.directory) }
         let creation = try await fixture.save(.createList(content: .init(name: "Destination")))
         let destination = try #require(creation.generated.first)
         let move = PlannerCommand.moveMembership(
@@ -182,7 +180,6 @@ import SwiftData
       }
       for removingEntry in [false, true] {
         let fixture = try await AssociationUndoFixture()
-        defer { try? FileManager.default.removeItem(at: fixture.directory) }
         let command: PlannerCommand
         if removingEntry {
           let itinerary = try #require(
@@ -237,7 +234,6 @@ import SwiftData
         return
       }
       let fixture = try await AssociationUndoFixture()
-      defer { try? FileManager.default.removeItem(at: fixture.directory) }
       let removal = await fixture.remove()
       let command = PlannerCommand.restoreAssociation(
         snapshot: try #require(removal.associationUndoSnapshot))

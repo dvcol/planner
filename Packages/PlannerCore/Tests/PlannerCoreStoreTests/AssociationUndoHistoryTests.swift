@@ -6,7 +6,6 @@ struct AssociationUndoHistoryTests {
   @Test(arguments: ["membership", "entry"])
   func recreatedExpandedCounterpartsRejectTheWholeUndo(kind: String) async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let itinerary = try #require(
       try await fixture.save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
     let addition = try await fixture.save(
@@ -48,10 +47,6 @@ struct AssociationUndoHistoryTests {
   @Test func anotherDatasetCannotConsumeTheIssuedUndoCapability() async throws {
     let original = try await AssociationUndoFixture()
     let other = try await AssociationUndoFixture()
-    defer {
-      try? FileManager.default.removeItem(at: original.directory)
-      try? FileManager.default.removeItem(at: other.directory)
-    }
     let removal = await original.remove()
     let snapshot = try #require(removal.associationUndoSnapshot)
     let before = try await other.export()
@@ -79,7 +74,6 @@ struct AssociationUndoHistoryTests {
   @Test(arguments: ["item", "list"])
   func deletedOriginalBindingsRejectUndoWithoutChangingSurvivors(kind: String) async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let removal = await fixture.remove()
     let snapshot = try #require(removal.associationUndoSnapshot)
     let deleted = kind == "item" ? fixture.item : fixture.list
@@ -110,7 +104,6 @@ struct AssociationUndoHistoryTests {
 
   @Test func anotherRemovalRestoresOnlyItsOwnFreshLifetimeAndClosesOlderHistory() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let firstRemoval = await fixture.remove()
     let firstSnapshot = try #require(firstRemoval.associationUndoSnapshot)
     _ = try await fixture.save(.restoreAssociation(snapshot: firstSnapshot))
@@ -145,7 +138,6 @@ struct AssociationUndoHistoryTests {
 
   @Test func issuanceEndsOnReopenButAppliedRestorationReplayPreservesLaterEdits() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let removal = await fixture.remove()
     let snapshot = try #require(removal.associationUndoSnapshot)
     let replay = await fixture.remove()
@@ -207,7 +199,6 @@ struct AssociationUndoHistoryTests {
 
   @Test func newerMembershipRejectsOldUndoWithoutReplacingLocalState() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let removal = await fixture.remove()
     let snapshot = try #require(removal.associationUndoSnapshot)
     let replacement = try await fixture.save(
@@ -244,7 +235,7 @@ struct AssociationUndoFixture {
   let removalIdentifier = UUID()
 
   init() async throws {
-    directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    directory = try makePlannerStoreFixtureDirectory()
     configuration = .init(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

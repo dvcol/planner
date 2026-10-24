@@ -4,8 +4,7 @@ import Testing
 
 struct MembershipMoveTests {
   @Test func movingCreatesANewTodoContextWithoutChangingTheSharedGloballyDoneItem() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -117,8 +116,7 @@ struct MembershipMoveTests {
   @Test func existingDestinationKeepsIdentityOrderAndCompletionAndReplayCannotRestoreIt()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -223,8 +221,7 @@ struct MembershipMoveTests {
 
   @Test func invalidMoveAndRecoveryObstructionLeaveBothListsAndIssuedWindowsUnchanged() async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let recoveryDirectory = directory.appendingPathComponent("recovery")
     let retainedRecoveryDirectory = directory.appendingPathComponent("retained-recovery")
     let planner = Planner(

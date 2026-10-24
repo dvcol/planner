@@ -7,7 +7,6 @@ struct AssociationUndoRecoveryTests {
   @Test(arguments: [false, true])
   func committedRemovalAndRestorationRepairRecoveryWithoutReapplying(restoring: Bool) async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let command: PlannerCommand
     let operationIdentifier: UUID
     if restoring {
@@ -70,7 +69,6 @@ struct AssociationUndoRecoveryTests {
 
   @Test func rejectedRecoveryPreparationKeepsTheIssuedUndoRetryable() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let removal = await fixture.remove()
     let command = PlannerCommand.restoreAssociation(
       snapshot: try #require(removal.associationUndoSnapshot))
