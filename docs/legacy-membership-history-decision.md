@@ -2,7 +2,7 @@
 
 ## Current decision
 
-Q154 is pending. [Q153 A](native-unseen-membership-add-decision.md) is accepted: a same-pair Remove defeats an unseen independent Add, while an informed re-add starts Todo. This decision concerns older saved data that never recorded the information required to distinguish those cases. No production code, schema, public interface or new test is changed by this review.
+Q154 A is accepted on 24 October 2026. Preserve current saved data as the upgrade baseline and acknowledge the historical information limit. [Q153 A](native-unseen-membership-add-decision.md) is accepted: a same-pair Remove defeats an unseen independent Add, while an informed re-add starts Todo. This decision concerns older saved data that never recorded the information required to distinguish those cases. No production code, schema, public interface or new test is changed by this review.
 
 ## What the existing data can prove
 
@@ -33,9 +33,11 @@ B. Refuse writable upgrade when required historical pair or causal information i
 
 A17 still requires one visible duplicate context, initial Done/Todo consolidation and preservation of explicit Reopen history. Preserving older user data does not mean retaining duplicate visible rows or creating a new seed that overrides Reopen.
 
-Recommendation: A. Preserve actual current Planner data and make the historical limit explicit. B adds an upgrade restriction without recovering missing facts. Neither option authorizes deleting current memberships by inference, losing local completion, changing another List, or pretending an old writer observed a removal.
+The human accepted A. Preserve actual current Planner data and make the historical limit explicit. B adds an upgrade restriction without recovering missing facts. Neither option authorizes deleting current memberships by inference, losing local completion, changing another List, or pretending an old writer observed a removal.
 
 ## Concrete contract after this choice
+
+[Q155's concrete contract](native-membership-consolidation-contract-review.md) is the next review. It does not reopen Q153 or Q154.
 
 The next review must specify retained membership bindings and removal-observation provenance, duplicate retirement distinct from user Remove, exact context aliases across completion generations, canonical identity/order, native reader/writer compatibility and supported portable-version migration. It must also declare a truthful automatic maintenance/recovery transaction. Existing recovery only tracks command receipts; normalization must not fabricate a user command receipt or silently declare incomplete maintenance complete.
 

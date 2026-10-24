@@ -18,7 +18,7 @@ A. Removal wins for the same pair unless a new Add observed that removal. M402 d
 
 B. The unseen independent Add survives. Removing M401 closes the relationships A knew; M402 becomes visible after reconnection. Edits or reordering of the removed M401 still lose. This permits an Item to reappear in the List after Remove, without resurrecting the old membership.
 
-The human selected A. This resolves the new policy case without reinterpreting Q16. The concrete native/portable and recovery declarations still require review before dependent implementation. The [legacy-history decision](legacy-membership-history-decision.md) records information missing from older data; it does not reopen this policy for newly recorded removals.
+The human selected A. This resolves the new policy case without reinterpreting Q16. The [Q154 A legacy-history decision](legacy-membership-history-decision.md) preserves current data while recording information missing from older bytes; it does not reopen this policy for newly recorded removals. [Q155's concrete native/portable and recovery declarations](native-membership-consolidation-contract-review.md) require review before dependent implementation.
 
 ## Existing evidence and constraints
 
