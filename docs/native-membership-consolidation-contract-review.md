@@ -1,6 +1,6 @@
 # Native membership consolidation contract
 
-Status: proposed for Q155 review, 24 October 2026. Q153 A and Q154 A are accepted. This document declares the next implementation and existing test seams; it supplies no executed implementation evidence. Signing stays deferred.
+Status: Q155 A accepted on 24 October 2026, following Q153 A and Q154 A. This document declares the approved implementation and existing test seams; it supplies no executed implementation evidence. Signing stays deferred.
 
 ## Scope and shared interface
 

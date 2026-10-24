@@ -37,8 +37,8 @@ The human accepted A. Preserve actual current Planner data and make the historic
 
 ## Concrete contract after this choice
 
-[Q155's concrete contract](native-membership-consolidation-contract-review.md) is the next review. It does not reopen Q153 or Q154.
+[Q155 A's concrete contract](native-membership-consolidation-contract-review.md) is accepted on 24 October 2026. It does not reopen Q153 or Q154. Dependent implementation and qualification now proceed through its approved existing boundaries.
 
-The next review must specify retained membership bindings and removal-observation provenance, duplicate retirement distinct from user Remove, exact context aliases across completion generations, canonical identity/order, native reader/writer compatibility and supported portable-version migration. It must also declare a truthful automatic maintenance/recovery transaction. Existing recovery only tracks command receipts; normalization must not fabricate a user command receipt or silently declare incomplete maintenance complete.
+The approved contract specifies retained membership bindings and removal-observation provenance, duplicate retirement distinct from user Remove, exact context aliases across completion generations, canonical identity/order, native reader/writer compatibility and supported portable-version migration. It also declares a truthful automatic maintenance/recovery transaction. Existing recovery only tracks command receipts; normalization must not fabricate a user command receipt or silently declare incomplete maintenance complete.
 
 Use the already approved real-native-store and public query/read/execute/export/recovery boundaries. Retain the existing failing diagnostic, then work through literal cases in vertical slices: initial Done/Todo consolidation; explicit Reopen followed by a late seed; same-pair unseen Add suppression; informed re-add; independent other-List additions; exact repeated-itinerary contexts; faithful full export; genuine save/recovery failure; replay and reopen. Schema/compiler or local-store evidence does not qualify live CloudKit or physical convergence. Signing stays deferred.
