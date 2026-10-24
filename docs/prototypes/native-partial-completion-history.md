@@ -23,3 +23,5 @@ Matching Mac app, Share and fixture compilation and seven existing real HTTP reg
 ## Remaining scope
 
 This qualifies referenced causal records and their consistency. Unproven or changed owner/context lifetimes, partial relationship delivery beyond these cases, broader restoration-family reconciliation, other prepared command families, alias-specific adapter journeys and repair-specific native-save/interruption faults remain open. Actual Mac UI, signed/shared storage, installed Share, CloudKit, physical performance, system invocation and whole-app visual acceptance keep their separate gates. Signing stays deferred.
+
+The later [appearance-scope checkpoint](native-completion-alias-scope.md) also qualifies native rejection when complete causal references target another appearance kind or itinerary entry identity. The earlier causal-reference evidence above retains its original scope.

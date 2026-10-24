@@ -38,6 +38,19 @@ func plannerValidateCompletionHistoryReferences(
     .init("invalidInput", message, propertyPath: path)
   }
   for (index, alias) in aliases.enumerated() {
+    switch (alias.context, alias.canonicalContext) {
+    case (.listMembership, .listMembership): break
+    case (
+      .directItineraryItem(let originalEntryIdentifier, _),
+      .directItineraryItem(let canonicalEntryIdentifier, _)
+    ) where originalEntryIdentifier == canonicalEntryIdentifier: break
+    case (.expandedListItem(let originalContext), .expandedListItem(let canonicalContext))
+    where originalContext.listEntryId == canonicalContext.listEntryId: break
+    default:
+      throw failure(
+        "Aliases must retain the same logical context; repeated route entries stay independent.",
+        "/contextAliases/\(index)/canonicalContext")
+    }
     if let current = alias.currentChangeId {
       guard let change = changesByIdentifier[current], change.aliasId == alias.aliasId,
         change.context == alias.context

@@ -12,7 +12,10 @@ import Testing
 struct NativeMembershipConsolidationTests {
   @Test(
     arguments: ["list", "expanded", "direct"],
-    ["head", "predecessor", "alias", "wrongAlias", "duplicateObservation", "cycle"])
+    [
+      "head", "predecessor", "alias", "wrongAlias", "duplicateObservation", "cycle",
+      "canonicalDirect", "canonicalExpanded",
+    ])
   func incompleteCompletionHistoryRejectsCurrentReadsAndWritesUntilItsRecordsArrive(
     scope: String, historyCondition: String
   ) async throws {
@@ -63,7 +66,16 @@ struct NativeMembershipConsolidationTests {
       command: .setCompletion(scope: .appearance(appearance), done: false))
     guard
       case .applied(let reopened, .complete(let checkpoint)) = await planner.execute(reopening)
-        .outcome,
+        .outcome
+    else { throw CancellationError() }
+    if historyCondition == "canonicalDirect" {
+      _ = try await save(
+        .addItineraryEntry(itineraryId: itinerary.id, source: item, placement: .last))
+    } else if historyCondition == "canonicalExpanded" {
+      _ = try await save(
+        .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    }
+    guard
       case .exported(let before) = await planner.exportData(session: session),
       case .decoded(let decoded) = planner.decodeImport(before),
       case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
@@ -77,7 +89,33 @@ struct NativeMembershipConsolidationTests {
     let content: Data
     let expectedPropertyPath: String
     var inconsistentContent: Data?
-    if historyCondition == "alias" {
+    if historyCondition == "canonicalDirect" || historyCondition == "canonicalExpanded" {
+      identifier = alias.aliasId
+      kind = "contextAlias"
+      content = try JSONEncoder().encode(alias)
+      expectedPropertyPath = "/contextAliases/0/canonicalContext"
+      let canonicalContext: PlannerPortableCompletionContext
+      if historyCondition == "canonicalDirect" {
+        let target = try #require(
+          decoded.backup.itineraryEntries.first { $0.id != directEntry && $0.source.kind == .item })
+        canonicalContext = .directItineraryItem(
+          entryId: target.id, entryLifetimeId: target.lifetimeId)
+      } else {
+        let target = try #require(
+          decoded.backup.itineraryEntries.first {
+            $0.id != expandedEntry && $0.source.kind == .list
+          })
+        let member = try #require(decoded.backup.memberships.first { $0.id == membership })
+        canonicalContext = .expandedListItem(
+          .init(
+            listEntryId: target.id, listEntryLifetimeId: target.lifetimeId,
+            membershipId: member.id, membershipLifetimeId: member.lifetimeId))
+      }
+      inconsistentContent = try JSONEncoder().encode(
+        PlannerPortableContextAlias(
+          aliasId: alias.aliasId, context: alias.context, canonicalContext: canonicalContext,
+          initialDone: alias.initialDone, currentChangeId: alias.currentChangeId))
+    } else if historyCondition == "alias" {
       identifier = alias.aliasId
       kind = "contextAlias"
       content = try JSONEncoder().encode(alias)
