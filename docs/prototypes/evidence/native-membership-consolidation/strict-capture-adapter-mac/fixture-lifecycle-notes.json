@@ -1,0 +1,5 @@
+{
+  "extraFixtureDeletionAttempted": false,
+  "newDirectoryLifecycleGuarantee": false,
+  "reason": "No owned-directory markers were emitted by these existing tests. No unknown directory is removed."
+}

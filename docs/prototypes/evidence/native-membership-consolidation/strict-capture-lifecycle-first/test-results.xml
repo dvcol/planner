@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.2125e-05"/>
+    <testsuite name="TestResults" errors="0" tests="23" failures="0" skipped="0" time="9.199383040999999">
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="relativeRedirectResolvesAgainstTheCurrentHop()" time="0.011453292"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="savingWhileLookupIsPendingKeepsTheOriginalAndRejectsLatePreview()" time="0.03887525"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="httpMapsBookmarkRemainsUsableWithoutNetworkLookup()" time="0.013685334"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:)" time="0.030117042"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:)" time="0.039897958"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:)" time="0.3877965"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="cancellingNativeInputRetryClearsItsObsoleteLookupIndicator()" time="0.026438"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:)" time="0.046750084"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="overallDeadlineReducesTheFinalRequestBudgetAndKeepsTheBookmarkUsable()" time="8.133257542"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:)" time="0.044600375"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:)" time="0.073627209"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:)" time="0.161531167"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="documentedHTTPSPlaceLookupKeepsProviderPreviewSeparateFromSavedContent()" time="0.013959334"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:)" time="0.136683667"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="newerLookupKeepsItsSelectionWhenAnOlderResultArrives()" time="0.02517425"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops()" time="0.0138795"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState()" time="0.545619083"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged()" time="0.260662542"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:)" time="0.272099334"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay()" time="0.329554583"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()" time="0.671453834"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:)" time="0.408300666"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:)" time="0.415971583"/>
+    </testsuite>
+</testsuites>

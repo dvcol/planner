@@ -1,0 +1,59 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 2.481,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay()",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.19169575,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:)",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.30750375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.429266917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState()",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.437917542,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:)",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.206264458,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:)",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.191770458,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged()",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.309552875,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

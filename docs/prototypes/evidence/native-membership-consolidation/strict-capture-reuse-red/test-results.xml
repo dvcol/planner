@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.3042e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.165660833">
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()" time="0.165356208">
+            <failure message="Issue recorded (error): Reviewed reuse must create an informed membership after an ordinary Remove: PlannerOperationResult(operationId: 842129FB-823D-4964-87AA-3AF773C98C39, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: &quot;recoveryIntegrityFailure&quot;, propertyPath: Optional(&quot;/memberships/1/id&quot;), message: &quot;A live membership must observe every strict removal for its exact Item/List pair.&quot;, details: nil)), associationUndoSnapshot: nil)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

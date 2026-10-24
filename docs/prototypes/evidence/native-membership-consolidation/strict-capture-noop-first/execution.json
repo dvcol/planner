@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.321,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.385398041,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

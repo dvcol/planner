@@ -3,6 +3,7 @@ import PlannerCore
 import Testing
 import UniformTypeIdentifiers
 
+@Suite(.serialized)
 struct CaptureLookupTests {
   @Test(arguments: [false, true]) @MainActor
   func nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry: Bool) async throws

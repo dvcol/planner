@@ -1,0 +1,15 @@
+{
+  "productionComparisonBase": "009f4286",
+  "verifiedProductionFiles": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureApply.swift"
+  ],
+  "macExistingFunctionsPassed": 234,
+  "macLookupFailureReproducedOnBase": false,
+  "phoneExitCode": 65,
+  "phoneSQLiteUnlinkDiagnostics": 6,
+  "phoneNewRegressionExcludedByXcode": false,
+  "phoneExpectedUnsupportedNewRegressionRetained": true,
+  "comparisonRunsRewriteWorkspace": false,
+  "serializedTrialAssertionsOrDeadlinesChanged": false
+}

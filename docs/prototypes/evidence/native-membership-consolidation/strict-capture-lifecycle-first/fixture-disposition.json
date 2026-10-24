@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/83C0FDA5-DA63-4643-96EA-F1EE526C8253",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/60923A72-082D-4757-9698-44EB6ADCC34B",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/B31C5766-37F4-486F-BC15-AEEC633AC60D",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/08E4C8BB-D4AA-4D77-8609-B50A39EECBD2",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/04049B0E-D9E9-4BBF-9589-949CBE8092A0",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/ACBF19A2-1BE6-4E3A-BB98-C7C4349D85D3",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/3014E940-549C-4891-95D9-1EE61443054F",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/E7A3F173-F08E-46EE-B8DD-3463FA449A90",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/EA7D3941-5338-4E53-A0A3-666AAC61183B",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/17BAFA72-392E-4D68-A1A7-774403FBEA7B",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/BB6E691A-D7A2-4669-A2B7-0312742628F3",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/9F9DA4BB-198E-4EC5-B237-E04951FF9378",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/F0B48C27-7229-48B3-AEDD-8CE64A366FAC",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/927986A2-9E8A-4652-9C52-20B309412848",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/CE4ACF13-18E4-483C-8D5E-20D122B022A4",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/BB28E80F-904A-4590-AFC8-7A7F3A8A2D14",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/B916CAEC-A20B-4C19-9747-1C9A6A87F5C2",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/E507739F-AB1D-4F3D-9FB7-FB5241934306",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/82C614DB-C2FD-41C6-9F0E-D79E7A2F5A9F"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "64f1a4614d50363204156705c6c64706570cabc1836de06489ac24ff017ec2af",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 19,
+  "hostProcessIdentifiers": [
+    91065
+  ]
+}

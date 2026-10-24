@@ -11,7 +11,8 @@ func plannerCaptureReviewDigest(operationDigest: String, source: ItemSnapshot?) 
 
 func plannerCaptureOperationDigest(
   draftId: UUID, draftGeneration: UUID, choice: PlannerCaptureChoice, listIds: Set<UUID>,
-  identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
+  identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity],
+  membershipEvidence: [PlannerPortableMembershipProvenance]? = nil
 ) -> String {
   let choiceValue: PlannerCanonicalValue
   switch choice {
@@ -19,7 +20,7 @@ func plannerCaptureOperationDigest(
   case .reuse(let itemId):
     choiceValue = .record(["kind": .string("reuse"), "itemId": .identity(itemId)])
   }
-  let value = PlannerCanonicalValue.record([
+  var fields: [String: PlannerCanonicalValue] = [
     "command": .record([
       "type": .string("applyCapture"), "draftId": .identity(draftId),
       "draftGeneration": .identity(draftGeneration), "choice": choiceValue,
@@ -28,7 +29,15 @@ func plannerCaptureOperationDigest(
     "datasetId": .identity(identity.datasetId),
     "ownershipBinding": .string(identity.ownershipBinding),
     "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
-  ])
-  let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
-  return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  ]
+  var version: UInt8 = 1
+  if let membershipEvidence {
+    version = 3
+    fields["resolvedMembershipEvidence"] = .ordered(
+      plannerSortedMembershipEvidence(membershipEvidence).map(\.operationCanonicalValue))
+  }
+  let bytes =
+    Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, version])
+    + PlannerCanonicalValue.record(fields).encoded()
+  return plannerDigest(bytes, prefix: "sha256-payload-v\(version):")
 }

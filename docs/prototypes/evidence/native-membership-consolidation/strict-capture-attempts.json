@@ -1,0 +1,250 @@
+[
+  {
+    "phase": "strict-capture-adapter-mac",
+    "stages": {
+      "build-for-testing": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 149.542,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-capture-adapter-mac-build-for-testing.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "fixture-build": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 36.453,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-capture-adapter-mac-fixture-build.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "test-without-building": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 5.388,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-capture-adapter-mac-test-without-building.xcresult",
+        "sqliteUnlinkWarnings": 0
+      }
+    },
+    "testSummary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 11,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1792828765.192,
+      "passedTests": 10,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1792828761.295,
+      "statistics": [
+        {
+          "subtitle": "2 test runs",
+          "title": "1 test ran with dynamic parameters"
+        }
+      ],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [],
+      "totalTestCount": 10
+    }
+  },
+  {
+    "phase": "strict-capture-apply-cohort-first",
+    "exitCode": 0,
+    "functions": 7,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-base-phone",
+    "exitCode": 65,
+    "functions": 235,
+    "failedFunctions": 1,
+    "skipped": 0,
+    "expectedUnsupportedNewRegressionNotExcluded": true
+  },
+  {
+    "phase": "strict-capture-canonical-mac",
+    "exitCode": 1,
+    "functions": 235,
+    "failedFunctions": 3,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-canonical-phone",
+    "exitCode": 0,
+    "functions": 235,
+    "failedFunctions": 0,
+    "skipped": 0
+  },
+  {
+    "phase": "strict-capture-final-adapter-mac",
+    "stages": {
+      "build-for-testing": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 13.574,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-capture-final-adapter-mac-build-for-testing.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "fixture-build": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 8.29,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-capture-final-adapter-mac-fixture-build.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "test-without-building": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 8.295,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-capture-final-adapter-mac-test-without-building.xcresult",
+        "sqliteUnlinkWarnings": 0
+      }
+    },
+    "testSummary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 11,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1792829668.373,
+      "passedTests": 10,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1792829663.009,
+      "statistics": [
+        {
+          "subtitle": "2 test runs",
+          "title": "1 test ran with dynamic parameters"
+        }
+      ],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [],
+      "totalTestCount": 10
+    }
+  },
+  {
+    "phase": "strict-capture-final-mac",
+    "exitCode": 0,
+    "functions": 235,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-final-phone",
+    "exitCode": 0,
+    "functions": 235,
+    "failedFunctions": 0,
+    "skipped": 0
+  },
+  {
+    "phase": "strict-capture-lifecycle-first",
+    "exitCode": 0,
+    "functions": 23,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-lookup-base-mac",
+    "exitCode": 0,
+    "functions": 234,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": false,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-lookup-isolated-mac",
+    "exitCode": 0,
+    "functions": 16,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-noop-first",
+    "exitCode": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-reuse-first",
+    "exitCode": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-reuse-red",
+    "exitCode": 1,
+    "functions": 1,
+    "failedFunctions": 1,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-capture-serialized-trial-mac",
+    "exitCode": 0,
+    "functions": 235,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": false,
+    "sqliteUnlinkWarnings": 0
+  }
+]

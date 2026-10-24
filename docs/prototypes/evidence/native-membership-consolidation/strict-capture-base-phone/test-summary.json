@@ -1,0 +1,59 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 671,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerCore · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792829456.293,
+  "passedTests" : 234,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792829074.69,
+  "statistics" : [
+    {
+      "subtitle" : "534 test runs",
+      "title" : "97 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Issue recorded: Reviewed reuse must create an informed membership after an ordinary Remove: PlannerOperationResult(operationId: 4D1919C1-570E-41C8-983A-C3B28865B83E, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"recoveryIntegrityFailure\", propertyPath: Optional(\"/memberships/0/id\"), message: \"A live membership must observe every strict removal for its exact Item/List pair.\", details: nil)), associationUndoSnapshot: nil)",
+      "targetName" : "PlannerCoreStoreTests",
+      "testIdentifier" : 14,
+      "testIdentifierString" : "CaptureApplyTests/reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/CaptureApplyTests/reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()",
+      "testName" : "reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()"
+    }
+  ],
+  "title" : "Test - PlannerCore",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "24% of duration",
+      "text" : "8 longest test runs with outlier durations exceeding 1.84s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 235
+}

@@ -1,0 +1,122 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 10.406,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.180167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "documentedHTTPSPlaceLookupKeepsProviderPreviewSeparateFromSavedContent()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.205883125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.192921042,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "newerLookupKeepsItsSelectionWhenAnOlderResultArrives()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.227063542,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.192957584,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.139104791,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "relativeRedirectResolvesAgainstTheCurrentHop()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.192878166,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.204543792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "cancellingNativeInputRetryClearsItsObsoleteLookupIndicator()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.242371916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "httpMapsBookmarkRemainsUsableWithoutNetworkLookup()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.180463541,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.215109959,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.228429125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "savingWhileLookupIsPendingKeepsTheOriginalAndRejectsLatePreview()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.247926167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overallDeadlineReducesTheFinalRequestBudgetAndKeepsTheBookmarkUsable()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 8.252796584,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops()",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.204585708,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:)",
+      "className": "PlannerCoreStoreTests.CaptureLookupTests",
+      "seconds": 0.243672125,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000197125"/>
+    <testsuite name="TestResults" errors="0" tests="16" failures="0" skipped="0" time="8.25332925">
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:)" time="0.180167"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="documentedHTTPSPlaceLookupKeepsProviderPreviewSeparateFromSavedContent()" time="0.205883125"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:)" time="0.192921042"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="newerLookupKeepsItsSelectionWhenAnOlderResultArrives()" time="0.227063542"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:)" time="0.192957584"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:)" time="0.139104791"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="relativeRedirectResolvesAgainstTheCurrentHop()" time="0.192878166"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:)" time="0.204543792"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="cancellingNativeInputRetryClearsItsObsoleteLookupIndicator()" time="0.242371916"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="httpMapsBookmarkRemainsUsableWithoutNetworkLookup()" time="0.180463541"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:)" time="0.215109959"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:)" time="0.228429125"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="savingWhileLookupIsPendingKeepsTheOriginalAndRejectsLatePreview()" time="0.247926167"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="overallDeadlineReducesTheFinalRequestBudgetAndKeepsTheBookmarkUsable()" time="8.252796584"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops()" time="0.204585708"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureLookupTests" name="nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:)" time="0.243672125"/>
+    </testsuite>
+</testsuites>

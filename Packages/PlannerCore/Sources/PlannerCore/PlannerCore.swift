@@ -669,9 +669,11 @@ public actor Planner {
     envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let evidence = try receipt.evidence()
       let digest = plannerCaptureOperationDigest(
         draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
-        identity: identity, bindings: try receipt.evidence().bindings)
+        identity: identity, bindings: evidence.bindings,
+        membershipEvidence: evidence.resolvedMembershipEvidence)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "This operation describes another capture.")
@@ -679,6 +681,19 @@ public actor Planner {
       return appliedResult(
         operationId: operation.operationId,
         evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let prepared = try archive.proposals().first { $0.originalOperationId == operation.operationId }
+    if let prepared, let bindings = prepared.resolvedBindings,
+      let membershipEvidence = prepared.resolvedMembershipEvidence
+    {
+      let digest = plannerCaptureOperationDigest(
+        draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
+        identity: identity, bindings: bindings, membershipEvidence: membershipEvidence)
+      guard prepared.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another capture.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(prepared.summary))
     }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
@@ -696,20 +711,18 @@ public actor Planner {
       session: operation.session, draftId: draftId,
       draftGeneration: draftGeneration, choice: choice,
       listIds: listIds, context: context)
-    let digest = plannerCaptureOperationDigest(
+    let reviewOperationDigest = plannerCaptureOperationDigest(
       draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
       identity: identity, bindings: resolution.bindings)
     let reviewDigest = plannerCaptureReviewDigest(
-      operationDigest: digest, source: try resolution.item?.value())
+      operationDigest: reviewOperationDigest, source: try resolution.item?.value())
     guard reviewDigest == review.payloadDigest else {
       throw PlannerFailure(
         "staleReview", "The capture or selected identities changed; review again.",
         details: .staleReview)
     }
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
+    if let proposal = prepared {
+      guard proposal.payloadDigest == reviewOperationDigest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another capture.")
       }
@@ -775,6 +788,33 @@ public actor Planner {
       added.append(membership)
       memberships.append(membership)
     }
+    let markers = try deletionMarkers(context)
+    var membershipEvidence: [PlannerPortableMembershipProvenance]?
+    if !listIds.isEmpty {
+      let lineage = try PlannerNativeLineage(context: context)
+      let addedIdentifiers = Set(added.map(\.id))
+      let selectedMemberships = memberships.filter {
+        $0.item.id == snapshot.id && $0.item.lifetimeId == snapshot.lifetimeId
+          && listIds.contains($0.list.id)
+      }
+      let resolved = try selectedMemberships.map { membership in
+        if addedIdentifiers.contains(membership.id) {
+          return try lineage.provenanceForNewMembership(membership, markers: markers)
+        }
+        return lineage.membershipProvenance.first {
+          $0.membershipId == membership.id && $0.membershipLifetimeId == membership.lifetimeId
+        } ?? membership.baselineProvenance
+      }
+      membershipEvidence = plannerSortedMembershipEvidence(resolved)
+      try plannerStageMembershipProvenance(
+        resolved.filter {
+          addedIdentifiers.contains($0.membershipId) && !$0.observedRemovalIds.isEmpty
+        },
+        context: context)
+    }
+    let digest = plannerCaptureOperationDigest(
+      draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
+      identity: identity, bindings: resolution.bindings, membershipEvidence: membershipEvidence)
     let updatedAt = Date()
     let lists = try listSnapshots(context).map { value in
       guard resolution.details.missingListIds.contains(value.id) else { return value }
@@ -793,7 +833,6 @@ public actor Planner {
     let itineraries = try itinerarySnapshots(context)
     let categories = try categorySnapshots(context)
     let tags = try tagSnapshots(context)
-    let markers = try deletionMarkers(context)
     var generatedIdentities = added.map { PlannerAppliedIdentity.reference($0.reference) }
     if resolution.item == nil {
       generatedIdentities =
@@ -819,10 +858,18 @@ public actor Planner {
           itineraries: itineraries,
           labelAssociations: associations, tags: tags, categories: categories,
           items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified",
+        resolvedBindings: membershipEvidence.map { _ in resolution.bindings },
+        resolvedMembershipEvidence: membershipEvidence))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result,
       bindings: resolution.bindings)
+    if let membershipEvidence {
+      receipt.resultData = try JSONEncoder().encode(
+        PlannerStoredOperationEvidence(
+          result: result, bindings: resolution.bindings,
+          resolvedMembershipEvidence: membershipEvidence))
+    }
     if resolution.item == nil {
       context.insert(item)
       for association in item.labelAssociations ?? [] { context.insert(association) }

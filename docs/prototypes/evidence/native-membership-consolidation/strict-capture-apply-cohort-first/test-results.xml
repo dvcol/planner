@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000145208"/>
+    <testsuite name="TestResults" errors="0" tests="7" failures="0" skipped="0" time="0.438341459">
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay()" time="0.19169575"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:)" time="0.30750375"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()" time="0.429266917"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState()" time="0.437917542"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:)" time="0.206264458"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:)" time="0.191770458"/>
+        <testcase classname="PlannerCoreStoreTests.CaptureApplyTests" name="ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged()" time="0.309552875"/>
+    </testsuite>
+</testsuites>

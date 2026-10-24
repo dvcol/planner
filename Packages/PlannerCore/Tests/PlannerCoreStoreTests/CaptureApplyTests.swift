@@ -4,11 +4,163 @@ import SwiftData
 import Testing
 
 struct CaptureApplyTests {
+  @Test func reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()
+    async throws
+  {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = captureApplyConfiguration(directory)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    let originalUrl = "https://example.com/strict-reuse"
+    let item = try #require(
+      try await captureApplySave(
+        planner, session: session,
+        command: .createItem(
+          content: .init(
+            title: "Original", notes: "Keep shared notes",
+            links: [.init(originalUrl: originalUrl)]))
+      ).generated.first)
+    let destination = try #require(
+      try await captureApplySave(
+        planner, session: session,
+        command: .createList(content: .init(name: "Destination"))
+      ).generated.first)
+    let retainedList = try #require(
+      try await captureApplySave(
+        planner, session: session,
+        command: .createList(content: .init(name: "Keep this context"))
+      ).generated.first)
+    let originalAddition = try await captureApplySave(
+      planner, session: session,
+      command: .addMembership(itemId: item.id, listId: destination.id, placement: .last))
+    let retainedAddition = try await captureApplySave(
+      planner, session: session,
+      command: .addMembership(itemId: item.id, listId: retainedList.id, placement: .last))
+    guard
+      case .membership(let removedIdentifier, _, _) = originalAddition.generatedReferences.first,
+      case .membership(let retainedIdentifier, _, _) = retainedAddition.generatedReferences.first
+    else { throw CancellationError() }
+    _ = try await captureApplySave(
+      planner, session: session,
+      command: .setCompletion(
+        scope: .appearance(
+          .listMembership(
+            listId: retainedList.id,
+            membershipId: retainedIdentifier)), done: true))
+    _ = try await captureApplySave(
+      planner, session: session,
+      command: .removeMembership(listId: destination.id, membershipId: removedIdentifier))
+    guard case .exported(let beforeData) = await planner.exportData(session: session),
+      case .decoded(let before) = planner.decodeImport(beforeData),
+      case .source(.item(let beforeItem)) = await planner.read(
+        session: session, request: .source(item)),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session,
+        input: .direct([.url(originalUrl)])),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session,
+        command: .applyCapture(
+          draftId: draft.draftId, draftGeneration: draft.generation,
+          choice: .reuse(itemId: item.id), listIds: [destination.id, retainedList.id]))
+    else { throw CancellationError() }
+    #expect(review.impact.captureDetails?.missingListIds == [destination.id])
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session,
+        command: review.command, reviewToken: review.reviewToken))
+    guard case .applied(let applied, .complete(let checkpoint)) = response.outcome,
+      case .membership(let addedIdentifier, _, _) = applied.generatedReferences.first,
+      case .exported(let savedData) = await planner.exportData(session: session),
+      case .decoded(let saved) = planner.decodeImport(savedData),
+      case .appearance(let added) = await planner.read(
+        session: session,
+        request: .appearance(.listMembership(listId: destination.id, membershipId: addedIdentifier))
+      ),
+      case .appearance(let retained) = await planner.read(
+        session: session,
+        request: .appearance(
+          .listMembership(listId: retainedList.id, membershipId: retainedIdentifier))),
+      case .source(.item(let savedItem)) = await planner.read(
+        session: session, request: .source(item)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else {
+      Issue.record(
+        "Reviewed reuse must create an informed membership after an ordinary Remove: \(response)")
+      return
+    }
+    #expect(addedIdentifier != removedIdentifier && added.localDone == false)
+    #expect(retained.localDone && savedItem.state.globalDone == false)
+    #expect(
+      savedItem.updatedAt == beforeItem.updatedAt && savedItem.fieldHashes == beforeItem.fieldHashes
+    )
+    let basis = try #require(
+      saved.backup.membershipProvenance.first { $0.membershipId == addedIdentifier })
+    #expect(basis.observedRemovalIds == before.backup.membershipRemovals.map(\.deletionId))
+    #expect(
+      saved.backup.membershipRemovals.map(\.deletionId)
+        == before.backup.membershipRemovals.map(\.deletionId))
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let envelope = try #require(
+      JSONSerialization.jsonObject(
+        with: Data(
+          contentsOf:
+            namespaceDirectory.appendingPathComponent("checkpoint-\(checkpoint).json")))
+        as? [String: Any])
+    let receipts = try #require(envelope["receipts"] as? [[String: Any]])
+    let receipt = try #require(
+      receipts.first { $0["operationId"] as? String == operationIdentifier.uuidString })
+    #expect((receipt["payloadDigest"] as? String)?.hasPrefix("sha256-payload-v3:") == true)
+    let files = try FileManager.default.contentsOfDirectory(
+      at: namespaceDirectory,
+      includingPropertiesForKeys: nil
+    ).filter { $0.lastPathComponent.hasPrefix("proposal-") }
+    let candidates = try files.compactMap { file -> [String: Any]? in
+      let value = try JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any]
+      return value?["originalOperationId"] as? String == operationIdentifier.uuidString
+        ? value : nil
+    }
+    let preparation = try #require(candidates.first)
+    #expect(preparation["formatVersion"] as? Int == 2)
+    #expect((preparation["resolvedMembershipEvidence"] as? [[String: Any]])?.count == 2)
+    guard
+      case .draft(let noOpDraft) = await planner.prepareCapture(
+        session: session, input: .direct([.url(originalUrl)])),
+      case .reviewed(let noOpReview) = await planner.prepareReview(
+        session: session,
+        command: .applyCapture(
+          draftId: noOpDraft.draftId, draftGeneration: noOpDraft.generation,
+          choice: .reuse(itemId: item.id), listIds: [destination.id, retainedList.id])),
+      case .applied(let noOpResult, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: noOpReview.command,
+          reviewToken: noOpReview.reviewToken)
+      ).outcome,
+      case .exported(let afterNoOp) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(noOpResult.generatedIdentities.isEmpty && afterNoOp == savedData)
+    _ = try await captureApplySave(
+      planner, session: session,
+      command: .removeMembership(listId: destination.id, membershipId: addedIdentifier))
+    _ = try await captureApplySave(
+      planner, session: session,
+      command: .addMembership(itemId: item.id, listId: destination.id, placement: .last))
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let beforeReplay) = await reopened.exportData(session: reopenedSession),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
+      ).outcome,
+      case .exported(let afterReplay) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(replayed == applied && replayCheckpoint == checkpoint)
+    #expect(afterReplay == beforeReplay)
+  }
+
   @Test func ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged() async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerCaptureApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: captureApplyConfiguration(directory))
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     let category = try #require(
@@ -82,10 +234,7 @@ struct CaptureApplyTests {
     "changedLists", "changedSourceLinks", "archivedSource", "deletedSource", "changedMembership",
   ])
   func invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario: String) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerCaptureApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: captureApplyConfiguration(directory))
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     let item = try #require(
@@ -210,10 +359,7 @@ struct CaptureApplyTests {
 
   @Test(arguments: [false, true])
   func recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem: Bool) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerCaptureApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = captureApplyConfiguration(directory)
     let planner = Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
@@ -303,10 +449,7 @@ struct CaptureApplyTests {
   }
 
   @Test func appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerCaptureApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: captureApplyConfiguration(directory))
     guard case .ready(let session) = await planner.bootstrap(),
       case .draft(let draft) = await planner.prepareCapture(
@@ -363,10 +506,7 @@ struct CaptureApplyTests {
   @Test func reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerCaptureApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: captureApplyConfiguration(directory))
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     let originalUrl = "https://example.com/original"
@@ -489,10 +629,7 @@ struct CaptureApplyTests {
   func reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(
     usesExplicitTitle: Bool
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerCaptureApplyTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = captureApplyConfiguration(directory)
     let planner = Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }

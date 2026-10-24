@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.742,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedReuseObservesStrictRemovalAndPreservesAnotherListsCompletionThroughReplay()",
+      "className": "PlannerCoreStoreTests.CaptureApplyTests",
+      "seconds": 0.165356208,
+      "failures": [
+        "Issue recorded (error): Reviewed reuse must create an informed membership after an ordinary Remove: PlannerOperationResult(operationId: 842129FB-823D-4964-87AA-3AF773C98C39, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"recoveryIntegrityFailure\", propertyPath: Optional(\"/memberships/1/id\"), message: \"A live membership must observe every strict removal for its exact Item/List pair.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

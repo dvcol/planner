@@ -1,0 +1,20 @@
+{
+  "functionsPerPlatform": 235,
+  "invocationsPerPlatform": 672,
+  "suitesPerPlatform": 83,
+  "matchedCoreInputs": 807,
+  "fullPhoneInputs": 1146,
+  "actualCoreTestProductsPerPlatform": 2,
+  "unchangedFrozenFixtureInputs": 513,
+  "unchangedModelSourceFiles": 19,
+  "strictFormatFiles": 4,
+  "realMacHTTPFunctions": 10,
+  "macAppShareFixtureBuildsPassed": true,
+  "lookupAssertionsAndDeadlinesUnchanged": true,
+  "sixExistingApplyBodiesChangedOnlyFixtureLifetime": true,
+  "removedClosedDisposableStores": 2281,
+  "previousCandidateMacFailuresReproducedOnBase": false,
+  "phoneEarlyCleanupWarningsReproducedOnBase": true,
+  "nativeUIPhysicalCloudOrSystemInvocationQualified": false,
+  "remainingMembershipCommandsQualified": false
+}
