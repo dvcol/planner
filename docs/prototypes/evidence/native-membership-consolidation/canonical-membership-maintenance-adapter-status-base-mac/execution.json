@@ -1,0 +1,16 @@
+{
+  "build-for-testing": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 280.006,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-canonical-membership-maintenance-adapter-status-base-mac-build-for-testing.xcresult",
+    "sqliteUnlinkWarnings": 0
+  },
+  "test-without-building": {
+    "exitCode": 65,
+    "timedOut": false,
+    "seconds": 19.649,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-canonical-membership-maintenance-adapter-status-base-mac-test-without-building.xcresult",
+    "sqliteUnlinkWarnings": 0
+  }
+}

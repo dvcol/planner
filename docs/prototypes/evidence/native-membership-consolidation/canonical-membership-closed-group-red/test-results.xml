@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.2833e-05"/>
+    <testsuite name="TestResults" errors="0" tests="3" failures="4" skipped="0" time="0.137791708">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.118641958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.131751625"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.1374215">
+            <failure message="Expectation failed: todo.matchingCount == 1 (error)"/>
+            <failure message="Expectation failed: done.matchingCount == 0 (error)"/>
+            <failure message="Expectation failed: members.count == 1 &amp;&amp; members.first?[&quot;localDone&quot;] as? Bool == false (error)"/>
+            <failure message="Expectation failed: oldHistory.allSatisfy {
+        ($0[&quot;canonicalContext&quot;] as? [String: Any])?[&quot;membershipId&quot;] as? String
+          == &quot;00000000-0000-4000-8000-000000000401&quot;
+      } (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

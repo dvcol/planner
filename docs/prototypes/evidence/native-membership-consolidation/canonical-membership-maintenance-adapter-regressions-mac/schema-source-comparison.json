@@ -1,0 +1,10 @@
+{
+  "unchangedBase": "b1ca96202b0e711985c2e3707188caa0e6bd2144",
+  "path": "Planner/AgentControl/PlannerMCPSourceTool.swift",
+  "sha256": "a76fe312b2da8687408abcde8e2b8bf92bd1f0f3bad1542854bd57b012f4a13a",
+  "sourceUnchanged": true,
+  "schema": "Source and appearance use constant kinds; rows, mapRows and calendarRows share an enum branch.",
+  "testFailure": "The old test collects only constant kind values and expects source, appearance and rows.",
+  "baseRuntimeReproduction": "Same assertion fails at NativeStatusBoundaryTests.swift:81 on unchanged b1ca9620, with collected kinds source/appearance.",
+  "baseEvidence": "canonical-membership-maintenance-adapter-status-base-mac"
+}

@@ -1,0 +1,8 @@
+{
+  "qualifiedCoreInputs": 805,
+  "coreWorkspaceDifferences": [],
+  "subsequentNonCoreTestChanges": [
+    "PlannerMCPTests/NativeStatusBoundaryTests.swift"
+  ],
+  "reason": "Only the separately qualified Mac-only HTTP schema expectation changes after the Core cohort. Core inputs remain identical."
+}

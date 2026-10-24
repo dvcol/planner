@@ -285,6 +285,28 @@ struct PlannerDataSnapshot: Codable {
   }
 
   func validated() throws -> PlannerDecodedBackup {
+    let decoded = try decodedRecords()
+    guard Set(memberships.map(\.id)).count == memberships.count,
+      Set(memberships.map { $0.list.id.uuidString + "/" + $0.item.id.uuidString }).count
+        == memberships.count
+    else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate memberships.")
+    }
+    guard Set(expandedCompletions.map(\.context)).count == expandedCompletions.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate expanded completion contexts.")
+    }
+    do { try PlannerImportGraph(backup: decoded.backup).validate() } catch let failure
+      as PlannerFailure
+    {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", failure.message, propertyPath: failure.propertyPath)
+    }
+    return decoded
+  }
+
+  func decodedRecords() throws -> PlannerDecodedBackup {
     guard format == "planner-data", (1...3).contains(formatVersion) else {
       throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
     }
@@ -297,20 +319,9 @@ struct PlannerDataSnapshot: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate link identities.")
     }
-    guard Set(memberships.map(\.id)).count == memberships.count,
-      Set(memberships.map { $0.list.id.uuidString + "/" + $0.item.id.uuidString }).count
-        == memberships.count
-    else {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", "The snapshot contains duplicate memberships.")
-    }
     guard Set(itineraryEntries.map(\.id)).count == itineraryEntries.count else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate itinerary entries.")
-    }
-    guard Set(expandedCompletions.map(\.context)).count == expandedCompletions.count else {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", "The snapshot contains duplicate expanded completion contexts.")
     }
     let itemRecords = sources.compactMap {
       if case .item(let item) = $0 { return item }
@@ -453,12 +464,6 @@ struct PlannerDataSnapshot: Codable {
         completionChanges: completionChanges, restorationFamilies: restorationFamilies,
         formatVersion: formatVersion, membershipProvenance: membershipProvenance,
         membershipRemovals: membershipRemovals))
-    do { try PlannerImportGraph(backup: decoded.backup).validate() } catch let failure
-      as PlannerFailure
-    {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", failure.message, propertyPath: failure.propertyPath)
-    }
     return decoded
   }
 }
@@ -670,13 +675,49 @@ struct PlannerRecoveryArchive {
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))
       })
-    let evidence = try receipts.map { receipt in
-      try RecoveryReceipt(
+    var acknowledgedCommands = Dictionary(
+      uniqueKeysWithValues: (previous?.receipts ?? []).map { ($0.operationId, $0) })
+    for receipt in receipts {
+      let evidence = try RecoveryReceipt(
         receipt,
         checkpoint: receipt.operationId.flatMap { priorCheckpoints[$0] ?? nil } ?? generation)
-    }.sorted { $0.operationId.uuidString < $1.operationId.uuidString }
+      if let prior = acknowledgedCommands[evidence.operationId] {
+        guard prior.payloadDigest == evidence.payloadDigest, prior.datasetId == evidence.datasetId,
+          prior.ownershipBinding == evidence.ownershipBinding, prior.result == evidence.result
+        else {
+          throw PlannerFailure(
+            "recoveryIntegrityFailure", "Command acknowledgement differs from its commit.")
+        }
+      }
+      acknowledgedCommands[evidence.operationId] = evidence
+    }
+    let evidence = acknowledgedCommands.values.sorted {
+      $0.operationId.uuidString < $1.operationId.uuidString
+    }
+    var acknowledgedMaintenance = Dictionary(
+      uniqueKeysWithValues: (previous?.maintenanceReceipts ?? []).map {
+        ($0.evidence.maintenanceId, $0)
+      })
+    if let nativeContext {
+      for commit in try maintenanceCommits(in: nativeContext) {
+        if let prior = acknowledgedMaintenance[commit.maintenanceId] {
+          guard prior.evidence == commit else {
+            throw PlannerFailure(
+              "recoveryIntegrityFailure", "Maintenance acknowledgement differs from its commit.")
+          }
+          continue
+        }
+        try verifyMaintenancePreparation(commit)
+        acknowledgedMaintenance[commit.maintenanceId] = .init(
+          evidence: commit, checkpointGeneration: generation)
+      }
+    }
+    let maintenance = acknowledgedMaintenance.values.sorted {
+      $0.evidence.maintenanceId.uuidString < $1.evidence.maintenanceId.uuidString
+    }
     let envelope = RecoveryEnvelope(
-      format: "planner-recovery", formatVersion: previous?.formatVersion ?? 1,
+      format: "planner-recovery",
+      formatVersion: maintenance.isEmpty ? (previous?.formatVersion ?? 1) : 2,
       namespaceId: identity.namespaceId,
       datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
       storageSchemaVersion: String(identity.schemaVersion),
@@ -684,7 +725,7 @@ struct PlannerRecoveryArchive {
       portablePayloadBase64: bytes.base64EncodedString(),
       dataDigest: plannerDigest(bytes, prefix: "sha256:"),
       receipts: evidence, preparedProposals: [],
-      maintenanceReceipts: previous?.maintenanceReceipts ?? []
+      maintenanceReceipts: maintenance
     )
     _ = try envelope.validated(identity: identity)
     try plannerWriteDurably(

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.9166e-05"/>
+    <testsuite name="TestResults" errors="0" tests="4" failures="0" skipped="0" time="0.73620125">
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoSaveFailureTests" name="failedNativeRemovalSaveIssuesNoUndoAndRetainsOriginalAssociations()" time="0.362524541"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoSaveFailureTests" name="failedNativeRestorationSaveRollsBackAndKeepsItsIssuedSnapshotRetryable()" time="0.264253125"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoSaveFailureTests" name="failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry()" time="0.396037125"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoSaveFailureTests" name="failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry()" time="0.735875292"/>
+    </testsuite>
+</testsuites>

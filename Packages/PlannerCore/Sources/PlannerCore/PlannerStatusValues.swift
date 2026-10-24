@@ -7,7 +7,10 @@ public struct PlannerNativeStatusRead: Sendable {
 }
 
 public enum PlannerRecoveryObservation: Sendable {
-  case known(checkpointGeneration: Int64?, incompleteOperationIds: [UUID], mutationBlocked: Bool)
+  case known(
+    checkpointGeneration: Int64?, incompleteOperationIds: [UUID],
+    incompleteMaintenanceIds: [UUID], mutationBlocked: Bool
+  )
   case unavailable(PlannerFailure)
 }
 

@@ -44,7 +44,7 @@ struct NativeExportTests {
       case .source(.item(let before)) = await planner.read(
         session: session, request: .source(source)),
       case .status(let beforeStatus) = await planner.read(session: session, request: .status),
-      case .known(let beforeCheckpoint, let beforeIncomplete, let beforeBlocked) = beforeStatus
+      case .known(let beforeCheckpoint, let beforeIncomplete, _, let beforeBlocked) = beforeStatus
         .recovery,
       case .exported(let data) = await planner.exportData(session: session)
     else { throw CancellationError() }
@@ -76,7 +76,8 @@ struct NativeExportTests {
         session: reopenedSession, request: .source(source)),
       case .status(let afterStatus) = await reopened.read(
         session: reopenedSession, request: .status),
-      case .known(let afterCheckpoint, let afterIncomplete, let afterBlocked) = afterStatus.recovery
+      case .known(let afterCheckpoint, let afterIncomplete, _, let afterBlocked) = afterStatus
+        .recovery
     else { throw CancellationError() }
     let reopenedObject = try #require(
       JSONSerialization.jsonObject(with: reopenedData) as? [String: Any])

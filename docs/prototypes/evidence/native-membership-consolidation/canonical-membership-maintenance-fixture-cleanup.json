@@ -1,0 +1,25 @@
+{
+  "removedOwnedDirectories": 2516,
+  "allUnique": true,
+  "reports": {
+    "canonical-membership-closed-group-green/fixture-disposition.json": 3,
+    "canonical-membership-maintenance-adapter-final-mac/fixture-disposition.json": 3,
+    "canonical-membership-maintenance-affected-mac/fixture-disposition.json": 465,
+    "canonical-membership-maintenance-evidence/fixture-disposition.json": 1,
+    "canonical-membership-maintenance-final-mac/fixture-disposition.json": 465,
+    "canonical-membership-maintenance-final-phone/post-diagnosis-fixture-disposition.json": 465,
+    "canonical-membership-maintenance-known-status-green/fixture-disposition.json": 26,
+    "canonical-membership-maintenance-lifetime-final-mac/fixture-disposition.json": 525,
+    "canonical-membership-maintenance-lifetime-final-phone/fixture-disposition.json": 525,
+    "canonical-membership-maintenance-recovery-failure/fixture-disposition.json": 2,
+    "canonical-membership-maintenance-required-status-green/fixture-disposition.json": 26,
+    "canonical-membership-maintenance-third-trial/fixture-disposition.json": 1,
+    "canonical-membership-maintenance-undo-save-faults-mac/failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry.fixture-disposition.json": 2,
+    "canonical-membership-maintenance-undo-save-faults-mac/failedNativeRemovalSaveIssuesNoUndoAndRetainsOriginalAssociations.fixture-disposition.json": 2,
+    "canonical-membership-maintenance-undo-save-faults-mac/failedNativeRestorationSaveRollsBackAndKeepsItsIssuedSnapshotRetryable.fixture-disposition.json": 1,
+    "canonical-membership-maintenance-undo-save-faults-mac/failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry.fixture-disposition.json": 4
+  },
+  "actualReclaimedBytesMeasured": false,
+  "redBehaviorFixturesRetained": true,
+  "warningRunsRemainUnqualified": true
+}

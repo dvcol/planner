@@ -69,6 +69,7 @@ final class SavedPlannerStore {
   @ObservationIgnored private var recoveryRefresh: RecoveryRefresh?
   private(set) var isRetryingRecovery = false
   private(set) var incompleteRecoveryOperationIdentifiers: [UUID] = []
+  private(set) var incompleteRecoveryMaintenanceIdentifiers: [UUID] = []
   private var requiresRecoveryReview = false
   private(set) var changeRevision = UUID()
   @ObservationIgnored let sourceDeletions = PassthroughSubject<SavedSourceDeletionNotice, Never>()
@@ -85,7 +86,8 @@ final class SavedPlannerStore {
   }
   var canRetryRecovery: Bool {
     isReady && !isSaving && !requiresRecoveryReview
-      && !incompleteRecoveryOperationIdentifiers.isEmpty
+      && (!incompleteRecoveryOperationIdentifiers.isEmpty
+        || !incompleteRecoveryMaintenanceIdentifiers.isEmpty)
   }
   var currentDatasetIdentifier: UUID? { session?.datasetId }
 
@@ -308,8 +310,10 @@ final class SavedPlannerStore {
     switch result {
     case .status(let status):
       switch status.recovery {
-      case .known(let checkpoint, let incompleteIdentifiers, let mutationBlocked):
+      case .known(
+        let checkpoint, let incompleteIdentifiers, let maintenanceIdentifiers, let mutationBlocked):
         incompleteRecoveryOperationIdentifiers = incompleteIdentifiers
+        incompleteRecoveryMaintenanceIdentifiers = maintenanceIdentifiers
         recoveryBlocked = mutationBlocked || requiresRecoveryReview
         recoveryStatusFailure = nil
         if requiresRecoveryReview {
@@ -329,6 +333,7 @@ final class SavedPlannerStore {
   func retryIncompleteRecovery() async {
     guard let planner, let session, canRetryRecovery else { return }
     let operationIdentifiers = incompleteRecoveryOperationIdentifiers
+    let maintenanceIdentifiers = incompleteRecoveryMaintenanceIdentifiers
     activeSaveCount += 1
     isRetryingRecovery = true
     alertMessage = nil
@@ -349,6 +354,15 @@ final class SavedPlannerStore {
         retryFailure = "The change needs recovery review before it can be acknowledged."
       }
       break
+    }
+    if retryFailure == nil {
+      for identifier in maintenanceIdentifiers {
+        switch await planner.retryMaintenanceRecovery(session: session, maintenanceId: identifier) {
+        case .complete: continue
+        case .incomplete(let reason), .rejected(let reason): retryFailure = reason.message
+        }
+        break
+      }
     }
     invalidateRecoveryRefresh()
     await refreshRecoveryStatus()

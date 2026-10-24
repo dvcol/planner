@@ -1,0 +1,33 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.27,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.104897917,
+      "failures": [
+        "Issue recorded (error): Verified committed maintenance must have a known, blocked recovery status: .status(PlannerCore.PlannerNativeStatusRead(recovery: PlannerCore.PlannerRecoveryObservation.unavailable(PlannerCore.PlannerFailure(code: \"maintenanceRecoveryIncomplete\", propertyPath: nil, message: \"Committed membership maintenance needs recovery: 3B399F73-C29B-415C-B8C6-55BCF49E645A\", details: nil)), account: PlannerCore.PlannerAccountObservation.unknown, cloud: PlannerCore.PlannerCloudObservation(state: PlannerCore.PlannerCloudObservation.State.unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))"
+      ],
+      "skipped": false
+    },
+    {
+      "name": "independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.123516416,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.146872541,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "build",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "Planner",
+  "-destination",
+  "platform=macOS,arch=arm64",
+  "-derivedDataPath",
+  "/private/tmp/PlannerMapNativeDerivedData",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerCalendarMonthSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-jobs",
+  "1",
+  "CODE_SIGNING_ALLOWED=YES",
+  "CODE_SIGN_IDENTITY=-",
+  "CODE_SIGN_STYLE=Manual",
+  "DEVELOPMENT_TEAM=",
+  "ARCHS=arm64",
+  "ONLY_ACTIVE_ARCH=YES"
+]

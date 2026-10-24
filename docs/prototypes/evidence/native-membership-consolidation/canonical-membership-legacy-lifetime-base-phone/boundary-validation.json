@@ -1,0 +1,12 @@
+{
+  "base": "b1ca96202b0e711985c2e3707188caa0e6bd2144",
+  "overlays": [],
+  "baseInputsMatchArchive": true,
+  "stagedInputsMatchArchive": true,
+  "inputs": 1139,
+  "passedFunctions": 36,
+  "failedFunctions": 0,
+  "sqliteLifetimeWarnings": 102,
+  "behavioralQualificationAccepted": false,
+  "purpose": "Exact-base diagnosis only; the lifetime warnings keep this run unqualified."
+}

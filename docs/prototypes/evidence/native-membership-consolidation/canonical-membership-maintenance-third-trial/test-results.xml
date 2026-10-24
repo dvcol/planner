@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000105583"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.087449417">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.08712075"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,29 @@
+{
+  "root": "/private/tmp/PlannerCanonicalMembershipPhoneAppSource",
+  "base": "d663b114ee58b672292d272c0683d980c9e29ac1",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMaintenanceRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipConsolidation.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStatusValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/initial-completion-seeds-v1.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeExportAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeExportTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportDeletedReviewTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportIncomingDeletionReviewTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportMarkerTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportReviewTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipConsolidationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeStatusAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeStatusReadTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/OwnedLinkEditResultTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PlannerChangeStreamTests.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "PlannerFixtures/PlannerChangeObservationFixtureView.swift",
+    "PlannerMCPTests/NativeStatusBoundaryTests.swift",
+    "PlannerMCPTests/PlannerItemIntentTests.swift"
+  ]
+}

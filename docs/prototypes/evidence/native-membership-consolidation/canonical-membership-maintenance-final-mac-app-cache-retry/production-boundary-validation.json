@@ -1,0 +1,23 @@
+{
+  "buildSucceeded": true,
+  "fullInputsAtBuild": 1142,
+  "frozenBuildInputsUnchanged": true,
+  "currentProductionDifferences": [],
+  "subsequentTestFixtureLifetimeChanges": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationMoveUndoTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoHistoryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoSaveFailureTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ExpandedCompletionMembershipTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/OwnedAssociationUndoTests.swift"
+  ],
+  "actualProductDifferences": [],
+  "products": 6,
+  "nativeInteractionQualified": false
+}

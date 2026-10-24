@@ -1,0 +1,25 @@
+{
+  "domain": "PlannerInitialCompletionAlias-v1",
+  "cases": [
+    {
+      "aliasId": "C6D0BEC6-0730-8084-9E40-B273BA57B8A8",
+      "context": {
+        "kind": "listMembership",
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841"
+      },
+      "initialDone": false,
+      "canonicalValueBase64": "GAAAAAAAAAACAAAAAAAAAAdjb250ZXh0GAAAAAAAAAADAAAAAAAAAARraW5kEAAAAAAAAAAObGlzdE1lbWJlcnNoaXAAAAAAAAAADG1lbWJlcnNoaXBJZBQAAAAAAABAAIAAAAAAAAQBAAAAAAAAABRtZW1iZXJzaGlwTGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAhBAAAAAAAAAAtpbml0aWFsRG9uZREA"
+    },
+    {
+      "aliasId": "37F0BAB7-15B5-8056-A54B-7EBBC458E11E",
+      "context": {
+        "kind": "listMembership",
+        "membershipId": "00000000-0000-4000-8000-000000000402",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000842"
+      },
+      "initialDone": true,
+      "canonicalValueBase64": "GAAAAAAAAAACAAAAAAAAAAdjb250ZXh0GAAAAAAAAAADAAAAAAAAAARraW5kEAAAAAAAAAAObGlzdE1lbWJlcnNoaXAAAAAAAAAADG1lbWJlcnNoaXBJZBQAAAAAAABAAIAAAAAAAAQCAAAAAAAAABRtZW1iZXJzaGlwTGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAhCAAAAAAAAAAtpbml0aWFsRG9uZREB"
+    }
+  ]
+}

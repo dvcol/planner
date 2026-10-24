@@ -1,0 +1,16 @@
+{
+  "build-for-testing": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 281.08,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-canonical-membership-maintenance-adapter-regressions-mac-build-for-testing.xcresult",
+    "sqliteUnlinkWarnings": 0
+  },
+  "test-without-building": {
+    "exitCode": 65,
+    "timedOut": false,
+    "seconds": 20.044,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-canonical-membership-maintenance-adapter-regressions-mac-test-without-building.xcresult",
+    "sqliteUnlinkWarnings": 0
+  }
+}

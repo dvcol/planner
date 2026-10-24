@@ -1,0 +1,7 @@
+{
+  "phase": "dependency-resolution failure",
+  "buildSucceeded": false,
+  "recordedProductsQualified": false,
+  "reason": "The requested old source-package cache lacks the pinned checkouts. The runner recorded existing derived products, which are not evidence for this attempt.",
+  "nextAttempt": "canonical-membership-maintenance-final-mac-app-cache-retry"
+}

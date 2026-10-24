@@ -1,0 +1,11 @@
+{
+  "exitCode": 70,
+  "attemptedPlatform": "iPhone Simulator",
+  "targetSupports": "macOS",
+  "buildStarted": false,
+  "testsStarted": false,
+  "recordedOldProductsQualified": false,
+  "configuration": "Configuration/PlannerMCPTests.xcconfig",
+  "configurationSha256": "4c39655036fd6957748e1b75edbd447a29de33e5659d2a39e2ba1fd67ed1dc58",
+  "nextAttempt": "canonical-membership-maintenance-adapter-regressions-mac"
+}

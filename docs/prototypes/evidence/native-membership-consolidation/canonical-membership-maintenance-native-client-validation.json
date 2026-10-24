@@ -1,0 +1,24 @@
+{
+  "nativeAdapterFunctionsPassed": 4,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteLifetimeDiagnostics": 0,
+  "projectInputsPerNativeClient": 1142,
+  "sharedCoreInputs": 805,
+  "nativeClientInputsMatch": true,
+  "workspaceDifferences": [],
+  "stagedDifferences": [],
+  "actualProductDifferences": [],
+  "recordedProducts": {
+    "canonical-membership-maintenance-adapter-final-mac": 9,
+    "canonical-membership-maintenance-final-phone-app": 6,
+    "canonical-membership-maintenance-final-phone-fixture": 2
+  },
+  "macAppShareAndFixtureCompiled": true,
+  "iPhoneAppShareAndFixtureCompiled": true,
+  "changedObservationFixtureCompiledBothPlatforms": true,
+  "confirmedStaleSchemaTestCorrected": true,
+  "productionMCPReadSchemaUnchangedFromBase": true,
+  "actualSystemShortcutsInvocationQualified": false,
+  "positiveNativeMaintenanceRetryUIJourneyQualified": false
+}

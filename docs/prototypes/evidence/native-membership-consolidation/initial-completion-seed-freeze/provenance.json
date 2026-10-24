@@ -1,0 +1,5 @@
+{
+  "fixture": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/initial-completion-seeds-v1.json",
+  "sha256": "d9cc076d0616c008cb128771a3b5667703b682aeb5dcb6e213957ebe9da0254d",
+  "producer": "Independent Python tagged-value encoder; Planner production not executed"
+}

@@ -362,7 +362,7 @@ struct NativeImportIncomingDeletionReviewTests {
         && !review.globalFlagsChanged)
     guard case .exported(let after) = await planner.exportData(session: session),
       case .status(let status) = await planner.read(session: session, request: .status),
-      case .known(let afterCheckpoint, let incomplete, let blocked) = status.recovery
+      case .known(let afterCheckpoint, let incomplete, _, let blocked) = status.recovery
     else { throw CancellationError() }
     #expect(before == after && afterCheckpoint == checkpoint && incomplete.isEmpty && !blocked)
   }

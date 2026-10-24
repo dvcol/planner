@@ -55,7 +55,7 @@ struct PlannerChangeStreamTests {
     try FileManager.default.removeItem(at: recovery)
     try FileManager.default.moveItem(at: retained, to: recovery)
     _ = try await waitForRecoveryObservation(changes) {
-      if case .known(let generation, let incomplete, let blocked) = $0 {
+      if case .known(let generation, let incomplete, _, let blocked) = $0 {
         return generation == 1 && incomplete.isEmpty && !blocked
       }
       return false
@@ -114,7 +114,7 @@ struct PlannerChangeStreamTests {
     }
     try await waitForDataInvalidation(changes)
     _ = try await waitForRecoveryObservation(changes) {
-      if case .known(let generation, _, _) = $0 { return generation == 6 }
+      if case .known(let generation, _, _, _) = $0 { return generation == 6 }
       return false
     }
     guard
@@ -175,7 +175,7 @@ struct PlannerChangeStreamTests {
       case .source(.item(let finalItem)) = await reader.read(
         session: session, request: .source(finalSource)),
       case .status(let status) = await reader.read(session: session, request: .status),
-      case .known(let generation, let incomplete, let blocked) = status.recovery
+      case .known(let generation, let incomplete, _, let blocked) = status.recovery
     else { throw CancellationError() }
     #expect(final.matchingCount == 30 && final.rows.count == 30)
     #expect(final.rows == expectedSources.map { .source($0) })
@@ -223,7 +223,7 @@ struct PlannerChangeStreamTests {
       // This subscription is cancelled by the negative test deadline; the other remains live.
     }
     guard case .status(let status) = await first.read(session: firstSession, request: .status),
-      case .known(let generation, let incomplete, let blocked) = status.recovery,
+      case .known(let generation, let incomplete, _, let blocked) = status.recovery,
       case .status(let otherStatus) = await second.read(session: secondSession, request: .status),
       case .unavailable = otherStatus.recovery
     else { throw CancellationError() }
@@ -283,7 +283,7 @@ struct PlannerChangeStreamTests {
     else { throw CancellationError() }
     try await waitForDataInvalidation(changes)
     _ = try await waitForRecoveryObservation(changes) {
-      if case .known(let generation, _, _) = $0 { return generation == 1 }
+      if case .known(let generation, _, _, _) = $0 { return generation == 1 }
       return false
     }
     try await Task.sleep(for: .milliseconds(100))
@@ -335,7 +335,7 @@ struct PlannerChangeStreamTests {
     else { throw CancellationError() }
     try await waitForDataInvalidation(changes)
     _ = try await waitForRecoveryObservation(changes) {
-      if case .known(let generation, _, _) = $0 { return generation == 1 }
+      if case .known(let generation, _, _, _) = $0 { return generation == 1 }
       return false
     }
     /// Separate the control-only edit from the setup write's native invalidations.
@@ -413,13 +413,13 @@ struct PlannerChangeStreamTests {
     #expect(!observedFailure.message.isEmpty)
     try writeCheckpoint(originalBytes, to: checkpointURL, atomicReplacement: atomicReplacement)
     _ = try await waitForRecoveryObservation(changes) {
-      if case .known(let generation, let incomplete, let blocked) = $0 {
+      if case .known(let generation, let incomplete, _, let blocked) = $0 {
         return generation == 1 && incomplete.isEmpty && !blocked
       }
       return false
     }
     guard case .status(let repairedStatus) = await planner.read(session: session, request: .status),
-      case .known(let generation, let incomplete, let blocked) = repairedStatus.recovery,
+      case .known(let generation, let incomplete, _, let blocked) = repairedStatus.recovery,
       case .source(.item(let current)) = await planner.read(
         session: session, request: .source(source))
     else { throw CancellationError() }

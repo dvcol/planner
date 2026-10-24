@@ -89,7 +89,7 @@ struct NativeStatusBoundaryTests {
       case .source(.item(let after)) = await planner.read(
         session: session, request: .source(source)),
       case .status(let nativeStatus) = await planner.read(session: session, request: .status),
-      case .known(let retainedCheckpoint, let incomplete, let blocked) = nativeStatus.recovery
+      case .known(let retainedCheckpoint, let incomplete, _, let blocked) = nativeStatus.recovery
     else { throw CancellationError() }
     #expect(after.content.title == "Hotel" && after.content.notes == "Original notes")
     #expect(after.updatedAt == before.updatedAt && after.fieldHashes == before.fieldHashes)

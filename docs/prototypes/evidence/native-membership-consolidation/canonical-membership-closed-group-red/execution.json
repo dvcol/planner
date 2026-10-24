@@ -1,0 +1,36 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.332,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.118641958,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.131751625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.1374215,
+      "failures": [
+        "Expectation failed: todo.matchingCount == 1 (error)",
+        "Expectation failed: done.matchingCount == 0 (error)",
+        "Expectation failed: members.count == 1 && members.first?[\"localDone\"] as? Bool == false (error)",
+        "Expectation failed: oldHistory.allSatisfy {         ($0[\"canonicalContext\"] as? [String: Any])?[\"membershipId\"] as? String           == \"00000000-0000-4000-8000-000000000401\"       } (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

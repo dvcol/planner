@@ -515,7 +515,7 @@ extension PlannerSchemaV19.MembershipProvenance {
   }
 }
 
-private func plannerStageMembershipProvenance(
+func plannerStageMembershipProvenance(
   _ provenance: [PlannerPortableMembershipProvenance], context: ModelContext
 ) throws {
   var records: [PlannerPortableBoundIdentity: PlannerSchemaV19.MembershipProvenance] = [:]

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.4625e-05"/>
+    <testsuite name="TestResults" errors="0" tests="3" failures="1" skipped="0" time="0.146729583">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.133944083">
+            <failure message="Issue recorded (error): Uncommitted consolidation must be reported without normalizing: .status(PlannerCore.PlannerNativeStatusRead(recovery: PlannerCore.PlannerRecoveryObservation.known(checkpointGeneration: Optional(2), incompleteOperationIds: [], incompleteMaintenanceIds: [], mutationBlocked: false), account: PlannerCore.PlannerAccountObservation.unknown, cloud: PlannerCore.PlannerCloudObservation(state: PlannerCore.PlannerCloudObservation.State.unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.146316292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.143155292"/>
+    </testsuite>
+</testsuites>

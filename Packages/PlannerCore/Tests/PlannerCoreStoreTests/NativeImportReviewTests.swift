@@ -65,7 +65,7 @@ struct NativeImportReviewTests {
       details.referenceChanges.count == 1 && details.referenceChanges.first?.change == .retain)
     guard case .exported(let after) = await planner.exportData(session: session),
       case .status(let status) = await planner.read(session: session, request: .status),
-      case .known(let afterCheckpoint, let incomplete, let blocked) = status.recovery
+      case .known(let afterCheckpoint, let incomplete, _, let blocked) = status.recovery
     else { throw CancellationError() }
     #expect(before == after && afterCheckpoint == checkpoint)
     #expect(incomplete.isEmpty && !blocked)
@@ -119,7 +119,7 @@ struct NativeImportReviewTests {
       case .status(let status) = await planner.read(session: session, request: .status)
     else { throw CancellationError() }
     #expect(before == after)
-    guard case .known(let checkpoint, let incomplete, let blocked) = status.recovery else {
+    guard case .known(let checkpoint, let incomplete, _, let blocked) = status.recovery else {
       Issue.record("Review must retain readable, unchanged recovery status.")
       return
     }

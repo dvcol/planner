@@ -1,0 +1,46 @@
+{
+  "outerLogBirthTime": 1792814820.5832791,
+  "outerLogModificationTime": 1792814823.4105396,
+  "children": [
+    {
+      "function": "failedNativeRestorationSaveRollsBackAndKeepsItsIssuedSnapshotRetryable",
+      "sourceLog": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerUndoWriteFailure-718F8CF3-4491-46E8-A943-DBA4BC53C759/child.log",
+      "fixtureCleanup": {
+        "success": true,
+        "removedFixtures": 1,
+        "error": null
+      },
+      "sourceLogModifiedAt": 1792814822.9323857
+    },
+    {
+      "function": "failedNativeRemovalSaveIssuesNoUndoAndRetainsOriginalAssociations",
+      "sourceLog": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerUndoWriteFailure-3D1B60F0-69BD-4648-A2DF-355FF3C80728/child.log",
+      "fixtureCleanup": {
+        "success": true,
+        "removedFixtures": 2,
+        "error": null
+      },
+      "sourceLogModifiedAt": 1792814823.0306404
+    },
+    {
+      "function": "failedNativeMoveOrItsUndoPreservesBothListsAndCanRetry",
+      "sourceLog": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerUndoWriteFailure-6249DE36-6491-4FE8-BE42-C53654309688/child.log",
+      "fixtureCleanup": {
+        "success": true,
+        "removedFixtures": 2,
+        "error": null
+      },
+      "sourceLogModifiedAt": 1792814823.064328
+    },
+    {
+      "function": "failedOwnedGroupSaveOrUndoRollsBackEveryMemberAndCanRetry",
+      "sourceLog": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerUndoWriteFailure-59801F4B-4D3F-4E98-9153-114ED340E2D5/child.log",
+      "fixtureCleanup": {
+        "success": true,
+        "removedFixtures": 4,
+        "error": null
+      },
+      "sourceLogModifiedAt": 1792814823.4041736
+    }
+  ]
+}

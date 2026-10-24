@@ -196,7 +196,7 @@ struct OwnedLinkEditResultTests {
     let reopened = Planner(configuration: storageConfiguration(directory))
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .status(let status) = await reopened.read(session: reopenedSession, request: .status),
-      case .known(_, let incompleteOperations, let mutationBlocked) = status.recovery
+      case .known(_, let incompleteOperations, _, let mutationBlocked) = status.recovery
     else { throw CancellationError() }
     #expect(incompleteOperations.isEmpty && !mutationBlocked)
   }

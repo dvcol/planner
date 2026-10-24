@@ -1,0 +1,33 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.071,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.133944083,
+      "failures": [
+        "Issue recorded (error): Uncommitted consolidation must be reported without normalizing: .status(PlannerCore.PlannerNativeStatusRead(recovery: PlannerCore.PlannerRecoveryObservation.known(checkpointGeneration: Optional(2), incompleteOperationIds: [], incompleteMaintenanceIds: [], mutationBlocked: false), account: PlannerCore.PlannerAccountObservation.unknown, cloud: PlannerCore.PlannerCloudObservation(state: PlannerCore.PlannerCloudObservation.State.unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))"
+      ],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.146316292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.143155292,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

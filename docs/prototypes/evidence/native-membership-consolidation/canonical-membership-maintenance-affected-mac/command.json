@@ -1,0 +1,19 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "/private/tmp/PlannerImportLifetimeAuditSource/Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerImportLifetimeAuditBuild",
+  "--jobs",
+  "1",
+  "--disable-xctest",
+  "--enable-swift-testing",
+  "--filter",
+  "NativeImport|NativeMembership|NativeMaintenanceRecoveryTests|ImportLineageEncodingTests|MigrationTests|ManualContainerEstimateTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|RecoveryFailureTests|RecoveryRestorationTests|NativeStatusReadTests|NativeStatusAdmissionTests|PlannerChangeStreamTests|MembershipRemovalTests|MembershipCompletionTests|MembershipCreationTests|MembershipMoveTests|MembershipReorderingTests|MembershipAppearanceTests|ExpandedCompletionMembershipTests|AssociationUndoTests|AssociationMoveUndoTests|OwnedAssociationUndoTests|MapReadAdmissionTests|MapReadIntegrityTests|MapRowWindowTests|MapContextWindowTests",
+  "--xunit-output",
+  "/private/tmp/PlannerImportLifetime-canonical-membership-maintenance-affected-mac.xml",
+  "--skip",
+  "anIndependentProcessInvalidatesTheSubscribedDataset"
+]

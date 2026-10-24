@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.8959e-05"/>
+    <testsuite name="TestResults" errors="0" tests="3" failures="1" skipped="0" time="0.14717625">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.104897917">
+            <failure message="Issue recorded (error): Verified committed maintenance must have a known, blocked recovery status: .status(PlannerCore.PlannerNativeStatusRead(recovery: PlannerCore.PlannerRecoveryObservation.unavailable(PlannerCore.PlannerFailure(code: &quot;maintenanceRecoveryIncomplete&quot;, propertyPath: nil, message: &quot;Committed membership maintenance needs recovery: 3B399F73-C29B-415C-B8C6-55BCF49E645A&quot;, details: nil)), account: PlannerCore.PlannerAccountObservation.unknown, cloud: PlannerCore.PlannerCloudObservation(state: PlannerCore.PlannerCloudObservation.State.unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.123516416"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.146872541"/>
+    </testsuite>
+</testsuites>
