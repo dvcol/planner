@@ -266,6 +266,20 @@ struct SavedWebsiteView: View {
           .help("Reload")
           .accessibilityIdentifier("saved.browser.reload")
         }
+        #if os(iOS)
+          ToolbarOverflowMenu {
+            Button("Open in default browser", systemImage: "arrow.up.right.square") {
+              openURL(requestedDestination)
+            }
+          }
+        #else
+          ToolbarItem(placement: .primaryAction) {
+            Button("Open in default browser", systemImage: "arrow.up.right.square") {
+              openURL(requestedDestination)
+            }
+            .help("Open in default browser")
+          }
+        #endif
         ToolbarItem(placement: .navigation) {
           Button(returnTitle, systemImage: "chevron.backward", action: returnToPlanner)
             .labelStyle(.iconOnly)
