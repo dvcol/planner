@@ -2235,6 +2235,9 @@ struct NativeMembershipConsolidationTests {
       "none", "membership", "expanded", "detached", "preparationFailure", "publicationFailure",
       "retiredAlias:membership", "retiredAlias:expanded", "retiredAlias:detached",
       "retiredAlias:preparationFailure", "retiredAlias:publicationFailure",
+      "retiredAliasWithoutProvenance:membership", "retiredAliasWithoutProvenance:expanded",
+      "retiredAliasWithoutProvenance:preparationFailure",
+      "retiredAliasWithoutProvenance:publicationFailure",
     ])
   func closedLegacyAliasRootsPreserveIndependentLiveMemberships(
     currentDone: Bool, delivery: String
@@ -2322,14 +2325,20 @@ struct NativeMembershipConsolidationTests {
       #expect(after == before)
       #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
     }
-    let deliversRetiredAlias = delivery.hasPrefix("retiredAlias:")
-    let deliveryMode = delivery.replacingOccurrences(of: "retiredAlias:", with: "")
+    let missingProvenance = delivery.hasPrefix("retiredAliasWithoutProvenance:")
+    let deliversRetiredAlias = delivery.hasPrefix("retiredAlias:") || missingProvenance
+    let deliveryMode = delivery.split(separator: ":").last.map(String.init) ?? delivery
     if deliveryMode == "none" { return }
     var deliveredIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
     var deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
     if deliversRetiredAlias {
       deliveredIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000402")!
       deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000842")!
+    }
+    if missingProvenance {
+      try await removeNativeMembershipProvenance(
+        storeURL: configuration.storeURL, membershipIdentifier: deliveredIdentifier,
+        membershipLifetime: deliveredLifetime)
     }
     if deliveryMode != "detached" {
       try await insertIndependentMemberships(
@@ -2485,7 +2494,11 @@ struct NativeMembershipConsolidationTests {
     #expect(reopenedData == before)
   }
 
-  @Test(arguments: ["identity", "family", "missingFamily", "retiredAlias"])
+  @Test(
+    arguments: [
+      "identity", "family", "missingFamily", "retiredAlias", "retiredAliasWithoutProvenance",
+    ]
+  )
   func aLegacyClosureRetiresASoleLateCopyWithoutCreatingAStrictBarrier(closure: String)
     async throws
   {
@@ -2514,7 +2527,7 @@ struct NativeMembershipConsolidationTests {
     ]
     var deliveredMembership = "00000000-0000-4000-8000-000000000401"
     var deliveredLifetime = "00000000-0000-4000-8000-000000000841"
-    if closure == "retiredAlias" {
+    if closure == "retiredAlias" || closure == "retiredAliasWithoutProvenance" {
       deliveredMembership = "00000000-0000-4000-8000-000000000402"
       deliveredLifetime = "00000000-0000-4000-8000-000000000842"
     }
@@ -2584,6 +2597,12 @@ struct NativeMembershipConsolidationTests {
     }
     let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
     let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    if closure == "retiredAliasWithoutProvenance" {
+      try await removeNativeMembershipProvenance(
+        storeURL: configuration.storeURL,
+        membershipIdentifier: UUID(uuidString: deliveredMembership)!,
+        membershipLifetime: UUID(uuidString: deliveredLifetime)!)
+    }
     try await insertIndependentMemberships(
       storeURL: configuration.storeURL, itemIdentifier: itemIdentifier,
       listIdentifier: listIdentifier,
@@ -4246,6 +4265,24 @@ struct NativeMembershipConsolidationTests {
         $0.deletionId == deletionIdentifier
       })
     marker.closedFamilyId = familyIdentifier
+    try context.save()
+  }
+
+  /// Model access constructs the actual persisted input; all behavioral observations use Planner.
+  @MainActor private func removeNativeMembershipProvenance(
+    storeURL: URL, membershipIdentifier: UUID, membershipLifetime: UUID
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    let record = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>()).first {
+        $0.membershipId == membershipIdentifier && $0.membershipLifetimeId == membershipLifetime
+      })
+    context.delete(record)
     try context.save()
   }
 

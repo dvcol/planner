@@ -4060,8 +4060,12 @@ public actor Planner {
       if !aliases.isEmpty {
         let graph = PlannerImportGraph(
           backup: try maintenanceSnapshot(context).decodedRecords().backup)
+        let retainedMemberships = Set(lineage.membershipProvenance.map(\.membership))
+        let availableProvenance =
+          lineage.membershipProvenance
+          + memberships.filter { !retainedMemberships.contains($0.membership) }
         let retired = PlannerMembershipConsolidation.membershipsRetiredByClosedCanonicalAliases(
-          aliases: lineage.contextAliases, provenance: lineage.membershipProvenance, graph: graph)
+          aliases: lineage.contextAliases, provenance: availableProvenance, graph: graph)
         if memberships.contains(where: { retired.contains($0.membership) })
           || aliases.contains(where: {
             !graph.isClosed($0.context) && !graph.isClosed($0.canonicalContext)

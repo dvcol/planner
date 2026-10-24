@@ -79,7 +79,7 @@ struct PlannerMembershipConsolidation {
     var eligible: [PlannerPortableMembership] = []
     var eligibleLifetimes: [UUID: UUID] = [:]
     let retiredMemberships = Self.membershipsRetiredByClosedCanonicalAliases(
-      aliases: current.contextAliases, provenance: current.membershipProvenance, graph: graph)
+      aliases: current.contextAliases, provenance: Array(provenance.values), graph: graph)
     var closedMembershipIdentities: Set<PlannerPortableBoundIdentity> = []
     var suppressed: [Generation: [PlannerPortableMembership]] = [:]
     for member in current.memberships {
