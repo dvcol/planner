@@ -336,7 +336,8 @@ struct PlannerImportGraph {
 
   private func contextState(
     _ context: PlannerPortableCompletionContext, path: String, allowClosed: Bool = false,
-    allowRetiredMembership: Bool = false
+    allowRetiredMembership: Bool = false,
+    suppressedMemberships: Set<PlannerPortableBoundIdentity> = []
   ) throws -> Bool? {
     if allowClosed && isClosed(context) { return nil }
     switch context {
@@ -348,7 +349,11 @@ struct PlannerImportGraph {
           binding,
           to: .init(kind: .membership, id: membership.id, lifetimeId: membership.lifetimeId))
       else {
-        if allowRetiredMembership, retainedMembershipProvenance(for: binding) != nil { return nil }
+        if allowRetiredMembership || suppressedMemberships.contains(binding),
+          retainedMembershipProvenance(for: binding) != nil
+        {
+          return nil
+        }
         throw failure(
           "The completion context has no declared membership lifetime.", path + "/membershipId")
       }
@@ -387,7 +392,7 @@ struct PlannerImportGraph {
       {
         membership = live.baselineProvenance
         retired = false
-      } else if allowRetiredMembership,
+      } else if allowRetiredMembership || suppressedMemberships.contains(membershipBinding),
         let retained = retainedMembershipProvenance(for: membershipBinding)
       {
         membership = retained
@@ -465,6 +470,7 @@ struct PlannerImportGraph {
   }
 
   private func validateCompletionHistory() throws {
+    let suppressedMemberships = try suppressedMembershipIdentities()
     let aliases = Dictionary(uniqueKeysWithValues: backup.contextAliases.map { ($0.aliasId, $0) })
     let changes = Dictionary(uniqueKeysWithValues: backup.completionChanges.map { ($0.id, $0) })
     for (index, alias) in backup.contextAliases.enumerated() {
@@ -472,7 +478,8 @@ struct PlannerImportGraph {
       _ = try contextState(
         alias.context, path: path + "/context", allowClosed: true, allowRetiredMembership: true)
       _ = try contextState(
-        alias.canonicalContext, path: path + "/canonicalContext", allowClosed: true)
+        alias.canonicalContext, path: path + "/canonicalContext", allowClosed: true,
+        suppressedMemberships: suppressedMemberships)
       guard sameLogicalContext(alias.context, alias.canonicalContext) else {
         throw failure(
           "Aliases must retain the same logical context; repeated route entries stay independent.",
@@ -524,8 +531,9 @@ struct PlannerImportGraph {
     let groups = Dictionary(grouping: backup.contextAliases, by: \.canonicalContext)
     for (context, contributions) in groups {
       let expected = plannerCompletionHistoryValue(contributions: contributions, changes: changes)
-      if let actual = try contextState(context, path: "/contextAliases", allowClosed: true),
-        actual != expected
+      if let actual = try contextState(
+        context, path: "/contextAliases", allowClosed: true,
+        suppressedMemberships: suppressedMemberships), actual != expected
       {
         let index = backup.contextAliases.firstIndex { $0.canonicalContext == context }!
         throw failure(

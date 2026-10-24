@@ -70,13 +70,18 @@ struct PlannerImportMerge {
     let selectedRecordOwners = selectedOwners.union(replacedOwners)
     let incomingGraph = PlannerImportGraph(backup: incoming)
     let currentGraph = PlannerImportGraph(backup: current)
-    let liveAliases = incoming.contextAliases.filter {
-      guard !incomingGraph.isClosed($0.canonicalContext) else { return false }
-      return
-        plannerImportCompletionOwner(
-          $0.canonicalContext, memberships: incomingProjection.membershipsById,
-          entries: incomingProjection.entriesById
-        ).map(selectedRecordOwners.contains) ?? false
+    let suppressedMemberships = try incomingGraph.suppressedMembershipIdentities()
+    let ownedAliases = incoming.contextAliases.filter { alias in
+      guard !incomingGraph.isClosed(alias.canonicalContext) else { return false }
+      let owner = plannerImportCompletionOwner(
+        alias.canonicalContext, memberships: incomingProjection.membershipsById,
+        entries: incomingProjection.entriesById)
+      if let membership = alias.canonicalContext.importContextIdentities.first(where: {
+        suppressedMemberships.contains($0)
+      }), let retained = incomingGraph.retainedMembershipProvenance(for: membership) {
+        return selectedRecordOwners.contains(owner ?? retained.list.reference)
+      }
+      return owner.map(selectedRecordOwners.contains) ?? false
     }
     let knownMarkers = Dictionary(
       uniqueKeysWithValues: current.deletionMarkers.map { ($0.deletionId, $0) })
@@ -116,7 +121,7 @@ struct PlannerImportMerge {
       return currentGraph.isClosed(alias.canonicalContext)
         || markers.contains(where: { $0.target.closes(alias.canonicalContext) })
     }
-    let selectedAliases = liveAliases + closedAliases
+    let selectedAliases = ownedAliases + closedAliases
     let selectedClosedAliasIdentifiers = Set(closedAliases.map(\.aliasId))
     for alias in selectedAliases {
       guard let existing = currentAliases[alias.aliasId] else { continue }
