@@ -200,7 +200,9 @@ struct PlannerImportRestoration {
           id: change.id, aliasId: change.aliasId, context: completionContext(change.context),
           done: change.done, observedChangeIds: change.observedChangeIds)
       },
-      restorationFamilies: families)
+      restorationFamilies: families, formatVersion: incoming.formatVersion,
+      membershipProvenance: incoming.membershipProvenance,
+      membershipRemovals: incoming.membershipRemovals)
     if !reusedReferences.isEmpty {
       let currentReferences = try PlannerImportProjection(backup: current).references
       let currentValues = Dictionary(

@@ -47,7 +47,11 @@ struct NativeProvenanceMigrationTests {
           command: .applyImport(backup: originalCommandBackup))
       ).outcome
     else { throw CancellationError() }
-    #expect(migrated == expected && replayed == originalResult)
+    let actual = try #require(JSONSerialization.jsonObject(with: migrated) as? [String: Any])
+    #expect(
+      NSDictionary(dictionary: actual).isEqual(
+        to: try canonicalPortableFixtureExpectations(expected)))
+    #expect(replayed == originalResult)
     #expect(originalResult.importSummary?.imports.count == 7)
     guard case .decoded(let imported) = planner.decodeImport(migrated),
       let item = imported.backup.items.first,

@@ -3513,7 +3513,9 @@ public actor Planner {
           lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
           deletionMarkers: try deletionMarkers(context),
           contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
-          restorationFamilies: lineage.restorationFamilies, receipts: receipts)
+          restorationFamilies: lineage.restorationFamilies,
+          membershipProvenance: lineage.membershipProvenance,
+          membershipRemovals: lineage.membershipRemovals, receipts: receipts)
         return PlannerOperationResult(
           operationId: operationId,
           outcome: .applied(
@@ -3623,7 +3625,9 @@ public actor Planner {
       itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
       items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
       contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
-      restorationFamilies: lineage.restorationFamilies)
+      restorationFamilies: lineage.restorationFamilies,
+      membershipProvenance: lineage.membershipProvenance,
+      membershipRemovals: lineage.membershipRemovals)
     try archive.prepare(
       .init(
         proposalId: UUID(), originalOperationId: operation.operationId,
@@ -3667,7 +3671,9 @@ public actor Planner {
         itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
         items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
         contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
-        restorationFamilies: lineage.restorationFamilies, receipts: receipts + [receipt])
+        restorationFamilies: lineage.restorationFamilies,
+        membershipProvenance: lineage.membershipProvenance,
+        membershipRemovals: lineage.membershipRemovals, receipts: receipts + [receipt])
       return .init(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
@@ -3696,7 +3702,9 @@ public actor Planner {
           deletionMarkers: try deletionMarkers(context),
           contextAliases: lineage.contextAliases,
           completionChanges: lineage.completionChanges,
-          restorationFamilies: lineage.restorationFamilies)
+          restorationFamilies: lineage.restorationFamilies,
+          membershipProvenance: lineage.membershipProvenance,
+          membershipRemovals: lineage.membershipRemovals)
         try requireCompleteExportGraph(snapshot, context: context)
         _ = try snapshot.validated()
         let encoder = JSONEncoder()
@@ -3804,7 +3812,9 @@ public actor Planner {
       deletionMarkers: try deletionMarkers(context),
       contextAliases: lineage.contextAliases,
       completionChanges: lineage.completionChanges,
-      restorationFamilies: lineage.restorationFamilies)
+      restorationFamilies: lineage.restorationFamilies,
+      membershipProvenance: lineage.membershipProvenance,
+      membershipRemovals: lineage.membershipRemovals)
     try requireCompleteExportGraph(snapshot, context: context)
     return try snapshot.validated()
   }
@@ -6047,7 +6057,9 @@ public actor Planner {
           itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
           items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
           contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
-          restorationFamilies: lineage.restorationFamilies),
+          restorationFamilies: lineage.restorationFamilies,
+          membershipProvenance: lineage.membershipProvenance,
+          membershipRemovals: lineage.membershipRemovals),
         payloadDigest: digest, evidence: "preparedUnverified"))
     let result = PlannerAppliedResult(
       generatedIdentities: [],
@@ -6078,7 +6090,9 @@ public actor Planner {
         itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
         items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
         contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
-        restorationFamilies: lineage.restorationFamilies, receipts: receipts + [receipt])
+        restorationFamilies: lineage.restorationFamilies,
+        membershipProvenance: lineage.membershipProvenance,
+        membershipRemovals: lineage.membershipRemovals, receipts: receipts + [receipt])
       return .init(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))

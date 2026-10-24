@@ -131,6 +131,8 @@ struct PlannerDataSnapshot: Codable {
   let contextAliases: [PlannerPortableContextAlias]
   let completionChanges: [PlannerPortableCompletionChange]
   let restorationFamilies: [PlannerPortableRestorationFamily]
+  let membershipProvenance: [PlannerPortableMembershipProvenance]
+  let membershipRemovals: [PlannerPortableMembershipRemoval]
 
   init(snapshot: PlannerDataSnapshot, lineage: PlannerNativeLineage) {
     format = snapshot.format
@@ -146,13 +148,15 @@ struct PlannerDataSnapshot: Codable {
     contextAliases = lineage.contextAliases
     completionChanges = lineage.completionChanges
     restorationFamilies = lineage.restorationFamilies
+    membershipProvenance = lineage.membershipProvenance
+    membershipRemovals = lineage.membershipRemovals
   }
 
   enum CodingKeys: String, CodingKey, CaseIterable {
     case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
     case schedules, labelAssociations, ownedLinks, deletionMarkers, contextAliases,
       completionChanges
-    case restorationFamilies
+    case restorationFamilies, membershipProvenance, membershipRemovals
   }
 
   init(
@@ -163,8 +167,19 @@ struct PlannerDataSnapshot: Codable {
     deletionMarkers: [PortableDeletionMarker],
     contextAliases: [PlannerPortableContextAlias] = [],
     completionChanges: [PlannerPortableCompletionChange] = [],
-    restorationFamilies: [PlannerPortableRestorationFamily] = []
+    restorationFamilies: [PlannerPortableRestorationFamily] = [],
+    membershipProvenance: [PlannerPortableMembershipProvenance] = [],
+    membershipRemovals: [PlannerPortableMembershipRemoval] = []
   ) {
+    self.membershipProvenance = membershipProvenance.map(\.normalized).sorted {
+      if $0.membershipId != $1.membershipId {
+        return $0.membershipId.uuidString < $1.membershipId.uuidString
+      }
+      return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
+    }
+    self.membershipRemovals = membershipRemovals.sorted {
+      $0.deletionId.uuidString < $1.deletionId.uuidString
+    }
     self.contextAliases = contextAliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString }
     self.completionChanges = completionChanges.sorted { $0.id.uuidString < $1.id.uuidString }
     self.restorationFamilies = restorationFamilies.sorted {
@@ -185,7 +200,7 @@ struct PlannerDataSnapshot: Codable {
       $0.deletionId.uuidString < $1.deletionId.uuidString
     }
     format = "planner-data"
-    formatVersion = 2
+    formatVersion = 3
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
       + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
@@ -231,6 +246,21 @@ struct PlannerDataSnapshot: Codable {
       [PlannerPortableCompletionChange].self, forKey: .completionChanges)
     restorationFamilies = try container.decode(
       [PlannerPortableRestorationFamily].self, forKey: .restorationFamilies)
+    if formatVersion == 3 {
+      membershipProvenance = try container.decode(
+        [PlannerPortableMembershipProvenance].self, forKey: .membershipProvenance)
+      membershipRemovals = try container.decode(
+        [PlannerPortableMembershipRemoval].self, forKey: .membershipRemovals)
+    } else {
+      guard !container.contains(.membershipProvenance), !container.contains(.membershipRemovals)
+      else {
+        throw DecodingError.dataCorruptedError(
+          forKey: .formatVersion, in: container,
+          debugDescription: "Membership provenance requires portable version 3.")
+      }
+      membershipProvenance = []
+      membershipRemovals = []
+    }
   }
 
   func encode(to encoder: any Encoder) throws {
@@ -248,10 +278,14 @@ struct PlannerDataSnapshot: Codable {
     try container.encode(contextAliases, forKey: .contextAliases)
     try container.encode(completionChanges, forKey: .completionChanges)
     try container.encode(restorationFamilies, forKey: .restorationFamilies)
+    if formatVersion == 3 {
+      try container.encode(membershipProvenance, forKey: .membershipProvenance)
+      try container.encode(membershipRemovals, forKey: .membershipRemovals)
+    }
   }
 
   func validated() throws -> PlannerDecodedBackup {
-    guard format == "planner-data", (1...2).contains(formatVersion) else {
+    guard format == "planner-data", (1...3).contains(formatVersion) else {
       throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
     }
     guard Set(sources.map { $0.kind.rawValue + ":" + $0.id.uuidString }).count == sources.count
@@ -416,7 +450,9 @@ struct PlannerDataSnapshot: Codable {
             entries: itineraryEntries, ownedLinks: portableLinks,
             expandedCompletions: expandedCompletions)
         }, ownedLinks: portableLinks, contextAliases: contextAliases,
-        completionChanges: completionChanges, restorationFamilies: restorationFamilies))
+        completionChanges: completionChanges, restorationFamilies: restorationFamilies,
+        formatVersion: formatVersion, membershipProvenance: membershipProvenance,
+        membershipRemovals: membershipRemovals))
     do { try PlannerImportGraph(backup: decoded.backup).validate() } catch let failure
       as PlannerFailure
     {
@@ -603,6 +639,8 @@ struct PlannerRecoveryArchive {
     contextAliases: [PlannerPortableContextAlias] = [],
     completionChanges: [PlannerPortableCompletionChange] = [],
     restorationFamilies: [PlannerPortableRestorationFamily] = [],
+    membershipProvenance: [PlannerPortableMembershipProvenance] = [],
+    membershipRemovals: [PlannerPortableMembershipRemoval] = [],
     receipts: [PlannerSchemaV1.Receipt]
   ) throws -> Int64 {
     let previous = try latest()
@@ -619,7 +657,9 @@ struct PlannerRecoveryArchive {
         items: items, lists: lists, memberships: memberships,
         deletionMarkers: deletionMarkers, contextAliases: lineage?.contextAliases ?? contextAliases,
         completionChanges: lineage?.completionChanges ?? completionChanges,
-        restorationFamilies: lineage?.restorationFamilies ?? restorationFamilies))
+        restorationFamilies: lineage?.restorationFamilies ?? restorationFamilies,
+        membershipProvenance: lineage?.membershipProvenance ?? membershipProvenance,
+        membershipRemovals: lineage?.membershipRemovals ?? membershipRemovals))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))
