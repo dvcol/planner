@@ -33,4 +33,4 @@ A complete local follow-up must resolve the same-pair removal policy, define ret
 
 ## Current frontier
 
-[Q153](../native-unseen-membership-add-decision.md) asks only the newly uncovered removal-versus-unseen-add policy. Q16 and the accepted initial completion/global precedence rules stay settled. Its answer precedes the concrete representation and recovery review. Signing does not block this contract preparation.
+[Q153 A](../native-unseen-membership-add-decision.md) is accepted on 24 October 2026. The [legacy-history decision](../legacy-membership-history-decision.md) now distinguishes prospective enforcement from historical bytes that never recorded pair/causal provenance. That compatibility answer precedes the complete representation and recovery review. Q16, initial completion/global precedence and the approved real-storage test boundary stay settled. Signing does not block this contract preparation.
