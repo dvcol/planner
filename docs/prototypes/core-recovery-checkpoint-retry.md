@@ -52,3 +52,5 @@ Manual restore/import/export, native status/recovery forms and controlled native
 ## Later native qualification
 
 The [native retry/status flow](native-recovery-checkpoint-retry.md) now qualifies the represented readable-store success, publication-failure and unavailable-checkpoint journeys, with their own phone/tablet evidence. The earlier pending-choice statements describe the historical Core slice; the [decision register](../open-decisions.md) records current choices. Unverified/interrupted outcomes, unavailable-store recovery, physical sync/account/Share, Mac runtime, scale and whole-app polish retain their separate gates.
+
+The [canonical-copy follow-up](native-canonical-recovery-copy.md) handles later duplicate memberships or expanded rows while keeping Retry read-only. It preserves applied evidence through unproven input, separates recovery acknowledgement from the next native maintenance transaction, and qualifies matching Mac/iPhone coverage. Concurrent mid-read changes, interruption and native presentation remain separate gates.

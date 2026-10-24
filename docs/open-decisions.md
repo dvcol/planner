@@ -2,6 +2,8 @@
 
 ## Current frontier
 
+The [canonical recovery-copy follow-up](prototypes/native-canonical-recovery-copy.md) preserves the existing read-only native Retry interfaces while handling later duplicate rows through the shared resolver. Acknowledgement belongs only to the original applied command or verified maintenance; the next native maintenance retains its own transaction. Matching Mac/iPhone coverage passes 267 functions/891 invocations across ninety suites. Broader lifetimes/families, concurrent-input/interruption cases and native/physical/system acceptance remain separate; no new policy answer or signing action blocks this checkpoint.
+
 The [duplicate completion-row follow-up](prototypes/native-duplicate-expanded-rows.md) qualifies existing exact-appearance semantics without changing conflict rules. Both physical row orders preserve independent contributions and explicit Reopen. Matching Mac/iPhone coverage passes 265 functions/887 invocations in ninety suites; broader context closure, lifetimes/families and native/physical/system gates remain open. No new policy answer or signing action blocks this checkpoint.
 
 The [exact legacy closure follow-up](prototypes/native-legacy-membership-closure.md) implements already accepted original-identity protection without inferring a strict pair barrier. Matching Mac/iPhone coverage passes 264 functions/878 invocations across ninety suites, with four bounded phone hosts preserving every assertion after measured disposable-store file pressure. Original failed runs and the passing unchanged baseline remain retained. Unclosed aliases pointing to a closed root and broader restoration-family admission remain separate local work. No new policy answer or signing action blocks this checkpoint.

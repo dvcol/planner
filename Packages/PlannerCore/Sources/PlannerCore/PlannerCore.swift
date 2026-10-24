@@ -3582,19 +3582,9 @@ public actor Planner {
         }
         knownAppliedReceipt = evidence
         _ = try latestRead.get()
-        let lineage = try PlannerNativeLineage(context: context)
+        let snapshot = try canonicalRecoverySnapshot(context)
         let generation = try archive.publish(
-          itineraries: try itinerarySnapshots(context),
-          labelAssociations: try labelAssociationSnapshots(context),
-          tags: try tagSnapshots(context),
-          categories: try categorySnapshots(context),
-          items: try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() },
-          lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
-          deletionMarkers: try deletionMarkers(context),
-          contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
-          restorationFamilies: lineage.restorationFamilies,
-          membershipProvenance: lineage.membershipProvenance,
-          membershipRemovals: lineage.membershipRemovals, receipts: receipts)
+          snapshot: snapshot, receipts: context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()))
         return PlannerOperationResult(
           operationId: operationId,
           outcome: .applied(
@@ -3956,6 +3946,33 @@ public actor Planner {
       receipts: try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()))
   }
 
+  /// Recovery copies derive canonical data without creating a native maintenance transaction.
+  private func canonicalRecoverySnapshot(_ context: ModelContext) throws -> PlannerDataSnapshot {
+    let history = try latestHistoryToken(in: context)
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
+    let snapshot: PlannerDataSnapshot
+    if try membershipConsolidationRequired(records, context: context) {
+      defer { context.rollback() }
+      let memberships = try records.map { try $0.value() }
+      let detached = try plannerStageDetachedExpandedRetirements(
+        context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
+      let before = try maintenanceSnapshot(context, memberships: memberships)
+      try requireCompleteExportGraph(before, context: context)
+      let consolidation = try PlannerMembershipConsolidation(
+        snapshot: before, detachedExpanded: detached)
+      snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
+    } else {
+      snapshot = try maintenanceSnapshot(context)
+      try requireCompleteExportGraph(snapshot, context: context)
+    }
+    _ = try snapshot.validated()
+    guard try latestHistoryToken(in: context) == history else {
+      throw PlannerFailure(
+        "recoveryIncomplete", "Native data changed while preparing its recovery copy.")
+    }
+    return snapshot
+  }
+
   private func membershipConsolidationRequired(
     _ records: [PlannerSchemaV18.Membership], context: ModelContext
   ) throws -> Bool {
@@ -4212,8 +4229,10 @@ public actor Planner {
         }
         try archive.verifyMaintenancePreparation(commit)
         verifiedCommit = true
+        let snapshot = try canonicalRecoverySnapshot(context)
         return .complete(
-          checkpointGeneration: try publishMaintenanceSnapshot(identity: identity, context: context)
+          checkpointGeneration: try recoveryArchive(identity, context: context).publish(
+            snapshot: snapshot, receipts: context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()))
         )
       }
     } catch {

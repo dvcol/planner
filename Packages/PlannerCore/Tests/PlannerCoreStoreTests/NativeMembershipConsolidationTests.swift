@@ -10,6 +10,328 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test func maintenanceRetryCopiesLaterCanonicalDataWithoutApplyingTheWaitingCommand() async throws
+  {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(try Data(contentsOf: fixture)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: itemIdentifier,
+      listIdentifier: listIdentifier,
+      contributions: [
+        ("00000000-0000-4000-8000-000000000400", "00000000-0000-4000-8000-000000000840", 512, false)
+      ])
+    let obstruction = NativeSaveRecoveryObstruction(configuration: configuration)
+    let observer = NotificationCenter.default.addObserver(
+      forName: ModelContext.didSave, object: nil, queue: nil
+    ) { notification in obstruction.observe(notification) }
+    defer {
+      NotificationCenter.default.removeObserver(observer)
+      try? obstruction.restore()
+    }
+    let waiting = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .createTag(content: .init(name: "Must remain unapplied")))
+    guard case .rejected = await planner.execute(waiting).outcome else { throw CancellationError() }
+    #expect(obstruction.didObstruct && obstruction.failure == nil)
+    try obstruction.restore()
+    guard case .status(let pending) = await planner.read(session: session, request: .status),
+      case .known(let originalCheckpoint, let operations, let maintenance, let blocked) = pending
+        .recovery,
+      let maintenanceIdentifier = maintenance.first,
+      case .noReliableEvidence = await planner.operationStatus(
+        session: session, operationId: waiting.operationId),
+      case .exported(let beforeIncoming) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(originalCheckpoint == 1 && operations.isEmpty && maintenance.count == 1 && blocked)
+    let incomingIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000399")!
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: itemIdentifier,
+      listIdentifier: listIdentifier,
+      contributions: [
+        (incomingIdentifier.uuidString, "00000000-0000-4000-8000-000000000839", 256, false)
+      ])
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeRetry = try maintenanceNamespaceFiles(namespaceDirectory)
+    guard
+      case .failed(let needed) = await planner.query(
+        .init(session: session, request: .items(.init(scope: .list(listIdentifier)))))
+    else { throw CancellationError() }
+    #expect(needed.code == "maintenanceRequired")
+    let response = await planner.retryMaintenanceRecovery(
+      session: session, maintenanceId: maintenanceIdentifier)
+    guard case .complete(let checkpoint) = response else {
+      Issue.record(
+        "Committed maintenance needs a canonical recovery copy of later inputs: \(response)")
+      return
+    }
+    #expect(checkpoint == 2)
+    guard
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint)),
+      case .noReliableEvidence = await planner.operationStatus(
+        session: session, operationId: waiting.operationId),
+      case .noReliableEvidence = await planner.operationStatus(
+        session: session, operationId: maintenanceIdentifier)
+    else { throw CancellationError() }
+    #expect(recovered.decodedBackup.backup.memberships.count == 1)
+    #expect(recovered.decodedBackup.backup.memberships.first?.id == incomingIdentifier)
+    let recoveredGraph = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    let beforeGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeIncoming) as? [String: Any])
+    for key in ["sources", "completionChanges", "itineraryEntries", "ownedLinks", "schedules"] {
+      #expect(
+        NSDictionary(dictionary: [key: beforeGraph[key]!]).isEqual(to: [key: recoveredGraph[key]!]))
+    }
+    let afterRetry = try maintenanceNamespaceFiles(namespaceDirectory)
+    #expect(
+      afterRetry.filter { $0.key.hasPrefix("maintenance-") }
+        == beforeRetry.filter { $0.key.hasPrefix("maintenance-") })
+    let copy = try #require(
+      JSONSerialization.jsonObject(
+        with: Data(contentsOf: namespaceDirectory.appendingPathComponent("checkpoint-2.json")))
+        as? [String: Any])
+    let receipts = try #require(copy["maintenanceReceipts"] as? [[String: Any]])
+    #expect(receipts.count == 1 && receipts.first?["checkpointGeneration"] as? String == "2")
+    guard
+      case .snapshot(let contents) = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .list(listIdentifier), completion: .all, archive: .all)))),
+      case .exported(let afterConsolidation) = await planner.exportData(session: session),
+      case .status(let completed) = await planner.read(session: session, request: .status),
+      case .known(let latest, let pendingOperations, let pendingMaintenance, let stillBlocked) =
+        completed.recovery
+    else { throw CancellationError() }
+    #expect(contents.matchingCount == 1)
+    #expect(latest == 3 && pendingOperations.isEmpty && pendingMaintenance.isEmpty && !stillBlocked)
+    let exportedGraph = try #require(
+      JSONSerialization.jsonObject(with: afterConsolidation) as? [String: Any])
+    #expect(NSDictionary(dictionary: recoveredGraph).isEqual(to: exportedGraph))
+    let acknowledged = try maintenanceNamespaceFiles(namespaceDirectory)
+    guard
+      case .complete(let originalGeneration) = await planner.retryMaintenanceRecovery(
+        session: session, maintenanceId: maintenanceIdentifier)
+    else { throw CancellationError() }
+    #expect(originalGeneration == 2)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == acknowledged)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let afterReopen) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(afterReopen == afterConsolidation)
+  }
+
+  @Test(arguments: ["membership", "expanded", "unproven"])
+  func recoveryRetryCopiesCanonicalDataBeforeNativeConsolidationRuns(delivery: String)
+    async throws
+  {
+    let expandedDelivery = delivery != "membership"
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(try Data(contentsOf: fixture)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    let obstruction = NativeSaveRecoveryObstruction(configuration: configuration)
+    let observer = NotificationCenter.default.addObserver(
+      forName: ModelContext.didSave, object: nil, queue: nil
+    ) { notification in obstruction.observe(notification) }
+    defer {
+      NotificationCenter.default.removeObserver(observer)
+      try? obstruction.restore()
+    }
+    let operation = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .createTag(content: .init(name: "Saved before the incoming membership")))
+    guard case .applied(let applied, .incomplete) = await planner.execute(operation).outcome else {
+      throw CancellationError()
+    }
+    #expect(obstruction.didObstruct && obstruction.failure == nil)
+    try obstruction.restore()
+    guard case .exported(let beforeIncoming) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    let originalIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let smallerIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000400")!
+    let firstEntry = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let unknownIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000999")!
+    let incomingIdentifier = expandedDelivery ? originalIdentifier : smallerIdentifier
+    if expandedDelivery {
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL,
+        entryIdentifier: firstEntry,
+        membershipIdentifier: originalIdentifier,
+        membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000841")!)
+    } else {
+      try await insertIndependentMemberships(
+        storeURL: configuration.storeURL, itemIdentifier: itemIdentifier,
+        listIdentifier: listIdentifier,
+        contributions: [
+          (incomingIdentifier.uuidString, "00000000-0000-4000-8000-000000000840", 512, false)
+        ])
+    }
+    if delivery == "unproven" {
+      try await insertDetachedExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: unknownIdentifier,
+        membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000899")!)
+    }
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeRetry = try maintenanceNamespaceFiles(namespaceDirectory)
+    guard
+      case .failed(let pending) = await planner.query(
+        .init(session: session, request: .items(.init(scope: .list(listIdentifier)))))
+    else { throw CancellationError() }
+    #expect(pending.code == "maintenanceRequired")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeRetry)
+    if delivery == "unproven" {
+      guard
+        case .applied(let retained, .incomplete(let reason)) = await planner.retryRecovery(
+          session: session, operationId: operation.operationId
+        ).outcome,
+        case .appliedRecoveryIncomplete(let original, _) = await planner.operationStatus(
+          session: session, operationId: operation.operationId)
+      else { throw CancellationError() }
+      #expect(retained == applied && original == applied)
+      #expect(reason.code == "readUnavailable")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeRetry)
+      try await removeNativeExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: unknownIdentifier)
+    }
+    let response = await planner.retryRecovery(session: session, operationId: operation.operationId)
+    guard case .applied(let repaired, .complete(let checkpoint)) = response.outcome else {
+      Issue.record(
+        "Known applied work needs a canonical recovery copy before maintenance: \(response)")
+      return
+    }
+    #expect(repaired == applied && checkpoint == 2)
+    guard
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else { throw CancellationError() }
+    #expect(recovered.decodedBackup.backup.memberships.count == 1)
+    #expect(recovered.decodedBackup.backup.memberships.first?.id == incomingIdentifier)
+    #expect(recovered.decodedBackup.backup.memberships.first?.localDone == true)
+    if expandedDelivery {
+      #expect(
+        recovered.decodedBackup.backup.expandedCompletions.first {
+          $0.context.listEntryId == firstEntry
+        }?.localDone == true)
+    }
+    let beforeGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeIncoming) as? [String: Any])
+    let recoveredGraph = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    var changedKeys: Set<String> = ["expandedCompletions", "contextAliases"]
+    if !expandedDelivery { changedKeys.formUnion(["memberships", "membershipProvenance"]) }
+    for key in beforeGraph.keys where !changedKeys.contains(key) {
+      #expect(
+        NSDictionary(dictionary: [key: beforeGraph[key]!]).isEqual(
+          to: [key: recoveredGraph[key]!]), "Recovery must retain \(key).")
+    }
+    let copy = try #require(
+      JSONSerialization.jsonObject(
+        with: Data(contentsOf: namespaceDirectory.appendingPathComponent("checkpoint-2.json")))
+        as? [String: Any])
+    #expect((copy["maintenanceReceipts"] as? [[String: Any]] ?? []).isEmpty)
+    #expect(
+      try maintenanceNamespaceFiles(namespaceDirectory).keys.allSatisfy {
+        !$0.hasPrefix("maintenance-")
+      })
+    guard
+      case .snapshot(let contents) = await planner.query(
+        .init(
+          session: session,
+          request: .items(
+            .init(
+              scope: .itinerary(UUID(uuidString: "00000000-0000-4000-8000-000000000301")!),
+              completion: .all, archive: .all)))),
+      case .exported(let afterConsolidation) = await planner.exportData(session: session),
+      case .status(let status) = await planner.read(session: session, request: .status),
+      case .known(let latest, let operations, let maintenance, let blocked) = status.recovery,
+      case .appliedRecoveryComplete(let original, let originalCheckpoint) =
+        await planner
+        .operationStatus(session: session, operationId: operation.operationId)
+    else { throw CancellationError() }
+    #expect(contents.matchingCount == 3)
+    #expect(latest == 3 && operations.isEmpty && maintenance.isEmpty && !blocked)
+    #expect(original == applied && originalCheckpoint == 2)
+    let exportedGraph = try #require(
+      JSONSerialization.jsonObject(with: afterConsolidation) as? [String: Any])
+    #expect(NSDictionary(dictionary: recoveredGraph).isEqual(to: exportedGraph))
+    let acknowledged = try maintenanceNamespaceFiles(namespaceDirectory)
+    guard
+      case .applied(let replayed, .complete(let originalGeneration)) = await planner.retryRecovery(
+        session: session, operationId: operation.operationId
+      ).outcome
+    else { throw CancellationError() }
+    #expect(replayed == applied && originalGeneration == 2)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == acknowledged)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let afterReopen) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(afterReopen == afterConsolidation)
+  }
+
   @Test func duplicateDoneRowsPreserveOnlyTheirActualInitialContribution() async throws {
     #if SWIFT_PACKAGE
       let bundle = Bundle.module

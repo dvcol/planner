@@ -714,15 +714,9 @@ struct PlannerRecoveryArchive {
     membershipRemovals: [PlannerPortableMembershipRemoval] = [],
     receipts: [PlannerSchemaV1.Receipt]
   ) throws -> Int64 {
-    let previous = try latest()
-    let previousGeneration = try previous?.validated(identity: identity).2 ?? 0
-    let (generation, overflow) = previousGeneration.addingReportingOverflow(1)
-    guard !overflow else {
-      throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
-    }
     let lineage = try nativeContext.map { try PlannerNativeLineage(context: $0) }
-    let bytes = try JSONEncoder().encode(
-      PlannerDataSnapshot(
+    return try publish(
+      snapshot: PlannerDataSnapshot(
         itineraries: itineraries, labelAssociations: labelAssociations, tags: tags,
         categories: categories,
         items: items, lists: lists, memberships: memberships,
@@ -730,7 +724,18 @@ struct PlannerRecoveryArchive {
         completionChanges: lineage?.completionChanges ?? completionChanges,
         restorationFamilies: lineage?.restorationFamilies ?? restorationFamilies,
         membershipProvenance: lineage?.membershipProvenance ?? membershipProvenance,
-        membershipRemovals: lineage?.membershipRemovals ?? membershipRemovals))
+        membershipRemovals: lineage?.membershipRemovals ?? membershipRemovals),
+      receipts: receipts)
+  }
+
+  func publish(snapshot: PlannerDataSnapshot, receipts: [PlannerSchemaV1.Receipt]) throws -> Int64 {
+    let previous = try latest()
+    let previousGeneration = try previous?.validated(identity: identity).2 ?? 0
+    let (generation, overflow) = previousGeneration.addingReportingOverflow(1)
+    guard !overflow else {
+      throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
+    }
+    let bytes = try JSONEncoder().encode(snapshot)
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))
