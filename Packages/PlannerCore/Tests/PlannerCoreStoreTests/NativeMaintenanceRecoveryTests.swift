@@ -81,6 +81,85 @@ struct NativeMaintenanceRecoveryTests {
     #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
     #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
   }
+  @Test func reviewedMaintenanceCopyRestoresItsGraphWithoutAcknowledgingThePreparation()
+    async throws
+  {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    var preparation = try #require(
+      JSONSerialization.jsonObject(with: maintenanceFixtureData("maintenance-preparation-v1"))
+        as? [String: Any])
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000941"))
+    preparation["maintenanceId"] = maintenanceIdentifier.uuidString
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    guard
+      case .selected(let selection) = await fixture.planner.inspectRecovery(
+        request: .maintenanceProposal(
+          namespaceId: fixture.namespaceIdentifier, maintenanceId: maintenanceIdentifier))
+    else { throw CancellationError() }
+    let directory = fixture.configuration.recoveryDirectoryURL.deletingLastPathComponent()
+      .appendingPathComponent("target")
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let target = Planner(configuration: configuration)
+    let operationIdentifier = UUID()
+    let command = PlannerCommand.restoreRecovery(selection: selection)
+    guard case .ready(let session) = await target.bootstrap(),
+      case .exported(let emptyData) = await target.exportData(session: session),
+      case .rejected(let missingReview) = await target.execute(
+        .init(operationId: operationIdentifier, session: session, command: command)
+      ).outcome,
+      case .exported(let afterRejection) = await target.exportData(session: session),
+      case .noReliableEvidence = await target.operationStatus(
+        session: session, operationId: operationIdentifier),
+      case .reviewed(let review) = await target.prepareReview(session: session, command: command),
+      case .exported(let afterReview) = await target.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(missingReview.code == "staleReview")
+    #expect(afterRejection == emptyData && afterReview == emptyData)
+    let response = await target.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(let restored, .complete(let checkpoint)) = response.outcome,
+      case .exported(let restoredData) = await target.exportData(session: session),
+      case .noReliableEvidence = await target.operationStatus(
+        session: session, operationId: maintenanceIdentifier),
+      case .rejected(let retryFailure) = await target.retryMaintenanceRecovery(
+        session: session, maintenanceId: maintenanceIdentifier)
+    else {
+      Issue.record("Fresh review must restore data, not claim maintenance execution: \(response)")
+      return
+    }
+    let actual = try #require(
+      JSONSerialization.jsonObject(with: restoredData) as? [String: Any])
+    let expected = try #require(preparation["proposedBackup"] as? [String: Any])
+    #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
+    #expect(retryFailure.code == "maintenanceNotApplied")
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+      case .applied(let replayed, .complete(let replayedCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: command)
+      ).outcome,
+      case .listed(let originalNamespace) = await fixture.planner.inspectRecovery(
+        request: .namespace(namespaceId: fixture.namespaceIdentifier))
+    else { throw CancellationError() }
+    #expect(reopenedData == restoredData)
+    #expect(replayed == restored && replayedCheckpoint == checkpoint)
+    #expect(originalNamespace.acknowledgedSnapshot?.checkpointGeneration == 7)
+    #expect(originalNamespace.preparedMaintenance.map(\.maintenanceId) == [maintenanceIdentifier])
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
+
   @Test func selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution() async throws {
     let fixture = try MaintenanceRecoveryFixture.create()
     var preparation = try #require(

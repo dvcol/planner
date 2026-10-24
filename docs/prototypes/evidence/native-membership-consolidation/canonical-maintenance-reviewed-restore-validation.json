@@ -1,0 +1,13 @@
+{
+  "functionsPerPlatform": 23,
+  "suitesPerPlatform": 3,
+  "invocationsPerPlatform": 78,
+  "matchedCoreInputs": 805,
+  "actualTestProductsPerPlatform": 2,
+  "productionUnchanged": true,
+  "existingTestBodiesUnchanged": true,
+  "strictFormatExitCode": 0,
+  "removedClosedDisposableStores": 129,
+  "originalMaintenanceAcknowledgedByRestore": false,
+  "nativeUIPhysicalCloudAndSystemInvocationQualifiedByThisTest": false
+}

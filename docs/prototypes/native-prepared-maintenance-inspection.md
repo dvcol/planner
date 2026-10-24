@@ -23,3 +23,11 @@ The first phone attempt stopped before Recovery at an incorrect Settings route; 
 After host and file-closure checks, 1,222 distinct marked disposable stores from the completed passing runs were removed. Failed attempts and frozen evidence remain retained. Physical reclaimed bytes are not measured.
 
 Preparation-write failure, process interruption, committed-maintenance Retry UI, strict per-action Remove/Add observations, retired-alias actions, versioned command evidence and broader convergence remain separate local work. Actual Mac interaction, physical/shared/cloud and system Shortcuts qualification retain their existing gates. Signing stays deferred.
+
+## Reviewed maintenance-copy restoration
+
+A further public-interface test selects the frozen unverified preparation and restores it into an empty, independently initialized local dataset. Execution without a review rejects with staleReview and leaves the target unchanged; preparing the review also writes no Planner data. Authorized execution restores the entire represented graph, including retained membership provenance and removal history. Reopening and exact operation replay preserve the resulting graph and original result/checkpoint.
+
+The maintenance identity never becomes a user-command receipt, and retryMaintenanceRecovery still rejects it as maintenanceNotApplied. The original namespace keeps checkpoint 7 and its unverified preparation, byte for byte; its native store and control file remain absent. This distinguishes a newly reviewed data restore from acknowledging the original maintenance.
+
+The [matching affected Mac/iPhone cohorts](evidence/native-membership-consolidation/canonical-maintenance-reviewed-restore-validation.json) each pass 23 functions in three suites, totaling 78 invocations, with 805 matching Core inputs and both actual test products. Production and existing test bodies are unchanged. Strict Swift formatting passes. The standalone first Mac run and both cohorts retain their evidence; 129 distinct closed, marked fixture stores are removed safely. This is additional Core qualification, not a new native UI, physical, CloudKit or system Shortcuts claim.

@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "03ab0b6c3bc167e9b92a627b3405705f041520a7",
+  "overlays": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMaintenanceRecoveryTests.swift"
+  ]
+}

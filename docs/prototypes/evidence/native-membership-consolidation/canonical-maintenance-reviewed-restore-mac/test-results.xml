@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.2458e-05"/>
+    <testsuite name="TestResults" errors="0" tests="23" failures="0" skipped="0" time="0.508076292">
+        <testcase classname="PlannerCoreStoreTests.RecoveryRestorationTests" name="recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)" time="0.50735025"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryRestorationTests" name="unverifiedProposalRequiresFreshOperationAndDoesNotAcknowledgeSource()" time="0.388184167"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryRestorationTests" name="reviewedSnapshotRestoresCompleteGraphIntoSeparateEmptyDatasetAndReplaysAfterReopen()" time="0.492265708"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryRestorationTests" name="recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)" time="0.452170958"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryRestorationTests" name="changedRecoveryReviewCannotApplyToDifferentData(_:)" time="0.388118167"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryRestorationTests" name="deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)" time="0.477904333"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt()" time="0.388222166"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:)" time="0.387970208"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData()" time="0.388058416"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing()" time="0.388034792"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="malformedPortableLineageIsRejectedBeforeRecoverySelection(_:)" time="0.388117"/>
+        <testcase classname="PlannerCoreStoreTests.RecoveryProposalSelectionTests" name="completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:)" time="0.388164542"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()" time="0.387723"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidPreparedMaintenanceCannotBeListedOrSelected(scenario:)" time="0.388130166"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="extraMaintenancePreparationFieldsCannotSupplyRecoveryEvidence()" time="0.387787333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)" time="0.387849875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()" time="0.388113083"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenancePreparationIsNotPresentedAsUnverified()" time="0.388200792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)" time="0.390353833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)" time="0.388252959"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()" time="0.388077084"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution()" time="0.388142541"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="reviewedMaintenanceCopyRestoresItsGraphWithoutAcknowledgingThePreparation()" time="0.388219584"/>
+    </testsuite>
+</testsuites>
