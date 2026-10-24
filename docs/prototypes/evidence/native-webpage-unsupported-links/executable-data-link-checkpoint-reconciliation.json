@@ -1,0 +1,75 @@
+{
+  "nativeInputs": 1102,
+  "nativeExecutions": [
+    {
+      "phase": "executable-data-link-phone",
+      "passedFunctions": 1,
+      "sqliteUnlinkDiagnostics": 0
+    },
+    {
+      "phase": "executable-data-link-phone-regression",
+      "passedFunctions": 1,
+      "sqliteUnlinkDiagnostics": 0
+    },
+    {
+      "phase": "executable-data-link-dark-tablet",
+      "passedFunctions": 2,
+      "sqliteUnlinkDiagnostics": 0
+    }
+  ],
+  "totalPassedFunctions": 4,
+  "macBuild": {
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "elapsedSeconds": 11.543,
+    "inputCount": 1102,
+    "workspaceDifferences": [],
+    "stagedDifferences": []
+  },
+  "macProductCount": 9,
+  "executableDataLinkOutcomes": [
+    {
+      "phase": "executable-data-link-phone",
+      "originalAttachment": "33368070-DD52-449F-B6D8-BE95B8E253DB.json",
+      "guideStillReadable": true,
+      "inlineDocumentVisible": false,
+      "target": "data:text/html,%3Ch1%3EInline%20executable%20fixture%3C%2Fh1%3E%3Cscript%3Edocument.title%3D%27Executed%20inline%20fixture%27%3C%2Fscript%3E",
+      "plannerNoticePresented": true
+    },
+    {
+      "phase": "executable-data-link-dark-tablet",
+      "originalAttachment": "1B6410A4-4DBA-486D-915B-4951F684A8B4.json",
+      "inlineDocumentVisible": false,
+      "guideStillReadable": true,
+      "target": "data:text/html,%3Ch1%3EInline%20executable%20fixture%3C%2Fh1%3E%3Cscript%3Edocument.title%3D%27Executed%20inline%20fixture%27%3C%2Fscript%3E",
+      "plannerNoticePresented": true
+    }
+  ],
+  "originalCaptures": [
+    {
+      "path": "executable-data-link-phone/3752E669-FE07-440D-8445-10F8316CCF26.png",
+      "sha256": "aaa0bad5298e2e1733cee2e0afb2292950905f24be04dc6ae2093890313ea228",
+      "visuallyInspected": true
+    },
+    {
+      "path": "executable-data-link-phone-regression/B702314D-726C-443F-B117-BCDF84D07B1E.png",
+      "sha256": "c5c22b4dc3ff7c5f5d32e32caa3317dc7608a9af0578f29ddb4384180630f5ee",
+      "visuallyInspected": true
+    },
+    {
+      "path": "executable-data-link-dark-tablet/101FA0E4-C81F-4E46-8B12-F5AF5BBFFCA5.png",
+      "sha256": "850054a721861700eb052cf63d36c7c4679cebade76a5aad487f75b551167d17",
+      "visuallyInspected": true
+    },
+    {
+      "path": "executable-data-link-dark-tablet/1A1A6EDE-D831-4FD1-BC5D-DC11DEFFB3C6.png",
+      "sha256": "8653e97dfd63288d5bf42c46704d29704c4ed47c5c23da420da9fa575d348194",
+      "visuallyInspected": true
+    }
+  ],
+  "productionChanges": false,
+  "appearanceRestored": true,
+  "actualMacRuntimeCredit": false,
+  "physicalDeviceCredit": false,
+  "scope": "The activated data HTML/script URL cannot replace the saved guide; exact unsupported notices, onward HTTP navigation and original bookmarks survive. Other executable URL forms, arbitrary webpages, actual Mac and physical behavior remain unqualified."
+}

@@ -1,0 +1,31 @@
+{
+  "entries": [
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-executable-data-link-phone",
+      "fileCount": 3,
+      "nominalBytes": 167375,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-executable-data-link-phone.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-executable-data-link-phone-regression",
+      "fileCount": 2,
+      "nominalBytes": 216279,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-executable-data-link-phone-regression.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-executable-data-link-dark-tablet",
+      "fileCount": 4,
+      "nominalBytes": 296265,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-executable-data-link-dark-tablet.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    }
+  ],
+  "totalNominalBytes": 679919,
+  "allOriginalResultBundlesPreserved": true,
+  "nominalBytesAreNotGuaranteedAPFSFreeSpace": true
+}

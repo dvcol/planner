@@ -195,6 +195,16 @@ final class BrowserJourneyServer: @unchecked Sendable {
           <p id="file-activation">File link idle</p>
           <a href="/garden">Garden guide</a></body></html>
           """
+      } else if requestLine.contains(" /executable-link-policy ") {
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Executable link policy</title></head>
+          <body><h1>Executable link policy fixture</h1>
+          <a href="data:text/html,%3Ch1%3EInline%20executable%20fixture%3C%2Fh1%3E%3Cscript%3Edocument.title%3D%27Executed%20inline%20fixture%27%3C%2Fscript%3E"
+            onclick="document.getElementById('data-activation').textContent = 'Executable data link activated'">Unavailable executable data link</a>
+          <p id="data-activation">Executable data link idle</p>
+          <a href="/garden">Garden guide</a></body></html>
+          """
       } else if requestLine.contains(" /unsupported-content ") {
         contentType = "application/x-planner-fixture"
         responseHeaders = "X-Content-Type-Options: nosniff\r\n"

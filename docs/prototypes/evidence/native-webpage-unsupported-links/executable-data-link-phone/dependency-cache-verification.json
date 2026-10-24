@@ -1,0 +1,47 @@
+{
+  "cache": "/private/tmp/PlannerItinerarySelectionSourcePackages",
+  "packages": [
+    {
+      "identity": "eventsource",
+      "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+      "clean": true,
+      "manifestPresent": true
+    },
+    {
+      "identity": "swift-atomics",
+      "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+      "clean": true,
+      "manifestPresent": true
+    },
+    {
+      "identity": "swift-collections",
+      "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+      "clean": true,
+      "manifestPresent": true
+    },
+    {
+      "identity": "swift-log",
+      "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+      "clean": true,
+      "manifestPresent": true
+    },
+    {
+      "identity": "swift-nio",
+      "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+      "clean": true,
+      "manifestPresent": true
+    },
+    {
+      "identity": "swift-sdk",
+      "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+      "clean": true,
+      "manifestPresent": true
+    },
+    {
+      "identity": "swift-system",
+      "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+      "clean": true,
+      "manifestPresent": true
+    }
+  ]
+}

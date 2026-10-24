@@ -1,0 +1,27 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-executable-data-link-phone-regression.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-executable-data-link-phone-regression"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B702314D-726C-443F-B117-BCDF84D07B1E.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported website link retains its guide without an external action_0_2ADE535E-BFAA-4A0D-A65C-D48E03B7ACCE.png",
+      "timestamp": 1792801673.013,
+      "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "B702314D-726C-443F-B117-BCDF84D07B1E.png",
+      "originalSha256": "c5c22b4dc3ff7c5f5d32e32caa3317dc7608a9af0578f29ddb4384180630f5ee"
+    }
+  ],
+  "videoPublished": false
+}

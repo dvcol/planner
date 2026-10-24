@@ -1,0 +1,6 @@
+{
+  "inlineDocumentVisible" : false,
+  "guideStillReadable" : true,
+  "target" : "data:text\/html,%3Ch1%3EInline%20executable%20fixture%3C%2Fh1%3E%3Cscript%3Edocument.title%3D%27Executed%20inline%20fixture%27%3C%2Fscript%3E",
+  "plannerNoticePresented" : true
+}

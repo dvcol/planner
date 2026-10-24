@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-executable-data-link-dark-tablet.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-executable-data-link-dark-tablet"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "101FA0E4-C81F-4E46-8B12-F5AF5BBFFCA5.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Unsupported website link retains its guide without an external action_0_DA3EEE46-3F1D-4C0C-8075-144067CE324D.png",
+      "timestamp": 1792801744.948,
+      "testIdentifier": "SavedBrowserJourneyTests/testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "101FA0E4-C81F-4E46-8B12-F5AF5BBFFCA5.png",
+      "originalSha256": "850054a721861700eb052cf63d36c7c4679cebade76a5aad487f75b551167d17"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "1A1A6EDE-D831-4FD1-BC5D-DC11DEFFB3C6.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native executable data link keeps the saved guide readable_0_5CC44799-723C-45E7-8A6D-629B3FFDC97B.png",
+      "timestamp": 1792801786.094,
+      "testIdentifier": "SavedBrowserJourneyTests/testWebsiteExecutableDataLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "1A1A6EDE-D831-4FD1-BC5D-DC11DEFFB3C6.png",
+      "originalSha256": "8653e97dfd63288d5bf42c46704d29704c4ed47c5c23da420da9fa575d348194"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "1B6410A4-4DBA-486D-915B-4951F684A8B4.json",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Native executable data link activation outcome_0_36D89C70-BDD5-4496-B5FC-F0E1123D3136.json",
+      "timestamp": 1792801785.686,
+      "testIdentifier": "SavedBrowserJourneyTests/testWebsiteExecutableDataLinkKeepsTheGuideAndItsOriginalBookmark()",
+      "retainedFileName": "1B6410A4-4DBA-486D-915B-4951F684A8B4.json",
+      "originalSha256": "7fd80d5b11bcee1655c1e4923fbdf2f18e1eb439ff1adcf8666b16d7ace548cd"
+    }
+  ],
+  "videoPublished": false
+}
