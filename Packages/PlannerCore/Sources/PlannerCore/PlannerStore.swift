@@ -136,7 +136,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       PlannerSchemaV5.self, PlannerSchemaV6.self, PlannerSchemaV7.self, PlannerSchemaV8.self,
       PlannerSchemaV9.self, PlannerSchemaV10.self, PlannerSchemaV11.self, PlannerSchemaV12.self,
       PlannerSchemaV13.self, PlannerSchemaV14.self, PlannerSchemaV15.self, PlannerSchemaV16.self,
-      PlannerSchemaV17.self, PlannerSchemaV18.self,
+      PlannerSchemaV17.self, PlannerSchemaV18.self, PlannerSchemaV19.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -158,6 +158,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV15.self, toVersion: PlannerSchemaV16.self),
       .lightweight(fromVersion: PlannerSchemaV16.self, toVersion: PlannerSchemaV17.self),
       .lightweight(fromVersion: PlannerSchemaV17.self, toVersion: PlannerSchemaV18.self),
+      .lightweight(fromVersion: PlannerSchemaV18.self, toVersion: PlannerSchemaV19.self),
     ]
   }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.2333e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.367465833">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipMigrationTests" name="genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()" time="0.367090666">
+            <failure message="Caught error: Error Domain=NSCocoaErrorDomain Code=260 &quot;The file “checkpoint-3.json” couldn’t be opened because there is no such file.&quot; UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4B3004D1-88D1-4C91-8C62-A4C50395957B/dataset/recovery/ecovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-3.json, NSURL=file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4B3004D1-88D1-4C91-8C62-A4C50395957B/dataset/recovery/ecovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-3.json, NSUnderlyingError=0x7b04a61aa0 {Error Domain=NSPOSIXErrorDomain Code=2 &quot;No such file or directory&quot;}} (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

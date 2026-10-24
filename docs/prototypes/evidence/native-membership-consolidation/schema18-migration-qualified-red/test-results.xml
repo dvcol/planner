@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.5709e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.054513708">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipMigrationTests" name="genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()" time="0.054190333">
+            <failure message="Issue recorded (error): Share must leave schema 18 for the main app to migrate: .ready(PlannerCore.PlannerDatasetSession(datasetId: AD0E1A77-2C4A-4AE3-B0C1-9932012EC22F, sessionId: A0EE0A94-7069-4608-A5E9-C263E04A2D0B, ownershipBinding: &quot;local:17CFF818-7CC4-4590-85C1-F946F41BE8E9&quot;, epochId: 3F855B19-8B72-40C2-8CC5-3B2EFE5DDCBB))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

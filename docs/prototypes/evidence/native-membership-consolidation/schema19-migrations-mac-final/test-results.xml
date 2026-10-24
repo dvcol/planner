@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.05e-05"/>
+    <testsuite name="TestResults" errors="0" tests="18" failures="0" skipped="0" time="1.909837583">
+        <testcase classname="PlannerCoreStoreTests.ExpandedCompletionMigrationTests" name="genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion()" time="1.327632167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeProvenanceMigrationTests" name="genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt()" time="1.333842167"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLabelMigrationTests" name="genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem()" time="1.372006959"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory()" time="1.327383834"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory()" time="1.327497709"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay()" time="1.327513209"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList()" time="1.327586208"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt()" time="1.327483167"/>
+        <testcase classname="PlannerCoreStoreTests.ItineraryMigrationTests" name="genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation()" time="1.327482375"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipMigrationTests" name="genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership()" time="1.340166791"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipMigrationTests" name="genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()" time="1.753596542"/>
+        <testcase classname="PlannerCoreStoreTests.CategoryMigrationTests" name="genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery()" time="1.893225791"/>
+        <testcase classname="PlannerCoreStoreTests.ItineraryScheduleMigrationTests" name="genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary()" time="1.909151417"/>
+        <testcase classname="PlannerCoreStoreTests.ItineraryEntryMigrationTests" name="genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry()" time="1.327485375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeProviderMigrationTests" name="genuineSchema17MigrationPreservesOriginsGraphAndReceipt()" time="1.75978725"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLineageMigrationTests" name="genuineV15MigrationPreservesGraphBudgetsRecoveryAndCreationReplay()" time="1.848107375"/>
+        <testcase classname="PlannerCoreStoreTests.ManualContainerEstimateMigrationTests" name="genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay()" time="1.897179792"/>
+        <testcase classname="PlannerCoreStoreTests.TagMigrationTests" name="genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery()" time="1.889690834"/>
+    </testsuite>
+</testsuites>

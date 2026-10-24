@@ -13,8 +13,7 @@ struct ItemLinkMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV5", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       LinkedManifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json"))
@@ -121,7 +120,7 @@ struct ItemLinkMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(beforeAgain.portableData == before.portableData)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
   }
 
@@ -133,8 +132,7 @@ struct ItemLinkMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV4", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       LinkedManifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json"))
@@ -238,7 +236,7 @@ struct ItemLinkMigrationTests {
     #expect(current.fieldHashes == original.fieldHashes)
     #expect(current.updatedAt == original.updatedAt)
     #expect(current.content.links == original.content.links)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
     #expect(after.decodedBackup.backup.schedules.count == 2)
     #expect(
@@ -256,8 +254,7 @@ struct ItemLinkMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV3", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifestData = try Data(contentsOf: directory.appendingPathComponent("manifest.json"))
     let manifest = try JSONDecoder().decode(LinkedManifest.self, from: manifestData)
@@ -345,7 +342,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.links == source.content.links)
     #expect(retained.state.globalDone == true)
     #expect(retained.state.archived == true)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(newRecovery.decodedBackup.backup.schedules.isEmpty)
     #expect(newRecovery.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -361,8 +358,7 @@ struct ItemLinkMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV1", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -443,7 +439,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(newRecovery.decodedBackup.backup.items.count == 2)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.globalDone == true)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.archived == true)
@@ -462,8 +458,7 @@ struct ItemLinkMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV2", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       LinkedManifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json"))
@@ -563,7 +558,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(retained.content.links == source.content.links)
     #expect(retained.fieldHashes == source.fieldHashes)
     #expect(retained.updatedAt == source.updatedAt)

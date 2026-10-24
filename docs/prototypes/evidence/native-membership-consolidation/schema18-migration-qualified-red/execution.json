@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.778,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()",
+      "className": "PlannerCoreStoreTests.NativeMembershipMigrationTests",
+      "seconds": 0.054190333,
+      "failures": [
+        "Issue recorded (error): Share must leave schema 18 for the main app to migrate: .ready(PlannerCore.PlannerDatasetSession(datasetId: AD0E1A77-2C4A-4AE3-B0C1-9932012EC22F, sessionId: A0EE0A94-7069-4608-A5E9-C263E04A2D0B, ownershipBinding: \"local:17CFF818-7CC4-4590-85C1-F946F41BE8E9\", epochId: 3F855B19-8B72-40C2-8CC5-3B2EFE5DDCBB))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

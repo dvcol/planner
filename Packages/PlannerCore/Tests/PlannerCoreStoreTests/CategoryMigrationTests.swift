@@ -11,8 +11,7 @@ struct CategoryMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV7", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -89,7 +88,7 @@ struct CategoryMigrationTests {
     #expect(checkpoint == manifest.latestCheckpoint + 1)
     #expect(read.content.name == "Food")
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 7)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try canonicalPortableFixtureExpectations(historical.portableData)
     let afterData = try #require(

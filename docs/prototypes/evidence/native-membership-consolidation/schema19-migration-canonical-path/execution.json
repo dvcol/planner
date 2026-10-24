@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.811,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()",
+      "className": "PlannerCoreStoreTests.NativeMembershipMigrationTests",
+      "seconds": 0.367090666,
+      "failures": [
+        "Caught error: Error Domain=NSCocoaErrorDomain Code=260 \"The file \u201ccheckpoint-3.json\u201d couldn\u2019t be opened because there is no such file.\" UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4B3004D1-88D1-4C91-8C62-A4C50395957B/dataset/recovery/ecovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-3.json, NSURL=file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/4B3004D1-88D1-4C91-8C62-A4C50395957B/dataset/recovery/ecovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-3.json, NSUnderlyingError=0x7b04a61aa0 {Error Domain=NSPOSIXErrorDomain Code=2 \"No such file or directory\"}} (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

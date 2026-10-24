@@ -1,0 +1,51 @@
+[
+  {
+    "identity": "eventsource",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/eventsource",
+    "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  },
+  {
+    "identity": "swift-atomics",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/swift-atomics",
+    "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  },
+  {
+    "identity": "swift-collections",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/swift-collections",
+    "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  },
+  {
+    "identity": "swift-log",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/swift-log",
+    "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  },
+  {
+    "identity": "swift-nio",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/swift-nio",
+    "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  },
+  {
+    "identity": "swift-sdk",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/swift-sdk",
+    "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  },
+  {
+    "identity": "swift-system",
+    "path": "/private/tmp/PlannerItinerarySelectionSourcePackages/checkouts/swift-system",
+    "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+    "matchesResolvedPin": true,
+    "workingTreeClean": true
+  }
+]

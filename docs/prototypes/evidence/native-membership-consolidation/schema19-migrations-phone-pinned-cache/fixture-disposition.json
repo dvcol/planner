@@ -1,0 +1,34 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/2B7B33D6-03EF-477E-B58D-D25E4B3B3FA1",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/23B4FAA7-ECCB-4726-B328-59951EC21541",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/A5123BA1-0D5D-4201-8216-3E1159255829",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/32A1C4FD-F424-4FD2-A48F-BE265BB5DD2F",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/26B24D61-49A8-4DA8-B758-DE82925D4C18",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/825BA9A7-38AE-43CC-8161-56A664B974A0",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/774D90A3-5517-4566-B6EE-536DFF8895C0",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/091273B9-0174-4717-A10E-62875D2334CF",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/ED5989E6-A5B4-49AC-B0E3-E537DA00CBE1",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/2ABEDE46-8FBB-42AB-96AF-5B8A65C8881C",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/AE198305-D5BC-40FA-8EC5-8AE814E92655",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/72218712-7EF4-4D0F-A5F7-B74C4BCE18FB",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/8A98E8EE-766E-4C9B-B937-B3D4885E9E75",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/0854DD26-F633-47FD-AF09-37EF883DA308",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/51BE122C-BAEA-4C90-A74F-39CDCBA0BABD",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/281DA8B1-3235-4D90-BDE5-4B7832EB89F2",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/D46D3E96-52A6-4028-AF1D-9AF7816DCC96",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerStoreFixtures/C43F7719-7F99-45DC-B812-9D37BFD67109"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "818c761db584d1c4fcacd1a149c7b3a21719336be3ae7aeed1d963d0125010eb",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 18,
+  "hostProcessIdentifiers": [
+    41726
+  ]
+}
