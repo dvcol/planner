@@ -635,12 +635,14 @@ func plannerStageMembershipConsolidation(_ backup: PlannerPortableBackup, contex
   context.processPendingChanges()
 }
 
-/// Stage only unresolved records; retained scope and causal authority are validated before preparation.
+/// Stage unresolved or surplus rows; retained scope and causal authority are validated before preparation.
 func plannerStageDetachedExpandedRetirements(
   context: ModelContext, memberships: [MembershipSnapshot], lineage: PlannerNativeLineage
 ) throws -> [PlannerPortableExpandedCompletion] {
   let liveMembershipBindings = Set(memberships.map { $0.baselineProvenance.membership })
   let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+  var retainedLiveContexts: [PlannerExpandedContext: Bool] = [:]
+  var contributedLiveContexts: Set<PlannerExpandedContext> = []
   var contributions: [PlannerPortableExpandedCompletion] = []
   for record in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
     guard let entryIdentifier = record.listEntryId,
@@ -652,7 +654,15 @@ func plannerStageDetachedExpandedRetirements(
     }
     let identity = PlannerPortableBoundIdentity(
       kind: .membership, id: membershipIdentifier, lifetimeId: membershipLifetime)
-    if liveMembershipBindings.contains(identity), (try? record.value()) != nil { continue }
+    if liveMembershipBindings.contains(identity), let value = try? record.value() {
+      guard let retainedDone = retainedLiveContexts[value.context] else {
+        retainedLiveContexts[value.context] = value.localDone
+        continue
+      }
+      if contributedLiveContexts.insert(value.context).inserted {
+        contributions.append(.init(context: value.context, localDone: retainedDone))
+      }
+    }
     if let entry = record.listEntry,
       entry.id != entryIdentifier || entry.lifetimeId != entryLifetime
     {

@@ -10,8 +10,91 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test func duplicateDoneRowsPreserveOnlyTheirActualInitialContribution() async throws {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    var graph = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: fixture)) as? [String: Any])
+    var expanded = try #require(graph["expandedCompletions"] as? [[String: Any]])
+    expanded[0]["localDone"] = true
+    graph["expandedCompletions"] = expanded
+    graph["contextAliases"] = []
+    graph["membershipProvenance"] = []
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: graph)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let entryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let membershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    var expectedExport: Data?
+    for _ in 0..<2 {
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: entryIdentifier,
+        membershipIdentifier: membershipIdentifier,
+        membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000841")!)
+      guard
+        case .snapshot(let contents) = await planner.query(
+          .init(
+            session: session,
+            request: .items(
+              .init(scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all)))),
+        case .appearance(let appearance) = await planner.read(
+          session: session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itineraryIdentifier, listEntryId: entryIdentifier,
+              membershipId: membershipIdentifier))),
+        case .exported(let after) = await planner.exportData(session: session),
+        case .decoded(let retained) = planner.decodeImport(after)
+      else { throw CancellationError() }
+      #expect(contents.matchingCount == 3)
+      #expect(appearance.localDone && appearance.effectiveDone && !appearance.globalDone)
+      #expect(retained.backup.contextAliases.count == 1)
+      #expect(
+        retained.backup.contextAliases.allSatisfy { $0.initialDone && $0.currentChangeId == nil })
+      let beforeGraph = try #require(
+        JSONSerialization.jsonObject(with: before) as? [String: Any])
+      let afterGraph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+      for key in beforeGraph.keys where key != "contextAliases" {
+        #expect(
+          NSDictionary(dictionary: [key: beforeGraph[key]!]).isEqual(to: [key: afterGraph[key]!]),
+          "Identical Done copies must preserve \(key).")
+      }
+      if let expectedExport { #expect(after == expectedExport) }
+      expectedExport = after
+    }
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let afterReopen) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(afterReopen == expectedExport)
+  }
+
   @Test(
-    arguments: ["retired", "live", "entry", "baseline"],
+    arguments: ["retired", "live", "entry", "baseline", "duplicate", "duplicateReversed"],
     [(false, false), (true, false), (false, true), (true, true)])
   func eligibleRetiredExpandedDeliveryPreservesItsExactBranchAndInitialContribution(
     delivery: String, conditions: (Bool, Bool)
@@ -92,11 +175,28 @@ struct NativeMembershipConsolidationTests {
     } else {
       deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
     }
-    try await insertDetachedExpandedCompletion(
-      storeURL: configuration.storeURL, entryIdentifier: firstEntry,
-      membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime,
-      retainMembershipRelationship: delivery == "entry",
-      detachEntryRelationship: delivery == "entry")
+    if delivery == "duplicateReversed" {
+      try await removeNativeExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: deliveredIdentifier)
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime)
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime,
+        localDone: false)
+    } else if delivery == "duplicate" {
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime)
+    } else {
+      try await insertDetachedExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: deliveredIdentifier, membershipLifetime: deliveredLifetime,
+        retainMembershipRelationship: delivery == "entry",
+        detachEntryRelationship: delivery == "entry")
+    }
     if preparationFails {
       guard
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
@@ -3425,7 +3525,8 @@ struct NativeMembershipConsolidationTests {
   }
 
   @MainActor private func insertIndependentExpandedCompletion(
-    storeURL: URL, entryIdentifier: UUID, membershipIdentifier: UUID, membershipLifetime: UUID
+    storeURL: URL, entryIdentifier: UUID, membershipIdentifier: UUID, membershipLifetime: UUID,
+    localDone: Bool = true
   ) throws {
     let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let container = try ModelContainer(
@@ -3442,7 +3543,8 @@ struct NativeMembershipConsolidationTests {
         $0.id == membershipIdentifier && $0.lifetimeId == membershipLifetime
       })
     context.insert(
-      PlannerSchemaV18.ExpandedCompletion(listEntry: entry, membership: member, localDone: true))
+      PlannerSchemaV18.ExpandedCompletion(
+        listEntry: entry, membership: member, localDone: localDone))
     try context.save()
   }
 

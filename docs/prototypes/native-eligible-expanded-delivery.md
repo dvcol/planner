@@ -26,4 +26,6 @@ Only closed, marked disposable stores from passing runs are removed. The [cleanu
 
 ## Remaining scope
 
+The [fully linked duplicate-row follow-up](native-duplicate-expanded-rows.md) additionally qualifies both physical row orders, explicit Reopen, real preparation failure/retry and identical Done copies without an invented Todo seed. It retains every observed value for repeated exact contexts through the existing resolver.
+
 Missing or contradictory identity/source data intentionally remains unavailable. The [exact legacy closure follow-up](native-legacy-membership-closure.md) implements original-identity protection without a strict pair barrier. Broader legacy alias/barrier admission, independent expanded-context closure admission, changed owner/entry lifetimes, broader restoration-family reconciliation, other prepared command families, alias-specific native/HTTP journeys and further native-save/interruption faults remain separate work. Actual Mac UI, signed/shared storage, installed Share, CloudKit convergence, physical performance, system invocation and final whole-app visual acceptance remain open. Signing stays deferred.

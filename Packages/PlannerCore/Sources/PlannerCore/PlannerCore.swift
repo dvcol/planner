@@ -4015,7 +4015,12 @@ public actor Planner {
       }
     }
     let expandedRecords = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>())
-    if expandedRecords.contains(where: { (try? $0.value()) == nil }) { return true }
+    var expandedContexts: Set<PlannerExpandedContext> = []
+    for record in expandedRecords {
+      guard let value = try? record.value(), expandedContexts.insert(value.context).inserted else {
+        return true
+      }
+    }
     if !lineage.contextAliases.isEmpty && !lineage.membershipProvenance.isEmpty {
       let aliases = PlannerMembershipConsolidation.aliasesRequiringCanonicalRootResolution(
         memberships: try records.map { try $0.value().baselineProvenance },
