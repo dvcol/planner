@@ -7,8 +7,7 @@ struct ExpandedCompletionMembershipTests {
   func closingMembershipClearsOnlyItsExpandedContextsAndOrdinaryReaddStartsTodo(mode: String)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -179,8 +178,7 @@ struct ExpandedCompletionMembershipTests {
   }
 
   @Test func undoRestoresMembershipContextsAcrossRepeatedEntriesAndItineraries() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

@@ -9,7 +9,6 @@ struct AssociationMoveUndoTests {
     async throws
   {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let creation = try await fixture.save(.createList(content: .init(name: "Destination")))
     let destination = try #require(creation.generated.first)
     let move = PlannerCommand.moveMembership(
@@ -75,7 +74,6 @@ struct AssociationMoveUndoTests {
     async throws
   {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let routeCreation = try await fixture.save(.createItinerary(content: .init(title: "Route")))
     let route = try #require(routeCreation.generated.first)
     var entryIdentifiers: [UUID] = []
@@ -126,7 +124,6 @@ struct AssociationMoveUndoTests {
   @Test(arguments: ["completion", "order", "branch", "expanded", "replacement", "origin"])
   func newerRelationshipChangesRejectTheWholeMoveUndo(change: String) async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let creation = try await fixture.save(.createList(content: .init(name: "Destination")))
     let destination = try #require(creation.generated.first)
     let otherCreation = try await fixture.save(.createItem(content: .init(title: "Other")))
@@ -196,7 +193,6 @@ struct AssociationMoveUndoTests {
 
   @Test func moveUndoPreservesAnExistingDestinationAndItsLaterLocalChanges() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let creation = try await fixture.save(.createList(content: .init(name: "Destination")))
     let destination = try #require(creation.generated.first)
     let addition = try await fixture.save(
@@ -237,7 +233,6 @@ struct AssociationMoveUndoTests {
 
   @Test func moveUndoRestoresOriginAndRemovesOnlyItsCreatedDestination() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let destinationCreation = try await fixture.save(
       .createList(content: .init(name: "Destination")))
     let destination = try #require(destinationCreation.generated.first)

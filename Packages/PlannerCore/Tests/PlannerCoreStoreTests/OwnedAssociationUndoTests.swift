@@ -7,7 +7,6 @@ struct OwnedAssociationUndoTests {
   @Test(arguments: [false, true])
   func committedGroupsRepairOnlyTheirRecoveryCheckpoint(restoring: Bool) async throws {
     let fixture = try await RemovalFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.storage.directory) }
     let command: PlannerCommand
     if restoring {
       command = .restoreAssociation(snapshot: fixture.snapshot)
@@ -67,10 +66,6 @@ struct OwnedAssociationUndoTests {
   {
     let fixture = try await RemovalFixture()
     let other = try await AssociationUndoFixture()
-    defer {
-      try? FileManager.default.removeItem(at: fixture.storage.directory)
-      try? FileManager.default.removeItem(at: other.directory)
-    }
     let otherBefore = try await other.export()
     let foreign = await other.planner.execute(
       .init(
@@ -132,7 +127,6 @@ struct OwnedAssociationUndoTests {
   ])
   func changedBindingsOrIncompatibleOrderRejectTheWholeRemovalGroup(change: String) async throws {
     let fixture = try await RemovalFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.storage.directory) }
     if change == "reordered anchors" || change == "recreated label" {
       let current = try await fixture.readItem()
       let changes: PlannerItemChanges
@@ -194,7 +188,6 @@ struct OwnedAssociationUndoTests {
 
   @Test func contentEditsAndIndependentAdditionsDoNotIssueRemovalHistory() async throws {
     let fixture = try await RemovalFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.storage.directory) }
     let current = try await fixture.readItem()
     let response = await fixture.storage.planner.execute(
       .init(
@@ -228,7 +221,6 @@ struct OwnedAssociationUndoTests {
     default: retained = [1, 3]
     }
     let fixture = try await RemovalFixture(retaining: retained)
-    defer { try? FileManager.default.removeItem(at: fixture.storage.directory) }
     let beforeEdit = try await fixture.readItem()
     let original = fixture.originalLinks
     var inputs: [PlannerLinkInput] = []
@@ -269,7 +261,6 @@ struct OwnedAssociationUndoTests {
 
   @Test func labelOnlyUndoPreservesAnIndependentBookmarkReorder() async throws {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let tagCreation = try await fixture.save(.createTag(content: .init(name: "Indoor")))
     let tag = try #require(tagCreation.generated.first)
     func readItem() async throws -> PlannerItemSourceRead {
@@ -324,7 +315,6 @@ struct OwnedAssociationUndoTests {
     async throws
   {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let tagCreation = try await fixture.save(.createTag(content: .init(name: "Rainy day")))
     let tag = try #require(tagCreation.generated.first)
     let routeCreation = try await fixture.save(
@@ -394,7 +384,6 @@ struct OwnedAssociationUndoTests {
     async throws
   {
     let fixture = try await AssociationUndoFixture()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let tagCreation = try await fixture.save(.createTag(content: .init(name: "Rainy day")))
     let tag = try #require(tagCreation.generated.first)
     func readItem() async throws -> PlannerItemSourceRead {

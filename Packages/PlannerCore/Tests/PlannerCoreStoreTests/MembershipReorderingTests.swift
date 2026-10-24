@@ -6,8 +6,7 @@ struct MembershipReorderingTests {
   @Test func reorderingKeepsMembershipIdentityLocalStateAndSourceContentAcrossReopenAndReplay()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -175,8 +174,7 @@ struct MembershipReorderingTests {
   @Test func invalidReordersAndUnavailableRecoveryLeaveTheIssuedWindowAndEverySourceUnchanged()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let recoveryDirectory = directory.appendingPathComponent("recovery")
     let planner = Planner(
       configuration: .init(
@@ -310,8 +308,7 @@ struct MembershipReorderingTests {
   @Test func closeAnchorReordersRebalanceWithoutLosingAnAppearanceOrResettingCompletion()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
