@@ -27,28 +27,43 @@ struct PlannerNativeLineage {
     self.membershipRemovals = membershipRemovals
   }
 
-  func seedCompletionContexts(
+  func recordCompletionAssertions(
     _ contributions: [(context: PlannerPortableCompletionContext, initialDone: Bool)],
-    context: ModelContext
+    done: Bool, context: ModelContext
   ) throws {
     guard !contributions.isEmpty else { return }
-    var currentContexts = Set(contextAliases.map(\.canonicalContext))
-    var aliases = Dictionary(uniqueKeysWithValues: contextAliases.map { ($0.aliasId, $0) })
+    let groups = Dictionary(grouping: contextAliases, by: \.canonicalContext)
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
     for contribution in contributions {
-      guard !currentContexts.contains(contribution.context) else { continue }
-      let identifier = plannerInitialCompletionAliasIdentifier(
-        context: contribution.context, done: contribution.initialDone)
-      guard aliases[identifier] == nil else {
+      let existing = groups[contribution.context] ?? []
+      let original = existing.filter { $0.context == contribution.context }.min {
+        $0.aliasId.uuidString < $1.aliasId.uuidString
+      }
+      let aliasIdentifier =
+        original?.aliasId
+        ?? plannerInitialCompletionAliasIdentifier(
+          context: contribution.context, done: contribution.initialDone)
+      guard original != nil || !contextAliases.contains(where: { $0.aliasId == aliasIdentifier })
+      else {
         throw PlannerFailure("readUnavailable", "The completion seed belongs to another context.")
       }
+      let changeIdentifier = UUID()
       let alias = PlannerPortableContextAlias(
-        aliasId: identifier, context: contribution.context, canonicalContext: contribution.context,
-        initialDone: contribution.initialDone, currentChangeId: nil)
+        aliasId: aliasIdentifier, context: contribution.context,
+        canonicalContext: contribution.context,
+        initialDone: original?.initialDone ?? contribution.initialDone,
+        currentChangeId: changeIdentifier)
+      let change = PlannerPortableCompletionChange(
+        id: changeIdentifier, aliasId: aliasIdentifier, context: contribution.context, done: done,
+        observedChangeIds: Array(Set(existing.compactMap(\.currentChangeId))).sorted {
+          $0.uuidString < $1.uuidString
+        })
       try plannerStageLineageRecord(
-        alias, identifier: identifier, kind: "contextAlias", records: records, context: context)
-      aliases[identifier] = alias
-      currentContexts.insert(contribution.context)
+        alias, identifier: aliasIdentifier, kind: "contextAlias", records: records, context: context
+      )
+      try plannerStageLineageRecord(
+        change, identifier: changeIdentifier, kind: "completionChange", records: records,
+        context: context)
     }
   }
 

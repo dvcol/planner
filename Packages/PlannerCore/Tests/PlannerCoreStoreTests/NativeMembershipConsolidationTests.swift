@@ -11,11 +11,20 @@ import Testing
 
 struct NativeMembershipConsolidationTests {
   @Test(
-    arguments: ["list", "expanded", "direct", "listBulk", "expandedBulk", "itineraryBulk"],
+    arguments: ["list", "expanded", "direct", "listBulk", "expandedBulk", "itineraryBulk"].flatMap {
+      [$0, "first:" + $0]
+    },
     [false, true])
   func reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(
-    scope: String, preparationFails: Bool
+    rawScope: String, preparationFails: Bool
   ) async throws {
+    let firstAssertion = rawScope.hasPrefix("first:")
+    let scope: String
+    if firstAssertion {
+      scope = String(rawScope.dropFirst("first:".count))
+    } else {
+      scope = rawScope
+    }
     let protectsList = scope == "list" || scope == "listBulk"
     let protectsFirstBranch =
       scope == "expanded" || scope == "expandedBulk" || scope == "itineraryBulk"
@@ -96,7 +105,8 @@ struct NativeMembershipConsolidationTests {
         operationId: operationIdentifier, session: session, command: review.command,
         reviewToken: review.reviewToken)
     }
-    var completion = try await completionOperation(done: true, operationIdentifier: UUID())
+    var completion = try await completionOperation(
+      done: !firstAssertion, operationIdentifier: UUID())
     if preparationFails {
       guard case .exported(let unchanged) = await planner.exportData(session: session),
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
@@ -123,20 +133,39 @@ struct NativeMembershipConsolidationTests {
       #expect(afterFailure == unchanged)
       #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
       completion = try await completionOperation(
-        done: true, operationIdentifier: completion.operationId)
+        done: !firstAssertion, operationIdentifier: completion.operationId)
     }
-    guard case .applied(_, .complete) = await planner.execute(completion).outcome else {
+    guard case .exported(let beforeAssertion) = await planner.exportData(session: session) else {
       throw CancellationError()
     }
-    let reopening = try await completionOperation(done: false, operationIdentifier: UUID())
+    let originalGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeAssertion) as? [String: Any])
+    let reopening: PlannerOperation
+    if firstAssertion {
+      reopening = completion
+    } else {
+      guard case .applied(_, .complete) = await planner.execute(completion).outcome else {
+        throw CancellationError()
+      }
+      reopening = try await completionOperation(done: false, operationIdentifier: UUID())
+    }
     guard
       case .applied(let reopened, .complete(let checkpoint)) = await planner.execute(reopening)
         .outcome,
       case .exported(let before) = await planner.exportData(session: session)
     else { throw CancellationError() }
     let beforeGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    if firstAssertion && !wholeItinerary {
+      #expect((beforeGraph["sources"] as? NSArray) == (originalGraph["sources"] as? NSArray))
+    }
     let changes = try #require(beforeGraph["completionChanges"] as? [[String: Any]])
-    #expect(changes.count == (wholeItinerary ? 5 : 2))
+    let expectedChangeCount: Int
+    if firstAssertion {
+      expectedChangeCount = wholeItinerary ? 3 : 1
+    } else {
+      expectedChangeCount = wholeItinerary ? 6 : 2
+    }
+    #expect(changes.count == expectedChangeCount)
     let aliases = try #require(beforeGraph["contextAliases"] as? [[String: Any]])
     #expect(aliases.count == (wholeItinerary ? 3 : 1))
     let initialValues = aliases.compactMap { $0["initialDone"] as? Bool }.sorted { !$0 && $1 }
@@ -146,7 +175,7 @@ struct NativeMembershipConsolidationTests {
     }
     let completing = changes.filter { $0["done"] as? Bool == true }
     let reopeningChanges = changes.filter { $0["done"] as? Bool == false }
-    #expect(completing.count == (wholeItinerary ? 2 : 1))
+    #expect(completing.count == (firstAssertion ? 0 : (wholeItinerary ? 3 : 1)))
     #expect(reopeningChanges.count == (wholeItinerary ? 3 : 1))
     for complete in completing {
       let completeIdentifier = try #require(complete["id"] as? String)
