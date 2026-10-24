@@ -1,0 +1,17 @@
+{
+  "root": "/private/tmp/PlannerCanonicalMembershipPhoneAppSource",
+  "base": "340d559f08fae23e8a8d8b2b46f6992926222d6f",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMaintenanceRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMaintenanceRecoveryTests.swift",
+    "Planner/Scenes/SavedBackupImportForm.swift",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift",
+    "Planner/Scenes/SavedRecoverySelectionView.swift",
+    "PlannerFixtureUITests/PreparedMaintenanceRecoveryJourneyTests.swift",
+    "PlannerFixtures/PlannerFixtureDataset.swift",
+    "PlannerFixtures/PlannerPreparedMaintenanceRecoveryFixture.swift"
+  ]
+}

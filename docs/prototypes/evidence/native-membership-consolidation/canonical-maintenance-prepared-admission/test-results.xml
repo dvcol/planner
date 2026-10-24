@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.0459e-05"/>
+    <testsuite name="TestResults" errors="0" tests="10" failures="0" skipped="0" time="0.138069917">
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="extraMaintenancePreparationFieldsCannotSupplyRecoveryEvidence()" time="0.074448958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()" time="0.074521209"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenancePreparationIsNotPresentedAsUnverified()" time="0.074648667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution()" time="0.074537709"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)" time="0.080848375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)" time="0.137653292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidPreparedMaintenanceCannotBeListedOrSelected(scenario:)" time="0.074531833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()" time="0.074594959"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()" time="0.077517833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)" time="0.074360708"/>
+    </testsuite>
+</testsuites>

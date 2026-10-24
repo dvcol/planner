@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A93F84A2-013E-439E-AAE9-D4590333DA90.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Canceling recovery review preserves the exact saved Item after relaunch_0_97D37231-0845-46AB-9451-10694289634A.png",
+        "timestamp" : 1792820879.666
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9683C4D9-A961-4B0D-9F70-667F1E9D27F4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "An unverified copy enters the existing explicit recovery review_0_8D3020A6-1368-4E2E-B6DC-C3758C3F4DD9.png",
+        "timestamp" : 1792820863.876
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "90A32DEC-2439-4B17-A193-AFBDD53BF4C2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Prepared maintenance appears separately from the acknowledged snapshot_0_029BA516-EFB4-45AA-9D92-FA2102E1379A.png",
+        "timestamp" : 1792820856.778
+      }
+    ],
+    "testIdentifier" : "PreparedMaintenanceRecoveryJourneyTests/testPreparedCopyStaysUnverifiedThroughReviewAndLeavesSavedItemsUnchanged()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/PreparedMaintenanceRecoveryJourneyTests/testPreparedCopyStaysUnverifiedThroughReviewAndLeavesSavedItemsUnchanged"
+  }
+]

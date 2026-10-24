@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.0001895"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="3" skipped="0" time="0.016389584">
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()" time="0.016034042">
+            <failure message="Expectation failed: view.preparedMaintenance.map(\.maintenanceId) == [maintenanceIdentifier] (error)"/>
+            <failure message="Expectation failed: view.preparedMaintenance.first?.evidence == &quot;preparedMaintenanceUnverified&quot; (error)"/>
+            <failure message="Expectation failed: view.preparedMaintenance.first?.requiresFreshReview == true (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

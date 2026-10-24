@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.5042e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.016476791">
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()" time="0.016124875">
+            <failure message="Issue recorded (error): Inspection must not discard undeclared prepared data: .listed(PlannerCore.PlannerRecoveryView(namespaceId: 00000000-0000-4000-8000-000000000920, datasetId: 00000000-0000-4000-8000-000000000910, ownershipDescription: nil, acknowledgedSnapshot: Optional(PlannerCore.PlannerSnapshotSummary(storageSchemaVersion: 19, portableFormatVersion: 3, checkpointGeneration: 7, integrity: &quot;verified&quot;)), preparedProposals: [], preparedMaintenance: [PlannerCore.PlannerPreparedMaintenanceSummary(maintenanceId: 00000000-0000-4000-8000-000000000941, evidence: &quot;preparedMaintenanceUnverified&quot;, requiresFreshReview: true)], availability: PlannerCore.PlannerRecoveryView.Availability.available))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

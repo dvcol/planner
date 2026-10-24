@@ -1,0 +1,35 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "06214880-3814-4A6E-B915-DA79B4D871EA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Canceling recovery review preserves the exact saved Item after relaunch_0_F51A5241-B6D2-4C1F-AA1B-11A51C81D148.png",
+        "timestamp": 1792821353.959
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "B2A48A4D-01A6-4A44-8FF6-C293135529D8.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "An unverified copy enters the existing explicit recovery review_0_8D6D7EA4-868F-4A11-B485-432564A623B6.png",
+        "timestamp": 1792821336.75
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "EC971F95-4D2A-492B-9150-EFFC1496B1E1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Prepared maintenance appears separately from the acknowledged snapshot_0_1FA906D8-18A2-4CBA-9529-BB03CA9CB9A2.png",
+        "timestamp": 1792821329.642
+      }
+    ],
+    "testIdentifier": "PreparedMaintenanceRecoveryJourneyTests/testPreparedCopyStaysUnverifiedThroughReviewAndLeavesSavedItemsUnchanged()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/PreparedMaintenanceRecoveryJourneyTests/testPreparedCopyStaysUnverifiedThroughReviewAndLeavesSavedItemsUnchanged"
+  }
+]

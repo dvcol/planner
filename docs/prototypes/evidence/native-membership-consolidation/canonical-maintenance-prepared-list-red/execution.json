@@ -1,0 +1,21 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 189.895,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.016034042,
+      "failures": [
+        "Expectation failed: view.preparedMaintenance.map(\\.maintenanceId) == [maintenanceIdentifier] (error)",
+        "Expectation failed: view.preparedMaintenance.first?.evidence == \"preparedMaintenanceUnverified\" (error)",
+        "Expectation failed: view.preparedMaintenance.first?.requiresFreshReview == true (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,21 @@
+{
+  "coreFunctionsPerPlatform": 190,
+  "coreInvocationsPerPlatform": 565,
+  "suitesPerPlatform": 78,
+  "matchedCoreInputs": 805,
+  "fullPhoneInputs": 1144,
+  "coreProductsPerPlatform": 2,
+  "macAdapterFunctions": 4,
+  "macAppShareAndFixtureBuildsPassed": true,
+  "mobileAppAndShareBuildPassed": true,
+  "mobileAppAndShareProducts": 6,
+  "closedDisposableStoresRemoved": 1222,
+  "nativeRecoveryPhoneAndDarkIPadPassed": true,
+  "strictSwiftFormatFiles": 11,
+  "macAdapterTestOnlyInputDrift": [
+    "PlannerFixtureUITests/PreparedMaintenanceRecoveryJourneyTests.swift"
+  ],
+  "productionClientInputDrift": [],
+  "savedCommandOrMaintenanceExecutionInferredFromPreparation": false,
+  "signedPhysicalCloudOrSystemInvocationQualified": false
+}

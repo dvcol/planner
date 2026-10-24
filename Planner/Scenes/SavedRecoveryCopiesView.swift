@@ -66,6 +66,18 @@ struct SavedRecoveryCopiesView: View {
                   .disabled(copy.availability != .available)
                   .accessibilityIdentifier("saved.recovery.proposal.\(proposal.proposalId)")
                 }
+                ForEach(copy.preparedMaintenance, id: \.maintenanceId) { preparation in
+                  Button {
+                    requestSelection(
+                      .maintenanceProposal(
+                        namespaceId: copy.namespaceId, maintenanceId: preparation.maintenanceId))
+                  } label: {
+                    Label("Unverified recovery copy", systemImage: "exclamationmark.triangle")
+                  }
+                  .disabled(copy.availability != .available)
+                  .accessibilityIdentifier(
+                    "saved.recovery.maintenance.\(preparation.maintenanceId)")
+                }
                 if copy.availability != .available {
                   Label(availabilityDescription(copy), systemImage: "exclamationmark.triangle")
                 }
@@ -76,8 +88,10 @@ struct SavedRecoveryCopiesView: View {
               } header: {
                 Text(copy.ownershipDescription ?? "Dataset \(copy.datasetId.uuidString.prefix(8))")
               } footer: {
-                if !copy.preparedProposals.isEmpty {
-                  Text("Unverified proposals contain intended changes, not confirmed saved data.")
+                if !copy.preparedProposals.isEmpty || !copy.preparedMaintenance.isEmpty {
+                  Text(
+                    "Unverified copies contain intended changes. Review them before restoring data."
+                  )
                 }
               }
             }

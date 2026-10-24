@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.688,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.016124875,
+      "failures": [
+        "Issue recorded (error): Inspection must not discard undeclared prepared data: .listed(PlannerCore.PlannerRecoveryView(namespaceId: 00000000-0000-4000-8000-000000000920, datasetId: 00000000-0000-4000-8000-000000000910, ownershipDescription: nil, acknowledgedSnapshot: Optional(PlannerCore.PlannerSnapshotSummary(storageSchemaVersion: 19, portableFormatVersion: 3, checkpointGeneration: 7, integrity: \"verified\")), preparedProposals: [], preparedMaintenance: [PlannerCore.PlannerPreparedMaintenanceSummary(maintenanceId: 00000000-0000-4000-8000-000000000941, evidence: \"preparedMaintenanceUnverified\", requiresFreshReview: true)], availability: PlannerCore.PlannerRecoveryView.Availability.available))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

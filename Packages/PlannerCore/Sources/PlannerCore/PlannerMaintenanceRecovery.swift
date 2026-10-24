@@ -20,6 +20,50 @@ struct PlannerPreparedMaintenance: Codable {
   let proposedBackup: PlannerDataSnapshot
   let evidence: String
 
+  private enum CodingKeys: String, CodingKey, CaseIterable {
+    case format, formatVersion, maintenanceId, namespaceId, datasetId, epochId, ownershipBinding,
+      kind, ruleVersion, proposedBackup, evidence
+  }
+
+  init(from decoder: any Decoder) throws {
+    guard case .object(let fields) = try PlannerImportJSON(from: decoder),
+      Set(fields.keys) == Set(CodingKeys.allCases.map(\.rawValue)),
+      let proposedBackupValue = fields[CodingKeys.proposedBackup.rawValue]
+    else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "A maintenance preparation must contain its exact fields.")
+    }
+    do {
+      var portableDecoder = PlannerPortableImportDecoder(
+        root: .init(value: proposedBackupValue, path: "/proposedBackup"))
+      _ = try portableDecoder.decode()
+      let container = try decoder.container(keyedBy: CodingKeys.self)
+      format = try container.decode(String.self, forKey: .format)
+      formatVersion = try container.decode(Int.self, forKey: .formatVersion)
+      maintenanceId = try container.decode(UUID.self, forKey: .maintenanceId)
+      namespaceId = try container.decode(UUID.self, forKey: .namespaceId)
+      datasetId = try container.decode(UUID.self, forKey: .datasetId)
+      epochId = try container.decode(UUID.self, forKey: .epochId)
+      ownershipBinding = try container.decode(String.self, forKey: .ownershipBinding)
+      kind = try container.decode(String.self, forKey: .kind)
+      ruleVersion = try container.decode(Int.self, forKey: .ruleVersion)
+      proposedBackup = try container.decode(PlannerDataSnapshot.self, forKey: .proposedBackup)
+      evidence = try container.decode(String.self, forKey: .evidence)
+    } catch let reason as PlannerFailure {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", reason.message, propertyPath: reason.propertyPath)
+    } catch {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "A maintenance preparation contains malformed data.")
+    }
+  }
+
+  var summary: PlannerPreparedMaintenanceSummary {
+    .init(
+      maintenanceId: maintenanceId, evidence: "preparedMaintenanceUnverified",
+      requiresFreshReview: true)
+  }
+
   init(maintenanceId: UUID, identity: PlannerStoreIdentity, proposedBackup: PlannerDataSnapshot) {
     format = "planner-maintenance-preparation"
     formatVersion = 1
@@ -179,6 +223,31 @@ extension PlannerRecoveryArchive {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "Maintenance commit does not match its durable preparation.")
     }
+  }
+
+  func preparedMaintenance() throws -> [PlannerPreparedMaintenance] {
+    let completed = Set(try latest()?.maintenanceReceipts.map { $0.evidence.maintenanceId } ?? [])
+    let files = try FileManager.default.contentsOfDirectory(
+      at: namespaceURL, includingPropertiesForKeys: nil
+    ).filter { $0.lastPathComponent.hasPrefix("maintenance-") && $0.pathExtension == "json" }
+    let preparations = try files.map { file in
+      let bytes = try Data(contentsOf: file)
+      let preparation = try JSONDecoder().decode(PlannerPreparedMaintenance.self, from: bytes)
+      _ = try preparation.validated(identity: identity, bytes: bytes)
+      guard file.lastPathComponent == "maintenance-\(preparation.maintenanceId.uuidString).json"
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure",
+          "The maintenance preparation identity does not match its file.")
+      }
+      return preparation
+    }
+    guard Set(preparations.map(\.maintenanceId)).count == preparations.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Prepared maintenance identities are duplicated.")
+    }
+    return preparations.filter { !completed.contains($0.maintenanceId) }
+      .sorted { $0.maintenanceId.uuidString < $1.maintenanceId.uuidString }
   }
 
   func incompleteMaintenance(in context: ModelContext, envelope: RecoveryEnvelope?) throws -> [UUID]

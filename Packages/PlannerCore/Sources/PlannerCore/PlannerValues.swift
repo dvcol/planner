@@ -602,6 +602,7 @@ public enum PlannerRecoveryRequest: Sendable {
   case namespace(namespaceId: UUID)
   case acknowledgedSnapshot(namespaceId: UUID, checkpointGeneration: Int64)
   case proposal(namespaceId: UUID, proposalId: UUID)
+  case maintenanceProposal(namespaceId: UUID, maintenanceId: UUID)
 }
 
 public struct PlannerSnapshotSummary: Sendable {
@@ -618,6 +619,12 @@ public struct PlannerProposalSummary: Sendable {
   public let requiresFreshReview: Bool
 }
 
+public struct PlannerPreparedMaintenanceSummary: Sendable {
+  public let maintenanceId: UUID
+  public let evidence: String
+  public let requiresFreshReview: Bool
+}
+
 public struct PlannerRecoveryView: Sendable {
   public enum Availability: Sendable { case available, unavailable, ownershipUnverified }
   public let namespaceId: UUID
@@ -625,11 +632,14 @@ public struct PlannerRecoveryView: Sendable {
   public let ownershipDescription: String?
   public let acknowledgedSnapshot: PlannerSnapshotSummary?
   public let preparedProposals: [PlannerProposalSummary]
+  public let preparedMaintenance: [PlannerPreparedMaintenanceSummary]
   public let availability: Availability
 }
 
 public struct PlannerRecoverySelection: Sendable {
-  public enum Evidence: Sendable { case acknowledgedSnapshot, preparedUnverified }
+  public enum Evidence: Sendable {
+    case acknowledgedSnapshot, preparedUnverified, preparedMaintenanceUnverified
+  }
   public let selectionId: UUID
   public let namespaceId: UUID
   public let datasetId: UUID
@@ -638,6 +648,7 @@ public struct PlannerRecoverySelection: Sendable {
   public let checkpointGeneration: Int64?
   public let proposalId: UUID?
   public let originalOperationId: UUID?
+  public let maintenanceId: UUID?
   public let portableData: Data
   public let decodedBackup: PlannerDecodedBackup
 }
