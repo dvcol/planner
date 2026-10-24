@@ -1,0 +1,128 @@
+{
+  "identity": {
+    "namespaceId": "00000000-0000-4000-8000-000000000920",
+    "datasetId": "00000000-0000-4000-8000-000000000910",
+    "epochId": "00000000-0000-4000-8000-000000000930",
+    "ownershipBinding": "local:membership-fixture"
+  },
+  "name": "legacy-new-destination-move-v1",
+  "version": 1,
+  "canonicalValue": [
+    "record",
+    {
+      "command": [
+        "record",
+        {
+          "type": [
+            "string",
+            "moveMembership"
+          ],
+          "listId": [
+            "identity",
+            "00000000-0000-4000-8000-000000000201"
+          ],
+          "membershipId": [
+            "identity",
+            "00000000-0000-4000-8000-000000000405"
+          ],
+          "destinationListId": [
+            "identity",
+            "00000000-0000-4000-8000-000000000202"
+          ],
+          "placement": [
+            "record",
+            {
+              "kind": [
+                "string",
+                "last"
+              ]
+            }
+          ]
+        }
+      ],
+      "datasetId": [
+        "identity",
+        "00000000-0000-4000-8000-000000000910"
+      ],
+      "ownershipBinding": [
+        "string",
+        "local:membership-fixture"
+      ],
+      "resolvedBindings": [
+        "identitySet",
+        [
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "item"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000101"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000811"
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "list"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000201"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000821"
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "membership"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000405"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000845"
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "list"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000202"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000822"
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ],
+  "payloadBase64": "UGxhbm5lck9wZXJhdGlvblBheWxvYWQAAAAAARgAAAAAAAAABAAAAAAAAAAHY29tbWFuZBgAAAAAAAAABQAAAAAAAAARZGVzdGluYXRpb25MaXN0SWQUAAAAAAAAQACAAAAAAAACAgAAAAAAAAAGbGlzdElkFAAAAAAAAEAAgAAAAAAAAgEAAAAAAAAADG1lbWJlcnNoaXBJZBQAAAAAAABAAIAAAAAAAAQFAAAAAAAAAAlwbGFjZW1lbnQYAAAAAAAAAAEAAAAAAAAABGtpbmQQAAAAAAAAAARsYXN0AAAAAAAAAAR0eXBlEAAAAAAAAAAObW92ZU1lbWJlcnNoaXAAAAAAAAAACWRhdGFzZXRJZBQAAAAAAABAAIAAAAAAAAkQAAAAAAAAABBvd25lcnNoaXBCaW5kaW5nEAAAAAAAAAAYbG9jYWw6bWVtYmVyc2hpcC1maXh0dXJlAAAAAAAAABByZXNvbHZlZEJpbmRpbmdzFwAAAAAAAAAEGAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAEBAAAAAAAAAARraW5kEAAAAAAAAAAEaXRlbQAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAgRGAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAIBAAAAAAAAAARraW5kEAAAAAAAAAAEbGlzdAAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAghGAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAICAAAAAAAAAARraW5kEAAAAAAAAAAEbGlzdAAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAgiGAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAQFAAAAAAAAAARraW5kEAAAAAAAAAAKbWVtYmVyc2hpcAAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAhF",
+  "payloadDigest": "sha256-payload-v1:8350bd75b8814566c944720e35c67f07e64ad06b2f4949a5fb4ab68c5d347d09"
+}
