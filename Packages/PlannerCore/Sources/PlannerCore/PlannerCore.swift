@@ -4032,9 +4032,16 @@ public actor Planner {
       }
     }
     let expandedRecords = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>())
+    let closedExpandedContexts = Set(
+      lineage.deletionMarkers.compactMap { marker -> PlannerExpandedContext? in
+        guard case .expandedCompletion(let completionContext) = marker.target else { return nil }
+        return completionContext
+      })
     var expandedContexts: Set<PlannerExpandedContext> = []
     for record in expandedRecords {
-      guard let value = try? record.value(), expandedContexts.insert(value.context).inserted else {
+      guard let value = try? record.value(), expandedContexts.insert(value.context).inserted,
+        !closedExpandedContexts.contains(value.context)
+      else {
         return true
       }
     }

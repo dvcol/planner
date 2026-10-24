@@ -10,6 +10,118 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(arguments: [false, true])
+  func delayedClosedCompletionIsRetiredWhileItsEntryAndMembershipSurvive(done: Bool) async throws {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    var graph = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: fixture)) as? [String: Any])
+    var expanded = try #require(graph["expandedCompletions"] as? [[String: Any]])
+    let removed = expanded.removeFirst()
+    graph["expandedCompletions"] = expanded
+    graph["deletionMarkers"] = [
+      [
+        "deletionId": "00000000-0000-4000-8000-000000000891",
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": ["kind": "expandedCompletion", "context": try #require(removed["context"])],
+        "closedFamilyId": NSNull(),
+      ]
+    ]
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: graph)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite))
+    else { throw CancellationError() }
+    let operation = PlannerOperation(
+      operationId: UUID(), session: session, command: review.command,
+      reviewToken: review.reviewToken)
+    guard
+      case .applied(let imported, .complete(let checkpoint)) = await planner.execute(operation)
+        .outcome,
+      case .exported(let before) = await planner.exportData(session: session),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let entryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let membershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: entryIdentifier,
+      membershipIdentifier: membershipIdentifier,
+      membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000841")!,
+      localDone: done)
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all))))
+    let exported = await planner.exportData(session: session)
+    guard case .snapshot(let contents) = query, case .exported(let after) = exported,
+      case .appearance(let appearance) = await planner.read(
+        session: session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: entryIdentifier,
+            membershipId: membershipIdentifier))),
+      case .status(let status) = await planner.read(session: session, request: .status),
+      case .known(let latest, let operations, let maintenance, let blocked) = status.recovery,
+      let latest
+    else {
+      Issue.record(
+        "A closed completion must retire independently of its scalar: \(query), \(exported)")
+      return
+    }
+    #expect(contents.matchingCount == 3)
+    #expect(!appearance.localDone && !appearance.effectiveDone && !appearance.globalDone)
+    #expect(after == before)
+    #expect(latest > checkpoint && operations.isEmpty && maintenance.isEmpty && !blocked)
+    guard
+      case .selected(let recovered) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: latest))
+    else { throw CancellationError() }
+    let recoveredGraph = try #require(
+      JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+    let expectedGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    #expect(NSDictionary(dictionary: recoveredGraph).isEqual(to: expectedGraph))
+    guard
+      case .applied(let replay, .complete(let replayCheckpoint)) = await planner.execute(operation)
+        .outcome
+    else { throw CancellationError() }
+    #expect(replay == imported && replayCheckpoint == checkpoint)
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let acknowledgedFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    guard
+      case .snapshot = await planner.query(
+        .init(
+          session: session,
+          request: .items(
+            .init(scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all))))
+    else { throw CancellationError() }
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == acknowledgedFiles)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let retained) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(retained == before)
+  }
+
   @Test(arguments: ["removed", "restored", "unproven", "preparationFailure", "publicationFailure"])
   func delayedCompletionForARemovedItineraryStopDoesNotBlockTheSurvivingPlan(delivery: String)
     async throws
