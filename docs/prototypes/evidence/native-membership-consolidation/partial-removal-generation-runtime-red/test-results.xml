@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000188791"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.164694042">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd()" time="0.164358083">
+            <failure message="Issue recorded (error): The unseen second removal must suppress the partially informed Add: .failed(PlannerCore.PlannerFailure(code: &quot;readUnavailable&quot;, propertyPath: nil, message: &quot;A suppressed generation needs its retained closed context.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

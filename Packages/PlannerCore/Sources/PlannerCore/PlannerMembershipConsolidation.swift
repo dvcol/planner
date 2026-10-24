@@ -54,15 +54,14 @@ struct PlannerMembershipConsolidation {
     for (generation, contributions) in suppressed {
       let roots = provenance.values.filter {
         $0.pair == generation.pair && $0.observedRemovalIds == generation.basis
-          && graph.isClosed($0.membership)
       }.sorted {
         if $0.membershipId != $1.membershipId {
           return $0.membershipId.uuidString < $1.membershipId.uuidString
         }
         return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
       }
-      guard let root = roots.first else {
-        throw Self.unresolved("A suppressed generation needs its retained closed context.")
+      guard let root = roots.first(where: { graph.isClosed($0.membership) }) ?? roots.first else {
+        throw Self.unresolved("A suppressed generation needs its retained membership binding.")
       }
       _ = try Self.normalize(
         canonical: .listMembership(

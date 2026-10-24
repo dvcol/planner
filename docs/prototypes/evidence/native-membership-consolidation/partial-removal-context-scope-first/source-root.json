@@ -1,0 +1,12 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "bfdaa43b66f120f30d3dff3f9488f2dc06071514",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipConsolidation.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipProvenance.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipConsolidationTests.swift"
+  ]
+}

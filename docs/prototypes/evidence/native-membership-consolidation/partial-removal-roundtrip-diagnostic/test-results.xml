@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.0001"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.435647042">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)" time="0.4351905">
+            <failure message="Issue recorded (error): A valid suppressed context must survive empty-dataset review: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: Optional(&quot;/contextAliases/1/canonicalContext&quot;), message: &quot;Completion history needs its current context owner.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): A valid suppressed context must survive empty-dataset review: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: Optional(&quot;/contextAliases/0/canonicalContext&quot;), message: &quot;Completion history needs its current context owner.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

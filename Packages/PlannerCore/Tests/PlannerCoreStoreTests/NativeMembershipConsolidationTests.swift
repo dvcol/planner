@@ -10,6 +10,262 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(arguments: [false, true])
+  func anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(
+    withRepeatedListEntries: Bool
+  ) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let itemResult, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Museum", notes: "Keep shared content")))
+      ).outcome,
+      let item = itemResult.generated.first,
+      case .applied(let listResult, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: .createList(content: .init(name: "Tokyo"))
+        )
+      ).outcome,
+      let list = listResult.generated.first
+    else { throw CancellationError() }
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id)
+    var itinerary: PlannerEntityReference?
+    var entryIdentifiers: [UUID] = []
+    if withRepeatedListEntries {
+      guard
+        case .applied(let created, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .createItinerary(content: .init(title: "Repeated route")))
+        ).outcome, let route = created.generated.first
+      else { throw CancellationError() }
+      itinerary = route
+      for _ in 0..<2 {
+        guard
+          case .applied(let entry, .complete) = await planner.execute(
+            .init(
+              operationId: UUID(), session: session,
+              command: .addItineraryEntry(itineraryId: route.id, source: list, placement: .last))
+          ).outcome, case .itineraryEntry(let identifier, _, _) = entry.generatedReferences.first
+        else { throw CancellationError() }
+        entryIdentifiers.append(identifier)
+      }
+    }
+    let originalIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    guard
+      case .snapshot = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .list(list.id), completion: .all, archive: .all)))),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .removeMembership(listId: list.id, membershipId: originalIdentifier))
+      ).outcome,
+      case .applied(let partialAddition, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let partialIdentifier, _, _) = partialAddition.generatedReferences.first,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(
+            scope: .appearance(
+              .listMembership(listId: list.id, membershipId: partialIdentifier)), done: true))
+      ).outcome
+    else { throw CancellationError() }
+    if let itinerary {
+      guard
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .setCompletion(
+              scope: .appearance(
+                .expandedListItem(
+                  itineraryId: itinerary.id, listEntryId: entryIdentifiers[0],
+                  membershipId: partialIdentifier)), done: true))
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard case .exported(let beforeArrival) = await planner.exportData(session: session),
+      case .decoded(let before) = planner.decodeImport(beforeArrival),
+      let partial = before.backup.membershipProvenance.first(where: {
+        $0.membershipId == partialIdentifier
+      })
+    else { throw CancellationError() }
+    let beforeGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeArrival) as? NSDictionary)
+    #expect(partial.observedRemovalIds.count == 1)
+    let secondRemovalIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000892")!
+    try await insertSecondIndependentRemoval(
+      storeURL: configuration.storeURL, deletionIdentifier: secondRemovalIdentifier)
+    let result = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .list(list.id), completion: .all, archive: .all))))
+    guard case .snapshot(let suppressed) = result,
+      case .exported(let suppressedData) = await planner.exportData(session: session),
+      case .decoded(let suppressedBackup) = planner.decodeImport(suppressedData)
+    else {
+      Issue.record("The unseen second removal must suppress the partially informed Add: \(result)")
+      return
+    }
+    let suppressedGraph = try #require(
+      JSONSerialization.jsonObject(with: suppressedData) as? NSDictionary)
+    #expect(suppressed.matchingCount == 0)
+    #expect(suppressedBackup.backup.memberships.isEmpty)
+    #expect(suppressedBackup.backup.expandedCompletions.isEmpty)
+    for entryIdentifier in entryIdentifiers {
+      #expect(
+        suppressedBackup.backup.contextAliases.contains { alias in
+          if case .expandedListItem(let context) = alias.context {
+            return context.listEntryId == entryIdentifier
+              && context.membershipId == partialIdentifier
+              && alias.canonicalContext == alias.context
+          }
+          return false
+        })
+    }
+    #expect((suppressedGraph["sources"] as? NSArray) == (beforeGraph["sources"] as? NSArray))
+    #expect(
+      (suppressedGraph["completionChanges"] as? NSArray)
+        == (beforeGraph["completionChanges"] as? NSArray))
+    #expect(suppressedBackup.backup.membershipProvenance.contains(partial))
+    #expect(suppressedBackup.backup.membershipRemovals.count == 2)
+    #expect(
+      suppressedBackup.backup.deletionMarkers.count == before.backup.deletionMarkers.count + 1)
+    #expect(
+      suppressedBackup.backup.contextAliases.contains { alias in
+        alias.context
+          == .listMembership(
+            membershipId: partialIdentifier, membershipLifetimeId: partial.membershipLifetimeId)
+          && alias.canonicalContext == alias.context
+      })
+    var unprovenGraph = try #require(
+      JSONSerialization.jsonObject(with: suppressedData) as? [String: Any])
+    let unprovenMarkers = try #require(unprovenGraph["deletionMarkers"] as? [[String: Any]])
+    let unprovenRemovals = try #require(unprovenGraph["membershipRemovals"] as? [[String: Any]])
+    unprovenGraph["deletionMarkers"] = unprovenMarkers.filter {
+      $0["deletionId"] as? String != secondRemovalIdentifier.uuidString
+    }
+    unprovenGraph["membershipRemovals"] = unprovenRemovals.filter {
+      $0["deletionId"] as? String != secondRemovalIdentifier.uuidString
+    }
+    guard
+      case .invalid(let missingAuthority) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: unprovenGraph))
+    else {
+      Issue.record("Retained provenance alone must not authorize an absent canonical membership.")
+      return
+    }
+    #expect(missingAuthority.code == "invalidInput")
+    #expect(missingAuthority.propertyPath?.hasSuffix("/canonicalContext/membershipId") == true)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+      case .applied(let informedAddition, .complete) = await reopened.execute(
+        .init(
+          operationId: UUID(), session: reopenedSession,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let informedIdentifier, _, _) = informedAddition.generatedReferences.first,
+      case .snapshot(let todo) = await reopened.query(
+        .init(
+          session: reopenedSession,
+          request: .items(.init(scope: .list(list.id), completion: .todo, archive: .all)))),
+      case .snapshot(let done) = await reopened.query(
+        .init(
+          session: reopenedSession,
+          request: .items(.init(scope: .list(list.id), completion: .done, archive: .all)))),
+      case .exported(let informedData) = await reopened.exportData(session: reopenedSession),
+      case .decoded(let informed) = reopened.decodeImport(informedData),
+      let informedProvenance = informed.backup.membershipProvenance.first(where: {
+        $0.membershipId == informedIdentifier
+      })
+    else { throw CancellationError() }
+    #expect(reopenedData == suppressedData)
+    #expect(todo.matchingCount == 1 && done.matchingCount == 0)
+    #expect(informedIdentifier != partialIdentifier)
+    #expect(
+      Set(informedProvenance.observedRemovalIds)
+        == Set([
+          partial.observedRemovalIds[0], secondRemovalIdentifier,
+        ]))
+    if let itinerary {
+      for entryIdentifier in entryIdentifiers {
+        guard
+          case .appearance(let appearance) = await reopened.read(
+            session: reopenedSession,
+            request: .appearance(
+              .expandedListItem(
+                itineraryId: itinerary.id, listEntryId: entryIdentifier,
+                membershipId: informedIdentifier)))
+        else { throw CancellationError() }
+        #expect(appearance.localDone == false && appearance.effectiveDone == false)
+      }
+    }
+    let staleAppearance = PlannerAppearance.listMembership(
+      listId: list.id, membershipId: partialIdentifier)
+    guard
+      case .failed(let missingAppearance) = await reopened.read(
+        session: reopenedSession, request: .appearance(staleAppearance)),
+      case .rejected(let missingAction) = await reopened.execute(
+        .init(
+          operationId: UUID(), session: reopenedSession,
+          command: .setCompletion(scope: .appearance(staleAppearance), done: true))
+      ).outcome,
+      case .exported(let afterRejectedAction) = await reopened.exportData(session: reopenedSession)
+    else {
+      Issue.record("A suppressed context must never target a later informed membership.")
+      return
+    }
+    #expect(missingAppearance.code == "missingReference")
+    #expect(missingAction.code == "missingReference")
+    #expect(afterRejectedAction == informedData)
+    let targetDirectory = try makePlannerStoreFixtureDirectory()
+    let target = Planner(
+      configuration: .init(
+        storeURL: targetDirectory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: targetDirectory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: targetDirectory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let targetSession) = await target.bootstrap(),
+      case .decoded(let imported) = target.decodeImport(informedData)
+    else { throw CancellationError() }
+    let targetReview = await target.prepareReview(
+      session: targetSession, command: .applyImport(backup: imported, mode: .overwrite))
+    guard case .reviewed(let review) = targetReview else {
+      Issue.record("A valid suppressed context must survive empty-dataset review: \(targetReview)")
+      return
+    }
+    let targetResult = await target.execute(
+      .init(
+        operationId: UUID(), session: targetSession, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(_, .complete) = targetResult.outcome else {
+      Issue.record("Reviewed suppressed history must round-trip intact: \(targetResult)")
+      return
+    }
+    guard case .exported(let roundTripped) = await target.exportData(session: targetSession)
+    else { throw CancellationError() }
+    #expect(roundTripped == informedData)
+    let informedGraph = try #require(
+      JSONSerialization.jsonObject(with: informedData) as? NSDictionary)
+    #expect(
+      (informedGraph["completionChanges"] as? NSArray)
+        == (beforeGraph["completionChanges"] as? NSArray))
+  }
+
   @Test func aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
@@ -521,6 +777,34 @@ struct NativeMembershipConsolidationTests {
     else { throw CancellationError() }
     #expect(reopenedData == data)
     #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeNoOp)
+  }
+
+  /// Simulate a second offline Remove of the other baseline contribution without forging a receipt.
+  @MainActor private func insertSecondIndependentRemoval(
+    storeURL: URL, deletionIdentifier: UUID
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    context.insert(
+      try PlannerSchemaV4.DeletionMarker(
+        .init(
+          deletionId: deletionIdentifier,
+          operationId: UUID(uuidString: "00000000-0000-4000-8000-000000000902")!,
+          target: .membership(
+            .init(
+              kind: "membership", id: UUID(uuidString: "00000000-0000-4000-8000-000000000402")!,
+              lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000842")!)),
+          closedFamilyId: nil)))
+    context.insert(
+      PlannerSchemaV16.LineageRecord(
+        identifier: deletionIdentifier, kind: "membershipRemoval",
+        data: try JSONEncoder().encode(
+          PlannerPortableMembershipRemoval(deletionId: deletionIdentifier))))
+    try context.save()
   }
 
   /// Model access constructs the actual persisted input; all behavioral observations use Planner.

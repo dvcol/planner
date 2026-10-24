@@ -1,0 +1,90 @@
+[
+  {
+    "phase": "partial-removal-canonical-mac",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 196,
+    "failedFunctions": 0
+  },
+  {
+    "phase": "partial-removal-canonical-phone",
+    "exitCode": 0,
+    "functions": 196,
+    "failedFunctions": 0,
+    "skipped": 0,
+    "scope": "See matched Swift Testing functions/invocations in partial-removal-validation.json."
+  },
+  {
+    "phase": "partial-removal-context-scope-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 1,
+    "failedFunctions": 0
+  },
+  {
+    "phase": "partial-removal-expanded-first",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 1,
+    "failedFunctions": 1
+  },
+  {
+    "phase": "partial-removal-generation-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 1,
+    "failedFunctions": 0
+  },
+  {
+    "phase": "partial-removal-generation-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 0,
+    "failedFunctions": 0
+  },
+  {
+    "phase": "partial-removal-generation-runtime-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 1,
+    "failedFunctions": 1
+  },
+  {
+    "phase": "partial-removal-roundtrip-diagnostic",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 1,
+    "failedFunctions": 1
+  },
+  {
+    "phase": "partial-removal-roundtrip-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "functions": 1,
+    "failedFunctions": 0
+  }
+]

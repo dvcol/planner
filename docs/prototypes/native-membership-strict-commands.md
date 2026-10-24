@@ -14,7 +14,7 @@ Canonical maintenance validates provenance authority before testing live eligibi
 
 The first broad Mac/iPhone run exposed an eligibility check occurring before canonical maintenance could suppress an unaware contribution. The isolated public query/export diagnostic confirmed invalidInput at /memberships/0/id. The revised ordering preserves strict validation for portable imports while allowing native maintenance to retire that contribution. The sole-membership tracer then exposed maintenance detection limited to duplicates; the shared native/status predicate now detects that case too.
 
-This suppression slice requires a retained closed context for the suppressed generation. Other partially informed generations remain unresolved rather than guessed. Broader generation admission remains local work.
+This initial suppression slice requires a retained closed context for the suppressed generation. The later [partially informed generation follow-up](native-membership-partial-removal-generations.md) qualifies retained history when no older closed context shares that basis. Broader generation/lifetime admission remains local work.
 
 ## Local checkpoint
 

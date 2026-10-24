@@ -64,6 +64,14 @@ extension PlannerImportGraph {
     }?.baselineProvenance
   }
 
+  func suppressedMembershipIdentities() throws -> Set<PlannerPortableBoundIdentity> {
+    let requiredRemovals = try validatedMembershipRemovalAuthority()
+    return Set(
+      backup.membershipProvenance.filter {
+        !(requiredRemovals[$0.pair] ?? []).isSubset(of: $0.observedRemovalIds)
+      }.map(\.membership))
+  }
+
   func validateMembershipProvenance() throws {
     let requiredRemovals = try validatedMembershipRemovalAuthority()
     let provenance = Dictionary(

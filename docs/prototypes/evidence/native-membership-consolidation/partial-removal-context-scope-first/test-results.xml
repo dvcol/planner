@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000224459"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.476427542">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)" time="0.476024625"/>
+    </testsuite>
+</testsuites>

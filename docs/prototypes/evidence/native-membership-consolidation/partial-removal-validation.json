@@ -1,0 +1,14 @@
+{
+  "functionsPerPlatform": 196,
+  "invocationsPerPlatform": 572,
+  "suitesPerPlatform": 79,
+  "matchedCoreInputs": 806,
+  "fullPhoneInputs": 1145,
+  "actualCoreTestProductsPerPlatform": 2,
+  "unchangedFrozenFixtureInputs": 512,
+  "unchangedModelSourceFiles": 19,
+  "strictFormatFiles": 6,
+  "removedClosedDisposableStores": 1113,
+  "externalMacUIPhysicalCloudOrSystemInvocationQualified": false,
+  "remainingMembershipCommandsQualified": false
+}

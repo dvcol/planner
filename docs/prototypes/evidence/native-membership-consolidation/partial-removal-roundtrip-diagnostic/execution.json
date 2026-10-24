@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 10.209,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.4351905,
+      "failures": [
+        "Issue recorded (error): A valid suppressed context must survive empty-dataset review: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/contextAliases/1/canonicalContext\"), message: \"Completion history needs its current context owner.\", details: nil))",
+        "Issue recorded (error): A valid suppressed context must survive empty-dataset review: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/contextAliases/0/canonicalContext\"), message: \"Completion history needs its current context owner.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

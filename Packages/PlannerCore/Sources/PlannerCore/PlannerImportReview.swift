@@ -150,9 +150,15 @@ struct PlannerImportProjection {
       })
     var histories: [PlannerImportOwnerHistory] = []
     let graph = PlannerImportGraph(backup: backup)
+    let suppressedMemberships = try graph.suppressedMembershipIdentities()
     let aliases = Dictionary(uniqueKeysWithValues: backup.contextAliases.map { ($0.aliasId, $0) })
     for (index, alias) in backup.contextAliases.enumerated() {
-      if graph.isClosed(alias.canonicalContext) { continue }
+      if graph.isClosed(alias.canonicalContext)
+        || alias.canonicalContext.importContextIdentities.contains(
+          where: suppressedMemberships.contains)
+      {
+        continue
+      }
       guard
         let owner = plannerImportCompletionOwner(
           alias.canonicalContext, memberships: memberships, entries: entries)
@@ -167,7 +173,13 @@ struct PlannerImportProjection {
           value: alias.importCanonicalValue))
     }
     for (index, change) in backup.completionChanges.enumerated() {
-      if let alias = aliases[change.aliasId], graph.isClosed(alias.canonicalContext) { continue }
+      if let alias = aliases[change.aliasId],
+        graph.isClosed(alias.canonicalContext)
+          || alias.canonicalContext.importContextIdentities.contains(
+            where: suppressedMemberships.contains)
+      {
+        continue
+      }
       guard let alias = aliases[change.aliasId],
         let owner = plannerImportCompletionOwner(
           alias.canonicalContext, memberships: memberships, entries: entries)
