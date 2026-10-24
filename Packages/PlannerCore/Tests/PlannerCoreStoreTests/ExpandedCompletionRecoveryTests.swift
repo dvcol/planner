@@ -5,8 +5,7 @@ import Testing
 
 struct ExpandedCompletionRecoveryTests {
   @Test func duplicateDanglingAndCrossListContextsRejectTheWholeRecoveryInput() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let recoveryDirectory = directory.appendingPathComponent("recovery")
     let planner = Planner(
       configuration: .init(

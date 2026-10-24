@@ -10,6 +10,293 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test func unprovenCompetingMembershipLifetimesStayUnmodifiedAndUnavailable() async throws {
+    let fixture = try await AssociationUndoFixture()
+    guard
+      case .listedNamespaces(let namespaces) = await fixture.planner.inspectRecovery(
+        request: .namespaces), let namespace = namespaces.first
+    else { throw CancellationError() }
+    let namespaceDirectory = fixture.configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    try await insertIndependentMemberships(
+      storeURL: fixture.configuration.storeURL, itemIdentifier: fixture.item.id,
+      listIdentifier: fixture.list.id,
+      contributions: [
+        (
+          fixture.membershipIdentifier.uuidString,
+          "00000000-0000-4000-8000-000000000845", 1024, false
+        )
+      ])
+    let response = await fixture.planner.query(
+      .init(
+        session: fixture.session,
+        request: .items(.init(scope: .list(fixture.list.id), completion: .all, archive: .all))))
+    guard case .failed(let failure) = response else {
+      Issue.record(
+        "A lifetime without closure/restoration proof must not replace current work: \(response)")
+      return
+    }
+    #expect(failure.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    let reopened = Planner(configuration: fixture.configuration)
+    let bootstrap = await reopened.bootstrap()
+    guard case .unavailable(let repeatedFailure) = bootstrap else {
+      Issue.record(
+        "Unproven conflicting records must remain intact for reconciliation: \(bootstrap)")
+      return
+    }
+    #expect(repeatedFailure.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+  }
+
+  @Test func oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent() async throws {
+    let fixture = try await AssociationUndoFixture()
+    let itinerary = try #require(
+      try await fixture.save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
+    let firstAddition = try await fixture.save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: fixture.list, placement: .last))
+    let secondAddition = try await fixture.save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: fixture.list, placement: .last))
+    guard case .itineraryEntry(let firstEntry, _, _) = firstAddition.generatedReferences.first,
+      case .itineraryEntry(let secondEntry, _, _) = secondAddition.generatedReferences.first
+    else { throw CancellationError() }
+    let firstAppearance = PlannerAppearance.expandedListItem(
+      itineraryId: itinerary.id, listEntryId: firstEntry,
+      membershipId: fixture.membershipIdentifier)
+    let secondAppearance = PlannerAppearance.expandedListItem(
+      itineraryId: itinerary.id, listEntryId: secondEntry,
+      membershipId: fixture.membershipIdentifier)
+    _ = try await fixture.save(.setCompletion(scope: .appearance(firstAppearance), done: true))
+    let originalData = try await fixture.export()
+    guard case .decoded(let original) = fixture.planner.decodeImport(originalData),
+      let originalMembership = original.backup.memberships.first
+    else { throw CancellationError() }
+    let removal = await fixture.remove()
+    let undo = try #require(removal.associationUndoSnapshot)
+    _ = try await fixture.save(.restoreAssociation(snapshot: undo))
+    _ = try await fixture.save(
+      .setCompletion(
+        scope: .appearance(
+          .listMembership(listId: fixture.list.id, membershipId: fixture.membershipIdentifier)),
+        done: false))
+    let beforeDelivery = try await fixture.export()
+    guard case .decoded(let restored) = fixture.planner.decodeImport(beforeDelivery),
+      let restoredMembership = restored.backup.memberships.first
+    else { throw CancellationError() }
+    #expect(restoredMembership.id == originalMembership.id)
+    #expect(restoredMembership.lifetimeId != originalMembership.lifetimeId)
+    try await insertIndependentMemberships(
+      storeURL: fixture.configuration.storeURL, itemIdentifier: fixture.item.id,
+      listIdentifier: fixture.list.id,
+      contributions: [
+        (
+          originalMembership.id.uuidString, originalMembership.lifetimeId.uuidString,
+          originalMembership.rank, true
+        )
+      ])
+    try await insertIndependentExpandedCompletion(
+      storeURL: fixture.configuration.storeURL, entryIdentifier: firstEntry,
+      membershipIdentifier: originalMembership.id, membershipLifetime: originalMembership.lifetimeId
+    )
+    try await insertIndependentExpandedCompletion(
+      storeURL: fixture.configuration.storeURL, entryIdentifier: secondEntry,
+      membershipIdentifier: originalMembership.id, membershipLifetime: originalMembership.lifetimeId
+    )
+    let result = await fixture.planner.query(
+      .init(
+        session: fixture.session,
+        request: .items(.init(scope: .list(fixture.list.id), completion: .all, archive: .all))))
+    guard case .snapshot(let contents) = result,
+      case .appearance(let first) = await fixture.planner.read(
+        session: fixture.session, request: .appearance(firstAppearance)),
+      case .appearance(let second) = await fixture.planner.read(
+        session: fixture.session, request: .appearance(secondAppearance)),
+      case .appearance(let standalone) = await fixture.planner.read(
+        session: fixture.session,
+        request: .appearance(
+          .listMembership(listId: fixture.list.id, membershipId: fixture.membershipIdentifier)))
+    else {
+      Issue.record("Closed expanded copies cannot block independent restored branches: \(result)")
+      return
+    }
+    #expect(contents.matchingCount == 1)
+    #expect(first.localDone && first.effectiveDone)
+    #expect(!second.localDone && !second.effectiveDone)
+    #expect(!standalone.localDone && !standalone.effectiveDone)
+    let afterDelivery = try await fixture.export()
+    let beforeGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeDelivery) as? [String: Any])
+    let afterGraph = try #require(
+      JSONSerialization.jsonObject(with: afterDelivery) as? [String: Any])
+    for key in [
+      "sources", "memberships", "itineraryEntries", "expandedCompletions", "deletionMarkers",
+      "completionChanges", "restorationFamilies", "membershipProvenance", "membershipRemovals",
+    ] {
+      #expect(
+        (beforeGraph[key] as? NSArray) == (afterGraph[key] as? NSArray),
+        "Old branch delivery must preserve \(key).")
+    }
+    let beforeAliases = try #require(beforeGraph["contextAliases"] as? [[String: Any]])
+    let afterAliases = try #require(afterGraph["contextAliases"] as? [[String: Any]])
+    #expect(
+      beforeAliases.allSatisfy { original in
+        afterAliases.contains { NSDictionary(dictionary: $0).isEqual(to: original) }
+      })
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let afterReopen) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(afterReopen == afterDelivery)
+  }
+
+  @Test func anOldDeliveredLifetimeCannotBlockOrCompleteTheSamePublicMembershipAfterUndo()
+    async throws
+  {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let itemCreation, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Hotel", notes: "Keep this shared Item")))
+      ).outcome,
+      let item = itemCreation.generated.first,
+      case .applied(let listCreation, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: .createList(content: .init(name: "Tokyo"))
+        )
+      ).outcome,
+      let list = listCreation.generated.first
+    else { throw CancellationError() }
+    let membershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let originalLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [(membershipIdentifier.uuidString, originalLifetime.uuidString, 1024, false)])
+    let removal = await planner.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .removeMembership(listId: list.id, membershipId: membershipIdentifier)))
+    guard case .applied(_, .complete) = removal.outcome,
+      let undo = removal.associationUndoSnapshot,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: .restoreAssociation(snapshot: undo))
+      ).outcome,
+      case .exported(let beforeDelivery) = await planner.exportData(session: session),
+      case .decoded(let beforeBackup) = planner.decodeImport(beforeDelivery),
+      let restoredMembership = beforeBackup.backup.memberships.first
+    else { throw CancellationError() }
+    #expect(restoredMembership.id == membershipIdentifier)
+    #expect(restoredMembership.lifetimeId != originalLifetime && !restoredMembership.localDone)
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [(membershipIdentifier.uuidString, originalLifetime.uuidString, 1024, true)])
+    let result = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .list(list.id), completion: .all, archive: .all))))
+    guard case .snapshot(let contents) = result,
+      case .appearance(let appearance) = await planner.read(
+        session: session,
+        request: .appearance(
+          .listMembership(listId: list.id, membershipId: membershipIdentifier))),
+      case .exported(let afterDelivery) = await planner.exportData(session: session),
+      case .decoded(let afterBackup) = planner.decodeImport(afterDelivery)
+    else {
+      Issue.record("A closed old lifetime cannot block the restored public membership: \(result)")
+      return
+    }
+    #expect(contents.matchingCount == 1)
+    #expect(
+      contents.rows == [
+        .appearance(
+          source: item,
+          appearance: .listMembership(listId: list.id, membershipId: membershipIdentifier))
+      ])
+    #expect(!appearance.localDone && !appearance.effectiveDone)
+    #expect(afterBackup.backup.memberships == [restoredMembership])
+    #expect(afterBackup.backup.membershipProvenance == beforeBackup.backup.membershipProvenance)
+    #expect(afterBackup.backup.membershipRemovals == beforeBackup.backup.membershipRemovals)
+    let beforeGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeDelivery) as? [String: Any])
+    let afterGraph = try #require(
+      JSONSerialization.jsonObject(with: afterDelivery) as? [String: Any])
+    for key in [
+      "sources", "deletionMarkers", "expandedCompletions", "restorationFamilies",
+      "completionChanges",
+    ] {
+      #expect(
+        (beforeGraph[key] as? NSArray) == (afterGraph[key] as? NSArray),
+        "Late delivery must preserve \(key).")
+    }
+    let beforeAliases = try #require(beforeGraph["contextAliases"] as? [[String: Any]])
+    let afterAliases = try #require(afterGraph["contextAliases"] as? [[String: Any]])
+    #expect(
+      beforeAliases.allSatisfy { original in
+        afterAliases.contains { NSDictionary(dictionary: $0).isEqual(to: original) }
+      })
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let afterReopen) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(afterReopen == afterDelivery)
+    var invalidGraph = afterGraph
+    var invalidMembers = try #require(invalidGraph["memberships"] as? [[String: Any]])
+    invalidMembers[0]["lifetimeId"] = originalLifetime.uuidString
+    invalidGraph["memberships"] = invalidMembers
+    invalidGraph["formatVersion"] = 2
+    invalidGraph.removeValue(forKey: "membershipProvenance")
+    invalidGraph.removeValue(forKey: "membershipRemovals")
+    for key in ["restorationFamilies", "contextAliases", "completionChanges"] {
+      invalidGraph[key] = [Any]()
+    }
+    let invalidData = try JSONSerialization.data(withJSONObject: invalidGraph, options: .sortedKeys)
+    guard case .invalid(let importFailure) = planner.decodeImport(invalidData) else {
+      Issue.record("A portable backup must reject an explicitly closed membership lifetime.")
+      return
+    }
+    #expect(importFailure.code == "invalidInput")
+    #expect(importFailure.propertyPath == "/memberships/0/lifetimeId")
+    guard
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      let generation = namespace.acknowledgedSnapshot?.checkpointGeneration
+    else { throw CancellationError() }
+    let checkpointURL = configuration.recoveryDirectoryURL
+      .appendingPathComponent(namespace.namespaceId.uuidString)
+      .appendingPathComponent("checkpoint-\(generation).json")
+    let originalCheckpoint = try Data(contentsOf: checkpointURL)
+    defer { try? originalCheckpoint.write(to: checkpointURL, options: .atomic) }
+    var envelope = try #require(
+      JSONSerialization.jsonObject(with: originalCheckpoint) as? [String: Any])
+    envelope["portablePayloadBase64"] = invalidData.base64EncodedString()
+    envelope["dataDigest"] =
+      "sha256:" + SHA256.hash(data: invalidData).map { String(format: "%02x", $0) }.joined()
+    try JSONSerialization.data(withJSONObject: envelope).write(to: checkpointURL, options: .atomic)
+    let inspected = await planner.inspectRecovery(
+      request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: generation))
+    guard case .failed(let recoveryFailure) = inspected else {
+      Issue.record(
+        "Recovery must reject the closed native record despite a matching checksum: \(inspected)")
+      return
+    }
+    #expect(recoveryFailure.code == "recoveryIntegrityFailure")
+    #expect(recoveryFailure.propertyPath == "/memberships/0/lifetimeId")
+    try originalCheckpoint.write(to: checkpointURL, options: .atomic)
+    guard case .exported(let afterInvalidReads) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    #expect(afterInvalidReads == afterDelivery)
+  }
+
   @Test(arguments: [false, true])
   func reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem(incomingClosure: Bool)
     async throws
@@ -959,6 +1246,28 @@ struct NativeMembershipConsolidationTests {
         identifier: deletionIdentifier, kind: "membershipRemoval",
         data: try JSONEncoder().encode(
           PlannerPortableMembershipRemoval(deletionId: deletionIdentifier))))
+    try context.save()
+  }
+
+  @MainActor private func insertIndependentExpandedCompletion(
+    storeURL: URL, entryIdentifier: UUID, membershipIdentifier: UUID, membershipLifetime: UUID
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    let entry = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).first {
+        $0.id == entryIdentifier
+      })
+    let member = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).first {
+        $0.id == membershipIdentifier && $0.lifetimeId == membershipLifetime
+      })
+    context.insert(
+      PlannerSchemaV18.ExpandedCompletion(listEntry: entry, membership: member, localDone: true))
     try context.save()
   }
 

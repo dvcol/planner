@@ -17,17 +17,12 @@ struct PlannerMembershipConsolidation {
     var provenance = Dictionary(
       uniqueKeysWithValues: current.membershipProvenance.map { ($0.membership, $0.normalized) })
     var memberPairs: [PlannerPortableBoundIdentity: PlannerMembershipPair] = [:]
-    var lifetimes: [UUID: UUID] = [:]
     for member in current.memberships {
       let binding = member.baselineProvenance
       if let previous = memberPairs[binding.membership], previous != binding.pair {
         throw Self.unresolved("Copies of a membership disagree on their source bindings.")
       }
-      if let previous = lifetimes[member.id], previous != member.lifetimeId {
-        throw Self.unresolved("Competing membership lifetimes need restoration reconciliation.")
-      }
       memberPairs[binding.membership] = binding.pair
-      lifetimes[member.id] = member.lifetimeId
       if let retained = provenance[binding.membership] {
         guard retained.pair == binding.pair else {
           throw Self.unresolved("Membership provenance describes another source pair.")
@@ -37,10 +32,15 @@ struct PlannerMembershipConsolidation {
       }
     }
     var eligible: [PlannerPortableMembership] = []
+    var eligibleLifetimes: [UUID: UUID] = [:]
     var suppressed: [Generation: [PlannerPortableMembership]] = [:]
     for member in current.memberships {
       let binding = try Self.binding(member.baselineProvenance.membership, in: provenance)
       if (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) {
+        if let previous = eligibleLifetimes[member.id], previous != member.lifetimeId {
+          throw Self.unresolved("Competing membership lifetimes need restoration reconciliation.")
+        }
+        eligibleLifetimes[member.id] = member.lifetimeId
         eligible.append(member)
       } else {
         suppressed[.init(pair: binding.pair, basis: binding.observedRemovalIds), default: []]
