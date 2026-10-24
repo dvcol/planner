@@ -85,7 +85,19 @@ struct PlannerImportMerge {
     }
     let knownMarkers = Dictionary(
       uniqueKeysWithValues: current.deletionMarkers.map { ($0.deletionId, $0) })
+    let importedSources = incoming.sources.filter {
+      selectedOwners.contains($0.importBinding.reference)
+    }
+    let retainedSources = current.sources.filter {
+      !replacedOwners.contains($0.importBinding.reference)
+        && !deletedSources.contains($0.importBinding.reference)
+    }
+    let sources = (retainedSources + sourceReplacements + importedSources).sorted {
+      $0.id.uuidString < $1.id.uuidString
+    }
+    let survivingSources = Set(sources.map(\.importBinding))
     var markers: [PlannerPortableDeletionMarker] = []
+    var localRemovalMarkers: [PlannerPortableDeletionMarker] = []
     for incomingMarker in incoming.deletionMarkers {
       let marker = incomingMarker.closingRestorationFamily(current.restorationFamilies)
       if let known = knownMarkers[marker.deletionId] {
@@ -104,13 +116,27 @@ struct PlannerImportMerge {
       }
     }
     for target in removals.targets {
-      guard !(current.deletionMarkers + markers).contains(where: { $0.target == target }) else {
+      let removesSurvivingPair: Bool
+      if case .membership(let identifier, let lifetimeIdentifier) = target,
+        let member = currentProjection.membershipsById[identifier],
+        member.lifetimeId == lifetimeIdentifier,
+        survivingSources.contains(member.baselineProvenance.list),
+        survivingSources.contains(member.baselineProvenance.item)
+      {
+        removesSurvivingPair = true
+      } else {
+        removesSurvivingPair = false
+      }
+      if !removesSurvivingPair,
+        (current.deletionMarkers + markers).contains(where: { $0.target == target })
+      {
         continue
       }
-      markers.append(
-        PlannerPortableDeletionMarker(
-          deletionId: UUID(), operationId: operationId, target: target, closedFamilyId: nil
-        ).closingRestorationFamily(current.restorationFamilies))
+      let marker = PlannerPortableDeletionMarker(
+        deletionId: UUID(), operationId: operationId, target: target, closedFamilyId: nil
+      ).closingRestorationFamily(current.restorationFamilies)
+      markers.append(marker)
+      localRemovalMarkers.append(marker)
     }
     let currentAliases = Dictionary(
       uniqueKeysWithValues: current.contextAliases.map { ($0.aliasId, $0) })
@@ -151,9 +177,10 @@ struct PlannerImportMerge {
         || currentChanges[$0.id] == nil
     }
     let membershipHistory = try PlannerImportMembershipHistory(
-      current: current, incoming: incoming, selectedOwners: selectedRecordOwners, markers: markers)
+      current: current, incoming: incoming, selectedOwners: selectedRecordOwners, markers: markers,
+      localRemovalMarkers: localRemovalMarkers, survivingSources: survivingSources)
     recordsToWrite = .init(
-      sources: incoming.sources.filter { selectedOwners.contains($0.importBinding.reference) },
+      sources: importedSources,
       labelAssociations: incoming.labelAssociations.filter {
         selectedRecordOwners.contains($0.owner)
       },
@@ -176,13 +203,6 @@ struct PlannerImportMerge {
       }, formatVersion: incoming.formatVersion,
       membershipProvenance: membershipHistory.provenanceToWrite,
       membershipRemovals: membershipHistory.removalsToWrite)
-    let retainedSources = current.sources.filter {
-      !replacedOwners.contains($0.importBinding.reference)
-        && !deletedSources.contains($0.importBinding.reference)
-    }
-    let sources = (retainedSources + sourceReplacements + recordsToWrite.sources).sorted {
-      $0.id.uuidString < $1.id.uuidString
-    }
     let sourceKinds: [PlannerEntityKind] = [.item, .list, .itinerary, .category, .tag]
     let replacedAliasIdentifiers = Set(
       current.contextAliases.filter {

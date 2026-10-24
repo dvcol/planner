@@ -3633,12 +3633,32 @@ public actor Planner {
       incoming: backup, current: empty, mode: mode, identity: identity,
       restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection)
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
-      guard receipt.payloadDigest == digest else {
+      let evidence = try receipt.evidence()
+      let replayDigest = plannerImportDigest(
+        incoming: backup, current: empty, mode: mode, identity: identity,
+        restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection,
+        resolvedBindings: evidence.resolvedMembershipEvidence.map { _ in evidence.bindings },
+        membershipEvidence: evidence.resolvedMembershipEvidence)
+      guard receipt.payloadDigest == replayDigest else {
         throw PlannerFailure("operationPayloadMismatch", "This operation describes another import.")
       }
       return appliedResult(
         operationId: operation.operationId,
         evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let prepared = try archive.proposals().first { $0.originalOperationId == operation.operationId }
+    if let prepared, let bindings = prepared.resolvedBindings,
+      let membershipEvidence = prepared.resolvedMembershipEvidence
+    {
+      let replayDigest = plannerImportDigest(
+        incoming: backup, current: empty, mode: mode, identity: identity,
+        restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection,
+        resolvedBindings: bindings, membershipEvidence: membershipEvidence)
+      guard prepared.payloadDigest == replayDigest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another import.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(prepared.summary))
     }
     let completedIdentifiers = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIdentifiers.contains($0) } ?? false })
@@ -3658,9 +3678,7 @@ public actor Planner {
         "staleReview", "The import or current dataset changed; review it again.",
         propertyPath: "/reviewToken", details: .staleReview)
     }
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
+    if let proposal = prepared {
       guard proposal.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another import.")
@@ -3683,6 +3701,14 @@ public actor Planner {
     let merge = try PlannerImportMerge(
       current: current.backup, resolution: resolution, mode: mode,
       operationId: operation.operationId)
+    let executionEvidence = try plannerImportMembershipOperationEvidence(
+      incoming: backup, current: current.backup, projected: merge.projected,
+      changes: resolution.details.referenceChanges)
+    let executionDigest = plannerImportDigest(
+      incoming: backup, current: empty, mode: mode, identity: identity,
+      restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection,
+      resolvedBindings: executionEvidence?.bindings,
+      membershipEvidence: executionEvidence?.memberships)
     try plannerRemoveUnretainedImportedRecords(notIn: merge.projected, context: context)
     try plannerInsertImportedGraph(
       merge.recordsToWrite, replacing: merge.sourceReplacements, context: context)
@@ -3715,7 +3741,9 @@ public actor Planner {
       .init(
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
-        proposedBackup: proposalSnapshot, payloadDigest: digest, evidence: "preparedUnverified"))
+        proposedBackup: proposalSnapshot, payloadDigest: executionDigest,
+        evidence: "preparedUnverified", resolvedBindings: executionEvidence?.bindings,
+        resolvedMembershipEvidence: executionEvidence?.memberships))
     let restoredSources = Set(resolution.details.restorations.map { $0.owner.reference })
     let generated = merge.recordsToWrite.sources.filter {
       !restoredSources.contains($0.importBinding.reference)
@@ -3737,12 +3765,20 @@ public actor Planner {
     let result = PlannerAppliedResult(
       generatedIdentities: generated, affectedIdentities: affected,
       importSummary: try resolution.details.appliedSummary(in: restored.backup))
-    let bindings = backup.backup.sources.map {
-      PlannerBoundIdentity(
-        kind: $0.kind.rawValue, id: $0.id, lifetimeId: $0.importBinding.lifetimeId)
-    }
+    let bindings =
+      executionEvidence?.bindings
+      ?? backup.backup.sources.map {
+        PlannerBoundIdentity(
+          kind: $0.kind.rawValue, id: $0.id, lifetimeId: $0.importBinding.lifetimeId)
+      }
     let receipt = try PlannerSchemaV1.Receipt(
-      operation: operation, digest: digest, result: result, bindings: bindings)
+      operation: operation, digest: executionDigest, result: result, bindings: bindings)
+    if let executionEvidence {
+      receipt.resultData = try JSONEncoder().encode(
+        PlannerStoredOperationEvidence(
+          result: result, bindings: bindings,
+          resolvedMembershipEvidence: executionEvidence.memberships))
+    }
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()

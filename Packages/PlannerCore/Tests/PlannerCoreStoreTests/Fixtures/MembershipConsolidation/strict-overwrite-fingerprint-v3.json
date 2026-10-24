@@ -1,0 +1,771 @@
+{
+  "identity": {
+    "namespaceId": "00000000-0000-4000-8000-000000000920",
+    "datasetId": "00000000-0000-4000-8000-000000000910",
+    "epochId": "00000000-0000-4000-8000-000000000930",
+    "ownershipBinding": "local:membership-fixture"
+  },
+  "name": "strict-overwrite-membership-removal-v3",
+  "version": 3,
+  "incoming": {
+    "format": "planner-data",
+    "formatVersion": 3,
+    "sources": [
+      {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811",
+        "createdAt": 10.25,
+        "updatedAt": 20.125,
+        "content": {
+          "title": "Hotel",
+          "subtitle": null,
+          "notes": "A shared stop",
+          "location": null,
+          "estimate": {
+            "minutes": "30",
+            "displayUnit": "minute"
+          }
+        },
+        "globalDone": false,
+        "archived": false,
+        "contentOrigins": {
+          "title": "independent",
+          "notes": "independent"
+        }
+      },
+      {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821",
+        "createdAt": 10.25,
+        "updatedAt": 20.125,
+        "content": {
+          "name": "Tokyo",
+          "notes": null,
+          "color": null,
+          "iconName": null,
+          "manualEstimate": null
+        },
+        "globalDone": null,
+        "archived": false,
+        "contentOrigins": {
+          "name": "independent"
+        }
+      }
+    ],
+    "memberships": [],
+    "itineraryEntries": [],
+    "expandedCompletions": [],
+    "labelAssociations": [],
+    "ownedLinks": [],
+    "schedules": [],
+    "deletionMarkers": [
+      {
+        "deletionId": "00000000-0000-4000-8000-000000000891",
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": {
+          "kind": "membership",
+          "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000841"
+        },
+        "closedFamilyId": null
+      }
+    ],
+    "contextAliases": [],
+    "completionChanges": [],
+    "restorationFamilies": [],
+    "membershipProvenance": [
+      {
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841",
+        "list": {
+          "kind": "list",
+          "id": "00000000-0000-4000-8000-000000000201",
+          "lifetimeId": "00000000-0000-4000-8000-000000000821"
+        },
+        "item": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        },
+        "observedRemovalIds": []
+      }
+    ],
+    "membershipRemovals": [
+      {
+        "deletionId": "00000000-0000-4000-8000-000000000891"
+      }
+    ]
+  },
+  "expectedMembershipEvidence": [
+    {
+      "membershipId": "00000000-0000-4000-8000-000000000401",
+      "membershipLifetimeId": "00000000-0000-4000-8000-000000000841",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "observedRemovalIds": []
+    },
+    {
+      "membershipId": "00000000-0000-4000-8000-000000000405",
+      "membershipLifetimeId": "00000000-0000-4000-8000-000000000845",
+      "list": {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821"
+      },
+      "item": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "observedRemovalIds": [
+        "00000000-0000-4000-8000-000000000891"
+      ]
+    }
+  ],
+  "expectedBindings": [
+    {
+      "kind": "item",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "lifetimeId": "00000000-0000-4000-8000-000000000811"
+    },
+    {
+      "kind": "list",
+      "id": "00000000-0000-4000-8000-000000000201",
+      "lifetimeId": "00000000-0000-4000-8000-000000000821"
+    },
+    {
+      "kind": "membership",
+      "id": "00000000-0000-4000-8000-000000000401",
+      "lifetimeId": "00000000-0000-4000-8000-000000000841"
+    },
+    {
+      "kind": "membership",
+      "id": "00000000-0000-4000-8000-000000000405",
+      "lifetimeId": "00000000-0000-4000-8000-000000000845"
+    }
+  ],
+  "canonicalValue": [
+    "record",
+    {
+      "command": [
+        "record",
+        {
+          "type": [
+            "string",
+            "applyImport"
+          ],
+          "backup": [
+            "record",
+            {
+              "format": [
+                "string",
+                "planner-data"
+              ],
+              "formatVersion": [
+                "integer",
+                3
+              ],
+              "sources": [
+                "ordered",
+                [
+                  [
+                    "record",
+                    {
+                      "identity": [
+                        "record",
+                        {
+                          "kind": [
+                            "string",
+                            "item"
+                          ],
+                          "id": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000101"
+                          ],
+                          "lifetimeId": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000811"
+                          ]
+                        }
+                      ],
+                      "fields": [
+                        "record",
+                        {
+                          "createdAt": [
+                            "date",
+                            10.25
+                          ],
+                          "updatedAt": [
+                            "date",
+                            20.125
+                          ],
+                          "contentOrigins": [
+                            "record",
+                            {
+                              "title": [
+                                "string",
+                                "independent"
+                              ],
+                              "notes": [
+                                "string",
+                                "independent"
+                              ]
+                            }
+                          ],
+                          "archived": [
+                            "boolean",
+                            false
+                          ],
+                          "title": [
+                            "string",
+                            "Hotel"
+                          ],
+                          "notes": [
+                            "optional",
+                            [
+                              "string",
+                              "A shared stop"
+                            ]
+                          ],
+                          "subtitle": [
+                            "optional",
+                            null
+                          ],
+                          "location": [
+                            "optional",
+                            null
+                          ],
+                          "estimate": [
+                            "optional",
+                            [
+                              "record",
+                              {
+                                "minutes": [
+                                  "integer",
+                                  30
+                                ],
+                                "displayUnit": [
+                                  "string",
+                                  "minute"
+                                ]
+                              }
+                            ]
+                          ],
+                          "globalDone": [
+                            "boolean",
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "record",
+                    {
+                      "identity": [
+                        "record",
+                        {
+                          "kind": [
+                            "string",
+                            "list"
+                          ],
+                          "id": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000201"
+                          ],
+                          "lifetimeId": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000821"
+                          ]
+                        }
+                      ],
+                      "fields": [
+                        "record",
+                        {
+                          "createdAt": [
+                            "date",
+                            10.25
+                          ],
+                          "updatedAt": [
+                            "date",
+                            20.125
+                          ],
+                          "contentOrigins": [
+                            "record",
+                            {
+                              "name": [
+                                "string",
+                                "independent"
+                              ]
+                            }
+                          ],
+                          "archived": [
+                            "boolean",
+                            false
+                          ],
+                          "name": [
+                            "string",
+                            "Tokyo"
+                          ],
+                          "notes": [
+                            "optional",
+                            null
+                          ],
+                          "color": [
+                            "optional",
+                            null
+                          ],
+                          "iconName": [
+                            "optional",
+                            null
+                          ],
+                          "manualEstimate": [
+                            "optional",
+                            null
+                          ],
+                          "globalDone": [
+                            "optional",
+                            null
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                ]
+              ],
+              "memberships": [
+                "ordered",
+                []
+              ],
+              "itineraryEntries": [
+                "ordered",
+                []
+              ],
+              "expandedCompletions": [
+                "ordered",
+                []
+              ],
+              "labelAssociations": [
+                "ordered",
+                []
+              ],
+              "ownedLinks": [
+                "ordered",
+                []
+              ],
+              "schedules": [
+                "ordered",
+                []
+              ],
+              "deletionMarkers": [
+                "ordered",
+                [
+                  [
+                    "record",
+                    {
+                      "deletionId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000891"
+                      ],
+                      "operationId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000991"
+                      ],
+                      "target": [
+                        "record",
+                        {
+                          "kind": [
+                            "string",
+                            "membership"
+                          ],
+                          "id": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000401"
+                          ],
+                          "lifetimeId": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000841"
+                          ]
+                        }
+                      ],
+                      "closedFamilyId": [
+                        "optional",
+                        null
+                      ]
+                    }
+                  ]
+                ]
+              ],
+              "contextAliases": [
+                "ordered",
+                []
+              ],
+              "completionChanges": [
+                "ordered",
+                []
+              ],
+              "restorationFamilies": [
+                "ordered",
+                []
+              ],
+              "membershipProvenance": [
+                "ordered",
+                [
+                  [
+                    "record",
+                    {
+                      "membershipId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000401"
+                      ],
+                      "membershipLifetimeId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000841"
+                      ],
+                      "list": [
+                        "record",
+                        {
+                          "kind": [
+                            "string",
+                            "list"
+                          ],
+                          "id": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000201"
+                          ],
+                          "lifetimeId": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000821"
+                          ]
+                        }
+                      ],
+                      "item": [
+                        "record",
+                        {
+                          "kind": [
+                            "string",
+                            "item"
+                          ],
+                          "id": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000101"
+                          ],
+                          "lifetimeId": [
+                            "identity",
+                            "00000000-0000-4000-8000-000000000811"
+                          ]
+                        }
+                      ],
+                      "observedRemovalIds": [
+                        "identitySet",
+                        []
+                      ]
+                    }
+                  ]
+                ]
+              ],
+              "membershipRemovals": [
+                "ordered",
+                [
+                  [
+                    "record",
+                    {
+                      "deletionId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000891"
+                      ]
+                    }
+                  ]
+                ]
+              ]
+            }
+          ],
+          "mode": [
+            "string",
+            "overwrite"
+          ]
+        }
+      ],
+      "datasetId": [
+        "identity",
+        "00000000-0000-4000-8000-000000000910"
+      ],
+      "ownershipBinding": [
+        "string",
+        "local:membership-fixture"
+      ],
+      "resolvedBindings": [
+        "identitySet",
+        [
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "item"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000101"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000811"
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "list"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000201"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000821"
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "membership"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000401"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000841"
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "kind": [
+                "string",
+                "membership"
+              ],
+              "id": [
+                "identity",
+                "00000000-0000-4000-8000-000000000405"
+              ],
+              "lifetimeId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000845"
+              ]
+            }
+          ]
+        ]
+      ],
+      "reviewedCurrentData": [
+        "record",
+        {
+          "format": [
+            "string",
+            "planner-data"
+          ],
+          "formatVersion": [
+            "integer",
+            2
+          ],
+          "sources": [
+            "ordered",
+            []
+          ],
+          "memberships": [
+            "ordered",
+            []
+          ],
+          "itineraryEntries": [
+            "ordered",
+            []
+          ],
+          "expandedCompletions": [
+            "ordered",
+            []
+          ],
+          "labelAssociations": [
+            "ordered",
+            []
+          ],
+          "ownedLinks": [
+            "ordered",
+            []
+          ],
+          "schedules": [
+            "ordered",
+            []
+          ],
+          "deletionMarkers": [
+            "ordered",
+            []
+          ],
+          "contextAliases": [
+            "ordered",
+            []
+          ],
+          "completionChanges": [
+            "ordered",
+            []
+          ],
+          "restorationFamilies": [
+            "ordered",
+            []
+          ]
+        }
+      ],
+      "resolvedMembershipEvidence": [
+        "ordered",
+        [
+          [
+            "record",
+            {
+              "membership": [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "membership"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000401"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000841"
+                  ]
+                }
+              ],
+              "list": [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "list"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000201"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000821"
+                  ]
+                }
+              ],
+              "item": [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "item"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000101"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000811"
+                  ]
+                }
+              ],
+              "observedRemovalIds": [
+                "identitySet",
+                []
+              ]
+            }
+          ],
+          [
+            "record",
+            {
+              "membership": [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "membership"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000405"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000845"
+                  ]
+                }
+              ],
+              "list": [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "list"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000201"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000821"
+                  ]
+                }
+              ],
+              "item": [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "item"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000101"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000811"
+                  ]
+                }
+              ],
+              "observedRemovalIds": [
+                "identitySet",
+                [
+                  [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000891"
+                  ]
+                ]
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ],
+  "payloadBase64": "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",
+  "payloadDigest": "sha256-payload-v3:96b81ccd106cdb596ff00fbb5c40d1939281eae8a4dd9e800d3e41cade9f16a7"
+}

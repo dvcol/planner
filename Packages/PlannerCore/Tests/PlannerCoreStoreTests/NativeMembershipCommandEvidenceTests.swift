@@ -5,6 +5,233 @@ import Testing
 @testable import PlannerCore
 
 struct NativeMembershipCommandEvidenceTests {
+  @MainActor @Test func overwriteRetainsRemovedMembershipBasisAndReplaysItsFrozenFingerprint()
+    async throws
+  {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let literal = try #require(
+      JSONSerialization.jsonObject(with: fixtureData("strict-overwrite-fingerprint-v3"))
+        as? [String: Any])
+    var identity = try #require(literal["identity"] as? [String: Any])
+    identity["schemaVersion"] = 19
+    try initializeEmptyStore(configuration)
+    try FileManager.default.createDirectory(
+      at: configuration.controlURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+    try JSONSerialization.data(withJSONObject: identity).write(
+      to: configuration.controlURL, options: .atomic)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let seed) = planner.decodeImport(try fixtureData("informed-readd-v3")),
+      case .reviewed(let seedReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: seed, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: seedReview.command,
+          reviewToken: seedReview.reviewToken)
+      ).outcome,
+      case .decoded(let incoming) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: #require(literal["incoming"]))),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: incoming, mode: .overwrite))
+    else { throw CancellationError() }
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .applied(let applied, .complete(let generation)) = response.outcome else {
+      Issue.record("Apply the reviewed membership removal: \(response)")
+      return
+    }
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      "00000000-0000-4000-8000-000000000920")
+    let acknowledged = try #require(
+      JSONSerialization.jsonObject(
+        with: Data(
+          contentsOf: namespaceDirectory.appendingPathComponent("checkpoint-\(generation).json")))
+        as? [String: Any])
+    let receipts = try #require(acknowledged["receipts"] as? [[String: Any]])
+    let receipt = try #require(
+      receipts.first { $0["operationId"] as? String == operationIdentifier.uuidString })
+    #expect(receipt["payloadDigest"] as? String == literal["payloadDigest"] as? String)
+    let proposals = try FileManager.default.contentsOfDirectory(
+      at: namespaceDirectory, includingPropertiesForKeys: nil
+    ).filter { $0.lastPathComponent.hasPrefix("proposal-") }
+    let matchingProposals = try proposals.compactMap { file -> [String: Any]? in
+      let value = try JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any]
+      guard value?["originalOperationId"] as? String == operationIdentifier.uuidString else {
+        return nil
+      }
+      return value
+    }
+    let preparation = try #require(matchingProposals.first)
+    #expect(preparation["formatVersion"] as? Int == 2)
+    #expect(preparation["payloadDigest"] as? String == literal["payloadDigest"] as? String)
+    #expect(
+      NSDictionary(dictionary: ["evidence": try #require(preparation["resolvedMembershipEvidence"])]
+      )
+      .isEqual(to: ["evidence": try #require(literal["expectedMembershipEvidence"])]))
+    let actualBindings = try #require(preparation["resolvedBindings"] as? [[String: Any]])
+    let expectedBindings = try #require(literal["expectedBindings"] as? [[String: Any]])
+    #expect(
+      Set(
+        try actualBindings.map {
+          try JSONSerialization.data(withJSONObject: $0, options: .sortedKeys)
+        })
+        == Set(
+          try expectedBindings.map {
+            try JSONSerialization.data(withJSONObject: $0, options: .sortedKeys)
+          }))
+    guard
+      case .applied(let added, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addMembership(
+            itemId: UUID(uuidString: "00000000-0000-4000-8000-000000000101")!,
+            listId: UUID(uuidString: "00000000-0000-4000-8000-000000000201")!, placement: .last))
+      ).outcome,
+      !added.generatedReferences.isEmpty,
+      case .exported(let beforeReplay) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .applied(let replayed, .complete(let replayedGeneration)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: review.command)
+      ).outcome,
+      case .exported(let afterReplay) = await reopened.exportData(session: reopenedSession)
+    else {
+      Issue.record("Replay the original import before resolving the newly added membership.")
+      return
+    }
+    #expect(replayed == applied && replayedGeneration == generation)
+    #expect(afterReplay == beforeReplay)
+    let unverifiedDirectory = directory.appendingPathComponent("unverified")
+    let unverifiedConfiguration = PlannerStorageConfiguration(
+      storeURL: unverifiedDirectory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: unverifiedDirectory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: unverifiedDirectory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    try initializeEmptyStore(unverifiedConfiguration)
+    try FileManager.default.createDirectory(
+      at: unverifiedConfiguration.controlURL.deletingLastPathComponent(),
+      withIntermediateDirectories: true)
+    try JSONSerialization.data(withJSONObject: identity).write(
+      to: unverifiedConfiguration.controlURL, options: .atomic)
+    let unverified = Planner(configuration: unverifiedConfiguration)
+    guard case .ready(let unverifiedSession) = await unverified.bootstrap(),
+      case .exported(let originalEmptyData) = await unverified.exportData(
+        session: unverifiedSession)
+    else { throw CancellationError() }
+    let proposalIdentifier = try #require(preparation["proposalId"] as? String)
+    let unverifiedNamespace = unverifiedConfiguration.recoveryDirectoryURL.appendingPathComponent(
+      "00000000-0000-4000-8000-000000000920")
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: unverifiedNamespace.appendingPathComponent("proposal-\(proposalIdentifier).json"),
+      options: .atomic)
+    let unverifiedResponse = await unverified.execute(
+      .init(operationId: operationIdentifier, session: unverifiedSession, command: review.command))
+    guard case .unverified(let summary) = unverifiedResponse.outcome,
+      case .exported(let afterUnverifiedRetry) = await unverified.exportData(
+        session: unverifiedSession)
+    else {
+      Issue.record(
+        "A preparation alone remains unverified without a fresh review: \(unverifiedResponse)")
+      return
+    }
+    #expect(summary.originalOperationId == operationIdentifier)
+    #expect(afterUnverifiedRetry == originalEmptyData)
+  }
+
+  @MainActor @Test func legacyRestorationImportReceiptKeepsItsVersionTwoFingerprint() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let literals = try #require(
+      JSONSerialization.jsonObject(with: fixtureData("operation-fingerprint-literals"))
+        as? [String: Any])
+    let cases = try #require(literals["cases"] as? [[String: Any]])
+    let literal = try #require(cases.first { $0["name"] as? String == "legacy-restoration-v2" })
+    let digest = try #require(literal["payloadDigest"] as? String)
+    var identity = try #require(literals["identity"] as? [String: Any])
+    identity["schemaVersion"] = 19
+    try initializeEmptyStore(configuration)
+    try FileManager.default.createDirectory(
+      at: configuration.controlURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+    try JSONSerialization.data(withJSONObject: identity).write(
+      to: configuration.controlURL, options: .atomic)
+    let planner = Planner(configuration: configuration)
+    let empty: [String: Any] = [
+      "format": "planner-data", "formatVersion": 2, "sources": [], "memberships": [],
+      "itineraryEntries": [], "expandedCompletions": [], "labelAssociations": [],
+      "ownedLinks": [], "schedules": [], "deletionMarkers": [], "contextAliases": [],
+      "completionChanges": [], "restorationFamilies": [],
+    ]
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let backup) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: empty)),
+      case .decoded(let seed) = planner.decodeImport(try fixtureData("informed-readd-v3")),
+      case .reviewed(let seedReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: seed, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: seedReview.command,
+          reviewToken: seedReview.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    let command = PlannerCommand.applyImport(
+      backup: backup, mode: .overwrite, restoreDeletedData: true)
+    let operationIdentifier = UUID()
+    let expected = PlannerAppliedResult(generatedIdentities: [], affectedIdentities: [])
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [
+        ModelConfiguration(schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
+      ])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    context.insert(
+      try PlannerSchemaV1.Receipt(
+        operation: .init(operationId: operationIdentifier, session: session, command: command),
+        digest: digest, result: expected, bindings: []))
+    try context.save()
+    guard case .exported(let before) = await planner.exportData(session: session),
+      case .applied(let replayed, .incomplete) = await planner.execute(
+        .init(operationId: operationIdentifier, session: session, command: command)
+      ).outcome,
+      case .applied(let repaired, .complete(let generation)) = await planner.retryRecovery(
+        session: session, operationId: operationIdentifier
+      ).outcome,
+      case .applied(let repeated, .complete(let repeatedGeneration)) = await planner.execute(
+        .init(operationId: operationIdentifier, session: session, command: command)
+      ).outcome,
+      case .exported(let after) = await planner.exportData(session: session)
+    else {
+      Issue.record(
+        "Replay the old restoration fingerprint without upgrading its format or evidence.")
+      return
+    }
+    #expect(replayed == expected && repaired == expected && repeated == expected)
+    #expect(repeatedGeneration == generation && before == after)
+    let checkpointURL = configuration.recoveryDirectoryURL
+      .appendingPathComponent("00000000-0000-4000-8000-000000000920")
+      .appendingPathComponent("checkpoint-\(generation).json")
+    let checkpoint = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: checkpointURL)) as? [String: Any])
+    let receipts = try #require(checkpoint["receipts"] as? [[String: Any]])
+    let receipt = try #require(
+      receipts.first { $0["operationId"] as? String == operationIdentifier.uuidString })
+    #expect(receipt["payloadDigest"] as? String == digest)
+  }
+
   @MainActor @Test func legacyMoveReceiptReplaysBeforeCurrentTargetResolutionAndKeepsItsDigest()
     async throws
   {

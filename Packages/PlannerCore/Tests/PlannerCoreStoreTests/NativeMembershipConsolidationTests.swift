@@ -11,6 +11,161 @@ import Testing
 
 struct NativeMembershipConsolidationTests {
   @Test(arguments: [false, true])
+  func reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem(incomingClosure: Bool)
+    async throws
+  {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let itemCreation, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Museum", notes: "Keep this shared Item")))
+      ).outcome,
+      let item = itemCreation.generated.first,
+      case .applied(let listCreation, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createList(content: .init(name: "Tokyo")))
+      ).outcome,
+      let list = listCreation.generated.first,
+      case .exported(let emptyListData) = await planner.exportData(session: session),
+      case .decoded(let emptyList) = planner.decodeImport(emptyListData),
+      case .applied(let addition, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let originalIdentifier, _, _) = addition.generatedReferences.first,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(
+            scope: .appearance(
+              .listMembership(listId: list.id, membershipId: originalIdentifier)), done: true))
+      ).outcome,
+      case .source(.item(let beforeItem)) = await planner.read(
+        session: session, request: .source(item)),
+      case .exported(let currentData) = await planner.exportData(session: session),
+      case .decoded(let current) = planner.decodeImport(currentData),
+      let originalMember = current.backup.memberships.first(where: { $0.id == originalIdentifier })
+    else { throw CancellationError() }
+    let foreignDeletionIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000918")!
+    var incoming = emptyList
+    if incomingClosure {
+      var graph = try #require(JSONSerialization.jsonObject(with: emptyListData) as? [String: Any])
+      graph["deletionMarkers"] = [
+        [
+          "deletionId": foreignDeletionIdentifier.uuidString,
+          "operationId": "00000000-0000-4000-8000-000000000919",
+          "target": [
+            "kind": "membership", "id": originalIdentifier.uuidString,
+            "lifetimeId": originalMember.lifetimeId.uuidString,
+          ],
+          "closedFamilyId": NSNull(),
+        ]
+      ]
+      let decoded = planner.decodeImport(try JSONSerialization.data(withJSONObject: graph))
+      guard case .decoded(let backup) = decoded else {
+        Issue.record(
+          "An old marker without a strict declaration is a valid legacy closure: \(decoded)")
+        return
+      }
+      incoming = backup
+    }
+    guard
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: incoming, mode: .overwrite))
+    else { throw CancellationError() }
+    let overwriteIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: overwriteIdentifier, session: session,
+        command: review.command, reviewToken: review.reviewToken))
+    guard case .applied(_, .complete) = response.outcome,
+      case .exported(let removedData) = await planner.exportData(session: session),
+      case .decoded(let removed) = planner.decodeImport(removedData)
+    else {
+      Issue.record("The reviewed empty contents must remove the current membership: \(response)")
+      return
+    }
+    #expect(removed.backup.memberships.isEmpty)
+    #expect(removed.backup.membershipRemovals.count == 1)
+    #expect(
+      removed.backup.membershipProvenance.contains { binding in
+        binding.membershipId == originalIdentifier && binding.list.reference == list
+          && binding.item.reference == item && binding.observedRemovalIds.isEmpty
+      })
+    let localMarker = removed.backup.deletionMarkers.first { $0.operationId == overwriteIdentifier }
+    #expect(localMarker != nil)
+    #expect(removed.backup.membershipRemovals.first?.deletionId == localMarker?.deletionId)
+    if incomingClosure {
+      #expect(
+        removed.backup.deletionMarkers.contains { $0.deletionId == foreignDeletionIdentifier })
+      #expect(
+        removed.backup.membershipRemovals.allSatisfy { $0.deletionId != foreignDeletionIdentifier })
+    }
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL,
+      itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [
+        (
+          "00000000-0000-4000-8000-000000000403",
+          "00000000-0000-4000-8000-000000000843", 3072, true
+        )
+      ])
+    let contentsResult = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .list(list.id), completion: .all, archive: .all))))
+    guard case .snapshot(let contents) = contentsResult,
+      case .snapshot(let inbox) = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .inbox, completion: .all, archive: .all)))),
+      case .source(.item(let retainedItem)) = await planner.read(
+        session: session, request: .source(item))
+    else {
+      Issue.record("An unseen Add must remain suppressed after Overwrite: \(contentsResult)")
+      return
+    }
+    #expect(contents.matchingCount == 0 && inbox.matchingCount == 1)
+    #expect(
+      retainedItem.updatedAt == beforeItem.updatedAt
+        && retainedItem.fieldHashes == beforeItem.fieldHashes)
+    #expect(
+      retainedItem.content.notes == "Keep this shared Item"
+        && retainedItem.state.globalDone == false)
+    if contents.matchingCount != 0 { return }
+    guard
+      case .applied(let readdition, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let readdedIdentifier, _, _) = readdition.generatedReferences.first,
+      case .appearance(let readded) = await planner.read(
+        session: session,
+        request: .appearance(.listMembership(listId: list.id, membershipId: readdedIdentifier))),
+      case .exported(let readdedData) = await planner.exportData(session: session),
+      case .decoded(let saved) = planner.decodeImport(readdedData)
+    else { throw CancellationError() }
+    #expect(readdedIdentifier != originalIdentifier && readded.localDone == false)
+    let observed = saved.backup.membershipProvenance.first { $0.membershipId == readdedIdentifier }
+    #expect(observed?.observedRemovalIds == removed.backup.membershipRemovals.map(\.deletionId))
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == readdedData)
+  }
+
+  @Test(arguments: [false, true])
   func anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(
     withRepeatedListEntries: Bool
   ) async throws {
