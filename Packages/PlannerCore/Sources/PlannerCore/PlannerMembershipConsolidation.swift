@@ -209,7 +209,7 @@ struct PlannerMembershipConsolidation {
         expanded.append(.init(context: canonicalExpanded, localDone: localDone))
       }
     }
-    let completionStates = plannerCompletionHistoryStates(
+    let completionStates = try plannerCompletionHistoryStates(
       aliases: aliases, changes: current.completionChanges)
     members = members.map { member in
       let completionContext = PlannerPortableCompletionContext.listMembership(

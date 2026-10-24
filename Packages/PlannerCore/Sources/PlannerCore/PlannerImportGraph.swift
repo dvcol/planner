@@ -471,7 +471,6 @@ struct PlannerImportGraph {
 
   private func validateCompletionHistory() throws {
     let suppressedMemberships = try suppressedMembershipIdentities()
-    let aliases = Dictionary(uniqueKeysWithValues: backup.contextAliases.map { ($0.aliasId, $0) })
     let changes = Dictionary(uniqueKeysWithValues: backup.completionChanges.map { ($0.id, $0) })
     for (index, alias) in backup.contextAliases.enumerated() {
       let path = "/contextAliases/\(index)"
@@ -485,49 +484,9 @@ struct PlannerImportGraph {
           "Aliases must retain the same logical context; repeated route entries stay independent.",
           path + "/canonicalContext")
       }
-      if let current = alias.currentChangeId {
-        guard let change = changes[current], change.aliasId == alias.aliasId,
-          change.context == alias.context
-        else {
-          throw failure(
-            "The current change must resolve to this alias and context.", path + "/currentChangeId")
-        }
-      }
     }
-    for (index, change) in backup.completionChanges.enumerated() {
-      let path = "/completionChanges/\(index)"
-      guard Set(change.observedChangeIds).count == change.observedChangeIds.count else {
-        throw failure(
-          "Observed completion changes must be distinct.", path + "/observedChangeIds")
-      }
-      guard let alias = aliases[change.aliasId], alias.context == change.context else {
-        throw failure(
-          "A completion change must resolve to its declared alias context.", path + "/aliasId")
-      }
-      for (predecessorIndex, predecessorId) in change.observedChangeIds.enumerated() {
-        guard let predecessor = changes[predecessorId],
-          let predecessorAlias = aliases[predecessor.aliasId],
-          predecessorAlias.canonicalContext == alias.canonicalContext
-        else {
-          throw failure(
-            "An observed change must resolve within the same canonical context.",
-            path + "/observedChangeIds/\(predecessorIndex)")
-        }
-      }
-    }
-    var remaining = Set(changes.keys)
-    while !remaining.isEmpty {
-      let ready = remaining.filter { identifier in
-        changes[identifier]!.observedChangeIds.allSatisfy { !remaining.contains($0) }
-      }
-      guard !ready.isEmpty else {
-        let index = backup.completionChanges.firstIndex { remaining.contains($0.id) }!
-        throw failure(
-          "Completion history must not contain a cycle.",
-          "/completionChanges/\(index)/observedChangeIds")
-      }
-      remaining.subtract(ready)
-    }
+    try plannerValidateCompletionHistoryReferences(
+      aliases: backup.contextAliases, changes: backup.completionChanges)
     let groups = Dictionary(grouping: backup.contextAliases, by: \.canonicalContext)
     for (context, contributions) in groups {
       let expected = plannerCompletionHistoryValue(contributions: contributions, changes: changes)

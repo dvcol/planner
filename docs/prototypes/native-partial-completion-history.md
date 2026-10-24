@@ -1,0 +1,25 @@
+# Incomplete referenced completion history
+
+Q155 A requires unresolved completion history to reject rather than infer another user action or silently discard references. Native reads previously calculated a value before checking whether its head, predecessor or alias records were present. A missing current change could therefore fall back to an initial flag. Even when the displayed Bool happened to match the last saved Reopen, it was not backed by complete history.
+
+Native canonical admission now reuses the import validator's causal-reference checks before calculating completion states. Current heads must resolve to their declared aliases and contexts; changes must resolve their aliases and predecessors; observations must be distinct and acyclic within the same canonical context. Native failures report readUnavailable with the actual field path. Import validation retains its invalidInput errors and JSON Pointer fields. Context/owner binding validation stays in the existing graph validator.
+
+Current queries and appearance reads reject while those references are incomplete or inconsistent. New edits remain unapplied and status reports recovery observation as unavailable. Historical applied replay still returns its original result and checkpoint without normalizing current data. No recovery file changes during that unavailable window. When the missing valid record arrives, bootstrap and reads recover, and the complete export remains exactly the original one. The fix invents no completion changes, aliases, timestamps or checkpoints.
+
+The causal winner and predecessor-traversal bodies remain byte-identical. The existing portable format, schemas, public interfaces, fingerprints and native staging are unchanged. The two existing state-calculation callers propagate the validation failure; no package, target or production test hook is added.
+
+## Qualification
+
+The public-storage tracer creates an Item, List membership and direct/expanded itinerary entries through ordinary commands, then completes and reopens one selected appearance. Public export supplies the saved records. A separate native fixture write withholds a referenced head, predecessor or alias, or supplies a wrong alias, duplicate observation or causal cycle. All behavior is observed through public queries, reads, commands, operation evidence, replay, bootstrap and export.
+
+All nine initial missing-record cases fail on unchanged production because current queries and appearance reads remain available. Sharing the reference validation passes those nine cases. The tracer then expands to eighteen cases across standalone List, direct itinerary and expanded List-entry scopes, including exact error-field assertions and unchanged recovery files.
+
+The first expanded run exposes an incorrect expected field index in two predecessor-removal cases. Removing that record leaves one change at index zero; the test still expected the index from the earlier two-record export. Its actual paths, failed assertions and [correction record](evidence/native-membership-consolidation/partial-completion-integrity/expectation-correction.json) remain retained. Only that expected index changes before the final run; production and exact-path assertions stay intact.
+
+The [final verification](evidence/native-membership-consolidation/partial-completion-validation.json) checks actual executed signatures, structured results, source manifests and products. Mac and iPhone Simulator each pass 258 functions and 830 invocations in ninety suites. The eighteen new cases join the unchanged preceding cohort. All 809 Core inputs and 1,150 native build inputs match. The 514 frozen fixtures, nineteen model sources and preceding consolidation test bodies are unchanged. All five affected Swift files pass strict formatting.
+
+Matching Mac app, Share and fixture compilation and seven existing real HTTP regressions pass. The retained linkd diagnostics do not establish actual system Shortcuts invocation. These checks add no native UI, Mac interaction, physical-device or CloudKit credit. The [attempt index](evidence/native-membership-consolidation/partial-completion-attempts.json) preserves all phases. Only closed, marked disposable stores from passing runs are removed through the existing verifier; the [cleanup report](evidence/native-membership-consolidation/partial-completion-passing-fixture-cleanup.json) records counts and nominal sizes. Failed attempts and original evidence remain retained.
+
+## Remaining scope
+
+This qualifies referenced causal records and their consistency. Unproven or changed owner/context lifetimes, partial relationship delivery beyond these cases, broader restoration-family reconciliation, other prepared command families, alias-specific adapter journeys and repair-specific native-save/interruption faults remain open. Actual Mac UI, signed/shared storage, installed Share, CloudKit, physical performance, system invocation and whole-app visual acceptance keep their separate gates. Signing stays deferred.

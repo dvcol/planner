@@ -11,6 +11,180 @@ import Testing
 
 struct NativeMembershipConsolidationTests {
   @Test(
+    arguments: ["list", "expanded", "direct"],
+    ["head", "predecessor", "alias", "wrongAlias", "duplicateObservation", "cycle"])
+  func incompleteCompletionHistoryRejectsCurrentReadsAndWritesUntilItsRecordsArrive(
+    scope: String, historyCondition: String
+  ) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let response = await planner.execute(
+        .init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let result, .complete) = response.outcome else {
+        Issue.record("The partial-history fixture action must save: \(response)")
+        throw CancellationError()
+      }
+      return result
+    }
+    let item = try #require(
+      try await save(.createItem(content: .init(title: "Hotel", notes: "Keep"))).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Tokyo"))).generated.first)
+    let itinerary = try #require(
+      try await save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
+    let addition = try await save(
+      .addMembership(itemId: item.id, listId: list.id, placement: .last))
+    let expandedAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    let directAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: item, placement: .last))
+    guard case .membership(let membership, _, _)? = addition.generatedReferences.first,
+      case .itineraryEntry(let expandedEntry, _, _)? = expandedAddition.generatedReferences.first,
+      case .itineraryEntry(let directEntry, _, _)? = directAddition.generatedReferences.first
+    else { throw CancellationError() }
+    let appearance: PlannerAppearance
+    switch scope {
+    case "list": appearance = .listMembership(listId: list.id, membershipId: membership)
+    case "expanded":
+      appearance = .expandedListItem(
+        itineraryId: itinerary.id, listEntryId: expandedEntry, membershipId: membership)
+    default: appearance = .directItineraryItem(itineraryId: itinerary.id, entryId: directEntry)
+    }
+    _ = try await save(.setCompletion(scope: .appearance(appearance), done: true))
+    let reopening = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .setCompletion(scope: .appearance(appearance), done: false))
+    guard
+      case .applied(let reopened, .complete(let checkpoint)) = await planner.execute(reopening)
+        .outcome,
+      case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let decoded) = planner.decodeImport(before),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    let alias = try #require(decoded.backup.contextAliases.first)
+    #expect(decoded.backup.contextAliases.count == 1)
+    #expect(decoded.backup.completionChanges.count == 2)
+    let identifier: UUID
+    let kind: String
+    let content: Data
+    let expectedPropertyPath: String
+    var inconsistentContent: Data?
+    if historyCondition == "alias" {
+      identifier = alias.aliasId
+      kind = "contextAlias"
+      content = try JSONEncoder().encode(alias)
+      expectedPropertyPath = "/completionChanges/0/aliasId"
+    } else {
+      let change: PlannerPortableCompletionChange
+      if historyCondition == "predecessor" || historyCondition == "cycle" {
+        change = try #require(decoded.backup.completionChanges.first { $0.done })
+      } else {
+        change = try #require(
+          decoded.backup.completionChanges.first { $0.id == alias.currentChangeId })
+      }
+      identifier = change.id
+      kind = "completionChange"
+      content = try JSONEncoder().encode(change)
+      let headIndex = try #require(
+        decoded.backup.completionChanges.firstIndex { $0.id == alias.currentChangeId })
+      switch historyCondition {
+      case "predecessor":
+        expectedPropertyPath = "/completionChanges/0/observedChangeIds/0"
+      case "wrongAlias":
+        expectedPropertyPath = "/contextAliases/0/currentChangeId"
+        inconsistentContent = try JSONEncoder().encode(
+          PlannerPortableCompletionChange(
+            id: change.id, aliasId: UUID(uuidString: "00000000-0000-4000-8000-000000000990")!,
+            context: change.context, done: change.done, observedChangeIds: change.observedChangeIds)
+        )
+      case "duplicateObservation":
+        expectedPropertyPath = "/completionChanges/\(headIndex)/observedChangeIds"
+        let predecessor = try #require(change.observedChangeIds.first)
+        inconsistentContent = try JSONEncoder().encode(
+          PlannerPortableCompletionChange(
+            id: change.id, aliasId: change.aliasId, context: change.context, done: change.done,
+            observedChangeIds: [predecessor, predecessor]))
+      case "cycle":
+        expectedPropertyPath = "/completionChanges/0/observedChangeIds"
+        inconsistentContent = try JSONEncoder().encode(
+          PlannerPortableCompletionChange(
+            id: change.id, aliasId: change.aliasId, context: change.context, done: change.done,
+            observedChangeIds: [try #require(alias.currentChangeId)]))
+      default: expectedPropertyPath = "/contextAliases/0/currentChangeId"
+      }
+    }
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    try await setNativeCompletionLineageRecord(
+      storeURL: configuration.storeURL, identifier: identifier, kind: kind, content: nil)
+    if let inconsistentContent {
+      try await setNativeCompletionLineageRecord(
+        storeURL: configuration.storeURL, identifier: identifier, kind: kind,
+        content: inconsistentContent)
+    }
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .itinerary(itinerary.id), completion: .all, archive: .all))))
+    let read = await planner.read(session: session, request: .appearance(appearance))
+    guard case .failed(let queryFailure) = query, case .failed(let readFailure) = read else {
+      Issue.record(
+        "Incomplete causal history must not expose a guessed current state: \(query), \(read)")
+      return
+    }
+    #expect(queryFailure.code == "readUnavailable" && readFailure.code == "readUnavailable")
+    #expect(queryFailure.propertyPath == expectedPropertyPath)
+    #expect(readFailure.propertyPath == expectedPropertyPath)
+    let waiting = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .createTag(content: .init(name: "Must remain unapplied")))
+    guard case .rejected(let rejected) = await planner.execute(waiting).outcome,
+      case .noReliableEvidence = await planner.operationStatus(
+        session: session, operationId: waiting.operationId),
+      case .status(let status) = await planner.read(session: session, request: .status),
+      case .unavailable(let reason) = status.recovery,
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await planner.execute(
+        reopening
+      )
+      .outcome
+    else { throw CancellationError() }
+    #expect(rejected.code == "readUnavailable" && reason.code == "readUnavailable")
+    #expect(replayed == reopened && replayCheckpoint == checkpoint)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    let fresh = Planner(configuration: configuration)
+    guard case .unavailable(let unavailable) = await fresh.bootstrap() else {
+      Issue.record("An incomplete history must remain unavailable after relaunch")
+      return
+    }
+    #expect(unavailable.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    if inconsistentContent != nil {
+      try await setNativeCompletionLineageRecord(
+        storeURL: configuration.storeURL, identifier: identifier, kind: kind, content: nil)
+    }
+    try await setNativeCompletionLineageRecord(
+      storeURL: configuration.storeURL, identifier: identifier, kind: kind, content: content)
+    guard case .ready(let freshSession) = await fresh.bootstrap(),
+      case .appearance(let current) = await fresh.read(
+        session: freshSession, request: .appearance(appearance)),
+      case .exported(let after) = await fresh.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(
+      current.source == item && !current.globalDone && !current.localDone && !current.effectiveDone)
+    #expect(after == before)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+  }
+
+  @Test(
     arguments: ["individual", "branchBulk", "itineraryBulk"].flatMap {
       [$0, "retiredSibling:" + $0]
     }, [false, true])
@@ -2030,6 +2204,31 @@ struct NativeMembershipConsolidationTests {
       })
     context.insert(
       PlannerSchemaV18.ExpandedCompletion(listEntry: entry, membership: member, localDone: true))
+    try context.save()
+  }
+
+  /// Model access constructs the actual persisted input; all behavioral observations use Planner.
+  @MainActor private func setNativeCompletionLineageRecord(
+    storeURL: URL, identifier: UUID, kind: String, content: Data?
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()).filter {
+      $0.recordIdentifier == identifier && $0.recordKind == kind
+    }
+    if let content {
+      #expect(records.isEmpty)
+      context.insert(
+        PlannerSchemaV16.LineageRecord(identifier: identifier, kind: kind, data: content))
+    } else {
+      let record = try #require(records.first)
+      #expect(records.count == 1)
+      context.delete(record)
+    }
     try context.save()
   }
 

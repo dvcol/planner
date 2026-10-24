@@ -21,3 +21,5 @@ Matching Mac app, Share and fixture compilation and seven existing real HTTP reg
 ## Remaining scope
 
 This repairs a missing completed expanded row from complete proven history. Partial or missing causal records, unproven or changed owner bindings, repair-specific native-save failure and process interruption, broader restoration reconciliation, alias-specific adapter journeys and final native UI acceptance remain open. Signed/shared storage, installed Share, CloudKit, physical devices and system invocation keep their separate gates. Signing stays deferred.
+
+The later [referenced-history checkpoint](native-partial-completion-history.md) qualifies native rejection and recovery for missing or inconsistent causal references. This earlier checkpoint retains its narrower complete-history repair evidence.

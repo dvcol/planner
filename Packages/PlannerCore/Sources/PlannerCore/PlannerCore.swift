@@ -3985,7 +3985,7 @@ public actor Planner {
         }
       }
     }
-    let completionStates = plannerCompletionHistoryStates(
+    let completionStates = try plannerCompletionHistoryStates(
       aliases: lineage.contextAliases, changes: lineage.completionChanges)
     for record in records {
       guard let identifier = record.id, let lifetime = record.lifetimeId,
