@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 17.409,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.107272541,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

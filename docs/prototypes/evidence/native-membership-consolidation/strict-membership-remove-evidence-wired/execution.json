@@ -1,0 +1,45 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 112.032,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.157711625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.278131,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.285750959,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.266013709,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.131075875,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

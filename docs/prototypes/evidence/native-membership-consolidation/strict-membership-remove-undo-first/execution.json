@@ -1,0 +1,38 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 112.029,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.166016333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.109164625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.178321334,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.1645625,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

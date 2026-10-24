@@ -1,0 +1,50 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 2.177,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.155779875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.1713745,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.153717417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.09047325,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.0766615,
+      "failures": [
+        "Expectation failed: receipt[\"payloadDigest\"] as? String == literal[\"payloadDigest\"] as? String (error)",
+        "Expectation failed: preparation[\"formatVersion\"] as? Int == 2 (error)",
+        "Expectation failed: (preparation[\"resolvedBindings\"] as? [[String: Any]])?.count == 3 (error)",
+        "Expectation failed: (preparation[\"resolvedMembershipEvidence\"] as? [[String: Any]])?.count == 1 (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

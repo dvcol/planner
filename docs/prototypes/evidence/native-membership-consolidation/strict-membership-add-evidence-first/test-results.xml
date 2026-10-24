@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.7375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="10" failures="0" skipped="0" time="3.198213583">
+        <testcase classname="PlannerCoreStoreTests.MembershipCreationTests" name="placementKeepsSourceIdentitiesAndRebalancesWithoutLosingOrder()" time="3.197764375"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipCreationTests" name="newMembershipReferencesOneItemWithoutCopyingContentOrCompletingIt()" time="0.137133791"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipCreationTests" name="listedItemLeavesInboxAndEveryWriterRetainsIndependentMemberships()" time="0.57941325"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipCreationTests" name="invalidSourcesAnchorsAndRecoveryFailureLeaveMembershipAdditionUnapplied()" time="0.254373542"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="0.127128375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="ordinaryReAddRetainsItsOriginalObservationBasisForReplay()" time="0.2525335"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()" time="0.259204375"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.279885292"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()" time="0.265794667"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.161877375"/>
+    </testsuite>
+</testsuites>

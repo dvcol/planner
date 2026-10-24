@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.825e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="3" skipped="0" time="0.093902792">
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.093465625">
+            <failure message="Expectation failed: after.backup.membershipRemovals.count == 1 (error)"/>
+            <failure message="Expectation failed: after.backup.membershipProvenance.count == 1 (error)"/>
+            <failure message="Expectation failed: after.backup.membershipProvenance.first (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

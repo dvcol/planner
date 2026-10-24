@@ -1,0 +1,115 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 21.342,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.193655417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.226800792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.203451458,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "informedReaddSurvivesNativeImportRecoveryReplayAndReopen()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.199671709,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removalObservationsCannotBorrowAnotherItemListPairsAuthority()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.203430708,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.263103333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.158154667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReAddRetainsItsOriginalObservationBasisForReplay()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.252274083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.283365667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.324362292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.326531,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.328703583,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.203610541,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.328879375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.374983333,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

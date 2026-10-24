@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.712,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.135158708,
+      "failures": [
+        "Issue recorded (error): Late membership reads must retain the informed re-add: .failed(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/memberships/0/id\"), message: \"A live membership must observe every strict removal for its exact Item/List pair.\", details: nil)), .failed(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/memberships/0/id\"), message: \"A live membership must observe every strict removal for its exact Item/List pair.\", details: nil)), .failed(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/memberships/0/id\"), message: \"A live membership must observe every strict removal for its exact Item/List pair.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

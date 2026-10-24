@@ -1,0 +1,17 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "/private/tmp/PlannerImportLifetimeAuditSource/Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerImportLifetimeAuditBuild",
+  "--jobs",
+  "1",
+  "--disable-xctest",
+  "--enable-swift-testing",
+  "--filter",
+  "NativeMembershipCommandEvidenceTests|MembershipRemovalTests",
+  "--xunit-output",
+  "/private/tmp/PlannerImportLifetime-strict-membership-remove-evidence-first.xml"
+]

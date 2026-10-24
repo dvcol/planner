@@ -1,0 +1,24 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.665,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "ordinaryReAddRetainsItsOriginalObservationBasisForReplay()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.18425925,
+      "failures": [
+        "Expectation failed: (receipt[\"payloadDigest\"] as? String)?.hasPrefix(\"sha256-payload-v3:\") == true (error)",
+        "Expectation failed: preparation[\"formatVersion\"] as? Int == 2 (error)",
+        "Expectation failed: (preparation[\"resolvedBindings\"] as? [[String: Any]])?.count == 2 (error)",
+        "Expectation failed: evidence?.count == 1 (error)",
+        "Expectation failed: evidence?.first?[\"membershipId\"] as? String == addedIdentifier.uuidString (error)",
+        "Expectation failed: evidence?.first?[\"observedRemovalIds\"] as? [String] == removedBackup.backup.membershipRemovals.map { $0.deletionId.uuidString }.sorted() (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.25e-05"/>
+    <testsuite name="TestResults" errors="0" tests="15" failures="0" skipped="0" time="0.375385">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="0.193655417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(scenario:)" time="0.226800792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)" time="0.203451458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddSurvivesNativeImportRecoveryReplayAndReopen()" time="0.199671709"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="removalObservationsCannotBorrowAnotherItemListPairsAuthority()" time="0.203430708"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)" time="0.263103333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="0.158154667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="ordinaryReAddRetainsItsOriginalObservationBasisForReplay()" time="0.252274083"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.283365667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.324362292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.326531"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()" time="0.328703583"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.203610541"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()" time="0.328879375"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.374983333"/>
+    </testsuite>
+</testsuites>

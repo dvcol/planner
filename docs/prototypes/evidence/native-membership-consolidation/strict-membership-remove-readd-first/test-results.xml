@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.6958e-05"/>
+    <testsuite name="TestResults" errors="0" tests="4" failures="1" skipped="0" time="0.173651">
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.09966475"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()" time="0.144937375">
+            <failure message="Issue recorded (error): Undo must durably restore the original membership."/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.173288333"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()" time="0.1621"/>
+    </testsuite>
+</testsuites>

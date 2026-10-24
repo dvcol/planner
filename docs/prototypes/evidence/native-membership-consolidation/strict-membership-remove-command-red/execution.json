@@ -1,0 +1,21 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.854,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.093465625,
+      "failures": [
+        "Expectation failed: after.backup.membershipRemovals.count == 1 (error)",
+        "Expectation failed: after.backup.membershipProvenance.count == 1 (error)",
+        "Expectation failed: after.backup.membershipProvenance.first (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

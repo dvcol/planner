@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.4375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="4" failures="0" skipped="0" time="0.178832375">
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()" time="0.166016333"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.109164625"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.178321334"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()" time="0.1645625"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,1370 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 33.606,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "restoredSourceValuesPreserveOmittedReferencesAndTruthfulRecovery(sourceSuffix:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalKindTests",
+      "seconds": 25.25633575,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 25.120530582999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 25.121593416,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 25.120552707999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 25.120593333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "largePortableListRetainsAllSourcesAndMembershipBindings()",
+      "className": "PlannerCoreStoreTests.NativeImportScaleTests",
+      "seconds": 25.123580791,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:)",
+      "className": "PlannerCoreStoreTests.NativeImportHistoryCollisionTests",
+      "seconds": 25.125904,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 24.094495666,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 23.95292725,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyPlannerRestoresIncomingFamilyReferencesAndItsCompleteGraph(sourceIdentifierSuffix:mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 23.767629625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingCurrentOwners(importCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 25.121094125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(declaration:mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportBindingReviewTests",
+      "seconds": 25.12206925,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt()",
+      "className": "PlannerCoreStoreTests.NativeProvenanceMigrationTests",
+      "seconds": 25.124907209,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair()",
+      "className": "PlannerCoreStoreTests.NativeStatusAdmissionTests",
+      "seconds": 25.233546833000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent()",
+      "className": "PlannerCoreStoreTests.NativeStatusAdmissionTests",
+      "seconds": 25.231750041,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:)",
+      "className": "PlannerCoreStoreTests.NativeStatusAdmissionTests",
+      "seconds": 25.239220917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "initialContributionRetainsItsContextAndExplicitNullChange(kind:)",
+      "className": "PlannerCoreStoreTests.ImportLineageEncodingTests",
+      "seconds": 25.121924208,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "explicitCompletionHistoryEncodesTheIndependentPortableFixture()",
+      "className": "PlannerCoreStoreTests.ImportLineageEncodingTests",
+      "seconds": 25.121783500000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 24.82156475,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidPreparedMaintenanceCannotBeListedOrSelected(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.239256708,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "extraMaintenancePreparationFieldsCannotSupplyRecoveryEvidence()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 24.822693166999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "acknowledgedMaintenancePreparationIsNotPresentedAsUnverified()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.252881667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.252930582999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.251236041000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 24.988855667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.239329875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.239622666,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 25.252861166000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedMaintenanceCopyRestoresItsGraphWithoutAcknowledgingThePreparation()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 24.822122916999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "placementKeepsSourceIdentitiesAndRebalancesWithoutLosingOrder()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 25.221806166999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "listedItemLeavesInboxAndEveryWriterRetainsIndependentMemberships()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 25.125943125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidSourcesAnchorsAndRecoveryFailureLeaveMembershipAdditionUnapplied()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 25.124580166,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "newMembershipReferencesOneItemWithoutCopyingContentOrCompletingIt()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 25.124556707999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restoredMembershipHistoryTransformsExactLifetimesOrRejectsRetainedIdentityCollisions(collidesWithRetainedHistory:restoresIncomingValuesIntoDeletedSource:)",
+      "className": "PlannerCoreStoreTests.NativeImportPredecessorHistoryTests",
+      "seconds": 25.123658541,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:)",
+      "className": "PlannerCoreStoreTests.NativeImportLineageTests",
+      "seconds": 25.193752292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState()",
+      "className": "PlannerCoreStoreTests.NativeImportLineageTests",
+      "seconds": 25.134781208,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "aClosedMembershipCannotRedirectItsHistoryToAnotherItem()",
+      "className": "PlannerCoreStoreTests.NativeImportLineageTests",
+      "seconds": 25.193359,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup()",
+      "className": "PlannerCoreStoreTests.NativeImportLineageTests",
+      "seconds": 25.13463625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState()",
+      "className": "PlannerCoreStoreTests.NativeImportReviewTests",
+      "seconds": 25.122062375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData()",
+      "className": "PlannerCoreStoreTests.NativeImportReviewTests",
+      "seconds": 25.121851875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipKeepsTheCurrentFamilyAndRejectsUnknownCandidateDependents(incomingLifetimeSuffix:sharesFamilyIdentifier:)",
+      "className": "PlannerCoreStoreTests.NativeImportUnknownCandidateSkipTests",
+      "seconds": 25.239699958000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "incomingCompletionHistoryBelongsToItsWholeOwnerReview()",
+      "className": "PlannerCoreStoreTests.NativeImportConflictReviewTests",
+      "seconds": 24.121550084,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportConflictReviewTests",
+      "seconds": 23.979787333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportConflictReviewTests",
+      "seconds": 24.996773125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineSchema17MigrationPreservesOriginsGraphAndReceipt()",
+      "className": "PlannerCoreStoreTests.NativeProviderMigrationTests",
+      "seconds": 25.122246875000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry()",
+      "className": "PlannerCoreStoreTests.ItineraryEntryMigrationTests",
+      "seconds": 25.122460958,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "freshOwnerRestoresExactOwnedReferencesButRejectsForeignCandidates(referenceKind:hasForeignReferenceCandidate:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalOwnedTests",
+      "seconds": 25.125908917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidMoveAndRecoveryObstructionLeaveBothListsAndIssuedWindowsUnchanged()",
+      "className": "PlannerCoreStoreTests.MembershipMoveTests",
+      "seconds": 25.251145875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "movingCreatesANewTodoContextWithoutChangingTheSharedGloballyDoneItem()",
+      "className": "PlannerCoreStoreTests.MembershipMoveTests",
+      "seconds": 25.252923167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "existingDestinationKeepsIdentityOrderAndCompletionAndReplayCannotRestoreIt()",
+      "className": "PlannerCoreStoreTests.MembershipMoveTests",
+      "seconds": 25.239550041,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reorderingKeepsMembershipIdentityLocalStateAndSourceContentAcrossReopenAndReplay()",
+      "className": "PlannerCoreStoreTests.MembershipReorderingTests",
+      "seconds": 25.123137125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "closeAnchorReordersRebalanceWithoutLosingAnAppearanceOrResettingCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipReorderingTests",
+      "seconds": 25.222635833000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidReordersAndUnavailableRecoveryLeaveTheIssuedWindowAndEverySourceUnchanged()",
+      "className": "PlannerCoreStoreTests.MembershipReorderingTests",
+      "seconds": 25.123526833000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restoredItineraryKeepsExactDirectAndExpandedHistoryOrRejectsTheWholeCollision(collision:restorationCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportPredecessorItineraryHistoryTests",
+      "seconds": 25.124635374999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV15MigrationPreservesGraphBudgetsRecoveryAndCreationReplay()",
+      "className": "PlannerCoreStoreTests.NativeImportLineageMigrationTests",
+      "seconds": 25.122558499999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation()",
+      "className": "PlannerCoreStoreTests.ItineraryMigrationTests",
+      "seconds": 25.122463833,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryRestorationTests",
+      "seconds": 25.126674625000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedSnapshotRestoresCompleteGraphIntoSeparateEmptyDatasetAndReplaysAfterReopen()",
+      "className": "PlannerCoreStoreTests.RecoveryRestorationTests",
+      "seconds": 25.126394916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryRestorationTests",
+      "seconds": 25.12646275,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unverifiedProposalRequiresFreshOperationAndDoesNotAcknowledgeSource()",
+      "className": "PlannerCoreStoreTests.RecoveryRestorationTests",
+      "seconds": 25.126000833000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "changedRecoveryReviewCannotApplyToDifferentData(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryRestorationTests",
+      "seconds": 25.126497750000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryRestorationTests",
+      "seconds": 25.134352167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unresolvedOwnedMapsLinkRejectsThePageInsteadOfOmittingItsLocationInput()",
+      "className": "PlannerCoreStoreTests.MapReadIntegrityTests",
+      "seconds": 25.23920025,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem()",
+      "className": "PlannerCoreStoreTests.ItemLabelMigrationTests",
+      "seconds": 24.996985958,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:)",
+      "className": "PlannerCoreStoreTests.NativeImportSourceDeletionTests",
+      "seconds": 25.126389500000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "sourceDeletionAndNewOwnersApplyTogetherOrLeaveNoPartialImport(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeImportSourceDeletionTests",
+      "seconds": 25.126474291999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anotherWriterInvalidatesCachedMapInputsAndContextWithoutRetargeting()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 25.239634875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyMapQueriesAndRejectedRequestsPreserveDataAndGeneration()",
+      "className": "PlannerCoreStoreTests.MapReadAdmissionTests",
+      "seconds": 25.252785209000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removedContextsRetainReviewableRestorableHistory(kind:)",
+      "className": "PlannerCoreStoreTests.NativeImportClosedHistoryTests",
+      "seconds": 23.811664042,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "inaccessibleRecoveryRejectsCreationBeforeCommitAndRetainsAcknowledgedData()",
+      "className": "PlannerCoreStoreTests.RecoveryFailureTests",
+      "seconds": 25.126074790999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "issuanceEndsOnReopenButAppliedRestorationReplayPreservesLaterEdits()",
+      "className": "PlannerCoreStoreTests.AssociationUndoHistoryTests",
+      "seconds": 25.122602417000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anotherRemovalRestoresOnlyItsOwnFreshLifetimeAndClosesOlderHistory()",
+      "className": "PlannerCoreStoreTests.AssociationUndoHistoryTests",
+      "seconds": 25.122492417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "deletedOriginalBindingsRejectUndoWithoutChangingSurvivors(kind:)",
+      "className": "PlannerCoreStoreTests.AssociationUndoHistoryTests",
+      "seconds": 25.123465917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anotherDatasetCannotConsumeTheIssuedUndoCapability()",
+      "className": "PlannerCoreStoreTests.AssociationUndoHistoryTests",
+      "seconds": 25.12327125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "recreatedExpandedCounterpartsRejectTheWholeUndo(kind:)",
+      "className": "PlannerCoreStoreTests.AssociationUndoHistoryTests",
+      "seconds": 25.123419249999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "newerMembershipRejectsOldUndoWithoutReplacingLocalState()",
+      "className": "PlannerCoreStoreTests.AssociationUndoHistoryTests",
+      "seconds": 25.1231765,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:)",
+      "className": "PlannerCoreStoreTests.NativeImportOverwriteDeletionReviewTests",
+      "seconds": 25.122383417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportOverwriteDeletionReviewTests",
+      "seconds": 25.121740792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportOverwriteDeletionReviewTests",
+      "seconds": 25.121299167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage()",
+      "className": "PlannerCoreStoreTests.NativeImportDecodingTests",
+      "seconds": 25.12408725,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportIncomingDeletionReviewTests",
+      "seconds": 25.120710665999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportIncomingDeletionReviewTests",
+      "seconds": 25.121946708,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportIncomingDeletionReviewTests",
+      "seconds": 25.122132125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)",
+      "className": "PlannerCoreStoreTests.NativeImportCompetingValuesTests",
+      "seconds": 25.221389041000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(usesPredecessorDerivedFamilyIdentity:hasClosedLineage:)",
+      "className": "PlannerCoreStoreTests.NativeImportFreshLocalValuesTests",
+      "seconds": 25.125693875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:)",
+      "className": "PlannerCoreStoreTests.NativeImportOmittedOwnerReviewTests",
+      "seconds": 25.125132458,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:)",
+      "className": "PlannerCoreStoreTests.NativeImportOmittedOwnerReviewTests",
+      "seconds": 25.124237625000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:)",
+      "className": "PlannerCoreStoreTests.NativeImportOmittedOwnerReviewTests",
+      "seconds": 25.125164417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:)",
+      "className": "PlannerCoreStoreTests.NativeImportResultTests",
+      "seconds": 25.12533625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry()",
+      "className": "PlannerCoreStoreTests.NativeImportResultTests",
+      "seconds": 25.124835,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restorationSummaryReportsSavedLifetimesAndReboundDependencies()",
+      "className": "PlannerCoreStoreTests.NativeImportResultTests",
+      "seconds": 25.125911041000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "incompleteRecoveryRetainsSummaryUntilCheckpointRepair()",
+      "className": "PlannerCoreStoreTests.NativeImportResultTests",
+      "seconds": 25.125949333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportDeletedReviewTests",
+      "seconds": 25.134726167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview()",
+      "className": "PlannerCoreStoreTests.NativeImportDeletedReviewTests",
+      "seconds": 25.126135792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)",
+      "className": "PlannerCoreStoreTests.NativeImportDeletedReviewTests",
+      "seconds": 25.125994457999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory()",
+      "className": "PlannerCoreStoreTests.ItemLinkMigrationTests",
+      "seconds": 25.122046417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList()",
+      "className": "PlannerCoreStoreTests.ItemLinkMigrationTests",
+      "seconds": 25.122212,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt()",
+      "className": "PlannerCoreStoreTests.ItemLinkMigrationTests",
+      "seconds": 25.120810833,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay()",
+      "className": "PlannerCoreStoreTests.ItemLinkMigrationTests",
+      "seconds": 25.121657291000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory()",
+      "className": "PlannerCoreStoreTests.ItemLinkMigrationTests",
+      "seconds": 25.122234166000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery()",
+      "className": "PlannerCoreStoreTests.CategoryMigrationTests",
+      "seconds": 25.126426917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:)",
+      "className": "PlannerCoreStoreTests.NativeImportProviderTests",
+      "seconds": 25.134527292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "foreignOwnedCandidateCannotBypassRestorationReconciliation()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 25.252602042,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 25.252933417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 25.253050875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 25.256299833,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource()",
+      "className": "PlannerCoreStoreTests.NativeImportRestorationTests",
+      "seconds": 24.937056249999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "recoveryOnlyDamageAndRepairInvalidateStatusWithoutChangingTheItem(atomicReplacement:)",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.362473958000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "aBurstOverlappingInitialReadsStillInvalidatesTheFinalCanonicalGeneration()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 26.033910417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "cancellingOneSubscriberKeepsTheOtherLiveForOwnWrites()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.332147917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedBulkInvalidatesLocalProgressAndCompleteReplayDoesNotInventADataChange()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 30.508476792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "changingTheControlBindingEndsTheStreamAndAValidatedReopeningCanObserve()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.441381167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "retainingAStreamDoesNotRetainItsDiscardedPlanner()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.256073916000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "aForeignInstanceSessionFailsWithoutPoisoningTheValidSubscription()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.330345334,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "losingTheStoreEndsObservationWithoutRecreatingItAndCanReopenAfterRepair()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.449025875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "recoveryDirectoryRepairKeepsTheSubscriptionAndSavedContent(subscribeWhileUnavailable:)",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.352974792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anIndependentLocalWriterInvalidatesCanonicalReadsAfterSubscription()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 25.306553417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anotherDatasetAndRecoveryNamespaceCannotInvalidateTheSubscribedDataset()",
+      "className": "PlannerCoreStoreTests.PlannerChangeStreamTests",
+      "seconds": 30.525252333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion()",
+      "className": "PlannerCoreStoreTests.ExpandedCompletionMigrationTests",
+      "seconds": 25.233666540999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryProposalSelectionTests",
+      "seconds": 25.13419275,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:)",
+      "className": "PlannerCoreStoreTests.RecoveryProposalSelectionTests",
+      "seconds": 25.134880167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing()",
+      "className": "PlannerCoreStoreTests.RecoveryProposalSelectionTests",
+      "seconds": 25.126624125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData()",
+      "className": "PlannerCoreStoreTests.RecoveryProposalSelectionTests",
+      "seconds": 25.134787667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "malformedPortableLineageIsRejectedBeforeRecoverySelection(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryProposalSelectionTests",
+      "seconds": 25.134712875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt()",
+      "className": "PlannerCoreStoreTests.RecoveryProposalSelectionTests",
+      "seconds": 25.126689417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidAppearancesAndPrecommitRecoveryFailureLeaveLocalAndGlobalStateUnchanged()",
+      "className": "PlannerCoreStoreTests.MembershipCompletionTests",
+      "seconds": 25.122863667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "localCompletionRetainsOtherContextAndGlobalPrecedenceThroughReopenAndReplay()",
+      "className": "PlannerCoreStoreTests.MembershipCompletionTests",
+      "seconds": 25.123942083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList(restorationCount:)",
+      "className": "PlannerCoreStoreTests.NativeImportLiveOverwriteTests",
+      "seconds": 25.12269625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "olderOwnedLinksAndSchedulesNeedFreshRestorationAuthorization()",
+      "className": "PlannerCoreStoreTests.NativeImportLiveOverwriteTests",
+      "seconds": 25.122214208,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipRetainsEachCurrentSourceFamilyAndAllOmittedOwnedData(sourceSuffix:incomingLifetimeSuffix:)",
+      "className": "PlannerCoreStoreTests.NativeImportUnknownCandidateKindsTests",
+      "seconds": 25.123868083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:)",
+      "className": "PlannerCoreStoreTests.NativeImportProvenanceTests",
+      "seconds": 25.124155083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery()",
+      "className": "PlannerCoreStoreTests.TagMigrationTests",
+      "seconds": 25.126173959,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:omitUnchangedOwners:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedAdditionTests",
+      "seconds": 25.122788875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity()",
+      "className": "PlannerCoreStoreTests.NativeStatusReadTests",
+      "seconds": 25.125793708000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay()",
+      "className": "PlannerCoreStoreTests.ManualContainerEstimateMigrationTests",
+      "seconds": 25.124337750000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "contextualMapRowsRetainSavedPositionsAndHeaderOnlyBranches()",
+      "className": "PlannerCoreStoreTests.MapContextWindowTests",
+      "seconds": 25.123511333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeImportMergeTests",
+      "seconds": 25.123682249999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear()",
+      "className": "PlannerCoreStoreTests.NativeImportMergeTests",
+      "seconds": 25.123817582999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:)",
+      "className": "PlannerCoreStoreTests.NativeImportMergeTests",
+      "seconds": 25.126204125,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:)",
+      "className": "PlannerCoreStoreTests.NativeImportMergeTests",
+      "seconds": 25.124056707999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits()",
+      "className": "PlannerCoreStoreTests.RecoveryCheckpointRetryTests",
+      "seconds": 25.126574499999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset()",
+      "className": "PlannerCoreStoreTests.NativeImportAdmissionTests",
+      "seconds": 25.239441041000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportAdmissionTests",
+      "seconds": 25.233646625000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds()",
+      "className": "PlannerCoreStoreTests.RecoveryCheckpointRetryAdmissionTests",
+      "seconds": 25.221457667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult()",
+      "className": "PlannerCoreStoreTests.RecoveryCheckpointRetryAdmissionTests",
+      "seconds": 25.285888708999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:)",
+      "className": "PlannerCoreStoreTests.RecoveryCheckpointRetryAdmissionTests",
+      "seconds": 25.221373166,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker()",
+      "className": "PlannerCoreStoreTests.RecoveryCheckpointRetryAdmissionTests",
+      "seconds": 25.253065084000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 25.349813292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReAddRetainsItsOriginalObservationBasisForReplay()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 25.126147416,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "listAppearanceDetailKeepsExactContextAndReadsLiveItemContent()",
+      "className": "PlannerCoreStoreTests.MembershipAppearanceTests",
+      "seconds": 25.252934208,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "moveUndoRestoresOriginAndRemovesOnlyItsCreatedDestination()",
+      "className": "PlannerCoreStoreTests.AssociationMoveUndoTests",
+      "seconds": 23.877692167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "moveUndoRestoresIndependentExpandedContextsWithoutCompletingOtherAppearances()",
+      "className": "PlannerCoreStoreTests.AssociationMoveUndoTests",
+      "seconds": 24.186931374999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedMoveAndUndoRepairOnlyRecoveryWithoutRepeatingTheirChanges(restoring:)",
+      "className": "PlannerCoreStoreTests.AssociationMoveUndoTests",
+      "seconds": 23.667173833000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "moveUndoPreservesAnExistingDestinationAndItsLaterLocalChanges()",
+      "className": "PlannerCoreStoreTests.AssociationMoveUndoTests",
+      "seconds": 24.100126,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "newerRelationshipChangesRejectTheWholeMoveUndo(change:)",
+      "className": "PlannerCoreStoreTests.AssociationMoveUndoTests",
+      "seconds": 23.836171625000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedRemovalAndRestorationRepairRecoveryWithoutReapplying(restoring:)",
+      "className": "PlannerCoreStoreTests.AssociationUndoRecoveryTests",
+      "seconds": 23.767543166,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "rejectedRecoveryPreparationKeepsTheIssuedUndoRetryable()",
+      "className": "PlannerCoreStoreTests.AssociationUndoRecoveryTests",
+      "seconds": 23.762416916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "retiredAliasesCannotBorrowAnotherPairGenerationOrCanonicalLifetime(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipAliasTests",
+      "seconds": 25.123403041000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "retiredMembershipHistorySurvivesImportRecoveryReplayAndReopen(explicitReopen:fixtureName:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipAliasTests",
+      "seconds": 25.124647209000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restoredLinkRunsKeepIndependentAdditionsAndUseSurvivingAnchors(placement:)",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 24.553784459,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "contentEditsAndIndependentAdditionsDoNotIssueRemovalHistory()",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 23.952970667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "groupIssuanceExpiresAcrossRunsAndDatasetsAndOldLineageCannotReplayAsNewUndo()",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 25.12125975,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedGroupsRepairOnlyTheirRecoveryCheckpoint(restoring:)",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 25.120663292000003,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "labelOnlyUndoPreservesAnIndependentBookmarkReorder()",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 24.09447775,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "oneSaveRestoresItsRemovedLinksAndTagTogetherWithoutOverwritingLaterEdits()",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 25.120386292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "itineraryGroupPreservesDuplicateLinksLiveLabelNamesCompletionAndItsBooking()",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 25.120892041999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "changedBindingsOrIncompatibleOrderRejectTheWholeRemovalGroup(change:)",
+      "className": "PlannerCoreStoreTests.OwnedAssociationUndoTests",
+      "seconds": 23.795184,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "predecessorValuesPreserveEveryLiveSourceKindAndItsCompleteLineage(restorationCount:)",
+      "className": "PlannerCoreStoreTests.NativeImportPredecessorValueKindsTests",
+      "seconds": 25.374101708,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportCompetingValueKindsTests",
+      "seconds": 25.124881667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary()",
+      "className": "PlannerCoreStoreTests.ItineraryScheduleMigrationTests",
+      "seconds": 25.124997667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "closingMembershipClearsOnlyItsExpandedContextsAndOrdinaryReaddStartsTodo(mode:)",
+      "className": "PlannerCoreStoreTests.ExpandedCompletionMembershipTests",
+      "seconds": 25.193881083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresMembershipContextsAcrossRepeatedEntriesAndItineraries()",
+      "className": "PlannerCoreStoreTests.ExpandedCompletionMembershipTests",
+      "seconds": 25.126467417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "mapPagesRetainEveryMatchingIdentityAndSavedLocationInput()",
+      "className": "PlannerCoreStoreTests.MapRowWindowTests",
+      "seconds": 25.23970275,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData()",
+      "className": "PlannerCoreStoreTests.NativeImportMarkerTests",
+      "seconds": 25.120708167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "manualContainerFieldsPersistExactValuesAndGuardEditsAcrossReopen()",
+      "className": "PlannerCoreStoreTests.ManualContainerEstimateTests",
+      "seconds": 25.123513374999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "manualEstimateClearReplayAndInvalidEditsPreserveUnrelatedContent(kind:)",
+      "className": "PlannerCoreStoreTests.ManualContainerEstimateTests",
+      "seconds": 25.124644083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()",
+      "className": "PlannerCoreStoreTests.NativeMembershipMigrationTests",
+      "seconds": 25.124820458,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership()",
+      "className": "PlannerCoreStoreTests.MembershipMigrationTests",
+      "seconds": 25.121695417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 25.126524167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 25.134622083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 25.239320917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 25.326671084,
+      "failures": [
+        "Caught error: CancellationError() (error)"
+      ],
+      "skipped": false
+    },
+    {
+      "name": "independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 25.26232875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 25.378198417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "restoredOwnerLabelsRequireRepresentedAuthorizedDependencies(ownerSuffix:obstructRecovery:)",
+      "className": "PlannerCoreStoreTests.NativeImportPredecessorLabelTests",
+      "seconds": 25.124147917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)",
+      "className": "PlannerCoreStoreTests.NativeImportApplyTests",
+      "seconds": 25.231744332999998,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "failedRecoveryPreparationLeavesGraphAndReceiptUnapplied()",
+      "className": "PlannerCoreStoreTests.NativeImportApplyTests",
+      "seconds": 25.221415666,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)",
+      "className": "PlannerCoreStoreTests.NativeImportApplyTests",
+      "seconds": 25.253211584,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removalObservationsCannotBorrowAnotherItemListPairsAuthority()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 25.12658625,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 25.193820833,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 25.231648416,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 25.134631083000002,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "informedReaddSurvivesNativeImportRecoveryReplayAndReopen()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 25.134769457999997,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 25.221247542,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,80 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 127.51,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "placementKeepsSourceIdentitiesAndRebalancesWithoutLosingOrder()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 3.197764375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "newMembershipReferencesOneItemWithoutCopyingContentOrCompletingIt()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 0.137133791,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "listedItemLeavesInboxAndEveryWriterRetainsIndependentMemberships()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 0.57941325,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidSourcesAnchorsAndRecoveryFailureLeaveMembershipAdditionUnapplied()",
+      "className": "PlannerCoreStoreTests.MembershipCreationTests",
+      "seconds": 0.254373542,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.127128375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReAddRetainsItsOriginalObservationBasisForReplay()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.2525335,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.259204375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.279885292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.265794667,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()",
+      "className": "PlannerCoreStoreTests.MembershipRemovalTests",
+      "seconds": 0.161877375,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

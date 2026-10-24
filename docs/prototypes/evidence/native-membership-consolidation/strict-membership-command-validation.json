@@ -1,0 +1,21 @@
+{
+  "functionsPerPlatform": 195,
+  "invocationsPerPlatform": 570,
+  "suitesPerPlatform": 79,
+  "matchedCoreInputs": 806,
+  "fullPhoneInputs": 1145,
+  "actualCoreTestProductsPerPlatform": 2,
+  "unchangedFrozenFixtureInputs": 512,
+  "preservedModelSourceFiles": 19,
+  "versionOneModelAndReceiptClassBodiesUnchanged": true,
+  "macHTTPStatusFunctions": 6,
+  "macAppShareFixtureBuildsPassed": true,
+  "nativeUndoJourneys": 2,
+  "inspectedOriginalScreenshots": 4,
+  "mobileAppShareProducts": 6,
+  "strictFormatFiles": 8,
+  "removedClosedDisposableStores": 1194,
+  "mcpExtraFixtureDeletionAttempted": false,
+  "partiallyInformedGenerationsAndOtherCommandsQualified": false,
+  "actualMacUIPhysicalCloudOrSystemInvocationQualified": false
+}

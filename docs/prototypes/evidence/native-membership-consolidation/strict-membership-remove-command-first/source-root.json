@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "70b2bed0fce268cde8d55a4ff820284fab6c99cd",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift"
+  ]
+}

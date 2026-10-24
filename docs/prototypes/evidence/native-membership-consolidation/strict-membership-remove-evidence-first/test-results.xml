@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.55e-05"/>
+    <testsuite name="TestResults" errors="0" tests="5" failures="4" skipped="0" time="0.171703875">
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()" time="0.155779875"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.1713745"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()" time="0.153717417"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.09047325"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="0.0766615">
+            <failure message="Expectation failed: receipt[&quot;payloadDigest&quot;] as? String == literal[&quot;payloadDigest&quot;] as? String (error)"/>
+            <failure message="Expectation failed: preparation[&quot;formatVersion&quot;] as? Int == 2 (error)"/>
+            <failure message="Expectation failed: (preparation[&quot;resolvedBindings&quot;] as? [[String: Any]])?.count == 3 (error)"/>
+            <failure message="Expectation failed: (preparation[&quot;resolvedMembershipEvidence&quot;] as? [[String: Any]])?.count == 1 (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

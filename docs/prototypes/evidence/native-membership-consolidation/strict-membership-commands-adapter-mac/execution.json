@@ -1,0 +1,23 @@
+{
+  "build-for-testing": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 311.072,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-strict-membership-commands-adapter-mac-build-for-testing.xcresult",
+    "sqliteUnlinkWarnings": 0
+  },
+  "fixture-build": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 45.141,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-strict-membership-commands-adapter-mac-fixture-build.xcresult",
+    "sqliteUnlinkWarnings": 0
+  },
+  "test-without-building": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 5.727,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-strict-membership-commands-adapter-mac-test-without-building.xcresult",
+    "sqliteUnlinkWarnings": 0
+  }
+}

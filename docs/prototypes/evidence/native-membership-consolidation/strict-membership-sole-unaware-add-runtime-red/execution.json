@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.178,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.101273459,
+      "failures": [
+        "Issue recorded (error): A strict Remove must suppress even a sole unseen Add: .snapshot(PlannerCore.PlannerQuerySnapshot(session: PlannerCore.PlannerDatasetSession(datasetId: E4209FD3-265C-4F9D-A976-DC8F73FD574A, sessionId: 60441611-6100-4FB2-82F5-10C2FD1726EB, ownershipBinding: \"local:7C9F941D-8F6B-4F6F-BEA4-E5C807AA5562\", epochId: A23E0CB7-F4DC-40E8-B431-EAA72D583756), generation: 1CA622F4-837B-4AC1-8841-1DEBFCFB6533, rows: [PlannerCore.PlannerRowIdentity.appearance(source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 6A24C6BA-4966-43A2-9EC5-FAED1EAFE75E), appearance: PlannerCore.PlannerAppearance.listMembership(listId: D12D47B9-C6FD-417F-939A-EB3044CC2A72, membershipId: 00000000-0000-4000-8000-000000000403))], matchingCount: 1, rowPresentation: Optional(PlannerCore.PlannerRowPresentationContext(referenceInstant: 2026-10-24 06:40:56 +0000, displayTimeZone: \"Asia/Tokyo\")), progress: [PlannerCore.PlannerContainerProgress(container: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: D12D47B9-C6FD-417F-939A-EB3044CC2A72), state: PlannerCore.PlannerContainerProgressState.complete, doneCount: Optional(1), totalCount: Optional(1), archivedCount: Optional(0))], unresolvedReferences: []))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

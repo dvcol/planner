@@ -1,0 +1,22 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.107,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.089794,
+      "failures": [
+        "Expectation failed: receipt[\"payloadDigest\"] as? String == literal[\"payloadDigest\"] as? String (error)",
+        "Expectation failed: preparation[\"formatVersion\"] as? Int == 2 (error)",
+        "Expectation failed: (preparation[\"resolvedBindings\"] as? [[String: Any]])?.count == 3 (error)",
+        "Expectation failed: (preparation[\"resolvedMembershipEvidence\"] as? [[String: Any]])?.count == 1 (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

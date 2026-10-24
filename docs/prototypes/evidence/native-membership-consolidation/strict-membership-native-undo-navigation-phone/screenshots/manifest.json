@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E3018BF4-76A2-4532-A3A0-0578A01E7BAC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Undo restores original completed List appearance_0_6599F4BA-9396-42B6-A521-C72E37078ACA.png",
+        "timestamp" : 1792825051.99
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "F2C988D1-7DCA-4697-B88A-5EEBCE727E9D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native removal offers Undo above the system tabs_0_09CBC1AC-A559-434C-B2FC-5D5DB74E9101.png",
+        "timestamp" : 1792825048.894
+      }
+    ],
+    "testIdentifier" : "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion"
+  }
+]

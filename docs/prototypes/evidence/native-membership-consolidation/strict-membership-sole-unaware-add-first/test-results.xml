@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.4375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="20" failures="0" skipped="0" time="0.504285166">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="ordinaryReAddRetainsItsOriginalObservationBasisForReplay()" time="0.357485833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="0.366519042"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.50341375"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion()" time="0.485582417"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow()" time="0.470739917"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay()" time="0.286340041"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusReadTests" name="emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity()" time="0.273898625"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent()" time="0.266572917"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair()" time="0.280297083"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:)" time="0.259853208"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="removalObservationsCannotBorrowAnotherItemListPairsAuthority()" time="0.280035166"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(scenario:)" time="0.30115625"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)" time="0.319301042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="0.266457333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddSurvivesNativeImportRecoveryReplayAndReopen()" time="0.300951958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)" time="0.301044458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem()" time="0.395758291"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.421066792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.4216615"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.394140917"/>
+    </testsuite>
+</testsuites>

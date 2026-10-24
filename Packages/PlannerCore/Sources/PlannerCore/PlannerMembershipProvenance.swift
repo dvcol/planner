@@ -65,6 +65,21 @@ extension PlannerImportGraph {
   }
 
   func validateMembershipProvenance() throws {
+    let requiredRemovals = try validatedMembershipRemovalAuthority()
+    let provenance = Dictionary(
+      uniqueKeysWithValues: backup.membershipProvenance.map { ($0.membership, $0) })
+    for (index, membership) in backup.memberships.enumerated() {
+      let baseline = membership.baselineProvenance
+      let binding = provenance[baseline.membership] ?? baseline
+      guard (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) else {
+        throw failure(
+          "A live membership must observe every strict removal for its exact Item/List pair.",
+          "/memberships/\(index)/id")
+      }
+    }
+  }
+
+  func validatedMembershipRemovalAuthority() throws -> [PlannerMembershipPair: Set<UUID>] {
     try unique(
       backup.membershipProvenance.map(\.membership), "/membershipProvenance", "membershipId")
     try unique(backup.membershipRemovals.map(\.deletionId), "/membershipRemovals", "deletionId")
@@ -103,15 +118,7 @@ extension PlannerImportGraph {
     for (identifier, pair) in removalPairs {
       requiredRemovals[pair, default: []].insert(identifier)
     }
-    for (index, membership) in backup.memberships.enumerated() {
-      let baseline = membership.baselineProvenance
-      let binding = provenance[baseline.membership] ?? baseline
-      guard (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) else {
-        throw failure(
-          "A live membership must observe every strict removal for its exact Item/List pair.",
-          "/memberships/\(index)/id")
-      }
-    }
+    return requiredRemovals
   }
 
   private func validateProvenanceBinding(
@@ -231,5 +238,60 @@ extension PlannerPortableBackup {
       }
       return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
     }
+  }
+}
+
+extension PlannerNativeLineage {
+  func provenanceForNewMembership(
+    _ membership: MembershipSnapshot, markers: [PortableDeletionMarker]
+  )
+    throws -> PlannerPortableMembershipProvenance
+  {
+    var observedRemovalIdentifiers: [UUID] = []
+    for removal in membershipRemovals {
+      guard let marker = markers.first(where: { $0.deletionId == removal.deletionId }),
+        case .membership(let removedMembership) = marker.target,
+        let retained = membershipProvenance.first(where: {
+          $0.membershipId == removedMembership.id
+            && $0.membershipLifetimeId == removedMembership.lifetimeId
+        })
+      else {
+        throw PlannerFailure(
+          "readUnavailable", "A strict membership removal has no retained pair binding.")
+      }
+      if retained.list.id == membership.list.id,
+        retained.list.lifetimeId == membership.list.lifetimeId,
+        retained.item.id == membership.item.id,
+        retained.item.lifetimeId == membership.item.lifetimeId
+      {
+        observedRemovalIdentifiers.append(removal.deletionId)
+      }
+    }
+    return PlannerPortableMembershipProvenance(
+      membershipId: membership.id, membershipLifetimeId: membership.lifetimeId,
+      list: .init(kind: .list, id: membership.list.id, lifetimeId: membership.list.lifetimeId),
+      item: .init(kind: .item, id: membership.item.id, lifetimeId: membership.item.lifetimeId),
+      observedRemovalIds: observedRemovalIdentifiers
+    ).normalized
+  }
+}
+
+func plannerSortedMembershipEvidence(_ evidence: [PlannerPortableMembershipProvenance])
+  -> [PlannerPortableMembershipProvenance]
+{
+  evidence.map(\.normalized).sorted {
+    if $0.membershipId != $1.membershipId {
+      return $0.membershipId.uuidString < $1.membershipId.uuidString
+    }
+    return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
+  }
+}
+
+extension MembershipSnapshot {
+  var baselineProvenance: PlannerPortableMembershipProvenance {
+    .init(
+      membershipId: id, membershipLifetimeId: lifetimeId,
+      list: .init(kind: .list, id: list.id, lifetimeId: list.lifetimeId),
+      item: .init(kind: .item, id: item.id, lifetimeId: item.lifetimeId), observedRemovalIds: [])
   }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.8125e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="4" skipped="0" time="0.090169458">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="0.089794">
+            <failure message="Expectation failed: receipt[&quot;payloadDigest&quot;] as? String == literal[&quot;payloadDigest&quot;] as? String (error)"/>
+            <failure message="Expectation failed: preparation[&quot;formatVersion&quot;] as? Int == 2 (error)"/>
+            <failure message="Expectation failed: (preparation[&quot;resolvedBindings&quot;] as? [[String: Any]])?.count == 3 (error)"/>
+            <failure message="Expectation failed: (preparation[&quot;resolvedMembershipEvidence&quot;] as? [[String: Any]])?.count == 1 (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

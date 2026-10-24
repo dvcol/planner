@@ -1,0 +1,169 @@
+[
+  {
+    "phase": "strict-membership-add-evidence-first",
+    "classification": "passed",
+    "functions": 10,
+    "failedFunctions": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-add-evidence-red",
+    "classification": "runtime failure",
+    "functions": 1,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-commands-adapter-mac",
+    "classification": "adapter builds and runtime passed",
+    "passedTests": 6,
+    "failedTests": 0
+  },
+  {
+    "phase": "strict-membership-commands-canonical-mac",
+    "classification": "passed",
+    "functions": 195,
+    "failedFunctions": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-commands-canonical-phone",
+    "classification": "passed",
+    "passedTests": 195,
+    "failedTests": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-commands-core-mac",
+    "classification": "runtime failure",
+    "functions": 194,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-commands-core-phone",
+    "classification": "runtime failure",
+    "passedTests": 193,
+    "failedTests": 1,
+    "exitCode": 65
+  },
+  {
+    "phase": "strict-membership-native-undo-ipad-dark",
+    "classification": "passed",
+    "passedTests": 1,
+    "failedTests": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-native-undo-navigation-phone",
+    "classification": "passed",
+    "passedTests": 1,
+    "failedTests": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-native-undo-phone",
+    "classification": "runtime failure",
+    "passedTests": 0,
+    "failedTests": 0,
+    "exitCode": 70
+  },
+  {
+    "phase": "strict-membership-remove-command-first",
+    "classification": "passed",
+    "functions": 1,
+    "failedFunctions": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-remove-command-red",
+    "classification": "runtime failure",
+    "functions": 1,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-remove-evidence-first",
+    "classification": "runtime failure",
+    "functions": 5,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-remove-evidence-red",
+    "classification": "compiler/setup failure, no tests executed",
+    "functions": 0,
+    "failedFunctions": 0,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-remove-evidence-runtime-red",
+    "classification": "runtime failure",
+    "functions": 1,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-remove-evidence-wired",
+    "classification": "passed",
+    "functions": 5,
+    "failedFunctions": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-remove-readd-first",
+    "classification": "runtime failure",
+    "functions": 4,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-remove-readd-red",
+    "classification": "runtime failure",
+    "functions": 1,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-remove-undo-first",
+    "classification": "passed",
+    "functions": 4,
+    "failedFunctions": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-sole-unaware-add-first",
+    "classification": "passed",
+    "functions": 20,
+    "failedFunctions": 0,
+    "exitCode": 0
+  },
+  {
+    "phase": "strict-membership-sole-unaware-add-red",
+    "classification": "compiler/setup failure, no tests executed",
+    "functions": 0,
+    "failedFunctions": 0,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-sole-unaware-add-runtime-red",
+    "classification": "runtime failure",
+    "functions": 1,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-unaware-add-diagnostic",
+    "classification": "runtime failure",
+    "functions": 1,
+    "failedFunctions": 1,
+    "exitCode": 1
+  },
+  {
+    "phase": "strict-membership-unaware-add-first",
+    "classification": "passed",
+    "functions": 15,
+    "failedFunctions": 0,
+    "exitCode": 0
+  }
+]

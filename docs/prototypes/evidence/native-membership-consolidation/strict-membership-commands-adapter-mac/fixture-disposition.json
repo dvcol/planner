@@ -1,0 +1,12 @@
+{
+  "success": false,
+  "removedDirectories": [],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "a34e05e1c9d66d1d182ef7fe9864430d0b15795674f719b0ba05869f69a1907f",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "error": "The log contains no owned test fixtures."
+}

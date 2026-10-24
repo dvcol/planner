@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.5625e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.150846291">
+        <testcase classname="PlannerCoreStoreTests.MembershipRemovalTests" name="removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo()" time="0.150525917">
+            <failure message="Issue recorded (error): Fixture membership creation must save."/>
+            <failure message="Caught error: .unexpectedOutcome (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

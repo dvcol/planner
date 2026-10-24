@@ -1,0 +1,8 @@
+{
+  "ownershipMarkers": 0,
+  "extraCleanupVerifierApplicable": false,
+  "extraDirectoryDeletionAttempted": false,
+  "existingRoutingTestsUseDeferredTemporaryDirectoryCleanup": true,
+  "observedSQLiteLifetimeDiagnostics": 0,
+  "safeMarkedDirectoryCleanupQualifiedByThisAdapterRun": false
+}

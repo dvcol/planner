@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.2916e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="6" skipped="0" time="0.18798625">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="ordinaryReAddRetainsItsOriginalObservationBasisForReplay()" time="0.18425925">
+            <failure message="Expectation failed: (receipt[&quot;payloadDigest&quot;] as? String)?.hasPrefix(&quot;sha256-payload-v3:&quot;) == true (error)"/>
+            <failure message="Expectation failed: preparation[&quot;formatVersion&quot;] as? Int == 2 (error)"/>
+            <failure message="Expectation failed: (preparation[&quot;resolvedBindings&quot;] as? [[String: Any]])?.count == 2 (error)"/>
+            <failure message="Expectation failed: evidence?.count == 1 (error)"/>
+            <failure message="Expectation failed: evidence?.first?[&quot;membershipId&quot;] as? String == addedIdentifier.uuidString (error)"/>
+            <failure message="Expectation failed: evidence?.first?[&quot;observedRemovalIds&quot;] as? [String] == removedBackup.backup.membershipRemovals.map { $0.deletionId.uuidString }.sorted() (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

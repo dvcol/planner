@@ -5,9 +5,15 @@ import SwiftData
 struct PlannerMembershipConsolidation {
   let backup: PlannerPortableBackup
 
+  private struct Generation: Hashable {
+    let pair: PlannerMembershipPair
+    let basis: [UUID]
+  }
+
   init(snapshot: PlannerDataSnapshot) throws {
     let current = try snapshot.decodedRecords().backup
-    try PlannerImportGraph(backup: current).validateMembershipProvenance()
+    let graph = PlannerImportGraph(backup: current)
+    let requiredRemovals = try graph.validatedMembershipRemovalAuthority()
     var provenance = Dictionary(
       uniqueKeysWithValues: current.membershipProvenance.map { ($0.membership, $0.normalized) })
     var memberPairs: [PlannerPortableBoundIdentity: PlannerMembershipPair] = [:]
@@ -30,11 +36,72 @@ struct PlannerMembershipConsolidation {
         provenance[binding.membership] = binding
       }
     }
-    var members = current.memberships
+    var eligible: [PlannerPortableMembership] = []
+    var suppressed: [Generation: [PlannerPortableMembership]] = [:]
+    for member in current.memberships {
+      let binding = try Self.binding(member.baselineProvenance.membership, in: provenance)
+      if (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) {
+        eligible.append(member)
+      } else {
+        suppressed[.init(pair: binding.pair, basis: binding.observedRemovalIds), default: []]
+          .append(member)
+      }
+    }
+    var members = eligible
     var expanded = current.expandedCompletions
     var aliases = current.contextAliases
     let changes = Dictionary(uniqueKeysWithValues: current.completionChanges.map { ($0.id, $0) })
-    let groups = Dictionary(grouping: current.memberships, by: { $0.baselineProvenance.pair })
+    for (generation, contributions) in suppressed {
+      let roots = provenance.values.filter {
+        $0.pair == generation.pair && $0.observedRemovalIds == generation.basis
+          && graph.isClosed($0.membership)
+      }.sorted {
+        if $0.membershipId != $1.membershipId {
+          return $0.membershipId.uuidString < $1.membershipId.uuidString
+        }
+        return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
+      }
+      guard let root = roots.first else {
+        throw Self.unresolved("A suppressed generation needs its retained closed context.")
+      }
+      _ = try Self.normalize(
+        canonical: .listMembership(
+          membershipId: root.membershipId, membershipLifetimeId: root.membershipLifetimeId),
+        contributions: contributions.map {
+          (.listMembership(membershipId: $0.id, membershipLifetimeId: $0.lifetimeId), $0.localDone)
+        }, pair: generation.pair, basis: generation.basis, provenance: provenance, graph: graph,
+        aliases: &aliases, changes: changes)
+      let identities = Set(contributions.map { $0.baselineProvenance.membership })
+      expanded.removeAll {
+        identities.contains(
+          .init(
+            kind: .membership, id: $0.context.membershipId,
+            lifetimeId: $0.context.membershipLifetimeId))
+      }
+      for entry in current.itineraryEntries
+      where entry.source.kind == .list && entry.source.id == generation.pair.list.id
+        && entry.sourceLifetimeId == generation.pair.list.lifetimeId
+      {
+        var initial: [(PlannerPortableCompletionContext, Bool)] = []
+        for member in contributions {
+          let context = PlannerExpandedContext(
+            listEntryId: entry.id, listEntryLifetimeId: entry.lifetimeId,
+            membershipId: member.id, membershipLifetimeId: member.lifetimeId)
+          let states = current.expandedCompletions.filter { $0.context == context }.map(\.localDone)
+          for value in states.isEmpty ? [false] : states {
+            initial.append((.expandedListItem(context), value))
+          }
+        }
+        _ = try Self.normalize(
+          canonical: .expandedListItem(
+            .init(
+              listEntryId: entry.id, listEntryLifetimeId: entry.lifetimeId,
+              membershipId: root.membershipId, membershipLifetimeId: root.membershipLifetimeId)),
+          contributions: initial, pair: generation.pair, basis: generation.basis,
+          provenance: provenance, graph: graph, aliases: &aliases, changes: changes)
+      }
+    }
+    let groups = Dictionary(grouping: eligible, by: { $0.baselineProvenance.pair })
     for (pair, contributions) in groups where contributions.count > 1 {
       let ordered = contributions.sorted {
         if $0.id != $1.id { return $0.id.uuidString < $1.id.uuidString }
@@ -44,7 +111,6 @@ struct PlannerMembershipConsolidation {
       let canonicalBinding = canonical.baselineProvenance.membership
       let basis = try Self.binding(canonicalBinding, in: provenance).normalized.observedRemovalIds
       let membershipBindings = Set(contributions.map { $0.baselineProvenance.membership })
-      let graph = PlannerImportGraph(backup: current)
       for alias in current.contextAliases {
         if graph.isClosed(alias.canonicalContext),
           let original = Self.membership(in: alias.context),

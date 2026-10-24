@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.1209e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.135483625">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.135158708">
+            <failure message="Issue recorded (error): Late membership reads must retain the informed re-add: .failed(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/memberships/0/id&quot;), message: &quot;A live membership must observe every strict removal for its exact Item/List pair.&quot;, details: nil)), .failed(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/memberships/0/id&quot;), message: &quot;A live membership must observe every strict removal for its exact Item/List pair.&quot;, details: nil)), .failed(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/memberships/0/id&quot;), message: &quot;A live membership must observe every strict removal for its exact Item/List pair.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -10,6 +10,80 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test func aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let itemResult, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Museum", notes: "Keep this Item")))
+      ).outcome,
+      let item = itemResult.generated.first,
+      case .applied(let listResult, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: .createList(content: .init(name: "Tokyo"))
+        )
+      ).outcome,
+      let list = listResult.generated.first,
+      case .applied(let addition, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let membershipIdentifier, _, _) = addition.generatedReferences.first,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .removeMembership(listId: list.id, membershipId: membershipIdentifier))
+      ).outcome
+    else { throw CancellationError() }
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [
+        ("00000000-0000-4000-8000-000000000403", "00000000-0000-4000-8000-000000000843", 1024, true)
+      ])
+    let contentsResult = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .list(list.id), completion: .all, archive: .all))))
+    guard case .snapshot(let contents) = contentsResult,
+      case .snapshot(let inbox) = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .inbox, completion: .all, archive: .all)))),
+      case .source(.item(let retained)) = await planner.read(
+        session: session, request: .source(item)),
+      case .exported(let beforeRepeat) = await planner.exportData(session: session),
+      case .listedNamespaces(let originalNamespaces) = await planner.inspectRecovery(
+        request: .namespaces)
+    else {
+      Issue.record("A strict Remove must suppress even a sole unseen Add: \(contentsResult)")
+      return
+    }
+    #expect(contents.matchingCount == 0)
+    #expect(inbox.matchingCount == 1)
+    #expect(retained.content.notes == "Keep this Item" && retained.state.globalDone == false)
+    guard
+      case .snapshot(let repeated) = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .list(list.id), completion: .all, archive: .all)))),
+      case .exported(let afterRepeat) = await planner.exportData(session: session),
+      case .listedNamespaces(let afterNamespaces) = await planner.inspectRecovery(
+        request: .namespaces)
+    else { throw CancellationError() }
+    #expect(repeated.matchingCount == 0 && afterRepeat == beforeRepeat)
+    #expect(
+      afterNamespaces.first?.acknowledgedSnapshot?.checkpointGeneration
+        == originalNamespaces.first?.acknowledgedSnapshot?.checkpointGeneration)
+  }
+
   @Test func ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
@@ -59,17 +133,23 @@ struct NativeMembershipConsolidationTests {
           false
         )
       ])
-    guard
-      case .snapshot(let todo) = await planner.query(
-        .init(
-          session: session,
-          request: .items(.init(scope: .list(list.id), completion: .todo, archive: .all)))),
-      case .snapshot(let done) = await planner.query(
-        .init(
-          session: session,
-          request: .items(.init(scope: .list(list.id), completion: .done, archive: .all)))),
-      case .exported(let data) = await planner.exportData(session: session)
-    else { throw CancellationError() }
+    let todoResult = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .list(list.id), completion: .todo, archive: .all))))
+    let doneResult = await planner.query(
+      .init(
+        session: session,
+        request: .items(.init(scope: .list(list.id), completion: .done, archive: .all))))
+    let exportResult = await planner.exportData(session: session)
+    guard case .snapshot(let todo) = todoResult, case .snapshot(let done) = doneResult,
+      case .exported(let data) = exportResult
+    else {
+      Issue.record(
+        "Late membership reads must retain the informed re-add: \(todoResult), \(doneResult), \(exportResult)"
+      )
+      return
+    }
     #expect(todo.matchingCount == 1)
     #expect(done.matchingCount == 0)
     let graph = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])

@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "6415F1F5-5362-4FA4-877A-71D7FD59A3FD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Undo restores original completed List appearance_0_5A32FE0E-6D2D-4C5B-8430-04AFF449A5E2.png",
+        "timestamp" : 1792825336.376
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "6FE0527F-BBD5-4A24-83C4-CE68100E5680.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native removal offers Undo above the system tabs_0_35DB810D-9500-48AE-B73C-DFB0996EB08E.png",
+        "timestamp" : 1792825333.48
+      }
+    ],
+    "testIdentifier" : "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion"
+  }
+]

@@ -1559,7 +1559,7 @@ public actor Planner {
       let context = ModelContext(try openContainer())
       context.autosaveEnabled = false
       let memberships = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
-      guard !membershipConsolidationRequired(memberships) else {
+      guard try !membershipConsolidationRequired(memberships, context: context) else {
         throw PlannerFailure(
           "maintenanceRequired", "Membership consolidation has not committed yet.")
       }
@@ -3877,7 +3877,9 @@ public actor Planner {
       receipts: try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()))
   }
 
-  private func membershipConsolidationRequired(_ records: [PlannerSchemaV18.Membership]) -> Bool {
+  private func membershipConsolidationRequired(
+    _ records: [PlannerSchemaV18.Membership], context: ModelContext
+  ) throws -> Bool {
     let identifiers = records.compactMap(\.id)
     let pairs = records.compactMap { record -> String? in
       guard let list = record.listId, let listLifetime = record.listLifetimeId,
@@ -3886,14 +3888,31 @@ public actor Planner {
       return list.uuidString + "/" + listLifetime.uuidString + "/"
         + item.uuidString + "/" + itemLifetime.uuidString
     }
-    return Set(identifiers).count != identifiers.count || Set(pairs).count != pairs.count
+    if Set(identifiers).count != identifiers.count || Set(pairs).count != pairs.count {
+      return true
+    }
+    let lineage = try PlannerNativeLineage(context: context)
+    guard !lineage.membershipRemovals.isEmpty else { return false }
+    let markers = try deletionMarkers(context)
+    for record in records {
+      let membership = try record.value()
+      let retained =
+        lineage.membershipProvenance.first {
+          $0.membershipId == membership.id && $0.membershipLifetimeId == membership.lifetimeId
+        } ?? membership.baselineProvenance
+      let required = try lineage.provenanceForNewMembership(membership, markers: markers)
+      if !Set(retained.observedRemovalIds).isSuperset(of: required.observedRemovalIds) {
+        return true
+      }
+    }
+    return false
   }
 
   private func ensureCanonicalMemberships(identity: PlannerStoreIdentity, context: ModelContext)
     throws
   {
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
-    guard membershipConsolidationRequired(records) else { return }
+    guard try membershipConsolidationRequired(records, context: context) else { return }
     let memberships = try records.map { try $0.value() }
     let archive = recoveryArchive(identity, context: context)
     let envelope = try archive.latest()
@@ -5705,9 +5724,10 @@ public actor Planner {
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let evidence = try receipt.evidence()
       let digest = membershipCreationDigest(
         itemId: itemId, listId: listId, placement: placement, identity: identity,
-        bindings: try receipt.evidence().bindings)
+        bindings: evidence.bindings, membershipEvidence: evidence.resolvedMembershipEvidence)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "This operation identity describes another addition.")
@@ -5715,6 +5735,19 @@ public actor Planner {
       return appliedResult(
         operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
         envelope: envelope)
+    }
+    let prepared = try archive.proposals().first { $0.originalOperationId == operation.operationId }
+    if let prepared, let bindings = prepared.resolvedBindings,
+      let membershipEvidence = prepared.resolvedMembershipEvidence
+    {
+      let digest = membershipCreationDigest(
+        itemId: itemId, listId: listId, placement: placement, identity: identity,
+        bindings: bindings, membershipEvidence: membershipEvidence)
+      guard prepared.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another addition.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(prepared.summary))
     }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
@@ -5751,12 +5784,11 @@ public actor Planner {
       }
     case .first, .last: break
     }
-    let digest = membershipCreationDigest(
-      itemId: itemId, listId: listId, placement: placement, identity: identity, bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
+    if let proposal = prepared {
+      let legacyDigest = membershipCreationDigest(
+        itemId: itemId, listId: listId, placement: placement, identity: identity, bindings: bindings
+      )
+      guard proposal.payloadDigest == legacyDigest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another addition.")
       }
@@ -5765,9 +5797,11 @@ public actor Planner {
     }
     let existing = memberships.first { $0.item.id == itemId && $0.list.id == listId }
     let added: MembershipSnapshot?
+    let evidenceMembership: MembershipSnapshot
     let reference: PlannerReferenceRead
     if let existing {
       added = nil
+      evidenceMembership = existing
       reference = existing.reference
     } else {
       let rank = try associationInsertionRank(
@@ -5777,9 +5811,26 @@ public actor Planner {
         id: identifier, lifetimeId: identifier, list: bindings[1], item: bindings[0],
         rank: rank, localDone: false)
       added = membership
+      evidenceMembership = membership
       reference = membership.reference
       memberships.append(membership)
     }
+    let markers = try deletionMarkers(context)
+    let lineage = try PlannerNativeLineage(context: context)
+    let membershipEvidence: PlannerPortableMembershipProvenance
+    if added != nil {
+      membershipEvidence = try lineage.provenanceForNewMembership(
+        evidenceMembership, markers: markers)
+    } else {
+      membershipEvidence =
+        lineage.membershipProvenance.first {
+          $0.membershipId == evidenceMembership.id
+            && $0.membershipLifetimeId == evidenceMembership.lifetimeId
+        } ?? evidenceMembership.baselineProvenance
+    }
+    let digest = membershipCreationDigest(
+      itemId: itemId, listId: listId, placement: placement, identity: identity, bindings: bindings,
+      membershipEvidence: [membershipEvidence])
     let result = PlannerAppliedResult(
       generatedIdentities: added == nil ? [] : [.reference(reference)],
       affectedIdentities: [.reference(reference), .source(owner.reference)])
@@ -5793,7 +5844,9 @@ public actor Planner {
         content: owner.content, archived: owner.archived, contentOrigins: owner.contentOrigins
       )
     }
-    let markers = try deletionMarkers(context)
+    if added != nil, !membershipEvidence.observedRemovalIds.isEmpty {
+      try plannerStageMembershipProvenance([membershipEvidence], context: context)
+    }
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
@@ -5803,10 +5856,14 @@ public actor Planner {
         categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers),
-      payloadDigest: digest, evidence: "preparedUnverified")
+      payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+      resolvedMembershipEvidence: [membershipEvidence])
     try archive.prepare(proposal)
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
+    receipt.resultData = try JSONEncoder().encode(
+      PlannerStoredOperationEvidence(
+        result: result, bindings: bindings, resolvedMembershipEvidence: [membershipEvidence]))
     if let added {
       context.insert(PlannerSchemaV18.Membership(snapshot: added, list: list, item: item))
     }
@@ -5848,9 +5905,10 @@ public actor Planner {
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let evidence = try receipt.evidence()
       let digest = membershipRemovalDigest(
         listId: listId, membershipId: membershipId, identity: identity,
-        bindings: try receipt.evidence().bindings)
+        bindings: evidence.bindings, membershipEvidence: evidence.resolvedMembershipEvidence)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "This operation identity describes another removal.")
@@ -5858,6 +5916,19 @@ public actor Planner {
       return appliedResult(
         operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
         envelope: envelope)
+    }
+    let prepared = try archive.proposals().first { $0.originalOperationId == operation.operationId }
+    if let prepared, let bindings = prepared.resolvedBindings,
+      let membershipEvidence = prepared.resolvedMembershipEvidence
+    {
+      let digest = membershipRemovalDigest(
+        listId: listId, membershipId: membershipId, identity: identity,
+        bindings: bindings, membershipEvidence: membershipEvidence)
+      guard prepared.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another removal.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(prepared.summary))
     }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
@@ -5885,12 +5956,23 @@ public actor Planner {
     let membershipBinding = PlannerBoundIdentity(
       kind: "membership", id: before.id, lifetimeId: before.lifetimeId)
     let bindings = [membershipBinding, before.list, before.item]
+    let lineage = try PlannerNativeLineage(context: context)
+    let removalProvenance =
+      lineage.membershipProvenance.first {
+        $0.membershipId == before.id && $0.membershipLifetimeId == before.lifetimeId
+      }
+      ?? PlannerPortableMembershipProvenance(
+        membershipId: before.id, membershipLifetimeId: before.lifetimeId,
+        list: .init(kind: .list, id: before.list.id, lifetimeId: before.list.lifetimeId),
+        item: .init(kind: .item, id: before.item.id, lifetimeId: before.item.lifetimeId),
+        observedRemovalIds: [])
     let digest = membershipRemovalDigest(
-      listId: listId, membershipId: membershipId, identity: identity, bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
+      listId: listId, membershipId: membershipId, identity: identity, bindings: bindings,
+      membershipEvidence: [removalProvenance])
+    if let proposal = prepared {
+      let legacyDigest = membershipRemovalDigest(
+        listId: listId, membershipId: membershipId, identity: identity, bindings: bindings)
+      guard proposal.payloadDigest == legacyDigest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another removal.")
       }
@@ -5914,6 +5996,12 @@ public actor Planner {
       deletionId: UUID(), operationId: operation.operationId,
       target: .membership(membershipBinding), closedFamilyId: nil)
     let removalMarker = try closingRestorationFamilies([pendingRemovalMarker], context: context)[0]
+    try plannerStageMembershipProvenance([removalProvenance], context: context)
+    try plannerStageLineageRecord(
+      PlannerPortableMembershipRemoval(deletionId: removalMarker.deletionId),
+      identifier: removalMarker.deletionId, kind: "membershipRemoval",
+      records: try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()),
+      context: context)
     let markers = try deletionMarkers(context) + [removalMarker]
     let expandedRecords = record.expandedCompletions ?? []
     let expandedSnapshots = try expandedRecords.map { try $0.value() }.sorted {
@@ -5940,9 +6028,13 @@ public actor Planner {
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+        resolvedMembershipEvidence: [removalProvenance]))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
+    receipt.resultData = try JSONEncoder().encode(
+      PlannerStoredOperationEvidence(
+        result: result, bindings: bindings, resolvedMembershipEvidence: [removalProvenance]))
     for completion in expandedRecords { context.delete(completion) }
     context.delete(record)
     try context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
@@ -6143,6 +6235,9 @@ public actor Planner {
         list: .init(kind: "list", id: original.list.id, lifetimeId: original.listLifetimeId),
         item: .init(kind: "item", id: original.item.id, lifetimeId: original.itemLifetimeId),
         rank: original.rank, localDone: original.localDone)
+      let provenance = try PlannerNativeLineage(context: context)
+        .provenanceForNewMembership(restored, markers: deletionMarkers(context))
+      try plannerStageMembershipProvenance([provenance], context: context)
       let membership = PlannerSchemaV18.Membership(snapshot: restored, list: owner, item: source)
       context.insert(membership)
       for (state, entry) in expandedEntries {
@@ -6337,9 +6432,10 @@ public actor Planner {
 
   private func membershipRemovalDigest(
     listId: UUID, membershipId: UUID, identity: PlannerStoreIdentity,
-    bindings: [PlannerBoundIdentity]
+    bindings: [PlannerBoundIdentity],
+    membershipEvidence: [PlannerPortableMembershipProvenance]? = nil
   ) -> String {
-    let value = PlannerCanonicalValue.record([
+    var fields: [String: PlannerCanonicalValue] = [
       "command": .record([
         "type": .string("removeMembership"), "listId": .identity(listId),
         "membershipId": .identity(membershipId),
@@ -6347,9 +6443,17 @@ public actor Planner {
       "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),
       "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
-    ])
-    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
-    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+    ]
+    var version: UInt8 = 1
+    if let membershipEvidence {
+      version = 3
+      fields["resolvedMembershipEvidence"] = .ordered(
+        plannerSortedMembershipEvidence(membershipEvidence).map(\.operationCanonicalValue))
+    }
+    let bytes =
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, version])
+      + PlannerCanonicalValue.record(fields).encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v\(version):")
   }
 
   private func executeMembershipMove(
@@ -8429,7 +8533,8 @@ public actor Planner {
 
   private func membershipCreationDigest(
     itemId: UUID, listId: UUID, placement: PlannerPlacement, identity: PlannerStoreIdentity,
-    bindings: [PlannerBoundIdentity]
+    bindings: [PlannerBoundIdentity],
+    membershipEvidence: [PlannerPortableMembershipProvenance]? = nil
   ) -> String {
     let placementValue: PlannerCanonicalValue
     switch placement {
@@ -8440,7 +8545,7 @@ public actor Planner {
     case .after(let identifier):
       placementValue = .record(["kind": .string("after"), "associationId": .identity(identifier)])
     }
-    let value = PlannerCanonicalValue.record([
+    var fields: [String: PlannerCanonicalValue] = [
       "command": .record([
         "type": .string("addMembership"), "itemId": .identity(itemId), "listId": .identity(listId),
         "placement": placementValue,
@@ -8448,9 +8553,17 @@ public actor Planner {
       "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),
       "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
-    ])
-    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
-    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+    ]
+    var version: UInt8 = 1
+    if let membershipEvidence {
+      version = 3
+      fields["resolvedMembershipEvidence"] = .ordered(
+        plannerSortedMembershipEvidence(membershipEvidence).map(\.operationCanonicalValue))
+    }
+    let bytes =
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, version])
+      + PlannerCanonicalValue.record(fields).encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v\(version):")
   }
 
   private func deletionMarkers(_ context: ModelContext) throws -> [PortableDeletionMarker] {
