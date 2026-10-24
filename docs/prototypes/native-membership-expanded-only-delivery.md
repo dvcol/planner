@@ -18,6 +18,6 @@ The [attempt record](evidence/native-membership-consolidation/expanded-only-atte
 
 ## Remaining scope
 
-The proven case requires a known strictly retired membership generation and a surviving exact entry binding. Eligible active-orphan repair, changed entry/source lifetimes, legacy closure without a strict pair barrier, independent expanded-context closure admission and broader restoration-family/reference reconciliation remain open. Exact eligible-alias actions and remaining maintenance failure/native controls also need qualification.
+The proven case requires a known strictly retired membership generation and a surviving exact entry binding. The [eligible-delivery follow-up](native-eligible-expanded-delivery.md) now separately qualifies complete stored identities with actual live bindings or an eligible retired alias. Changed entry/source lifetimes, legacy closure without a strict pair barrier, independent expanded-context closure admission and broader restoration-family/reference reconciliation remain open. Exact eligible-alias actions and remaining maintenance failure/native controls also need qualification.
 
 Actual Mac UI, signed shared storage, installed Share, CloudKit convergence, physical performance and system invocation retain their separate gates. Q155 and the implementation map remain open; signing stays deferred.

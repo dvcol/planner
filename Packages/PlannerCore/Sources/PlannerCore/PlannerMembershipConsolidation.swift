@@ -73,12 +73,13 @@ struct PlannerMembershipConsolidation {
       }
     }
     var detachedGenerations: [Generation: [PlannerPortableExpandedCompletion]] = [:]
+    var eligibleDetached: [PlannerPortableExpandedCompletion] = []
     for completion in detachedExpanded {
       let identity = PlannerPortableBoundIdentity(
         kind: .membership, id: completion.context.membershipId,
         lifetimeId: completion.context.membershipLifetimeId)
       let binding = try Self.binding(identity, in: provenance)
-      guard !(requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds),
+      guard
         current.itineraryEntries.contains(where: {
           $0.id == completion.context.listEntryId
             && $0.lifetimeId == completion.context.listEntryLifetimeId
@@ -86,7 +87,11 @@ struct PlannerMembershipConsolidation {
             && $0.sourceLifetimeId == binding.list.lifetimeId
         })
       else {
-        throw Self.unresolved("An unresolved completion has no proven retired membership scope.")
+        throw Self.unresolved("An unresolved completion has no proven membership scope.")
+      }
+      if (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) {
+        eligibleDetached.append(completion)
+        continue
       }
       detachedGenerations[.init(pair: binding.pair, basis: binding.observedRemovalIds), default: []]
         .append(completion)
@@ -267,6 +272,70 @@ struct PlannerMembershipConsolidation {
         }
         expanded.append(.init(context: canonicalExpanded, localDone: localDone))
       }
+    }
+    var eligibleTargets: [PlannerExpandedContext: [PlannerPortableExpandedCompletion]] = [:]
+    for completion in eligibleDetached {
+      let original = PlannerPortableBoundIdentity(
+        kind: .membership, id: completion.context.membershipId,
+        lifetimeId: completion.context.membershipLifetimeId)
+      let binding = try Self.binding(original, in: provenance)
+      guard !graph.isClosed(.expandedListItem(completion.context)),
+        let target = members.first(where: {
+          $0.baselineProvenance.pair == binding.pair
+            && provenance[$0.baselineProvenance.membership]?.normalized.observedRemovalIds
+              == binding.normalized.observedRemovalIds
+        }), !graph.isClosed(target.baselineProvenance.membership),
+        current.memberships.contains(where: { $0.baselineProvenance.membership == original })
+          || aliases.contains(where: {
+            Self.membership(in: $0.context) == original
+              && Self.membership(in: $0.canonicalContext) == target.baselineProvenance.membership
+              && !graph.isClosed($0.context) && !graph.isClosed($0.canonicalContext)
+          })
+      else {
+        throw Self.unresolved("The eligible completion's exact canonical binding is unavailable.")
+      }
+      let canonical = PlannerExpandedContext(
+        listEntryId: completion.context.listEntryId,
+        listEntryLifetimeId: completion.context.listEntryLifetimeId,
+        membershipId: target.id, membershipLifetimeId: target.lifetimeId)
+      eligibleTargets[canonical, default: []].append(completion)
+    }
+    for (canonical, contributions) in eligibleTargets {
+      let canonicalContext = PlannerPortableCompletionContext.expandedListItem(canonical)
+      let binding = try Self.binding(
+        .init(
+          kind: .membership, id: canonical.membershipId,
+          lifetimeId: canonical.membershipLifetimeId), in: provenance)
+      let values = expanded.filter { $0.context == canonical }.map {
+        (canonicalContext, $0.localDone)
+      }
+      _ = try Self.normalize(
+        canonical: canonicalContext,
+        contributions: values.isEmpty ? [(canonicalContext, false)] : values,
+        pair: binding.pair, basis: binding.normalized.observedRemovalIds, provenance: provenance,
+        graph: graph, aliases: &aliases, changes: changes)
+      for contribution in contributions {
+        let originalContext = PlannerPortableCompletionContext.expandedListItem(
+          contribution.context)
+        if aliases.contains(where: {
+          $0.context == originalContext && $0.initialDone == contribution.localDone
+        }) {
+          continue
+        }
+        let identifier = plannerInitialCompletionAliasIdentifier(
+          context: originalContext, done: contribution.localDone)
+        guard !aliases.contains(where: { $0.aliasId == identifier }) else {
+          throw Self.unresolved("An initial completion identity describes another contribution.")
+        }
+        aliases.append(
+          .init(
+            aliasId: identifier, context: originalContext, canonicalContext: canonicalContext,
+            initialDone: contribution.localDone, currentChangeId: nil))
+      }
+      let done = plannerCompletionHistoryValue(
+        contributions: aliases.filter { $0.canonicalContext == canonicalContext }, changes: changes)
+      expanded.removeAll { $0.context == canonical }
+      expanded.append(.init(context: canonical, localDone: done))
     }
     let completionStates = try plannerCompletionHistoryStates(
       aliases: aliases, changes: current.completionChanges)
@@ -573,7 +642,21 @@ func plannerStageDetachedExpandedRetirements(
     let identity = PlannerPortableBoundIdentity(
       kind: .membership, id: membershipIdentifier, lifetimeId: membershipLifetime)
     if liveMembershipBindings.contains(identity), (try? record.value()) != nil { continue }
-    guard let binding = lineage.membershipProvenance.first(where: { $0.membership == identity }),
+    if let entry = record.listEntry,
+      entry.id != entryIdentifier || entry.lifetimeId != entryLifetime
+    {
+      throw PlannerFailure("readUnavailable", "The completion has contradictory entry bindings.")
+    }
+    if let member = record.membership,
+      member.id != membershipIdentifier || member.lifetimeId != membershipLifetime
+    {
+      throw PlannerFailure(
+        "readUnavailable", "The completion has contradictory membership bindings.")
+    }
+    guard
+      let binding = lineage.membershipProvenance.first(where: { $0.membership == identity })
+        ?? memberships.first(where: { $0.baselineProvenance.membership == identity })?
+        .baselineProvenance,
       entries.contains(where: {
         $0.id == entryIdentifier && $0.lifetimeId == entryLifetime && $0.sourceKind == "list"
           && $0.sourceId == binding.list.id && $0.sourceLifetimeId == binding.list.lifetimeId
