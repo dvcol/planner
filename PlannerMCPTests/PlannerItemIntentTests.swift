@@ -774,7 +774,7 @@ final class PlannerItemIntentTests: XCTestCase {
     XCTAssertEqual(saved.source.id, created.id)
     XCTAssertEqual(saved.content.title, "Train tickets")
     XCTAssertEqual(saved.content.notes, "Collect at the station")
-    guard case .known(let checkpoint, let incomplete, let blocked) = status.recovery else {
+    guard case .known(let checkpoint, let incomplete, _, let blocked) = status.recovery else {
       return XCTFail("The actual recovery status must remain available.")
     }
     XCTAssertNotNil(checkpoint)

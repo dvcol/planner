@@ -573,7 +573,7 @@ private final class PlannerChangeObservationFixture {
   func damageRecovery() async {
     guard damagedCheckpoint == nil,
       case .status(let current) = await writer.read(session: session, request: .status),
-      case .known(let generation?, _, _) = current.recovery,
+      case .known(let generation?, _, _, _) = current.recovery,
       case .listedNamespaces(let namespaces) = await writer.inspectRecovery(request: .namespaces),
       let namespace = namespaces.first(where: { $0.datasetId == session.datasetId })
     else {
@@ -599,7 +599,7 @@ private final class PlannerChangeObservationFixture {
     do {
       try damagedCheckpoint.bytes.write(to: damagedCheckpoint.url, options: .atomic)
       guard case .status(let current) = await writer.read(session: session, request: .status),
-        case .known(_, let incomplete, false) = current.recovery, incomplete.isEmpty
+        case .known(_, let incomplete, _, false) = current.recovery, incomplete.isEmpty
       else { throw CancellationError() }
       self.damagedCheckpoint = nil
       status = "Recovery checkpoint repaired"

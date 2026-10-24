@@ -44,7 +44,7 @@ struct NativeExportAdmissionTests {
     guard
       case .status(let status) = await fixture.planner.read(
         session: fixture.session, request: .status),
-      case .known(let checkpoint, let incomplete, let blocked) = status.recovery,
+      case .known(let checkpoint, let incomplete, _, let blocked) = status.recovery,
       case .appliedRecoveryIncomplete(let retainedResult, _) = await fixture.planner
         .operationStatus(
           session: fixture.session, operationId: operationIdentifier),

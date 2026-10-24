@@ -172,7 +172,7 @@ struct NativeImportOmittedOwnerReviewTests {
     }
     guard case .exported(let before) = await planner.exportData(session: session),
       case .status(let beforeStatus) = await planner.read(session: session, request: .status),
-      case .known(let checkpoint, _, _) = beforeStatus.recovery
+      case .known(let checkpoint, _, _, _) = beforeStatus.recovery
     else { throw CancellationError() }
     var object = try #require(JSONSerialization.jsonObject(with: olderBackup) as? [String: Any])
     object["sources"] = [
@@ -215,7 +215,7 @@ struct NativeImportOmittedOwnerReviewTests {
     #expect(review.impact.sourceDeletes.isEmpty && review.impact.referenceRemovals.isEmpty)
     guard case .exported(let after) = await planner.exportData(session: session),
       case .status(let afterStatus) = await planner.read(session: session, request: .status),
-      case .known(let afterCheckpoint, let incomplete, let blocked) = afterStatus.recovery
+      case .known(let afterCheckpoint, let incomplete, _, let blocked) = afterStatus.recovery
     else { throw CancellationError() }
     #expect(before == after && checkpoint == afterCheckpoint && incomplete.isEmpty && !blocked)
   }
@@ -263,7 +263,7 @@ struct NativeImportOmittedOwnerReviewTests {
     _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
     guard case .exported(let before) = await planner.exportData(session: session),
       case .status(let beforeStatus) = await planner.read(session: session, request: .status),
-      case .known(let checkpoint, _, _) = beforeStatus.recovery
+      case .known(let checkpoint, _, _, _) = beforeStatus.recovery
     else { throw CancellationError() }
     var object = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
     var sources = try #require(object["sources"] as? [[String: Any]])
@@ -326,7 +326,7 @@ struct NativeImportOmittedOwnerReviewTests {
     #expect(!review.globalFlagsChanged && review.targets.contains(.source(item)))
     guard case .exported(let after) = await planner.exportData(session: session),
       case .status(let afterStatus) = await planner.read(session: session, request: .status),
-      case .known(let afterCheckpoint, let incomplete, let blocked) = afterStatus.recovery
+      case .known(let afterCheckpoint, let incomplete, _, let blocked) = afterStatus.recovery
     else { throw CancellationError() }
     #expect(before == after && afterCheckpoint == checkpoint && incomplete.isEmpty && !blocked)
   }

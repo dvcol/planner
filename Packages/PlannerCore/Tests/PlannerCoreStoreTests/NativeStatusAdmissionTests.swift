@@ -33,7 +33,7 @@ struct NativeStatusAdmissionTests {
     guard
       case .status(let pending) = await fixture.planner.read(
         session: fixture.session, request: .status),
-      case .known(let checkpoint, let incomplete, let blocked) = pending.recovery,
+      case .known(let checkpoint, let incomplete, _, let blocked) = pending.recovery,
       case .snapshot(let query) = await fixture.planner.query(
         .init(session: fixture.session, request: .items(.init()))),
       case .rejected(let blockReason) = await fixture.planner.execute(
@@ -48,14 +48,14 @@ struct NativeStatusAdmissionTests {
     let reopened = Planner(configuration: fixture.configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .status(let retained) = await reopened.read(session: reopenedSession, request: .status),
-      case .known(let retainedCheckpoint, let retainedIncomplete, let retainedBlock) = retained
+      case .known(let retainedCheckpoint, let retainedIncomplete, _, let retainedBlock) = retained
         .recovery,
       case .applied(let repairedResult, .complete(let repairedCheckpoint)) =
         await reopened.retryRecovery(
           session: reopenedSession, operationId: operationIdentifier
         ).outcome,
       case .status(let repaired) = await reopened.read(session: reopenedSession, request: .status),
-      case .known(let currentCheckpoint, let currentIncomplete, let currentBlock) = repaired
+      case .known(let currentCheckpoint, let currentIncomplete, _, let currentBlock) = repaired
         .recovery,
       case .rows(let rows) = await fixture.planner.read(
         session: fixture.session, request: .rows(generation: query.generation, offset: 0, limit: 2))
@@ -96,7 +96,7 @@ struct NativeStatusAdmissionTests {
       let other = Planner(configuration: otherConfiguration)
       guard case .ready(let otherSession) = await other.bootstrap(),
         case .status(let empty) = await other.read(session: otherSession, request: .status),
-        case .known(let checkpoint, let incomplete, let blocked) = empty.recovery
+        case .known(let checkpoint, let incomplete, _, let blocked) = empty.recovery
       else { throw CancellationError() }
       #expect(checkpoint == nil && incomplete.isEmpty && !blocked)
     default:
@@ -151,7 +151,7 @@ struct NativeStatusAdmissionTests {
         session: fixture.session, request: .source(fixture.source)),
       case .status(let retained) = await fixture.planner.read(
         session: fixture.session, request: .status),
-      case .known(let checkpoint, let incomplete, let blocked) = retained.recovery
+      case .known(let checkpoint, let incomplete, _, let blocked) = retained.recovery
     else { throw CancellationError() }
     #expect(current.content.title == "Hotel" && current.content.notes == "Original notes")
     #expect(
@@ -190,7 +190,7 @@ struct NativeStatusAdmissionTests {
         session: fixture.session, operationId: operationIdentifier),
       case .status(let status) = await fixture.planner.read(
         session: fixture.session, request: .status),
-      case .known(let checkpoint, let incomplete, let blocked) = status.recovery,
+      case .known(let checkpoint, let incomplete, _, let blocked) = status.recovery,
       case .source(.item(let current)) = await fixture.planner.read(
         session: fixture.session, request: .source(fixture.source))
     else { throw CancellationError() }

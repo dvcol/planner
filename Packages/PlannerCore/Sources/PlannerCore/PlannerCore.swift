@@ -237,11 +237,11 @@ public actor Planner {
   ) -> Bool {
     switch (first, second) {
     case (
-      .known(let firstGeneration, let firstIncomplete, let firstBlocked),
-      .known(let secondGeneration, let secondIncomplete, let secondBlocked)
+      .known(let firstGeneration, let firstIncomplete, let firstMaintenance, let firstBlocked),
+      .known(let secondGeneration, let secondIncomplete, let secondMaintenance, let secondBlocked)
     ):
       return firstGeneration == secondGeneration && firstIncomplete == secondIncomplete
-        && firstBlocked == secondBlocked
+        && firstMaintenance == secondMaintenance && firstBlocked == secondBlocked
     case (.unavailable(let firstFailure), .unavailable(let secondFailure)):
       return firstFailure == secondFailure
     default: return false
@@ -315,6 +315,9 @@ public actor Planner {
         } else {
           try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
         }
+        let maintenanceContext = ModelContext(try openContainer())
+        maintenanceContext.autosaveEnabled = false
+        try ensureCanonicalMemberships(identity: identity, context: maintenanceContext)
         let session = PlannerDatasetSession(
           datasetId: identity.datasetId, sessionId: UUID(),
           ownershipBinding: identity.ownershipBinding, epochId: identity.epochId
@@ -332,9 +335,10 @@ public actor Planner {
   {
     do {
       return try coordinated {
-        _ = try validateSession(session)
+        let identity = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
+        try ensureCanonicalMemberships(identity: identity, context: context)
         let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map {
           try $0.value()
         }
@@ -923,6 +927,7 @@ public actor Planner {
         let identity = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
+        try ensureCanonicalMemberships(identity: identity, context: context)
         let targets: [PlannerReviewTarget]
         let impact: PlannerReviewImpact
         let digest: String
@@ -1051,8 +1056,23 @@ public actor Planner {
         let context = ModelContext(container)
         context.autosaveEnabled = false
         let archive = recoveryArchive(identity, context: context)
-        let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
-        let envelope = try archive.latest()
+        var receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
+        var envelope = try archive.latest()
+        let hasAppliedHistory =
+          receipts.contains { $0.operationId == operation.operationId }
+          || (envelope?.receipts.contains { $0.operationId == operation.operationId } ?? false)
+        if !hasAppliedHistory {
+          let prepared = try archive.proposals().contains {
+            $0.originalOperationId == operation.operationId
+          }
+          if !prepared { try ensureCanonicalMemberships(identity: identity, context: context) }
+          envelope = try archive.latest()
+          guard try archive.incompleteMaintenance(in: context, envelope: envelope).isEmpty else {
+            throw PlannerFailure(
+              "mutationBlocked", "Committed maintenance still needs independent recovery.")
+          }
+          receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
+        }
         switch operation.command {
         case .restoreAssociation(let snapshot):
           return try executeAssociationRestoration(
@@ -1415,6 +1435,13 @@ public actor Planner {
       return try coordinated {
         let identity = try validateSession(session)
         switch request {
+        case .status: break
+        default:
+          let maintenanceContext = ModelContext(try openContainer())
+          maintenanceContext.autosaveEnabled = false
+          try ensureCanonicalMemberships(identity: identity, context: maintenanceContext)
+        }
+        switch request {
         case .status:
           return .status(
             PlannerNativeStatusRead(
@@ -1531,7 +1558,13 @@ public actor Planner {
       }
       let context = ModelContext(try openContainer())
       context.autosaveEnabled = false
-      let envelope = try recoveryArchive(identity).latest()
+      let memberships = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
+      guard !membershipConsolidationRequired(memberships) else {
+        throw PlannerFailure(
+          "maintenanceRequired", "Membership consolidation has not committed yet.")
+      }
+      let archive = recoveryArchive(identity)
+      let envelope = try archive.latest()
       let acknowledged = Dictionary(
         uniqueKeysWithValues: (envelope?.receipts ?? []).map { ($0.operationId, $0) })
       let committed = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()).map {
@@ -1558,10 +1591,12 @@ public actor Planner {
           )
         }
       }
+      let maintenance = try archive.incompleteMaintenance(in: context, envelope: envelope)
       return .known(
         checkpointGeneration: (envelope?.checkpointGeneration).flatMap(Int64.init),
         incompleteOperationIds: incomplete.sorted { $0.uuidString < $1.uuidString },
-        mutationBlocked: !incomplete.isEmpty)
+        incompleteMaintenanceIds: maintenance,
+        mutationBlocked: !incomplete.isEmpty || !maintenance.isEmpty)
     } catch { return .unavailable(failure(error, code: "readUnavailable")) }
   }
 
@@ -1705,10 +1740,11 @@ public actor Planner {
   public func query(_ query: PlannerQuery) -> PlannerQueryResult {
     do {
       return try coordinated {
-        _ = try validateSession(query.session)
+        let identity = try validateSession(query.session)
         let container = try openContainer()
         let context = ModelContext(container)
         context.autosaveEnabled = false
+        try ensureCanonicalMemberships(identity: identity, context: context)
         switch query.request {
         case .calendar(let calendarQuery):
           let historyToken = try latestHistoryToken(in: context)
@@ -3688,9 +3724,10 @@ public actor Planner {
   public func exportData(session: PlannerDatasetSession) -> PlannerExportResult {
     do {
       return try coordinated {
-        _ = try validateSession(session)
+        let identity = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
+        try ensureCanonicalMemberships(identity: identity, context: context)
         let lineage = try PlannerNativeLineage(context: context)
         let snapshot = PlannerDataSnapshot(
           itineraries: try itinerarySnapshots(context),
@@ -3799,6 +3836,164 @@ public actor Planner {
       }
     }
     return impacts
+  }
+
+  private func maintenanceSnapshot(
+    _ context: ModelContext, memberships: [MembershipSnapshot]? = nil
+  ) throws -> PlannerDataSnapshot {
+    let lineage = try PlannerNativeLineage(context: context)
+    return PlannerDataSnapshot(
+      itineraries: try itinerarySnapshots(context),
+      labelAssociations: try labelAssociationSnapshots(context),
+      tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+      items: try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() },
+      lists: try listSnapshots(context),
+      memberships: try memberships ?? membershipSnapshots(context),
+      deletionMarkers: try deletionMarkers(context), contextAliases: lineage.contextAliases,
+      completionChanges: lineage.completionChanges,
+      restorationFamilies: lineage.restorationFamilies,
+      membershipProvenance: lineage.membershipProvenance,
+      membershipRemovals: lineage.membershipRemovals)
+  }
+
+  private func publishMaintenanceSnapshot(
+    identity: PlannerStoreIdentity, context: ModelContext
+  ) throws -> Int64 {
+    let snapshot = try maintenanceSnapshot(context)
+    try requireCompleteExportGraph(snapshot, context: context)
+    _ = try snapshot.validated()
+    let lineage = try PlannerNativeLineage(context: context)
+    return try recoveryArchive(identity, context: context).publish(
+      itineraries: try itinerarySnapshots(context),
+      labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+      categories: try categorySnapshots(context),
+      items: try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() },
+      lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
+      deletionMarkers: try deletionMarkers(context), contextAliases: lineage.contextAliases,
+      completionChanges: lineage.completionChanges,
+      restorationFamilies: lineage.restorationFamilies,
+      membershipProvenance: lineage.membershipProvenance,
+      membershipRemovals: lineage.membershipRemovals,
+      receipts: try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()))
+  }
+
+  private func membershipConsolidationRequired(_ records: [PlannerSchemaV18.Membership]) -> Bool {
+    let identifiers = records.compactMap(\.id)
+    let pairs = records.compactMap { record -> String? in
+      guard let list = record.listId, let listLifetime = record.listLifetimeId,
+        let item = record.itemId, let itemLifetime = record.itemLifetimeId
+      else { return nil }
+      return list.uuidString + "/" + listLifetime.uuidString + "/"
+        + item.uuidString + "/" + itemLifetime.uuidString
+    }
+    return Set(identifiers).count != identifiers.count || Set(pairs).count != pairs.count
+  }
+
+  private func ensureCanonicalMemberships(identity: PlannerStoreIdentity, context: ModelContext)
+    throws
+  {
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
+    guard membershipConsolidationRequired(records) else { return }
+    let memberships = try records.map { try $0.value() }
+    let archive = recoveryArchive(identity, context: context)
+    let envelope = try archive.latest()
+    let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
+    let acknowledged = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map(acknowledged.contains) ?? false }),
+      try archive.incompleteMaintenance(in: context, envelope: envelope).isEmpty
+    else {
+      throw PlannerFailure(
+        "maintenanceRequired", "Prior recovery must complete before consolidation.")
+    }
+    let history = try latestHistoryToken(in: context)
+    let before = try maintenanceSnapshot(context, memberships: memberships)
+    let consolidation = try PlannerMembershipConsolidation(snapshot: before)
+    let proposed = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
+    _ = try proposed.validated()
+    let maintenanceIdentifier = UUID()
+    let usedIdentifiers = Set(receipts.compactMap(\.operationId))
+      .union(try archive.maintenanceCommits(in: context).map(\.maintenanceId))
+      .union(envelope?.maintenanceReceipts.map(\.evidence.maintenanceId) ?? [])
+    guard !usedIdentifiers.contains(maintenanceIdentifier) else {
+      throw PlannerFailure(
+        "maintenanceRequired", "A fresh maintenance identity could not be issued.")
+    }
+    do {
+      let evidence = try archive.prepareMaintenance(
+        .init(maintenanceId: maintenanceIdentifier, identity: identity, proposedBackup: proposed))
+      try plannerStageMembershipConsolidation(consolidation.backup, context: context)
+      context.insert(
+        PlannerSchemaV19.MaintenanceCommit(
+          maintenanceId: maintenanceIdentifier, evidenceData: try JSONEncoder().encode(evidence)))
+      let staged = try maintenanceSnapshot(context)
+      try requireCompleteExportGraph(staged, context: context)
+      guard
+        try staged.validated().backup.importCanonicalValue.encoded()
+          == consolidation.backup.importCanonicalValue.encoded()
+      else {
+        throw PlannerFailure(
+          "maintenanceRequired", "The staged consolidation differs from its proposal.")
+      }
+      let current = try loadIdentity()
+      guard current.datasetId == identity.datasetId, current.namespaceId == identity.namespaceId,
+        current.epochId == identity.epochId, current.ownershipBinding == identity.ownershipBinding,
+        current.schemaVersion == identity.schemaVersion,
+        try latestHistoryToken(in: context) == history
+      else {
+        throw PlannerFailure(
+          "maintenanceRequired", "The dataset changed while preparing consolidation.")
+      }
+      try context.save()
+    } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "maintenanceRequired",
+        "Membership consolidation could not commit: " + failure(error, code: "unavailable").message)
+    }
+    querySnapshots.removeAll()
+    do {
+      _ = try publishMaintenanceSnapshot(identity: identity, context: context)
+    } catch {
+      // The native commit remains the authority; status and explicit retry expose incomplete recovery.
+      return
+    }
+  }
+
+  public func retryMaintenanceRecovery(session: PlannerDatasetSession, maintenanceId: UUID)
+    -> PlannerMaintenanceRecoveryResult
+  {
+    var verifiedCommit = false
+    do {
+      return try coordinated {
+        let identity = try validateSession(session)
+        let archive = recoveryArchive(identity)
+        let envelope = try archive.latest()
+        if let acknowledged = envelope?.maintenanceReceipts.first(where: {
+          $0.evidence.maintenanceId == maintenanceId
+        }), let generation = Int64(acknowledged.checkpointGeneration) {
+          return .complete(checkpointGeneration: generation)
+        }
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        guard
+          let commit = try archive.maintenanceCommits(in: context).first(where: {
+            $0.maintenanceId == maintenanceId
+          })
+        else {
+          throw PlannerFailure(
+            "maintenanceNotApplied", "Only verified committed maintenance can retry recovery.")
+        }
+        try archive.verifyMaintenancePreparation(commit)
+        verifiedCommit = true
+        return .complete(
+          checkpointGeneration: try publishMaintenanceSnapshot(identity: identity, context: context)
+        )
+      }
+    } catch {
+      let reason = failure(error, code: "recoveryIncomplete")
+      if verifiedCommit { return .incomplete(reason: reason) }
+      return .rejected(reason: reason)
+    }
   }
 
   private func importReviewSnapshot(_ context: ModelContext) throws -> PlannerDecodedBackup {

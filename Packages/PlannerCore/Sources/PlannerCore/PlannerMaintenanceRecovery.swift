@@ -1,6 +1,55 @@
 import Foundation
+import SwiftData
 
-struct PlannerMaintenanceEvidence: Codable {
+public enum PlannerMaintenanceRecoveryResult: Sendable {
+  case complete(checkpointGeneration: Int64)
+  case incomplete(reason: PlannerFailure)
+  case rejected(reason: PlannerFailure)
+}
+
+struct PlannerPreparedMaintenance: Codable {
+  let format: String
+  let formatVersion: Int
+  let maintenanceId: UUID
+  let namespaceId: UUID
+  let datasetId: UUID
+  let epochId: UUID
+  let ownershipBinding: String
+  let kind: String
+  let ruleVersion: Int
+  let proposedBackup: PlannerDataSnapshot
+  let evidence: String
+
+  init(maintenanceId: UUID, identity: PlannerStoreIdentity, proposedBackup: PlannerDataSnapshot) {
+    format = "planner-maintenance-preparation"
+    formatVersion = 1
+    self.maintenanceId = maintenanceId
+    namespaceId = identity.namespaceId
+    datasetId = identity.datasetId
+    epochId = identity.epochId
+    ownershipBinding = identity.ownershipBinding
+    kind = "membershipConsolidation"
+    ruleVersion = 1
+    self.proposedBackup = proposedBackup
+    evidence = "preparedUnverified"
+  }
+
+  func validated(identity: PlannerStoreIdentity, bytes: Data) throws -> PlannerMaintenanceEvidence {
+    guard format == "planner-maintenance-preparation", formatVersion == 1,
+      evidence == "preparedUnverified", proposedBackup.formatVersion == 3
+    else { throw PlannerFailure("recoveryIntegrityFailure", "Maintenance preparation is invalid.") }
+    let value = PlannerMaintenanceEvidence(
+      maintenanceId: maintenanceId, namespaceId: namespaceId, datasetId: datasetId,
+      epochId: epochId,
+      ownershipBinding: ownershipBinding, kind: kind, ruleVersion: ruleVersion,
+      preparationDigest: plannerDigest(bytes, prefix: "sha256:"))
+    try value.validate(identity: identity)
+    _ = try proposedBackup.validated()
+    return value
+  }
+}
+
+struct PlannerMaintenanceEvidence: Codable, Equatable {
   let maintenanceId: UUID
   let namespaceId: UUID
   let datasetId: UUID
@@ -36,6 +85,12 @@ struct RecoveryMaintenanceReceipt: Codable {
   let checkpointGeneration: String
 
   enum CodingKeys: String, CodingKey, CaseIterable { case commitState, checkpointGeneration }
+
+  init(evidence: PlannerMaintenanceEvidence, checkpointGeneration: Int64) {
+    self.evidence = evidence
+    commitState = "applied"
+    self.checkpointGeneration = String(checkpointGeneration)
+  }
 
   init(from decoder: any Decoder) throws {
     let expectedKeys = Set(
@@ -73,6 +128,78 @@ struct RecoveryMaintenanceReceipt: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "Recovery maintenance acknowledgement is inconsistent.")
     }
+  }
+}
+
+extension PlannerRecoveryArchive {
+  func prepareMaintenance(_ proposal: PlannerPreparedMaintenance) throws
+    -> PlannerMaintenanceEvidence
+  {
+    let bytes = try JSONEncoder().encode(proposal)
+    let evidence = try proposal.validated(identity: identity, bytes: bytes)
+    try plannerWriteDurably(
+      bytes,
+      to: namespaceURL.appendingPathComponent(
+        "maintenance-\(proposal.maintenanceId.uuidString).json"))
+    return evidence
+  }
+
+  func maintenanceCommits(in context: ModelContext) throws -> [PlannerMaintenanceEvidence] {
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV19.MaintenanceCommit>())
+    var evidence: [PlannerMaintenanceEvidence] = []
+    for record in records {
+      guard let identifier = record.maintenanceId, let bytes = record.evidenceData,
+        case .object(let fields) = try JSONDecoder().decode(PlannerImportJSON.self, from: bytes),
+        Set(fields.keys) == Set(PlannerMaintenanceEvidence.CodingKeys.allCases.map(\.rawValue))
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "Native maintenance evidence is unresolved.")
+      }
+      let decoded = try JSONDecoder().decode(PlannerMaintenanceEvidence.self, from: bytes)
+      guard decoded.maintenanceId == identifier else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The maintenance commit identity is inconsistent.")
+      }
+      try decoded.validate(identity: identity)
+      evidence.append(decoded)
+    }
+    guard Set(evidence.map(\.maintenanceId)).count == evidence.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Native maintenance identities are duplicated.")
+    }
+    return evidence.sorted { $0.maintenanceId.uuidString < $1.maintenanceId.uuidString }
+  }
+
+  func verifyMaintenancePreparation(_ evidence: PlannerMaintenanceEvidence) throws {
+    let file = namespaceURL.appendingPathComponent(
+      "maintenance-\(evidence.maintenanceId.uuidString).json")
+    let bytes = try Data(contentsOf: file)
+    let prepared = try JSONDecoder().decode(PlannerPreparedMaintenance.self, from: bytes)
+    guard try prepared.validated(identity: identity, bytes: bytes) == evidence else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Maintenance commit does not match its durable preparation.")
+    }
+  }
+
+  func incompleteMaintenance(in context: ModelContext, envelope: RecoveryEnvelope?) throws -> [UUID]
+  {
+    let known = Dictionary(
+      uniqueKeysWithValues: (envelope?.maintenanceReceipts ?? []).map {
+        ($0.evidence.maintenanceId, $0.evidence)
+      })
+    var pending: [UUID] = []
+    for value in try maintenanceCommits(in: context) {
+      if let acknowledged = known[value.maintenanceId] {
+        guard acknowledged == value else {
+          throw PlannerFailure(
+            "recoveryIntegrityFailure", "Acknowledged maintenance differs from its native commit.")
+        }
+      } else {
+        try verifyMaintenancePreparation(value)
+        pending.append(value.maintenanceId)
+      }
+    }
+    return pending
   }
 }
 

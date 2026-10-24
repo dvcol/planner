@@ -55,7 +55,7 @@ struct NativeImportMarkerTests {
       case .source(.item(let after)) = await reopened.read(
         session: reopenedSession, request: .source(item)),
       case .status(let status) = await reopened.read(session: reopenedSession, request: .status),
-      case .known(let acknowledged, let incomplete, let blocked) = status.recovery,
+      case .known(let acknowledged, let incomplete, _, let blocked) = status.recovery,
       case .exported(let reopenedBytes) = await reopened.exportData(session: reopenedSession),
       case .decoded(let reopenedBackup) = reopened.decodeImport(reopenedBytes)
     else { throw CancellationError() }
