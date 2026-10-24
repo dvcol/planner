@@ -1031,6 +1031,51 @@ final class SavedBrowserJourneyTests: XCTestCase {
     #endif
   }
 
+  func testReportedNewWindowFormPreservesSubmissionAndReaderHistory() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guide = try await server.start()
+    let destination = guide.deletingLastPathComponent().appendingPathComponent("new-window-form")
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Visit form fixture"].waitForExistence(timeout: 10))
+    page.buttons["Open morning visit"].activateForPlannerJourney()
+    let submitted = page.staticTexts["Morning visit fixture"].waitForExistence(timeout: 10)
+    let requestLine = "POST /submitted-visit HTTP/1.1"
+    let observation = XCTAttachment(
+      data: try JSONSerialization.data(
+        withJSONObject: [
+          "requestLines": server.requestLines,
+          "submittedBodies": server.requestBodies(for: requestLine),
+          "submittedContentVisible": submitted,
+        ], options: .prettyPrinted), uniformTypeIdentifier: "public.json")
+    observation.name = "Reported new-window form actual submission"
+    observation.lifetime = .keepAlways
+    add(observation)
+    try await recordWindow(application, name: "Reported new-window form retains submitted values")
+    XCTAssertTrue(submitted)
+    XCTAssertEqual(server.requestLines.filter { $0 == requestLine }.count, 1)
+    XCTAssertEqual(server.requestBodies(for: requestLine), ["visit=morning"])
+    XCTAssertEqual(application.state, .runningForeground)
+    application.buttons["saved.browser.back"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Visit form fixture"].waitForExistence(timeout: 10))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
+    XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
+  }
+
   func testReportedNewWindowLinkReusesReaderAndNativeHistory() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()

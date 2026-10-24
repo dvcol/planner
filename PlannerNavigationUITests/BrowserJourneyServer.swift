@@ -9,6 +9,7 @@ final class BrowserJourneyServer: @unchecked Sendable {
   private var failure: NWError?
   private var observedRequestLines: [String] = []
   private var observedRequestUserAgents: [String: [String]] = [:]
+  private var observedRequestBodies: [String: [String]] = [:]
   private var visitorCookieName: String?
   private var observedVisitorCookieValues: [String] = []
   private var isGuideAvailable = true
@@ -27,6 +28,9 @@ final class BrowserJourneyServer: @unchecked Sendable {
   var requestLines: [String] { lock.withLock { observedRequestLines } }
   func userAgents(for requestLine: String) -> [String] {
     lock.withLock { observedRequestUserAgents[requestLine] ?? [] }
+  }
+  func requestBodies(for requestLine: String) -> [String] {
+    lock.withLock { observedRequestBodies[requestLine] ?? [] }
   }
   var visitorCookieValues: [String] { lock.withLock { observedVisitorCookieValues } }
   var delayedRequestCount: Int { lock.withLock { observedDelayedRequests } }
@@ -103,6 +107,24 @@ final class BrowserJourneyServer: @unchecked Sendable {
         if complete { connection.cancel() } else { receive(connection, bytes: received) }
         return
       }
+      let contentLengthHeader = header.components(separatedBy: "\r\n").first(where: {
+        $0.lowercased().hasPrefix("content-length:")
+      })
+      let contentLengthValue =
+        contentLengthHeader?.dropFirst("Content-Length:".count)
+        .trimmingCharacters(in: .whitespaces) ?? "0"
+      guard let contentLength = Int(contentLengthValue), (0...8192).contains(contentLength),
+        let separator = received.range(of: Data("\r\n\r\n".utf8))
+      else {
+        connection.cancel()
+        return
+      }
+      let bodyBytes = received[separator.upperBound...]
+      guard bodyBytes.count >= contentLength else {
+        if complete { connection.cancel() } else { receive(connection, bytes: received) }
+        return
+      }
+      let requestBody = String(decoding: bodyBytes.prefix(contentLength), as: UTF8.self)
       let requestLine = header.components(separatedBy: "\r\n").first ?? ""
       let userAgent =
         header.components(separatedBy: "\r\n").first(where: {
@@ -111,6 +133,7 @@ final class BrowserJourneyServer: @unchecked Sendable {
       lock.withLock {
         observedRequestLines.append(requestLine)
         observedRequestUserAgents[requestLine, default: []].append(userAgent)
+        observedRequestBodies[requestLine, default: []].append(requestBody)
       }
       if requestLine == "GET /guide HTTP/1.1", !lock.withLock({ isGuideAvailable }) {
         connection.cancel()
@@ -157,6 +180,27 @@ final class BrowserJourneyServer: @unchecked Sendable {
           <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="color-scheme" content="light dark"><title>Remembered visit</title></head>
           <body><h1>\(heading)</h1>\(visitLinks)</body></html>
+          """
+      } else if requestLine.contains(" /new-window-form ") {
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Visit form</title></head>
+          <body><h1>Visit form fixture</h1>
+          <form action="/submitted-visit" method="post" target="_blank">
+          <input type="hidden" name="visit" value="morning">
+          <button type="submit">Open morning visit</button></form></body></html>
+          """
+      } else if requestLine.contains(" /submitted-visit ") {
+        let heading: String
+        if requestLine.hasPrefix("POST "), requestBody == "visit=morning" {
+          heading = "Morning visit fixture"
+        } else {
+          heading = "Visit selection missing"
+        }
+        body = """
+          <!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="color-scheme" content="light dark"><title>Visit result</title></head>
+          <body><h1>\(heading)</h1></body></html>
           """
       } else if requestLine.contains(" /initial-app-redirect ") {
         responseStatus = "302 Found"
