@@ -1,0 +1,17 @@
+{
+  "plannerUserAgents" : [
+    "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko)",
+    "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko)",
+    "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko)",
+    "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko)"
+  ],
+  "plannerState" : 3,
+  "requestedExternalTarget" : "http:\/\/localhost:62080\/garden",
+  "browserBecameForeground" : true,
+  "browserState" : 4,
+  "originalBookmark" : "http:\/\/localhost:62080\/guide",
+  "externalUserAgents" : [
+    "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/27.0 Mobile\/15E148 Safari\/604.1"
+  ],
+  "requestLine" : "GET \/garden HTTP\/1.1"
+}

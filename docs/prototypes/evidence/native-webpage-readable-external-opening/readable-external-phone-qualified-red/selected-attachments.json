@@ -1,0 +1,99 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-readable-external-phone-qualified-red.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-qualified-red"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "57B13825-6C86-4201-9F2A-A5CE873BAA27.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "App UI hierarchy for org.example_0_C5A17AEC-8092-4A89-BF2B-67E6CAE1026F.PlannerMCPPrototype",
+      "timestamp": 1792802584.144,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "57B13825-6C86-4201-9F2A-A5CE873BAA27.txt.gz",
+      "originalSha256": "7af205d292e795b8838a1ad740fdff3015d2c6e568483ca0df68a7da38122392"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B2DF39AB-CD38-49E4-8402-43390D0C9DD0.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"More\" Button`_0_B8244393-ECE8-402C-8EBC-7B1F1E6E42EC.txt",
+      "timestamp": 1792802584,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "B2DF39AB-CD38-49E4-8402-43390D0C9DD0.txt.gz",
+      "originalSha256": "5a2186c4a04642a697715bc135cfc0c44f65381794fe1dd146f4f538c26008de"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "7272AD7F-90CD-41BD-B4A0-B2E4B33156B2.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"More\" Button`_0_3DD35D02-3207-4E7D-A3C7-A28320689FA4.txt",
+      "timestamp": 1792802583.115,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "7272AD7F-90CD-41BD-B4A0-B2E4B33156B2.txt.gz",
+      "originalSha256": "5a2186c4a04642a697715bc135cfc0c44f65381794fe1dd146f4f538c26008de"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "59D8E791-607C-482B-9575-72891078988A.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"More\" Button`_0_176DDCB0-EC83-40AE-95D2-BCC87EBB413F.txt",
+      "timestamp": 1792802582.095,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "59D8E791-607C-482B-9575-72891078988A.txt.gz",
+      "originalSha256": "5a2186c4a04642a697715bc135cfc0c44f65381794fe1dd146f4f538c26008de"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "46BEEC47-0910-4101-A4E3-8E2150251B3F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"More\" Button`_0_A3A5B001-0987-452F-A645-EBF52124F925.txt",
+      "timestamp": 1792802581.078,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "46BEEC47-0910-4101-A4E3-8E2150251B3F.txt.gz",
+      "originalSha256": "5a2186c4a04642a697715bc135cfc0c44f65381794fe1dd146f4f538c26008de"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "A21955E6-F8D3-4B4C-AC93-FC64943445FA.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"More\" Button`_0_FDEC26A9-C746-4F75-88C8-85E105931D57.txt",
+      "timestamp": 1792802580.056,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "A21955E6-F8D3-4B4C-AC93-FC64943445FA.txt.gz",
+      "originalSha256": "5a2186c4a04642a697715bc135cfc0c44f65381794fe1dd146f4f538c26008de"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "1BE25F5E-8020-46A5-8946-E2A96479491C.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Debug description for `\"Museum guide fixture\" StaticText`_0_6D53F5E3-C26E-4A97-9A8B-EE5957752D8C.txt",
+      "timestamp": 1792802576.273,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "1BE25F5E-8020-46A5-8946-E2A96479491C.txt.gz",
+      "originalSha256": "aa3bef61e2ca43504edcd696d92e1dad4fc37868efe06f0ff4c423714ff2771d"
+    }
+  ],
+  "videoPublished": false
+}

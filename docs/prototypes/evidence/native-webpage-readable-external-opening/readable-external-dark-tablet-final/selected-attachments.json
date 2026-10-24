@@ -1,0 +1,111 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-readable-external-dark-tablet-final.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-readable-external-dark-tablet-final"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "A45C007B-779D-4E46-8DD0-ADB519126722.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "System browser handoff preserves the original saved bookmark_0_F93DE437-A95E-40E2-A012-00E1BAD6DE55.png",
+      "timestamp": 1792803123.252,
+      "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+      "retainedFileName": "A45C007B-779D-4E46-8DD0-ADB519126722.png",
+      "originalSha256": "f0f64d1f110b65c077692f0fd49100b31a72f6919f72e2502e0cb7de54f59a5f"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9BC82D6C-5FB5-4344-8D6C-822E355588CF.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "System browser after explicit Planner external action_0_AEAD66DE-6D8B-44AB-9282-35DBE50F81A7.png",
+      "timestamp": 1792803118.881,
+      "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+      "retainedFileName": "9BC82D6C-5FB5-4344-8D6C-822E355588CF.png",
+      "originalSha256": "a300dafd2e23964431ba8a1592a36c0b322594c40cd0f919d40d732bbf608b62"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "9DE86A17-E45A-4591-8C12-D6F68F4874C5.json",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Actual system browser request provenance_0_D1DCE24C-DCDC-412F-9326-ABA86E736B77.json",
+      "timestamp": 1792803118.673,
+      "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+      "retainedFileName": "9DE86A17-E45A-4591-8C12-D6F68F4874C5.json",
+      "originalSha256": "d3befe3ea1383109c878d3ba37465ee7237226f1eab03f7ce84b59b0df61ff42"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "C2583EF3-E535-4433-88D8-F3BC664026F7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Failed linked guide offers its exact external target_0_071BDEE9-4B62-4EEA-BD7A-200241442941.png",
+      "timestamp": 1792803114.054,
+      "testIdentifier": "SavedBrowserJourneyTests/testFailedLinkedGuideOpensItsExactTargetInTheSystemBrowser()",
+      "retainedFileName": "C2583EF3-E535-4433-88D8-F3BC664026F7.png",
+      "originalSha256": "2ab4a85913d515e5d4c3b28d8f4f7d4a54d82fff32dcf3e023b730e5adfd2422"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "B3D6ECC8-1BBE-4605-9FB6-17DB737F21EE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Readable-page external handoff preserves the original saved bookmark_0_65C0D5CB-948C-4AD5-A2D8-088DCE8C3032.png",
+      "timestamp": 1792803165.176,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "B3D6ECC8-1BBE-4605-9FB6-17DB737F21EE.png",
+      "originalSha256": "2af35f0ee9bfe9b426b2d315d9352b789e922316a73aa78d4b5506edc2fba4f8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "8D3469D6-4FAF-4FF9-AB9E-D51743E9993C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "System browser after explicit readable-page external action_0_DFA0DE72-8FD4-4CF9-A841-4F77C93BB9D9.png",
+      "timestamp": 1792803161.803,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "8D3469D6-4FAF-4FF9-AB9E-D51743E9993C.png",
+      "originalSha256": "27c7be3bd0275bf262b5650424682434519afacef6841e89448a60f0119ef5d8"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "79658B27-BDD7-47E2-A55D-04EB6E50CF10.json",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Readable-page system browser request provenance_0_2FEF99EB-438C-4DDA-BF64-6B5872C7A2DD.json",
+      "timestamp": 1792803161.644,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "79658B27-BDD7-47E2-A55D-04EB6E50CF10.json",
+      "originalSha256": "b0b65fd1f04220c1b154e7aee34fff14c74383a4cf24e557b11f7259f81ec730"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "exportedFileName": "3CB6C4D6-D076-4FB9-8BBB-365D66BAD0C9.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Reported new-window link reuses native reader_0_36154FA3-1A8B-4786-9A96-4EC0FAF6DDE2.png",
+      "timestamp": 1792803196.91,
+      "testIdentifier": "SavedBrowserJourneyTests/testReportedNewWindowLinkReusesReaderAndNativeHistory()",
+      "retainedFileName": "3CB6C4D6-D076-4FB9-8BBB-365D66BAD0C9.png",
+      "originalSha256": "b5df949257844913269f348257c11d6f3560f72463471ff133c5737e42c7213c"
+    }
+  ],
+  "videoPublished": false
+}

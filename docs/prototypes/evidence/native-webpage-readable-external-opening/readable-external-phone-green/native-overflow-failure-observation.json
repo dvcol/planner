@@ -1,0 +1,14 @@
+{
+  "originalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-green.xcresult",
+  "observations": [
+    {
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "originalFile": "EB96C432-B57C-4AD7-8616-D957664213E4.txt",
+      "retainedFile": "native-overflow-failure-hierarchy.txt.gz",
+      "originalSha256": "89bbd53e3e596159f91888c8ac836accedc090505c97aeb83d67a197f10e21e9",
+      "menuLabelPresent": true,
+      "requestedIdentifierPresent": false
+    }
+  ],
+  "passingCredit": false
+}

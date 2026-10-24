@@ -1,0 +1,51 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerItemWindow-readable-external-phone-qualified-green.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-qualified-green"
+  ],
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "B7809E8C-E057-47E7-B3E8-42F7530BCB27.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Readable-page external handoff preserves the original saved bookmark_0_48C0DAED-547E-4538-86AB-A86D773BC0B0.png",
+      "timestamp": 1792802709.45,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "B7809E8C-E057-47E7-B3E8-42F7530BCB27.png",
+      "originalSha256": "e39cdbf32ad15303edb374f06894801eb438653bdf6bd2f7983a76f89942e5f7"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "05389D3B-0AF3-4423-A209-63193186E027.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "System browser after explicit readable-page external action_0_0BD0645F-BBB0-4DAA-9018-FD9D703A9C35.png",
+      "timestamp": 1792802705.76,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "05389D3B-0AF3-4423-A209-63193186E027.png",
+      "originalSha256": "541121a2d98d4a0b4eb972dfe9e78bfba2385d5fd6df2d8a65e8364f81c16f61"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "exportedFileName": "DDF22634-16AC-493E-86CB-B573D3A59450.json",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Readable-page system browser request provenance_0_D6D8E78F-E020-4D08-A2DB-B35368385592.json",
+      "timestamp": 1792802705.662,
+      "testIdentifier": "SavedBrowserJourneyTests/testReadableLinkedGuideOpensItsCurrentPageInTheSystemBrowser()",
+      "retainedFileName": "DDF22634-16AC-493E-86CB-B573D3A59450.json",
+      "originalSha256": "3be3bac2e395b2e20078b54525e55971c593b43000724a9831745be93c58518a"
+    }
+  ],
+  "videoPublished": false
+}

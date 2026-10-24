@@ -1,0 +1,64 @@
+{
+  "entries": [
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-red",
+      "fileCount": 29,
+      "nominalBytes": 7829973,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-red.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-green",
+      "fileCount": 31,
+      "nominalBytes": 7664233,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-green.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-qualified-red",
+      "fileCount": 29,
+      "nominalBytes": 6927433,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-qualified-red.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-qualified-green",
+      "fileCount": 4,
+      "nominalBytes": 324393,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-qualified-green.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-regressions",
+      "fileCount": 6,
+      "nominalBytes": 627920,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-regressions.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-phone-final",
+      "fileCount": 9,
+      "nominalBytes": 949659,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-phone-final.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    },
+    {
+      "path": "/private/tmp/PlannerApprovedAdminAttachments-readable-external-dark-tablet-final",
+      "fileCount": 9,
+      "nominalBytes": 869673,
+      "preservedOriginalBundle": "/private/tmp/PlannerItemWindow-readable-external-dark-tablet-final.xcresult",
+      "selectedOriginalsVerified": true,
+      "removed": true
+    }
+  ],
+  "totalNominalBytes": 25193284,
+  "additionalFailureHierarchyVerified": true,
+  "allOriginalResultBundlesPreserved": true,
+  "nominalBytesAreNotGuaranteedAPFSFreeSpace": true
+}
