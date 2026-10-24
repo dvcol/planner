@@ -11,8 +11,7 @@ struct ItineraryScheduleMigrationTests {
     #endif
     let fixture = try #require(
       bundle.url(forResource: "SchemaV13", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -121,7 +120,7 @@ struct ItineraryScheduleMigrationTests {
     #expect(after.progress.totalCount == 4)
     #expect(after.progress.doneCount == 2)
     #expect(after.references.contains(.schedule(id: schedule.id, source: itinerary)))
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(current.decodedBackup.backup.schedules.count == 3)
     #expect(

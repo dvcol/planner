@@ -260,11 +260,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...18).contains(identity.schemaVersion) else {
+          guard (1...19).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 18, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 19, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -283,15 +283,15 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 18, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 19, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 18 {
+        if identity.schemaVersion < 19 {
           identity = PlannerStoreIdentity(
-            schemaVersion: 18, datasetId: identity.datasetId, epochId: identity.epochId,
+            schemaVersion: 19, datasetId: identity.datasetId, epochId: identity.epochId,
             namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -9347,7 +9347,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 18
+      identity.schemaVersion == 19
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -9367,7 +9367,7 @@ public actor Planner {
       return nativeContainer.container
     }
     nativeContainer = nil
-    let schema = Schema(versionedSchema: PlannerSchemaV18.self)
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
     let container = try ModelContainer(
@@ -9406,7 +9406,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...18).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...19).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

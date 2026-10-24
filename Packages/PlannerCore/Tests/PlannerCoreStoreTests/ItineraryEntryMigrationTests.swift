@@ -11,8 +11,7 @@ struct ItineraryEntryMigrationTests {
     #endif
     let fixture = try #require(
       bundle.url(forResource: "SchemaV11", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -86,7 +85,7 @@ struct ItineraryEntryMigrationTests {
           namespaceId: manifest.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
     #expect(checkpoint == 12)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(current.content == before.content)
     #expect(current.fieldHashes == before.fieldHashes)
     #expect(current.progress.doneCount == 1)

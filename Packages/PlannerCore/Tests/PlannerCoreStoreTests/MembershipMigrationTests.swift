@@ -13,8 +13,7 @@ struct MembershipMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV6", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -144,7 +143,7 @@ struct MembershipMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(historical.portableData == before.portableData)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(updatedNamespaces.first?.preparedProposals.isEmpty == true)
     for original in originalLists where original.source != list {
       guard

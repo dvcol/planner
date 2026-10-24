@@ -11,8 +11,7 @@ struct ManualContainerEstimateMigrationTests {
     #endif
     let fixture = try #require(
       bundle.url(forResource: "SchemaV14", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -126,7 +125,7 @@ struct ManualContainerEstimateMigrationTests {
     #expect(edited.state.archived == listRead.state.archived)
     #expect(edited.state.globalDone == listRead.state.globalDone)
     #expect(checkpoint == manifest.checkpoint + 1)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(oldAfter.portableData == historical.portableData)
   }
 

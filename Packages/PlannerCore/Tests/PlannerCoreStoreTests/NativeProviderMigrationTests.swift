@@ -11,12 +11,7 @@ struct NativeProviderMigrationTests {
     #endif
     let fixture = try #require(
       bundle.url(forResource: "SchemaV17", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory
-      .appendingPathComponent("PlannerNativeProviderMigrationTests", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    try FileManager.default.createDirectory(
-      at: directory.deletingLastPathComponent(), withIntermediateDirectories: true)
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let metadata = try #require(
       JSONSerialization.jsonObject(
@@ -68,7 +63,7 @@ struct NativeProviderMigrationTests {
         request: .acknowledgedSnapshot(
           namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 19)
     let graph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
     let recoveryGraph = try #require(
       JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])

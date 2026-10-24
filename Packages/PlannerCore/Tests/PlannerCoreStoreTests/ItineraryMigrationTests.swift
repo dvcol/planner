@@ -11,8 +11,7 @@ struct ItineraryMigrationTests {
     #endif
     let fixture = try #require(
       fixtureBundle.url(forResource: "SchemaV10", withExtension: nil, subdirectory: "Fixtures"))
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     try FileManager.default.copyItem(at: fixture, to: directory)
     let manifest = try JSONDecoder().decode(
       Manifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
@@ -105,7 +104,7 @@ struct ItineraryMigrationTests {
     #expect(itineraryRead.content.title == "Tokyo")
     #expect(Set(itineraryRead.labels.map(\.name)) == ["Food", "Rain"])
     #expect(itineraryRead.progress.state == .empty)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(
       recovery.decodedBackup.backup.sources.filter { $0.kind == .itinerary }.map(\.id) == [
