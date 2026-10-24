@@ -1,0 +1,67 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 18,
+      "passedTests" : 658,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerCore · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1792832172.996,
+  "passedTests" : 236,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792831887.257,
+  "statistics" : [
+    {
+      "subtitle" : "536 test runs",
+      "title" : "98 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Issue recorded: Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: D4F284FE-BF42-4AB9-BFD1-58D06C257FC2, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+      "targetName" : "PlannerCoreStoreTests",
+      "testIdentifier" : 105,
+      "testIdentifierString" : "NativeImportCompetingValuesTests/overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportCompetingValuesTests/overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)",
+      "testName" : "overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)"
+    },
+    {
+      "failureText" : "Issue recorded: Retain the applied item projection when its recovery write fails: PlannerOperationResult(operationId: 3CDC82D9-E836-4894-9A4C-1EC373FE55C4, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+      "targetName" : "PlannerCoreStoreTests",
+      "testIdentifier" : 104,
+      "testIdentifierString" : "NativeImportCompetingValueKindsTests/overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportCompetingValueKindsTests/overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)",
+      "testName" : "overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)"
+    }
+  ],
+  "title" : "Test - PlannerCore",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "20% of duration",
+      "text" : "6 longest test runs with outlier durations exceeding 1.78s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 238
+}

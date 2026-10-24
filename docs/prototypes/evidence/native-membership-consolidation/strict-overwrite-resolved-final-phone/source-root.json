@@ -1,0 +1,14 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "6194bb12dadc53fc28c321701db710d82b5d524b",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportEncoding.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMembershipHistory.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/strict-overwrite-fingerprint-v3.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportOwnedRemovalTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipCommandEvidenceTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipConsolidationTests.swift"
+  ]
+}

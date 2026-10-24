@@ -353,7 +353,9 @@ extension PlannerPortableBackup {
 func plannerImportDigest(
   incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
   identity: PlannerStoreIdentity, restoreDeletedData: Bool = false,
-  recoverySelection: PlannerRecoverySelection? = nil
+  recoverySelection: PlannerRecoverySelection? = nil,
+  resolvedBindings: [PlannerBoundIdentity]? = nil,
+  membershipEvidence: [PlannerPortableMembershipProvenance]? = nil
 ) -> String {
   let bindings = incoming.backup.sources.map(\.importBinding) + incoming.externalBindings
   var command: [String: PlannerCanonicalValue] = [
@@ -381,12 +383,15 @@ func plannerImportDigest(
     "command": .record(command),
     "datasetId": .identity(identity.datasetId),
     "ownershipBinding": .string(identity.ownershipBinding),
-    "resolvedBindings": .identitySet(Set(bindings).map(\.importCanonicalValue)),
+    "resolvedBindings": .identitySet(
+      resolvedBindings?.map(\.canonicalValue) ?? Set(bindings).map(\.importCanonicalValue)),
     "reviewedCurrentData": current.backup.importCanonicalValue,
   ]
-  if incoming.backup.usesMembershipProvenanceFormat {
+  if membershipEvidence != nil || incoming.backup.usesMembershipProvenanceFormat {
     fields["resolvedMembershipEvidence"] = .ordered(
-      incoming.backup.resolvedMembershipProvenance.map(\.operationCanonicalValue))
+      plannerSortedMembershipEvidence(
+        membershipEvidence ?? incoming.backup.resolvedMembershipProvenance
+      ).map(\.operationCanonicalValue))
     return plannerDigest(
       Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 3])
         + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v3:")

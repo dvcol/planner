@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.5583e-05"/>
+    <testsuite name="TestResults" errors="0" tests="9" failures="0" skipped="0" time="3.657628875">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem(incomingClosure:)" time="2.986542041"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)" time="3.657198416"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()" time="2.891134291"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)" time="2.891268"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="3.034441959"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="legacyMoveReceiptReplaysBeforeCurrentTargetResolutionAndKeepsItsDigest()" time="3.030237584"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="legacyRestorationImportReceiptKeepsItsVersionTwoFingerprint()" time="3.011526458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="ordinaryReAddRetainsItsOriginalObservationBasisForReplay()" time="2.891137375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="overwriteRetainsRemovedMembershipBasisAndReplaysItsFrozenFingerprint()" time="3.121664792"/>
+    </testsuite>
+</testsuites>

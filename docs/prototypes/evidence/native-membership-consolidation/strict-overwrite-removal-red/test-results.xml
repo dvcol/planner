@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00017875"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="4" skipped="0" time="0.134153958">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem()" time="0.133740292">
+            <failure message="Expectation failed: removed.backup.membershipRemovals.count == 1 (error)"/>
+            <failure message="Expectation failed: removed.backup.membershipProvenance.contains { binding in
+        binding.membershipId == originalIdentifier &amp;&amp; binding.list.reference == list
+          &amp;&amp; binding.item.reference == item &amp;&amp; binding.observedRemovalIds.isEmpty
+      } (error)"/>
+            <failure message="Expectation failed: removed.backup.membershipRemovals.first?.deletionId == localMarker?.deletionId (error)"/>
+            <failure message="Expectation failed: contents.matchingCount == 0 &amp;&amp; inbox.matchingCount == 1 (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.1375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="10" failures="0" skipped="0" time="5.459828208999999">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="legacyMoveReceiptReplaysBeforeCurrentTargetResolutionAndKeepsItsDigest()" time="5.06656275"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="overwriteRetainsRemovedMembershipBasisAndReplaysItsFrozenFingerprint()" time="5.199913542"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()" time="5.062542"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="legacyRestorationImportReceiptKeepsItsVersionTwoFingerprint()" time="5.071150833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="ordinaryReAddRetainsItsOriginalObservationBasisForReplay()" time="4.925990709"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportCompetingValuesTests" name="overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)" time="5.267782375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportCompetingValueKindsTests" name="overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)" time="5.404218958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()" time="4.92578825"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)" time="5.459363124999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)" time="4.926095791000001"/>
+    </testsuite>
+</testsuites>

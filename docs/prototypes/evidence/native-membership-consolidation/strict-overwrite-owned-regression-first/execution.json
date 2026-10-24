@@ -1,0 +1,38 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 4.789,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 1.931951959,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 1.931648916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 2.56928025,
+      "failures": [
+        "Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)",
+        "Expectation failed: markers.count == originalMarkers.count + 1 (error)",
+        "Expectation failed: markers.count == originalMarkers.count + 1 (error)",
+        "Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)",
+        "Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)",
+        "Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,225 @@
+[
+  {
+    "phase": "strict-overwrite-compatibility-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 26.45,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 9,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-evidence-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 123.099,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-evidence-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 6.223,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 0,
+    "failedFunctions": 0,
+    "issues": 0,
+    "note": "Initial test source did not compile. The separate evidence-runtime-red phase establishes the behavioral failure."
+  },
+  {
+    "phase": "strict-overwrite-evidence-runtime-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 7.972,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 1,
+    "issues": 4
+  },
+  {
+    "phase": "strict-overwrite-final-adapter-mac",
+    "stages": {
+      "build-for-testing": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 148.463,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-overwrite-final-adapter-mac-build-for-testing.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "fixture-build": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 35.264,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-overwrite-final-adapter-mac-fixture-build.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "test-without-building": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 5.761,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-overwrite-final-adapter-mac-test-without-building.xcresult",
+        "sqliteUnlinkWarnings": 0
+      }
+    }
+  },
+  {
+    "phase": "strict-overwrite-final-mac",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 40.465,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 238,
+    "failedFunctions": 2,
+    "issues": 18
+  },
+  {
+    "phase": "strict-overwrite-final-phone",
+    "mobileExecution": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemWindow-strict-overwrite-final-phone.xcresult"
+    }
+  },
+  {
+    "phase": "strict-overwrite-foreign-closure-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 14.316,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-foreign-closure-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 11.939,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 1,
+    "issues": 4
+  },
+  {
+    "phase": "strict-overwrite-owned-regression",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 1.132,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 0,
+    "failedFunctions": 0,
+    "issues": 0,
+    "note": "Compiler cache sandbox access failed before tests; the approved local retry is recorded separately."
+  },
+  {
+    "phase": "strict-overwrite-owned-regression-first",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 4.789,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 3,
+    "failedFunctions": 1,
+    "issues": 6
+  },
+  {
+    "phase": "strict-overwrite-owned-regression-local",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 10.956,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 3,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-removal-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 13.59,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-removal-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 12.912,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 1,
+    "issues": 4
+  },
+  {
+    "phase": "strict-overwrite-resolved-bindings-first",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 7.391,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 10,
+    "failedFunctions": 2,
+    "issues": 18,
+    "note": "The edit preflight failed before changing source. This repeated the previous failing candidate unchanged."
+  },
+  {
+    "phase": "strict-overwrite-resolved-bindings-fixed",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 15.679,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 10,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-resolved-final-mac",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 41.675,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 238,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "strict-overwrite-resolved-final-phone",
+    "mobileExecution": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemWindow-strict-overwrite-resolved-final-phone.xcresult"
+    }
+  }
+]

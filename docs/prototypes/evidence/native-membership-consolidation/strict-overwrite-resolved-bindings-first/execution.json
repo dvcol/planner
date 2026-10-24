@@ -1,0 +1,100 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.391,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 4.96253075,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 4.198188209,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)",
+      "className": "PlannerCoreStoreTests.NativeImportOwnedRemovalTests",
+      "seconds": 4.198157791,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "legacyRestorationImportReceiptKeepsItsVersionTwoFingerprint()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 4.403269792,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "legacyMoveReceiptReplaysBeforeCurrentTargetResolutionAndKeepsItsDigest()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 4.408682042,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteRetainsRemovedMembershipBasisAndReplaysItsFrozenFingerprint()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 4.4792275,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReAddRetainsItsOriginalObservationBasisForReplay()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 4.197788333,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "strictRemoveUsesTheFrozenVersionThreeFingerprintAndPreparedBindings()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 4.402995167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)",
+      "className": "PlannerCoreStoreTests.NativeImportCompetingValueKindsTests",
+      "seconds": 4.198158375,
+      "failures": [
+        "Issue recorded (error): Retain the applied list projection when its recovery write fails: PlannerOperationResult(operationId: D8086038-3718-440B-90AC-59E7E85BE63D, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied item projection when its recovery write fails: PlannerOperationResult(operationId: 54A8DD6A-D813-4795-8B96-26E0A455437C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied item projection when its recovery write fails: PlannerOperationResult(operationId: 601AF490-CF1A-475C-BF80-34057D7902FD, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied item projection when its recovery write fails: PlannerOperationResult(operationId: CF11A714-15E8-41A9-AB62-EBDAD4A8CCB4, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied list projection when its recovery write fails: PlannerOperationResult(operationId: 6BFAF56C-5FDF-4FDD-86C4-FA4BF9BE5ABD, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied item projection when its recovery write fails: PlannerOperationResult(operationId: E44DB5E4-9946-47F6-BCD2-0BE5932C5C8E, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied item projection when its recovery write fails: PlannerOperationResult(operationId: AB75C598-BA32-4130-97F5-DF7C141F065A, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied list projection when its recovery write fails: PlannerOperationResult(operationId: 8651C18B-5FC5-4F53-A1C7-C2E8A5FA2E5A, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied list projection when its recovery write fails: PlannerOperationResult(operationId: 5AA60AFE-BBCA-4788-B283-E2946A28D2BD, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Retain the applied list projection when its recovery write fails: PlannerOperationResult(operationId: BA12DD9B-5DA1-416C-AF4B-C407636D0A66, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    },
+    {
+      "name": "overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)",
+      "className": "PlannerCoreStoreTests.NativeImportCompetingValuesTests",
+      "seconds": 4.200158875,
+      "failures": [
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: CCE5F597-0F1E-4555-A78F-DFDB82801D77, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: 61306B33-BD5A-44B8-A98D-3DA404D1C669, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: A10FD2EC-5237-41FE-A8F8-49044BD0EDF3, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: 2D715B44-A057-4DFF-A7D8-A876042B2BAD, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: BCA11672-285B-4C29-92AE-57641DBC836A, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: CAD774C4-D2AD-4835-A0AE-2C52978D9F10, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: 2DDD61A1-DFE3-4C9A-AD43-31588E51187C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): Apply the reviewed values and Tour without admitting D or G: PlannerOperationResult(operationId: 422853A1-674E-4310-BA5A-287FC3D425F9, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: nil, message: \"An import changes retained membership observations.\", details: nil)), associationUndoSnapshot: nil)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

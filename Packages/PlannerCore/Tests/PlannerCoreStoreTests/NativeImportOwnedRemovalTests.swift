@@ -158,17 +158,45 @@ struct NativeImportOwnedRemovalTests {
             guard let actualTarget = $0["target"] as? [String: Any] else { return false }
             return NSDictionary(dictionary: actualTarget).isEqual(to: target)
           })
-        #expect(markers.count == originalMarkers.count + 1)
-        #expect(Set(closure.keys) == ["deletionId", "operationId", "target", "closedFamilyId"])
-        let expectedOperationIdentifier: String
-        if explicitClosure {
-          expectedOperationIdentifier = "00000000-0000-4000-8000-000000000995"
+        var expectedGraph = expected
+        if group == "membership" {
+          #expect(markers.count == originalMarkers.count + (explicitClosure ? 2 : 1))
+          let localClosure = try #require(
+            markers.first { $0["operationId"] as? String == operationIdentifier.uuidString })
+          #expect(
+            Set(localClosure.keys) == ["deletionId", "operationId", "target", "closedFamilyId"])
+          #expect(
+            NSDictionary(dictionary: try #require(localClosure["target"] as? [String: Any]))
+              .isEqual(to: target))
+          let removed = try #require(
+            (original["memberships"] as? [[String: Any]])?.first)
+          expectedGraph["membershipProvenance"] = [
+            [
+              "membershipId": try #require(removed["id"]),
+              "membershipLifetimeId": try #require(removed["lifetimeId"]),
+              "list": try #require(removed["list"]), "item": try #require(removed["item"]),
+              "observedRemovalIds": [String](),
+            ]
+          ]
+          expectedGraph["membershipRemovals"] = [
+            ["deletionId": try #require(localClosure["deletionId"])]
+          ]
+          if explicitClosure {
+            #expect(closure["operationId"] as? String == "00000000-0000-4000-8000-000000000995")
+          }
         } else {
-          expectedOperationIdentifier = operationIdentifier.uuidString
+          #expect(markers.count == originalMarkers.count + 1)
+          #expect(Set(closure.keys) == ["deletionId", "operationId", "target", "closedFamilyId"])
+          let expectedOperationIdentifier: String
+          if explicitClosure {
+            expectedOperationIdentifier = "00000000-0000-4000-8000-000000000995"
+          } else {
+            expectedOperationIdentifier = operationIdentifier.uuidString
+          }
+          #expect(closure["operationId"] as? String == expectedOperationIdentifier)
         }
-        #expect(closure["operationId"] as? String == expectedOperationIdentifier)
         actual["deletionMarkers"] = originalMarkers
-        #expect(NSDictionary(dictionary: actual).isEqual(to: expected))
+        #expect(NSDictionary(dictionary: actual).isEqual(to: expectedGraph))
       }
       let reopened = Planner(configuration: configuration)
       guard case .ready(let reopenedSession) = await reopened.bootstrap(),

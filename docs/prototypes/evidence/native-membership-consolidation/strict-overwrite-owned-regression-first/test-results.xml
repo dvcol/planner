@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.1791e-05"/>
+    <testsuite name="TestResults" errors="0" tests="3" failures="6" skipped="0" time="2.569685667">
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)" time="1.931951959"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()" time="1.931648916"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)" time="2.56928025">
+            <failure message="Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)"/>
+            <failure message="Expectation failed: markers.count == originalMarkers.count + 1 (error)"/>
+            <failure message="Expectation failed: markers.count == originalMarkers.count + 1 (error)"/>
+            <failure message="Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)"/>
+            <failure message="Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)"/>
+            <failure message="Expectation failed: NSDictionary(dictionary: actual).isEqual(to: expected) (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

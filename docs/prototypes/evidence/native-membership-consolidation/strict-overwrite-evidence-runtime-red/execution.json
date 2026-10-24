@@ -1,0 +1,22 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.972,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "overwriteRetainsRemovedMembershipBasisAndReplaysItsFrozenFingerprint()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.102889875,
+      "failures": [
+        "Expectation failed: receipt[\"payloadDigest\"] as? String == literal[\"payloadDigest\"] as? String (error)",
+        "Expectation failed: preparation[\"formatVersion\"] as? Int == 2 (error)",
+        "Expectation failed: preparation[\"payloadDigest\"] as? String == literal[\"payloadDigest\"] as? String (error)",
+        "Expectation failed: preparation[\"resolvedMembershipEvidence\"] (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,22 @@
+{
+  "functionsPerPlatform": 238,
+  "invocationsPerPlatform": 676,
+  "suitesPerPlatform": 83,
+  "matchedCoreInputs": 808,
+  "fullPhoneInputs": 1147,
+  "actualCoreTestProductsPerPlatform": 2,
+  "unchangedFrozenFixtureInputs": 513,
+  "newIndependentFingerprintFixtureInputs": 1,
+  "unchangedModelSourceFiles": 19,
+  "strictFormatFiles": 7,
+  "realMacHTTPFunctions": 6,
+  "macAppShareFixtureBuildsPassed": true,
+  "competingValueTestExpectationsUnchanged": true,
+  "removedClosedDisposableStores": 1298,
+  "newFingerprint": "sha256-payload-v3:96b81ccd106cdb596ff00fbb5c40d1939281eae8a4dd9e800d3e41cade9f16a7",
+  "legacyRestorationFingerprint": "sha256-payload-v2:287439f4fb9ec1a01410bbb65122c0bd4047170e7740dcd8047d420930244b5b",
+  "preparationOnlyInputRemainsUnverified": true,
+  "actualProcessInterruptionQualified": false,
+  "nativeUIPhysicalCloudOrSystemInvocationQualified": false,
+  "allMembershipCommandsQualified": false
+}

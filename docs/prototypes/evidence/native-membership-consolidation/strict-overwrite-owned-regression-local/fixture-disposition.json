@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/588CA03E-3B0B-4CE7-9116-D4F1288935D4",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A384CFC5-A3DB-4ECD-8129-F1FBECD9E223",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/85ACDE56-0D9A-42A4-9C3E-88DC69C91887",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/1BD992ED-D4AD-44B4-8C6A-0FF503EEF5EC",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/421E30C9-95B6-4195-8D7C-8E6F00403179",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/67ECD0A4-B3FC-4D15-8C91-A74880AC120D",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AED3CF46-3B04-4193-A433-8DA587CFCF22",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/14FE4D57-14D2-4ECB-A41F-9BF26CEA23D1",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/57C5B784-2043-461C-8BD2-56DBE9528F74",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/ABA86390-456C-4117-9251-EC5000AF3E72",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A69B6030-8BEA-4142-BAC2-A80C987B76F0",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/1C927238-8A3D-4AF4-83FE-6888A76C71D8",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/6641202B-826F-4440-A38B-B0319E2BA3C1",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/2FDBA7E0-BBF2-453C-B71F-91645403E09F",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/8C2D7662-3885-451B-9806-2F6CDB67B2CE",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/89C1BEB8-E6E5-4971-8EFE-7F89867DF788",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/5F467819-4A92-41BA-AB3A-6B4C59CAFFF4",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/C130CA5F-B55A-40E2-BF33-D88174C062B6",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AA74993F-0D1E-489A-AD06-3F5D22AFA746",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/DD17EECA-EC4D-4CA8-AA65-B24EF2AAB106",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/B2162842-E0D0-4337-B47D-C3E3BA513578",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/EF92428F-F1D3-4D8B-8659-35C87C292E93",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/15E51CBB-3826-48A1-A259-7F00B34B858E",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/3AB80117-08CF-4632-97D6-AE0C98C1DAF8",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/FF8ABCD2-C8D8-461A-97FB-C13FB490C82C",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/96DAF71F-A44A-47FD-B93C-4DFBEAB386AC",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/7300A7DC-EE2F-4A60-8A42-ED87199D1A39",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/5061E820-670B-423D-8F06-7E19827A6436",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A7526296-2EAB-4E8A-A90A-BE98E05529C8",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/B210AA0F-E25E-4ADB-B215-685FE1FD96DD",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/32769CB3-9057-4F15-AE71-463CB02C5F98"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "57c633f4c0d7bc532794c3f1607e7e81da0abb39bd8606da3fea3ff9df92b0c3",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 31,
+  "hostProcessIdentifiers": [
+    1843
+  ]
+}

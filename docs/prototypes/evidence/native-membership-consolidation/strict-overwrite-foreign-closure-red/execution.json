@@ -1,0 +1,22 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 11.939,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem(incomingClosure:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.193505,
+      "failures": [
+        "Expectation failed: removed.backup.membershipRemovals.count == 1 (error)",
+        "Expectation failed: removed.backup.membershipProvenance.contains { binding in         binding.membershipId == originalIdentifier && binding.list.reference == list           && binding.item.reference == item && binding.observedRemovalIds.isEmpty       } (error)",
+        "Expectation failed: localMarker != nil (error)",
+        "Expectation failed: contents.matchingCount == 0 && inbox.matchingCount == 1 (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}
