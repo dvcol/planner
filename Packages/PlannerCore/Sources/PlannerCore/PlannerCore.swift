@@ -1660,14 +1660,8 @@ public actor Planner {
         appearance, itineraryId: itineraryId, entryId: entryId, datasetId: datasetId,
         context: context)
     case .listMembership(let listId, let membershipId):
-      var descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
-        predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
-      descriptor.fetchLimit = 2
-      let records = try context.fetch(descriptor)
-      guard records.count == 1, let membership = records.first else {
-        throw PlannerFailure(
-          "missingReference", "The selected List appearance is missing or unresolved.")
-      }
+      let membership = try resolveMembership(
+        listId: listId, membershipId: membershipId, context: context)
       let binding = try membership.value()
       let itemId = binding.item.id
       var itemDescriptor = FetchDescriptor<PlannerSchemaV18.Item>(
@@ -5879,12 +5873,14 @@ public actor Planner {
       if $0.rank != $1.rank { return $0.rank < $1.rank }
       return $0.id.uuidString < $1.id.uuidString
     }
-    let insertionIndex = try associationInsertionIndex(placement, in: ordered)
+    let resolvedPlacement = try resolveMembershipPlacement(
+      placement, listId: listId, context: context)
+    let insertionIndex = try associationInsertionIndex(resolvedPlacement, in: ordered)
     var bindings = [
       PlannerBoundIdentity(kind: "item", id: source.id, lifetimeId: source.lifetimeId),
       PlannerBoundIdentity(kind: "list", id: owner.id, lifetimeId: owner.lifetimeId),
     ]
-    switch placement {
+    switch resolvedPlacement {
     case .before(let identifier), .after(let identifier):
       if let anchor = ordered.first(where: { $0.id == identifier }) {
         bindings.append(
@@ -6043,13 +6039,8 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
-      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
-    descriptor.fetchLimit = 2
-    let selected = try context.fetch(descriptor)
-    guard selected.count == 1, let record = selected.first else {
-      throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
-    }
+    let record = try resolveMembership(
+      listId: listId, membershipId: membershipId, context: context)
     let before = try record.value()
     let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>())
     let lists = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>())
@@ -6087,7 +6078,7 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    let memberships = try membershipSnapshots(context).filter { $0.id != membershipId }
+    let memberships = try membershipSnapshots(context).filter { $0.id != before.id }
     let ownerSnapshot = try owner.value()
     let updatedAt = Date()
     let itemSnapshots = try items.map { try $0.value() }
@@ -6608,13 +6599,8 @@ public actor Planner {
         "invalidInput", "Use reorder to change position in the same List.",
         propertyPath: "/command/destinationListId")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
-      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
-    descriptor.fetchLimit = 2
-    let selected = try context.fetch(descriptor)
-    guard selected.count == 1, let record = selected.first else {
-      throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
-    }
+    let record = try resolveMembership(
+      listId: listId, membershipId: membershipId, context: context)
     let before = try record.value()
     let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>())
     let lists = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>())
@@ -6641,7 +6627,9 @@ public actor Planner {
       if $0.rank != $1.rank { return $0.rank < $1.rank }
       return $0.id.uuidString < $1.id.uuidString
     }
-    let insertionIndex = try associationInsertionIndex(placement, in: ordered)
+    let resolvedPlacement = try resolveMembershipPlacement(
+      placement, listId: destinationListId, context: context)
+    let insertionIndex = try associationInsertionIndex(resolvedPlacement, in: ordered)
     let existing = ordered.first {
       $0.item.id == before.item.id && $0.item.lifetimeId == before.item.lifetimeId
     }
@@ -6650,7 +6638,7 @@ public actor Planner {
       bindings.append(
         PlannerBoundIdentity(kind: "membership", id: existing.id, lifetimeId: existing.lifetimeId))
     }
-    switch placement {
+    switch resolvedPlacement {
     case .before(let identifier), .after(let identifier):
       if let anchor = ordered.first(where: { $0.id == identifier }) {
         bindings.append(
@@ -6669,7 +6657,7 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    memberships.removeAll { $0.id == membershipId }
+    memberships.removeAll { $0.id == before.id }
     let added: MembershipSnapshot?
     let destinationReference: PlannerReferenceRead
     if let existing {
@@ -6891,13 +6879,8 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
-      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
-    descriptor.fetchLimit = 2
-    let selected = try context.fetch(descriptor)
-    guard selected.count == 1, let record = selected.first else {
-      throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
-    }
+    let record = try resolveMembership(
+      listId: listId, membershipId: membershipId, context: context)
     let before = try record.value()
     let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>())
     let lists = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>())
@@ -6909,9 +6892,11 @@ public actor Planner {
       throw PlannerFailure(
         "missingReference", "The membership's Item or List lifetime is unresolved.")
     }
-    switch placement {
+    let resolvedPlacement = try resolveMembershipPlacement(
+      placement, listId: listId, context: context)
+    switch resolvedPlacement {
     case .before(let identifier), .after(let identifier):
-      guard identifier != membershipId else {
+      guard identifier != before.id else {
         throw PlannerFailure(
           "invalidInput", "A membership cannot use itself as its placement anchor.",
           propertyPath: "/command/placement/associationId")
@@ -6923,16 +6908,16 @@ public actor Planner {
       if $0.rank != $1.rank { return $0.rank < $1.rank }
       return $0.id.uuidString < $1.id.uuidString
     }
-    let remaining = ordered.filter { $0.id != membershipId }
-    let insertionIndex = try associationInsertionIndex(placement, in: remaining)
+    let remaining = ordered.filter { $0.id != before.id }
+    let insertionIndex = try associationInsertionIndex(resolvedPlacement, in: remaining)
     var desiredOrder = remaining.map(\.id)
-    desiredOrder.insert(membershipId, at: insertionIndex)
+    desiredOrder.insert(before.id, at: insertionIndex)
     let changed = desiredOrder != ordered.map(\.id)
     var bindings = [
       PlannerBoundIdentity(kind: "membership", id: before.id, lifetimeId: before.lifetimeId),
       before.list, before.item,
     ]
-    switch placement {
+    switch resolvedPlacement {
     case .before(let identifier), .after(let identifier):
       if let anchor = remaining.first(where: { $0.id == identifier }) {
         bindings.append(
@@ -6956,7 +6941,7 @@ public actor Planner {
     if changed {
       let rank = try associationInsertionRank(
         at: insertionIndex, ordered: remaining, associations: &memberships)
-      guard let selectedIndex = memberships.firstIndex(where: { $0.id == membershipId }) else {
+      guard let selectedIndex = memberships.firstIndex(where: { $0.id == before.id }) else {
         throw PlannerFailure("missingReference", "The selected membership is missing.")
       }
       memberships[selectedIndex].rank = rank
@@ -7049,6 +7034,93 @@ public actor Planner {
     return plannerDigest(bytes, prefix: "sha256-payload-v1:")
   }
 
+  private func resolveMembershipPlacement(
+    _ placement: PlannerPlacement, listId: UUID, context: ModelContext
+  ) throws -> PlannerPlacement {
+    let identifier: UUID
+    switch placement {
+    case .first, .last: return placement
+    case .before(let anchor), .after(let anchor): identifier = anchor
+    }
+    let resolved: PlannerSchemaV18.Membership
+    do {
+      resolved = try resolveMembership(listId: listId, membershipId: identifier, context: context)
+    } catch let failure as PlannerFailure where failure.code == "missingReference" {
+      throw PlannerFailure(
+        "missingReference", "The placement anchor is not in the destination container.",
+        propertyPath: "/command/placement/associationId")
+    }
+    guard let canonicalIdentifier = resolved.id else {
+      throw PlannerFailure("readUnavailable", "The resolved membership has no identity.")
+    }
+    switch placement {
+    case .before: return .before(associationId: canonicalIdentifier)
+    case .after: return .after(associationId: canonicalIdentifier)
+    case .first, .last: return placement
+    }
+  }
+
+  private func resolveMembership(
+    listId: UUID, membershipId: UUID, context: ModelContext
+  ) throws -> PlannerSchemaV18.Membership {
+    let missing = PlannerFailure(
+      "missingReference", "The selected membership is missing or unresolved.")
+    var descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
+      predicate: #Predicate { $0.id == membershipId })
+    descriptor.fetchLimit = 2
+    let direct = try context.fetch(descriptor)
+    if !direct.isEmpty {
+      guard direct.count == 1, let record = direct.first, record.listId == listId else {
+        throw missing
+      }
+      return record
+    }
+    let lineage = try PlannerNativeLineage(context: context)
+    let aliases = lineage.contextAliases.filter {
+      $0.context.importContextIdentities.contains {
+        $0.kind == .membership && $0.id == membershipId
+      }
+    }
+    guard !aliases.isEmpty else { throw missing }
+    let backup = try maintenanceSnapshot(context).validated().backup
+    let graph = PlannerImportGraph(backup: backup)
+    let requiredRemovals = try graph.validatedMembershipRemovalAuthority()
+    var originalBindings: Set<PlannerPortableBoundIdentity> = []
+    var canonicalBindings: Set<PlannerPortableBoundIdentity> = []
+    for alias in aliases {
+      guard
+        let original = alias.context.importContextIdentities.first(where: {
+          $0.kind == .membership
+        }),
+        let canonical = alias.canonicalContext.importContextIdentities.first(where: {
+          $0.kind == .membership
+        }), !graph.isClosed(original), !graph.isClosed(canonical),
+        let binding = graph.retainedMembershipProvenance(for: original),
+        binding.list.id == listId,
+        (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds),
+        let target = backup.memberships.first(where: {
+          $0.id == canonical.id && $0.lifetimeId == canonical.lifetimeId
+        }), target.baselineProvenance.pair == binding.pair,
+        let targetBinding = graph.membershipProvenance(for: canonical),
+        Set(targetBinding.observedRemovalIds) == Set(binding.observedRemovalIds)
+      else { continue }
+      originalBindings.insert(original)
+      canonicalBindings.insert(canonical)
+    }
+    guard originalBindings.count == 1, canonicalBindings.count == 1,
+      let canonical = canonicalBindings.first
+    else { throw missing }
+    let identifier = canonical.id
+    var canonicalDescriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
+      predicate: #Predicate { $0.id == identifier })
+    canonicalDescriptor.fetchLimit = 2
+    let records = try context.fetch(canonicalDescriptor)
+    guard records.count == 1, let record = records.first,
+      record.lifetimeId == canonical.lifetimeId, record.listId == listId
+    else { throw missing }
+    return record
+  }
+
   private func resolveExpandedAppearance(
     itineraryId: UUID, listEntryId: UUID, membershipId: UUID,
     context: ModelContext
@@ -7059,17 +7131,13 @@ public actor Planner {
       })
     entryDescriptor.fetchLimit = 2
     let entries = try context.fetch(entryDescriptor)
-    var membershipDescriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
-      predicate: #Predicate { $0.id == membershipId })
-    membershipDescriptor.fetchLimit = 2
-    let memberships = try context.fetch(membershipDescriptor)
-    guard entries.count == 1, let entry = entries.first, memberships.count == 1,
-      let membership = memberships.first
-    else {
+    guard entries.count == 1, let entry = entries.first else {
       throw PlannerFailure(
         "missingReference", "The expanded itinerary appearance is missing or unresolved.")
     }
     let entryBinding = try entry.value()
+    let membership = try resolveMembership(
+      listId: entryBinding.source.id, membershipId: membershipId, context: context)
     let membershipBinding = try membership.value()
     guard
       entryBinding.source.id == membershipBinding.list.id
@@ -8563,14 +8631,8 @@ public actor Planner {
       listId = ownerIdentifier
       membershipId = associationIdentifier
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
-      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
-    descriptor.fetchLimit = 2
-    let selected = try context.fetch(descriptor)
-    guard selected.count == 1, let record = selected.first else {
-      throw PlannerFailure(
-        "missingReference", "The selected List appearance is missing or unresolved.")
-    }
+    let record = try resolveMembership(
+      listId: listId, membershipId: membershipId, context: context)
     let before = try record.value()
     let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>())
     let lists = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>())
