@@ -1,0 +1,6 @@
+{
+  "producer": "Independent Python literal graph, no Planner encoder or resolver",
+  "fixture": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/retired-expanded-membership-alias-v3.json",
+  "sha256": "346c71ae48afb1a58071a29817d397859f66408fb18636bfa94a8ce826431a23",
+  "expected": "Standalone Done, first List branch Todo, repeated second List branch Done, direct Item stop Todo. Retired M402 contributions remain scoped to each entry lifetime."
+}

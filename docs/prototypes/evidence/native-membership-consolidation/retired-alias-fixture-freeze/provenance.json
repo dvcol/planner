@@ -1,0 +1,6 @@
+{
+  "producer": "Independent Python literal graph, no Planner encoder or resolver",
+  "fixture": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/retired-membership-alias-v3.json",
+  "sha256": "a6156cd7c2c9e323a8ad560f42fe5bd24cfb0f6c66c67b9f08bfb09fc67bda3f",
+  "expected": "M401/841 remains live at rank1024 and local Done. Retired M402/842 contributes initial Done through alias852, without a Remove or strict barrier."
+}

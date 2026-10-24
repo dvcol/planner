@@ -4,6 +4,142 @@ import SwiftData
 import Testing
 
 struct NativeMembershipPortableTests {
+  enum ImportAdmission: String, CaseIterable {
+    case sameLegacyBinding, differentLegacyBindingSkip, differentLegacyBindingOverwrite
+    case conflictingProvenanceSkip, conflictingProvenanceOverwrite
+
+    var mode: PlannerImportMode {
+      switch self {
+      case .differentLegacyBindingSkip, .conflictingProvenanceSkip: .skip
+      default: .overwrite
+      }
+    }
+
+    var rejects: Bool {
+      self == .differentLegacyBindingOverwrite || self == .conflictingProvenanceSkip
+        || self == .conflictingProvenanceOverwrite
+    }
+  }
+
+  @Test(arguments: ImportAdmission.allCases)
+  func importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(
+    scenario: ImportAdmission
+  ) async throws {
+    let originalData = try informedMembershipPortableFixtureData()
+    var expected = try #require(JSONSerialization.jsonObject(with: originalData) as? [String: Any])
+    var incoming = expected
+    var sources = try #require(incoming["sources"] as? [[String: Any]])
+    var content = try #require(sources[0]["content"] as? [String: Any])
+    content["notes"] = "Incoming Hotel notes"
+    sources[0]["content"] = content
+    let independentTag: [String: Any] = [
+      "kind": "tag", "id": "00000000-0000-4000-8000-000000000602",
+      "lifetimeId": "00000000-0000-4000-8000-000000000862",
+      "createdAt": 10.25, "updatedAt": 20.125,
+      "content": ["name": "Rainy day", "color": NSNull(), "iconName": NSNull()],
+      "globalDone": NSNull(), "archived": NSNull(),
+      "contentOrigins": ["name": "independent"],
+    ]
+    sources.append(independentTag)
+    incoming["sources"] = sources
+    if scenario == .conflictingProvenanceSkip || scenario == .conflictingProvenanceOverwrite {
+      var provenance = try #require(incoming["membershipProvenance"] as? [[String: Any]])
+      provenance[1]["observedRemovalIds"] = []
+      incoming["membershipProvenance"] = provenance
+      incoming["membershipRemovals"] = []
+    } else {
+      incoming["formatVersion"] = 2
+      incoming.removeValue(forKey: "membershipProvenance")
+      incoming.removeValue(forKey: "membershipRemovals")
+      if scenario != .sameLegacyBinding {
+        var memberships = try #require(incoming["memberships"] as? [[String: Any]])
+        memberships[0]["id"] = "00000000-0000-4000-8000-000000000406"
+        memberships[0]["lifetimeId"] = "00000000-0000-4000-8000-000000000846"
+        incoming["memberships"] = memberships
+      }
+    }
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let seed) = planner.decodeImport(originalData),
+      case .reviewed(let seedReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: seed, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: seedReview.command,
+          reviewToken: seedReview.reviewToken)
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let decodedResult = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+    guard case .decoded(let decoded) = decodedResult else {
+      Issue.record(
+        "This independently valid backup must reach current-data admission: \(decodedResult)")
+      return
+    }
+    let reviewed = await planner.prepareReview(
+      session: session, command: .applyImport(backup: decoded, mode: scenario.mode))
+    guard case .reviewed(let review) = reviewed else {
+      Issue.record("Preview the complete import before applying it: \(reviewed)")
+      return
+    }
+    let operation = PlannerOperation(
+      operationId: UUID(), session: session, command: review.command,
+      reviewToken: review.reviewToken)
+    let response = await planner.execute(operation)
+    if scenario.rejects {
+      guard case .rejected = response.outcome,
+        case .noReliableEvidence = await planner.operationStatus(
+          session: session, operationId: operation.operationId)
+      else {
+        Issue.record(
+          "Unproven or contradictory authority must reject the whole import: \(response)")
+        return
+      }
+    } else {
+      guard case .applied(let saved, .complete(let checkpoint)) = response.outcome,
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first,
+        case .selected(let recovered) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint)),
+        case .applied(let replayed, .complete(let replayCheckpoint)) =
+          await planner.execute(operation).outcome
+      else {
+        Issue.record(
+          "Admitted data must save and acknowledge without losing authority: \(response)")
+        return
+      }
+      if scenario == .sameLegacyBinding {
+        expected["sources"] = sources
+      } else {
+        var retainedSources = try #require(expected["sources"] as? [[String: Any]])
+        retainedSources.append(independentTag)
+        expected["sources"] = retainedSources
+      }
+      let recoveredGraph = try #require(
+        JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+      #expect(NSDictionary(dictionary: expected).isEqual(to: recoveredGraph))
+      #expect(saved == replayed && checkpoint == replayCheckpoint)
+    }
+    guard case .exported(let after) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    let actual = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
+    if scenario.rejects { #expect(after == before) }
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == after)
+  }
+
   enum InvalidProvenance: String, CaseIterable {
     case missingGroup, unknownField, duplicateBinding, duplicateRemoval, missingMarker,
       missingBinding

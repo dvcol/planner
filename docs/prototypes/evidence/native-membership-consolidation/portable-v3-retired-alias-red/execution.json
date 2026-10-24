@@ -1,0 +1,20 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 9.411,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "retiredMembershipHistorySurvivesImportRecoveryReplayAndReopen(explicitReopen:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipAliasTests",
+      "seconds": 0.01266125,
+      "failures": [
+        "Issue recorded (error): Retained exact provenance must resolve the retired alias: .invalid(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/contextAliases/1/context/membershipId\"), message: \"The completion context has no declared membership lifetime.\", details: nil))",
+        "Issue recorded (error): Retained exact provenance must resolve the retired alias: .invalid(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/contextAliases/1/context/membershipId\"), message: \"The completion context has no declared membership lifetime.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "ac9244bbaa7c7e65b4dfe0b8508b7c39044c3452",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipProvenance.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/retired-membership-alias-v3.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipAliasTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipPortableTests.swift"
+  ]
+}

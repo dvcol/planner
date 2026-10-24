@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000148667"/>
+    <testsuite name="TestResults" errors="0" tests="6" failures="0" skipped="0" time="0.183321666">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddSurvivesNativeImportRecoveryReplayAndReopen()" time="0.159347667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)" time="0.17628175"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="removalObservationsCannotBorrowAnotherItemListPairsAuthority()" time="0.025773042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(scenario:)" time="0.182728541"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="0.025882959"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)" time="0.02806025"/>
+    </testsuite>
+</testsuites>

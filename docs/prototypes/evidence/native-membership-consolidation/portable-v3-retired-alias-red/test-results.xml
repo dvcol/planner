@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.8459e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.012991834">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredMembershipHistorySurvivesImportRecoveryReplayAndReopen(explicitReopen:)" time="0.01266125">
+            <failure message="Issue recorded (error): Retained exact provenance must resolve the retired alias: .invalid(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/contextAliases/1/context/membershipId&quot;), message: &quot;The completion context has no declared membership lifetime.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): Retained exact provenance must resolve the retired alias: .invalid(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/contextAliases/1/context/membershipId&quot;), message: &quot;The completion context has no declared membership lifetime.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.625e-05"/>
+    <testsuite name="TestResults" errors="0" tests="8" failures="1" skipped="0" time="0.218444542">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredAliasesCannotBorrowAnotherPairGenerationOrCanonicalLifetime(scenario:)" time="0.15759925">
+            <failure message="Expectation failed: failure.propertyPath == scenario.path (error)"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredMembershipHistorySurvivesImportRecoveryReplayAndReopen(explicitReopen:fixtureName:)" time="0.218111417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="importPreservesCurrentAuthorityWithoutAdmittingUnawareOrConflictingMemberships(scenario:)" time="0.186733292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="removalObservationsCannotBorrowAnotherItemListPairsAuthority()" time="0.157554458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)" time="0.157486917"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="0.15753375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddSurvivesNativeImportRecoveryReplayAndReopen()" time="0.157593125"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)" time="0.174198083"/>
+    </testsuite>
+</testsuites>
