@@ -1112,11 +1112,13 @@ public actor Planner {
           let prepared = try archive.proposals().contains {
             $0.originalOperationId == operation.operationId
           }
-          if !prepared { try ensureCanonicalMemberships(identity: identity, context: context) }
-          envelope = try archive.latest()
-          guard try archive.incompleteMaintenance(in: context, envelope: envelope).isEmpty else {
-            throw PlannerFailure(
-              "mutationBlocked", "Committed maintenance still needs independent recovery.")
+          if !prepared {
+            try ensureCanonicalMemberships(identity: identity, context: context)
+            envelope = try archive.latest()
+            guard try archive.incompleteMaintenance(in: context, envelope: envelope).isEmpty else {
+              throw PlannerFailure(
+                "mutationBlocked", "Committed maintenance still needs independent recovery.")
+            }
           }
           receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         }

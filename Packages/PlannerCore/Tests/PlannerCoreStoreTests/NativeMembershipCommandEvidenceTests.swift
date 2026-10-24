@@ -12,9 +12,9 @@ struct NativeMembershipCommandEvidenceTests {
       "bulkItinerary",
       "bulkEmptyBranch",
     ].flatMap { scope in [scope, "legacy:" + scope] },
-    [false, true])
+    ["empty", "newer", "maintenance"])
   func savedContextPreparationsStayUnverifiedBeforeResolvingMissingOrNewerTargets(
-    rawScope: String, newerTargets: Bool
+    rawScope: String, environment: String
   ) async throws {
     let legacyPreparation = rawScope.hasPrefix("legacy:")
     let scope: String
@@ -190,7 +190,7 @@ struct NativeMembershipCommandEvidenceTests {
     guard case .ready(let currentSession) = await current.bootstrap() else {
       throw CancellationError()
     }
-    if newerTargets {
+    if environment != "empty" {
       let proposed = try #require(proposal.2["proposedBackup"])
       guard
         case .decoded(let incoming) = current.decodeImport(
@@ -203,22 +203,84 @@ struct NativeMembershipCommandEvidenceTests {
             reviewToken: review.reviewToken)
         ).outcome
       else { throw CancellationError() }
-      _ = try await save(
-        current, session: currentSession,
-        command: .removeMembership(listId: listIdentifier, membershipId: canonicalIdentifier))
-      _ = try await save(
-        current, session: currentSession,
-        command: .addMembership(itemId: hotel.id, listId: listIdentifier, placement: .last))
-      _ = try await save(
-        current, session: currentSession,
-        command: .removeItineraryEntry(itineraryId: itineraryIdentifier, entryId: directEntry))
-      _ = try await save(
-        current, session: currentSession,
-        command: .addItineraryEntry(
-          itineraryId: itineraryIdentifier, source: hotel, placement: .last))
+      if environment == "newer" {
+        _ = try await save(
+          current, session: currentSession,
+          command: .removeMembership(listId: listIdentifier, membershipId: canonicalIdentifier))
+        _ = try await save(
+          current, session: currentSession,
+          command: .addMembership(itemId: hotel.id, listId: listIdentifier, placement: .last))
+        _ = try await save(
+          current, session: currentSession,
+          command: .removeItineraryEntry(itineraryId: itineraryIdentifier, entryId: directEntry))
+        _ = try await save(
+          current, session: currentSession,
+          command: .addItineraryEntry(
+            itineraryId: itineraryIdentifier, source: hotel, placement: .last))
+      }
     }
     let currentNamespace = currentConfiguration.recoveryDirectoryURL.appendingPathComponent(
       namespaceName)
+    if environment == "maintenance" {
+      do {
+        let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+        let container = try ModelContainer(
+          for: schema, migrationPlan: PlannerMigrationPlan.self,
+          configurations: [
+            ModelConfiguration(
+              schema: schema, url: currentConfiguration.storeURL,
+              cloudKitDatabase: .none)
+          ])
+        let nativeContext = ModelContext(container)
+        nativeContext.autosaveEnabled = false
+        let item = try #require(
+          nativeContext.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first { $0.id == hotel.id })
+        let list = try #require(
+          nativeContext.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first {
+            $0.id == listIdentifier
+          })
+        nativeContext.insert(
+          PlannerSchemaV18.Membership(
+            snapshot: .init(
+              id: UUID(uuidString: "00000000-0000-4000-8000-000000000400")!,
+              lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000840")!,
+              list: .init(
+                kind: "list", id: listIdentifier,
+                lifetimeId: try #require(list.lifetimeId)),
+              item: .init(
+                kind: "item", id: hotel.id,
+                lifetimeId: try #require(item.lifetimeId)),
+              rank: 4096, localDone: false), list: list, item: item))
+        try nativeContext.save()
+      }
+      let obstruction = NativeSaveRecoveryObstruction(configuration: currentConfiguration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let waitingIdentifier = UUID()
+      let waiting = await current.execute(
+        .init(
+          operationId: waitingIdentifier, session: currentSession,
+          command: .createTag(content: .init(name: "Must wait for maintenance"))))
+      guard case .rejected(let reason) = waiting.outcome else {
+        Issue.record("Maintenance recovery must leave the new command unapplied: \(waiting)")
+        return
+      }
+      #expect(reason.code == "persistenceFailure")
+      #expect(obstruction.didObstruct && obstruction.failure == nil)
+      try obstruction.restore()
+      guard
+        case .noReliableEvidence = await current.operationStatus(
+          session: currentSession, operationId: waitingIdentifier),
+        case .status(let status) = await current.read(session: currentSession, request: .status),
+        case .known(_, let operations, let maintenance, let mutationBlocked) = status.recovery
+      else { throw CancellationError() }
+      #expect(operations.isEmpty && maintenance.count == 1 && mutationBlocked)
+    }
     var replayData = proposal.1
     if legacyPreparation {
       var unversioned = proposal.2
@@ -271,6 +333,18 @@ struct NativeMembershipCommandEvidenceTests {
     #expect(mismatched.code == "operationPayloadMismatch")
     #expect(before == after)
     #expect(try namespaceFiles() == beforeFiles)
+    if environment == "maintenance" {
+      guard
+        case .rejected(let blocked) = await current.execute(
+          .init(
+            operationId: UUID(), session: currentSession,
+            command: .createTag(content: .init(name: "Still must wait")))
+        )
+        .outcome
+      else { throw CancellationError() }
+      #expect(blocked.code == "mutationBlocked")
+      #expect(try namespaceFiles() == beforeFiles)
+    }
     let reopened = Planner(configuration: currentConfiguration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .unverified(let repeated) = await reopened.execute(
