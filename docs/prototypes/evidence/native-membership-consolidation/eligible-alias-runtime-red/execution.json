@@ -1,0 +1,21 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.549,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "eligibleRetiredMembershipReadsAndCompletesOnlyItsSelectedAppearance(scope:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipAliasTests",
+      "seconds": 0.093968125,
+      "failures": [
+        "Issue recorded (error): A proven eligible alias must resolve its exact appearance: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: nil, message: \"The expanded itinerary appearance is missing or unresolved.\", details: nil))",
+        "Issue recorded (error): A proven eligible alias must resolve its exact appearance: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: nil, message: \"The expanded itinerary appearance is missing or unresolved.\", details: nil))",
+        "Issue recorded (error): A proven eligible alias must resolve its exact appearance: .failed(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: nil, message: \"The selected List appearance is missing or unresolved.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

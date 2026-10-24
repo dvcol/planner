@@ -1,0 +1,26 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.236,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "eligibleAliasesOrganizeTheCanonicalMembershipAndPlacementAnchor(action:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipAliasTests",
+      "seconds": 0.257538083,
+      "failures": [
+        "Issue recorded (error): A proven alias must organize its canonical relationship: PlannerOperationResult(operationId: 7EC332CD-D6AC-4F9D-967A-5D48B0ECD28B, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/command/placement/associationId\"), message: \"The placement anchor is not in the destination container.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): A proven alias must organize its canonical relationship: PlannerOperationResult(operationId: F2D4BD0D-F227-4859-A678-939605C32861, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: nil, message: \"The selected membership is missing or unresolved.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): A proven alias must organize its canonical relationship: PlannerOperationResult(operationId: B3829627-7B49-4932-9512-8D8CDAE0550C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/command/placement/associationId\"), message: \"The placement anchor is not in the destination container.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): A proven alias must organize its canonical relationship: PlannerOperationResult(operationId: 7223FAFD-B0A7-4194-BD08-B4541AE4EC8C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: nil, message: \"The selected membership is missing or unresolved.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): A proven alias must organize its canonical relationship: PlannerOperationResult(operationId: 10A5BC06-7171-455B-AA2B-D9AA5AEC1D91, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: nil, message: \"The selected membership is missing or unresolved.\", details: nil)), associationUndoSnapshot: nil)",
+        "Issue recorded (error): A proven alias must organize its canonical relationship: PlannerOperationResult(operationId: 6A9B2AA1-4C86-49C9-A814-F1B5ACADEF7F, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"missingReference\", propertyPath: Optional(\"/command/placement/associationId\"), message: \"The placement anchor is not in the destination container.\", details: nil)), associationUndoSnapshot: nil)",
+        "Expectation failed: failure.code == \"invalidInput\" (error)",
+        "Expectation failed: failure.propertyPath == \"/command/placement/associationId\" (error)"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

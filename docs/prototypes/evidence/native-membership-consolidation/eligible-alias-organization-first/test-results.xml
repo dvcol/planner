@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.3583e-05"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="0" skipped="0" time="0.42634975">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="eligibleRetiredMembershipReadsAndCompletesOnlyItsSelectedAppearance(scope:)" time="0.391672042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="eligibleAliasesOrganizeTheCanonicalMembershipAndPlacementAnchor(action:)" time="0.42598575"/>
+    </testsuite>
+</testsuites>

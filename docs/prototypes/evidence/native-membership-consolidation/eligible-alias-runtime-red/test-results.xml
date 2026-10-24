@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000164292"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="3" skipped="0" time="0.094383125">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="eligibleRetiredMembershipReadsAndCompletesOnlyItsSelectedAppearance(scope:)" time="0.093968125">
+            <failure message="Issue recorded (error): A proven eligible alias must resolve its exact appearance: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: nil, message: &quot;The expanded itinerary appearance is missing or unresolved.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): A proven eligible alias must resolve its exact appearance: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: nil, message: &quot;The expanded itinerary appearance is missing or unresolved.&quot;, details: nil))"/>
+            <failure message="Issue recorded (error): A proven eligible alias must resolve its exact appearance: .failed(PlannerCore.PlannerFailure(code: &quot;missingReference&quot;, propertyPath: nil, message: &quot;The selected List appearance is missing or unresolved.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>
