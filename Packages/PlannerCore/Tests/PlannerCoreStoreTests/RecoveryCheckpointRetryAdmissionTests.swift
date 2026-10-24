@@ -8,7 +8,6 @@ struct RecoveryCheckpointRetryAdmissionTests {
     async throws
   {
     let fixture = try await CheckpointRetryFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let pending = try await fixture.applyWithRecoveryFailure(
       .setCompletion(scope: .globalItem(itemId: fixture.source.id), done: true))
     let before = try await fixture.currentItem()
@@ -55,7 +54,6 @@ struct RecoveryCheckpointRetryAdmissionTests {
     async throws
   {
     let fixture = try await CheckpointRetryFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let pending = try await fixture.applyWithRecoveryFailure(
       .setCompletion(scope: .globalItem(itemId: fixture.source.id), done: true))
     let before = try await fixture.currentItem()
@@ -146,7 +144,6 @@ struct RecoveryCheckpointRetryAdmissionTests {
     async throws
   {
     let fixture = try await CheckpointRetryFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let pending = try await fixture.applyWithRecoveryFailure(
       .setCompletion(scope: .globalItem(itemId: fixture.source.id), done: true))
     let secondPlanner = Planner(configuration: fixture.configuration)
@@ -175,7 +172,6 @@ struct RecoveryCheckpointRetryAdmissionTests {
     async throws
   {
     let fixture = try await CheckpointRetryFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let category = try #require(
       try await fixture.save(.createCategory(content: .init(name: "Food"))).generated.first)
     let tag = try #require(
@@ -348,7 +344,7 @@ private struct CheckpointRetryFixture {
   let originalRecovery: PlannerRecoverySelection
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

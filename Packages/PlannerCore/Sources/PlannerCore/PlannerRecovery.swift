@@ -517,9 +517,11 @@ struct RecoveryEnvelope: Codable {
   let dataDigest: String
   let receipts: [RecoveryReceipt]
   let preparedProposals: [RecoveryPreparedProposal]
+  let maintenanceReceipts: [RecoveryMaintenanceReceipt]
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
-    guard format == "planner-recovery", formatVersion == 1,
+    guard format == "planner-recovery", (1...2).contains(formatVersion),
+      formatVersion == 2 || maintenanceReceipts.isEmpty,
       [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
         "18", "19",
@@ -532,7 +534,8 @@ struct RecoveryEnvelope: Codable {
       String(generation) == checkpointGeneration,
       let bytes = Data(base64Encoded: portablePayloadBase64),
       plannerDigest(bytes, prefix: "sha256:") == dataDigest,
-      Set(receipts.map(\.operationId)).count == receipts.count
+      Set(receipts.map(\.operationId)).count == receipts.count,
+      Set(maintenanceReceipts.map(\.evidence.maintenanceId)).count == maintenanceReceipts.count
     else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "Recovery ownership, version or digest validation failed.")
@@ -553,6 +556,9 @@ struct RecoveryEnvelope: Codable {
         throw PlannerFailure(
           "recoveryIntegrityFailure", "Recovery operation evidence is inconsistent.")
       }
+    }
+    for receipt in maintenanceReceipts {
+      try receipt.validate(identity: identity, generation: generation)
     }
     return (bytes, decoded, generation)
   }
@@ -670,13 +676,15 @@ struct PlannerRecoveryArchive {
         checkpoint: receipt.operationId.flatMap { priorCheckpoints[$0] ?? nil } ?? generation)
     }.sorted { $0.operationId.uuidString < $1.operationId.uuidString }
     let envelope = RecoveryEnvelope(
-      format: "planner-recovery", formatVersion: 1, namespaceId: identity.namespaceId,
+      format: "planner-recovery", formatVersion: previous?.formatVersion ?? 1,
+      namespaceId: identity.namespaceId,
       datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
       storageSchemaVersion: String(identity.schemaVersion),
       checkpointGeneration: String(generation),
       portablePayloadBase64: bytes.base64EncodedString(),
       dataDigest: plannerDigest(bytes, prefix: "sha256:"),
-      receipts: evidence, preparedProposals: []
+      receipts: evidence, preparedProposals: [],
+      maintenanceReceipts: previous?.maintenanceReceipts ?? []
     )
     _ = try envelope.validated(identity: identity)
     try plannerWriteDurably(
@@ -687,11 +695,11 @@ struct PlannerRecoveryArchive {
 
   func view() throws -> PlannerRecoveryView {
     let envelope = try latest()
-    let generation = try envelope?.validated(identity: identity).2
-    let snapshot = generation.map {
+    let validated = try envelope?.validated(identity: identity)
+    let snapshot = validated.map { _, decoded, generation in
       PlannerSnapshotSummary(
         storageSchemaVersion: Int64(envelope?.storageSchemaVersion ?? "") ?? 0,
-        portableFormatVersion: 1, checkpointGeneration: $0,
+        portableFormatVersion: decoded.backup.formatVersion, checkpointGeneration: generation,
         integrity: "verified")
     }
     return PlannerRecoveryView(

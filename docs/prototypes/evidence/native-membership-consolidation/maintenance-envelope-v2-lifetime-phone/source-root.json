@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "6559feee4a415084b2cc65255bea9679281ad0df",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMaintenanceRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMaintenanceRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeStatusAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests.swift"
+  ]
+}

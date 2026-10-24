@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.825e-05"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="2" skipped="0" time="0.091376833">
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints()" time="0.091048583">
+            <failure message="Expectation failed: published[&quot;formatVersion&quot;] as? Int == 2 (error)"/>
+            <failure message="Expectation failed: (published[&quot;maintenanceReceipts&quot;] as? [[String: Any]]).first (error)"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()" time="0.01217625"/>
+    </testsuite>
+</testsuites>

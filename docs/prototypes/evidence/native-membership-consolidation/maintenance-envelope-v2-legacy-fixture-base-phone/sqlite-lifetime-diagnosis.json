@@ -1,0 +1,15 @@
+{
+  "baseCommit": "6559feee4a415084b2cc65255bea9679281ad0df",
+  "baseInputsMatchArchive": true,
+  "baseFunctions": 7,
+  "baseSuites": 2,
+  "baseSqliteLifetimeWarnings": 48,
+  "currentSqliteLifetimeWarnings": 48,
+  "fixtureHelperHashesIdentical": {
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeStatusAdmissionTests.swift": "644d4f105711817e772dbc769a1e1d55a9ae7be9f7fed671e21540c8df36d583",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests.swift": "89424164b42a4f85749c9e0a7f8018582f8555a51f125b67e192b974a9b99272"
+  },
+  "baseRealProductsVerified": true,
+  "qualificationComplete": false,
+  "nextAction": "Use owned retained fixture roots and move the missing-store directory instead of unlinking open files."
+}

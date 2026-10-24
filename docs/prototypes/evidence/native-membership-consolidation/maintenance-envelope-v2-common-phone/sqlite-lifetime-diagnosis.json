@@ -1,0 +1,28 @@
+{
+  "assertionsPassed": true,
+  "qualificationComplete": false,
+  "sqliteLifetimeWarnings": 48,
+  "warningsBySuite": {
+    "NativeStatusAdmissionTests": 27,
+    "RecoveryCheckpointRetryAdmissionTests": 21
+  },
+  "unlinkedFixtureRoots": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/17829861-DD15-43ED-A9FB-14B7B1B952CA",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/226B88B1-E41F-4C0B-842B-ED435992EB42",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/2366BFC4-4806-4B71-97C4-71C67943B52E",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/3B24A61B-8D16-485C-8142-C501BFBD8045",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/53F58474-49D7-49F3-A42D-69FD0D36D773",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/5EF59606-7B23-47D6-AF84-307E0AEE4281",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/76A49DD7-EC26-4D80-B988-C5D8724D1BC6",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/7DA060FA-5981-4DFF-9DCA-1AE4F2AC1722",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/9DB9C0AB-641D-4F28-B8AD-184667E0431F",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/A755D349-2153-462C-9BBC-8466251087E0",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/A87017AD-DE84-4629-BD80-1D5BBD61B1ED",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/BADB3ADF-0843-42F0-B9A9-DC5ADCB9B287",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/C909DE89-5FDB-422A-B789-9C5B077BDFBD",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/CD8F0D61-C92A-4778-9F56-6E43F67FB75D",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/E3E50698-58BE-4F92-8904-3C9EE6C35761",
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/F988E4A0-0401-4E2E-B436-7ABC5A586BAA"
+  ],
+  "runInputsAndRealProductsVerifiedBeforeBaselineTrial": true
+}
