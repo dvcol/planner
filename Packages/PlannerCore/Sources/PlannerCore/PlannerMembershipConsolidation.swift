@@ -58,9 +58,14 @@ struct PlannerMembershipConsolidation {
     }
     var eligible: [PlannerPortableMembership] = []
     var eligibleLifetimes: [UUID: UUID] = [:]
+    var closedMembershipIdentities: Set<PlannerPortableBoundIdentity> = []
     var suppressed: [Generation: [PlannerPortableMembership]] = [:]
     for member in current.memberships {
       let binding = try Self.binding(member.baselineProvenance.membership, in: provenance)
+      if graph.isClosed(binding.membership) {
+        closedMembershipIdentities.insert(binding.membership)
+        continue
+      }
       if (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) {
         if let previous = eligibleLifetimes[member.id], previous != member.lifetimeId {
           throw Self.unresolved("Competing membership lifetimes need restoration reconciliation.")
@@ -79,6 +84,7 @@ struct PlannerMembershipConsolidation {
         kind: .membership, id: completion.context.membershipId,
         lifetimeId: completion.context.membershipLifetimeId)
       let binding = try Self.binding(identity, in: provenance)
+      if graph.isClosed(identity) { continue }
       guard
         current.itineraryEntries.contains(where: {
           $0.id == completion.context.listEntryId
@@ -97,7 +103,12 @@ struct PlannerMembershipConsolidation {
         .append(completion)
     }
     var members = eligible
-    var expanded = current.expandedCompletions
+    var expanded = current.expandedCompletions.filter {
+      !closedMembershipIdentities.contains(
+        .init(
+          kind: .membership, id: $0.context.membershipId,
+          lifetimeId: $0.context.membershipLifetimeId))
+    }
     var aliases = current.contextAliases
     let changes = Dictionary(uniqueKeysWithValues: current.completionChanges.map { ($0.id, $0) })
     let generations = Set(suppressed.keys).union(detachedGenerations.keys)
@@ -172,7 +183,7 @@ struct PlannerMembershipConsolidation {
         guard let root = Self.membership(in: alias.canonicalContext) else { return nil }
         return provenance[root]?.pair
       })
-    var consolidatedMembershipIdentities: Set<PlannerPortableBoundIdentity> = []
+    var consolidatedMembershipIdentities = closedMembershipIdentities
     for (pair, contributions) in groups
     where contributions.count > 1 || rootResolutionPairs.contains(pair) {
       let ordered = contributions.sorted {

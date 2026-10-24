@@ -3971,8 +3971,37 @@ public actor Planner {
       return true
     }
     let lineage = try PlannerNativeLineage(context: context)
+    var markerDescriptor = FetchDescriptor<PlannerSchemaV4.DeletionMarker>()
+    if lineage.membershipRemovals.isEmpty {
+      markerDescriptor.predicate = #Predicate { $0.sourceKind == "membership" }
+    }
+    let markers =
+      try context.fetch(markerDescriptor).map { try $0.value() } + lineage.deletionMarkers
+    let membershipClosures = try markers.compactMap { marker -> PlannerPortableDeletionMarker? in
+      guard case .membership(let binding) = marker.target else { return nil }
+      guard binding.kind == "membership" else {
+        throw PlannerFailure("readUnavailable", "The membership closure kind is unsupported.")
+      }
+      return .init(
+        deletionId: marker.deletionId, operationId: marker.operationId,
+        target: .membership(id: binding.id, lifetimeId: binding.lifetimeId),
+        closedFamilyId: marker.closedFamilyId)
+    }
+    if !membershipClosures.isEmpty {
+      // Only closure identities are probed here; maintenance validates the complete graph.
+      let closures = PlannerImportGraph(
+        backup: .init(
+          sources: [], labelAssociations: [], memberships: [], itineraryEntries: [],
+          expandedCompletions: [], deletionMarkers: membershipClosures,
+          restorationFamilies: lineage.restorationFamilies))
+      if records.contains(where: {
+        guard let identifier = $0.id, let lifetime = $0.lifetimeId else { return false }
+        return closures.isClosed(.init(kind: .membership, id: identifier, lifetimeId: lifetime))
+      }) {
+        return true
+      }
+    }
     if !lineage.membershipRemovals.isEmpty {
-      let markers = try deletionMarkers(context)
       for record in records {
         let membership = try record.value()
         let retained =
@@ -3985,6 +4014,8 @@ public actor Planner {
         }
       }
     }
+    let expandedRecords = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>())
+    if expandedRecords.contains(where: { (try? $0.value()) == nil }) { return true }
     if !lineage.contextAliases.isEmpty && !lineage.membershipProvenance.isEmpty {
       let aliases = PlannerMembershipConsolidation.aliasesRequiringCanonicalRootResolution(
         memberships: try records.map { try $0.value().baselineProvenance },
@@ -4026,7 +4057,7 @@ public actor Planner {
         return .init(kind: .membership, id: identifier, lifetimeId: lifetime)
       })
     var representedExpanded: Set<PlannerExpandedContext> = []
-    for completion in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
+    for completion in expandedRecords {
       guard let identifier = completion.membershipId,
         let lifetime = completion.membershipLifetimeId,
         liveMembershipBindings.contains(
