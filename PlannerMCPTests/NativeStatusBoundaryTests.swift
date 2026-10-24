@@ -72,13 +72,14 @@ struct NativeStatusBoundaryTests {
       let properties = try #require(schema["properties"] as? [String: Any])
       let readRequest = try #require(properties["request"] as? [String: Any])
       let alternatives = try #require(readRequest["oneOf"] as? [[String: Any]])
-      let kinds = alternatives.compactMap { alternative -> String? in
+      let kinds = alternatives.flatMap { alternative -> [String] in
         guard let properties = alternative["properties"] as? [String: Any],
           let kind = properties["kind"] as? [String: Any]
-        else { return nil }
-        return kind["const"] as? String
+        else { return [] }
+        if let constant = kind["const"] as? String { return [constant] }
+        return kind["enum"] as? [String] ?? []
       }
-      #expect(Set(kinds) == ["source", "appearance", "rows"])
+      #expect(Set(kinds) == ["source", "appearance", "rows", "mapRows", "calendarRows"])
       await listener.stop()
     } catch {
       await listener.stop()
