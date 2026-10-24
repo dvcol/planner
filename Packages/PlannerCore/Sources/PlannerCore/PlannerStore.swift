@@ -127,6 +127,45 @@ struct PlannerBoundIdentity: Codable {
 struct PlannerStoredOperationEvidence: Codable {
   let result: PlannerAppliedResult
   let bindings: [PlannerBoundIdentity]
+  let formatVersion: Int?
+  let resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]?
+
+  init(
+    result: PlannerAppliedResult, bindings: [PlannerBoundIdentity],
+    resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]? = nil
+  ) {
+    self.result = result
+    self.bindings = bindings
+    formatVersion = resolvedMembershipEvidence == nil ? nil : 2
+    self.resolvedMembershipEvidence = resolvedMembershipEvidence.map(
+      plannerSortedMembershipEvidence)
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case result, bindings, formatVersion, resolvedMembershipEvidence
+  }
+
+  init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    result = try container.decode(PlannerAppliedResult.self, forKey: .result)
+    bindings = try container.decode([PlannerBoundIdentity].self, forKey: .bindings)
+    formatVersion = try container.decodeIfPresent(Int.self, forKey: .formatVersion)
+    if let formatVersion {
+      guard formatVersion == 2,
+        case .object(let fields) = try PlannerImportJSON(from: decoder),
+        Set(fields.keys) == ["result", "bindings", "formatVersion", "resolvedMembershipEvidence"]
+      else {
+        throw PlannerFailure("readUnavailable", "Stored membership operation evidence is invalid.")
+      }
+      resolvedMembershipEvidence = try container.decode(
+        [PlannerPortableMembershipProvenance].self, forKey: .resolvedMembershipEvidence)
+    } else {
+      guard !container.contains(.resolvedMembershipEvidence) else {
+        throw PlannerFailure("readUnavailable", "Stored membership evidence needs its version.")
+      }
+      resolvedMembershipEvidence = nil
+    }
+  }
 }
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {

@@ -501,6 +501,65 @@ struct RecoveryPreparedProposal: Codable {
   let proposedBackup: PlannerDataSnapshot
   let payloadDigest: String
   let evidence: String
+  let formatVersion: Int?
+  let resolvedBindings: [PlannerBoundIdentity]?
+  let resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]?
+
+  init(
+    proposalId: UUID, originalOperationId: UUID, datasetId: UUID, ownershipBinding: String,
+    proposedBackup: PlannerDataSnapshot, payloadDigest: String, evidence: String,
+    resolvedBindings: [PlannerBoundIdentity]? = nil,
+    resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]? = nil
+  ) {
+    self.proposalId = proposalId
+    self.originalOperationId = originalOperationId
+    self.datasetId = datasetId
+    self.ownershipBinding = ownershipBinding
+    self.proposedBackup = proposedBackup
+    self.payloadDigest = payloadDigest
+    self.evidence = evidence
+    formatVersion = resolvedMembershipEvidence == nil ? nil : 2
+    self.resolvedBindings = resolvedBindings
+    self.resolvedMembershipEvidence = resolvedMembershipEvidence.map(
+      plannerSortedMembershipEvidence)
+  }
+
+  private enum CodingKeys: String, CodingKey, CaseIterable {
+    case proposalId, originalOperationId, datasetId, ownershipBinding, proposedBackup,
+      payloadDigest, evidence, formatVersion, resolvedBindings, resolvedMembershipEvidence
+  }
+
+  init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    proposalId = try container.decode(UUID.self, forKey: .proposalId)
+    originalOperationId = try container.decode(UUID.self, forKey: .originalOperationId)
+    datasetId = try container.decode(UUID.self, forKey: .datasetId)
+    ownershipBinding = try container.decode(String.self, forKey: .ownershipBinding)
+    proposedBackup = try container.decode(PlannerDataSnapshot.self, forKey: .proposedBackup)
+    payloadDigest = try container.decode(String.self, forKey: .payloadDigest)
+    evidence = try container.decode(String.self, forKey: .evidence)
+    formatVersion = try container.decodeIfPresent(Int.self, forKey: .formatVersion)
+    if let formatVersion {
+      guard formatVersion == 2,
+        case .object(let fields) = try PlannerImportJSON(from: decoder),
+        Set(fields.keys) == Set(CodingKeys.allCases.map(\.rawValue))
+      else {
+        throw PlannerFailure("recoveryIntegrityFailure", "Prepared membership evidence is invalid.")
+      }
+      resolvedBindings = try container.decode(
+        [PlannerBoundIdentity].self, forKey: .resolvedBindings)
+      resolvedMembershipEvidence = try container.decode(
+        [PlannerPortableMembershipProvenance].self, forKey: .resolvedMembershipEvidence)
+    } else {
+      guard !container.contains(.resolvedBindings), !container.contains(.resolvedMembershipEvidence)
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "Prepared membership evidence needs its version.")
+      }
+      resolvedBindings = nil
+      resolvedMembershipEvidence = nil
+    }
+  }
 
   var summary: PlannerProposalSummary {
     PlannerProposalSummary(
@@ -586,7 +645,9 @@ struct PlannerRecoveryArchive {
         datasetId: proposal.datasetId, ownershipBinding: proposal.ownershipBinding,
         proposedBackup: .init(
           snapshot: proposal.proposedBackup, lineage: lineage),
-        payloadDigest: proposal.payloadDigest, evidence: proposal.evidence)
+        payloadDigest: proposal.payloadDigest, evidence: proposal.evidence,
+        resolvedBindings: proposal.resolvedBindings,
+        resolvedMembershipEvidence: proposal.resolvedMembershipEvidence)
     }
     _ = try retained.proposedBackup.validated()
     try plannerWriteDurably(

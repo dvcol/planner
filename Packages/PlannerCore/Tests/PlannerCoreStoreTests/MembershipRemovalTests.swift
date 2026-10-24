@@ -3,6 +3,60 @@ import PlannerCore
 import Testing
 
 struct MembershipRemovalTests {
+  @Test func ordinaryRemoveRetainsItsExactPairAndDeclaresStrictRemovalThroughReplay() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    let item = try await source(
+      planner, session: session, command: .createItem(content: .init(title: "Museum")))
+    let list = try await source(
+      planner, session: session, command: .createList(content: .init(name: "Tokyo")))
+    let reference = try await membership(planner, session: session, item: item, list: list)
+    guard case .membership(let membershipIdentifier, _, _) = reference,
+      case .exported(let beforeData) = await planner.exportData(session: session),
+      case .decoded(let before) = planner.decodeImport(beforeData)
+    else { throw CancellationError() }
+    let original = try #require(before.backup.memberships.first)
+    let operationIdentifier = UUID()
+    let command = PlannerCommand.removeMembership(
+      listId: list.id, membershipId: membershipIdentifier)
+    guard
+      case .applied(let removed, .complete(let checkpoint)) = await planner.execute(
+        .init(operationId: operationIdentifier, session: session, command: command)
+      ).outcome,
+      case .exported(let afterData) = await planner.exportData(session: session),
+      case .decoded(let after) = planner.decodeImport(afterData)
+    else { throw CancellationError() }
+    #expect(after.backup.memberships.isEmpty)
+    #expect(after.backup.membershipRemovals.count == 1)
+    #expect(after.backup.membershipProvenance.count == 1)
+    let retained = try #require(after.backup.membershipProvenance.first)
+    let removal = try #require(after.backup.membershipRemovals.first)
+    let marker = try #require(
+      after.backup.deletionMarkers.first { $0.deletionId == removal.deletionId })
+    #expect(retained.membershipId == original.id)
+    #expect(retained.membershipLifetimeId == original.lifetimeId)
+    #expect(retained.list.id == list.id && retained.list.lifetimeId == original.listLifetimeId)
+    #expect(retained.item.id == item.id && retained.item.lifetimeId == original.itemLifetimeId)
+    #expect(retained.observedRemovalIds.isEmpty)
+    #expect(marker.operationId == operationIdentifier)
+    #expect(marker.target == .membership(id: original.id, lifetimeId: original.lifetimeId))
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .applied(let replayed, .complete(let replayedCheckpoint)) = await reopened.execute(
+        .init(operationId: operationIdentifier, session: reopenedSession, command: command)
+      ).outcome,
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == afterData)
+    #expect(replayed == removed && replayedCheckpoint == checkpoint)
+  }
+
   @Test func removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
