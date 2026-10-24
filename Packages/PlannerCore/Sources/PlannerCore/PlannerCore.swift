@@ -7251,6 +7251,10 @@ public actor Planner {
     let result = PlannerAppliedResult(
       generatedIdentities: [],
       affectedIdentities: [.reference(after.reference), .source(ownerSnapshot.reference)])
+    if done != (previous?.localDone ?? false) {
+      try PlannerNativeLineage(context: context).seedCompletionContexts(
+        [(.expandedListItem(binding), previous?.localDone ?? false)], context: context)
+    }
     try archive.prepare(
       .init(
         proposalId: UUID(), originalOperationId: operation.operationId,
@@ -7356,6 +7360,16 @@ public actor Planner {
     let result = PlannerAppliedResult(
       generatedIdentities: [],
       affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)])
+    if done != (before.localDone ?? false) {
+      try PlannerNativeLineage(context: context).seedCompletionContexts(
+        [
+          (
+            .directItineraryItem(entryId: before.id, entryLifetimeId: before.lifetimeId),
+            before.localDone ?? false
+          )
+        ],
+        context: context)
+    }
     try archive.prepare(
       .init(
         proposalId: UUID(), originalOperationId: operation.operationId,
@@ -8541,6 +8555,13 @@ public actor Planner {
       affectedIdentities: [.source(resolution.reference)]
         + resolution.targets.map { .reference($0.reference) })
     let proposalIdentifier = UUID()
+    let completionSeeds = resolution.targets.filter { $0.localDone != done }.map {
+      (context: $0.completionContext, initialDone: $0.localDone)
+    }
+    if !completionSeeds.isEmpty {
+      try PlannerNativeLineage(context: context).seedCompletionContexts(
+        completionSeeds, context: context)
+    }
     try archive.prepare(
       .init(
         proposalId: proposalIdentifier, originalOperationId: operation.operationId,
@@ -8683,6 +8704,16 @@ public actor Planner {
     let result = PlannerAppliedResult(
       generatedIdentities: [],
       affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)])
+    if done != before.localDone {
+      try PlannerNativeLineage(context: context).seedCompletionContexts(
+        [
+          (
+            .listMembership(membershipId: before.id, membershipLifetimeId: before.lifetimeId),
+            before.localDone
+          )
+        ],
+        context: context)
+    }
     try archive.prepare(
       RecoveryPreparedProposal(
         proposalId: UUID(), originalOperationId: operation.operationId,

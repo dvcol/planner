@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.9916e-05"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="0" skipped="0" time="0.412604459">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes()" time="0.412223083"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(expandedScope:preparationFails:)" time="0.336525084"/>
+    </testsuite>
+</testsuites>

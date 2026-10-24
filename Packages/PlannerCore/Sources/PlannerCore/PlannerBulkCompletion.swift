@@ -20,6 +20,21 @@ enum BulkCompletionTarget {
     }
   }
 
+  var completionContext: PlannerPortableCompletionContext {
+    switch self {
+    case .membership(_, let membership):
+      return .listMembership(
+        membershipId: membership.id, membershipLifetimeId: membership.lifetimeId)
+    case .direct(_, let entry):
+      return .directItineraryItem(entryId: entry.id, entryLifetimeId: entry.lifetimeId)
+    case .expanded(_, let entry, _, let membership):
+      return .expandedListItem(
+        .init(
+          listEntryId: entry.id, listEntryLifetimeId: entry.lifetimeId,
+          membershipId: membership.id, membershipLifetimeId: membership.lifetimeId))
+    }
+  }
+
   var reference: PlannerReferenceRead {
     switch self {
     case .membership(_, let membership): return membership.reference

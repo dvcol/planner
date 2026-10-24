@@ -1,0 +1,16 @@
+{
+  "build-for-testing": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 132.364,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-initial-completion-base-bulk-http-build-for-testing.xcresult",
+    "sqliteUnlinkWarnings": 0
+  },
+  "test-without-building": {
+    "exitCode": 0,
+    "timedOut": false,
+    "seconds": 4.266,
+    "bundle": "/private/tmp/PlannerMembershipAdapter-initial-completion-base-bulk-http-test-without-building.xcresult",
+    "sqliteUnlinkWarnings": 3
+  }
+}

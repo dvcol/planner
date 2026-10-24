@@ -1,0 +1,11 @@
+{
+  "parentLogSha256": "9f72040508267a5c82187fe47102f16baafaf6d8906d4b52826f6e5a8028a68a",
+  "childLogPath": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerBulkWriteFailure-68034A75-67BE-413A-BA2A-9D1ACBEC6D57/child.log",
+  "childLogSha256": "bdf748f1ffe359f5ab49849f7abd8ac15f0ffb81ebc1e38734cf381e2b38d886",
+  "forwardedOwnedFixtures": 3,
+  "actualFaultScopes": [
+    "list",
+    "itinerary",
+    "itineraryListEntry"
+  ]
+}

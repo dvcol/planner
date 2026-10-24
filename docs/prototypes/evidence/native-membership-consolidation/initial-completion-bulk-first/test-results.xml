@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.1041e-05"/>
+    <testsuite name="TestResults" errors="0" tests="6" failures="0" skipped="0" time="1.356682375">
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="canceledMissingChangedAndForeignReviewsNeverMutateThePlanner()" time="0.949325709"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:)" time="0.538815541"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionAdmissionTests" name="emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged()" time="0.813880417"/>
+        <testcase classname="PlannerCoreStoreTests.BulkCompletionTests" name="reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates()" time="1.356158375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes()" time="1.027692875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(scope:preparationFails:)" time="1.021333791"/>
+    </testsuite>
+</testsuites>

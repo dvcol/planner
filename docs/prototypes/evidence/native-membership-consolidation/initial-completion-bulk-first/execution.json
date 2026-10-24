@@ -1,0 +1,52 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 26.825,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "canceledMissingChangedAndForeignReviewsNeverMutateThePlanner()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.949325709,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:)",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.538815541,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged()",
+      "className": "PlannerCoreStoreTests.BulkCompletionAdmissionTests",
+      "seconds": 0.813880417,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates()",
+      "className": "PlannerCoreStoreTests.BulkCompletionTests",
+      "seconds": 1.356158375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 1.027692875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(scope:preparationFails:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 1.021333791,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

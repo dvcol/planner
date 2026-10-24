@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.4125e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="22" skipped="0" time="0.27208">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(expandedScope:preparationFails:)" time="0.271602792">
+            <failure message="Expectation failed: changes.count == 2 (error)"/>
+            <failure message="Expectation failed: aliases.count == 1 (error)"/>
+            <failure message="Expectation failed: aliases.first?[&quot;initialDone&quot;] as? Bool == false (error)"/>
+            <failure message="Issue recorded (error): The two actual commands need their exact causal completion history."/>
+            <failure message="Expectation failed: changes.count == 2 (error)"/>
+            <failure message="Expectation failed: aliases.count == 1 (error)"/>
+            <failure message="Expectation failed: aliases.first?[&quot;initialDone&quot;] as? Bool == false (error)"/>
+            <failure message="Expectation failed: aliases.first?[&quot;aliasId&quot;] as? String == &quot;C6D0BEC6-0730-8084-9E40-B273BA57B8A8&quot; (error)"/>
+            <failure message="Issue recorded (error): The two actual commands need their exact causal completion history."/>
+            <failure message="Expectation failed: changes.count == 2 (error)"/>
+            <failure message="Expectation failed: aliases.count == 1 (error)"/>
+            <failure message="Expectation failed: aliases.first?[&quot;initialDone&quot;] as? Bool == false (error)"/>
+            <failure message="Expectation failed: aliases.first?[&quot;aliasId&quot;] as? String == &quot;C6D0BEC6-0730-8084-9E40-B273BA57B8A8&quot; (error)"/>
+            <failure message="Issue recorded (error): The two actual commands need their exact causal completion history."/>
+            <failure message="Expectation failed: changes.count == 2 (error)"/>
+            <failure message="Expectation failed: aliases.count == 1 (error)"/>
+            <failure message="Expectation failed: aliases.first?[&quot;initialDone&quot;] as? Bool == false (error)"/>
+            <failure message="Issue recorded (error): The two actual commands need their exact causal completion history."/>
+            <failure message="Expectation failed: read.localDone == expectedDone &amp;&amp; read.effectiveDone == expectedDone (error)"/>
+            <failure message="Expectation failed: read.localDone == expectedDone &amp;&amp; read.effectiveDone == expectedDone (error)"/>
+            <failure message="Expectation failed: read.localDone == expectedDone &amp;&amp; read.effectiveDone == expectedDone (error)"/>
+            <failure message="Expectation failed: read.localDone == expectedDone &amp;&amp; read.effectiveDone == expectedDone (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>

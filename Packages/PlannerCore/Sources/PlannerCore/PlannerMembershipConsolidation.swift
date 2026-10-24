@@ -245,7 +245,7 @@ struct PlannerMembershipConsolidation {
     for (context, values) in originals {
       if values.count == 1 && aliases.contains(where: { $0.context == context }) { continue }
       for done in Set(values.map { $0.1 }) {
-        let identifier = initialAliasIdentifier(context: context, done: done)
+        let identifier = plannerInitialCompletionAliasIdentifier(context: context, done: done)
         if let known = aliases.first(where: { $0.aliasId == identifier }) {
           guard known.context == context, known.initialDone == done else {
             throw unresolved("An initial completion identity describes another contribution.")
@@ -301,23 +301,6 @@ struct PlannerMembershipConsolidation {
     return value
   }
 
-  private static func initialAliasIdentifier(context: PlannerPortableCompletionContext, done: Bool)
-    -> UUID
-  {
-    let value = PlannerCanonicalValue.record([
-      "context": context.importCanonicalValue, "initialDone": .boolean(done),
-    ])
-    var digest = Array(
-      SHA256.hash(data: Data("PlannerInitialCompletionAlias-v1".utf8) + value.encoded()))
-    digest[6] = (digest[6] & 0x0f) | 0x80
-    digest[8] = (digest[8] & 0x3f) | 0x80
-    return UUID(
-      uuid: (
-        digest[0], digest[1], digest[2], digest[3], digest[4], digest[5], digest[6], digest[7],
-        digest[8], digest[9], digest[10], digest[11], digest[12], digest[13], digest[14], digest[15]
-      ))
-  }
-
   private static func unresolved(_ message: String) -> PlannerFailure {
     .init("readUnavailable", message)
   }
@@ -331,6 +314,23 @@ extension PlannerPortableMembership {
       item: .init(kind: "item", id: item.id, lifetimeId: itemLifetimeId), rank: rank,
       localDone: localDone)
   }
+}
+
+func plannerInitialCompletionAliasIdentifier(context: PlannerPortableCompletionContext, done: Bool)
+  -> UUID
+{
+  let value = PlannerCanonicalValue.record([
+    "context": context.importCanonicalValue, "initialDone": .boolean(done),
+  ])
+  var digest = Array(
+    SHA256.hash(data: Data("PlannerInitialCompletionAlias-v1".utf8) + value.encoded()))
+  digest[6] = (digest[6] & 0x0f) | 0x80
+  digest[8] = (digest[8] & 0x3f) | 0x80
+  return UUID(
+    uuid: (
+      digest[0], digest[1], digest[2], digest[3], digest[4], digest[5], digest[6], digest[7],
+      digest[8], digest[9], digest[10], digest[11], digest[12], digest[13], digest[14], digest[15]
+    ))
 }
 
 extension PlannerDataSnapshot {

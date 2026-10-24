@@ -157,6 +157,9 @@ struct NativeImportConflictReviewTests {
         "rank": "1024", "localDone": false,
       ]
     ]
+    object["contextAliases"] = []
+    object["completionChanges"] = []
+    object["membershipProvenance"] = []
     guard
       case .decoded(let decoded) = planner.decodeImport(
         try JSONSerialization.data(withJSONObject: object))
@@ -179,7 +182,10 @@ struct NativeImportConflictReviewTests {
     #expect(itemConflict.before?.title == "Museum")
     #expect(itemConflict.after?.title == (mode == .skip ? "Museum" : "Backup museum"))
     #expect(itemConflict.before?.changedFieldNames == ["title"])
-    #expect(listConflict.before?.changedFieldNames == ["memberships"])
+    #expect(
+      listConflict.before?.changedFieldNames == [
+        "completionChanges", "contextAliases", "memberships",
+      ])
     #expect(listConflict.before?.associationIds == [membershipId])
     if mode == .skip {
       #expect(details.replacements.isEmpty)

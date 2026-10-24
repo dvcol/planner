@@ -10,6 +10,407 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(
+    arguments: ["list", "expanded", "direct", "listBulk", "expandedBulk", "itineraryBulk"],
+    [false, true])
+  func reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(
+    scope: String, preparationFails: Bool
+  ) async throws {
+    let protectsList = scope == "list" || scope == "listBulk"
+    let protectsFirstBranch =
+      scope == "expanded" || scope == "expandedBulk" || scope == "itineraryBulk"
+    let wholeItinerary = scope == "itineraryBulk"
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let response = await planner.execute(
+        .init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let result, .complete) = response.outcome else {
+        Issue.record("The single-member fixture action must save: \(response)")
+        throw CancellationError()
+      }
+      return result
+    }
+    let item = try #require(
+      try await save(.createItem(content: .init(title: "Hotel", notes: "Keep"))).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Tokyo"))).generated.first)
+    let itinerary = try #require(
+      try await save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
+    let firstAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    let secondAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    let directAddition = try await save(
+      .addItineraryEntry(
+        itineraryId: itinerary.id, source: item, placement: .last))
+    guard case .itineraryEntry(let firstEntry, _, _)? = firstAddition.generatedReferences.first,
+      case .itineraryEntry(let secondEntry, _, _)? = secondAddition.generatedReferences.first,
+      case .itineraryEntry(let directEntry, _, _)? = directAddition.generatedReferences.first
+    else { throw CancellationError() }
+    let originalIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let originalLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
+    let smallerIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000400")!
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [(originalIdentifier.uuidString, originalLifetime.uuidString, 1024, false)])
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: secondEntry,
+      membershipIdentifier: originalIdentifier, membershipLifetime: originalLifetime)
+    let selected: PlannerAppearance
+    if scope == "direct" {
+      selected = .directItineraryItem(itineraryId: itinerary.id, entryId: directEntry)
+    } else if protectsFirstBranch {
+      selected = .expandedListItem(
+        itineraryId: itinerary.id, listEntryId: firstEntry,
+        membershipId: originalIdentifier)
+    } else {
+      selected = .listMembership(listId: list.id, membershipId: originalIdentifier)
+    }
+    func completionOperation(done: Bool, operationIdentifier: UUID) async throws -> PlannerOperation
+    {
+      guard scope.hasSuffix("Bulk") else {
+        return .init(
+          operationId: operationIdentifier, session: session,
+          command: .setCompletion(scope: .appearance(selected), done: done))
+      }
+      let bulkScope: PlannerBulkScope
+      if wholeItinerary {
+        bulkScope = .itinerary(itineraryId: itinerary.id)
+      } else if protectsFirstBranch {
+        bulkScope = .itineraryListEntry(itineraryId: itinerary.id, listEntryId: firstEntry)
+      } else {
+        bulkScope = .list(listId: list.id)
+      }
+      guard
+        case .reviewed(let review) = await planner.prepareReview(
+          session: session, command: .setBulkCompletion(scope: bulkScope, done: done))
+      else { throw CancellationError() }
+      return .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken)
+    }
+    var completion = try await completionOperation(done: true, operationIdentifier: UUID())
+    if preparationFails {
+      guard case .exported(let unchanged) = await planner.exportData(session: session),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first
+      else { throw CancellationError() }
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespace.namespaceId.uuidString)
+      let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: namespaceDirectory.path)
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+      }
+      let failure = await planner.execute(completion)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+      guard case .rejected(let rejected) = failure.outcome,
+        case .noReliableEvidence = await planner.operationStatus(
+          session: session, operationId: completion.operationId),
+        case .exported(let afterFailure) = await planner.exportData(session: session)
+      else { throw CancellationError() }
+      #expect(rejected.code == "persistenceFailure")
+      #expect(afterFailure == unchanged)
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+      completion = try await completionOperation(
+        done: true, operationIdentifier: completion.operationId)
+    }
+    guard case .applied(_, .complete) = await planner.execute(completion).outcome else {
+      throw CancellationError()
+    }
+    let reopening = try await completionOperation(done: false, operationIdentifier: UUID())
+    guard
+      case .applied(let reopened, .complete(let checkpoint)) = await planner.execute(reopening)
+        .outcome,
+      case .exported(let before) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let beforeGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    let changes = try #require(beforeGraph["completionChanges"] as? [[String: Any]])
+    #expect(changes.count == (wholeItinerary ? 5 : 2))
+    let aliases = try #require(beforeGraph["contextAliases"] as? [[String: Any]])
+    #expect(aliases.count == (wholeItinerary ? 3 : 1))
+    let initialValues = aliases.compactMap { $0["initialDone"] as? Bool }.sorted { !$0 && $1 }
+    #expect(initialValues == (wholeItinerary ? [false, false, true] : [false]))
+    if protectsList {
+      #expect(aliases.first?["aliasId"] as? String == "C6D0BEC6-0730-8084-9E40-B273BA57B8A8")
+    }
+    let completing = changes.filter { $0["done"] as? Bool == true }
+    let reopeningChanges = changes.filter { $0["done"] as? Bool == false }
+    #expect(completing.count == (wholeItinerary ? 2 : 1))
+    #expect(reopeningChanges.count == (wholeItinerary ? 3 : 1))
+    for complete in completing {
+      let completeIdentifier = try #require(complete["id"] as? String)
+      let completeContext = try #require(complete["context"] as? [String: Any])
+      let reopen = try #require(
+        reopeningChanges.first {
+          guard let context = $0["context"] as? [String: Any] else { return false }
+          return NSDictionary(dictionary: completeContext).isEqual(to: context)
+        })
+      #expect(reopen["observedChangeIds"] as? [String] == [completeIdentifier])
+    }
+    let fresh = Planner(configuration: configuration)
+    guard case .ready(let freshSession) = await fresh.bootstrap(),
+      case .exported(let retained) = await fresh.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(retained == before)
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [
+        (smallerIdentifier.uuidString, "00000000-0000-4000-8000-000000000840", 2048, true)
+      ])
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+      membershipIdentifier: smallerIdentifier,
+      membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000840")!)
+    let query = await fresh.query(
+      .init(
+        session: freshSession,
+        request: .items(
+          .init(scope: .list(list.id), completion: .all, archive: .all))))
+    guard case .snapshot(let current) = query else {
+      Issue.record("The first explicit reopen must survive late duplicate delivery: \(query)")
+      return
+    }
+    #expect(
+      current.rows == [
+        .appearance(
+          source: item,
+          appearance: .listMembership(listId: list.id, membershipId: smallerIdentifier))
+      ])
+    for (appearance, expectedDone) in [
+      (
+        PlannerAppearance.listMembership(listId: list.id, membershipId: originalIdentifier),
+        !protectsList
+      ),
+      (
+        .expandedListItem(
+          itineraryId: itinerary.id, listEntryId: firstEntry,
+          membershipId: originalIdentifier), !protectsFirstBranch
+      ),
+      (
+        .expandedListItem(
+          itineraryId: itinerary.id, listEntryId: secondEntry,
+          membershipId: originalIdentifier), !wholeItinerary
+      ),
+      (.directItineraryItem(itineraryId: itinerary.id, entryId: directEntry), false),
+    ] {
+      guard
+        case .appearance(let read) = await fresh.read(
+          session: freshSession, request: .appearance(appearance))
+      else {
+        throw CancellationError()
+      }
+      #expect(read.source == item && !read.globalDone)
+      #expect(read.localDone == expectedDone && read.effectiveDone == expectedDone)
+    }
+    guard
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await fresh.execute(
+        .init(operationId: reopening.operationId, session: freshSession, command: reopening.command)
+      ).outcome,
+      case .exported(let after) = await fresh.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(replayed == reopened && replayCheckpoint == checkpoint)
+    let afterGraph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    #expect(
+      (afterGraph["completionChanges"] as? NSArray)
+        == (beforeGraph["completionChanges"] as? NSArray))
+    #expect((afterGraph["sources"] as? NSArray) == (beforeGraph["sources"] as? NSArray))
+    #expect(
+      (afterGraph["itineraryEntries"] as? NSArray) == (beforeGraph["itineraryEntries"] as? NSArray))
+  }
+
+  @Test func aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let response = await planner.execute(
+        .init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let result, .complete) = response.outcome else {
+        Issue.record("The route fixture command must save: \(response)")
+        throw CancellationError()
+      }
+      return result
+    }
+    let item = try #require(
+      try await save(
+        .createItem(
+          content: .init(title: "Hotel", notes: "Shared source stays intact"))
+      ).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Tokyo"))).generated.first)
+    let itinerary = try #require(
+      try await save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
+    let firstAddition = try await save(
+      .addItineraryEntry(
+        itineraryId: itinerary.id, source: list, placement: .last))
+    let secondAddition = try await save(
+      .addItineraryEntry(
+        itineraryId: itinerary.id, source: list, placement: .last))
+    let directAddition = try await save(
+      .addItineraryEntry(
+        itineraryId: itinerary.id, source: item, placement: .last))
+    guard case .itineraryEntry(let firstEntry, _, _)? = firstAddition.generatedReferences.first,
+      case .itineraryEntry(let secondEntry, _, _)? = secondAddition.generatedReferences.first,
+      case .itineraryEntry(let directEntry, _, _)? = directAddition.generatedReferences.first
+    else { throw CancellationError() }
+    let originalIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let losingIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000402")!
+    let smallerIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000400")!
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id)
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+      membershipIdentifier: originalIdentifier,
+      membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000841")!)
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: secondEntry,
+      membershipIdentifier: losingIdentifier,
+      membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000842")!)
+    let reopening = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .setCompletion(
+        scope: .appearance(
+          .listMembership(listId: list.id, membershipId: losingIdentifier)), done: false))
+    guard
+      case .applied(let reopened, .complete(let reopenCheckpoint)) = await planner.execute(
+        reopening
+      ).outcome
+    else {
+      throw CancellationError()
+    }
+    _ = try await save(
+      .setCompletion(
+        scope: .appearance(
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: firstEntry,
+            membershipId: losingIdentifier)), done: false))
+    guard case .exported(let before) = await planner.exportData(session: session),
+      case .snapshot(let originalWindow) = await planner.query(
+        .init(
+          session: session,
+          request: .items(
+            .init(
+              scope: .list(list.id), completion: .all, archive: .all, sort: .init(mode: .manual)))))
+    else { throw CancellationError() }
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+      contributions: [
+        (smallerIdentifier.uuidString, "00000000-0000-4000-8000-000000000840", 4096, true)
+      ])
+    for entry in [firstEntry, secondEntry] {
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: entry,
+        membershipIdentifier: smallerIdentifier,
+        membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000840")!)
+    }
+    let queryResult = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(scope: .list(list.id), completion: .all, archive: .all, sort: .init(mode: .manual)))
+      ))
+    guard case .snapshot(let current) = queryResult else {
+      Issue.record(
+        "A smaller eligible root must retain explicit and branch history: \(queryResult)")
+      return
+    }
+    #expect(
+      current.rows == [
+        .appearance(
+          source: item,
+          appearance:
+            .listMembership(listId: list.id, membershipId: smallerIdentifier))
+      ])
+    #expect(current.progress.first?.doneCount == 0 && current.progress.first?.totalCount == 1)
+    for identifier in [smallerIdentifier, originalIdentifier, losingIdentifier] {
+      for (appearance, expectedDone) in [
+        (PlannerAppearance.listMembership(listId: list.id, membershipId: identifier), false),
+        (
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: firstEntry, membershipId: identifier), false
+        ),
+        (
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: secondEntry, membershipId: identifier), true
+        ),
+      ] {
+        let response = await planner.read(session: session, request: .appearance(appearance))
+        guard case .appearance(let read) = response else {
+          Issue.record("Every eligible original must retain its exact route scope: \(response)")
+          return
+        }
+        #expect(read.source == item && !read.globalDone)
+        #expect(read.localDone == expectedDone && read.effectiveDone == expectedDone)
+      }
+    }
+    guard
+      case .appearance(let direct) = await planner.read(
+        session: session,
+        request: .appearance(.directItineraryItem(itineraryId: itinerary.id, entryId: directEntry))),
+      case .failed(let stale) = await planner.read(
+        session: session, request: .rows(generation: originalWindow.generation, offset: 0, limit: 1)
+      ),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await planner.execute(
+        reopening
+      ).outcome,
+      case .exported(let after) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(!direct.localDone && !direct.effectiveDone && !direct.globalDone)
+    #expect(stale.code == "staleSnapshot")
+    #expect(replayed == reopened && replayCheckpoint == reopenCheckpoint)
+    let beforeGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    let afterGraph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
+    for key in [
+      "sources", "itineraryEntries", "deletionMarkers", "restorationFamilies", "completionChanges",
+      "membershipRemovals",
+    ] {
+      #expect(
+        (beforeGraph[key] as? NSArray) == (afterGraph[key] as? NSArray),
+        "Root rotation preserves \(key).")
+    }
+    let members = try #require(afterGraph["memberships"] as? [[String: Any]])
+    #expect(members.count == 1)
+    #expect(members.first?["id"] as? String == smallerIdentifier.uuidString)
+    #expect(members.first?["rank"] as? String == "4096")
+    #expect(members.first?["localDone"] as? Bool == false)
+    let beforeAliases = try #require(beforeGraph["contextAliases"] as? [[String: Any]])
+    let afterAliases = try #require(afterGraph["contextAliases"] as? [[String: Any]])
+    for original in beforeAliases {
+      let identifier = try #require(original["aliasId"] as? String)
+      let retained = try #require(afterAliases.first { $0["aliasId"] as? String == identifier })
+      for key in ["context", "initialDone", "currentChangeId"] {
+        #expect(
+          NSDictionary(dictionary: [key: try #require(original[key])]).isEqual(
+            to: [key: try #require(retained[key])]))
+      }
+      let canonical = try #require(retained["canonicalContext"] as? [String: Any])
+      #expect(canonical["membershipId"] as? String == smallerIdentifier.uuidString)
+      #expect(
+        canonical["membershipLifetimeId"] as? String == "00000000-0000-4000-8000-000000000840")
+    }
+    let fresh = Planner(configuration: configuration)
+    guard case .ready(let freshSession) = await fresh.bootstrap(),
+      case .exported(let freshExport) = await fresh.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(freshExport == after)
+  }
+
   @Test(arguments: ["missingMembershipHistory", "differentList"])
   func detachedCompletionsCannotBorrowAnUnknownLifetimeOrAnotherListsScope(scenario: String)
     async throws

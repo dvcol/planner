@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 118.076,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "aLaterSmallerCanonicalMembershipRetainsHistoryAndExactRepeatedScopes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.412223083,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(expandedScope:preparationFails:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.336525084,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}
