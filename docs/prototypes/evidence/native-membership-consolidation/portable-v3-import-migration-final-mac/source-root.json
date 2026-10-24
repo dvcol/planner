@@ -1,0 +1,28 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "e145eb4bac25880a0b913764bbc77be5c371c42e",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportDecoding.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportEncoding.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMembershipHistory.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipProvenance.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ManualContainerEstimateTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportDecodingTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportFreshLocalValuesTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportLineageMigrationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipMigrationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipPortableTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeProvenanceMigrationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeProviderMigrationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PortableFixtureExpectations.swift"
+  ]
+}

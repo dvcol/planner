@@ -183,7 +183,7 @@ struct ManualContainerEstimateTests {
     }
     #expect(backedItineraries.first?.content.manualEstimate == manualEstimate)
     let object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
-    #expect(object["formatVersion"] as? Int == 2)
+    #expect(object["formatVersion"] as? Int == 3)
     let sources = try #require(object["sources"] as? [[String: Any]])
     for (index, source) in sources.enumerated() {
       guard ["list", "itinerary"].contains(source["kind"] as? String ?? "") else { continue }

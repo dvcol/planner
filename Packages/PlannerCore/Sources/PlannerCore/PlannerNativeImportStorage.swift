@@ -6,12 +6,16 @@ struct PlannerNativeLineage {
   let completionChanges: [PlannerPortableCompletionChange]
   let restorationFamilies: [PlannerPortableRestorationFamily]
   let deletionMarkers: [PortableDeletionMarker]
+  let membershipProvenance: [PlannerPortableMembershipProvenance]
+  let membershipRemovals: [PlannerPortableMembershipRemoval]
 
   private init(
     contextAliases: [PlannerPortableContextAlias],
     completionChanges: [PlannerPortableCompletionChange],
     restorationFamilies: [PlannerPortableRestorationFamily],
-    deletionMarkers: [PortableDeletionMarker]
+    deletionMarkers: [PortableDeletionMarker],
+    membershipProvenance: [PlannerPortableMembershipProvenance],
+    membershipRemovals: [PlannerPortableMembershipRemoval]
   ) {
     self.contextAliases = contextAliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString }
     self.completionChanges = completionChanges.sorted { $0.id.uuidString < $1.id.uuidString }
@@ -19,6 +23,8 @@ struct PlannerNativeLineage {
       $0.familyId.uuidString < $1.familyId.uuidString
     }
     self.deletionMarkers = deletionMarkers
+    self.membershipProvenance = membershipProvenance
+    self.membershipRemovals = membershipRemovals
   }
 
   func reconciling(_ snapshot: PlannerDataSnapshot, context: ModelContext) throws
@@ -77,7 +83,8 @@ struct PlannerNativeLineage {
     }
     return .init(
       contextAliases: aliases, completionChanges: changes, restorationFamilies: restorationFamilies,
-      deletionMarkers: deletionMarkers)
+      deletionMarkers: deletionMarkers, membershipProvenance: membershipProvenance,
+      membershipRemovals: membershipRemovals)
   }
 
   init(context: ModelContext) throws {
@@ -85,6 +92,7 @@ struct PlannerNativeLineage {
     var changes: [PlannerPortableCompletionChange] = []
     var families: [PlannerPortableRestorationFamily] = []
     var markers: [PortableDeletionMarker] = []
+    var removals: [PlannerPortableMembershipRemoval] = []
     for record in try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()) {
       guard let identifier = record.recordIdentifier, let data = record.recordData else {
         throw PlannerFailure("readUnavailable", "Stored lineage has unresolved identity or data.")
@@ -106,18 +114,37 @@ struct PlannerNativeLineage {
         let marker = try JSONDecoder().decode(PortableDeletionMarker.self, from: data)
         guard marker.deletionId == identifier else { throw Self.invalidIdentity() }
         markers.append(marker)
+      case "membershipRemoval":
+        let removal = try JSONDecoder().decode(PlannerPortableMembershipRemoval.self, from: data)
+        guard removal.deletionId == identifier else { throw Self.invalidIdentity() }
+        removals.append(removal)
       default: throw Self.invalidIdentity()
       }
     }
     guard Set(aliases.map(\.aliasId)).count == aliases.count,
       Set(changes.map(\.id)).count == changes.count,
       Set(families.map(\.familyId)).count == families.count,
-      Set(markers.map(\.deletionId)).count == markers.count
+      Set(markers.map(\.deletionId)).count == markers.count,
+      Set(removals.map(\.deletionId)).count == removals.count
     else { throw Self.invalidIdentity() }
     contextAliases = aliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString }
     completionChanges = changes.sorted { $0.id.uuidString < $1.id.uuidString }
     restorationFamilies = families.sorted { $0.familyId.uuidString < $1.familyId.uuidString }
     deletionMarkers = markers.sorted { $0.deletionId.uuidString < $1.deletionId.uuidString }
+    let provenance = try context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>()).map
+    {
+      try $0.provenance()
+    }
+    guard Set(provenance.map(\.membership)).count == provenance.count else {
+      throw Self.invalidIdentity()
+    }
+    membershipProvenance = provenance.sorted {
+      if $0.membershipId != $1.membershipId {
+        return $0.membershipId.uuidString < $1.membershipId.uuidString
+      }
+      return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
+    }
+    membershipRemovals = removals.sorted { $0.deletionId.uuidString < $1.deletionId.uuidString }
   }
 
   private static func invalidIdentity() -> PlannerFailure {
@@ -464,6 +491,56 @@ func plannerInsertImportedGraph(
     try plannerStageLineageRecord(
       family, identifier: family.familyId, kind: "restorationFamily", records: lineageRecords,
       context: context)
+  }
+  for removal in backup.membershipRemovals {
+    try plannerStageLineageRecord(
+      removal, identifier: removal.deletionId, kind: "membershipRemoval", records: lineageRecords,
+      context: context)
+  }
+  try plannerStageMembershipProvenance(backup.membershipProvenance, context: context)
+}
+
+extension PlannerSchemaV19.MembershipProvenance {
+  func provenance() throws -> PlannerPortableMembershipProvenance {
+    guard let membershipId, let membershipLifetimeId, let recordData else {
+      throw PlannerFailure(
+        "readUnavailable", "Membership provenance has unresolved identity or data.")
+    }
+    let value = try JSONDecoder().decode(PlannerPortableMembershipProvenance.self, from: recordData)
+    guard value.membershipId == membershipId, value.membershipLifetimeId == membershipLifetimeId
+    else {
+      throw PlannerFailure("readUnavailable", "Membership provenance has inconsistent identity.")
+    }
+    return value.normalized
+  }
+}
+
+private func plannerStageMembershipProvenance(
+  _ provenance: [PlannerPortableMembershipProvenance], context: ModelContext
+) throws {
+  var records: [PlannerPortableBoundIdentity: PlannerSchemaV19.MembershipProvenance] = [:]
+  for record in try context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>()) {
+    let binding = try record.provenance().membership
+    guard records[binding] == nil else {
+      throw PlannerFailure("readUnavailable", "Stored membership provenance is duplicated.")
+    }
+    records[binding] = record
+  }
+  let encoder = JSONEncoder()
+  encoder.outputFormatting = [.sortedKeys]
+  for value in provenance.map(\.normalized) {
+    if let existing = records[value.membership] {
+      guard try existing.provenance() == value else {
+        throw PlannerFailure(
+          "invalidInput", "Membership provenance cannot replace retained authority.")
+      }
+      continue
+    }
+    let record = PlannerSchemaV19.MembershipProvenance(
+      membershipId: value.membershipId, membershipLifetimeId: value.membershipLifetimeId,
+      recordData: try encoder.encode(value))
+    context.insert(record)
+    records[value.membership] = record
   }
 }
 

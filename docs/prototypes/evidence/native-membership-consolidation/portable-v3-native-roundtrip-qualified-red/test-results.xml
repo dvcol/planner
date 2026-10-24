@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.4375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="4" failures="2" skipped="0" time="0.089282834">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddSurvivesNativeImportRecoveryReplayAndReopen()" time="0.088991583">
+            <failure message="Expectation failed: NSDictionary(dictionary: expected).isEqual(to: actual) (error)"/>
+            <failure message="Expectation failed: NSDictionary(dictionary: expected).isEqual(to: recoveryGraph) (error)"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="0.011124709"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)" time="0.014173917"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="removalObservationsCannotBorrowAnotherItemListPairsAuthority()" time="0.011493417"/>
+    </testsuite>
+</testsuites>

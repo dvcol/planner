@@ -75,6 +75,7 @@ struct PlannerImportGraph {
       }, "/labelAssociations", "label")
     try validateRestorations()
     try validateDeletions()
+    try validateMembershipProvenance()
     for (index, expanded) in backup.expandedCompletions.enumerated() {
       _ = try contextState(
         .expandedListItem(expanded.context), path: "/expandedCompletions/\(index)/context")

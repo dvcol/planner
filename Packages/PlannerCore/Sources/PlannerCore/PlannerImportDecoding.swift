@@ -299,19 +299,21 @@ struct PlannerPortableImportDecoder {
   init(root: PlannerImportNode) { self.root = root }
 
   mutating func decode() throws -> PlannerDecodedBackup {
-    let fields = try root.record([
-      "format", "formatVersion", "sources", "memberships", "itineraryEntries",
-      "expandedCompletions", "schedules", "labelAssociations", "ownedLinks", "deletionMarkers",
-      "contextAliases", "completionChanges", "restorationFamilies",
-    ])
-    guard try fields.child("format").string() == "planner-data" else {
-      throw try fields.child("format").failure("Expected a Planner data backup.")
-    }
-    formatVersion = try fields.child("formatVersion").integer()
-    guard (1...2).contains(formatVersion) else {
+    formatVersion = try root.child("formatVersion").integer()
+    guard (1...3).contains(formatVersion) else {
       throw PlannerFailure(
         "unsupportedVersion", "Unsupported portable backup version.",
         propertyPath: "/formatVersion")
+    }
+    var names = [
+      "format", "formatVersion", "sources", "memberships", "itineraryEntries",
+      "expandedCompletions", "schedules", "labelAssociations", "ownedLinks", "deletionMarkers",
+      "contextAliases", "completionChanges", "restorationFamilies",
+    ]
+    if formatVersion == 3 { names += ["membershipProvenance", "membershipRemovals"] }
+    let fields = try root.record(names)
+    guard try fields.child("format").string() == "planner-data" else {
+      throw try fields.child("format").failure("Expected a Planner data backup.")
     }
     let sources = try fields.child("sources").array().map { try source($0) }
     let memberships = try fields.child("memberships").array().map { try membership($0) }
@@ -329,11 +331,24 @@ struct PlannerPortableImportDecoder {
     let aliases = try fields.child("contextAliases").array().map { try contextAlias($0) }
     let changes = try fields.child("completionChanges").array().map { try completionChange($0) }
     let families = try fields.child("restorationFamilies").array().map { try restorationFamily($0) }
+    var provenance: [PlannerPortableMembershipProvenance] = []
+    var removals: [PlannerPortableMembershipRemoval] = []
+    if formatVersion == 3 {
+      provenance = try fields.child("membershipProvenance").array().map {
+        try membershipProvenance($0)
+      }
+      removals = try fields.child("membershipRemovals").array().map { node in
+        let fields = try node.record(["deletionId"])
+        return try PlannerPortableMembershipRemoval(
+          deletionId: fields.child("deletionId").identifier())
+      }
+    }
     let backup = PlannerPortableBackup(
       sources: sources, labelAssociations: labels, memberships: memberships,
       itineraryEntries: entries, expandedCompletions: expanded, schedules: schedules,
       deletionMarkers: markers, ownedLinks: links, contextAliases: aliases,
-      completionChanges: changes, restorationFamilies: families)
+      completionChanges: changes, restorationFamilies: families, formatVersion: formatVersion,
+      membershipProvenance: provenance, membershipRemovals: removals)
     try PlannerImportGraph(backup: backup).validate()
     let external = try externalPaths(backup: backup)
     let unique = Set(external.map(\.binding)).sorted {
@@ -390,7 +405,7 @@ struct PlannerPortableImportDecoder {
     case "list":
       try fields.child("globalDone").requireNull()
       var names = ["name", "notes", "color", "iconName"]
-      if formatVersion == 2 { names.append("manualEstimate") }
+      if formatVersion >= 2 { names.append("manualEstimate") }
       let content = try content.record(names)
       let manualEstimate = try containerManualEstimate(content)
       return try .list(
@@ -407,7 +422,7 @@ struct PlannerPortableImportDecoder {
     case "itinerary":
       try fields.child("globalDone").requireNull()
       var names = ["title", "notes", "color", "iconName", "location"]
-      if formatVersion == 2 { names.append("manualEstimate") }
+      if formatVersion >= 2 { names.append("manualEstimate") }
       let content = try content.record(names)
       let manualEstimate = try containerManualEstimate(content)
       return try .itinerary(
@@ -582,6 +597,20 @@ struct PlannerPortableImportDecoder {
       target: target, closedFamilyId: fields.child("closedFamilyId").optionalIdentifier())
   }
 
+  private mutating func membershipProvenance(_ node: PlannerImportNode) throws
+    -> PlannerPortableMembershipProvenance
+  {
+    let fields = try node.record([
+      "membershipId", "membershipLifetimeId", "list", "item", "observedRemovalIds",
+    ])
+    return try .init(
+      membershipId: fields.child("membershipId").identifier(),
+      membershipLifetimeId: fields.child("membershipLifetimeId").identifier(),
+      list: boundSource(fields.child("list"), kinds: [.list], recordPath: false),
+      item: boundSource(fields.child("item"), kinds: [.item], recordPath: false),
+      observedRemovalIds: fields.child("observedRemovalIds").array().map { try $0.identifier() })
+  }
+
   private func contextAlias(_ node: PlannerImportNode) throws -> PlannerPortableContextAlias {
     let fields = try node.record([
       "aliasId", "context", "canonicalContext", "initialDone", "currentChangeId",
@@ -661,7 +690,7 @@ struct PlannerPortableImportDecoder {
   }
 
   private func containerManualEstimate(_ content: PlannerImportNode) throws -> PlannerEstimate? {
-    guard formatVersion == 2 else { return nil }
+    guard formatVersion >= 2 else { return nil }
     return try content.child("manualEstimate").estimate()
   }
 
@@ -714,6 +743,8 @@ struct PlannerPortableImportDecoder {
       schedules: backup.schedules,
       deletionMarkers: backup.deletionMarkers, ownedLinks: backup.ownedLinks,
       contextAliases: backup.contextAliases,
-      completionChanges: backup.completionChanges, restorationFamilies: backup.restorationFamilies)
+      completionChanges: backup.completionChanges, restorationFamilies: backup.restorationFamilies,
+      formatVersion: backup.formatVersion, membershipProvenance: backup.membershipProvenance,
+      membershipRemovals: backup.membershipRemovals)
   }
 }

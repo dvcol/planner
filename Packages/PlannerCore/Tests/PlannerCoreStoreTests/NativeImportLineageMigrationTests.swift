@@ -41,8 +41,10 @@ struct NativeImportLineageMigrationTests {
         session: session, request: .source(.init(kind: .item, id: itemIdentifier))),
       let notesHash = item.fieldHashes[.notes]
     else { throw CancellationError() }
-    #expect(
-      exported == (try Data(contentsOf: fixture.appendingPathComponent("expected-portable.json"))))
+    let actual = try #require(JSONSerialization.jsonObject(with: exported) as? [String: Any])
+    let expected = try canonicalPortableFixtureExpectations(
+      Data(contentsOf: fixture.appendingPathComponent("expected-portable.json")))
+    #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
     guard
       case .applied(_, .complete) = await planner.execute(
         .init(

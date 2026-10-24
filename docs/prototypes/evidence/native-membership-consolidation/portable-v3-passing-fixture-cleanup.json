@@ -1,0 +1,37 @@
+{
+  "removedFixtures": 423,
+  "nominalBytes": 259740055,
+  "phases": [
+    {
+      "phase": "portable-v3-informed-readd-decoder-first-green",
+      "fixtureCount": 1,
+      "nominalBytes": 186
+    },
+    {
+      "phase": "portable-v3-cross-pair-removal-green",
+      "fixtureCount": 2,
+      "nominalBytes": 372
+    },
+    {
+      "phase": "portable-v3-history-integrity-first-green",
+      "fixtureCount": 16,
+      "nominalBytes": 2976
+    },
+    {
+      "phase": "portable-v3-native-roundtrip-first-green",
+      "fixtureCount": 17,
+      "nominalBytes": 258832
+    },
+    {
+      "phase": "portable-v3-native-ordinary-writes",
+      "fixtureCount": 20,
+      "nominalBytes": 1056064
+    },
+    {
+      "phase": "portable-v3-import-migration-final-mac",
+      "fixtureCount": 367,
+      "nominalBytes": 258421625
+    }
+  ],
+  "scope": "Only marked fixtures from completed passing Core runs; frozen fixtures, original evidence, failed fixtures and user datasets retained."
+}

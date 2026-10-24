@@ -1,0 +1,26 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 7.213,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "removalObservationsCannotBorrowAnotherItemListPairsAuthority()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.015655125,
+      "failures": [
+        "Issue recorded (error): A removal for another Item cannot authorize this membership: .decoded(PlannerCore.PlannerDecodedBackup(backup: PlannerCore.PlannerPortableBackup(formatVersion: 3, labelAssociations: [], sources: [PlannerCore.PlannerPortableSource.item(PlannerCore.PlannerPortableItem(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000101, lifetimeId: 00000000-0000-4000-8000-000000000811, createdAt: 2001-01-01 00:00:10 +0000, updatedAt: 2001-01-01 00:00:20 +0000, content: PlannerCore.PlannerItemContent(title: \"Hotel\", subtitle: nil, notes: Optional(\"A shared stop\"), location: nil, estimate: Optional(PlannerCore.PlannerEstimate(minutes: 30, displayUnit: PlannerCore.PlannerEstimateUnit.minute)), links: [], categoryIds: Set([]), tagIds: Set([])), globalDone: false, archived: false, contentOrigins: [\"notes\": \"independent\", \"title\": \"independent\"])), PlannerCore.PlannerPortableSource.list(PlannerCore.PlannerPortableList(id: 00000000-0000-4000-8000-000000000201, lifetimeId: 00000000-0000-4000-8000-000000000821, createdAt: 2001-01-01 00:00:10 +0000, updatedAt: 2001-01-01 00:00:20 +0000, content: PlannerCore.PlannerListContentInput(name: \"Tokyo\", notes: nil, color: nil, iconName: nil, manualEstimate: nil), archived: false, contentOrigins: [\"name\": \"independent\"])), PlannerCore.PlannerPortableSource.item(PlannerCore.PlannerPortableItem(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000102, lifetimeId: 00000000-0000-4000-8000-000000000812, createdAt: 2001-01-01 00:00:10 +0000, updatedAt: 2001-01-01 00:00:20 +0000, content: PlannerCore.PlannerItemContent(title: \"Hotel\", subtitle: nil, notes: Optional(\"A shared stop\"), location: nil, estimate: Optional(PlannerCore.PlannerEstimate(minutes: 30, displayUnit: PlannerCore.PlannerEstimateUnit.minute)), links: [], categoryIds: Set([]), tagIds: Set([])), globalDone: false, archived: false, contentOrigins: [\"title\": \"independent\", \"notes\": \"independent\"]))], memberships: [PlannerCore.PlannerPortableMembership(id: 00000000-0000-4000-8000-000000000405, lifetimeId: 00000000-0000-4000-8000-000000000845, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201), listLifetimeId: 00000000-0000-4000-8000-000000000821, item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000101), itemLifetimeId: 00000000-0000-4000-8000-000000000811, rank: 1024, localDone: false)], itineraryEntries: [], expandedCompletions: [], schedules: [], deletionMarkers: [PlannerCore.PlannerPortableDeletionMarker(deletionId: 00000000-0000-4000-8000-000000000891, operationId: 00000000-0000-4000-8000-000000000991, target: PlannerCore.PlannerPortableDeletionTarget.membership(id: 00000000-0000-4000-8000-000000000401, lifetimeId: 00000000-0000-4000-8000-000000000841), closedFamilyId: nil)], ownedLinks: [], contextAliases: [], completionChanges: [], restorationFamilies: [], membershipProvenance: [PlannerCore.PlannerPortableMembershipProvenance(membershipId: 00000000-0000-4000-8000-000000000401, membershipLifetimeId: 00000000-0000-4000-8000-000000000841, list: PlannerCore.PlannerBoundSource(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201, lifetimeId: 00000000-0000-4000-8000-000000000821), item: PlannerCore.PlannerBoundSource(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000102, lifetimeId: 00000000-0000-4000-8000-000000000812), observedRemovalIds: []), PlannerCore.PlannerPortableMembershipProvenance(membershipId: 00000000-0000-4000-8000-000000000405, membershipLifetimeId: 00000000-0000-4000-8000-000000000845, list: PlannerCore.PlannerBoundSource(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201, lifetimeId: 00000000-0000-4000-8000-000000000821), item: PlannerCore.PlannerBoundSource(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000101, lifetimeId: 00000000-0000-4000-8000-000000000811), observedRemovalIds: [00000000-0000-4000-8000-000000000891])], membershipRemovals: [PlannerCore.PlannerPortableMembershipRemoval(deletionId: 00000000-0000-4000-8000-000000000891)]), externalBindings: [], originPaths: []))"
+      ],
+      "skipped": false
+    },
+    {
+      "name": "informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.007498,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

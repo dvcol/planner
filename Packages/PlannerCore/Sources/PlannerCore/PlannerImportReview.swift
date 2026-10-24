@@ -796,6 +796,7 @@ extension PlannerPortableBackup {
           providerReference: $0.providerReference)
       },
       contextAliases: contextAliases, completionChanges: completionChanges,
-      restorationFamilies: selectingFamilies)
+      restorationFamilies: selectingFamilies, formatVersion: formatVersion,
+      membershipProvenance: membershipProvenance, membershipRemovals: membershipRemovals)
   }
 }

@@ -30,7 +30,7 @@ struct NativeImportFreshLocalValuesTests {
     else { throw CancellationError() }
     #expect(
       try competingValueGraph(before)
-        == competingValueGraph(freshLocalValuesFixture(currentFixture)))
+        == freshLocalValuesExpectedGraph(freshLocalValuesFixture(currentFixture)))
     var incomingData = try freshLocalValuesFixture("incoming")
     if usesPredecessorDerivedFamilyIdentity {
       let incomingText = try #require(String(data: incomingData, encoding: .utf8))
@@ -115,7 +115,7 @@ struct NativeImportFreshLocalValuesTests {
       expectedText.replacingOccurrences(
         of: "$restored-lifetime", with: museum.lifetimeId.uuidString
       ).utf8)
-    #expect(try competingValueGraph(after) == competingValueGraph(expected))
+    #expect(try competingValueGraph(after) == freshLocalValuesExpectedGraph(expected))
     guard
       case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
       let namespace = namespaces.first,
@@ -123,7 +123,8 @@ struct NativeImportFreshLocalValuesTests {
         request: .acknowledgedSnapshot(
           namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
-    #expect(try competingValueGraph(recovered.portableData) == competingValueGraph(expected))
+    #expect(
+      try competingValueGraph(recovered.portableData) == freshLocalValuesExpectedGraph(expected))
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
@@ -163,4 +164,9 @@ private func freshLocalValuesFixture(_ name: String) throws -> Data {
       forResource: "fresh-local-restoration-\(name)-v2", withExtension: "json",
       subdirectory: "Fixtures/PortableImport"))
   return try Data(contentsOf: fixture)
+}
+
+private func freshLocalValuesExpectedGraph(_ legacyFixtureData: Data) throws -> Data {
+  let expected = try canonicalPortableFixtureExpectations(legacyFixtureData)
+  return try competingValueGraph(JSONSerialization.data(withJSONObject: expected))
 }

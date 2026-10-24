@@ -1,0 +1,38 @@
+{
+  "cases": [
+    {
+      "fixture": "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/286054F5-F68B-4E89-82A5-512A5E4A33E0",
+      "legacyFixtureKind": "single",
+      "firstCheckpoint": "1",
+      "finalCheckpoint": "3",
+      "initialAndFinalCompleteGraphsMatchWithOnlyV3HeaderAndEmptyGroups": true
+    },
+    {
+      "fixture": "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/03CC1BB2-3B6B-4011-8E6A-0A319895E28B",
+      "legacyFixtureKind": "deep",
+      "firstCheckpoint": "1",
+      "finalCheckpoint": "3",
+      "initialAndFinalCompleteGraphsMatchWithOnlyV3HeaderAndEmptyGroups": true
+    },
+    {
+      "fixture": "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/DC6D2FC6-25FE-4FB0-AFBC-2BB200F6C0C4",
+      "legacyFixtureKind": "single",
+      "firstCheckpoint": "1",
+      "finalCheckpoint": "3",
+      "initialAndFinalCompleteGraphsMatchWithOnlyV3HeaderAndEmptyGroups": true
+    },
+    {
+      "fixture": "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/9FA8382B-B016-4699-9531-BF240F97AA82",
+      "legacyFixtureKind": "deep",
+      "firstCheckpoint": "1",
+      "finalCheckpoint": "3",
+      "initialAndFinalCompleteGraphsMatchWithOnlyV3HeaderAndEmptyGroups": true
+    }
+  ],
+  "changedExpectedFields": [
+    "formatVersion",
+    "membershipProvenance",
+    "membershipRemovals"
+  ],
+  "freshLifetimeOnlyCapturedPerExistingFixtureContract": true
+}

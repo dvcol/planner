@@ -64,7 +64,7 @@ struct NativeImportAdmissionTests {
       var content = try #require(sources[0]["content"] as? [String: Any])
       content["provider"] = [:]
       sources[0]["content"] = content
-    case .unsupportedVersion: object["formatVersion"] = 3
+    case .unsupportedVersion: object["formatVersion"] = 4
     case .duplicateSource: sources.append(sources[0])
     case .duplicateMembership: memberships.append(memberships[0])
     case .duplicatePair:

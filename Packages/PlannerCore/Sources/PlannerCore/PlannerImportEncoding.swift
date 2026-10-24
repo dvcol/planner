@@ -307,7 +307,7 @@ extension PlannerPortableBackup {
   }
 
   var importCanonicalValue: PlannerCanonicalValue {
-    .record([
+    var fields: [String: PlannerCanonicalValue] = [
       "format": .string("planner-data"), "formatVersion": .integer(2),
       "sources": .ordered(sources.map(\.importCanonicalValue)),
       "memberships": .ordered(memberships.map(\.importCanonicalValue)),
@@ -338,7 +338,15 @@ extension PlannerPortableBackup {
               }),
           ])
         }),
-    ])
+    ]
+    if usesMembershipProvenanceFormat {
+      fields["formatVersion"] = .integer(3)
+      fields["membershipProvenance"] = .ordered(
+        membershipProvenance.map(\.normalized).map(\.importCanonicalValue))
+      fields["membershipRemovals"] = .ordered(
+        membershipRemovals.map { .record(["deletionId": .identity($0.deletionId)]) })
+    }
+    return .record(fields)
   }
 }
 
@@ -369,13 +377,21 @@ func plannerImportDigest(
         selection.originalOperationId.map(PlannerCanonicalValue.identity)),
     ])
   }
-  let value = PlannerCanonicalValue.record([
+  var fields: [String: PlannerCanonicalValue] = [
     "command": .record(command),
     "datasetId": .identity(identity.datasetId),
     "ownershipBinding": .string(identity.ownershipBinding),
     "resolvedBindings": .identitySet(Set(bindings).map(\.importCanonicalValue)),
     "reviewedCurrentData": current.backup.importCanonicalValue,
-  ])
+  ]
+  if incoming.backup.usesMembershipProvenanceFormat {
+    fields["resolvedMembershipEvidence"] = .ordered(
+      incoming.backup.resolvedMembershipProvenance.map(\.operationCanonicalValue))
+    return plannerDigest(
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 3])
+        + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v3:")
+  }
+  let value = PlannerCanonicalValue.record(fields)
   if restoreDeletedData {
     return plannerDigest(
       Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 2]) + value.encoded(),

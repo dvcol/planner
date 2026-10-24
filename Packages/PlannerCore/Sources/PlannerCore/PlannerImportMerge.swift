@@ -145,6 +145,8 @@ struct PlannerImportMerge {
       mode != .skip || !selectedClosedAliasIdentifiers.contains($0.aliasId)
         || currentChanges[$0.id] == nil
     }
+    let membershipHistory = try PlannerImportMembershipHistory(
+      current: current, incoming: incoming, selectedOwners: selectedRecordOwners, markers: markers)
     recordsToWrite = .init(
       sources: incoming.sources.filter { selectedOwners.contains($0.importBinding.reference) },
       labelAssociations: incoming.labelAssociations.filter {
@@ -166,7 +168,9 @@ struct PlannerImportMerge {
       completionChanges: changes,
       restorationFamilies: incoming.restorationFamilies.filter { family in
         !current.restorationFamilies.contains { $0.familyId == family.familyId }
-      })
+      }, formatVersion: incoming.formatVersion,
+      membershipProvenance: membershipHistory.provenanceToWrite,
+      membershipRemovals: membershipHistory.removalsToWrite)
     let retainedSources = current.sources.filter {
       !replacedOwners.contains($0.importBinding.reference)
         && !deletedSources.contains($0.importBinding.reference)
@@ -253,7 +257,9 @@ struct PlannerImportMerge {
       restorationFamilies: (current.restorationFamilies + recordsToWrite.restorationFamilies).sorted
       {
         $0.familyId.uuidString < $1.familyId.uuidString
-      })
+      }, formatVersion: max(current.formatVersion, incoming.formatVersion),
+      membershipProvenance: membershipHistory.projectedProvenance,
+      membershipRemovals: membershipHistory.projectedRemovals)
     try PlannerImportGraph(backup: projected).validate()
   }
 }

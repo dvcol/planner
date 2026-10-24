@@ -665,6 +665,7 @@ public struct PlannerDecodedBackup: Sendable {
 }
 
 public struct PlannerPortableBackup: Sendable {
+  public let formatVersion: Int
   public let labelAssociations: [PlannerPortableLabelAssociation]
   public var items: [PlannerPortableItem] {
     sources.compactMap {
@@ -690,6 +691,8 @@ public struct PlannerPortableBackup: Sendable {
   public let contextAliases: [PlannerPortableContextAlias]
   public let completionChanges: [PlannerPortableCompletionChange]
   public let restorationFamilies: [PlannerPortableRestorationFamily]
+  public let membershipProvenance: [PlannerPortableMembershipProvenance]
+  public let membershipRemovals: [PlannerPortableMembershipRemoval]
 
   init(
     sources: [PlannerPortableSource], labelAssociations: [PlannerPortableLabelAssociation],
@@ -701,8 +704,12 @@ public struct PlannerPortableBackup: Sendable {
     ownedLinks: [PlannerPortableOwnedLink] = [],
     contextAliases: [PlannerPortableContextAlias] = [],
     completionChanges: [PlannerPortableCompletionChange] = [],
-    restorationFamilies: [PlannerPortableRestorationFamily] = []
+    restorationFamilies: [PlannerPortableRestorationFamily] = [],
+    formatVersion: Int = 2,
+    membershipProvenance: [PlannerPortableMembershipProvenance] = [],
+    membershipRemovals: [PlannerPortableMembershipRemoval] = []
   ) {
+    self.formatVersion = formatVersion
     self.sources = sources
     self.labelAssociations = labelAssociations
     self.memberships = memberships
@@ -714,6 +721,8 @@ public struct PlannerPortableBackup: Sendable {
     self.contextAliases = contextAliases
     self.completionChanges = completionChanges
     self.restorationFamilies = restorationFamilies
+    self.membershipProvenance = membershipProvenance
+    self.membershipRemovals = membershipRemovals
   }
 }
 

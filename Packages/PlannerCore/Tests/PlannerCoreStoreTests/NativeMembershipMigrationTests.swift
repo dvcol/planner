@@ -54,15 +54,22 @@ struct NativeMembershipMigrationTests {
               estimate: .init(minutes: 120, displayUnit: .hour))))
       ).outcome
     else { throw CancellationError() }
-    let expected = try #require(
-      JSONSerialization.jsonObject(
-        with: Data(contentsOf: fixture.appendingPathComponent("expected-portable.json")))
-        as? [String: Any])
+    let expected = try canonicalPortableFixtureExpectations(
+      Data(contentsOf: fixture.appendingPathComponent("expected-portable.json")))
     let actual = try #require(JSONSerialization.jsonObject(with: exported) as? [String: Any])
     #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
     #expect(item.content.notes == "Migrated note" && item.sourceLifetimeId == itemLifetime)
     #expect(originalResult == replayed && originalCheckpoint == 1 && replayCheckpoint == 1)
     #expect(try historicalRecoveryFiles(in: configuration.recoveryDirectoryURL) == recoveryFiles)
+    guard
+      case .listedNamespaces(let originalNamespaces) = await planner.inspectRecovery(
+        request: .namespaces),
+      let originalNamespace = originalNamespaces.first,
+      case .selected(let originalSnapshot) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: originalNamespace.namespaceId, checkpointGeneration: 7))
+    else { throw CancellationError() }
+    #expect(originalSnapshot.decodedBackup.backup.formatVersion == 2)
     let control = try #require(
       JSONSerialization.jsonObject(with: Data(contentsOf: configuration.controlURL))
         as? [String: Any])

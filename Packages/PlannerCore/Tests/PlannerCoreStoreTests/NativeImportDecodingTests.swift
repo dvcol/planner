@@ -26,6 +26,7 @@ struct NativeImportDecodingTests {
       return
     }
     let backup = decoded.backup
+    #expect(backup.formatVersion == 1)
     #expect(backup.sources.count == 7 && backup.items.count == 2 && backup.lists.count == 2)
     #expect(backup.memberships.count == 3 && backup.itineraryEntries.count == 2)
     #expect(backup.expandedCompletions.count == 2 && backup.schedules.count == 2)

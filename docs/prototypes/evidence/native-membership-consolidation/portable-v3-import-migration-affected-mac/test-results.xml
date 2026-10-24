@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.5375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="97" failures="12" skipped="0" time="15.388529542">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="removalObservationsCannotBorrowAnotherItemListPairsAuthority()" time="14.493256583"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="malformedMembershipHistoryRejectsTheWholeDecodeAtItsActualProperty(testCase:)" time="14.493113459"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="laterOrdinaryWritesPreserveMembershipAuthorityAndOriginalImportReplay(_:)" time="14.603781332999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddSurvivesNativeImportRecoveryReplayAndReopen()" time="14.493176667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="14.493161542000001"/>
+        <testcase classname="PlannerCoreStoreTests.ExpandedCompletionMigrationTests" name="genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion()" time="14.456609"/>
+        <testcase classname="PlannerCoreStoreTests.CategoryMigrationTests" name="genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery()" time="14.456668667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="skipKeepsRestoredCurrentDataWhileImportingAnIndependentSource()" time="14.637697292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime()" time="14.637978833999998"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:)" time="14.638267708999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="foreignOwnedCandidateCannotBypassRestorationReconciliation()" time="14.637360958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportRestorationTests" name="skipKeepsRestoredCurrentDataAndSkipsOwnersBoundToItsClosedPredecessor()" time="14.637791667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedAdditionTests" name="overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:omitUnchangedOwners:)" time="14.842600292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportUnknownCandidateKindsTests" name="skipRetainsEachCurrentSourceFamilyAndAllOmittedOwnedData(sourceSuffix:incomingLifetimeSuffix:)" time="14.6385705"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportIncomingDeletionReviewTests" name="skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:)" time="14.638023708999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportIncomingDeletionReviewTests" name="skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:)" time="14.638145959000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportIncomingDeletionReviewTests" name="skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:)" time="14.638690458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportConflictReviewTests" name="globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:)" time="7.753482042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportConflictReviewTests" name="incomingCompletionHistoryBelongsToItsWholeOwnerReview()" time="6.156795916"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportConflictReviewTests" name="reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:)" time="7.7611285830000005"/>
+        <testcase classname="PlannerCoreStoreTests.ItineraryMigrationTests" name="genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation()" time="14.638741667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorValueKindsTests" name="predecessorValuesPreserveEveryLiveSourceKindAndItsCompleteLineage(restorationCount:)" time="14.456639792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportCompetingValueKindsTests" name="overwriteRetainsEveryCurrentFamilyAndProjectsOnlyDeclaredBindings(sourceSuffix:incomingCase:)" time="14.493279083000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportMergeTests" name="changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:)" time="14.547765457999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportMergeTests" name="retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:)" time="14.547749209"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportMergeTests" name="overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear()" time="14.603596249999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportMergeTests" name="skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:)" time="14.547777208"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportCompetingValuesTests" name="overwriteAppliesCompetingValuesWithoutAdoptingItsFamily(incomingCase:restorationCount:)" time="14.456510332999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipMigrationTests" name="genuineSchema18UpgradePreservesGraphAndHistoricalRecoveryEvidence()" time="14.603629708"/>
+        <testcase classname="PlannerCoreStoreTests.ManualContainerEstimateMigrationTests" name="genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay()" time="14.637857167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOverwriteDeletionReviewTests" name="overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:)" time="14.493114417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOverwriteDeletionReviewTests" name="overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:)" time="14.547735167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOverwriteDeletionReviewTests" name="overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:)" time="14.4672295"/>
+        <testcase classname="PlannerCoreStoreTests.MembershipMigrationTests" name="genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership()" time="14.603526"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="aNewListCanReferenceAnotherKnownCandidateOfTheOpenFamily(mode:)" time="14.456424292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:)" time="14.4566235"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="routeAndLabelBindingsResolveKnownFamiliesWithoutReplacingCurrentOwners(importCase:)" time="14.456467291000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="emptyPlannerRestoresIncomingFamilyReferencesAndItsCompleteGraph(sourceIdentifierSuffix:mode:)" time="14.456700334"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportBindingReviewTests" name="internallyDeclaredKnownCandidateUsesCurrentIdentityAndReviewedConflictMode(declaration:mode:)" time="14.456568040999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportClosedHistoryTests" name="removedContextsRetainReviewableRestorableHistory(kind:)" time="14.637922625"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportResultTests" name="appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry()" time="14.636798542000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportResultTests" name="incompleteRecoveryRetainsSummaryUntilCheckpointRepair()" time="14.637139417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportResultTests" name="mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:)" time="14.636924459000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportResultTests" name="restorationSummaryReportsSavedLifetimesAndReboundDependencies()" time="14.636855417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()" time="14.492993083"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)" time="14.467270166"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)" time="14.467273917"/>
+        <testcase classname="PlannerCoreStoreTests.NativeProvenanceMigrationTests" name="genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt()" time="14.638121416"/>
+        <testcase classname="PlannerCoreStoreTests.ItineraryScheduleMigrationTests" name="genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary()" time="14.636999875"/>
+        <testcase classname="PlannerCoreStoreTests.ItineraryEntryMigrationTests" name="genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry()" time="14.637624125"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportSourceDeletionTests" name="overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:)" time="14.493230583"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportSourceDeletionTests" name="sourceDeletionAndNewOwnersApplyTogetherOrLeaveNoPartialImport(scenario:)" time="14.491675333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportProvenanceTests" name="importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:)" time="14.338404665999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeProviderMigrationTests" name="genuineSchema17MigrationPreservesOriginsGraphAndReceipt()" time="14.547706457999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorHistoryTests" name="restoredMembershipHistoryTransformsExactLifetimesOrRejectsRetainedIdentityCollisions(collidesWithRetainedHistory:restoresIncomingValuesIntoDeletedSource:)" time="14.638349375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportUnknownCandidateSkipTests" name="skipKeepsTheCurrentFamilyAndRejectsUnknownCandidateDependents(incomingLifetimeSuffix:sharesFamilyIdentifier:)" time="14.638831750000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorLabelTests" name="restoredOwnerLabelsRequireRepresentedAuthorizedDependencies(ownerSuffix:obstructRecovery:)" time="14.493444459000001"/>
+        <testcase classname="PlannerCoreStoreTests.ManualContainerEstimateTests" name="manualEstimateClearReplayAndInvalidEditsPreserveUnrelatedContent(kind:)" time="14.267021042"/>
+        <testcase classname="PlannerCoreStoreTests.ManualContainerEstimateTests" name="manualContainerFieldsPersistExactValuesAndGuardEditsAcrossReopen()" time="14.088843"/>
+        <testcase classname="PlannerCoreStoreTests.TagMigrationTests" name="genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery()" time="14.603468167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalValuesTests" name="restoredValuesCreateALocalLifetimeAndRebindOnlyRepresentedReferences(usesPredecessorDerivedFamilyIdentity:hasClosedLineage:)" time="14.338224083">
+            <failure message="Expectation failed: try competingValueGraph(before)
+        == competingValueGraph(freshLocalValuesFixture(currentFixture)) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(before)
+        == competingValueGraph(freshLocalValuesFixture(currentFixture)) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(before)
+        == competingValueGraph(freshLocalValuesFixture(currentFixture)) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(after) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(after) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(recovered.portableData) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(after) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(recovered.portableData) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(recovered.portableData) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(before)
+        == competingValueGraph(freshLocalValuesFixture(currentFixture)) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(after) == competingValueGraph(expected) (error)"/>
+            <failure message="Expectation failed: try competingValueGraph(recovered.portableData) == competingValueGraph(expected) (error)"/>
+        </testcase>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory()" time="14.493111208"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt()" time="14.456533375000001"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList()" time="14.493068916"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay()" time="14.456710167"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLinkMigrationTests" name="mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory()" time="14.467065459"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLineageTests" name="restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:)" time="10.414873416"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLineageTests" name="explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState()" time="12.088191"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLineageTests" name="aClosedMembershipCannotRedirectItsHistoryToAnotherItem()" time="10.082346"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLineageTests" name="nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup()" time="12.088361791"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportDeletedReviewTests" name="closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)" time="14.636854583"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportDeletedReviewTests" name="unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview()" time="14.603623542000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportDeletedReviewTests" name="skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)" time="14.603529916"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportAdmissionTests" name="invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:)" time="14.338152832999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportAdmissionTests" name="absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset()" time="14.337496"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportDecodingTests" name="bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage()" time="14.467027958000001"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalKindTests" name="restoredSourceValuesPreserveOmittedReferencesAndTruthfulRecovery(sourceSuffix:)" time="14.467252"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOmittedOwnerReviewTests" name="omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:)" time="14.467244334000002"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOmittedOwnerReviewTests" name="omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:)" time="14.493101459"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOmittedOwnerReviewTests" name="omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:)" time="14.491698583"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportProviderTests" name="applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:)" time="6.013323875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportFreshLocalOwnedTests" name="freshOwnerRestoresExactOwnedReferencesButRejectsForeignCandidates(referenceKind:hasForeignReferenceCandidate:)" time="14.638207667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportPredecessorItineraryHistoryTests" name="restoredItineraryKeepsExactDirectAndExpandedHistoryOrRejectsTheWholeCollision(collision:restorationCase:)" time="14.456864958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLiveOverwriteTests" name="olderOwnedLinksAndSchedulesNeedFreshRestorationAuthorization()" time="14.638530417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLiveOverwriteTests" name="olderBackupOverwritesRestoredValuesWithoutReplacingTheLiveLifetimeOrOmittedList(restorationCount:)" time="14.638002791"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportApplyTests" name="reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)" time="14.638265416"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportApplyTests" name="ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)" time="14.638200832999999"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportApplyTests" name="failedRecoveryPreparationLeavesGraphAndReceiptUnapplied()" time="14.638670792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportLineageMigrationTests" name="genuineV15MigrationPreservesGraphBudgetsRecoveryAndCreationReplay()" time="14.603589"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportHistoryCollisionTests" name="skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:)" time="14.456662625"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportReviewTests" name="completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData()" time="14.404638125"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportReviewTests" name="identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState()" time="14.338155792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportScaleTests" name="largePortableListRetainsAllSourcesAndMembershipBindings()" time="14.467487209"/>
+        <testcase classname="PlannerCoreStoreTests.ItemLabelMigrationTests" name="genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem()" time="14.638221667"/>
+        <testcase classname="PlannerCoreStoreTests.ImportLineageEncodingTests" name="initialContributionRetainsItsContextAndExplicitNullChange(kind:)" time="14.337582416"/>
+        <testcase classname="PlannerCoreStoreTests.ImportLineageEncodingTests" name="explicitCompletionHistoryEncodesTheIndependentPortableFixture()" time="14.4046285"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportMarkerTests" name="actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData()" time="6.102898291000001"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "removedDirectories": [
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/EDD76F22-F517-4AE0-87CD-D87A81CA887D",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AE56797C-331C-498F-899D-27E7C4876864",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/BAA845C7-DE53-445A-831F-A49A89A1E239",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/298CF24E-C0AE-46E0-9FAE-E95685C5AF60",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/0C48626E-F0CF-4CDA-BEEC-10BD92621BFD",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/EBD245E3-AEB5-49E0-AB7A-0A5AD0AB57D2",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/927DDEEE-17C5-4892-8985-C1B21D68A956",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/E3E13135-7F35-4491-9CA9-4FAF4B10F506",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/AE94C029-75C0-41C1-85BA-5AC0A92CBB63",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/ABBE86CB-6235-474A-9EAB-5E0AA0E12B56",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/A6EA8161-688E-458A-B300-92F0AB95E67D",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/CCEFEC4D-0907-4866-BB1C-4661666F8D60",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/1D6D3790-E34E-4DD0-8D49-4712D1C5F1DD",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/B811872D-0B7C-4ECE-BE0B-66F82A975A9A",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/5AE7BE98-EB6E-402D-8F04-13558B0C4C46",
+    "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/BA179A28-DA08-403C-A071-E598640FE728"
+  ],
+  "verifierSha256": "497036fc2ee1f7356f11f731e1579b64a78c32bb57e277d6930a9b803edb51c9",
+  "sourceLogSha256": "83674ffe4da8bb09edc52c7e2ebfcf96d2191cd31fb56310bddbd7b8c1cc212c",
+  "diagnosticCounts": {
+    "vnode unlinked while in use": 0,
+    "invalidated open fd": 0,
+    "database integrity compromised": 0
+  },
+  "fixtureCount": 16,
+  "hostProcessIdentifiers": [
+    50170
+  ]
+}
