@@ -303,3 +303,56 @@ extension MembershipSnapshot {
       item: .init(kind: .item, id: item.id, lifetimeId: item.lifetimeId), observedRemovalIds: [])
   }
 }
+
+extension PlannerImportGraph {
+  /// The caller validates the complete snapshot before resolving action identities.
+  func resolvedMembershipForAction(listIdentifier: UUID, membershipIdentifier: UUID) throws
+    -> PlannerPortableMembership
+  {
+    let missing = PlannerFailure(
+      "missingReference", "The selected membership is missing or unresolved.")
+    let direct = backup.memberships.filter { $0.id == membershipIdentifier }
+    if !direct.isEmpty {
+      guard direct.count == 1, let member = direct.first, member.list.id == listIdentifier else {
+        throw missing
+      }
+      return member
+    }
+    let aliases = backup.contextAliases.filter {
+      $0.context.importContextIdentities.contains {
+        $0.kind == .membership && $0.id == membershipIdentifier
+      }
+    }
+    let requiredRemovals = try validatedMembershipRemovalAuthority()
+    var originalBindings: Set<PlannerPortableBoundIdentity> = []
+    var canonicalBindings: Set<PlannerPortableBoundIdentity> = []
+    for alias in aliases {
+      guard
+        let original = alias.context.importContextIdentities.first(where: {
+          $0.kind == .membership
+        }),
+        let canonical = alias.canonicalContext.importContextIdentities.first(where: {
+          $0.kind == .membership
+        }), !isClosed(original), !isClosed(canonical),
+        let binding = retainedMembershipProvenance(for: original),
+        binding.list.id == listIdentifier,
+        (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds),
+        let target = backup.memberships.first(where: {
+          $0.id == canonical.id && $0.lifetimeId == canonical.lifetimeId
+        }), target.baselineProvenance.pair == binding.pair,
+        let targetBinding = membershipProvenance(for: canonical),
+        Set(targetBinding.observedRemovalIds) == Set(binding.observedRemovalIds)
+      else { continue }
+      originalBindings.insert(original)
+      canonicalBindings.insert(canonical)
+    }
+    guard originalBindings.count == 1, canonicalBindings.count == 1,
+      let canonical = canonicalBindings.first,
+      let member = backup.memberships.first(where: {
+        $0.id == canonical.id && $0.lifetimeId == canonical.lifetimeId
+          && $0.list.id == listIdentifier
+      })
+    else { throw missing }
+    return member
+  }
+}

@@ -6874,6 +6874,19 @@ public actor Planner {
         operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
         envelope: envelope)
     }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      let bindings = try proposal.contextualBindings(for: operation.command)
+      let digest = membershipReorderingDigest(
+        listId: listId, membershipId: membershipId, placement: placement, identity: identity,
+        bindings: bindings)
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another contextual action.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
       throw PlannerFailure(
@@ -6928,16 +6941,6 @@ public actor Planner {
     let digest = membershipReorderingDigest(
       listId: listId, membershipId: membershipId, placement: placement, identity: identity,
       bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
-        throw PlannerFailure(
-          "operationPayloadMismatch", "Prepared evidence describes another reorder.")
-      }
-      return PlannerOperationResult(
-        operationId: operation.operationId, outcome: .unverified(proposal.summary))
-    }
     if changed {
       let rank = try associationInsertionRank(
         at: insertionIndex, ordered: remaining, associations: &memberships)
@@ -6973,7 +6976,8 @@ public actor Planner {
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+        resolvedMembershipEvidence: []))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
@@ -7083,33 +7087,8 @@ public actor Planner {
     }
     guard !aliases.isEmpty else { throw missing }
     let backup = try maintenanceSnapshot(context).validated().backup
-    let graph = PlannerImportGraph(backup: backup)
-    let requiredRemovals = try graph.validatedMembershipRemovalAuthority()
-    var originalBindings: Set<PlannerPortableBoundIdentity> = []
-    var canonicalBindings: Set<PlannerPortableBoundIdentity> = []
-    for alias in aliases {
-      guard
-        let original = alias.context.importContextIdentities.first(where: {
-          $0.kind == .membership
-        }),
-        let canonical = alias.canonicalContext.importContextIdentities.first(where: {
-          $0.kind == .membership
-        }), !graph.isClosed(original), !graph.isClosed(canonical),
-        let binding = graph.retainedMembershipProvenance(for: original),
-        binding.list.id == listId,
-        (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds),
-        let target = backup.memberships.first(where: {
-          $0.id == canonical.id && $0.lifetimeId == canonical.lifetimeId
-        }), target.baselineProvenance.pair == binding.pair,
-        let targetBinding = graph.membershipProvenance(for: canonical),
-        Set(targetBinding.observedRemovalIds) == Set(binding.observedRemovalIds)
-      else { continue }
-      originalBindings.insert(original)
-      canonicalBindings.insert(canonical)
-    }
-    guard originalBindings.count == 1, canonicalBindings.count == 1,
-      let canonical = canonicalBindings.first
-    else { throw missing }
+    let canonical = try PlannerImportGraph(backup: backup).resolvedMembershipForAction(
+      listIdentifier: listId, membershipIdentifier: membershipId)
     let identifier = canonical.id
     var canonicalDescriptor = FetchDescriptor<PlannerSchemaV18.Membership>(
       predicate: #Predicate { $0.id == identifier })
@@ -7205,15 +7184,6 @@ public actor Planner {
     ]
     let digest = appearanceCompletionDigest(
       appearance: appearance, done: done, identity: identity, bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
-        throw PlannerFailure(
-          "operationPayloadMismatch", "Prepared evidence describes another completion action.")
-      }
-      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
-    }
     let previous = before.expandedCompletions.first { $0.context == binding }
     let after = ExpandedCompletionSnapshot(
       context: binding, localDone: done, itineraryId: itineraryId)
@@ -7263,7 +7233,8 @@ public actor Planner {
           itineraries: snapshots, labelAssociations: labels,
           tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
           deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+        resolvedMembershipEvidence: []))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     let existing = (records.entry.expandedCompletions ?? []).first {
@@ -7321,15 +7292,6 @@ public actor Planner {
     ]
     let digest = appearanceCompletionDigest(
       appearance: appearance, done: done, identity: identity, bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
-        throw PlannerFailure(
-          "operationPayloadMismatch", "Prepared evidence describes another completion action.")
-      }
-      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
-    }
     let entryAfter = ItineraryEntrySnapshot(
       id: before.id, lifetimeId: before.lifetimeId,
       itinerary: before.itinerary, source: before.source, rank: before.rank, localDone: done)
@@ -7377,7 +7339,8 @@ public actor Planner {
         proposedBackup: PlannerDataSnapshot(
           itineraries: snapshots, labelAssociations: labels,
           tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
-          deletionMarkers: markers), payloadDigest: digest, evidence: "preparedUnverified"))
+          deletionMarkers: markers), payloadDigest: digest, evidence: "preparedUnverified",
+        resolvedBindings: bindings, resolvedMembershipEvidence: []))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     record.localDone = done
@@ -8497,6 +8460,18 @@ public actor Planner {
         operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
         envelope: envelope)
     }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      let bindings = try proposal.contextualBindings(for: operation.command)
+      let digest = bulkCompletionDigest(
+        scope: scope, done: done, identity: identity, bindings: bindings)
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another contextual action.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
       throw PlannerFailure(
@@ -8520,15 +8495,6 @@ public actor Planner {
       throw PlannerFailure(
         "staleReview", "The command or full target set changed; review it again.",
         details: .staleReview)
-    }
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
-        throw PlannerFailure(
-          "operationPayloadMismatch", "Prepared evidence describes another bulk action.")
-      }
-      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
     let changed = resolution.targets.contains { $0.localDone != done }
     let lists = try listSnapshots(context).map { value in
@@ -8569,7 +8535,8 @@ public actor Planner {
         proposedBackup: PlannerDataSnapshot(
           itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
           items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+        resolvedMembershipEvidence: []))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     for target in resolution.targets { target.apply(done: done, context: context) }
@@ -8630,6 +8597,18 @@ public actor Planner {
         operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
         envelope: envelope)
     }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      let bindings = try proposal.contextualBindings(for: operation.command)
+      let digest = appearanceCompletionDigest(
+        appearance: appearance, done: done, identity: identity, bindings: bindings)
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another contextual action.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
       throw PlannerFailure(
@@ -8672,16 +8651,6 @@ public actor Planner {
     ]
     let digest = appearanceCompletionDigest(
       appearance: appearance, done: done, identity: identity, bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
-        throw PlannerFailure(
-          "operationPayloadMismatch", "Prepared evidence describes another completion action.")
-      }
-      return PlannerOperationResult(
-        operationId: operation.operationId, outcome: .unverified(proposal.summary))
-    }
     let after = MembershipSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, list: before.list, item: before.item,
       rank: before.rank, localDone: done)
@@ -8725,7 +8694,8 @@ public actor Planner {
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+        resolvedMembershipEvidence: []))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     record.localDone = done
