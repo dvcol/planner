@@ -10,7 +10,8 @@ struct PlannerMembershipConsolidation {
     let basis: [UUID]
   }
 
-  init(snapshot: PlannerDataSnapshot) throws {
+  init(snapshot: PlannerDataSnapshot, detachedExpanded: [PlannerPortableExpandedCompletion]) throws
+  {
     let current = try snapshot.decodedRecords().backup
     let graph = PlannerImportGraph(backup: current)
     let requiredRemovals = try graph.validatedMembershipRemovalAuthority()
@@ -47,11 +48,32 @@ struct PlannerMembershipConsolidation {
           .append(member)
       }
     }
+    var detachedGenerations: [Generation: [PlannerPortableExpandedCompletion]] = [:]
+    for completion in detachedExpanded {
+      let identity = PlannerPortableBoundIdentity(
+        kind: .membership, id: completion.context.membershipId,
+        lifetimeId: completion.context.membershipLifetimeId)
+      let binding = try Self.binding(identity, in: provenance)
+      guard !(requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds),
+        current.itineraryEntries.contains(where: {
+          $0.id == completion.context.listEntryId
+            && $0.lifetimeId == completion.context.listEntryLifetimeId
+            && $0.source.kind == .list && $0.source.id == binding.list.id
+            && $0.sourceLifetimeId == binding.list.lifetimeId
+        })
+      else {
+        throw Self.unresolved("An unresolved completion has no proven retired membership scope.")
+      }
+      detachedGenerations[.init(pair: binding.pair, basis: binding.observedRemovalIds), default: []]
+        .append(completion)
+    }
     var members = eligible
     var expanded = current.expandedCompletions
     var aliases = current.contextAliases
     let changes = Dictionary(uniqueKeysWithValues: current.completionChanges.map { ($0.id, $0) })
-    for (generation, contributions) in suppressed {
+    let generations = Set(suppressed.keys).union(detachedGenerations.keys)
+    for generation in generations {
+      let contributions = suppressed[generation] ?? []
       let roots = provenance.values.filter {
         $0.pair == generation.pair && $0.observedRemovalIds == generation.basis
       }.sorted {
@@ -63,13 +85,18 @@ struct PlannerMembershipConsolidation {
       guard let root = roots.first(where: { graph.isClosed($0.membership) }) ?? roots.first else {
         throw Self.unresolved("A suppressed generation needs its retained membership binding.")
       }
-      _ = try Self.normalize(
-        canonical: .listMembership(
-          membershipId: root.membershipId, membershipLifetimeId: root.membershipLifetimeId),
-        contributions: contributions.map {
-          (.listMembership(membershipId: $0.id, membershipLifetimeId: $0.lifetimeId), $0.localDone)
-        }, pair: generation.pair, basis: generation.basis, provenance: provenance, graph: graph,
-        aliases: &aliases, changes: changes)
+      if !contributions.isEmpty {
+        _ = try Self.normalize(
+          canonical: .listMembership(
+            membershipId: root.membershipId, membershipLifetimeId: root.membershipLifetimeId),
+          contributions: contributions.map {
+            (
+              .listMembership(membershipId: $0.id, membershipLifetimeId: $0.lifetimeId),
+              $0.localDone
+            )
+          }, pair: generation.pair, basis: generation.basis, provenance: provenance, graph: graph,
+          aliases: &aliases, changes: changes)
+      }
       let identities = Set(contributions.map { $0.baselineProvenance.membership })
       expanded.removeAll {
         identities.contains(
@@ -91,6 +118,10 @@ struct PlannerMembershipConsolidation {
             initial.append((.expandedListItem(context), value))
           }
         }
+        initial += (detachedGenerations[generation] ?? []).filter {
+          $0.context.listEntryId == entry.id && $0.context.listEntryLifetimeId == entry.lifetimeId
+        }.map { (.expandedListItem($0.context), $0.localDone) }
+        if initial.isEmpty { continue }
         _ = try Self.normalize(
           canonical: .expandedListItem(
             .init(
@@ -395,4 +426,44 @@ func plannerStageMembershipConsolidation(_ backup: PlannerPortableBackup, contex
       alias, identifier: alias.aliasId, kind: "contextAlias", records: lineage, context: context)
   }
   context.processPendingChanges()
+}
+
+/// Stage only unresolved records; retained scope and causal authority are validated before preparation.
+func plannerStageDetachedExpandedRetirements(
+  context: ModelContext, memberships: [MembershipSnapshot], lineage: PlannerNativeLineage
+) throws -> [PlannerPortableExpandedCompletion] {
+  let liveMembershipBindings = Set(memberships.map { $0.baselineProvenance.membership })
+  let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+  var contributions: [PlannerPortableExpandedCompletion] = []
+  for record in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
+    guard let entryIdentifier = record.listEntryId,
+      let entryLifetime = record.listEntryLifetimeId,
+      let membershipIdentifier = record.membershipId,
+      let membershipLifetime = record.membershipLifetimeId
+    else {
+      throw PlannerFailure("readUnavailable", "The completion has incomplete context identities.")
+    }
+    let identity = PlannerPortableBoundIdentity(
+      kind: .membership, id: membershipIdentifier, lifetimeId: membershipLifetime)
+    if liveMembershipBindings.contains(identity), (try? record.value()) != nil { continue }
+    guard let binding = lineage.membershipProvenance.first(where: { $0.membership == identity }),
+      entries.contains(where: {
+        $0.id == entryIdentifier && $0.lifetimeId == entryLifetime && $0.sourceKind == "list"
+          && $0.sourceId == binding.list.id && $0.sourceLifetimeId == binding.list.lifetimeId
+      })
+    else {
+      throw PlannerFailure(
+        "readUnavailable", "The unresolved completion has no retained scope binding.")
+    }
+    contributions.append(
+      .init(
+        context: .init(
+          listEntryId: entryIdentifier, listEntryLifetimeId: entryLifetime,
+          membershipId: membershipIdentifier, membershipLifetimeId: membershipLifetime),
+        localDone: record.localDone))
+    record.listEntry = nil
+    context.delete(record)
+  }
+  context.processPendingChanges()
+  return contributions
 }

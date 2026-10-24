@@ -3975,18 +3975,32 @@ public actor Planner {
       return true
     }
     let lineage = try PlannerNativeLineage(context: context)
-    guard !lineage.membershipRemovals.isEmpty else { return false }
-    let markers = try deletionMarkers(context)
-    for record in records {
-      let membership = try record.value()
-      let retained =
-        lineage.membershipProvenance.first {
-          $0.membershipId == membership.id && $0.membershipLifetimeId == membership.lifetimeId
-        } ?? membership.baselineProvenance
-      let required = try lineage.provenanceForNewMembership(membership, markers: markers)
-      if !Set(retained.observedRemovalIds).isSuperset(of: required.observedRemovalIds) {
-        return true
+    if !lineage.membershipRemovals.isEmpty {
+      let markers = try deletionMarkers(context)
+      for record in records {
+        let membership = try record.value()
+        let retained =
+          lineage.membershipProvenance.first {
+            $0.membershipId == membership.id && $0.membershipLifetimeId == membership.lifetimeId
+          } ?? membership.baselineProvenance
+        let required = try lineage.provenanceForNewMembership(membership, markers: markers)
+        if !Set(retained.observedRemovalIds).isSuperset(of: required.observedRemovalIds) {
+          return true
+        }
       }
+    }
+    let liveMembershipBindings = Set(
+      records.compactMap { record -> PlannerPortableBoundIdentity? in
+        guard let identifier = record.id, let lifetime = record.lifetimeId else { return nil }
+        return .init(kind: .membership, id: identifier, lifetimeId: lifetime)
+      })
+    for completion in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
+      guard let identifier = completion.membershipId,
+        let lifetime = completion.membershipLifetimeId,
+        liveMembershipBindings.contains(
+          .init(kind: .membership, id: identifier, lifetimeId: lifetime))
+      else { return true }
+      do { _ = try completion.value() } catch { return true }
     }
     return false
   }
@@ -3994,6 +4008,7 @@ public actor Planner {
   private func ensureCanonicalMemberships(identity: PlannerStoreIdentity, context: ModelContext)
     throws
   {
+    context.autosaveEnabled = false
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     guard try membershipConsolidationRequired(records, context: context) else { return }
     let memberships = try records.map { try $0.value() }
@@ -4008,10 +4023,6 @@ public actor Planner {
         "maintenanceRequired", "Prior recovery must complete before consolidation.")
     }
     let history = try latestHistoryToken(in: context)
-    let before = try maintenanceSnapshot(context, memberships: memberships)
-    let consolidation = try PlannerMembershipConsolidation(snapshot: before)
-    let proposed = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
-    _ = try proposed.validated()
     let maintenanceIdentifier = UUID()
     let usedIdentifiers = Set(receipts.compactMap(\.operationId))
       .union(try archive.maintenanceCommits(in: context).map(\.maintenanceId))
@@ -4019,6 +4030,20 @@ public actor Planner {
     guard !usedIdentifiers.contains(maintenanceIdentifier) else {
       throw PlannerFailure(
         "maintenanceRequired", "A fresh maintenance identity could not be issued.")
+    }
+    let consolidation: PlannerMembershipConsolidation
+    let proposed: PlannerDataSnapshot
+    do {
+      let detached = try plannerStageDetachedExpandedRetirements(
+        context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
+      let before = try maintenanceSnapshot(context, memberships: memberships)
+      consolidation = try PlannerMembershipConsolidation(
+        snapshot: before, detachedExpanded: detached)
+      proposed = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
+      _ = try proposed.validated()
+    } catch {
+      context.rollback()
+      throw error
     }
     do {
       let evidence = try archive.prepareMaintenance(

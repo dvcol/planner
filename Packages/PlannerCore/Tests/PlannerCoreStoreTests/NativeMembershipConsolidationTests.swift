@@ -10,6 +10,64 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(arguments: ["missingMembershipHistory", "differentList"])
+  func detachedCompletionsCannotBorrowAnUnknownLifetimeOrAnotherListsScope(scenario: String)
+    async throws
+  {
+    let fixture = try await AssociationUndoFixture()
+    let itinerary = try #require(
+      try await fixture.save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
+    let entrySource: PlannerEntityReference
+    if scenario == "differentList" {
+      entrySource = try #require(
+        try await fixture.save(.createList(content: .init(name: "Other"))).generated.first)
+    } else {
+      entrySource = fixture.list
+    }
+    let addition = try await fixture.save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: entrySource, placement: .last))
+    guard case .itineraryEntry(let entryIdentifier, _, _) = addition.generatedReferences.first,
+      case .decoded(let original) = fixture.planner.decodeImport(try await fixture.export()),
+      let originalMembership = original.backup.memberships.first
+    else { throw CancellationError() }
+    let removal = await fixture.remove()
+    let undo = try #require(removal.associationUndoSnapshot)
+    _ = try await fixture.save(.restoreAssociation(snapshot: undo))
+    let deliveredLifetime: UUID
+    if scenario == "missingMembershipHistory" {
+      deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000849")!
+    } else {
+      deliveredLifetime = originalMembership.lifetimeId
+    }
+    guard
+      case .listedNamespaces(let namespaces) = await fixture.planner.inspectRecovery(
+        request: .namespaces), let namespace = namespaces.first
+    else { throw CancellationError() }
+    let namespaceDirectory = fixture.configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    try await insertDetachedExpandedCompletion(
+      storeURL: fixture.configuration.storeURL, entryIdentifier: entryIdentifier,
+      membershipIdentifier: originalMembership.id, membershipLifetime: deliveredLifetime)
+    let response = await fixture.planner.query(
+      .init(
+        session: fixture.session,
+        request: .items(.init(scope: .list(fixture.list.id), completion: .all, archive: .all))))
+    guard case .failed(let failure) = response else {
+      Issue.record("Unknown or cross-List completion inputs must not be discarded: \(response)")
+      return
+    }
+    #expect(failure.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .unavailable(let repeatedFailure) = await reopened.bootstrap() else {
+      Issue.record("Unproven completion input must remain intact for reconciliation.")
+      return
+    }
+    #expect(repeatedFailure.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+  }
+
   @Test func unprovenCompetingMembershipLifetimesStayUnmodifiedAndUnavailable() async throws {
     let fixture = try await AssociationUndoFixture()
     guard
@@ -50,7 +108,12 @@ struct NativeMembershipConsolidationTests {
     #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
   }
 
-  @Test func oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent() async throws {
+  @Test(arguments: [true, false], [false, true])
+  func oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent(
+    includesMembership: Bool, preparationFails: Bool
+  )
+    async throws
+  {
     let fixture = try await AssociationUndoFixture()
     let itinerary = try #require(
       try await fixture.save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
@@ -86,23 +149,67 @@ struct NativeMembershipConsolidationTests {
     else { throw CancellationError() }
     #expect(restoredMembership.id == originalMembership.id)
     #expect(restoredMembership.lifetimeId != originalMembership.lifetimeId)
-    try await insertIndependentMemberships(
-      storeURL: fixture.configuration.storeURL, itemIdentifier: fixture.item.id,
-      listIdentifier: fixture.list.id,
-      contributions: [
-        (
-          originalMembership.id.uuidString, originalMembership.lifetimeId.uuidString,
-          originalMembership.rank, true
-        )
-      ])
-    try await insertIndependentExpandedCompletion(
-      storeURL: fixture.configuration.storeURL, entryIdentifier: firstEntry,
-      membershipIdentifier: originalMembership.id, membershipLifetime: originalMembership.lifetimeId
-    )
-    try await insertIndependentExpandedCompletion(
-      storeURL: fixture.configuration.storeURL, entryIdentifier: secondEntry,
-      membershipIdentifier: originalMembership.id, membershipLifetime: originalMembership.lifetimeId
-    )
+    if includesMembership {
+      try await insertIndependentMemberships(
+        storeURL: fixture.configuration.storeURL, itemIdentifier: fixture.item.id,
+        listIdentifier: fixture.list.id,
+        contributions: [
+          (
+            originalMembership.id.uuidString, originalMembership.lifetimeId.uuidString,
+            originalMembership.rank, true
+          )
+        ])
+      try await insertIndependentExpandedCompletion(
+        storeURL: fixture.configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: originalMembership.id,
+        membershipLifetime: originalMembership.lifetimeId
+      )
+      try await insertIndependentExpandedCompletion(
+        storeURL: fixture.configuration.storeURL, entryIdentifier: secondEntry,
+        membershipIdentifier: originalMembership.id,
+        membershipLifetime: originalMembership.lifetimeId
+      )
+    } else {
+      try await insertDetachedExpandedCompletion(
+        storeURL: fixture.configuration.storeURL, entryIdentifier: firstEntry,
+        membershipIdentifier: originalMembership.id,
+        membershipLifetime: originalMembership.lifetimeId)
+      try await insertDetachedExpandedCompletion(
+        storeURL: fixture.configuration.storeURL, entryIdentifier: secondEntry,
+        membershipIdentifier: originalMembership.id,
+        membershipLifetime: originalMembership.lifetimeId)
+    }
+    if preparationFails {
+      guard
+        case .listedNamespaces(let namespaces) = await fixture.planner.inspectRecovery(
+          request: .namespaces), let namespace = namespaces.first
+      else { throw CancellationError() }
+      let namespaceDirectory = fixture.configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespace.namespaceId.uuidString)
+      let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: namespaceDirectory.path)
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+      }
+      let failedQuery = await fixture.planner.query(
+        .init(
+          session: fixture.session,
+          request: .items(.init(scope: .list(fixture.list.id), completion: .all, archive: .all))))
+      guard case .failed(let failure) = failedQuery,
+        case .status(let status) = await fixture.planner.read(
+          session: fixture.session, request: .status),
+        case .unavailable(let reason) = status.recovery
+      else {
+        Issue.record("Failed preparation must retain unresolved native inputs: \(failedQuery)")
+        return
+      }
+      #expect(failure.code == "maintenanceRequired" && reason.code == "maintenanceRequired")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+    }
     let result = await fixture.planner.query(
       .init(
         session: fixture.session,
@@ -1246,6 +1353,31 @@ struct NativeMembershipConsolidationTests {
         identifier: deletionIdentifier, kind: "membershipRemoval",
         data: try JSONEncoder().encode(
           PlannerPortableMembershipRemoval(deletionId: deletionIdentifier))))
+    try context.save()
+  }
+
+  @MainActor private func insertDetachedExpandedCompletion(
+    storeURL: URL, entryIdentifier: UUID, membershipIdentifier: UUID, membershipLifetime: UUID
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    let entry = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).first {
+        $0.id == entryIdentifier
+      })
+    let current = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).first {
+        $0.id == membershipIdentifier
+      })
+    let completion = PlannerSchemaV18.ExpandedCompletion(
+      listEntry: entry, membership: current, localDone: true)
+    completion.membershipLifetimeId = membershipLifetime
+    completion.membership = nil
+    context.insert(completion)
     try context.save()
   }
 
