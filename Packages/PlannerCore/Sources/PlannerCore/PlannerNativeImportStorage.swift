@@ -27,6 +27,31 @@ struct PlannerNativeLineage {
     self.membershipRemovals = membershipRemovals
   }
 
+  func seedCompletionContexts(
+    _ contributions: [(context: PlannerPortableCompletionContext, initialDone: Bool)],
+    context: ModelContext
+  ) throws {
+    guard !contributions.isEmpty else { return }
+    var currentContexts = Set(contextAliases.map(\.canonicalContext))
+    var aliases = Dictionary(uniqueKeysWithValues: contextAliases.map { ($0.aliasId, $0) })
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
+    for contribution in contributions {
+      guard !currentContexts.contains(contribution.context) else { continue }
+      let identifier = plannerInitialCompletionAliasIdentifier(
+        context: contribution.context, done: contribution.initialDone)
+      guard aliases[identifier] == nil else {
+        throw PlannerFailure("readUnavailable", "The completion seed belongs to another context.")
+      }
+      let alias = PlannerPortableContextAlias(
+        aliasId: identifier, context: contribution.context, canonicalContext: contribution.context,
+        initialDone: contribution.initialDone, currentChangeId: nil)
+      try plannerStageLineageRecord(
+        alias, identifier: identifier, kind: "contextAlias", records: records, context: context)
+      aliases[identifier] = alias
+      currentContexts.insert(contribution.context)
+    }
+  }
+
   func reconciling(_ snapshot: PlannerDataSnapshot, context: ModelContext) throws
     -> PlannerNativeLineage
   {

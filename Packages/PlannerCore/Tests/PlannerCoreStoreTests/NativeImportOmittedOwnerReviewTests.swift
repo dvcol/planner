@@ -79,20 +79,28 @@ struct NativeImportOmittedOwnerReviewTests {
       ]
       expectedTitle = "Current route"
     }
-    object["contextAliases"] = [
+    var retainedAliases: [[String: Any]] = []
+    var retainedChanges: [[String: Any]] = []
+    if ownerKind == .list {
+      retainedAliases = try #require(object["contextAliases"] as? [[String: Any]])
+      retainedChanges = try #require(object["completionChanges"] as? [[String: Any]])
+    }
+    object["contextAliases"] =
       [
-        "aliasId": "00000000-0000-4000-8000-000000000871", "context": completionContext,
-        "canonicalContext": completionContext, "initialDone": ownerKind == .itinerary,
-        "currentChangeId": "00000000-0000-4000-8000-000000000872",
-      ]
-    ]
-    object["completionChanges"] = [
+        [
+          "aliasId": "00000000-0000-4000-8000-000000000871", "context": completionContext,
+          "canonicalContext": completionContext, "initialDone": ownerKind == .itinerary,
+          "currentChangeId": "00000000-0000-4000-8000-000000000872",
+        ]
+      ] + retainedAliases
+    object["completionChanges"] =
       [
-        "id": "00000000-0000-4000-8000-000000000872",
-        "aliasId": "00000000-0000-4000-8000-000000000871", "context": completionContext,
-        "done": ownerKind == .list, "observedChangeIds": [],
-      ]
-    ]
+        [
+          "id": "00000000-0000-4000-8000-000000000872",
+          "aliasId": "00000000-0000-4000-8000-000000000871", "context": completionContext,
+          "done": ownerKind == .list, "observedChangeIds": [],
+        ]
+      ] + retainedChanges
     let decoded = planner.decodeImport(try JSONSerialization.data(withJSONObject: object))
     guard case .decoded(let incoming) = decoded else {
       Issue.record("Decode the complete omitted-container fixture: \(decoded)")
