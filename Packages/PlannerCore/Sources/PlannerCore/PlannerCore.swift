@@ -4011,6 +4011,7 @@ public actor Planner {
         guard let identifier = record.id, let lifetime = record.lifetimeId else { return nil }
         return .init(kind: .membership, id: identifier, lifetimeId: lifetime)
       })
+    var representedExpanded: Set<PlannerExpandedContext> = []
     for completion in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
       guard let identifier = completion.membershipId,
         let lifetime = completion.membershipLifetimeId,
@@ -4019,12 +4020,37 @@ public actor Planner {
       else { return true }
       do {
         let value = try completion.value()
+        representedExpanded.insert(value.context)
         if let expected = completionStates[.expandedListItem(value.context)],
           value.localDone != expected
         {
           return true
         }
       } catch { return true }
+    }
+    let missingCompletedContexts = completionStates.compactMap {
+      completionContext, done -> PlannerExpandedContext? in
+      guard done, case .expandedListItem(let expanded) = completionContext,
+        !representedExpanded.contains(expanded),
+        liveMembershipBindings.contains(
+          .init(
+            kind: .membership, id: expanded.membershipId,
+            lifetimeId: expanded.membershipLifetimeId))
+      else { return nil }
+      return expanded
+    }
+    if !missingCompletedContexts.isEmpty {
+      let graph = PlannerImportGraph(
+        backup: try maintenanceSnapshot(context).decodedRecords().backup)
+      for expanded in missingCompletedContexts {
+        guard !graph.isClosed(.expandedListItem(expanded)),
+          graph.backup.itineraryEntries.contains(where: {
+            $0.id == expanded.listEntryId && $0.lifetimeId == expanded.listEntryLifetimeId
+              && $0.source.kind == .list
+          })
+        else { continue }
+        return true
+      }
     }
     return false
   }

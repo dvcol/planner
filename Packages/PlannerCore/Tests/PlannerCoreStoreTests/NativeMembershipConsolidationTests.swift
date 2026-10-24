@@ -11,6 +11,191 @@ import Testing
 
 struct NativeMembershipConsolidationTests {
   @Test(
+    arguments: ["individual", "branchBulk", "itineraryBulk"].flatMap {
+      [$0, "retiredSibling:" + $0]
+    }, [false, true])
+  func aMissingExpandedCompletionRetainsItsProvenHistoryAndExactRepeatedScope(
+    rawScope: String, preparationFails: Bool
+  ) async throws {
+    let retireSibling = rawScope.hasPrefix("retiredSibling:")
+    let commandScope =
+      retireSibling ? String(rawScope.dropFirst("retiredSibling:".count)) : rawScope
+    let wholeItinerary = commandScope == "itineraryBulk"
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let response = await planner.execute(
+        .init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let result, .complete) = response.outcome else {
+        Issue.record("The missing-completion fixture action must save: \(response)")
+        throw CancellationError()
+      }
+      return result
+    }
+    let item = try #require(
+      try await save(.createItem(content: .init(title: "Hotel", notes: "Keep"))).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Tokyo"))).generated.first)
+    let itinerary = try #require(
+      try await save(.createItinerary(content: .init(title: "Weekend"))).generated.first)
+    let membership = try await save(
+      .addMembership(itemId: item.id, listId: list.id, placement: .last))
+    let firstAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    let secondAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    let directAddition = try await save(
+      .addItineraryEntry(itineraryId: itinerary.id, source: item, placement: .last))
+    guard case .membership(let membershipIdentifier, _, _)? = membership.generatedReferences.first,
+      case .itineraryEntry(let firstEntry, _, _)? = firstAddition.generatedReferences.first,
+      case .itineraryEntry(let secondEntry, _, _)? = secondAddition.generatedReferences.first,
+      case .itineraryEntry(let directEntry, _, _)? = directAddition.generatedReferences.first
+    else { throw CancellationError() }
+    let selected = PlannerAppearance.expandedListItem(
+      itineraryId: itinerary.id, listEntryId: firstEntry, membershipId: membershipIdentifier)
+    let completion: PlannerOperation
+    if commandScope == "individual" {
+      completion = .init(
+        operationId: UUID(), session: session,
+        command: .setCompletion(scope: .appearance(selected), done: true))
+    } else {
+      let bulkScope: PlannerBulkScope
+      if wholeItinerary {
+        bulkScope = .itinerary(itineraryId: itinerary.id)
+      } else {
+        bulkScope = .itineraryListEntry(itineraryId: itinerary.id, listEntryId: firstEntry)
+      }
+      guard
+        case .reviewed(let review) = await planner.prepareReview(
+          session: session, command: .setBulkCompletion(scope: bulkScope, done: true))
+      else { throw CancellationError() }
+      completion = .init(
+        operationId: UUID(), session: session, command: review.command,
+        reviewToken: review.reviewToken)
+    }
+    guard
+      case .applied(let completed, .complete(let checkpoint)) = await planner.execute(completion)
+        .outcome
+    else { throw CancellationError() }
+    if retireSibling {
+      _ = try await save(
+        .setCompletion(
+          scope: .appearance(
+            .expandedListItem(
+              itineraryId: itinerary.id, listEntryId: secondEntry,
+              membershipId: membershipIdentifier)), done: true))
+      _ = try await save(.removeItineraryEntry(itineraryId: itinerary.id, entryId: secondEntry))
+    }
+    guard case .exported(let before) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    try await removeNativeExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: firstEntry,
+      membershipIdentifier: membershipIdentifier)
+    if preparationFails {
+      guard
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(
+          request: .namespaces), let namespace = namespaces.first
+      else { throw CancellationError() }
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespace.namespaceId.uuidString)
+      let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: namespaceDirectory.path)
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+      }
+      let failedQuery = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .itinerary(itinerary.id), completion: .all, archive: .all))))
+      guard case .failed(let failure) = failedQuery,
+        case .status(let status) = await planner.read(session: session, request: .status),
+        case .unavailable(let reason) = status.recovery
+      else {
+        Issue.record("Unprepared missing-row repair must stay unavailable: \(failedQuery)")
+        return
+      }
+      #expect(failure.code == "maintenanceRequired" && reason.code == "maintenanceRequired")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: namespaceDirectory.path)
+    }
+    let fresh = Planner(configuration: configuration)
+    let readiness = await fresh.bootstrap()
+    guard case .ready(let freshSession) = readiness else {
+      Issue.record("Proven completion must survive a missing native row: \(readiness)")
+      return
+    }
+    var expectedAppearances: [(PlannerAppearance, Bool)] = [
+      (selected, true),
+      (.directItineraryItem(itineraryId: itinerary.id, entryId: directEntry), wholeItinerary),
+      (.listMembership(listId: list.id, membershipId: membershipIdentifier), false),
+    ]
+    if !retireSibling {
+      expectedAppearances.append(
+        (
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: secondEntry,
+            membershipId: membershipIdentifier), wholeItinerary
+        ))
+    } else {
+      guard
+        case .snapshot(let contents) = await fresh.query(
+          .init(
+            session: freshSession,
+            request: .items(
+              .init(scope: .itinerary(itinerary.id), completion: .all, archive: .all))))
+      else { throw CancellationError() }
+      #expect(contents.matchingCount == 2)
+    }
+    for (appearance, expectedDone) in expectedAppearances {
+      let response = await fresh.read(session: freshSession, request: .appearance(appearance))
+      guard case .appearance(let read) = response else {
+        Issue.record("The exact saved appearance must remain readable: \(response)")
+        return
+      }
+      #expect(read.source == item && !read.globalDone)
+      #expect(read.localDone == expectedDone && read.effectiveDone == expectedDone)
+    }
+    let retainedExport = await fresh.exportData(session: freshSession)
+    guard case .exported(let retained) = retainedExport else {
+      Issue.record(
+        "Missing scalar rows must not invalidate complete saved history: \(retainedExport)")
+      return
+    }
+    #expect(retained == before)
+    guard
+      case .applied(_, .complete) = await fresh.execute(
+        .init(
+          operationId: UUID(), session: freshSession,
+          command: .setCompletion(scope: .appearance(selected), done: false))
+      )
+      .outcome,
+      case .exported(let afterReopening) = await fresh.exportData(session: freshSession),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await fresh.execute(
+        .init(
+          operationId: completion.operationId, session: freshSession, command: completion.command)
+      ).outcome,
+      case .exported(let afterReplay) = await fresh.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(replayed == completed && replayCheckpoint == checkpoint)
+    #expect(afterReplay == afterReopening)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let afterRelaunch) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(afterRelaunch == afterReopening)
+  }
+
+  @Test(
     arguments: ["list", "expanded", "direct", "listBulk", "expandedBulk", "itineraryBulk"].flatMap {
       [$0, "first:" + $0, "divergent:" + $0]
     },
@@ -1845,6 +2030,24 @@ struct NativeMembershipConsolidationTests {
       })
     context.insert(
       PlannerSchemaV18.ExpandedCompletion(listEntry: entry, membership: member, localDone: true))
+    try context.save()
+  }
+
+  /// Model access constructs the actual persisted input; all behavioral observations use Planner.
+  @MainActor private func removeNativeExpandedCompletion(
+    storeURL: URL, entryIdentifier: UUID, membershipIdentifier: UUID
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    let completion = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).first {
+        $0.listEntryId == entryIdentifier && $0.membershipId == membershipIdentifier
+      })
+    context.delete(completion)
     try context.save()
   }
 

@@ -23,3 +23,5 @@ Seven existing real MCP HTTP regressions and matching Mac app/Share/fixture buil
 ## Remaining scope
 
 This slice repairs existing rows from complete proven history. Missing completion rows, partial history delivery, repair-specific write/interruption faults, active-orphan/legacy-barrier admission, changed entry/source lifetimes and broader restoration-family/reference reconciliation remain open. Other prepared command families, alias-specific HTTP/native journeys and native committed-maintenance Retry controls need their own evidence. Actual Mac UI, signed shared storage, installed Share, CloudKit, physical performance and system invocation retain separate gates. Q155 and the map remain open; signing stays deferred.
+
+The later [missing expanded-row checkpoint](native-missing-expanded-completion.md) extends repair to absent completed expanded rows with exact live bindings. The [native Retry checkpoint](native-committed-maintenance-retry-ui.md) also qualifies the maintenance recovery control on phone and dark iPad. The earlier results above retain their original scope.

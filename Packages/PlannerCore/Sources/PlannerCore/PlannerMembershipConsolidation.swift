@@ -239,6 +239,21 @@ struct PlannerMembershipConsolidation {
       else { return value }
       return .init(context: value.context, localDone: expected)
     }
+    let representedExpanded = Set(expanded.map(\.context))
+    for (completionContext, done) in completionStates where done {
+      guard case .expandedListItem(let context) = completionContext,
+        !representedExpanded.contains(context), !graph.isClosed(completionContext),
+        let member = members.first(where: {
+          $0.id == context.membershipId && $0.lifetimeId == context.membershipLifetimeId
+        }),
+        entries.contains(where: {
+          $0.id == context.listEntryId && $0.lifetimeId == context.listEntryLifetimeId
+            && $0.source.kind == .list && $0.source.id == member.list.id
+            && $0.sourceLifetimeId == member.listLifetimeId
+        })
+      else { continue }
+      expanded.append(.init(context: context, localDone: done))
+    }
     let consolidatedMembershipIdentities = Set(
       groups.values.filter { $0.count > 1 }.flatMap {
         $0.map { $0.baselineProvenance.membership }
