@@ -1,0 +1,7 @@
+{
+  "classification": "test-macro compilation failure",
+  "testFunctionsExecuted": 0,
+  "runtimeQualification": false,
+  "correction": "Split an optional dictionary extraction from UUID construction before passing the result to require.",
+  "nextAttempt": "canonical-membership-maintenance-save-fault-runtime"
+}

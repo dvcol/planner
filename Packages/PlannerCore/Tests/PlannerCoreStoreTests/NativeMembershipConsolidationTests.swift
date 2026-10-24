@@ -5,6 +5,10 @@ import Testing
 
 @testable import PlannerCore
 
+#if os(macOS)
+  import Darwin
+#endif
+
 struct NativeMembershipConsolidationTests {
   @Test func ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
@@ -498,3 +502,213 @@ private func initialCompletionSeedFixtures() throws -> [[String: Any]] {
 }
 
 private final class InitialCompletionSeedFixtureBundle: NSObject {}
+
+#if os(macOS)
+  extension NativeMembershipConsolidationTests {
+    @Test func failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh() async throws {
+      guard ProcessInfo.processInfo.environment["PLANNER_MAINTENANCE_SAVE_FAULT_CHILD"] == "1"
+      else {
+        try runIsolatedMaintenanceSaveFailure()
+        return
+      }
+      let directory = try makePlannerStoreFixtureDirectory()
+      let configuration = PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly)
+      let planner = Planner(configuration: configuration)
+      guard case .ready(let session) = await planner.bootstrap(),
+        case .applied(let itemCreation, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .createItem(content: .init(title: "Hotel", notes: "Keep these notes")))
+        ).outcome,
+        let item = itemCreation.generated.first,
+        case .applied(let listCreation, .complete(let originalCheckpoint)) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .createList(content: .init(name: "Tokyo")))
+        ).outcome,
+        let list = listCreation.generated.first,
+        case .exported(let originalData) = await planner.exportData(session: session),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first
+      else { throw CancellationError() }
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespace.namespaceId.uuidString)
+      let originalFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      try await insertIndependentMemberships(
+        storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id)
+      let obstruction = NativeSaveFileSizeObstruction(
+        configuration: configuration, maximumFileSize: 0)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.willSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let waitingIdentifier = UUID()
+      let command = PlannerCommand.createTag(content: .init(name: "Waiting for maintenance"))
+      let failed = await planner.execute(
+        .init(operationId: waitingIdentifier, session: session, command: command))
+      try obstruction.restore()
+      NotificationCenter.default.removeObserver(observer)
+      #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+      guard case .rejected(let failure) = failed.outcome else {
+        Issue.record("A failed maintenance save must not apply the waiting command: \(failed)")
+        return
+      }
+      #expect(failure.code == "maintenanceRequired")
+      let failedFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      for (name, bytes) in originalFiles { #expect(failedFiles[name] == bytes) }
+      let preparations = failedFiles.filter { $0.key.hasPrefix("maintenance-") }
+      #expect(preparations.count == 1)
+      let failedPreparationBytes = try #require(preparations.values.first)
+      let failedPreparation = try #require(
+        JSONSerialization.jsonObject(with: failedPreparationBytes) as? [String: Any])
+      let failedIdentifier = try #require(
+        (failedPreparation["maintenanceId"] as? String).flatMap(UUID.init(uuidString:)))
+      #expect(failedPreparation["evidence"] as? String == "preparedUnverified")
+      guard case .status(let status) = await planner.read(session: session, request: .status),
+        case .unavailable(let statusFailure) = status.recovery,
+        case .rejected(let retryFailure) = await planner.retryMaintenanceRecovery(
+          session: session, maintenanceId: failedIdentifier),
+        case .noReliableEvidence = await planner.operationStatus(
+          session: session, operationId: waitingIdentifier),
+        case .listed(let beforeRetry) = await planner.inspectRecovery(
+          request: .namespace(namespaceId: namespace.namespaceId))
+      else {
+        Issue.record(
+          "Preparation alone must authorize neither a command nor maintenance acknowledgement.")
+        return
+      }
+      #expect(statusFailure.code == "maintenanceRequired")
+      #expect(retryFailure.code == "maintenanceNotApplied")
+      #expect(beforeRetry.acknowledgedSnapshot?.checkpointGeneration == originalCheckpoint)
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == failedFiles)
+      let proposed = try #require(failedPreparation["proposedBackup"] as? [String: Any])
+      #expect((proposed["contextAliases"] as? [Any])?.count == 2)
+      try await insertIndependentMemberships(
+        storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
+        contributions: [
+          (
+            "00000000-0000-4000-8000-000000000403", "00000000-0000-4000-8000-000000000843", 3072,
+            false
+          )
+        ])
+      let reopened = Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .exported(let healedData) = await reopened.exportData(session: reopenedSession),
+        case .listed(let healedView) = await reopened.inspectRecovery(
+          request: .namespace(namespaceId: namespace.namespaceId)),
+        let healedCheckpoint = healedView.acknowledgedSnapshot?.checkpointGeneration
+      else { throw CancellationError() }
+      #expect(healedCheckpoint == originalCheckpoint + 1)
+      let healedFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      #expect(
+        healedFiles["maintenance-\(failedIdentifier.uuidString).json"] == failedPreparationBytes)
+      #expect(healedFiles.keys.filter { $0.hasPrefix("maintenance-") }.count == 2)
+      let envelope = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(
+            contentsOf: namespaceDirectory.appendingPathComponent(
+              "checkpoint-\(healedCheckpoint).json"))) as? [String: Any])
+      let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+      #expect(maintenance.count == 1)
+      let healedMaintenance = try #require(maintenance.first)
+      let healedIdentifierText = try #require(healedMaintenance["maintenanceId"] as? String)
+      let healedIdentifier = try #require(UUID(uuidString: healedIdentifierText))
+      #expect(healedIdentifier != failedIdentifier && healedIdentifier != waitingIdentifier)
+      let healed = try #require(JSONSerialization.jsonObject(with: healedData) as? [String: Any])
+      let original = try #require(
+        JSONSerialization.jsonObject(with: originalData) as? [String: Any])
+      #expect(
+        NSArray(array: try #require(healed["sources"] as? [Any])).isEqual(
+          to: try #require(original["sources"] as? [Any])))
+      let memberships = try #require(healed["memberships"] as? [[String: Any]])
+      #expect(memberships.count == 1)
+      #expect(memberships.first?["id"] as? String == "00000000-0000-4000-8000-000000000401")
+      #expect(memberships.first?["localDone"] as? Bool == true)
+      let healedAliases = try #require(healed["contextAliases"] as? [[String: Any]])
+      #expect(healedAliases.count == 3)
+      #expect(
+        Set(
+          healedAliases.compactMap {
+            ($0["context"] as? [String: Any])?["membershipId"] as? String
+          }) == [
+            "00000000-0000-4000-8000-000000000401",
+            "00000000-0000-4000-8000-000000000402",
+            "00000000-0000-4000-8000-000000000403",
+          ])
+      #expect((healed["membershipProvenance"] as? [Any])?.count == 3)
+      #expect((healed["completionChanges"] as? [Any])?.isEmpty == true)
+      #expect((healed["deletionMarkers"] as? [Any])?.isEmpty == true)
+      guard
+        case .rejected(let staleRetry) = await reopened.retryMaintenanceRecovery(
+          session: reopenedSession, maintenanceId: failedIdentifier),
+        case .noReliableEvidence = await reopened.operationStatus(
+          session: reopenedSession, operationId: waitingIdentifier)
+      else { throw CancellationError() }
+      #expect(staleRetry.code == "maintenanceNotApplied")
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == healedFiles)
+      let resumed = await reopened.execute(
+        .init(operationId: waitingIdentifier, session: reopenedSession, command: command))
+      guard case .applied(_, .complete(let commandCheckpoint)) = resumed.outcome,
+        case .snapshot(let tags) = await reopened.query(
+          .init(session: reopenedSession, request: .catalog(.init(sourceKind: .tag, archive: .all)))
+        )
+      else {
+        Issue.record(
+          "After fresh maintenance, the original waiting command must execute once: \(resumed)")
+        return
+      }
+      #expect(commandCheckpoint == healedCheckpoint + 1)
+      #expect(tags.matchingCount == 1)
+    }
+
+    private func runIsolatedMaintenanceSaveFailure() throws {
+      let directory = FileManager.default.temporaryDirectory.appendingPathComponent(
+        "PlannerMaintenanceSaveFault-" + UUID().uuidString)
+      try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+      let outputURL = directory.appendingPathComponent("child.log")
+      try Data().write(to: outputURL)
+      let output = try FileHandle(forWritingTo: outputURL)
+      defer { try? output.close() }
+      let process = Process()
+      process.executableURL = URL(fileURLWithPath: CommandLine.arguments[0])
+      var runnerArguments: [String] = []
+      if let index = CommandLine.arguments.firstIndex(of: "--test-bundle-path"),
+        CommandLine.arguments.indices.contains(index + 1)
+      {
+        runnerArguments = ["--test-bundle-path", CommandLine.arguments[index + 1]]
+      }
+      process.arguments =
+        runnerArguments + [
+          "--testing-library", "swift-testing", "--filter",
+          "NativeMembershipConsolidationTests/failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh",
+        ]
+      var environment = ProcessInfo.processInfo.environment
+      environment["PLANNER_MAINTENANCE_SAVE_FAULT_CHILD"] = "1"
+      process.environment = environment
+      process.standardOutput = output
+      process.standardError = output
+      let completion = DispatchSemaphore(value: 0)
+      process.terminationHandler = { _ in completion.signal() }
+      try process.run()
+      let finished = completion.wait(timeout: .now() + 45) == .success
+      if !finished {
+        kill(process.processIdentifier, SIGKILL)
+        process.waitUntilExit()
+      }
+      try output.close()
+      let transcript = try String(contentsOf: outputURL, encoding: .utf8)
+      print("MAINTENANCE_SAVE_FAULT_CHILD_LOG \(outputURL.path)")
+      #expect(finished, "The isolated maintenance save fault must finish within its deadline.")
+      #expect(process.terminationReason == .exit)
+      #expect(process.terminationStatus == 0, Comment(rawValue: String(transcript.suffix(12_000))))
+      #expect(transcript.contains("Test run with 1 test"))
+    }
+  }
+#endif

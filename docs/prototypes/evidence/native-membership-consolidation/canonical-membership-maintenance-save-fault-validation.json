@@ -1,0 +1,19 @@
+{
+  "macFunctions": 12,
+  "suites": 4,
+  "invocations": 42,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "sqliteLifetimeDiagnostics": 0,
+  "coreInputs": 805,
+  "actualTestProducts": 2,
+  "workspaceDifferences": [],
+  "stagedDifferences": [],
+  "productDifferences": [],
+  "productionCodeChanged": false,
+  "existingCommonTestBodyUnchanged": true,
+  "newTestMacOnly": true,
+  "strictFormatExitCode": 0,
+  "removedOwnedFixtures": 84,
+  "physicalAndProcessInterruptionQualified": false
+}

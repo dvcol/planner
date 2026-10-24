@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.2375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="12" failures="0" skipped="0" time="0.533795417">
+        <testcase classname="PlannerCoreStoreTests.NativeStatusReadTests" name="emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity()" time="0.346915958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.377954542"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh()" time="0.533279792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.416326458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.408076"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:)" time="0.313753333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair()" time="0.32738"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent()" time="0.297477125"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)" time="0.318393042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)" time="0.284164833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()" time="0.297519833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)" time="0.310571709"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,9 @@
+{
+  "function": "failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh",
+  "sourceLog": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerMaintenanceSaveFault-D1473966-8922-47BB-9A74-3C9207D2F5B9/child.log",
+  "parentExitCode": 0,
+  "childTranscriptComplete": true,
+  "fault": "RLIMIT_FSIZE soft limit zero at the real ModelContext.willSave boundary in an isolated child, restored before outcome reads.",
+  "productionTestHook": false,
+  "qualificationScope": "Mac native-save failure, preparation-only rejection, fresh maintenance and waiting-command retry."
+}

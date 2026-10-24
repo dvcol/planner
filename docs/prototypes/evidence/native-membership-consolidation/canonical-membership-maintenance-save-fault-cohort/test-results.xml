@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00013975"/>
+    <testsuite name="TestResults" errors="0" tests="12" failures="0" skipped="0" time="0.451776292">
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)" time="0.178740167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()" time="0.179460292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)" time="0.1795145"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)" time="0.262102667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusReadTests" name="emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity()" time="0.270833292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.356470916"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh()" time="0.451189667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.309811667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.339007458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent()" time="0.183427042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair()" time="0.226843917"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:)" time="0.257779708"/>
+    </testsuite>
+</testsuites>
