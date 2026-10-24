@@ -439,6 +439,71 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
   }
 
+  func testWebsiteExecutableDataLinkKeepsTheGuideAndItsOriginalBookmark() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let guideURL = try await server.start()
+    defer { server.stop() }
+    let destination = guideURL.deletingLastPathComponent().appendingPathComponent(
+      "executable-link-policy")
+    let executableTarget =
+      "data:text/html,%3Ch1%3EInline%20executable%20fixture%3C%2Fh1%3E%3Cscript%3Edocument.title%3D%27Executed%20inline%20fixture%27%3C%2Fscript%3E"
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedLink = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
+    let savedLinkIdentifier = savedLink.identifier
+    savedLink.activateForPlannerJourney()
+    let page = application.webViews.firstMatch
+    XCTAssertTrue(page.staticTexts["Executable link policy fixture"].waitForExistence(timeout: 10))
+    page.links["Unavailable executable data link"].activateForPlannerJourney()
+    let explanation = application.alerts.firstMatch
+    let reportedNavigation = explanation.waitForExistence(timeout: 2)
+    if reportedNavigation {
+      XCTAssertTrue(explanation.staticTexts["Link unavailable"].exists)
+      XCTAssertTrue(
+        explanation.staticTexts.matching(
+          NSPredicate(format: "label CONTAINS %@", executableTarget)
+        ).firstMatch.exists)
+      XCTAssertFalse(explanation.buttons["Open in default browser"].exists)
+      explanation.buttons["Keep reading"].activateForPlannerJourney()
+      XCTAssertTrue(explanation.waitForNonExistence(timeout: 5))
+    }
+    XCTAssertTrue(
+      page.staticTexts["Executable data link activated"].waitForExistence(timeout: 5))
+    XCTAssertTrue(page.staticTexts["Executable link policy fixture"].exists)
+    XCTAssertFalse(page.staticTexts["Inline executable fixture"].exists)
+    XCTAssertEqual(application.state, .runningForeground)
+    XCTAssertFalse(application.staticTexts["Page unavailable"].exists)
+    let observation = XCTAttachment(
+      data: try JSONSerialization.data(
+        withJSONObject: [
+          "target": executableTarget,
+          "plannerNoticePresented": reportedNavigation,
+          "guideStillReadable": page.staticTexts["Executable link policy fixture"].exists,
+          "inlineDocumentVisible": page.staticTexts["Inline executable fixture"].exists,
+        ], options: .prettyPrinted),
+      uniformTypeIdentifier: "public.json")
+    observation.name = "Native executable data link activation outcome"
+    observation.lifetime = .keepAlways
+    add(observation)
+    try await recordWindow(
+      application, name: "Native executable data link keeps the saved guide readable")
+    page.links["Garden guide"].activateForPlannerJourney()
+    XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    XCTAssertTrue(server.requestLines.contains("GET /garden HTTP/1.1"))
+    application.buttons["saved.browser.return"].activateForPlannerJourney()
+    let retainedLink = application.descendants(matching: .any)
+      .matching(identifier: savedLinkIdentifier).firstMatch
+    XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedLink.value as? String, destination.absoluteString)
+  }
+
   func testUnsupportedWebsiteLinkKeepsTheGuideAndItsOriginalBookmark() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
