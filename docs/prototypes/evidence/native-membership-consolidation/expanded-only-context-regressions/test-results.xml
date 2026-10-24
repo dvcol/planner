@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000104292"/>
+    <testsuite name="TestResults" errors="0" tests="21" failures="0" skipped="0" time="4.341689917">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredAliasesCannotBorrowAnotherPairGenerationOrCanonicalLifetime(scenario:)" time="3.765563834"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredMembershipHistorySurvivesImportRecoveryReplayAndReopen(explicitReopen:fixtureName:)" time="3.765420542"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="issuanceEndsOnReopenButAppliedRestorationReplayPreservesLaterEdits()" time="3.862996584"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="recreatedExpandedCounterpartsRejectTheWholeUndo(kind:)" time="3.863069"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="anotherRemovalRestoresOnlyItsOwnFreshLifetimeAndClosesOlderHistory()" time="3.863063667"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="deletedOriginalBindingsRejectUndoWithoutChangingSurvivors(kind:)" time="3.882447625"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="newerMembershipRejectsOldUndoWithoutReplacingLocalState()" time="3.862984917"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="anotherDatasetCannotConsumeTheIssuedUndoCapability()" time="3.86870775"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="detachedCompletionsCannotBorrowAnUnknownLifetimeOrAnotherListsScope(scenario:)" time="3.954049833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="3.896415167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="3.896589583"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="3.995417125"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anOldDeliveredLifetimeCannotBlockOrCompleteTheSamePublicMembershipAfterUndo()" time="4.020939791"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)" time="4.307081958"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem(incomingClosure:)" time="3.954166292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="unprovenCompetingMembershipLifetimesStayUnmodifiedAndUnavailable()" time="3.888762709"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent(includesMembership:preparationFails:)" time="4.119641333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem()" time="3.888740125"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()" time="3.84216075"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)" time="3.842271708"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)" time="4.34121775"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 13.212,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent(includesMembership:preparationFails:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.494725416,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "detachedCompletionsCannotBorrowAnUnknownLifetimeOrAnotherListsScope(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.320725167,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

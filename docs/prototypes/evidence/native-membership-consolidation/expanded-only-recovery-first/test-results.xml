@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.425e-05"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="0" skipped="0" time="0.495084083">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent(includesMembership:preparationFails:)" time="0.494725416"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="detachedCompletionsCannotBorrowAnUnknownLifetimeOrAnotherListsScope(scenario:)" time="0.320725167"/>
+    </testsuite>
+</testsuites>
