@@ -12,7 +12,9 @@ enum PlannerRetiredMembershipFixture {
   private static let originalLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
   private static let retiredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000842")!
 
-  static func makeStore(directory: URL) async throws -> SavedPlannerStore {
+  static func makeStore(directory: URL, missingProvenance: Bool = false) async throws
+    -> SavedPlannerStore
+  {
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -39,12 +41,14 @@ enum PlannerRetiredMembershipFixture {
         ).outcome
       else { throw CancellationError() }
     }
-    try deliverRetiredCopy(configuration: configuration)
+    try deliverRetiredCopy(configuration: configuration, missingProvenance: missingProvenance)
     return SavedPlannerStore(configuration: configuration)
   }
 
   /// Every launch redelivers the old native row before the production view opens its dataset.
-  private static func deliverRetiredCopy(configuration: PlannerStorageConfiguration) throws {
+  private static func deliverRetiredCopy(
+    configuration: PlannerStorageConfiguration, missingProvenance: Bool
+  ) throws {
     let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let container = try ModelContainer(
       for: schema, migrationPlan: PlannerMigrationPlan.self,
@@ -59,6 +63,15 @@ enum PlannerRetiredMembershipFixture {
       let list = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first(
         where: { $0.id == listIdentifier }), let listLifetime = list.lifetimeId
     else { throw CancellationError() }
+    if missingProvenance {
+      guard
+        let provenance = try context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>())
+          .first(where: {
+            $0.membershipId == retiredIdentifier && $0.membershipLifetimeId == retiredLifetime
+          })
+      else { throw CancellationError() }
+      context.delete(provenance)
+    }
     context.insert(
       PlannerSchemaV18.Membership(
         snapshot: .init(

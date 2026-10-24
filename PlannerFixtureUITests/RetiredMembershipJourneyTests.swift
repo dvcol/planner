@@ -6,6 +6,14 @@ import XCTest
   @MainActor
   final class RetiredMembershipJourneyTests: XCTestCase {
     func testFreshMembershipRetainsLocalCompletionAfterAnOldCopyReturnsOnRelaunch() {
+      verifyFreshMembershipAfterRelaunch(fixture: "retired-membership")
+    }
+
+    func testFreshMembershipRetainsLocalCompletionWithoutTheOldCopysSeparateProvenance() {
+      verifyFreshMembershipAfterRelaunch(fixture: "retired-membership-without-provenance")
+    }
+
+    private func verifyFreshMembershipAfterRelaunch(fixture: String) {
       continueAfterFailure = false
       if UIDevice.current.userInterfaceIdiom == .pad {
         XCUIDevice.shared.orientation = .landscapeLeft
@@ -16,7 +24,7 @@ import XCTest
       let application = XCUIApplication()
       let datasetIdentifier = UUID().uuidString
       application.launchArguments = [
-        "--fixture", "retired-membership", "--fixture-dataset", datasetIdentifier,
+        "--fixture", fixture, "--fixture-dataset", datasetIdentifier,
       ]
       application.launchSavedPlannerJourney()
       application.openPlannerSection("Items")
