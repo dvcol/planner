@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 11.17,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.276469167,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

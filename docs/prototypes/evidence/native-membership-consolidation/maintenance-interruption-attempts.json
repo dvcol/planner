@@ -1,0 +1,29 @@
+[
+  {
+    "phase": "maintenance-interruption-cohort-mac",
+    "exitCode": 0,
+    "functions": 22,
+    "failedFunctions": 0,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true
+  },
+  {
+    "phase": "maintenance-interruption-first",
+    "exitCode": 1,
+    "functions": 0,
+    "failedFunctions": 0,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true
+  },
+  {
+    "phase": "maintenance-interruption-runtime-first",
+    "exitCode": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "sqliteUnlinkWarnings": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true
+  }
+]

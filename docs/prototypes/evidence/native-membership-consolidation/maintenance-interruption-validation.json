@@ -1,0 +1,18 @@
+{
+  "macFunctions": 22,
+  "macInvocations": 65,
+  "macSuites": 4,
+  "verifiedProducts": 2,
+  "matchedProductionInputs": 88,
+  "testOnlySourceFileChanged": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipConsolidationTests.swift",
+  "sourceInputs": 807,
+  "removedClosedDisposableStores": 69,
+  "actualChildTermination": {
+    "childProcessIdentifier": 81171,
+    "finishedWithinDeadline": true,
+    "terminationReason": "NSTaskTerminationReason(rawValue: 2)",
+    "terminationStatus": 9
+  },
+  "productionChanged": false,
+  "physicalPowerLossOrCloudInterruptionQualified": false
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.4375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.276825542">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput()" time="0.276469167"/>
+    </testsuite>
+</testsuites>

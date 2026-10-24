@@ -1,0 +1,164 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 11.379,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent()",
+      "className": "PlannerCoreStoreTests.NativeStatusAdmissionTests",
+      "seconds": 0.212049166,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:)",
+      "className": "PlannerCoreStoreTests.NativeStatusAdmissionTests",
+      "seconds": 0.212031167,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair()",
+      "className": "PlannerCoreStoreTests.NativeStatusAdmissionTests",
+      "seconds": 0.212123708,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.380359875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.422397875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.67088925,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.367310916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.46527875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.32082925,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()",
+      "className": "PlannerCoreStoreTests.NativeMembershipConsolidationTests",
+      "seconds": 0.380041416,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity()",
+      "className": "PlannerCoreStoreTests.NativeStatusReadTests",
+      "seconds": 0.086111917,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212185041,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "reviewedMaintenanceCopyRestoresItsGraphWithoutAcknowledgingThePreparation()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.2122045,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "acknowledgedMaintenancePreparationIsNotPresentedAsUnverified()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212054833,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212035292,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212033042,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.211990875,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "extraMaintenancePreparationFieldsCannotSupplyRecoveryEvidence()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212030375,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212110834,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidPreparedMaintenanceCannotBeListedOrSelected(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.216904584,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.212023916,
+      "failures": [],
+      "skipped": false
+    },
+    {
+      "name": "invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)",
+      "className": "PlannerCoreStoreTests.NativeMaintenanceRecoveryTests",
+      "seconds": 0.211918625,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

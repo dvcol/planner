@@ -1,0 +1,8 @@
+{
+  "testFailure": false,
+  "initialCollectorFailure": "The collector expected an enum case name, but Foundation String(describing:) retained NSTaskTerminationReason(rawValue: 2).",
+  "actualTerminationStatus": 9,
+  "parentAssertedReason": "uncaughtSignal",
+  "sourceOrTestChangeForCorrection": false,
+  "oldSaveFaultChildAlreadyCollected": true
+}

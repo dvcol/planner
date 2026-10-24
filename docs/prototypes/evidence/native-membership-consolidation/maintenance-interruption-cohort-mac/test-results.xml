@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000281"/>
+    <testsuite name="TestResults" errors="0" tests="22" failures="0" skipped="0" time="0.67147325">
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent()" time="0.212049166"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:)" time="0.212031167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusAdmissionTests" name="appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair()" time="0.212123708"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="0.380359875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput()" time="0.422397875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)" time="0.67088925"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem()" time="0.367310916"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="failedMaintenanceSaveKeepsItsPreparationUnverifiedAndRetriesFresh()" time="0.46527875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="0.32082925"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="0.380041416"/>
+        <testcase classname="PlannerCoreStoreTests.NativeStatusReadTests" name="emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity()" time="0.086111917"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="ordinaryWritesPreserveAcknowledgedMaintenanceAndOriginalCommandCheckpoints(failPublication:)" time="0.212185041"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="reviewedMaintenanceCopyRestoresItsGraphWithoutAcknowledgingThePreparation()" time="0.2122045"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenancePreparationIsNotPresentedAsUnverified()" time="0.212054833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="acknowledgedMaintenanceEnvelopeIsInspectableWithoutOpeningPlannerStorage()" time="0.212035292"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()" time="0.212033042"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution()" time="0.211990875"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="extraMaintenancePreparationFieldsCannotSupplyRecoveryEvidence()" time="0.212030375"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion:)" time="0.212110834"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidPreparedMaintenanceCannotBeListedOrSelected(scenario:)" time="0.216904584"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="undeclaredPreparedBackupFieldsCannotBeSilentlyDropped()" time="0.212023916"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMaintenanceRecoveryTests" name="invalidMaintenanceEvidenceCannotAuthorizeRecoverySelection(scenario:)" time="0.211918625"/>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,12 @@
+{
+  "sourceChildLog": "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerStoreFixtures/0BBBC42B-E013-4AAD-9673-508D67B4A28F/dataset/child.log",
+  "capturedHashes": {
+    "input.json": "e9806119a7dbb18f780656bd4794d20f8832952a6f6239cb646ad3d8ed157327",
+    "will-save.json": "7408612ec82d109c829d9031a2727598a27c027ac448805e7d500abc89909c00",
+    "child.log": "36719a2571d25efe7c0b5bacf7a75c76bd9844fe0980825e5d802c905b48feb9"
+  },
+  "parentFunctions": 1,
+  "qualification": "Mac isolated SIGKILL after durable preparation and before native save; unverified-copy inspection, fresh reconciliation after later native input, old retry rejection and waiting-command exact replay.",
+  "productionTestHook": false,
+  "powerLossOrPhysicalDeviceQualified": false
+}
