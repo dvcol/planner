@@ -456,7 +456,6 @@ struct PlannerDataSnapshot: Codable {
             items: itemRecords, lists: listRecords, itineraries: itineraryRecords,
             schedules: schedules, categories: categories,
             tags: tags,
-            memberships: memberships,
             labelAssociations: labelAssociations,
             entries: itineraryEntries, ownedLinks: portableLinks,
             expandedCompletions: expandedCompletions)

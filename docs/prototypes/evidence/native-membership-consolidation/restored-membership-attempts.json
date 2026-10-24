@@ -1,0 +1,190 @@
+[
+  {
+    "phase": "restored-membership-context-regressions",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 29.688,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 19,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "restored-membership-expanded-delivery-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 6.727,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 0,
+    "failedFunctions": 0,
+    "issues": 0,
+    "note": "Test-source compilation failed before execution. The separate runtime phases retain actual behavior."
+  },
+  {
+    "phase": "restored-membership-expanded-delivery-runtime-red",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 12.276,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0,
+    "note": "This additional repeated-branch qualification passed without another production change; the historical phase name is retained."
+  },
+  {
+    "phase": "restored-membership-explicit-expanded-closure-red",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 12.44,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0,
+    "note": "Both old expanded records arrive with their old membership and this scenario passes. The historical name does not qualify an independent expanded-completion deletion-marker case."
+  },
+  {
+    "phase": "restored-membership-final-adapter-mac",
+    "stages": {
+      "build-for-testing": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 37.616,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-restored-membership-final-adapter-mac-build-for-testing.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "fixture-build": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 9.248,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-restored-membership-final-adapter-mac-fixture-build.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "test-without-building": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 6.168,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-restored-membership-final-adapter-mac-test-without-building.xcresult",
+        "sqliteUnlinkWarnings": 0
+      }
+    }
+  },
+  {
+    "phase": "restored-membership-final-mac",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 50.0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 246,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "restored-membership-final-phone",
+    "mobileExecution": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemWindow-restored-membership-final-phone.xcresult"
+    },
+    "sqliteUnlinkWarnings": 12,
+    "note": "All assertions pass, but twelve teardown diagnostics remain. No extra cleanup is applied to this warning-bearing log."
+  },
+  {
+    "phase": "restored-membership-lifecycle-base-phone",
+    "mobileExecution": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemWindow-restored-membership-lifecycle-base-phone.xcresult"
+    },
+    "sqliteUnlinkWarnings": 12,
+    "note": "Five unchanged recovery suites pass against c6165cc6 production and reproduce all twelve teardown diagnostics."
+  },
+  {
+    "phase": "restored-membership-lifecycle-final-mac",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 48.735,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 246,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "restored-membership-lifecycle-final-phone",
+    "mobileExecution": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemWindow-restored-membership-lifecycle-final-phone.xcresult"
+    },
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "restored-membership-old-delivery-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 10.744,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "restored-membership-old-delivery-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 7.11,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 0,
+    "failedFunctions": 0,
+    "issues": 0,
+    "note": "Test-source compilation failed before execution. The separate runtime phases retain actual behavior."
+  },
+  {
+    "phase": "restored-membership-old-delivery-runtime-red",
+    "exitCode": 1,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 11.886,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 1,
+    "issues": 1
+  },
+  {
+    "phase": "restored-membership-snapshot-validation-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 11.929,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "issues": 0
+  },
+  {
+    "phase": "restored-membership-unproven-lifetimes-first",
+    "exitCode": 0,
+    "runnerTimedOut": false,
+    "elapsedSeconds": 13.086,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0,
+    "functions": 3,
+    "failedFunctions": 0,
+    "issues": 0
+  }
+]

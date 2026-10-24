@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000139875"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.110612541">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anOldDeliveredLifetimeCannotBlockOrCompleteTheSamePublicMembershipAfterUndo()" time="0.110239083">
+            <failure message="Issue recorded (error): A closed old lifetime cannot block the restored public membership: .failed(PlannerCore.PlannerFailure(code: &quot;recoveryIntegrityFailure&quot;, propertyPath: nil, message: &quot;The removed membership is unsupported or still live.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

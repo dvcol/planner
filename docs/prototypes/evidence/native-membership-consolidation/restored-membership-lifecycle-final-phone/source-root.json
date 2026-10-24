@@ -1,0 +1,15 @@
+{
+  "root": "/private/tmp/PlannerBrowserNativeSource",
+  "base": "c6165cc617a0cea89f2c4170379e74d63dbe36a0",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipConsolidation.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ExpandedCompletionRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryEntryClosureRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipConsolidationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoverySourceIdentityRejectionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoverySourceIdentityTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/SourceDeletionIntegrityTests.swift"
+  ]
+}

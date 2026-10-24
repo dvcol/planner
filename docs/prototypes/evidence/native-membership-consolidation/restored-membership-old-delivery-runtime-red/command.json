@@ -1,0 +1,17 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "/private/tmp/PlannerImportLifetimeAuditSource/Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerImportLifetimeAuditBuild",
+  "--jobs",
+  "1",
+  "--disable-xctest",
+  "--enable-swift-testing",
+  "--filter",
+  "anOldDeliveredLifetimeCannotBlockOrCompleteTheSamePublicMembershipAfterUndo",
+  "--xunit-output",
+  "/private/tmp/PlannerImportLifetime-restored-membership-old-delivery-runtime-red.xml"
+]

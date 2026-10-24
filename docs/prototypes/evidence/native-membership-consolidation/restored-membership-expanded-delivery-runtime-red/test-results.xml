@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.9667e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.294419708">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent()" time="0.294064208"/>
+    </testsuite>
+</testsuites>

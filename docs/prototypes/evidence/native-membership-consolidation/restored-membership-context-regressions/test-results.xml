@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.0583e-05"/>
+    <testsuite name="TestResults" errors="0" tests="19" failures="0" skipped="0" time="3.8833805">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredAliasesCannotBorrowAnotherPairGenerationOrCanonicalLifetime(scenario:)" time="2.969318417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipAliasTests" name="retiredMembershipHistorySurvivesImportRecoveryReplayAndReopen(explicitReopen:fixtureName:)" time="2.969521208"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="newerMembershipRejectsOldUndoWithoutReplacingLocalState()" time="2.969755042"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="anotherDatasetCannotConsumeTheIssuedUndoCapability()" time="3.054635333"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="deletedOriginalBindingsRejectUndoWithoutChangingSurvivors(kind:)" time="2.969634"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="issuanceEndsOnReopenButAppliedRestorationReplayPreservesLaterEdits()" time="3.054808833"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="anotherRemovalRestoresOnlyItsOwnFreshLifetimeAndClosesOlderHistory()" time="3.054763917"/>
+        <testcase classname="PlannerCoreStoreTests.AssociationUndoHistoryTests" name="recreatedExpandedCounterpartsRejectTheWholeUndo(kind:)" time="3.061243833"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent()" time="3.387523583"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="ordinaryReaddDoesNotInheritAClosedCanonicalGroupsCompletion()" time="3.319522333"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anOldDeliveredLifetimeCannotBlockOrCompleteTheSamePublicMembershipAfterUndo()" time="3.319674667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="independentNativeMembershipsReadAsOneDoneContextWithoutCompletingTheirItem()" time="3.228990792"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="committedMaintenanceBlocksNewCommandsUntilItsOwnRecoveryRetryCompletes()" time="3.370307667"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="aSoleUnawareOfflineMembershipStaysRemovedWithoutDiscardingItsItem()" time="3.238973542"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="reviewedOverwriteRemovalDefeatsAnUnseenAddWithoutDeletingItsItem(incomingClosure:)" time="3.238963708"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anAddMissingASecondRemovalStaysSuppressedWithoutContaminatingAnInformedReadd(withRepeatedListEntries:)" time="3.72298575"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag()" time="3.110250167"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:)" time="3.054662417"/>
+        <testcase classname="PlannerCoreStoreTests.NativeImportOwnedRemovalTests" name="overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:)" time="3.88282125"/>
+    </testsuite>
+</testsuites>

@@ -128,7 +128,6 @@ struct PortableDeletionMarker: Codable {
     schedules: [PortableScheduleRecord],
     categories: [PlannerPortableCategory],
     tags: [PlannerPortableTag],
-    memberships: [PortableMembershipRecord],
     labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord],
     ownedLinks: [PlannerPortableOwnedLink], expandedCompletions: [PortableExpandedCompletionRecord]
   )
@@ -201,13 +200,10 @@ struct PortableDeletionMarker: Codable {
           PlannerEntityReference(kind: kind, id: source.id), lifetimeId: source.lifetimeId),
         closedFamilyId: closedFamilyId)
     case .membership(let membership):
-      guard membership.kind == "membership",
-        !memberships.contains(where: {
-          $0.id == membership.id && $0.lifetimeId == membership.lifetimeId
-        })
-      else {
+      /// Closed native copies reach consolidation; complete graph validation still rejects them.
+      guard membership.kind == "membership" else {
         throw PlannerFailure(
-          "recoveryIntegrityFailure", "The removed membership is unsupported or still live.")
+          "recoveryIntegrityFailure", "The removed membership kind is unsupported.")
       }
       return PlannerPortableDeletionMarker(
         deletionId: deletionId, operationId: operationId,

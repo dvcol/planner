@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000118375"/>
+    <testsuite name="TestResults" errors="0" tests="3" failures="0" skipped="0" time="0.309438458">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="unprovenCompetingMembershipLifetimesStayUnmodifiedAndUnavailable()" time="0.09937325"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="anOldDeliveredLifetimeCannotBlockOrCompleteTheSamePublicMembershipAfterUndo()" time="0.143266458"/>
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipConsolidationTests" name="oldExpandedDeliveryKeepsRestoredRepeatedBranchesIndependent()" time="0.309094458"/>
+    </testsuite>
+</testsuites>
