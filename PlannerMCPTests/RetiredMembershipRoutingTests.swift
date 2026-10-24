@@ -7,7 +7,10 @@ import Testing
 
 @MainActor
 struct RetiredMembershipRoutingTests {
-  @Test func aRetiredNativeCopyCannotReviveOrRetargetAnHTTPMembership() async throws {
+  @Test(arguments: [false, true])
+  func aRetiredNativeCopyCannotReviveOrRetargetAnHTTPMembership(missingProvenance: Bool)
+    async throws
+  {
     let (_, seedConfiguration, _) = try makePlannerIntentStorage()
     let seedPlanner = PlannerCore.Planner(configuration: seedConfiguration)
     guard case .ready(let seedSession) = await seedPlanner.bootstrap() else {
@@ -101,7 +104,8 @@ struct RetiredMembershipRoutingTests {
     do {
       try insertRetiredCopy(
         configuration: configuration, item: item, list: list,
-        identifier: retiredIdentifier, lifetime: retiredLifetime)
+        identifier: retiredIdentifier, lifetime: retiredLifetime,
+        missingProvenance: missingProvenance)
       let empty = try await call(
         "planner_query",
         arguments: [
@@ -186,7 +190,8 @@ struct RetiredMembershipRoutingTests {
       }
       try insertRetiredCopy(
         configuration: configuration, item: item, list: list,
-        identifier: retiredIdentifier, lifetime: retiredLifetime)
+        identifier: retiredIdentifier, lifetime: retiredLifetime,
+        missingProvenance: missingProvenance)
       let retained = try await call(
         "planner_read",
         arguments: [
@@ -232,7 +237,7 @@ struct RetiredMembershipRoutingTests {
   /// The second native writer supplies input; every behavioral assertion uses Core or actual HTTP.
   private func insertRetiredCopy(
     configuration: PlannerStorageConfiguration, item: PlannerEntityReference,
-    list: PlannerEntityReference, identifier: UUID, lifetime: UUID
+    list: PlannerEntityReference, identifier: UUID, lifetime: UUID, missingProvenance: Bool
   ) throws {
     let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let container = try ModelContainer(
@@ -246,6 +251,13 @@ struct RetiredMembershipRoutingTests {
       context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first { $0.id == item.id })
     let savedList = try #require(
       context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first { $0.id == list.id })
+    if missingProvenance {
+      let provenance = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>()).first {
+          $0.membershipId == identifier && $0.membershipLifetimeId == lifetime
+        })
+      context.delete(provenance)
+    }
     context.insert(
       PlannerSchemaV18.Membership(
         snapshot: .init(
