@@ -1,0 +1,418 @@
+{
+  "identity": {
+    "namespaceId": "00000000-0000-4000-8000-000000000920",
+    "datasetId": "00000000-0000-4000-8000-000000000910",
+    "epochId": "00000000-0000-4000-8000-000000000930",
+    "ownershipBinding": "local:membership-fixture"
+  },
+  "cases": [
+    {
+      "name": "legacy-remove-v1",
+      "version": 1,
+      "canonicalValue": [
+        "record",
+        {
+          "command": [
+            "record",
+            {
+              "type": [
+                "string",
+                "removeMembership"
+              ],
+              "listId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000201"
+              ],
+              "membershipId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000405"
+              ]
+            }
+          ],
+          "datasetId": [
+            "identity",
+            "00000000-0000-4000-8000-000000000910"
+          ],
+          "ownershipBinding": [
+            "string",
+            "local:membership-fixture"
+          ],
+          "resolvedBindings": [
+            "identitySet",
+            [
+              [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "item"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000101"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000811"
+                  ]
+                }
+              ],
+              [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "list"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000201"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000821"
+                  ]
+                }
+              ],
+              [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "membership"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000405"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000845"
+                  ]
+                }
+              ]
+            ]
+          ]
+        }
+      ],
+      "payloadBase64": "UGxhbm5lck9wZXJhdGlvblBheWxvYWQAAAAAARgAAAAAAAAABAAAAAAAAAAHY29tbWFuZBgAAAAAAAAAAwAAAAAAAAAGbGlzdElkFAAAAAAAAEAAgAAAAAAAAgEAAAAAAAAADG1lbWJlcnNoaXBJZBQAAAAAAABAAIAAAAAAAAQFAAAAAAAAAAR0eXBlEAAAAAAAAAAQcmVtb3ZlTWVtYmVyc2hpcAAAAAAAAAAJZGF0YXNldElkFAAAAAAAAEAAgAAAAAAACRAAAAAAAAAAEG93bmVyc2hpcEJpbmRpbmcQAAAAAAAAABhsb2NhbDptZW1iZXJzaGlwLWZpeHR1cmUAAAAAAAAAEHJlc29sdmVkQmluZGluZ3MXAAAAAAAAAAMYAAAAAAAAAAMAAAAAAAAAAmlkFAAAAAAAAEAAgAAAAAAAAQEAAAAAAAAABGtpbmQQAAAAAAAAAARpdGVtAAAAAAAAAApsaWZldGltZUlkFAAAAAAAAEAAgAAAAAAACBEYAAAAAAAAAAMAAAAAAAAAAmlkFAAAAAAAAEAAgAAAAAAAAgEAAAAAAAAABGtpbmQQAAAAAAAAAARsaXN0AAAAAAAAAApsaWZldGltZUlkFAAAAAAAAEAAgAAAAAAACCEYAAAAAAAAAAMAAAAAAAAAAmlkFAAAAAAAAEAAgAAAAAAABAUAAAAAAAAABGtpbmQQAAAAAAAAAAptZW1iZXJzaGlwAAAAAAAAAApsaWZldGltZUlkFAAAAAAAAEAAgAAAAAAACEU=",
+      "payloadDigest": "sha256-payload-v1:83a1962cc0ce643eac14d2dee328610fe683ea678d51adff7730c32d3c7173db"
+    },
+    {
+      "name": "legacy-restoration-v2",
+      "version": 2,
+      "canonicalValue": [
+        "record",
+        {
+          "command": [
+            "record",
+            {
+              "type": [
+                "string",
+                "applyImport"
+              ],
+              "backup": [
+                "record",
+                {
+                  "format": [
+                    "string",
+                    "planner-data"
+                  ],
+                  "formatVersion": [
+                    "integer",
+                    2
+                  ],
+                  "sources": [
+                    "ordered",
+                    []
+                  ],
+                  "memberships": [
+                    "ordered",
+                    []
+                  ],
+                  "itineraryEntries": [
+                    "ordered",
+                    []
+                  ],
+                  "expandedCompletions": [
+                    "ordered",
+                    []
+                  ],
+                  "labelAssociations": [
+                    "ordered",
+                    []
+                  ],
+                  "ownedLinks": [
+                    "ordered",
+                    []
+                  ],
+                  "schedules": [
+                    "ordered",
+                    []
+                  ],
+                  "deletionMarkers": [
+                    "ordered",
+                    []
+                  ],
+                  "contextAliases": [
+                    "ordered",
+                    []
+                  ],
+                  "completionChanges": [
+                    "ordered",
+                    []
+                  ],
+                  "restorationFamilies": [
+                    "ordered",
+                    []
+                  ]
+                }
+              ],
+              "mode": [
+                "string",
+                "overwrite"
+              ],
+              "restoreDeletedData": [
+                "boolean",
+                true
+              ]
+            }
+          ],
+          "datasetId": [
+            "identity",
+            "00000000-0000-4000-8000-000000000910"
+          ],
+          "ownershipBinding": [
+            "string",
+            "local:membership-fixture"
+          ],
+          "resolvedBindings": [
+            "identitySet",
+            []
+          ],
+          "reviewedCurrentData": [
+            "record",
+            {
+              "format": [
+                "string",
+                "planner-data"
+              ],
+              "formatVersion": [
+                "integer",
+                2
+              ],
+              "sources": [
+                "ordered",
+                []
+              ],
+              "memberships": [
+                "ordered",
+                []
+              ],
+              "itineraryEntries": [
+                "ordered",
+                []
+              ],
+              "expandedCompletions": [
+                "ordered",
+                []
+              ],
+              "labelAssociations": [
+                "ordered",
+                []
+              ],
+              "ownedLinks": [
+                "ordered",
+                []
+              ],
+              "schedules": [
+                "ordered",
+                []
+              ],
+              "deletionMarkers": [
+                "ordered",
+                []
+              ],
+              "contextAliases": [
+                "ordered",
+                []
+              ],
+              "completionChanges": [
+                "ordered",
+                []
+              ],
+              "restorationFamilies": [
+                "ordered",
+                []
+              ]
+            }
+          ]
+        }
+      ],
+      "payloadBase64": "UGxhbm5lck9wZXJhdGlvblBheWxvYWQAAAAAAhgAAAAAAAAABQAAAAAAAAAHY29tbWFuZBgAAAAAAAAABAAAAAAAAAAGYmFja3VwGAAAAAAAAAANAAAAAAAAABFjb21wbGV0aW9uQ2hhbmdlcxYAAAAAAAAAAAAAAAAAAAAOY29udGV4dEFsaWFzZXMWAAAAAAAAAAAAAAAAAAAAD2RlbGV0aW9uTWFya2VycxYAAAAAAAAAAAAAAAAAAAATZXhwYW5kZWRDb21wbGV0aW9ucxYAAAAAAAAAAAAAAAAAAAAGZm9ybWF0EAAAAAAAAAAMcGxhbm5lci1kYXRhAAAAAAAAAA1mb3JtYXRWZXJzaW9uEgAAAAAAAAACAAAAAAAAABBpdGluZXJhcnlFbnRyaWVzFgAAAAAAAAAAAAAAAAAAABFsYWJlbEFzc29jaWF0aW9ucxYAAAAAAAAAAAAAAAAAAAALbWVtYmVyc2hpcHMWAAAAAAAAAAAAAAAAAAAACm93bmVkTGlua3MWAAAAAAAAAAAAAAAAAAAAE3Jlc3RvcmF0aW9uRmFtaWxpZXMWAAAAAAAAAAAAAAAAAAAACXNjaGVkdWxlcxYAAAAAAAAAAAAAAAAAAAAHc291cmNlcxYAAAAAAAAAAAAAAAAAAAAEbW9kZRAAAAAAAAAACW92ZXJ3cml0ZQAAAAAAAAAScmVzdG9yZURlbGV0ZWREYXRhEQEAAAAAAAAABHR5cGUQAAAAAAAAAAthcHBseUltcG9ydAAAAAAAAAAJZGF0YXNldElkFAAAAAAAAEAAgAAAAAAACRAAAAAAAAAAEG93bmVyc2hpcEJpbmRpbmcQAAAAAAAAABhsb2NhbDptZW1iZXJzaGlwLWZpeHR1cmUAAAAAAAAAEHJlc29sdmVkQmluZGluZ3MXAAAAAAAAAAAAAAAAAAAAE3Jldmlld2VkQ3VycmVudERhdGEYAAAAAAAAAA0AAAAAAAAAEWNvbXBsZXRpb25DaGFuZ2VzFgAAAAAAAAAAAAAAAAAAAA5jb250ZXh0QWxpYXNlcxYAAAAAAAAAAAAAAAAAAAAPZGVsZXRpb25NYXJrZXJzFgAAAAAAAAAAAAAAAAAAABNleHBhbmRlZENvbXBsZXRpb25zFgAAAAAAAAAAAAAAAAAAAAZmb3JtYXQQAAAAAAAAAAxwbGFubmVyLWRhdGEAAAAAAAAADWZvcm1hdFZlcnNpb24SAAAAAAAAAAIAAAAAAAAAEGl0aW5lcmFyeUVudHJpZXMWAAAAAAAAAAAAAAAAAAAAEWxhYmVsQXNzb2NpYXRpb25zFgAAAAAAAAAAAAAAAAAAAAttZW1iZXJzaGlwcxYAAAAAAAAAAAAAAAAAAAAKb3duZWRMaW5rcxYAAAAAAAAAAAAAAAAAAAATcmVzdG9yYXRpb25GYW1pbGllcxYAAAAAAAAAAAAAAAAAAAAJc2NoZWR1bGVzFgAAAAAAAAAAAAAAAAAAAAdzb3VyY2VzFgAAAAAAAAAA",
+      "payloadDigest": "sha256-payload-v2:287439f4fb9ec1a01410bbb65122c0bd4047170e7740dcd8047d420930244b5b"
+    },
+    {
+      "name": "observed-remove-v3",
+      "version": 3,
+      "canonicalValue": [
+        "record",
+        {
+          "command": [
+            "record",
+            {
+              "type": [
+                "string",
+                "removeMembership"
+              ],
+              "listId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000201"
+              ],
+              "membershipId": [
+                "identity",
+                "00000000-0000-4000-8000-000000000405"
+              ]
+            }
+          ],
+          "datasetId": [
+            "identity",
+            "00000000-0000-4000-8000-000000000910"
+          ],
+          "ownershipBinding": [
+            "string",
+            "local:membership-fixture"
+          ],
+          "resolvedBindings": [
+            "identitySet",
+            [
+              [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "item"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000101"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000811"
+                  ]
+                }
+              ],
+              [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "list"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000201"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000821"
+                  ]
+                }
+              ],
+              [
+                "record",
+                {
+                  "kind": [
+                    "string",
+                    "membership"
+                  ],
+                  "id": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000405"
+                  ],
+                  "lifetimeId": [
+                    "identity",
+                    "00000000-0000-4000-8000-000000000845"
+                  ]
+                }
+              ]
+            ]
+          ],
+          "resolvedMembershipEvidence": [
+            "ordered",
+            [
+              [
+                "record",
+                {
+                  "membership": [
+                    "record",
+                    {
+                      "kind": [
+                        "string",
+                        "membership"
+                      ],
+                      "id": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000405"
+                      ],
+                      "lifetimeId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000845"
+                      ]
+                    }
+                  ],
+                  "list": [
+                    "record",
+                    {
+                      "kind": [
+                        "string",
+                        "list"
+                      ],
+                      "id": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000201"
+                      ],
+                      "lifetimeId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000821"
+                      ]
+                    }
+                  ],
+                  "item": [
+                    "record",
+                    {
+                      "kind": [
+                        "string",
+                        "item"
+                      ],
+                      "id": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000101"
+                      ],
+                      "lifetimeId": [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000811"
+                      ]
+                    }
+                  ],
+                  "observedRemovalIds": [
+                    "identitySet",
+                    [
+                      [
+                        "identity",
+                        "00000000-0000-4000-8000-000000000891"
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            ]
+          ]
+        }
+      ],
+      "payloadBase64": "UGxhbm5lck9wZXJhdGlvblBheWxvYWQAAAAAAxgAAAAAAAAABQAAAAAAAAAHY29tbWFuZBgAAAAAAAAAAwAAAAAAAAAGbGlzdElkFAAAAAAAAEAAgAAAAAAAAgEAAAAAAAAADG1lbWJlcnNoaXBJZBQAAAAAAABAAIAAAAAAAAQFAAAAAAAAAAR0eXBlEAAAAAAAAAAQcmVtb3ZlTWVtYmVyc2hpcAAAAAAAAAAJZGF0YXNldElkFAAAAAAAAEAAgAAAAAAACRAAAAAAAAAAEG93bmVyc2hpcEJpbmRpbmcQAAAAAAAAABhsb2NhbDptZW1iZXJzaGlwLWZpeHR1cmUAAAAAAAAAEHJlc29sdmVkQmluZGluZ3MXAAAAAAAAAAMYAAAAAAAAAAMAAAAAAAAAAmlkFAAAAAAAAEAAgAAAAAAAAQEAAAAAAAAABGtpbmQQAAAAAAAAAARpdGVtAAAAAAAAAApsaWZldGltZUlkFAAAAAAAAEAAgAAAAAAACBEYAAAAAAAAAAMAAAAAAAAAAmlkFAAAAAAAAEAAgAAAAAAAAgEAAAAAAAAABGtpbmQQAAAAAAAAAARsaXN0AAAAAAAAAApsaWZldGltZUlkFAAAAAAAAEAAgAAAAAAACCEYAAAAAAAAAAMAAAAAAAAAAmlkFAAAAAAAAEAAgAAAAAAABAUAAAAAAAAABGtpbmQQAAAAAAAAAAptZW1iZXJzaGlwAAAAAAAAAApsaWZldGltZUlkFAAAAAAAAEAAgAAAAAAACEUAAAAAAAAAGnJlc29sdmVkTWVtYmVyc2hpcEV2aWRlbmNlFgAAAAAAAAABGAAAAAAAAAAEAAAAAAAAAARpdGVtGAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAEBAAAAAAAAAARraW5kEAAAAAAAAAAEaXRlbQAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAgRAAAAAAAAAARsaXN0GAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAIBAAAAAAAAAARraW5kEAAAAAAAAAAEbGlzdAAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAghAAAAAAAAAAptZW1iZXJzaGlwGAAAAAAAAAADAAAAAAAAAAJpZBQAAAAAAABAAIAAAAAAAAQFAAAAAAAAAARraW5kEAAAAAAAAAAKbWVtYmVyc2hpcAAAAAAAAAAKbGlmZXRpbWVJZBQAAAAAAABAAIAAAAAAAAhFAAAAAAAAABJvYnNlcnZlZFJlbW92YWxJZHMXAAAAAAAAAAEUAAAAAAAAQACAAAAAAAAIkQ==",
+      "payloadDigest": "sha256-payload-v3:b9d1f98230c4acbee16579d7827aa731f3b1a8a033814ddd36691e9c8c139aa9"
+    }
+  ]
+}

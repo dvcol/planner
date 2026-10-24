@@ -1,0 +1,24 @@
+{
+  "contract": "docs/native-membership-consolidation-contract-review.md",
+  "frozenBeforeImplementationTests": true,
+  "producer": "Independent literal graph and Python tagged-value encoder; no Planner production code executed",
+  "case": "M401/841 removed under D891; M405/845 explicitly observes D891 and remains Todo",
+  "files": {
+    "informed-readd-v3.json": {
+      "bytes": 3407,
+      "sha256": "ca751a9fd7306fb828a8006fba566c0a45255909d9375106b571499b2622ed7b"
+    },
+    "maintenance-preparation-v1.json": {
+      "bytes": 4115,
+      "sha256": "fe6b7ffe0180302bd42dc4f55aaeee1a14573ba3203a61b43679c42cf0366b46"
+    },
+    "maintenance-recovery-v2.json": {
+      "bytes": 5564,
+      "sha256": "f1bed6631fcfa4acceeae804c54fde6f0971482c9146852063a02518806f6daa"
+    },
+    "operation-fingerprint-literals.json": {
+      "bytes": 15009,
+      "sha256": "18a1159d0e0697d833075b3db151fe28fe05a9c74c6839b42eacebf06c0386f6"
+    }
+  }
+}
