@@ -317,7 +317,11 @@ public actor Planner {
         }
         let maintenanceContext = ModelContext(try openContainer())
         maintenanceContext.autosaveEnabled = false
-        try ensureCanonicalMemberships(identity: identity, context: maintenanceContext)
+        do {
+          try ensureCanonicalMemberships(identity: identity, context: maintenanceContext)
+        } catch let reason as PlannerFailure where reason.code == "maintenanceRequired" {
+          guard case .known(_, _, _, true) = readRecoveryObservation(identity) else { throw reason }
+        }
         let session = PlannerDatasetSession(
           datasetId: identity.datasetId, sessionId: UUID(),
           ownershipBinding: identity.ownershipBinding, epochId: identity.epochId
@@ -1608,10 +1612,6 @@ public actor Planner {
       let context = ModelContext(try openContainer())
       context.autosaveEnabled = false
       let memberships = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
-      guard try !membershipConsolidationRequired(memberships, context: context) else {
-        throw PlannerFailure(
-          "maintenanceRequired", "Membership consolidation has not committed yet.")
-      }
       let archive = recoveryArchive(identity)
       let envelope = try archive.latest()
       let acknowledged = Dictionary(
@@ -1641,6 +1641,13 @@ public actor Planner {
         }
       }
       let maintenance = try archive.incompleteMaintenance(in: context, envelope: envelope)
+      if try membershipConsolidationRequired(memberships, context: context) {
+        guard !incomplete.isEmpty || !maintenance.isEmpty else {
+          throw PlannerFailure(
+            "maintenanceRequired", "Membership consolidation has not committed yet.")
+        }
+        _ = try canonicalRecoverySnapshot(context)
+      }
       return .known(
         checkpointGeneration: (envelope?.checkpointGeneration).flatMap(Int64.init),
         incompleteOperationIds: incomplete.sorted { $0.uuidString < $1.uuidString },

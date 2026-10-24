@@ -393,13 +393,23 @@ struct NativeMembershipConsolidationTests {
     let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
       namespace.namespaceId.uuidString)
     let beforeRetry = try maintenanceNamespaceFiles(namespaceDirectory)
+    let recoveryReader = Planner(configuration: configuration)
+    guard case .ready(let recoverySession) = await recoveryReader.bootstrap(),
+      case .status(let restartedStatus) = await recoveryReader.read(
+        session: recoverySession, request: .status),
+      case .known(_, let restartedOperations, let restartedMaintenance, let stillBlocked) =
+        restartedStatus.recovery
+    else { throw CancellationError() }
+    #expect(restartedOperations.isEmpty && restartedMaintenance == [maintenanceIdentifier])
+    #expect(stillBlocked)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeRetry)
     guard
       case .failed(let needed) = await planner.query(
         .init(session: session, request: .items(.init(scope: .list(listIdentifier)))))
     else { throw CancellationError() }
     #expect(needed.code == "maintenanceRequired")
-    let response = await planner.retryMaintenanceRecovery(
-      session: session, maintenanceId: maintenanceIdentifier)
+    let response = await recoveryReader.retryMaintenanceRecovery(
+      session: recoverySession, maintenanceId: maintenanceIdentifier)
     guard case .complete(let checkpoint) = response else {
       Issue.record(
         "Committed maintenance needs a canonical recovery copy of later inputs: \(response)")
@@ -553,6 +563,15 @@ struct NativeMembershipConsolidationTests {
     #expect(pending.code == "maintenanceRequired")
     #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeRetry)
     if delivery == "unproven" {
+      let unprovenReader = Planner(configuration: configuration)
+      guard case .unavailable = await unprovenReader.bootstrap(),
+        case .status(let unresolvedStatus) = await planner.read(session: session, request: .status),
+        case .unavailable = unresolvedStatus.recovery
+      else {
+        Issue.record("Unproven later input must not gain a ready recovery session or known status.")
+        return
+      }
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeRetry)
       guard
         case .applied(let retained, .incomplete(let reason)) = await planner.retryRecovery(
           session: session, operationId: operation.operationId
@@ -567,7 +586,23 @@ struct NativeMembershipConsolidationTests {
         storeURL: configuration.storeURL, entryIdentifier: firstEntry,
         membershipIdentifier: unknownIdentifier)
     }
-    let response = await planner.retryRecovery(session: session, operationId: operation.operationId)
+    let recoveryReader = Planner(configuration: configuration)
+    let restarted = await recoveryReader.bootstrap()
+    guard case .ready(let recoverySession) = restarted else {
+      Issue.record("A fresh process must retain Retry for a known applied command: \(restarted)")
+      return
+    }
+    guard
+      case .status(let restartedStatus) = await recoveryReader.read(
+        session: recoverySession, request: .status),
+      case .known(_, let restartedOperations, let restartedMaintenance, let stillBlocked) =
+        restartedStatus.recovery
+    else { throw CancellationError() }
+    #expect(restartedOperations == [operation.operationId] && restartedMaintenance.isEmpty)
+    #expect(stillBlocked)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeRetry)
+    let response = await recoveryReader.retryRecovery(
+      session: recoverySession, operationId: operation.operationId)
     guard case .applied(let repaired, .complete(let checkpoint)) = response.outcome else {
       Issue.record(
         "Known applied work needs a canonical recovery copy before maintenance: \(response)")
@@ -4379,6 +4414,158 @@ private final class InitialCompletionSeedFixtureBundle: NSObject {}
 
 #if os(macOS)
   extension NativeMembershipConsolidationTests {
+    @Test func interruptedCommittedMaintenanceCanRecoverAfterLaterNativeInput() async throws {
+      if let workPath = ProcessInfo.processInfo.environment[
+        "PLANNER_MAINTENANCE_POST_COMMIT_WORK"]
+      {
+        try await runMaintenanceInterruptionChild(
+          workDirectory: URL(fileURLWithPath: workPath), afterCommit: true)
+        return
+      }
+      let workDirectory = try makePlannerStoreFixtureDirectory()
+      try FileManager.default.createDirectory(at: workDirectory, withIntermediateDirectories: true)
+      try runIsolatedMaintenanceInterruption(workDirectory: workDirectory, afterCommit: true)
+      let metadata = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(contentsOf: workDirectory.appendingPathComponent("input.json")))
+          as? [String: Any])
+      let directory = URL(fileURLWithPath: try #require(metadata["directory"] as? String))
+      let configuration = PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly)
+      let namespaceIdentifier = try #require(
+        (metadata["namespaceId"] as? String).flatMap(UUID.init(uuidString:)))
+      let itemIdentifier = try #require(
+        (metadata["itemId"] as? String).flatMap(UUID.init(uuidString:)))
+      let listIdentifier = try #require(
+        (metadata["listId"] as? String).flatMap(UUID.init(uuidString:)))
+      let waitingIdentifier = try #require(
+        (metadata["waitingOperationId"] as? String).flatMap(UUID.init(uuidString:)))
+      let originalCheckpoint = try #require(metadata["checkpointGeneration"] as? Int)
+      let originalFiles = try #require(metadata["originalFiles"] as? [String: String])
+      let proof = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(contentsOf: workDirectory.appendingPathComponent("did-save.json")))
+          as? [String: Any])
+      #expect(proof["preparationCount"] as? Int == 1)
+      let planner = Planner(configuration: configuration)
+      guard
+        case .listed(let pending) = await planner.inspectRecovery(
+          request: .namespace(namespaceId: namespaceIdentifier)),
+        let preparation = pending.preparedMaintenance.first,
+        case .ready(let initialSession) = await planner.bootstrap(),
+        case .status(let committedStatus) = await planner.read(
+          session: initialSession, request: .status),
+        case .known(let checkpoint, let operations, let maintenance, let blocked) =
+          committedStatus.recovery
+      else { throw CancellationError() }
+      #expect(pending.acknowledgedSnapshot?.checkpointGeneration == Int64(originalCheckpoint))
+      #expect(checkpoint == Int64(originalCheckpoint) && operations.isEmpty && blocked)
+      #expect(maintenance == [preparation.maintenanceId])
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespaceIdentifier.uuidString)
+      let preparationName = "maintenance-\(preparation.maintenanceId.uuidString).json"
+      let interruptedFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      for (name, encoded) in originalFiles {
+        #expect(interruptedFiles[name] == Data(base64Encoded: encoded))
+      }
+      let preparedBytes = try #require(interruptedFiles[preparationName])
+      try await insertIndependentMemberships(
+        storeURL: configuration.storeURL,
+        itemIdentifier: itemIdentifier, listIdentifier: listIdentifier,
+        contributions: [
+          (
+            "00000000-0000-4000-8000-000000000403",
+            "00000000-0000-4000-8000-000000000843", 3072, false
+          )
+        ])
+      let relaunched = Planner(configuration: configuration)
+      let restarted = await relaunched.bootstrap()
+      guard case .ready(let session) = restarted else {
+        Issue.record(
+          "A fresh process must retain access to committed-maintenance Retry after later input: \(restarted)"
+        )
+        return
+      }
+      let statusRead = await relaunched.read(session: session, request: .status)
+      guard case .status(let status) = statusRead,
+        case .known(
+          let retainedCheckpoint, let incompleteOperations, let incompleteMaintenance,
+          let mutationBlocked) = status.recovery
+      else {
+        Issue.record("The pending committed recovery must remain visible: \(statusRead)")
+        return
+      }
+      guard
+        case .noReliableEvidence = await relaunched.operationStatus(
+          session: session, operationId: waitingIdentifier)
+      else { throw CancellationError() }
+      #expect(retainedCheckpoint == Int64(originalCheckpoint))
+      #expect(incompleteOperations.isEmpty && mutationBlocked)
+      #expect(incompleteMaintenance == [preparation.maintenanceId])
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == interruptedFiles)
+      let command = PlannerCommand.createTag(content: .init(name: "Waiting for maintenance"))
+      let waiting = await relaunched.execute(
+        .init(operationId: waitingIdentifier, session: session, command: command))
+      guard case .rejected = waiting.outcome else {
+        Issue.record("The waiting command must remain unapplied: \(waiting)")
+        return
+      }
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == interruptedFiles)
+      guard
+        case .complete(let recoveredCheckpoint) = await relaunched.retryMaintenanceRecovery(
+          session: session, maintenanceId: preparation.maintenanceId),
+        case .selected(let recovered) = await relaunched.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespaceIdentifier, checkpointGeneration: recoveredCheckpoint))
+      else { throw CancellationError() }
+      #expect(recoveredCheckpoint == Int64(originalCheckpoint) + 1)
+      #expect(recovered.decodedBackup.backup.memberships.count == 1)
+      #expect(recovered.decodedBackup.backup.memberships.first?.localDone == true)
+      #expect(recovered.decodedBackup.backup.contextAliases.count == 3)
+      let recoveredFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      #expect(recoveredFiles[preparationName] == preparedBytes)
+      #expect(recoveredFiles.keys.filter { $0.hasPrefix("maintenance-") }.count == 1)
+      guard
+        case .snapshot(let members) = await relaunched.query(
+          .init(
+            session: session,
+            request: .items(.init(scope: .list(listIdentifier), completion: .all, archive: .all)))),
+        case .exported(let currentData) = await relaunched.exportData(session: session),
+        case .listed(let consolidated) = await relaunched.inspectRecovery(
+          request: .namespace(namespaceId: namespaceIdentifier)),
+        let consolidatedCheckpoint = consolidated.acknowledgedSnapshot?.checkpointGeneration
+      else { throw CancellationError() }
+      #expect(members.matchingCount == 1)
+      #expect(consolidatedCheckpoint == recoveredCheckpoint + 1)
+      let recoveredGraph = try #require(
+        JSONSerialization.jsonObject(with: recovered.portableData) as? NSDictionary)
+      let currentGraph = try #require(
+        JSONSerialization.jsonObject(with: currentData) as? NSDictionary)
+      #expect(currentGraph == recoveredGraph)
+      let consolidatedFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+      #expect(consolidatedFiles[preparationName] == preparedBytes)
+      #expect(consolidatedFiles.keys.filter { $0.hasPrefix("maintenance-") }.count == 2)
+      guard
+        case .complete(let originalRetryCheckpoint) = await relaunched.retryMaintenanceRecovery(
+          session: session, maintenanceId: preparation.maintenanceId)
+      else { throw CancellationError() }
+      #expect(originalRetryCheckpoint == recoveredCheckpoint)
+      #expect(try maintenanceNamespaceFiles(namespaceDirectory) == consolidatedFiles)
+      guard
+        case .applied(let resumed, .complete(let commandCheckpoint)) = await relaunched.execute(
+          .init(operationId: waitingIdentifier, session: session, command: command)
+        ).outcome,
+        case .applied(let replayed, .complete(let repeatedCheckpoint)) = await relaunched.execute(
+          .init(operationId: waitingIdentifier, session: session, command: command)
+        ).outcome
+      else { throw CancellationError() }
+      #expect(resumed == replayed && commandCheckpoint == repeatedCheckpoint)
+      #expect(commandCheckpoint == consolidatedCheckpoint + 1)
+    }
+
     @Test func interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput()
       async throws
     {
@@ -4502,7 +4689,9 @@ private final class InitialCompletionSeedFixtureBundle: NSObject {}
       #expect(resumed == replayed && tags.matchingCount == 1)
     }
 
-    private func runMaintenanceInterruptionChild(workDirectory: URL) async throws {
+    private func runMaintenanceInterruptionChild(workDirectory: URL, afterCommit: Bool = false)
+      async throws
+    {
       let directory = try makePlannerStoreFixtureDirectory()
       let configuration = PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -4545,8 +4734,10 @@ private final class InitialCompletionSeedFixtureBundle: NSObject {}
       try await insertIndependentMemberships(
         storeURL: configuration.storeURL,
         itemIdentifier: item.id, listIdentifier: list.id)
+      let notificationName = afterCommit ? ModelContext.didSave : ModelContext.willSave
+      let proofFilename = afterCommit ? "did-save.json" : "will-save.json"
       let observer = NotificationCenter.default.addObserver(
-        forName: ModelContext.willSave,
+        forName: notificationName,
         object: nil, queue: nil
       ) { notification in
         guard notification.object is ModelContext else { return }
@@ -4558,7 +4749,7 @@ private final class InitialCompletionSeedFixtureBundle: NSObject {}
           try JSONSerialization.data(
             withJSONObject: ["preparationCount": preparations.count],
             options: [.sortedKeys]
-          ).write(to: workDirectory.appendingPathComponent("will-save.json"), options: .atomic)
+          ).write(to: workDirectory.appendingPathComponent(proofFilename), options: .atomic)
         } catch {
           print("MAINTENANCE_INTERRUPT_PROOF_ERROR \(error)")
         }
@@ -4570,10 +4761,13 @@ private final class InitialCompletionSeedFixtureBundle: NSObject {}
           operationId: waitingIdentifier, session: session,
           command: .createTag(content: .init(name: "Waiting for maintenance"))))
       NotificationCenter.default.removeObserver(observer)
-      Issue.record("The isolated process must stop at the actual native willSave: \(unexpected)")
+      Issue.record(
+        "The isolated process must stop at the actual native save notification: \(unexpected)")
     }
 
-    private func runIsolatedMaintenanceInterruption(workDirectory: URL) throws {
+    private func runIsolatedMaintenanceInterruption(workDirectory: URL, afterCommit: Bool = false)
+      throws
+    {
       let outputURL = workDirectory.appendingPathComponent("child.log")
       try Data().write(to: outputURL)
       let output = try FileHandle(forWritingTo: outputURL)
@@ -4586,13 +4780,23 @@ private final class InitialCompletionSeedFixtureBundle: NSObject {}
       {
         runnerArguments = ["--test-bundle-path", CommandLine.arguments[index + 1]]
       }
+      let selectedTest: String
+      let environmentName: String
+      if afterCommit {
+        selectedTest = "interruptedCommittedMaintenanceCanRecoverAfterLaterNativeInput"
+        environmentName = "PLANNER_MAINTENANCE_POST_COMMIT_WORK"
+      } else {
+        selectedTest =
+          "interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput"
+        environmentName = "PLANNER_MAINTENANCE_INTERRUPT_WORK"
+      }
       process.arguments =
         runnerArguments + [
           "--testing-library", "swift-testing", "--filter",
-          "NativeMembershipConsolidationTests/interruptedPreparedMaintenanceStaysUnverifiedAndFreshBootstrapIncludesLaterInput",
+          "NativeMembershipConsolidationTests/\(selectedTest)",
         ]
       var environment = ProcessInfo.processInfo.environment
-      environment["PLANNER_MAINTENANCE_INTERRUPT_WORK"] = workDirectory.path
+      environment[environmentName] = workDirectory.path
       process.environment = environment
       process.standardOutput = output
       process.standardError = output
