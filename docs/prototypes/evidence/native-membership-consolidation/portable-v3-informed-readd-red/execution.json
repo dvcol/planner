@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.079,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()",
+      "className": "PlannerCoreStoreTests.NativeMembershipPortableTests",
+      "seconds": 0.008779917,
+      "failures": [
+        "Issue recorded (error): Decode the independent informed re-add and retained strict removal: .invalid(PlannerCore.PlannerFailure(code: \"invalidInput\", propertyPath: Optional(\"/membershipProvenance\"), message: \"This backup property is not supported.\", details: nil))"
+      ],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

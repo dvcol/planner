@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000161375"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.009106209">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipPortableTests" name="informedReaddDecodesItsRetainedRemovalHistoryWithoutOpeningStorage()" time="0.008779917">
+            <failure message="Issue recorded (error): Decode the independent informed re-add and retained strict removal: .invalid(PlannerCore.PlannerFailure(code: &quot;invalidInput&quot;, propertyPath: Optional(&quot;/membershipProvenance&quot;), message: &quot;This backup property is not supported.&quot;, details: nil))"/>
+        </testcase>
+    </testsuite>
+</testsuites>

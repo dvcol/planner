@@ -1,0 +1,137 @@
+{
+  "format": "planner-maintenance-preparation",
+  "formatVersion": 1,
+  "maintenanceId": "00000000-0000-4000-8000-000000000940",
+  "namespaceId": "00000000-0000-4000-8000-000000000920",
+  "datasetId": "00000000-0000-4000-8000-000000000910",
+  "epochId": "00000000-0000-4000-8000-000000000930",
+  "ownershipBinding": "local:membership-fixture",
+  "kind": "membershipConsolidation",
+  "ruleVersion": 1,
+  "proposedBackup": {
+    "format": "planner-data",
+    "formatVersion": 3,
+    "sources": [
+      {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811",
+        "createdAt": 10.25,
+        "updatedAt": 20.125,
+        "content": {
+          "title": "Hotel",
+          "subtitle": null,
+          "notes": "A shared stop",
+          "location": null,
+          "estimate": {
+            "minutes": "30",
+            "displayUnit": "minute"
+          }
+        },
+        "globalDone": false,
+        "archived": false,
+        "contentOrigins": {
+          "title": "independent",
+          "notes": "independent"
+        }
+      },
+      {
+        "kind": "list",
+        "id": "00000000-0000-4000-8000-000000000201",
+        "lifetimeId": "00000000-0000-4000-8000-000000000821",
+        "createdAt": 10.25,
+        "updatedAt": 20.125,
+        "content": {
+          "name": "Tokyo",
+          "notes": null,
+          "color": null,
+          "iconName": null,
+          "manualEstimate": null
+        },
+        "globalDone": null,
+        "archived": false,
+        "contentOrigins": {
+          "name": "independent"
+        }
+      }
+    ],
+    "memberships": [
+      {
+        "id": "00000000-0000-4000-8000-000000000405",
+        "lifetimeId": "00000000-0000-4000-8000-000000000845",
+        "list": {
+          "kind": "list",
+          "id": "00000000-0000-4000-8000-000000000201",
+          "lifetimeId": "00000000-0000-4000-8000-000000000821"
+        },
+        "item": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        },
+        "rank": "1024",
+        "localDone": false
+      }
+    ],
+    "itineraryEntries": [],
+    "expandedCompletions": [],
+    "labelAssociations": [],
+    "ownedLinks": [],
+    "schedules": [],
+    "deletionMarkers": [
+      {
+        "deletionId": "00000000-0000-4000-8000-000000000891",
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": {
+          "kind": "membership",
+          "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000841"
+        },
+        "closedFamilyId": null
+      }
+    ],
+    "contextAliases": [],
+    "completionChanges": [],
+    "restorationFamilies": [],
+    "membershipProvenance": [
+      {
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000841",
+        "list": {
+          "kind": "list",
+          "id": "00000000-0000-4000-8000-000000000201",
+          "lifetimeId": "00000000-0000-4000-8000-000000000821"
+        },
+        "item": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        },
+        "observedRemovalIds": []
+      },
+      {
+        "membershipId": "00000000-0000-4000-8000-000000000405",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000845",
+        "list": {
+          "kind": "list",
+          "id": "00000000-0000-4000-8000-000000000201",
+          "lifetimeId": "00000000-0000-4000-8000-000000000821"
+        },
+        "item": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        },
+        "observedRemovalIds": [
+          "00000000-0000-4000-8000-000000000891"
+        ]
+      }
+    ],
+    "membershipRemovals": [
+      {
+        "deletionId": "00000000-0000-4000-8000-000000000891"
+      }
+    ]
+  },
+  "evidence": "preparedUnverified"
+}

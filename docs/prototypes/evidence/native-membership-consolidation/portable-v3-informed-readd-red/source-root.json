@@ -1,0 +1,12 @@
+{
+  "root": "/private/tmp/PlannerImportLifetimeAuditSource",
+  "base": "953fe2dab9ebfa880e1ef5fa389acf7d19cc7e41",
+  "isolatedOverlays": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/informed-readd-v3.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/maintenance-preparation-v1.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/maintenance-recovery-v2.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/operation-fingerprint-literals.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/provenance.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipPortableTests.swift"
+  ]
+}
