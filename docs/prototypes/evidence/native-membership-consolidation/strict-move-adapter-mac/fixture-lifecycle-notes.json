@@ -1,0 +1,5 @@
+{
+  "extraFixtureDeletionAttempted": false,
+  "reason": "Existing routing tests emit no owned-directory markers. Additional marked-store cleanup is not applicable; no unknown directory is removed.",
+  "newDirectoryLifecycleGuarantee": false
+}

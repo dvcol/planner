@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.9666e-05"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="0.090102542">
+        <testcase classname="PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests" name="legacyMoveReceiptReplaysBeforeCurrentTargetResolutionAndKeepsItsDigest()" time="0.089793791"/>
+    </testsuite>
+</testsuites>

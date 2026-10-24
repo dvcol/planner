@@ -3,6 +3,146 @@ import PlannerCore
 import Testing
 
 struct MembershipMoveTests {
+  @Test(arguments: [false, true])
+  func moveRetainsItsStrictOriginAndInformedDestinationThroughReplay(existingDestination: Bool)
+    async throws
+  {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    let item = try await source(
+      planner, session: session,
+      command: .createItem(content: .init(title: "Museum", notes: "Keep shared notes")))
+    let originalList = try await source(
+      planner, session: session,
+      command: .createList(content: .init(name: "Original")))
+    let destinationList = try await source(
+      planner, session: session,
+      command: .createList(content: .init(name: "Destination")))
+    let firstOrigin = try await membership(
+      planner, session: session, item: item, list: originalList)
+    _ = try await apply(
+      planner, session: session,
+      command: .removeMembership(listId: originalList.id, membershipId: firstOrigin))
+    let origin = try await membership(planner, session: session, item: item, list: originalList)
+    _ = try await apply(
+      planner, session: session,
+      command: .setCompletion(
+        scope: .appearance(
+          .listMembership(listId: originalList.id, membershipId: origin)), done: true))
+    let firstDestination = try await membership(
+      planner, session: session, item: item,
+      list: destinationList)
+    _ = try await apply(
+      planner, session: session,
+      command: .removeMembership(listId: destinationList.id, membershipId: firstDestination))
+    var existingIdentifier: UUID?
+    if existingDestination {
+      let identifier = try await membership(
+        planner, session: session, item: item, list: destinationList)
+      existingIdentifier = identifier
+      _ = try await apply(
+        planner, session: session,
+        command: .setCompletion(
+          scope: .appearance(
+            .listMembership(listId: destinationList.id, membershipId: identifier)), done: true))
+    }
+    guard case .exported(let beforeData) = await planner.exportData(session: session),
+      case .decoded(let before) = planner.decodeImport(beforeData),
+      let originalBasis = before.backup.membershipProvenance.first(where: {
+        $0.membershipId == origin
+      }),
+      let destinationRemoval = before.backup.deletionMarkers.first(where: { marker in
+        if case .membership(let identifier, _) = marker.target {
+          return identifier == firstDestination
+        }
+        return false
+      })
+    else { throw CancellationError() }
+    let operationIdentifier = UUID()
+    let command = PlannerCommand.moveMembership(
+      listId: originalList.id, membershipId: origin,
+      destinationListId: destinationList.id, placement: .last)
+    let moved = try await apply(
+      planner, session: session, command: command,
+      operationId: operationIdentifier)
+    guard case .exported(let movedData) = await planner.exportData(session: session),
+      case .decoded(let saved) = planner.decodeImport(movedData),
+      let destination = saved.backup.memberships.first,
+      let sourceRemoval = saved.backup.deletionMarkers.first(where: {
+        $0.operationId == operationIdentifier
+      }),
+      case .source(.item(let retainedItem)) = await planner.read(
+        session: session, request: .source(item)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    #expect(saved.backup.memberships.count == 1 && destination.list == destinationList)
+    #expect(destination.localDone == existingDestination)
+    #expect(existingIdentifier == nil || destination.id == existingIdentifier)
+    #expect(saved.backup.membershipProvenance.contains(originalBasis))
+    #expect(saved.backup.membershipRemovals.count == 3)
+    #expect(saved.backup.membershipRemovals.contains { $0.deletionId == sourceRemoval.deletionId })
+    let destinationBasis = try #require(
+      saved.backup.membershipProvenance.first(where: {
+        $0.membershipId == destination.id && $0.membershipLifetimeId == destination.lifetimeId
+      }))
+    #expect(destinationBasis.observedRemovalIds == [destinationRemoval.deletionId])
+    #expect(
+      retainedItem.content.notes == "Keep shared notes" && retainedItem.state.globalDone == false)
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let checkpoint = try #require(
+      JSONSerialization.jsonObject(
+        with: Data(
+          contentsOf:
+            namespaceDirectory.appendingPathComponent("checkpoint-\(moved.checkpoint).json")))
+        as? [String: Any])
+    let receipts = try #require(checkpoint["receipts"] as? [[String: Any]])
+    let receipt = try #require(
+      receipts.first { $0["operationId"] as? String == operationIdentifier.uuidString })
+    #expect((receipt["payloadDigest"] as? String)?.hasPrefix("sha256-payload-v3:") == true)
+    let preparations = try FileManager.default.contentsOfDirectory(
+      at: namespaceDirectory,
+      includingPropertiesForKeys: nil
+    ).filter { $0.lastPathComponent.hasPrefix("proposal-") }
+    let matching = try preparations.compactMap { file -> [String: Any]? in
+      let value = try JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any]
+      return value?["originalOperationId"] as? String == operationIdentifier.uuidString
+        ? value : nil
+    }
+    let preparation = try #require(matching.first)
+    #expect(preparation["formatVersion"] as? Int == 2)
+    let evidence = try #require(preparation["resolvedMembershipEvidence"] as? [[String: Any]])
+    #expect(evidence.count == 2)
+    #expect(
+      Set(evidence.compactMap { $0["membershipId"] as? String })
+        == Set([origin.uuidString, destination.id.uuidString]))
+    _ = try await apply(
+      planner, session: session,
+      command: .removeMembership(listId: destinationList.id, membershipId: destination.id))
+    let replacement = try await membership(
+      planner, session: session, item: item, list: destinationList)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let beforeReplay) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    let replayed = try await apply(
+      reopened, session: reopenedSession, command: command,
+      operationId: operationIdentifier)
+    guard case .exported(let afterReplay) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(replayed.result == moved.result && replayed.checkpoint == moved.checkpoint)
+    #expect(afterReplay == beforeReplay)
+    #expect(replacement != destination.id)
+    #expect(await order(reopened, session: reopenedSession, list: originalList) == [])
+  }
+
   @Test func movingCreatesANewTodoContextWithoutChangingTheSharedGloballyDoneItem() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(

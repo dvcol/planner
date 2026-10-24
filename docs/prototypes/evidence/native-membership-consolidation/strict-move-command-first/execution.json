@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 109.01,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "moveRetainsItsStrictOriginAndInformedDestinationThroughReplay(existingDestination:)",
+      "className": "PlannerCoreStoreTests.MembershipMoveTests",
+      "seconds": 0.516740833,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

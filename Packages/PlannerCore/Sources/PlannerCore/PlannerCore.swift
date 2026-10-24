@@ -6463,9 +6463,11 @@ public actor Planner {
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let evidence = try receipt.evidence()
       let digest = membershipMoveDigest(
         listId: listId, membershipId: membershipId, destinationListId: destinationListId,
-        placement: placement, identity: identity, bindings: try receipt.evidence().bindings)
+        placement: placement, identity: identity, bindings: evidence.bindings,
+        membershipEvidence: evidence.resolvedMembershipEvidence)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "This operation identity describes another move.")
@@ -6473,6 +6475,20 @@ public actor Planner {
       return appliedResult(
         operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
         envelope: envelope)
+    }
+    let prepared = try archive.proposals().first { $0.originalOperationId == operation.operationId }
+    if let prepared, let bindings = prepared.resolvedBindings,
+      let membershipEvidence = prepared.resolvedMembershipEvidence
+    {
+      let digest = membershipMoveDigest(
+        listId: listId, membershipId: membershipId, destinationListId: destinationListId,
+        placement: placement, identity: identity, bindings: bindings,
+        membershipEvidence: membershipEvidence)
+      guard prepared.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another move.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(prepared.summary))
     }
     let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
     guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
@@ -6534,13 +6550,11 @@ public actor Planner {
       }
     case .first, .last: break
     }
-    let digest = membershipMoveDigest(
-      listId: listId, membershipId: membershipId, destinationListId: destinationListId,
-      placement: placement, identity: identity, bindings: bindings)
-    if let proposal = try archive.proposals().first(where: {
-      $0.originalOperationId == operation.operationId
-    }) {
-      guard proposal.payloadDigest == digest else {
+    if let proposal = prepared {
+      let legacyDigest = membershipMoveDigest(
+        listId: listId, membershipId: membershipId, destinationListId: destinationListId,
+        placement: placement, identity: identity, bindings: bindings)
+      guard proposal.payloadDigest == legacyDigest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another move.")
       }
@@ -6564,6 +6578,33 @@ public actor Planner {
       destinationReference = membership.reference
       memberships.append(membership)
     }
+    let knownMarkers = try deletionMarkers(context)
+    let lineage = try PlannerNativeLineage(context: context)
+    let originProvenance =
+      lineage.membershipProvenance.first {
+        $0.membershipId == before.id && $0.membershipLifetimeId == before.lifetimeId
+      } ?? before.baselineProvenance
+    guard let destinationMembership = existing ?? added else {
+      throw PlannerFailure("readUnavailable", "The Move destination membership is unavailable.")
+    }
+    let destinationProvenance: PlannerPortableMembershipProvenance
+    if added != nil {
+      destinationProvenance = try lineage.provenanceForNewMembership(
+        destinationMembership, markers: knownMarkers)
+    } else {
+      destinationProvenance =
+        lineage.membershipProvenance.first {
+          $0.membershipId == destinationMembership.id
+            && $0.membershipLifetimeId == destinationMembership.lifetimeId
+        } ?? destinationMembership.baselineProvenance
+    }
+    let membershipEvidence = plannerSortedMembershipEvidence([
+      originProvenance, destinationProvenance,
+    ])
+    let digest = membershipMoveDigest(
+      listId: listId, membershipId: membershipId, destinationListId: destinationListId,
+      placement: placement, identity: identity, bindings: bindings,
+      membershipEvidence: membershipEvidence)
     let updatedAt = Date()
     let listSnapshots = try lists.map { list in
       if list.id == listId {
@@ -6589,7 +6630,13 @@ public actor Planner {
       deletionId: UUID(), operationId: operation.operationId,
       target: .membership(membershipBinding), closedFamilyId: nil)
     let removalMarker = try closingRestorationFamilies([pendingRemovalMarker], context: context)[0]
-    let markers = try deletionMarkers(context) + [removalMarker]
+    try plannerStageMembershipProvenance(membershipEvidence, context: context)
+    try plannerStageLineageRecord(
+      PlannerPortableMembershipRemoval(deletionId: removalMarker.deletionId),
+      identifier: removalMarker.deletionId, kind: "membershipRemoval",
+      records: try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()),
+      context: context)
+    let markers = knownMarkers + [removalMarker]
     let expandedRecords = record.expandedCompletions ?? []
     let expandedSnapshots = try expandedRecords.map { try $0.value() }.sorted {
       $0.context.orderingKey < $1.context.orderingKey
@@ -6617,9 +6664,13 @@ public actor Planner {
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
-        payloadDigest: digest, evidence: "preparedUnverified"))
+        payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
+        resolvedMembershipEvidence: membershipEvidence))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
+    receipt.resultData = try JSONEncoder().encode(
+      PlannerStoredOperationEvidence(
+        result: result, bindings: bindings, resolvedMembershipEvidence: membershipEvidence))
     for completion in expandedRecords { context.delete(completion) }
     context.delete(record)
     if let added {
@@ -6676,7 +6727,8 @@ public actor Planner {
 
   private func membershipMoveDigest(
     listId: UUID, membershipId: UUID, destinationListId: UUID, placement: PlannerPlacement,
-    identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
+    identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity],
+    membershipEvidence: [PlannerPortableMembershipProvenance]? = nil
   ) -> String {
     let placementValue: PlannerCanonicalValue
     switch placement {
@@ -6687,7 +6739,7 @@ public actor Planner {
     case .after(let identifier):
       placementValue = .record(["kind": .string("after"), "associationId": .identity(identifier)])
     }
-    let value = PlannerCanonicalValue.record([
+    var fields: [String: PlannerCanonicalValue] = [
       "command": .record([
         "type": .string("moveMembership"), "listId": .identity(listId),
         "membershipId": .identity(membershipId), "destinationListId": .identity(destinationListId),
@@ -6696,9 +6748,17 @@ public actor Planner {
       "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),
       "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
-    ])
-    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
-    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+    ]
+    var version: UInt8 = 1
+    if let membershipEvidence {
+      version = 3
+      fields["resolvedMembershipEvidence"] = .ordered(
+        plannerSortedMembershipEvidence(membershipEvidence).map(\.operationCanonicalValue))
+    }
+    let bytes =
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, version])
+      + PlannerCanonicalValue.record(fields).encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v\(version):")
   }
 
   private func executeMembershipReordering(

@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerStrictMembershipAdapterMacSource",
+  "base": "8989f77c61f2d34bc686067a5455b934cfb61cb9",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/MembershipConsolidation/legacy-move-fingerprint-v1.json",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeMembershipCommandEvidenceTests.swift"
+  ]
+}

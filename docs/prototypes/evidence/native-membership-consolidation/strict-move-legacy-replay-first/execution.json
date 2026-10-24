@@ -1,0 +1,17 @@
+{
+  "exitCode": 0,
+  "runnerTimedOut": false,
+  "elapsedSeconds": 8.512,
+  "frozenInputsUnchanged": true,
+  "workspaceInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "legacyMoveReceiptReplaysBeforeCurrentTargetResolutionAndKeepsItsDigest()",
+      "className": "PlannerCoreStoreTests.NativeMembershipCommandEvidenceTests",
+      "seconds": 0.089793791,
+      "failures": [],
+      "skipped": false
+    }
+  ],
+  "sqliteUnlinkWarnings": 0
+}

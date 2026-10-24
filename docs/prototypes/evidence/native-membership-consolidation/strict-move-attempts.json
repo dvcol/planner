@@ -1,0 +1,109 @@
+[
+  {
+    "phase": "strict-move-adapter-mac",
+    "stages": {
+      "build-for-testing": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 126.137,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-move-adapter-mac-build-for-testing.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "fixture-build": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 27.612,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-move-adapter-mac-fixture-build.xcresult",
+        "sqliteUnlinkWarnings": 0
+      },
+      "test-without-building": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 5.826,
+        "bundle": "/private/tmp/PlannerMembershipAdapter-strict-move-adapter-mac-test-without-building.xcresult",
+        "sqliteUnlinkWarnings": 0
+      }
+    },
+    "testSummary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 6,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1792827211.665,
+      "passedTests": 6,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1792827207.349,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [],
+      "totalTestCount": 6
+    }
+  },
+  {
+    "phase": "strict-move-canonical-mac",
+    "exitCode": 0,
+    "functions": 198,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-move-canonical-phone",
+    "exitCode": 0,
+    "functions": 198,
+    "failedFunctions": 0,
+    "skipped": 0,
+    "scope": "See matched Swift Testing signatures in strict-move-validation.json."
+  },
+  {
+    "phase": "strict-move-command-first",
+    "exitCode": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-move-command-red",
+    "exitCode": 1,
+    "functions": 1,
+    "failedFunctions": 1,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  },
+  {
+    "phase": "strict-move-legacy-replay-first",
+    "exitCode": 0,
+    "functions": 1,
+    "failedFunctions": 0,
+    "frozenInputsUnchanged": true,
+    "workspaceInputsUnchanged": true,
+    "sqliteUnlinkWarnings": 0
+  }
+]

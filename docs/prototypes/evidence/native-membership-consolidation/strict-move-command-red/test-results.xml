@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000177042"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="7" skipped="0" time="0.364749083">
+        <testcase classname="PlannerCoreStoreTests.MembershipMoveTests" name="moveRetainsItsStrictOriginAndInformedDestinationThroughReplay(existingDestination:)" time="0.364325084">
+            <failure message="Issue recorded (error): The complete local action must save: .rejected(PlannerCore.PlannerFailure(code: &quot;recoveryIntegrityFailure&quot;, propertyPath: Optional(&quot;/memberships/0/id&quot;), message: &quot;A live membership must observe every strict removal for its exact Item/List pair.&quot;, details: nil))"/>
+            <failure message="Caught error: .unexpectedOutcome (error)"/>
+            <failure message="Expectation failed: saved.backup.membershipRemovals.count == 3 (error)"/>
+            <failure message="Expectation failed: saved.backup.membershipRemovals.contains { $0.deletionId == sourceRemoval.deletionId } (error)"/>
+            <failure message="Expectation failed: (receipt[&quot;payloadDigest&quot;] as? String)?.hasPrefix(&quot;sha256-payload-v3:&quot;) == true (error)"/>
+            <failure message="Expectation failed: preparation[&quot;formatVersion&quot;] as? Int == 2 (error)"/>
+            <failure message="Expectation failed: preparation[&quot;resolvedMembershipEvidence&quot;] as? [[String: Any]] (error)"/>
+        </testcase>
+    </testsuite>
+</testsuites>
