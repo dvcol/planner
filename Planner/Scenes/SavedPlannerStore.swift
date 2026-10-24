@@ -84,10 +84,12 @@ final class SavedPlannerStore {
     isReady && !isSaving && !isCheckingRecovery && !isReconnectingChanges
       && changeObservationFailure != nil
   }
+  var hasIncompleteRecovery: Bool {
+    !incompleteRecoveryOperationIdentifiers.isEmpty
+      || !incompleteRecoveryMaintenanceIdentifiers.isEmpty
+  }
   var canRetryRecovery: Bool {
-    isReady && !isSaving && !requiresRecoveryReview
-      && (!incompleteRecoveryOperationIdentifiers.isEmpty
-        || !incompleteRecoveryMaintenanceIdentifiers.isEmpty)
+    isReady && !isSaving && !requiresRecoveryReview && hasIncompleteRecovery
   }
   var currentDatasetIdentifier: UUID? { session?.datasetId }
 

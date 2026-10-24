@@ -24,6 +24,8 @@ After host and file-closure checks, 1,222 distinct marked disposable stores from
 
 Preparation-write failure, process interruption, committed-maintenance Retry UI, strict per-action Remove/Add observations, retired-alias actions, versioned command evidence and broader convergence remain separate local work. Actual Mac interaction, physical/shared/cloud and system Shortcuts qualification retain their existing gates. Signing stays deferred.
 
+The later [committed-maintenance Retry checkpoint](native-committed-maintenance-retry-ui.md) implements and qualifies that native action on phone and dark iPad, including its distinction from this unverified-preparation workflow. The earlier evidence above retains its original scope.
+
 ## Reviewed maintenance-copy restoration
 
 A further public-interface test selects the frozen unverified preparation and restores it into an empty, independently initialized local dataset. Execution without a review rejects with staleReview and leaves the target unchanged; preparing the review also writes no Planner data. Authorized execution restores the entire represented graph, including retained membership provenance and removal history. Reopening and exact operation replay preserve the resulting graph and original result/checkpoint.

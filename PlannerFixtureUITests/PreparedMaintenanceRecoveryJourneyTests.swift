@@ -27,6 +27,7 @@ import XCTest
       }
       XCTAssertTrue(settings.waitForExistence(timeout: 10))
       settings.activateForPlannerJourney()
+      XCTAssertFalse(application.plannerElement("saved.recovery.retry").exists)
       application.plannerElement("saved.settings.recovery").activateForPlannerJourney()
       let preparation = application.plannerElement(
         "saved.recovery.maintenance.00000000-0000-4000-8000-000000000941")

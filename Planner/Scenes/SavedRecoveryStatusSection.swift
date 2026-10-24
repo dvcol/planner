@@ -16,7 +16,7 @@ struct SavedRecoveryStatusSection: View {
       if store.isRetryingRecovery {
         ProgressView("Finishing recovery copy")
       }
-      if !store.incompleteRecoveryOperationIdentifiers.isEmpty {
+      if store.hasIncompleteRecovery {
         Button("Retry recovery copy", systemImage: "arrow.clockwise") {
           Task { await store.retryIncompleteRecovery() }
         }
@@ -40,7 +40,7 @@ struct SavedRecoveryStatusSection: View {
     } header: {
       Text("On-device recovery")
     } footer: {
-      if !store.incompleteRecoveryOperationIdentifiers.isEmpty {
+      if store.hasIncompleteRecovery {
         Text(
           "Your changes are in local storage. Finish the recovery copy before making further changes. Retrying does not repeat your changes."
         )
