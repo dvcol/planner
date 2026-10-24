@@ -18,15 +18,21 @@ struct SavedRecoverySelectionView: View {
     NavigationStack {
       Form {
         Section {
-          if selection.evidence == .acknowledgedSnapshot {
+          switch selection.evidence {
+          case .acknowledgedSnapshot:
             Label("Saved snapshot", systemImage: "checkmark.shield")
               .accessibilityIdentifier("saved.recovery.evidence")
             Text("Planner acknowledged this saved recovery copy.")
               .foregroundStyle(.secondary)
-          } else {
+          case .preparedUnverified:
             Label("Unverified proposal", systemImage: "exclamationmark.triangle")
               .accessibilityIdentifier("saved.recovery.evidence")
             Text("These proposed changes have not been verified as saved data.")
+              .foregroundStyle(.secondary)
+          case .preparedMaintenanceUnverified:
+            Label("Unverified recovery copy", systemImage: "exclamationmark.triangle")
+              .accessibilityIdentifier("saved.recovery.evidence")
+            Text("This copy has not been verified as saved data. Review it before restoring.")
               .foregroundStyle(.secondary)
           }
           if let exportedFilename {
@@ -41,6 +47,9 @@ struct SavedRecoverySelectionView: View {
             }
             if let proposalIdentifier = selection.proposalId {
               LabeledContent("Proposal", value: proposalIdentifier.uuidString)
+            }
+            if let maintenanceIdentifier = selection.maintenanceId {
+              LabeledContent("Preparation", value: maintenanceIdentifier.uuidString)
             }
             if let operationIdentifier = selection.originalOperationId {
               LabeledContent("Original operation", value: operationIdentifier.uuidString)
@@ -124,7 +133,7 @@ struct SavedRecoverySelectionView: View {
     let evidenceName: String
     switch selection.evidence {
     case .acknowledgedSnapshot: evidenceName = "Saved"
-    case .preparedUnverified: evidenceName = "Unverified"
+    case .preparedUnverified, .preparedMaintenanceUnverified: evidenceName = "Unverified"
     }
     var components = ["Planner \(evidenceName) Recovery", selection.namespaceId.uuidString]
     if let generation = selection.checkpointGeneration {
@@ -132,6 +141,9 @@ struct SavedRecoverySelectionView: View {
     }
     if let proposalIdentifier = selection.proposalId {
       components.append("Proposal \(proposalIdentifier)")
+    }
+    if let maintenanceIdentifier = selection.maintenanceId {
+      components.append("Preparation \(maintenanceIdentifier)")
     }
     return components.joined(separator: " ")
   }

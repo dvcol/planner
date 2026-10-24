@@ -22,6 +22,7 @@ enum PlannerFixtureDataset {
     case itineraryWindows = "itinerary-windows"
     case containerWindows = "container-windows"
     case graphRecovery = "graph-recovery"
+    case preparedMaintenanceRecovery = "prepared-maintenance-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
     case pinnedItinerary = "pinned-itinerary"
@@ -91,6 +92,9 @@ enum PlannerFixtureDataset {
     }
     if scenario == .graphRecovery {
       return try await PlannerRecoveryGraphFixture.makeStore(directory: directory)
+    }
+    if scenario == .preparedMaintenanceRecovery {
+      return try await PlannerPreparedMaintenanceRecoveryFixture.makeStore(directory: directory)
     }
     if let recoveryAccess = scenario.recoveryAccess {
       return try await PlannerRecoveryFixture.makeStore(

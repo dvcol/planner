@@ -746,7 +746,9 @@ struct PlannerRecoveryArchive {
     return PlannerRecoveryView(
       namespaceId: identity.namespaceId, datasetId: identity.datasetId,
       ownershipDescription: nil, acknowledgedSnapshot: snapshot,
-      preparedProposals: try proposals().map(\.summary), availability: .available
+      preparedProposals: try proposals().map(\.summary),
+      preparedMaintenance: try preparedMaintenance().map(\.summary),
+      availability: .available
     )
   }
 
@@ -763,8 +765,27 @@ struct PlannerRecoveryArchive {
       selectionId: UUID(), namespaceId: identity.namespaceId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding, evidence: .acknowledgedSnapshot,
       checkpointGeneration: generation, proposalId: nil, originalOperationId: nil,
+      maintenanceId: nil,
       portableData: bytes, decodedBackup: decoded
     )
+  }
+
+  func selection(maintenanceId: UUID) throws -> PlannerRecoverySelection {
+    let matches = try preparedMaintenance().filter { $0.maintenanceId == maintenanceId }
+    guard let preparation = matches.first else {
+      throw PlannerFailure("missingReference", "The selected prepared maintenance is unavailable.")
+    }
+    guard matches.count == 1 else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Prepared maintenance identities are duplicated.")
+    }
+    let decoded = try preparation.proposedBackup.validated()
+    let bytes = try JSONEncoder().encode(preparation.proposedBackup)
+    return PlannerRecoverySelection(
+      selectionId: UUID(), namespaceId: identity.namespaceId, datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding, evidence: .preparedMaintenanceUnverified,
+      checkpointGeneration: nil, proposalId: nil, originalOperationId: nil,
+      maintenanceId: preparation.maintenanceId, portableData: bytes, decodedBackup: decoded)
   }
 
   func selection(proposalId: UUID) throws -> PlannerRecoverySelection {
@@ -782,7 +803,7 @@ struct PlannerRecoveryArchive {
       selectionId: UUID(), namespaceId: identity.namespaceId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding, evidence: .preparedUnverified,
       checkpointGeneration: nil, proposalId: proposal.proposalId,
-      originalOperationId: proposal.originalOperationId,
+      originalOperationId: proposal.originalOperationId, maintenanceId: nil,
       portableData: bytes, decodedBackup: decoded)
   }
 }

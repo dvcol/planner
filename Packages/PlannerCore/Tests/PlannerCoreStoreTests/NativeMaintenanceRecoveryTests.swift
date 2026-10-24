@@ -4,6 +4,197 @@ import SwiftData
 import Testing
 
 struct NativeMaintenanceRecoveryTests {
+  enum InvalidMaintenancePreparation: CaseIterable {
+    case missingField, malformedIdentity, namespace, dataset, epoch, ownership, kind, rule,
+      malformedRule, format, version, evidence, filenameIdentity
+  }
+
+  @Test(arguments: InvalidMaintenancePreparation.allCases)
+  func invalidPreparedMaintenanceCannotBeListedOrSelected(scenario: InvalidMaintenancePreparation)
+    async throws
+  {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    var preparation = try #require(
+      JSONSerialization.jsonObject(with: maintenanceFixtureData("maintenance-preparation-v1"))
+        as? [String: Any])
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000941"))
+    preparation["maintenanceId"] = maintenanceIdentifier.uuidString
+    switch scenario {
+    case .missingField: preparation.removeValue(forKey: "epochId")
+    case .malformedIdentity: preparation["maintenanceId"] = "not-an-identity"
+    case .namespace: preparation["namespaceId"] = "00000000-0000-4000-8000-000000000921"
+    case .dataset: preparation["datasetId"] = "00000000-0000-4000-8000-000000000911"
+    case .epoch: preparation["epochId"] = "00000000-0000-4000-8000-000000000931"
+    case .ownership: preparation["ownershipBinding"] = "local:another-owner"
+    case .kind: preparation["kind"] = "unknownMaintenance"
+    case .rule: preparation["ruleVersion"] = 2
+    case .malformedRule: preparation["ruleVersion"] = "1"
+    case .format: preparation["format"] = "unrecognized-preparation"
+    case .version: preparation["formatVersion"] = 2
+    case .evidence: preparation["evidence"] = "applied"
+    case .filenameIdentity: preparation["maintenanceId"] = "00000000-0000-4000-8000-000000000942"
+    }
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    let listed = await fixture.planner.inspectRecovery(
+      request: .namespace(namespaceId: fixture.namespaceIdentifier))
+    let selected = await fixture.planner.inspectRecovery(
+      request: .maintenanceProposal(
+        namespaceId: fixture.namespaceIdentifier, maintenanceId: maintenanceIdentifier))
+    guard case .failed(let listingFailure) = listed, case .failed(let selectionFailure) = selected
+    else {
+      Issue.record(
+        "Invalid maintenance must supply neither a row nor selectable data: \(listed), \(selected)")
+      return
+    }
+    #expect(listingFailure.code == "recoveryIntegrityFailure")
+    #expect(selectionFailure.code == "recoveryIntegrityFailure")
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
+
+  @Test func acknowledgedMaintenancePreparationIsNotPresentedAsUnverified() async throws {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000940"))
+    try maintenanceFixtureData("maintenance-preparation-v1").write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    let listed = await fixture.planner.inspectRecovery(
+      request: .namespace(namespaceId: fixture.namespaceIdentifier))
+    let selected = await fixture.planner.inspectRecovery(
+      request: .maintenanceProposal(
+        namespaceId: fixture.namespaceIdentifier, maintenanceId: maintenanceIdentifier))
+    guard case .listed(let view) = listed, case .failed(let reason) = selected else {
+      Issue.record("Acknowledged maintenance belongs to its saved snapshot: \(listed), \(selected)")
+      return
+    }
+    #expect(view.acknowledgedSnapshot?.checkpointGeneration == 7)
+    #expect(view.preparedMaintenance.isEmpty)
+    #expect(reason.code == "missingReference")
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
+  @Test func selectedMaintenanceCopyPreservesItsGraphWithoutClaimingExecution() async throws {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    var preparation = try #require(
+      JSONSerialization.jsonObject(with: maintenanceFixtureData("maintenance-preparation-v1"))
+        as? [String: Any])
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000941"))
+    preparation["maintenanceId"] = maintenanceIdentifier.uuidString
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    let result = await fixture.planner.inspectRecovery(
+      request: .maintenanceProposal(
+        namespaceId: fixture.namespaceIdentifier, maintenanceId: maintenanceIdentifier))
+    guard case .selected(let selected) = result else {
+      Issue.record("Select the exact unverified maintenance graph without execution: \(result)")
+      return
+    }
+    #expect(selected.namespaceId == fixture.namespaceIdentifier)
+    #expect(selected.maintenanceId == maintenanceIdentifier)
+    #expect(selected.evidence == .preparedMaintenanceUnverified)
+    #expect(selected.checkpointGeneration == nil)
+    #expect(selected.proposalId == nil && selected.originalOperationId == nil)
+    #expect(selected.decodedBackup.backup.formatVersion == 3)
+    let actual = try #require(
+      JSONSerialization.jsonObject(with: selected.portableData) as? [String: Any])
+    let expected = try #require(preparation["proposedBackup"] as? [String: Any])
+    #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
+  @Test func undeclaredPreparedBackupFieldsCannotBeSilentlyDropped() async throws {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    var preparation = try #require(
+      JSONSerialization.jsonObject(with: maintenanceFixtureData("maintenance-preparation-v1"))
+        as? [String: Any])
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000941"))
+    preparation["maintenanceId"] = maintenanceIdentifier.uuidString
+    var backup = try #require(preparation["proposedBackup"] as? [String: Any])
+    backup["completionHint"] = "done"
+    preparation["proposedBackup"] = backup
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    let listed = await fixture.planner.inspectRecovery(
+      request: .namespace(namespaceId: fixture.namespaceIdentifier))
+    guard case .failed(let reason) = listed else {
+      Issue.record("Inspection must not discard undeclared prepared data: \(listed)")
+      return
+    }
+    #expect(reason.code == "recoveryIntegrityFailure")
+    #expect(reason.propertyPath == "/proposedBackup/completionHint")
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
+  @Test func extraMaintenancePreparationFieldsCannotSupplyRecoveryEvidence() async throws {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    var preparation = try #require(
+      JSONSerialization.jsonObject(with: maintenanceFixtureData("maintenance-preparation-v1"))
+        as? [String: Any])
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000941"))
+    preparation["maintenanceId"] = maintenanceIdentifier.uuidString
+    preparation["commitState"] = "applied"
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    let listed = await fixture.planner.inspectRecovery(
+      request: .namespace(namespaceId: fixture.namespaceIdentifier))
+    guard case .failed(let reason) = listed else {
+      Issue.record("A preparation with undeclared execution evidence must reject: \(listed)")
+      return
+    }
+    #expect(reason.code == "recoveryIntegrityFailure")
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
+  @Test func unacknowledgedMaintenanceCopiesRemainInspectableWithoutOpeningPlannerStorage()
+    async throws
+  {
+    let fixture = try MaintenanceRecoveryFixture.create()
+    var preparation = try #require(
+      JSONSerialization.jsonObject(with: maintenanceFixtureData("maintenance-preparation-v1"))
+        as? [String: Any])
+    let maintenanceIdentifier = try #require(
+      UUID(uuidString: "00000000-0000-4000-8000-000000000941"))
+    preparation["maintenanceId"] = maintenanceIdentifier.uuidString
+    try JSONSerialization.data(withJSONObject: preparation).write(
+      to: fixture.namespaceDirectory.appendingPathComponent(
+        "maintenance-\(maintenanceIdentifier.uuidString).json"), options: .atomic)
+    let originalFiles = try fixture.files()
+    let listed = await fixture.planner.inspectRecovery(
+      request: .namespace(namespaceId: fixture.namespaceIdentifier))
+    guard case .listed(let view) = listed else {
+      Issue.record("An owned unverified maintenance copy must remain inspectable: \(listed)")
+      return
+    }
+    #expect(view.availability == .available)
+    #expect(view.acknowledgedSnapshot?.checkpointGeneration == 7)
+    #expect(view.preparedProposals.isEmpty)
+    #expect(view.preparedMaintenance.map(\.maintenanceId) == [maintenanceIdentifier])
+    #expect(view.preparedMaintenance.first?.evidence == "preparedMaintenanceUnverified")
+    #expect(view.preparedMaintenance.first?.requiresFreshReview == true)
+    #expect(try fixture.files() == originalFiles)
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.storeURL.path))
+    #expect(!FileManager.default.fileExists(atPath: fixture.configuration.controlURL.path))
+  }
   @Test(arguments: [1, 2])
   func legacyAndEmptyMaintenanceEnvelopesRemainReadableWithoutMutation(envelopeVersion: Int)
     async throws

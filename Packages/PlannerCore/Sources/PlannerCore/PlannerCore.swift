@@ -4062,6 +4062,10 @@ public actor Planner {
       case .proposal(let namespaceId, let proposalId):
         return .selected(
           try requireArchive(archives, namespaceId: namespaceId).selection(proposalId: proposalId))
+      case .maintenanceProposal(let namespaceId, let maintenanceId):
+        return .selected(
+          try requireArchive(archives, namespaceId: namespaceId).selection(
+            maintenanceId: maintenanceId))
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }

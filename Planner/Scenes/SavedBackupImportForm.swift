@@ -29,7 +29,11 @@ struct SavedBackupImportDraft: Identifiable {
     switch source {
     case .file(let filename, _): filename
     case .recovery(let selection):
-      selection.evidence == .acknowledgedSnapshot ? "Saved snapshot" : "Unverified proposal"
+      switch selection.evidence {
+      case .acknowledgedSnapshot: "Saved snapshot"
+      case .preparedUnverified: "Unverified proposal"
+      case .preparedMaintenanceUnverified: "Unverified recovery copy"
+      }
     }
   }
 }
@@ -59,8 +63,8 @@ struct SavedBackupImportForm: View {
           if let recoverySelection = draft.recoverySelection {
             LabeledContent("Destination", value: "Current Planner")
               .accessibilityIdentifier("saved.recovery.restore.target")
-            if recoverySelection.evidence == .preparedUnverified {
-              Text("This proposal contains intended changes that were not verified as saved data.")
+            if recoverySelection.evidence != .acknowledgedSnapshot {
+              Text("This copy contains intended changes that were not verified as saved data.")
                 .foregroundStyle(.secondary)
             }
             DisclosureGroup("Recovery details") {
