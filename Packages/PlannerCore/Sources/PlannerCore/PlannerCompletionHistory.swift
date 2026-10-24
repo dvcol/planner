@@ -13,6 +13,15 @@ func plannerCompletionHistoryValue(
   return winner?.done ?? contributions.contains(where: \.initialDone)
 }
 
+func plannerCompletionHistoryStates(
+  aliases: [PlannerPortableContextAlias], changes: [PlannerPortableCompletionChange]
+) -> [PlannerPortableCompletionContext: Bool] {
+  let changesByIdentifier = Dictionary(uniqueKeysWithValues: changes.map { ($0.id, $0) })
+  return Dictionary(grouping: aliases, by: \.canonicalContext).mapValues {
+    plannerCompletionHistoryValue(contributions: $0, changes: changesByIdentifier)
+  }
+}
+
 private func plannerObservedCompletionChanges(
   _ identifier: UUID, changes: [UUID: PlannerPortableCompletionChange]
 ) -> Set<UUID> {

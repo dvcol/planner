@@ -3985,6 +3985,27 @@ public actor Planner {
         }
       }
     }
+    let completionStates = plannerCompletionHistoryStates(
+      aliases: lineage.contextAliases, changes: lineage.completionChanges)
+    for record in records {
+      guard let identifier = record.id, let lifetime = record.lifetimeId,
+        let expected = completionStates[
+          .listMembership(membershipId: identifier, membershipLifetimeId: lifetime)]
+      else { continue }
+      if record.localDone != expected { return true }
+    }
+    if completionStates.keys.contains(where: {
+      if case .directItineraryItem = $0 { return true }
+      return false
+    }) {
+      for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+        guard let identifier = entry.id, let lifetime = entry.lifetimeId,
+          let expected = completionStates[
+            .directItineraryItem(entryId: identifier, entryLifetimeId: lifetime)]
+        else { continue }
+        if entry.localDone != expected { return true }
+      }
+    }
     let liveMembershipBindings = Set(
       records.compactMap { record -> PlannerPortableBoundIdentity? in
         guard let identifier = record.id, let lifetime = record.lifetimeId else { return nil }
@@ -3996,7 +4017,14 @@ public actor Planner {
         liveMembershipBindings.contains(
           .init(kind: .membership, id: identifier, lifetimeId: lifetime))
       else { return true }
-      do { _ = try completion.value() } catch { return true }
+      do {
+        let value = try completion.value()
+        if let expected = completionStates[.expandedListItem(value.context)],
+          value.localDone != expected
+        {
+          return true
+        }
+      } catch { return true }
     }
     return false
   }

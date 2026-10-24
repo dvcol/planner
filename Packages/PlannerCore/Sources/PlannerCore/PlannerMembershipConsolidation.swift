@@ -209,13 +209,50 @@ struct PlannerMembershipConsolidation {
         expanded.append(.init(context: canonicalExpanded, localDone: localDone))
       }
     }
+    let completionStates = plannerCompletionHistoryStates(
+      aliases: aliases, changes: current.completionChanges)
+    members = members.map { member in
+      let completionContext = PlannerPortableCompletionContext.listMembership(
+        membershipId: member.id, membershipLifetimeId: member.lifetimeId)
+      guard let expected = completionStates[completionContext], expected != member.localDone else {
+        return member
+      }
+      return .init(
+        id: member.id, lifetimeId: member.lifetimeId, list: member.list,
+        listLifetimeId: member.listLifetimeId, item: member.item,
+        itemLifetimeId: member.itemLifetimeId, rank: member.rank, localDone: expected)
+    }
+    let entries = current.itineraryEntries.map { entry in
+      let completionContext = PlannerPortableCompletionContext.directItineraryItem(
+        entryId: entry.id, entryLifetimeId: entry.lifetimeId)
+      guard entry.source.kind == .item, let expected = completionStates[completionContext],
+        expected != entry.localDone
+      else { return entry }
+      return PlannerPortableItineraryEntry(
+        id: entry.id, lifetimeId: entry.lifetimeId, itinerary: entry.itinerary,
+        itineraryLifetimeId: entry.itineraryLifetimeId, source: entry.source,
+        sourceLifetimeId: entry.sourceLifetimeId, rank: entry.rank, localDone: expected)
+    }
+    expanded = expanded.map { value in
+      guard let expected = completionStates[.expandedListItem(value.context)],
+        expected != value.localDone
+      else { return value }
+      return .init(context: value.context, localDone: expected)
+    }
+    let consolidatedMembershipIdentities = Set(
+      groups.values.filter { $0.count > 1 }.flatMap {
+        $0.map { $0.baselineProvenance.membership }
+      }
+    ).union(suppressed.values.flatMap { $0.map { $0.baselineProvenance.membership } })
     let represented = Set(current.membershipProvenance.map(\.membership))
       .union(
-        aliases.flatMap { $0.context.importContextIdentities }.filter { $0.kind == .membership })
+        aliases.flatMap { $0.context.importContextIdentities }.filter {
+          $0.kind == .membership && consolidatedMembershipIdentities.contains($0)
+        })
     backup = .init(
       sources: current.sources, labelAssociations: current.labelAssociations,
       memberships: members.sorted { $0.id.uuidString < $1.id.uuidString },
-      itineraryEntries: current.itineraryEntries,
+      itineraryEntries: entries,
       expandedCompletions: expanded.sorted { $0.context.orderingKey < $1.context.orderingKey },
       schedules: current.schedules, deletionMarkers: current.deletionMarkers,
       ownedLinks: current.ownedLinks,
@@ -339,7 +376,18 @@ extension PlannerDataSnapshot {
     formatVersion = 3
     sources = snapshot.sources
     memberships = canonical.memberships.map { PortableMembershipRecord($0.nativeSnapshot) }
-    itineraryEntries = snapshot.itineraryEntries
+    itineraryEntries = canonical.itineraryEntries.map { entry in
+      PortableItineraryEntryRecord(
+        .init(
+          id: entry.id, lifetimeId: entry.lifetimeId,
+          itinerary: .init(
+            kind: "itinerary", id: entry.itinerary.id,
+            lifetimeId: entry.itineraryLifetimeId),
+          source: .init(
+            kind: entry.source.kind.rawValue, id: entry.source.id,
+            lifetimeId: entry.sourceLifetimeId),
+          rank: entry.rank, localDone: entry.localDone))
+    }
     expandedCompletions = try canonical.expandedCompletions.map { value in
       guard
         let entry = canonical.itineraryEntries.first(where: { $0.id == value.context.listEntryId })
@@ -380,6 +428,14 @@ func plannerStageMembershipConsolidation(_ backup: PlannerPortableBackup, contex
     retained[identity] = member
   }
   let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+  for entry in entries {
+    guard
+      let canonical = backup.itineraryEntries.first(where: {
+        $0.id == entry.id && $0.lifetimeId == entry.lifetimeId && $0.source.kind == .item
+      })
+    else { continue }
+    if entry.localDone != canonical.localDone { entry.localDone = canonical.localDone }
+  }
   var savedExpanded: Set<PlannerExpandedContext> = []
   for expanded in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
     let value = try expanded.value()

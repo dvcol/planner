@@ -12,16 +12,19 @@ import Testing
 struct NativeMembershipConsolidationTests {
   @Test(
     arguments: ["list", "expanded", "direct", "listBulk", "expandedBulk", "itineraryBulk"].flatMap {
-      [$0, "first:" + $0]
+      [$0, "first:" + $0, "divergent:" + $0]
     },
     [false, true])
   func reopeningBeforeAnyDuplicateArrivesStillSupersedesALateDoneSeed(
     rawScope: String, preparationFails: Bool
   ) async throws {
     let firstAssertion = rawScope.hasPrefix("first:")
+    let divergentHistory = rawScope.hasPrefix("divergent:")
     let scope: String
     if firstAssertion {
       scope = String(rawScope.dropFirst("first:".count))
+    } else if divergentHistory {
+      scope = String(rawScope.dropFirst("divergent:".count))
     } else {
       scope = rawScope
     }
@@ -187,10 +190,22 @@ struct NativeMembershipConsolidationTests {
         })
       #expect(reopen["observedChangeIds"] as? [String] == [completeIdentifier])
     }
+    if divergentHistory {
+      try await overwriteNativeCompletionFlag(
+        storeURL: configuration.storeURL, appearance: selected, done: true)
+    }
     let fresh = Planner(configuration: configuration)
-    guard case .ready(let freshSession) = await fresh.bootstrap(),
-      case .exported(let retained) = await fresh.exportData(session: freshSession)
-    else { throw CancellationError() }
+    let readiness = await fresh.bootstrap()
+    guard case .ready(let freshSession) = readiness else {
+      Issue.record("Explicit completion history must survive a delayed scalar flag: \(readiness)")
+      return
+    }
+    let retainedExport = await fresh.exportData(session: freshSession)
+    guard case .exported(let retained) = retainedExport else {
+      Issue.record(
+        "Delayed scalar flags must not invalidate saved completion history: \(retainedExport)")
+      return
+    }
     #expect(retained == before)
     try await insertIndependentMemberships(
       storeURL: configuration.storeURL, itemIdentifier: item.id, listIdentifier: list.id,
@@ -1834,6 +1849,38 @@ struct NativeMembershipConsolidationTests {
   }
 
   /// Model access constructs the actual persisted input; all behavioral observations use Planner.
+  @MainActor private func overwriteNativeCompletionFlag(
+    storeURL: URL, appearance: PlannerAppearance, done: Bool
+  ) throws {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    switch appearance {
+    case .listMembership(_, let membershipIdentifier):
+      let member = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).first {
+          $0.id == membershipIdentifier
+        })
+      member.localDone = done
+    case .directItineraryItem(_, let entryIdentifier):
+      let entry = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).first {
+          $0.id == entryIdentifier
+        })
+      entry.localDone = done
+    case .expandedListItem(_, let entryIdentifier, let membershipIdentifier):
+      let completion = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).first {
+          $0.listEntryId == entryIdentifier && $0.membershipId == membershipIdentifier
+        })
+      completion.localDone = done
+    }
+    try context.save()
+  }
+
   @MainActor private func insertIndependentMemberships(
     storeURL: URL, itemIdentifier: UUID, listIdentifier: UUID,
     contributions: [(identifier: String, lifetime: String, rank: Int64, done: Bool)] = [
