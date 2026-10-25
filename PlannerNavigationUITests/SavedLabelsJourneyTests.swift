@@ -1034,6 +1034,8 @@ final class SavedLabelsJourneyTests: XCTestCase {
     application.plannerElement("saved.items.filters").activateForPlannerJourney()
     XCTAssertTrue(
       application.plannerElement("saved.filters.categories").waitForExistence(timeout: 5))
+    recordLabelsScreenshot(
+      application, name: "Native cumulative Filters form before selecting labels")
     application.plannerElement("saved.filters.done").activateForPlannerJourney()
     createLabeledItem(
       "Dry museum", categories: ["Culture"], tags: ["Indoor"], application: application)

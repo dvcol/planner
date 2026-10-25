@@ -66,14 +66,57 @@ passes with the actual singular caption, provider/uncertainty controls and
 unchanged bookmark identity/URL. Its original footer capture is inspected.
 There are no failures, skips or SQLite-unlink warnings in either follow-up.
 
+## Dark iPhone reader, Calendar and Map
+
+Three existing production journeys pass in confirmed dark appearance: a saved
+website and its rich card open inside Planner and return to the original Item;
+a start-only Calendar booking keeps its exact saved caption through relaunch;
+and the Map Locations controls retain attribution, uncertainty and the original
+bookmark. The [verified run](evidence/native-membership-consolidation/native-final-reader-calendar-map-dark-phone/boundary-validation.json)
+contains four inspected original captures. All 1160 source inputs and four actual
+products match the executed epoch. Device appearance is restored afterward.
+There are no failures, skips or SQLite-unlink warnings.
+
+The native browser toolbar and page, month picker/agenda, Map footer and Locations
+sheet render in dark mode. The compact browser title truncates beside its history
+controls; the loaded page retains the full heading. This is a visual limit, not
+Mac title-width qualification. No production layout or website content changes
+are made for these checks.
+
+## Dark iPad draft, Filters and recovery forms
+
+Three more existing production journeys pass in confirmed dark iPad appearance.
+The rich New Item draft retains title, notes, duration, owned location and link
+across portrait/landscape changes, then saves into its original List and survives
+relaunch. Cumulative Category/Tag filters narrow catalog and List rows, preserve
+full progress, support Any/All selection and clear correctly. Recovery inspection
+keeps the current Tag intact through relaunch.
+
+The [verified run](evidence/native-membership-consolidation/native-final-forms-filters-recovery-dark-tablet/boundary-validation.json)
+retains ten inspected original captures, including the open native Filters form,
+its scrolled All-selected state, both draft layouts, contextual details and manual
+recovery/label administration. Native Forms, popovers, split panes and system
+buttons retain readable spacing in these states. The filter popover scrolls to
+its later criteria. A partially scrolled form is not a clipped-layout defect.
+No production layout changes were needed.
+
+All 1160 native inputs and four actual products match the executed epoch.
+Appearance is restored, with no failures, skips or SQLite-unlink warnings.
+The only test change adds one review capture to the existing filter journey;
+its assertions and production interfaces remain unchanged. Strict formatting
+subsequently wraps that attachment call without changing its behavior. The
+[narrow compiler check](evidence/native-membership-consolidation/native-final-forms-compiler/qualification.json)
+passes for all 1160 final inputs and records that formatting separately from UI
+execution. It adds no runtime credit.
+
 ## Remaining UI acceptance
 
-This starts the final UI pass; it does not close whole-app acceptance. Populated
-List/Itinerary, Map, browser, filter/editor, failure and recovery scene states,
-full accessibility/contrast/text-size review and physical behavior keep their
-separate map gates. The unchanged Mac host still has its 14 October boot and
-17 October test broker; no unchanged startup retry is attempted here. Actual Mac
-window/column interaction remains unqualified, separately from signing.
+The represented phone/iPad scene states above have local evidence. They do not
+close whole-app acceptance, unrepresented failure states, full accessibility,
+contrast/text-size review or physical behavior. Actual Mac window, column and
+keyboard interaction remains unqualified. Its last observed host still had the
+14 October boot and 17 October test broker; this checkpoint makes no unchanged
+startup retry. That runtime gate is separate from signing.
 
 Q163's crossed-family policy remains pending. Signing stays deferred, and the
 user's final coherence/layout review is still required.
