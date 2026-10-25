@@ -462,3 +462,44 @@ phone stores. Distinct Item/List owned-data and label-collision faults, Q163,
 native interaction, cloud/accounts, physical power loss and whole-app acceptance
 remain open. No production hook, package, target, schema, format or writer gate
 is added; signing stays deferred.
+
+## Mixed Item publication failure
+
+The mixed-metadata fixture now supports Item and Itinerary owners through their
+existing native constructors. Existing Itinerary payloads and literal closure
+expectations stay unchanged. A new Item test uses public editing to save notes,
+a guide, Category/Tag selections and an all-day booking. Two independent
+itinerary appearances retain different local completion.
+
+The losing Item supplies a different guide, timed booking and label selections.
+Ordinary retirement and actual post-save publication failure both preserve the
+complete winning graph, field hashes and edit timestamp. The only graph additions
+are four exact closures for the discarded guide, booking and label associations.
+Independent appearance identities, order, local completion and shared sources
+remain equal to the pre-delivery backup.
+
+While recovery waits, complete content remains readable, a new write rejects
+without applied evidence, and prior recovery/control bytes remain intact.
+Explicit Retry acknowledges the original maintenance and preserves original user
+receipts. Its saved proposal matches export. Reopen and repeated native delivery
+retain that same complete graph without merging metadata.
+
+The [validation record](evidence/native-membership-consolidation/native-owned-item-publication-validation.json)
+reconciles seven passing Mac parent functions/thirteen invocations and five
+passing iPhone functions/eleven invocations. Existing Item link, booking and
+label tests and the shared Itinerary paths pass. Three actual Itinerary child
+regressions retain native-write-failure and pre/post-save SIGKILL evidence; these
+supply no Item-specific save-failure/interruption credit.
+
+All 813 Core inputs and actual products match; 1159 of 1160 native inputs are
+unchanged. Only the existing test file changes. All 90 production inputs, 514
+frozen fixtures and schema sources remain unchanged. Final cohorts have no
+failures, skips, timeouts or SQLite-unlink diagnostics. Strict Swift/Markdown and
+whitespace checks pass. Source manifests remain losslessly compressed; verified
+cleanup removes thirteen closed passing tracer/mobile stores. The Mac cohort's
+interrupted datasets and child evidence remain retained.
+
+Item/List-specific native-save/interruption and label-collision faults remain
+open, alongside Q163 and native/system/physical acceptance. No production code,
+module, test boundary, target, schema, portable format or writer gate changes.
+Signing stays deferred.

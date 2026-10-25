@@ -2,6 +2,8 @@
 
 ## Current frontier
 
+The [mixed Item publication checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-item-publication-failure) now qualifies complete winning metadata and independent appearances through real publication obstruction, blocked writes, explicit Retry, reopen and redelivery. Seven Mac and five phone functions pass; the Item/Itinerary fixture extension introduces no production or policy change. Item/List native-save/interruption and collision faults remain local checks. Q163 and native/system/physical/signing gates retain their existing scope.
+
 The [List publication checkpoint](prototypes/native-restored-owned-memberships.md#recovery-publication-failure) now qualifies readable complete winning content, truthful incomplete recovery, blocked writes and explicit Retry for standalone/repeated contexts. Five functions and eleven cases pass on both Core runtimes with matched inputs/products and no production changes. Remaining named payload faults continue locally; Q163, native/system/physical acceptance and signing retain their existing gates.
 
 The [mixed Itinerary interruption checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-process-interruption) now qualifies actual pre/post-save SIGKILL without policy or production changes. The two stages preserve the exact winning graph and original recovery while distinguishing an unverified proposal from a committed maintenance. Parent, child and affected phone evidence pass with matched inputs/products. Distinct Item/List/collision faults remain local checks; Q163, native/system/physical acceptance and deferred signing retain their own gates.

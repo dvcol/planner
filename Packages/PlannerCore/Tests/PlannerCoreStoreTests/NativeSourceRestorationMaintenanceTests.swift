@@ -9,6 +9,171 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [false, true])
+  func mixedItemOwnedContentsSurvivePublicationFailureAndKeepIndependentAppearances(
+    recoveryFailure: Bool
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.makeWithEntries(true)
+    guard
+      case .source(.item(let initial)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source)),
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .editItem(
+            sourceId: fixture.source.id,
+            changes: .init(
+              notes: .set("Winning Item notes"),
+              links: .set([.init(originalUrl: "https://example.com/winner", label: "Guide A")]),
+              categoryIds: .set([UUID(uuidString: "00000000-0000-4000-8000-000000000501")!]),
+              tagIds: .set([UUID(uuidString: "00000000-0000-4000-8000-000000000601")!])),
+            expectedFieldHashes: initial.fieldHashes))
+      ).outcome,
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .createSchedule(
+            source: fixture.source,
+            form: .allDay(start: .init(year: 2026, month: 10, day: 26), end: nil)))
+      ).outcome,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
+      case .source(.item(let winner)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    let originalFiles = try fixture.files()
+    let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
+    let originalReceipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidateWithEntries(true)
+    try await fixture.addMixedMetadataToLosingSource()
+    var pendingMaintenance: UUID?
+    var pendingExport: Data?
+    if recoveryFailure {
+      let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let committed = await fixture.planner.exportData(session: fixture.session)
+      NotificationCenter.default.removeObserver(observer)
+      try obstruction.restore()
+      #expect(obstruction.didObstruct && obstruction.failure == nil)
+      guard case .exported(let data) = committed,
+        case .status(let status) = await fixture.planner.read(
+          session: fixture.session, request: .status),
+        case .known(_, let operations, let maintenance, let blocked) = status.recovery
+      else {
+        Issue.record(
+          "Committed Item metadata must remain readable while recovery waits: \(committed)")
+        return
+      }
+      #expect(operations.isEmpty && maintenance.count == 1 && blocked)
+      pendingMaintenance = try #require(maintenance.first)
+      pendingExport = data
+      let files = try fixture.files()
+      for (name, bytes) in originalFiles { #expect(files[name] == bytes) }
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+      let operationIdentifier = UUID()
+      guard
+        case .rejected(let reason) = await fixture.planner.execute(
+          .init(
+            operationId: operationIdentifier, session: fixture.session,
+            command: .createTag(content: .init(name: "Wait for Item metadata recovery")))
+        ).outcome,
+        case .noReliableEvidence = await fixture.planner.operationStatus(
+          session: fixture.session, operationId: operationIdentifier)
+      else { throw CancellationError() }
+      #expect(reason.code == "mutationBlocked")
+      #expect(try fixture.files() == files)
+    }
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session),
+      case .source(.item(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    if let pendingExport {
+      #expect(try fixture.graph(pendingExport) == fixture.graph(after))
+    }
+    #expect(retained.fieldHashes == winner.fieldHashes && retained.updatedAt == winner.updatedAt)
+    let original = try fixture.object(before)
+    var graph = try fixture.object(after)
+    let originalMarkers = try #require(original["deletionMarkers"] as? [[String: Any]])
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let closures = markers.filter { marker in
+      !originalMarkers.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    let targets: [[String: Any]] = [
+      [
+        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
+        "lifetimeId": "00000000-0000-4000-8000-000000000872",
+      ],
+      [
+        "kind": "source",
+        "source": [
+          "kind": "schedule",
+          "id": "00000000-0000-4000-8000-000000000873",
+          "lifetimeId": "00000000-0000-4000-8000-000000000874",
+        ],
+      ],
+      [
+        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000875",
+        "lifetimeId": "00000000-0000-4000-8000-000000000876",
+      ],
+      [
+        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000877",
+        "lifetimeId": "00000000-0000-4000-8000-000000000878",
+      ],
+    ]
+    #expect(closures.count == 4)
+    for target in targets {
+      #expect(
+        closures.contains { $0["target"] as? NSDictionary == NSDictionary(dictionary: target) })
+    }
+    graph["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    if let pendingMaintenance {
+      let files = try fixture.files()
+      guard
+        case .exported(let readable) = await fixture.planner.exportData(session: fixture.session)
+      else { throw CancellationError() }
+      #expect(try fixture.graph(readable) == fixture.graph(after))
+      #expect(try fixture.files() == files)
+      guard
+        case .complete(let checkpoint) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance),
+        case .complete(let repeated) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance)
+      else { throw CancellationError() }
+      #expect(checkpoint == repeated)
+    }
+    let envelope = try fixture.envelope()
+    #expect(envelope["receipts"] as? NSArray == originalReceipts)
+    let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+    #expect(maintenance.count == 1)
+    let identifier = try #require(maintenance.first?["maintenanceId"] as? String)
+    if let pendingMaintenance { #expect(identifier == pendingMaintenance.uuidString) }
+    let preparation = try fixture.object(
+      Data(contentsOf: fixture.namespace.appendingPathComponent("maintenance-\(identifier).json")))
+    #expect(
+      try fixture.graph(
+        JSONSerialization.data(withJSONObject: #require(preparation["proposedBackup"])))
+        == fixture.graph(after))
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    try await fixture.deliverCandidateWithEntries(true)
+    try await fixture.addMixedMetadataToLosingSource()
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
   func unresolvedOwnerAndOwnedWinnerDisagreementPreservesEveryNativeRecord(
     ownerKind: PlannerEntityKind, referenceKind: String
@@ -817,7 +982,7 @@ struct NativeSourceRestorationMaintenanceTests {
     let originalFiles = try fixture.files()
     let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
-    try await fixture.addMixedMetadataToLosingItinerary()
+    try await fixture.addMixedMetadataToLosingSource()
     #if os(macOS)
       let environment = ProcessInfo.processInfo.environment
       if let directoryPath = environment["PLANNER_SOURCE_RESTORATION_CHILD"],
@@ -1013,7 +1178,7 @@ struct NativeSourceRestorationMaintenanceTests {
     else { throw CancellationError() }
     #expect(try fixture.graph(persisted) == fixture.graph(after))
     try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
-    try await fixture.addMixedMetadataToLosingItinerary()
+    try await fixture.addMixedMetadataToLosingSource()
     guard
       case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
@@ -3540,12 +3705,8 @@ private struct SourceRestorationFixture {
     return data
   }
 
-  @MainActor func addMixedMetadataToLosingItinerary() throws {
+  @MainActor func addMixedMetadataToLosingSource() throws {
     let context = try nativeContext()
-    let owner = try #require(
-      context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
-        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
-      })
     let category = try #require(
       context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
         $0.id?.uuidString == "00000000-0000-4000-8000-000000000501"
@@ -3554,22 +3715,42 @@ private struct SourceRestorationFixture {
       context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
         $0.id?.uuidString == "00000000-0000-4000-8000-000000000601"
       })
-    let link = try PlannerSchemaV18.OwnedLink(
-      input: .init(originalUrl: "https://example.com/loser", label: "Guide B"), rank: 0,
-      owner: owner)
+    let linkInput = PlannerLinkInput(originalUrl: "https://example.com/loser", label: "Guide B")
+    let scheduleSnapshot = ScheduleSnapshot(
+      id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!,
+      lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000874")!,
+      form: .timed(
+        start: Date(timeIntervalSinceReferenceDate: 3000), end: nil,
+        planningTimeZone: "America/New_York"))
+    let link: PlannerSchemaV18.OwnedLink
+    let schedule: PlannerSchemaV18.Schedule
+    let categorySelection: PlannerSchemaV18.LabelAssociation
+    let tagSelection: PlannerSchemaV18.LabelAssociation
+    switch source.kind {
+    case .item:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      link = try .init(input: linkInput, rank: 0, owner: owner)
+      schedule = try .init(snapshot: scheduleSnapshot, owner: owner)
+      categorySelection = .init(item: owner, category: category)
+      tagSelection = .init(item: owner, tag: tag)
+    case .itinerary:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      link = try .init(input: linkInput, rank: 0, owner: owner)
+      schedule = try .init(snapshot: scheduleSnapshot, owner: owner)
+      categorySelection = .init(itinerary: owner, category: category)
+      tagSelection = .init(itinerary: owner, tag: tag)
+    default: throw CancellationError()
+    }
     link.id = UUID(uuidString: "00000000-0000-4000-8000-000000000871")!
     link.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000872")!
-    let schedule = try PlannerSchemaV18.Schedule(
-      snapshot: .init(
-        id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!,
-        lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000874")!,
-        form: .timed(
-          start: Date(timeIntervalSinceReferenceDate: 3000), end: nil,
-          planningTimeZone: "America/New_York")), owner: owner)
-    let categorySelection = PlannerSchemaV18.LabelAssociation(itinerary: owner, category: category)
     categorySelection.id = UUID(uuidString: "00000000-0000-4000-8000-000000000875")!
     categorySelection.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000876")!
-    let tagSelection = PlannerSchemaV18.LabelAssociation(itinerary: owner, tag: tag)
     tagSelection.id = UUID(uuidString: "00000000-0000-4000-8000-000000000877")!
     tagSelection.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000878")!
     context.insert(link)
