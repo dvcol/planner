@@ -110,7 +110,7 @@ struct ItineraryScheduleMigrationTests {
         request: .acknowledgedSnapshot(
           namespaceId: manifest.namespaceId, checkpointGeneration: manifest.checkpoint))
     else { throw CancellationError() }
-    #expect(checkpoint == manifest.checkpoint + 1)
+    #expect(checkpoint == manifest.checkpoint + 2)
     #expect(shareSession.datasetId == session.datasetId)
     #expect(assignment.content.source == itinerary)
     #expect(assignment.content.form == form)
@@ -120,7 +120,7 @@ struct ItineraryScheduleMigrationTests {
     #expect(after.progress.totalCount == 4)
     #expect(after.progress.doneCount == 2)
     #expect(after.references.contains(.schedule(id: schedule.id, source: itinerary)))
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(current.decodedBackup.backup.schedules.count == 3)
     #expect(

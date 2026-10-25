@@ -28,6 +28,7 @@ struct NativeMembershipPortableTests {
     let originalData = try informedMembershipPortableFixtureData()
     var expected = try #require(JSONSerialization.jsonObject(with: originalData) as? [String: Any])
     var incoming = expected
+    expected = try canonicalPortableFixtureExpectations(originalData)
     var sources = try #require(incoming["sources"] as? [[String: Any]])
     var content = try #require(sources[0]["content"] as? [String: Any])
     content["notes"] = "Incoming Hotel notes"
@@ -318,7 +319,7 @@ struct NativeMembershipPortableTests {
 
   @Test func informedReaddSurvivesNativeImportRecoveryReplayAndReopen() async throws {
     let data = try informedMembershipPortableFixtureData()
-    let expected = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+    let expected = try canonicalPortableFixtureExpectations(data)
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -377,7 +378,7 @@ struct NativeMembershipPortableTests {
     async throws
   {
     let data = try informedMembershipPortableFixtureData()
-    var expected = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+    var expected = try canonicalPortableFixtureExpectations(data)
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

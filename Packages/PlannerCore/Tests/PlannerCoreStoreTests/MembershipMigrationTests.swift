@@ -52,7 +52,7 @@ struct MembershipMigrationTests {
     #expect(originalItem.state.globalDone == true)
     #expect(originalItem.state.archived == true)
     #expect(originalItem.content.links.count == 2)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 6)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(before.decodedBackup.backup.memberships.isEmpty)
     var originalLists: [PlannerListSourceRead] = []
     for metadata in manifest.listMetadata {
@@ -125,7 +125,7 @@ struct MembershipMigrationTests {
     }
     #expect(oldCreation.generated == [list])
     #expect(oldCheckpoint == 8)
-    #expect(checkpoint == 12)
+    #expect(checkpoint == 13)
     #expect(updated.references == [reference])
     #expect(updated.progress.state == .complete)
     #expect(updated.progress.doneCount == 1)
@@ -143,7 +143,7 @@ struct MembershipMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(historical.portableData == before.portableData)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(updatedNamespaces.first?.preparedProposals.isEmpty == true)
     for original in originalLists where original.source != list {
       guard

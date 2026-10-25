@@ -129,7 +129,8 @@ struct PortableDeletionMarker: Codable {
     categories: [PlannerPortableCategory],
     tags: [PlannerPortableTag],
     labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord],
-    ownedLinks: [PlannerPortableOwnedLink], expandedCompletions: [PortableExpandedCompletionRecord]
+    ownedLinks: [PlannerPortableOwnedLink], expandedCompletions: [PortableExpandedCompletionRecord],
+    allowsObservedExpandedAssertions: Bool = false
   )
     throws
     -> PlannerPortableDeletionMarker
@@ -146,7 +147,8 @@ struct PortableDeletionMarker: Codable {
         target: .ownedLink(id: identifier, lifetimeId: lifetimeId), closedFamilyId: closedFamilyId)
     case .expandedCompletion(let context):
       guard closedFamilyId == nil,
-        !expandedCompletions.contains(where: { $0.context == context })
+        allowsObservedExpandedAssertions
+          || !expandedCompletions.contains(where: { $0.context == context })
       else {
         throw PlannerFailure(
           "recoveryIntegrityFailure",

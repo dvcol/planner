@@ -366,12 +366,14 @@ struct PlannerMembershipConsolidation {
             initialDone: contribution.localDone, currentChangeId: nil))
       }
       let done = plannerCompletionHistoryValue(
-        contributions: aliases.filter { $0.canonicalContext == canonicalContext }, changes: changes)
+        contributions: aliases.filter { $0.canonicalContext == canonicalContext }, changes: changes,
+        deletionMarkers: current.deletionMarkers)
       expanded.removeAll { $0.context == canonical }
       expanded.append(.init(context: canonical, localDone: done))
     }
     let completionStates = try plannerCompletionHistoryStates(
-      aliases: aliases, changes: current.completionChanges)
+      aliases: aliases, changes: current.completionChanges, deletionMarkers: current.deletionMarkers
+    )
     members = members.map { member in
       let completionContext = PlannerPortableCompletionContext.listMembership(
         membershipId: member.id, membershipLifetimeId: member.lifetimeId)
@@ -432,7 +434,7 @@ struct PlannerMembershipConsolidation {
       contextAliases: aliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString },
       completionChanges: current.completionChanges,
       restorationFamilies: current.restorationFamilies,
-      formatVersion: 3,
+      formatVersion: 4,
       membershipProvenance: provenance.values.filter { represented.contains($0.membership) }.sorted
       {
         if $0.membershipId != $1.membershipId {
@@ -480,7 +482,8 @@ struct PlannerMembershipConsolidation {
         initialDone: alias.initialDone, currentChangeId: alias.currentChangeId)
     }
     return plannerCompletionHistoryValue(
-      contributions: aliases.filter { $0.canonicalContext == canonical }, changes: changes)
+      contributions: aliases.filter { $0.canonicalContext == canonical }, changes: changes,
+      deletionMarkers: graph.backup.deletionMarkers)
   }
 
   private static func sameScope(
@@ -546,7 +549,7 @@ func plannerInitialCompletionAliasIdentifier(context: PlannerPortableCompletionC
 extension PlannerDataSnapshot {
   init(snapshot: PlannerDataSnapshot, canonical: PlannerPortableBackup) throws {
     format = snapshot.format
-    formatVersion = 3
+    formatVersion = 4
     sources = snapshot.sources
     memberships = canonical.memberships.map { PortableMembershipRecord($0.nativeSnapshot) }
     itineraryEntries = canonical.itineraryEntries.map { entry in

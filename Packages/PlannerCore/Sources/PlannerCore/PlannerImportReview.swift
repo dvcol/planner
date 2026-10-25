@@ -264,9 +264,13 @@ struct PlannerImportDeletionImpact {
 }
 
 func plannerResolveImportReview(
-  incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
+  incoming originalIncoming: PlannerDecodedBackup, current: PlannerDecodedBackup,
+  mode: PlannerImportMode,
   deletionImpacts: [PlannerImportDeletionImpact]
 ) throws -> PlannerImportReviewResolution {
+  let incoming = PlannerDecodedBackup(
+    backup: try originalIncoming.backup.preservingKnownCompletionObservations(from: current.backup),
+    externalBindings: originalIncoming.externalBindings, originPaths: originalIncoming.originPaths)
   let currentSources = Dictionary(
     uniqueKeysWithValues: current.backup.sources.map {
       ($0.importBinding.reference, $0.importBinding)

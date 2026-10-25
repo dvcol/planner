@@ -118,6 +118,48 @@ public struct PlannerPortableCompletionChange: Sendable, Codable {
   public let context: PlannerPortableCompletionContext
   public let done: Bool
   public let observedChangeIds: [UUID]
+  public let observedExpandedCompletionDeletionIds: [UUID]
+
+  init(
+    id: UUID, aliasId: UUID, context: PlannerPortableCompletionContext, done: Bool,
+    observedChangeIds: [UUID], observedExpandedCompletionDeletionIds: [UUID] = []
+  ) {
+    self.id = id
+    self.aliasId = aliasId
+    self.context = context
+    self.done = done
+    self.observedChangeIds = observedChangeIds
+    self.observedExpandedCompletionDeletionIds = observedExpandedCompletionDeletionIds
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case id, aliasId, context, done, observedChangeIds, observedExpandedCompletionDeletionIds
+  }
+
+  public func encode(to encoder: any Encoder) throws {
+    var fields = encoder.container(keyedBy: CodingKeys.self)
+    try fields.encode(id, forKey: .id)
+    try fields.encode(aliasId, forKey: .aliasId)
+    try fields.encode(context, forKey: .context)
+    try fields.encode(done, forKey: .done)
+    try fields.encode(observedChangeIds, forKey: .observedChangeIds)
+    try fields.encode(
+      observedExpandedCompletionDeletionIds.sorted {
+        $0.uuidString < $1.uuidString
+      }, forKey: .observedExpandedCompletionDeletionIds)
+  }
+
+  public init(from decoder: any Decoder) throws {
+    let fields = try decoder.container(keyedBy: CodingKeys.self)
+    id = try fields.decode(UUID.self, forKey: .id)
+    aliasId = try fields.decode(UUID.self, forKey: .aliasId)
+    context = try fields.decode(PlannerPortableCompletionContext.self, forKey: .context)
+    done = try fields.decode(Bool.self, forKey: .done)
+    observedChangeIds = try fields.decode([UUID].self, forKey: .observedChangeIds)
+    observedExpandedCompletionDeletionIds =
+      try fields.decodeIfPresent(
+        [UUID].self, forKey: .observedExpandedCompletionDeletionIds) ?? []
+  }
 }
 
 public struct PlannerPortableRestorationCandidate: Sendable, Codable {
@@ -188,5 +230,59 @@ extension PlannerDeletionImportEntry {
     try fields.encode(propertyPaths, forKey: .propertyPaths)
     try fields.encode(before, forKey: .before)
     try fields.encode(after, forKey: .after)
+  }
+}
+
+struct PlannerLegacyPortableCompletionChange: Encodable {
+  let id: UUID
+  let aliasId: UUID
+  let context: PlannerPortableCompletionContext
+  let done: Bool
+  let observedChangeIds: [UUID]
+
+  init(_ change: PlannerPortableCompletionChange) {
+    id = change.id
+    aliasId = change.aliasId
+    context = change.context
+    done = change.done
+    observedChangeIds = change.observedChangeIds
+  }
+}
+
+extension PlannerPortableBackup {
+  /// Legacy absence is not an instruction to erase evidence on an immutable change identity.
+  func preservingKnownCompletionObservations(from current: PlannerPortableBackup) throws
+    -> PlannerPortableBackup
+  {
+    let known = Dictionary(uniqueKeysWithValues: current.completionChanges.map { ($0.id, $0) })
+    let changes = try completionChanges.enumerated().map { index, change in
+      guard let retained = known[change.id] else { return change }
+      if formatVersion >= 4 {
+        guard
+          Set(retained.observedExpandedCompletionDeletionIds)
+            == Set(change.observedExpandedCompletionDeletionIds)
+        else {
+          throw PlannerFailure(
+            "invalidInput", "A known completion change has conflicting deletion observations.",
+            propertyPath: "/completionChanges/\(index)/observedExpandedCompletionDeletionIds")
+        }
+        return change
+      }
+      // Existing selection and restoration rules still decide context rebinding at apply.
+      guard retained.context == change.context, retained.aliasId == change.aliasId else {
+        return change
+      }
+      return PlannerPortableCompletionChange(
+        id: change.id, aliasId: change.aliasId, context: change.context, done: change.done,
+        observedChangeIds: change.observedChangeIds,
+        observedExpandedCompletionDeletionIds: retained.observedExpandedCompletionDeletionIds)
+    }
+    return .init(
+      sources: sources, labelAssociations: labelAssociations, memberships: memberships,
+      itineraryEntries: itineraryEntries, expandedCompletions: expandedCompletions,
+      schedules: schedules, deletionMarkers: deletionMarkers, ownedLinks: ownedLinks,
+      contextAliases: contextAliases, completionChanges: changes,
+      restorationFamilies: restorationFamilies, formatVersion: formatVersion,
+      membershipProvenance: membershipProvenance, membershipRemovals: membershipRemovals)
   }
 }

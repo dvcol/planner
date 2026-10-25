@@ -27,13 +27,41 @@ struct PlannerNativeLineage {
     self.membershipRemovals = membershipRemovals
   }
 
+  func expandedCompletionEvidence(
+    for contexts: [PlannerPortableCompletionContext]
+  ) -> [PlannerExpandedCompletionEvidence] {
+    plannerSortedExpandedCompletionEvidence(
+      contexts.compactMap { completionContext in
+        guard case .expandedListItem(let context) = completionContext else { return nil }
+        let contributions = contextAliases.filter { $0.canonicalContext == completionContext }
+        let seed = PlannerPortableContextAlias(
+          aliasId: plannerInitialCompletionAliasIdentifier(context: completionContext, done: false),
+          context: completionContext, canonicalContext: completionContext, initialDone: false,
+          currentChangeId: nil)
+        let observations = plannerExpandedCompletionDeletionIdentifiers(
+          contributions: contributions + [seed],
+          deletionMarkers: deletionMarkers.compactMap(\.expandedCompletionMarker))
+        return .init(context: context, observedExpandedCompletionDeletionIds: Array(observations))
+      })
+  }
+
+  func expandedCompletionOperationEvidence(
+    for contexts: [PlannerPortableCompletionContext]
+  ) -> [PlannerExpandedCompletionEvidence]? {
+    let evidence = expandedCompletionEvidence(for: contexts)
+    return evidence.isEmpty ? nil : evidence
+  }
+
   func recordCompletionAssertions(
     _ contributions: [(context: PlannerPortableCompletionContext, initialDone: Bool)],
-    done: Bool, context: ModelContext
+    done: Bool, context: ModelContext,
+    expandedEvidence: [PlannerExpandedCompletionEvidence] = []
   ) throws {
     guard !contributions.isEmpty else { return }
     let groups = Dictionary(grouping: contextAliases, by: \.canonicalContext)
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
+    let changesByIdentifier = Dictionary(
+      uniqueKeysWithValues: completionChanges.map { ($0.id, $0) })
     for contribution in contributions {
       let existing = groups[contribution.context] ?? []
       let original = existing.filter { $0.context == contribution.context }.min {
@@ -47,6 +75,11 @@ struct PlannerNativeLineage {
       else {
         throw PlannerFailure("readUnavailable", "The completion seed belongs to another context.")
       }
+      let observedHeads = plannerCompletionHistoryHeads(
+        contributions: existing, changes: changesByIdentifier,
+        deletionMarkers: deletionMarkers.compactMap(\.expandedCompletionMarker))
+      let observedIdentifiers = Set(existing.compactMap(\.currentChangeId))
+        .union(observedHeads.map(\.id))
       let changeIdentifier = UUID()
       let alias = PlannerPortableContextAlias(
         aliasId: aliasIdentifier, context: contribution.context,
@@ -55,9 +88,12 @@ struct PlannerNativeLineage {
         currentChangeId: changeIdentifier)
       let change = PlannerPortableCompletionChange(
         id: changeIdentifier, aliasId: aliasIdentifier, context: contribution.context, done: done,
-        observedChangeIds: Array(Set(existing.compactMap(\.currentChangeId))).sorted {
+        observedChangeIds: observedIdentifiers.sorted {
           $0.uuidString < $1.uuidString
-        })
+        },
+        observedExpandedCompletionDeletionIds: expandedEvidence.first {
+          .expandedListItem($0.context) == contribution.context
+        }?.observedExpandedCompletionDeletionIds ?? [])
       try plannerStageLineageRecord(
         alias, identifier: aliasIdentifier, kind: "contextAlias", records: records, context: context
       )
@@ -93,8 +129,17 @@ struct PlannerNativeLineage {
     {
       guard let done = states[canonicalContext],
         done
-          != plannerCompletionHistoryValue(contributions: contributions, changes: previousChanges)
+          != plannerCompletionHistoryValue(
+            contributions: contributions, changes: previousChanges,
+            deletionMarkers: deletionMarkers.compactMap(\.expandedCompletionMarker))
       else { continue }
+      // Scalar delivery carries no evidence that its writer observed an expanded closure.
+      if !plannerExpandedCompletionDeletionIdentifiers(
+        contributions: contributions,
+        deletionMarkers: deletionMarkers.compactMap(\.expandedCompletionMarker)
+      ).isEmpty {
+        continue
+      }
       let alias = contributions.filter { $0.context == canonicalContext }.min {
         $0.aliasId.uuidString < $1.aliasId.uuidString
       }

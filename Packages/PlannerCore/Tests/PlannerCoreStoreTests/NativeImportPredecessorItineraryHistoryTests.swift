@@ -178,7 +178,7 @@ struct NativeImportPredecessorItineraryHistoryTests {
       changes.append([
         "id": itineraryHistoryIdentifier(changeIdentifier),
         "aliasId": itineraryHistoryIdentifier(aliasIdentifier), "context": context,
-        "done": true, "observedChangeIds": [],
+        "done": true, "observedChangeIds": [], "observedExpandedCompletionDeletionIds": [],
       ])
     }
     if restoresIncomingValuesIntoDeletedSource {

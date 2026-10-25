@@ -99,6 +99,7 @@ struct NativeImportOmittedOwnerReviewTests {
           "id": "00000000-0000-4000-8000-000000000872",
           "aliasId": "00000000-0000-4000-8000-000000000871", "context": completionContext,
           "done": ownerKind == .list, "observedChangeIds": [],
+          "observedExpandedCompletionDeletionIds": [],
         ]
       ] + retainedChanges
     let decoded = planner.decodeImport(try JSONSerialization.data(withJSONObject: object))

@@ -1,6 +1,6 @@
 # Explicit completion after an imported context closure
 
-Status: Q156 A accepted on 25 October 2026. The concrete declaration, compatibility and qualification contract below is approved for implementation. No production declaration or implementation has changed yet. Signing stays deferred. This uses the already approved public Core, native-input, recovery-filesystem, HTTP and native UI boundaries; it proposes no additional direct test seam.
+Status: Q156 A accepted on 25 October 2026. The [first implementation checkpoint](prototypes/native-post-closure-completion.md) now passes the affected Mac storage cohort, real HTTP operations and matching native builds. Mobile/native checkbox, old-writer and broader lineage/failure qualification remain open; this is not full contract acceptance. Signing stays deferred. The implementation uses the already approved public Core, native-input, recovery-filesystem, HTTP and native UI boundaries, with no additional direct test seam.
 
 ## Observed problem and accepted intent
 

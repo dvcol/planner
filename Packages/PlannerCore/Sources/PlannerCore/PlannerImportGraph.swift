@@ -73,6 +73,9 @@ struct PlannerImportGraph {
         $0.owner.kind.rawValue + ":" + $0.owner.id.uuidString + ":" + $0.label.kind.rawValue + ":"
           + $0.label.id.uuidString
       }, "/labelAssociations", "label")
+    try plannerValidateCompletionHistoryReferences(
+      aliases: backup.contextAliases, changes: backup.completionChanges,
+      deletionMarkers: backup.deletionMarkers)
     try validateRestorations()
     try validateDeletions()
     try validateMembershipProvenance()
@@ -138,8 +141,26 @@ struct PlannerImportGraph {
   }
 
   func isClosed(_ context: PlannerPortableCompletionContext) -> Bool {
-    if backup.deletionMarkers.contains(where: { $0.target.closes(context) }) { return true }
+    if backup.deletionMarkers.contains(where: { $0.target.closes(context) }) {
+      guard case .expandedListItem(let expanded) = context,
+        hasAuthorizedExpandedAssertion(expanded)
+      else { return true }
+    }
     return context.importContextIdentities.contains(where: isClosed)
+  }
+
+  private func hasAuthorizedExpandedAssertion(_ context: PlannerExpandedContext) -> Bool {
+    guard backup.formatVersion >= 4 else { return false }
+    let contributions = backup.contextAliases.filter {
+      $0.canonicalContext == .expandedListItem(context)
+    }
+    let closures = plannerExpandedCompletionDeletionIdentifiers(
+      contributions: contributions, deletionMarkers: backup.deletionMarkers)
+    guard !closures.isEmpty else { return false }
+    return backup.completionChanges.contains { change in
+      contributions.contains { $0.aliasId == change.aliasId }
+        && closures.isSubset(of: Set(change.observedExpandedCompletionDeletionIds))
+    }
   }
 
   func restoredValueFamily(
@@ -280,7 +301,8 @@ struct PlannerImportGraph {
         }
       }
       if case .expandedCompletion(let context) = marker.target,
-        backup.expandedCompletions.contains(where: { $0.context == context })
+        backup.expandedCompletions.contains(where: { $0.context == context }),
+        !hasAuthorizedExpandedAssertion(context)
       {
         throw failure("A deleted expanded completion remains present.", path + "/target/context")
       }
@@ -485,11 +507,10 @@ struct PlannerImportGraph {
           path + "/canonicalContext")
       }
     }
-    try plannerValidateCompletionHistoryReferences(
-      aliases: backup.contextAliases, changes: backup.completionChanges)
     let groups = Dictionary(grouping: backup.contextAliases, by: \.canonicalContext)
     for (context, contributions) in groups {
-      let expected = plannerCompletionHistoryValue(contributions: contributions, changes: changes)
+      let expected = plannerCompletionHistoryValue(
+        contributions: contributions, changes: changes, deletionMarkers: backup.deletionMarkers)
       if let actual = try contextState(
         context, path: "/contextAliases", allowClosed: true,
         suppressedMemberships: suppressedMemberships), actual != expected

@@ -198,7 +198,8 @@ struct PlannerImportRestoration {
         guard transformedAliasIdentifiers.contains(change.aliasId) else { return change }
         return .init(
           id: change.id, aliasId: change.aliasId, context: completionContext(change.context),
-          done: change.done, observedChangeIds: change.observedChangeIds)
+          done: change.done, observedChangeIds: change.observedChangeIds,
+          observedExpandedCompletionDeletionIds: change.observedExpandedCompletionDeletionIds)
       },
       restorationFamilies: families, formatVersion: incoming.formatVersion,
       membershipProvenance: incoming.membershipProvenance,

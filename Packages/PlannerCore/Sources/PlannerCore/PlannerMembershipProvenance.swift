@@ -232,7 +232,7 @@ extension PlannerPortableMembership {
 
 extension PlannerPortableBackup {
   var usesMembershipProvenanceFormat: Bool {
-    formatVersion == 3 || !membershipProvenance.isEmpty || !membershipRemovals.isEmpty
+    formatVersion >= 3 || !membershipProvenance.isEmpty || !membershipRemovals.isEmpty
   }
 
   var resolvedMembershipProvenance: [PlannerPortableMembershipProvenance] {

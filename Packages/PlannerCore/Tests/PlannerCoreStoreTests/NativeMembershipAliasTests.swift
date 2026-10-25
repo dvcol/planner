@@ -497,8 +497,10 @@ struct NativeMembershipAliasTests {
     let actual = try #require(JSONSerialization.jsonObject(with: exported) as? [String: Any])
     let recovery = try #require(
       JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
-    #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
-    #expect(NSDictionary(dictionary: expected).isEqual(to: recovery))
+    let currentExpected = try canonicalPortableFixtureExpectations(
+      JSONSerialization.data(withJSONObject: expected))
+    #expect(NSDictionary(dictionary: currentExpected).isEqual(to: actual))
+    #expect(NSDictionary(dictionary: currentExpected).isEqual(to: recovery))
     let reopened = Planner(configuration: configuration)
     let listIdentifier = try #require(UUID(uuidString: "00000000-0000-4000-8000-000000000201"))
     let itemIdentifier = try #require(UUID(uuidString: "00000000-0000-4000-8000-000000000101"))

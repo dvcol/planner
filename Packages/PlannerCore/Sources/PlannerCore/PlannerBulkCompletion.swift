@@ -273,7 +273,8 @@ private func expandedContext(entry: ItineraryEntrySnapshot, membership: Membersh
 
 func bulkCompletionDigest(
   scope: PlannerBulkScope, done: Bool, identity: PlannerStoreIdentity,
-  bindings: [PlannerBoundIdentity]
+  bindings: [PlannerBoundIdentity],
+  expandedEvidence: [PlannerExpandedCompletionEvidence]? = nil
 ) -> String {
   let scopeValue: PlannerCanonicalValue
   switch scope {
@@ -287,15 +288,22 @@ func bulkCompletionDigest(
       "listEntryId": .identity(listEntryId),
     ])
   }
-  let value = PlannerCanonicalValue.record([
+  var fields: [String: PlannerCanonicalValue] = [
     "command": .record([
       "type": .string("setBulkCompletion"), "scope": scopeValue, "done": .boolean(done),
     ]),
     "datasetId": .identity(identity.datasetId),
     "ownershipBinding": .string(identity.ownershipBinding),
     "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
-  ])
+  ]
+  if let expandedEvidence {
+    fields["resolvedExpandedCompletionEvidence"] = .ordered(
+      plannerSortedExpandedCompletionEvidence(expandedEvidence).map(\.canonicalValue))
+    return plannerDigest(
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 4])
+        + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v4:")
+  }
   return plannerDigest(
-    Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
-    prefix: "sha256-payload-v1:")
+    Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1])
+      + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v1:")
 }

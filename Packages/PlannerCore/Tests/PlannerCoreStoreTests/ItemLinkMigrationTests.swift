@@ -72,7 +72,7 @@ struct ItemLinkMigrationTests {
         == .allDay(
           start: PlannerCivilDate(year: 2026, month: 10, day: 9),
           end: PlannerCivilDate(year: 2026, month: 10, day: 11)))
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 5)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(before.decodedBackup.backup.lists.isEmpty)
     #expect(before.decodedBackup.backup.deletionMarkers.count == 1)
     let operationIdentifier = UUID()
@@ -103,7 +103,7 @@ struct ItemLinkMigrationTests {
       Issue.record("Share-role List creation must preserve every migrated owned record.")
       return
     }
-    #expect(checkpoint == 8)
+    #expect(checkpoint == 9)
     #expect(listRead.content.name == "Tokyo Food")
     #expect(listRead.progress.state == .empty)
     #expect(listRead.state.globalDone == nil)
@@ -120,7 +120,7 @@ struct ItemLinkMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(beforeAgain.portableData == before.portableData)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
   }
 
@@ -187,7 +187,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.form == timedForm)
     #expect(retained.fieldHashes[.form]?.value == assignment.retainedScheduleHash)
     #expect(missing.code == "missingReference")
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 4)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(before.decodedBackup.backup.schedules.count == 1)
     #expect(before.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -228,7 +228,7 @@ struct ItemLinkMigrationTests {
       )
       return
     }
-    #expect(checkpoint == 7)
+    #expect(checkpoint == 8)
     #expect(originalCheckpoint == 4)
     #expect(replay.generated == [deletedSchedule])
     #expect(stillDeleted.code == "missingReference")
@@ -236,7 +236,7 @@ struct ItemLinkMigrationTests {
     #expect(current.fieldHashes == original.fieldHashes)
     #expect(current.updatedAt == original.updatedAt)
     #expect(current.content.links == original.content.links)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
     #expect(after.decodedBackup.backup.schedules.count == 2)
     #expect(
@@ -300,8 +300,8 @@ struct ItemLinkMigrationTests {
     #expect(scheduleRead.content.source == item)
     #expect(scheduleRead.content.form == form)
     #expect(scheduleRead.fieldHashes[.form]?.value == assignment.scheduleHash)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 3)
-    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 4)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 5)
     #expect(oldRecovery.decodedBackup.backup.deletionMarkers.isEmpty)
     let removalIdentifier = UUID()
     guard case .ready(let shareSession) = await share.bootstrap(),
@@ -333,7 +333,7 @@ struct ItemLinkMigrationTests {
       )
       return
     }
-    #expect(checkpoint == 5)
+    #expect(checkpoint == 6)
     #expect(originalCheckpoint == 4)
     #expect(replayedCreation.generated == [schedule])
     #expect(missing.code == "missingReference")
@@ -342,7 +342,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.links == source.content.links)
     #expect(retained.state.globalDone == true)
     #expect(retained.state.archived == true)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(newRecovery.decodedBackup.backup.schedules.isEmpty)
     #expect(newRecovery.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -416,8 +416,8 @@ struct ItemLinkMigrationTests {
     }
     #expect(replayed.generated == [item])
     #expect(checkpoint == manifest.creationCheckpoint)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 1)
-    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 3)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 4)
     #expect(oldRecovery.decodedBackup.backup.items.first?.id == item.id)
     #expect(oldRecovery.decodedBackup.backup.items.first?.globalDone == true)
     #expect(oldRecovery.decodedBackup.backup.items.first?.archived == true)
@@ -438,8 +438,8 @@ struct ItemLinkMigrationTests {
       Issue.record("After main-app migration, Share must save owned links without losing V1 data.")
       return
     }
-    #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(nextCheckpoint == 5)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(newRecovery.decodedBackup.backup.items.count == 2)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.globalDone == true)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.archived == true)
@@ -529,8 +529,8 @@ struct ItemLinkMigrationTests {
     }
     #expect(replayed.generated == [item])
     #expect(oldCheckpoint == 1)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 2)
-    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 3)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 4)
     #expect(oldRecovery.decodedBackup.backup.schedules.isEmpty)
     let oldItem = try #require(oldRecovery.decodedBackup.backup.items.first)
     #expect(oldItem.lifetimeId == manifest.ownedLinks.first?.owner.lifetimeId)
@@ -549,7 +549,8 @@ struct ItemLinkMigrationTests {
       case .listedNamespaces(let updatedNamespaces) = await planner.inspectRecovery(
         request: .namespaces),
       case .selected(let newRecovery) = await planner.inspectRecovery(
-        request: .acknowledgedSnapshot(namespaceId: namespace.namespaceId, checkpointGeneration: 4)),
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: nextCheckpoint)),
       case .selected(let retainedOldRecovery) = await planner.inspectRecovery(
         request: .acknowledgedSnapshot(namespaceId: namespace.namespaceId, checkpointGeneration: 3))
     else {
@@ -557,8 +558,8 @@ struct ItemLinkMigrationTests {
         "The migrated writer must save a new Schedule and retain both old and new recovery.")
       return
     }
-    #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(nextCheckpoint == 5)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(retained.content.links == source.content.links)
     #expect(retained.fieldHashes == source.fieldHashes)
     #expect(retained.updatedAt == source.updatedAt)

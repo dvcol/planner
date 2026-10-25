@@ -1,23 +1,50 @@
 import Foundation
 
 func plannerCompletionHistoryValue(
-  contributions: [PlannerPortableContextAlias], changes: [UUID: PlannerPortableCompletionChange]
+  contributions: [PlannerPortableContextAlias], changes: [UUID: PlannerPortableCompletionChange],
+  deletionMarkers: [PlannerPortableDeletionMarker]
 ) -> Bool {
-  let selected = contributions.compactMap(\.currentChangeId).compactMap { changes[$0] }
-  let maximal = selected.filter { candidate in
-    !selected.contains { other in
-      plannerObservedCompletionChanges(other.id, changes: changes).contains(candidate.id)
-    }
+  let winner = plannerCompletionHistoryHeads(
+    contributions: contributions, changes: changes, deletionMarkers: deletionMarkers
+  )
+  .min { $0.id.uuidString < $1.id.uuidString }
+  let permitsInitial = plannerExpandedCompletionDeletionIdentifiers(
+    contributions: contributions, deletionMarkers: deletionMarkers
+  ).isEmpty
+  return winner?.done ?? (permitsInitial && contributions.contains(where: \.initialDone))
+}
+
+func plannerCompletionHistoryHeads(
+  contributions: [PlannerPortableContextAlias], changes: [UUID: PlannerPortableCompletionChange],
+  deletionMarkers: [PlannerPortableDeletionMarker]
+) -> [PlannerPortableCompletionChange] {
+  let closures = plannerExpandedCompletionDeletionIdentifiers(
+    contributions: contributions, deletionMarkers: deletionMarkers)
+  let selectedIdentifiers: Set<UUID>
+  if closures.isEmpty {
+    selectedIdentifiers = Set(contributions.compactMap(\.currentChangeId))
+  } else {
+    // A stale head cannot erase an independently retained, informed assertion on the same alias.
+    let aliasIdentifiers = Set(contributions.map(\.aliasId))
+    selectedIdentifiers = Set(
+      changes.values.filter {
+        aliasIdentifiers.contains($0.aliasId)
+      }.map(\.id))
   }
-  let winner = maximal.min { $0.id.uuidString < $1.id.uuidString }
-  return winner?.done ?? contributions.contains(where: \.initialDone)
+  let selected = selectedIdentifiers.compactMap { changes[$0] }.filter {
+    closures.isSubset(of: Set($0.observedExpandedCompletionDeletionIds))
+  }
+  let observed = plannerObservedCompletionChanges(selected.map(\.id), changes: changes)
+  return selected.filter { !observed.contains($0.id) }
 }
 
 func plannerCompletionHistoryStates(
-  aliases: [PlannerPortableContextAlias], changes: [PlannerPortableCompletionChange]
+  aliases: [PlannerPortableContextAlias], changes: [PlannerPortableCompletionChange],
+  deletionMarkers: [PlannerPortableDeletionMarker]
 ) throws -> [PlannerPortableCompletionContext: Bool] {
   do {
-    try plannerValidateCompletionHistoryReferences(aliases: aliases, changes: changes)
+    try plannerValidateCompletionHistoryReferences(
+      aliases: aliases, changes: changes, deletionMarkers: deletionMarkers)
   } catch let failure as PlannerFailure {
     throw PlannerFailure(
       "readUnavailable", "Saved completion history is unavailable: " + failure.message,
@@ -25,12 +52,14 @@ func plannerCompletionHistoryStates(
   }
   let changesByIdentifier = Dictionary(uniqueKeysWithValues: changes.map { ($0.id, $0) })
   return Dictionary(grouping: aliases, by: \.canonicalContext).mapValues {
-    plannerCompletionHistoryValue(contributions: $0, changes: changesByIdentifier)
+    plannerCompletionHistoryValue(
+      contributions: $0, changes: changesByIdentifier, deletionMarkers: deletionMarkers)
   }
 }
 
 func plannerValidateCompletionHistoryReferences(
-  aliases: [PlannerPortableContextAlias], changes: [PlannerPortableCompletionChange]
+  aliases: [PlannerPortableContextAlias], changes: [PlannerPortableCompletionChange],
+  deletionMarkers: [PlannerPortableDeletionMarker]
 ) throws {
   let aliasesByIdentifier = Dictionary(uniqueKeysWithValues: aliases.map { ($0.aliasId, $0) })
   let changesByIdentifier = Dictionary(uniqueKeysWithValues: changes.map { ($0.id, $0) })
@@ -71,6 +100,21 @@ func plannerValidateCompletionHistoryReferences(
       throw failure(
         "A completion change must resolve to its declared alias context.", path + "/aliasId")
     }
+    let observationPath = path + "/observedExpandedCompletionDeletionIds"
+    let observations = change.observedExpandedCompletionDeletionIds
+    guard Set(observations).count == observations.count else {
+      throw failure("Observed expanded completion deletions must be distinct.", observationPath)
+    }
+    let eligibleClosures = plannerExpandedCompletionDeletionIdentifiers(
+      contributions: aliases.filter { $0.canonicalContext == alias.canonicalContext },
+      deletionMarkers: deletionMarkers)
+    for (observationIndex, identifier) in observations.enumerated() {
+      guard case .expandedListItem = change.context, eligibleClosures.contains(identifier) else {
+        throw failure(
+          "An observed deletion must resolve within this proven expanded context.",
+          observationPath + "/\(observationIndex)")
+      }
+    }
     for (predecessorIndex, predecessorId) in change.observedChangeIds.enumerated() {
       guard let predecessor = changesByIdentifier[predecessorId],
         let predecessorAlias = aliasesByIdentifier[predecessor.aliasId],
@@ -98,13 +142,86 @@ func plannerValidateCompletionHistoryReferences(
 }
 
 private func plannerObservedCompletionChanges(
-  _ identifier: UUID, changes: [UUID: PlannerPortableCompletionChange]
+  _ identifiers: [UUID], changes: [UUID: PlannerPortableCompletionChange]
 ) -> Set<UUID> {
-  var pending = changes[identifier]?.observedChangeIds ?? []
+  var pending = identifiers.flatMap { changes[$0]?.observedChangeIds ?? [] }
   var seen: Set<UUID> = []
   while let next = pending.popLast() {
     guard seen.insert(next).inserted else { continue }
     pending.append(contentsOf: changes[next]?.observedChangeIds ?? [])
   }
   return seen
+}
+
+/// Callers establish alias admission and lifetimes before sharing a closure basis.
+func plannerExpandedCompletionDeletionIdentifiers(
+  contributions: [PlannerPortableContextAlias],
+  deletionMarkers: [PlannerPortableDeletionMarker]
+) -> Set<UUID> {
+  let contexts = Set(contributions.flatMap { [$0.context, $0.canonicalContext] })
+  return Set(
+    deletionMarkers.compactMap { marker in
+      guard marker.closedFamilyId == nil,
+        case .expandedCompletion(let context) = marker.target,
+        contexts.contains(.expandedListItem(context))
+      else { return nil }
+      return marker.deletionId
+    })
+}
+
+extension PortableDeletionMarker {
+  var expandedCompletionMarker: PlannerPortableDeletionMarker? {
+    guard case .expandedCompletion(let context) = target else { return nil }
+    return .init(
+      deletionId: deletionId, operationId: operationId, target: .expandedCompletion(context),
+      closedFamilyId: closedFamilyId)
+  }
+}
+
+struct PlannerExpandedCompletionEvidence: Codable, Equatable {
+  let context: PlannerExpandedContext
+  let observedExpandedCompletionDeletionIds: [UUID]
+
+  init(context: PlannerExpandedContext, observedExpandedCompletionDeletionIds: [UUID]) {
+    self.context = context
+    self.observedExpandedCompletionDeletionIds = observedExpandedCompletionDeletionIds.sorted {
+      $0.uuidString < $1.uuidString
+    }
+  }
+
+  init(from decoder: any Decoder) throws {
+    let node = PlannerImportNode(value: try PlannerImportJSON(from: decoder), path: "")
+    let fields = try node.record(["context", "observedExpandedCompletionDeletionIds"])
+    context = try fields.child("context").expandedContext()
+    observedExpandedCompletionDeletionIds = try fields.child(
+      "observedExpandedCompletionDeletionIds"
+    )
+    .array().map { try $0.identifier() }
+    guard
+      Set(observedExpandedCompletionDeletionIds).count
+        == observedExpandedCompletionDeletionIds.count
+    else {
+      throw PlannerFailure("recoveryIntegrityFailure", "Expanded observations must be distinct.")
+    }
+  }
+
+  var canonicalValue: PlannerCanonicalValue {
+    .record([
+      "context": context.importCanonicalValue,
+      "observedExpandedCompletionDeletionIds": .identitySet(
+        observedExpandedCompletionDeletionIds.map(PlannerCanonicalValue.identity)),
+    ])
+  }
+}
+
+func plannerSortedExpandedCompletionEvidence(
+  _ evidence: [PlannerExpandedCompletionEvidence]
+) -> [PlannerExpandedCompletionEvidence] {
+  evidence.map {
+    .init(
+      context: $0.context,
+      observedExpandedCompletionDeletionIds: $0.observedExpandedCompletionDeletionIds.sorted {
+        $0.uuidString < $1.uuidString
+      })
+  }.sorted { $0.context.orderingKey < $1.context.orderingKey }
 }

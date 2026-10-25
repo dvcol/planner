@@ -300,7 +300,7 @@ struct PlannerPortableImportDecoder {
 
   mutating func decode() throws -> PlannerDecodedBackup {
     formatVersion = try root.child("formatVersion").integer()
-    guard (1...3).contains(formatVersion) else {
+    guard (1...4).contains(formatVersion) else {
       throw PlannerFailure(
         "unsupportedVersion", "Unsupported portable backup version.",
         propertyPath: "/formatVersion")
@@ -310,7 +310,7 @@ struct PlannerPortableImportDecoder {
       "expandedCompletions", "schedules", "labelAssociations", "ownedLinks", "deletionMarkers",
       "contextAliases", "completionChanges", "restorationFamilies",
     ]
-    if formatVersion == 3 { names += ["membershipProvenance", "membershipRemovals"] }
+    if formatVersion >= 3 { names += ["membershipProvenance", "membershipRemovals"] }
     let fields = try root.record(names)
     guard try fields.child("format").string() == "planner-data" else {
       throw try fields.child("format").failure("Expected a Planner data backup.")
@@ -333,7 +333,7 @@ struct PlannerPortableImportDecoder {
     let families = try fields.child("restorationFamilies").array().map { try restorationFamily($0) }
     var provenance: [PlannerPortableMembershipProvenance] = []
     var removals: [PlannerPortableMembershipRemoval] = []
-    if formatVersion == 3 {
+    if formatVersion >= 3 {
       provenance = try fields.child("membershipProvenance").array().map {
         try membershipProvenance($0)
       }
@@ -625,7 +625,17 @@ struct PlannerPortableImportDecoder {
 
   private func completionChange(_ node: PlannerImportNode) throws -> PlannerPortableCompletionChange
   {
-    let fields = try node.record(["id", "aliasId", "context", "done", "observedChangeIds"])
+    var names = ["id", "aliasId", "context", "done", "observedChangeIds"]
+    if formatVersion >= 4 { names.append("observedExpandedCompletionDeletionIds") }
+    let fields = try node.record(names)
+    let observations: [UUID]
+    if formatVersion >= 4 {
+      observations = try fields.child("observedExpandedCompletionDeletionIds").array().map {
+        try $0.identifier()
+      }
+    } else {
+      observations = []
+    }
     let predecessors = try fields.child("observedChangeIds").array().map { try $0.identifier() }
     guard Set(predecessors).count == predecessors.count else {
       throw try fields.child("observedChangeIds").failure(
@@ -634,7 +644,7 @@ struct PlannerPortableImportDecoder {
     return try .init(
       id: fields.child("id").identifier(), aliasId: fields.child("aliasId").identifier(),
       context: fields.child("context").completionContext(), done: fields.child("done").boolean(),
-      observedChangeIds: predecessors)
+      observedChangeIds: predecessors, observedExpandedCompletionDeletionIds: observations)
   }
 
   private func restorationFamily(_ node: PlannerImportNode) throws

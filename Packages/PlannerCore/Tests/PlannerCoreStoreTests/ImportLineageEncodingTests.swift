@@ -10,7 +10,7 @@ struct ImportLineageEncodingTests {
     guard case .decoded(let decoded) = planner.decodeImport(fixture) else {
       throw CancellationError()
     }
-    let original = try #require(JSONSerialization.jsonObject(with: fixture) as? [String: Any])
+    let original = try canonicalPortableFixtureExpectations(fixture)
     for (name, encoded) in [
       ("contextAliases", try JSONEncoder().encode(decoded.backup.contextAliases)),
       ("completionChanges", try JSONEncoder().encode(decoded.backup.completionChanges)),

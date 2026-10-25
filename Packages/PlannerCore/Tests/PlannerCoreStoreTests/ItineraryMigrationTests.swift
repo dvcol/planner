@@ -75,7 +75,7 @@ struct ItineraryMigrationTests {
     #expect(historical.portableData == Data(base64Encoded: manifest.portableDataBase64))
     #expect(historical.decodedBackup.backup.memberships.count == 1)
     #expect(historical.decodedBackup.backup.schedules.count == 1)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 10)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     let input = PlannerItineraryContentInput(
       title: "Tokyo", links: [.init(originalUrl: "https://example.com/route")],
       categoryIds: [manifest.categoryId], tagIds: [manifest.tagId])
@@ -89,7 +89,7 @@ struct ItineraryMigrationTests {
         session: session, request: .source(itinerary)),
       case .selected(let recovery) = await planner.inspectRecovery(
         request: .acknowledgedSnapshot(
-          namespaceId: manifest.namespaceId, checkpointGeneration: 9)),
+          namespaceId: manifest.namespaceId, checkpointGeneration: checkpoint)),
       case .selected(let historicalAfter) = await planner.inspectRecovery(
         request: .acknowledgedSnapshot(
           namespaceId: manifest.namespaceId, checkpointGeneration: 8)),
@@ -100,11 +100,11 @@ struct ItineraryMigrationTests {
         "After main migration, Share saves a real Itinerary through the same durable commands.")
       return
     }
-    #expect(checkpoint == 9)
+    #expect(checkpoint == 10)
     #expect(itineraryRead.content.title == "Tokyo")
     #expect(Set(itineraryRead.labels.map(\.name)) == ["Food", "Rain"])
     #expect(itineraryRead.progress.state == .empty)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(
       recovery.decodedBackup.backup.sources.filter { $0.kind == .itinerary }.map(\.id) == [

@@ -73,14 +73,16 @@ struct PlannerPreparedMaintenance: Codable {
     epochId = identity.epochId
     ownershipBinding = identity.ownershipBinding
     kind = "membershipConsolidation"
-    ruleVersion = 1
+    ruleVersion = 2
     self.proposedBackup = proposedBackup
     evidence = "preparedUnverified"
   }
 
   func validated(identity: PlannerStoreIdentity, bytes: Data) throws -> PlannerMaintenanceEvidence {
     guard format == "planner-maintenance-preparation", formatVersion == 1,
-      evidence == "preparedUnverified", proposedBackup.formatVersion == 3
+      evidence == "preparedUnverified",
+      (ruleVersion == 1 && proposedBackup.formatVersion == 3)
+        || (ruleVersion == 2 && proposedBackup.formatVersion == 4)
     else { throw PlannerFailure("recoveryIntegrityFailure", "Maintenance preparation is invalid.") }
     let value = PlannerMaintenanceEvidence(
       maintenanceId: maintenanceId, namespaceId: namespaceId, datasetId: datasetId,
@@ -111,7 +113,7 @@ struct PlannerMaintenanceEvidence: Codable, Equatable {
   func validate(identity: PlannerStoreIdentity) throws {
     guard namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       epochId == identity.epochId, ownershipBinding == identity.ownershipBinding,
-      !ownershipBinding.isEmpty, kind == "membershipConsolidation", ruleVersion == 1,
+      !ownershipBinding.isEmpty, kind == "membershipConsolidation", (1...2).contains(ruleVersion),
       preparationDigest.hasPrefix("sha256:"), preparationDigest.utf8.count == 71,
       preparationDigest.utf8.dropFirst(7).allSatisfy({
         (48...57).contains($0) || (97...102).contains($0)

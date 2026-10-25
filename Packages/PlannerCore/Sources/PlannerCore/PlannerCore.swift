@@ -260,11 +260,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...19).contains(identity.schemaVersion) else {
+          guard (1...20).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 19, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 20, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -283,18 +283,12 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 19, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 20, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 19 {
-          identity = PlannerStoreIdentity(
-            schemaVersion: 19, datasetId: identity.datasetId, epochId: identity.epochId,
-            namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
-          try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
-        }
         let archive = recoveryArchive(identity)
         let metadataURL = archive.namespaceURL.appendingPathComponent("identity.json")
         if FileManager.default.fileExists(atPath: metadataURL.path) {
@@ -315,6 +309,9 @@ public actor Planner {
         } else {
           try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
         }
+        if identity.schemaVersion < 20 {
+          identity = try activateCompletionHistoryCompatibility(identity, metadataURL: metadataURL)
+        }
         let maintenanceContext = ModelContext(try openContainer())
         maintenanceContext.autosaveEnabled = false
         do {
@@ -332,6 +329,31 @@ public actor Planner {
     } catch {
       return .unavailable(failure(error, code: "unavailable"))
     }
+  }
+
+  /// Control activation is last: an interrupted baseline can be inspected and rebuilt on retry.
+  private func activateCompletionHistoryCompatibility(
+    _ previous: PlannerStoreIdentity, metadataURL: URL
+  ) throws -> PlannerStoreIdentity {
+    let upgraded = PlannerStoreIdentity(
+      schemaVersion: 20, datasetId: previous.datasetId, epochId: previous.epochId,
+      namespaceId: previous.namespaceId, ownershipBinding: previous.ownershipBinding)
+    let context = ModelContext(try openContainer())
+    context.autosaveEnabled = false
+    let history = try latestHistoryToken(in: context)
+    let snapshot = try canonicalRecoverySnapshot(context)
+    let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
+    guard try latestHistoryToken(in: context) == history else {
+      throw PlannerFailure("recoveryIncomplete", "Data changed before compatibility preparation.")
+    }
+    _ = try recoveryArchive(upgraded, context: context).publish(
+      snapshot: snapshot, receipts: receipts)
+    guard try latestHistoryToken(in: context) == history else {
+      throw PlannerFailure("recoveryIncomplete", "Data changed during compatibility preparation.")
+    }
+    try plannerWriteDurably(JSONEncoder().encode(upgraded), to: metadataURL)
+    try plannerWriteDurably(JSONEncoder().encode(upgraded), to: configuration.controlURL)
+    return upgraded
   }
 
   public func prepareCapture(session: PlannerDatasetSession, input: PlannerCaptureInput)
@@ -1043,7 +1065,10 @@ public actor Planner {
             kind: .bulkCompletion, targetCount: Int64(targets.count), globalFlagsChanged: false,
             sourceDeletes: [], referenceRemovals: [])
           digest = bulkCompletionDigest(
-            scope: scope, done: done, identity: identity, bindings: resolution.bindings)
+            scope: scope, done: done, identity: identity, bindings: resolution.bindings,
+            expandedEvidence: try PlannerNativeLineage(context: context)
+              .expandedCompletionOperationEvidence(
+                for: resolution.targets.map(\.completionContext)))
         case .deleteSource(let source):
           if source.kind == .itinerary {
             let resolution = try resolveItineraryDeletion(source, context: context)
@@ -4076,7 +4101,8 @@ public actor Planner {
       }
     }
     let completionStates = try plannerCompletionHistoryStates(
-      aliases: lineage.contextAliases, changes: lineage.completionChanges)
+      aliases: lineage.contextAliases, changes: lineage.completionChanges,
+      deletionMarkers: lineage.deletionMarkers.compactMap(\.expandedCompletionMarker))
     for record in records {
       guard let identifier = record.id, let lifetime = record.lifetimeId,
         let expected = completionStates[
@@ -7330,8 +7356,11 @@ public actor Planner {
       PlannerBoundIdentity(
         kind: "membership", id: membership.id, lifetimeId: membership.lifetimeId),
     ]
+    let lineage = try PlannerNativeLineage(context: context)
+    let expandedEvidence = lineage.expandedCompletionEvidence(for: [.expandedListItem(binding)])
     let digest = appearanceCompletionDigest(
-      appearance: appearance, done: done, identity: identity, bindings: bindings)
+      appearance: appearance, done: done, identity: identity, bindings: bindings,
+      expandedEvidence: expandedEvidence)
     let previous = before.expandedCompletions.first { $0.context == binding }
     let after = ExpandedCompletionSnapshot(
       context: binding, localDone: done, itineraryId: itineraryId)
@@ -7369,8 +7398,9 @@ public actor Planner {
     let result = PlannerAppliedResult(
       generatedIdentities: [],
       affectedIdentities: [.reference(after.reference), .source(ownerSnapshot.reference)])
-    try PlannerNativeLineage(context: context).recordCompletionAssertions(
-      [(.expandedListItem(binding), previous?.localDone ?? false)], done: done, context: context)
+    try lineage.recordCompletionAssertions(
+      [(.expandedListItem(binding), previous?.localDone ?? false)], done: done, context: context,
+      expandedEvidence: expandedEvidence)
     try archive.prepare(
       .init(
         proposalId: UUID(), originalOperationId: operation.operationId,
@@ -7380,9 +7410,10 @@ public actor Planner {
           tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
           deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
-        resolvedMembershipEvidence: []))
+        resolvedMembershipEvidence: [], resolvedExpandedCompletionEvidence: expandedEvidence))
     let receipt = try PlannerSchemaV1.Receipt(
-      operation: operation, digest: digest, result: result, bindings: bindings)
+      operation: operation, digest: digest, result: result, bindings: bindings,
+      expandedEvidence: expandedEvidence)
     let existing = (records.entry.expandedCompletions ?? []).first {
       $0.membershipId == membership.id && $0.membershipLifetimeId == membership.lifetimeId
     }
@@ -8595,7 +8626,8 @@ public actor Planner {
       guard
         receipt.payloadDigest
           == bulkCompletionDigest(
-            scope: scope, done: done, identity: identity, bindings: stored.bindings)
+            scope: scope, done: done, identity: identity, bindings: stored.bindings,
+            expandedEvidence: stored.resolvedExpandedCompletionEvidence)
       else {
         throw PlannerFailure(
           "operationPayloadMismatch", "This operation describes another bulk action.")
@@ -8609,7 +8641,8 @@ public actor Planner {
     }) {
       let bindings = try proposal.contextualBindings(for: operation.command)
       let digest = bulkCompletionDigest(
-        scope: scope, done: done, identity: identity, bindings: bindings)
+        scope: scope, done: done, identity: identity, bindings: bindings,
+        expandedEvidence: proposal.resolvedExpandedCompletionEvidence)
       guard proposal.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another contextual action.")
@@ -8633,8 +8666,12 @@ public actor Planner {
     }
     let resolution = try resolveBulkCompletion(scope, context: context)
     let bindings = resolution.bindings
+    let lineage = try PlannerNativeLineage(context: context)
+    let expandedEvidence = lineage.expandedCompletionOperationEvidence(
+      for: resolution.targets.map(\.completionContext))
     let digest = bulkCompletionDigest(
-      scope: scope, done: done, identity: identity, bindings: bindings)
+      scope: scope, done: done, identity: identity, bindings: bindings,
+      expandedEvidence: expandedEvidence)
     guard digest == review.payloadDigest else {
       throw PlannerFailure(
         "staleReview", "The command or full target set changed; review it again.",
@@ -8668,8 +8705,8 @@ public actor Planner {
     let completionAssertions = resolution.targets.map {
       (context: $0.completionContext, initialDone: $0.localDone)
     }
-    try PlannerNativeLineage(context: context).recordCompletionAssertions(
-      completionAssertions, done: done, context: context)
+    try lineage.recordCompletionAssertions(
+      completionAssertions, done: done, context: context, expandedEvidence: expandedEvidence ?? [])
     try archive.prepare(
       .init(
         proposalId: proposalIdentifier, originalOperationId: operation.operationId,
@@ -8678,9 +8715,10 @@ public actor Planner {
           itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
           items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified", resolvedBindings: bindings,
-        resolvedMembershipEvidence: []))
+        resolvedMembershipEvidence: [], resolvedExpandedCompletionEvidence: expandedEvidence))
     let receipt = try PlannerSchemaV1.Receipt(
-      operation: operation, digest: digest, result: result, bindings: bindings)
+      operation: operation, digest: digest, result: result, bindings: bindings,
+      expandedEvidence: expandedEvidence)
     for target in resolution.targets { target.apply(done: done, context: context) }
     if let list = resolution.list,
       let snapshot = lists.first(where: { $0.id == resolution.owner.id })
@@ -8729,7 +8767,8 @@ public actor Planner {
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
       let digest = appearanceCompletionDigest(
-        appearance: appearance, done: done, identity: identity, bindings: stored.bindings)
+        appearance: appearance, done: done, identity: identity, bindings: stored.bindings,
+        expandedEvidence: stored.resolvedExpandedCompletionEvidence)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "This operation identity describes another completion action."
@@ -8744,7 +8783,8 @@ public actor Planner {
     }) {
       let bindings = try proposal.contextualBindings(for: operation.command)
       let digest = appearanceCompletionDigest(
-        appearance: appearance, done: done, identity: identity, bindings: bindings)
+        appearance: appearance, done: done, identity: identity, bindings: bindings,
+        expandedEvidence: proposal.resolvedExpandedCompletionEvidence)
       guard proposal.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch", "Prepared evidence describes another contextual action.")
@@ -8867,7 +8907,8 @@ public actor Planner {
 
   private func appearanceCompletionDigest(
     appearance: PlannerAppearance, done: Bool, identity: PlannerStoreIdentity,
-    bindings: [PlannerBoundIdentity]
+    bindings: [PlannerBoundIdentity],
+    expandedEvidence: [PlannerExpandedCompletionEvidence]? = nil
   ) -> String {
     let appearanceValue: PlannerCanonicalValue
     switch appearance {
@@ -8887,7 +8928,7 @@ public actor Planner {
         "membershipId": .identity(membershipId),
       ])
     }
-    let value = PlannerCanonicalValue.record([
+    var fields: [String: PlannerCanonicalValue] = [
       "command": .record([
         "type": .string("setCompletion"),
         "scope": .record(["kind": .string("appearance"), "appearance": appearanceValue]),
@@ -8896,10 +8937,17 @@ public actor Planner {
       "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),
       "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
-    ])
+    ]
+    if let expandedEvidence {
+      fields["resolvedExpandedCompletionEvidence"] = .ordered(
+        plannerSortedExpandedCompletionEvidence(expandedEvidence).map(\.canonicalValue))
+      return plannerDigest(
+        Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 4])
+          + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v4:")
+    }
     return plannerDigest(
-      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
-      prefix: "sha256-payload-v1:")
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1])
+        + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v1:")
   }
 
   private func membershipCreationDigest(
@@ -10044,7 +10092,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 19
+      identity.schemaVersion == 20
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -10103,7 +10151,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...19).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...20).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

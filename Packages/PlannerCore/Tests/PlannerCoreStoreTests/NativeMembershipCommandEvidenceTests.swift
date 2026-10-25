@@ -178,10 +178,12 @@ struct NativeMembershipCommandEvidenceTests {
     }
     #expect(proposals.count == 1)
     let proposal = try #require(proposals.first)
-    #expect(proposal.2["formatVersion"] as? Int == 2)
+    let hasExpandedEvidence = ["expanded", "bulkBranch", "bulkItinerary"].contains(scope)
+    #expect(proposal.2["formatVersion"] as? Int == (hasExpandedEvidence ? 3 : 2))
     #expect((proposal.2["resolvedBindings"] as? [[String: Any]])?.isEmpty == false)
     #expect((proposal.2["resolvedMembershipEvidence"] as? [[String: Any]])?.isEmpty == true)
-    #expect((proposal.2["payloadDigest"] as? String)?.hasPrefix("sha256-payload-v1:") == true)
+    let expectedPrefix = hasExpandedEvidence ? "sha256-payload-v4:" : "sha256-payload-v1:"
+    #expect((proposal.2["payloadDigest"] as? String)?.hasPrefix(expectedPrefix) == true)
     let proposalIdentifier = try #require(
       (proposal.2["proposalId"] as? String).flatMap(UUID.init(uuidString:)))
     let currentConfiguration = configuration(directory.appendingPathComponent("current"))
@@ -284,7 +286,47 @@ struct NativeMembershipCommandEvidenceTests {
     var replayData = proposal.1
     if legacyPreparation {
       var unversioned = proposal.2
-      for key in ["formatVersion", "resolvedBindings", "resolvedMembershipEvidence"] {
+      let savedIdentity = try JSONDecoder().decode(
+        PlannerStoreIdentity.self, from: JSONSerialization.data(withJSONObject: identity))
+      let savedBindings = try JSONDecoder().decode(
+        [PlannerBoundIdentity].self,
+        from: JSONSerialization.data(withJSONObject: try #require(proposal.2["resolvedBindings"])))
+      if case .setBulkCompletion(let bulkScope, let done) = command {
+        unversioned["payloadDigest"] = bulkCompletionDigest(
+          scope: bulkScope, done: done, identity: savedIdentity, bindings: savedBindings)
+      } else if scope == "expanded" {
+        let oldPayload = PlannerCanonicalValue.record([
+          "command": .record([
+            "type": .string("setCompletion"),
+            "scope": .record([
+              "kind": .string("appearance"),
+              "appearance": .record([
+                "kind": .string("expandedListItem"), "itineraryId": .identity(itineraryIdentifier),
+                "listEntryId": .identity(firstEntry), "membershipId": .identity(retiredIdentifier),
+              ]),
+            ]), "done": .boolean(true),
+          ]),
+          "datasetId": .identity(savedIdentity.datasetId),
+          "ownershipBinding": .string(savedIdentity.ownershipBinding),
+          "resolvedBindings": .identitySet(savedBindings.map(\.canonicalValue)),
+        ])
+        unversioned["payloadDigest"] = plannerDigest(
+          Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + oldPayload.encoded(),
+          prefix: "sha256-payload-v1:")
+      }
+      var legacyGraph = try #require(unversioned["proposedBackup"] as? [String: Any])
+      legacyGraph["formatVersion"] = 3
+      let currentChanges = try #require(legacyGraph["completionChanges"] as? [[String: Any]])
+      legacyGraph["completionChanges"] = currentChanges.map { change in
+        var change = change
+        change.removeValue(forKey: "observedExpandedCompletionDeletionIds")
+        return change
+      }
+      unversioned["proposedBackup"] = legacyGraph
+      for key in [
+        "formatVersion", "resolvedBindings", "resolvedMembershipEvidence",
+        "resolvedExpandedCompletionEvidence",
+      ] {
         unversioned.removeValue(forKey: key)
       }
       replayData = try JSONSerialization.data(withJSONObject: unversioned)

@@ -59,12 +59,16 @@ enum PlannerSchemaV1: VersionedSchema {
 
     init(
       operation: PlannerOperation, digest: String, result: PlannerAppliedResult,
-      bindings: [PlannerBoundIdentity] = []
+      bindings: [PlannerBoundIdentity] = [],
+      expandedEvidence: [PlannerExpandedCompletionEvidence]? = nil
     ) throws {
       operationId = operation.operationId
       payloadDigest = digest
       resultData = try JSONEncoder().encode(
-        PlannerStoredOperationEvidence(result: result, bindings: bindings))
+        PlannerStoredOperationEvidence(
+          result: result, bindings: bindings,
+          resolvedMembershipEvidence: expandedEvidence == nil ? nil : [],
+          resolvedExpandedCompletionEvidence: expandedEvidence))
       datasetId = operation.session.datasetId
       ownershipBinding = operation.session.ownershipBinding
     }
@@ -129,20 +133,29 @@ struct PlannerStoredOperationEvidence: Codable {
   let bindings: [PlannerBoundIdentity]
   let formatVersion: Int?
   let resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]?
+  let resolvedExpandedCompletionEvidence: [PlannerExpandedCompletionEvidence]?
 
   init(
     result: PlannerAppliedResult, bindings: [PlannerBoundIdentity],
-    resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]? = nil
+    resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]? = nil,
+    resolvedExpandedCompletionEvidence: [PlannerExpandedCompletionEvidence]? = nil
   ) {
     self.result = result
     self.bindings = bindings
-    formatVersion = resolvedMembershipEvidence == nil ? nil : 2
+    if resolvedExpandedCompletionEvidence != nil {
+      formatVersion = 3
+    } else {
+      formatVersion = resolvedMembershipEvidence == nil ? nil : 2
+    }
+    self.resolvedExpandedCompletionEvidence = resolvedExpandedCompletionEvidence.map(
+      plannerSortedExpandedCompletionEvidence)
     self.resolvedMembershipEvidence = resolvedMembershipEvidence.map(
       plannerSortedMembershipEvidence)
   }
 
   private enum CodingKeys: String, CodingKey {
-    case result, bindings, formatVersion, resolvedMembershipEvidence
+    case result, bindings, formatVersion, resolvedMembershipEvidence,
+      resolvedExpandedCompletionEvidence
   }
 
   init(from decoder: any Decoder) throws {
@@ -151,18 +164,32 @@ struct PlannerStoredOperationEvidence: Codable {
     bindings = try container.decode([PlannerBoundIdentity].self, forKey: .bindings)
     formatVersion = try container.decodeIfPresent(Int.self, forKey: .formatVersion)
     if let formatVersion {
-      guard formatVersion == 2,
+      var expected: Set<String> = [
+        "result", "bindings", "formatVersion", "resolvedMembershipEvidence",
+      ]
+      if formatVersion == 3 { expected.insert("resolvedExpandedCompletionEvidence") }
+      guard (2...3).contains(formatVersion),
         case .object(let fields) = try PlannerImportJSON(from: decoder),
-        Set(fields.keys) == ["result", "bindings", "formatVersion", "resolvedMembershipEvidence"]
+        Set(fields.keys) == expected
       else {
         throw PlannerFailure("readUnavailable", "Stored membership operation evidence is invalid.")
       }
       resolvedMembershipEvidence = try container.decode(
         [PlannerPortableMembershipProvenance].self, forKey: .resolvedMembershipEvidence)
+      if formatVersion == 3 {
+        resolvedExpandedCompletionEvidence = try container.decode(
+          [PlannerExpandedCompletionEvidence].self, forKey: .resolvedExpandedCompletionEvidence)
+      } else {
+        resolvedExpandedCompletionEvidence = nil
+      }
     } else {
       guard !container.contains(.resolvedMembershipEvidence) else {
         throw PlannerFailure("readUnavailable", "Stored membership evidence needs its version.")
       }
+      guard !container.contains(.resolvedExpandedCompletionEvidence) else {
+        throw PlannerFailure("recoveryIntegrityFailure", "Expanded evidence needs its version.")
+      }
+      resolvedExpandedCompletionEvidence = nil
       resolvedMembershipEvidence = nil
     }
   }

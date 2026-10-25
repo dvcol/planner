@@ -139,7 +139,8 @@ struct NativeMaintenanceRecoveryTests {
     }
     let actual = try #require(
       JSONSerialization.jsonObject(with: restoredData) as? [String: Any])
-    let expected = try #require(preparation["proposedBackup"] as? [String: Any])
+    let expected = try canonicalPortableFixtureExpectations(
+      JSONSerialization.data(withJSONObject: try #require(preparation["proposedBackup"])))
     #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
     #expect(retryFailure.code == "maintenanceNotApplied")
     let reopened = Planner(configuration: configuration)

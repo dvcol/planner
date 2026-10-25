@@ -515,6 +515,155 @@ struct RetiredMembershipRoutingTests {
     await listener.stop()
   }
 
+  @Test func anHTTPCompletionAfterReviewedImportObservesOnlyItsExactStopClosure() async throws {
+    let (_, configuration, _) = try makePlannerIntentStorage()
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    let item = try await create(
+      .createItem(content: .init(title: "Hotel", notes: "Keep these shared notes")),
+      planner: planner, session: session)
+    let list = try await create(
+      .createList(content: .init(name: "Tokyo")), planner: planner, session: session)
+    let itinerary = try await create(
+      .createItinerary(content: .init(title: "Repeated visit")), planner: planner, session: session)
+    guard
+      case .applied(let addition, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let membership, _, _)? = addition.generatedReferences.first
+    else { throw CancellationError() }
+    var entries: [UUID] = []
+    for source in [list, list, item] {
+      guard
+        case .applied(let addition, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last)
+          )
+        ).outcome,
+        case .itineraryEntry(let identifier, _, _)? = addition.generatedReferences.first
+      else { throw CancellationError() }
+      entries.append(identifier)
+    }
+    let first = PlannerAppearance.expandedListItem(
+      itineraryId: itinerary.id, listEntryId: entries[0], membershipId: membership)
+    guard
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(scope: .appearance(first), done: true))
+      ).outcome,
+      case .exported(let completedData) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    var incoming = try #require(JSONSerialization.jsonObject(with: completedData) as? [String: Any])
+    incoming["expandedCompletions"] = []
+    incoming["contextAliases"] = []
+    incoming["completionChanges"] = []
+    let decoding = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+    guard case .decoded(let decoded) = decoding else {
+      Issue.record("The independently cleared backup must decode before review: \(decoding)")
+      return
+    }
+    guard
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .appearance(let cleared) = await planner.read(
+        session: session, request: .appearance(first)),
+      case .exported(let clearedData) = await planner.exportData(session: session),
+      case .decoded(let clearedBackup) = planner.decodeImport(clearedData)
+    else { throw CancellationError() }
+    #expect(!cleared.localDone && !cleared.globalDone)
+    let closures = Set(
+      clearedBackup.backup.deletionMarkers.compactMap { marker -> UUID? in
+        guard case .expandedCompletion = marker.target else { return nil }
+        return marker.deletionId
+      })
+    #expect(closures.count == 1)
+    let listener = PlannerMCPLoopbackListener(
+      requestHandler: PlannerMCPRequestHandler(
+        credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+        planner: planner, datasetSession: session))
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let appearance: [String: Any] = [
+      "kind": "expandedListItem", "itineraryId": itinerary.id.uuidString,
+      "listEntryId": entries[0].uuidString, "membershipId": membership.uuidString,
+    ]
+    let completion: [String: Any] = [
+      "formatVersion": 1, "operationId": UUID().uuidString,
+      "command": [
+        "type": "setCompletion", "scope": ["kind": "appearance", "appearance": appearance],
+        "done": true,
+      ],
+    ]
+    do {
+      let completed = try await call(
+        "planner_execute", arguments: completion, endpoint: endpoint, httpSession: httpSession)
+      try #require(completed["state"] as? String == "applied")
+      for (selected, done) in [
+        (first, true),
+        (
+          .expandedListItem(
+            itineraryId: itinerary.id, listEntryId: entries[1], membershipId: membership), false
+        ),
+        (.directItineraryItem(itineraryId: itinerary.id, entryId: entries[2]), false),
+        (.listMembership(listId: list.id, membershipId: membership), false),
+      ] {
+        guard
+          case .appearance(let value) = await planner.read(
+            session: session, request: .appearance(selected))
+        else { throw CancellationError() }
+        #expect(value.localDone == done && !value.globalDone)
+        #expect(value.source == item && value.content.notes == "Keep these shared notes")
+      }
+      guard case .exported(let savedData) = await planner.exportData(session: session),
+        case .decoded(let saved) = planner.decodeImport(savedData)
+      else { throw CancellationError() }
+      #expect(saved.backup.formatVersion == 4)
+      #expect(saved.backup.deletionMarkers.count == 1)
+      #expect(
+        saved.backup.completionChanges.contains {
+          $0.done && Set($0.observedExpandedCompletionDeletionIds) == closures
+        })
+      var reopen = completion
+      reopen["operationId"] = UUID().uuidString
+      var command = try #require(reopen["command"] as? [String: Any])
+      command["done"] = false
+      reopen["command"] = command
+      let reopened = try await call(
+        "planner_execute", arguments: reopen, endpoint: endpoint, httpSession: httpSession)
+      try #require(reopened["state"] as? String == "applied")
+      guard case .exported(let beforeReplay) = await planner.exportData(session: session) else {
+        throw CancellationError()
+      }
+      let replay = try await call(
+        "planner_execute", arguments: completion, endpoint: endpoint, httpSession: httpSession)
+      #expect(NSDictionary(dictionary: replay).isEqual(to: completed))
+      guard case .exported(let afterReplay) = await planner.exportData(session: session),
+        case .appearance(let final) = await planner.read(
+          session: session, request: .appearance(first))
+      else { throw CancellationError() }
+      #expect(beforeReplay == afterReplay && !final.localDone)
+      let relaunched = PlannerCore.Planner(configuration: configuration)
+      guard case .ready(let relaunchedSession) = await relaunched.bootstrap(),
+        case .exported(let relaunchedData) = await relaunched.exportData(session: relaunchedSession)
+      else { throw CancellationError() }
+      #expect(relaunchedData == afterReplay)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+    await listener.stop()
+  }
+
   private func create(
     _ command: PlannerCommand, planner: PlannerCore.Planner, session: PlannerDatasetSession
   ) async throws -> PlannerEntityReference {

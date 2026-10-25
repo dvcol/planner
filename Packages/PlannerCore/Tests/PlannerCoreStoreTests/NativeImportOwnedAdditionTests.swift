@@ -201,6 +201,7 @@ private func graphAddingOwnedRecord(group: String, to original: [String: Any]) t
     record = [
       "id": identifier, "aliasId": try #require(aliases[0]["aliasId"]), "context": context,
       "done": false, "observedChangeIds": ["00000000-0000-4000-8000-000000000881"],
+      "observedExpandedCompletionDeletionIds": [],
     ]
   }
   var records = try #require(graph[recordGroup] as? [[String: Any]])

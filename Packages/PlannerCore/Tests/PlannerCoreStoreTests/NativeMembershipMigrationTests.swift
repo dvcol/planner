@@ -60,7 +60,9 @@ struct NativeMembershipMigrationTests {
     #expect(NSDictionary(dictionary: expected).isEqual(to: actual))
     #expect(item.content.notes == "Migrated note" && item.sourceLifetimeId == itemLifetime)
     #expect(originalResult == replayed && originalCheckpoint == 1 && replayCheckpoint == 1)
-    #expect(try historicalRecoveryFiles(in: configuration.recoveryDirectoryURL) == recoveryFiles)
+    let upgradedFiles = try historicalRecoveryFiles(in: configuration.recoveryDirectoryURL)
+    #expect(recoveryFiles.allSatisfy { upgradedFiles[$0.key] == $0.value })
+    #expect(upgradedFiles.count == recoveryFiles.count + 1)
     guard
       case .listedNamespaces(let originalNamespaces) = await planner.inspectRecovery(
         request: .namespaces),
@@ -73,7 +75,7 @@ struct NativeMembershipMigrationTests {
     let control = try #require(
       JSONSerialization.jsonObject(with: Data(contentsOf: configuration.controlURL))
         as? [String: Any])
-    #expect(control["schemaVersion"] as? Int == 19)
+    #expect(control["schemaVersion"] as? Int == 20)
     guard
       case .applied(_, .complete(let newCheckpoint)) = await planner.execute(
         .init(
@@ -84,8 +86,8 @@ struct NativeMembershipMigrationTests {
       case .appliedRecoveryComplete(_, let retainedCheckpoint) = await planner.operationStatus(
         session: session, operationId: operationIdentifier)
     else { throw CancellationError() }
-    #expect(newCheckpoint == 8 && retainedCheckpoint == 1)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(newCheckpoint == 9 && retainedCheckpoint == 1)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .source(.item(let saved)) = await reopened.read(

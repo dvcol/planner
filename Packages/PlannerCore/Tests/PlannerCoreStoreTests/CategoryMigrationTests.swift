@@ -85,10 +85,10 @@ struct CategoryMigrationTests {
           id: manifest.membershipId,
           list: PlannerEntityReference(kind: .list, id: manifest.listId), item: item)
       ])
-    #expect(checkpoint == manifest.latestCheckpoint + 1)
+    #expect(checkpoint == manifest.latestCheckpoint + 2)
     #expect(read.content.name == "Food")
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 7)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 19)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try canonicalPortableFixtureExpectations(historical.portableData)
     let afterData = try #require(

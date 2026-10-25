@@ -200,7 +200,7 @@ struct PlannerDataSnapshot: Codable {
       $0.deletionId.uuidString < $1.deletionId.uuidString
     }
     format = "planner-data"
-    formatVersion = 3
+    formatVersion = 4
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
       + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
@@ -229,6 +229,16 @@ struct PlannerDataSnapshot: Codable {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     format = try container.decode(String.self, forKey: .format)
     formatVersion = try container.decode(Int.self, forKey: .formatVersion)
+    if formatVersion >= 4 {
+      var validation = PlannerPortableImportDecoder(
+        root: .init(value: try PlannerImportJSON(from: decoder), path: ""))
+      do {
+        _ = try validation.decode()
+      } catch let failure as PlannerFailure {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", failure.message, propertyPath: failure.propertyPath)
+      }
+    }
     sources = try container.decode([PortableSourceRecord].self, forKey: .sources)
     memberships = try container.decode([PortableMembershipRecord].self, forKey: .memberships)
     itineraryEntries = try container.decode(
@@ -246,7 +256,7 @@ struct PlannerDataSnapshot: Codable {
       [PlannerPortableCompletionChange].self, forKey: .completionChanges)
     restorationFamilies = try container.decode(
       [PlannerPortableRestorationFamily].self, forKey: .restorationFamilies)
-    if formatVersion == 3 {
+    if formatVersion >= 3 {
       membershipProvenance = try container.decode(
         [PlannerPortableMembershipProvenance].self, forKey: .membershipProvenance)
       membershipRemovals = try container.decode(
@@ -276,9 +286,15 @@ struct PlannerDataSnapshot: Codable {
     try container.encode(schedules, forKey: .schedules)
     try container.encode(deletionMarkers, forKey: .deletionMarkers)
     try container.encode(contextAliases, forKey: .contextAliases)
-    try container.encode(completionChanges, forKey: .completionChanges)
+    if formatVersion >= 4 {
+      try container.encode(completionChanges, forKey: .completionChanges)
+    } else {
+      try container.encode(
+        completionChanges.map(PlannerLegacyPortableCompletionChange.init),
+        forKey: .completionChanges)
+    }
     try container.encode(restorationFamilies, forKey: .restorationFamilies)
-    if formatVersion == 3 {
+    if formatVersion >= 3 {
       try container.encode(membershipProvenance, forKey: .membershipProvenance)
       try container.encode(membershipRemovals, forKey: .membershipRemovals)
     }
@@ -307,7 +323,7 @@ struct PlannerDataSnapshot: Codable {
   }
 
   func decodedRecords() throws -> PlannerDecodedBackup {
-    guard format == "planner-data", (1...3).contains(formatVersion) else {
+    guard format == "planner-data", (1...4).contains(formatVersion) else {
       throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
     }
     guard Set(sources.map { $0.kind.rawValue + ":" + $0.id.uuidString }).count == sources.count
@@ -458,7 +474,8 @@ struct PlannerDataSnapshot: Codable {
             tags: tags,
             labelAssociations: labelAssociations,
             entries: itineraryEntries, ownedLinks: portableLinks,
-            expandedCompletions: expandedCompletions)
+            expandedCompletions: expandedCompletions,
+            allowsObservedExpandedAssertions: formatVersion >= 4)
         }, ownedLinks: portableLinks, contextAliases: contextAliases,
         completionChanges: completionChanges, restorationFamilies: restorationFamilies,
         formatVersion: formatVersion, membershipProvenance: membershipProvenance,
@@ -503,12 +520,14 @@ struct RecoveryPreparedProposal: Codable {
   let formatVersion: Int?
   let resolvedBindings: [PlannerBoundIdentity]?
   let resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]?
+  let resolvedExpandedCompletionEvidence: [PlannerExpandedCompletionEvidence]?
 
   init(
     proposalId: UUID, originalOperationId: UUID, datasetId: UUID, ownershipBinding: String,
     proposedBackup: PlannerDataSnapshot, payloadDigest: String, evidence: String,
     resolvedBindings: [PlannerBoundIdentity]? = nil,
-    resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]? = nil
+    resolvedMembershipEvidence: [PlannerPortableMembershipProvenance]? = nil,
+    resolvedExpandedCompletionEvidence: [PlannerExpandedCompletionEvidence]? = nil
   ) {
     self.proposalId = proposalId
     self.originalOperationId = originalOperationId
@@ -517,7 +536,13 @@ struct RecoveryPreparedProposal: Codable {
     self.proposedBackup = proposedBackup
     self.payloadDigest = payloadDigest
     self.evidence = evidence
-    formatVersion = resolvedMembershipEvidence == nil ? nil : 2
+    if resolvedExpandedCompletionEvidence != nil {
+      formatVersion = 3
+    } else {
+      formatVersion = resolvedMembershipEvidence == nil ? nil : 2
+    }
+    self.resolvedExpandedCompletionEvidence = resolvedExpandedCompletionEvidence.map(
+      plannerSortedExpandedCompletionEvidence)
     self.resolvedBindings = resolvedBindings
     self.resolvedMembershipEvidence = resolvedMembershipEvidence.map(
       plannerSortedMembershipEvidence)
@@ -525,7 +550,8 @@ struct RecoveryPreparedProposal: Codable {
 
   private enum CodingKeys: String, CodingKey, CaseIterable {
     case proposalId, originalOperationId, datasetId, ownershipBinding, proposedBackup,
-      payloadDigest, evidence, formatVersion, resolvedBindings, resolvedMembershipEvidence
+      payloadDigest, evidence, formatVersion, resolvedBindings, resolvedMembershipEvidence,
+      resolvedExpandedCompletionEvidence
   }
 
   init(from decoder: any Decoder) throws {
@@ -539,9 +565,11 @@ struct RecoveryPreparedProposal: Codable {
     evidence = try container.decode(String.self, forKey: .evidence)
     formatVersion = try container.decodeIfPresent(Int.self, forKey: .formatVersion)
     if let formatVersion {
-      guard formatVersion == 2,
+      var expected = Set(CodingKeys.allCases.map(\.rawValue))
+      if formatVersion == 2 { expected.remove("resolvedExpandedCompletionEvidence") }
+      guard (2...3).contains(formatVersion),
         case .object(let fields) = try PlannerImportJSON(from: decoder),
-        Set(fields.keys) == Set(CodingKeys.allCases.map(\.rawValue))
+        Set(fields.keys) == expected
       else {
         throw PlannerFailure("recoveryIntegrityFailure", "Prepared membership evidence is invalid.")
       }
@@ -549,6 +577,12 @@ struct RecoveryPreparedProposal: Codable {
         [PlannerBoundIdentity].self, forKey: .resolvedBindings)
       resolvedMembershipEvidence = try container.decode(
         [PlannerPortableMembershipProvenance].self, forKey: .resolvedMembershipEvidence)
+      if formatVersion == 3 {
+        resolvedExpandedCompletionEvidence = try container.decode(
+          [PlannerExpandedCompletionEvidence].self, forKey: .resolvedExpandedCompletionEvidence)
+      } else {
+        resolvedExpandedCompletionEvidence = nil
+      }
     } else {
       guard !container.contains(.resolvedBindings), !container.contains(.resolvedMembershipEvidence)
       else {
@@ -556,6 +590,10 @@ struct RecoveryPreparedProposal: Codable {
           "recoveryIntegrityFailure", "Prepared membership evidence needs its version.")
       }
       resolvedBindings = nil
+      guard !container.contains(.resolvedExpandedCompletionEvidence) else {
+        throw PlannerFailure("recoveryIntegrityFailure", "Expanded evidence needs its version.")
+      }
+      resolvedExpandedCompletionEvidence = nil
       resolvedMembershipEvidence = nil
     }
   }
@@ -587,7 +625,7 @@ struct RecoveryEnvelope: Codable {
       formatVersion == 2 || maintenanceReceipts.isEmpty,
       [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-        "18", "19",
+        "18", "19", "20",
       ]
       .contains(
         storageSchemaVersion),
@@ -622,6 +660,11 @@ struct RecoveryEnvelope: Codable {
     }
     for receipt in maintenanceReceipts {
       try receipt.validate(identity: identity, generation: generation)
+      guard receipt.evidence.ruleVersion < 2 || decoded.backup.formatVersion >= 4 else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "This maintenance rule requires its version-4 recovery graph."
+        )
+      }
     }
     return (bytes, decoded, generation)
   }
@@ -646,7 +689,8 @@ struct PlannerRecoveryArchive {
           snapshot: proposal.proposedBackup, lineage: lineage),
         payloadDigest: proposal.payloadDigest, evidence: proposal.evidence,
         resolvedBindings: proposal.resolvedBindings,
-        resolvedMembershipEvidence: proposal.resolvedMembershipEvidence)
+        resolvedMembershipEvidence: proposal.resolvedMembershipEvidence,
+        resolvedExpandedCompletionEvidence: proposal.resolvedExpandedCompletionEvidence)
     }
     _ = try retained.proposedBackup.validated()
     try plannerWriteDurably(

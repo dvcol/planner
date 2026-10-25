@@ -287,11 +287,21 @@ extension PlannerPortableContextAlias {
 
 extension PlannerPortableCompletionChange {
   var importCanonicalValue: PlannerCanonicalValue {
-    .record([
+    importCanonicalValue(
+      includingExpandedObservations: !observedExpandedCompletionDeletionIds.isEmpty)
+  }
+
+  func importCanonicalValue(includingExpandedObservations: Bool) -> PlannerCanonicalValue {
+    var fields: [String: PlannerCanonicalValue] = [
       "id": .identity(id), "aliasId": .identity(aliasId),
       "context": context.importCanonicalValue, "done": .boolean(done),
       "observedChangeIds": .identitySet(observedChangeIds.map(PlannerCanonicalValue.identity)),
-    ])
+    ]
+    if includingExpandedObservations {
+      fields["observedExpandedCompletionDeletionIds"] = .identitySet(
+        observedExpandedCompletionDeletionIds.map(PlannerCanonicalValue.identity))
+    }
+    return .record(fields)
   }
 }
 
@@ -325,7 +335,10 @@ extension PlannerPortableBackup {
           ])
         }),
       "contextAliases": .ordered(contextAliases.map(\.importCanonicalValue)),
-      "completionChanges": .ordered(completionChanges.map(\.importCanonicalValue)),
+      "completionChanges": .ordered(
+        completionChanges.map {
+          $0.importCanonicalValue(includingExpandedObservations: formatVersion >= 4)
+        }),
       "restorationFamilies": .ordered(
         restorationFamilies.map {
           .record([
@@ -346,6 +359,7 @@ extension PlannerPortableBackup {
       fields["membershipRemovals"] = .ordered(
         membershipRemovals.map { .record(["deletionId": .identity($0.deletionId)]) })
     }
+    if formatVersion >= 4 { fields["formatVersion"] = .integer(4) }
     return .record(fields)
   }
 }
@@ -392,6 +406,11 @@ func plannerImportDigest(
       plannerSortedMembershipEvidence(
         membershipEvidence ?? incoming.backup.resolvedMembershipProvenance
       ).map(\.operationCanonicalValue))
+    if incoming.backup.formatVersion >= 4 {
+      return plannerDigest(
+        Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 4])
+          + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v4:")
+    }
     return plannerDigest(
       Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 3])
         + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v3:")
