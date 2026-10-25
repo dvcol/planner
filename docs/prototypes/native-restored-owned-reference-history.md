@@ -95,3 +95,36 @@ only. Verified cleanup removed one passing Mac and 61 passing phone datasets.
 This qualifies mixed collection kinds on one declared source family. It does
 not establish reconciliation across several simultaneous source families or
 pre-existing owned restoration families, and adds no native UI or HTTP credit.
+
+## Related Item and List restoration families
+
+A new real-store case declares independent open families for Museum and Tokyo
+Food. Their winning versions retain an Item membership and the route Museum →
+Tokyo Food → Museum, with distinct direct and expanded completion. The losing
+Item owns Guide B. The losing List owns a different membership referencing that
+losing Item, plus an expanded completion in the independent route.
+
+Both native delivery orders converge through one existing maintenance receipt.
+The original three appearances retain their order and two finished states. The
+only graph additions are exact closures for discarded membership403/843 and
+bookmark871/872, plus membership403's truthful original List815/Item815 Add
+provenance. All winning values, identities, existing history and user receipts
+match the pre-delivery graph. The retained proposal equals export. Reopen and
+repeat delivery in the opposite order retain the complete graph exactly.
+
+The private fixture can now seed the second List family. Its unchanged defaults
+and affected callers pass 47 Mac and 45 iPhone functions in eight suites,
+including genuine Schema18 and Schema12 migration. The
+[validation record](evidence/native-membership-consolidation/native-related-source-families-validation.json)
+reconciles 813 Mac and 1,160 phone inputs and both test products per platform.
+All 90 Core production inputs, 514 frozen fixtures and 18 schema sources remain
+unchanged. Neither final cohort has SQLite unlink diagnostics. The first tracer
+used an incomplete literal expected provenance record; its missing source-kind
+fields were corrected. That failed assertion is retained as a test diagnostic,
+not a production failure.
+
+Verified cleanup removed two passing Mac tracer stores and 140 passing phone
+stores after host/database closure. Failed and interrupted data remain retained.
+This adds no production rule, format, module or test boundary. Other source-family
+combinations, pre-existing owned restoration-family histories and native/system
+acceptance retain their separate gates.
