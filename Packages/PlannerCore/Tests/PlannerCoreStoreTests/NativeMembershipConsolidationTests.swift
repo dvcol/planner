@@ -10,6 +10,156 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(arguments: ["deletionMarker", "completionChange"], [false, true])
+  func missingObservedClosureHistoryRejectsReadsUntilTheExactNativeRecordReturns(
+    missingRecordKind: String, done: Bool
+  ) async throws {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    var incoming = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: fixture)) as? [String: Any])
+    var expanded = try #require(incoming["expandedCompletions"] as? [[String: Any]])
+    let removed = expanded.removeFirst()
+    let deletionIdentifier = "00000000-0000-4000-8000-000000000891"
+    incoming["expandedCompletions"] = expanded
+    incoming["deletionMarkers"] = [
+      [
+        "deletionId": deletionIdentifier,
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": ["kind": "expandedCompletion", "context": try #require(removed["context"])],
+        "closedFamilyId": NSNull(),
+      ]
+    ]
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: incoming)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let appearance = PlannerAppearance.expandedListItem(
+      itineraryId: itineraryIdentifier,
+      listEntryId: UUID(uuidString: "00000000-0000-4000-8000-000000000451")!,
+      membershipId: UUID(uuidString: "00000000-0000-4000-8000-000000000401")!)
+    var operation = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .setCompletion(scope: .appearance(appearance), done: true))
+    guard
+      case .applied(let initialResult, .complete(let initialCheckpoint)) = await planner.execute(
+        operation
+      ).outcome
+    else { throw CancellationError() }
+    var appliedResult = initialResult
+    var checkpoint = initialCheckpoint
+    if !done {
+      operation = .init(
+        operationId: UUID(), session: session,
+        command: .setCompletion(scope: .appearance(appearance), done: false))
+      guard
+        case .applied(let result, .complete(let completedCheckpoint)) = await planner.execute(
+          operation
+        ).outcome
+      else { throw CancellationError() }
+      appliedResult = result
+      checkpoint = completedCheckpoint
+    }
+    guard case .exported(let before) = await planner.exportData(session: session),
+      case .decoded(let decodedBefore) = planner.decodeImport(before),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    let missingIdentifier: UUID
+    if missingRecordKind == "deletionMarker" {
+      missingIdentifier = UUID(uuidString: deletionIdentifier)!
+    } else {
+      missingIdentifier = try #require(
+        decodedBefore.backup.completionChanges.first { $0.done == done }?.id)
+    }
+    let originalRecord = try await nativeCompletionLineageData(
+      storeURL: configuration.storeURL, identifier: missingIdentifier, kind: missingRecordKind)
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    let beforeFiles = try maintenanceNamespaceFiles(namespaceDirectory)
+    try await setNativeCompletionLineageRecord(
+      storeURL: configuration.storeURL, identifier: missingIdentifier,
+      kind: missingRecordKind, content: nil)
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all))))
+    let read = await planner.read(session: session, request: .appearance(appearance))
+    guard case .failed(let queryFailure) = query, case .failed(let readFailure) = read else {
+      Issue.record("Missing observed history must not expose a guessed value: \(query), \(read)")
+      return
+    }
+    #expect(queryFailure.code == "readUnavailable" && readFailure.code == "readUnavailable")
+    let waiting = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .createTag(content: .init(name: "Waiting for observed history")))
+    guard case .rejected(let rejection) = await planner.execute(waiting).outcome,
+      case .noReliableEvidence = await planner.operationStatus(
+        session: session, operationId: waiting.operationId),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await planner.execute(
+        operation
+      ).outcome
+    else { throw CancellationError() }
+    #expect(rejection.code == "readUnavailable")
+    #expect(replayed == appliedResult && replayCheckpoint == checkpoint)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    let fresh = Planner(configuration: configuration)
+    guard case .unavailable(let unavailable) = await fresh.bootstrap() else {
+      Issue.record("Incomplete observed history must remain unavailable after reopening")
+      return
+    }
+    #expect(unavailable.code == "readUnavailable")
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    try await setNativeCompletionLineageRecord(
+      storeURL: configuration.storeURL, identifier: missingIdentifier,
+      kind: missingRecordKind, content: originalRecord)
+    guard case .ready(let freshSession) = await fresh.bootstrap(),
+      case .appearance(let restored) = await fresh.read(
+        session: freshSession, request: .appearance(appearance)),
+      case .exported(let after) = await fresh.exportData(session: freshSession),
+      case .noReliableEvidence = await fresh.operationStatus(
+        session: freshSession, operationId: waiting.operationId)
+    else { throw CancellationError() }
+    #expect(restored.localDone == done && !restored.globalDone)
+    #expect(after == before)
+    #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+    let changing = await fresh.execute(
+      .init(
+        operationId: UUID(), session: freshSession,
+        command: .setCompletion(scope: .appearance(appearance), done: !done)))
+    guard case .applied(_, .complete) = changing.outcome,
+      case .appearance(let changed) = await fresh.read(
+        session: freshSession, request: .appearance(appearance))
+    else {
+      Issue.record("A deliberate action must resume after exact history returns: \(changing)")
+      return
+    }
+    #expect(changed.localDone == !done && !changed.globalDone)
+  }
+
   @Test(arguments: [false, true])
   func informedCompletionKeepsItsClosureBasisWhenASmallerCanonicalMembershipArrives(done: Bool)
     async throws
@@ -4512,6 +4662,21 @@ struct NativeMembershipConsolidationTests {
       }
     }
     try context.save()
+  }
+
+  @MainActor private func nativeCompletionLineageData(
+    storeURL: URL, identifier: UUID, kind: String
+  ) throws -> Data {
+    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let container = try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self,
+      configurations: [ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)])
+    let context = ModelContext(container)
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()).filter {
+      $0.recordIdentifier == identifier && $0.recordKind == kind
+    }
+    #expect(records.count == 1)
+    return try #require(records.first?.recordData)
   }
 
   /// Model access constructs the actual persisted input; all behavioral observations use Planner.

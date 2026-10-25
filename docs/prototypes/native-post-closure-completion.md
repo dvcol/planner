@@ -80,10 +80,18 @@ The initial attempt fails compilation before any test. The next attempt reaches 
 
 The [passing-fixture cleanup](evidence/native-membership-consolidation/post-closure-completion-upgrade-fixture-cleanup.json) removes 38 closed owned directories totaling 18,005,200 nominal file bytes. It explicitly verifies that the interrupted child's dataset is outside that deletion set. That dataset and failed attempts remain retained; copies of the child's input, publication and termination evidence plus its compressed log are archived before parent-work cleanup.
 
+## Partial observed history delivery
+
+The [partial-record follow-up](evidence/native-membership-consolidation/post-closure-completion-partial-record-validation.json) passes three focused Mac functions and all 27 iPhone native-membership functions. Its four new cases remove either the observed deletion marker or the current completion head, for both Done and Reopen. Actual native records are read, removed and restored through the existing ModelContext input boundary; every behavioral observation uses public Planner interfaces.
+
+While a record is missing, query/detail reads and unrelated new writes reject with readUnavailable. A rejected waiting action has no reliable execution evidence. The original version-4 action still replays its exact saved result and checkpoint, without changing recovery files. Fresh bootstrap also stays unavailable. Returning the exact original record restores the full exported data and recovery files byte-for-byte; a deliberate completion action then resumes in the same appearance, with global completion unchanged.
+
+All 810 Core inputs match the 1,157-input phone execution, and two current binaries on each platform are verified. Only additional test code differs from 0fb1c9bb; production and every existing test line remain unchanged. The focused Mac set includes the prior missing-reference and smaller-root regressions. No new package, target, production hook or direct test boundary is introduced. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-partial-record-fixture-cleanup.json) removes 214 closed passing fixture directories totaling 193,706,462 nominal file bytes, retaining failed/interrupted datasets.
+
 ## Remaining work
 
 - Broaden native paths beyond the represented phone/dark-iPad checkbox, relaunch and independent-appearance journeys; actual Mac UI remains separate.
-- Qualify non-baseline membership-removal generations, incomplete history delivery and earlier upgrade/other command interruption states.
+- Qualify non-baseline membership-removal generations and earlier upgrade/other command interruption states beyond the represented cases.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 
 No new package, target, production test hook or direct test boundary was introduced.
