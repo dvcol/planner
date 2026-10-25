@@ -1576,10 +1576,10 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
   }
 
-  @Test(arguments: [false, true])
-  func losingListMembershipsRetireWithoutMergingRepeatedBranchCompletion(referenced: Bool)
-    async throws
-  {
+  @Test(arguments: [false, true], [false, true])
+  func losingListMembershipsRetireWithoutMergingRepeatedBranchCompletion(
+    referenced: Bool, recoveryFailure: Bool
+  ) async throws {
     let fixture = try await SourceRestorationFixture.make(kind: .list)
     let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
     let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
@@ -1621,11 +1621,59 @@ struct NativeSourceRestorationMaintenanceTests {
     guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
     let receipts = try fixture.envelope()["receipts"] as? NSArray
+    let originalFiles = try fixture.files()
+    let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     try await fixture.deliverCandidateWithOwnedMembership(entries: entries)
+    var pendingMaintenance: UUID?
+    var pendingExport: Data?
+    if recoveryFailure {
+      let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let committed = await fixture.planner.exportData(session: fixture.session)
+      NotificationCenter.default.removeObserver(observer)
+      try obstruction.restore()
+      #expect(obstruction.didObstruct && obstruction.failure == nil)
+      guard case .exported(let data) = committed,
+        case .status(let status) = await fixture.planner.read(
+          session: fixture.session, request: .status),
+        case .known(_, let operations, let maintenance, let blocked) = status.recovery
+      else {
+        Issue.record(
+          "Committed List retirement must remain readable while recovery waits: \(committed)")
+        return
+      }
+      #expect(operations.isEmpty && maintenance.count == 1 && blocked)
+      pendingMaintenance = try #require(maintenance.first)
+      pendingExport = data
+      let files = try fixture.files()
+      for (name, bytes) in originalFiles { #expect(files[name] == bytes) }
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+      let blockedOperation = UUID()
+      guard
+        case .rejected(let reason) = await fixture.planner.execute(
+          .init(
+            operationId: blockedOperation, session: fixture.session,
+            command: .createTag(content: .init(name: "Wait for List recovery")))
+        ).outcome,
+        case .noReliableEvidence = await fixture.planner.operationStatus(
+          session: fixture.session, operationId: blockedOperation)
+      else { throw CancellationError() }
+      #expect(reason.code == "mutationBlocked")
+      #expect(try fixture.files() == files)
+    }
     let result = await fixture.planner.exportData(session: fixture.session)
     guard case .exported(let after) = result else {
       Issue.record("Only the winning List's memberships and branch states must remain: \(result)")
       return
+    }
+    if let pendingExport {
+      #expect(try fixture.graph(pendingExport) == fixture.graph(after))
     }
     var graph = try fixture.object(after)
     let original = try fixture.object(before)
@@ -1662,6 +1710,27 @@ struct NativeSourceRestorationMaintenanceTests {
               membershipId: membershipIdentifier)))
       else { throw CancellationError() }
       #expect(appearance.localDone == (index == 1))
+    }
+    if let pendingMaintenance {
+      let files = try fixture.files()
+      guard
+        case .exported(let readable) = await fixture.planner.exportData(session: fixture.session)
+      else { throw CancellationError() }
+      #expect(try fixture.graph(readable) == fixture.graph(after))
+      #expect(try fixture.files() == files)
+      guard
+        case .complete(let checkpoint) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance),
+        case .complete(let repeated) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance)
+      else { throw CancellationError() }
+      #expect(checkpoint == repeated)
+      let envelope = try fixture.envelope()
+      #expect(envelope["checkpointGeneration"] as? String == String(checkpoint))
+      #expect(envelope["receipts"] as? NSArray == receipts)
+      let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+      #expect(maintenance.count == 1)
+      #expect(maintenance.first?["maintenanceId"] as? String == pendingMaintenance.uuidString)
     }
     let retiredMembership = UUID(uuidString: "00000000-0000-4000-8000-000000000403")!
     guard

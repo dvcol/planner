@@ -2,6 +2,8 @@
 
 ## Current frontier
 
+The [List publication checkpoint](prototypes/native-restored-owned-memberships.md#recovery-publication-failure) now qualifies readable complete winning content, truthful incomplete recovery, blocked writes and explicit Retry for standalone/repeated contexts. Five functions and eleven cases pass on both Core runtimes with matched inputs/products and no production changes. Remaining named payload faults continue locally; Q163, native/system/physical acceptance and signing retain their existing gates.
+
 The [mixed Itinerary interruption checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-process-interruption) now qualifies actual pre/post-save SIGKILL without policy or production changes. The two stages preserve the exact winning graph and original recovery while distinguishing an unverified proposal from a committed maintenance. Parent, child and affected phone evidence pass with matched inputs/products. Distinct Item/List/collision faults remain local checks; Q163, native/system/physical acceptance and deferred signing retain their own gates.
 
 The [mixed Itinerary native-save checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-native-save-rollback) qualifies actual rollback/fresh retry without production or contract changes. Complete source/owned values, original recovery and writer control survive the isolated SQLite failure; only an unverified preparation remains. Mac parent/child and affected phone checks pass with matched inputs/products. Actual mixed-payload interruption and other named payload faults remain separate; Q163 and signing keep their existing gates.

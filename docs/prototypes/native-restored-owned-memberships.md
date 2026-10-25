@@ -86,7 +86,41 @@ host/database closure checks, preserving failed/interrupted data and result bund
 Losing Itinerary-owned entries now have a separate
 [local checkpoint](native-restored-owned-itinerary-stops.md). Broader owned
 restoration/import histories, duplicate or partial owned-context delivery and
-List-specific native-save/publication/interruption need qualification. Existing
+List-specific native-save/interruption need qualification. The publication
+follow-up below covers its represented failure cases. Existing
 generic checks do not prove all those payload-specific outcomes. Native controls,
 HTTP, actual Mac/system, cloud/physical convergence and whole-app acceptance retain
 their separate gates. Signing stays deferred.
+
+## Recovery-publication failure
+
+The existing List test now covers standalone and repeated-itinerary contexts
+with ordinary publication or an actual post-save publication obstruction.
+Complete winning content remains readable while recovery reports one committed
+maintenance and blocks new writes. A new Tag command rejects with
+`mutationBlocked` and has no reliable applied evidence; recovery files stay
+unchanged. Prior recovery bytes and writer control remain intact.
+
+The full graph still differs from the winning baseline only by the one exact
+retired membership closure and its truthful original Add provenance. The first
+repeated stop stays Todo and the second Done, including while recovery is
+pending. Explicit Retry acknowledges the original maintenance; repeated Retry
+returns the same checkpoint. Original user receipts remain unchanged. Stale
+membership/expanded identities still fail after recovery, and reopen/redelivery
+preserve the same complete graph.
+
+The [validation record](evidence/native-membership-consolidation/native-owned-list-publication-validation.json)
+reconciles five passing functions and eleven invocations on each of Mac and
+iPhone Simulator. All four main List cases execute with affected preparation,
+completion-history, provenance and committed-recovery regressions. There are no
+failures, skips, timeouts or SQLite-unlink diagnostics. Actual products and 813
+Core inputs match; 1159 of 1160 native inputs are unchanged. Only the existing
+test file changes. All 90 Core production inputs, 514 frozen fixtures and schema
+sources stay unchanged. Strict Swift/Markdown and whitespace checks pass.
+Verified cleanup removes 26 closed marked stores; manifests remain losslessly
+compressed.
+
+Production code and contracts are unchanged. Actual List-specific native-save
+rollback and process interruption remain separate checks. This adds no module,
+production hook, target, schema, portable format or writer gate. Native/system/
+physical acceptance and Q163 retain their existing gates; signing stays deferred.
