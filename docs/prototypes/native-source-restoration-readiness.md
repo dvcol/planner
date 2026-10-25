@@ -1,0 +1,21 @@
+# Native restored-source candidate readiness
+
+## Existing rule and test boundary
+
+A20 already requires one deterministic initial candidate for an authorized restoration family. Candidate lifetime UUID ordering chooses the winner. Authorized references and later family closure have their existing rules. Manual import normalization does not prove that independently delivered native rows receive the same treatment.
+
+The approved public Core/real native-input boundary constructs a disposable actual store, then observes bootstrap, import, query and Item reads. No production hook, target or additional direct test seam is introduced. The diagnostic uses fully declared metadata and no losing-owned or inbound references, avoiding any new admission or field-merge policy.
+
+## Executed result
+
+Import Item X101/814 with its original title Nezu Museum, note Original notes and global Todo. Family F890 declares predecessor X101/811, its retained closure and both candidate lifetimes814/815. The valid imported graph exports one live source and both candidate declarations.
+
+A separate native ModelContext then saves a second well-formed Item X101/815 with different content and global Done. A20's required result is one readable X101/814 retaining its original content/state. Instead, the [executed diagnostic](evidence/native-membership-consolidation/native-source-restoration-known-candidate-compiled-mac/execution.json) fails one function. Query returns readUnavailable, “Query Item identities are duplicated and unresolved.” Item details return missingReference, “The selected Item is missing or unresolved.” The [diagnostic verification](evidence/native-membership-consolidation/native-source-restoration-known-candidate-compiled-mac/diagnostic-validation.json) reconciles all 811 isolated inputs, proves the prior 810 Core inputs unchanged and verifies both actual test binaries. No SQLite unlink warning occurs. The original failed store is retained.
+
+The [first attempt](evidence/native-membership-consolidation/native-source-restoration-known-candidate-first-mac/execution.json) fails compilation before any test because the probe used a direct globalDone property instead of the public Item read's optional state.globalDone. That attempt remains separate and is not evidence of the runtime defect. The corrected probe passes strict Swift formatting. Its source is retained compressed in the runtime packet and withdrawn from the shipping test target while its dependent maintenance declaration is reviewed.
+
+## Concrete next step
+
+Current native maintenance admits only membershipConsolidation rules1–2. Native source loading retains restoration-family metadata but does not normalize candidate source rows. Reusing the membership kind would misdescribe the durable action. The [Q157 proposal](../native-source-restoration-maintenance-contract-review.md) declares the bounded source rule, its distinct evidence kind and explicit writer compatibility21 while preserving physical model19 and portable4.
+
+The winning policy is settled; the new serialized maintenance declaration awaits review before dependent implementation. Losing references/owned data, broader family reconciliation, actual Mac interaction and signed/system/physical gates remain distinct. Signing did not prevent this diagnostic.
