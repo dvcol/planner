@@ -58,10 +58,15 @@ The final [light-phone journey](evidence/native-membership-consolidation/post-cl
 
 The additional [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-maintenance-fixture-cleanup.json) removes 2,087 closed passing fixture directories totaling 1,539,651,295 nominal file bytes. Ownership, closed hosts and open files are checked before deletion. Failed and interrupted stores are retained. These sizes do not measure reclaimed physical disk blocks.
 
+## Matching mobile storage cohort
+
+The four [iPhone storage batches](evidence/native-membership-consolidation/post-closure-completion-mobile-validation.json) pass 360 functions across 139 suites: 92/37, 82/35, 88/31 and 98/36. All four executions use the same two test binaries and all 1,157 inputs match the native checkpoint and workspace. No tests skip, no tests fail and no SQLite unlink warnings occur. The group-plan function weights describe the original filtered Mac planning set; the verifier reports actual mobile executions. The last batch includes the corrected existing List expectations, while the first executed batch includes all seven Q156 functions.
+
+The [mobile cleanup](evidence/native-membership-consolidation/post-closure-completion-mobile-fixture-cleanup.json) checks closed hosts, ownership and open files before removing 968 passing fixture directories totaling 680,244,126 nominal file bytes. Failed/interrupted stores remain retained. Combined with this follow-up's earlier cleanup, that is 2,219,895,421 nominal file bytes removed, without claiming reclaimed physical disk space.
+
 ## Remaining work
 
 - Broaden native paths beyond the represented phone/dark-iPad checkbox, relaunch and independent-appearance journeys; actual Mac UI remains separate.
-- Run the affected mobile Core cohort against the final implementation.
 - Extend canonical-root/partial-history and interruption/failure evidence beyond the cases represented here.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 
