@@ -38,6 +38,6 @@ Verified cleanup removes 123 marked, closed fixtures from five completed passing
 
 ## Remaining work
 
-The bounded Q157 rule has this local implementation/qualification checkpoint. Broader owned/inbound-reference rebinding, closed-family arrivals, authority reconciliation and other unresolved restoration graphs remain required on the map. Q158 proposes the next direct-entry rebinding declaration; its dependent implementation waits for review.
+The bounded Q157 rule has this local implementation/qualification checkpoint. Broader owned/inbound-reference rebinding, closed-family arrivals, authority reconciliation and other unresolved restoration graphs remain required on the map. Q158 A approves the next direct-entry rebinding declaration; its [implementation and local qualification](native-source-restoration-entry-rebinding.md) are complete for that bounded rule.
 
 Actual Mac interaction, installed Share, protected signed storage, CloudKit/account convergence, system Shortcuts and physical-device checks remain separate. Whole-app UI polish and human acceptance follow feature completion. Signing stays deferred.
