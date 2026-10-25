@@ -11,6 +11,193 @@ import Testing
 
 struct NativeMembershipConsolidationTests {
   @Test(arguments: [false, true])
+  func informedCompletionKeepsItsClosureBasisWhenASmallerCanonicalMembershipArrives(done: Bool)
+    async throws
+  {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    var incoming = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: fixture)) as? [String: Any])
+    var expanded = try #require(incoming["expandedCompletions"] as? [[String: Any]])
+    let removed = expanded.removeFirst()
+    let deletionIdentifier = "00000000-0000-4000-8000-000000000891"
+    incoming["expandedCompletions"] = expanded
+    incoming["deletionMarkers"] = [
+      [
+        "deletionId": deletionIdentifier,
+        "operationId": "00000000-0000-4000-8000-000000000991",
+        "target": ["kind": "expandedCompletion", "context": try #require(removed["context"])],
+        "closedFamilyId": NSNull(),
+      ]
+    ]
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: incoming)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let firstEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let secondEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000452")!
+    let directEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000453")!
+    let originalMembershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let smallerMembershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000400")!
+    let smallerMembershipLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000840")!
+    let originalAppearance = PlannerAppearance.expandedListItem(
+      itineraryId: itineraryIdentifier, listEntryId: firstEntryIdentifier,
+      membershipId: originalMembershipIdentifier)
+    let completing = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .setCompletion(scope: .appearance(originalAppearance), done: true))
+    guard
+      case .applied(let completed, .complete(let completedCheckpoint)) = await planner.execute(
+        completing
+      ).outcome
+    else { throw CancellationError() }
+    if !done {
+      guard
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .setCompletion(scope: .appearance(originalAppearance), done: false))
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard case .exported(let beforeData) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: itemIdentifier,
+      listIdentifier: listIdentifier,
+      contributions: [
+        (smallerMembershipIdentifier.uuidString, smallerMembershipLifetime.uuidString, 4096, !done)
+      ])
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: firstEntryIdentifier,
+      membershipIdentifier: smallerMembershipIdentifier,
+      membershipLifetime: smallerMembershipLifetime,
+      localDone: !done)
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(
+            scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all,
+            sort: .init(mode: .manual)))))
+    guard case .snapshot(let contents) = query,
+      case .exported(let rotatedData) = await planner.exportData(session: session)
+    else {
+      Issue.record("An eligible smaller root must retain informed completion: \(query)")
+      return
+    }
+    #expect(contents.matchingCount == 3)
+    let canonicalAppearance = PlannerAppearance.expandedListItem(
+      itineraryId: itineraryIdentifier, listEntryId: firstEntryIdentifier,
+      membershipId: smallerMembershipIdentifier)
+    #expect(
+      contents.rows.contains(
+        .appearance(source: .init(kind: .item, id: itemIdentifier), appearance: canonicalAppearance)
+      ))
+    for membershipIdentifier in [smallerMembershipIdentifier, originalMembershipIdentifier] {
+      guard
+        case .appearance(let appearance) = await planner.read(
+          session: session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itineraryIdentifier, listEntryId: firstEntryIdentifier,
+              membershipId: membershipIdentifier)))
+      else { throw CancellationError() }
+      #expect(appearance.localDone == done && !appearance.globalDone)
+    }
+    let before = try #require(JSONSerialization.jsonObject(with: beforeData) as? [String: Any])
+    let rotated = try #require(JSONSerialization.jsonObject(with: rotatedData) as? [String: Any])
+    for field in ["sources", "itineraryEntries", "deletionMarkers", "restorationFamilies"] {
+      let original = try #require(before[field] as? [Any])
+      let retained = try #require(rotated[field] as? [Any])
+      #expect(NSArray(array: original).isEqual(to: retained), Comment(rawValue: field))
+    }
+    let originalChanges = try #require(before["completionChanges"] as? [[String: Any]])
+    let rotatedChanges = try #require(rotated["completionChanges"] as? [[String: Any]])
+    for original in originalChanges {
+      let retained = try #require(
+        rotatedChanges.first { $0["id"] as? String == original["id"] as? String })
+      #expect(NSDictionary(dictionary: original).isEqual(to: retained))
+      #expect(
+        original["observedExpandedCompletionDeletionIds"] as? [String] == [deletionIdentifier])
+    }
+    guard
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await planner.execute(
+        completing
+      ).outcome,
+      case .exported(let replayData) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(replayed == completed && replayCheckpoint == completedCheckpoint)
+    #expect(replayData == rotatedData)
+    let changing = await planner.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .setCompletion(scope: .appearance(canonicalAppearance), done: !done)))
+    guard case .applied(_, .complete) = changing.outcome,
+      case .appearance(let changed) = await planner.read(
+        session: session, request: .appearance(canonicalAppearance)),
+      case .appearance(let other) = await planner.read(
+        session: session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: secondEntryIdentifier,
+            membershipId: smallerMembershipIdentifier))),
+      case .appearance(let direct) = await planner.read(
+        session: session,
+        request: .appearance(
+          .directItineraryItem(itineraryId: itineraryIdentifier, entryId: directEntryIdentifier))),
+      case .exported(let finalData) = await planner.exportData(session: session)
+    else {
+      Issue.record(
+        "A deliberate action on the new root must observe the retained closure: \(changing)")
+      return
+    }
+    #expect(changed.localDone == !done && !changed.globalDone)
+    #expect(other.localDone && !other.globalDone)
+    #expect(!direct.localDone && !direct.globalDone)
+    let final = try #require(JSONSerialization.jsonObject(with: finalData) as? [String: Any])
+    let finalChanges = try #require(final["completionChanges"] as? [[String: Any]])
+    let canonicalChange = try #require(
+      finalChanges.first {
+        let context = $0["context"] as? [String: Any]
+        return context?["membershipId"] as? String == smallerMembershipIdentifier.uuidString
+          && context?["listEntryId"] as? String == firstEntryIdentifier.uuidString
+          && $0["observedExpandedCompletionDeletionIds"] as? [String] == [deletionIdentifier]
+      })
+    #expect(canonicalChange["done"] as? Bool == !done)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let freshSession) = await reopened.bootstrap(),
+      case .exported(let freshData) = await reopened.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(freshData == finalData)
+  }
+
+  @Test(arguments: [false, true])
   func delayedClosedCompletionIsRetiredWhileItsEntryAndMembershipSurvive(done: Bool) async throws {
     #if SWIFT_PACKAGE
       let bundle = Bundle.module

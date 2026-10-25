@@ -64,10 +64,16 @@ The four [iPhone storage batches](evidence/native-membership-consolidation/post-
 
 The [mobile cleanup](evidence/native-membership-consolidation/post-closure-completion-mobile-fixture-cleanup.json) checks closed hosts, ownership and open files before removing 968 passing fixture directories totaling 680,244,126 nominal file bytes. Failed/interrupted stores remain retained. Combined with this follow-up's earlier cleanup, that is 2,219,895,421 nominal file bytes removed, without claiming reclaimed physical disk space.
 
+## Smaller canonical membership
+
+The [new native-input follow-up](evidence/native-membership-consolidation/post-closure-completion-smaller-root-validation.json) qualifies an informed Done and an informed Reopen when an eligible smaller membership becomes canonical. A conflicting delivered scalar cannot replace that assertion. Original change contexts and deletion observations survive, the old Complete replays its exact result/checkpoint without changing current data, and a later deliberate action on the new canonical appearance observes the existing closure. The repeated List branch, direct stop, source content and current graph survive independently and across reopening the store.
+
+Mac passes eight selected functions in two suites; iPhone passes all 33 functions in the native-membership and Q156 suites. Both new parameter cases run. All 810 Core inputs match the 1,157-input phone execution. Only the added function in NativeMembershipConsolidationTests differs from the 991dfac9 checkpoint; existing tests and every production input are unchanged. Two current Core and two phone binaries are verified. No shipping correction, declaration, format or new test boundary is needed. This covers the fixture's baseline membership generation; non-baseline removal generations and incomplete history remain separate qualification. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-smaller-root-fixture-cleanup.json) removes 210 closed passing fixture directories totaling 179,695,644 nominal file bytes, preserving failed/interrupted stores.
+
 ## Remaining work
 
 - Broaden native paths beyond the represented phone/dark-iPad checkbox, relaunch and independent-appearance journeys; actual Mac UI remains separate.
-- Extend canonical-root/partial-history and interruption/failure evidence beyond the cases represented here.
+- Qualify non-baseline membership-removal generations, incomplete history delivery and additional interruption/failure states.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 
 No new package, target, production test hook or direct test boundary was introduced.
