@@ -85,6 +85,9 @@ final class SavedItemJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Native design initial navigation")
     recordHierarchy(application, name: "Native design initial navigation hierarchy")
     #if os(iOS)
+      try auditNativeScene(application, name: "Initial navigation")
+    #endif
+    #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .pad {
         XCTAssertTrue(
           application.plannerElement("saved.section.items").waitForExistence(timeout: 10))
@@ -100,13 +103,26 @@ final class SavedItemJourneyTests: XCTestCase {
     notes.activateForPlannerJourney()
     notes.typeText("Meet by the garden entrance")
     recordScreenshot(application, name: "Native design New Item editor")
+    #if os(iOS)
+      try auditNativeScene(application, name: "New Item editor")
+    #endif
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(
       application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
     let completion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    #if os(iOS)
+      revealEstimateForAppearanceReview(application)
+    #endif
     recordScreenshot(application, name: "Native design selected Item details")
+    #if os(iOS)
+      try auditNativeScene(
+        application, name: "Selected Item details",
+        auditTypes: [.contrast, .hitRegion, .sufficientElementDescription])
+      for _ in 0..<6 where !completion.isHittable { application.swipeDown() }
+      XCTAssertTrue(completion.isHittable)
+    #endif
     for section in ["Lists", "Inbox", "Itineraries", "Calendar"] {
       openDesignSection(section, in: application)
       switch section {
@@ -148,6 +164,9 @@ final class SavedItemJourneyTests: XCTestCase {
       default: XCTFail("Unexpected design-review destination")
       }
       recordScreenshot(application, name: "Native design \(section) destination")
+      #if os(iOS)
+        try auditNativeScene(application, name: "\(section) destination")
+      #endif
     }
     openDesignSection("Items", in: application)
     let row = application.savedPlannerItemRows("Museum morning").firstMatch
@@ -157,6 +176,7 @@ final class SavedItemJourneyTests: XCTestCase {
       }
     #endif
     XCTAssertTrue(row.waitForExistence(timeout: 10))
+    let originalItemIdentifier = row.identifier
     row.activateForPlannerJourney()
     XCTAssertTrue(
       application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
@@ -175,6 +195,12 @@ final class SavedItemJourneyTests: XCTestCase {
       if UIDevice.current.userInterfaceIdiom == .pad {
         let sidebar = application.windows.firstMatch.buttons["Show Sidebar"].firstMatch
         if sidebar.exists { sidebar.activateForPlannerJourney() }
+        recordScreenshot(application, name: "Native design landscape navigation")
+        if let hideSidebar = application.buttons.matching(identifier: "Hide Sidebar")
+          .allElementsBoundByIndex.first(where: \.isHittable)
+        {
+          hideSidebar.activateForPlannerJourney()
+        }
       } else {
         XCTAssertTrue(application.buttons["Items"].firstMatch.exists)
         XCTAssertFalse(application.plannerElement("saved.section.items").exists)
@@ -187,8 +213,53 @@ final class SavedItemJourneyTests: XCTestCase {
       activateCompletion(completion)
       XCTAssertTrue(completion.waitForPlannerBooleanState(false))
       recordScreenshot(application, name: "Native design landscape retains selected Item")
+      try auditNativeScene(application, name: "Landscape navigation and Item details")
+      XCUIDevice.shared.orientation = .portrait
+    #endif
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openDesignSection("Items", in: application)
+    let reopened = application.savedPlannerItemRows("Museum morning").firstMatch
+    #if os(iOS)
+      if !reopened.waitForExistence(timeout: 3) {
+        let back = application.navigationBars.buttons["Items"].firstMatch
+        if back.exists { back.activateForPlannerJourney() }
+      }
+    #endif
+    XCTAssertTrue(reopened.waitForExistence(timeout: 10))
+    XCTAssertEqual(reopened.identifier, originalItemIdentifier)
+    reopened.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    #if os(iOS)
+      revealEstimateForAppearanceReview(application)
+    #endif
+    recordScreenshot(application, name: "Native design saved Item after relaunch")
+    #if os(iOS)
+      try auditNativeScene(
+        application, name: "Reopened Item details",
+        auditTypes: [.contrast, .hitRegion, .sufficientElementDescription])
     #endif
   }
+
+  #if os(iOS)
+    private func revealEstimateForAppearanceReview(_ application: XCUIApplication) {
+      let estimate = application.descendants(matching: .any)
+        .matching(identifier: "saved.item.estimate").firstMatch
+      for _ in 0..<6 where !estimate.isHittable { application.swipeUp() }
+      XCTAssertTrue(estimate.isHittable)
+    }
+
+    private func auditNativeScene(
+      _ application: XCUIApplication, name: String,
+      auditTypes: XCUIAccessibilityAuditType = [.hitRegion, .sufficientElementDescription]
+    ) throws {
+      try XCTContext.runActivity(named: "Native accessibility audit: \(name)") { _ in
+        try application.performAccessibilityAudit(for: auditTypes)
+      }
+    }
+  #endif
 
   func testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning() throws {
     #if os(iOS)

@@ -22,7 +22,8 @@ The production Planner app passes both corrected light and dark journeys on
 an iPhone18 Pro and iPad Air11-inch M4 Simulator, four executions altogether.
 They exercise initial navigation, New Item fields/Save, saved notes/completion,
 Lists, Items, Inbox, Itineraries, Calendar, retained Item selection, rotation,
-completion changes and relaunch. Appearance is explicitly set, asserted and
+completion changes. These initial four executions do not relaunch the app.
+Appearance is explicitly set, asserted and
 restored in each execution. There are no failures, skips or SQLite-unlink
 warnings.
 
@@ -108,6 +109,107 @@ subsequently wraps that attachment call without changing its behavior. The
 [narrow compiler check](evidence/native-membership-consolidation/native-final-forms-compiler/qualification.json)
 passes for all 1160 final inputs and records that formatting separately from UI
 execution. It adds no runtime credit.
+
+## Native accessibility audit follow-up
+
+Unfiltered native audits exposed an empty-List symbol with weak contrast and
+borderline app-owned secondary text in the sidebar, empty estimate editor and
+Calendar guidance. The production changes use explicit adaptive primary color
+for those elements, keeping native ContentUnavailableView, Form and sidebar
+components. Directly styling the empty-state Image changes the rendered symbol;
+styling its enclosing Label alone did not. No navigation, content or persistence
+behavior changes.
+
+The broad four-type diagnostic retains fourteen findings across eight scene
+checkpoints in its [unfiltered result](evidence/native-membership-consolidation/native-final-navigation-audit-collection-phone/unfiltered-findings-by-scene.json).
+Native titles, search controls and editable fields also report predictive
+text-clipping findings. Shortening the navigation title and removing its compact
+section header did not resolve that diagnostic, so those experiments are
+reverted. Apple's [audit documentation](https://developer.apple.com/documentation/accessibility/performing-accessibility-audits-for-your-app)
+describes clipped-text checks at larger Dynamic Type sizes. A full visible title
+in one screenshot does not close that warning.
+
+The landscape iPad whole-window contrast audit still reports native sidebar
+labels. Removing the content-row foreground override and explicitly applying
+primary color both retained that finding; both experiments are reverted.
+[Read-only pixel samples](evidence/native-membership-consolidation/native-final-navigation-primary-sidebar-tablet/sampled-contrast.json)
+show contrast ratios above 9 for selected interior glyph/background samples in
+the reported crops. Those samples do not establish full accessibility or prove
+the native audit wrong. This remains an unresolved finding.
+
+The permanent journey audits hit regions and sufficient descriptions at every
+named checkpoint, with contrast additionally audited at selected and reopened
+portrait Item windows. It supplies no issue-suppression handler. The broader
+failed contrast/clipping diagnostics remain separate from that explicit scope.
+A new actual relaunch verifies exact Item identity, saved notes and Todo after
+rotation and completion changes. Earlier navigation runs described above did
+not relaunch; their documentation is corrected without adding retrospective
+runtime credit.
+
+The first actual largest-text iPhone contrast audit reported an Activity estimate
+heading partially beneath the floating native tab bar. The strengthened journey
+scrolls the real estimate row into view and asserts it is hittable before the
+selected/reopened portrait audits, then returns to the completion control. The
+[largest-text phone run](evidence/native-membership-consolidation/native-final-navigation-largest-text-scroll-phone/boundary-validation.json)
+passes all nine checkpoints, rotation, completion changes and actual relaunch.
+Five inspected originals cover the editor, month view, landscape and both
+scrolled portrait detail states. The estimate is fully above the tab bar. The saved
+settings record confirms maximum accessibility text, Increase Contrast and dark
+appearance, then restoration of every original setting. This required a test
+interaction correction, not a production inset or palette change. Its first
+scroll probe used a Button lookup for a static row and receives no production
+scrolling verdict.
+
+The largest-text iPad journey also passed its functional and scoped audit
+checks, but [its inspected landscape capture](evidence/native-membership-consolidation/native-final-navigation-largest-text-scroll-tablet/capture-review.json)
+exposed short sidebar destinations breaking across multiple lines. The fixed
+sidebar width did not grow with its text. The column's minimum, preferred and
+maximum widths now use native ScaledMetric values relative to body text. Normal
+body size retains the original 200/240/320 widths; native split-view resizing and
+collapse continue to govern the layout. No custom sidebar or font-size cap is
+introduced.
+
+The first scaled-width interaction probe retained readable destination names,
+but tried to toggle completion through an open native sidebar overlay after
+rotation. The [retained recording frame](evidence/native-membership-consolidation/native-final-navigation-scaled-sidebar-tablet/capture-review.json)
+shows that obstruction. The driver now captures landscape navigation and uses
+Hide Sidebar before interacting with details. The failed probe receives no
+passing journey credit.
+
+The [final largest-text iPad run](evidence/native-membership-consolidation/native-final-navigation-scaled-sidebar-dismiss-tablet/boundary-validation.json)
+passes all nine scoped audits, native sidebar dismissal, completion Done/Todo,
+rotation and relaunch. Three inspected originals show full destination labels,
+unobstructed landscape details and the exact reopened portrait Item. The native
+column is an overlay when those scaled widths exceed the available space; Hide
+Sidebar returns that space to the catalog and details. All original Simulator
+settings are restored. The four changed Swift files pass strict formatting.
+
+Normal-size regressions on the final source pass both light/dark journeys on
+[phone](evidence/native-membership-consolidation/native-final-navigation-scaled-sidebar-normal-phone/boundary-validation.json)
+and [iPad](evidence/native-membership-consolidation/native-final-navigation-scaled-sidebar-normal-tablet/boundary-validation.json).
+Together with the final largest-text iPad run, these are five executions and
+45 named audit activities. All 1160 native inputs and four actual products match
+each executed epoch, with no failures, skips or SQLite-unlink warnings. Nine
+final-source original captures are inspected: both ordinary iPad sidebars and
+reopened details, both reopened phone details and three largest-text iPad states.
+The earlier largest-text phone pass has its own pre-sidebar-sizing epoch; it is
+not represented as another final-source execution.
+
+The [final Mac app/Share build](evidence/native-membership-consolidation/native-final-accessibility-mac-build-verified/qualification.json)
+also succeeds with signing disabled and all 1160 final inputs verified. Six
+actual binary paths include standalone and embedded Share-extension copies.
+The first collector expected four paths after a successful compiler run; its
+postprocessing failure is retained separately, and the corrected narrow build
+records exit zero. This is compilation evidence only. No unchanged external
+Mac UI startup attempt is made.
+
+The [final validation record](evidence/native-membership-consolidation/native-final-accessibility-validation.json)
+checks the final workspace against all three executed UI epochs and the Mac
+build. Exploratory source overlays, commands and logs are retained in a
+[lossless diagnostic archive](evidence/native-membership-consolidation/native-final-accessibility-diagnostics-index.json).
+Every archived member was read and hash-compared before its duplicate was
+removed. Reviewed originals and outward-facing diagnostic summaries stay
+readable directly; final executed run packets remain separate.
 
 ## Remaining UI acceptance
 

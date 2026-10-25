@@ -93,7 +93,7 @@ struct SavedActivityEstimateEditor: View {
           .font(.footnote).foregroundStyle(.secondary)
       } else {
         Text(purpose.emptyDescription)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(Color.primary)
       }
     }
   }

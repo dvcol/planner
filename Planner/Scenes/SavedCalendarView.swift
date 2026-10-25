@@ -297,7 +297,7 @@ struct SavedCalendarView: View {
           GroupBox {
             Text("Choose another date or schedule an Item or Itinerary.")
               .font(.subheadline)
-              .foregroundStyle(.secondary)
+              .foregroundStyle(Color.primary)
               .frame(maxWidth: .infinity, alignment: .leading)
           } label: {
             Label("No scheduled entries", systemImage: "calendar")

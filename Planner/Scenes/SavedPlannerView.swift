@@ -70,6 +70,9 @@ struct SavedPlannerView: View {
   @Environment(\.undoManager) private var undoManager
   @Environment(PlannerAddressPreviews.self) private var addressPreviews
   @Environment(PlannerMapsPreviews.self) private var mapsPreviews
+  @ScaledMetric(relativeTo: .body) private var sidebarMinimumWidth: CGFloat = 200
+  @ScaledMetric(relativeTo: .body) private var sidebarPreferredWidth: CGFloat = 240
+  @ScaledMetric(relativeTo: .body) private var sidebarMaximumWidth: CGFloat = 320
   @State private var associationUndo = SavedAssociationUndoHistory()
   @State private var website: SavedWebsiteSession?
   @State private var websiteCalendarSelection: SavedCalendarSelection?
@@ -1591,12 +1594,12 @@ struct SavedPlannerView: View {
           .accessibilityIdentifier("saved.section.calendar")
         }
       }
-      Section("Lists") {
+      Section {
         if usesSidebarNavigation, listCatalogWindow?.state == .ready,
           listCatalogWindow?.matchingCount == 0
         {
           Text(listCatalogArchive == .active ? "No Lists yet" : "No matching Lists")
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.primary)
         }
         if let listCatalogWindow {
           SavedContainerWindowRows(
@@ -1638,6 +1641,8 @@ struct SavedPlannerView: View {
             }
           }
         }
+      } header: {
+        Text("Lists").foregroundStyle(Color.primary)
       }
     }
     .listStyle(.sidebar)
@@ -1647,10 +1652,15 @@ struct SavedPlannerView: View {
         if !usesSidebarNavigation, listCatalogWindow?.state == .ready,
           listCatalogWindow?.matchingCount == 0
         {
-          ContentUnavailableView(
-            listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
-            systemImage: "list.bullet.rectangle",
-            description: Text("Change the archive filter or create a List to start planning."))
+          ContentUnavailableView {
+            Label {
+              Text(listCatalogArchive == .active ? "No Lists yet" : "No matching Lists")
+            } icon: {
+              Image(systemName: "list.bullet.rectangle").foregroundStyle(Color.primary)
+            }
+          } description: {
+            Text("Change the archive filter or create a List to start planning.")
+          }
         }
       #endif
       if isOpeningListCatalog || listCatalogWindow?.state == .loading {
@@ -1668,7 +1678,9 @@ struct SavedPlannerView: View {
     }
     .navigationTitle("Planner")
     .toolbarTitleDisplayMode(.inline)
-    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
+    .navigationSplitViewColumnWidth(
+      min: sidebarMinimumWidth, ideal: sidebarPreferredWidth, max: sidebarMaximumWidth
+    )
     .toolbar {
       ToolbarItem(placement: secondaryToolbarPlacement) {
         Button("Manage labels", systemImage: "square.grid.2x2") { showLabels = true }
@@ -2025,11 +2037,15 @@ struct SavedPlannerView: View {
         ContentUnavailableView(
           "List deleted", systemImage: "trash", description: Text(listDeletionMessage))
       } else if listCatalogWindow?.state == .ready, listCatalogWindow?.matchingCount == 0 {
-        ContentUnavailableView(
-          listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
-          systemImage: "list.bullet.rectangle",
-          description: Text("Change the archive filter or create a List to start planning.")
-        )
+        ContentUnavailableView {
+          Label {
+            Text(listCatalogArchive == .active ? "No Lists yet" : "No matching Lists")
+          } icon: {
+            Image(systemName: "list.bullet.rectangle").foregroundStyle(Color.primary)
+          }
+        } description: {
+          Text("Change the archive filter or create a List to start planning.")
+        }
         .accessibilityIdentifier("saved.lists.empty")
       } else {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
