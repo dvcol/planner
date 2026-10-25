@@ -7,7 +7,6 @@ struct ItemDeletionAdmissionTests {
   @Test(arguments: ["membership", "entry", "schedule", "link", "expanded"])
   func anotherWritersRemovalSetChangeRequiresFreshItemReview(_ change: String) async throws {
     let fixture = try await ItemDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let review = try await fixture.review()
     let writer = Planner(configuration: fixture.configuration)
     guard case .ready(let writerSession) = await writer.bootstrap() else {
@@ -74,7 +73,6 @@ struct ItemDeletionAdmissionTests {
     async throws
   {
     let fixture = try await ItemDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let otherItem = try #require(
       try await fixture.save(.createItem(content: .init(title: "Other"))).generated.first)
     let review = try await fixture.review()
@@ -136,7 +134,6 @@ struct ItemDeletionAdmissionTests {
 
   @Test func unavailableRecoveryBeforeSaveLeavesTheWholeItemClosureUnapplied() async throws {
     let fixture = try await ItemDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     let recoveryDirectory = fixture.configuration.recoveryDirectoryURL
@@ -172,7 +169,6 @@ struct ItemDeletionAdmissionTests {
     async throws
   {
     let fixture = try await ItemDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
@@ -232,7 +228,7 @@ private struct ItemDeletionFixture {
   let expandedAppearance: PlannerAppearance
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

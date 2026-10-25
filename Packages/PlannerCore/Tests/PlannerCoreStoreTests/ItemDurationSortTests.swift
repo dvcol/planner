@@ -6,8 +6,7 @@ struct ItemDurationSortTests {
   @Test func listDurationSortRetainsManualOrderLocalCompletionAndFullProgressAcrossFilters()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = configuration(at: directory)
     let planner = Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
@@ -158,8 +157,7 @@ struct ItemDurationSortTests {
   @Test func durationSortKeepsUnknownLastAndTitleTiesAscendingInBothDirectionsAfterReopen()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = configuration(at: directory)
     let planner = Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else {

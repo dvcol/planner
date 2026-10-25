@@ -5,8 +5,7 @@ import Testing
 
 struct ListEditTests {
   @Test func guardedNotesEditPreservesTheListAndOriginalReplayAcrossReopening() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -87,8 +86,7 @@ struct ListEditTests {
     #expect(namespace.preparedProposals.isEmpty)
   }
   @Test func unchangedFieldsDoNotGuardEditsAndStalePatchesDoNotPartiallyApply() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let planner = fixture.planner
     let session = fixture.session
@@ -185,8 +183,7 @@ struct ListEditTests {
   }
 
   @Test func nullablePresentationFieldsPreserveExactValuesAndMixedSourceRecovery() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let planner = fixture.planner
     let session = fixture.session
@@ -308,8 +305,7 @@ struct ListEditTests {
   }
 
   @Test func invalidEditsAndRecoveryObstructionLeaveNoAppliedEvidence() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let planner = fixture.planner
     let session = fixture.session
@@ -416,8 +412,7 @@ struct ListEditTests {
   }
 
   @Test func competingFacadesResolveOneWinnerAtTheSharedWriterBoundary() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let second = Planner(configuration: fixture.configuration)
     guard case .ready(let secondSession) = await second.bootstrap() else {

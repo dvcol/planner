@@ -4,8 +4,7 @@ import Testing
 
 struct CategoryEditTests {
   @Test func optionalColorEditsAndInvalidCategoryPatchesPreserveIndependentRecovery() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -113,8 +112,7 @@ struct CategoryEditTests {
   }
 
   @Test func categoryEditsGuardOnlyChangedFieldsAndRejectAStalePatchTogether() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

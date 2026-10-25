@@ -7,7 +7,6 @@ struct CategoryDeletionAdmissionTests {
   @Test func postSaveRecoveryFailureRetainsDeletionAndBlocksLaterWritesAfterRelaunch() async throws
   {
     let fixture = try await CategoryDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
@@ -61,7 +60,6 @@ struct CategoryDeletionAdmissionTests {
   @Test func canceledMissingForeignAndChangedCommandReviewsLeaveTheCategoryUnchanged() async throws
   {
     let fixture = try await CategoryDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     #expect(try await fixture.recovery().portableData == before.portableData)
@@ -107,7 +105,6 @@ struct CategoryDeletionAdmissionTests {
   @Test(arguments: ["add", "remove"])
   func anotherWritersAssociationChangeRequiresFreshDeletionReview(_ change: String) async throws {
     let fixture = try await CategoryDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let review = try await fixture.review()
     let writer = Planner(configuration: fixture.configuration)
     guard case .ready(let writerSession) = await writer.bootstrap() else {
@@ -157,7 +154,6 @@ struct CategoryDeletionAdmissionTests {
 
   @Test func changedReplayPayloadAndUnavailableRecoveryDoNotPartiallyDelete() async throws {
     let fixture = try await CategoryDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     let recoveryDirectory = fixture.configuration.recoveryDirectoryURL
@@ -219,7 +215,7 @@ private struct CategoryDeletionFixture {
   let item: PlannerEntityReference
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

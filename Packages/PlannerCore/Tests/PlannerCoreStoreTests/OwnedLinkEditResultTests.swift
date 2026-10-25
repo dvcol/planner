@@ -144,20 +144,23 @@ struct OwnedLinkEditResultTests {
       #expect(record.result.affectedIdentities == [.source(record.owner)])
       let status = await planner.operationStatus(session: session, operationId: record.operationId)
       if record.incomplete {
-        guard case .appliedRecoveryIncomplete(let result, _) = status,
+        guard case .appliedRecoveryComplete(let result, let acknowledgedCheckpoint) = status,
           case .applied(let repaired, .complete(let checkpoint)) = await planner.retryRecovery(
             session: session, operationId: record.operationId
           ).outcome
         else {
           Issue.record(
-            "A genuine pre-change incomplete edit must be repairable without new result metadata.")
+            "The compatibility baseline must acknowledge the committed legacy edit without new result metadata: \(status)"
+          )
           return
         }
         #expect(result == record.result && repaired == record.result)
+        #expect(acknowledgedCheckpoint == record.checkpoint)
         #expect(checkpoint == record.checkpoint)
       } else {
         guard case .appliedRecoveryComplete(let result, let checkpoint) = status else {
-          Issue.record("An acknowledged pre-change edit must retain its complete receipt.")
+          Issue.record(
+            "An acknowledged pre-change edit must retain its complete receipt: \(status)")
           return
         }
         #expect(result == record.result && checkpoint == record.checkpoint)

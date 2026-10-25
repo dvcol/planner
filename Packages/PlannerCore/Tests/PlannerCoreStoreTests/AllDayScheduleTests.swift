@@ -7,8 +7,7 @@ struct AllDayScheduleTests {
   @Test func inclusiveAllDayDatesRetainSourceIdentityAndIndependentRecoveryAfterReopen()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
@@ -119,8 +118,7 @@ struct AllDayScheduleTests {
   }
 
   @Test func rowsSelectInclusiveCivilSpansAcrossTravelWithoutMergingTheGap() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
@@ -226,8 +224,7 @@ struct AllDayScheduleTests {
   }
 
   @Test func planningZoneChangesRejectAllDayFormsWithoutSavingOrInvalidatingRows() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     let form = PlannerScheduleForm.allDay(
       start: PlannerCivilDate(year: 2026, month: 10, day: 9), end: nil)
@@ -296,8 +293,7 @@ struct AllDayScheduleTests {
   @Test func invalidGregorianDatesRejectTogetherAndCompleteFormConversionsKeepIdentity()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     let leapDate = PlannerCivilDate(year: 2024, month: 2, day: 29)
     let originalForm = PlannerScheduleForm.allDay(start: leapDate, end: nil)

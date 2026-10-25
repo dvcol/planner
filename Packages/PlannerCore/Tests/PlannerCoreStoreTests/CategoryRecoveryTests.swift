@@ -5,8 +5,7 @@ import Testing
 struct CategoryRecoveryTests {
   @Test func existingDomainCommandsRetainCategoryContentAndIdentityInEveryCheckpoint() async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

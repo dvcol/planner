@@ -4,8 +4,7 @@ import Testing
 
 struct ItineraryEntryMutationAdmissionTests {
   @Test func invalidOwnersEntriesAndAnchorsLeaveTheGraphAndRecoveryUnchanged() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -96,8 +95,7 @@ struct ItineraryEntryMutationAdmissionTests {
   )
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let recoveryDirectory = directory.appendingPathComponent("recovery")
     let retainedDirectory = directory.appendingPathComponent("retained-recovery")
     let configuration = PlannerStorageConfiguration(

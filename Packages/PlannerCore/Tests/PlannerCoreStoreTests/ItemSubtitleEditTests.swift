@@ -4,8 +4,7 @@ import Testing
 
 struct ItemSubtitleEditTests {
   @Test func subtitleEditAndClearPreserveOtherContentAndSurviveReopenWithRecovery() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let operationIdentifier = UUID()
     let edited = await fixture.planner.execute(
@@ -95,8 +94,7 @@ struct ItemSubtitleEditTests {
   }
 
   @Test func staleSubtitleRejectsWholePatchAndReplayRetainsTheOriginalOperation() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let operationIdentifier = UUID()
     let subtitleCommand = PlannerCommand.editItem(

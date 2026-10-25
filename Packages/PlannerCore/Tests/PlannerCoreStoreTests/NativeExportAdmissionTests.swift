@@ -8,7 +8,6 @@ struct NativeExportAdmissionTests {
     async throws
   {
     let fixture = try await NativeExportFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
     let observer = NotificationCenter.default.addObserver(
       forName: ModelContext.didSave, object: nil, queue: nil
@@ -74,7 +73,6 @@ struct NativeExportAdmissionTests {
     async throws
   {
     let fixture = try await NativeExportFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     var requestedSession = fixture.session
     let storeDirectory = fixture.configuration.storeURL.deletingLastPathComponent()
     let retainedDirectory = fixture.directory.appendingPathComponent("retained-store")
@@ -137,7 +135,7 @@ private struct NativeExportFixture {
   let recovery: PlannerRecoverySelection
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

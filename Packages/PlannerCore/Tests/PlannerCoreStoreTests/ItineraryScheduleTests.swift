@@ -4,8 +4,7 @@ import Testing
 
 struct ItineraryScheduleTests {
   @Test func emptyItineraryScheduleRetainsOwnershipAndRecoveryAfterReopen() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -94,8 +93,7 @@ struct ItineraryScheduleTests {
     #expect(namespace.preparedProposals.isEmpty)
   }
   @Test func itineraryAssignmentCanBeEditedAndRemovedWithoutChangingItsChildren() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -203,8 +201,7 @@ struct ItineraryScheduleTests {
 
   @Test func itineraryZoneChangePreservesInstantsAndRejectsStaleOrInvalidReplacement() async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

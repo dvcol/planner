@@ -5,8 +5,7 @@ import Testing
 struct ItineraryArchiveAdmissionTests {
   @Test(arguments: [true, false])
   func archiveAdmissionAndRecoveryFailureLeaveTheItineraryUnchanged(archived: Bool) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let recoveryDirectory = directory.appendingPathComponent("recovery")
     let retainedDirectory = directory.appendingPathComponent("retained-recovery")
     let configuration = PlannerStorageConfiguration(

@@ -7,8 +7,7 @@ struct ItineraryEntryRemovalTests {
   func removingOneRepeatedEntryClosesItsContextAndRetainsSourcesAndOtherAppearances(kind: String)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -174,8 +173,7 @@ struct ItineraryEntryRemovalTests {
 
   @Test(arguments: ["item", "list"])
   func undoRestoresOneRepeatedEntryAndItsIndependentCompletion(sourceKind: String) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

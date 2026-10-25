@@ -6,8 +6,7 @@ struct ItemEstimateEditTests {
   @Test func estimateEditAndClearPreserveContentAndStartOnlyScheduleAcrossRecoveryAndReopen()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let operationIdentifier = UUID()
     let edited = await fixture.planner.execute(
@@ -104,8 +103,7 @@ struct ItemEstimateEditTests {
 
   @Test func staleEstimateRejectsWholePatchAndReplayRetainsTheOriginalRepresentation() async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let operationIdentifier = UUID()
     let command = PlannerCommand.editItem(
@@ -219,8 +217,7 @@ struct ItemEstimateEditTests {
   func nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData(_ estimateMinutes: Int64)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let operationIdentifier = UUID()
     let invalid = await fixture.planner.execute(
@@ -263,8 +260,7 @@ struct ItemEstimateEditTests {
   func positiveEstimateBoundsPersistExactValuesThroughTitleEditAndReopen(
     _ expectedEstimate: PlannerEstimate
   ) async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     guard let fixture = try await makeFixture(directory: directory) else { return }
     let operationIdentifier = UUID()
     let command = PlannerCommand.editItem(

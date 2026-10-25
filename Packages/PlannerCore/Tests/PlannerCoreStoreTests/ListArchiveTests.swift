@@ -4,8 +4,7 @@ import Testing
 
 struct ListArchiveTests {
   @Test func archiveRetainsListContentAndOldReplayCannotUndoLaterUnarchive() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -152,8 +151,7 @@ struct ListArchiveTests {
     #expect(latestRecovery.decodedBackup.backup.schedules.count == 1)
   }
   @Test func missingListAndObstructedRecoveryLeaveArchiveUnapplied() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let recoveryDirectory = directory.appendingPathComponent("recovery")
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

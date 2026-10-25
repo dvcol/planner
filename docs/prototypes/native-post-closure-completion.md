@@ -30,11 +30,24 @@ The six Q156 functions exercise deliberate Complete/Reopen, stale same-alias hea
 
 Earlier failed attempts remain retained. Some were invalid test fixtures or compile errors; they are not claimed as production regressions. The first broad storage run also found changed context-rebinding timing and missing v4 fields in test-created records; subsequent runs preserve the established timing and update only current-format expectations. Deliberately malformed SQLite recovery fixtures emit expected Core Data errors; runner exit/structured test results determine success.
 
+## Mobile tracer, old writer and fixture-lifetime follow-up
+
+The [iPhone tracer](evidence/native-membership-consolidation/post-closure-completion-first-iphone/test-summary.json) passes all six Q156 functions. Its 1,156 input hashes match the Mac adapter checkpoint exactly. This is storage execution on Simulator, not a native checkbox journey or physical-device proof.
+
+The [old-writer execution](evidence/native-membership-consolidation/post-closure-completion-old-writer-second-mac/execution.json) builds genuine pre-Q156 Core at `82c1943f` and current Core at `ebab6079`. One legacy process first writes successfully under control 19, keeps its session while the current executable activates control 20, then rejects its next write, query and export with `staleDatasetSession`. Fresh legacy main/Share instances reject with `unsupportedVersion`. Canonical exports and every control/recovery byte remain unchanged by those rejected attempts. Both frozen source trees and binaries are verified. The initial harness incorrectly asserted an `items` root instead of `sources`; that failed attempt is retained, and the corrected execution reuses the identical compiled binaries.
+
+The first broader mobile group executes 88 functions and exposes an outdated legacy-receipt expectation plus 58 SQLite unlink warnings; it remains failed evidence. The actual public status shows the compatibility baseline has already acknowledged a committed formerly incomplete edit at checkpoint 4, with the original empty generated references and exact result. The test now requires that complete status and verifies explicit Retry remains the same result/checkpoint. The historical acknowledged Item receipt remains checkpoint 2. This reflects the coherent upgrade checkpoint; no shipping code changes follow this finding.
+
+Those tests also contained deferred directory deletion while SwiftData retained connections. Fifty-four affected fixture files now use the existing owned-store helper and leave deletion to the verified runner after host exit. Their assertion lines are unchanged. The isolated [Mac](evidence/native-membership-consolidation/post-closure-completion-fixture-lifetime-first-mac/execution.json) and [iPhone](evidence/native-membership-consolidation/post-closure-completion-fixture-lifetime-first-iphone/test-summary.json) runs each pass six functions in two suites with zero SQLite unlink warnings. Strict formatting and whitespace checks pass. The broader mobile cohort remains to be rerun at this test-source epoch.
+
+One attempted method-only diagnostic selected zero tests; its summary is retained and supplies no passing evidence. The runner now rejects empty selections.
+
+The [portable contract](../portable-data-contract.md) now states accepted v3/v4 additions and distinguishes compatibility control 20 from physical model 19. Earlier format declarations and frozen fixtures retain their historical meaning.
+
 ## Remaining work
 
 - Qualify actual phone/iPad checkboxes after a retained completion removal, including relaunch and independent appearances.
 - Run the affected mobile Core cohort against the final implementation.
-- Execute a frozen older writer/active-session check against compatibility 20; source inspection is not that proof.
 - Extend canonical-root/partial-history and interruption/failure evidence beyond the cases represented here.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 

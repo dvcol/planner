@@ -7,7 +7,6 @@ struct ListDeletionAdmissionTests {
   @Test(arguments: ["membership", "entry", "expanded"])
   func anotherWritersRemovalSetChangeRequiresFreshListReview(_ change: String) async throws {
     let fixture = try await ListDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let review = try await fixture.review()
     let writer = Planner(configuration: fixture.configuration)
     guard case .ready(let writerSession) = await writer.bootstrap() else {
@@ -62,7 +61,6 @@ struct ListDeletionAdmissionTests {
     async throws
   {
     let fixture = try await ListDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let otherList = try #require(
       try await fixture.save(.createList(content: .init(name: "Other"))).generated.first)
     let review = try await fixture.review()
@@ -125,7 +123,6 @@ struct ListDeletionAdmissionTests {
 
   @Test func unavailableRecoveryBeforeSaveLeavesTheWholeListClosureUnapplied() async throws {
     let fixture = try await ListDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     let recoveryDirectory = fixture.configuration.recoveryDirectoryURL
@@ -159,7 +156,6 @@ struct ListDeletionAdmissionTests {
 
   @Test func postSaveRecoveryFailureKeepsItemsAndBlocksLaterWritesAfterRelaunch() async throws {
     let fixture = try await ListDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let before = try await fixture.recovery()
     let review = try await fixture.review()
     let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
@@ -209,7 +205,6 @@ struct ListDeletionAdmissionTests {
 
   @Test func emptyListDeletionKeepsUnrelatedMembershipsAndSourceState() async throws {
     let fixture = try await ListDeletionFixture.create()
-    defer { try? FileManager.default.removeItem(at: fixture.directory) }
     let emptyList = try #require(
       try await fixture.save(.createList(content: .init(name: "Empty"))).generated.first)
     let before = try await fixture.recovery()
@@ -247,7 +242,7 @@ private struct ListDeletionFixture {
   let appearance: PlannerAppearance
 
   static func create() async throws -> Self {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

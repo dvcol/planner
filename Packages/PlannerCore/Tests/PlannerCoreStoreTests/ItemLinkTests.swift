@@ -4,8 +4,7 @@ import Testing
 
 struct ItemLinkTests {
   @Test func invalidBookmarksAndChangedReplayLeaveItemsAndRecoveryUnchanged() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -100,8 +99,7 @@ struct ItemLinkTests {
   }
 
   @Test func mapsOnlyRowsHaveNoWebsitePreviewAndProviderHostsUseExactBoundaries() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -167,8 +165,7 @@ struct ItemLinkTests {
   }
 
   @Test func completionArchiveAndNotesEditKeepOwnedLinksInEveryRecoveryCheckpoint() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -229,8 +226,7 @@ struct ItemLinkTests {
   }
 
   @Test func savedLinksKeepIdentityOrderAndOneWebsitePreviewAfterReopenAndReplay() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),

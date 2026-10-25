@@ -5,8 +5,7 @@ import Testing
 struct DirectScheduleTests {
 
   @Test func contentBookmarkCompletionAndArchiveChangesPreserveIndependentSchedule() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
@@ -100,8 +99,7 @@ struct DirectScheduleTests {
   }
 
   @Test func startOnlyStopsBeingNextWithoutBecomingAnEstimatedOngoingAppointment() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
@@ -165,8 +163,7 @@ struct DirectScheduleTests {
   }
 
   @Test func invalidAppointmentsAndAlteredReplayLeaveSourceAndRecoveryUnchanged() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(configuration: configuration(directory))
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
@@ -299,8 +296,7 @@ struct DirectScheduleTests {
   }
 
   @Test func directDateSummarySelectsOngoingThenFutureThenPastWithStableOverlapTie() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let planner = Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -408,8 +404,7 @@ struct DirectScheduleTests {
   }
 
   @Test func savedStartOnlyAppointmentKeepsItsInstantAndNoEstimatedEndAfterReopen() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
