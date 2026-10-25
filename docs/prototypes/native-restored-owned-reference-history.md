@@ -503,3 +503,31 @@ Item/List-specific native-save/interruption and label-collision faults remain
 open, alongside Q163 and native/system/physical acceptance. No production code,
 module, test boundary, target, schema, portable format or writer gate changes.
 Signing stays deferred.
+
+## Mixed Item native-save rollback
+
+The mixed Item fixture now reaches a real isolated native save failure with its
+notes, guide, booking, Category/Tag selections and two independent itinerary
+appearances present. SQLite error 778 is observed at the existing willSave
+boundary. Both complete source versions, owned records, appearance bindings,
+completion history, previous recovery bytes and writer control remain unchanged.
+The prepared maintenance is unverified; its Retry rejects with
+`maintenanceNotApplied` and changes no files. Fresh maintenance uses a different
+identity, preserves the complete winning graph and all old receipts, and survives
+reopen and late redelivery. Its four exact losing-owned closures are the only
+graph additions. Saved field hashes and Last updated remain unchanged.
+
+The [validation record](evidence/native-membership-consolidation/native-owned-item-save-validation.json)
+reconciles seven passing Mac functions, including five successful native-fault
+children, and three passing iPhone Simulator functions. The actual Item write
+fault executes only in the isolated Mac child; phone qualifies the shared
+Item/List/Itinerary test helpers and their ordinary/publication paths. No run
+has failures, skips, timeouts or SQLite-unlink warnings. Actual products and
+813 shared Core inputs match; all ninety production inputs, 514 frozen fixtures,
+eighteen schema sources, formats and gates stay unchanged. Only the existing
+test file changes. Logs/manifests remain compressed; verified cleanup removes
+the passing disposable stores after host and handle closure.
+
+Item-specific process interruption and List-specific process interruption still
+need their own qualification. Collision faults, Q163 and actual native/system/
+physical acceptance retain their separate gates. Signing stays deferred.

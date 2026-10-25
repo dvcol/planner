@@ -66,8 +66,11 @@ turn historical product hashes into current execution credit.
    now preserves notes, guide, booking, labels and independent appearances through
    failure/Retry/reopen/redelivery. The [List native-save check](prototypes/native-restored-owned-memberships.md#native-save-rollback-and-late-redelivery)
    now preserves its complete bindings through actual failure and fresh Retry,
-   and corrects stale cached-container state exposed by late redelivery. Item
-   native-save/interruption, List interruption and label-collision faults remain separate. Do not claim a Cartesian
+   and corrects stale cached-container state exposed by late redelivery. The
+   [mixed Item native-save check](prototypes/native-restored-owned-reference-history.md#mixed-item-native-save-rollback)
+   now preserves both complete versions and independent appearances through
+   actual failure and fresh Retry. Item/List process interruption and
+   label-collision faults remain separate. Do not claim a Cartesian
    fault matrix or add a new recovery framework by inference.
 2. Await Q163 for the conflicting source/owned-family authority. Preserve the
    current atomic rejection while that decision is pending.
