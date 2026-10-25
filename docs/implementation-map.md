@@ -4,9 +4,13 @@ Planner is a personal native iPhone, iPad and Mac app using Xcode, SwiftUI and s
 
 This map remains open. Signing is deferred, and it is not the only remaining gate. The [decision register](open-decisions.md) distinguishes accepted behavior, current implementation and executed evidence. An accepted choice, successful build or isolated test does not close a broader requirement.
 
+## MVP implementation preference
+
+Prefer the simplest existing path that meets the accepted behavior. Reuse native/platform components and shared code; add a new abstraction, recovery mechanism or version only when a concrete requirement needs it. Keep bounded unsupported cases explicit rather than expanding into a general reconciliation system. Do not broaden a completed slice solely to cover hypothetical permutations. Preserve data-loss protections and accepted guarantees; bring genuinely necessary behavior tradeoffs to the user with the smaller option first. Feature completion and native UI polish take priority over optional infrastructure.
+
 ## Decisions and external actions needed
 
-- **Q159 A is accepted; Q160 is the next concrete declaration review.** Shared strict-removal authority spans authorized Item candidates in one proven open family, preserving original provenance and observations. The [aggregate target-reference contract](native-restored-target-reference-contract-review.md) covers independent membership Item targets, referenced List entries and Category/Tag targets in one portable5/rule3/gate23 upgrade. Physical model19 and recovery envelope2 stay unchanged. It excludes candidate-owned collection transfer and unresolved label identity collisions. Dependent tests/implementation await this promised review; signing is not the blocker.
+- **Q159 A and Q160 A are accepted.** The [aggregate target-reference contract](native-restored-target-reference-contract-review.md) is approved for implementation through the existing storage/maintenance paths. It retains original provenance, bounded exclusions and old replay while declaring portable5/rule3/gate23. Keep this implementation minimal under the MVP preference above; do not add general candidate-owned collection merging or label-collision machinery. Signing stays deferred.
 
 - **Q158 A is implemented and locally qualified.** The [direct-entry checkpoint](prototypes/native-source-restoration-entry-rebinding.md) preserves exact entry identity/order/local state/history while atomically rebinding to the winner and retiring the loser. Final cohorts pass 44 Mac, 41 iPhone and twelve real HTTP functions across 813 Core/1,160 native inputs and verified products. Genuine gate21 writers reject22; eight interrupted datasets and original recovery files remain retained. Verified cleanup removes 278 passing fixtures. Physical model19 and portable4 stay unchanged. Other candidate-owned/reference cases and actual Mac/system/physical/whole-app gates remain required. Signing stays deferred.
 

@@ -1,6 +1,6 @@
 # Restored-source target references and membership authority
 
-Status: proposed Q160. Q159 A is accepted. It extends strict Remove authority across the authorized candidates of one proven Item restoration family. Q158's direct-entry rule is implemented. This declaration joins the next independent target-reference cases under one portable and maintenance upgrade. No dependent tests or implementation have started.
+Status: Q160 A approved on 25 October 2026. Q159 A is accepted. It extends strict Remove authority across the authorized candidates of one proven Item restoration family. Q158's direct-entry rule is implemented. This declaration joins the next independent target-reference cases under one portable and maintenance upgrade. Implementation must follow the user's MVP-first preference, reusing the existing storage/maintenance paths and retaining the bounded exclusions.
 
 ## Scope and unchanged ownership
 
