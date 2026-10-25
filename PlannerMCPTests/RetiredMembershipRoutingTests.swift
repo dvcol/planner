@@ -7,8 +7,10 @@ import Testing
 
 @MainActor
 struct RetiredMembershipRoutingTests {
-  @Test(arguments: [false, true])
-  func aDeclaredLosingSourceKeepsItsWinnerReadableOverHTTP(directEntries: Bool) async throws {
+  @Test(arguments: [false, true], [false, true])
+  func aDeclaredLosingSourceKeepsItsWinnerReadableOverHTTP(
+    directEntries: Bool, membership: Bool
+  ) async throws {
     let (_, seedConfiguration, _) = try makePlannerIntentStorage()
     let seed = PlannerCore.Planner(configuration: seedConfiguration)
     guard case .ready(let seedSession) = await seed.bootstrap() else { throw CancellationError() }
@@ -102,6 +104,24 @@ struct RetiredMembershipRoutingTests {
       }
       before = expected
     }
+    if membership {
+      let list = try await create(
+        .createList(content: .init(name: "Independent List")), planner: planner, session: session)
+      guard
+        case .applied(let addition, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .addMembership(itemId: source.id, listId: list.id, placement: .last))
+        ).outcome,
+        case .membership(let identifier, _, _)? = addition.generatedReferences.first,
+        case .exported(let expected) = await planner.exportData(session: session)
+      else { throw CancellationError() }
+      appearances.append([
+        "kind": "listMembership", "listId": list.id.uuidString,
+        "membershipId": identifier.uuidString,
+      ])
+      before = expected
+    }
     let listener = PlannerMCPLoopbackListener(
       requestHandler: PlannerMCPRequestHandler(
         credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
@@ -128,6 +148,24 @@ struct RetiredMembershipRoutingTests {
         entry.sourceLifetimeId = losingLifetime
         entry.item = losing
       }
+      var expectedGraph = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+      var expectedProvenance = try #require(
+        expectedGraph["membershipProvenance"] as? [[String: Any]])
+      for membership in try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()) {
+        membership.itemLifetimeId = losingLifetime
+        membership.item = losing
+        let value = try membership.value()
+        if !expectedProvenance.contains(where: {
+          $0["membershipId"] as? String == value.id.uuidString
+        }) {
+          expectedProvenance.append(
+            try #require(
+              JSONSerialization.jsonObject(with: JSONEncoder().encode(value.baselineProvenance))
+                as? [String: Any]))
+        }
+      }
+      expectedGraph["membershipProvenance"] = expectedProvenance
+      before = try JSONSerialization.data(withJSONObject: expectedGraph)
       try context.save()
       let query = try await call(
         "planner_query",
@@ -794,7 +832,7 @@ struct RetiredMembershipRoutingTests {
       guard case .exported(let savedData) = await planner.exportData(session: session),
         case .decoded(let saved) = planner.decodeImport(savedData)
       else { throw CancellationError() }
-      #expect(saved.backup.formatVersion == 4)
+      #expect(saved.backup.formatVersion == 5)
       #expect(saved.backup.deletionMarkers.count == 1)
       #expect(
         saved.backup.completionChanges.contains {

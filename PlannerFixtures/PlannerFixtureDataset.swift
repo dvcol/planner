@@ -30,6 +30,8 @@ enum PlannerFixtureDataset {
     case retiredMembership = "retired-membership"
     case retiredMembershipWithoutProvenance = "retired-membership-without-provenance"
     case retiredItineraryMembership = "retired-itinerary-membership"
+    case restoredItemTarget = "restored-item-target"
+    case restoredListTarget = "restored-list-target"
     case retiredItineraryMembershipWithoutProvenance =
       "retired-itinerary-membership-without-provenance"
     case pinnedAddress = "pinned-address"
@@ -110,6 +112,11 @@ enum PlannerFixtureDataset {
     }
     if scenario == .retiredMembership {
       return try await PlannerRetiredMembershipFixture.makeStore(directory: directory)
+    }
+    if scenario == .restoredItemTarget || scenario == .restoredListTarget {
+      return try await PlannerRetiredMembershipFixture.makeStore(
+        directory: directory, includesItinerary: true,
+        restoredSource: scenario == .restoredItemTarget ? .item : .list)
     }
     if scenario == .retiredMembershipWithoutProvenance {
       return try await PlannerRetiredMembershipFixture.makeStore(

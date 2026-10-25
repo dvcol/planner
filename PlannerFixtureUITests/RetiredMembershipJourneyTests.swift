@@ -76,6 +76,14 @@ import XCTest
       verifyRepeatedStopsAfterRelaunch(fixture: "retired-itinerary-membership")
     }
 
+    func testRestoredItemTargetsKeepTheirIndependentNativeStopsAfterRedelivery() {
+      verifyRepeatedStopsAfterRelaunch(fixture: "restored-item-target")
+    }
+
+    func testRestoredListTargetsKeepTheirIndependentNativeStopsAfterRedelivery() {
+      verifyRepeatedStopsAfterRelaunch(fixture: "restored-list-target")
+    }
+
     func testRepeatedItineraryStopsKeepIndependentCompletionWithoutOldMembershipProvenance() {
       verifyRepeatedStopsAfterRelaunch(fixture: "retired-itinerary-membership-without-provenance")
     }

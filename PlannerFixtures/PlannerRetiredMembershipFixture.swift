@@ -13,7 +13,8 @@ enum PlannerRetiredMembershipFixture {
   private static let retiredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000842")!
 
   static func makeStore(
-    directory: URL, missingProvenance: Bool = false, includesItinerary: Bool = false
+    directory: URL, missingProvenance: Bool = false, includesItinerary: Bool = false,
+    restoredSource: PlannerEntityKind? = nil
   ) async throws
     -> SavedPlannerStore
   {
@@ -29,7 +30,10 @@ enum PlannerRetiredMembershipFixture {
     else { throw CancellationError() }
     if existing.matchingCount == 0 {
       let backup: PlannerDecodedBackup
-      switch planner.decodeImport(try portableData(includesItinerary: includesItinerary)) {
+      switch planner.decodeImport(
+        try portableData(
+          includesItinerary: includesItinerary, restoredSource: restoredSource))
+      {
       case .decoded(let decoded): backup = decoded
       case .invalid(let failure): throw failure
       }
@@ -43,13 +47,16 @@ enum PlannerRetiredMembershipFixture {
         ).outcome
       else { throw CancellationError() }
     }
-    try deliverRetiredCopy(configuration: configuration, missingProvenance: missingProvenance)
+    try deliverRetiredCopy(
+      configuration: configuration, missingProvenance: missingProvenance,
+      restoredSource: restoredSource)
     return SavedPlannerStore(configuration: configuration)
   }
 
   /// Every launch redelivers the old native row before the production view opens its dataset.
   private static func deliverRetiredCopy(
-    configuration: PlannerStorageConfiguration, missingProvenance: Bool
+    configuration: PlannerStorageConfiguration, missingProvenance: Bool,
+    restoredSource: PlannerEntityKind?
   ) throws {
     let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let container = try ModelContainer(
@@ -74,25 +81,60 @@ enum PlannerRetiredMembershipFixture {
       else { throw CancellationError() }
       context.delete(provenance)
     }
+    var deliveredItem = item
+    if restoredSource == .item {
+      let losing = try PlannerSchemaV18.Item(input: .init(title: "Losing hotel"))
+      losing.id = itemIdentifier
+      losing.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
+      losing.globalDone = true
+      losing.archived = true
+      context.insert(losing)
+      deliveredItem = losing
+      for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+      where entry.sourceKind == "item" && entry.sourceId == itemIdentifier {
+        entry.sourceLifetimeId = losing.lifetimeId
+        entry.item = losing
+      }
+    } else if restoredSource == .list {
+      let losing = try PlannerSchemaV18.List(content: .init(name: "Losing plan"))
+      losing.id = listIdentifier
+      losing.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
+      losing.archived = true
+      context.insert(losing)
+      for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+      where entry.sourceKind == "list" && entry.sourceId == listIdentifier {
+        entry.sourceLifetimeId = losing.lifetimeId
+        entry.list = losing
+      }
+    }
     context.insert(
       PlannerSchemaV18.Membership(
         snapshot: .init(
           id: retiredIdentifier, lifetimeId: retiredLifetime,
           list: .init(kind: "list", id: listIdentifier, lifetimeId: listLifetime),
-          item: .init(kind: "item", id: itemIdentifier, lifetimeId: itemLifetime),
-          rank: 1024, localDone: true), list: list, item: item))
+          item: .init(
+            kind: "item", id: itemIdentifier, lifetimeId: deliveredItem.lifetimeId ?? itemLifetime),
+          rank: 1024, localDone: true), list: list, item: deliveredItem))
     try context.save()
   }
 
-  private static func portableData(includesItinerary: Bool) throws -> Data {
-    let itemBinding: [String: Any] = [
+  private static func portableData(
+    includesItinerary: Bool, restoredSource: PlannerEntityKind?
+  ) throws -> Data {
+    var itemBinding: [String: Any] = [
       "kind": "item", "id": itemIdentifier.uuidString,
       "lifetimeId": "00000000-0000-4000-8000-000000000811",
     ]
-    let listBinding: [String: Any] = [
+    var listBinding: [String: Any] = [
       "kind": "list", "id": listIdentifier.uuidString,
       "lifetimeId": "00000000-0000-4000-8000-000000000821",
     ]
+    let predecessor = restoredSource == .item ? itemBinding : listBinding
+    if restoredSource == .item {
+      itemBinding["lifetimeId"] = "00000000-0000-4000-8000-000000000814"
+    } else if restoredSource == .list {
+      listBinding["lifetimeId"] = "00000000-0000-4000-8000-000000000814"
+    }
     let canonical: [String: Any] = [
       "kind": "listMembership", "membershipId": originalIdentifier.uuidString,
       "membershipLifetimeId": originalLifetime.uuidString,
@@ -112,9 +154,13 @@ enum PlannerRetiredMembershipFixture {
     ]
     let provenance = [(originalIdentifier, originalLifetime), (retiredIdentifier, retiredLifetime)]
       .map { identifier, lifetime -> [String: Any] in
-        [
+        var attestedItem = itemBinding
+        if restoredSource == .item && identifier == retiredIdentifier {
+          attestedItem["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
+        }
+        return [
           "membershipId": identifier.uuidString, "membershipLifetimeId": lifetime.uuidString,
-          "item": itemBinding, "list": listBinding, "observedRemovalIds": [],
+          "item": attestedItem, "list": listBinding, "observedRemovalIds": [],
         ]
       }
     let item = itemBinding.merging([
@@ -180,7 +226,7 @@ enum PlannerRetiredMembershipFixture {
         "itinerary": itineraryBinding, "source": itemBinding, "rank": "3072", "localDone": false,
       ])
     }
-    return try JSONSerialization.data(withJSONObject: [
+    var graph: [String: Any] = [
       "format": "planner-data", "formatVersion": 3, "sources": sources,
       "memberships": [], "itineraryEntries": entries, "expandedCompletions": [],
       "labelAssociations": [], "ownedLinks": [], "schedules": [], "completionChanges": [],
@@ -196,6 +242,32 @@ enum PlannerRetiredMembershipFixture {
           ], "closedFamilyId": NSNull(),
         ]
       ],
-    ])
+    ]
+    if restoredSource != nil {
+      graph["formatVersion"] = 5
+      graph["restorationFamilies"] = [
+        [
+          "familyId": "00000000-0000-4000-8000-000000000890", "predecessor": predecessor,
+          "candidates": [
+            [
+              "lifetimeId": "00000000-0000-4000-8000-000000000814",
+              "operationId": "00000000-0000-4000-8000-000000000994",
+            ],
+            [
+              "lifetimeId": "00000000-0000-4000-8000-000000000815",
+              "operationId": "00000000-0000-4000-8000-000000000995",
+            ],
+          ],
+        ]
+      ]
+      var markers = graph["deletionMarkers"] as? [[String: Any]] ?? []
+      markers.append([
+        "deletionId": "00000000-0000-4000-8000-000000000892",
+        "operationId": "00000000-0000-4000-8000-000000000992",
+        "target": ["kind": "source", "source": predecessor], "closedFamilyId": NSNull(),
+      ])
+      graph["deletionMarkers"] = markers
+    }
+    return try JSONSerialization.data(withJSONObject: graph)
   }
 }
