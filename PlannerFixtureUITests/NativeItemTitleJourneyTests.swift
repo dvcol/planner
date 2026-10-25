@@ -101,6 +101,143 @@ import XCTest
       application.terminate()
     }
 
+    func testCalendarItemKeepsItsNativeTitleAndSavedContextAfterReturningFromItsGuide()
+      async throws
+    {
+      continueAfterFailure = false
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCUIDevice.shared.orientation = .landscapeLeft
+      } else {
+        XCUIDevice.shared.orientation = .portrait
+      }
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let server = try BrowserJourneyServer()
+      let destination = try await server.start()
+      defer { server.stop() }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+        "--fixture-website-url", destination.absoluteString,
+      ]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let sourceRow = application.savedPlannerItemRows("Hotel").firstMatch
+      XCTAssertTrue(sourceRow.waitForExistence(timeout: 15))
+      let sourceIdentifier = sourceRow.identifier
+      sourceRow.activateForPlannerJourney()
+      let itemActions = application.plannerElement("saved.item.actions")
+      XCTAssertTrue(itemActions.waitForExistence(timeout: 10))
+      itemActions.activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
+      let saveSchedule = application.plannerElement("saved.schedule.save")
+      XCTAssertTrue(saveSchedule.waitForExistence(timeout: 10))
+      XCTAssertTrue(saveSchedule.isEnabled)
+      saveSchedule.activateForPlannerJourney()
+      let originalSchedule = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
+      ).firstMatch
+      XCTAssertTrue(originalSchedule.waitForExistence(timeout: 10))
+      let scheduleIdentifier = originalSchedule.identifier
+      let scheduleDescription = try XCTUnwrap(originalSchedule.value as? String)
+      application.openPlannerSection("Calendar")
+      let booking = application.descendants(matching: .any).matching(
+        identifier: scheduleIdentifier.replacingOccurrences(
+          of: "saved.item.schedule.", with: "saved.calendar.schedule.")
+      ).firstMatch
+      XCTAssertTrue(booking.waitForExistence(timeout: 10))
+      booking.activateForPlannerJourney()
+      let completion = application.descendants(matching: .any)
+        .matching(identifier: "saved.item.completion").firstMatch
+      XCTAssertTrue(completion.waitForExistence(timeout: 10))
+      XCTAssertTrue(completion.isHittable)
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      let nativeTitle = application.navigationBars.staticTexts["Hotel"].firstMatch
+      XCTAssertTrue(nativeTitle.waitForExistence(timeout: 10))
+      let detailForm = application.collectionViews.containing(
+        .any, identifier: "saved.item.completion"
+      ).firstMatch
+      XCTAssertTrue(detailForm.waitForExistence(timeout: 10), application.debugDescription)
+      let selectedCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      selectedCapture.name = "Calendar Item has one native title and its original content"
+      selectedCapture.lifetime = .keepAlways
+      add(selectedCapture)
+      let repeatedHeadings = detailForm.staticTexts.matching(
+        NSPredicate(format: "label == %@", "Hotel")
+      ).allElementsBoundByIndex.filter {
+        $0.isHittable && $0.frame.maxY <= completion.frame.minY
+      }
+      XCTAssertEqual(
+        repeatedHeadings.count, 0,
+        "Calendar must retain the native Item title without repeating it inside the detail Form.")
+      XCTAssertTrue(application.staticTexts["Original notes"].exists)
+      let detailFrame = detailForm.frame
+      XCTAssertGreaterThan(detailFrame.height, 200)
+      let window = application.windows.firstMatch
+      let windowOrigin = window.coordinate(withNormalizedOffset: .init(dx: 0, dy: 0))
+      let lowerScrollPoint = windowOrigin.withOffset(
+        .init(
+          dx: detailFrame.maxX - window.frame.minX - 8,
+          dy: detailFrame.minY - window.frame.minY + detailFrame.height * 0.8))
+      let upperScrollPoint = windowOrigin.withOffset(
+        .init(
+          dx: detailFrame.maxX - window.frame.minX - 8,
+          dy: detailFrame.minY - window.frame.minY + detailFrame.height * 0.25))
+      let bookmark = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+      ).firstMatch
+      for _ in 0..<8 where !bookmark.isHittable {
+        lowerScrollPoint.press(forDuration: 0.05, thenDragTo: upperScrollPoint)
+      }
+      XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+      XCTAssertTrue(bookmark.isHittable)
+      let bookmarkIdentifier = bookmark.identifier
+      XCTAssertEqual(bookmark.value as? String, destination.absoluteString)
+      bookmark.activateForPlannerJourney()
+      let page = application.webViews.firstMatch
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+      XCTAssertTrue(server.requestLines.contains("GET /guide HTTP/1.1"))
+      let returnToItem = application.plannerElement("saved.browser.return")
+      XCTAssertEqual(returnToItem.label, "Return to item")
+      returnToItem.activateForPlannerJourney()
+      XCTAssertTrue(page.waitForNonExistence(timeout: 10))
+      XCTAssertTrue(nativeTitle.waitForExistence(timeout: 10))
+      XCTAssertFalse(application.alerts.firstMatch.exists)
+      let retainedBookmark = application.descendants(matching: .any)
+        .matching(identifier: bookmarkIdentifier).firstMatch
+      for _ in 0..<8 where !retainedBookmark.isHittable {
+        lowerScrollPoint.press(forDuration: 0.05, thenDragTo: upperScrollPoint)
+      }
+      XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+      for _ in 0..<8 where !completion.isHittable {
+        upperScrollPoint.press(forDuration: 0.05, thenDragTo: lowerScrollPoint)
+      }
+      XCTAssertTrue(completion.isHittable)
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      let returnedHeadings = detailForm.staticTexts.matching(
+        NSPredicate(format: "label == %@", "Hotel")
+      ).allElementsBoundByIndex.filter {
+        $0.isHittable && $0.frame.maxY <= completion.frame.minY
+      }
+      XCTAssertEqual(returnedHeadings.count, 0)
+      XCTAssertTrue(application.staticTexts["Original notes"].exists)
+      XCTAssertTrue(originalSchedule.waitForExistence(timeout: 10))
+      XCTAssertEqual(originalSchedule.identifier, scheduleIdentifier)
+      XCTAssertEqual(originalSchedule.value as? String, scheduleDescription)
+      let returnedCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      returnedCapture.name = "Calendar guide returns to the same Item title and booking"
+      returnedCapture.lifetime = .keepAlways
+      add(returnedCapture)
+      application.openPlannerSection("Items")
+      if !application.plannerElement(sourceIdentifier).exists {
+        let back = application.navigationBars.buttons["BackButton"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10), application.debugDescription)
+        back.activateForPlannerJourney()
+      }
+      XCTAssertTrue(application.plannerElement(sourceIdentifier).waitForExistence(timeout: 10))
+      application.terminate()
+    }
+
     func testItineraryAppearanceUsesItsNativeTitleWithoutRepeatingItInTheDetailForm() {
       continueAfterFailure = false
       if UIDevice.current.userInterfaceIdiom == .pad {
