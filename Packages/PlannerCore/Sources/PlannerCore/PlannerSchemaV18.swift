@@ -187,7 +187,10 @@ enum PlannerSchemaV18: VersionedSchema {
       self.list = list
     }
 
-    func value(projectedListLifetimeId: UUID? = nil) throws -> ItineraryEntrySnapshot {
+    func value(
+      projectedListLifetimeId: UUID? = nil,
+      retiringMemberships: Set<PlannerPortableBoundIdentity> = []
+    ) throws -> ItineraryEntrySnapshot {
       guard let id, let lifetimeId, let itineraryId, let itineraryLifetimeId,
         let sourceId, let sourceLifetimeId,
         itinerary?.id == itineraryId, itinerary?.lifetimeId == itineraryLifetimeId
@@ -210,8 +213,20 @@ enum PlannerSchemaV18: VersionedSchema {
         throw PlannerFailure(
           "readUnavailable", "The entry has unresolved source bindings or completion.")
       }
-      let completions = try (expandedCompletions ?? []).map {
-        try $0.value(projectedListLifetimeId: projectedListLifetimeId)
+      let completions = try (expandedCompletions ?? []).compactMap {
+        completion -> ExpandedCompletionSnapshot? in
+        if let identifier = completion.membershipId, let lifetime = completion.membershipLifetimeId,
+          retiringMemberships.contains(
+            .init(kind: .membership, id: identifier, lifetimeId: lifetime))
+        {
+          guard let membership = completion.membership else {
+            throw PlannerFailure("readUnavailable", "A retiring completion has no membership.")
+          }
+          let binding = try membership.value()
+          _ = try completion.value(projectedListLifetimeId: binding.list.lifetimeId)
+          return nil
+        }
+        return try completion.value(projectedListLifetimeId: projectedListLifetimeId)
       }.sorted {
         $0.context.orderingKey < $1.context.orderingKey
       }

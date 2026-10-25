@@ -24,6 +24,13 @@ struct PlannerSourceRestorationConsolidation {
     let provenance: PlannerPortableMembershipProvenance
   }
 
+  private struct MembershipRetirement {
+    let membership: PlannerSchemaV18.Membership
+    let identity: PlannerPortableBoundIdentity
+    let provenance: PlannerPortableMembershipProvenance
+    let marker: PortableDeletionMarker?
+  }
+
   private struct LabelRebinding {
     let association: PlannerSchemaV18.LabelAssociation
     let winner: Row
@@ -49,6 +56,8 @@ struct PlannerSourceRestorationConsolidation {
   private let rows: [Row]
   private let entryRebindings: [EntryRebinding]
   private let membershipRebindings: [MembershipRebinding]
+  private let membershipRetirements: [MembershipRetirement]
+  private let expandedRetirements: [PlannerSchemaV18.ExpandedCompletion]
   private let labelRebindings: [LabelRebinding]
   private let ownedLinkRetirements: [OwnedLinkRetirement]
   private let scheduleRetirements: [ScheduleRetirement]
@@ -56,10 +65,14 @@ struct PlannerSourceRestorationConsolidation {
   let ruleVersion = 3
   let retired: Set<PlannerPortableBoundIdentity>
   var requiresMaintenance: Bool { !retired.isEmpty || !labelRetirements.isEmpty }
+  private var retiredMemberships: Set<PlannerPortableBoundIdentity> {
+    Set(membershipRetirements.map(\.identity))
+  }
 
   init(context: ModelContext, markers: [PortableDeletionMarker]) throws {
     let rows = try Self.sourceRows(context)
-    let families = try PlannerNativeLineage(context: context).restorationFamilies
+    let lineage = try PlannerNativeLineage(context: context)
+    let families = lineage.restorationFamilies
     let closedFamilies = Set(markers.compactMap(\.closedFamilyId))
     let groups = Dictionary(grouping: rows) {
       $0.identity.kind.rawValue + ":" + $0.identity.id.uuidString
@@ -100,8 +113,13 @@ struct PlannerSourceRestorationConsolidation {
         winners[row.identity] = winnerRow
       }
     }
+    let membershipRetirements = try Self.membershipRetirements(
+      context: context, rows: rows, retired: retired, lineage: lineage, markers: markers)
+    let expandedRetirements = try Self.expandedRetirements(
+      context: context, memberships: membershipRetirements, winners: winners)
     let entryRebindings = try Self.entryRebindings(
-      context: context, rows: rows, retired: retired, winners: winners)
+      context: context, rows: rows, retired: retired, winners: winners,
+      retiringMemberships: Set(membershipRetirements.map(\.identity)))
     let membershipRebindings = try Self.membershipRebindings(
       context: context, rows: rows, retired: retired, winners: winners)
     let labelRebindings = try Self.labelRebindings(
@@ -122,12 +140,14 @@ struct PlannerSourceRestorationConsolidation {
         retired, context: context, admittedEntries: entryRebindings,
         admittedMemberships: membershipRebindings, admittedLabels: labelRebindings,
         retiredOwnedLinks: ownedLinkRetirements, retiredSchedules: scheduleRetirements,
-        retiredLabels: labelRetirements)
+        retiredLabels: labelRetirements, retiredMemberships: membershipRetirements)
     }
     self.rows = rows
     self.retired = retired
     self.entryRebindings = entryRebindings
     self.membershipRebindings = membershipRebindings
+    self.membershipRetirements = membershipRetirements
+    self.expandedRetirements = expandedRetirements
     self.labelRebindings = labelRebindings
     self.ownedLinkRetirements = ownedLinkRetirements
     self.scheduleRetirements = scheduleRetirements
@@ -139,12 +159,15 @@ struct PlannerSourceRestorationConsolidation {
       snapshot: snapshot, retiringSources: retired,
       reboundEntries: entryRebindings.map(\.projected),
       reboundMemberships: membershipRebindings.map(\.projected),
-      originalProvenance: membershipRebindings.map(\.provenance),
+      originalProvenance:
+        membershipRebindings.map(\.provenance) + membershipRetirements.map(\.provenance),
       reboundLabels: labelRebindings.map(\.projected),
       retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)),
       retiringSchedules: Set(scheduleRetirements.map(\.identity)),
       retiringLabels: Set(labelRetirements.map(\.identity)),
-      labelClosures: labelRetirements.compactMap(\.marker))
+      retiringMemberships: retiredMemberships,
+      associationClosures:
+        labelRetirements.compactMap(\.marker) + membershipRetirements.compactMap(\.marker))
   }
 
   func retiresOwnedLink(_ link: PlannerSchemaV18.OwnedLink) -> Bool {
@@ -159,17 +182,22 @@ struct PlannerSourceRestorationConsolidation {
     labelRetirements.contains { $0.association === association }
   }
 
+  func retiresExpandedCompletion(_ completion: PlannerSchemaV18.ExpandedCompletion) -> Bool {
+    expandedRetirements.contains { $0 === completion }
+  }
+
   func itineraryValue(_ itinerary: PlannerSchemaV18.Itinerary) throws -> ItinerarySnapshot {
     let entries = try (itinerary.entries ?? []).map { entry in
       if let rebinding = entryRebindings.first(where: { $0.entry === entry }) {
         return rebinding.snapshot
       }
-      return try entry.value()
+      return try entry.value(retiringMemberships: retiredMemberships)
     }
     return try itinerary.value(entrySnapshots: entries)
   }
 
   func stage(in context: ModelContext) throws {
+    for completion in expandedRetirements { context.delete(completion) }
     for rebinding in entryRebindings {
       rebinding.entry.sourceLifetimeId = rebinding.winner.identity.lifetimeId
       if let item = rebinding.winner.model as? PlannerSchemaV18.Item {
@@ -198,7 +226,14 @@ struct PlannerSourceRestorationConsolidation {
         context.insert(try PlannerSchemaV4.DeletionMarker(marker))
       }
     }
+    for retirement in membershipRetirements {
+      context.delete(retirement.membership)
+      if let marker = retirement.marker {
+        context.insert(try PlannerSchemaV4.DeletionMarker(marker))
+      }
+    }
     for row in rows where retired.contains(row.identity) { context.delete(row.model) }
+    context.processPendingChanges()
   }
 
   private static func binding(
@@ -224,7 +259,7 @@ struct PlannerSourceRestorationConsolidation {
       rows.append(
         .init(
           identity: try binding(.list, list.id, list.lifetimeId), model: list,
-          hasUnsupportedOwnedRelationships: !(list.memberships ?? []).isEmpty))
+          hasUnsupportedOwnedRelationships: false))
     }
     for itinerary in try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()) {
       rows.append(
@@ -438,8 +473,8 @@ struct PlannerSourceRestorationConsolidation {
     }
     if closed { return .init(association: association, identity: identity, marker: nil) }
     let marker = try PortableDeletionMarker(
-      deletionId: labelClosureIdentifier(identity, role: "deletion"),
-      operationId: labelClosureIdentifier(identity, role: "maintenance"),
+      deletionId: closureIdentifier(identity, role: "deletion"),
+      operationId: closureIdentifier(identity, role: "maintenance"),
       target: .labelAssociation(id: identity.id, lifetimeId: identity.lifetimeId),
       closedFamilyId: nil
     ).closingRestorationFamily(families)
@@ -447,10 +482,16 @@ struct PlannerSourceRestorationConsolidation {
   }
 
   /// Stable closure identities keep repeated projections and durable preparation consistent.
-  private static func labelClosureIdentifier(_ identity: PlannerPortableBoundIdentity, role: String)
+  private static func closureIdentifier(_ identity: PlannerPortableBoundIdentity, role: String)
     -> UUID
   {
-    let input = "PlannerRestoredLabelClosure-v1/\(identity.id)/\(identity.lifetimeId)/\(role)"
+    let namespace: String
+    if identity.kind == .membership {
+      namespace = "PlannerRestoredMembershipClosure-v1"
+    } else {
+      namespace = "PlannerRestoredLabelClosure-v1"
+    }
+    let input = "\(namespace)/\(identity.id)/\(identity.lifetimeId)/\(role)"
     var digest = Array(SHA256.hash(data: Data(input.utf8)))
     digest[6] = (digest[6] & 0x0f) | 0x80
     digest[8] = (digest[8] & 0x3f) | 0x80
@@ -459,6 +500,87 @@ struct PlannerSourceRestorationConsolidation {
         digest[0], digest[1], digest[2], digest[3], digest[4], digest[5], digest[6], digest[7],
         digest[8], digest[9], digest[10], digest[11], digest[12], digest[13], digest[14], digest[15]
       ))
+  }
+
+  /// Retired flags do not seed surviving completion; the complete graph retains and validates history.
+  private static func membershipRetirements(
+    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
+    lineage: PlannerNativeLineage, markers: [PortableDeletionMarker]
+  ) throws -> [MembershipRetirement] {
+    guard !retired.isEmpty else { return [] }
+    var identities: Set<PlannerPortableBoundIdentity> = []
+    var retirements: [MembershipRetirement] = []
+    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()) {
+      let owner = try binding(.list, membership.listId, membership.listLifetimeId)
+      guard retired.contains(owner) else { continue }
+      guard let row = rows.first(where: { $0.identity == owner }),
+        let list = row.model as? PlannerSchemaV18.List, membership.list === list
+      else { throw unresolved("A retired membership has inconsistent List ownership.") }
+      let value = try membership.value()
+      let identity = PlannerPortableBoundIdentity(
+        kind: .membership, id: value.id, lifetimeId: value.lifetimeId)
+      guard identities.insert(identity).inserted else {
+        throw unresolved("Competing retired memberships have the same bound identity.")
+      }
+      let provenance =
+        lineage.membershipProvenance.first { $0.membership == identity } ?? value.baselineProvenance
+      guard
+        try plannerMembershipHistoryPair(provenance.pair, families: lineage.restorationFamilies)
+          == plannerMembershipHistoryPair(
+            value.baselineProvenance.pair, families: lineage.restorationFamilies)
+      else { throw unresolved("Retired membership provenance describes another source pair.") }
+      let closed = markers.contains { marker in
+        guard case .membership(let target) = marker.target else { return false }
+        return target.kind == "membership" && target.id == value.id
+          && target.lifetimeId == value.lifetimeId
+      }
+      let marker: PortableDeletionMarker?
+      if closed {
+        marker = nil
+      } else {
+        marker = try PortableDeletionMarker(
+          deletionId: closureIdentifier(identity, role: "deletion"),
+          operationId: closureIdentifier(identity, role: "maintenance"),
+          target: .membership(
+            .init(kind: "membership", id: value.id, lifetimeId: value.lifetimeId)),
+          closedFamilyId: nil
+        ).closingRestorationFamily(lineage.restorationFamilies)
+      }
+      retirements.append(
+        .init(membership: membership, identity: identity, provenance: provenance, marker: marker))
+    }
+    return retirements
+  }
+
+  private static func expandedRetirements(
+    context: ModelContext, memberships: [MembershipRetirement],
+    winners: [PlannerPortableBoundIdentity: Row]
+  ) throws -> [PlannerSchemaV18.ExpandedCompletion] {
+    guard !memberships.isEmpty else { return [] }
+    var contexts: Set<PlannerExpandedContext> = []
+    var retirements: [PlannerSchemaV18.ExpandedCompletion] = []
+    for completion in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
+      guard
+        let retirement = memberships.first(where: {
+          $0.identity.id == completion.membershipId
+            && $0.identity.lifetimeId == completion.membershipLifetimeId
+        })
+      else { continue }
+      let member = try retirement.membership.value()
+      let owner = try binding(.list, member.list.id, member.list.lifetimeId)
+      guard completion.membership === retirement.membership,
+        let original = retirement.membership.list,
+        let winner = winners[owner]?.model as? PlannerSchemaV18.List,
+        let entry = completion.listEntry, entry.list === original || entry.list === winner,
+        entry.sourceLifetimeId == original.lifetimeId || entry.sourceLifetimeId == winner.lifetimeId
+      else { throw unresolved("A retiring expanded completion has an unresolved List scope.") }
+      let value = try completion.value(projectedListLifetimeId: member.list.lifetimeId)
+      guard contexts.insert(value.context).inserted else {
+        throw unresolved("A retired membership has duplicate expanded completion contexts.")
+      }
+      retirements.append(completion)
+    }
+    return retirements
   }
 
   private static func membershipRebindings(
@@ -473,7 +595,8 @@ struct PlannerSourceRestorationConsolidation {
       guard retired.contains(source) else { continue }
       let value = try membership.value()
       let owner = try binding(.list, value.list.id, value.list.lifetimeId)
-      guard !retired.contains(owner), rows.filter({ $0.identity == owner }).count == 1,
+      if retired.contains(owner) { continue }
+      guard rows.filter({ $0.identity == owner }).count == 1,
         let winner = winners[source]?.model as? PlannerSchemaV18.Item,
         let winnerLifetime = winner.lifetimeId
       else { throw unresolved("A losing Item has an unresolved membership owner.") }
@@ -495,7 +618,8 @@ struct PlannerSourceRestorationConsolidation {
 
   private static func entryRebindings(
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
-    winners: [PlannerPortableBoundIdentity: Row]
+    winners: [PlannerPortableBoundIdentity: Row],
+    retiringMemberships: Set<PlannerPortableBoundIdentity>
   ) throws -> [EntryRebinding] {
     guard !retired.isEmpty else { return [] }
     let lineage = try PlannerNativeLineage(context: context)
@@ -510,7 +634,8 @@ struct PlannerSourceRestorationConsolidation {
       let source = try binding(sourceKind, entry.sourceId, entry.sourceLifetimeId)
       guard retired.contains(source) else { continue }
       let projectedListLifetime = source.kind == .list ? winners[source]?.identity.lifetimeId : nil
-      let value = try entry.value(projectedListLifetimeId: projectedListLifetime)
+      let value = try entry.value(
+        projectedListLifetimeId: projectedListLifetime, retiringMemberships: retiringMemberships)
       if let expected = completionStates[
         .directItineraryItem(
           entryId: value.id, entryLifetimeId: value.lifetimeId)], expected != value.localDone
@@ -546,7 +671,8 @@ struct PlannerSourceRestorationConsolidation {
     _ retired: Set<PlannerPortableBoundIdentity>, context: ModelContext,
     admittedEntries: [EntryRebinding], admittedMemberships: [MembershipRebinding],
     admittedLabels: [LabelRebinding], retiredOwnedLinks: [OwnedLinkRetirement],
-    retiredSchedules: [ScheduleRetirement], retiredLabels: [LabelRetirement]
+    retiredSchedules: [ScheduleRetirement], retiredLabels: [LabelRetirement],
+    retiredMemberships: [MembershipRetirement]
   ) throws {
     func requireSurvivor(_ kind: String, _ identifier: UUID?, _ lifetime: UUID?) throws {
       guard let kind = PlannerPortableIdentityKind(rawValue: kind) else {
@@ -557,6 +683,7 @@ struct PlannerSourceRestorationConsolidation {
       }
     }
     for member in try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()) {
+      if retiredMemberships.contains(where: { $0.membership === member }) { continue }
       if !admittedMemberships.contains(where: { $0.membership === member }) {
         try requireSurvivor("item", member.itemId, member.itemLifetimeId)
       }
@@ -599,19 +726,28 @@ extension PlannerDataSnapshot {
     reboundLabels: [PortableLabelAssociationRecord],
     retiringOwnedLinks: Set<PlannerPortableBoundIdentity>,
     retiringSchedules: Set<PlannerPortableBoundIdentity>,
-    retiringLabels: Set<PlannerPortableBoundIdentity>, labelClosures: [PortableDeletionMarker]
+    retiringLabels: Set<PlannerPortableBoundIdentity>,
+    retiringMemberships: Set<PlannerPortableBoundIdentity>,
+    associationClosures: [PortableDeletionMarker]
   ) {
     format = snapshot.format
     formatVersion = snapshot.formatVersion
     sources = snapshot.sources.filter { !retiringSources.contains($0.boundIdentity) }
-    memberships = snapshot.memberships.map { member in
+    memberships = snapshot.memberships.filter {
+      !retiringMemberships.contains(.init(kind: .membership, id: $0.id, lifetimeId: $0.lifetimeId))
+    }.map { member in
       reboundMemberships.first { $0.id == member.id && $0.lifetimeId == member.lifetimeId }
         ?? member
     }
     itineraryEntries = snapshot.itineraryEntries.map { entry in
       reboundEntries.first { $0.id == entry.id && $0.lifetimeId == entry.lifetimeId } ?? entry
     }
-    expandedCompletions = snapshot.expandedCompletions
+    expandedCompletions = snapshot.expandedCompletions.filter {
+      !retiringMemberships.contains(
+        .init(
+          kind: .membership, id: $0.context.membershipId,
+          lifetimeId: $0.context.membershipLifetimeId))
+    }
     labelAssociations = snapshot.labelAssociations.filter {
       !retiringLabels.contains(.init(kind: .labelAssociation, id: $0.id, lifetimeId: $0.lifetimeId))
     }.map { association in
@@ -624,7 +760,7 @@ extension PlannerDataSnapshot {
     schedules = snapshot.schedules.filter {
       !retiringSchedules.contains(.init(kind: .schedule, id: $0.id, lifetimeId: $0.lifetimeId))
     }
-    deletionMarkers = (snapshot.deletionMarkers + labelClosures).sorted {
+    deletionMarkers = (snapshot.deletionMarkers + associationClosures).sorted {
       $0.deletionId.uuidString < $1.deletionId.uuidString
     }
     contextAliases = snapshot.contextAliases
@@ -632,9 +768,14 @@ extension PlannerDataSnapshot {
     restorationFamilies = snapshot.restorationFamilies
     var represented = Set(snapshot.membershipProvenance.map(\.membership))
     membershipProvenance =
-      snapshot.membershipProvenance
+      (snapshot.membershipProvenance
       + originalProvenance.filter {
         represented.insert($0.membership).inserted
+      }).map(\.normalized).sorted {
+        if $0.membershipId != $1.membershipId {
+          return $0.membershipId.uuidString < $1.membershipId.uuidString
+        }
+        return $0.membershipLifetimeId.uuidString < $1.membershipLifetimeId.uuidString
       }
     membershipRemovals = snapshot.membershipRemovals
   }

@@ -4378,16 +4378,18 @@ public actor Planner {
     try requireExportedIdentities(
       stored: context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).map(\.id),
       exported: snapshot.itineraryEntries.map(\.id), kind: "Itinerary entry")
-    let contexts = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).map {
-      guard let entryIdentifier = $0.listEntryId, let entryLifetime = $0.listEntryLifetimeId,
-        let membershipIdentifier = $0.membershipId, let membershipLifetime = $0.membershipLifetimeId
-      else {
-        throw PlannerFailure("readUnavailable", "An expanded context has incomplete identities.")
+    let contexts = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>())
+      .filter { sourceProjection?.retiresExpandedCompletion($0) != true }.map {
+        guard let entryIdentifier = $0.listEntryId, let entryLifetime = $0.listEntryLifetimeId,
+          let membershipIdentifier = $0.membershipId,
+          let membershipLifetime = $0.membershipLifetimeId
+        else {
+          throw PlannerFailure("readUnavailable", "An expanded context has incomplete identities.")
+        }
+        return PlannerExpandedContext(
+          listEntryId: entryIdentifier, listEntryLifetimeId: entryLifetime,
+          membershipId: membershipIdentifier, membershipLifetimeId: membershipLifetime)
       }
-      return PlannerExpandedContext(
-        listEntryId: entryIdentifier, listEntryLifetimeId: entryLifetime,
-        membershipId: membershipIdentifier, membershipLifetimeId: membershipLifetime)
-    }
     guard contexts.count == snapshot.expandedCompletions.count,
       Set(contexts) == Set(snapshot.expandedCompletions.map(\.context))
     else {

@@ -63,9 +63,11 @@ remain preserved. No original result bundle was removed.
 
 Q161 is not complete. Schedules now have a separate
 [local checkpoint](native-restored-owned-bookings.md). Owned label selections have
-their [own checkpoint](native-restored-owned-labels.md). Losing List memberships,
-losing Itinerary entries and their expanded completion
-still need implementation and qualification. Broader owned restoration histories and link-specific native
-save/publication/interruption outcomes remain open. Q162 label collision handling
-is also still open. HTTP, native interaction, actual Mac/system, cloud and physical
+their [own checkpoint](native-restored-owned-labels.md). Losing List memberships
+and their expanded rows have a [checkpoint](native-restored-owned-memberships.md).
+Losing Itinerary-owned entries still require implementation. Broader owned
+restoration histories and link-specific native save/publication/interruption
+outcomes remain open. Q162 has a [Core checkpoint](native-restored-label-collisions.md)
+with broader history/native qualification remaining. HTTP, native interaction,
+actual Mac/system, cloud and physical
 acceptance keep their separate gates. Signing remains deferred.

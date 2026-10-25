@@ -9,6 +9,256 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [false, true])
+  func retiredListChildrenKeepReopenHistoryWithoutAdoptingLateDoneFlags(expanded: Bool)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: .list)
+    var entries: [UUID] = []
+    if expanded {
+      guard
+        case .applied(let addition, .complete) = await fixture.planner.execute(
+          .init(
+            operationId: UUID(), session: fixture.session,
+            command: .addItineraryEntry(
+              itineraryId: UUID(uuidString: "00000000-0000-4000-8000-000000000301")!,
+              source: fixture.source, placement: .last))
+        ).outcome,
+        case .itineraryEntry(let identifier, _, _)? = addition.generatedReferences.first
+      else { throw CancellationError() }
+      entries.append(identifier)
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    try await fixture.deliverCandidateWithOwnedMembership(entries: entries)
+    try await fixture.recordOwnedMembershipReopen(expandedEntry: entries.first)
+    let history = try await fixture.rawCompletionAuthorityData()
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result else {
+      Issue.record(
+        "Retiring losing children must preserve history without adopting late flags: \(result)")
+      return
+    }
+    #expect(try await fixture.rawCompletionAuthorityData() == history)
+    let original = try fixture.object(before)
+    let graph = try fixture.object(after)
+    for field in ["sources", "memberships", "itineraryEntries", "expandedCompletions"] {
+      #expect(graph[field] as? NSArray == original[field] as? NSArray)
+    }
+    let changes = try #require(graph["completionChanges"] as? [[String: Any]])
+    #expect(changes.count == 1)
+    #expect(changes.first?["done"] as? Bool == false)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+  }
+
+  @Test func losingListPreparationFailurePreservesMembershipAndExpandedBindingsUntilRetry()
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: .list)
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    guard
+      case .applied(let addition, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addItineraryEntry(
+            itineraryId: itineraryIdentifier, source: fixture.source, placement: .last))
+      ).outcome,
+      case .itineraryEntry(let entry, _, _)? = addition.generatedReferences.first,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    try await fixture.deliverCandidateWithOwnedMembership(entries: [entry])
+    let memberships = try await fixture.rawMembershipData()
+    let expanded = try await fixture.rawExpandedData()
+    let entries = try await fixture.rawEntryData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.rawMembershipData() == memberships)
+    #expect(try await fixture.rawExpandedData() == expanded)
+    #expect(try await fixture.rawEntryData() == entries)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let original = try fixture.object(before)
+    let graph = try fixture.object(after)
+    for field in ["sources", "memberships", "itineraryEntries", "expandedCompletions"] {
+      #expect(graph[field] as? NSArray == original[field] as? NSArray)
+    }
+  }
+
+  @Test(arguments: [false, true])
+  func conflictingOwnedMembershipProvenanceRejectsWithoutChangingAnyAuthority(wrongItem: Bool)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: .list)
+    try await fixture.deliverCandidateWithOwnedMembership(entries: [])
+    try await fixture.corruptOwnedMembershipProvenance(wrongItem: wrongItem)
+    let memberships = try await fixture.rawMembershipData()
+    let authority = try await fixture.rawMembershipAuthorityData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else {
+      Issue.record("Retirement must not accept Add provenance for another Item or List lifetime.")
+      return
+    }
+    #expect(failure.code == "readUnavailable")
+    #expect(try await fixture.rawMembershipData() == memberships)
+    #expect(try await fixture.rawMembershipAuthorityData() == authority)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+  }
+
+  @Test(arguments: [false, true])
+  func losingListMembershipsRetireWithoutMergingRepeatedBranchCompletion(referenced: Bool)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: .list)
+    let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    guard
+      case .applied(let addition, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addMembership(
+            itemId: itemIdentifier, listId: fixture.source.id, placement: .last))
+      ).outcome,
+      case .membership(let membershipIdentifier, _, _)? = addition.generatedReferences.first
+    else { throw CancellationError() }
+    var entries: [UUID] = []
+    if referenced {
+      for _ in 0..<2 {
+        guard
+          case .applied(let added, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .addItineraryEntry(
+                itineraryId: itineraryIdentifier, source: fixture.source, placement: .last))
+          ).outcome,
+          case .itineraryEntry(let identifier, _, _)? = added.generatedReferences.first
+        else { throw CancellationError() }
+        entries.append(identifier)
+      }
+      guard
+        case .applied(_, .complete) = await fixture.planner.execute(
+          .init(
+            operationId: UUID(), session: fixture.session,
+            command: .setCompletion(
+              scope: .appearance(
+                .expandedListItem(
+                  itineraryId: itineraryIdentifier, listEntryId: entries[1],
+                  membershipId: membershipIdentifier)), done: true))
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidateWithOwnedMembership(entries: entries)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result else {
+      Issue.record("Only the winning List's memberships and branch states must remain: \(result)")
+      return
+    }
+    var graph = try fixture.object(after)
+    let original = try fixture.object(before)
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let closures = markers.filter { marker in
+      guard let target = marker["target"] as? [String: Any] else { return false }
+      return target["kind"] as? String == "membership"
+        && target["id"] as? String == "00000000-0000-4000-8000-000000000403"
+        && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000843"
+    }
+    #expect(closures.count == 1)
+    graph["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    let provenance = try #require(graph["membershipProvenance"] as? [[String: Any]])
+    let retiredProvenance = provenance.filter {
+      $0["membershipId"] as? String == "00000000-0000-4000-8000-000000000403"
+    }
+    #expect(retiredProvenance.count == 1)
+    let list = try #require(retiredProvenance.first?["list"] as? [String: Any])
+    #expect(list["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000815")
+    graph["membershipProvenance"] = provenance.filter {
+      $0["membershipId"] as? String != "00000000-0000-4000-8000-000000000403"
+    }
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    for (index, identifier) in entries.enumerated() {
+      guard
+        case .appearance(let appearance) = await fixture.planner.read(
+          session: fixture.session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itineraryIdentifier, listEntryId: identifier,
+              membershipId: membershipIdentifier)))
+      else { throw CancellationError() }
+      #expect(appearance.localDone == (index == 1))
+    }
+    let retiredMembership = UUID(uuidString: "00000000-0000-4000-8000-000000000403")!
+    guard
+      case .failed = await fixture.planner.read(
+        session: fixture.session,
+        request: .appearance(
+          .listMembership(listId: fixture.source.id, membershipId: retiredMembership)))
+    else {
+      Issue.record("The discarded membership must not redirect to the winner's membership.")
+      return
+    }
+    for identifier in entries {
+      guard
+        case .failed = await fixture.planner.read(
+          session: fixture.session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itineraryIdentifier, listEntryId: identifier,
+              membershipId: retiredMembership)))
+      else {
+        Issue.record("A discarded branch child must not redirect to the winning child.")
+        return
+      }
+    }
+    let files = try fixture.files()
+    let stale = await fixture.planner.execute(
+      .init(
+        operationId: UUID(), session: fixture.session,
+        command: .setCompletion(
+          scope: .appearance(
+            .listMembership(listId: fixture.source.id, membershipId: retiredMembership)),
+          done: true)))
+    guard case .rejected = stale.outcome else {
+      Issue.record("Completing a discarded membership must reject without changing its survivor.")
+      return
+    }
+    #expect(try fixture.files() == files)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    try await fixture.deliverCandidateWithOwnedMembership(entries: entries)
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .itinerary])
   func ownedLabelPreparationFailurePreservesSelectionsAndSharedLabelsUntilRetry(
     kind: PlannerEntityKind
@@ -1368,6 +1618,142 @@ private struct SourceRestorationFixture {
     context.insert(categorySelection)
     context.insert(tagSelection)
     try context.save()
+  }
+
+  @MainActor func deliverCandidateWithOwnedMembership(entries identifiers: [UUID]) throws {
+    try deliverCandidate()
+    try bindEntriesToLosingCandidate(identifiers)
+    let context = try nativeContext()
+    let owner = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first {
+        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      })
+    let item = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000101"
+      })
+    let membership = PlannerSchemaV18.Membership(
+      snapshot: .init(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000403")!,
+        lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000843")!,
+        list: .init(kind: "list", id: owner.id!, lifetimeId: owner.lifetimeId!),
+        item: .init(kind: "item", id: item.id!, lifetimeId: item.lifetimeId!),
+        rank: 1024, localDone: true), list: owner, item: item)
+    context.insert(membership)
+    let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+    for (index, identifier) in identifiers.enumerated() {
+      let entry = try #require(entries.first { $0.id == identifier })
+      context.insert(
+        PlannerSchemaV18.ExpandedCompletion(
+          listEntry: entry, membership: membership, localDone: index == 0))
+    }
+    try context.save()
+  }
+
+  @MainActor func corruptOwnedMembershipProvenance(wrongItem: Bool) throws {
+    let context = try nativeContext()
+    let membership = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000403"
+      })
+    let original = try membership.value().baselineProvenance
+    let provenance: PlannerPortableMembershipProvenance
+    if wrongItem {
+      let other = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id?.uuidString == "00000000-0000-4000-8000-000000000102"
+        })
+      provenance = .init(
+        membershipId: original.membershipId, membershipLifetimeId: original.membershipLifetimeId,
+        list: original.list, item: .init(kind: .item, id: other.id!, lifetimeId: other.lifetimeId!),
+        observedRemovalIds: [])
+    } else {
+      provenance = .init(
+        membershipId: original.membershipId, membershipLifetimeId: original.membershipLifetimeId,
+        list: .init(
+          kind: .list, id: source.id,
+          lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000814")!),
+        item: original.item, observedRemovalIds: [])
+    }
+    context.insert(
+      PlannerSchemaV19.MembershipProvenance(
+        membershipId: original.membershipId, membershipLifetimeId: original.membershipLifetimeId,
+        recordData: try JSONEncoder().encode(provenance)))
+    try context.save()
+  }
+
+  @MainActor func rawMembershipData() throws -> Data {
+    let context = try nativeContext()
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).map {
+      PortableMembershipRecord(try $0.value())
+    }.sorted { $0.id.uuidString < $1.id.uuidString }
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    return try encoder.encode(records)
+  }
+
+  @MainActor func rawMembershipAuthorityData() throws -> Data {
+    let context = try nativeContext()
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV19.MembershipProvenance>()).map {
+      [
+        "membership": $0.membershipId?.uuidString ?? "",
+        "lifetime": $0.membershipLifetimeId?.uuidString ?? "",
+        "data": $0.recordData?.base64EncodedString() ?? "",
+      ]
+    }.sorted { ($0["membership"] ?? "") < ($1["membership"] ?? "") }
+    return try JSONSerialization.data(withJSONObject: records, options: [.sortedKeys])
+  }
+
+  @MainActor func recordOwnedMembershipReopen(expandedEntry: UUID?) throws {
+    let context = try nativeContext()
+    let membership = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000403"
+      })
+    let scope: PlannerPortableCompletionContext
+    if let expandedEntry {
+      let entry = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).first {
+          $0.id == expandedEntry
+        })
+      scope = .expandedListItem(
+        .init(
+          listEntryId: expandedEntry, listEntryLifetimeId: entry.lifetimeId!,
+          membershipId: membership.id!, membershipLifetimeId: membership.lifetimeId!))
+    } else {
+      scope = .listMembership(
+        membershipId: membership.id!, membershipLifetimeId: membership.lifetimeId!)
+    }
+    let aliasIdentifier = UUID()
+    let changeIdentifier = UUID()
+    let alias = PlannerPortableContextAlias(
+      aliasId: aliasIdentifier, context: scope, canonicalContext: scope,
+      initialDone: true, currentChangeId: changeIdentifier)
+    let change = PlannerPortableCompletionChange(
+      id: changeIdentifier, aliasId: aliasIdentifier, context: scope,
+      done: false, observedChangeIds: [])
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    context.insert(
+      PlannerSchemaV16.LineageRecord(
+        identifier: aliasIdentifier, kind: "contextAlias", data: try encoder.encode(alias)))
+    context.insert(
+      PlannerSchemaV16.LineageRecord(
+        identifier: changeIdentifier, kind: "completionChange", data: try encoder.encode(change)))
+    try context.save()
+  }
+
+  @MainActor func rawCompletionAuthorityData() throws -> Data {
+    let context = try nativeContext()
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()).filter {
+      $0.recordKind == "contextAlias" || $0.recordKind == "completionChange"
+    }.map {
+      [
+        "identity": $0.recordIdentifier?.uuidString ?? "", "kind": $0.recordKind,
+        "data": $0.recordData?.base64EncodedString() ?? "",
+      ]
+    }.sorted { ($0["identity"] ?? "") < ($1["identity"] ?? "") }
+    return try JSONSerialization.data(withJSONObject: records, options: [.sortedKeys])
   }
 
   @MainActor func deliverCandidate() throws {
