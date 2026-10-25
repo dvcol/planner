@@ -72,3 +72,26 @@ association/history reconciliation and reference-specific save/publication
 interruptions remain open. This checkpoint adds no HTTP or native UI evidence.
 Actual Mac/system, CloudKit/account, physical-device and whole-app acceptance
 remain separate gates. Signing stays deferred.
+
+## Combined Itinerary contents
+
+A further real-store tracer puts a Guide B bookmark, a timed booking, Category
+and Tag selections, two direct stops and one expanded List branch on the same
+losing Itinerary. The winner already has Guide A, its own booking and labels,
+and a two-stop route referencing shared Item/List data. One maintenance receipt
+and its retained proposal establish that all losing contents retire together.
+The only seven graph additions are the exact owned-reference closures. Every
+winning value, timestamp, association, route, shared source and existing history
+matches the graph captured before competing delivery. Reopen and full redelivery
+retain that result.
+
+The Mac tracer and all 23 functions in the affected iPhone maintenance suite
+pass. The [combined validation record](evidence/native-membership-consolidation/native-owned-mixed-itinerary-validation.json)
+reconciles 813 Mac and 1,160 phone inputs, both test products per platform and
+zero SQLite unlink diagnostics. All 90 Core production inputs and 514 frozen
+fixture inputs match the preceding checkpoint. This adds tests and evidence
+only. Verified cleanup removed one passing Mac and 61 passing phone datasets.
+
+This qualifies mixed collection kinds on one declared source family. It does
+not establish reconciliation across several simultaneous source families or
+pre-existing owned restoration families, and adds no native UI or HTTP credit.

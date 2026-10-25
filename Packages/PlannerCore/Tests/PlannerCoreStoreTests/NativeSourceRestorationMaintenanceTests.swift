@@ -9,6 +9,131 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test func mixedLosingItineraryContentsRetireInOneTransactionWithoutChangingTheWinner()
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: .itinerary)
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let result = await fixture.planner.execute(
+        .init(operationId: UUID(), session: fixture.session, command: command))
+      guard case .applied(let applied, .complete) = result.outcome else {
+        Issue.record("Prepare the winning Itinerary through ordinary saves: \(result)")
+        throw CancellationError()
+      }
+      return applied
+    }
+    guard
+      case .source(.itinerary(let initial)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    _ = try await save(
+      .editItinerary(
+        sourceId: fixture.source.id,
+        changes: .init(
+          notes: .set("Winning notes"),
+          links: .set([.init(originalUrl: "https://example.com/winner", label: "Guide A")]),
+          categoryIds: .set([UUID(uuidString: "00000000-0000-4000-8000-000000000501")!]),
+          tagIds: .set([UUID(uuidString: "00000000-0000-4000-8000-000000000601")!])),
+        expectedFieldHashes: initial.fieldHashes))
+    _ = try await save(
+      .createSchedule(
+        source: fixture.source,
+        form: .allDay(start: .init(year: 2026, month: 10, day: 26), end: nil)))
+    let item = PlannerEntityReference(
+      kind: .item, id: UUID(uuidString: "00000000-0000-4000-8000-000000000101")!)
+    let list = PlannerEntityReference(
+      kind: .list, id: UUID(uuidString: "00000000-0000-4000-8000-000000000201")!)
+    let addition = try await save(
+      .addMembership(itemId: item.id, listId: list.id, placement: .last))
+    guard case .membership(let membership, _, _)? = addition.generatedReferences.first else {
+      throw CancellationError()
+    }
+    for source in [item, list] {
+      _ = try await save(
+        .addItineraryEntry(itineraryId: fixture.source.id, source: source, placement: .last))
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
+    try await fixture.addMixedMetadataToLosingItinerary()
+    let outcome = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = outcome else {
+      Issue.record("Mixed losing contents must retire together: \(outcome)")
+      return
+    }
+    let original = try fixture.object(before)
+    var graph = try fixture.object(after)
+    let originalMarkers = try #require(original["deletionMarkers"] as? [[String: Any]])
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let closures = markers.filter { marker in
+      !originalMarkers.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(closures.count == 7)
+    let expectedTargets: [[String: Any]] = [
+      [
+        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000831",
+        "lifetimeId": "00000000-0000-4000-8000-000000000832",
+      ],
+      [
+        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000833",
+        "lifetimeId": "00000000-0000-4000-8000-000000000834",
+      ],
+      [
+        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000835",
+        "lifetimeId": "00000000-0000-4000-8000-000000000836",
+      ],
+      [
+        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
+        "lifetimeId": "00000000-0000-4000-8000-000000000872",
+      ],
+      [
+        "kind": "source",
+        "source": [
+          "kind": "schedule", "id": "00000000-0000-4000-8000-000000000873",
+          "lifetimeId": "00000000-0000-4000-8000-000000000874",
+        ],
+      ],
+      [
+        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000875",
+        "lifetimeId": "00000000-0000-4000-8000-000000000876",
+      ],
+      [
+        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000877",
+        "lifetimeId": "00000000-0000-4000-8000-000000000878",
+      ],
+    ]
+    for target in expectedTargets {
+      #expect(
+        closures.contains { $0["target"] as? NSDictionary == NSDictionary(dictionary: target) })
+    }
+    graph["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    let envelope = try fixture.envelope()
+    #expect(envelope["receipts"] as? NSArray == receipts)
+    let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+    #expect(maintenance.count == 1)
+    let identifier = try #require(maintenance.first?["maintenanceId"] as? String)
+    let preparation = try fixture.object(
+      Data(contentsOf: fixture.namespace.appendingPathComponent("maintenance-\(identifier).json")))
+    #expect(
+      try fixture.graph(JSONSerialization.data(withJSONObject: preparation["proposedBackup"]!))
+        == fixture.graph(after))
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
+    try await fixture.addMixedMetadataToLosingItinerary()
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
   func discardedOwnedReferencesRequireExplicitRestorationForImport(
     ownerKind: PlannerEntityKind, referenceKind: String
@@ -2143,6 +2268,45 @@ private struct SourceRestorationFixture {
             listEntry: entry, membership: membership, localDone: false))
       }
     }
+    try context.save()
+  }
+
+  @MainActor func addMixedMetadataToLosingItinerary() throws {
+    let context = try nativeContext()
+    let owner = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      })
+    let category = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000501"
+      })
+    let tag = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000601"
+      })
+    let link = try PlannerSchemaV18.OwnedLink(
+      input: .init(originalUrl: "https://example.com/loser", label: "Guide B"), rank: 0,
+      owner: owner)
+    link.id = UUID(uuidString: "00000000-0000-4000-8000-000000000871")!
+    link.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000872")!
+    let schedule = try PlannerSchemaV18.Schedule(
+      snapshot: .init(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!,
+        lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000874")!,
+        form: .timed(
+          start: Date(timeIntervalSinceReferenceDate: 3000), end: nil,
+          planningTimeZone: "America/New_York")), owner: owner)
+    let categorySelection = PlannerSchemaV18.LabelAssociation(itinerary: owner, category: category)
+    categorySelection.id = UUID(uuidString: "00000000-0000-4000-8000-000000000875")!
+    categorySelection.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000876")!
+    let tagSelection = PlannerSchemaV18.LabelAssociation(itinerary: owner, tag: tag)
+    tagSelection.id = UUID(uuidString: "00000000-0000-4000-8000-000000000877")!
+    tagSelection.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000878")!
+    context.insert(link)
+    context.insert(schedule)
+    context.insert(categorySelection)
+    context.insert(tagSelection)
     try context.save()
   }
 
