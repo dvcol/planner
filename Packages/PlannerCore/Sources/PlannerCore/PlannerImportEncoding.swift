@@ -360,6 +360,7 @@ extension PlannerPortableBackup {
         membershipRemovals.map { .record(["deletionId": .identity($0.deletionId)]) })
     }
     if formatVersion >= 4 { fields["formatVersion"] = .integer(4) }
+    if formatVersion >= 5 { fields["formatVersion"] = .integer(5) }
     return .record(fields)
   }
 }
@@ -406,6 +407,11 @@ func plannerImportDigest(
       plannerSortedMembershipEvidence(
         membershipEvidence ?? incoming.backup.resolvedMembershipProvenance
       ).map(\.operationCanonicalValue))
+    if incoming.backup.formatVersion >= 5 {
+      return plannerDigest(
+        Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 5])
+          + PlannerCanonicalValue.record(fields).encoded(), prefix: "sha256-payload-v5:")
+    }
     if incoming.backup.formatVersion >= 4 {
       return plannerDigest(
         Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 4])

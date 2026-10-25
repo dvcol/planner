@@ -17,7 +17,7 @@ struct PlannerSourceRestorationConsolidation {
 
   private let rows: [Row]
   private let entryRebindings: [EntryRebinding]
-  var ruleVersion: Int { entryRebindings.isEmpty ? 1 : 2 }
+  let ruleVersion = 3
   let retired: Set<PlannerPortableBoundIdentity>
 
   init(context: ModelContext, markers: [PortableDeletionMarker]) throws {

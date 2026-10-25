@@ -89,6 +89,8 @@ struct PlannerPreparedMaintenance: Codable {
           && proposedBackup.formatVersion == 4)
         || (kind == "sourceRestorationConsolidation" && (1...2).contains(ruleVersion)
           && proposedBackup.formatVersion == 4)
+        || ((kind == "sourceRestorationConsolidation" || kind == "membershipConsolidation")
+          && ruleVersion == 3 && proposedBackup.formatVersion == 5)
     else { throw PlannerFailure("recoveryIntegrityFailure", "Maintenance preparation is invalid.") }
     let value = PlannerMaintenanceEvidence(
       maintenanceId: maintenanceId, namespaceId: namespaceId, datasetId: datasetId,
@@ -120,8 +122,8 @@ struct PlannerMaintenanceEvidence: Codable, Equatable {
     guard namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       epochId == identity.epochId, ownershipBinding == identity.ownershipBinding,
       !ownershipBinding.isEmpty,
-      (kind == "membershipConsolidation" && (1...2).contains(ruleVersion))
-        || (kind == "sourceRestorationConsolidation" && (1...2).contains(ruleVersion)),
+      (kind == "membershipConsolidation" && (1...3).contains(ruleVersion))
+        || (kind == "sourceRestorationConsolidation" && (1...3).contains(ruleVersion)),
       preparationDigest.hasPrefix("sha256:"), preparationDigest.utf8.count == 71,
       preparationDigest.utf8.dropFirst(7).allSatisfy({
         (48...57).contains($0) || (97...102).contains($0)

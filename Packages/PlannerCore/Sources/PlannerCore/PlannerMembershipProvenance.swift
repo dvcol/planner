@@ -289,6 +289,8 @@ extension PlannerNativeLineage {
   )
     throws -> PlannerPortableMembershipProvenance
   {
+    let pair = try plannerMembershipHistoryPair(
+      membership.baselineProvenance.pair, families: restorationFamilies)
     var observedRemovalIdentifiers: [UUID] = []
     for removal in membershipRemovals {
       guard let marker = markers.first(where: { $0.deletionId == removal.deletionId }),
@@ -301,11 +303,7 @@ extension PlannerNativeLineage {
         throw PlannerFailure(
           "readUnavailable", "A strict membership removal has no retained pair binding.")
       }
-      if retained.list.id == membership.list.id,
-        retained.list.lifetimeId == membership.list.lifetimeId,
-        retained.item.id == membership.item.id,
-        retained.item.lifetimeId == membership.item.lifetimeId
-      {
+      if try plannerMembershipHistoryPair(retained.pair, families: restorationFamilies) == pair {
         observedRemovalIdentifiers.append(removal.deletionId)
       }
     }

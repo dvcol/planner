@@ -403,6 +403,17 @@ func plannerResolveImportReview(
       }
     }
   }
+  if incoming.backup.formatVersion >= 5 {
+    for family in current.backup.restorationFamilies
+    where !selectedIncomingFamilies.contains(where: { $0.familyId == family.familyId })
+      && incoming.backup.membershipProvenance.contains(where: { binding in
+        family.predecessor.kind == .item && family.predecessor.id == binding.item.id
+          && family.candidates.contains { $0.lifetimeId == binding.item.lifetimeId }
+      })
+    {
+      selectedIncomingFamilies.append(family)
+    }
+  }
   let resolvedIncoming = incoming.backup.resolvingImportSourceLifetimes(
     resolvedSourceLifetimes, replacingSources: replacementSourceLifetimes,
     selectingFamilies: selectedIncomingFamilies)

@@ -260,11 +260,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...22).contains(identity.schemaVersion) else {
+          guard (1...23).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 22, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 23, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -283,7 +283,7 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 22, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 23, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
@@ -303,13 +303,13 @@ public actor Planner {
               "ownershipUnverified",
               "The independent recovery namespace belongs to another dataset.")
           }
-          if recorded.schemaVersion != identity.schemaVersion, identity.schemaVersion == 22 {
+          if recorded.schemaVersion != identity.schemaVersion, identity.schemaVersion == 23 {
             try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
           }
         } else {
           try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
         }
-        if identity.schemaVersion < 22 {
+        if identity.schemaVersion < 23 {
           identity = try activateNativeMaintenanceCompatibility(identity, metadataURL: metadataURL)
         }
         let maintenanceContext = ModelContext(try openContainer())
@@ -336,7 +336,7 @@ public actor Planner {
     _ previous: PlannerStoreIdentity, metadataURL: URL
   ) throws -> PlannerStoreIdentity {
     let upgraded = PlannerStoreIdentity(
-      schemaVersion: 22, datasetId: previous.datasetId, epochId: previous.epochId,
+      schemaVersion: 23, datasetId: previous.datasetId, epochId: previous.epochId,
       namespaceId: previous.namespaceId, ownershipBinding: previous.ownershipBinding)
     let context = ModelContext(try openContainer())
     context.autosaveEnabled = false
@@ -4201,7 +4201,7 @@ public actor Planner {
     guard try membershipConsolidationRequired(records, context: context) else { return }
     let memberships = try records.map { try $0.value() }
     try commitMaintenance(
-      identity: identity, context: context, kind: "membershipConsolidation", ruleVersion: 2,
+      identity: identity, context: context, kind: "membershipConsolidation", ruleVersion: 3,
       proposal: {
         let detached = try plannerStageDetachedExpandedRetirements(
           context: context, memberships: memberships,
@@ -10130,7 +10130,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 22
+      identity.schemaVersion == 23
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -10189,7 +10189,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...22).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...23).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

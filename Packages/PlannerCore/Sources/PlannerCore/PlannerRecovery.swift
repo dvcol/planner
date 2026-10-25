@@ -200,7 +200,7 @@ struct PlannerDataSnapshot: Codable {
       $0.deletionId.uuidString < $1.deletionId.uuidString
     }
     format = "planner-data"
-    formatVersion = 4
+    formatVersion = 5
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
       + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
@@ -323,7 +323,7 @@ struct PlannerDataSnapshot: Codable {
   }
 
   func decodedRecords() throws -> PlannerDecodedBackup {
-    guard format == "planner-data", (1...4).contains(formatVersion) else {
+    guard format == "planner-data", (1...5).contains(formatVersion) else {
       throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
     }
     guard Set(sources.map { $0.kind.rawValue + ":" + $0.id.uuidString }).count == sources.count
@@ -625,7 +625,7 @@ struct RecoveryEnvelope: Codable {
       formatVersion == 2 || maintenanceReceipts.isEmpty,
       [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-        "18", "19", "20", "21", "22",
+        "18", "19", "20", "21", "22", "23",
       ]
       .contains(
         storageSchemaVersion),
@@ -660,9 +660,20 @@ struct RecoveryEnvelope: Codable {
     }
     for receipt in maintenanceReceipts {
       try receipt.validate(identity: identity, generation: generation)
-      guard receipt.evidence.ruleVersion < 2 || decoded.backup.formatVersion >= 4 else {
+      let minimumVersion: Int
+      if receipt.evidence.ruleVersion == 3 {
+        minimumVersion = 5
+      } else if receipt.evidence.kind == "sourceRestorationConsolidation"
+        || receipt.evidence.ruleVersion == 2
+      {
+        minimumVersion = 4
+      } else {
+        minimumVersion = 3
+      }
+      guard decoded.backup.formatVersion >= minimumVersion else {
         throw PlannerFailure(
-          "recoveryIntegrityFailure", "This maintenance rule requires its version-4 recovery graph."
+          "recoveryIntegrityFailure",
+          "This maintenance rule requires its declared portable recovery version."
         )
       }
     }

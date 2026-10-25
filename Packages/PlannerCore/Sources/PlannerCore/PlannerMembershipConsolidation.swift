@@ -434,7 +434,7 @@ struct PlannerMembershipConsolidation {
       contextAliases: aliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString },
       completionChanges: current.completionChanges,
       restorationFamilies: current.restorationFamilies,
-      formatVersion: 4,
+      formatVersion: 5,
       membershipProvenance: provenance.values.filter { represented.contains($0.membership) }.sorted
       {
         if $0.membershipId != $1.membershipId {
@@ -549,7 +549,7 @@ func plannerInitialCompletionAliasIdentifier(context: PlannerPortableCompletionC
 extension PlannerDataSnapshot {
   init(snapshot: PlannerDataSnapshot, canonical: PlannerPortableBackup) throws {
     format = snapshot.format
-    formatVersion = 4
+    formatVersion = 5
     sources = snapshot.sources
     memberships = canonical.memberships.map { PortableMembershipRecord($0.nativeSnapshot) }
     itineraryEntries = canonical.itineraryEntries.map { entry in

@@ -427,6 +427,36 @@ private struct SourceRestorationFixture {
       entries.map { try #require(($0["id"] as? String).flatMap(UUID.init(uuidString:))) })
   }
 
+  func siblingMembershipData(formatVersion: Int) throws -> Data {
+    var graph = try object(baseline)
+    let membershipIdentifier = "00000000-0000-4000-8000-000000000403"
+    let membershipLifetime = "00000000-0000-4000-8000-000000000843"
+    let list: [String: Any] = [
+      "kind": "list", "id": "00000000-0000-4000-8000-000000000201",
+      "lifetimeId": "00000000-0000-4000-8000-000000000821",
+    ]
+    let item: [String: Any] = [
+      "kind": "item", "id": source.id.uuidString,
+      "lifetimeId": "00000000-0000-4000-8000-000000000814",
+    ]
+    var attestedItem = item
+    attestedItem["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
+    graph["memberships"] = [
+      [
+        "id": membershipIdentifier, "lifetimeId": membershipLifetime,
+        "list": list, "item": item, "rank": "0", "localDone": false,
+      ]
+    ]
+    graph["membershipProvenance"] = [
+      [
+        "membershipId": membershipIdentifier, "membershipLifetimeId": membershipLifetime,
+        "list": list, "item": attestedItem, "observedRemovalIds": [],
+      ]
+    ]
+    graph["formatVersion"] = formatVersion
+    return try JSONSerialization.data(withJSONObject: graph)
+  }
+
   func object(_ data: Data) throws -> [String: Any] {
     try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
   }
@@ -1042,6 +1072,94 @@ struct NativeSourceRestorationEntryTests {
 }
 
 struct NativeRestoredTargetReferenceTests {
+  @Test func deliberateReAddObservesRemovalAttestedAgainstTheSibling() async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    guard
+      case .decoded(let incoming) = fixture.planner.decodeImport(
+        try fixture.siblingMembershipData(formatVersion: 5)),
+      case .reviewed(let review) = await fixture.planner.prepareReview(
+        session: fixture.session, command: .applyImport(backup: incoming, mode: .overwrite)),
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .removeMembership(
+            listId: listIdentifier,
+            membershipId: UUID(uuidString: "00000000-0000-4000-8000-000000000403")!))
+      ).outcome,
+      case .exported(let removed) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let removalBackup) = fixture.planner.decodeImport(removed)
+    else { throw CancellationError() }
+    let addition = await fixture.planner.execute(
+      .init(
+        operationId: UUID(), session: fixture.session,
+        command: .addMembership(itemId: fixture.source.id, listId: listIdentifier, placement: .last)
+      ))
+    guard case .applied(_, .complete) = addition.outcome,
+      case .exported(let saved) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let actual) = fixture.planner.decodeImport(saved),
+      let member = actual.backup.memberships.first
+    else {
+      Issue.record("A deliberate re-add must observe the sibling's retained Remove: \(addition)")
+      return
+    }
+    let provenance = try #require(
+      actual.backup.membershipProvenance.first {
+        $0.membershipId == member.id && $0.membershipLifetimeId == member.lifetimeId
+      })
+    #expect(member.localDone == false)
+    #expect(member.itemLifetimeId.uuidString == "00000000-0000-4000-8000-000000000814")
+    #expect(
+      Set(provenance.observedRemovalIds)
+        == Set(removalBackup.backup.membershipRemovals.map(\.deletionId)))
+  }
+
+  @Test func portableFiveImportSavesOriginalAttestationAndReplaysItsExactResult() async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    guard
+      case .decoded(let incoming) = fixture.planner.decodeImport(
+        try fixture.siblingMembershipData(formatVersion: 5))
+    else { throw CancellationError() }
+    let reviewed = await fixture.planner.prepareReview(
+      session: fixture.session, command: .applyImport(backup: incoming, mode: .overwrite))
+    guard case .reviewed(let review) = reviewed else {
+      Issue.record("A valid version5 membership must be reviewable for real storage: \(reviewed)")
+      return
+    }
+    let operation = PlannerOperation(
+      operationId: UUID(), session: fixture.session, command: review.command,
+      reviewToken: review.reviewToken)
+    let saved = await fixture.planner.execute(operation)
+    guard case .applied(let original, .complete(let generation)) = saved.outcome,
+      case .exported(let bytes) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let actual) = fixture.planner.decodeImport(bytes)
+    else {
+      Issue.record("A reviewed version5 import must save with complete recovery: \(saved)")
+      return
+    }
+    #expect(actual.backup.formatVersion == 5)
+    #expect(
+      actual.backup.memberships.first?.itemLifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000814")
+    #expect(
+      actual.backup.membershipProvenance.first?.item.lifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000815")
+    guard
+      case .applied(let replayed, .complete(let replayGeneration)) = await fixture.planner.execute(
+        operation
+      ).outcome
+    else { throw CancellationError() }
+    #expect(replayed == original && replayGeneration == generation)
+    let identity = try fixture.object(Data(contentsOf: fixture.configuration.controlURL))
+    #expect(identity["schemaVersion"] as? Int == 23)
+    #expect(try fixture.envelope()["storageSchemaVersion"] as? String == "23")
+  }
+
   @Test(arguments: [false, true])
   func portableFiveRequiresTheRemovalObservedAcrossItemSiblings(observedRemoval: Bool)
     async throws
@@ -1112,41 +1230,14 @@ struct NativeRestoredTargetReferenceTests {
     async throws
   {
     let fixture = try await SourceRestorationFixture.make()
-    var graph = try fixture.object(fixture.baseline)
-    let membershipIdentifier = "00000000-0000-4000-8000-000000000403"
-    let membershipLifetime = "00000000-0000-4000-8000-000000000843"
-    let list: [String: Any] = [
-      "kind": "list", "id": "00000000-0000-4000-8000-000000000201",
-      "lifetimeId": "00000000-0000-4000-8000-000000000821",
-    ]
-    let item: [String: Any] = [
-      "kind": "item", "id": fixture.source.id.uuidString,
-      "lifetimeId": "00000000-0000-4000-8000-000000000814",
-    ]
-    var attestedItem = item
-    attestedItem["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
-    graph["memberships"] = [
-      [
-        "id": membershipIdentifier, "lifetimeId": membershipLifetime,
-        "list": list, "item": item, "rank": "0", "localDone": false,
-      ]
-    ]
-    graph["membershipProvenance"] = [
-      [
-        "membershipId": membershipIdentifier, "membershipLifetimeId": membershipLifetime,
-        "list": list, "item": attestedItem, "observedRemovalIds": [],
-      ]
-    ]
-    graph["formatVersion"] = 4
     guard
       case .invalid = fixture.planner.decodeImport(
-        try JSONSerialization.data(withJSONObject: graph))
+        try fixture.siblingMembershipData(formatVersion: 4))
     else {
       Issue.record("Version4 must retain its exact attested-endpoint rule.")
       return
     }
-    graph["formatVersion"] = 5
-    let result = fixture.planner.decodeImport(try JSONSerialization.data(withJSONObject: graph))
+    let result = fixture.planner.decodeImport(try fixture.siblingMembershipData(formatVersion: 5))
     guard case .decoded(let decoded) = result else {
       Issue.record(
         "Version5 must retain a proven sibling attestation beside its live winner: \(result)")
