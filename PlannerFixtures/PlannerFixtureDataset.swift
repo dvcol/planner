@@ -28,6 +28,9 @@ enum PlannerFixtureDataset {
     case maintenanceRetryFailure = "maintenance-retry-failure"
     case retiredMembership = "retired-membership"
     case retiredMembershipWithoutProvenance = "retired-membership-without-provenance"
+    case retiredItineraryMembership = "retired-itinerary-membership"
+    case retiredItineraryMembershipWithoutProvenance =
+      "retired-itinerary-membership-without-provenance"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
     case pinnedItinerary = "pinned-itinerary"
@@ -107,6 +110,14 @@ enum PlannerFixtureDataset {
     if scenario == .retiredMembershipWithoutProvenance {
       return try await PlannerRetiredMembershipFixture.makeStore(
         directory: directory, missingProvenance: true)
+    }
+    if scenario == .retiredItineraryMembership
+      || scenario == .retiredItineraryMembershipWithoutProvenance
+    {
+      return try await PlannerRetiredMembershipFixture.makeStore(
+        directory: directory,
+        missingProvenance: scenario == .retiredItineraryMembershipWithoutProvenance,
+        includesItinerary: true)
     }
     if scenario == .committedMaintenanceRecovery || scenario == .maintenanceRetryFailure
       || scenario == .maintenanceLateInput

@@ -12,7 +12,9 @@ enum PlannerRetiredMembershipFixture {
   private static let originalLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000841")!
   private static let retiredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000842")!
 
-  static func makeStore(directory: URL, missingProvenance: Bool = false) async throws
+  static func makeStore(
+    directory: URL, missingProvenance: Bool = false, includesItinerary: Bool = false
+  ) async throws
     -> SavedPlannerStore
   {
     let configuration = PlannerStorageConfiguration(
@@ -27,7 +29,7 @@ enum PlannerRetiredMembershipFixture {
     else { throw CancellationError() }
     if existing.matchingCount == 0 {
       let backup: PlannerDecodedBackup
-      switch planner.decodeImport(try portableData()) {
+      switch planner.decodeImport(try portableData(includesItinerary: includesItinerary)) {
       case .decoded(let decoded): backup = decoded
       case .invalid(let failure): throw failure
       }
@@ -82,7 +84,7 @@ enum PlannerRetiredMembershipFixture {
     try context.save()
   }
 
-  private static func portableData() throws -> Data {
+  private static func portableData(includesItinerary: Bool) throws -> Data {
     let itemBinding: [String: Any] = [
       "kind": "item", "id": itemIdentifier.uuidString,
       "lifetimeId": "00000000-0000-4000-8000-000000000811",
@@ -95,7 +97,7 @@ enum PlannerRetiredMembershipFixture {
       "kind": "listMembership", "membershipId": originalIdentifier.uuidString,
       "membershipLifetimeId": originalLifetime.uuidString,
     ]
-    let aliases: [[String: Any]] = [
+    var aliases: [[String: Any]] = [
       [
         "aliasId": "00000000-0000-4000-8000-000000000851", "context": canonical,
         "canonicalContext": canonical, "initialDone": false, "currentChangeId": NSNull(),
@@ -130,9 +132,57 @@ enum PlannerRetiredMembershipFixture {
         "manualEstimate": NSNull(),
       ], "contentOrigins": ["name": "independent"],
     ]) { _, incoming in incoming }
+    var sources = [item, list]
+    var entries: [[String: Any]] = []
+    if includesItinerary {
+      let itineraryBinding: [String: Any] = [
+        "kind": "itinerary", "id": "00000000-0000-4000-8000-000000000301",
+        "lifetimeId": "00000000-0000-4000-8000-000000000831",
+      ]
+      sources.append(
+        itineraryBinding.merging([
+          "createdAt": 10.25, "updatedAt": 20.125, "globalDone": NSNull(), "archived": false,
+          "content": [
+            "title": "Retired stop route", "notes": NSNull(), "color": NSNull(),
+            "iconName": NSNull(), "location": NSNull(), "manualEstimate": NSNull(),
+          ], "contentOrigins": ["title": "independent"],
+        ]) { _, incoming in incoming })
+      for (index, entryIdentifier, entryLifetime) in [
+        (0, "00000000-0000-4000-8000-000000000451", "00000000-0000-4000-8000-000000000851"),
+        (1, "00000000-0000-4000-8000-000000000452", "00000000-0000-4000-8000-000000000852"),
+      ] {
+        entries.append([
+          "id": entryIdentifier, "lifetimeId": entryLifetime, "itinerary": itineraryBinding,
+          "source": listBinding, "rank": String((index + 1) * 1024), "localDone": NSNull(),
+        ])
+        let canonicalExpanded: [String: Any] = [
+          "kind": "expandedListItem", "listEntryId": entryIdentifier,
+          "listEntryLifetimeId": entryLifetime, "membershipId": originalIdentifier.uuidString,
+          "membershipLifetimeId": originalLifetime.uuidString,
+        ]
+        for (offset, membershipIdentifier, membershipLifetime) in [
+          (1, originalIdentifier, originalLifetime), (2, retiredIdentifier, retiredLifetime),
+        ] {
+          let context = canonicalExpanded.merging([
+            "membershipId": membershipIdentifier.uuidString,
+            "membershipLifetimeId": membershipLifetime.uuidString,
+          ]) { _, incoming in incoming }
+          aliases.append([
+            "aliasId": "00000000-0000-4000-8000-000000000\(860 + index * 10 + offset)",
+            "context": context, "canonicalContext": canonicalExpanded,
+            "initialDone": index == 1 && offset == 2, "currentChangeId": NSNull(),
+          ])
+        }
+      }
+      entries.append([
+        "id": "00000000-0000-4000-8000-000000000453",
+        "lifetimeId": "00000000-0000-4000-8000-000000000853",
+        "itinerary": itineraryBinding, "source": itemBinding, "rank": "3072", "localDone": false,
+      ])
+    }
     return try JSONSerialization.data(withJSONObject: [
-      "format": "planner-data", "formatVersion": 3, "sources": [item, list],
-      "memberships": [], "itineraryEntries": [], "expandedCompletions": [],
+      "format": "planner-data", "formatVersion": 3, "sources": sources,
+      "memberships": [], "itineraryEntries": entries, "expandedCompletions": [],
       "labelAssociations": [], "ownedLinks": [], "schedules": [], "completionChanges": [],
       "restorationFamilies": [], "membershipProvenance": provenance, "membershipRemovals": [],
       "contextAliases": aliases,
