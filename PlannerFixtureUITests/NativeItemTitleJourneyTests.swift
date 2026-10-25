@@ -32,7 +32,7 @@ import XCTest
         }
         if mode == "Map" {
           XCTAssertTrue(
-            application.staticTexts["0 of 1 items located"].waitForExistence(timeout: 15))
+            application.staticTexts["0 of 1 item located"].waitForExistence(timeout: 15))
         } else {
           let contents = application.descendants(matching: .any)
             .matching(identifier: "saved.itinerary.contents").firstMatch

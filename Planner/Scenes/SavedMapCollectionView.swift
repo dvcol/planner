@@ -124,7 +124,8 @@ struct SavedMapCollectionView: View {
   @State private var locationChoiceMessage: String?
 
   private var locatedCountDescription: String {
-    "\(collection.locatedCount) of \(collection.matchingCount) items located"
+    let itemNoun = collection.matchingCount == 1 ? "item" : "items"
+    return "\(collection.locatedCount) of \(collection.matchingCount) \(itemNoun) located"
   }
 
   private var locationsButton: some View {

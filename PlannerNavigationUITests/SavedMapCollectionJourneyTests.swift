@@ -25,7 +25,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     application.openSavedPlannerCatalogViewMenu()
     application.chooseSavedPlannerCollectionRepresentation("Map")
     XCTAssertTrue(application.buttons["saved.map.pin.35.0,139.0"].waitForExistence(timeout: 10))
-    let locatedCount = application.staticTexts["1 of 1 items located"].firstMatch
+    let locatedCount = application.staticTexts["1 of 1 item located"].firstMatch
     let locations = application.plannerElement("saved.map.locations")
     XCTAssertTrue(locatedCount.waitForExistence(timeout: 5))
     XCTAssertTrue(locatedCount.isHittable)
@@ -40,7 +40,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           .matching(identifier: "saved.map.collection").firstMatch
         XCTAssertTrue(map.waitForExistence(timeout: 5))
         XCTAssertFalse(locations.frame.intersects(locatedCount.frame))
-        XCTAssertEqual(locatedCount.label, "1 of 1 items located")
+        XCTAssertEqual(locatedCount.label, "1 of 1 item located")
         XCTAssertEqual(locations.label, "Locations")
         XCTAssertGreaterThanOrEqual(locations.frame.width, 44)
         XCTAssertGreaterThanOrEqual(locations.frame.height, 44)
@@ -104,7 +104,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     returnToCatalog(application)
     application.openSavedPlannerCatalogViewMenu()
     application.chooseSavedPlannerCollectionRepresentation("Map")
-    XCTAssertTrue(application.staticTexts["0 of 1 items located"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["0 of 1 item located"].waitForExistence(timeout: 10))
     application.plannerElement("saved.map.locations").activateForPlannerJourney()
     let location = application.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.source.")

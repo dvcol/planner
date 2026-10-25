@@ -42,6 +42,30 @@ bundle identifier. Only that configuration input differs from the executed UI
 source. Its metadata build receives no additional UI-execution credit. Screens
 in this checkpoint therefore retain the earlier display name.
 
+## Populated dark iPad follow-up
+
+Three existing production UI journeys now pass in confirmed dark appearance on
+iPad: browser return to a locally completed List appearance, itinerary composition
+and filtered counts with the native contrast audit, and exact List-map selection
+through portrait/landscape rotation. All 1160 source inputs and four actual
+products were verified. The previous device appearance was restored afterward.
+The [run packet](evidence/native-membership-consolidation/native-final-populated-dark-tablet/boundary-validation.json)
+retains five inspected original captures and their hashes. The browser capture
+shows returned Item details, not browser chrome.
+
+Grouped Forms, nested List spacing, progress and filtered counts remain readable.
+Collection and detail maps retain provider attribution and search uncertainty;
+local completion stays distinct from the source Item. This checkpoint requires
+no production styling change. It does not qualify Mac pane/title behavior or
+unrepresented scene states.
+
+The Map footer did expose one small copy defect, "1 of 1 items located". The
+shared caption now chooses the singular noun when one Item matches. Existing
+native expectations are updated. The [affected iPad journey](evidence/native-membership-consolidation/native-final-map-caption-tablet/boundary-validation.json)
+passes with the actual singular caption, provider/uncertainty controls and
+unchanged bookmark identity/URL. Its original footer capture is inspected.
+There are no failures, skips or SQLite-unlink warnings in either follow-up.
+
 ## Remaining UI acceptance
 
 This starts the final UI pass; it does not close whole-app acceptance. Populated
