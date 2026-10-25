@@ -133,6 +133,7 @@ struct SavedItemRowContent: View {
   let rowPresentation: PlannerRowPresentationContext?
   @Environment(SavedPlannerStore.self) private var store
   @Environment(PlannerPreviews.self) private var previews
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   private var previewRequest: PlannerLinkPreviewRequest? {
     guard let link = row.previewLink, let namespace = store.devicePreferenceNamespace else {
@@ -184,7 +185,7 @@ struct SavedItemRowContent: View {
       Text(row.title)
         .foregroundStyle(SavedRowForeground())
         .strikethrough((row.effectiveDone ?? row.globalDone) == true)
-        .lineLimit(2)
+        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
       if let subtitle = row.subtitle, !subtitle.isEmpty {
         Text(subtitle)
           .font(.subheadline)
@@ -195,7 +196,7 @@ struct SavedItemRowContent: View {
         Label(estimate.nativeEstimateDescription, systemImage: "clock")
           .font(.caption)
           .foregroundStyle(SavedRowForeground.secondary)
-          .lineLimit(1)
+          .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
       }
       if let link = row.previewLink {
         Label(link.displayTitle, systemImage: link.systemImage)

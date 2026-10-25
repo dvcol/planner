@@ -308,7 +308,7 @@ struct SavedItineraryDetail: View {
                             collectionTitleHeight = height
                           }
                         }
-                        .frame(height: min(collectionTitleHeight, contentHeight / 3))
+                        .frame(height: min(collectionTitleHeight, contentHeight / 4))
                         .scrollBounceBehavior(.basedOnSize)
                         .accessibilityLabel("Itinerary name")
                         .accessibilityIdentifier("saved.itinerary.heading")

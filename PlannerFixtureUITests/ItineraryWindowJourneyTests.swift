@@ -7,6 +7,59 @@ import XCTest
 @MainActor
 final class ItineraryWindowJourneyTests: XCTestCase {
   #if os(iOS)
+    func testEnlargedActivityNamesRemainDistinguishableInNarrowItineraries() throws {
+      try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
+      continueAfterFailure = false
+      XCTAssertTrue(UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory)
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "itinerary-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      XCUIDevice.shared.orientation = .portrait
+      waitForOrientation(application, landscape: false)
+      openRoute("Windowed route", application: application)
+      let hideSidebar = application.buttons["Hide Sidebar"].firstMatch
+      if hideSidebar.exists && hideSidebar.isHittable {
+        hideSidebar.activateForPlannerJourney()
+      }
+      let contents = application.descendants(matching: .any)
+        .matching(identifier: "saved.itinerary.contents").firstMatch
+      XCTAssertTrue(contents.waitForExistence(timeout: 10))
+      XCTAssertLessThan(contents.frame.width, 440)
+      let row = try revealExpandedActivity(
+        "Window Activity 002", in: contents, application: application)
+      XCTAssertFalse(application.staticTexts["saved.itinerary.title"].frame.intersects(row.frame))
+      XCTAssertFalse(application.staticTexts["Entries"].frame.intersects(row.frame))
+      capture(application, "Enlarged activity name and estimate in the narrow itinerary")
+      let hierarchy = XCTAttachment(string: row.debugDescription)
+      hierarchy.name = "Enlarged activity native text bounds"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      let title = row.staticTexts["Window Activity 002"]
+      XCTAssertTrue(title.exists)
+      let requiredTitleHeight = ("Window Activity 002" as NSString).boundingRect(
+        with: CGSize(width: title.frame.width, height: .greatestFiniteMagnitude),
+        options: [.usesLineFragmentOrigin, .usesFontLeading],
+        attributes: [.font: UIFont.preferredFont(forTextStyle: .body)], context: nil
+      ).height
+      XCTAssertGreaterThanOrEqual(title.frame.height + 2, requiredTitleHeight)
+      let estimate = row.staticTexts["5 minutes"]
+      XCTAssertTrue(estimate.exists)
+      let requiredEstimateHeight = ("5 minutes" as NSString).boundingRect(
+        with: CGSize(width: row.frame.width, height: .greatestFiniteMagnitude),
+        options: [.usesLineFragmentOrigin, .usesFontLeading],
+        attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1)], context: nil
+      ).height
+      XCTAssertGreaterThanOrEqual(estimate.frame.height + 2, requiredEstimateHeight)
+      row.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Window itinerary notes 2"].waitForExistence(timeout: 10))
+      capture(application, "Enlarged activity opens its exact unchanged notes")
+      application.terminate()
+    }
+
     func testLongItineraryTitleLeavesItsRouteUsableAtAccessibilitySizes() throws {
       try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
       continueAfterFailure = false
@@ -49,8 +102,18 @@ final class ItineraryWindowJourneyTests: XCTestCase {
         waitForOrientation(application, landscape: landscape)
         capture(application, "Long itinerary title at accessibility size, landscape \(landscape)")
         assertVisibleItineraryContext(name, in: contents, application: application)
+        if let appearanceIdentifier {
+          let retainedRow = application.plannerElement(appearanceIdentifier)
+          if retainedRow.exists {
+            let viewport = visibleContentsFrame(contents, application: application)
+            XCTAssertGreaterThanOrEqual(
+              viewport.height + 2, retainedRow.frame.height,
+              "Route viewport \(viewport), retained activity \(retainedRow.frame)")
+          }
+        }
         let row = try revealExpandedActivity(
-          "Window Activity 001", in: contents, application: application)
+          "Window Activity 001", in: contents, application: application,
+          searchBackwards: landscape)
         if let appearanceIdentifier {
           XCTAssertEqual(row.identifier, appearanceIdentifier)
         } else {
@@ -303,17 +366,41 @@ final class ItineraryWindowJourneyTests: XCTestCase {
 
   private func revealExpandedActivity(
     _ title: String, excluding identifier: String? = nil, in catalog: XCUIElement,
-    application: XCUIApplication
+    application: XCUIApplication, searchBackwards: Bool = false
   ) throws -> XCUIElement {
     XCTAssertTrue(catalog.waitForExistence(timeout: 15))
     for _ in 0..<30 {
-      if let row = activities(title, application: application).allElementsBoundByIndex.first(
-        where: {
-          $0.identifier != identifier && $0.identifier.split(separator: ".").count == 5
-            && isFullyVisible($0, in: catalog, application: application)
-        })
+      let matchingRows = activities(title, application: application).allElementsBoundByIndex.filter
       {
+        $0.identifier != identifier && $0.identifier.split(separator: ".").count == 5
+      }
+      if let row = matchingRows.first(where: {
+        isFullyVisible($0, in: catalog, application: application)
+      }) {
         return row
+      }
+      if let row = matchingRows.first {
+        let visibleFrame = visibleContentsFrame(catalog, application: application)
+        let requiredMovement = visibleFrame.minY + 2 - row.frame.minY
+        let maximumMovement = visibleFrame.height * 0.4
+        let movement = min(maximumMovement, max(-maximumMovement, requiredMovement))
+        let start = catalog.coordinate(withNormalizedOffset: .zero).withOffset(
+          CGVector(
+            dx: visibleFrame.midX - catalog.frame.minX,
+            dy: visibleFrame.midY - catalog.frame.minY))
+        let end = start.withOffset(CGVector(dx: 0, dy: movement))
+        start.press(forDuration: 0.05, thenDragTo: end)
+        continue
+      }
+      if searchBackwards {
+        let visibleFrame = visibleContentsFrame(catalog, application: application)
+        let start = catalog.coordinate(withNormalizedOffset: .zero).withOffset(
+          CGVector(
+            dx: visibleFrame.midX - catalog.frame.minX,
+            dy: visibleFrame.midY - catalog.frame.minY))
+        let end = start.withOffset(CGVector(dx: 0, dy: visibleFrame.height * 0.4))
+        start.press(forDuration: 0.05, thenDragTo: end)
+        continue
       }
       catalog.swipeUp()
     }
@@ -615,17 +702,32 @@ final class ItineraryWindowJourneyTests: XCTestCase {
   private func isFullyVisible(
     _ row: XCUIElement, in catalog: XCUIElement, application: XCUIApplication
   ) -> Bool {
-    guard row.exists, row.isHittable, catalog.frame.contains(row.frame) else { return false }
+    row.exists && row.isHittable
+      && visibleContentsFrame(catalog, application: application).contains(row.frame)
+  }
+
+  private func visibleContentsFrame(
+    _ catalog: XCUIElement, application: XCUIApplication
+  ) -> CGRect {
+    let frame = catalog.frame
     #if os(iOS)
       let bars = application.navigationBars.allElementsBoundByIndex.filter {
-        $0.frame.intersects(catalog.frame)
+        $0.frame.intersects(frame)
       }
-      let topBoundary = bars.map(\.frame.maxY).max() ?? catalog.frame.minY
-      guard row.frame.minY >= topBoundary else { return false }
+      var topBoundary = bars.map(\.frame.maxY).max() ?? frame.minY
+      let nameArea = application.scrollViews["saved.itinerary.heading"]
+      if nameArea.exists { topBoundary = max(topBoundary, nameArea.frame.maxY) }
+      let sectionTitle = application.staticTexts["Entries"]
+      if sectionTitle.exists { topBoundary = max(topBoundary, sectionTitle.frame.maxY) }
+      var bottomBoundary = frame.maxY
       let tabBar = application.tabBars.firstMatch
-      if tabBar.exists, row.frame.intersects(tabBar.frame) { return false }
+      if tabBar.exists, tabBar.frame.intersects(frame) { bottomBoundary = tabBar.frame.minY }
+      return CGRect(
+        x: frame.minX, y: topBoundary, width: frame.width,
+        height: max(0, bottomBoundary - topBoundary))
+    #else
+      return frame
     #endif
-    return true
   }
 
   private func completion(_ rowIdentifier: String, application: XCUIApplication) -> XCUIElement {
