@@ -1,6 +1,6 @@
 # Membership removal across restored candidates
 
-Status: proposed Q159. Q158's direct-entry rule is committed and locally qualified. This decision concerns the next aggregate target-reference rule, before its serialized declaration or tests.
+Status: Q159 A approved on 25 October 2026. Q158's direct-entry rule is committed and locally qualified. This decision concerns the next aggregate target-reference rule, before its serialized declaration or tests.
 
 ## Why existing decisions do not settle this case
 
@@ -32,4 +32,4 @@ Reject cross-candidate membership maintenance when removal authority could diffe
 
 Recommend A, matching the accepted expectation that an unaware offline Add cannot undo a deliberate Remove. This is a new cross-candidate policy choice, not a claim that Q155 already approved it.
 
-After this answer, review one aggregate target-reference contract for independent List memberships, referenced List entries and Category/Tag targets. It must separate target rebinding from candidate-owned collection transfer, preserve contextual identities/history and original replay, and explicitly reject unresolved label-identity collisions. Existing Q155 duplicate-membership rules apply only after pair/generation authority is proved. No dependent implementation or test is authorized by this draft alone. Signing stays deferred.
+The [proposed Q160 contract](native-restored-target-reference-contract-review.md) now reviews one aggregate target-reference contract for independent List memberships, referenced List entries and Category/Tag targets. It must separate target rebinding from candidate-owned collection transfer, preserve contextual identities/history and original replay, and explicitly reject unresolved label-identity collisions. Existing Q155 duplicate-membership rules apply only after pair/generation authority is proved. No dependent implementation or test is authorized by this draft alone. Signing stays deferred.
