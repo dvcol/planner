@@ -106,7 +106,16 @@ struct PlannerSourceRestorationConsolidation {
             family.candidates.contains { $0.lifetimeId == row.identity.lifetimeId }
           }
       }
-      if group.count == 1, relevant.isEmpty { continue }
+      if group.count == 1, relevant.isEmpty {
+        guard
+          !closedSources.contains(where: {
+            $0.kind == first.identity.kind && $0.id == first.identity.id
+          })
+        else {
+          throw Self.unresolved("A new lifetime for a closed source requires restoration history.")
+        }
+        continue
+      }
       guard relevant.count == 1, let family = relevant.first,
         let winner = family.candidates.map(\.lifetimeId).min(by: { $0.uuidString < $1.uuidString }),
         group.filter({ $0.identity.lifetimeId == winner }).count == 1,

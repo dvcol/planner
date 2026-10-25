@@ -9,6 +9,54 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [PlannerEntityKind.item, .list, .itinerary, .category, .tag])
+  func unknownSourceAfterFamilyClosurePreservesNativeDataAndRecovery(kind: PlannerEntityKind)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    guard
+      case .reviewed(let deletion) = await fixture.planner.prepareReview(
+        session: fixture.session, command: .deleteSource(source: fixture.source)),
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session, command: deletion.command,
+          reviewToken: deletion.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    try await fixture.deliverCandidate(
+      lifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000816")!)
+    let lifetimes = try await fixture.nativeSourceLifetimes()
+    #expect(lifetimes == [UUID(uuidString: "00000000-0000-4000-8000-000000000816")!])
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    let exported = await fixture.planner.exportData(session: fixture.session)
+    let read = await fixture.planner.read(
+      session: fixture.session, request: .source(fixture.source))
+    guard case .failed = exported, case .failed = read else {
+      Issue.record(
+        "A public identity cannot authorize an unknown lifetime: \(read), \(exported)")
+      return
+    }
+    #expect(try await fixture.nativeSourceLifetimes() == lifetimes)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    let reopened = Planner(configuration: fixture.configuration)
+    switch await reopened.bootstrap() {
+    case .ready(let session):
+      let exported = await reopened.exportData(session: session)
+      let read = await reopened.read(session: session, request: .source(fixture.source))
+      guard case .failed = exported, case .failed = read else {
+        Issue.record("Unproven source reads/export must fail: \(read), \(exported)")
+        return
+      }
+    case .unavailable(let failure): #expect(failure.code == "readUnavailable")
+    default: Issue.record("The existing dataset needs no new setup or migration.")
+    }
+    #expect(try await fixture.nativeSourceLifetimes() == lifetimes)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .list, .itinerary, .category, .tag], [false, true])
   func closedSourceFamiliesIgnoreLateCandidatesWithoutReplacingFreshRestorations(
     kind: PlannerEntityKind, restoreCurrent: Bool
@@ -3084,9 +3132,10 @@ private struct SourceRestorationFixture {
     return try JSONSerialization.data(withJSONObject: records, options: [.sortedKeys])
   }
 
-  @MainActor func deliverCandidate() throws {
+  @MainActor func deliverCandidate(
+    lifetime: UUID = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
+  ) throws {
     let context = try nativeContext()
-    let lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
     switch source.kind {
     case .item:
       let candidate = try PlannerSchemaV18.Item(

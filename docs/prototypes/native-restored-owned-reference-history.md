@@ -221,3 +221,29 @@ datasets and original results remain retained; duplicate manifests are
 losslessly compressed. The [remaining local checklist](../restoration-acceptance-checklist.md)
 names association and authority checks separately. These results add no native
 UI, system invocation, cloud or physical-device evidence.
+
+## Unknown source lifetimes after deletion
+
+The opposite boundary exposed a real read/export mismatch. An undeclared
+Museum816 arriving after its declared family closed was rejected by export,
+but an ordinary source read returned it. All five source kinds reproduced this.
+The single-record source-selection shortcut treated an unknown lifetime as
+ordinary data when it found no matching open family.
+
+That shortcut now rejects a new lifetime of a known closed public identity
+unless its restoration family authorizes it. It uses the same closed-identity
+set as maintenance. No row is retired or changed. Reads/export reject, reopen
+cannot authorize the record, and exact native lifetime arrays, recovery files
+and writer control stay unchanged. No format, model, gate or public interface
+changes. The first diagnostic's extra expectation of immediate bootstrap failure
+was corrected before retaining the exact failing source-read responses.
+
+The [validation record](evidence/native-membership-consolidation/native-closed-source-unknown-validation.json)
+reconciles 50 passing Mac functions, 48 passing iPhone functions and four
+existing real HTTP regressions. Both Core runtimes execute genuine Schema18/12
+migrations in the eight affected suites. All 813 shared Core inputs and 1,160
+phone/HTTP inputs match their products. The 514 frozen fixtures and 18 schema
+sources remain unchanged. Mac app/Share/test-host compilation and strict
+Swift/Markdown lint pass; final cohorts have no failures, skips or SQLite unlink
+warnings. Passing fixture cleanup retains failed and interrupted diagnostics.
+Native UI, system, cloud and physical acceptance remain separate.
