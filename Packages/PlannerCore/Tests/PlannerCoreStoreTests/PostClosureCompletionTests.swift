@@ -2,6 +2,10 @@ import Foundation
 import PlannerCore
 import Testing
 
+#if os(macOS)
+  import Darwin
+#endif
+
 struct PostClosureCompletionTests {
   @Test func aNewCompletionObservesItsImportedClosureAndKeepsOtherAppearancesIndependent()
     async throws
@@ -446,6 +450,28 @@ struct PostClosureCompletionTests {
         return
       }
       #expect(try Data(contentsOf: configuration.controlURL) == beforeControl)
+      if scenario == "controlFailure" {
+        let interruptedIdentity = try #require(
+          JSONSerialization.jsonObject(
+            with: Data(contentsOf: historicalDirectory.appendingPathComponent("identity.json")))
+            as? [String: Any])
+        #expect(interruptedIdentity["schemaVersion"] as? Int == 20)
+        guard
+          case .listedNamespaces(let interruptedNamespaces) = await planner.inspectRecovery(
+            request: .namespaces),
+          let interrupted = interruptedNamespaces.first?.acknowledgedSnapshot,
+          case .selected(let copy) = await planner.inspectRecovery(
+            request: .acknowledgedSnapshot(
+              namespaceId: UUID(uuidString: namespace)!,
+              checkpointGeneration: interrupted.checkpointGeneration))
+        else {
+          Issue.record(
+            "The published compatibility baseline must remain inspectable before activation")
+          return
+        }
+        #expect(interrupted.storageSchemaVersion == 20)
+        #expect(copy.decodedBackup.backup.formatVersion == 4)
+      }
       try FileManager.default.setAttributes(
         [.posixPermissions: originalMode], ofItemAtPath: obstructedDirectory.path)
       guard case .mainAppMigrationRequired = await share.bootstrap() else {
@@ -674,3 +700,224 @@ struct PostClosureCompletionTests {
 }
 
 private final class PostClosureCompletionFixtureBundle: NSObject {}
+
+#if os(macOS)
+  extension PostClosureCompletionTests {
+    @Test func interruptedCompatibilityActivationRetainsItsPublishedBaselineAndRetries()
+      async throws
+    {
+      if let workPath = ProcessInfo.processInfo.environment[
+        "PLANNER_COMPLETION_COMPATIBILITY_INTERRUPT_WORK"]
+      {
+        try await interruptFailedCompatibilityActivation(
+          workDirectory: URL(fileURLWithPath: workPath))
+        return
+      }
+      let workDirectory = try makePlannerStoreFixtureDirectory()
+      try FileManager.default.createDirectory(at: workDirectory, withIntermediateDirectories: true)
+      try runCompatibilityInterruption(workDirectory: workDirectory)
+      let input = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(contentsOf: workDirectory.appendingPathComponent("input.json")))
+          as? [String: Any])
+      let directory = URL(fileURLWithPath: try #require(input["directory"] as? String))
+      let configuration = Self.configuration(directory)
+      let originalControl = try #require(
+        (input["control"] as? String).flatMap { Data(base64Encoded: $0) })
+      let originalMode = try #require(input["controlMode"] as? Int)
+      let controlDirectory = configuration.controlURL.deletingLastPathComponent()
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: originalMode], ofItemAtPath: controlDirectory.path)
+      }
+      #expect(try Data(contentsOf: configuration.controlURL) == originalControl)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: originalMode], ofItemAtPath: controlDirectory.path)
+      let published = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(contentsOf: workDirectory.appendingPathComponent("published.json")))
+          as? [String: Any])
+      let namespaceIdentifier = try #require(
+        (input["namespaceId"] as? String).flatMap(UUID.init(uuidString:)))
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+        namespaceIdentifier.uuidString)
+      let checkpoint = try #require(published["checkpointGeneration"] as? Int64)
+      let originalCopy = try #require(
+        (published["portableData"] as? String).flatMap { Data(base64Encoded: $0) })
+      let planner = Planner(configuration: configuration)
+      guard
+        case .listedNamespaces(let interruptedNamespaces) = await planner.inspectRecovery(
+          request: .namespaces),
+        let interruptedSnapshot = interruptedNamespaces.first?.acknowledgedSnapshot,
+        case .selected(let interrupted) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespaceIdentifier, checkpointGeneration: checkpoint))
+      else { throw CancellationError() }
+      #expect(interrupted.portableData == originalCopy)
+      #expect(interrupted.decodedBackup.backup.formatVersion == 4)
+      #expect(
+        interruptedSnapshot.storageSchemaVersion == 20
+          && interruptedSnapshot.checkpointGeneration == checkpoint)
+      let interruptedIdentity = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(contentsOf: namespaceDirectory.appendingPathComponent("identity.json")))
+          as? [String: Any])
+      #expect(interruptedIdentity["schemaVersion"] as? Int == 20)
+      let share = Planner(
+        configuration: .init(
+          storeURL: configuration.storeURL, controlURL: configuration.controlURL,
+          recoveryDirectoryURL: configuration.recoveryDirectoryURL, processRole: .shareExtension,
+          storageMode: .localOnly))
+      guard case .mainAppMigrationRequired = await share.bootstrap() else {
+        Issue.record("Share must wait after the interrupted activation")
+        return
+      }
+      #expect(try Data(contentsOf: configuration.controlURL) == originalControl)
+      guard case .ready(let session) = await planner.bootstrap(),
+        case .exported(let exported) = await planner.exportData(session: session),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let latest = namespaces.first?.acknowledgedSnapshot,
+        case .selected(let retained) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespaceIdentifier, checkpointGeneration: checkpoint)),
+        case .ready = await share.bootstrap()
+      else { throw CancellationError() }
+      #expect(retained.portableData == originalCopy)
+      let exportedGraph = try #require(
+        JSONSerialization.jsonObject(with: exported) as? NSDictionary)
+      let interruptedGraph = try #require(
+        JSONSerialization.jsonObject(with: originalCopy) as? NSDictionary)
+      #expect(exportedGraph == interruptedGraph)
+      #expect(latest.storageSchemaVersion == 20 && latest.checkpointGeneration >= checkpoint)
+      let control = try #require(
+        JSONSerialization.jsonObject(with: Data(contentsOf: configuration.controlURL))
+          as? [String: Any])
+      let originalIdentity = try #require(
+        JSONSerialization.jsonObject(with: originalControl) as? [String: Any])
+      #expect(control["schemaVersion"] as? Int == 20)
+      for field in ["datasetId", "namespaceId", "epochId", "ownershipBinding"] {
+        #expect(control[field] as? String == originalIdentity[field] as? String)
+      }
+      let historicalFiles = try #require(input["historicalFiles"] as? [String: String])
+      for (name, encoded) in historicalFiles {
+        #expect(
+          try Data(contentsOf: namespaceDirectory.appendingPathComponent(name))
+            == Data(base64Encoded: encoded))
+      }
+    }
+
+    private func interruptFailedCompatibilityActivation(workDirectory: URL) async throws {
+      #if SWIFT_PACKAGE
+        let bundle = Bundle.module
+      #else
+        let bundle = Bundle(for: PostClosureCompletionFixtureBundle.self)
+      #endif
+      let fixture = try #require(
+        bundle.url(forResource: "SchemaV18", withExtension: nil, subdirectory: "Fixtures"))
+      let directory = try makePlannerStoreFixtureDirectory()
+      try FileManager.default.copyItem(at: fixture, to: directory)
+      let configuration = Self.configuration(directory)
+      let beforeControl = try Data(contentsOf: configuration.controlURL)
+      let before = try #require(
+        JSONSerialization.jsonObject(with: beforeControl) as? [String: Any])
+      let namespace = try #require(before["namespaceId"] as? String)
+      let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(namespace)
+      let historicalFiles = try FileManager.default.contentsOfDirectory(
+        at: namespaceDirectory, includingPropertiesForKeys: nil
+      ).filter {
+        $0.lastPathComponent.hasPrefix("checkpoint-") || $0.lastPathComponent.hasPrefix("proposal-")
+      }
+      let historicalBytes = try Dictionary(
+        uniqueKeysWithValues: historicalFiles.map {
+          ($0.lastPathComponent, try Data(contentsOf: $0).base64EncodedString())
+        })
+      let controlDirectory = configuration.controlURL.deletingLastPathComponent()
+      let attributes = try FileManager.default.attributesOfItem(atPath: controlDirectory.path)
+      let originalMode = try #require(attributes[.posixPermissions] as? NSNumber).intValue
+      try JSONSerialization.data(
+        withJSONObject: [
+          "directory": directory.path, "namespaceId": namespace,
+          "control": beforeControl.base64EncodedString(), "controlMode": originalMode,
+          "historicalFiles": historicalBytes,
+        ], options: [.sortedKeys]
+      ).write(to: workDirectory.appendingPathComponent("input.json"), options: .atomic)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: controlDirectory.path)
+      let planner = Planner(configuration: configuration)
+      guard case .unavailable = await planner.bootstrap(),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let checkpoint = namespaces.first?.acknowledgedSnapshot,
+        case .selected(let copy) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: UUID(uuidString: namespace)!,
+            checkpointGeneration: checkpoint.checkpointGeneration))
+      else { throw CancellationError() }
+      try #require(try Data(contentsOf: configuration.controlURL) == beforeControl)
+      try #require(checkpoint.storageSchemaVersion == 20)
+      try #require(copy.decodedBackup.backup.formatVersion == 4)
+      let identity = try #require(
+        JSONSerialization.jsonObject(
+          with: Data(contentsOf: namespaceDirectory.appendingPathComponent("identity.json")))
+          as? [String: Any])
+      try #require(identity["schemaVersion"] as? Int == 20)
+      try JSONSerialization.data(
+        withJSONObject: [
+          "checkpointGeneration": checkpoint.checkpointGeneration,
+          "storageSchemaVersion": checkpoint.storageSchemaVersion,
+          "metadataSchemaVersion": identity["schemaVersion"]!,
+          "portableData": copy.portableData.base64EncodedString(),
+        ], options: [.sortedKeys]
+      ).write(to: workDirectory.appendingPathComponent("published.json"), options: .atomic)
+      kill(getpid(), SIGKILL)
+      Issue.record("The isolated compatibility writer must terminate at the retained failure state")
+    }
+
+    private func runCompatibilityInterruption(workDirectory: URL) throws {
+      let outputURL = workDirectory.appendingPathComponent("child.log")
+      try Data().write(to: outputURL)
+      let output = try FileHandle(forWritingTo: outputURL)
+      defer { try? output.close() }
+      let process = Process()
+      process.executableURL = URL(fileURLWithPath: CommandLine.arguments[0])
+      var runnerArguments: [String] = []
+      if let index = CommandLine.arguments.firstIndex(of: "--test-bundle-path"),
+        CommandLine.arguments.indices.contains(index + 1)
+      {
+        runnerArguments = ["--test-bundle-path", CommandLine.arguments[index + 1]]
+      }
+      process.arguments =
+        runnerArguments + [
+          "--testing-library", "swift-testing", "--filter",
+          "PostClosureCompletionTests/interruptedCompatibilityActivationRetainsItsPublishedBaselineAndRetries",
+        ]
+      var environment = ProcessInfo.processInfo.environment
+      environment["PLANNER_COMPLETION_COMPATIBILITY_INTERRUPT_WORK"] = workDirectory.path
+      process.environment = environment
+      process.standardOutput = output
+      process.standardError = output
+      let completion = DispatchSemaphore(value: 0)
+      process.terminationHandler = { _ in completion.signal() }
+      try process.run()
+      let finished = completion.wait(timeout: .now() + 45) == .success
+      if !finished {
+        kill(process.processIdentifier, SIGKILL)
+        process.waitUntilExit()
+      }
+      try output.close()
+      let transcript = try String(contentsOf: outputURL, encoding: .utf8)
+      print("COMPLETION_COMPATIBILITY_INTERRUPTION_WORK \(workDirectory.path)")
+      try JSONSerialization.data(
+        withJSONObject: [
+          "finishedWithinDeadline": finished,
+          "terminationReason": String(describing: process.terminationReason),
+          "terminationStatus": process.terminationStatus,
+          "childProcessIdentifier": process.processIdentifier,
+        ], options: [.sortedKeys]
+      ).write(to: workDirectory.appendingPathComponent("termination.json"), options: .atomic)
+      #expect(finished)
+      #expect(process.terminationReason == .uncaughtSignal)
+      #expect(
+        process.terminationStatus == SIGKILL, Comment(rawValue: String(transcript.suffix(12_000))))
+    }
+  }
+#endif

@@ -70,10 +70,20 @@ The [new native-input follow-up](evidence/native-membership-consolidation/post-c
 
 Mac passes eight selected functions in two suites; iPhone passes all 33 functions in the native-membership and Q156 suites. Both new parameter cases run. All 810 Core inputs match the 1,157-input phone execution. Only the added function in NativeMembershipConsolidationTests differs from the 991dfac9 checkpoint; existing tests and every production input are unchanged. Two current Core and two phone binaries are verified. No shipping correction, declaration, format or new test boundary is needed. This covers the fixture's baseline membership generation; non-baseline removal generations and incomplete history remain separate qualification. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-smaller-root-fixture-cleanup.json) removes 210 closed passing fixture directories totaling 179,695,644 nominal file bytes, preserving failed/interrupted stores.
 
+## Compatibility activation after termination
+
+The [actual process-interruption follow-up](evidence/native-membership-consolidation/post-closure-completion-upgrade-interruption-validation.json) passes nine Mac functions across the Q156 and smaller-root suites. A test-owned child encounters the real blocked control write after publishing checkpoint 8 with storage compatibility 20, namespace metadata 20 and portable format 4. Its writer control still contains compatibility 18. Critical child requirements must pass before it terminates itself with SIGKILL; the parent records signal 9 within the deadline, then reads the retained copy and retries through a fresh public Core instance. Dataset, namespace, epoch, ownership and all fourteen historical recovery files survive. The original copy retains its exact bytes. Share's public Core role waits before activation and becomes ready afterward; installed extension invocation remains separate.
+
+All seven mobile Q156 functions also pass, including the stronger failed-activation inspection assertions. The [matching-input verifier](evidence/native-membership-consolidation/post-closure-completion-upgrade-interruption-validation.json) reconciles 810 Core and 1,157 phone inputs and verifies two current binaries on each platform. Only additional test code differs from 40db8ef2; production remains unchanged and no existing test lines are removed. The Mac-only process case is excluded from mobile compilation.
+
+The initial attempt fails compilation before any test. The next attempt reaches the real termination/retry state but uses an incorrect byte comparison between separately serialized outputs. Its [retained diagnosis](evidence/native-membership-consolidation/post-closure-completion-upgrade-sigkill-corrected-mac/serialization-diagnosis.json) proves both recovery graphs equal despite different JSON bytes. The final test compares the retried export structurally while retaining exact-byte checks for the original copy and historical files. Both attempts remain recorded. The observed termination point is after a blocked activation attempt with the v4 copy committed; earlier upgrade/write-interruption points remain separate evidence.
+
+The [passing-fixture cleanup](evidence/native-membership-consolidation/post-closure-completion-upgrade-fixture-cleanup.json) removes 38 closed owned directories totaling 18,005,200 nominal file bytes. It explicitly verifies that the interrupted child's dataset is outside that deletion set. That dataset and failed attempts remain retained; copies of the child's input, publication and termination evidence plus its compressed log are archived before parent-work cleanup.
+
 ## Remaining work
 
 - Broaden native paths beyond the represented phone/dark-iPad checkbox, relaunch and independent-appearance journeys; actual Mac UI remains separate.
-- Qualify non-baseline membership-removal generations, incomplete history delivery and additional interruption/failure states.
+- Qualify non-baseline membership-removal generations, incomplete history delivery and earlier upgrade/other command interruption states.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 
 No new package, target, production test hook or direct test boundary was introduced.
