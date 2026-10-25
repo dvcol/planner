@@ -9,6 +9,84 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
+  func unresolvedOwnerAndOwnedWinnerDisagreementPreservesEveryNativeRecord(
+    ownerKind: PlannerEntityKind, referenceKind: String
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: ownerKind)
+    if referenceKind == "link" {
+      try await fixture.deliverCandidateWithOwnedLink()
+    } else {
+      try await fixture.deliverCandidateWithSchedule(allDay: false)
+    }
+    let familyData = try await fixture.addOwnedRestorationHistory(referenceKind: referenceKind)
+    try await fixture.deliverClosedOwnedSibling(referenceKind: referenceKind)
+    let losingBackup = try await fixture.backupForOwnedReference(restorationHistory: familyData)
+    var winningFamily = try fixture.object(familyData)
+    let candidates = try #require(winningFamily["candidates"] as? [[String: Any]])
+    winningFamily["candidates"] = candidates.filter {
+      $0["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000889"
+    }
+    let winningFamilyData = try JSONSerialization.data(withJSONObject: winningFamily)
+    let winningBackup = try await fixture.backupForOwnedReference(
+      ownerLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000814")!,
+      restorationHistory: winningFamilyData)
+    guard case .decoded = fixture.planner.decodeImport(losingBackup),
+      case .decoded = fixture.planner.decodeImport(winningBackup)
+    else {
+      Issue.record("Both pre-union source/owned-family snapshots must be valid independently.")
+      return
+    }
+    let linksBefore = try await fixture.rawOwnedLinkData()
+    let schedulesBefore = try await fixture.rawScheduleData()
+    let sourcesBefore = try await fixture.nativeSourceLifetimes()
+    #expect(sourcesBefore.count == 2)
+    let filesBefore = try fixture.files()
+    let controlBefore = try Data(contentsOf: fixture.configuration.controlURL)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    let read = await fixture.planner.read(
+      session: fixture.session, request: .source(fixture.source))
+    guard case .failed(let failure) = result, case .failed = read else {
+      Issue.record(
+        "Unsettled cross-family ownership must not mutate either version: \(result), \(read)")
+      return
+    }
+    print(
+      "PLANNER_CROSSED_FAMILY_FAILURE", ownerKind.rawValue, referenceKind, failure.code,
+      failure.propertyPath ?? "", failure.message)
+    #expect(try await fixture.rawOwnedLinkData() == linksBefore)
+    #expect(try await fixture.rawScheduleData() == schedulesBefore)
+    #expect(try await fixture.nativeSourceLifetimes() == sourcesBefore)
+    #expect(
+      try fixture.graph(await fixture.backupForOwnedReference(restorationHistory: familyData))
+        == fixture.graph(losingBackup))
+    #expect(
+      try fixture.graph(
+        await fixture.backupForOwnedReference(
+          ownerLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000814")!,
+          restorationHistory: winningFamilyData)) == fixture.graph(winningBackup))
+    #expect(try fixture.files() == filesBefore)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == controlBefore)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .unavailable = await reopened.bootstrap() else {
+      Issue.record("Reopening cannot silently choose a different cross-family precedence.")
+      return
+    }
+    #expect(try await fixture.rawOwnedLinkData() == linksBefore)
+    #expect(try await fixture.rawScheduleData() == schedulesBefore)
+    #expect(try await fixture.nativeSourceLifetimes() == sourcesBefore)
+    #expect(
+      try fixture.graph(await fixture.backupForOwnedReference(restorationHistory: familyData))
+        == fixture.graph(losingBackup))
+    #expect(
+      try fixture.graph(
+        await fixture.backupForOwnedReference(
+          ownerLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000814")!,
+          restorationHistory: winningFamilyData)) == fixture.graph(winningBackup))
+    #expect(try fixture.files() == filesBefore)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == controlBefore)
+  }
+
   @Test(
     arguments: [PlannerEntityKind.item, .itinerary],
     [
@@ -778,7 +856,7 @@ struct NativeSourceRestorationMaintenanceTests {
     } else {
       restorationHistory = nil
     }
-    let incoming = try await fixture.backupForLosingOwnedReference(
+    let incoming = try await fixture.backupForOwnedReference(
       restorationHistory: restorationHistory)
     guard case .decoded(let backup) = fixture.planner.decodeImport(incoming),
       case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
@@ -3245,7 +3323,10 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
-  @MainActor func backupForLosingOwnedReference(restorationHistory: Data? = nil) throws -> Data {
+  @MainActor func backupForOwnedReference(
+    ownerLifetime: UUID = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!,
+    restorationHistory: Data? = nil
+  ) throws -> Data {
     let context = try nativeContext()
     let sourceRecord: PortableSourceRecord
     let links: [PortableOwnedLink]
@@ -3254,7 +3335,7 @@ private struct SourceRestorationFixture {
     case .item:
       let owner = try #require(
         context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
-          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+          $0.id == source.id && $0.lifetimeId == ownerLifetime
         })
       let value = try owner.value()
       sourceRecord = .item(.init(value))
@@ -3263,7 +3344,7 @@ private struct SourceRestorationFixture {
     case .itinerary:
       let owner = try #require(
         context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
-          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+          $0.id == source.id && $0.lifetimeId == ownerLifetime
         })
       let value = try owner.value()
       sourceRecord = .itinerary(.init(value))
@@ -3287,7 +3368,7 @@ private struct SourceRestorationFixture {
     var families = try #require(graph["restorationFamilies"] as? [[String: Any]])
     let candidates = try #require(families[0]["candidates"] as? [[String: Any]])
     families[0]["candidates"] = candidates.filter {
-      $0["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000815"
+      $0["lifetimeId"] as? String == ownerLifetime.uuidString
     }
     graph["restorationFamilies"] = families
     if let restorationHistory {

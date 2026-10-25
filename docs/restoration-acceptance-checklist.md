@@ -28,7 +28,7 @@ cases. They do not claim that every interaction below has already executed.
 
 | Check | Required result | Gate |
 | --- | --- | --- |
-| Source-owner and owned-reference families choose different candidates | Apply the accepted complete-winner policy where authority is proven; retain atomic rejection where existing declarations cannot prove it | Worked fixture first; request a decision only if the accepted contracts leave a concrete policy gap |
+| Source-owner and owned-reference families choose different candidates | Four real-store cases preserve both complete versions under rejection, including reopen; this proves preservation, not reconciliation | [Q163](native-crossed-restoration-family-decision.md) needs an explicit authority or MVP deferral decision |
 | Remaining import, legacy admission, causal-history and interruption outcomes named in older checkpoints | Match their existing literal contracts; establish which are covered by current tests before adding tests or code | Reconcile the retained diagnostics with the existing Core/HTTP suite coverage |
 
 A20 closes the whole declared family after Delete. It does not authorize
