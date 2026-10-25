@@ -2,6 +2,8 @@
 
 ## Current frontier
 
+Q161 and Q162 are the next independent choices in [the MVP restored-data review](native-restored-owned-data-decision.md). Q161 recommends retaining the winning source's complete owned contents rather than merging losing collections. Q162 recommends one deterministic surviving label-association identity. Both replace Q160's explicit atomic-rejection exclusions and therefore await the user's decision. No new format, gate, framework or test boundary is proposed merely for these choices. Independent native UI work continues; signing stays deferred.
+
 Q159 A and the [Q160 aggregate contract](native-restored-target-reference-contract-review.md) are approved. Implementation should reuse existing storage/maintenance and preserve its bounded exclusions. The user now explicitly prioritizes the simplest workable path to MVP: avoid speculative recovery/generalization, unnecessary abstractions and further infrastructure beyond concrete requirements. Portable5/rule3/gate23 are authorized for this contract; physical model19 stays unchanged. No broader candidate-owned collection or label-identity collision policy is implied. Signing stays deferred.
 
 Q160's bounded independent targets now have their [completed local checkpoint](prototypes/native-restored-target-reference.md#final-local-checkpoint), including shared removal authority, referenced Lists and label targets, old-format admission, migration/recovery and native phone/dark-iPad checks. No Q160 product answer remains pending. Candidate-owned collections, automatic label-collision reconciliation and the signed/system/physical/whole-app gates remain open on the map.
