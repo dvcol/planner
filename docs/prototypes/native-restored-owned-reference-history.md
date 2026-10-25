@@ -420,3 +420,45 @@ Actual mixed-payload process interruption, distinct Item/List owned-data and
 label-collision faults, Q163 and native/system/physical acceptance remain open.
 This adds no production hook, package, target, schema, portable format or writer
 gate. Signing stays deferred.
+
+## Mixed Itinerary process interruption
+
+The mixed-owned graph now runs through actual Mac child termination at its
+store-specific `willSave` and `didSave` notifications. Each child writes its
+original complete winning backup, recovery files and control binding, then a
+proof naming its stage and process identifier. The child requests SIGKILL and
+never reports its unfinished test as passed. The parent verifies uncaught
+signal 9 within the existing deadline; collected ownership records independently
+match the proof's process identifier and dataset path.
+
+Before native commit, recovery exposes the preparation as unverified. Fresh
+bootstrap re-evaluates current data and uses a different maintenance identity;
+Retry of the original proposal rejects without changing files. After native
+commit, bootstrap retains the existing pending maintenance and mutation block.
+Explicit Retry acknowledges that original identity, and repeated Retry returns
+the same checkpoint.
+
+Both cases retain the complete winning graph, seven exact owned-reference
+closures, original user receipts, every prior recovery-file byte and writer
+control. A further reopen retains the same export. The literal seven closure
+targets are unchanged from the preceding mixed-owned tests; one shared assertion
+checks the full graph against the original winning backup. Production is
+unchanged.
+
+The [validation record](evidence/native-membership-consolidation/native-owned-itinerary-interruption-validation.json)
+verifies six passing Mac parent functions/eight invocations. Its five children
+include the two deliberate SIGKILL cases and three passing native-write-failure
+regressions. Three iPhone functions/five invocations qualify the affected shared
+ordinary/publication paths, with no mobile interruption claim. All 813 Core and
+1160 native inputs reconcile with actual products; only the existing test file
+changes. All 90 production inputs, 514 frozen fixtures and schema sources stay
+unchanged. Final cohorts have no failures, skips, timeouts or SQLite-unlink
+diagnostics. Strict Swift/Markdown and whitespace checks pass.
+
+Original child inputs, proof files, termination records and transcripts are
+retained with the actual interrupted Mac datasets. Source manifests are
+losslessly compressed. Verified cleanup removes only the five closed passing
+phone stores. Distinct Item/List owned-data and label-collision faults, Q163,
+native interaction, cloud/accounts, physical power loss and whole-app acceptance
+remain open. No production hook, package, target, schema, format or writer gate
+is added; signing stays deferred.

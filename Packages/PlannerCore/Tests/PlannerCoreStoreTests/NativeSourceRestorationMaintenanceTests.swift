@@ -715,6 +715,60 @@ struct NativeSourceRestorationMaintenanceTests {
     try await checkMixedOwnedItinerary(recoveryFailure: recoveryFailure, nativeSaveFailure: false)
   }
 
+  private func expectMixedItineraryGraph(_ data: Data, preserving before: Data) throws {
+    let original = try #require(
+      JSONSerialization.jsonObject(with: before) as? [String: Any])
+    var graph = try #require(
+      JSONSerialization.jsonObject(with: data) as? [String: Any])
+    let originalMarkers = try #require(original["deletionMarkers"] as? [[String: Any]])
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let closures = markers.filter { marker in
+      !originalMarkers.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(closures.count == 7)
+    let expectedTargets: [[String: Any]] = [
+      [
+        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000831",
+        "lifetimeId": "00000000-0000-4000-8000-000000000832",
+      ],
+      [
+        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000833",
+        "lifetimeId": "00000000-0000-4000-8000-000000000834",
+      ],
+      [
+        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000835",
+        "lifetimeId": "00000000-0000-4000-8000-000000000836",
+      ],
+      [
+        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
+        "lifetimeId": "00000000-0000-4000-8000-000000000872",
+      ],
+      [
+        "kind": "source",
+        "source": [
+          "kind": "schedule", "id": "00000000-0000-4000-8000-000000000873",
+          "lifetimeId": "00000000-0000-4000-8000-000000000874",
+        ],
+      ],
+      [
+        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000875",
+        "lifetimeId": "00000000-0000-4000-8000-000000000876",
+      ],
+      [
+        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000877",
+        "lifetimeId": "00000000-0000-4000-8000-000000000878",
+      ],
+    ]
+    for target in expectedTargets {
+      #expect(
+        closures.contains { $0["target"] as? NSDictionary == NSDictionary(dictionary: target) })
+    }
+    graph["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+  }
+
   private func checkMixedOwnedItinerary(recoveryFailure: Bool, nativeSaveFailure: Bool) async throws
   {
     let fixture = try await SourceRestorationFixture.make(kind: .itinerary)
@@ -765,6 +819,46 @@ struct NativeSourceRestorationMaintenanceTests {
     try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
     try await fixture.addMixedMetadataToLosingItinerary()
     #if os(macOS)
+      let environment = ProcessInfo.processInfo.environment
+      if let directoryPath = environment["PLANNER_SOURCE_RESTORATION_CHILD"],
+        let stage = environment["PLANNER_SOURCE_RESTORATION_STAGE"],
+        ["mixedBeforeNativeSave", "mixedAfterNativeSave"].contains(stage)
+      {
+        let directory = URL(fileURLWithPath: directoryPath)
+        let input: [String: Any] = [
+          "dataset": fixture.configuration.storeURL.deletingLastPathComponent()
+            .deletingLastPathComponent().path,
+          "namespace": fixture.namespace.path, "baseline": before.base64EncodedString(),
+          "files": originalFiles.mapValues { $0.base64EncodedString() },
+          "control": originalControl.base64EncodedString(), "receipts": receipts ?? NSArray(),
+        ]
+        try JSONSerialization.data(withJSONObject: input).write(
+          to: directory.appendingPathComponent("input.json"), options: .atomic)
+        let storeURL = fixture.configuration.storeURL.standardizedFileURL
+        let notification =
+          stage == "mixedBeforeNativeSave" ? ModelContext.willSave : ModelContext.didSave
+        let observer = NotificationCenter.default.addObserver(
+          forName: notification, object: nil, queue: nil
+        ) { value in
+          guard let context = value.object as? ModelContext,
+            context.container.configurations.contains(where: {
+              $0.url.standardizedFileURL == storeURL
+            })
+          else { return }
+          do {
+            try JSONSerialization.data(withJSONObject: [
+              "stage": stage, "processIdentifier": Int(getpid()),
+            ]).write(to: directory.appendingPathComponent("proof.json"), options: .atomic)
+          } catch { print("SOURCE_RESTORATION_PROOF_ERROR \(error)") }
+          fflush(nil)
+          if kill(getpid(), SIGKILL) != 0 { return }
+          while true { pause() }
+        }
+        let result = await fixture.planner.exportData(session: fixture.session)
+        NotificationCenter.default.removeObserver(observer)
+        Issue.record("Mixed-owned retirement must stop at its actual save boundary: \(result)")
+        return
+      }
       var unverifiedMaintenance: UUID?
       var unverifiedFiles: [String: Data]?
       if nativeSaveFailure {
@@ -876,55 +970,7 @@ struct NativeSourceRestorationMaintenanceTests {
     if let pendingExport {
       #expect(try fixture.graph(pendingExport) == fixture.graph(after))
     }
-    let original = try fixture.object(before)
-    var graph = try fixture.object(after)
-    let originalMarkers = try #require(original["deletionMarkers"] as? [[String: Any]])
-    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
-    let closures = markers.filter { marker in
-      !originalMarkers.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
-    }
-    #expect(closures.count == 7)
-    let expectedTargets: [[String: Any]] = [
-      [
-        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000831",
-        "lifetimeId": "00000000-0000-4000-8000-000000000832",
-      ],
-      [
-        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000833",
-        "lifetimeId": "00000000-0000-4000-8000-000000000834",
-      ],
-      [
-        "kind": "itineraryEntry", "id": "00000000-0000-4000-8000-000000000835",
-        "lifetimeId": "00000000-0000-4000-8000-000000000836",
-      ],
-      [
-        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
-        "lifetimeId": "00000000-0000-4000-8000-000000000872",
-      ],
-      [
-        "kind": "source",
-        "source": [
-          "kind": "schedule", "id": "00000000-0000-4000-8000-000000000873",
-          "lifetimeId": "00000000-0000-4000-8000-000000000874",
-        ],
-      ],
-      [
-        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000875",
-        "lifetimeId": "00000000-0000-4000-8000-000000000876",
-      ],
-      [
-        "kind": "labelAssociation", "id": "00000000-0000-4000-8000-000000000877",
-        "lifetimeId": "00000000-0000-4000-8000-000000000878",
-      ],
-    ]
-    for target in expectedTargets {
-      #expect(
-        closures.contains { $0["target"] as? NSDictionary == NSDictionary(dictionary: target) })
-    }
-    graph["deletionMarkers"] = markers.filter { marker in
-      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
-    }
-    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    try expectMixedItineraryGraph(after, preserving: before)
     if let pendingMaintenance {
       let beforeRetryFiles = try fixture.files()
       guard
@@ -3746,6 +3792,110 @@ private struct SourceRestorationFixture {
 
 #if os(macOS)
   extension NativeSourceRestorationMaintenanceTests {
+    @Test func mixedOwnedInterruptionPreservesCompleteWinnerAndRecovery() async throws {
+      let stages = ["mixedBeforeNativeSave", "mixedAfterNativeSave"]
+      if let stage = ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"],
+        stages.contains(stage)
+      {
+        try await checkMixedOwnedItinerary(recoveryFailure: false, nativeSaveFailure: false)
+        return
+      }
+      for stage in stages {
+        let directory = try makePlannerStoreFixtureDirectory()
+        try runSourceRestorationProcess(directory: directory, stage: stage, directEntries: false)
+        let input = try #require(
+          JSONSerialization.jsonObject(
+            with: Data(contentsOf: directory.appendingPathComponent("input.json")))
+            as? [String: Any])
+        let dataset = URL(fileURLWithPath: try #require(input["dataset"] as? String))
+        let namespace = URL(fileURLWithPath: try #require(input["namespace"] as? String))
+        let baseline = try #require(
+          (input["baseline"] as? String).flatMap { Data(base64Encoded: $0) })
+        let control = try #require(
+          (input["control"] as? String).flatMap { Data(base64Encoded: $0) })
+        let files = try #require(input["files"] as? [String: String])
+        let originalReceipts = try #require(input["receipts"] as? NSArray)
+        let proof = try #require(
+          JSONSerialization.jsonObject(
+            with: Data(contentsOf: directory.appendingPathComponent("proof.json")))
+            as? [String: Any])
+        #expect(proof["stage"] as? String == stage)
+        #expect((proof["processIdentifier"] as? Int ?? 0) > 1)
+        let configuration = PlannerStorageConfiguration(
+          storeURL: dataset.appendingPathComponent("store/Planner.sqlite"),
+          controlURL: dataset.appendingPathComponent("control/writer"),
+          recoveryDirectoryURL: dataset.appendingPathComponent("recovery"),
+          processRole: .mainApplication, storageMode: .localOnly)
+        #expect(try Data(contentsOf: configuration.controlURL) == control)
+        let identity = try #require(
+          JSONSerialization.jsonObject(with: control) as? [String: Any])
+        let namespaceIdentifier = try #require(
+          (identity["namespaceId"] as? String).flatMap(UUID.init(uuidString:)))
+        let planner = Planner(configuration: configuration)
+        guard
+          case .listed(let view) = await planner.inspectRecovery(
+            request: .namespace(namespaceId: namespaceIdentifier)),
+          let preparation = view.preparedMaintenance.first
+        else { throw CancellationError() }
+        #expect(view.preparedMaintenance.count == 1)
+        guard case .ready(let session) = await planner.bootstrap() else {
+          throw CancellationError()
+        }
+        let fixture = SourceRestorationFixture(
+          configuration: configuration, planner: planner, session: session,
+          source: .init(
+            kind: .itinerary, id: UUID(uuidString: "00000000-0000-4000-8000-000000000301")!),
+          namespace: namespace, baseline: baseline)
+        if stage == "mixedAfterNativeSave" {
+          guard case .status(let status) = await planner.read(session: session, request: .status),
+            case .known(_, let operations, let pending, let blocked) = status.recovery
+          else { throw CancellationError() }
+          #expect(operations.isEmpty && pending == [preparation.maintenanceId] && blocked)
+          guard
+            case .complete(let checkpoint) = await planner.retryMaintenanceRecovery(
+              session: session, maintenanceId: preparation.maintenanceId),
+            case .complete(let repeated) = await planner.retryMaintenanceRecovery(
+              session: session, maintenanceId: preparation.maintenanceId)
+          else { throw CancellationError() }
+          #expect(checkpoint == repeated)
+        } else {
+          let beforeRetry = try fixture.files()
+          guard
+            case .rejected(let reason) = await planner.retryMaintenanceRecovery(
+              session: session, maintenanceId: preparation.maintenanceId)
+          else { throw CancellationError() }
+          #expect(reason.code == "maintenanceNotApplied")
+          #expect(try fixture.files() == beforeRetry)
+        }
+        guard case .exported(let current) = await planner.exportData(session: session) else {
+          throw CancellationError()
+        }
+        try expectMixedItineraryGraph(current, preserving: baseline)
+        let envelope = try fixture.envelope()
+        #expect(envelope["receipts"] as? NSArray == originalReceipts)
+        let acknowledgements = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+        #expect(acknowledgements.count == 1)
+        let acknowledgedIdentifier = try #require(
+          acknowledgements.first?["maintenanceId"] as? String)
+        if stage == "mixedBeforeNativeSave" {
+          #expect(acknowledgedIdentifier != preparation.maintenanceId.uuidString)
+        } else {
+          #expect(acknowledgedIdentifier == preparation.maintenanceId.uuidString)
+        }
+        for (name, encoded) in files {
+          #expect(
+            try Data(contentsOf: namespace.appendingPathComponent(name))
+              == Data(base64Encoded: encoded))
+        }
+        #expect(try Data(contentsOf: configuration.controlURL) == control)
+        let reopened = Planner(configuration: configuration)
+        guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+          case .exported(let persisted) = await reopened.exportData(session: reopenedSession)
+        else { throw CancellationError() }
+        #expect(try fixture.graph(persisted) == fixture.graph(current))
+      }
+    }
+
     @Test func failedMixedOwnedNativeSavePreservesAllContentsAndRetriesFresh() async throws {
       guard
         ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
@@ -3987,6 +4137,8 @@ private struct SourceRestorationFixture {
         selectedTest = "failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh"
       } else if stage == "mixedOwnedNativeSaveFailure" {
         selectedTest = "failedMixedOwnedNativeSavePreservesAllContentsAndRetriesFresh"
+      } else if stage == "mixedBeforeNativeSave" || stage == "mixedAfterNativeSave" {
+        selectedTest = "mixedOwnedInterruptionPreservesCompleteWinnerAndRecovery"
       } else {
         selectedTest = "sourceRestorationInterruptionPreservesPreparationAndActivationOrder"
       }
