@@ -62,6 +62,14 @@ import XCTest
       application.openPlannerSection("Items")
       let item = application.savedPlannerItemRows("Window Item 001").firstMatch
       XCTAssertTrue(item.waitForExistence(timeout: 15))
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        capture("Global Items before native sidebar dismissal")
+        let details = application.staticTexts["Choose an Item"].firstMatch
+        XCTAssertTrue(details.waitForExistence(timeout: 5))
+        XCTAssertTrue(details.isHittable)
+        details.activateForPlannerJourney()
+        capture("Global Items after tapping the unobscured detail pane")
+      }
       item.activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["Window notes 1"].waitForExistence(timeout: 10))
       capture("Selected Item presentation before native contrast audit")
