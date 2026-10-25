@@ -96,10 +96,20 @@ An independently delivered smaller membership becomes canonical only when its pr
 
 All 810 Core inputs match the 1,157-input phone execution. Two current binaries on each platform are verified. Only the added test function differs from a4236772; every existing test line and production input is unchanged. This adds no declaration, format, target or test boundary. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-removal-generation-fixture-cleanup.json) removes only this batch's closed passing stores and preserves failed/interrupted datasets. Actual cloud delivery remains separate.
 
+## Termination before baseline publication
+
+The [publication-interruption follow-up](evidence/native-membership-consolidation/post-closure-completion-publication-interruption-validation.json) now covers the earlier failure boundary. A test-owned child blocks the actual recovery-directory write, verifies that checkpoint 7, metadata/control compatibility 18 and the original portable-v2 bytes remain current, then requests its own SIGKILL. After termination, fresh public recovery inspection still reads that original copy and Share still requires the main app. Restoring the directory permission lets a fresh main-app bootstrap publish v4/compatibility 20. Saved content, references, identities and all fourteen historical files survive.
+
+The final Mac run passes ten functions, including both pre-publication and post-publication interruption tests and the four Remove/Add generation cases. All seven iPhone Q156 functions pass at the same source revision. Both final child processes terminate with signal 9 within their deadlines and have clean logs. This establishes retry after the two represented failed-write states; it does not simulate termination halfway through an atomic write or physical power loss.
+
+The evidence audit rejected one earlier Mac packet even though its parent runner returned success. After requesting SIGKILL, its old child briefly executed the fallback Issue line before the kernel delivered the signal. Both child paths now wait after a successful signal request. The old test's storage assertions are preserved; the ambiguous packet and its datasets remain retained. The final verifier checks the actual child logs, signals, original recovery bytes and control values independently of the parent test result.
+
+All 810 Core and 1,157 phone inputs reconcile, with only PostClosureCompletionTests changed since f1e73a25. Shipping code and existing mobile tests stay unchanged; two current binaries per platform are verified. Child input/publication/termination evidence and compressed logs are archived before parent-work cleanup. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-publication-fixture-cleanup.json) removes 55 closed passing directories totaling 28,858,392 nominal file bytes and explicitly retains every interrupted child dataset and the ambiguous Mac run. No signing, new target or test seam is introduced.
+
 ## Remaining work
 
 - Broaden native paths beyond the represented phone/dark-iPad checkbox, relaunch and independent-appearance journeys; actual Mac UI remains separate.
-- Qualify earlier upgrade and other command interruption states beyond the represented cases. Broader lifetime/family reconciliation remains separate from the proven baseline and Remove/Add generation cases.
+- Qualify other command interruption states beyond the represented cases. Broader lifetime/family reconciliation remains separate from the proven baseline and Remove/Add generation cases; the two compatibility failure boundaries now have actual termination/retry evidence.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 
 No new package, target, production test hook or direct test boundary was introduced.
