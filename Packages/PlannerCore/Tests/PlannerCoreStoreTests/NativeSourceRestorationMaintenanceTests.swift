@@ -708,9 +708,10 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
   }
 
-  @Test func mixedLosingItineraryContentsRetireInOneTransactionWithoutChangingTheWinner()
-    async throws
-  {
+  @Test(arguments: [false, true])
+  func mixedLosingItineraryContentsRetireInOneTransactionWithoutChangingTheWinner(
+    recoveryFailure: Bool
+  ) async throws {
     let fixture = try await SourceRestorationFixture.make(kind: .itinerary)
     func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
       let result = await fixture.planner.execute(
@@ -754,12 +755,61 @@ struct NativeSourceRestorationMaintenanceTests {
     guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
     let receipts = try fixture.envelope()["receipts"] as? NSArray
+    let originalFiles = try fixture.files()
+    let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
     try await fixture.addMixedMetadataToLosingItinerary()
+    var pendingMaintenance: UUID?
+    var pendingExport: Data?
+    if recoveryFailure {
+      let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let committedResult = await fixture.planner.exportData(session: fixture.session)
+      NotificationCenter.default.removeObserver(observer)
+      try obstruction.restore()
+      #expect(obstruction.didObstruct && obstruction.failure == nil)
+      guard case .exported(let committedData) = committedResult,
+        case .status(let status) = await fixture.planner.read(
+          session: fixture.session, request: .status),
+        case .known(_, let operations, let maintenance, let blocked) = status.recovery
+      else {
+        Issue.record(
+          "Mixed owned retirement must remain readable with truthful incomplete recovery: \(committedResult)"
+        )
+        return
+      }
+      #expect(operations.isEmpty && maintenance.count == 1 && blocked)
+      pendingMaintenance = try #require(maintenance.first)
+      pendingExport = committedData
+      let files = try fixture.files()
+      for (name, bytes) in originalFiles { #expect(files[name] == bytes) }
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+      let blockedOperation = UUID()
+      guard
+        case .rejected(let blockedReason) = await fixture.planner.execute(
+          .init(
+            operationId: blockedOperation, session: fixture.session,
+            command: .createTag(content: .init(name: "Wait for owned-content recovery")))
+        ).outcome,
+        case .noReliableEvidence = await fixture.planner.operationStatus(
+          session: fixture.session, operationId: blockedOperation)
+      else { throw CancellationError() }
+      #expect(blockedReason.code == "mutationBlocked")
+      #expect(try fixture.files() == files)
+    }
     let outcome = await fixture.planner.exportData(session: fixture.session)
     guard case .exported(let after) = outcome else {
       Issue.record("Mixed losing contents must retire together: \(outcome)")
       return
+    }
+    if let pendingExport {
+      #expect(try fixture.graph(pendingExport) == fixture.graph(after))
     }
     let original = try fixture.object(before)
     var graph = try fixture.object(after)
@@ -810,6 +860,25 @@ struct NativeSourceRestorationMaintenanceTests {
       !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
     }
     #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    if let pendingMaintenance {
+      let beforeRetryFiles = try fixture.files()
+      guard
+        case .exported(let unchanged) = await fixture.planner.exportData(session: fixture.session)
+      else { throw CancellationError() }
+      #expect(try fixture.graph(unchanged) == fixture.graph(after))
+      #expect(try fixture.files() == beforeRetryFiles)
+      guard
+        case .complete(let checkpoint) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance),
+        case .complete(let repeated) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance)
+      else {
+        Issue.record("Committed mixed-owned maintenance must Retry without repeating retirement.")
+        return
+      }
+      #expect(checkpoint == repeated)
+      #expect(try fixture.envelope()["checkpointGeneration"] as? String == String(checkpoint))
+    }
     let envelope = try fixture.envelope()
     #expect(envelope["receipts"] as? NSArray == receipts)
     let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])

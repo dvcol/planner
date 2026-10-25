@@ -336,3 +336,46 @@ frozen fixtures and 17 other schema sources remain unchanged. The retained
 changes only snapshot method signatures/bodies. Strict Swift/Markdown lint and
 whitespace checks pass; final cohorts have no failures, skips or SQLite unlink
 warnings. Native UI, system, cloud and physical acceptance remain separate.
+
+## Mixed Itinerary publication failure
+
+The existing mixed-owned Itinerary test now covers ordinary retirement and a
+real post-save recovery-publication obstruction. Its winning source keeps its
+notes, guide, booking, Category/Tag selections and ordered direct/List stops.
+The losing source contributes seven exact closures, including its repeated-stop
+state. Shared sources and every other graph field retain the original values.
+
+An actual `ModelContext.didSave` notification makes the recovery namespace
+unwritable after the domain transaction. Export still returns the complete
+canonical graph. Public status identifies one committed maintenance awaiting
+recovery and blocks changes; an attempted Tag creation rejects with
+`mutationBlocked` and has no reliable applied evidence. Original recovery bytes,
+writer control and user receipts stay unchanged. Repeated reads cannot publish
+or alter that recovery state.
+
+Explicit Retry acknowledges the existing committed maintenance. Repeated Retry
+returns its original checkpoint. The saved proposal equals the complete export;
+reopen and late redelivery preserve that same graph without merging contents.
+No production change is needed.
+
+The [validation record](evidence/native-membership-consolidation/native-owned-itinerary-publication-validation.json)
+reconciles three passing functions and five invocations on both Mac and iPhone
+Simulator. The mixed cases run with existing preparation-failure and committed
+source-recovery regressions. Actual products and all 813 Core inputs match;
+1159 of 1160 native inputs are unchanged. Only the existing test file changes.
+All 90 Core production inputs, 514 frozen fixtures and schema sources remain
+unchanged. Strict Swift/Markdown lint and whitespace checks pass, with no skips,
+failures, timeouts or SQLite-unlink diagnostics in the final cohorts.
+
+The first build lacked `try` in a new assertion and executed no tests. The first
+runtime expected export to fail, but its actual complete export follows the
+accepted readable-data policy. Correcting that test expectation leaves
+production unchanged. Both original failures and inputs remain retained.
+Verified cleanup removes twelve closed marked stores from passing runs.
+
+This qualifies recovery publication for this mixed Itinerary payload. It does
+not qualify its native-save rollback or actual process interruption, the
+distinct Item/List owned-content cases or label-collision faults. Those concrete
+checks, Q163 and native/system/physical acceptance remain on the map. No new
+module, test boundary, target, schema, format or gate is introduced. Signing
+stays deferred.

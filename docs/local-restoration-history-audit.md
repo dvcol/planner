@@ -53,9 +53,12 @@ turn historical product hashes into current execution credit.
 ## Concrete local work still open
 
 1. Reconcile payload-specific save/publication/interruption promises in the Q161
-   owned-content reports with the existing shared transaction tests. Run a new
-   payload-specific case where a promised outcome is still unestablished. Do not
-   claim a Cartesian fault matrix or add a new recovery framework by inference.
+   owned-content reports with the existing shared transaction tests. The
+   [mixed Itinerary publication check](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure)
+   now preserves its complete graph through real publication failure and Retry.
+   Its native-save/actual interruption cases and distinct Item/List owned-data
+   and label-collision faults remain separate. Do not claim a Cartesian fault
+   matrix or add a new recovery framework by inference.
 2. Await Q163 for the conflicting source/owned-family authority. Preserve the
    current atomic rejection while that decision is pending.
 

@@ -2,6 +2,8 @@
 
 ## Current frontier
 
+The [mixed Itinerary publication checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure) advances the existing local fault checks without changing policy or production. Actual publication failure retains the complete canonical graph, truthful incomplete recovery and blocked writes; Retry/reopen/redelivery pass. Three functions and five cases pass on both Mac and phone. Other named payload/fault cases retain their limits in the audit; Q163 remains the pending authority choice and signing stays deferred.
+
 The [prepared Move/Capture checkpoint](prototypes/native-prepared-move-capture.md) closes the named preparation-only replay check through the existing interface. Final Mac/phone cohorts each pass five functions and 66 cases while retaining full saved state, recovery bytes and an unrelated edited draft. Production code remains unchanged. The [audit](local-restoration-history-audit.md) now leaves Q161 payload-specific fault promises and Q163 explicit; system/physical/native acceptance stays separate. No new policy answer is needed for this test-only checkpoint.
 
 The [history audit](local-restoration-history-audit.md) distinguishes completed later checkpoints from historical open lists. Current Mac/phone cohorts each pass eight existing functions and 119 invocations with unchanged inputs. Prepared-only Move/Capture now has the subsequent checkpoint above. Payload-specific fault promises remain local checks, not signing or product-policy gates. Q163 below is the sole new pending policy choice from this audit; other native/system/physical gates keep their existing scope.
