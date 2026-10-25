@@ -210,7 +210,10 @@ struct SavedItineraryDetail: View {
   @State private var removedSelectionMessage: String?
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var contentWidth: CGFloat = 0
+    @State private var contentHeight: CGFloat = 0
+    @State private var collectionTitleHeight: CGFloat = 0
     @State private var entryEditMode: EditMode = .inactive
   #endif
 
@@ -293,7 +296,26 @@ struct SavedItineraryDetail: View {
               #if os(iOS)
                 .safeAreaInset(edge: .top, spacing: 0) {
                   if showsCollectionTitle {
-                    itineraryTitle(itinerary)
+                    Group {
+                      if dynamicTypeSize.isAccessibilitySize {
+                        ScrollView {
+                          itineraryTitle(itinerary)
+                          .frame(maxWidth: .infinity, alignment: .leading)
+                          .fixedSize(horizontal: false, vertical: true)
+                          .onGeometryChange(for: CGFloat.self) { geometry in
+                            geometry.size.height
+                          } action: { height in
+                            collectionTitleHeight = height
+                          }
+                        }
+                        .frame(height: min(collectionTitleHeight, contentHeight / 3))
+                        .scrollBounceBehavior(.basedOnSize)
+                        .accessibilityLabel("Itinerary name")
+                        .accessibilityIdentifier("saved.itinerary.heading")
+                      } else {
+                        itineraryTitle(itinerary)
+                      }
+                    }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                     .background(.bar)
@@ -333,10 +355,11 @@ struct SavedItineraryDetail: View {
           ideal: usesMapRepresentation ? 560 : 400, max: 800
         )
         #if os(iOS)
-          .onGeometryChange(for: CGFloat.self) { geometry in
-            geometry.size.width
-          } action: { width in
-            contentWidth = width
+          .onGeometryChange(for: CGSize.self) { geometry in
+            geometry.size
+          } action: { size in
+            contentWidth = size.width
+            contentHeight = size.height
           }
         #endif
         .overlay(alignment: .topTrailing) {

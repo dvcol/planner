@@ -7,6 +7,78 @@ import XCTest
 @MainActor
 final class ItineraryWindowJourneyTests: XCTestCase {
   #if os(iOS)
+    func testLongItineraryTitleLeavesItsRouteUsableAtAccessibilitySizes() throws {
+      try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
+      continueAfterFailure = false
+      XCTAssertTrue(UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory)
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "itinerary-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      XCUIDevice.shared.orientation = .portrait
+      waitForOrientation(application, landscape: false)
+      openRoute("Windowed route", application: application)
+      application.savedPlannerItineraryEditControl().activateForPlannerJourney()
+      let titleField = application.textFields["saved.itinerary.title"]
+      XCTAssertTrue(titleField.waitForExistence(timeout: 10))
+      let name =
+        "Tokyo weekend museum visits and favourite restaurants, gardens, bookshops and rainy-day alternatives"
+      titleField.activateForPlannerJourney()
+      titleField.press(forDuration: 1)
+      let selectAll = application.descendants(matching: .any).matching(
+        NSPredicate(format: "label == %@ OR identifier == %@", "Select All", "Select All")
+      ).firstMatch
+      XCTAssertTrue(selectAll.waitForExistence(timeout: 5))
+      selectAll.activateForPlannerJourney()
+      titleField.typeText(name)
+      XCTAssertTrue(titleField.waitForPlannerValue(name))
+      application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+      XCTAssertTrue(titleField.waitForNonExistence(timeout: 10))
+      let hideSidebar = application.buttons["Hide Sidebar"].firstMatch
+      if hideSidebar.exists && hideSidebar.isHittable {
+        hideSidebar.activateForPlannerJourney()
+      }
+      let contents = application.descendants(matching: .any)
+        .matching(identifier: "saved.itinerary.contents").firstMatch
+      XCTAssertTrue(contents.waitForExistence(timeout: 10))
+      var appearanceIdentifier: String?
+      for landscape in [false, true] {
+        XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
+        waitForOrientation(application, landscape: landscape)
+        capture(application, "Long itinerary title at accessibility size, landscape \(landscape)")
+        assertVisibleItineraryContext(name, in: contents, application: application)
+        let row = try revealExpandedActivity(
+          "Window Activity 001", in: contents, application: application)
+        if let appearanceIdentifier {
+          XCTAssertEqual(row.identifier, appearanceIdentifier)
+        } else {
+          appearanceIdentifier = row.identifier
+        }
+        let heading = application.staticTexts["saved.itinerary.title"]
+        let nameArea = application.scrollViews["saved.itinerary.heading"]
+        XCTAssertTrue(nameArea.exists)
+        let separated = NSPredicate { _, _ in !nameArea.frame.intersects(row.frame) }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: separated, object: application)], timeout: 5),
+          .completed,
+          "Name area \(nameArea.frame), title \(heading.frame), activity \(row.frame), route \(contents.frame)"
+        )
+        if !landscape {
+          let startingPosition = heading.frame.minY
+          for _ in 0..<3 { nameArea.swipeUp() }
+          XCTAssertLessThan(heading.frame.minY, startingPosition)
+          XCTAssertTrue(row.isHittable)
+          capture(application, "Long itinerary name remains readable in its native scroll area")
+        }
+        XCTAssertTrue(application.plannerElement("saved.itinerary.filters").isHittable)
+        XCTAssertTrue(application.plannerElement("saved.itinerary.entry.new").isHittable)
+      }
+      application.terminate()
+    }
+
     func testNarrowTabletKeepsItsItineraryContextWhileScrollingAndRotating() throws {
       try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
       continueAfterFailure = false
@@ -52,9 +124,22 @@ final class ItineraryWindowJourneyTests: XCTestCase {
       for landscape in [true, false] {
         XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
         waitForOrientation(application, landscape: landscape)
-        XCTAssertEqual(
-          try revealExpandedActivity("Window Activity 020", in: catalog, application: application)
-            .identifier, identifier)
+        let originalAppearance = application.plannerElement(identifier)
+        for _ in 0..<30 {
+          if isFullyVisible(originalAppearance, in: catalog, application: application) { break }
+          let verticalMovement: CGFloat
+          if originalAppearance.exists && originalAppearance.frame.midY < catalog.frame.midY {
+            verticalMovement = 0.2
+          } else {
+            verticalMovement = -0.2
+          }
+          let start = catalog.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+          let end = catalog.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5 + verticalMovement))
+          start.press(forDuration: 0.05, thenDragTo: end)
+        }
+        XCTAssertTrue(isFullyVisible(originalAppearance, in: catalog, application: application))
+        XCTAssertEqual(originalAppearance.label, "Window Activity 020")
         capture(application, "Itinerary context after rotation, landscape \(landscape)")
         assertVisibleItineraryContext("Windowed route", in: catalog, application: application)
       }
@@ -68,15 +153,28 @@ final class ItineraryWindowJourneyTests: XCTestCase {
         .matching(identifier: "saved.itinerary.title").allElementsBoundByIndex
       let nativeTitles = application.navigationBars.staticTexts.matching(identifier: title)
         .allElementsBoundByIndex
-      let visible = (headings + nativeTitles).filter {
-        $0.exists && $0.isHittable && $0.label == title
-          && $0.frame.minX >= catalog.frame.minX && $0.frame.maxX <= catalog.frame.maxX
+      let nameArea = application.scrollViews["saved.itinerary.heading"]
+      let visibleFrames = (headings + nativeTitles).compactMap { heading -> CGRect? in
+        guard heading.exists, heading.label == title else { return nil }
+        let frame: CGRect
+        if nameArea.exists {
+          guard nameArea.isHittable else { return nil }
+          frame = heading.frame.intersection(nameArea.frame)
+        } else {
+          guard heading.isHittable else { return nil }
+          frame = heading.frame
+        }
+        guard !frame.isEmpty, frame.minX >= catalog.frame.minX,
+          frame.maxX <= catalog.frame.maxX
+        else { return nil }
+        return frame
       }
-      XCTAssertFalse(visible.isEmpty, "The current Itinerary must remain identifiable in its pane.")
-      for heading in visible {
+      XCTAssertFalse(
+        visibleFrames.isEmpty, "The current Itinerary must remain identifiable in its pane.")
+      for frame in visibleFrames {
         for button in application.navigationBars.buttons.allElementsBoundByIndex
         where button.isHittable {
-          XCTAssertFalse(heading.frame.intersects(button.frame))
+          XCTAssertFalse(frame.intersects(button.frame))
         }
       }
     }
