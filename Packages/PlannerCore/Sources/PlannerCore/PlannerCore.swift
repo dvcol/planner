@@ -3995,7 +3995,9 @@ public actor Planner {
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     let snapshot: PlannerDataSnapshot
     if !sources.retired.isEmpty {
-      let before = sources.project(try maintenanceSnapshot(context, sourceProjection: sources))
+      let before = sources.project(
+        try maintenanceSnapshot(
+          context, memberships: records.map { try $0.value() }, sourceProjection: sources))
       try requireCompleteExportGraph(before, context: context)
       let consolidation = try PlannerMembershipConsolidation(snapshot: before, detachedExpanded: [])
       snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)

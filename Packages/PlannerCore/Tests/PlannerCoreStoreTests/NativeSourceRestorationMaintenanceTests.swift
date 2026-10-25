@@ -412,8 +412,29 @@ private struct SourceRestorationFixture {
         else { throw CancellationError() }
       }
     }
-    guard case .exported(let baseline) = await fixture.planner.exportData(session: fixture.session)
+    guard
+      case .exported(let withEntries) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
+    let references = Self(
+      configuration: fixture.configuration, planner: fixture.planner, session: fixture.session,
+      source: fixture.source, namespace: fixture.namespace, baseline: withEntries)
+    guard
+      case .decoded(let backup) = fixture.planner.decodeImport(
+        try references.siblingMembershipData(formatVersion: 5)),
+      case .reviewed(let review) = await fixture.planner.prepareReview(
+        session: fixture.session, command: .applyImport(backup: backup, mode: .overwrite)),
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .exported(let baseline) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let saved) = fixture.planner.decodeImport(baseline)
+    else { throw CancellationError() }
+    #expect(saved.backup.memberships.count == 1 && saved.backup.itineraryEntries.count == 2)
+    #expect(
+      saved.backup.membershipProvenance.first?.item.lifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000815")
     return .init(
       configuration: fixture.configuration, planner: fixture.planner, session: fixture.session,
       source: fixture.source, namespace: fixture.namespace, baseline: baseline)
@@ -425,6 +446,20 @@ private struct SourceRestorationFixture {
     let entries = try #require(object(baseline)["itineraryEntries"] as? [[String: Any]])
     try await bindEntriesToLosingCandidate(
       entries.map { try #require(($0["id"] as? String).flatMap(UUID.init(uuidString:))) })
+    try await bindMembershipsToLosingCandidate()
+  }
+
+  @MainActor func bindMembershipsToLosingCandidate() throws {
+    let context = try nativeContext()
+    let candidate = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      })
+    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()) {
+      membership.itemLifetimeId = candidate.lifetimeId
+      membership.item = candidate
+    }
+    try context.save()
   }
 
   func siblingMembershipData(formatVersion: Int) throws -> Data {
@@ -565,7 +600,9 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
-  @MainActor func deliverUnawareSiblingMembership(expandedEntryIdentifier: UUID? = nil) throws
+  @MainActor func deliverSiblingMembership(
+    expandedEntryIdentifier: UUID? = nil, observedRemovals: [UUID] = []
+  ) throws
     -> UUID
   {
     try deliverCandidate()
@@ -599,7 +636,11 @@ private struct SourceRestorationFixture {
     context.insert(
       PlannerSchemaV19.MembershipProvenance(
         membershipId: identifier, membershipLifetimeId: lifetime,
-        recordData: try JSONEncoder().encode(snapshot.baselineProvenance)))
+        recordData: try JSONEncoder().encode(
+          PlannerPortableMembershipProvenance(
+            membershipId: identifier, membershipLifetimeId: lifetime,
+            list: snapshot.baselineProvenance.list, item: snapshot.baselineProvenance.item,
+            observedRemovalIds: observedRemovals))))
     try context.save()
     #expect(
       try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).count
@@ -609,25 +650,31 @@ private struct SourceRestorationFixture {
 
   @MainActor func bindLabelToLosingCandidate() throws {
     let context = try nativeContext()
-    let association = try #require(
-      context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()).first {
+    let associations = try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>())
+      .filter {
         $0.labelId == source.id
-      })
+      }
+    #expect(!associations.isEmpty)
     let lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
     if source.kind == .category {
       let category = try #require(
         context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
           $0.id == source.id && $0.lifetimeId == lifetime
         })
-      association.category = category
+      for association in associations {
+        association.category = category
+        association.labelLifetimeId = lifetime
+      }
     } else {
       let tag = try #require(
         context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
           $0.id == source.id && $0.lifetimeId == lifetime
         })
-      association.tag = tag
+      for association in associations {
+        association.tag = tag
+        association.labelLifetimeId = lifetime
+      }
     }
-    association.labelLifetimeId = lifetime
     try context.save()
   }
 
@@ -731,6 +778,29 @@ private struct SourceRestorationFixture {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.sortedKeys]
     return try encoder.encode(values)
+  }
+
+  @MainActor func corruptExpandedFlag() throws {
+    let context = try nativeContext()
+    let completion = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).first)
+    #expect(completion.localDone == true)
+    completion.localDone = false
+    try context.save()
+  }
+
+  @MainActor func rawExpandedData() throws -> Data {
+    let context = try nativeContext()
+    let values = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).map {
+      [
+        "entry": $0.listEntryId?.uuidString ?? "",
+        "entryLifetime": $0.listEntryLifetimeId?.uuidString ?? "",
+        "membership": $0.membershipId?.uuidString ?? "",
+        "membershipLifetime": $0.membershipLifetimeId?.uuidString ?? "",
+        "done": String(describing: $0.localDone),
+      ]
+    }.sorted { ($0["entry"] ?? "") < ($1["entry"] ?? "") }
+    return try JSONSerialization.data(withJSONObject: values, options: [.sortedKeys])
   }
 
   @MainActor func bindEntriesToLosingCandidate(_ identifiers: [UUID]) throws {
@@ -1201,6 +1271,163 @@ struct NativeSourceRestorationEntryTests {
 }
 
 struct NativeRestoredTargetReferenceTests {
+  @Test(arguments: [3, 4])
+  func oldValidBackupCannotReintroduceAnUnawareSiblingAfterStrictRemove(formatVersion: Int)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make()
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    guard
+      case .applied(let addition, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addMembership(
+            itemId: fixture.source.id, listId: listIdentifier, placement: .last))
+      ).outcome,
+      case .membership(let identifier, _, _)? = addition.generatedReferences.first
+    else { throw CancellationError() }
+    var graph = try fixture.object(fixture.siblingMembershipData(formatVersion: formatVersion))
+    var sources = try #require(graph["sources"] as? [[String: Any]])
+    let sourceIndex = try #require(
+      sources.firstIndex {
+        $0["kind"] as? String == "item" && $0["id"] as? String == fixture.source.id.uuidString
+      })
+    sources[sourceIndex]["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
+    graph["sources"] = sources
+    var families = try #require(graph["restorationFamilies"] as? [[String: Any]])
+    var family = try #require(families.first)
+    let candidates = try #require(family["candidates"] as? [[String: Any]])
+    family["candidates"] = candidates.filter {
+      $0["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000815"
+    }
+    families[0] = family
+    graph["restorationFamilies"] = families
+    var memberships = try #require(graph["memberships"] as? [[String: Any]])
+    var item = try #require(memberships[0]["item"] as? [String: Any])
+    item["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
+    memberships[0]["item"] = item
+    graph["memberships"] = memberships
+    guard
+      case .decoded(let backup) = fixture.planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: graph))
+    else { throw CancellationError() }
+    let command = PlannerCommand.applyImport(backup: backup, mode: .overwrite)
+    let beforeRemove = await fixture.planner.prepareReview(
+      session: fixture.session, command: command)
+    guard case .reviewed = beforeRemove else {
+      Issue.record("The old backup must be independently reviewable before Remove: \(beforeRemove)")
+      return
+    }
+    guard
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .removeMembership(listId: listIdentifier, membershipId: identifier))
+      ).outcome,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let files = try fixture.files()
+    let afterRemove = await fixture.planner.prepareReview(
+      session: fixture.session, command: command)
+    guard case .reviewed(let review) = afterRemove else {
+      Issue.record("The old import must reach current-data admission through its ordinary review.")
+      return
+    }
+    let operation = PlannerOperation(
+      operationId: UUID(), session: fixture.session, command: review.command,
+      reviewToken: review.reviewToken)
+    let response = await fixture.planner.execute(operation)
+    guard case .rejected(let failure) = response.outcome,
+      case .noReliableEvidence = await fixture.planner.operationStatus(
+        session: fixture.session, operationId: operation.operationId)
+    else {
+      Issue.record(
+        "Strict Remove must reject the whole old unaware import without recording a save.")
+      return
+    }
+    #expect(failure.code == "invalidInput")
+    #expect(try fixture.files() == files)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(after) == fixture.graph(before))
+  }
+
+  @Test(arguments: [false, true], [false, true])
+  func eligibleSiblingMembershipsKeepTheirGenerationAndExplicitCompletion(
+    strictRemoval: Bool, explicitReopen: Bool
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    var currentIdentifier: UUID?
+    for index in 0..<(strictRemoval ? 2 : 1) {
+      guard
+        case .applied(let addition, .complete) = await fixture.planner.execute(
+          .init(
+            operationId: UUID(), session: fixture.session,
+            command: .addMembership(
+              itemId: fixture.source.id, listId: listIdentifier, placement: .last))
+        ).outcome,
+        case .membership(let identifier, _, _)? = addition.generatedReferences.first
+      else { throw CancellationError() }
+      currentIdentifier = identifier
+      if strictRemoval && index == 0 {
+        guard
+          case .applied(_, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .removeMembership(listId: listIdentifier, membershipId: identifier))
+          ).outcome
+        else { throw CancellationError() }
+      }
+    }
+    let originalIdentifier = try #require(currentIdentifier)
+    if explicitReopen {
+      for done in [true, false] {
+        guard
+          case .applied(_, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .setCompletion(
+                scope: .appearance(
+                  .listMembership(
+                    listId: listIdentifier, membershipId: originalIdentifier)), done: done))
+          ).outcome
+        else { throw CancellationError() }
+      }
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let previous) = fixture.planner.decodeImport(before)
+    else { throw CancellationError() }
+    let removals = previous.backup.membershipRemovals.map(\.deletionId)
+    let siblingIdentifier = try await fixture.deliverSiblingMembership(observedRemovals: removals)
+    let normalized = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let bytes) = normalized,
+      case .decoded(let decoded) = fixture.planner.decodeImport(bytes)
+    else {
+      Issue.record(
+        "Eligible sibling memberships must consolidate in their observed generation: \(normalized)")
+      return
+    }
+    let membership = try #require(decoded.backup.memberships.first)
+    #expect(decoded.backup.memberships.count == 1)
+    #expect(
+      membership.id
+        == [originalIdentifier, siblingIdentifier].min(by: {
+          $0.uuidString < $1.uuidString
+        }))
+    #expect(membership.localDone == !explicitReopen)
+    #expect(membership.itemLifetimeId.uuidString == "00000000-0000-4000-8000-000000000814")
+    for provenance in previous.backup.membershipProvenance {
+      #expect(decoded.backup.membershipProvenance.contains(provenance))
+    }
+    let originalSibling = try #require(
+      decoded.backup.membershipProvenance.first {
+        $0.membershipId == siblingIdentifier
+      })
+    #expect(originalSibling.item.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000815")
+    #expect(Set(originalSibling.observedRemovalIds) == Set(removals))
+  }
+
   @Test(
     arguments: [PlannerEntityKind.category, .tag],
     ["collision", "scalarMismatch", "ownerMismatch"])
@@ -1233,9 +1460,10 @@ struct NativeRestoredTargetReferenceTests {
     #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
   }
 
-  @Test(arguments: [false, true])
-  func repeatedRestoredListTargetsPreserveIndependentExpandedCompletion(upgrade: Bool) async throws
-  {
+  @Test(arguments: [false, true], [false, true])
+  func repeatedRestoredListTargetsPreserveIndependentExpandedCompletion(
+    upgrade: Bool, invalidExpanded: Bool
+  ) async throws {
     let fixture = try await SourceRestorationFixture.make(kind: .list)
     let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
     let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
@@ -1276,6 +1504,31 @@ struct NativeRestoredTargetReferenceTests {
     else { throw CancellationError() }
     try await fixture.deliverCandidate()
     try await fixture.bindEntriesToLosingCandidate(entries)
+    if invalidExpanded {
+      try await fixture.corruptExpandedFlag()
+      if upgrade { try fixture.rewriteCompatibility(22) }
+      let files = try fixture.files()
+      let control = try Data(contentsOf: fixture.configuration.controlURL)
+      let rawEntries = try await fixture.rawEntryData()
+      let rawExpanded = try await fixture.rawExpandedData()
+      if upgrade {
+        let reopened = Planner(configuration: fixture.configuration)
+        guard case .unavailable = await reopened.bootstrap() else {
+          Issue.record("An invalid expanded flag must block source projection before activation.")
+          return
+        }
+      } else {
+        guard case .failed = await fixture.planner.exportData(session: fixture.session) else {
+          Issue.record("Source maintenance must not silently repair an invalid expanded flag.")
+          return
+        }
+      }
+      #expect(try fixture.files() == files)
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+      #expect(try await fixture.rawEntryData() == rawEntries)
+      #expect(try await fixture.rawExpandedData() == rawExpanded)
+      return
+    }
     let planner: Planner
     let session: PlannerDatasetSession
     if upgrade {
@@ -1357,6 +1610,15 @@ struct NativeRestoredTargetReferenceTests {
                 title: "Independent visit", notes: "Keep the independent owner unchanged",
                 categoryIds: kind == .category ? [fixture.source.id] : [],
                 tagIds: kind == .tag ? [fixture.source.id] : [])))
+        ).outcome,
+        case .applied(_, .complete) = await fixture.planner.execute(
+          .init(
+            operationId: UUID(), session: fixture.session,
+            command: .createItinerary(
+              content: .init(
+                title: "Independent label route", notes: "Keep this owner unchanged too",
+                categoryIds: kind == .category ? [fixture.source.id] : [],
+                tagIds: kind == .tag ? [fixture.source.id] : [])))
         ).outcome
       else { throw CancellationError() }
     }
@@ -1414,7 +1676,7 @@ struct NativeRestoredTargetReferenceTests {
           command: .removeMembership(listId: listIdentifier, membershipId: identifier))
       ).outcome
     else { throw CancellationError() }
-    let offlineIdentifier = try await fixture.deliverUnawareSiblingMembership(
+    let offlineIdentifier = try await fixture.deliverSiblingMembership(
       expandedEntryIdentifier: entryIdentifier)
     let normalized = await fixture.planner.exportData(session: fixture.session)
     guard case .exported(let bytes) = normalized,
@@ -1614,6 +1876,75 @@ struct NativeRestoredTargetReferenceTests {
       })
     #expect(retained.item.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000815")
     #expect(retained.observedRemovalIds.map(\.uuidString) == [removalIdentifier])
+
+    var markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    markers.append([
+      "deletionId": "00000000-0000-4000-8000-000000000893",
+      "operationId": "00000000-0000-4000-8000-000000000993",
+      "target": ["kind": "membership", "id": identifier, "lifetimeId": lifetime],
+      "closedFamilyId": NSNull(),
+    ])
+    markers.append([
+      "deletionId": "00000000-0000-4000-8000-000000000894",
+      "operationId": "00000000-0000-4000-8000-000000000996",
+      "target": ["kind": "source", "source": item],
+      "closedFamilyId": "00000000-0000-4000-8000-000000000890",
+    ])
+    graph["deletionMarkers"] = markers
+    var families = try #require(graph["restorationFamilies"] as? [[String: Any]])
+    families.append([
+      "familyId": "00000000-0000-4000-8000-000000000891", "predecessor": item,
+      "candidates": [
+        [
+          "lifetimeId": "00000000-0000-4000-8000-000000000816",
+          "operationId": "00000000-0000-4000-8000-000000000997",
+        ]
+      ],
+    ])
+    graph["restorationFamilies"] = families
+    var sources = try #require(graph["sources"] as? [[String: Any]])
+    let sourceIndex = try #require(
+      sources.firstIndex {
+        $0["kind"] as? String == "item" && $0["id"] as? String == item["id"] as? String
+      })
+    sources[sourceIndex]["lifetimeId"] = "00000000-0000-4000-8000-000000000816"
+    graph["sources"] = sources
+    var nextItem = item
+    nextItem["lifetimeId"] = "00000000-0000-4000-8000-000000000816"
+    graph["memberships"] = [
+      [
+        "id": "00000000-0000-4000-8000-000000000404",
+        "lifetimeId": "00000000-0000-4000-8000-000000000844",
+        "list": list, "item": nextItem, "rank": "0", "localDone": false,
+      ]
+    ]
+    for inheritsOldRemoval in [false, true] {
+      var nextProvenance = provenance
+      nextProvenance.append([
+        "membershipId": "00000000-0000-4000-8000-000000000404",
+        "membershipLifetimeId": "00000000-0000-4000-8000-000000000844",
+        "list": list, "item": nextItem,
+        "observedRemovalIds": inheritsOldRemoval ? [removalIdentifier] : [],
+      ])
+      graph["membershipProvenance"] = nextProvenance
+      let next = fixture.planner.decodeImport(try JSONSerialization.data(withJSONObject: graph))
+      if inheritsOldRemoval {
+        guard case .invalid = next else {
+          Issue.record("A new Item family must not inherit its predecessor's removal authority.")
+          return
+        }
+      } else {
+        guard case .decoded(let closedHistory) = next else {
+          Issue.record(
+            "Closed sibling observations must survive beside an independent new family: \(next)")
+          return
+        }
+        #expect(closedHistory.backup.membershipProvenance.contains(retained))
+        #expect(
+          closedHistory.backup.memberships.first?.itemLifetimeId.uuidString
+            == "00000000-0000-4000-8000-000000000816")
+      }
+    }
   }
 
   @Test func portableFivePreservesAttestedSiblingBindingsWithoutReinterpretingVersionFour()

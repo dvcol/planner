@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-/// Rebinds admitted direct entries and retires fully declared losing native source candidates.
+/// Rebinds admitted target references and retires fully declared losing native source candidates.
 struct PlannerSourceRestorationConsolidation {
   private struct Row {
     let identity: PlannerPortableBoundIdentity
@@ -268,6 +268,14 @@ struct PlannerSourceRestorationConsolidation {
           entryId: value.id, entryLifetimeId: value.lifetimeId)], expected != value.localDone
       {
         throw unresolved("A source entry disagrees with its retained completion history.")
+      }
+      for completion in value.expandedCompletions {
+        if let expected = completionStates[.expandedListItem(completion.context)],
+          expected != completion.localDone
+        {
+          throw unresolved(
+            "An expanded source entry disagrees with its retained completion history.")
+        }
       }
       let owner = try binding(.itinerary, value.itinerary.id, value.itinerary.lifetimeId)
       guard source.kind == .item || source.kind == .list, !retired.contains(owner),
