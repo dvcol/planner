@@ -86,7 +86,8 @@ host/database closure checks, preserving failed/interrupted data and result bund
 Losing Itinerary-owned entries now have a separate
 [local checkpoint](native-restored-owned-itinerary-stops.md). Broader owned
 restoration/import histories, duplicate or partial owned-context delivery and
-List-specific native-save/interruption need qualification. The publication
+List-specific process interruption needs qualification. The native-save
+follow-up below now covers rollback and late redelivery. The publication
 follow-up below covers its represented failure cases. Existing
 generic checks do not prove all those payload-specific outcomes. Native controls,
 HTTP, actual Mac/system, cloud/physical convergence and whole-app acceptance retain
@@ -124,3 +125,45 @@ Production code and contracts are unchanged. Actual List-specific native-save
 rollback and process interruption remain separate checks. This adds no module,
 production hook, target, schema, portable format or writer gate. Native/system/
 physical acceptance and Q163 retain their existing gates; signing stays deferred.
+
+## Native-save rollback and late redelivery
+
+The repeated-List fixture now reaches an actual isolated native write failure.
+The child sets its file-size limit at the existing `ModelContext.willSave`
+boundary and observes SQLite error 778. Both source versions, memberships,
+original Add authority, stop bindings, expanded completion, causal history,
+previous recovery bytes and writer control remain unchanged. The preparation
+stays unverified; retrying it rejects with `maintenanceNotApplied`. A fresh
+maintenance gets a different identity and preserves the complete winning graph.
+
+This check found a real follow-up defect. After rollback, successful retry and
+reopen, late delivery could make the reused SwiftData container save the old
+List lifetime and nullify the stop's native List relationship. The staged graph
+had already passed validation, but recovery publication then rejected it and
+blocked subsequent consolidation. Targeted probes reproduced that mismatch;
+a fresh-container trial removed it. The shared maintenance catch now discards
+only the failed container after rollback. Ordinary reads retain container reuse.
+No new recovery path, public contract, format, physical model or writer gate is
+introduced. Temporary diagnostics are removed.
+
+The first diagnostic failure came from trying to materialize an intermediate
+expanded graph in the test observer. Raw binding comparison fixes that observer;
+it is distinct from the later reproduced production defect. All original
+failure packets remain retained.
+
+The [final validation](evidence/native-membership-consolidation/native-owned-list-save-validation.json)
+reconciles 57 passing Mac functions and 52 iPhone Simulator functions in eight
+affected suites, plus twelve passing real MCP HTTP functions. Mac app and Share
+extension builds pass. Executed products and 813 shared Core inputs match;
+514 frozen fixtures and all eighteen schema sources remain unchanged. The Mac
+cohort retains four successful native-fault children and ten deliberately killed
+children whose parent recovery checks pass. Those interruption results cover
+their existing generic and mixed-Itinerary payloads, not List-specific process
+death. All final runs have no skips, failures, timeouts or SQLite-unlink warnings.
+Manifests and logs remain compressed; failed/interrupted stores stay retained.
+Verified cleanup removes 190 phone and 25 HTTP disposable stores after their
+hosts exit and database handles close.
+
+List-specific process interruption, Item native-save/interruption and collision
+faults remain named local checks. Q163 and native/system/physical acceptance
+retain their separate gates. Signing stays deferred.

@@ -1745,6 +1745,13 @@ struct NativeSourceRestorationMaintenanceTests {
   func losingListMembershipsRetireWithoutMergingRepeatedBranchCompletion(
     referenced: Bool, recoveryFailure: Bool
   ) async throws {
+    try await checkOwnedListRetirement(
+      referenced: referenced, recoveryFailure: recoveryFailure, nativeSaveFailure: false)
+  }
+
+  private func checkOwnedListRetirement(
+    referenced: Bool, recoveryFailure: Bool, nativeSaveFailure: Bool
+  ) async throws {
     let fixture = try await SourceRestorationFixture.make(kind: .list)
     let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
     let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
@@ -1789,6 +1796,55 @@ struct NativeSourceRestorationMaintenanceTests {
     let originalFiles = try fixture.files()
     let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     try await fixture.deliverCandidateWithOwnedMembership(entries: entries)
+    #if os(macOS)
+      var unverifiedPreparation: UUID?
+      var unverifiedFiles: [String: Data]?
+      if nativeSaveFailure {
+        let originalSources = try await fixture.rawListSourceData()
+        let originalMemberships = try await fixture.rawMembershipData()
+        let originalAuthority = try await fixture.rawMembershipAuthorityData()
+        let originalEntries = try await fixture.rawEntryData()
+        let originalExpanded = try await fixture.rawExpandedData()
+        let originalCompletion = try await fixture.rawCompletionAuthorityData()
+        let obstruction = NativeSaveFileSizeObstruction(
+          configuration: fixture.configuration, maximumFileSize: 0)
+        let observer = NotificationCenter.default.addObserver(
+          forName: ModelContext.willSave, object: nil, queue: nil
+        ) { notification in obstruction.observe(notification) }
+        let failed = await fixture.planner.exportData(session: fixture.session)
+        NotificationCenter.default.removeObserver(observer)
+        try obstruction.restore()
+        #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+        guard case .failed(let reason) = failed else {
+          Issue.record(
+            "Failed native List retirement must leave both versions unchanged: \(failed)")
+          return
+        }
+        #expect(reason.code == "maintenanceRequired")
+        #expect(try await fixture.rawListSourceData() == originalSources)
+        #expect(try await fixture.rawMembershipData() == originalMemberships)
+        #expect(try await fixture.rawMembershipAuthorityData() == originalAuthority)
+        #expect(try await fixture.rawEntryData() == originalEntries)
+        #expect(try await fixture.rawExpandedData() == originalExpanded)
+        #expect(try await fixture.rawCompletionAuthorityData() == originalCompletion)
+        let files = try fixture.files()
+        for (name, bytes) in originalFiles { #expect(files[name] == bytes) }
+        #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+        let preparations = files.filter { $0.key.hasPrefix("maintenance-") }
+        #expect(preparations.count == 1)
+        let preparation = try fixture.object(try #require(preparations.values.first))
+        let identifier = try #require(
+          (preparation["maintenanceId"] as? String).flatMap(UUID.init(uuidString:)))
+        guard
+          case .rejected(let reason) = await fixture.planner.retryMaintenanceRecovery(
+            session: fixture.session, maintenanceId: identifier)
+        else { throw CancellationError() }
+        #expect(reason.code == "maintenanceNotApplied")
+        #expect(try fixture.files() == files)
+        unverifiedPreparation = identifier
+        unverifiedFiles = files
+      }
+    #endif
     var pendingMaintenance: UUID?
     var pendingExport: Data?
     if recoveryFailure {
@@ -1865,15 +1921,28 @@ struct NativeSourceRestorationMaintenanceTests {
     }
     #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
     #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    #if os(macOS)
+      if let unverifiedPreparation, let unverifiedFiles {
+        let acknowledgements = try #require(
+          fixture.envelope()["maintenanceReceipts"] as? [[String: Any]])
+        #expect(acknowledgements.count == 1)
+        #expect(
+          acknowledgements.first?["maintenanceId"] as? String != unverifiedPreparation.uuidString)
+        let files = try fixture.files()
+        for (name, bytes) in unverifiedFiles { #expect(files[name] == bytes) }
+      }
+    #endif
     for (index, identifier) in entries.enumerated() {
-      guard
-        case .appearance(let appearance) = await fixture.planner.read(
-          session: fixture.session,
-          request: .appearance(
-            .expandedListItem(
-              itineraryId: itineraryIdentifier, listEntryId: identifier,
-              membershipId: membershipIdentifier)))
-      else { throw CancellationError() }
+      let response = await fixture.planner.read(
+        session: fixture.session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: identifier,
+            membershipId: membershipIdentifier)))
+      guard case .appearance(let appearance) = response else {
+        Issue.record("The winning List branch must remain readable after retirement: \(response)")
+        return
+      }
       #expect(appearance.localDone == (index == 1))
     }
     if let pendingMaintenance {
@@ -1921,9 +1990,10 @@ struct NativeSourceRestorationMaintenanceTests {
       }
     }
     let files = try fixture.files()
+    let staleOperationIdentifier = UUID()
     let stale = await fixture.planner.execute(
       .init(
-        operationId: UUID(), session: fixture.session,
+        operationId: staleOperationIdentifier, session: fixture.session,
         command: .setCompletion(
           scope: .appearance(
             .listMembership(listId: fixture.source.id, membershipId: retiredMembership)),
@@ -1934,14 +2004,23 @@ struct NativeSourceRestorationMaintenanceTests {
     }
     #expect(try fixture.files() == files)
     let reopened = Planner(configuration: fixture.configuration)
-    guard case .ready(let session) = await reopened.bootstrap(),
-      case .exported(let persisted) = await reopened.exportData(session: session)
-    else { throw CancellationError() }
+    let bootstrap = await reopened.bootstrap()
+    guard case .ready(let session) = bootstrap else {
+      Issue.record("The winning List must reopen after retirement: \(bootstrap)")
+      return
+    }
+    let persistedResult = await reopened.exportData(session: session)
+    guard case .exported(let persisted) = persistedResult else {
+      Issue.record("Reopened List content must remain exportable: \(persistedResult)")
+      return
+    }
     #expect(try fixture.graph(persisted) == fixture.graph(after))
     try await fixture.deliverCandidateWithOwnedMembership(entries: entries)
-    guard
-      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
-    else { throw CancellationError() }
+    let redelivery = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let redelivered) = redelivery else {
+      Issue.record("Late losing List delivery must not replace its survivor: \(redelivery)")
+      return
+    }
     #expect(try fixture.graph(redelivered) == fixture.graph(after))
   }
 
@@ -3200,6 +3279,8 @@ private struct SourceRestorationFixture {
         "sourceLifetime": entry.sourceLifetimeId?.uuidString as Any? ?? NSNull(),
         "nativeItem": entry.item?.id?.uuidString as Any? ?? NSNull(),
         "nativeItemLifetime": entry.item?.lifetimeId?.uuidString as Any? ?? NSNull(),
+        "nativeList": entry.list?.id?.uuidString as Any? ?? NSNull(),
+        "nativeListLifetime": entry.list?.lifetimeId?.uuidString as Any? ?? NSNull(),
         "rank": String(entry.rank), "localDone": entry.localDone as Any? ?? NSNull(),
       ]
     }
@@ -3923,6 +4004,21 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
+  @MainActor func rawListSourceData() throws -> Data {
+    let context = try nativeContext()
+    let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).filter {
+      $0.id == source.id
+    }.sorted {
+      ($0.lifetimeId?.uuidString ?? "") < ($1.lifetimeId?.uuidString ?? "")
+    }
+    let values = try records.map { record in
+      PortableSourceRecord.list(.init(try record.value()))
+    }
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    return try encoder.encode(values)
+  }
+
   @MainActor func rawMembershipData() throws -> Data {
     let context = try nativeContext()
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).map {
@@ -4042,6 +4138,22 @@ private struct SourceRestorationFixture {
 
 #if os(macOS)
   extension NativeSourceRestorationMaintenanceTests {
+    @Test func failedOwnedListNativeSavePreservesMembershipsAndBranchesUntilFreshRetry()
+      async throws
+    {
+      guard
+        ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
+          == "ownedListNativeSaveFailure"
+      else {
+        let directory = try makePlannerStoreFixtureDirectory()
+        try runSourceRestorationProcess(
+          directory: directory, stage: "ownedListNativeSaveFailure", directEntries: false)
+        return
+      }
+      try await checkOwnedListRetirement(
+        referenced: true, recoveryFailure: false, nativeSaveFailure: true)
+    }
+
     @Test func mixedOwnedInterruptionPreservesCompleteWinnerAndRecovery() async throws {
       let stages = ["mixedBeforeNativeSave", "mixedAfterNativeSave"]
       if let stage = ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"],
@@ -4387,6 +4499,8 @@ private struct SourceRestorationFixture {
         selectedTest = "failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh"
       } else if stage == "mixedOwnedNativeSaveFailure" {
         selectedTest = "failedMixedOwnedNativeSavePreservesAllContentsAndRetriesFresh"
+      } else if stage == "ownedListNativeSaveFailure" {
+        selectedTest = "failedOwnedListNativeSavePreservesMembershipsAndBranchesUntilFreshRetry"
       } else if stage == "mixedBeforeNativeSave" || stage == "mixedAfterNativeSave" {
         selectedTest = "mixedOwnedInterruptionPreservesCompleteWinnerAndRecovery"
       } else {
@@ -4414,7 +4528,9 @@ private struct SourceRestorationFixture {
       }
       try output.close()
       let transcript = try String(contentsOf: outputURL, encoding: .utf8)
-      if stage == "nativeSaveFailure" || stage == "mixedOwnedNativeSaveFailure" {
+      if ["nativeSaveFailure", "mixedOwnedNativeSaveFailure", "ownedListNativeSaveFailure"]
+        .contains(stage)
+      {
         #expect(
           finished && process.terminationReason == .exit && process.terminationStatus == 0,
           Comment(rawValue: String(transcript.suffix(12000))))

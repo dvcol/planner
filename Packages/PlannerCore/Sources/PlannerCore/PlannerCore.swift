@@ -4298,6 +4298,8 @@ public actor Planner {
       try context.save()
     } catch {
       context.rollback()
+      // A failed save can leave cached relationship snapshots stale after rollback.
+      nativeContainer = nil
       throw PlannerFailure(
         "maintenanceRequired",
         "Native consolidation could not commit: " + failure(error, code: "unavailable").message)
