@@ -1529,6 +1529,71 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertEqual(application.savedPlannerItemRows("Museum reading").count, 1)
   }
 
+  func testReturningFromPendingWebpageKeepsTheItemAndReopensTheOriginalGuide() async throws {
+    continueAfterFailure = false
+    let server = try BrowserJourneyServer()
+    let destination = try await server.start()
+    defer { server.stop() }
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    createLinkedItem(in: application, destination: destination)
+    let savedBookmark = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    XCTAssertTrue(savedBookmark.waitForExistence(timeout: 10))
+    for _ in 0..<6 where !savedBookmark.isHittable { application.swipeUp() }
+    let originalBookmarkIdentifier = savedBookmark.identifier
+    savedBookmark.activateForPlannerJourney()
+    let webpage = application.webViews.firstMatch
+    XCTAssertTrue(webpage.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    webpage.links["Delayed guide"].activateForPlannerJourney()
+    let requestDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while server.delayedRequestCount == 0, ContinuousClock.now < requestDeadline {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertEqual(server.delayedRequestCount, 1)
+    XCTAssertTrue(
+      application.progressIndicators["Loading webpage"].firstMatch.waitForExistence(timeout: 5))
+    let returnToItem = application.buttons["saved.browser.return"]
+    XCTAssertTrue(returnToItem.isHittable)
+    returnToItem.activateForPlannerJourney()
+    let retainedBookmark = application.descendants(matching: .any)
+      .matching(identifier: originalBookmarkIdentifier).firstMatch
+    XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+    XCTAssertTrue(webpage.waitForNonExistence(timeout: 5))
+    server.releaseDelayedResponses()
+    let responseDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while server.delayedResponseOutcomes.isEmpty, ContinuousClock.now < responseDeadline {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertEqual(server.delayedResponseOutcomes.count, 1)
+    let responseOutcome = XCTAttachment(
+      string: server.delayedResponseOutcomes.joined(separator: "\n"))
+    responseOutcome.name = "Closed reader delayed socket response outcome"
+    responseOutcome.lifetime = .keepAlways
+    add(responseOutcome)
+    XCTAssertFalse(returnToItem.exists)
+    XCTAssertFalse(webpage.exists)
+    XCTAssertTrue(retainedBookmark.exists)
+    XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    try await recordWindow(application, name: "Closed pending reader leaves the saved Item intact")
+    retainedBookmark.activateForPlannerJourney()
+    XCTAssertTrue(webpage.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    XCTAssertFalse(webpage.staticTexts["Delayed guide fixture"].exists)
+    XCTAssertFalse(application.buttons["saved.browser.back"].isEnabled)
+    try await recordWindow(application, name: "Reopened saved guide has fresh native history")
+    returnToItem.activateForPlannerJourney()
+    XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+  }
+
   func testNativeWebpageHistoryAndReloadKeepTheSavedBookmarkUnchanged() async throws {
     continueAfterFailure = false
     let server = try BrowserJourneyServer()
