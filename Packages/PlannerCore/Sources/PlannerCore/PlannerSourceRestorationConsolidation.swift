@@ -75,7 +75,7 @@ struct PlannerSourceRestorationConsolidation {
   let retired: Set<PlannerPortableBoundIdentity>
   var requiresMaintenance: Bool {
     !retired.isEmpty || !labelRetirements.isEmpty || !ownedLinkRetirements.isEmpty
-      || !scheduleRetirements.isEmpty
+      || !scheduleRetirements.isEmpty || !entryRetirements.isEmpty
   }
   private var retiredMemberships: Set<PlannerPortableBoundIdentity> {
     Set(membershipRetirements.map(\.identity))
@@ -439,6 +439,8 @@ struct PlannerSourceRestorationConsolidation {
         identities.insert(.init(kind: kind, id: identifier, lifetimeId: lifetime))
       case .source(let source) where kind != .ownedLink && source.kind == kind.rawValue:
         identities.insert(.init(kind: kind, id: source.id, lifetimeId: source.lifetimeId))
+      case .itineraryEntry(let identifier, let lifetime) where kind == .itineraryEntry:
+        identities.insert(.init(kind: kind, id: identifier, lifetimeId: lifetime))
       default: continue
       }
     }
@@ -619,12 +621,26 @@ struct PlannerSourceRestorationConsolidation {
     retiringMemberships: Set<PlannerPortableBoundIdentity>,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [EntryRetirement] {
-    guard !retired.isEmpty else { return [] }
+    let closedEntries = closedNativeIdentities(
+      kind: .itineraryEntry, families: families, markers: markers)
+    guard !retired.isEmpty || !closedEntries.isEmpty else { return [] }
     var identities: Set<PlannerPortableBoundIdentity> = []
     var retirements: [EntryRetirement] = []
     for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
       let owner = try binding(.itinerary, entry.itineraryId, entry.itineraryLifetimeId)
-      guard retired.contains(owner) else { continue }
+      let identity = try binding(.itineraryEntry, entry.id, entry.lifetimeId)
+      if !retired.contains(owner), !closedEntries.contains(identity) {
+        guard
+          !closedEntries.contains(where: { $0.id == identity.id })
+            || families.contains(where: { family in
+              family.predecessor.kind == .itineraryEntry && family.predecessor.id == identity.id
+                && family.candidates.contains { $0.lifetimeId == identity.lifetimeId }
+            })
+        else {
+          throw unresolved("A new lifetime for a closed stop requires restoration history.")
+        }
+        continue
+      }
       guard let row = rows.first(where: { $0.identity == owner }),
         let itinerary = row.model as? PlannerSchemaV18.Itinerary, entry.itinerary === itinerary,
         let sourceKind = PlannerPortableIdentityKind(rawValue: entry.sourceKind)
@@ -638,19 +654,11 @@ struct PlannerSourceRestorationConsolidation {
       }
       let value = try entry.value(
         projectedListLifetimeId: projectedListLifetime, retiringMemberships: retiringMemberships)
-      let identity = PlannerPortableBoundIdentity(
-        kind: .itineraryEntry, id: value.id, lifetimeId: value.lifetimeId)
       guard identities.insert(identity).inserted else {
         throw unresolved("Competing retired stops have the same bound identity.")
       }
-      let closed = markers.contains { marker in
-        guard case .itineraryEntry(let identifier, let lifetime) = marker.target else {
-          return false
-        }
-        return identifier == value.id && lifetime == value.lifetimeId
-      }
       let marker: PortableDeletionMarker?
-      if closed {
+      if closedEntries.contains(identity) {
         marker = nil
       } else {
         marker = try PortableDeletionMarker(

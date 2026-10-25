@@ -267,3 +267,38 @@ Strict Swift/Markdown lint passes. The first attempt had a test-only compiler
 error accessing the Undo snapshot on the applied value instead of the operation
 result; no test executed in that attempt. Final runs have no failures, skips or
 SQLite unlink warnings. There is no new HTTP, native UI or signing credit.
+
+## Closed Itinerary stop families
+
+A real-store tracer creates two repeated Item or List stops and completes only
+the first. Ordinary Remove/Undo creates its restoration family; removing it
+again closes that family. A late closed copy blocked the route read, and a fresh
+second Undo also exposed duplicate-entry validation. All four deleted/restored
+and direct/List combinations reproduced the failure.
+
+Existing stop retirement now accepts proven closed identities even while their
+Itinerary survives. The same projection filters them before duplicate validation,
+and the existing transaction retires their exact expanded rows. Already retained
+family closures authorize this cleanup; no extra closure is invented. Recovery
+preparation failure leaves native stops, expanded rows, files and writer control
+unchanged. Restored access permits ordinary query retry. Complete exports, exact
+old Remove replay and reopen retain the current route, including independent
+completion and a fresh Undo lifetime where present.
+
+Two additional unknown-lifetime cases exposed a read/export mismatch. Source
+reads accepted the undeclared stop while export rejected it. The same stop
+admission loop now rejects an unknown replacement of a closed identity unless a
+declared restoration family authorizes it. Native records and recovery remain
+untouched. The private native-entry observation sorts equal public IDs by
+lifetime so its before/after comparison has a stable order.
+
+The [validation record](evidence/native-membership-consolidation/native-closed-entry-family-validation.json)
+reconciles 51 passing Mac functions, 49 passing iPhone functions and four existing
+real HTTP regressions. Both Core runtimes execute genuine Schema18/12 migrations
+in eight affected suites. The six stop cases execute on both. All 813 shared
+Core inputs and 1,160 phone/HTTP inputs match actual products, with 514 frozen
+fixtures and all 18 schema sources unchanged. Mac app/Share/test-host compilation,
+strict Swift/Markdown lint and whitespace checks pass. No final cohort has
+failures, skips or SQLite unlink warnings. Formats, model, writer gate and
+maintenance rule stay unchanged. There is no native UI, system or physical
+acceptance credit.
