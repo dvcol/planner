@@ -2,6 +2,8 @@
 
 Status: final review planned in [ticket 23](https://github.com/dvcol/planner/issues/23). The human brought forward a [navigation and appearance slice](prototypes/native-design-pass.md) on 18 October; its findings and evidence do not close the final review. This pass follows feature implementation and does not replace the behavior, persistence, sync or recovery gates in the [decision map](https://github.com/dvcol/planner/issues/1).
 
+The [25 October Item-title correction](prototypes/native-item-detail-title.md#final-local-checkpoint) removes duplicated mobile Form headings while retaining native navigation titles. All three detail contexts pass on light iPhone and dark iPad, with six inspected originals. This is an early correction; long-name truncation, other caller journeys and the full scene/accessibility review below remain open.
+
 ## Context and goal
 
 Planner must feel at home on iPhone, iPad and Mac. The navigation prototype establishes native tabs, split columns, disclosure groups and detail forms, while saved-data features are being implemented in separate slices. The user's screenshot reviews found sparse layouts, confusing progress counts, technical detail fields and a map available only in one prototype layout. Immediate behavior corrections remain in the Navigation prototype ticket.

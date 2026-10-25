@@ -295,7 +295,9 @@ struct SavedItemDetail: View {
   var body: some View {
     Form {
       Section {
-        Text(item.content.title).font(.title2).fontWeight(.semibold)
+        #if os(macOS)
+          Text(item.content.title).font(.title2).fontWeight(.semibold)
+        #endif
         if let subtitle = item.content.subtitle, !subtitle.isEmpty {
           Text(subtitle).foregroundStyle(.secondary)
         }

@@ -100,7 +100,9 @@ struct SavedItineraryItemDetail: View {
       if let item {
         Form {
           Section {
-            Text(item.content.title).font(.title2).fontWeight(.semibold)
+            #if os(macOS)
+              Text(item.content.title).font(.title2).fontWeight(.semibold)
+            #endif
             Label(
               item.effectiveDone ? "Completed" : "To do",
               systemImage: item.effectiveDone ? "checkmark.circle.fill" : "circle")
