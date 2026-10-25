@@ -5,6 +5,75 @@ import XCTest
 
   @MainActor
   final class NativeItemTitleJourneyTests: XCTestCase {
+    func testItineraryCollectionKeepsOneVisibleNativeTitleInListAndMapModes() throws {
+      try XCTSkipIf(
+        UIDevice.current.userInterfaceIdiom == .pad,
+        "The wide collection retains its readable heading; narrow iPad titles remain separate.")
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "retired-itinerary-membership", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Itineraries")
+      let itinerary = application.plannerElement(
+        "saved.itinerary.row.00000000-0000-4000-8000-000000000301")
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+      itinerary.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["0 of 1 item done"].waitForExistence(timeout: 10))
+      let name = "Retired stop route"
+      let title = application.navigationBars.staticTexts[name].firstMatch
+      for (index, mode) in ["List", "Map", "List"].enumerated() {
+        if index > 0 {
+          application.openSavedPlannerItineraryViewMenu()
+          application.chooseSavedPlannerCollectionRepresentation(mode)
+        }
+        if mode == "Map" {
+          XCTAssertTrue(
+            application.staticTexts["0 of 1 items located"].waitForExistence(timeout: 15))
+        } else {
+          let contents = application.descendants(matching: .any)
+            .matching(identifier: "saved.itinerary.contents").firstMatch
+          XCTAssertTrue(contents.waitForExistence(timeout: 10))
+        }
+        let titleExists = title.waitForExistence(timeout: 5)
+        let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        capture.name = "Itinerary native title in \(mode) mode, visit \(index + 1)"
+        capture.lifetime = .keepAlways
+        add(capture)
+        let frames = XCTAttachment(string: application.navigationBars.debugDescription)
+        frames.name = "Itinerary title and native controls in \(mode) mode, visit \(index + 1)"
+        frames.lifetime = .keepAlways
+        add(frames)
+        XCTAssertTrue(
+          titleExists, "The current Itinerary needs a native title in its collection pane.")
+        XCTAssertTrue(title.isHittable)
+        let visibleTitles = application.staticTexts.matching(
+          NSPredicate(format: "label == %@", name)
+        )
+        .allElementsBoundByIndex.filter { $0.isHittable }
+        XCTAssertEqual(
+          visibleTitles.count, 1, "The Itinerary name must appear once in the visible pane.")
+        for button in application.navigationBars.buttons.allElementsBoundByIndex
+        where button.isHittable {
+          XCTAssertFalse(
+            title.frame.intersects(button.frame), "The title overlaps \(button.label).")
+        }
+        XCTAssertTrue(application.plannerElement("saved.itinerary.filters").isHittable)
+        let addEntry = application.plannerElement("saved.itinerary.entry.new")
+        XCTAssertTrue(addEntry.isHittable)
+        addEntry.activateForPlannerJourney()
+        let cancel = application.plannerElement("saved.itinerary.entry.cancel")
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+        cancel.activateForPlannerJourney()
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+      }
+      XCTAssertTrue(application.staticTexts["0 of 1 item done"].waitForExistence(timeout: 10))
+      application.terminate()
+    }
+
     func testGlobalItemUsesItsNativeTitleWithoutRepeatingItInTheDetailForm() {
       continueAfterFailure = false
       if UIDevice.current.userInterfaceIdiom == .pad {
@@ -259,7 +328,7 @@ import XCTest
       ).firstMatch
       XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
       itinerary.activateForPlannerJourney()
-      let itineraryTitle = application.staticTexts["saved.itinerary.title"].firstMatch
+      let itineraryTitle = application.staticTexts["Museum route"].firstMatch
       XCTAssertTrue(itineraryTitle.waitForExistence(timeout: 15), application.debugDescription)
       XCTAssertEqual(itineraryTitle.label, "Museum route")
       XCTAssertTrue(application.staticTexts["0 of 1 item done"].waitForExistence(timeout: 10))

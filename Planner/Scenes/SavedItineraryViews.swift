@@ -309,7 +309,11 @@ struct SavedItineraryDetail: View {
           .environment(\.editMode, $entryEditMode)
         #endif
         .navigationTitle(itinerary.content.title)
-        .toolbarTitleDisplayMode(.inline)
+        #if os(iOS)
+          .navigationBarTitleDisplayMode(showsCollectionTitle ? .inline : .large)
+        #else
+          .toolbarTitleDisplayMode(.inline)
+        #endif
         .searchable(text: $searchText, prompt: "Search this Itinerary")
         .searchPresentationToolbarBehavior(.avoidHidingContent)
         .navigationSplitViewColumnWidth(
@@ -508,10 +512,21 @@ struct SavedItineraryDetail: View {
 
   private var usesMapRepresentation: Bool { representation?.wrappedValue == .map }
 
+  private var showsCollectionTitle: Bool {
+    #if os(iOS)
+      UIDevice.current.userInterfaceIdiom != .phone
+    #else
+      true
+    #endif
+  }
+
+  @ViewBuilder
   private func itineraryTitle(_ itinerary: PlannerItinerarySourceRead) -> some View {
-    Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
-      .accessibilityAddTraits(.isHeader)
-      .accessibilityIdentifier("saved.itinerary.title")
+    if showsCollectionTitle {
+      Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
+        .accessibilityAddTraits(.isHeader)
+        .accessibilityIdentifier("saved.itinerary.title")
+    }
   }
 
   private func itineraryMap(_ itinerary: PlannerItinerarySourceRead) -> some View {

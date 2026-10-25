@@ -259,6 +259,8 @@ import XCTest
         withAttributes: [.font: UIFont.preferredFont(forTextStyle: .headline)]).width
       if application.windows.firstMatch.frame.width < 600 {
         XCTAssertGreaterThanOrEqual(title.frame.width, minimumWidth)
+        XCTAssertFalse(
+          application.collectionViews["saved.itinerary.contents"].staticTexts["City trip"].exists)
       } else {
         XCTAssertTrue(
           application.collectionViews["saved.itinerary.contents"].staticTexts["City trip"].exists)
@@ -279,7 +281,7 @@ import XCTest
       XCTAssertTrue(title.exists)
       application.openSavedPlannerItineraryViewMenu()
       application.chooseSavedPlannerCollectionRepresentation("Map")
-      let mapTitle = application.staticTexts["saved.itinerary.title"].firstMatch
+      let mapTitle = application.staticTexts["City trip"].firstMatch
       XCTAssertTrue(mapTitle.waitForExistence(timeout: 10))
       XCTAssertEqual(mapTitle.label, "City trip")
       XCTAssertTrue(mapTitle.isHittable)
@@ -329,7 +331,7 @@ import XCTest
       XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), identities)
       application.openSavedPlannerItineraryViewMenu()
       application.chooseSavedPlannerCollectionRepresentation("Map")
-      XCTAssertTrue(application.staticTexts["saved.itinerary.title"].waitForExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["City trip"].waitForExistence(timeout: 10))
       let mapReorder = application.savedPlannerItineraryReorderControl()
       XCTAssertFalse(mapReorder.isEnabled)
       application.dismissSavedPlannerItineraryOverflow()
