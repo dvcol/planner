@@ -62,13 +62,21 @@ enum PlannerSchemaV18: VersionedSchema {
 
     func value(
       entrySnapshots: [ItineraryEntrySnapshot]? = nil,
-      retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = []
+      retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = [],
+      retiringLabels: Set<PlannerPortableBoundIdentity> = []
     ) throws -> ItinerarySnapshot {
       guard let id, let lifetimeId, let createdAt, let updatedAt else {
         throw PlannerFailure(
           "readUnavailable", "The Itinerary has unresolved identity or timestamps.")
       }
-      let associations = try (labelAssociations ?? []).map { try $0.value() }
+      let labelRecords = (labelAssociations ?? []).filter { association in
+        guard let identifier = association.id, let lifetime = association.lifetimeId else {
+          return true
+        }
+        return !retiringLabels.contains(
+          .init(kind: .labelAssociation, id: identifier, lifetimeId: lifetime))
+      }
+      let associations = try labelRecords.map { try $0.value() }
       guard Set(associations.map(\.id)).count == associations.count else {
         throw PlannerFailure("readUnavailable", "The Itinerary has duplicate label associations.")
       }
@@ -105,7 +113,7 @@ enum PlannerSchemaV18: VersionedSchema {
         schedules: try (schedules ?? []).map {
           try $0.value(ownerId: id, ownerLifetimeId: lifetimeId, ownerKind: "itinerary")
         }, labelAssociations: associations,
-        labels: try (labelAssociations ?? []).sorted {
+        labels: try labelRecords.sorted {
           ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "")
         }.map { try $0.labelRead() },
         entries: try (entrySnapshots ?? (entries ?? []).map { try $0.value() }).sorted {
@@ -348,11 +356,21 @@ enum PlannerSchemaV18: VersionedSchema {
       }
     }
 
-    func value(retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = []) throws -> ItemSnapshot {
+    func value(
+      retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = [],
+      retiringLabels: Set<PlannerPortableBoundIdentity> = []
+    ) throws -> ItemSnapshot {
       guard let id, let lifetimeId, let createdAt, let updatedAt else {
         throw PlannerFailure("readUnavailable", "The Item has unresolved identity or timestamps.")
       }
-      let associations = try (labelAssociations ?? []).map { try $0.value() }
+      let labelRecords = (labelAssociations ?? []).filter { association in
+        guard let identifier = association.id, let lifetime = association.lifetimeId else {
+          return true
+        }
+        return !retiringLabels.contains(
+          .init(kind: .labelAssociation, id: identifier, lifetimeId: lifetime))
+      }
+      let associations = try labelRecords.map { try $0.value() }
       guard Set(associations.map(\.id)).count == associations.count else {
         throw PlannerFailure("readUnavailable", "The Item has duplicate label associations.")
       }
@@ -386,7 +404,7 @@ enum PlannerSchemaV18: VersionedSchema {
         schedules: try (schedules ?? []).map {
           try $0.value(ownerId: id, ownerLifetimeId: lifetimeId)
         }, labelAssociations: associations,
-        labels: try (labelAssociations ?? []).sorted {
+        labels: try labelRecords.sorted {
           ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "")
         }.map {
           try $0.labelRead()

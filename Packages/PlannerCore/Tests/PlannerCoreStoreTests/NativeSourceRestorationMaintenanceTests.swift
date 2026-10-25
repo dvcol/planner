@@ -9,6 +9,112 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(
+    arguments: [PlannerEntityKind.item, .itinerary],
+    [
+      (PlannerEntityKind.category, "deleted"), (.category, "restored"), (.category, "unknown"),
+      (.tag, "deleted"), (.tag, "restored"), (.tag, "unknown"),
+    ])
+  func closedLabelFamiliesPreserveTheCurrentOwnerAfterLateDelivery(
+    ownerKind: PlannerEntityKind, scenario: (PlannerEntityKind, String)
+  ) async throws {
+    let (labelKind, delivery) = scenario
+    let fixture = try await SourceRestorationFixture.make(kind: ownerKind)
+    func save(_ command: PlannerCommand) async throws -> PlannerOperationResult {
+      let result = await fixture.planner.execute(
+        .init(operationId: UUID(), session: fixture.session, command: command))
+      guard case .applied(_, .complete) = result.outcome else { throw CancellationError() }
+      return result
+    }
+    _ = try await save(fixture.labelSelectionCommand(kind: labelKind, selected: true))
+    let firstRemoval = try await save(
+      fixture.labelSelectionCommand(kind: labelKind, selected: false))
+    _ = try await save(
+      .restoreAssociation(snapshot: #require(firstRemoval.associationUndoSnapshot)))
+    guard
+      case .exported(let restoredData) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let restored) = fixture.planner.decodeImport(restoredData),
+      let oldAssociation = restored.backup.labelAssociations.first,
+      let family = restored.backup.restorationFamilies.first(where: {
+        $0.predecessor.kind == .labelAssociation && $0.predecessor.id == oldAssociation.id
+          && $0.candidates.contains { $0.lifetimeId == oldAssociation.lifetimeId }
+      })
+    else { throw CancellationError() }
+    let removal = PlannerOperation(
+      operationId: UUID(), session: fixture.session,
+      command: try await fixture.labelSelectionCommand(kind: labelKind, selected: false))
+    let removed = await fixture.planner.execute(removal)
+    guard case .applied(let removalValue, .complete) = removed.outcome else {
+      throw CancellationError()
+    }
+    if delivery == "restored" {
+      _ = try await save(.restoreAssociation(snapshot: #require(removed.associationUndoSnapshot)))
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let current) = fixture.planner.decodeImport(before)
+    else { throw CancellationError() }
+    #expect(current.backup.deletionMarkers.contains { $0.closedFamilyId == family.familyId })
+    let deliveredLifetime: UUID
+    if delivery == "unknown" {
+      deliveredLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000816")!
+    } else {
+      deliveredLifetime = oldAssociation.lifetimeId
+    }
+    try await fixture.deliverClosedLabel(oldAssociation, lifetime: deliveredLifetime)
+    let labelsBefore = try await fixture.rawLabelData()
+    let filesBefore = try fixture.files()
+    let controlBefore = try Data(contentsOf: fixture.configuration.controlURL)
+    if delivery == "unknown" {
+      let read = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+      let exported = await fixture.planner.exportData(session: fixture.session)
+      guard case .failed = read, case .failed = exported else {
+        Issue.record(
+          "An unknown label-selection lifetime must remain unavailable: \(read), \(exported)")
+        return
+      }
+      #expect(try await fixture.rawLabelData() == labelsBefore)
+      #expect(try fixture.files() == filesBefore)
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == controlBefore)
+      return
+    }
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard
+      case .failed(let failure) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else {
+      Issue.record("Closed label copies must await durable preparation before retirement.")
+      return
+    }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.rawLabelData() == labelsBefore)
+    #expect(try fixture.files() == filesBefore)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == controlBefore)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard
+      case .source = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source)),
+      case .exported(let after) = await fixture.planner.exportData(session: fixture.session),
+      case .applied(let replayed, .complete) = await fixture.planner.execute(removal).outcome
+    else {
+      Issue.record("Closed label copies must not block or replace the current selection.")
+      return
+    }
+    #expect(try fixture.graph(after) == fixture.graph(before))
+    #expect(replayed == removalValue)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(before))
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .list], ["deleted", "restored", "unknown"])
   func closedEntryFamiliesPreserveTheCurrentRouteAfterLateDelivery(
     sourceKind: PlannerEntityKind, delivery: String
@@ -2716,6 +2822,65 @@ private struct SourceRestorationFixture {
       }
     }
     context.insert(entry)
+    try context.save()
+  }
+
+  func labelSelectionCommand(kind: PlannerEntityKind, selected: Bool) async throws -> PlannerCommand
+  {
+    let identifier: UUID
+    if kind == .category {
+      identifier = UUID(uuidString: "00000000-0000-4000-8000-000000000501")!
+    } else {
+      identifier = UUID(uuidString: "00000000-0000-4000-8000-000000000601")!
+    }
+    let identifiers: Set<UUID> = selected ? [identifier] : []
+    var categoryChange: PlannerFieldChange<Set<UUID>> = .unchanged
+    var tagChange: PlannerFieldChange<Set<UUID>> = .unchanged
+    if kind == .category {
+      categoryChange = .set(identifiers)
+    } else {
+      tagChange = .set(identifiers)
+    }
+    switch await planner.read(session: session, request: .source(source)) {
+    case .source(.item(let value)):
+      return .editItem(
+        sourceId: source.id, changes: .init(categoryIds: categoryChange, tagIds: tagChange),
+        expectedFieldHashes: value.fieldHashes)
+    case .source(.itinerary(let value)):
+      return .editItinerary(
+        sourceId: source.id, changes: .init(categoryIds: categoryChange, tagIds: tagChange),
+        expectedFieldHashes: value.fieldHashes)
+    default: throw CancellationError()
+    }
+  }
+
+  @MainActor func deliverClosedLabel(_ value: PlannerPortableLabelAssociation, lifetime: UUID)
+    throws
+  {
+    let context = try nativeContext()
+    let item = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+      $0.id == value.owner.id && $0.lifetimeId == value.ownerLifetimeId
+    }
+    let itinerary = try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+      $0.id == value.owner.id && $0.lifetimeId == value.ownerLifetimeId
+    }
+    let category = try context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
+      $0.id == value.label.id && $0.lifetimeId == value.labelLifetimeId
+    }
+    let tag = try context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
+      $0.id == value.label.id && $0.lifetimeId == value.labelLifetimeId
+    }
+    let association: PlannerSchemaV18.LabelAssociation
+    switch (item, itinerary, category, tag) {
+    case (let owner?, nil, let label?, nil): association = .init(item: owner, category: label)
+    case (let owner?, nil, nil, let label?): association = .init(item: owner, tag: label)
+    case (nil, let owner?, let label?, nil): association = .init(itinerary: owner, category: label)
+    case (nil, let owner?, nil, let label?): association = .init(itinerary: owner, tag: label)
+    default: throw CancellationError()
+    }
+    association.id = value.id
+    association.lifetimeId = lifetime
+    context.insert(association)
     try context.save()
   }
 

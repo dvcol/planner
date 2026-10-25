@@ -302,3 +302,37 @@ strict Swift/Markdown lint and whitespace checks pass. No final cohort has
 failures, skips or SQLite unlink warnings. Formats, model, writer gate and
 maintenance rule stay unchanged. There is no native UI, system or physical
 acceptance credit.
+
+## Closed label-selection families
+
+Twelve real-store cases use ordinary Item/Itinerary edits and association Undo
+to create and close a Category/Tag selection family. A late known copy blocked
+fresh selections or made a deleted selection readable again. An unknown
+lifetime was readable while export rejected it. Both owner kinds and label
+kinds reproduced the failures.
+
+The existing owned-label retirement now also admits proven closed selections
+on surviving owners. It rejects an undeclared replacement of a closed selection
+without mutation. Known family closure is reused without adding another marker.
+Fresh selections additionally needed exact retirement filtering before duplicate
+association validation, through the existing Item/Itinerary snapshot methods.
+All remaining labels retain their ordinary identity, ownership and uniqueness
+validation. No stored model declaration, format, writer gate or maintenance rule
+changes.
+
+Real recovery preparation obstruction preserves native selections, files and
+writer control. Ordinary source-read retry retires only the closed copies. Full
+exports preserve current selections, owner fields/timestamps and shared labels;
+old edit replay and reopen retain the same graph. Unknown copies remain stored
+and unavailable.
+
+The [validation record](evidence/native-membership-consolidation/native-closed-label-family-validation.json)
+reconciles 52 passing Mac functions, 50 passing iPhone functions and four existing
+real HTTP regressions, plus Mac app/Share/test-host compilation. The twelve label
+cases and genuine Schema18/12 migrations execute on both Core runtimes. All 813
+shared Core inputs and 1,160 phone/HTTP inputs match actual products. All 514
+frozen fixtures and 17 other schema sources remain unchanged. The retained
+[Schema18 diff](evidence/native-membership-consolidation/native-closed-label-family-schema18.diff)
+changes only snapshot method signatures/bodies. Strict Swift/Markdown lint and
+whitespace checks pass; final cohorts have no failures, skips or SQLite unlink
+warnings. Native UI, system, cloud and physical acceptance remain separate.

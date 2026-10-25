@@ -19,6 +19,7 @@ boundary before changing code. Prefer the existing closure and maintenance paths
 | Reject an unknown source lifetime after family closure without changing native data, recovery or writer control, across all five source kinds | [Unknown source lifetimes](prototypes/native-restored-owned-reference-history.md#unknown-source-lifetimes-after-deletion) |
 | Preserve the fresh Undo membership and repeated-branch completion when a closed-family membership and expanded copies arrive | [Closed membership families](prototypes/native-restored-owned-reference-history.md#closed-membership-family-after-undo) |
 | Retire proven closed direct/List stop copies while preserving deletion or fresh Undo and exact route state; reject unknown stop lifetimes without mutation | [Closed stop families](prototypes/native-restored-owned-reference-history.md#closed-itinerary-stop-families) |
+| Preserve deleted or fresh Category/Tag selections on Item/Itinerary owners after closed-family redelivery; reject unknown selection lifetimes without mutation | [Closed label families](prototypes/native-restored-owned-reference-history.md#closed-label-selection-families) |
 
 These checkpoints include bounded recovery, replay, migration and redelivery
 cases. They do not claim that every interaction below has already executed.
@@ -27,7 +28,6 @@ cases. They do not claim that every interaction below has already executed.
 
 | Check | Required result | Gate |
 | --- | --- | --- |
-| Late closed Category/Tag selection restoration copies on Item/Itinerary owners | Preserve the current selection and owner fields/timestamps; close no unproven identity | Real-store fixture and existing public read/export/replay boundary |
 | Source-owner and owned-reference families choose different candidates | Apply the accepted complete-winner policy where authority is proven; retain atomic rejection where existing declarations cannot prove it | Worked fixture first; request a decision only if the accepted contracts leave a concrete policy gap |
 | Remaining import, legacy admission, causal-history and interruption outcomes named in older checkpoints | Match their existing literal contracts; establish which are covered by current tests before adding tests or code | Reconcile the retained diagnostics with the existing Core/HTTP suite coverage |
 

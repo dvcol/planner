@@ -223,7 +223,9 @@ struct PlannerSourceRestorationConsolidation {
   }
 
   func itemValue(_ item: PlannerSchemaV18.Item) throws -> ItemSnapshot {
-    try item.value(retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)))
+    try item.value(
+      retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)),
+      retiringLabels: Set(labelRetirements.map(\.identity)))
   }
 
   func itineraryValue(_ itinerary: PlannerSchemaV18.Itinerary) throws -> ItinerarySnapshot {
@@ -234,7 +236,8 @@ struct PlannerSourceRestorationConsolidation {
       return try entry.value(retiringMemberships: retiredMemberships)
     }
     return try itinerary.value(
-      entrySnapshots: entries, retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)))
+      entrySnapshots: entries, retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)),
+      retiringLabels: Set(labelRetirements.map(\.identity)))
   }
 
   func stage(in context: ModelContext) throws {
@@ -441,6 +444,8 @@ struct PlannerSourceRestorationConsolidation {
         identities.insert(.init(kind: kind, id: source.id, lifetimeId: source.lifetimeId))
       case .itineraryEntry(let identifier, let lifetime) where kind == .itineraryEntry:
         identities.insert(.init(kind: kind, id: identifier, lifetimeId: lifetime))
+      case .labelAssociation(let identifier, let lifetime) where kind == .labelAssociation:
+        identities.insert(.init(kind: kind, id: identifier, lifetimeId: lifetime))
       default: continue
       }
     }
@@ -489,14 +494,29 @@ struct PlannerSourceRestorationConsolidation {
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [LabelRetirement] {
-    guard !retired.isEmpty else { return [] }
+    let closedLabels = closedNativeIdentities(
+      kind: .labelAssociation, families: families, markers: markers)
+    guard !retired.isEmpty || !closedLabels.isEmpty else { return [] }
     var retirements: [LabelRetirement] = []
     for association in try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()) {
       guard let kind = PlannerPortableIdentityKind(rawValue: association.ownerKind) else {
         throw unresolved("A native label selection has an unsupported owner kind.")
       }
       let owner = try binding(kind, association.ownerId, association.ownerLifetimeId)
-      guard retired.contains(owner) else { continue }
+      let identity = try binding(.labelAssociation, association.id, association.lifetimeId)
+      if !retired.contains(owner), !closedLabels.contains(identity) {
+        guard
+          !closedLabels.contains(where: { $0.id == identity.id })
+            || families.contains(where: { family in
+              family.predecessor.kind == .labelAssociation && family.predecessor.id == identity.id
+                && family.candidates.contains { $0.lifetimeId == identity.lifetimeId }
+            })
+        else {
+          throw unresolved(
+            "A new lifetime for a closed label selection requires restoration history.")
+        }
+        continue
+      }
       guard let row = rows.first(where: { $0.identity == owner }) else {
         throw unresolved("A retired label-selection owner is unresolved.")
       }
@@ -571,12 +591,9 @@ struct PlannerSourceRestorationConsolidation {
     _ association: PlannerSchemaV18.LabelAssociation, identity: PlannerPortableBoundIdentity,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> LabelRetirement {
-    let closed = markers.contains { marker in
-      guard case .labelAssociation(let identifier, let lifetime) = marker.target else {
-        return false
-      }
-      return identifier == identity.id && lifetime == identity.lifetimeId
-    }
+    let closed = closedNativeIdentities(
+      kind: .labelAssociation, families: families, markers: markers
+    ).contains(identity)
     if closed { return .init(association: association, identity: identity, marker: nil) }
     let marker = try PortableDeletionMarker(
       deletionId: closureIdentifier(identity, role: "deletion"),
