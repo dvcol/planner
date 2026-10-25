@@ -71,3 +71,5 @@ qualification. Booking-specific native-save/publication/interruption and native
 Calendar interaction remain open; generic passing checks do not establish every
 booking-specific outcome. Broader restoration, HTTP, actual Mac/system, cloud,
 physical and whole-app acceptance remain separate gates. Signing stays deferred.
+
+The subsequent [owned-reference history checkpoint](native-restored-owned-reference-history.md) now qualifies individual bookmark/Schedule closures and reviewed old-backup restoration. Its exact closure is an additional graph delta beyond the original checkpoint above; broader history and native/system gates remain open.

@@ -9,6 +9,182 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
+  func discardedOwnedReferencesRequireExplicitRestorationForImport(
+    ownerKind: PlannerEntityKind, referenceKind: String
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: ownerKind)
+    if referenceKind == "link" {
+      try await fixture.deliverCandidateWithOwnedLink()
+    } else {
+      try await fixture.deliverCandidateWithSchedule(allDay: false)
+    }
+    let incoming = try await fixture.backupForLosingOwnedReference()
+    guard case .decoded(let backup) = fixture.planner.decodeImport(incoming),
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
+      case .reviewed(let review) = await fixture.planner.prepareReview(
+        session: fixture.session, command: .applyImport(backup: backup, mode: .overwrite))
+    else {
+      Issue.record("The independently valid losing-version backup must remain reviewable.")
+      return
+    }
+    let files = try fixture.files()
+    let operationIdentifier = UUID()
+    let result = await fixture.planner.execute(
+      .init(
+        operationId: operationIdentifier, session: fixture.session,
+        command: review.command, reviewToken: review.reviewToken))
+    guard case .rejected = result.outcome,
+      case .noReliableEvidence = await fixture.planner.operationStatus(
+        session: fixture.session, operationId: operationIdentifier)
+    else {
+      Issue.record("Discarded \(referenceKind) must require restoration authorization: \(result)")
+      return
+    }
+    #expect(try fixture.files() == files)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(after) == fixture.graph(before))
+    let expected: PlannerReferenceRead
+    if referenceKind == "link" {
+      expected = .ownedLink(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000871")!, owner: fixture.source)
+    } else {
+      expected = .schedule(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!, source: fixture.source)
+    }
+    #expect(
+      review.impact.importDetails?.referenceChanges.filter { $0.change == .restore }.map(
+        \.reference) == [expected])
+    guard
+      case .reviewed(let authorized) = await fixture.planner.prepareReview(
+        session: fixture.session,
+        command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true))
+    else { throw CancellationError() }
+    let restorationIdentifier = UUID()
+    let operation = PlannerOperation(
+      operationId: restorationIdentifier, session: fixture.session,
+      command: authorized.command, reviewToken: authorized.reviewToken)
+    let response = await fixture.planner.execute(operation)
+    guard case .applied(let restoredResult, .complete(let checkpoint)) = response.outcome,
+      case .exported(let restoredData) = await fixture.planner.exportData(session: fixture.session),
+      case .decoded(let restored) = fixture.planner.decodeImport(restoredData)
+    else {
+      Issue.record("Explicit restoration must use fresh owned identities: \(response)")
+      return
+    }
+    let restoredIdentity: PlannerPortableBoundIdentity
+    if referenceKind == "link" {
+      let link = try #require(restored.backup.ownedLinks.first)
+      #expect(link.id.uuidString == "00000000-0000-4000-8000-000000000871")
+      #expect(link.lifetimeId.uuidString != "00000000-0000-4000-8000-000000000872")
+      #expect(link.owner.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000814")
+      restoredIdentity = .init(kind: .ownedLink, id: link.id, lifetimeId: link.lifetimeId)
+    } else {
+      let schedule = try #require(restored.backup.schedules.first)
+      #expect(schedule.id.uuidString == "00000000-0000-4000-8000-000000000873")
+      #expect(schedule.lifetimeId.uuidString != "00000000-0000-4000-8000-000000000874")
+      #expect(schedule.sourceLifetimeId.uuidString == "00000000-0000-4000-8000-000000000814")
+      restoredIdentity = .init(kind: .schedule, id: schedule.id, lifetimeId: schedule.lifetimeId)
+    }
+    var expectedGraph = try fixture.object(before)
+    let incomingGraph = try fixture.object(incoming)
+    var sources = try #require(incomingGraph["sources"] as? [[String: Any]])
+    let sourceIndex = try #require(
+      sources.firstIndex {
+        $0["kind"] as? String == ownerKind.rawValue
+          && $0["id"] as? String == fixture.source.id.uuidString
+      })
+    sources[sourceIndex]["lifetimeId"] = "00000000-0000-4000-8000-000000000814"
+    expectedGraph["sources"] = sources
+    let collection: String
+    let ownerField: String
+    if referenceKind == "link" {
+      collection = "ownedLinks"
+      ownerField = "owner"
+    } else {
+      collection = "schedules"
+      ownerField = "source"
+    }
+    var references = try #require(incomingGraph[collection] as? [[String: Any]])
+    #expect(references.count == 1)
+    references[0]["lifetimeId"] = restoredIdentity.lifetimeId.uuidString
+    var owner = try #require(references[0][ownerField] as? [String: Any])
+    owner["lifetimeId"] = "00000000-0000-4000-8000-000000000814"
+    references[0][ownerField] = owner
+    expectedGraph[collection] = references
+    let referenceFamilies = restored.backup.restorationFamilies.filter {
+      $0.predecessor.kind == restoredIdentity.kind
+    }
+    let family = try #require(referenceFamilies.first)
+    #expect(referenceFamilies.count == 1)
+    #expect(family.predecessor.id == restoredIdentity.id)
+    #expect(family.candidates.count == 1)
+    #expect(family.candidates.first?.lifetimeId == restoredIdentity.lifetimeId)
+    #expect(family.candidates.first?.operationId == restorationIdentifier)
+    let actualGraph = try fixture.object(restoredData)
+    let originalFamilies = try #require(expectedGraph["restorationFamilies"] as? [[String: Any]])
+    let actualFamilies = try #require(actualGraph["restorationFamilies"] as? [[String: Any]])
+    #expect(actualFamilies.count == originalFamilies.count + 1)
+    #expect(
+      originalFamilies.allSatisfy { original in
+        actualFamilies.contains {
+          NSDictionary(dictionary: $0) == NSDictionary(dictionary: original)
+        }
+      })
+    expectedGraph["restorationFamilies"] = actualFamilies
+    #expect(NSDictionary(dictionary: actualGraph) == NSDictionary(dictionary: expectedGraph))
+    let envelope = try fixture.envelope()
+    #expect(Int64(try #require(envelope["checkpointGeneration"] as? String)) == checkpoint)
+    let payload = try #require(envelope["portablePayloadBase64"] as? String)
+    #expect(
+      try fixture.graph(#require(Data(base64Encoded: payload))) == fixture.graph(restoredData))
+    let reopened = Planner(configuration: fixture.configuration)
+    let bootstrap = await reopened.bootstrap()
+    guard case .ready(let session) = bootstrap else {
+      Issue.record("Restored owned references must reopen: \(bootstrap)")
+      return
+    }
+    let replay = await reopened.execute(
+      .init(operationId: restorationIdentifier, session: session, command: authorized.command))
+    guard case .applied(let replayed, .complete(let replayCheckpoint)) = replay.outcome,
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else {
+      Issue.record("Authorized restoration must replay: \(replay)")
+      return
+    }
+    let reimportReview = await reopened.prepareReview(
+      session: session, command: .applyImport(backup: backup, mode: .overwrite))
+    guard case .reviewed(let reimport) = reimportReview else {
+      Issue.record("The restored backup must remain reviewable: \(reimportReview)")
+      return
+    }
+    #expect(replayed == restoredResult)
+    #expect(replayCheckpoint == checkpoint)
+    #expect(try fixture.graph(persisted) == fixture.graph(restoredData))
+    guard
+      case .rejected = await reopened.execute(
+        .init(
+          operationId: UUID(), session: session, command: reimport.command,
+          reviewToken: reimport.reviewToken)
+      ).outcome,
+      case .reviewed(let authorizedReimport) = await reopened.prepareReview(
+        session: session,
+        command: .applyImport(backup: backup, mode: .overwrite, restoreDeletedData: true))
+    else { throw CancellationError() }
+    let reimportResult = await reopened.execute(
+      .init(
+        operationId: UUID(), session: session, command: authorizedReimport.command,
+        reviewToken: authorizedReimport.reviewToken))
+    guard case .applied(_, .complete) = reimportResult.outcome,
+      case .exported(let reimported) = await reopened.exportData(session: session)
+    else {
+      Issue.record("Reimport must retain the current owned restoration: \(reimportResult)")
+      return
+    }
+    #expect(try fixture.graph(reimported) == fixture.graph(restoredData))
+  }
+
   @Test func losingItineraryPreparationFailurePreservesStopsAndExpandedBindingsUntilRetry()
     async throws
   {
@@ -614,7 +790,7 @@ struct NativeSourceRestorationMaintenanceTests {
       [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
-    #expect(try fixture.graph(after) == fixture.graph(fixture.baseline))
+    try fixture.expectOwnedReferenceClosure(after, preserving: fixture.baseline, kind: "schedule")
   }
 
   @Test(arguments: [PlannerEntityKind.item, .itinerary], [false, true])
@@ -653,7 +829,7 @@ struct NativeSourceRestorationMaintenanceTests {
     }
     #expect(retained.content.source == fixture.source)
     #expect(retained.content.form == form)
-    #expect(try fixture.graph(after) == fixture.graph(before))
+    try fixture.expectOwnedReferenceClosure(after, preserving: before, kind: "schedule")
     #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
     let retiredBooking = PlannerEntityReference(
       kind: .schedule, id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!)
@@ -671,12 +847,12 @@ struct NativeSourceRestorationMaintenanceTests {
     guard case .ready(let session) = await reopened.bootstrap(),
       case .exported(let persisted) = await reopened.exportData(session: session)
     else { throw CancellationError() }
-    #expect(try fixture.graph(persisted) == fixture.graph(before))
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
     try await fixture.deliverCandidateWithSchedule(allDay: allDay)
     guard
       case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
-    #expect(try fixture.graph(redelivered) == fixture.graph(before))
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
   }
 
   @Test func sourceWinnerKeepsItsOwnLinksWithoutAdoptingLosingContents() async throws {
@@ -712,6 +888,7 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(retained.content.links.first?.originalUrl == "https://example.com/winner")
     #expect(retained.content.links.first?.linkId == winner.content.links.first?.linkId)
     #expect(retained.fieldHashes == winner.fieldHashes)
+    try fixture.expectOwnedReferenceClosure(after, preserving: before, kind: "link")
     let expected = try fixture.object(before)
     let actual = try fixture.object(after)
     #expect(actual["sources"] as? NSArray == expected["sources"] as? NSArray)
@@ -765,7 +942,7 @@ struct NativeSourceRestorationMaintenanceTests {
     }
     #expect(retained.content.links.isEmpty)
     #expect(retained.fieldHashes == winner.fieldHashes)
-    #expect(try fixture.graph(after) == fixture.graph(fixture.baseline))
+    try fixture.expectOwnedReferenceClosure(after, preserving: fixture.baseline, kind: "link")
   }
 
   @Test func ownedLinkPreparationFailurePreservesNativeDataUntilRetry() async throws {
@@ -790,7 +967,7 @@ struct NativeSourceRestorationMaintenanceTests {
       [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
     guard case .exported(let recovered) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
-    #expect(try fixture.graph(recovered) == fixture.graph(fixture.baseline))
+    try fixture.expectOwnedReferenceClosure(recovered, preserving: fixture.baseline, kind: "link")
   }
 
   @Test(arguments: [PlannerEntityKind.item, .list, .itinerary, .category, .tag])
@@ -1299,6 +1476,39 @@ private struct SourceRestorationFixture {
 
   func graph(_ data: Data) throws -> NSDictionary {
     try #require(JSONSerialization.jsonObject(with: data) as? NSDictionary)
+  }
+
+  func expectOwnedReferenceClosure(_ data: Data, preserving before: Data, kind: String) throws {
+    var actual = try object(data)
+    let original = try object(before)
+    let originalMarkers = try #require(original["deletionMarkers"] as? [[String: Any]])
+    let markers = try #require(actual["deletionMarkers"] as? [[String: Any]])
+    let additions = markers.filter { marker in
+      !originalMarkers.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(additions.count == 1)
+    let closure = try #require(additions.first)
+    let target = try #require(closure["target"] as? NSDictionary)
+    let expected: [String: Any]
+    if kind == "link" {
+      expected = [
+        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
+        "lifetimeId": "00000000-0000-4000-8000-000000000872",
+      ]
+    } else {
+      expected = [
+        "kind": "source",
+        "source": [
+          "kind": "schedule", "id": "00000000-0000-4000-8000-000000000873",
+          "lifetimeId": "00000000-0000-4000-8000-000000000874",
+        ],
+      ]
+    }
+    #expect(target == NSDictionary(dictionary: expected))
+    actual["deletionMarkers"] = markers.filter { marker in
+      !additions.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(NSDictionary(dictionary: actual) == NSDictionary(dictionary: original))
   }
 
   func files() throws -> [String: Data] {
@@ -1934,6 +2144,54 @@ private struct SourceRestorationFixture {
       }
     }
     try context.save()
+  }
+
+  @MainActor func backupForLosingOwnedReference() throws -> Data {
+    let context = try nativeContext()
+    let sourceRecord: PortableSourceRecord
+    let links: [PortableOwnedLink]
+    let schedules: [PortableScheduleRecord]
+    switch source.kind {
+    case .item:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      let value = try owner.value()
+      sourceRecord = .item(.init(value))
+      links = value.links.map { .init($0, owner: value) }
+      schedules = value.schedules.map { .init($0, owner: value) }
+    case .itinerary:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      let value = try owner.value()
+      sourceRecord = .itinerary(.init(value))
+      links = value.links.map { .init($0, owner: value) }
+      schedules = value.schedules.map { .init($0, owner: value) }
+    default: throw CancellationError()
+    }
+    var graph = try object(baseline)
+    var sources = try #require(graph["sources"] as? [[String: Any]])
+    let index = try #require(
+      sources.firstIndex {
+        $0["kind"] as? String == source.kind.rawValue && $0["id"] as? String == source.id.uuidString
+      })
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    sources[index] = try #require(
+      JSONSerialization.jsonObject(with: encoder.encode(sourceRecord)) as? [String: Any])
+    graph["sources"] = sources
+    graph["ownedLinks"] = try JSONSerialization.jsonObject(with: encoder.encode(links))
+    graph["schedules"] = try JSONSerialization.jsonObject(with: encoder.encode(schedules))
+    var families = try #require(graph["restorationFamilies"] as? [[String: Any]])
+    let candidates = try #require(families[0]["candidates"] as? [[String: Any]])
+    families[0]["candidates"] = candidates.filter {
+      $0["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000815"
+    }
+    graph["restorationFamilies"] = families
+    return try JSONSerialization.data(withJSONObject: graph)
   }
 
   @MainActor func corruptOwnedStop(_ scenario: String) throws {

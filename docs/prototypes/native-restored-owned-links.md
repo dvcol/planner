@@ -72,3 +72,5 @@ outcomes remain open. Q162 has a [Core checkpoint](native-restored-label-collisi
 with broader history/native qualification remaining. HTTP, native interaction,
 actual Mac/system, cloud and physical
 acceptance keep their separate gates. Signing remains deferred.
+
+The subsequent [owned-reference history checkpoint](native-restored-owned-reference-history.md) now qualifies individual bookmark/Schedule closures and reviewed old-backup restoration. Its exact closure is an additional graph delta beyond the original checkpoint above; broader history and native/system gates remain open.

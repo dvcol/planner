@@ -46,11 +46,13 @@ struct PlannerSourceRestorationConsolidation {
   private struct OwnedLinkRetirement {
     let link: PlannerSchemaV18.OwnedLink
     let identity: PlannerPortableBoundIdentity
+    let marker: PortableDeletionMarker?
   }
 
   private struct ScheduleRetirement {
     let schedule: PlannerSchemaV18.Schedule
     let identity: PlannerPortableBoundIdentity
+    let marker: PortableDeletionMarker?
   }
 
   private struct LabelRetirement {
@@ -134,9 +136,9 @@ struct PlannerSourceRestorationConsolidation {
     let labelRebindings = try Self.labelRebindings(
       context: context, rows: rows, retired: retired, winners: winners)
     let ownedLinkRetirements = try Self.ownedLinkRetirements(
-      context: context, rows: rows, retired: retired)
+      context: context, rows: rows, retired: retired, families: families, markers: markers)
     let scheduleRetirements = try Self.scheduleRetirements(
-      context: context, rows: rows, retired: retired)
+      context: context, rows: rows, retired: retired, families: families, markers: markers)
     let ownedLabels = try Self.ownedLabelRetirements(
       context: context, rows: rows, retired: retired, families: families, markers: markers)
     let labelRetirements =
@@ -180,7 +182,8 @@ struct PlannerSourceRestorationConsolidation {
       retiringEntries: Set(entryRetirements.map(\.identity)),
       associationClosures:
         labelRetirements.compactMap(\.marker) + membershipRetirements.compactMap(\.marker)
-        + entryRetirements.compactMap(\.marker))
+        + entryRetirements.compactMap(\.marker) + ownedLinkRetirements.compactMap(\.marker)
+        + scheduleRetirements.compactMap(\.marker))
   }
 
   func retiresOwnedLink(_ link: PlannerSchemaV18.OwnedLink) -> Bool {
@@ -235,8 +238,18 @@ struct PlannerSourceRestorationConsolidation {
         rebinding.association.tag = tag
       }
     }
-    for retirement in ownedLinkRetirements { context.delete(retirement.link) }
-    for retirement in scheduleRetirements { context.delete(retirement.schedule) }
+    for retirement in ownedLinkRetirements {
+      context.delete(retirement.link)
+      if let marker = retirement.marker {
+        context.insert(try PlannerSchemaV4.DeletionMarker(marker))
+      }
+    }
+    for retirement in scheduleRetirements {
+      context.delete(retirement.schedule)
+      if let marker = retirement.marker {
+        context.insert(try PlannerSchemaV4.DeletionMarker(marker))
+      }
+    }
     for retirement in labelRetirements {
       context.delete(retirement.association)
       if let marker = retirement.marker {
@@ -301,7 +314,8 @@ struct PlannerSourceRestorationConsolidation {
   }
 
   private static func ownedLinkRetirements(
-    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>
+    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
+    families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [OwnedLinkRetirement] {
     guard !retired.isEmpty else { return [] }
     var retirements: [OwnedLinkRetirement] = []
@@ -327,14 +341,30 @@ struct PlannerSourceRestorationConsolidation {
       }
       _ = try link.value(
         ownerId: owner.id, ownerLifetimeId: owner.lifetimeId, ownerKind: owner.kind.rawValue)
+      let identity = try binding(.ownedLink, link.id, link.lifetimeId)
+      let closed = markers.contains { marker in
+        guard case .ownedLink(let identifier, let lifetime) = marker.target else { return false }
+        return identifier == identity.id && lifetime == identity.lifetimeId
+      }
+      let marker: PortableDeletionMarker?
+      if closed {
+        marker = nil
+      } else {
+        marker = try PortableDeletionMarker(
+          deletionId: closureIdentifier(identity, role: "deletion"),
+          operationId: closureIdentifier(identity, role: "maintenance"),
+          target: .ownedLink(id: identity.id, lifetimeId: identity.lifetimeId), closedFamilyId: nil
+        ).closingRestorationFamily(families)
+      }
       retirements.append(
-        .init(link: link, identity: try binding(.ownedLink, link.id, link.lifetimeId)))
+        .init(link: link, identity: identity, marker: marker))
     }
     return retirements
   }
 
   private static func scheduleRetirements(
-    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>
+    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
+    families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [ScheduleRetirement] {
     guard !retired.isEmpty else { return [] }
     var retirements: [ScheduleRetirement] = []
@@ -360,9 +390,26 @@ struct PlannerSourceRestorationConsolidation {
       }
       _ = try schedule.value(
         ownerId: owner.id, ownerLifetimeId: owner.lifetimeId, ownerKind: owner.kind.rawValue)
+      let identity = try binding(.schedule, schedule.id, schedule.lifetimeId)
+      let closed = markers.contains { marker in
+        guard case .source(let source) = marker.target else { return false }
+        return source.kind == "schedule" && source.id == identity.id
+          && source.lifetimeId == identity.lifetimeId
+      }
+      let marker: PortableDeletionMarker?
+      if closed {
+        marker = nil
+      } else {
+        marker = try PortableDeletionMarker(
+          deletionId: closureIdentifier(identity, role: "deletion"),
+          operationId: closureIdentifier(identity, role: "maintenance"),
+          target: .source(
+            .init(kind: "schedule", id: identity.id, lifetimeId: identity.lifetimeId)),
+          closedFamilyId: nil
+        ).closingRestorationFamily(families)
+      }
       retirements.append(
-        .init(
-          schedule: schedule, identity: try binding(.schedule, schedule.id, schedule.lifetimeId)))
+        .init(schedule: schedule, identity: identity, marker: marker))
     }
     return retirements
   }
@@ -508,6 +555,10 @@ struct PlannerSourceRestorationConsolidation {
       namespace = "PlannerRestoredMembershipClosure-v1"
     } else if identity.kind == .itineraryEntry {
       namespace = "PlannerRestoredItineraryEntryClosure-v1"
+    } else if identity.kind == .ownedLink {
+      namespace = "PlannerRestoredOwnedLinkClosure-v1"
+    } else if identity.kind == .schedule {
+      namespace = "PlannerRestoredScheduleClosure-v1"
     } else {
       namespace = "PlannerRestoredLabelClosure-v1"
     }
