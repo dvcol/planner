@@ -21,6 +21,117 @@ import XCTest
       verifyRepeatedStopsAfterRelaunch(fixture: "retired-itinerary-membership-without-provenance")
     }
 
+    func testAnImportedCompletionRemovalStillAllowsTheExactNativeStopToBeCompletedAndReopened() {
+      continueAfterFailure = false
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCUIDevice.shared.orientation = .landscapeLeft
+      } else {
+        XCUIDevice.shared.orientation = .portrait
+      }
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "post-closure-completion", "--fixture-dataset", UUID().uuidString,
+      ]
+      func openItineraries() {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+          let navigation = application.buttons.matching(
+            NSPredicate(
+              format: "identifier == %@ OR label == %@",
+              "saved.section.itineraries", "Show Sidebar")
+          ).firstMatch
+          XCTAssertTrue(navigation.waitForExistence(timeout: 15))
+        }
+        application.openPlannerSection("Itineraries")
+      }
+      application.launchSavedPlannerJourney()
+      openItineraries()
+      let itinerary = application.buttons.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@",
+          "saved.itinerary.row.", "Post-closure route")
+      ).firstMatch
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+      let itineraryIdentifier = itinerary.identifier
+      itinerary.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["0 of 3 items done"].waitForExistence(timeout: 10))
+      let appearances = application.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+      XCTAssertTrue(appearances.firstMatch.waitForExistence(timeout: 10))
+      let contents = application.descendants(matching: .any)
+        .matching(identifier: "saved.itinerary.contents").firstMatch
+      XCTAssertTrue(contents.waitForExistence(timeout: 10))
+      var identities: [String] = []
+      for _ in 0..<8 {
+        for appearance in appearances.allElementsBoundByIndex {
+          let identity = appearance.identifier.replacingOccurrences(
+            of: "saved.itinerary.appearance.", with: "")
+          if !identities.contains(identity) { identities.append(identity) }
+        }
+        if identities.count >= 3 { break }
+        contents.swipeUp()
+      }
+      XCTAssertEqual(identities.count, 3)
+      let expanded = identities.filter { $0.contains(".") }
+      XCTAssertEqual(expanded.count, 2)
+      guard let firstStop = expanded.first else { return }
+      func showStart(progress: String) {
+        let label = application.staticTexts[progress]
+        for _ in 0..<6 where !label.isHittable { contents.swipeDown() }
+        XCTAssertTrue(label.waitForExistence(timeout: 10))
+      }
+      var expected = Dictionary(uniqueKeysWithValues: identities.map { ($0, "To do") })
+      showStart(progress: "0 of 3 items done")
+      verifyItineraryStates(expected, in: application)
+      showStart(progress: "0 of 3 items done")
+      capture("An imported completion removal leaves three independent Todo appearances")
+      let completion = application.buttons["saved.itinerary.completion.\(firstStop)"]
+      XCTAssertTrue(completion.isHittable)
+      completion.activateForPlannerJourney()
+      expected[firstStop] = "Completed"
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      verifyItineraryStates(expected, in: application)
+      showStart(progress: "1 of 3 items done")
+      capture("The native checkbox completes only the stop whose completion was removed")
+      application.terminate()
+
+      application.launchSavedPlannerJourney()
+      openItineraries()
+      let sameItinerary = application.plannerElement(itineraryIdentifier)
+      XCTAssertTrue(sameItinerary.waitForExistence(timeout: 15))
+      sameItinerary.activateForPlannerJourney()
+      verifyItineraryStates(expected, in: application)
+      showStart(progress: "1 of 3 items done")
+      capture("Relaunch retains the completed exact appearance and the other Todo stops")
+      completion.activateForPlannerJourney()
+      expected[firstStop] = "To do"
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      verifyItineraryStates(expected, in: application)
+      showStart(progress: "0 of 3 items done")
+      capture("The same native checkbox can deliberately reopen the restored completion state")
+
+      application.openPlannerSection("Lists")
+      let list = application.savedPlannerListRow("Post-closure food")
+      XCTAssertTrue(list.waitForExistence(timeout: 10))
+      list.activateForPlannerJourney()
+      let membership = application.savedPlannerItemRows("Post-closure museum").firstMatch
+      XCTAssertTrue(membership.waitForExistence(timeout: 10))
+      let membershipCompletion = application.buttons[
+        membership.identifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion.")]
+      XCTAssertTrue(membershipCompletion.waitForPlannerValue("To do"))
+      application.openPlannerSection("Items")
+      let source = application.savedPlannerItemRows("Post-closure museum").firstMatch
+      XCTAssertTrue(source.waitForExistence(timeout: 10))
+      source.activateForPlannerJourney()
+      let globalCompletion = application.descendants(matching: .any)
+        .matching(identifier: "saved.item.completion").firstMatch
+      XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+      XCTAssertTrue(application.staticTexts["Keep the museum notes"].waitForExistence(timeout: 10))
+      capture("Standalone completion and the original shared Item remain unchanged")
+      application.terminate()
+    }
+
     private func verifyRepeatedStopsAfterRelaunch(fixture: String) {
       continueAfterFailure = false
       if UIDevice.current.userInterfaceIdiom == .pad {

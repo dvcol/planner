@@ -26,6 +26,7 @@ enum PlannerFixtureDataset {
     case committedMaintenanceRecovery = "committed-maintenance-recovery"
     case maintenanceLateInput = "maintenance-late-input"
     case maintenanceRetryFailure = "maintenance-retry-failure"
+    case postClosureCompletion = "post-closure-completion"
     case retiredMembership = "retired-membership"
     case retiredMembershipWithoutProvenance = "retired-membership-without-provenance"
     case retiredItineraryMembership = "retired-itinerary-membership"
@@ -103,6 +104,9 @@ enum PlannerFixtureDataset {
     }
     if scenario == .preparedMaintenanceRecovery {
       return try await PlannerPreparedMaintenanceRecoveryFixture.makeStore(directory: directory)
+    }
+    if scenario == .postClosureCompletion {
+      return try await PlannerPostClosureCompletionFixture.makeStore(directory: directory)
     }
     if scenario == .retiredMembership {
       return try await PlannerRetiredMembershipFixture.makeStore(directory: directory)
