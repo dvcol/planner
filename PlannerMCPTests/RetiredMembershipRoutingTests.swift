@@ -7,6 +7,118 @@ import Testing
 
 @MainActor
 struct RetiredMembershipRoutingTests {
+  @Test func aDeclaredLosingSourceKeepsItsWinnerReadableOverHTTP() async throws {
+    let (_, seedConfiguration, _) = try makePlannerIntentStorage()
+    let seed = PlannerCore.Planner(configuration: seedConfiguration)
+    guard case .ready(let seedSession) = await seed.bootstrap() else { throw CancellationError() }
+    let source = try await create(
+      .createItem(content: .init(title: "Nezu Museum", notes: "Keep the winning notes")),
+      planner: seed, session: seedSession)
+    guard case .exported(let initial) = await seed.exportData(session: seedSession) else {
+      throw CancellationError()
+    }
+    var graph = try #require(JSONSerialization.jsonObject(with: initial) as? [String: Any])
+    var sources = try #require(graph["sources"] as? [[String: Any]])
+    let predecessorLifetime = try #require(sources.first?["lifetimeId"] as? String)
+    let winnerLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000814")!
+    let losingLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
+    sources[0]["lifetimeId"] = winnerLifetime.uuidString
+    graph["sources"] = sources
+    let predecessor: [String: Any] = [
+      "kind": "item", "id": source.id.uuidString, "lifetimeId": predecessorLifetime,
+    ]
+    graph["deletionMarkers"] = [
+      [
+        "deletionId": "00000000-0000-4000-8000-000000000892",
+        "operationId": "00000000-0000-4000-8000-000000000992",
+        "target": ["kind": "source", "source": predecessor], "closedFamilyId": NSNull(),
+      ]
+    ]
+    graph["restorationFamilies"] = [
+      [
+        "familyId": "00000000-0000-4000-8000-000000000890", "predecessor": predecessor,
+        "candidates": [
+          [
+            "lifetimeId": winnerLifetime.uuidString,
+            "operationId": "00000000-0000-4000-8000-000000000994",
+          ],
+          [
+            "lifetimeId": losingLifetime.uuidString,
+            "operationId": "00000000-0000-4000-8000-000000000995",
+          ],
+        ],
+      ]
+    ]
+    let (_, configuration, _) = try makePlannerIntentStorage()
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let incoming) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: graph)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: incoming, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let listener = PlannerMCPLoopbackListener(
+      requestHandler: PlannerMCPRequestHandler(
+        credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+        planner: planner, datasetSession: session))
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+      let container = try ModelContainer(
+        for: schema, migrationPlan: PlannerMigrationPlan.self,
+        configurations: [
+          ModelConfiguration(schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
+        ])
+      let context = ModelContext(container)
+      context.autosaveEnabled = false
+      let losing = try PlannerSchemaV18.Item(
+        input: .init(title: "Other museum", notes: "Do not merge these notes"))
+      losing.id = source.id
+      losing.lifetimeId = losingLifetime
+      losing.globalDone = true
+      context.insert(losing)
+      try context.save()
+      let query = try await call(
+        "planner_query",
+        arguments: [
+          "formatVersion": 1,
+          "query": [
+            "kind": "items", "scope": ["kind": "global"], "completion": "all", "archive": "all",
+          ],
+        ], endpoint: endpoint, httpSession: httpSession)
+      #expect(query["matchingCount"] as? String == "1")
+      let read = try await call(
+        "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ], endpoint: endpoint, httpSession: httpSession)
+      let value = try #require(read["value"] as? [String: Any])
+      let content = try #require(value["content"] as? [String: Any])
+      #expect(content["title"] as? String == "Nezu Museum")
+      #expect(content["notes"] as? String == "Keep the winning notes")
+      #expect((value["state"] as? [String: Any])?["globalDone"] as? Bool == false)
+      guard case .exported(let after) = await planner.exportData(session: session) else {
+        throw CancellationError()
+      }
+      #expect(
+        try JSONSerialization.jsonObject(with: after) as? NSDictionary
+          == JSONSerialization.jsonObject(with: before) as? NSDictionary)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+    await listener.stop()
+  }
+
   @Test(arguments: [false, true])
   func aRetiredNativeCopyCannotReviveOrRetargetAnHTTPMembership(missingProvenance: Bool)
     async throws

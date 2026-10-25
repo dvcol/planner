@@ -6,8 +6,7 @@ import Testing
 
 struct MembershipMutationRoutingTests {
   @Test func removalOverHTTPPreservesSharedItemAndReplayCannotRemoveANewMembership() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try await makePlannerIntentStorage().directory
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -111,8 +110,7 @@ struct MembershipMutationRoutingTests {
   @Test func moveOverHTTPCreatesTodoOrRetainsTheExistingDestinationWithoutCopyingTheItem()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try await makePlannerIntentStorage().directory
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -253,8 +251,7 @@ struct MembershipMutationRoutingTests {
   @Test func strictAdvertisedMutationShapesRejectInvalidRequestsWithoutChangingEitherList()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try await makePlannerIntentStorage().directory
     let planner = PlannerCore.Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

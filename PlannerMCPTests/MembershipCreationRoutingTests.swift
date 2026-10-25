@@ -8,8 +8,7 @@ struct MembershipCreationRoutingTests {
   @Test func membershipAdditionOverHTTPRetainsLiveIdentityOrderLocalCompletionAndReplay()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try await makePlannerIntentStorage().directory
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -156,8 +155,7 @@ struct MembershipCreationRoutingTests {
   @Test func anchoredMembershipAdditionIsAdvertisedAndRejectsInvalidRequestsWithoutChangingTheList()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try await makePlannerIntentStorage().directory
     let planner = PlannerCore.Planner(
       configuration: PlannerStorageConfiguration(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

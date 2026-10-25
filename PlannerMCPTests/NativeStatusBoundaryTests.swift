@@ -8,8 +8,7 @@ struct NativeStatusBoundaryTests {
   @Test func authenticatedAgentCannotReadNativeDatasetStatusOrChangeItsAcknowledgement()
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try await makePlannerIntentStorage().directory
     let planner = PlannerCore.Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

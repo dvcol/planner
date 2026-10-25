@@ -4,6 +4,10 @@ import Testing
 
 @testable import PlannerCore
 
+#if os(macOS)
+  import Darwin
+#endif
+
 struct NativeSourceRestorationMaintenanceTests {
   @Test(arguments: [PlannerEntityKind.item, .list, .itinerary, .category, .tag])
   func everySourceKindRetainsItsExactWinnerAndTruthfulMaintenance(kind: PlannerEntityKind)
@@ -59,7 +63,10 @@ struct NativeSourceRestorationMaintenanceTests {
     else { throw CancellationError() }
     #expect(try fixture.graph(reopenedData) == fixture.graph(fixture.baseline))
   }
-  @Test(arguments: ["unknown", "missingWinner", "scalarLink", "scalarMembership"])
+  @Test(arguments: [
+    "unknown", "missingWinner", "scalarLink", "scalarMembership", "scalarEntry", "scalarSchedule",
+    "scalarLabel",
+  ])
   func unresolvedCandidateInputsPreserveEveryRecoveryByte(scenario: String) async throws {
     let fixture = try await SourceRestorationFixture.make()
     try await fixture.deliverCandidate()
@@ -158,6 +165,48 @@ struct NativeSourceRestorationMaintenanceTests {
     for (name, bytes) in originalFiles where name != "identity.json" {
       #expect(try fixture.files()[name] == bytes)
     }
+  }
+
+  @Test func independentNativeDeliveryInvalidatesAnOpenReaderWithoutChangingItsSource() async throws
+  {
+    let fixture = try await SourceRestorationFixture.make()
+    let reader = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reader.bootstrap(),
+      case .source(.item(let original)) = await reader.read(
+        session: session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    let changes = await reader.changes(session: session)
+    try await Task.sleep(for: .milliseconds(100))
+    try await fixture.deliverCandidate()
+    guard case .exported = await fixture.planner.exportData(session: fixture.session) else {
+      throw CancellationError()
+    }
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      group.addTask {
+        for try await change in changes {
+          if case .dataChanged = change.payload { return }
+        }
+        throw CancellationError()
+      }
+      group.addTask {
+        try await Task.sleep(for: .seconds(5))
+        throw CancellationError()
+      }
+      defer { group.cancelAll() }
+      try await group.next()
+    }
+    guard
+      case .snapshot(let query) = await reader.query(
+        .init(
+          session: session, request: .items(.init(completion: .all, archive: .all)))),
+      case .source(.item(let current)) = await reader.read(
+        session: session, request: .source(fixture.source)),
+      case .exported(let data) = await reader.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(query.matchingCount == 2)
+    #expect(current.source == original.source && current.content.title == original.content.title)
+    #expect(current.updatedAt == original.updatedAt && current.fieldHashes == original.fieldHashes)
+    #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
   }
 
   @Test func failedPreparationRetainsBothNativeCandidatesUntilFreshRetry() async throws {
@@ -387,6 +436,31 @@ private struct SourceRestorationFixture {
         input: .init(originalUrl: "https://example.com/losing"), rank: 0, owner: candidate)
       context.insert(link)
       link.itemOwner = nil
+    case "scalarEntry":
+      let itinerary = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first)
+      let entry = PlannerSchemaV18.ItineraryEntry(
+        snapshot: .init(
+          id: UUID(), lifetimeId: UUID(),
+          itinerary: .init(kind: "itinerary", id: itinerary.id!, lifetimeId: itinerary.lifetimeId!),
+          source: .init(kind: "item", id: source.id, lifetimeId: candidate.lifetimeId!),
+          rank: 0, localDone: true), itinerary: itinerary, item: candidate, list: nil)
+      context.insert(entry)
+      entry.item = nil
+    case "scalarSchedule":
+      let schedule = try PlannerSchemaV18.Schedule(
+        snapshot: .init(
+          id: UUID(), lifetimeId: UUID(),
+          form: .timed(
+            start: Date(timeIntervalSinceReferenceDate: 100), end: nil,
+            planningTimeZone: "Asia/Tokyo")), owner: candidate)
+      context.insert(schedule)
+      schedule.itemOwner = nil
+    case "scalarLabel":
+      let category = try #require(context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first)
+      let association = PlannerSchemaV18.LabelAssociation(item: candidate, category: category)
+      context.insert(association)
+      association.itemOwner = nil
     case "scalarMembership":
       let list = try #require(context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first)
       let member = PlannerSchemaV18.Membership(
@@ -455,3 +529,263 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 }
+
+#if os(macOS)
+  extension NativeSourceRestorationMaintenanceTests {
+    @Test func failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh() async throws {
+      guard
+        ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
+          == "nativeSaveFailure"
+      else {
+        let directory = try makePlannerStoreFixtureDirectory()
+        try runSourceRestorationProcess(directory: directory, stage: "nativeSaveFailure")
+        return
+      }
+      let fixture = try await SourceRestorationFixture.make()
+      try await fixture.deliverCandidate()
+      let originalFiles = try fixture.files()
+      let lifetimes = try await fixture.itemLifetimes()
+      let obstruction = NativeSaveFileSizeObstruction(
+        configuration: fixture.configuration, maximumFileSize: 0)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.willSave, object: nil, queue: nil
+      ) {
+        notification in obstruction.observe(notification)
+      }
+      let failed = await fixture.planner.exportData(session: fixture.session)
+      NotificationCenter.default.removeObserver(observer)
+      try obstruction.restore()
+      #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+      guard case .failed(let reason) = failed else { throw CancellationError() }
+      #expect(reason.code == "maintenanceRequired")
+      #expect(try await fixture.itemLifetimes() == lifetimes)
+      let failedFiles = try fixture.files()
+      for (name, bytes) in originalFiles { #expect(failedFiles[name] == bytes) }
+      let preparations = failedFiles.filter { $0.key.hasPrefix("maintenance-") }
+      #expect(preparations.count == 1)
+      let preparation = try fixture.object(try #require(preparations.values.first))
+      let identifier = try #require(
+        (preparation["maintenanceId"] as? String).flatMap(UUID.init(uuidString:)))
+      #expect(preparation["kind"] as? String == "sourceRestorationConsolidation")
+      guard
+        case .rejected(let retryFailure) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: identifier)
+      else { throw CancellationError() }
+      #expect(retryFailure.code == "maintenanceNotApplied")
+      #expect(try fixture.files() == failedFiles)
+      let reopened = Planner(configuration: fixture.configuration)
+      guard case .ready(let session) = await reopened.bootstrap(),
+        case .exported(let data) = await reopened.exportData(session: session)
+      else { throw CancellationError() }
+      #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
+      let healed = try fixture.files()
+      for (name, bytes) in failedFiles { #expect(healed[name] == bytes) }
+      let maintenance = try #require(fixture.envelope()["maintenanceReceipts"] as? [[String: Any]])
+      #expect(
+        maintenance.count == 1
+          && maintenance.first?["maintenanceId"] as? String != identifier.uuidString)
+    }
+
+    @Test func sourceRestorationInterruptionPreservesPreparationAndActivationOrder() async throws {
+      let environment = ProcessInfo.processInfo.environment
+      if let directory = environment["PLANNER_SOURCE_RESTORATION_CHILD"],
+        let stage = environment["PLANNER_SOURCE_RESTORATION_STAGE"]
+      {
+        try await runSourceRestorationChild(
+          directory: URL(fileURLWithPath: directory), stage: stage)
+        return
+      }
+      for stage in ["beforeNativeSave", "afterNativeSave", "beforePublication", "beforeActivation"]
+      {
+        let directory = try makePlannerStoreFixtureDirectory()
+        try runSourceRestorationProcess(directory: directory, stage: stage)
+        let input = try #require(
+          JSONSerialization.jsonObject(
+            with: Data(contentsOf: directory.appendingPathComponent("input.json")))
+            as? [String: Any])
+        let dataset = URL(fileURLWithPath: try #require(input["dataset"] as? String))
+        let namespace = URL(fileURLWithPath: try #require(input["namespace"] as? String))
+        let baseline = try #require(
+          (input["baseline"] as? String).flatMap { Data(base64Encoded: $0) })
+        let priorFiles = try #require(input["files"] as? [String: String])
+        let configuration = PlannerStorageConfiguration(
+          storeURL: dataset.appendingPathComponent("store/Planner.sqlite"),
+          controlURL: dataset.appendingPathComponent("control/writer"),
+          recoveryDirectoryURL: dataset.appendingPathComponent("recovery"),
+          processRole: .mainApplication, storageMode: .localOnly)
+        let proof = try #require(
+          JSONSerialization.jsonObject(
+            with: Data(contentsOf: directory.appendingPathComponent("proof.json")))
+            as? [String: Any])
+        #expect(proof["stage"] as? String == stage)
+        let identity = try #require(
+          JSONSerialization.jsonObject(
+            with: Data(contentsOf: configuration.controlURL)) as? [String: Any])
+        let namespaceIdentifier = try #require(
+          (identity["namespaceId"] as? String).flatMap(UUID.init(uuidString:)))
+        let source = Planner(configuration: configuration)
+        let pending = await source.inspectRecovery(
+          request: .namespace(namespaceId: namespaceIdentifier))
+        guard case .listed(let view) = pending else { throw CancellationError() }
+        let preparation = view.preparedMaintenance.first
+        if stage == "beforeNativeSave" || stage == "afterNativeSave" {
+          #expect(identity["schemaVersion"] as? Int == 21)
+          #expect(view.preparedMaintenance.count == 1)
+        } else {
+          #expect(identity["schemaVersion"] as? Int == 20)
+          #expect(view.preparedMaintenance.isEmpty)
+          if stage == "beforeActivation" {
+            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 21)
+          } else {
+            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 20)
+          }
+        }
+        try FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: namespace.path)
+        try FileManager.default.setAttributes(
+          [.posixPermissions: 0o700],
+          ofItemAtPath: configuration.controlURL.deletingLastPathComponent().path)
+        guard case .ready(let session) = await source.bootstrap() else { throw CancellationError() }
+        if stage == "afterNativeSave" {
+          let identifier = try #require(preparation?.maintenanceId)
+          guard case .status(let status) = await source.read(session: session, request: .status),
+            case .known(_, let operations, let maintenance, let blocked) = status.recovery
+          else { throw CancellationError() }
+          #expect(operations.isEmpty && maintenance == [identifier] && blocked)
+          guard
+            case .complete = await source.retryMaintenanceRecovery(
+              session: session, maintenanceId: identifier)
+          else { throw CancellationError() }
+        }
+        guard case .exported(let data) = await source.exportData(session: session) else {
+          throw CancellationError()
+        }
+        #expect(
+          try JSONSerialization.jsonObject(with: data) as? NSDictionary
+            == JSONSerialization.jsonObject(with: baseline) as? NSDictionary)
+        for (name, encoded) in priorFiles where name != "identity.json" {
+          #expect(
+            try Data(contentsOf: namespace.appendingPathComponent(name))
+              == Data(base64Encoded: encoded))
+        }
+        if stage == "beforeNativeSave", let preparation {
+          guard
+            case .rejected(let reason) = await source.retryMaintenanceRecovery(
+              session: session, maintenanceId: preparation.maintenanceId)
+          else { throw CancellationError() }
+          #expect(reason.code == "maintenanceNotApplied")
+        }
+      }
+    }
+
+    private func runSourceRestorationChild(directory: URL, stage: String) async throws {
+      let fixture = try await SourceRestorationFixture.make()
+      try await fixture.deliverCandidate()
+      if stage == "beforePublication" || stage == "beforeActivation" {
+        try fixture.rewriteCompatibility20()
+      }
+      let input: [String: Any] = [
+        "dataset": fixture.configuration.storeURL.deletingLastPathComponent()
+          .deletingLastPathComponent().path,
+        "namespace": fixture.namespace.path, "baseline": fixture.baseline.base64EncodedString(),
+        "files": try fixture.files().mapValues { $0.base64EncodedString() },
+      ]
+      try JSONSerialization.data(withJSONObject: input).write(
+        to: directory.appendingPathComponent("input.json"), options: .atomic)
+      if stage == "beforePublication" || stage == "beforeActivation" {
+        let obstructed: URL
+        if stage == "beforePublication" {
+          obstructed = fixture.namespace
+        } else {
+          obstructed = fixture.configuration.controlURL.deletingLastPathComponent()
+        }
+        try FileManager.default.setAttributes(
+          [.posixPermissions: 0o500], ofItemAtPath: obstructed.path)
+        let planner = Planner(configuration: fixture.configuration)
+        guard case .unavailable = await planner.bootstrap() else { throw CancellationError() }
+        try JSONSerialization.data(withJSONObject: ["stage": stage]).write(
+          to: directory.appendingPathComponent("proof.json"), options: .atomic)
+        try #require(kill(getpid(), SIGKILL) == 0)
+        while true { pause() }
+      }
+      let notification = stage == "afterNativeSave" ? ModelContext.didSave : ModelContext.willSave
+      let observer = NotificationCenter.default.addObserver(
+        forName: notification, object: nil, queue: nil
+      ) { value in
+        guard value.object is ModelContext else { return }
+        do {
+          try JSONSerialization.data(withJSONObject: ["stage": stage]).write(
+            to: directory.appendingPathComponent("proof.json"), options: .atomic)
+        } catch { print("SOURCE_RESTORATION_PROOF_ERROR \(error)") }
+        fflush(nil)
+        if kill(getpid(), SIGKILL) != 0 { return }
+        while true { pause() }
+      }
+      let result = await fixture.planner.exportData(session: fixture.session)
+      NotificationCenter.default.removeObserver(observer)
+      Issue.record("The isolated source retirement must stop at its actual save: \(result)")
+    }
+
+    private func runSourceRestorationProcess(directory: URL, stage: String) throws {
+      try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+      let outputURL = directory.appendingPathComponent("source-restoration-child.log")
+      try Data().write(to: outputURL)
+      let output = try FileHandle(forWritingTo: outputURL)
+      defer { try? output.close() }
+      let process = Process()
+      process.executableURL = URL(fileURLWithPath: CommandLine.arguments[0])
+      var arguments: [String] = []
+      if let index = CommandLine.arguments.firstIndex(of: "--test-bundle-path"),
+        CommandLine.arguments.indices.contains(index + 1)
+      {
+        arguments = ["--test-bundle-path", CommandLine.arguments[index + 1]]
+      }
+      let selectedTest: String
+      if stage == "nativeSaveFailure" {
+        selectedTest = "failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh"
+      } else {
+        selectedTest = "sourceRestorationInterruptionPreservesPreparationAndActivationOrder"
+      }
+      process.arguments =
+        arguments + [
+          "--testing-library", "swift-testing", "--filter",
+          "NativeSourceRestorationMaintenanceTests/\(selectedTest)",
+        ]
+      var environment = ProcessInfo.processInfo.environment
+      environment["PLANNER_SOURCE_RESTORATION_CHILD"] = directory.path
+      environment["PLANNER_SOURCE_RESTORATION_STAGE"] = stage
+      process.environment = environment
+      process.standardOutput = output
+      process.standardError = output
+      let completion = DispatchSemaphore(value: 0)
+      process.terminationHandler = { _ in completion.signal() }
+      try process.run()
+      let finished = completion.wait(timeout: .now() + 45) == .success
+      if !finished {
+        kill(process.processIdentifier, SIGKILL)
+        process.waitUntilExit()
+      }
+      try output.close()
+      let transcript = try String(contentsOf: outputURL, encoding: .utf8)
+      if stage == "nativeSaveFailure" {
+        #expect(
+          finished && process.terminationReason == .exit && process.terminationStatus == 0,
+          Comment(rawValue: String(transcript.suffix(12000))))
+        #expect(transcript.contains("Test run with 1 test"))
+      } else {
+        #expect(
+          finished && process.terminationReason == .uncaughtSignal
+            && process.terminationStatus == SIGKILL,
+          Comment(rawValue: String(transcript.suffix(12000))))
+      }
+      #expect(!transcript.contains("recorded an issue"))
+      try JSONSerialization.data(withJSONObject: [
+        "stage": stage, "finishedWithinDeadline": finished,
+        "terminationStatus": process.terminationStatus,
+        "uncaughtSignal": process.terminationReason == .uncaughtSignal,
+        "childLog": outputURL.path,
+      ]).write(to: directory.appendingPathComponent("termination.json"), options: .atomic)
+      print("SOURCE_RESTORATION_INTERRUPTION_CHILD_LOG \(outputURL.path)")
+    }
+  }
+#endif
