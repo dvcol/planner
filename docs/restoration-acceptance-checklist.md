@@ -17,6 +17,7 @@ boundary before changing code. Prefer the existing closure and maintenance paths
 | Retire known closed bookmark/Schedule candidates while preserving fresh authorized restorations | [Closed owned families](prototypes/native-restored-owned-reference-history.md#closed-owned-families-and-late-delivery) |
 | Retire known closed unreferenced source candidates, with or without a fresh restoration, across all five source kinds | [Closed source families](prototypes/native-restored-owned-reference-history.md#closed-source-families) |
 | Reject an unknown source lifetime after family closure without changing native data, recovery or writer control, across all five source kinds | [Unknown source lifetimes](prototypes/native-restored-owned-reference-history.md#unknown-source-lifetimes-after-deletion) |
+| Preserve the fresh Undo membership and repeated-branch completion when a closed-family membership and expanded copies arrive | [Closed membership families](prototypes/native-restored-owned-reference-history.md#closed-membership-family-after-undo) |
 
 These checkpoints include bounded recovery, replay, migration and redelivery
 cases. They do not claim that every interaction below has already executed.
@@ -25,7 +26,6 @@ cases. They do not claim that every interaction below has already executed.
 
 | Check | Required result | Gate |
 | --- | --- | --- |
-| Late closed membership restoration copies, including a fresh current membership | Preserve the fresh membership identity/local state and its exact expanded contexts; retire only proven closed copies | Real-store fixture and existing public read/export/replay boundary |
 | Late closed Itinerary-entry restoration copies, including a fresh current entry | Preserve the fresh entry, route order and direct/expanded completion; reject stale identities | Real-store fixture and existing public read/export/replay boundary |
 | Late closed Category/Tag selection restoration copies on Item/Itinerary owners | Preserve the current selection and owner fields/timestamps; close no unproven identity | Real-store fixture and existing public read/export/replay boundary |
 | Source-owner and owned-reference families choose different candidates | Apply the accepted complete-winner policy where authority is proven; retain atomic rejection where existing declarations cannot prove it | Worked fixture first; request a decision only if the accepted contracts leave a concrete policy gap |

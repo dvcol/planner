@@ -3417,6 +3417,79 @@ struct NativeMembershipConsolidationTests {
         uuidString: "00000000-0000-4000-8000-000000000840")!)
     #expect(retained.backup.contextAliases.count == 6)
     #expect(try maintenanceNamespaceFiles(namespaceDirectory) == beforeFiles)
+
+    let membershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let firstEntry = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let secondEntry = UUID(uuidString: "00000000-0000-4000-8000-000000000452")!
+    let firstAppearance = PlannerAppearance.expandedListItem(
+      itineraryId: itineraryIdentifier, listEntryId: firstEntry,
+      membershipId: membershipIdentifier)
+    let removal = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .removeMembership(listId: listIdentifier, membershipId: membershipIdentifier))
+    guard
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(scope: .appearance(firstAppearance), done: true))
+      ).outcome
+    else { throw CancellationError() }
+    let removalResult = await planner.execute(removal)
+    guard case .applied(let removed, .complete) = removalResult.outcome,
+      let undo = removalResult.associationUndoSnapshot,
+      case .applied(_, .complete) = await planner.execute(
+        .init(operationId: UUID(), session: session, command: .restoreAssociation(snapshot: undo))
+      ).outcome,
+      case .exported(let restoredData) = await planner.exportData(session: session),
+      case .decoded(let restored) = planner.decodeImport(restoredData),
+      let current = restored.backup.memberships.first
+    else { throw CancellationError() }
+    #expect(current.id == membershipIdentifier)
+    #expect(!family.candidates.contains { $0.lifetimeId == current.lifetimeId })
+    #expect(restored.backup.deletionMarkers.contains { $0.closedFamilyId == family.familyId })
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL,
+      itemIdentifier: UUID(uuidString: "00000000-0000-4000-8000-000000000101")!,
+      listIdentifier: listIdentifier,
+      contributions: [
+        (membershipIdentifier.uuidString, "00000000-0000-4000-8000-000000000841", 4096, false)
+      ])
+    for entryIdentifier in [firstEntry, secondEntry] {
+      try await insertIndependentExpandedCompletion(
+        storeURL: configuration.storeURL, entryIdentifier: entryIdentifier,
+        membershipIdentifier: membershipIdentifier,
+        membershipLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000841")!)
+    }
+    guard
+      case .snapshot(let contents) = await planner.query(
+        .init(
+          session: session,
+          request: .items(.init(scope: .list(listIdentifier), completion: .all, archive: .all)))),
+      case .appearance(let first) = await planner.read(
+        session: session, request: .appearance(firstAppearance)),
+      case .appearance(let second) = await planner.read(
+        session: session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: secondEntry,
+            membershipId: membershipIdentifier))),
+      case .exported(let afterDelivery) = await planner.exportData(session: session),
+      case .applied(let replayed, .complete) = await planner.execute(removal).outcome
+    else {
+      Issue.record("A closed membership family cannot replace its fresh Undo restoration.")
+      return
+    }
+    #expect(contents.matchingCount == 1)
+    #expect(first.localDone && !second.localDone)
+    #expect(afterDelivery == restoredData)
+    #expect(replayed == removed)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let ready) = await reopened.bootstrap(),
+      case .exported(let afterReopen) = await reopened.exportData(session: ready)
+    else { throw CancellationError() }
+    #expect(afterReopen == restoredData)
   }
 
   @Test(arguments: ["missingMembershipHistory", "differentList"])

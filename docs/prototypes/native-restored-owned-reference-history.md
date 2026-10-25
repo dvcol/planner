@@ -247,3 +247,23 @@ sources remain unchanged. Mac app/Share/test-host compilation and strict
 Swift/Markdown lint pass; final cohorts have no failures, skips or SQLite unlink
 warnings. Passing fixture cleanup retains failed and interrupted diagnostics.
 Native UI, system, cloud and physical acceptance remain separate.
+
+## Closed membership family after Undo
+
+The existing open membership-family test now follows the relationship through
+Remove and Undo. Undo retains its public identity under a fresh lifetime. A late
+old-family sibling then arrives with a different rank/local flag and expanded
+completion copies in both repeated List stops. The current membership and route
+retain their exact full export. One branch stays Done and the other stays Todo.
+Old Remove replay and reopen retain the same restored graph.
+
+This passes with unchanged production code. Three focused functions on both Mac
+and iPhone also cover the existing legacy-closure and restored expanded-context
+cases, including preparation failure. The
+[validation record](evidence/native-membership-consolidation/native-closed-membership-family-validation.json)
+reconciles 813 shared Core inputs and 1,160 phone inputs with actual products.
+All 90 production inputs and 514 frozen fixtures match the preceding checkpoint.
+Strict Swift/Markdown lint passes. The first attempt had a test-only compiler
+error accessing the Undo snapshot on the applied value instead of the operation
+result; no test executed in that attempt. Final runs have no failures, skips or
+SQLite unlink warnings. There is no new HTTP, native UI or signing credit.
