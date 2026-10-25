@@ -1040,3 +1040,125 @@ struct NativeSourceRestorationEntryTests {
     #expect(try fixture.graph(reopenedData) == fixture.graph(expected))
   }
 }
+
+struct NativeRestoredTargetReferenceTests {
+  @Test(arguments: [false, true])
+  func portableFiveRequiresTheRemovalObservedAcrossItemSiblings(observedRemoval: Bool)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make()
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    guard
+      case .applied(let addition, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addMembership(
+            itemId: fixture.source.id, listId: listIdentifier, placement: .last))
+      ).outcome,
+      case .membership(let removedIdentifier, _, _)? = addition.generatedReferences.first,
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .removeMembership(listId: listIdentifier, membershipId: removedIdentifier))
+      ).outcome,
+      case .exported(let removed) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    var graph = try fixture.object(removed)
+    let removals = try #require(graph["membershipRemovals"] as? [[String: Any]])
+    let removalIdentifier = try #require(removals.first?["deletionId"] as? String)
+    var provenance = try #require(graph["membershipProvenance"] as? [[String: Any]])
+    let original = try #require(provenance.first)
+    let list = try #require(original["list"] as? [String: Any])
+    let item = try #require(original["item"] as? [String: Any])
+    var sibling = item
+    sibling["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
+    let identifier = "00000000-0000-4000-8000-000000000403"
+    let lifetime = "00000000-0000-4000-8000-000000000843"
+    graph["formatVersion"] = 5
+    graph["memberships"] = [
+      [
+        "id": identifier, "lifetimeId": lifetime, "list": list, "item": item,
+        "rank": "0", "localDone": false,
+      ]
+    ]
+    provenance.append([
+      "membershipId": identifier, "membershipLifetimeId": lifetime,
+      "list": list, "item": sibling,
+      "observedRemovalIds": observedRemoval ? [removalIdentifier] : [],
+    ])
+    graph["membershipProvenance"] = provenance
+    let decoded = fixture.planner.decodeImport(try JSONSerialization.data(withJSONObject: graph))
+    if !observedRemoval {
+      guard case .invalid = decoded else {
+        Issue.record("An unaware sibling Add must not be admitted after Remove.")
+        return
+      }
+      return
+    }
+    guard case .decoded(let backup) = decoded else {
+      Issue.record(
+        "An actual removal observation must remain valid across proven Item siblings: \(decoded)")
+      return
+    }
+    let retained = try #require(
+      backup.backup.membershipProvenance.first {
+        $0.membershipId.uuidString == identifier
+      })
+    #expect(retained.item.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000815")
+    #expect(retained.observedRemovalIds.map(\.uuidString) == [removalIdentifier])
+  }
+
+  @Test func portableFivePreservesAttestedSiblingBindingsWithoutReinterpretingVersionFour()
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make()
+    var graph = try fixture.object(fixture.baseline)
+    let membershipIdentifier = "00000000-0000-4000-8000-000000000403"
+    let membershipLifetime = "00000000-0000-4000-8000-000000000843"
+    let list: [String: Any] = [
+      "kind": "list", "id": "00000000-0000-4000-8000-000000000201",
+      "lifetimeId": "00000000-0000-4000-8000-000000000821",
+    ]
+    let item: [String: Any] = [
+      "kind": "item", "id": fixture.source.id.uuidString,
+      "lifetimeId": "00000000-0000-4000-8000-000000000814",
+    ]
+    var attestedItem = item
+    attestedItem["lifetimeId"] = "00000000-0000-4000-8000-000000000815"
+    graph["memberships"] = [
+      [
+        "id": membershipIdentifier, "lifetimeId": membershipLifetime,
+        "list": list, "item": item, "rank": "0", "localDone": false,
+      ]
+    ]
+    graph["membershipProvenance"] = [
+      [
+        "membershipId": membershipIdentifier, "membershipLifetimeId": membershipLifetime,
+        "list": list, "item": attestedItem, "observedRemovalIds": [],
+      ]
+    ]
+    graph["formatVersion"] = 4
+    guard
+      case .invalid = fixture.planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: graph))
+    else {
+      Issue.record("Version4 must retain its exact attested-endpoint rule.")
+      return
+    }
+    graph["formatVersion"] = 5
+    let result = fixture.planner.decodeImport(try JSONSerialization.data(withJSONObject: graph))
+    guard case .decoded(let decoded) = result else {
+      Issue.record(
+        "Version5 must retain a proven sibling attestation beside its live winner: \(result)")
+      return
+    }
+    #expect(decoded.backup.formatVersion == 5)
+    #expect(
+      decoded.backup.memberships.first?.itemLifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000814")
+    #expect(
+      decoded.backup.membershipProvenance.first?.item.lifetimeId.uuidString
+        == "00000000-0000-4000-8000-000000000815")
+    #expect(decoded.backup.membershipProvenance.first?.observedRemovalIds.isEmpty == true)
+  }
+}

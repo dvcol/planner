@@ -47,7 +47,30 @@ struct PlannerMembershipPair: Hashable {
   let item: PlannerBoundSource
 }
 
+/// Historical siblings retain one authority key after closure; predecessors never join it.
+func plannerMembershipHistoryPair(
+  _ pair: PlannerMembershipPair, families: [PlannerPortableRestorationFamily]
+) throws -> PlannerMembershipPair {
+  let matching = families.filter {
+    $0.predecessor.kind == .item && $0.predecessor.id == pair.item.id
+      && $0.candidates.contains { $0.lifetimeId == pair.item.lifetimeId }
+  }
+  guard matching.count <= 1 else {
+    throw PlannerFailure("readUnavailable", "Membership authority has conflicting Item families.")
+  }
+  guard let family = matching.first,
+    let lifetime = family.candidates.map(\.lifetimeId).min(by: { $0.uuidString < $1.uuidString })
+  else { return pair }
+  return .init(
+    list: pair.list, item: .init(kind: .item, id: pair.item.id, lifetimeId: lifetime))
+}
+
 extension PlannerImportGraph {
+  func membershipHistoryPair(_ pair: PlannerMembershipPair) throws -> PlannerMembershipPair {
+    guard backup.formatVersion >= 5 else { return pair }
+    return try plannerMembershipHistoryPair(pair, families: backup.restorationFamilies)
+  }
+
   func retainedMembershipProvenance(for identity: PlannerPortableBoundIdentity)
     -> PlannerPortableMembershipProvenance?
   {
@@ -67,8 +90,9 @@ extension PlannerImportGraph {
   func suppressedMembershipIdentities() throws -> Set<PlannerPortableBoundIdentity> {
     let requiredRemovals = try validatedMembershipRemovalAuthority()
     return Set(
-      backup.membershipProvenance.filter {
-        !(requiredRemovals[$0.pair] ?? []).isSubset(of: $0.observedRemovalIds)
+      try backup.membershipProvenance.filter {
+        !(requiredRemovals[try membershipHistoryPair($0.pair)] ?? []).isSubset(
+          of: $0.observedRemovalIds)
       }.map(\.membership))
   }
 
@@ -79,7 +103,10 @@ extension PlannerImportGraph {
     for (index, membership) in backup.memberships.enumerated() {
       let baseline = membership.baselineProvenance
       let binding = provenance[baseline.membership] ?? baseline
-      guard (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds) else {
+      guard
+        (requiredRemovals[try membershipHistoryPair(binding.pair)] ?? []).isSubset(
+          of: binding.observedRemovalIds)
+      else {
         throw failure(
           "A live membership must observe every strict removal for its exact Item/List pair.",
           "/memberships/\(index)/id")
@@ -105,7 +132,7 @@ extension PlannerImportGraph {
           "A strict membership removal needs its retained marker and pair binding.",
           "/membershipRemovals/\(index)/deletionId")
       }
-      removalPairs[removal.deletionId] = binding.pair
+      removalPairs[removal.deletionId] = try membershipHistoryPair(binding.pair)
       removalBindings[removal.deletionId] = binding
     }
     for (index, binding) in backup.membershipProvenance.enumerated() {
@@ -114,7 +141,9 @@ extension PlannerImportGraph {
     for (index, binding) in backup.membershipProvenance.enumerated() {
       var observed: Set<UUID> = []
       for (observedIndex, identifier) in binding.observedRemovalIds.enumerated() {
-        guard observed.insert(identifier).inserted, removalPairs[identifier] == binding.pair else {
+        guard observed.insert(identifier).inserted,
+          removalPairs[identifier] == (try membershipHistoryPair(binding.pair))
+        else {
           throw failure(
             "An observation must name a distinct strict removal for this exact Item/List pair.",
             "/membershipProvenance/\(index)/observedRemovalIds/\(observedIndex)")
@@ -164,7 +193,12 @@ extension PlannerImportGraph {
     guard binding.id == actual.id else {
       throw failure("Membership provenance names a different source.", path + "/id")
     }
-    guard binding.lifetimeId == actual.lifetimeId else {
+    if binding.lifetimeId == actual.lifetimeId { return }
+    guard backup.formatVersion >= 5, binding.kind == .item,
+      resolves(
+        .init(kind: .item, id: binding.id, lifetimeId: binding.lifetimeId),
+        to: .init(kind: .item, id: actual.id, lifetimeId: actual.lifetimeId))
+    else {
       throw failure(
         "Membership provenance names a different source lifetime.", path + "/lifetimeId")
     }
@@ -336,7 +370,8 @@ extension PlannerImportGraph {
         }), !isClosed(original), !isClosed(canonical),
         let binding = retainedMembershipProvenance(for: original),
         binding.list.id == listIdentifier,
-        (requiredRemovals[binding.pair] ?? []).isSubset(of: binding.observedRemovalIds),
+        (requiredRemovals[try membershipHistoryPair(binding.pair)] ?? []).isSubset(
+          of: binding.observedRemovalIds),
         let target = backup.memberships.first(where: {
           $0.id == canonical.id && $0.lifetimeId == canonical.lifetimeId
         }), target.baselineProvenance.pair == binding.pair,

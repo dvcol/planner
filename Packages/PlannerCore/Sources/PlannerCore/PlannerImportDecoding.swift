@@ -300,7 +300,7 @@ struct PlannerPortableImportDecoder {
 
   mutating func decode() throws -> PlannerDecodedBackup {
     formatVersion = try root.child("formatVersion").integer()
-    guard (1...4).contains(formatVersion) else {
+    guard (1...5).contains(formatVersion) else {
       throw PlannerFailure(
         "unsupportedVersion", "Unsupported portable backup version.",
         propertyPath: "/formatVersion")
