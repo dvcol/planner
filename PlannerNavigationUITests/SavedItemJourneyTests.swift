@@ -58,11 +58,24 @@ final class SavedItemJourneyTests: XCTestCase {
     continueAfterFailure = false
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
-    if let appearance { application.launchArguments += ["-AppleInterfaceStyle", appearance] }
+    #if os(macOS)
+      if let appearance { application.launchArguments += ["-AppleInterfaceStyle", appearance] }
+    #endif
     #if os(iOS)
+      let originalAppearance = XCUIDevice.shared.appearance
+      if appearance == "Dark" {
+        XCUIDevice.shared.appearance = .dark
+        XCTAssertEqual(XCUIDevice.shared.appearance, .dark)
+      } else {
+        XCUIDevice.shared.appearance = .light
+        XCTAssertEqual(XCUIDevice.shared.appearance, .light)
+      }
       XCUIDevice.shared.orientation = .portrait
       addTeardownBlock {
-        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+        await MainActor.run {
+          XCUIDevice.shared.orientation = .portrait
+          XCUIDevice.shared.appearance = originalAppearance
+        }
       }
     #endif
     application.launchSavedPlannerJourney()
