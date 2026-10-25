@@ -7,7 +7,8 @@ import Testing
 
 @MainActor
 struct RetiredMembershipRoutingTests {
-  @Test func aDeclaredLosingSourceKeepsItsWinnerReadableOverHTTP() async throws {
+  @Test(arguments: [false, true])
+  func aDeclaredLosingSourceKeepsItsWinnerReadableOverHTTP(directEntries: Bool) async throws {
     let (_, seedConfiguration, _) = try makePlannerIntentStorage()
     let seed = PlannerCore.Planner(configuration: seedConfiguration)
     guard case .ready(let seedSession) = await seed.bootstrap() else { throw CancellationError() }
@@ -61,8 +62,46 @@ struct RetiredMembershipRoutingTests {
           operationId: UUID(), session: session, command: review.command,
           reviewToken: review.reviewToken)
       ).outcome,
-      case .exported(let before) = await planner.exportData(session: session)
+      case .exported(let imported) = await planner.exportData(session: session)
     else { throw CancellationError() }
+    var before = imported
+    var appearances: [[String: Any]] = []
+    if directEntries {
+      let itinerary = try await create(
+        .createItinerary(content: .init(title: "Independent route")),
+        planner: planner, session: session)
+      for done in [false, true] {
+        guard
+          case .applied(let result, .complete) = await planner.execute(
+            .init(
+              operationId: UUID(), session: session,
+              command: .addItineraryEntry(
+                itineraryId: itinerary.id, source: source, placement: .last))
+          ).outcome,
+          case .itineraryEntry(let identifier, _, _)? = result.generatedReferences.first
+        else { throw CancellationError() }
+        appearances.append([
+          "kind": "directItineraryItem", "itineraryId": itinerary.id.uuidString,
+          "entryId": identifier.uuidString,
+        ])
+        if done {
+          guard
+            case .applied(_, .complete) = await planner.execute(
+              .init(
+                operationId: UUID(), session: session,
+                command: .setCompletion(
+                  scope: .appearance(
+                    .directItineraryItem(itineraryId: itinerary.id, entryId: identifier)),
+                  done: true))
+            ).outcome
+          else { throw CancellationError() }
+        }
+      }
+      guard case .exported(let expected) = await planner.exportData(session: session) else {
+        throw CancellationError()
+      }
+      before = expected
+    }
     let listener = PlannerMCPLoopbackListener(
       requestHandler: PlannerMCPRequestHandler(
         credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
@@ -85,6 +124,10 @@ struct RetiredMembershipRoutingTests {
       losing.lifetimeId = losingLifetime
       losing.globalDone = true
       context.insert(losing)
+      for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+        entry.sourceLifetimeId = losingLifetime
+        entry.item = losing
+      }
       try context.save()
       let query = try await call(
         "planner_query",
@@ -106,6 +149,18 @@ struct RetiredMembershipRoutingTests {
       #expect(content["title"] as? String == "Nezu Museum")
       #expect(content["notes"] as? String == "Keep the winning notes")
       #expect((value["state"] as? [String: Any])?["globalDone"] as? Bool == false)
+      for (index, appearance) in appearances.enumerated() {
+        let readAppearance = try await call(
+          "planner_read",
+          arguments: [
+            "formatVersion": 1,
+            "request": ["kind": "appearance", "appearance": appearance],
+          ], endpoint: endpoint, httpSession: httpSession)
+        let current = try #require(readAppearance["value"] as? [String: Any])
+        #expect(current["localDone"] as? Bool == (index == 1))
+        #expect(current["globalDone"] as? Bool == false)
+        #expect(current["effectiveDone"] as? Bool == (index == 1))
+      }
       guard case .exported(let after) = await planner.exportData(session: session) else {
         throw CancellationError()
       }

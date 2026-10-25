@@ -75,7 +75,7 @@ struct ItineraryMigrationTests {
     #expect(historical.portableData == Data(base64Encoded: manifest.portableDataBase64))
     #expect(historical.decodedBackup.backup.memberships.count == 1)
     #expect(historical.decodedBackup.backup.schedules.count == 1)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 21)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
     let input = PlannerItineraryContentInput(
       title: "Tokyo", links: [.init(originalUrl: "https://example.com/route")],
       categoryIds: [manifest.categoryId], tagIds: [manifest.tagId])
@@ -104,7 +104,7 @@ struct ItineraryMigrationTests {
     #expect(itineraryRead.content.title == "Tokyo")
     #expect(Set(itineraryRead.labels.map(\.name)) == ["Food", "Rain"])
     #expect(itineraryRead.progress.state == .empty)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 21)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(
       recovery.decodedBackup.backup.sources.filter { $0.kind == .itinerary }.map(\.id) == [

@@ -81,7 +81,7 @@ struct ExpandedCompletionMigrationTests {
           namespaceId: manifest.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
     #expect(checkpoint == 14)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 21)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
     #expect(current.content == before.content)
     #expect(current.fieldHashes == before.fieldHashes)
     #expect(current.progress.doneCount == 2)

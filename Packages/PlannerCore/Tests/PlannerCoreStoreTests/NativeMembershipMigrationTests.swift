@@ -75,7 +75,7 @@ struct NativeMembershipMigrationTests {
     let control = try #require(
       JSONSerialization.jsonObject(with: Data(contentsOf: configuration.controlURL))
         as? [String: Any])
-    #expect(control["schemaVersion"] as? Int == 21)
+    #expect(control["schemaVersion"] as? Int == 22)
     guard
       case .applied(_, .complete(let newCheckpoint)) = await planner.execute(
         .init(
@@ -87,7 +87,7 @@ struct NativeMembershipMigrationTests {
         session: session, operationId: operationIdentifier)
     else { throw CancellationError() }
     #expect(newCheckpoint == 9 && retainedCheckpoint == 1)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 21)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .source(.item(let saved)) = await reopened.read(

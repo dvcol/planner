@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-/// Retires only fully declared, unreferenced losing native source candidates.
+/// Rebinds admitted direct entries and retires fully declared losing native source candidates.
 struct PlannerSourceRestorationConsolidation {
   private struct Row {
     let identity: PlannerPortableBoundIdentity
@@ -9,7 +9,15 @@ struct PlannerSourceRestorationConsolidation {
     let hasRelationships: Bool
   }
 
+  private struct EntryRebinding {
+    let entry: PlannerSchemaV18.ItineraryEntry
+    let winner: PlannerSchemaV18.Item
+    let projected: PortableItineraryEntryRecord
+  }
+
   private let rows: [Row]
+  private let entryRebindings: [EntryRebinding]
+  var ruleVersion: Int { entryRebindings.isEmpty ? 1 : 2 }
   let retired: Set<PlannerPortableBoundIdentity>
 
   init(context: ModelContext, markers: [PortableDeletionMarker]) throws {
@@ -20,6 +28,7 @@ struct PlannerSourceRestorationConsolidation {
       $0.identity.kind.rawValue + ":" + $0.identity.id.uuidString
     }
     var retired: Set<PlannerPortableBoundIdentity> = []
+    var winners: [PlannerPortableBoundIdentity: Row] = [:]
     for group in groups.values {
       guard let first = group.first else { continue }
       let relevant = families.filter { family in
@@ -39,19 +48,38 @@ struct PlannerSourceRestorationConsolidation {
           family.candidates.contains { $0.lifetimeId == row.identity.lifetimeId }
         })
       else { throw Self.unresolved("The native source candidates lack a unique present winner.") }
+      guard let winnerRow = group.first(where: { $0.identity.lifetimeId == winner }) else {
+        throw Self.unresolved("The native source winner is missing.")
+      }
       for row in group where row.identity.lifetimeId != winner {
         guard !row.hasRelationships else {
           throw Self.unresolved("A losing restoration candidate still has live relationships.")
         }
         retired.insert(row.identity)
+        winners[row.identity] = winnerRow
       }
     }
-    if !retired.isEmpty { try Self.requireUnreferenced(retired, context: context) }
+    let entryRebindings = try Self.entryRebindings(
+      context: context, rows: rows, retired: retired, winners: winners)
+    if !retired.isEmpty {
+      try Self.requireUnreferenced(retired, context: context, admittedEntries: entryRebindings)
+    }
     self.rows = rows
     self.retired = retired
+    self.entryRebindings = entryRebindings
+  }
+
+  func project(_ snapshot: PlannerDataSnapshot) -> PlannerDataSnapshot {
+    PlannerDataSnapshot(
+      snapshot: snapshot, retiringSources: retired,
+      reboundEntries: entryRebindings.map(\.projected))
   }
 
   func stage(in context: ModelContext) {
+    for rebinding in entryRebindings {
+      rebinding.entry.sourceLifetimeId = rebinding.winner.lifetimeId
+      rebinding.entry.item = rebinding.winner
+    }
     for row in rows where retired.contains(row.identity) { context.delete(row.model) }
   }
 
@@ -73,7 +101,7 @@ struct PlannerSourceRestorationConsolidation {
         .init(
           identity: try binding(.item, item.id, item.lifetimeId), model: item,
           hasRelationships: !(item.links ?? []).isEmpty || !(item.schedules ?? []).isEmpty
-            || !(item.memberships ?? []).isEmpty || !(item.itineraryEntries ?? []).isEmpty
+            || !(item.memberships ?? []).isEmpty
             || !(item.labelAssociations ?? []).isEmpty))
     }
     for list in try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()) {
@@ -105,9 +133,38 @@ struct PlannerSourceRestorationConsolidation {
     return rows
   }
 
+  private static func entryRebindings(
+    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
+    winners: [PlannerPortableBoundIdentity: Row]
+  ) throws -> [EntryRebinding] {
+    guard !retired.isEmpty else { return [] }
+    var rebindings: [EntryRebinding] = []
+    for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+      guard let sourceKind = PlannerPortableIdentityKind(rawValue: entry.sourceKind) else {
+        throw unresolved("A native entry has an unsupported source kind.")
+      }
+      let source = try binding(sourceKind, entry.sourceId, entry.sourceLifetimeId)
+      guard retired.contains(source) else { continue }
+      let value = try entry.value()
+      let owner = try binding(.itinerary, value.itinerary.id, value.itinerary.lifetimeId)
+      guard source.kind == .item, !retired.contains(owner),
+        rows.filter({ $0.identity == owner }).count == 1,
+        let winner = winners[source]?.model as? PlannerSchemaV18.Item,
+        let winnerLifetime = winner.lifetimeId
+      else { throw unresolved("A losing source has an unsupported entry or owner binding.") }
+      let projected = ItineraryEntrySnapshot(
+        id: value.id, lifetimeId: value.lifetimeId, itinerary: value.itinerary,
+        source: .init(kind: "item", id: source.id, lifetimeId: winnerLifetime),
+        rank: value.rank, localDone: value.localDone)
+      rebindings.append(.init(entry: entry, winner: winner, projected: .init(projected)))
+    }
+    return rebindings
+  }
+
   /// Scalar bindings remain authoritative even when SwiftData has not resolved their objects.
   private static func requireUnreferenced(
-    _ retired: Set<PlannerPortableBoundIdentity>, context: ModelContext
+    _ retired: Set<PlannerPortableBoundIdentity>, context: ModelContext,
+    admittedEntries: [EntryRebinding]
   ) throws {
     func requireSurvivor(_ kind: String, _ identifier: UUID?, _ lifetime: UUID?) throws {
       guard let kind = PlannerPortableIdentityKind(rawValue: kind) else {
@@ -123,7 +180,9 @@ struct PlannerSourceRestorationConsolidation {
     }
     for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
       try requireSurvivor("itinerary", entry.itineraryId, entry.itineraryLifetimeId)
-      try requireSurvivor(entry.sourceKind, entry.sourceId, entry.sourceLifetimeId)
+      if !admittedEntries.contains(where: { $0.entry === entry }) {
+        try requireSurvivor(entry.sourceKind, entry.sourceId, entry.sourceLifetimeId)
+      }
     }
     for link in try context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>()) {
       try requireSurvivor(link.ownerKind, link.ownerId, link.ownerLifetimeId)
@@ -143,12 +202,17 @@ struct PlannerSourceRestorationConsolidation {
 }
 
 extension PlannerDataSnapshot {
-  init(snapshot: PlannerDataSnapshot, retiringSources: Set<PlannerPortableBoundIdentity>) {
+  init(
+    snapshot: PlannerDataSnapshot, retiringSources: Set<PlannerPortableBoundIdentity>,
+    reboundEntries: [PortableItineraryEntryRecord]
+  ) {
     format = snapshot.format
     formatVersion = snapshot.formatVersion
     sources = snapshot.sources.filter { !retiringSources.contains($0.boundIdentity) }
     memberships = snapshot.memberships
-    itineraryEntries = snapshot.itineraryEntries
+    itineraryEntries = snapshot.itineraryEntries.map { entry in
+      reboundEntries.first { $0.id == entry.id && $0.lifetimeId == entry.lifetimeId } ?? entry
+    }
     expandedCompletions = snapshot.expandedCompletions
     labelAssociations = snapshot.labelAssociations
     ownedLinks = snapshot.ownedLinks

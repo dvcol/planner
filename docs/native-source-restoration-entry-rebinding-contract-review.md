@@ -1,6 +1,6 @@
 # Restored Item references from independent itineraries
 
-Status: Q158 proposed. [A20](architecture-review-packet.md) already requires references authorized by either restoration candidate to follow the deterministic winner. Q157's [first rule](native-source-restoration-maintenance-contract-review.md) deliberately admits only unreferenced losing physical rows. This proposal extends maintenance to direct Item entries in an independent surviving Itinerary. It does not choose how to merge competing candidate-owned collections.
+Status: Q158 A approved on 25 October 2026 and implemented at the [local checkpoint](prototypes/native-source-restoration-entry-rebinding.md). [A20](architecture-review-packet.md) already requires references authorized by either restoration candidate to follow the deterministic winner. Q157's [first rule](native-source-restoration-maintenance-contract-review.md) deliberately admits only unreferenced losing physical rows. This proposal extends maintenance to direct Item entries in an independent surviving Itinerary. It does not choose how to merge competing candidate-owned collections.
 
 ## Input and literal result
 

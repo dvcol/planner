@@ -260,11 +260,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...21).contains(identity.schemaVersion) else {
+          guard (1...22).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 21, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 22, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -283,7 +283,7 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 21, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 22, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
@@ -303,13 +303,13 @@ public actor Planner {
               "ownershipUnverified",
               "The independent recovery namespace belongs to another dataset.")
           }
-          if recorded.schemaVersion != identity.schemaVersion, identity.schemaVersion == 21 {
+          if recorded.schemaVersion != identity.schemaVersion, identity.schemaVersion == 22 {
             try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
           }
         } else {
           try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
         }
-        if identity.schemaVersion < 21 {
+        if identity.schemaVersion < 22 {
           identity = try activateNativeMaintenanceCompatibility(identity, metadataURL: metadataURL)
         }
         let maintenanceContext = ModelContext(try openContainer())
@@ -336,7 +336,7 @@ public actor Planner {
     _ previous: PlannerStoreIdentity, metadataURL: URL
   ) throws -> PlannerStoreIdentity {
     let upgraded = PlannerStoreIdentity(
-      schemaVersion: 21, datasetId: previous.datasetId, epochId: previous.epochId,
+      schemaVersion: 22, datasetId: previous.datasetId, epochId: previous.epochId,
       namespaceId: previous.namespaceId, ownershipBinding: previous.ownershipBinding)
     let context = ModelContext(try openContainer())
     context.autosaveEnabled = false
@@ -3990,16 +3990,13 @@ public actor Planner {
       let memberships = try records.map { try $0.value() }
       let detached = try plannerStageDetachedExpandedRetirements(
         context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
-      let before = PlannerDataSnapshot(
-        snapshot: try maintenanceSnapshot(context, memberships: memberships),
-        retiringSources: sources.retired)
+      let before = sources.project(try maintenanceSnapshot(context, memberships: memberships))
       try requireCompleteExportGraph(before, context: context)
       let consolidation = try PlannerMembershipConsolidation(
         snapshot: before, detachedExpanded: detached)
       snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
     } else {
-      snapshot = PlannerDataSnapshot(
-        snapshot: try maintenanceSnapshot(context), retiringSources: sources.retired)
+      snapshot = sources.project(try maintenanceSnapshot(context))
       try requireCompleteExportGraph(snapshot, context: context)
     }
     _ = try snapshot.validated()
@@ -4192,10 +4189,9 @@ public actor Planner {
     if !sources.retired.isEmpty {
       try commitMaintenance(
         identity: identity, context: context, kind: "sourceRestorationConsolidation",
-        ruleVersion: 1,
+        ruleVersion: sources.ruleVersion,
         proposal: {
-          let projected = PlannerDataSnapshot(
-            snapshot: try self.maintenanceSnapshot(context), retiringSources: sources.retired)
+          let projected = sources.project(try self.maintenanceSnapshot(context))
           try self.requireCompleteExportGraph(projected, context: context)
           return projected
         },
@@ -10134,7 +10130,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 21
+      identity.schemaVersion == 22
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -10193,7 +10189,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...21).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...22).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

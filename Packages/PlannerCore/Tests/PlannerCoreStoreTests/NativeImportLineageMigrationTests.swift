@@ -64,7 +64,7 @@ struct NativeImportLineageMigrationTests {
       case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
     else { throw CancellationError() }
     #expect(replayed.generated == [.init(kind: .item, id: itemIdentifier)])
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 21)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .source(.item(let restored)) = await reopened.read(

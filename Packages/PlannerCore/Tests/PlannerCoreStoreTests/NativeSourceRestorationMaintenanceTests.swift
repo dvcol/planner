@@ -28,7 +28,7 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
     let envelope = try fixture.envelope()
     #expect(envelope["formatVersion"] as? Int == 2)
-    #expect(envelope["storageSchemaVersion"] as? String == "21")
+    #expect(envelope["storageSchemaVersion"] as? String == "22")
     #expect(envelope["receipts"] as? NSArray == originalRecovery["receipts"] as? NSArray)
     let receipts = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
     #expect(receipts.count == 1)
@@ -83,14 +83,25 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try await fixture.itemLifetimes() == lifetimes)
   }
 
-  @Test(arguments: ["ordinary", "recoveryFailure", "controlFailure", "unproven"])
-  func compatibilityProjectionPrecedesActivationAndPhysicalRetirement(scenario: String)
+  @Test(
+    arguments: ["ordinary", "recoveryFailure", "controlFailure", "unproven", "invalidEntry"],
+    [false, true])
+  func compatibilityProjectionPrecedesActivationAndPhysicalRetirement(
+    scenario: String, directEntries: Bool
+  )
     async throws
   {
-    let fixture = try await SourceRestorationFixture.make()
-    try await fixture.deliverCandidate()
+    let fixture = try await SourceRestorationFixture.makeWithEntries(directEntries)
+    try await fixture.deliverCandidateWithEntries(directEntries)
     if scenario == "unproven" { try await fixture.makeUnresolved("unknown") }
-    try fixture.rewriteCompatibility20()
+    if scenario == "invalidEntry" {
+      if directEntries {
+        try await fixture.corruptEntry("scalarMismatch")
+      } else {
+        try await fixture.makeUnresolved("scalarEntry")
+      }
+    }
+    try fixture.rewriteCompatibility(directEntries ? 21 : 20)
     let originalFiles = try fixture.files()
     let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     let originalLifetimes = try await fixture.itemLifetimes()
@@ -112,7 +123,7 @@ struct NativeSourceRestorationMaintenanceTests {
       } else {
         obstructed = fixture.namespace
       }
-      if scenario != "unproven" {
+      if scenario != "unproven" && scenario != "invalidEntry" {
         try FileManager.default.setAttributes(
           [.posixPermissions: 0o500], ofItemAtPath: obstructed.path)
       }
@@ -128,7 +139,7 @@ struct NativeSourceRestorationMaintenanceTests {
       #expect(try await fixture.itemLifetimes() == originalLifetimes)
       if scenario == "controlFailure" {
         let envelope = try fixture.envelope()
-        #expect(envelope["storageSchemaVersion"] as? String == "21")
+        #expect(envelope["storageSchemaVersion"] as? String == "22")
         #expect((envelope["maintenanceReceipts"] as? [Any] ?? []).isEmpty)
         let bytes = try #require(
           (envelope["portablePayloadBase64"] as? String).flatMap { Data(base64Encoded: $0) })
@@ -137,7 +148,7 @@ struct NativeSourceRestorationMaintenanceTests {
       } else {
         #expect(try fixture.files() == originalFiles)
       }
-      if scenario == "unproven" { return }
+      if scenario == "unproven" || scenario == "invalidEntry" { return }
       try FileManager.default.setAttributes(
         [.posixPermissions: 0o700], ofItemAtPath: obstructed.path)
       guard case .mainAppMigrationRequired = await share.bootstrap() else {
@@ -150,7 +161,7 @@ struct NativeSourceRestorationMaintenanceTests {
     else { throw CancellationError() }
     #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
     let control = try fixture.object(Data(contentsOf: fixture.configuration.controlURL))
-    #expect(control["schemaVersion"] as? Int == 21)
+    #expect(control["schemaVersion"] as? Int == 22)
     let originalIdentity = try fixture.object(originalControl)
     for field in ["datasetId", "epochId", "namespaceId", "ownershipBinding"] {
       #expect(control[field] as? String == originalIdentity[field] as? String)
@@ -167,9 +178,11 @@ struct NativeSourceRestorationMaintenanceTests {
     }
   }
 
-  @Test func independentNativeDeliveryInvalidatesAnOpenReaderWithoutChangingItsSource() async throws
-  {
-    let fixture = try await SourceRestorationFixture.make()
+  @Test(arguments: [false, true])
+  func independentNativeDeliveryInvalidatesAnOpenReaderWithoutChangingItsSource(
+    directEntries: Bool
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.makeWithEntries(directEntries)
     let reader = Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await reader.bootstrap(),
       case .source(.item(let original)) = await reader.read(
@@ -177,7 +190,7 @@ struct NativeSourceRestorationMaintenanceTests {
     else { throw CancellationError() }
     let changes = await reader.changes(session: session)
     try await Task.sleep(for: .milliseconds(100))
-    try await fixture.deliverCandidate()
+    try await fixture.deliverCandidateWithEntries(directEntries)
     guard case .exported = await fixture.planner.exportData(session: fixture.session) else {
       throw CancellationError()
     }
@@ -209,9 +222,11 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
   }
 
-  @Test func failedPreparationRetainsBothNativeCandidatesUntilFreshRetry() async throws {
-    let fixture = try await SourceRestorationFixture.make()
-    try await fixture.deliverCandidate()
+  @Test(arguments: [false, true])
+  func failedPreparationRetainsBothNativeCandidatesUntilFreshRetry(directEntries: Bool) async throws
+  {
+    let fixture = try await SourceRestorationFixture.makeWithEntries(directEntries)
+    try await fixture.deliverCandidateWithEntries(directEntries)
     let original = try fixture.files()
     let lifetimes = try await fixture.itemLifetimes()
     try FileManager.default.setAttributes(
@@ -236,9 +251,11 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
   }
 
-  @Test func committedSourceRetirementBlocksWritesUntilItsRecoveryRetry() async throws {
-    let fixture = try await SourceRestorationFixture.make()
-    try await fixture.deliverCandidate()
+  @Test(arguments: [false, true])
+  func committedSourceRetirementBlocksWritesUntilItsRecoveryRetry(directEntries: Bool) async throws
+  {
+    let fixture = try await SourceRestorationFixture.makeWithEntries(directEntries)
+    try await fixture.deliverCandidateWithEntries(directEntries)
     let original = try fixture.envelope()
     let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
     let observer = NotificationCenter.default.addObserver(
@@ -368,6 +385,48 @@ private struct SourceRestorationFixture {
       baseline: baseline)
   }
 
+  static func makeWithEntries(_ directEntries: Bool) async throws -> Self {
+    let fixture = try await make()
+    guard directEntries else { return fixture }
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    for done in [false, true] {
+      guard
+        case .applied(let result, .complete) = await fixture.planner.execute(
+          .init(
+            operationId: UUID(), session: fixture.session,
+            command: .addItineraryEntry(
+              itineraryId: itineraryIdentifier, source: fixture.source, placement: .last))
+        ).outcome,
+        case .itineraryEntry(let identifier, _, _)? = result.generatedReferences.first
+      else { throw CancellationError() }
+      if done {
+        guard
+          case .applied(_, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .setCompletion(
+                scope: .appearance(
+                  .directItineraryItem(itineraryId: itineraryIdentifier, entryId: identifier)),
+                done: true))
+          ).outcome
+        else { throw CancellationError() }
+      }
+    }
+    guard case .exported(let baseline) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    return .init(
+      configuration: fixture.configuration, planner: fixture.planner, session: fixture.session,
+      source: fixture.source, namespace: fixture.namespace, baseline: baseline)
+  }
+
+  func deliverCandidateWithEntries(_ directEntries: Bool) async throws {
+    try await deliverCandidate()
+    guard directEntries else { return }
+    let entries = try #require(object(baseline)["itineraryEntries"] as? [[String: Any]])
+    try await bindEntriesToLosingCandidate(
+      entries.map { try #require(($0["id"] as? String).flatMap(UUID.init(uuidString:))) })
+  }
+
   func object(_ data: Data) throws -> [String: Any] {
     try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
   }
@@ -395,15 +454,15 @@ private struct SourceRestorationFixture {
       })
   }
 
-  func rewriteCompatibility20() throws {
+  func rewriteCompatibility(_ version: Int = 20) throws {
     for file in [configuration.controlURL, namespace.appendingPathComponent("identity.json")] {
       var identity = try object(Data(contentsOf: file))
-      identity["schemaVersion"] = 20
+      identity["schemaVersion"] = version
       try JSONSerialization.data(withJSONObject: identity).write(to: file, options: .atomic)
     }
     for (name, bytes) in try files() where name.hasPrefix("checkpoint-") {
       var envelope = try object(bytes)
-      envelope["storageSchemaVersion"] = "20"
+      envelope["storageSchemaVersion"] = String(version)
       try JSONSerialization.data(withJSONObject: envelope).write(
         to: namespace.appendingPathComponent(name), options: .atomic)
     }
@@ -476,6 +535,74 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
+  @MainActor func corruptEntry(_ scenario: String) throws {
+    let context = try nativeContext()
+    let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+    let entry = try #require(entries.first)
+    switch scenario {
+    case "nilItem": entry.item = nil
+    case "scalarMismatch":
+      entry.sourceLifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000814")!
+    case "nilOwner": entry.itinerary = nil
+    case "ownerLifetime": entry.itineraryLifetimeId = UUID()
+    case "nilCompletion": entry.localDone = nil
+    case "completionHistory":
+      let completed = try #require(entries.first { $0.localDone == true })
+      completed.localDone = false
+    default: throw CancellationError()
+    }
+    try context.save()
+  }
+
+  @MainActor func rawEntryData() throws -> Data {
+    let context = try nativeContext()
+    let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).sorted {
+      ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "")
+    }
+    let values: [[String: Any]] = entries.map { entry in
+      [
+        "id": entry.id?.uuidString as Any? ?? NSNull(),
+        "lifetime": entry.lifetimeId?.uuidString as Any? ?? NSNull(),
+        "owner": entry.itineraryId?.uuidString as Any? ?? NSNull(),
+        "ownerLifetime": entry.itineraryLifetimeId?.uuidString as Any? ?? NSNull(),
+        "nativeOwner": entry.itinerary?.id?.uuidString as Any? ?? NSNull(),
+        "nativeOwnerLifetime": entry.itinerary?.lifetimeId?.uuidString as Any? ?? NSNull(),
+        "sourceKind": entry.sourceKind,
+        "source": entry.sourceId?.uuidString as Any? ?? NSNull(),
+        "sourceLifetime": entry.sourceLifetimeId?.uuidString as Any? ?? NSNull(),
+        "nativeItem": entry.item?.id?.uuidString as Any? ?? NSNull(),
+        "nativeItemLifetime": entry.item?.lifetimeId?.uuidString as Any? ?? NSNull(),
+        "rank": String(entry.rank), "localDone": entry.localDone as Any? ?? NSNull(),
+      ]
+    }
+    return try JSONSerialization.data(withJSONObject: values, options: [.sortedKeys])
+  }
+
+  @MainActor func nativeEntryData() throws -> Data {
+    let context = try nativeContext()
+    let values = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).map {
+      PortableItineraryEntryRecord(try $0.value())
+    }.sorted { $0.id.uuidString < $1.id.uuidString }
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    return try encoder.encode(values)
+  }
+
+  @MainActor func bindEntriesToLosingCandidate(_ identifiers: [UUID]) throws {
+    let context = try nativeContext()
+    let candidate = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      })
+    let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+    for identifier in identifiers {
+      let entry = try #require(entries.first { $0.id == identifier })
+      entry.sourceLifetimeId = candidate.lifetimeId
+      entry.item = candidate
+    }
+    try context.save()
+  }
+
   @MainActor private func nativeContext() throws -> ModelContext {
     let schema = Schema(versionedSchema: PlannerSchemaV19.self)
     let container = try ModelContainer(
@@ -537,12 +664,18 @@ private struct SourceRestorationFixture {
         ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
           == "nativeSaveFailure"
       else {
-        let directory = try makePlannerStoreFixtureDirectory()
-        try runSourceRestorationProcess(directory: directory, stage: "nativeSaveFailure")
+        for directEntries in [false, true] {
+          let directory = try makePlannerStoreFixtureDirectory()
+          try runSourceRestorationProcess(
+            directory: directory, stage: "nativeSaveFailure", directEntries: directEntries)
+        }
         return
       }
-      let fixture = try await SourceRestorationFixture.make()
-      try await fixture.deliverCandidate()
+      let directEntries =
+        ProcessInfo.processInfo.environment["PLANNER_SOURCE_DIRECT_ENTRIES"] == "true"
+      let fixture = try await SourceRestorationFixture.makeWithEntries(directEntries)
+      try await fixture.deliverCandidateWithEntries(directEntries)
+      let originalEntries = try await fixture.nativeEntryData()
       let originalFiles = try fixture.files()
       let lifetimes = try await fixture.itemLifetimes()
       let obstruction = NativeSaveFileSizeObstruction(
@@ -559,6 +692,7 @@ private struct SourceRestorationFixture {
       guard case .failed(let reason) = failed else { throw CancellationError() }
       #expect(reason.code == "maintenanceRequired")
       #expect(try await fixture.itemLifetimes() == lifetimes)
+      #expect(try await fixture.nativeEntryData() == originalEntries)
       let failedFiles = try fixture.files()
       for (name, bytes) in originalFiles { #expect(failedFiles[name] == bytes) }
       let preparations = failedFiles.filter { $0.key.hasPrefix("maintenance-") }
@@ -595,10 +729,14 @@ private struct SourceRestorationFixture {
           directory: URL(fileURLWithPath: directory), stage: stage)
         return
       }
-      for stage in ["beforeNativeSave", "afterNativeSave", "beforePublication", "beforeActivation"]
-      {
+      for (stage, directEntries) in [false, true].flatMap({ directEntries in
+        ["beforeNativeSave", "afterNativeSave", "beforePublication", "beforeActivation"].map {
+          ($0, directEntries)
+        }
+      }) {
         let directory = try makePlannerStoreFixtureDirectory()
-        try runSourceRestorationProcess(directory: directory, stage: stage)
+        try runSourceRestorationProcess(
+          directory: directory, stage: stage, directEntries: directEntries)
         let input = try #require(
           JSONSerialization.jsonObject(
             with: Data(contentsOf: directory.appendingPathComponent("input.json")))
@@ -629,15 +767,15 @@ private struct SourceRestorationFixture {
         guard case .listed(let view) = pending else { throw CancellationError() }
         let preparation = view.preparedMaintenance.first
         if stage == "beforeNativeSave" || stage == "afterNativeSave" {
-          #expect(identity["schemaVersion"] as? Int == 21)
+          #expect(identity["schemaVersion"] as? Int == 22)
           #expect(view.preparedMaintenance.count == 1)
         } else {
-          #expect(identity["schemaVersion"] as? Int == 20)
+          #expect(identity["schemaVersion"] as? Int == (directEntries ? 21 : 20))
           #expect(view.preparedMaintenance.isEmpty)
           if stage == "beforeActivation" {
-            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 21)
+            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 22)
           } else {
-            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 20)
+            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == (directEntries ? 21 : 20))
           }
         }
         try FileManager.default.setAttributes(
@@ -679,10 +817,12 @@ private struct SourceRestorationFixture {
     }
 
     private func runSourceRestorationChild(directory: URL, stage: String) async throws {
-      let fixture = try await SourceRestorationFixture.make()
-      try await fixture.deliverCandidate()
+      let directEntries =
+        ProcessInfo.processInfo.environment["PLANNER_SOURCE_DIRECT_ENTRIES"] == "true"
+      let fixture = try await SourceRestorationFixture.makeWithEntries(directEntries)
+      try await fixture.deliverCandidateWithEntries(directEntries)
       if stage == "beforePublication" || stage == "beforeActivation" {
-        try fixture.rewriteCompatibility20()
+        try fixture.rewriteCompatibility(directEntries ? 21 : 20)
       }
       let input: [String: Any] = [
         "dataset": fixture.configuration.storeURL.deletingLastPathComponent()
@@ -726,7 +866,9 @@ private struct SourceRestorationFixture {
       Issue.record("The isolated source retirement must stop at its actual save: \(result)")
     }
 
-    private func runSourceRestorationProcess(directory: URL, stage: String) throws {
+    private func runSourceRestorationProcess(
+      directory: URL, stage: String, directEntries: Bool
+    ) throws {
       try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
       let outputURL = directory.appendingPathComponent("source-restoration-child.log")
       try Data().write(to: outputURL)
@@ -754,6 +896,7 @@ private struct SourceRestorationFixture {
       var environment = ProcessInfo.processInfo.environment
       environment["PLANNER_SOURCE_RESTORATION_CHILD"] = directory.path
       environment["PLANNER_SOURCE_RESTORATION_STAGE"] = stage
+      environment["PLANNER_SOURCE_DIRECT_ENTRIES"] = String(directEntries)
       process.environment = environment
       process.standardOutput = output
       process.standardError = output
@@ -780,7 +923,7 @@ private struct SourceRestorationFixture {
       }
       #expect(!transcript.contains("recorded an issue"))
       try JSONSerialization.data(withJSONObject: [
-        "stage": stage, "finishedWithinDeadline": finished,
+        "stage": stage, "directEntries": directEntries, "finishedWithinDeadline": finished,
         "terminationStatus": process.terminationStatus,
         "uncaughtSignal": process.terminationReason == .uncaughtSignal,
         "childLog": outputURL.path,
@@ -789,3 +932,111 @@ private struct SourceRestorationFixture {
     }
   }
 #endif
+
+struct NativeSourceRestorationEntryTests {
+  @Test(arguments: [
+    "nilItem", "scalarMismatch", "nilOwner", "ownerLifetime", "nilCompletion", "completionHistory",
+  ])
+  func invalidEntryAuthorityPreservesNativeAndRecoveryData(scenario: String) async throws {
+    let fixture = try await SourceRestorationFixture.makeWithEntries(true)
+    try await fixture.deliverCandidateWithEntries(true)
+    try await fixture.corruptEntry(scenario)
+    let originalFiles = try fixture.files()
+    let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
+    let originalLifetimes = try await fixture.itemLifetimes()
+    let originalEntries = try await fixture.rawEntryData()
+    guard case .failed = await fixture.planner.exportData(session: fixture.session) else {
+      Issue.record("An invalid direct-entry binding must not authorize rebinding: \(scenario)")
+      return
+    }
+    #expect(try fixture.files() == originalFiles)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+    #expect(try await fixture.itemLifetimes() == originalLifetimes)
+    #expect(try await fixture.rawEntryData() == originalEntries)
+  }
+
+  @Test func repeatedDirectEntriesFollowTheWinnerAndKeepIndependentCompletion() async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    var entryIdentifiers: [UUID] = []
+    var originalOperations: [(PlannerOperation, PlannerAppliedResult)] = []
+    for done in [false, true] {
+      let operation = PlannerOperation(
+        operationId: UUID(), session: fixture.session,
+        command: .addItineraryEntry(
+          itineraryId: itineraryIdentifier, source: fixture.source, placement: .last))
+      let creation = await fixture.planner.execute(operation)
+      guard case .applied(let result, .complete) = creation.outcome,
+        case .itineraryEntry(let identifier, _, _)? = result.generatedReferences.first
+      else { throw CancellationError() }
+      entryIdentifiers.append(identifier)
+      originalOperations.append((operation, result))
+      if done {
+        guard
+          case .applied(_, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .setCompletion(
+                scope: .appearance(
+                  .directItineraryItem(
+                    itineraryId: itineraryIdentifier, entryId: identifier)), done: true))
+          ).outcome
+        else { throw CancellationError() }
+      }
+    }
+    guard case .exported(let expected) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let originalReceipts = try fixture.envelope()["receipts"] as? NSArray
+    guard
+      case .snapshot(let originalQuery) = await fixture.planner.query(
+        .init(session: fixture.session, request: .items(.init(completion: .all, archive: .all))))
+    else { throw CancellationError() }
+    try await fixture.deliverCandidate()
+    try await fixture.bindEntriesToLosingCandidate(entryIdentifiers)
+    let normalized = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let actual) = normalized else {
+      Issue.record("Authorized independent itinerary entries must follow the winner: \(normalized)")
+      return
+    }
+    #expect(try fixture.graph(actual) == fixture.graph(expected))
+    let envelope = try fixture.envelope()
+    #expect(envelope["receipts"] as? NSArray == originalReceipts)
+    let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+    #expect(maintenance.count == 1 && maintenance.first?["ruleVersion"] as? Int == 2)
+    guard
+      case .failed(let stale) = await fixture.planner.read(
+        session: fixture.session,
+        request: .mapRows(generation: originalQuery.generation, offset: 0, limit: 64))
+    else { throw CancellationError() }
+    #expect(stale.code == "staleSnapshot")
+    for (operation, original) in originalOperations {
+      guard
+        case .applied(let replayed, .complete) = await fixture.planner.execute(operation).outcome
+      else { throw CancellationError() }
+      #expect(replayed == original)
+    }
+    for (index, identifier) in entryIdentifiers.enumerated() {
+      guard
+        case .appearance(let appearance) = await fixture.planner.read(
+          session: fixture.session,
+          request: .appearance(
+            .directItineraryItem(
+              itineraryId: itineraryIdentifier, entryId: identifier)))
+      else { throw CancellationError() }
+      #expect(appearance.source == fixture.source)
+      #expect(appearance.localDone == (index == 1))
+      #expect(appearance.globalDone == false && appearance.effectiveDone == (index == 1))
+    }
+    try await fixture.deliverCandidate()
+    try await fixture.bindEntriesToLosingCandidate(entryIdentifiers)
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(expected))
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(reopenedData) == fixture.graph(expected))
+  }
+}
