@@ -1,0 +1,175 @@
+import Foundation
+import SwiftData
+
+/// Retires only fully declared, unreferenced losing native source candidates.
+struct PlannerSourceRestorationConsolidation {
+  private struct Row {
+    let identity: PlannerPortableBoundIdentity
+    let model: any PersistentModel
+    let hasRelationships: Bool
+  }
+
+  private let rows: [Row]
+  let retired: Set<PlannerPortableBoundIdentity>
+
+  init(context: ModelContext, markers: [PortableDeletionMarker]) throws {
+    let rows = try Self.sourceRows(context)
+    let families = try PlannerNativeLineage(context: context).restorationFamilies
+    let closedFamilies = Set(markers.compactMap(\.closedFamilyId))
+    let groups = Dictionary(grouping: rows) {
+      $0.identity.kind.rawValue + ":" + $0.identity.id.uuidString
+    }
+    var retired: Set<PlannerPortableBoundIdentity> = []
+    for group in groups.values {
+      guard let first = group.first else { continue }
+      let relevant = families.filter { family in
+        family.predecessor.kind == first.identity.kind
+          && family.predecessor.id == first.identity.id
+          && !closedFamilies.contains(family.familyId)
+          && group.contains { row in
+            family.candidates.contains { $0.lifetimeId == row.identity.lifetimeId }
+          }
+      }
+      if group.count == 1, relevant.isEmpty { continue }
+      guard relevant.count == 1, let family = relevant.first,
+        let winner = family.candidates.map(\.lifetimeId).min(by: { $0.uuidString < $1.uuidString }),
+        group.filter({ $0.identity.lifetimeId == winner }).count == 1,
+        Set(group.map(\.identity)).count == group.count,
+        group.allSatisfy({ row in
+          family.candidates.contains { $0.lifetimeId == row.identity.lifetimeId }
+        })
+      else { throw Self.unresolved("The native source candidates lack a unique present winner.") }
+      for row in group where row.identity.lifetimeId != winner {
+        guard !row.hasRelationships else {
+          throw Self.unresolved("A losing restoration candidate still has live relationships.")
+        }
+        retired.insert(row.identity)
+      }
+    }
+    if !retired.isEmpty { try Self.requireUnreferenced(retired, context: context) }
+    self.rows = rows
+    self.retired = retired
+  }
+
+  func stage(in context: ModelContext) {
+    for row in rows where retired.contains(row.identity) { context.delete(row.model) }
+  }
+
+  private static func binding(
+    _ kind: PlannerPortableIdentityKind, _ identifier: UUID?, _ lifetime: UUID?
+  )
+    throws -> PlannerPortableBoundIdentity
+  {
+    guard let identifier, let lifetime else {
+      throw unresolved("A native source binding is incomplete.")
+    }
+    return .init(kind: kind, id: identifier, lifetimeId: lifetime)
+  }
+
+  private static func sourceRows(_ context: ModelContext) throws -> [Row] {
+    var rows: [Row] = []
+    for item in try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()) {
+      rows.append(
+        .init(
+          identity: try binding(.item, item.id, item.lifetimeId), model: item,
+          hasRelationships: !(item.links ?? []).isEmpty || !(item.schedules ?? []).isEmpty
+            || !(item.memberships ?? []).isEmpty || !(item.itineraryEntries ?? []).isEmpty
+            || !(item.labelAssociations ?? []).isEmpty))
+    }
+    for list in try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()) {
+      rows.append(
+        .init(
+          identity: try binding(.list, list.id, list.lifetimeId), model: list,
+          hasRelationships: !(list.memberships ?? []).isEmpty
+            || !(list.itineraryEntries ?? []).isEmpty))
+    }
+    for itinerary in try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()) {
+      rows.append(
+        .init(
+          identity: try binding(.itinerary, itinerary.id, itinerary.lifetimeId), model: itinerary,
+          hasRelationships: !(itinerary.links ?? []).isEmpty || !(itinerary.schedules ?? []).isEmpty
+            || !(itinerary.entries ?? []).isEmpty || !(itinerary.labelAssociations ?? []).isEmpty))
+    }
+    for category in try context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()) {
+      rows.append(
+        .init(
+          identity: try binding(.category, category.id, category.lifetimeId), model: category,
+          hasRelationships: !(category.associations ?? []).isEmpty))
+    }
+    for tag in try context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()) {
+      rows.append(
+        .init(
+          identity: try binding(.tag, tag.id, tag.lifetimeId), model: tag,
+          hasRelationships: !(tag.associations ?? []).isEmpty))
+    }
+    return rows
+  }
+
+  /// Scalar bindings remain authoritative even when SwiftData has not resolved their objects.
+  private static func requireUnreferenced(
+    _ retired: Set<PlannerPortableBoundIdentity>, context: ModelContext
+  ) throws {
+    func requireSurvivor(_ kind: String, _ identifier: UUID?, _ lifetime: UUID?) throws {
+      guard let kind = PlannerPortableIdentityKind(rawValue: kind) else {
+        throw unresolved("A native relationship has an unsupported source kind.")
+      }
+      guard !retired.contains(try binding(kind, identifier, lifetime)) else {
+        throw unresolved("A losing restoration candidate has a persisted reference.")
+      }
+    }
+    for member in try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()) {
+      try requireSurvivor("item", member.itemId, member.itemLifetimeId)
+      try requireSurvivor("list", member.listId, member.listLifetimeId)
+    }
+    for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+      try requireSurvivor("itinerary", entry.itineraryId, entry.itineraryLifetimeId)
+      try requireSurvivor(entry.sourceKind, entry.sourceId, entry.sourceLifetimeId)
+    }
+    for link in try context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>()) {
+      try requireSurvivor(link.ownerKind, link.ownerId, link.ownerLifetimeId)
+    }
+    for schedule in try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()) {
+      try requireSurvivor(schedule.sourceKind, schedule.sourceId, schedule.sourceLifetimeId)
+    }
+    for association in try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()) {
+      try requireSurvivor(association.ownerKind, association.ownerId, association.ownerLifetimeId)
+      try requireSurvivor(association.labelKind, association.labelId, association.labelLifetimeId)
+    }
+  }
+
+  private static func unresolved(_ message: String) -> PlannerFailure {
+    .init("readUnavailable", message)
+  }
+}
+
+extension PlannerDataSnapshot {
+  init(snapshot: PlannerDataSnapshot, retiringSources: Set<PlannerPortableBoundIdentity>) {
+    format = snapshot.format
+    formatVersion = snapshot.formatVersion
+    sources = snapshot.sources.filter { !retiringSources.contains($0.boundIdentity) }
+    memberships = snapshot.memberships
+    itineraryEntries = snapshot.itineraryEntries
+    expandedCompletions = snapshot.expandedCompletions
+    labelAssociations = snapshot.labelAssociations
+    ownedLinks = snapshot.ownedLinks
+    schedules = snapshot.schedules
+    deletionMarkers = snapshot.deletionMarkers
+    contextAliases = snapshot.contextAliases
+    completionChanges = snapshot.completionChanges
+    restorationFamilies = snapshot.restorationFamilies
+    membershipProvenance = snapshot.membershipProvenance
+    membershipRemovals = snapshot.membershipRemovals
+  }
+}
+
+extension PortableSourceRecord {
+  fileprivate var boundIdentity: PlannerPortableBoundIdentity {
+    switch self {
+    case .item(let value): .init(kind: .item, id: value.id, lifetimeId: value.lifetimeId)
+    case .list(let value): .init(kind: .list, id: value.id, lifetimeId: value.lifetimeId)
+    case .itinerary(let value): .init(kind: .itinerary, id: value.id, lifetimeId: value.lifetimeId)
+    case .category(let value): .init(kind: .category, id: value.id, lifetimeId: value.lifetimeId)
+    case .tag(let value): .init(kind: .tag, id: value.id, lifetimeId: value.lifetimeId)
+    }
+  }
+}

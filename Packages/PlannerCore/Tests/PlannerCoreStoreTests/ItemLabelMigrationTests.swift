@@ -117,8 +117,8 @@ struct ItemLabelMigrationTests {
     #expect(read.content.categoryIds == [category.id])
     #expect(read.content.tagIds == [tag.id])
     #expect(read.labels.count == 2)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 20)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 20)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 21)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 21)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try canonicalPortableFixtureExpectations(historical.portableData)
     let afterData = try #require(

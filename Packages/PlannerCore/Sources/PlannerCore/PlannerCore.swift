@@ -260,11 +260,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...20).contains(identity.schemaVersion) else {
+          guard (1...21).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 20, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 21, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -283,7 +283,7 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 20, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 21, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
@@ -303,19 +303,19 @@ public actor Planner {
               "ownershipUnverified",
               "The independent recovery namespace belongs to another dataset.")
           }
-          if recorded.schemaVersion != identity.schemaVersion {
+          if recorded.schemaVersion != identity.schemaVersion, identity.schemaVersion == 21 {
             try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
           }
         } else {
           try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
         }
-        if identity.schemaVersion < 20 {
-          identity = try activateCompletionHistoryCompatibility(identity, metadataURL: metadataURL)
+        if identity.schemaVersion < 21 {
+          identity = try activateNativeMaintenanceCompatibility(identity, metadataURL: metadataURL)
         }
         let maintenanceContext = ModelContext(try openContainer())
         maintenanceContext.autosaveEnabled = false
         do {
-          try ensureCanonicalMemberships(identity: identity, context: maintenanceContext)
+          try ensureCanonicalNativeGraph(identity: identity, context: maintenanceContext)
         } catch let reason as PlannerFailure where reason.code == "maintenanceRequired" {
           guard case .known(_, _, _, true) = readRecoveryObservation(identity) else { throw reason }
         }
@@ -332,11 +332,11 @@ public actor Planner {
   }
 
   /// Control activation is last: an interrupted baseline can be inspected and rebuilt on retry.
-  private func activateCompletionHistoryCompatibility(
+  private func activateNativeMaintenanceCompatibility(
     _ previous: PlannerStoreIdentity, metadataURL: URL
   ) throws -> PlannerStoreIdentity {
     let upgraded = PlannerStoreIdentity(
-      schemaVersion: 20, datasetId: previous.datasetId, epochId: previous.epochId,
+      schemaVersion: 21, datasetId: previous.datasetId, epochId: previous.epochId,
       namespaceId: previous.namespaceId, ownershipBinding: previous.ownershipBinding)
     let context = ModelContext(try openContainer())
     context.autosaveEnabled = false
@@ -364,7 +364,7 @@ public actor Planner {
         let identity = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
-        try ensureCanonicalMemberships(identity: identity, context: context)
+        try ensureCanonicalNativeGraph(identity: identity, context: context)
         let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map {
           try $0.value()
         }
@@ -1000,7 +1000,7 @@ public actor Planner {
         let identity = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
-        try ensureCanonicalMemberships(identity: identity, context: context)
+        try ensureCanonicalNativeGraph(identity: identity, context: context)
         let targets: [PlannerReviewTarget]
         let impact: PlannerReviewImpact
         let digest: String
@@ -1142,7 +1142,7 @@ public actor Planner {
             $0.originalOperationId == operation.operationId
           }
           if !prepared {
-            try ensureCanonicalMemberships(identity: identity, context: context)
+            try ensureCanonicalNativeGraph(identity: identity, context: context)
             envelope = try archive.latest()
             guard try archive.incompleteMaintenance(in: context, envelope: envelope).isEmpty else {
               throw PlannerFailure(
@@ -1517,7 +1517,7 @@ public actor Planner {
         default:
           let maintenanceContext = ModelContext(try openContainer())
           maintenanceContext.autosaveEnabled = false
-          try ensureCanonicalMemberships(identity: identity, context: maintenanceContext)
+          try ensureCanonicalNativeGraph(identity: identity, context: maintenanceContext)
         }
         switch request {
         case .status:
@@ -1819,7 +1819,7 @@ public actor Planner {
         let container = try openContainer()
         let context = ModelContext(container)
         context.autosaveEnabled = false
-        try ensureCanonicalMemberships(identity: identity, context: context)
+        try ensureCanonicalNativeGraph(identity: identity, context: context)
         switch query.request {
         case .calendar(let calendarQuery):
           let historyToken = try latestHistoryToken(in: context)
@@ -3828,7 +3828,7 @@ public actor Planner {
         let identity = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
-        try ensureCanonicalMemberships(identity: identity, context: context)
+        try ensureCanonicalNativeGraph(identity: identity, context: context)
         let lineage = try PlannerNativeLineage(context: context)
         let snapshot = PlannerDataSnapshot(
           itineraries: try itinerarySnapshots(context),
@@ -3981,6 +3981,8 @@ public actor Planner {
   /// Recovery copies derive canonical data without creating a native maintenance transaction.
   private func canonicalRecoverySnapshot(_ context: ModelContext) throws -> PlannerDataSnapshot {
     let history = try latestHistoryToken(in: context)
+    let sources = try PlannerSourceRestorationConsolidation(
+      context: context, markers: deletionMarkers(context))
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     let snapshot: PlannerDataSnapshot
     if try membershipConsolidationRequired(records, context: context) {
@@ -3988,13 +3990,16 @@ public actor Planner {
       let memberships = try records.map { try $0.value() }
       let detached = try plannerStageDetachedExpandedRetirements(
         context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
-      let before = try maintenanceSnapshot(context, memberships: memberships)
+      let before = PlannerDataSnapshot(
+        snapshot: try maintenanceSnapshot(context, memberships: memberships),
+        retiringSources: sources.retired)
       try requireCompleteExportGraph(before, context: context)
       let consolidation = try PlannerMembershipConsolidation(
         snapshot: before, detachedExpanded: detached)
       snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
     } else {
-      snapshot = try maintenanceSnapshot(context)
+      snapshot = PlannerDataSnapshot(
+        snapshot: try maintenanceSnapshot(context), retiringSources: sources.retired)
       try requireCompleteExportGraph(snapshot, context: context)
     }
     _ = try snapshot.validated()
@@ -4178,13 +4183,46 @@ public actor Planner {
     return false
   }
 
-  private func ensureCanonicalMemberships(identity: PlannerStoreIdentity, context: ModelContext)
+  private func ensureCanonicalNativeGraph(identity: PlannerStoreIdentity, context: ModelContext)
     throws
   {
     context.autosaveEnabled = false
+    let sources = try PlannerSourceRestorationConsolidation(
+      context: context, markers: deletionMarkers(context))
+    if !sources.retired.isEmpty {
+      try commitMaintenance(
+        identity: identity, context: context, kind: "sourceRestorationConsolidation",
+        ruleVersion: 1,
+        proposal: {
+          let projected = PlannerDataSnapshot(
+            snapshot: try self.maintenanceSnapshot(context), retiringSources: sources.retired)
+          try self.requireCompleteExportGraph(projected, context: context)
+          return projected
+        },
+        stage: { _ in sources.stage(in: context) })
+    }
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     guard try membershipConsolidationRequired(records, context: context) else { return }
     let memberships = try records.map { try $0.value() }
+    try commitMaintenance(
+      identity: identity, context: context, kind: "membershipConsolidation", ruleVersion: 2,
+      proposal: {
+        let detached = try plannerStageDetachedExpandedRetirements(
+          context: context, memberships: memberships,
+          lineage: PlannerNativeLineage(context: context))
+        let before = try self.maintenanceSnapshot(context, memberships: memberships)
+        let consolidation = try PlannerMembershipConsolidation(
+          snapshot: before, detachedExpanded: detached)
+        return try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
+      },
+      stage: { try plannerStageMembershipConsolidation($0, context: context) })
+  }
+
+  private func commitMaintenance(
+    identity: PlannerStoreIdentity, context: ModelContext, kind: String, ruleVersion: Int,
+    proposal: () throws -> PlannerDataSnapshot,
+    stage: (PlannerPortableBackup) throws -> Void
+  ) throws {
     let archive = recoveryArchive(identity, context: context)
     let envelope = try archive.latest()
     let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
@@ -4204,24 +4242,21 @@ public actor Planner {
       throw PlannerFailure(
         "maintenanceRequired", "A fresh maintenance identity could not be issued.")
     }
-    let consolidation: PlannerMembershipConsolidation
     let proposed: PlannerDataSnapshot
+    let backup: PlannerPortableBackup
     do {
-      let detached = try plannerStageDetachedExpandedRetirements(
-        context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
-      let before = try maintenanceSnapshot(context, memberships: memberships)
-      consolidation = try PlannerMembershipConsolidation(
-        snapshot: before, detachedExpanded: detached)
-      proposed = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
-      _ = try proposed.validated()
+      proposed = try proposal()
+      backup = try proposed.validated().backup
     } catch {
       context.rollback()
       throw error
     }
     do {
       let evidence = try archive.prepareMaintenance(
-        .init(maintenanceId: maintenanceIdentifier, identity: identity, proposedBackup: proposed))
-      try plannerStageMembershipConsolidation(consolidation.backup, context: context)
+        .init(
+          maintenanceId: maintenanceIdentifier, identity: identity, kind: kind,
+          ruleVersion: ruleVersion, proposedBackup: proposed))
+      try stage(backup)
       context.insert(
         PlannerSchemaV19.MaintenanceCommit(
           maintenanceId: maintenanceIdentifier, evidenceData: try JSONEncoder().encode(evidence)))
@@ -4229,7 +4264,7 @@ public actor Planner {
       try requireCompleteExportGraph(staged, context: context)
       guard
         try staged.validated().backup.importCanonicalValue.encoded()
-          == consolidation.backup.importCanonicalValue.encoded()
+          == backup.importCanonicalValue.encoded()
       else {
         throw PlannerFailure(
           "maintenanceRequired", "The staged consolidation differs from its proposal.")
@@ -4248,7 +4283,7 @@ public actor Planner {
       context.rollback()
       throw PlannerFailure(
         "maintenanceRequired",
-        "Membership consolidation could not commit: " + failure(error, code: "unavailable").message)
+        "Native consolidation could not commit: " + failure(error, code: "unavailable").message)
     }
     querySnapshots.removeAll()
     do {
@@ -10099,7 +10134,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 20
+      identity.schemaVersion == 21
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -10158,7 +10193,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...20).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...21).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

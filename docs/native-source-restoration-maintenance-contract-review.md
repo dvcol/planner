@@ -1,6 +1,6 @@
 # Native restoration-family maintenance
 
-Status: Q157 proposed, awaiting concrete declaration review. A20 already settles deterministic restoration-family winners. This proposal makes the first native normalization rule and its recovery/compatibility behavior concrete. It does not change manual Skip, Overwrite or explicit restoration.
+Status: Q157 A approved on 25 October 2026; the first bounded implementation has a [local checkpoint](prototypes/native-source-restoration-maintenance.md), with further qualification in progress. A20 already settles deterministic restoration-family winners. This proposal makes the first native normalization rule and its recovery/compatibility behavior concrete. It does not change manual Skip, Overwrite or explicit restoration.
 
 ## Reproduced local gap
 
