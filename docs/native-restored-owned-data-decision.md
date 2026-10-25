@@ -1,6 +1,6 @@
 # Remaining restored-data choices for the MVP
 
-Status: Q161 and Q162 pending. Q160 is complete for its approved independent target references. These choices concern data that Q160 explicitly preserves without reconciling. Signing is unrelated.
+Status: Q161 A and Q162 A approved on 25 October 2026. Q160 is complete for its approved independent target references. These choices concern data that Q160 explicitly preserves without reconciling. Their implementation remains open; signing is unrelated.
 
 ## Existing behavior and implementation limits
 
@@ -28,7 +28,7 @@ Example: surviving Item Museum has association701 selecting Tag601/815 and assoc
 
 Q162 is independent of Q161: its owner already survives, and the competing records differ only in their association identity and label binding.
 
-## Qualification after approval
+## Implementation and qualification
 
 Use the existing Core/native-input, recovery-filesystem, process, native UI and HTTP boundaries. Start with one literal owned-collection conflict and one literal Category/Tag collision. Reuse complete-graph projection and current maintenance rather than building a parallel path. Confirm discarded identities stay closed after redelivery, surviving references keep their exact scope, failed saves change nothing, Retry/replay remain truthful, and unchanged independent data survives reopening. Review any concrete declaration changes that the implementation actually requires before introducing them.
 
