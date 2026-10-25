@@ -23,9 +23,19 @@ struct PlannerImportMembershipHistory {
         throw PlannerFailure(
           "invalidInput", "Incoming membership provenance conflicts with retained authority.")
       }
-      if let known = currentMembers[value.membership], known.baselineProvenance.pair != value.pair {
-        throw PlannerFailure(
-          "invalidInput", "Incoming membership provenance names another saved Item/List pair.")
+      if let known = currentMembers[value.membership] {
+        var savedPair = known.baselineProvenance.pair
+        var incomingPair = value.pair
+        if current.formatVersion >= 5 {
+          savedPair = try plannerMembershipHistoryPair(
+            savedPair, families: current.restorationFamilies)
+          incomingPair = try plannerMembershipHistoryPair(
+            incomingPair, families: current.restorationFamilies)
+        }
+        guard savedPair == incomingPair else {
+          throw PlannerFailure(
+            "invalidInput", "Incoming membership provenance names another saved Item/List pair.")
+        }
       }
       guard
         selectedOwners.contains(value.list.reference)

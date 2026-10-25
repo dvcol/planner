@@ -60,7 +60,7 @@ enum PlannerSchemaV18: VersionedSchema {
       }
     }
 
-    func value() throws -> ItinerarySnapshot {
+    func value(entrySnapshots: [ItineraryEntrySnapshot]? = nil) throws -> ItinerarySnapshot {
       guard let id, let lifetimeId, let createdAt, let updatedAt else {
         throw PlannerFailure(
           "readUnavailable", "The Itinerary has unresolved identity or timestamps.")
@@ -101,7 +101,7 @@ enum PlannerSchemaV18: VersionedSchema {
         labels: try (labelAssociations ?? []).sorted {
           ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "")
         }.map { try $0.labelRead() },
-        entries: try (entries ?? []).map { try $0.value() }.sorted {
+        entries: try (entrySnapshots ?? (entries ?? []).map { try $0.value() }).sorted {
           if $0.rank != $1.rank { return $0.rank < $1.rank }
           return $0.id.uuidString < $1.id.uuidString
         })
@@ -187,7 +187,7 @@ enum PlannerSchemaV18: VersionedSchema {
       self.list = list
     }
 
-    func value() throws -> ItineraryEntrySnapshot {
+    func value(projectedListLifetimeId: UUID? = nil) throws -> ItineraryEntrySnapshot {
       guard let id, let lifetimeId, let itineraryId, let itineraryLifetimeId,
         let sourceId, let sourceLifetimeId,
         itinerary?.id == itineraryId, itinerary?.lifetimeId == itineraryLifetimeId
@@ -210,7 +210,9 @@ enum PlannerSchemaV18: VersionedSchema {
         throw PlannerFailure(
           "readUnavailable", "The entry has unresolved source bindings or completion.")
       }
-      let completions = try (expandedCompletions ?? []).map { try $0.value() }.sorted {
+      let completions = try (expandedCompletions ?? []).map {
+        try $0.value(projectedListLifetimeId: projectedListLifetimeId)
+      }.sorted {
         $0.context.orderingKey < $1.context.orderingKey
       }
       guard Set(completions.map(\.context)).count == completions.count,
@@ -246,7 +248,7 @@ enum PlannerSchemaV18: VersionedSchema {
       self.membership = membership
     }
 
-    func value() throws -> ExpandedCompletionSnapshot {
+    func value(projectedListLifetimeId: UUID? = nil) throws -> ExpandedCompletionSnapshot {
       guard let listEntryId, let listEntryLifetimeId, let membershipId, let membershipLifetimeId,
         let listEntry, let membership, let itineraryId = listEntry.itineraryId,
         listEntry.id == listEntryId, listEntry.lifetimeId == listEntryLifetimeId,
@@ -259,7 +261,7 @@ enum PlannerSchemaV18: VersionedSchema {
       let binding = try membership.value()
       guard
         binding.list.id == listEntry.sourceId
-          && binding.list.lifetimeId == listEntry.sourceLifetimeId
+          && binding.list.lifetimeId == (projectedListLifetimeId ?? listEntry.sourceLifetimeId)
       else {
         throw PlannerFailure(
           "readUnavailable", "The completion membership no longer belongs to this List entry.")

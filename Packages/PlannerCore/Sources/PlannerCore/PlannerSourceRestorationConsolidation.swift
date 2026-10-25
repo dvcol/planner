@@ -11,8 +11,9 @@ struct PlannerSourceRestorationConsolidation {
 
   private struct EntryRebinding {
     let entry: PlannerSchemaV18.ItineraryEntry
-    let winner: PlannerSchemaV18.Item
-    let projected: PortableItineraryEntryRecord
+    let winner: Row
+    let snapshot: ItineraryEntrySnapshot
+    var projected: PortableItineraryEntryRecord { .init(snapshot) }
   }
 
   private struct MembershipRebinding {
@@ -22,9 +23,16 @@ struct PlannerSourceRestorationConsolidation {
     let provenance: PlannerPortableMembershipProvenance
   }
 
+  private struct LabelRebinding {
+    let association: PlannerSchemaV18.LabelAssociation
+    let winner: Row
+    let projected: PortableLabelAssociationRecord
+  }
+
   private let rows: [Row]
   private let entryRebindings: [EntryRebinding]
   private let membershipRebindings: [MembershipRebinding]
+  private let labelRebindings: [LabelRebinding]
   let ruleVersion = 3
   let retired: Set<PlannerPortableBoundIdentity>
 
@@ -71,15 +79,18 @@ struct PlannerSourceRestorationConsolidation {
       context: context, rows: rows, retired: retired, winners: winners)
     let membershipRebindings = try Self.membershipRebindings(
       context: context, rows: rows, retired: retired, winners: winners)
+    let labelRebindings = try Self.labelRebindings(
+      context: context, rows: rows, retired: retired, winners: winners)
     if !retired.isEmpty {
       try Self.requireUnreferenced(
         retired, context: context, admittedEntries: entryRebindings,
-        admittedMemberships: membershipRebindings)
+        admittedMemberships: membershipRebindings, admittedLabels: labelRebindings)
     }
     self.rows = rows
     self.retired = retired
     self.entryRebindings = entryRebindings
     self.membershipRebindings = membershipRebindings
+    self.labelRebindings = labelRebindings
   }
 
   func project(_ snapshot: PlannerDataSnapshot) -> PlannerDataSnapshot {
@@ -87,17 +98,40 @@ struct PlannerSourceRestorationConsolidation {
       snapshot: snapshot, retiringSources: retired,
       reboundEntries: entryRebindings.map(\.projected),
       reboundMemberships: membershipRebindings.map(\.projected),
-      originalProvenance: membershipRebindings.map(\.provenance))
+      originalProvenance: membershipRebindings.map(\.provenance),
+      reboundLabels: labelRebindings.map(\.projected))
+  }
+
+  func itineraryValue(_ itinerary: PlannerSchemaV18.Itinerary) throws -> ItinerarySnapshot {
+    let entries = try (itinerary.entries ?? []).map { entry in
+      if let rebinding = entryRebindings.first(where: { $0.entry === entry }) {
+        return rebinding.snapshot
+      }
+      return try entry.value()
+    }
+    return try itinerary.value(entrySnapshots: entries)
   }
 
   func stage(in context: ModelContext) {
     for rebinding in entryRebindings {
-      rebinding.entry.sourceLifetimeId = rebinding.winner.lifetimeId
-      rebinding.entry.item = rebinding.winner
+      rebinding.entry.sourceLifetimeId = rebinding.winner.identity.lifetimeId
+      if let item = rebinding.winner.model as? PlannerSchemaV18.Item {
+        rebinding.entry.item = item
+      } else if let list = rebinding.winner.model as? PlannerSchemaV18.List {
+        rebinding.entry.list = list
+      }
     }
     for rebinding in membershipRebindings {
       rebinding.membership.itemLifetimeId = rebinding.winner.lifetimeId
       rebinding.membership.item = rebinding.winner
+    }
+    for rebinding in labelRebindings {
+      rebinding.association.labelLifetimeId = rebinding.winner.identity.lifetimeId
+      if let category = rebinding.winner.model as? PlannerSchemaV18.Category {
+        rebinding.association.category = category
+      } else if let tag = rebinding.winner.model as? PlannerSchemaV18.Tag {
+        rebinding.association.tag = tag
+      }
     }
     for row in rows where retired.contains(row.identity) { context.delete(row.model) }
   }
@@ -126,8 +160,7 @@ struct PlannerSourceRestorationConsolidation {
       rows.append(
         .init(
           identity: try binding(.list, list.id, list.lifetimeId), model: list,
-          hasRelationships: !(list.memberships ?? []).isEmpty
-            || !(list.itineraryEntries ?? []).isEmpty))
+          hasRelationships: !(list.memberships ?? []).isEmpty))
     }
     for itinerary in try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()) {
       rows.append(
@@ -140,15 +173,44 @@ struct PlannerSourceRestorationConsolidation {
       rows.append(
         .init(
           identity: try binding(.category, category.id, category.lifetimeId), model: category,
-          hasRelationships: !(category.associations ?? []).isEmpty))
+          hasRelationships: false))
     }
     for tag in try context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()) {
       rows.append(
         .init(
           identity: try binding(.tag, tag.id, tag.lifetimeId), model: tag,
-          hasRelationships: !(tag.associations ?? []).isEmpty))
+          hasRelationships: false))
     }
     return rows
+  }
+
+  private static func labelRebindings(
+    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
+    winners: [PlannerPortableBoundIdentity: Row]
+  ) throws -> [LabelRebinding] {
+    guard !retired.isEmpty else { return [] }
+    var rebindings: [LabelRebinding] = []
+    for association in try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()) {
+      guard let kind = PlannerPortableIdentityKind(rawValue: association.labelKind) else {
+        throw unresolved("A native association has an unsupported label kind.")
+      }
+      let target = try binding(kind, association.labelId, association.labelLifetimeId)
+      guard retired.contains(target) else { continue }
+      let value = try association.value()
+      guard let ownerKind = PlannerPortableIdentityKind(rawValue: value.owner.kind) else {
+        throw unresolved("A native association has an unsupported owner kind.")
+      }
+      let owner = try binding(ownerKind, value.owner.id, value.owner.lifetimeId)
+      guard !retired.contains(owner), rows.filter({ $0.identity == owner }).count == 1,
+        let winner = winners[target], target.kind == .category || target.kind == .tag
+      else { throw unresolved("A losing label has an unresolved association owner.") }
+      let projected = LabelAssociationSnapshot(
+        id: value.id, lifetimeId: value.lifetimeId, owner: value.owner,
+        label: .init(kind: value.label.kind, id: target.id, lifetimeId: winner.identity.lifetimeId))
+      rebindings.append(
+        .init(association: association, winner: winner, projected: .init(projected)))
+    }
+    return rebindings
   }
 
   private static func membershipRebindings(
@@ -199,7 +261,8 @@ struct PlannerSourceRestorationConsolidation {
       }
       let source = try binding(sourceKind, entry.sourceId, entry.sourceLifetimeId)
       guard retired.contains(source) else { continue }
-      let value = try entry.value()
+      let projectedListLifetime = source.kind == .list ? winners[source]?.identity.lifetimeId : nil
+      let value = try entry.value(projectedListLifetimeId: projectedListLifetime)
       if let expected = completionStates[
         .directItineraryItem(
           entryId: value.id, entryLifetimeId: value.lifetimeId)], expected != value.localDone
@@ -207,16 +270,17 @@ struct PlannerSourceRestorationConsolidation {
         throw unresolved("A source entry disagrees with its retained completion history.")
       }
       let owner = try binding(.itinerary, value.itinerary.id, value.itinerary.lifetimeId)
-      guard source.kind == .item, !retired.contains(owner),
+      guard source.kind == .item || source.kind == .list, !retired.contains(owner),
         rows.filter({ $0.identity == owner }).count == 1,
-        let winner = winners[source]?.model as? PlannerSchemaV18.Item,
-        let winnerLifetime = winner.lifetimeId
+        let winner = winners[source]
       else { throw unresolved("A losing source has an unsupported entry or owner binding.") }
       let projected = ItineraryEntrySnapshot(
         id: value.id, lifetimeId: value.lifetimeId, itinerary: value.itinerary,
-        source: .init(kind: "item", id: source.id, lifetimeId: winnerLifetime),
-        rank: value.rank, localDone: value.localDone)
-      rebindings.append(.init(entry: entry, winner: winner, projected: .init(projected)))
+        source: .init(
+          kind: value.source.kind, id: source.id, lifetimeId: winner.identity.lifetimeId),
+        rank: value.rank, localDone: value.localDone, expandedCompletions: value.expandedCompletions
+      )
+      rebindings.append(.init(entry: entry, winner: winner, snapshot: projected))
     }
     return rebindings
   }
@@ -224,7 +288,8 @@ struct PlannerSourceRestorationConsolidation {
   /// Scalar bindings remain authoritative even when SwiftData has not resolved their objects.
   private static func requireUnreferenced(
     _ retired: Set<PlannerPortableBoundIdentity>, context: ModelContext,
-    admittedEntries: [EntryRebinding], admittedMemberships: [MembershipRebinding]
+    admittedEntries: [EntryRebinding], admittedMemberships: [MembershipRebinding],
+    admittedLabels: [LabelRebinding]
   ) throws {
     func requireSurvivor(_ kind: String, _ identifier: UUID?, _ lifetime: UUID?) throws {
       guard let kind = PlannerPortableIdentityKind(rawValue: kind) else {
@@ -254,7 +319,9 @@ struct PlannerSourceRestorationConsolidation {
     }
     for association in try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()) {
       try requireSurvivor(association.ownerKind, association.ownerId, association.ownerLifetimeId)
-      try requireSurvivor(association.labelKind, association.labelId, association.labelLifetimeId)
+      if !admittedLabels.contains(where: { $0.association === association }) {
+        try requireSurvivor(association.labelKind, association.labelId, association.labelLifetimeId)
+      }
     }
   }
 
@@ -268,7 +335,8 @@ extension PlannerDataSnapshot {
     snapshot: PlannerDataSnapshot, retiringSources: Set<PlannerPortableBoundIdentity>,
     reboundEntries: [PortableItineraryEntryRecord],
     reboundMemberships: [PortableMembershipRecord],
-    originalProvenance: [PlannerPortableMembershipProvenance]
+    originalProvenance: [PlannerPortableMembershipProvenance],
+    reboundLabels: [PortableLabelAssociationRecord]
   ) {
     format = snapshot.format
     formatVersion = snapshot.formatVersion
@@ -281,7 +349,10 @@ extension PlannerDataSnapshot {
       reboundEntries.first { $0.id == entry.id && $0.lifetimeId == entry.lifetimeId } ?? entry
     }
     expandedCompletions = snapshot.expandedCompletions
-    labelAssociations = snapshot.labelAssociations
+    labelAssociations = snapshot.labelAssociations.map { association in
+      reboundLabels.first { $0.id == association.id && $0.lifetimeId == association.lifetimeId }
+        ?? association
+    }
     ownedLinks = snapshot.ownedLinks
     schedules = snapshot.schedules
     deletionMarkers = snapshot.deletionMarkers

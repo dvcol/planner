@@ -3940,11 +3940,20 @@ public actor Planner {
   }
 
   private func maintenanceSnapshot(
-    _ context: ModelContext, memberships: [MembershipSnapshot]? = nil
+    _ context: ModelContext, memberships: [MembershipSnapshot]? = nil,
+    sourceProjection: PlannerSourceRestorationConsolidation? = nil
   ) throws -> PlannerDataSnapshot {
     let lineage = try PlannerNativeLineage(context: context)
+    let itineraries: [ItinerarySnapshot]
+    if let sourceProjection {
+      itineraries = try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).map {
+        try sourceProjection.itineraryValue($0)
+      }
+    } else {
+      itineraries = try itinerarySnapshots(context)
+    }
     return PlannerDataSnapshot(
-      itineraries: try itinerarySnapshots(context),
+      itineraries: itineraries,
       labelAssociations: try labelAssociationSnapshots(context),
       tags: try tagSnapshots(context), categories: try categorySnapshots(context),
       items: try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() },
@@ -3985,18 +3994,24 @@ public actor Planner {
       context: context, markers: deletionMarkers(context))
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     let snapshot: PlannerDataSnapshot
-    if try !sources.retired.isEmpty || membershipConsolidationRequired(records, context: context) {
+    if !sources.retired.isEmpty {
+      let before = sources.project(try maintenanceSnapshot(context, sourceProjection: sources))
+      try requireCompleteExportGraph(before, context: context)
+      let consolidation = try PlannerMembershipConsolidation(snapshot: before, detachedExpanded: [])
+      snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
+    } else if try membershipConsolidationRequired(records, context: context) {
       defer { context.rollback() }
       let memberships = try records.map { try $0.value() }
       let detached = try plannerStageDetachedExpandedRetirements(
         context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
-      let before = sources.project(try maintenanceSnapshot(context, memberships: memberships))
+      let before = sources.project(
+        try maintenanceSnapshot(context, memberships: memberships, sourceProjection: sources))
       try requireCompleteExportGraph(before, context: context)
       let consolidation = try PlannerMembershipConsolidation(
         snapshot: before, detachedExpanded: detached)
       snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
     } else {
-      snapshot = sources.project(try maintenanceSnapshot(context))
+      snapshot = sources.project(try maintenanceSnapshot(context, sourceProjection: sources))
       try requireCompleteExportGraph(snapshot, context: context)
     }
     _ = try snapshot.validated()
@@ -4190,14 +4205,7 @@ public actor Planner {
       try commitMaintenance(
         identity: identity, context: context, kind: "sourceRestorationConsolidation",
         ruleVersion: sources.ruleVersion,
-        proposal: {
-          let projected = sources.project(try self.maintenanceSnapshot(context))
-          let canonical = try PlannerMembershipConsolidation(
-            snapshot: projected, detachedExpanded: [])
-          let complete = try PlannerDataSnapshot(snapshot: projected, canonical: canonical.backup)
-          try self.requireCompleteExportGraph(complete, context: context)
-          return complete
-        },
+        proposal: { try self.canonicalRecoverySnapshot(context) },
         stage: { backup in
           sources.stage(in: context)
           try plannerStageMembershipConsolidation(backup, context: context)
@@ -4366,7 +4374,14 @@ public actor Planner {
       stored: context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).map(\.id),
       exported: snapshot.itineraryEntries.map(\.id), kind: "Itinerary entry")
     let contexts = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).map {
-      try $0.value().context
+      guard let entryIdentifier = $0.listEntryId, let entryLifetime = $0.listEntryLifetimeId,
+        let membershipIdentifier = $0.membershipId, let membershipLifetime = $0.membershipLifetimeId
+      else {
+        throw PlannerFailure("readUnavailable", "An expanded context has incomplete identities.")
+      }
+      return PlannerExpandedContext(
+        listEntryId: entryIdentifier, listEntryLifetimeId: entryLifetime,
+        membershipId: membershipIdentifier, membershipLifetimeId: membershipLifetime)
     }
     guard contexts.count == snapshot.expandedCompletions.count,
       Set(contexts) == Set(snapshot.expandedCompletions.map(\.context))
