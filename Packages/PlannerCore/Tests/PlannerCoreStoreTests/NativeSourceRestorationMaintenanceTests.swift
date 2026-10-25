@@ -10,6 +10,127 @@ import Testing
 
 struct NativeSourceRestorationMaintenanceTests {
   @Test(arguments: [PlannerEntityKind.item, .itinerary])
+  func ownedLabelPreparationFailurePreservesSelectionsAndSharedLabelsUntilRetry(
+    kind: PlannerEntityKind
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    try await fixture.deliverCandidateWithOwnedLabels()
+    let selections = try await fixture.rawLabelData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.rawLabelData() == selections)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    var graph = try fixture.object(after)
+    let before = try fixture.object(fixture.baseline)
+    let markers = try #require(graph["deletionMarkers"] as? NSArray)
+    let originalMarkers = try #require(before["deletionMarkers"] as? NSArray)
+    #expect(markers.count == originalMarkers.count + 2)
+    graph["deletionMarkers"] = originalMarkers
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: before))
+  }
+
+  @Test(arguments: [PlannerEntityKind.item, .itinerary])
+  func winningSourceKeepsItsExactLabelsAndClosesLosingOwnedSelections(kind: PlannerEntityKind)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    let categoryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000501")!
+    let tagIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000601")!
+    let command: PlannerCommand
+    switch await fixture.planner.read(session: fixture.session, request: .source(fixture.source)) {
+    case .source(.item(let value)):
+      command = .editItem(
+        sourceId: fixture.source.id,
+        changes: .init(categoryIds: .set([categoryIdentifier]), tagIds: .set([tagIdentifier])),
+        expectedFieldHashes: value.fieldHashes)
+    case .source(.itinerary(let value)):
+      command = .editItinerary(
+        sourceId: fixture.source.id,
+        changes: .init(categoryIds: .set([categoryIdentifier]), tagIds: .set([tagIdentifier])),
+        expectedFieldHashes: value.fieldHashes)
+    default: throw CancellationError()
+    }
+    let operation = PlannerOperation(
+      operationId: UUID(), session: fixture.session, command: command)
+    guard case .applied(let original, .complete) = await fixture.planner.execute(operation).outcome,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidateWithOwnedLabels()
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result,
+      case .source = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else {
+      Issue.record("The winner must keep its complete label selections: \(result)")
+      return
+    }
+    let evidence = try fixture.envelope()
+    let maintenance = try #require(evidence["maintenanceReceipts"] as? [[String: Any]])
+    let identifier = try #require(maintenance.first?["maintenanceId"] as? String)
+    let preparation = try fixture.object(
+      Data(contentsOf: fixture.namespace.appendingPathComponent("maintenance-\(identifier).json")))
+    let proposed = try JSONSerialization.data(withJSONObject: preparation["proposedBackup"]!)
+    #expect(try fixture.graph(proposed) == fixture.graph(after))
+    var graph = try fixture.object(after)
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let retiredIdentifiers = [
+      "00000000-0000-4000-8000-000000000875", "00000000-0000-4000-8000-000000000877",
+    ]
+    let closures = markers.filter { marker in
+      guard let target = marker["target"] as? [String: Any],
+        target["kind"] as? String == "labelAssociation", let identifier = target["id"] as? String
+      else { return false }
+      return retiredIdentifiers.contains(identifier)
+    }
+    #expect(closures.count == 2)
+    #expect(
+      closures.contains { marker in
+        let target = marker["target"] as? [String: Any]
+        return target?["id"] as? String == "00000000-0000-4000-8000-000000000875"
+          && target?["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000876"
+      })
+    #expect(
+      closures.contains { marker in
+        let target = marker["target"] as? [String: Any]
+        return target?["id"] as? String == "00000000-0000-4000-8000-000000000877"
+          && target?["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000878"
+      })
+    graph["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(try NSDictionary(dictionary: graph) == fixture.graph(before))
+    #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    guard case .applied(let replayed, .complete) = await fixture.planner.execute(operation).outcome
+    else { throw CancellationError() }
+    #expect(replayed == original)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    try await fixture.deliverCandidateWithOwnedLabels()
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+  }
+
+  @Test(arguments: [PlannerEntityKind.item, .itinerary])
   func ownedSchedulePreparationFailurePreservesNativeDataUntilRetry(kind: PlannerEntityKind)
     async throws
   {
@@ -1208,6 +1329,45 @@ private struct SourceRestorationFixture {
       ]
     }.sorted { ($0["id"] ?? "") < ($1["id"] ?? "") }
     return try JSONSerialization.data(withJSONObject: values, options: [.sortedKeys])
+  }
+
+  @MainActor func deliverCandidateWithOwnedLabels() throws {
+    try deliverCandidate()
+    let context = try nativeContext()
+    let category = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000501"
+      })
+    let tag = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000601"
+      })
+    let categorySelection: PlannerSchemaV18.LabelAssociation
+    let tagSelection: PlannerSchemaV18.LabelAssociation
+    switch source.kind {
+    case .item:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      categorySelection = .init(item: owner, category: category)
+      tagSelection = .init(item: owner, tag: tag)
+    case .itinerary:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      categorySelection = .init(itinerary: owner, category: category)
+      tagSelection = .init(itinerary: owner, tag: tag)
+    default: throw CancellationError()
+    }
+    categorySelection.id = UUID(uuidString: "00000000-0000-4000-8000-000000000875")!
+    categorySelection.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000876")!
+    tagSelection.id = UUID(uuidString: "00000000-0000-4000-8000-000000000877")!
+    tagSelection.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000878")!
+    context.insert(categorySelection)
+    context.insert(tagSelection)
+    try context.save()
   }
 
   @MainActor func deliverCandidate() throws {

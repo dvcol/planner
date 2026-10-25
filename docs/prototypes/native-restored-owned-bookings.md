@@ -61,8 +61,9 @@ and original result bundles remain preserved.
 
 ## Remaining scope
 
-Q161 still requires losing-source label selections, List memberships, Itinerary
-entries and expanded completion. The current owned-link/booking slices retire
+Losing-source label selections now have a separate
+[local checkpoint](native-restored-owned-labels.md). Q161 still requires losing
+List memberships, Itinerary entries and expanded completion. The current owned-link/booking slices retire
 native losing-owner records under the proven source-family authority. Individual
 owned-identity closure and manual-import restoration histories still need
 qualification. Booking-specific native-save/publication/interruption and native
