@@ -86,10 +86,14 @@ struct PlannerSourceRestorationConsolidation {
     let lineage = try PlannerNativeLineage(context: context)
     let families = lineage.restorationFamilies
     let closedFamilies = Set(markers.compactMap(\.closedFamilyId))
-    let groups = Dictionary(grouping: rows) {
+    let closedSources = Set(
+      [PlannerPortableIdentityKind.item, .list, .itinerary, .category, .tag].flatMap {
+        Self.closedNativeIdentities(kind: $0, families: families, markers: markers)
+      })
+    let groups = Dictionary(grouping: rows.filter { !closedSources.contains($0.identity) }) {
       $0.identity.kind.rawValue + ":" + $0.identity.id.uuidString
     }
-    var retired: Set<PlannerPortableBoundIdentity> = []
+    var retired = Set(rows.filter { closedSources.contains($0.identity) }.map(\.identity))
     var winners: [PlannerPortableBoundIdentity: Row] = [:]
     var labelWinners: Set<PlannerPortableBoundIdentity> = []
     for group in groups.values {
@@ -325,7 +329,7 @@ struct PlannerSourceRestorationConsolidation {
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [OwnedLinkRetirement] {
-    let closed = closedOwnedIdentities(kind: .ownedLink, families: families, markers: markers)
+    let closed = closedNativeIdentities(kind: .ownedLink, families: families, markers: markers)
     guard !retired.isEmpty || !closed.isEmpty else { return [] }
     var retirements: [OwnedLinkRetirement] = []
     for link in try context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>()) {
@@ -371,7 +375,7 @@ struct PlannerSourceRestorationConsolidation {
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [ScheduleRetirement] {
-    let closed = closedOwnedIdentities(kind: .schedule, families: families, markers: markers)
+    let closed = closedNativeIdentities(kind: .schedule, families: families, markers: markers)
     guard !retired.isEmpty || !closed.isEmpty else { return [] }
     var retirements: [ScheduleRetirement] = []
     for schedule in try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()) {
@@ -415,7 +419,7 @@ struct PlannerSourceRestorationConsolidation {
     return retirements
   }
 
-  private static func closedOwnedIdentities(
+  private static func closedNativeIdentities(
     kind: PlannerPortableIdentityKind, families: [PlannerPortableRestorationFamily],
     markers: [PortableDeletionMarker]
   ) -> Set<PlannerPortableBoundIdentity> {
@@ -424,7 +428,7 @@ struct PlannerSourceRestorationConsolidation {
       switch marker.target {
       case .ownedLink(let identifier, let lifetime) where kind == .ownedLink:
         identities.insert(.init(kind: kind, id: identifier, lifetimeId: lifetime))
-      case .source(let source) where kind == .schedule && source.kind == "schedule":
+      case .source(let source) where kind != .ownedLink && source.kind == kind.rawValue:
         identities.insert(.init(kind: kind, id: source.id, lifetimeId: source.lifetimeId))
       default: continue
       }

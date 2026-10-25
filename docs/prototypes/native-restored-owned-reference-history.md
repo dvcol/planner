@@ -187,3 +187,37 @@ Further association/history combinations, actual Mac window interaction,
 installed Share, signed/shared storage, CloudKit/account and physical acceptance
 remain separate. Signing stays deferred. These data/HTTP checks add no native UI
 or system Shortcuts evidence.
+
+## Closed source families
+
+A20 requires Delete to close the entire declared source family, including late
+candidates. A real-store tracer exposed reads/export failing when a known old
+candidate arrived after deletion, both with no live source and with a fresh
+authorized restoration. All five source kinds reproduced the failure.
+
+The source projection now uses the existing exact closure lookup before choosing
+open-family winners. It retires proven closed native rows through the same
+durable maintenance transaction. A fresh source lifetime remains untouched.
+Unknown lifetimes and references across closed families gain no new authority.
+
+The ten cases retain exact native lifetime arrays, full exported graphs and
+original user receipts. Blocking the actual recovery directory leaves native
+rows, files and writer control unchanged. Restoring access and reading the
+source retries maintenance. Reopen, old Delete replay and repeat delivery retain
+the deleted state or the same fresh restoration as appropriate.
+
+Final affected cohorts pass 49 Mac and 47 iPhone functions in eight suites,
+including genuine Schema18 and Schema12 migrations. Four existing real HTTP
+regressions pass, and the Mac app, Share and test host compile. The
+[validation record](evidence/native-membership-consolidation/native-closed-source-family-validation.json)
+reconciles the 813 shared Core inputs, 1,160 phone/HTTP inputs and actual products.
+All 514 frozen fixture inputs and 18 schema sources match the preceding commit.
+No final cohort has failures, skips or SQLite unlink warnings. Existing formats,
+maintenance rule and writer gate stay unchanged.
+
+Verified cleanup removes 20 passing Mac tracer stores, 158 passing phone stores
+and 17 passing HTTP stores after host/database closure. Failed/interrupted
+datasets and original results remain retained; duplicate manifests are
+losslessly compressed. The [remaining local checklist](../restoration-acceptance-checklist.md)
+names association and authority checks separately. These results add no native
+UI, system invocation, cloud or physical-device evidence.

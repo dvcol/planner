@@ -9,6 +9,92 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [PlannerEntityKind.item, .list, .itinerary, .category, .tag], [false, true])
+  func closedSourceFamiliesIgnoreLateCandidatesWithoutReplacingFreshRestorations(
+    kind: PlannerEntityKind, restoreCurrent: Bool
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    guard case .decoded(let original) = fixture.planner.decodeImport(fixture.baseline),
+      case .reviewed(let deletion) = await fixture.planner.prepareReview(
+        session: fixture.session, command: .deleteSource(source: fixture.source))
+    else { throw CancellationError() }
+    let deletionOperation = PlannerOperation(
+      operationId: UUID(), session: fixture.session, command: deletion.command,
+      reviewToken: deletion.reviewToken)
+    guard
+      case .applied(let deleted, .complete) = await fixture.planner.execute(deletionOperation)
+        .outcome
+    else { throw CancellationError() }
+    if restoreCurrent {
+      guard
+        case .reviewed(let restoration) = await fixture.planner.prepareReview(
+          session: fixture.session,
+          command: .applyImport(backup: original, mode: .overwrite, restoreDeletedData: true)),
+        case .applied(_, .complete) = await fixture.planner.execute(
+          .init(
+            operationId: UUID(), session: fixture.session, command: restoration.command,
+            reviewToken: restoration.reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let lifetimes = try await fixture.nativeSourceLifetimes()
+    #expect(lifetimes.count == (restoreCurrent ? 1 : 0))
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidate()
+    let deliveredLifetimes = try await fixture.nativeSourceLifetimes()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.nativeSourceLifetimes() == deliveredLifetimes)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    let read = await fixture.planner.read(
+      session: fixture.session, request: .source(fixture.source))
+    switch read {
+    case .source: #expect(restoreCurrent)
+    case .failed: #expect(!restoreCurrent)
+    default: Issue.record("Read must retain the current source or report its existing deletion.")
+    }
+    #expect(try await fixture.nativeSourceLifetimes() == lifetimes)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result else {
+      Issue.record("A declared closed source candidate must stay retired: \(result)")
+      return
+    }
+    #expect(try fixture.graph(after) == fixture.graph(before))
+    #expect(try await fixture.nativeSourceLifetimes() == lifetimes)
+    #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    guard
+      case .applied(let replayed, .complete) = await fixture.planner.execute(deletionOperation)
+        .outcome
+    else { throw CancellationError() }
+    #expect(replayed == deleted)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(before))
+    try await fixture.deliverCandidate()
+    guard case .exported(let redelivered) = await reopened.exportData(session: session) else {
+      Issue.record("Repeated closed-candidate delivery must remain readable.")
+      return
+    }
+    #expect(try fixture.graph(redelivered) == fixture.graph(before))
+    #expect(try await fixture.nativeSourceLifetimes() == lifetimes)
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
   func losingOwnedRestorationHistoryClosesWithoutChangingTheWinningSource(
     ownerKind: PlannerEntityKind, referenceKind: String
@@ -1986,6 +2072,35 @@ private struct SourceRestorationFixture {
       try JSONSerialization.data(withJSONObject: envelope).write(
         to: namespace.appendingPathComponent(name), options: .atomic)
     }
+  }
+
+  @MainActor func nativeSourceLifetimes() throws -> [UUID] {
+    let context = try nativeContext()
+    let lifetimes: [UUID?]
+    switch source.kind {
+    case .item:
+      lifetimes = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).filter {
+        $0.id == source.id
+      }.map(\.lifetimeId)
+    case .list:
+      lifetimes = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).filter {
+        $0.id == source.id
+      }.map(\.lifetimeId)
+    case .itinerary:
+      lifetimes = try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).filter {
+        $0.id == source.id
+      }.map(\.lifetimeId)
+    case .category:
+      lifetimes = try context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).filter {
+        $0.id == source.id
+      }.map(\.lifetimeId)
+    case .tag:
+      lifetimes = try context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).filter {
+        $0.id == source.id
+      }.map(\.lifetimeId)
+    default: throw CancellationError()
+    }
+    return try lifetimes.map { try #require($0) }.sorted { $0.uuidString < $1.uuidString }
   }
 
   @MainActor func itemLifetimes() throws -> [String] {
