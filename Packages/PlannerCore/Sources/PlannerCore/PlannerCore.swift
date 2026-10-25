@@ -3998,7 +3998,7 @@ public actor Planner {
       let before = sources.project(
         try maintenanceSnapshot(
           context, memberships: records.map { try $0.value() }, sourceProjection: sources))
-      try requireCompleteExportGraph(before, context: context)
+      try requireCompleteExportGraph(before, context: context, sourceProjection: sources)
       let consolidation = try PlannerMembershipConsolidation(snapshot: before, detachedExpanded: [])
       snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
     } else if try membershipConsolidationRequired(records, context: context) {
@@ -4008,13 +4008,13 @@ public actor Planner {
         context: context, memberships: memberships, lineage: PlannerNativeLineage(context: context))
       let before = sources.project(
         try maintenanceSnapshot(context, memberships: memberships, sourceProjection: sources))
-      try requireCompleteExportGraph(before, context: context)
+      try requireCompleteExportGraph(before, context: context, sourceProjection: sources)
       let consolidation = try PlannerMembershipConsolidation(
         snapshot: before, detachedExpanded: detached)
       snapshot = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup)
     } else {
       snapshot = sources.project(try maintenanceSnapshot(context, sourceProjection: sources))
-      try requireCompleteExportGraph(snapshot, context: context)
+      try requireCompleteExportGraph(snapshot, context: context, sourceProjection: sources)
     }
     _ = try snapshot.validated()
     guard try latestHistoryToken(in: context) == history else {
@@ -4363,11 +4363,13 @@ public actor Planner {
     return try snapshot.validated()
   }
 
-  private func requireCompleteExportGraph(_ snapshot: PlannerDataSnapshot, context: ModelContext)
-    throws
-  {
+  private func requireCompleteExportGraph(
+    _ snapshot: PlannerDataSnapshot, context: ModelContext,
+    sourceProjection: PlannerSourceRestorationConsolidation? = nil
+  ) throws {
     try requireExportedIdentities(
-      stored: context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>()).map(\.id),
+      stored: context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>())
+        .filter { sourceProjection?.retiresOwnedLink($0) != true }.map(\.id),
       exported: snapshot.ownedLinks.map(\.id), kind: "bookmark")
     try requireExportedIdentities(
       stored: context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()).map(\.id),

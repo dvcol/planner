@@ -9,6 +9,120 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test func sourceWinnerKeepsItsOwnLinksWithoutAdoptingLosingContents() async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    guard
+      case .source(.item(let initial)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    let edit = PlannerOperation(
+      operationId: UUID(), session: fixture.session,
+      command: .editItem(
+        sourceId: fixture.source.id,
+        changes: .init(
+          links: .set([.init(originalUrl: "https://example.com/winner", label: "Guide A")])),
+        expectedFieldHashes: initial.fieldHashes))
+    guard case .applied(_, .complete) = await fixture.planner.execute(edit).outcome,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
+      case .source(.item(let winner)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    let originalRecovery = try fixture.envelope()
+    let originalLifetimes = try await fixture.itemLifetimes()
+    try await fixture.deliverCandidateWithOwnedLink()
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result,
+      case .source(.item(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else {
+      Issue.record("The winning Item's complete link collection must remain readable: \(result)")
+      return
+    }
+    #expect(retained.content.links.count == 1)
+    #expect(retained.content.links.first?.originalUrl == "https://example.com/winner")
+    #expect(retained.content.links.first?.linkId == winner.content.links.first?.linkId)
+    #expect(retained.fieldHashes == winner.fieldHashes)
+    let expected = try fixture.object(before)
+    let actual = try fixture.object(after)
+    #expect(actual["sources"] as? NSArray == expected["sources"] as? NSArray)
+    #expect(actual["ownedLinks"] as? NSArray == expected["ownedLinks"] as? NSArray)
+    #expect(
+      actual["restorationFamilies"] as? NSArray == expected["restorationFamilies"] as? NSArray)
+    #expect(!String(decoding: after, as: UTF8.self).contains("https://example.com/loser"))
+    #expect(try await fixture.itemLifetimes() == originalLifetimes)
+    let envelope = try fixture.envelope()
+    #expect(envelope["receipts"] as? NSArray == originalRecovery["receipts"] as? NSArray)
+    let receipts = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+    #expect(receipts.count == 1)
+    let receipt = try #require(receipts.first)
+    #expect(receipt["kind"] as? String == "sourceRestorationConsolidation")
+    let identifier = try #require(receipt["maintenanceId"] as? String)
+    let preparation = try fixture.object(
+      Data(contentsOf: fixture.namespace.appendingPathComponent("maintenance-\(identifier).json")))
+    #expect(
+      try fixture.graph(JSONSerialization.data(withJSONObject: preparation["proposedBackup"]!))
+        == fixture.graph(after))
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .source(.item(let reopenedItem)) = await reopened.read(
+        session: session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    #expect(reopenedItem.content.links.first?.linkId == winner.content.links.first?.linkId)
+    #expect(reopenedItem.content.links.count == 1)
+    try await fixture.deliverCandidateWithOwnedLink()
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+    #expect(
+      try fixture.envelope()["receipts"] as? NSArray == originalRecovery["receipts"] as? NSArray)
+  }
+
+  @Test func losingItineraryLinksDoNotChangeItsWinnerOrIndependentItems() async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: .itinerary)
+    guard
+      case .source(.itinerary(let winner)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    try await fixture.deliverCandidateWithOwnedLink()
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result,
+      case .source(.itinerary(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else {
+      Issue.record("A losing Itinerary's links must not replace the winning contents: \(result)")
+      return
+    }
+    #expect(retained.content.links.isEmpty)
+    #expect(retained.fieldHashes == winner.fieldHashes)
+    #expect(try fixture.graph(after) == fixture.graph(fixture.baseline))
+  }
+
+  @Test func ownedLinkPreparationFailurePreservesNativeDataUntilRetry() async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    try await fixture.deliverCandidateWithOwnedLink()
+    let originalFiles = try fixture.files()
+    let originalLifetimes = try await fixture.itemLifetimes()
+    let originalLinks = try await fixture.rawOwnedLinkData()
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try fixture.files() == originalFiles)
+    #expect(try await fixture.itemLifetimes() == originalLifetimes)
+    #expect(try await fixture.rawOwnedLinkData() == originalLinks)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard case .exported(let recovered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(recovered) == fixture.graph(fixture.baseline))
+  }
+
   @Test(arguments: [PlannerEntityKind.item, .list, .itinerary, .category, .tag])
   func everySourceKindRetainsItsExactWinnerAndTruthfulMaintenance(kind: PlannerEntityKind)
     async throws
@@ -842,6 +956,45 @@ private struct SourceRestorationFixture {
     let context = ModelContext(container)
     context.autosaveEnabled = false
     return context
+  }
+
+  @MainActor func deliverCandidateWithOwnedLink() throws {
+    try deliverCandidate()
+    let context = try nativeContext()
+    let input = PlannerLinkInput(originalUrl: "https://example.com/loser", label: "Guide B")
+    let link: PlannerSchemaV18.OwnedLink
+    switch source.kind {
+    case .item:
+      let candidate = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      link = try .init(input: input, rank: 0, owner: candidate)
+    case .itinerary:
+      let candidate = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      link = try .init(input: input, rank: 0, owner: candidate)
+    default: throw CancellationError()
+    }
+    link.id = UUID(uuidString: "00000000-0000-4000-8000-000000000871")!
+    link.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000872")!
+    context.insert(link)
+    try context.save()
+  }
+
+  @MainActor func rawOwnedLinkData() throws -> Data {
+    let context = try nativeContext()
+    let values = try context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>()).map { link in
+      let ownerIdentifier = try #require(link.ownerId)
+      let ownerLifetime = try #require(link.ownerLifetimeId)
+      return try link.value(
+        ownerId: ownerIdentifier, ownerLifetimeId: ownerLifetime, ownerKind: link.ownerKind)
+    }
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    return try encoder.encode(values.sorted { $0.id.uuidString < $1.id.uuidString })
   }
 
   @MainActor func deliverCandidate() throws {
