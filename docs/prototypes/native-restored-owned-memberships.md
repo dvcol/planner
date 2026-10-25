@@ -167,3 +167,13 @@ hosts exit and database handles close.
 List-specific process interruption, Item native-save/interruption and collision
 faults remain named local checks. Q163 and native/system/physical acceptance
 retain their separate gates. Signing stays deferred.
+
+## Process interruption follow-up
+
+The [Item/List checkpoint](native-restored-owned-reference-history.md#item-and-list-process-interruption)
+now stops the repeated-List payload before and after its actual native save.
+Fresh maintenance after pre-save termination and original-commit Retry after
+post-save termination preserve the complete winning membership, original Add
+provenance and independent repeated-branch completion. Final Mac and phone
+shared-helper regressions pass. Interrupted datasets remain retained; physical
+power loss and cloud/account convergence are separate gates.

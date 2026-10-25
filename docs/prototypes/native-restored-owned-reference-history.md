@@ -531,3 +531,38 @@ the passing disposable stores after host and handle closure.
 Item-specific process interruption and List-specific process interruption still
 need their own qualification. Collision faults, Q163 and actual native/system/
 physical acceptance retain their separate gates. Signing stays deferred.
+
+## Item and List process interruption
+
+The existing mixed-owned interruption test now covers Item and repeated-List
+payloads as well as its original Itinerary. Each source is stopped with actual
+SIGKILL immediately before native save and immediately after native save, before
+recovery publication. A retained proof records the exact boundary and child PID;
+the collector matches it to that child's owned fixture record.
+
+After pre-save termination, public recovery inspection finds one unverified
+preparation. Bootstrap completes fresh maintenance, and Retry of the old identity
+rejects with `maintenanceNotApplied` without changing files. The acknowledged
+maintenance has a different identity. After post-save termination, bootstrap
+reports the original committed maintenance pending and mutations blocked.
+Retry completes its recovery copy. Repeated Retry returns the same checkpoint and
+acknowledges that original identity. Every case preserves the complete winning
+graph, exact contextual completion, original user receipts, old recovery files,
+writer control and reopened state. Expectations use the existing literal four
+Item-owned closures, one List-membership closure and original Add provenance,
+or seven Itinerary-owned closures. No collection merging or new policy is added.
+
+The [final validation](evidence/native-membership-consolidation/native-owned-payload-interruption-validation.json)
+reconciles seven passing Mac parent functions with six intentionally killed
+children and three successful native-save-fault children. Three shared-helper
+functions pass on iPhone Simulator. Actual final products and 813 shared Core
+inputs match; all ninety production inputs, 514 frozen fixtures and eighteen
+schema sources stay unchanged. Formats and gates stay unchanged. The first
+run's product hashes retain their original execution epoch; the final build
+replaced those files. All final runs have no failures, skips, timeouts or SQLite
+unlink warnings. Logs/manifests remain compressed, interrupted stores stay
+retained, and verified cleanup removes the eight passing phone stores.
+
+This is controlled local process termination, not physical power loss or cloud/
+account qualification. Label-collision faults, Q163 and actual native/system/
+physical acceptance remain separate. Signing stays deferred.
