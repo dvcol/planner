@@ -4372,7 +4372,8 @@ public actor Planner {
         .filter { sourceProjection?.retiresOwnedLink($0) != true }.map(\.id),
       exported: snapshot.ownedLinks.map(\.id), kind: "bookmark")
     try requireExportedIdentities(
-      stored: context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()).map(\.id),
+      stored: context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>())
+        .filter { sourceProjection?.retiresSchedule($0) != true }.map(\.id),
       exported: snapshot.schedules.map(\.id), kind: "Schedule")
     try requireExportedIdentities(
       stored: context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).map(\.id),

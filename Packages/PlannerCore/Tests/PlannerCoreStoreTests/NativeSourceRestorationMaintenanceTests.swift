@@ -9,6 +9,96 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [PlannerEntityKind.item, .itinerary])
+  func ownedSchedulePreparationFailurePreservesNativeDataUntilRetry(kind: PlannerEntityKind)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    try await fixture.deliverCandidateWithSchedule(allDay: false)
+    let schedules = try await fixture.rawScheduleData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.rawScheduleData() == schedules)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(after) == fixture.graph(fixture.baseline))
+  }
+
+  @Test(arguments: [PlannerEntityKind.item, .itinerary], [false, true])
+  func winningSourceKeepsItsBookingAndRejectsTheRetiredBookingIdentity(
+    kind: PlannerEntityKind, allDay: Bool
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    let form: PlannerScheduleForm
+    if allDay {
+      form = .allDay(start: .init(year: 2026, month: 10, day: 26), end: nil)
+    } else {
+      form = .timed(
+        start: Date(timeIntervalSinceReferenceDate: 1000),
+        end: Date(timeIntervalSinceReferenceDate: 2000), planningTimeZone: "Asia/Tokyo")
+    }
+    let creation = PlannerOperation(
+      operationId: UUID(), session: fixture.session,
+      command: .createSchedule(source: fixture.source, form: form))
+    let originalResult = await fixture.planner.execute(creation)
+    guard case .applied(let addition, .complete) = originalResult.outcome,
+      let booking = addition.generated.first, booking.kind == .schedule,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else {
+      Issue.record("The winning source's initial booking must save: \(originalResult)")
+      return
+    }
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidateWithSchedule(allDay: allDay)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result,
+      case .source(.schedule(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(booking))
+    else {
+      Issue.record("Only the winning source's booking must remain live: \(result)")
+      return
+    }
+    #expect(retained.content.source == fixture.source)
+    #expect(retained.content.form == form)
+    #expect(try fixture.graph(after) == fixture.graph(before))
+    #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    let retiredBooking = PlannerEntityReference(
+      kind: .schedule, id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!)
+    guard
+      case .failed = await fixture.planner.read(
+        session: fixture.session, request: .source(retiredBooking))
+    else {
+      Issue.record("The discarded booking identity must not redirect to the winning booking.")
+      return
+    }
+    guard case .applied(let replayed, .complete) = await fixture.planner.execute(creation).outcome
+    else { throw CancellationError() }
+    #expect(replayed == addition)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(before))
+    try await fixture.deliverCandidateWithSchedule(allDay: allDay)
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(before))
+  }
+
   @Test func sourceWinnerKeepsItsOwnLinksWithoutAdoptingLosingContents() async throws {
     let fixture = try await SourceRestorationFixture.make()
     guard
@@ -1066,6 +1156,58 @@ private struct SourceRestorationFixture {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.sortedKeys]
     return try encoder.encode(values.sorted { $0.id.uuidString < $1.id.uuidString })
+  }
+
+  @MainActor func deliverCandidateWithSchedule(allDay: Bool) throws {
+    try deliverCandidate()
+    let context = try nativeContext()
+    let form: PlannerScheduleForm
+    if allDay {
+      form = .allDay(start: .init(year: 2026, month: 10, day: 27), end: nil)
+    } else {
+      form = .timed(
+        start: Date(timeIntervalSinceReferenceDate: 3000), end: nil,
+        planningTimeZone: "America/New_York")
+    }
+    let snapshot = ScheduleSnapshot(
+      id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!,
+      lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000874")!, form: form)
+    let schedule: PlannerSchemaV18.Schedule
+    switch source.kind {
+    case .item:
+      let candidate = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      schedule = try .init(snapshot: snapshot, owner: candidate)
+    case .itinerary:
+      let candidate = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+        })
+      schedule = try .init(snapshot: snapshot, owner: candidate)
+    default: throw CancellationError()
+    }
+    context.insert(schedule)
+    try context.save()
+  }
+
+  @MainActor func rawScheduleData() throws -> Data {
+    let context = try nativeContext()
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    let values = try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()).map { schedule in
+      let sourceIdentifier = try #require(schedule.sourceId)
+      let sourceLifetime = try #require(schedule.sourceLifetimeId)
+      let value = try schedule.value(
+        ownerId: sourceIdentifier, ownerLifetimeId: sourceLifetime, ownerKind: schedule.sourceKind)
+      return [
+        "id": value.id.uuidString, "lifetime": value.lifetimeId.uuidString,
+        "owner": sourceIdentifier.uuidString, "ownerLifetime": sourceLifetime.uuidString,
+        "form": try encoder.encode(value.form).base64EncodedString(),
+      ]
+    }.sorted { ($0["id"] ?? "") < ($1["id"] ?? "") }
+    return try JSONSerialization.data(withJSONObject: values, options: [.sortedKeys])
   }
 
   @MainActor func deliverCandidate() throws {
