@@ -4071,9 +4071,7 @@ public actor Planner {
       })
     var expandedContexts: Set<PlannerExpandedContext> = []
     for record in expandedRecords {
-      guard let value = try? record.value(), expandedContexts.insert(value.context).inserted,
-        !closedExpandedContexts.contains(value.context)
-      else {
+      guard let value = try? record.value(), expandedContexts.insert(value.context).inserted else {
         return true
       }
     }
@@ -4100,9 +4098,12 @@ public actor Planner {
         }
       }
     }
+    let expandedDeletionMarkers = lineage.deletionMarkers.compactMap(\.expandedCompletionMarker)
     let completionStates = try plannerCompletionHistoryStates(
       aliases: lineage.contextAliases, changes: lineage.completionChanges,
-      deletionMarkers: lineage.deletionMarkers.compactMap(\.expandedCompletionMarker))
+      deletionMarkers: expandedDeletionMarkers)
+    let completionChanges = Dictionary(
+      uniqueKeysWithValues: lineage.completionChanges.map { ($0.id, $0) })
     for record in records {
       guard let identifier = record.id, let lifetime = record.lifetimeId,
         let expected = completionStates[
@@ -4137,11 +4138,17 @@ public actor Planner {
       do {
         let value = try completion.value()
         representedExpanded.insert(value.context)
-        if let expected = completionStates[.expandedListItem(value.context)],
-          value.localDone != expected
+        let expected = completionStates[.expandedListItem(value.context)]
+        if closedExpandedContexts.contains(value.context),
+          plannerCompletionHistoryHeads(
+            contributions: lineage.contextAliases.filter {
+              $0.canonicalContext == .expandedListItem(value.context)
+            }, changes: completionChanges, deletionMarkers: expandedDeletionMarkers
+          ).isEmpty
         {
           return true
         }
+        if let expected, value.localDone != expected { return true }
       } catch { return true }
     }
     let missingCompletedContexts = completionStates.compactMap {

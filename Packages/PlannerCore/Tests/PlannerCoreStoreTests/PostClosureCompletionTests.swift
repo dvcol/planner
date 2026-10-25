@@ -577,6 +577,45 @@ struct PostClosureCompletionTests {
       })
   }
 
+  @Test(arguments: [false, true])
+  func informedExpandedCompletionReadsDoNotPublishRepeatedMaintenance(done: Bool) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let planner = Planner(configuration: Self.configuration(directory))
+    var backup = try Self.informedFixture()
+    var changes = try #require(backup["completionChanges"] as? [[String: Any]])
+    changes[0]["done"] = done
+    backup["completionChanges"] = changes
+    var expanded = try #require(backup["expandedCompletions"] as? [[String: Any]])
+    expanded[0]["localDone"] = done
+    backup["expandedCompletions"] = expanded
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: backup)),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded, mode: .overwrite)),
+      case .applied(_, .complete(let checkpoint)) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    for _ in 0..<4 {
+      guard
+        case .snapshot = await planner.query(
+          .init(session: session, request: .items(.init(completion: .all, archive: .all)))),
+        case .appearance(let appearance) = await planner.read(
+          session: session, request: .appearance(Self.firstAppearance)),
+        case .exported = await planner.exportData(session: session)
+      else { throw CancellationError() }
+      #expect(appearance.localDone == done && !appearance.globalDone)
+    }
+    guard
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let actualCheckpoint = namespaces.first?.acknowledgedSnapshot?.checkpointGeneration
+    else { throw CancellationError() }
+    #expect(actualCheckpoint == checkpoint)
+  }
+
   private static var firstAppearance: PlannerAppearance {
     .expandedListItem(
       itineraryId: UUID(uuidString: "00000000-0000-4000-8000-000000000301")!,
