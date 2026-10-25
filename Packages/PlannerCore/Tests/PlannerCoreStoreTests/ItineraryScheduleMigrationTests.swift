@@ -120,7 +120,7 @@ struct ItineraryScheduleMigrationTests {
     #expect(after.progress.totalCount == 4)
     #expect(after.progress.doneCount == 2)
     #expect(after.references.contains(.schedule(id: schedule.id, source: itinerary)))
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(current.decodedBackup.backup.schedules.count == 3)
     #expect(

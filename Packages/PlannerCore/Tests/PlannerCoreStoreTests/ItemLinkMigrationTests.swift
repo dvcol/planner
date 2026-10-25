@@ -72,7 +72,7 @@ struct ItemLinkMigrationTests {
         == .allDay(
           start: PlannerCivilDate(year: 2026, month: 10, day: 9),
           end: PlannerCivilDate(year: 2026, month: 10, day: 11)))
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(before.decodedBackup.backup.lists.isEmpty)
     #expect(before.decodedBackup.backup.deletionMarkers.count == 1)
     let operationIdentifier = UUID()
@@ -120,7 +120,7 @@ struct ItemLinkMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(beforeAgain.portableData == before.portableData)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
   }
 
@@ -187,7 +187,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.form == timedForm)
     #expect(retained.fieldHashes[.form]?.value == assignment.retainedScheduleHash)
     #expect(missing.code == "missingReference")
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(before.decodedBackup.backup.schedules.count == 1)
     #expect(before.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -236,7 +236,7 @@ struct ItemLinkMigrationTests {
     #expect(current.fieldHashes == original.fieldHashes)
     #expect(current.updatedAt == original.updatedAt)
     #expect(current.content.links == original.content.links)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
     #expect(after.decodedBackup.backup.schedules.count == 2)
     #expect(
@@ -300,7 +300,7 @@ struct ItemLinkMigrationTests {
     #expect(scheduleRead.content.source == item)
     #expect(scheduleRead.content.form == form)
     #expect(scheduleRead.fieldHashes[.form]?.value == assignment.scheduleHash)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 5)
     #expect(oldRecovery.decodedBackup.backup.deletionMarkers.isEmpty)
     let removalIdentifier = UUID()
@@ -342,7 +342,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.links == source.content.links)
     #expect(retained.state.globalDone == true)
     #expect(retained.state.archived == true)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(newRecovery.decodedBackup.backup.schedules.isEmpty)
     #expect(newRecovery.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -416,7 +416,7 @@ struct ItemLinkMigrationTests {
     }
     #expect(replayed.generated == [item])
     #expect(checkpoint == manifest.creationCheckpoint)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 4)
     #expect(oldRecovery.decodedBackup.backup.items.first?.id == item.id)
     #expect(oldRecovery.decodedBackup.backup.items.first?.globalDone == true)
@@ -439,7 +439,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 5)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(newRecovery.decodedBackup.backup.items.count == 2)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.globalDone == true)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.archived == true)
@@ -529,7 +529,7 @@ struct ItemLinkMigrationTests {
     }
     #expect(replayed.generated == [item])
     #expect(oldCheckpoint == 1)
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 4)
     #expect(oldRecovery.decodedBackup.backup.schedules.isEmpty)
     let oldItem = try #require(oldRecovery.decodedBackup.backup.items.first)
@@ -559,7 +559,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 5)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(retained.content.links == source.content.links)
     #expect(retained.fieldHashes == source.fieldHashes)
     #expect(retained.updatedAt == source.updatedAt)

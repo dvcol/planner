@@ -4,7 +4,7 @@ import Testing
 /// Compare current grammar with legacy fixture values while testing historical bytes separately.
 func canonicalPortableFixtureExpectations(_ data: Data) throws -> [String: Any] {
   var object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
-  object["formatVersion"] = 4
+  object["formatVersion"] = 5
   if object["membershipProvenance"] == nil { object["membershipProvenance"] = [] }
   if object["membershipRemovals"] == nil { object["membershipRemovals"] = [] }
   let changes = try #require(object["completionChanges"] as? [[String: Any]])

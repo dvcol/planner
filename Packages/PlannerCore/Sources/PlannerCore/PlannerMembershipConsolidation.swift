@@ -59,8 +59,19 @@ struct PlannerMembershipConsolidation {
     let current = try snapshot.decodedRecords().backup
     let graph = PlannerImportGraph(backup: current)
     let requiredRemovals = try graph.validatedMembershipRemovalAuthority()
-    var provenance = Dictionary(
+    let originalProvenance = Dictionary(
       uniqueKeysWithValues: current.membershipProvenance.map { ($0.membership, $0.normalized) })
+    var provenance = try Dictionary(
+      uniqueKeysWithValues: current.membershipProvenance.map { value in
+        let pair = try graph.membershipHistoryPair(value.pair)
+        return (
+          value.membership,
+          PlannerPortableMembershipProvenance(
+            membershipId: value.membershipId, membershipLifetimeId: value.membershipLifetimeId,
+            list: pair.list, item: pair.item,
+            observedRemovalIds: value.normalized.observedRemovalIds)
+        )
+      })
     var memberPairs: [PlannerPortableBoundIdentity: PlannerMembershipPair] = [:]
     for member in current.memberships {
       let binding = member.baselineProvenance
@@ -435,8 +446,9 @@ struct PlannerMembershipConsolidation {
       completionChanges: current.completionChanges,
       restorationFamilies: current.restorationFamilies,
       formatVersion: 5,
-      membershipProvenance: provenance.values.filter { represented.contains($0.membership) }.sorted
-      {
+      membershipProvenance: provenance.values.filter { represented.contains($0.membership) }.map {
+        originalProvenance[$0.membership] ?? $0
+      }.sorted {
         if $0.membershipId != $1.membershipId {
           return $0.membershipId.uuidString < $1.membershipId.uuidString
         }

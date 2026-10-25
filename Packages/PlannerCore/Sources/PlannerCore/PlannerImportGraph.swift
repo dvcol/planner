@@ -456,7 +456,10 @@ struct PlannerImportGraph {
           let second = membershipProvenance(
             for: .init(kind: .membership, id: secondId, lifetimeId: secondLifetime))
         else { return false }
-        return first.pair == second.pair
+        guard let firstPair = try? membershipHistoryPair(first.pair),
+          let secondPair = try? membershipHistoryPair(second.pair)
+        else { return false }
+        return firstPair == secondPair
           && first.normalized.observedRemovalIds == second.normalized.observedRemovalIds
       }
       if let firstMember = backup.memberships.first(where: { $0.id == firstId }),

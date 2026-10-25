@@ -98,7 +98,7 @@ struct PostClosureCompletionTests {
       JSONSerialization.jsonObject(with: originalData) as? [String: Any])
     let saved = try #require(
       JSONSerialization.jsonObject(with: completedData) as? [String: Any])
-    #expect(saved["formatVersion"] as? Int == 4)
+    #expect(saved["formatVersion"] as? Int == 5)
     let changes = try #require(saved["completionChanges"] as? [[String: Any]])
     #expect(changes.count == 1)
     let change = try #require(changes.first)
@@ -200,7 +200,7 @@ struct PostClosureCompletionTests {
       case .decoded(let roundTrip) = planner.decodeImport(exported)
     else { throw CancellationError() }
     #expect(value.localDone == expectedDone && !value.globalDone)
-    #expect(roundTrip.backup.formatVersion == 4)
+    #expect(roundTrip.backup.formatVersion == 5)
     #expect(roundTrip.backup.completionChanges.count == 2)
     #expect(roundTrip.backup.deletionMarkers.count == markers.count)
     let reopened = Planner(configuration: Self.configuration(directory))
@@ -455,7 +455,7 @@ struct PostClosureCompletionTests {
           JSONSerialization.jsonObject(
             with: Data(contentsOf: historicalDirectory.appendingPathComponent("identity.json")))
             as? [String: Any])
-        #expect(interruptedIdentity["schemaVersion"] as? Int == 22)
+        #expect(interruptedIdentity["schemaVersion"] as? Int == 23)
         guard
           case .listedNamespaces(let interruptedNamespaces) = await planner.inspectRecovery(
             request: .namespaces),
@@ -469,8 +469,8 @@ struct PostClosureCompletionTests {
             "The published compatibility baseline must remain inspectable before activation")
           return
         }
-        #expect(interrupted.storageSchemaVersion == 22)
-        #expect(copy.decodedBackup.backup.formatVersion == 4)
+        #expect(interrupted.storageSchemaVersion == 23)
+        #expect(copy.decodedBackup.backup.formatVersion == 5)
       }
       try FileManager.default.setAttributes(
         [.posixPermissions: originalMode], ofItemAtPath: obstructedDirectory.path)
@@ -490,12 +490,12 @@ struct PostClosureCompletionTests {
     let control = try #require(
       JSONSerialization.jsonObject(
         with: Data(contentsOf: configuration.controlURL)) as? [String: Any])
-    #expect(control["schemaVersion"] as? Int == 22)
+    #expect(control["schemaVersion"] as? Int == 23)
     for field in ["datasetId", "namespaceId", "epochId", "ownershipBinding"] {
       #expect(control[field] as? String == before[field] as? String)
     }
-    #expect(current.storageSchemaVersion == 22)
-    #expect(recovered.decodedBackup.backup.formatVersion == 4)
+    #expect(current.storageSchemaVersion == 23)
+    #expect(recovered.decodedBackup.backup.formatVersion == 5)
     #expect(current.checkpointGeneration > 7)
     for (file, bytes) in historicalBytes {
       #expect(try Data(contentsOf: file) == bytes)
@@ -842,11 +842,11 @@ private final class PostClosureCompletionFixtureBundle: NSObject {}
         case .ready = await share.bootstrap()
       else { throw CancellationError() }
       #expect(oldCopy.portableData == originalCopy)
-      #expect(upgraded.storageSchemaVersion == 22 && upgraded.checkpointGeneration > 7)
+      #expect(upgraded.storageSchemaVersion == 23 && upgraded.checkpointGeneration > 7)
       let beforeGraph = try #require(
         JSONSerialization.jsonObject(with: originalCopy) as? [String: Any])
       let afterGraph = try #require(JSONSerialization.jsonObject(with: exported) as? [String: Any])
-      #expect(afterGraph["formatVersion"] as? Int == 4)
+      #expect(afterGraph["formatVersion"] as? Int == 5)
       for field in [
         "sources", "memberships", "itineraryEntries", "expandedCompletions", "schedules",
         "deletionMarkers", "ownedLinks", "labelAssociations", "restorationFamilies",
@@ -860,7 +860,7 @@ private final class PostClosureCompletionFixtureBundle: NSObject {}
           as? [String: Any])
       let originalIdentity = try #require(
         JSONSerialization.jsonObject(with: originalControl) as? [String: Any])
-      #expect(control["schemaVersion"] as? Int == 22)
+      #expect(control["schemaVersion"] as? Int == 23)
       for field in ["datasetId", "namespaceId", "epochId", "ownershipBinding"] {
         #expect(control[field] as? String == originalIdentity[field] as? String)
       }
@@ -923,15 +923,15 @@ private final class PostClosureCompletionFixtureBundle: NSObject {}
             namespaceId: namespaceIdentifier, checkpointGeneration: checkpoint))
       else { throw CancellationError() }
       #expect(interrupted.portableData == originalCopy)
-      #expect(interrupted.decodedBackup.backup.formatVersion == 4)
+      #expect(interrupted.decodedBackup.backup.formatVersion == 5)
       #expect(
-        interruptedSnapshot.storageSchemaVersion == 22
+        interruptedSnapshot.storageSchemaVersion == 23
           && interruptedSnapshot.checkpointGeneration == checkpoint)
       let interruptedIdentity = try #require(
         JSONSerialization.jsonObject(
           with: Data(contentsOf: namespaceDirectory.appendingPathComponent("identity.json")))
           as? [String: Any])
-      #expect(interruptedIdentity["schemaVersion"] as? Int == 22)
+      #expect(interruptedIdentity["schemaVersion"] as? Int == 23)
       let share = Planner(
         configuration: .init(
           storeURL: configuration.storeURL, controlURL: configuration.controlURL,
@@ -957,13 +957,13 @@ private final class PostClosureCompletionFixtureBundle: NSObject {}
       let interruptedGraph = try #require(
         JSONSerialization.jsonObject(with: originalCopy) as? NSDictionary)
       #expect(exportedGraph == interruptedGraph)
-      #expect(latest.storageSchemaVersion == 22 && latest.checkpointGeneration >= checkpoint)
+      #expect(latest.storageSchemaVersion == 23 && latest.checkpointGeneration >= checkpoint)
       let control = try #require(
         JSONSerialization.jsonObject(with: Data(contentsOf: configuration.controlURL))
           as? [String: Any])
       let originalIdentity = try #require(
         JSONSerialization.jsonObject(with: originalControl) as? [String: Any])
-      #expect(control["schemaVersion"] as? Int == 22)
+      #expect(control["schemaVersion"] as? Int == 23)
       for field in ["datasetId", "namespaceId", "epochId", "ownershipBinding"] {
         #expect(control[field] as? String == originalIdentity[field] as? String)
       }
@@ -1022,13 +1022,13 @@ private final class PostClosureCompletionFixtureBundle: NSObject {}
             checkpointGeneration: checkpoint.checkpointGeneration))
       else { throw CancellationError() }
       try #require(try Data(contentsOf: configuration.controlURL) == beforeControl)
-      try #require(checkpoint.storageSchemaVersion == 22)
-      try #require(copy.decodedBackup.backup.formatVersion == 4)
+      try #require(checkpoint.storageSchemaVersion == 23)
+      try #require(copy.decodedBackup.backup.formatVersion == 5)
       let identity = try #require(
         JSONSerialization.jsonObject(
           with: Data(contentsOf: namespaceDirectory.appendingPathComponent("identity.json")))
           as? [String: Any])
-      try #require(identity["schemaVersion"] as? Int == 22)
+      try #require(identity["schemaVersion"] as? Int == 23)
       try JSONSerialization.data(
         withJSONObject: [
           "checkpointGeneration": checkpoint.checkpointGeneration,

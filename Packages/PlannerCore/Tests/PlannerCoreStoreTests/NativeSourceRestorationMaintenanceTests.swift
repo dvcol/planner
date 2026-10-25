@@ -28,13 +28,13 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
     let envelope = try fixture.envelope()
     #expect(envelope["formatVersion"] as? Int == 2)
-    #expect(envelope["storageSchemaVersion"] as? String == "22")
+    #expect(envelope["storageSchemaVersion"] as? String == "23")
     #expect(envelope["receipts"] as? NSArray == originalRecovery["receipts"] as? NSArray)
     let receipts = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
     #expect(receipts.count == 1)
     let receipt = try #require(receipts.first)
     #expect(receipt["kind"] as? String == "sourceRestorationConsolidation")
-    #expect(receipt["ruleVersion"] as? Int == 1)
+    #expect(receipt["ruleVersion"] as? Int == 3)
     let identifier = try #require(receipt["maintenanceId"] as? String)
     let preparation = try fixture.object(
       Data(contentsOf: fixture.namespace.appendingPathComponent("maintenance-\(identifier).json")))
@@ -139,7 +139,7 @@ struct NativeSourceRestorationMaintenanceTests {
       #expect(try await fixture.itemLifetimes() == originalLifetimes)
       if scenario == "controlFailure" {
         let envelope = try fixture.envelope()
-        #expect(envelope["storageSchemaVersion"] as? String == "22")
+        #expect(envelope["storageSchemaVersion"] as? String == "23")
         #expect((envelope["maintenanceReceipts"] as? [Any] ?? []).isEmpty)
         let bytes = try #require(
           (envelope["portablePayloadBase64"] as? String).flatMap { Data(base64Encoded: $0) })
@@ -161,7 +161,7 @@ struct NativeSourceRestorationMaintenanceTests {
     else { throw CancellationError() }
     #expect(try fixture.graph(data) == fixture.graph(fixture.baseline))
     let control = try fixture.object(Data(contentsOf: fixture.configuration.controlURL))
-    #expect(control["schemaVersion"] as? Int == 22)
+    #expect(control["schemaVersion"] as? Int == 23)
     let originalIdentity = try fixture.object(originalControl)
     for field in ["datasetId", "epochId", "namespaceId", "ownershipBinding"] {
       #expect(control[field] as? String == originalIdentity[field] as? String)
@@ -565,6 +565,33 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
+  @MainActor func deliverUnawareSiblingMembership() throws -> UUID {
+    try deliverCandidate()
+    let context = try nativeContext()
+    let candidate = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      })
+    let list = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000201"
+      })
+    let identifier = UUID(uuidString: "00000000-0000-4000-8000-000000000403")!
+    let lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000843")!
+    let snapshot = MembershipSnapshot(
+      id: identifier, lifetimeId: lifetime,
+      list: .init(kind: "list", id: list.id!, lifetimeId: list.lifetimeId!),
+      item: .init(kind: "item", id: source.id, lifetimeId: candidate.lifetimeId!),
+      rank: 0, localDone: true)
+    context.insert(PlannerSchemaV18.Membership(snapshot: snapshot, list: list, item: candidate))
+    context.insert(
+      PlannerSchemaV19.MembershipProvenance(
+        membershipId: identifier, membershipLifetimeId: lifetime,
+        recordData: try JSONEncoder().encode(snapshot.baselineProvenance)))
+    try context.save()
+    return identifier
+  }
+
   @MainActor func corruptEntry(_ scenario: String) throws {
     let context = try nativeContext()
     let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
@@ -797,13 +824,13 @@ private struct SourceRestorationFixture {
         guard case .listed(let view) = pending else { throw CancellationError() }
         let preparation = view.preparedMaintenance.first
         if stage == "beforeNativeSave" || stage == "afterNativeSave" {
-          #expect(identity["schemaVersion"] as? Int == 22)
+          #expect(identity["schemaVersion"] as? Int == 23)
           #expect(view.preparedMaintenance.count == 1)
         } else {
           #expect(identity["schemaVersion"] as? Int == (directEntries ? 21 : 20))
           #expect(view.preparedMaintenance.isEmpty)
           if stage == "beforeActivation" {
-            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 22)
+            #expect(view.acknowledgedSnapshot?.storageSchemaVersion == 23)
           } else {
             #expect(view.acknowledgedSnapshot?.storageSchemaVersion == (directEntries ? 21 : 20))
           }
@@ -1032,7 +1059,7 @@ struct NativeSourceRestorationEntryTests {
     let envelope = try fixture.envelope()
     #expect(envelope["receipts"] as? NSArray == originalReceipts)
     let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
-    #expect(maintenance.count == 1 && maintenance.first?["ruleVersion"] as? Int == 2)
+    #expect(maintenance.count == 1 && maintenance.first?["ruleVersion"] as? Int == 3)
     guard
       case .failed(let stale) = await fixture.planner.read(
         session: fixture.session,
@@ -1072,6 +1099,49 @@ struct NativeSourceRestorationEntryTests {
 }
 
 struct NativeRestoredTargetReferenceTests {
+  @Test func nativeUnawareSiblingAddStaysRemovedWithoutRewritingItsAttestation() async throws {
+    let fixture = try await SourceRestorationFixture.make()
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    guard
+      case .applied(let added, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addMembership(
+            itemId: fixture.source.id, listId: listIdentifier, placement: .last))
+      ).outcome,
+      case .membership(let identifier, _, _)? = added.generatedReferences.first,
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .removeMembership(listId: listIdentifier, membershipId: identifier))
+      ).outcome
+    else { throw CancellationError() }
+    let offlineIdentifier = try await fixture.deliverUnawareSiblingMembership()
+    let normalized = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let bytes) = normalized,
+      case .decoded(let actual) = fixture.planner.decodeImport(bytes)
+    else {
+      Issue.record(
+        "An unaware native sibling Add must normalize without reviving the membership: \(normalized)"
+      )
+      return
+    }
+    #expect(actual.backup.memberships.isEmpty)
+    let retained = try #require(
+      actual.backup.membershipProvenance.first {
+        $0.membershipId == offlineIdentifier
+      })
+    #expect(retained.item.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000815")
+    #expect(retained.observedRemovalIds.isEmpty)
+    guard
+      case .source(.item(let item)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    #expect(item.state.globalDone == false && item.content.notes == "Original notes")
+    let maintenance = try #require(fixture.envelope()["maintenanceReceipts"] as? [[String: Any]])
+    #expect(maintenance.count == 1 && maintenance.first?["ruleVersion"] as? Int == 3)
+  }
+
   @Test func deliberateReAddObservesRemovalAttestedAgainstTheSibling() async throws {
     let fixture = try await SourceRestorationFixture.make()
     let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!

@@ -3985,7 +3985,7 @@ public actor Planner {
       context: context, markers: deletionMarkers(context))
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     let snapshot: PlannerDataSnapshot
-    if try membershipConsolidationRequired(records, context: context) {
+    if try !sources.retired.isEmpty || membershipConsolidationRequired(records, context: context) {
       defer { context.rollback() }
       let memberships = try records.map { try $0.value() }
       let detached = try plannerStageDetachedExpandedRetirements(
@@ -4192,10 +4192,16 @@ public actor Planner {
         ruleVersion: sources.ruleVersion,
         proposal: {
           let projected = sources.project(try self.maintenanceSnapshot(context))
-          try self.requireCompleteExportGraph(projected, context: context)
-          return projected
+          let canonical = try PlannerMembershipConsolidation(
+            snapshot: projected, detachedExpanded: [])
+          let complete = try PlannerDataSnapshot(snapshot: projected, canonical: canonical.backup)
+          try self.requireCompleteExportGraph(complete, context: context)
+          return complete
         },
-        stage: { _ in sources.stage(in: context) })
+        stage: { backup in
+          sources.stage(in: context)
+          try plannerStageMembershipConsolidation(backup, context: context)
+        })
     }
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     guard try membershipConsolidationRequired(records, context: context) else { return }

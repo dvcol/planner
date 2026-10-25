@@ -125,7 +125,7 @@ struct ManualContainerEstimateMigrationTests {
     #expect(edited.state.archived == listRead.state.archived)
     #expect(edited.state.globalDone == listRead.state.globalDone)
     #expect(checkpoint == manifest.checkpoint + 2)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 22)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 23)
     #expect(oldAfter.portableData == historical.portableData)
   }
 

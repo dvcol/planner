@@ -21,7 +21,7 @@ struct NativeExportTests {
     }
     let empty = try #require(JSONSerialization.jsonObject(with: emptyData) as? [String: Any])
     #expect(empty["format"] as? String == "planner-data")
-    #expect(empty["formatVersion"] as? Int == 4)
+    #expect(empty["formatVersion"] as? Int == 5)
     #expect((empty["sources"] as? [[String: Any]])?.isEmpty == true)
     guard
       case .applied(let creation, .complete) = await planner.execute(
