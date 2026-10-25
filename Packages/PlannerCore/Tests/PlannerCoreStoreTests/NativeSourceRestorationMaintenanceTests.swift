@@ -3006,6 +3006,30 @@ private struct SourceRestorationFixture {
     #expect(NSDictionary(dictionary: actual) == NSDictionary(dictionary: original))
   }
 
+  func expectLabelCollisionGraph(_ data: Data, preserving before: Data) throws {
+    let graph = try object(data)
+    let expected = try object(before)
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    var complete = graph
+    let closures = markers.filter { marker in
+      guard let target = marker["target"] as? [String: Any] else { return false }
+      return target["kind"] as? String == "labelAssociation"
+        && target["id"] as? String == "00000000-0000-4000-8000-000000000702"
+        && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000802"
+    }
+    #expect(closures.count == 1)
+    complete["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    var preserved = expected
+    var originalAssociations = try #require(expected["labelAssociations"] as? [[String: Any]])
+    #expect(originalAssociations.count == 1)
+    originalAssociations[0]["id"] = "00000000-0000-4000-8000-000000000701"
+    originalAssociations[0]["lifetimeId"] = "00000000-0000-4000-8000-000000000801"
+    preserved["labelAssociations"] = originalAssociations
+    #expect(NSDictionary(dictionary: complete) == NSDictionary(dictionary: preserved))
+  }
+
   func files() throws -> [String: Data] {
     try Dictionary(
       uniqueKeysWithValues: FileManager.default.contentsOfDirectory(
@@ -4296,7 +4320,7 @@ private struct SourceRestorationFixture {
         referenced: true, recoveryFailure: false, nativeSaveFailure: true)
     }
 
-    private func interruptOwnedPayloadIfRequested(
+    fileprivate func interruptOwnedPayloadIfRequested(
       fixture: SourceRestorationFixture, baseline: Data, files: [String: Data],
       control: Data, receipts: NSArray?
     ) async throws -> Bool {
@@ -4306,6 +4330,8 @@ private struct SourceRestorationFixture {
         [
           "mixedItemBeforeNativeSave", "mixedItemAfterNativeSave",
           "ownedListBeforeNativeSave", "ownedListAfterNativeSave",
+          "labelCategoryBeforeNativeSave", "labelCategoryAfterNativeSave",
+          "labelTagBeforeNativeSave", "labelTagAfterNativeSave",
         ].contains(stage)
       else { return false }
       let directory = URL(fileURLWithPath: directoryPath)
@@ -4348,6 +4374,8 @@ private struct SourceRestorationFixture {
       let stages = [
         "mixedBeforeNativeSave", "mixedAfterNativeSave", "mixedItemBeforeNativeSave",
         "mixedItemAfterNativeSave", "ownedListBeforeNativeSave", "ownedListAfterNativeSave",
+        "labelCategoryBeforeNativeSave", "labelCategoryAfterNativeSave",
+        "labelTagBeforeNativeSave", "labelTagAfterNativeSave",
       ]
       if let stage = ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"],
         stages.contains(stage)
@@ -4357,6 +4385,16 @@ private struct SourceRestorationFixture {
         } else if stage.hasPrefix("ownedList") {
           try await checkOwnedListRetirement(
             referenced: true, recoveryFailure: false, nativeSaveFailure: false)
+        } else if stage.hasPrefix("labelCategory") || stage.hasPrefix("labelTag") {
+          let kind: PlannerEntityKind
+          if stage.hasPrefix("labelCategory") {
+            kind = .category
+          } else {
+            kind = .tag
+          }
+          try await NativeRestoredTargetReferenceTests().checkLabelCollision(
+            kind: kind, losingTargetIsSmaller: true,
+            recoveryFailure: false, nativeSaveFailure: false)
         } else {
           try await checkMixedOwnedItinerary(recoveryFailure: false, nativeSaveFailure: false)
         }
@@ -4411,6 +4449,12 @@ private struct SourceRestorationFixture {
         } else if stage.hasPrefix("ownedList") {
           source = .init(
             kind: .list, id: UUID(uuidString: "00000000-0000-4000-8000-000000000201")!)
+        } else if stage.hasPrefix("labelCategory") {
+          source = .init(
+            kind: .category, id: UUID(uuidString: "00000000-0000-4000-8000-000000000501")!)
+        } else if stage.hasPrefix("labelTag") {
+          source = .init(
+            kind: .tag, id: UUID(uuidString: "00000000-0000-4000-8000-000000000601")!)
         } else {
           source = .init(
             kind: .itinerary, id: UUID(uuidString: "00000000-0000-4000-8000-000000000301")!)
@@ -4446,6 +4490,8 @@ private struct SourceRestorationFixture {
           try expectMixedItemGraph(current, preserving: baseline)
         } else if source.kind == .list {
           try expectOwnedListGraph(current, preserving: baseline)
+        } else if source.kind == .category || source.kind == .tag {
+          try fixture.expectLabelCollisionGraph(current, preserving: baseline)
         } else {
           try expectMixedItineraryGraph(current, preserving: baseline)
         }
@@ -4724,6 +4770,8 @@ private struct SourceRestorationFixture {
       } else if [
         "mixedBeforeNativeSave", "mixedAfterNativeSave", "mixedItemBeforeNativeSave",
         "mixedItemAfterNativeSave", "ownedListBeforeNativeSave", "ownedListAfterNativeSave",
+        "labelCategoryBeforeNativeSave", "labelCategoryAfterNativeSave",
+        "labelTagBeforeNativeSave", "labelTagAfterNativeSave",
       ].contains(stage) {
         selectedTest = "mixedOwnedInterruptionPreservesCompleteWinnerAndRecovery"
       } else {
@@ -5015,6 +5063,14 @@ struct NativeRestoredTargetReferenceTests {
     try await fixture.invalidateLabelTarget("collision")
     try await fixture.identifyLabelCollision(losingTargetIsSmaller: losingTargetIsSmaller)
     #if os(macOS)
+      if try await NativeSourceRestorationMaintenanceTests().interruptOwnedPayloadIfRequested(
+        fixture: fixture, baseline: original, files: originalFiles,
+        control: originalControl, receipts: receipts)
+      {
+        return
+      }
+    #endif
+    #if os(macOS)
       var unverifiedMaintenance: UUID?
       var unverifiedFiles: [String: Data]?
       if nativeSaveFailure {
@@ -5123,24 +5179,7 @@ struct NativeRestoredTargetReferenceTests {
           && target["id"] as? String == "00000000-0000-4000-8000-000000000702"
           && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000802"
       })
-    var complete = graph
-    let closures = markers.filter { marker in
-      guard let target = marker["target"] as? [String: Any] else { return false }
-      return target["kind"] as? String == "labelAssociation"
-        && target["id"] as? String == "00000000-0000-4000-8000-000000000702"
-        && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000802"
-    }
-    #expect(closures.count == 1)
-    complete["deletionMarkers"] = markers.filter { marker in
-      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
-    }
-    var preserved = expected
-    var originalAssociations = try #require(expected["labelAssociations"] as? [[String: Any]])
-    #expect(originalAssociations.count == 1)
-    originalAssociations[0]["id"] = "00000000-0000-4000-8000-000000000701"
-    originalAssociations[0]["lifetimeId"] = "00000000-0000-4000-8000-000000000801"
-    preserved["labelAssociations"] = originalAssociations
-    #expect(NSDictionary(dictionary: complete) == NSDictionary(dictionary: preserved))
+    try fixture.expectLabelCollisionGraph(after, preserving: original)
     if let pendingMaintenance {
       let files = try fixture.files()
       guard

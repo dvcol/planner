@@ -50,34 +50,27 @@ These current results supplement the earlier fault/termination/UI evidence.
 They do not rerun every historical test, qualify another platform boundary or
 turn historical product hashes into current execution credit.
 
-## Concrete local work still open
+## Current local recovery frontier
 
-1. Reconcile payload-specific save/publication/interruption promises in the Q161
-   owned-content reports with the existing shared transaction tests. The
-   [mixed Itinerary publication check](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure)
-   now preserves its complete graph through real publication failure and Retry.
-   Its [native-save rollback](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-native-save-rollback)
-   now preserves both versions through an actual isolated write failure and
-   fresh retry. Its [pre/post-save SIGKILL checks](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-process-interruption)
-   now preserve the winning graph and truthful preparation/commit distinction.
-   The [standalone/repeated List publication check](prototypes/native-restored-owned-memberships.md#recovery-publication-failure)
-   now preserves its exact membership, original provenance and independent
-   completion through explicit Retry. The [mixed Item publication check](prototypes/native-restored-owned-reference-history.md#mixed-item-publication-failure)
-   now preserves notes, guide, booking, labels and independent appearances through
-   failure/Retry/reopen/redelivery. The [List native-save check](prototypes/native-restored-owned-memberships.md#native-save-rollback-and-late-redelivery)
-   now preserves its complete bindings through actual failure and fresh Retry,
-   and corrects stale cached-container state exposed by late redelivery. The
-   [mixed Item native-save check](prototypes/native-restored-owned-reference-history.md#mixed-item-native-save-rollback)
-   now preserves both complete versions and independent appearances through
-   actual failure and fresh Retry. The [Item/List interruption check](prototypes/native-restored-owned-reference-history.md#item-and-list-process-interruption)
-   now retains exact winning graphs and preparation/commit evidence across
-   actual pre/post-save termination. The [collision fault check](prototypes/native-restored-label-collisions.md#native-save-and-publication-failures)
-   now preserves both label versions and exact selection/owner state through
-   native-save rollback, publication failure and Retry. Collision-specific
-   process interruption remains separate. Do not claim a Cartesian
-   fault matrix or add a new recovery framework by inference.
-2. Await Q163 for the conflicting source/owned-family authority. Preserve the
-   current atomic rejection while that decision is pending.
+The named Q161/Q162 payload-specific fault promises now have local qualification:
+
+- [Mixed Itinerary publication, native-save and interruption](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure).
+- [Standalone/repeated List publication and native-save rollback](prototypes/native-restored-owned-memberships.md#recovery-publication-failure).
+- [Mixed Item publication and native-save rollback](prototypes/native-restored-owned-reference-history.md#mixed-item-publication-failure).
+- [Actual Item/List process interruption](prototypes/native-restored-owned-reference-history.md#item-and-list-process-interruption).
+- [Category/Tag collision save/publication faults](prototypes/native-restored-label-collisions.md#native-save-and-publication-failures)
+  and [actual interruption](prototypes/native-restored-label-collisions.md#process-interruption-follow-up).
+
+These checks preserve their represented complete winning graphs, truthful
+preparation/commit/Retry evidence and independent completion. They add no
+Cartesian fault requirement or recovery framework. The List rollback tracer
+found stale cached-container state on later delivery; its two-line shared
+correction discards the failed container after rollback. Subsequent payload
+checks require no production changes.
+
+[Q163](native-crossed-restoration-family-decision.md) remains pending for crossed
+source/owned-family authority. Preserve the current atomic rejection while that
+choice waits. Ordinary Q161/Q162 checkpoints do not settle that conflict.
 
 Mac interaction, Map/browser/change-stream lifecycle and accessibility, signed
 shared storage, installed Share, CloudKit/account convergence, actual system

@@ -117,3 +117,31 @@ compressed; passing disposable stores are cleaned only after host/handle checks.
 Collision-specific process interruption remains open. Q163, actual native UI,
 system and physical/cloud acceptance retain their separate gates; signing stays
 deferred.
+
+## Process interruption follow-up
+
+The existing mixed-owned runner now stops Category and Tag collision maintenance
+immediately before and after native save. The retained proof matches each exact
+boundary and child PID. These cases use selection701 initially bound to the
+losing label; the separate save/publication checks cover both identity orderings.
+
+After pre-save termination, the original preparation remains unverified and
+fresh maintenance acknowledges a different identity. After post-save termination,
+status reports that original committed maintenance pending and blocked; explicit
+Retry and repeated Retry acknowledge it at the same checkpoint. The complete
+winning graph contains exactly selection701/801 and closure702/802. Owner/source
+values, original user receipts, prior recovery bytes, writer control and reopened
+data stay exact.
+
+The [final validation](evidence/native-membership-consolidation/native-label-collision-interruption-validation.json)
+reconciles eight passing Mac parent functions and six passing phone shared-helper
+functions. The Mac runner retains ten deliberately killed children across all
+five source kinds and a successful native-fault child containing four collision
+write failures. This extends the earlier Item/List/Itinerary interruption cases.
+Final products and 813 shared Core inputs match; ninety production inputs,
+514 frozen fixtures, eighteen schema sources, formats and gates remain unchanged.
+Only the existing test file changes. All final runs have no failures, skips,
+timeouts or SQLite-unlink warnings. Interrupted stores and compressed proof/logs
+remain retained; twenty passing phone fixtures are cleaned after host/handle
+checks. Physical power loss, cloud/account behavior and actual native/system
+acceptance remain separate. Signing stays deferred.
