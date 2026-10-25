@@ -88,10 +88,18 @@ While a record is missing, query/detail reads and unrelated new writes reject wi
 
 All 810 Core inputs match the 1,157-input phone execution, and two current binaries on each platform are verified. Only additional test code differs from 0fb1c9bb; production and every existing test line remain unchanged. The focused Mac set includes the prior missing-reference and smaller-root regressions. No new package, target, production hook or direct test boundary is introduced. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-partial-record-fixture-cleanup.json) removes 214 closed passing fixture directories totaling 193,706,462 nominal file bytes, retaining failed/interrupted datasets.
 
+## Completion after a real membership removal
+
+The [removal-generation follow-up](evidence/native-membership-consolidation/post-closure-completion-removal-generation-validation.json) passes 39 affected Mac functions and 35 iPhone functions. Its four new cases first remove the imported membership through the public command and ordinarily add the Item again. Both repeated List stops start Todo. A reviewed Overwrite clears the new first stop's completion, then a deliberate Complete or Reopen observes its new closure.
+
+An independently delivered smaller membership becomes canonical only when its provenance observes the same strict membership removal. Its conflicting scalar cannot replace the informed completion. An unaware baseline membership stays suppressed and cannot borrow that state. The original closed appearance remains unavailable, historical change contexts and observations stay unchanged, and the original Complete replays its exact result/checkpoint without changing the current graph. A later explicit action records only the applicable new closure. The second List stop, direct Item, global completion and shared content remain independent through fresh bootstrap.
+
+All 810 Core inputs match the 1,157-input phone execution. Two current binaries on each platform are verified. Only the added test function differs from a4236772; every existing test line and production input is unchanged. This adds no declaration, format, target or test boundary. The [verified cleanup](evidence/native-membership-consolidation/post-closure-completion-removal-generation-fixture-cleanup.json) removes only this batch's closed passing stores and preserves failed/interrupted datasets. Actual cloud delivery remains separate.
+
 ## Remaining work
 
 - Broaden native paths beyond the represented phone/dark-iPad checkbox, relaunch and independent-appearance journeys; actual Mac UI remains separate.
-- Qualify non-baseline membership-removal generations and earlier upgrade/other command interruption states beyond the represented cases.
+- Qualify earlier upgrade and other command interruption states beyond the represented cases. Broader lifetime/family reconciliation remains separate from the proven baseline and Remove/Add generation cases.
 - Keep actual cloud/physical delivery, system invocation, Mac UI availability, signing and whole-app visual/accessibility acceptance as separate gates.
 
 No new package, target, production test hook or direct test boundary was introduced.

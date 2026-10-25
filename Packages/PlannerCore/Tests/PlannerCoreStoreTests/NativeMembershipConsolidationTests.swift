@@ -10,6 +10,241 @@ import Testing
 #endif
 
 struct NativeMembershipConsolidationTests {
+  @Test(arguments: [false, true], [false, true])
+  func informedCompletionStaysWithinItsMembershipRemovalGeneration(
+    done: Bool, observesRemoval: Bool
+  ) async throws {
+    #if SWIFT_PACKAGE
+      let bundle = Bundle.module
+    #else
+      let bundle = Bundle(for: InitialCompletionSeedFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      bundle.url(
+        forResource: "retired-expanded-membership-alias-v3", withExtension: "json",
+        subdirectory: "Fixtures/MembershipConsolidation"))
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let response = await planner.execute(
+        .init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let result, .complete) = response.outcome else {
+        Issue.record("The generation fixture must save through ordinary commands: \(response)")
+        throw CancellationError()
+      }
+      return result
+    }
+    guard case .decoded(let incoming) = planner.decodeImport(try Data(contentsOf: fixture)),
+      case .reviewed(let initialReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: incoming, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: initialReview.command,
+          reviewToken: initialReview.reviewToken)
+      ).outcome
+    else { throw CancellationError() }
+    let itemIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000101")!
+    let listIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000201")!
+    let itineraryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000301")!
+    let firstEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000451")!
+    let secondEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000452")!
+    let directEntryIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000453")!
+    let originalMembershipIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000401")!
+    _ = try await save(
+      .removeMembership(listId: listIdentifier, membershipId: originalMembershipIdentifier))
+    let addition = try await save(
+      .addMembership(itemId: itemIdentifier, listId: listIdentifier, placement: .last))
+    guard case .membership(let membershipIdentifier, _, _)? = addition.generatedReferences.first
+    else { throw CancellationError() }
+    let appearance = PlannerAppearance.expandedListItem(
+      itineraryId: itineraryIdentifier, listEntryId: firstEntryIdentifier,
+      membershipId: membershipIdentifier)
+    for entryIdentifier in [firstEntryIdentifier, secondEntryIdentifier] {
+      guard
+        case .appearance(let fresh) = await planner.read(
+          session: session,
+          request: .appearance(
+            .expandedListItem(
+              itineraryId: itineraryIdentifier, listEntryId: entryIdentifier,
+              membershipId: membershipIdentifier)))
+      else { throw CancellationError() }
+      #expect(!fresh.localDone && !fresh.globalDone)
+    }
+    _ = try await save(.setCompletion(scope: .appearance(appearance), done: true))
+    guard case .exported(let completedData) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    var clearing = try #require(
+      JSONSerialization.jsonObject(with: completedData) as? [String: Any])
+    for field in ["expandedCompletions", "contextAliases", "completionChanges"] {
+      let records = try #require(clearing[field] as? [[String: Any]])
+      clearing[field] = records.filter {
+        let context = $0["context"] as? [String: Any]
+        return context?["membershipId"] as? String != membershipIdentifier.uuidString
+          || context?["listEntryId"] as? String != firstEntryIdentifier.uuidString
+      }
+    }
+    guard
+      case .decoded(let clearedIncoming) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: clearing)),
+      case .reviewed(let clearingReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: clearedIncoming, mode: .overwrite)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: clearingReview.command,
+          reviewToken: clearingReview.reviewToken)
+      ).outcome,
+      case .appearance(let cleared) = await planner.read(
+        session: session, request: .appearance(appearance)),
+      case .exported(let clearedData) = await planner.exportData(session: session),
+      case .decoded(let clearedBackup) = planner.decodeImport(clearedData)
+    else { throw CancellationError() }
+    #expect(!cleared.localDone && !cleared.globalDone)
+    let provenance = try #require(
+      clearedBackup.backup.membershipProvenance.first { $0.membershipId == membershipIdentifier })
+    #expect(!provenance.observedRemovalIds.isEmpty)
+    #expect(
+      Set(provenance.observedRemovalIds)
+        == Set(clearedBackup.backup.membershipRemovals.map(\.deletionId)))
+    let closureIdentifiers = clearedBackup.backup.deletionMarkers.compactMap { marker -> UUID? in
+      guard case .expandedCompletion(let context) = marker.target,
+        context.membershipId == membershipIdentifier
+      else { return nil }
+      return marker.deletionId
+    }
+    #expect(closureIdentifiers.count == 1)
+    let operation = PlannerOperation(
+      operationId: UUID(), session: session,
+      command: .setCompletion(scope: .appearance(appearance), done: true))
+    guard
+      case .applied(let completed, .complete(let completedCheckpoint)) = await planner.execute(
+        operation
+      ).outcome
+    else { throw CancellationError() }
+    if !done {
+      _ = try await save(.setCompletion(scope: .appearance(appearance), done: false))
+    }
+    guard case .exported(let beforeData) = await planner.exportData(session: session),
+      case .decoded(let before) = planner.decodeImport(beforeData)
+    else { throw CancellationError() }
+    let smallerIdentifier = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
+    let smallerLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000840")!
+    if observesRemoval {
+      try await deliverIndependentMembershipHistory(
+        storeURL: configuration.storeURL,
+        backup: .init(
+          sources: [], labelAssociations: [], memberships: [], itineraryEntries: [],
+          expandedCompletions: [], deletionMarkers: [], formatVersion: 4,
+          membershipProvenance: [
+            .init(
+              membershipId: smallerIdentifier, membershipLifetimeId: smallerLifetime,
+              list: provenance.list, item: provenance.item,
+              observedRemovalIds: provenance.observedRemovalIds)
+          ]))
+    }
+    try await insertIndependentMemberships(
+      storeURL: configuration.storeURL, itemIdentifier: itemIdentifier,
+      listIdentifier: listIdentifier,
+      contributions: [(smallerIdentifier.uuidString, smallerLifetime.uuidString, 4096, !done)])
+    try await insertIndependentExpandedCompletion(
+      storeURL: configuration.storeURL, entryIdentifier: firstEntryIdentifier,
+      membershipIdentifier: smallerIdentifier, membershipLifetime: smallerLifetime, localDone: !done
+    )
+    let canonicalIdentifier = observesRemoval ? smallerIdentifier : membershipIdentifier
+    let canonicalAppearance = PlannerAppearance.expandedListItem(
+      itineraryId: itineraryIdentifier, listEntryId: firstEntryIdentifier,
+      membershipId: canonicalIdentifier)
+    let query = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(
+            scope: .itinerary(itineraryIdentifier), completion: .all, archive: .all,
+            sort: .init(mode: .manual)))))
+    guard case .snapshot(let contents) = query,
+      case .appearance(let current) = await planner.read(
+        session: session, request: .appearance(canonicalAppearance)),
+      case .exported(let rotatedData) = await planner.exportData(session: session),
+      case .decoded(let rotated) = planner.decodeImport(rotatedData)
+    else {
+      Issue.record("A closure must stay within its proven removal generation: \(query)")
+      return
+    }
+    #expect(contents.matchingCount == 3)
+    #expect(
+      contents.rows.contains(
+        .appearance(source: .init(kind: .item, id: itemIdentifier), appearance: canonicalAppearance)
+      ))
+    #expect(current.localDone == done && !current.globalDone)
+    for change in before.backup.completionChanges {
+      let retained = try #require(rotated.backup.completionChanges.first { $0.id == change.id })
+      #expect(retained.aliasId == change.aliasId && retained.context == change.context)
+      #expect(
+        retained.done == change.done && retained.observedChangeIds == change.observedChangeIds)
+      #expect(
+        retained.observedExpandedCompletionDeletionIds
+          == change.observedExpandedCompletionDeletionIds)
+    }
+    #expect(rotated.backup.membershipRemovals == before.backup.membershipRemovals)
+    let beforeGraph = try #require(JSONSerialization.jsonObject(with: beforeData) as? [String: Any])
+    let rotatedGraph = try #require(
+      JSONSerialization.jsonObject(with: rotatedData) as? [String: Any])
+    for field in ["sources", "itineraryEntries", "deletionMarkers", "restorationFamilies"] {
+      #expect(
+        NSArray(array: try #require(beforeGraph[field] as? [Any])).isEqual(
+          to: try #require(rotatedGraph[field] as? [Any])), Comment(rawValue: field))
+    }
+    guard
+      case .failed = await planner.read(
+        session: session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: firstEntryIdentifier,
+            membershipId: originalMembershipIdentifier))),
+      case .applied(let replayed, .complete(let replayCheckpoint)) = await planner.execute(
+        operation
+      ).outcome,
+      case .exported(let replayData) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(replayed == completed && replayCheckpoint == completedCheckpoint)
+    #expect(replayData == rotatedData)
+    _ = try await save(.setCompletion(scope: .appearance(canonicalAppearance), done: !done))
+    guard
+      case .appearance(let changed) = await planner.read(
+        session: session, request: .appearance(canonicalAppearance)),
+      case .appearance(let other) = await planner.read(
+        session: session,
+        request: .appearance(
+          .expandedListItem(
+            itineraryId: itineraryIdentifier, listEntryId: secondEntryIdentifier,
+            membershipId: canonicalIdentifier))),
+      case .appearance(let direct) = await planner.read(
+        session: session,
+        request: .appearance(
+          .directItineraryItem(itineraryId: itineraryIdentifier, entryId: directEntryIdentifier))),
+      case .exported(let finalData) = await planner.exportData(session: session),
+      case .decoded(let final) = planner.decodeImport(finalData)
+    else { throw CancellationError() }
+    #expect(changed.localDone == !done && !changed.globalDone)
+    #expect(!other.localDone && !other.globalDone && !direct.localDone && !direct.globalDone)
+    let newChanges = final.backup.completionChanges.filter { change in
+      !rotated.backup.completionChanges.contains { $0.id == change.id }
+    }
+    #expect(newChanges.count == 1)
+    #expect(newChanges.first?.observedExpandedCompletionDeletionIds == closureIdentifiers)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let freshSession) = await reopened.bootstrap(),
+      case .exported(let freshData) = await reopened.exportData(session: freshSession)
+    else { throw CancellationError() }
+    #expect(freshData == finalData)
+  }
+
   @Test(arguments: ["deletionMarker", "completionChange"], [false, true])
   func missingObservedClosureHistoryRejectsReadsUntilTheExactNativeRecordReturns(
     missingRecordKind: String, done: Bool
