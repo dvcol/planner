@@ -71,7 +71,10 @@ turn historical product hashes into current execution credit.
    now preserves both complete versions and independent appearances through
    actual failure and fresh Retry. The [Item/List interruption check](prototypes/native-restored-owned-reference-history.md#item-and-list-process-interruption)
    now retains exact winning graphs and preparation/commit evidence across
-   actual pre/post-save termination. Label-collision faults remain separate. Do not claim a Cartesian
+   actual pre/post-save termination. The [collision fault check](prototypes/native-restored-label-collisions.md#native-save-and-publication-failures)
+   now preserves both label versions and exact selection/owner state through
+   native-save rollback, publication failure and Retry. Collision-specific
+   process interruption remains separate. Do not claim a Cartesian
    fault matrix or add a new recovery framework by inference.
 2. Await Q163 for the conflicting source/owned-family authority. Preserve the
    current atomic rejection while that decision is pending.

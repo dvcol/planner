@@ -3252,6 +3252,21 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
+  @MainActor func rawLabelSourceData() throws -> Data {
+    let context = try nativeContext()
+    let categories = try context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).sorted {
+      ($0.id?.uuidString ?? "", $0.lifetimeId?.uuidString ?? "")
+        < ($1.id?.uuidString ?? "", $1.lifetimeId?.uuidString ?? "")
+    }.map { PortableSourceRecord.category(.init(try $0.value())) }
+    let tags = try context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).sorted {
+      ($0.id?.uuidString ?? "", $0.lifetimeId?.uuidString ?? "")
+        < ($1.id?.uuidString ?? "", $1.lifetimeId?.uuidString ?? "")
+    }.map { PortableSourceRecord.tag(.init(try $0.value())) }
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    return try encoder.encode(categories + tags)
+  }
+
   @MainActor func rawLabelData() throws -> Data {
     let context = try nativeContext()
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>())
@@ -4229,6 +4244,27 @@ private struct SourceRestorationFixture {
 
 #if os(macOS)
   extension NativeSourceRestorationMaintenanceTests {
+    @Test func failedLabelCollisionNativeSavePreservesBothSelectionsUntilFreshRetry()
+      async throws
+    {
+      guard
+        ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
+          == "labelCollisionNativeSaveFailure"
+      else {
+        let directory = try makePlannerStoreFixtureDirectory()
+        try runSourceRestorationProcess(
+          directory: directory, stage: "labelCollisionNativeSaveFailure", directEntries: false)
+        return
+      }
+      for kind in [PlannerEntityKind.category, .tag] {
+        for losingTargetIsSmaller in [false, true] {
+          try await NativeRestoredTargetReferenceTests().checkLabelCollision(
+            kind: kind, losingTargetIsSmaller: losingTargetIsSmaller,
+            recoveryFailure: false, nativeSaveFailure: true)
+        }
+      }
+    }
+
     @Test func failedMixedItemNativeSavePreservesContentsAndAppearancesUntilFreshRetry()
       async throws
     {
@@ -4677,6 +4713,8 @@ private struct SourceRestorationFixture {
       let selectedTest: String
       if stage == "nativeSaveFailure" {
         selectedTest = "failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh"
+      } else if stage == "labelCollisionNativeSaveFailure" {
+        selectedTest = "failedLabelCollisionNativeSavePreservesBothSelectionsUntilFreshRetry"
       } else if stage == "mixedItemNativeSaveFailure" {
         selectedTest = "failedMixedItemNativeSavePreservesContentsAndAppearancesUntilFreshRetry"
       } else if stage == "mixedOwnedNativeSaveFailure" {
@@ -4715,7 +4753,7 @@ private struct SourceRestorationFixture {
       let transcript = try String(contentsOf: outputURL, encoding: .utf8)
       if [
         "nativeSaveFailure", "mixedOwnedNativeSaveFailure", "ownedListNativeSaveFailure",
-        "mixedItemNativeSaveFailure",
+        "mixedItemNativeSaveFailure", "labelCollisionNativeSaveFailure",
       ].contains(stage) {
         #expect(
           finished && process.terminationReason == .exit && process.terminationStatus == 0,
@@ -4933,9 +4971,25 @@ struct NativeRestoredTargetReferenceTests {
     #expect(associations.first?["id"] as? String == "00000000-0000-4000-8000-000000000701")
   }
 
-  @Test(arguments: [PlannerEntityKind.category, .tag], [false, true])
+  @Test(
+    arguments: [PlannerEntityKind.category, .tag],
+    [
+      (losingTargetIsSmaller: false, recoveryFailure: false),
+      (losingTargetIsSmaller: true, recoveryFailure: false),
+      (losingTargetIsSmaller: false, recoveryFailure: true),
+      (losingTargetIsSmaller: true, recoveryFailure: true),
+    ])
   func restoredLabelCollisionKeepsSmallestAssociationWithoutEditingItsOwner(
-    kind: PlannerEntityKind, losingTargetIsSmaller: Bool
+    kind: PlannerEntityKind, scenario: (losingTargetIsSmaller: Bool, recoveryFailure: Bool)
+  ) async throws {
+    try await checkLabelCollision(
+      kind: kind, losingTargetIsSmaller: scenario.losingTargetIsSmaller,
+      recoveryFailure: scenario.recoveryFailure, nativeSaveFailure: false)
+  }
+
+  fileprivate func checkLabelCollision(
+    kind: PlannerEntityKind, losingTargetIsSmaller: Bool, recoveryFailure: Bool,
+    nativeSaveFailure: Bool
   ) async throws {
     let fixture = try await SourceRestorationFixture.make(kind: kind)
     guard
@@ -4954,10 +5008,94 @@ struct NativeRestoredTargetReferenceTests {
       case .exported(let original) = await fixture.planner.exportData(session: fixture.session)
     else { throw CancellationError() }
     let receipts = try fixture.envelope()["receipts"] as? NSArray
+    let originalFiles = try fixture.files()
+    let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     try await fixture.deliverCandidate()
     try await fixture.bindLabelToLosingCandidate()
     try await fixture.invalidateLabelTarget("collision")
     try await fixture.identifyLabelCollision(losingTargetIsSmaller: losingTargetIsSmaller)
+    #if os(macOS)
+      var unverifiedMaintenance: UUID?
+      var unverifiedFiles: [String: Data]?
+      if nativeSaveFailure {
+        let originalSources = try await fixture.rawLabelSourceData()
+        let originalAssociations = try await fixture.rawLabelData()
+        let obstruction = NativeSaveFileSizeObstruction(
+          configuration: fixture.configuration, maximumFileSize: 0)
+        let observer = NotificationCenter.default.addObserver(
+          forName: ModelContext.willSave, object: nil, queue: nil
+        ) { notification in obstruction.observe(notification) }
+        let failed = await fixture.planner.exportData(session: fixture.session)
+        NotificationCenter.default.removeObserver(observer)
+        try obstruction.restore()
+        #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+        guard case .failed(let reason) = failed else {
+          Issue.record("Failed collision retirement must preserve both selections: \(failed)")
+          return
+        }
+        #expect(reason.code == "maintenanceRequired")
+        #expect(try await fixture.rawLabelSourceData() == originalSources)
+        #expect(try await fixture.rawLabelData() == originalAssociations)
+        let files = try fixture.files()
+        for (name, bytes) in originalFiles { #expect(files[name] == bytes) }
+        #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+        let preparations = files.filter { $0.key.hasPrefix("maintenance-") }
+        #expect(preparations.count == 1)
+        let preparation = try fixture.object(try #require(preparations.values.first))
+        let identifier = try #require(
+          (preparation["maintenanceId"] as? String).flatMap(UUID.init(uuidString:)))
+        guard
+          case .rejected(let reason) = await fixture.planner.retryMaintenanceRecovery(
+            session: fixture.session, maintenanceId: identifier)
+        else { throw CancellationError() }
+        #expect(reason.code == "maintenanceNotApplied")
+        #expect(try fixture.files() == files)
+        unverifiedMaintenance = identifier
+        unverifiedFiles = files
+      }
+    #endif
+    var pendingMaintenance: UUID?
+    var pendingGraph: Data?
+    if recoveryFailure {
+      let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
+      let observer = NotificationCenter.default.addObserver(
+        forName: ModelContext.didSave, object: nil, queue: nil
+      ) { notification in obstruction.observe(notification) }
+      defer {
+        NotificationCenter.default.removeObserver(observer)
+        try? obstruction.restore()
+      }
+      let committed = await fixture.planner.exportData(session: fixture.session)
+      NotificationCenter.default.removeObserver(observer)
+      try obstruction.restore()
+      #expect(obstruction.didObstruct && obstruction.failure == nil)
+      guard case .exported(let data) = committed,
+        case .status(let status) = await fixture.planner.read(
+          session: fixture.session, request: .status),
+        case .known(_, let operations, let maintenance, let blocked) = status.recovery
+      else {
+        Issue.record("Committed collision retirement must report pending recovery: \(committed)")
+        return
+      }
+      #expect(operations.isEmpty && maintenance.count == 1 && blocked)
+      pendingMaintenance = try #require(maintenance.first)
+      pendingGraph = data
+      let files = try fixture.files()
+      for (name, bytes) in originalFiles { #expect(files[name] == bytes) }
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+      let blockedOperation = UUID()
+      guard
+        case .rejected(let reason) = await fixture.planner.execute(
+          .init(
+            operationId: blockedOperation, session: fixture.session,
+            command: .createTag(content: .init(name: "Wait for collision recovery")))
+        ).outcome,
+        case .noReliableEvidence = await fixture.planner.operationStatus(
+          session: fixture.session, operationId: blockedOperation)
+      else { throw CancellationError() }
+      #expect(reason.code == "mutationBlocked")
+      #expect(try fixture.files() == files)
+    }
     let result = await fixture.planner.exportData(session: fixture.session)
     guard case .exported(let after) = result,
       case .source(.item(let retained)) = await fixture.planner.read(
@@ -4967,6 +5105,8 @@ struct NativeRestoredTargetReferenceTests {
       return
     }
     #expect(retained.fieldHashes == before.fieldHashes)
+    #expect(retained.updatedAt == before.updatedAt)
+    if let pendingGraph { #expect(try fixture.graph(pendingGraph) == fixture.graph(after)) }
     let graph = try fixture.object(after)
     let expected = try fixture.object(original)
     #expect(graph["sources"] as? NSArray == expected["sources"] as? NSArray)
@@ -4983,6 +5123,51 @@ struct NativeRestoredTargetReferenceTests {
           && target["id"] as? String == "00000000-0000-4000-8000-000000000702"
           && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000802"
       })
+    var complete = graph
+    let closures = markers.filter { marker in
+      guard let target = marker["target"] as? [String: Any] else { return false }
+      return target["kind"] as? String == "labelAssociation"
+        && target["id"] as? String == "00000000-0000-4000-8000-000000000702"
+        && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000802"
+    }
+    #expect(closures.count == 1)
+    complete["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    var preserved = expected
+    var originalAssociations = try #require(expected["labelAssociations"] as? [[String: Any]])
+    #expect(originalAssociations.count == 1)
+    originalAssociations[0]["id"] = "00000000-0000-4000-8000-000000000701"
+    originalAssociations[0]["lifetimeId"] = "00000000-0000-4000-8000-000000000801"
+    preserved["labelAssociations"] = originalAssociations
+    #expect(NSDictionary(dictionary: complete) == NSDictionary(dictionary: preserved))
+    if let pendingMaintenance {
+      let files = try fixture.files()
+      guard
+        case .exported(let readable) = await fixture.planner.exportData(session: fixture.session)
+      else { throw CancellationError() }
+      #expect(try fixture.graph(readable) == fixture.graph(after))
+      #expect(try fixture.files() == files)
+      guard
+        case .complete(let checkpoint) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance),
+        case .complete(let repeated) = await fixture.planner.retryMaintenanceRecovery(
+          session: fixture.session, maintenanceId: pendingMaintenance)
+      else { throw CancellationError() }
+      #expect(checkpoint == repeated)
+    }
+    let envelope = try fixture.envelope()
+    let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
+    #expect(maintenance.count == 1)
+    let identifier = try #require(maintenance.first?["maintenanceId"] as? String)
+    if let pendingMaintenance { #expect(identifier == pendingMaintenance.uuidString) }
+    #if os(macOS)
+      if let unverifiedMaintenance, let unverifiedFiles {
+        #expect(identifier != unverifiedMaintenance.uuidString)
+        let files = try fixture.files()
+        for (name, bytes) in unverifiedFiles { #expect(files[name] == bytes) }
+      }
+    #endif
     #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
     #expect(graph["contextAliases"] as? NSArray == expected["contextAliases"] as? NSArray)
     let reopened = Planner(configuration: fixture.configuration)

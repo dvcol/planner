@@ -80,3 +80,40 @@ convergence remain open. The existing generic maintenance checks do not establis
 all those label-specific outcomes. Q161's remaining owned collections are separate
 implementation work. Actual Mac/system and whole-app acceptance keep their gates;
 signing stays deferred.
+
+## Native-save and publication failures
+
+The existing collision test now covers ordinary or obstructed publication for
+both Category and Tag, with the smallest selection initially targeting either
+restored version. The complete graph equals the saved baseline except for the
+literal retained selection701/801 and exact closure of702/802. Owner field hashes
+and Last updated, every other source/reference, original receipts, reopened data
+and both winner/loser redelivery paths remain unchanged.
+
+An actual post-save publication obstruction leaves the canonical graph readable,
+reports one committed maintenance and blocks a new Tag command without applied
+evidence. Repeated reads preserve recovery bytes. Explicit Retry acknowledges
+the original maintenance; repeated Retry returns the same checkpoint.
+
+A separate isolated Mac child executes all four collision cases with a real
+willSave file-size obstruction. Each reports SQLite error 778 and leaves both
+complete label versions, selections/bindings, old recovery files and writer
+control unchanged. The preparation is unverified, its Retry rejects without
+writes, and fresh maintenance uses a different identity. No production change is
+needed after the failed-container correction in the List checkpoint.
+
+The [validation record](evidence/native-membership-consolidation/native-label-collision-fault-validation.json)
+reconciles six passing Mac functions and three iPhone Simulator functions. The
+Mac cohort retains three successful native-fault children, including four actual
+collision write failures in one child. Phone qualifies publication/preparation
+and ordinary collision paths; the write fault is Mac-only. Final products and
+813 shared Core inputs match. All ninety production inputs, 514 frozen fixtures,
+eighteen schema sources, formats and gates remain unchanged. Only the existing
+test file changes. No final run has skips, failures, timeouts or SQLite-unlink
+warnings. The unchanged baseline and unsupported test-declaration attempt are
+recorded separately and receive no new runtime credit. Logs/manifests remain
+compressed; passing disposable stores are cleaned only after host/handle checks.
+
+Collision-specific process interruption remains open. Q163, actual native UI,
+system and physical/cloud acceptance retain their separate gates; signing stays
+deferred.
