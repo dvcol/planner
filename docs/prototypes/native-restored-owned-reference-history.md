@@ -379,3 +379,44 @@ distinct Item/List owned-content cases or label-collision faults. Those concrete
 checks, Q163 and native/system/physical acceptance remain on the map. No new
 module, test boundary, target, schema, format or gate is introduced. Signing
 stays deferred.
+
+## Mixed Itinerary native-save rollback
+
+The same mixed-owned graph now executes inside the existing isolated Mac process
+save-failure boundary. The native store's actual `willSave` notification lowers
+the disposable child's file-size limit. SQLite reports write error 778. After
+restoring the limit, both source versions' complete values, links, bookings,
+labels, stops, expanded completion and retained completion history are unchanged.
+Original recovery bytes and writer control remain intact.
+
+Only an unverified maintenance preparation survives. Retry rejects it with
+`maintenanceNotApplied` and changes no files. A fresh maintenance attempt uses a
+different identity, retains that original proposal byte-for-byte and preserves
+the complete winning graph with the seven exact owned-reference closures. Its
+acknowledged proposal matches export; reopening and redelivery retain that graph.
+
+The existing test body is shared by ordinary, publication-failure and isolated
+native-save cases. Production code and the existing failure mechanism stay
+unchanged. The Mac child has its own file limit; it does not affect the parent or
+mobile tests.
+
+The [validation record](evidence/native-membership-consolidation/native-owned-itinerary-save-validation.json)
+verifies five passing Mac parent functions/seven invocations, including three
+actual passing child executions, and three passing iPhone functions/five
+invocations. Phone covers the shared ordinary/publication paths; it receives no
+file-limit fault credit. The actual child transcripts, ownership records,
+termination status 0 and deadline results are retained. No function is skipped or
+failed, and no SQLite-unlink diagnostic occurs. Expected SQLite write errors
+remain visible in the child transcripts.
+
+All 813 shared Core inputs and actual products match. Of 1160 native inputs, only
+the existing test file changes. All 90 Core production inputs, 514 frozen fixtures
+and schema sources remain unchanged. Strict Swift/Markdown and whitespace checks
+pass. Verified cleanup removes eighteen closed marked parent/child/mobile stores
+after preserving their transcripts. Source manifests remain losslessly
+compressed.
+
+Actual mixed-payload process interruption, distinct Item/List owned-data and
+label-collision faults, Q163 and native/system/physical acceptance remain open.
+This adds no production hook, package, target, schema, portable format or writer
+gate. Signing stays deferred.

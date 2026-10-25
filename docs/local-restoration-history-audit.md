@@ -56,9 +56,11 @@ turn historical product hashes into current execution credit.
    owned-content reports with the existing shared transaction tests. The
    [mixed Itinerary publication check](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure)
    now preserves its complete graph through real publication failure and Retry.
-   Its native-save/actual interruption cases and distinct Item/List owned-data
-   and label-collision faults remain separate. Do not claim a Cartesian fault
-   matrix or add a new recovery framework by inference.
+   Its [native-save rollback](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-native-save-rollback)
+   now preserves both versions through an actual isolated write failure and
+   fresh retry. Actual mixed-payload interruption and distinct Item/List
+   owned-data and label-collision faults remain separate. Do not claim a
+   Cartesian fault matrix or add a new recovery framework by inference.
 2. Await Q163 for the conflicting source/owned-family authority. Preserve the
    current atomic rejection while that decision is pending.
 

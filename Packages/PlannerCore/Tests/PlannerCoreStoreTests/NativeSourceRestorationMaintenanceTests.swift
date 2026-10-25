@@ -712,6 +712,11 @@ struct NativeSourceRestorationMaintenanceTests {
   func mixedLosingItineraryContentsRetireInOneTransactionWithoutChangingTheWinner(
     recoveryFailure: Bool
   ) async throws {
+    try await checkMixedOwnedItinerary(recoveryFailure: recoveryFailure, nativeSaveFailure: false)
+  }
+
+  private func checkMixedOwnedItinerary(recoveryFailure: Bool, nativeSaveFailure: Bool) async throws
+  {
     let fixture = try await SourceRestorationFixture.make(kind: .itinerary)
     func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
       let result = await fixture.planner.execute(
@@ -759,6 +764,66 @@ struct NativeSourceRestorationMaintenanceTests {
     let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
     try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
     try await fixture.addMixedMetadataToLosingItinerary()
+    #if os(macOS)
+      var unverifiedMaintenance: UUID?
+      var unverifiedFiles: [String: Data]?
+      if nativeSaveFailure {
+        let originalLinks = try await fixture.rawOwnedLinkData()
+        let originalSchedules = try await fixture.rawScheduleData()
+        let originalLabels = try await fixture.rawLabelData()
+        let originalEntries = try await fixture.rawEntryData()
+        let originalExpanded = try await fixture.rawExpandedData()
+        let originalHistory = try await fixture.rawCompletionAuthorityData()
+        let originalLifetimes = try await fixture.nativeSourceLifetimes()
+        let winningSource = try await fixture.backupForOwnedReference(
+          ownerLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000814")!)
+        let losingSource = try await fixture.backupForOwnedReference()
+        let obstruction = NativeSaveFileSizeObstruction(
+          configuration: fixture.configuration, maximumFileSize: 0)
+        let observer = NotificationCenter.default.addObserver(
+          forName: ModelContext.willSave, object: nil, queue: nil
+        ) { notification in obstruction.observe(notification) }
+        let failed = await fixture.planner.exportData(session: fixture.session)
+        NotificationCenter.default.removeObserver(observer)
+        try obstruction.restore()
+        #expect(obstruction.didObstruct && obstruction.failureMessage == nil)
+        guard case .failed(let reason) = failed else {
+          Issue.record("A failed native mixed-owned save must remain unapplied: \(failed)")
+          return
+        }
+        #expect(reason.code == "maintenanceRequired")
+        #expect(try await fixture.rawOwnedLinkData() == originalLinks)
+        #expect(try await fixture.rawScheduleData() == originalSchedules)
+        #expect(try await fixture.rawLabelData() == originalLabels)
+        #expect(try await fixture.rawEntryData() == originalEntries)
+        #expect(try await fixture.rawExpandedData() == originalExpanded)
+        #expect(try await fixture.rawCompletionAuthorityData() == originalHistory)
+        #expect(try await fixture.nativeSourceLifetimes() == originalLifetimes)
+        #expect(
+          try fixture.graph(
+            await fixture.backupForOwnedReference(
+              ownerLifetime: UUID(uuidString: "00000000-0000-4000-8000-000000000814")!))
+            == fixture.graph(winningSource))
+        #expect(
+          try fixture.graph(await fixture.backupForOwnedReference()) == fixture.graph(losingSource))
+        let failedFiles = try fixture.files()
+        for (name, bytes) in originalFiles { #expect(failedFiles[name] == bytes) }
+        #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+        let proposals = failedFiles.filter { $0.key.hasPrefix("maintenance-") }
+        #expect(proposals.count == 1)
+        let proposal = try fixture.object(try #require(proposals.values.first))
+        let identifier = try #require(
+          (proposal["maintenanceId"] as? String).flatMap(UUID.init(uuidString:)))
+        guard
+          case .rejected(let reason) = await fixture.planner.retryMaintenanceRecovery(
+            session: fixture.session, maintenanceId: identifier)
+        else { throw CancellationError() }
+        #expect(reason.code == "maintenanceNotApplied")
+        #expect(try fixture.files() == failedFiles)
+        unverifiedMaintenance = identifier
+        unverifiedFiles = failedFiles
+      }
+    #endif
     var pendingMaintenance: UUID?
     var pendingExport: Data?
     if recoveryFailure {
@@ -884,6 +949,13 @@ struct NativeSourceRestorationMaintenanceTests {
     let maintenance = try #require(envelope["maintenanceReceipts"] as? [[String: Any]])
     #expect(maintenance.count == 1)
     let identifier = try #require(maintenance.first?["maintenanceId"] as? String)
+    #if os(macOS)
+      if let unverifiedMaintenance, let unverifiedFiles {
+        #expect(identifier != unverifiedMaintenance.uuidString)
+        let files = try fixture.files()
+        for (name, bytes) in unverifiedFiles { #expect(files[name] == bytes) }
+      }
+    #endif
     let preparation = try fixture.object(
       Data(contentsOf: fixture.namespace.appendingPathComponent("maintenance-\(identifier).json")))
     #expect(
@@ -3674,6 +3746,19 @@ private struct SourceRestorationFixture {
 
 #if os(macOS)
   extension NativeSourceRestorationMaintenanceTests {
+    @Test func failedMixedOwnedNativeSavePreservesAllContentsAndRetriesFresh() async throws {
+      guard
+        ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
+          == "mixedOwnedNativeSaveFailure"
+      else {
+        let directory = try makePlannerStoreFixtureDirectory()
+        try runSourceRestorationProcess(
+          directory: directory, stage: "mixedOwnedNativeSaveFailure", directEntries: false)
+        return
+      }
+      try await checkMixedOwnedItinerary(recoveryFailure: false, nativeSaveFailure: true)
+    }
+
     @Test func failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh() async throws {
       guard
         ProcessInfo.processInfo.environment["PLANNER_SOURCE_RESTORATION_STAGE"]
@@ -3900,6 +3985,8 @@ private struct SourceRestorationFixture {
       let selectedTest: String
       if stage == "nativeSaveFailure" {
         selectedTest = "failedSourceNativeSaveRetainsUnverifiedPreparationAndRetriesFresh"
+      } else if stage == "mixedOwnedNativeSaveFailure" {
+        selectedTest = "failedMixedOwnedNativeSavePreservesAllContentsAndRetriesFresh"
       } else {
         selectedTest = "sourceRestorationInterruptionPreservesPreparationAndActivationOrder"
       }
@@ -3925,7 +4012,7 @@ private struct SourceRestorationFixture {
       }
       try output.close()
       let transcript = try String(contentsOf: outputURL, encoding: .utf8)
-      if stage == "nativeSaveFailure" {
+      if stage == "nativeSaveFailure" || stage == "mixedOwnedNativeSaveFailure" {
         #expect(
           finished && process.terminationReason == .exit && process.terminationStatus == 0,
           Comment(rawValue: String(transcript.suffix(12000))))

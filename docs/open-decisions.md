@@ -2,6 +2,8 @@
 
 ## Current frontier
 
+The [mixed Itinerary native-save checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-native-save-rollback) qualifies actual rollback/fresh retry without production or contract changes. Complete source/owned values, original recovery and writer control survive the isolated SQLite failure; only an unverified preparation remains. Mac parent/child and affected phone checks pass with matched inputs/products. Actual mixed-payload interruption and other named payload faults remain separate; Q163 and signing keep their existing gates.
+
 The [mixed Itinerary publication checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure) advances the existing local fault checks without changing policy or production. Actual publication failure retains the complete canonical graph, truthful incomplete recovery and blocked writes; Retry/reopen/redelivery pass. Three functions and five cases pass on both Mac and phone. Other named payload/fault cases retain their limits in the audit; Q163 remains the pending authority choice and signing stays deferred.
 
 The [prepared Move/Capture checkpoint](prototypes/native-prepared-move-capture.md) closes the named preparation-only replay check through the existing interface. Final Mac/phone cohorts each pass five functions and 66 cases while retaining full saved state, recovery bytes and an unrelated edited draft. Production code remains unchanged. The [audit](local-restoration-history-audit.md) now leaves Q161 payload-specific fault promises and Q163 explicit; system/physical/native acceptance stays separate. No new policy answer is needed for this test-only checkpoint.
