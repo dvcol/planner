@@ -4376,7 +4376,8 @@ public actor Planner {
         .filter { sourceProjection?.retiresSchedule($0) != true }.map(\.id),
       exported: snapshot.schedules.map(\.id), kind: "Schedule")
     try requireExportedIdentities(
-      stored: context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).map(\.id),
+      stored: context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+        .filter { sourceProjection?.retiresEntry($0) != true }.map(\.id),
       exported: snapshot.itineraryEntries.map(\.id), kind: "Itinerary entry")
     let contexts = try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>())
       .filter { sourceProjection?.retiresExpandedCompletion($0) != true }.map {

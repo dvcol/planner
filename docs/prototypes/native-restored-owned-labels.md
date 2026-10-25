@@ -80,7 +80,7 @@ original result bundles remain preserved.
 
 Losing List memberships and their expanded rows now have a separate
 [local checkpoint](native-restored-owned-memberships.md). Losing Itinerary-owned
-entries still require Q161 implementation. Broader owned-identity closure/manual-import histories and
+entries now have a [local checkpoint](native-restored-owned-itinerary-stops.md). Broader owned-identity closure/manual-import histories and
 label-specific native-save/publication/interruption remain open. Native controls,
 HTTP, actual Mac/system, cloud/physical convergence and whole-app acceptance keep
 their separate gates. Signing stays deferred.

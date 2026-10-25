@@ -9,6 +9,215 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test func losingItineraryPreparationFailurePreservesStopsAndExpandedBindingsUntilRetry()
+    async throws
+  {
+    let (fixture, before) = try await SourceRestorationFixture.makeWithOwnedItineraryStops()
+    let entries = try await fixture.nativeEntryData()
+    let expanded = try await fixture.rawExpandedData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.nativeEntryData() == entries)
+    #expect(try await fixture.rawExpandedData() == expanded)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let original = try fixture.object(before)
+    let graph = try fixture.object(after)
+    for field in ["sources", "memberships", "itineraryEntries", "expandedCompletions"] {
+      #expect(graph[field] as? NSArray == original[field] as? NSArray)
+    }
+  }
+
+  @Test(arguments: ["owner", "source", "expanded"])
+  func malformedLosingStopsRejectWithoutChangingNativeOrRecoveryData(scenario: String)
+    async throws
+  {
+    let (fixture, _) = try await SourceRestorationFixture.makeWithOwnedItineraryStops()
+    try await fixture.corruptOwnedStop(scenario)
+    let entries = try await fixture.rawEntryData()
+    let expanded = try await fixture.rawExpandedData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else {
+      Issue.record("A malformed losing stop must reject before retirement: \(scenario)")
+      return
+    }
+    #expect(failure.code == "readUnavailable")
+    #expect(try await fixture.rawEntryData() == entries)
+    #expect(try await fixture.rawExpandedData() == expanded)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+  }
+
+  @Test(arguments: [false, true])
+  func losingStopsRetainSavedDoneHistoryWithoutAffectingTheWinningRoute(expanded: Bool)
+    async throws
+  {
+    let (fixture, before) = try await SourceRestorationFixture.makeWithOwnedItineraryStops()
+    try await fixture.recordOwnedStopDone(expanded: expanded)
+    let history = try await fixture.rawCompletionAuthorityData()
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try await fixture.rawCompletionAuthorityData() == history)
+    let original = try fixture.object(before)
+    let graph = try fixture.object(after)
+    for field in ["sources", "memberships", "itineraryEntries", "expandedCompletions"] {
+      #expect(graph[field] as? NSArray == original[field] as? NSArray)
+    }
+    let changes = try #require(graph["completionChanges"] as? [[String: Any]])
+    #expect(changes.count == 1)
+    #expect(changes.first?["done"] as? Bool == true)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+  }
+
+  @Test(arguments: [false, true])
+  func losingItineraryStopsRetireWithoutMergingRoutesOrDeletingSharedSources(winningRoute: Bool)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: .itinerary)
+    let item = PlannerEntityReference(
+      kind: .item, id: UUID(uuidString: "00000000-0000-4000-8000-000000000101")!)
+    let list = PlannerEntityReference(
+      kind: .list, id: UUID(uuidString: "00000000-0000-4000-8000-000000000201")!)
+    guard
+      case .applied(let addition, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let membership, _, _)? = addition.generatedReferences.first
+    else { throw CancellationError() }
+    var entries: [UUID] = []
+    if winningRoute {
+      for source in [item, list, item] {
+        guard
+          case .applied(let added, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .addItineraryEntry(
+                itineraryId: fixture.source.id, source: source, placement: .last))
+          ).outcome,
+          case .itineraryEntry(let identifier, _, _)? = added.generatedReferences.first
+        else { throw CancellationError() }
+        entries.append(identifier)
+      }
+      for appearance in [
+        PlannerAppearance.directItineraryItem(itineraryId: fixture.source.id, entryId: entries[0]),
+        .expandedListItem(
+          itineraryId: fixture.source.id, listEntryId: entries[1], membershipId: membership),
+      ] {
+        guard
+          case .applied(_, .complete) = await fixture.planner.execute(
+            .init(
+              operationId: UUID(), session: fixture.session,
+              command: .setCompletion(scope: .appearance(appearance), done: true))
+          ).outcome
+        else { throw CancellationError() }
+      }
+    }
+    guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
+      case .source(.itinerary(let initial)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else { throw CancellationError() }
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result,
+      case .source(.itinerary(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source))
+    else {
+      Issue.record("Only the winning Itinerary's complete route must remain live: \(result)")
+      return
+    }
+    #expect(retained.fieldHashes == initial.fieldHashes)
+    #expect(retained.progress.totalCount == initial.progress.totalCount)
+    #expect(retained.progress.doneCount == initial.progress.doneCount)
+    var graph = try fixture.object(after)
+    let original = try fixture.object(before)
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let identifiers = [
+      "00000000-0000-4000-8000-000000000831", "00000000-0000-4000-8000-000000000833",
+      "00000000-0000-4000-8000-000000000835",
+    ]
+    let closures = markers.filter { marker in
+      guard let target = marker["target"] as? [String: Any],
+        let identifier = target["id"] as? String
+      else { return false }
+      return target["kind"] as? String == "itineraryEntry" && identifiers.contains(identifier)
+    }
+    #expect(closures.count == 3)
+    for (identifier, lifetime) in [
+      ("00000000-0000-4000-8000-000000000831", "00000000-0000-4000-8000-000000000832"),
+      ("00000000-0000-4000-8000-000000000833", "00000000-0000-4000-8000-000000000834"),
+      ("00000000-0000-4000-8000-000000000835", "00000000-0000-4000-8000-000000000836"),
+    ] {
+      #expect(
+        closures.contains { marker in
+          let target = marker["target"] as? [String: Any]
+          return target?["id"] as? String == identifier
+            && target?["lifetimeId"] as? String == lifetime
+        })
+    }
+    graph["deletionMarkers"] = markers.filter { marker in
+      !closures.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    let retiredDirect = PlannerAppearance.directItineraryItem(
+      itineraryId: fixture.source.id,
+      entryId: UUID(uuidString: "00000000-0000-4000-8000-000000000831")!)
+    let retiredExpanded = PlannerAppearance.expandedListItem(
+      itineraryId: fixture.source.id,
+      listEntryId: UUID(uuidString: "00000000-0000-4000-8000-000000000833")!,
+      membershipId: membership)
+    for appearance in [retiredDirect, retiredExpanded] {
+      guard
+        case .failed = await fixture.planner.read(
+          session: fixture.session, request: .appearance(appearance))
+      else {
+        Issue.record("Discarded stop identities must not target surviving repeated appearances.")
+        return
+      }
+    }
+    let files = try fixture.files()
+    guard
+      case .rejected = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .setCompletion(scope: .appearance(retiredDirect), done: true))
+      ).outcome
+    else { throw CancellationError() }
+    #expect(try fixture.files() == files)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+  }
+
   @Test(arguments: [false, true])
   func retiredListChildrenKeepReopenHistoryWithoutAdoptingLateDoneFlags(expanded: Bool)
     async throws
@@ -960,6 +1169,23 @@ private struct SourceRestorationFixture {
       baseline: baseline)
   }
 
+  static func makeWithOwnedItineraryStops() async throws -> (fixture: Self, before: Data) {
+    let fixture = try await make(kind: .itinerary)
+    guard
+      case .applied(let addition, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .addMembership(
+            itemId: UUID(uuidString: "00000000-0000-4000-8000-000000000101")!,
+            listId: UUID(uuidString: "00000000-0000-4000-8000-000000000201")!, placement: .last))
+      ).outcome,
+      case .membership(let membership, _, _)? = addition.generatedReferences.first,
+      case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    try await fixture.deliverCandidateWithOwnedStops(membershipId: membership)
+    return (fixture, before)
+  }
+
   static func makeWithEntries(_ directEntries: Bool) async throws -> Self {
     let fixture = try await make()
     guard directEntries else { return fixture }
@@ -1443,6 +1669,10 @@ private struct SourceRestorationFixture {
         "entryLifetime": $0.listEntryLifetimeId?.uuidString ?? "",
         "membership": $0.membershipId?.uuidString ?? "",
         "membershipLifetime": $0.membershipLifetimeId?.uuidString ?? "",
+        "nativeEntry": $0.listEntry?.id?.uuidString ?? "",
+        "nativeEntryLifetime": $0.listEntry?.lifetimeId?.uuidString ?? "",
+        "nativeMembership": $0.membership?.id?.uuidString ?? "",
+        "nativeMembershipLifetime": $0.membership?.lifetimeId?.uuidString ?? "",
         "done": String(describing: $0.localDone),
       ]
     }.sorted { ($0["entry"] ?? "") < ($1["entry"] ?? "") }
@@ -1647,6 +1877,117 @@ private struct SourceRestorationFixture {
         PlannerSchemaV18.ExpandedCompletion(
           listEntry: entry, membership: membership, localDone: index == 0))
     }
+    try context.save()
+  }
+
+  @MainActor func deliverCandidateWithOwnedStops(membershipId: UUID) throws {
+    try deliverCandidate()
+    let context = try nativeContext()
+    let owner = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+        $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      })
+    let item = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000101"
+      })
+    let list = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000201"
+      })
+    let membership = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()).first { $0.id == membershipId })
+    let ownerBinding = PlannerBoundIdentity(
+      kind: "itinerary", id: owner.id!, lifetimeId: owner.lifetimeId!)
+    let snapshots: [ItineraryEntrySnapshot] = [
+      .init(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000831")!,
+        lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000832")!,
+        itinerary: ownerBinding,
+        source: .init(kind: "item", id: item.id!, lifetimeId: item.lifetimeId!),
+        rank: 0, localDone: false),
+      .init(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000833")!,
+        lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000834")!,
+        itinerary: ownerBinding,
+        source: .init(kind: "list", id: list.id!, lifetimeId: list.lifetimeId!),
+        rank: 1024, localDone: nil),
+      .init(
+        id: UUID(uuidString: "00000000-0000-4000-8000-000000000835")!,
+        lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000836")!,
+        itinerary: ownerBinding,
+        source: .init(kind: "item", id: item.id!, lifetimeId: item.lifetimeId!),
+        rank: 2048, localDone: true),
+    ]
+    for snapshot in snapshots {
+      let entry: PlannerSchemaV18.ItineraryEntry
+      if snapshot.source.kind == "item" {
+        entry = .init(snapshot: snapshot, itinerary: owner, item: item, list: nil)
+      } else {
+        entry = .init(snapshot: snapshot, itinerary: owner, item: nil, list: list)
+      }
+      context.insert(entry)
+      if snapshot.source.kind == "list" {
+        context.insert(
+          PlannerSchemaV18.ExpandedCompletion(
+            listEntry: entry, membership: membership, localDone: false))
+      }
+    }
+    try context.save()
+  }
+
+  @MainActor func corruptOwnedStop(_ scenario: String) throws {
+    let context = try nativeContext()
+    let entry = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000831"
+      })
+    switch scenario {
+    case "owner": entry.itinerary = nil
+    case "source": entry.item = nil
+    case "expanded":
+      let completion = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).first {
+          $0.listEntryId?.uuidString == "00000000-0000-4000-8000-000000000833"
+        })
+      completion.membership = nil
+    default: throw CancellationError()
+    }
+    try context.save()
+  }
+
+  @MainActor func recordOwnedStopDone(expanded: Bool) throws {
+    let context = try nativeContext()
+    let scope: PlannerPortableCompletionContext
+    if expanded {
+      let completion = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).first {
+          $0.listEntryId?.uuidString == "00000000-0000-4000-8000-000000000833"
+        })
+      scope = .expandedListItem(try completion.value().context)
+    } else {
+      let entry = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()).first {
+          $0.id?.uuidString == "00000000-0000-4000-8000-000000000831"
+        })
+      scope = .directItineraryItem(entryId: entry.id!, entryLifetimeId: entry.lifetimeId!)
+    }
+    let aliasIdentifier = UUID()
+    let changeIdentifier = UUID()
+    let alias = PlannerPortableContextAlias(
+      aliasId: aliasIdentifier, context: scope, canonicalContext: scope,
+      initialDone: false, currentChangeId: changeIdentifier)
+    let change = PlannerPortableCompletionChange(
+      id: changeIdentifier, aliasId: aliasIdentifier, context: scope,
+      done: true, observedChangeIds: [])
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    context.insert(
+      PlannerSchemaV16.LineageRecord(
+        identifier: aliasIdentifier, kind: "contextAlias", data: try encoder.encode(alias)))
+    context.insert(
+      PlannerSchemaV16.LineageRecord(
+        identifier: changeIdentifier, kind: "completionChange", data: try encoder.encode(change)))
     try context.save()
   }
 

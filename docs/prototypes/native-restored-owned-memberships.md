@@ -83,7 +83,8 @@ host/database closure checks, preserving failed/interrupted data and result bund
 
 ## Remaining scope
 
-Losing Itinerary-owned entries still require Q161 implementation. Broader owned
+Losing Itinerary-owned entries now have a separate
+[local checkpoint](native-restored-owned-itinerary-stops.md). Broader owned
 restoration/import histories, duplicate or partial owned-context delivery and
 List-specific native-save/publication/interruption need qualification. Existing
 generic checks do not prove all those payload-specific outcomes. Native controls,

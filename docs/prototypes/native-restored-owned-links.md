@@ -65,7 +65,8 @@ Q161 is not complete. Schedules now have a separate
 [local checkpoint](native-restored-owned-bookings.md). Owned label selections have
 their [own checkpoint](native-restored-owned-labels.md). Losing List memberships
 and their expanded rows have a [checkpoint](native-restored-owned-memberships.md).
-Losing Itinerary-owned entries still require implementation. Broader owned
+Losing Itinerary-owned entries have a
+[local checkpoint](native-restored-owned-itinerary-stops.md). Broader owned
 restoration histories and link-specific native save/publication/interruption
 outcomes remain open. Q162 has a [Core checkpoint](native-restored-label-collisions.md)
 with broader history/native qualification remaining. HTTP, native interaction,

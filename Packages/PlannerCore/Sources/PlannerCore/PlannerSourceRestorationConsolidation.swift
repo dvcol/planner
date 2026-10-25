@@ -7,7 +7,6 @@ struct PlannerSourceRestorationConsolidation {
   private struct Row {
     let identity: PlannerPortableBoundIdentity
     let model: any PersistentModel
-    let hasUnsupportedOwnedRelationships: Bool
   }
 
   private struct EntryRebinding {
@@ -15,6 +14,13 @@ struct PlannerSourceRestorationConsolidation {
     let winner: Row
     let snapshot: ItineraryEntrySnapshot
     var projected: PortableItineraryEntryRecord { .init(snapshot) }
+  }
+
+  private struct EntryRetirement {
+    let entry: PlannerSchemaV18.ItineraryEntry
+    let identity: PlannerPortableBoundIdentity
+    let projectedListLifetime: UUID?
+    let marker: PortableDeletionMarker?
   }
 
   private struct MembershipRebinding {
@@ -55,6 +61,7 @@ struct PlannerSourceRestorationConsolidation {
 
   private let rows: [Row]
   private let entryRebindings: [EntryRebinding]
+  private let entryRetirements: [EntryRetirement]
   private let membershipRebindings: [MembershipRebinding]
   private let membershipRetirements: [MembershipRetirement]
   private let expandedRetirements: [PlannerSchemaV18.ExpandedCompletion]
@@ -106,20 +113,22 @@ struct PlannerSourceRestorationConsolidation {
         labelWinners.insert(winnerRow.identity)
       }
       for row in group where row.identity.lifetimeId != winner {
-        guard !row.hasUnsupportedOwnedRelationships else {
-          throw Self.unresolved("A losing restoration candidate still has live relationships.")
-        }
         retired.insert(row.identity)
         winners[row.identity] = winnerRow
       }
     }
     let membershipRetirements = try Self.membershipRetirements(
       context: context, rows: rows, retired: retired, lineage: lineage, markers: markers)
+    let entryRetirements = try Self.entryRetirements(
+      context: context, rows: rows, retired: retired, winners: winners,
+      retiringMemberships: Set(membershipRetirements.map(\.identity)),
+      families: families, markers: markers)
     let expandedRetirements = try Self.expandedRetirements(
-      context: context, memberships: membershipRetirements, winners: winners)
+      context: context, memberships: membershipRetirements, entries: entryRetirements,
+      winners: winners)
     let entryRebindings = try Self.entryRebindings(
       context: context, rows: rows, retired: retired, winners: winners,
-      retiringMemberships: Set(membershipRetirements.map(\.identity)))
+      retiringMemberships: Set(membershipRetirements.map(\.identity)), excluding: entryRetirements)
     let membershipRebindings = try Self.membershipRebindings(
       context: context, rows: rows, retired: retired, winners: winners)
     let labelRebindings = try Self.labelRebindings(
@@ -140,11 +149,13 @@ struct PlannerSourceRestorationConsolidation {
         retired, context: context, admittedEntries: entryRebindings,
         admittedMemberships: membershipRebindings, admittedLabels: labelRebindings,
         retiredOwnedLinks: ownedLinkRetirements, retiredSchedules: scheduleRetirements,
-        retiredLabels: labelRetirements, retiredMemberships: membershipRetirements)
+        retiredLabels: labelRetirements, retiredMemberships: membershipRetirements,
+        retiredEntries: entryRetirements)
     }
     self.rows = rows
     self.retired = retired
     self.entryRebindings = entryRebindings
+    self.entryRetirements = entryRetirements
     self.membershipRebindings = membershipRebindings
     self.membershipRetirements = membershipRetirements
     self.expandedRetirements = expandedRetirements
@@ -166,8 +177,10 @@ struct PlannerSourceRestorationConsolidation {
       retiringSchedules: Set(scheduleRetirements.map(\.identity)),
       retiringLabels: Set(labelRetirements.map(\.identity)),
       retiringMemberships: retiredMemberships,
+      retiringEntries: Set(entryRetirements.map(\.identity)),
       associationClosures:
-        labelRetirements.compactMap(\.marker) + membershipRetirements.compactMap(\.marker))
+        labelRetirements.compactMap(\.marker) + membershipRetirements.compactMap(\.marker)
+        + entryRetirements.compactMap(\.marker))
   }
 
   func retiresOwnedLink(_ link: PlannerSchemaV18.OwnedLink) -> Bool {
@@ -186,8 +199,12 @@ struct PlannerSourceRestorationConsolidation {
     expandedRetirements.contains { $0 === completion }
   }
 
+  func retiresEntry(_ entry: PlannerSchemaV18.ItineraryEntry) -> Bool {
+    entryRetirements.contains { $0.entry === entry }
+  }
+
   func itineraryValue(_ itinerary: PlannerSchemaV18.Itinerary) throws -> ItinerarySnapshot {
-    let entries = try (itinerary.entries ?? []).map { entry in
+    let entries = try (itinerary.entries ?? []).filter { !retiresEntry($0) }.map { entry in
       if let rebinding = entryRebindings.first(where: { $0.entry === entry }) {
         return rebinding.snapshot
       }
@@ -232,6 +249,12 @@ struct PlannerSourceRestorationConsolidation {
         context.insert(try PlannerSchemaV4.DeletionMarker(marker))
       }
     }
+    for retirement in entryRetirements {
+      context.delete(retirement.entry)
+      if let marker = retirement.marker {
+        context.insert(try PlannerSchemaV4.DeletionMarker(marker))
+      }
+    }
     for row in rows where retired.contains(row.identity) { context.delete(row.model) }
     context.processPendingChanges()
   }
@@ -252,32 +275,27 @@ struct PlannerSourceRestorationConsolidation {
     for item in try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()) {
       rows.append(
         .init(
-          identity: try binding(.item, item.id, item.lifetimeId), model: item,
-          hasUnsupportedOwnedRelationships: false))
+          identity: try binding(.item, item.id, item.lifetimeId), model: item))
     }
     for list in try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()) {
       rows.append(
         .init(
-          identity: try binding(.list, list.id, list.lifetimeId), model: list,
-          hasUnsupportedOwnedRelationships: false))
+          identity: try binding(.list, list.id, list.lifetimeId), model: list))
     }
     for itinerary in try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()) {
       rows.append(
         .init(
-          identity: try binding(.itinerary, itinerary.id, itinerary.lifetimeId), model: itinerary,
-          hasUnsupportedOwnedRelationships: !(itinerary.entries ?? []).isEmpty))
+          identity: try binding(.itinerary, itinerary.id, itinerary.lifetimeId), model: itinerary))
     }
     for category in try context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()) {
       rows.append(
         .init(
-          identity: try binding(.category, category.id, category.lifetimeId), model: category,
-          hasUnsupportedOwnedRelationships: false))
+          identity: try binding(.category, category.id, category.lifetimeId), model: category))
     }
     for tag in try context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()) {
       rows.append(
         .init(
-          identity: try binding(.tag, tag.id, tag.lifetimeId), model: tag,
-          hasUnsupportedOwnedRelationships: false))
+          identity: try binding(.tag, tag.id, tag.lifetimeId), model: tag))
     }
     return rows
   }
@@ -488,6 +506,8 @@ struct PlannerSourceRestorationConsolidation {
     let namespace: String
     if identity.kind == .membership {
       namespace = "PlannerRestoredMembershipClosure-v1"
+    } else if identity.kind == .itineraryEntry {
+      namespace = "PlannerRestoredItineraryEntryClosure-v1"
     } else {
       namespace = "PlannerRestoredLabelClosure-v1"
     }
@@ -503,6 +523,60 @@ struct PlannerSourceRestorationConsolidation {
   }
 
   /// Retired flags do not seed surviving completion; the complete graph retains and validates history.
+  private static func entryRetirements(
+    context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
+    winners: [PlannerPortableBoundIdentity: Row],
+    retiringMemberships: Set<PlannerPortableBoundIdentity>,
+    families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
+  ) throws -> [EntryRetirement] {
+    guard !retired.isEmpty else { return [] }
+    var identities: Set<PlannerPortableBoundIdentity> = []
+    var retirements: [EntryRetirement] = []
+    for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+      let owner = try binding(.itinerary, entry.itineraryId, entry.itineraryLifetimeId)
+      guard retired.contains(owner) else { continue }
+      guard let row = rows.first(where: { $0.identity == owner }),
+        let itinerary = row.model as? PlannerSchemaV18.Itinerary, entry.itinerary === itinerary,
+        let sourceKind = PlannerPortableIdentityKind(rawValue: entry.sourceKind)
+      else { throw unresolved("A retired stop has inconsistent Itinerary ownership.") }
+      let source = try binding(sourceKind, entry.sourceId, entry.sourceLifetimeId)
+      let projectedListLifetime: UUID?
+      if source.kind == .list {
+        projectedListLifetime = winners[source]?.identity.lifetimeId
+      } else {
+        projectedListLifetime = nil
+      }
+      let value = try entry.value(
+        projectedListLifetimeId: projectedListLifetime, retiringMemberships: retiringMemberships)
+      let identity = PlannerPortableBoundIdentity(
+        kind: .itineraryEntry, id: value.id, lifetimeId: value.lifetimeId)
+      guard identities.insert(identity).inserted else {
+        throw unresolved("Competing retired stops have the same bound identity.")
+      }
+      let closed = markers.contains { marker in
+        guard case .itineraryEntry(let identifier, let lifetime) = marker.target else {
+          return false
+        }
+        return identifier == value.id && lifetime == value.lifetimeId
+      }
+      let marker: PortableDeletionMarker?
+      if closed {
+        marker = nil
+      } else {
+        marker = try PortableDeletionMarker(
+          deletionId: closureIdentifier(identity, role: "deletion"),
+          operationId: closureIdentifier(identity, role: "maintenance"),
+          target: .itineraryEntry(id: value.id, lifetimeId: value.lifetimeId), closedFamilyId: nil
+        ).closingRestorationFamily(families)
+      }
+      retirements.append(
+        .init(
+          entry: entry, identity: identity, projectedListLifetime: projectedListLifetime,
+          marker: marker))
+    }
+    return retirements
+  }
+
   private static func membershipRetirements(
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     lineage: PlannerNativeLineage, markers: [PortableDeletionMarker]
@@ -554,29 +628,41 @@ struct PlannerSourceRestorationConsolidation {
 
   private static func expandedRetirements(
     context: ModelContext, memberships: [MembershipRetirement],
+    entries: [EntryRetirement],
     winners: [PlannerPortableBoundIdentity: Row]
   ) throws -> [PlannerSchemaV18.ExpandedCompletion] {
-    guard !memberships.isEmpty else { return [] }
+    guard !memberships.isEmpty || !entries.isEmpty else { return [] }
     var contexts: Set<PlannerExpandedContext> = []
     var retirements: [PlannerSchemaV18.ExpandedCompletion] = []
     for completion in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
-      guard
-        let retirement = memberships.first(where: {
-          $0.identity.id == completion.membershipId
-            && $0.identity.lifetimeId == completion.membershipLifetimeId
-        })
-      else { continue }
-      let member = try retirement.membership.value()
-      let owner = try binding(.list, member.list.id, member.list.lifetimeId)
-      guard completion.membership === retirement.membership,
-        let original = retirement.membership.list,
-        let winner = winners[owner]?.model as? PlannerSchemaV18.List,
-        let entry = completion.listEntry, entry.list === original || entry.list === winner,
-        entry.sourceLifetimeId == original.lifetimeId || entry.sourceLifetimeId == winner.lifetimeId
-      else { throw unresolved("A retiring expanded completion has an unresolved List scope.") }
-      let value = try completion.value(projectedListLifetimeId: member.list.lifetimeId)
+      let value: ExpandedCompletionSnapshot
+      if let retirement = memberships.first(where: {
+        $0.identity.id == completion.membershipId
+          && $0.identity.lifetimeId == completion.membershipLifetimeId
+      }) {
+        let member = try retirement.membership.value()
+        let owner = try binding(.list, member.list.id, member.list.lifetimeId)
+        guard completion.membership === retirement.membership,
+          let original = retirement.membership.list,
+          let winner = winners[owner]?.model as? PlannerSchemaV18.List,
+          let entry = completion.listEntry, entry.list === original || entry.list === winner,
+          entry.sourceLifetimeId == original.lifetimeId
+            || entry.sourceLifetimeId == winner.lifetimeId
+        else { throw unresolved("A retiring expanded completion has an unresolved List scope.") }
+        value = try completion.value(projectedListLifetimeId: member.list.lifetimeId)
+      } else if let retirement = entries.first(where: {
+        $0.identity.id == completion.listEntryId
+          && $0.identity.lifetimeId == completion.listEntryLifetimeId
+      }) {
+        guard completion.listEntry === retirement.entry else {
+          throw unresolved("A retiring expanded completion has inconsistent stop ownership.")
+        }
+        value = try completion.value(projectedListLifetimeId: retirement.projectedListLifetime)
+      } else {
+        continue
+      }
       guard contexts.insert(value.context).inserted else {
-        throw unresolved("A retired membership has duplicate expanded completion contexts.")
+        throw unresolved("Retiring associations have duplicate expanded completion contexts.")
       }
       retirements.append(completion)
     }
@@ -619,7 +705,7 @@ struct PlannerSourceRestorationConsolidation {
   private static func entryRebindings(
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     winners: [PlannerPortableBoundIdentity: Row],
-    retiringMemberships: Set<PlannerPortableBoundIdentity>
+    retiringMemberships: Set<PlannerPortableBoundIdentity>, excluding entries: [EntryRetirement]
   ) throws -> [EntryRebinding] {
     guard !retired.isEmpty else { return [] }
     let lineage = try PlannerNativeLineage(context: context)
@@ -628,6 +714,7 @@ struct PlannerSourceRestorationConsolidation {
       deletionMarkers: lineage.deletionMarkers.compactMap(\.expandedCompletionMarker))
     var rebindings: [EntryRebinding] = []
     for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+      if entries.contains(where: { $0.entry === entry }) { continue }
       guard let sourceKind = PlannerPortableIdentityKind(rawValue: entry.sourceKind) else {
         throw unresolved("A native entry has an unsupported source kind.")
       }
@@ -672,7 +759,7 @@ struct PlannerSourceRestorationConsolidation {
     admittedEntries: [EntryRebinding], admittedMemberships: [MembershipRebinding],
     admittedLabels: [LabelRebinding], retiredOwnedLinks: [OwnedLinkRetirement],
     retiredSchedules: [ScheduleRetirement], retiredLabels: [LabelRetirement],
-    retiredMemberships: [MembershipRetirement]
+    retiredMemberships: [MembershipRetirement], retiredEntries: [EntryRetirement]
   ) throws {
     func requireSurvivor(_ kind: String, _ identifier: UUID?, _ lifetime: UUID?) throws {
       guard let kind = PlannerPortableIdentityKind(rawValue: kind) else {
@@ -690,6 +777,7 @@ struct PlannerSourceRestorationConsolidation {
       try requireSurvivor("list", member.listId, member.listLifetimeId)
     }
     for entry in try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>()) {
+      if retiredEntries.contains(where: { $0.entry === entry }) { continue }
       try requireSurvivor("itinerary", entry.itineraryId, entry.itineraryLifetimeId)
       if !admittedEntries.contains(where: { $0.entry === entry }) {
         try requireSurvivor(entry.sourceKind, entry.sourceId, entry.sourceLifetimeId)
@@ -728,6 +816,7 @@ extension PlannerDataSnapshot {
     retiringSchedules: Set<PlannerPortableBoundIdentity>,
     retiringLabels: Set<PlannerPortableBoundIdentity>,
     retiringMemberships: Set<PlannerPortableBoundIdentity>,
+    retiringEntries: Set<PlannerPortableBoundIdentity>,
     associationClosures: [PortableDeletionMarker]
   ) {
     format = snapshot.format
@@ -739,7 +828,9 @@ extension PlannerDataSnapshot {
       reboundMemberships.first { $0.id == member.id && $0.lifetimeId == member.lifetimeId }
         ?? member
     }
-    itineraryEntries = snapshot.itineraryEntries.map { entry in
+    itineraryEntries = snapshot.itineraryEntries.filter {
+      !retiringEntries.contains(.init(kind: .itineraryEntry, id: $0.id, lifetimeId: $0.lifetimeId))
+    }.map { entry in
       reboundEntries.first { $0.id == entry.id && $0.lifetimeId == entry.lifetimeId } ?? entry
     }
     expandedCompletions = snapshot.expandedCompletions.filter {
@@ -747,6 +838,10 @@ extension PlannerDataSnapshot {
         .init(
           kind: .membership, id: $0.context.membershipId,
           lifetimeId: $0.context.membershipLifetimeId))
+        && !retiringEntries.contains(
+          .init(
+            kind: .itineraryEntry, id: $0.context.listEntryId,
+            lifetimeId: $0.context.listEntryLifetimeId))
     }
     labelAssociations = snapshot.labelAssociations.filter {
       !retiringLabels.contains(.init(kind: .labelAssociation, id: $0.id, lifetimeId: $0.lifetimeId))
