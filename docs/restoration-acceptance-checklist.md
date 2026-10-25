@@ -29,7 +29,7 @@ cases. They do not claim that every interaction below has already executed.
 | Check | Required result | Gate |
 | --- | --- | --- |
 | Source-owner and owned-reference families choose different candidates | Four real-store cases preserve both complete versions under rejection, including reopen; this proves preservation, not reconciliation | [Q163](native-crossed-restoration-family-decision.md) needs an explicit authority or MVP deferral decision |
-| Named import, legacy admission, causal-history and interruption outcomes from older checkpoints | The [history audit](local-restoration-history-audit.md) links later evidence and separates current qualification from historical open lists | Prepared-only Move/Capture and payload-specific fault promises remain concrete local checks; no general reconciliation framework is implied |
+| Named import, legacy admission, causal-history and interruption outcomes from older checkpoints | The [history audit](local-restoration-history-audit.md) links later evidence, including [prepared-only Move/Capture](prototypes/native-prepared-move-capture.md), and separates current qualification from historical open lists | Q161 payload-specific fault promises remain concrete local checks; no general reconciliation framework is implied |
 
 A20 closes the whole declared family after Delete. It does not authorize
 redirecting independent references across closed families or predecessors.

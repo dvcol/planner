@@ -16,12 +16,12 @@ instruction to build more reconciliation machinery.
 
 | Earlier open item | Later qualification | Current limit |
 | --- | --- | --- |
-| Move must observe strict removals and retain original action evidence | [Strict Move](prototypes/native-membership-strict-move.md) covers new/preexisting destination, exact source/destination bases and replay after replacement | Applied replay is covered; a surviving preparation without a receipt is a distinct case |
-| Capture reuse must observe destination removals without changing other contexts | [Strict Capture](prototypes/native-membership-strict-capture.md) covers informed additions, no-op reuse, original content and later replacement/replay | Prepared-only Capture interruption remains distinct from applied replay and recovery-incomplete saves |
+| Move must observe strict removals and retain original action evidence | [Strict Move](prototypes/native-membership-strict-move.md) covers new/preexisting destination, exact source/destination bases and replay after replacement; [prepared-only replay](prototypes/native-prepared-move-capture.md) now covers a surviving proposal without its receipt | A copied valid preparation does not prove actual Move process death |
+| Capture reuse must observe destination removals without changing other contexts | [Strict Capture](prototypes/native-membership-strict-capture.md) covers informed additions, no-op reuse, original content and later replacement/replay; [prepared-only replay](prototypes/native-prepared-move-capture.md) preserves an unrelated edited draft | Preparation input, applied replay and recovery-incomplete saves keep their distinct evidence |
 | Reviewed Overwrite must establish a truthful removal barrier and preserve frozen replay | [Strict Overwrite](prototypes/native-membership-strict-overwrite.md) covers old/new evidence, competing-value regression and preparation-only admission | Preparation input is not evidence of an actual interrupted import process |
 | Legacy closed alias delivery, eligible aliases and later smaller roots | [Legacy delivery](prototypes/native-legacy-closed-alias-delivery.md), [alias actions](prototypes/native-membership-eligible-alias-actions.md) and [delayed roots](prototypes/native-delayed-canonical-roots.md) cover their worked cases | Unknown or contradictory authority retains rejection; unrelated generations do not gain a redirect |
 | Native flags disagree with retained history, or causal records are missing | [History-backed flags](prototypes/native-membership-history-backed-flags.md), [partial history](prototypes/native-partial-completion-history.md) and [Q156](prototypes/native-post-closure-completion.md) retain proven completion and reject incomplete history until exact records return | Broader physical delivery and repair-specific faults remain separate |
-| Prepared contextual commands must not resolve against replacement targets | [Context preparations](prototypes/native-membership-prepared-context-replay.md) and [pending maintenance](prototypes/native-membership-pending-maintenance-replay.md) cover completion/reorder/bulk, missing/newer targets and blocked maintenance | These commands do not supply prepared-only Move/Capture coverage |
+| Prepared contextual commands must not resolve against replacement targets | [Context preparations](prototypes/native-membership-prepared-context-replay.md), [pending maintenance](prototypes/native-membership-pending-maintenance-replay.md) and [Move/Capture](prototypes/native-prepared-move-capture.md) cover represented missing/newer targets and blocked maintenance | Actual command-specific process death is not inferred from a copied preparation |
 | Automatic maintenance interrupted before or after native commit | [Pre-save SIGKILL](prototypes/native-maintenance-pre-save-interruption.md), [post-save/relaunch](prototypes/native-maintenance-post-save-interruption.md) and native save-failure evidence qualify the shared transaction | A generic transaction test does not claim each owned-content payload has executed at every fault stage |
 | Q156 compatibility publication or activation interrupted | [Both retained termination checkpoints](prototypes/native-post-closure-completion.md#compatibility-activation-after-termination) preserve the old or already published baseline and retry through the public interface | Controlled local SIGKILL does not qualify power loss or cloud/account interruption |
 | Native recovery selection and committed Retry | [Prepared-copy inspection](prototypes/native-prepared-maintenance-inspection.md), [committed Retry](prototypes/native-committed-maintenance-retry-ui.md) and [late-input reload](prototypes/native-maintenance-post-save-interruption.md#native-late-input-recovery-follow-up) cover represented phone/iPad workflows | Actual Mac interaction and whole-app accessibility remain open |
@@ -52,15 +52,11 @@ turn historical product hashes into current execution credit.
 
 ## Concrete local work still open
 
-1. Qualify preparation-only Move and Capture replay through the existing public
-   operation/status and recovery-file boundaries. A changed or vanished draft,
-   source or destination must not retarget the original operation. Retain the
-   distinction between a copied valid preparation and actual process death.
-2. Reconcile payload-specific save/publication/interruption promises in the Q161
+1. Reconcile payload-specific save/publication/interruption promises in the Q161
    owned-content reports with the existing shared transaction tests. Run a new
    payload-specific case where a promised outcome is still unestablished. Do not
    claim a Cartesian fault matrix or add a new recovery framework by inference.
-3. Await Q163 for the conflicting source/owned-family authority. Preserve the
+2. Await Q163 for the conflicting source/owned-family authority. Preserve the
    current atomic rejection while that decision is pending.
 
 Mac interaction, Map/browser/change-stream lifecycle and accessibility, signed

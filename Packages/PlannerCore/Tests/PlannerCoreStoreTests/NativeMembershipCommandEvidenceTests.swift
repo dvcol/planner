@@ -11,7 +11,7 @@ struct NativeMembershipCommandEvidenceTests {
       "list", "expanded", "direct", "reorderAlias", "reorderAnchor", "bulkList", "bulkBranch",
       "bulkItinerary",
       "bulkEmptyBranch",
-    ].flatMap { scope in [scope, "legacy:" + scope] },
+    ].flatMap { scope in [scope, "legacy:" + scope] } + ["move", "capture"],
     ["empty", "newer", "maintenance"])
   func savedContextPreparationsStayUnverifiedBeforeResolvingMissingOrNewerTargets(
     rawScope: String, environment: String
@@ -127,6 +127,29 @@ struct NativeMembershipCommandEvidenceTests {
       command = .reorderMembership(
         listId: listIdentifier, membershipId: otherMembership,
         placement: .before(associationId: retiredIdentifier))
+    case "move":
+      command = .moveMembership(
+        listId: listIdentifier, membershipId: retiredIdentifier,
+        destinationListId: emptyList.id, placement: .last)
+    case "capture":
+      let originalUrl = "https://example.com/prepared-capture"
+      guard
+        case .source(.item(let source)) = await producer.read(
+          session: session, request: .source(hotel))
+      else { throw CancellationError() }
+      _ = try await save(
+        producer, session: session,
+        command: .editItem(
+          sourceId: hotel.id,
+          changes: .init(links: .set([.init(originalUrl: originalUrl)])),
+          expectedFieldHashes: [.links: try #require(source.fieldHashes[.links])]))
+      guard
+        case .draft(let draft) = await producer.prepareCapture(
+          session: session, input: .direct([.url(originalUrl)]))
+      else { throw CancellationError() }
+      command = .applyCapture(
+        draftId: draft.draftId, draftGeneration: draft.generation,
+        choice: .reuse(itemId: hotel.id), listIds: [emptyList.id])
     case "bulkList":
       command = .setBulkCompletion(scope: .list(listId: listIdentifier), done: true)
     case "bulkBranch":
@@ -142,16 +165,24 @@ struct NativeMembershipCommandEvidenceTests {
     default: throw CancellationError()
     }
     let reviewToken: PlannerReviewToken?
-    if case .setBulkCompletion = command {
-      guard
-        case .reviewed(let review) = await producer.prepareReview(
-          session: session, command: command)
-      else {
-        throw CancellationError()
+    switch command {
+    case .setBulkCompletion, .applyCapture:
+      let response = await producer.prepareReview(session: session, command: command)
+      guard case .reviewed(let review) = response else {
+        Issue.record("The source preparation fixture needs a valid review: \(response)")
+        return
       }
       reviewToken = review.reviewToken
-    } else {
+    default:
       reviewToken = nil
+    }
+    let hasMembershipEvidence = ["move", "capture"].contains(scope)
+    var originalTargetBackup: Data?
+    if hasMembershipEvidence {
+      guard case .exported(let backup) = await producer.exportData(session: session) else {
+        throw CancellationError()
+      }
+      originalTargetBackup = backup
     }
     let operationIdentifier = UUID()
     guard
@@ -181,8 +212,17 @@ struct NativeMembershipCommandEvidenceTests {
     let hasExpandedEvidence = ["expanded", "bulkBranch", "bulkItinerary"].contains(scope)
     #expect(proposal.2["formatVersion"] as? Int == (hasExpandedEvidence ? 3 : 2))
     #expect((proposal.2["resolvedBindings"] as? [[String: Any]])?.isEmpty == false)
-    #expect((proposal.2["resolvedMembershipEvidence"] as? [[String: Any]])?.isEmpty == true)
-    let expectedPrefix = hasExpandedEvidence ? "sha256-payload-v4:" : "sha256-payload-v1:"
+    #expect(
+      (proposal.2["resolvedMembershipEvidence"] as? [[String: Any]])?.isEmpty
+        == !hasMembershipEvidence)
+    let expectedPrefix: String
+    if hasExpandedEvidence {
+      expectedPrefix = "sha256-payload-v4:"
+    } else if hasMembershipEvidence {
+      expectedPrefix = "sha256-payload-v3:"
+    } else {
+      expectedPrefix = "sha256-payload-v1:"
+    }
     #expect((proposal.2["payloadDigest"] as? String)?.hasPrefix(expectedPrefix) == true)
     let proposalIdentifier = try #require(
       (proposal.2["proposalId"] as? String).flatMap(UUID.init(uuidString:)))
@@ -193,10 +233,15 @@ struct NativeMembershipCommandEvidenceTests {
       throw CancellationError()
     }
     if environment != "empty" {
-      let proposed = try #require(proposal.2["proposedBackup"])
+      let targetBackup: Data
+      if let originalTargetBackup {
+        targetBackup = originalTargetBackup
+      } else {
+        targetBackup = try JSONSerialization.data(
+          withJSONObject: #require(proposal.2["proposedBackup"]))
+      }
       guard
-        case .decoded(let incoming) = current.decodeImport(
-          try JSONSerialization.data(withJSONObject: proposed)),
+        case .decoded(let incoming) = current.decodeImport(targetBackup),
         case .reviewed(let review) = await current.prepareReview(
           session: currentSession, command: .applyImport(backup: incoming, mode: .overwrite)),
         case .applied(_, .complete) = await current.execute(
@@ -283,6 +328,17 @@ struct NativeMembershipCommandEvidenceTests {
       else { throw CancellationError() }
       #expect(operations.isEmpty && maintenance.count == 1 && mutationBlocked)
     }
+    var unrelatedDraft: PlannerCaptureDraftRead?
+    if scope == "capture" {
+      guard
+        case .draft(let draft) = await current.prepareCapture(
+          session: currentSession, input: .direct([.text("Keep this separate draft")])),
+        case .draft(let edited) = await current.updateCapture(
+          session: currentSession, draftId: draft.draftId, generation: draft.generation,
+          edit: .init(changes: .init(title: .set("Keep my edited draft"))))
+      else { throw CancellationError() }
+      unrelatedDraft = edited
+    }
     var replayData = proposal.1
     if legacyPreparation {
       var unversioned = proposal.2
@@ -364,6 +420,12 @@ struct NativeMembershipCommandEvidenceTests {
       altered = .setBulkCompletion(scope: selected, done: !done)
     case .reorderMembership(let owner, let member, _):
       altered = .reorderMembership(listId: owner, membershipId: member, placement: .first)
+    case .moveMembership(let owner, let member, let destination, _):
+      altered = .moveMembership(
+        listId: owner, membershipId: member, destinationListId: destination, placement: .first)
+    case .applyCapture(let draft, let generation, _, let destinations):
+      altered = .applyCapture(
+        draftId: draft, draftGeneration: generation, choice: .createNew, listIds: destinations)
     default: throw CancellationError()
     }
     guard
@@ -375,6 +437,18 @@ struct NativeMembershipCommandEvidenceTests {
     #expect(mismatched.code == "operationPayloadMismatch")
     #expect(before == after)
     #expect(try namespaceFiles() == beforeFiles)
+    if let unrelatedDraft {
+      guard
+        case .draft(let retained) = await current.readCapture(
+          session: currentSession, draftId: unrelatedDraft.draftId)
+      else {
+        Issue.record("Prepared Capture replay must leave another edited draft available.")
+        return
+      }
+      #expect(retained.generation == unrelatedDraft.generation)
+      #expect(retained.content.title == "Keep my edited draft")
+      #expect(retained.links == unrelatedDraft.links)
+    }
     if environment == "maintenance" {
       guard
         case .rejected(let blocked) = await current.execute(
