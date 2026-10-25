@@ -808,16 +808,25 @@ private struct SourceRestorationFixture {
         context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
           $0.id == source.id && $0.lifetimeId == winnerLifetime
         })
-      context.insert(
-        PlannerSchemaV18.LabelAssociation(
-          item: try #require(association.itemOwner), category: category))
+      if let owner = association.itemOwner {
+        context.insert(PlannerSchemaV18.LabelAssociation(item: owner, category: category))
+      } else {
+        context.insert(
+          PlannerSchemaV18.LabelAssociation(
+            itinerary: try #require(association.itineraryOwner), category: category))
+      }
     } else {
       let tag = try #require(
         context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
           $0.id == source.id && $0.lifetimeId == winnerLifetime
         })
-      context.insert(
-        PlannerSchemaV18.LabelAssociation(item: try #require(association.itemOwner), tag: tag))
+      if let owner = association.itemOwner {
+        context.insert(PlannerSchemaV18.LabelAssociation(item: owner, tag: tag))
+      } else {
+        context.insert(
+          PlannerSchemaV18.LabelAssociation(
+            itinerary: try #require(association.itineraryOwner), tag: tag))
+      }
     }
     try context.save()
   }
@@ -831,7 +840,9 @@ private struct SourceRestorationFixture {
         "lifetime": association.lifetimeId?.uuidString ?? "",
         "owner": association.ownerId?.uuidString ?? "",
         "ownerLifetime": association.ownerLifetimeId?.uuidString ?? "",
-        "ownerObject": association.itemOwner?.lifetimeId?.uuidString ?? "",
+        "ownerObject":
+          (association.itemOwner?.lifetimeId ?? association.itineraryOwner?.lifetimeId)?.uuidString
+          ?? "",
         "label": association.labelId?.uuidString ?? "",
         "labelLifetime": association.labelLifetimeId?.uuidString ?? "",
         "labelObject": (association.category?.lifetimeId ?? association.tag?.lifetimeId)?.uuidString
@@ -839,6 +850,66 @@ private struct SourceRestorationFixture {
       ]
     }.sorted { ($0["id"] ?? "") < ($1["id"] ?? "") }
     return try JSONSerialization.data(withJSONObject: values, options: [.sortedKeys])
+  }
+
+  @MainActor func identifyLabelCollision(losingTargetIsSmaller: Bool) throws {
+    let context = try nativeContext()
+    let associations = try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>())
+      .filter { $0.labelId == source.id }
+    #expect(associations.count == 2)
+    for association in associations {
+      let selectsLoser =
+        association.labelLifetimeId?.uuidString == "00000000-0000-4000-8000-000000000815"
+      let isSmaller = selectsLoser == losingTargetIsSmaller
+      if isSmaller {
+        association.id = UUID(uuidString: "00000000-0000-4000-8000-000000000701")!
+        association.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000801")!
+      } else {
+        association.id = UUID(uuidString: "00000000-0000-4000-8000-000000000702")!
+        association.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000802")!
+      }
+    }
+    try context.save()
+  }
+
+  @MainActor func redeliverClosedLabelAssociation(targetsLoser: Bool) throws {
+    let context = try nativeContext()
+    let retained = try #require(
+      context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()).first {
+        $0.id?.uuidString == "00000000-0000-4000-8000-000000000701"
+      })
+    let lifetime: UUID
+    if targetsLoser {
+      lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000815")!
+    } else {
+      lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000814")!
+    }
+    let association: PlannerSchemaV18.LabelAssociation
+    if source.kind == .category {
+      let category = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Category>()).first {
+          $0.id == source.id && $0.lifetimeId == lifetime
+        })
+      if let owner = retained.itemOwner {
+        association = .init(item: owner, category: category)
+      } else {
+        association = .init(itinerary: try #require(retained.itineraryOwner), category: category)
+      }
+    } else {
+      let tag = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Tag>()).first {
+          $0.id == source.id && $0.lifetimeId == lifetime
+        })
+      if let owner = retained.itemOwner {
+        association = .init(item: owner, tag: tag)
+      } else {
+        association = .init(itinerary: try #require(retained.itineraryOwner), tag: tag)
+      }
+    }
+    association.id = UUID(uuidString: "00000000-0000-4000-8000-000000000702")!
+    association.lifetimeId = UUID(uuidString: "00000000-0000-4000-8000-000000000802")!
+    context.insert(association)
+    try context.save()
   }
 
   @MainActor func corruptEntry(_ scenario: String) throws {
@@ -1424,6 +1495,161 @@ struct NativeSourceRestorationEntryTests {
 }
 
 struct NativeRestoredTargetReferenceTests {
+  @Test(arguments: [PlannerEntityKind.category, .tag])
+  func restoredLabelCollisionKeepsItineraryContentAndClosedIdentity(kind: PlannerEntityKind)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    guard
+      case .applied(let creation, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .createItinerary(
+            content: .init(
+              title: "Independent itinerary", notes: "Keep these route notes",
+              categoryIds: kind == .category ? [fixture.source.id] : [],
+              tagIds: kind == .tag ? [fixture.source.id] : [])))
+      ).outcome,
+      let owner = creation.generated.first,
+      case .source(.itinerary(let before)) = await fixture.planner.read(
+        session: fixture.session, request: .source(owner)),
+      case .exported(let original) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    try await fixture.deliverCandidate()
+    try await fixture.bindLabelToLosingCandidate()
+    try await fixture.invalidateLabelTarget("collision")
+    try await fixture.identifyLabelCollision(losingTargetIsSmaller: true)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session),
+      case .source(.itinerary(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(owner))
+    else { throw CancellationError() }
+    #expect(retained.fieldHashes == before.fieldHashes)
+    let graph = try fixture.object(after)
+    let expected = try fixture.object(original)
+    #expect(graph["sources"] as? NSArray == expected["sources"] as? NSArray)
+    let associations = try #require(graph["labelAssociations"] as? [[String: Any]])
+    #expect(associations.count == 1)
+    #expect(associations.first?["id"] as? String == "00000000-0000-4000-8000-000000000701")
+    try await fixture.redeliverClosedLabelAssociation(targetsLoser: false)
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+  }
+
+  @Test(arguments: [PlannerEntityKind.category, .tag])
+  func labelCollisionPreparationFailurePreservesBothAssociationsUntilRetry(kind: PlannerEntityKind)
+    async throws
+  {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    guard
+      case .applied(_, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .createItem(
+            content: .init(
+              title: "Independent owner", categoryIds: kind == .category ? [fixture.source.id] : [],
+              tagIds: kind == .tag ? [fixture.source.id] : [])))
+      ).outcome
+    else { throw CancellationError() }
+    try await fixture.deliverCandidate()
+    try await fixture.bindLabelToLosingCandidate()
+    try await fixture.invalidateLabelTarget("collision")
+    try await fixture.identifyLabelCollision(losingTargetIsSmaller: true)
+    let before = try await fixture.rawLabelData()
+    let files = try fixture.files()
+    let control = try Data(contentsOf: fixture.configuration.controlURL)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+    defer {
+      try? FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    }
+    guard case .failed(let failure) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(failure.code == "maintenanceRequired")
+    #expect(try await fixture.rawLabelData() == before)
+    #expect(try fixture.files() == files)
+    #expect(try Data(contentsOf: fixture.configuration.controlURL) == control)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+    guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let associations = try #require(fixture.object(after)["labelAssociations"] as? [[String: Any]])
+    #expect(associations.count == 1)
+    #expect(associations.first?["id"] as? String == "00000000-0000-4000-8000-000000000701")
+  }
+
+  @Test(arguments: [PlannerEntityKind.category, .tag], [false, true])
+  func restoredLabelCollisionKeepsSmallestAssociationWithoutEditingItsOwner(
+    kind: PlannerEntityKind, losingTargetIsSmaller: Bool
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: kind)
+    guard
+      case .applied(let creation, .complete) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .createItem(
+            content: .init(
+              title: "Independent owner", notes: "Keep this content",
+              categoryIds: kind == .category ? [fixture.source.id] : [],
+              tagIds: kind == .tag ? [fixture.source.id] : [])))
+      ).outcome,
+      let owner = creation.generated.first,
+      case .source(.item(let before)) = await fixture.planner.read(
+        session: fixture.session, request: .source(owner)),
+      case .exported(let original) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    let receipts = try fixture.envelope()["receipts"] as? NSArray
+    try await fixture.deliverCandidate()
+    try await fixture.bindLabelToLosingCandidate()
+    try await fixture.invalidateLabelTarget("collision")
+    try await fixture.identifyLabelCollision(losingTargetIsSmaller: losingTargetIsSmaller)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result,
+      case .source(.item(let retained)) = await fixture.planner.read(
+        session: fixture.session, request: .source(owner))
+    else {
+      Issue.record("The smallest association must survive a restored-label collision: \(result)")
+      return
+    }
+    #expect(retained.fieldHashes == before.fieldHashes)
+    let graph = try fixture.object(after)
+    let expected = try fixture.object(original)
+    #expect(graph["sources"] as? NSArray == expected["sources"] as? NSArray)
+    let associations = try #require(graph["labelAssociations"] as? [[String: Any]])
+    #expect(associations.count == 1)
+    #expect(associations.first?["id"] as? String == "00000000-0000-4000-8000-000000000701")
+    let label = try #require(associations.first?["label"] as? [String: Any])
+    #expect(label["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000814")
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    #expect(
+      markers.contains { marker in
+        guard let target = marker["target"] as? [String: Any] else { return false }
+        return target["kind"] as? String == "labelAssociation"
+          && target["id"] as? String == "00000000-0000-4000-8000-000000000702"
+          && target["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000802"
+      })
+    #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    #expect(graph["contextAliases"] as? NSArray == expected["contextAliases"] as? NSArray)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    for targetsLoser in [false, true] {
+      if targetsLoser { try await fixture.deliverCandidate() }
+      try await fixture.redeliverClosedLabelAssociation(targetsLoser: targetsLoser)
+      let redelivery = await fixture.planner.exportData(session: fixture.session)
+      guard case .exported(let redelivered) = redelivery else {
+        Issue.record("A closed association must stay closed after redelivery: \(redelivery)")
+        return
+      }
+      #expect(try fixture.graph(redelivered) == fixture.graph(after))
+      #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    }
+  }
+
   @Test(arguments: [3, 4])
   func oldValidBackupCannotReintroduceAnUnawareSiblingAfterStrictRemove(formatVersion: Int)
     async throws
@@ -1583,7 +1809,7 @@ struct NativeRestoredTargetReferenceTests {
 
   @Test(
     arguments: [PlannerEntityKind.category, .tag],
-    ["collision", "scalarMismatch", "ownerMismatch"])
+    ["scalarMismatch", "ownerMismatch"])
   func invalidLabelRebindingPreservesAllNativeAndRecoveryState(
     kind: PlannerEntityKind, scenario: String
   ) async throws {

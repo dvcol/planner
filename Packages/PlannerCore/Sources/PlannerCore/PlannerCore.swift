@@ -3954,7 +3954,7 @@ public actor Planner {
     }
     return PlannerDataSnapshot(
       itineraries: itineraries,
-      labelAssociations: try labelAssociationSnapshots(context),
+      labelAssociations: try labelAssociationSnapshots(context, sourceProjection: sourceProjection),
       tags: try tagSnapshots(context), categories: try categorySnapshots(context),
       items: try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() },
       lists: try listSnapshots(context),
@@ -3994,7 +3994,7 @@ public actor Planner {
       context: context, markers: deletionMarkers(context))
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
     let snapshot: PlannerDataSnapshot
-    if !sources.retired.isEmpty {
+    if sources.requiresMaintenance {
       let before = sources.project(
         try maintenanceSnapshot(
           context, memberships: records.map { try $0.value() }, sourceProjection: sources))
@@ -4203,13 +4203,13 @@ public actor Planner {
     context.autosaveEnabled = false
     let sources = try PlannerSourceRestorationConsolidation(
       context: context, markers: deletionMarkers(context))
-    if !sources.retired.isEmpty {
+    if sources.requiresMaintenance {
       try commitMaintenance(
         identity: identity, context: context, kind: "sourceRestorationConsolidation",
         ruleVersion: sources.ruleVersion,
         proposal: { try self.canonicalRecoverySnapshot(context) },
         stage: { backup in
-          sources.stage(in: context)
+          try sources.stage(in: context)
           try plannerStageMembershipConsolidation(backup, context: context)
         })
     }
@@ -4455,12 +4455,13 @@ public actor Planner {
     }
   }
 
-  private func labelAssociationSnapshots(_ context: ModelContext) throws
+  private func labelAssociationSnapshots(
+    _ context: ModelContext, sourceProjection: PlannerSourceRestorationConsolidation? = nil
+  ) throws
     -> [LabelAssociationSnapshot]
   {
-    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>()).map {
-      try $0.value()
-    }
+    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV18.LabelAssociation>())
+      .filter { sourceProjection?.retiresLabelAssociation($0) != true }.map { try $0.value() }
     let pairs = snapshots.map {
       $0.owner.kind + ":" + $0.owner.id.uuidString + ":" + $0.owner.lifetimeId.uuidString
         + ":" + $0.label.kind + ":" + $0.label.id.uuidString + ":" + $0.label.lifetimeId.uuidString
