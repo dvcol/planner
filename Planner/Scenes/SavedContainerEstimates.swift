@@ -51,6 +51,7 @@ struct SavedContainerEstimates: View {
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(isManual ? title + ", Manual" : title)
     .accessibilityValue(total.nativeContainerDurationAccessibilityDescription)
+    .accessibilityAddTraits(.isStaticText)
     .accessibilityIdentifier(accessibilityIdentifierPrefix + "." + identifier)
   }
 
@@ -76,6 +77,7 @@ struct SavedContainerEstimates: View {
     }
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(message)
+    .accessibilityAddTraits(.isStaticText)
     .accessibilityIdentifier(accessibilityIdentifierPrefix + ".warning." + identifier)
   }
 

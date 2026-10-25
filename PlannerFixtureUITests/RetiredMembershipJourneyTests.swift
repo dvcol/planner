@@ -5,6 +5,65 @@ import XCTest
 
   @MainActor
   final class RetiredMembershipJourneyTests: XCTestCase {
+    func testRepeatedItineraryControlsPassNativeInteractionAccessibilityAudit() throws {
+      continueAfterFailure = false
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCUIDevice.shared.orientation = .landscapeLeft
+      } else {
+        XCUIDevice.shared.orientation = .portrait
+      }
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "post-closure-completion", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Itineraries")
+      let itinerary = application.buttons.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@",
+          "saved.itinerary.row.", "Post-closure route")
+      ).firstMatch
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+      itinerary.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["0 of 3 items done"].waitForExistence(timeout: 10))
+      let contents = application.descendants(matching: .any)
+        .matching(identifier: "saved.itinerary.contents").firstMatch
+      XCTAssertTrue(contents.waitForExistence(timeout: 10))
+      let completions = application.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.completion."))
+      XCTAssertTrue(completions.firstMatch.waitForExistence(timeout: 10))
+      let firstCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      firstCapture.name = "Repeated itinerary controls before native interaction audit"
+      firstCapture.lifetime = .keepAlways
+      add(firstCapture)
+      let previousValue = continueAfterFailure
+      continueAfterFailure = true
+      defer { continueAfterFailure = previousValue }
+      try application.performAccessibilityAudit(
+        for: [.hitRegion, .sufficientElementDescription, .trait])
+      var checkedIdentifiers: Set<String> = []
+      for _ in 0..<6 {
+        for completion in completions.allElementsBoundByIndex where completion.isHittable {
+          XCTAssertGreaterThanOrEqual(completion.frame.width, 44)
+          XCTAssertGreaterThanOrEqual(completion.frame.height, 44)
+          XCTAssertEqual(completion.value as? String, "To do")
+          XCTAssertTrue(completion.label.contains("Post-closure museum"))
+          checkedIdentifiers.insert(completion.identifier)
+        }
+        if checkedIdentifiers.count == 3 { break }
+        contents.swipeUp()
+      }
+      XCTAssertEqual(checkedIdentifiers.count, 3)
+      let finalCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      finalCapture.name = "Repeated itinerary controls after reaching all exact stops"
+      finalCapture.lifetime = .keepAlways
+      add(finalCapture)
+      try application.performAccessibilityAudit(
+        for: [.hitRegion, .sufficientElementDescription, .trait])
+      application.terminate()
+    }
+
     func testFreshMembershipRetainsLocalCompletionAfterAnOldCopyReturnsOnRelaunch() {
       verifyFreshMembershipAfterRelaunch(fixture: "retired-membership")
     }
