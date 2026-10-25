@@ -3945,18 +3945,23 @@ public actor Planner {
   ) throws -> PlannerDataSnapshot {
     let lineage = try PlannerNativeLineage(context: context)
     let itineraries: [ItinerarySnapshot]
+    let items: [ItemSnapshot]
     if let sourceProjection {
       itineraries = try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).map {
         try sourceProjection.itineraryValue($0)
       }
+      items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map {
+        try sourceProjection.itemValue($0)
+      }
     } else {
       itineraries = try itinerarySnapshots(context)
+      items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() }
     }
     return PlannerDataSnapshot(
       itineraries: itineraries,
       labelAssociations: try labelAssociationSnapshots(context, sourceProjection: sourceProjection),
       tags: try tagSnapshots(context), categories: try categorySnapshots(context),
-      items: try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() },
+      items: items,
       lists: try listSnapshots(context),
       memberships: try memberships ?? membershipSnapshots(context),
       deletionMarkers: try deletionMarkers(context), contextAliases: lineage.contextAliases,

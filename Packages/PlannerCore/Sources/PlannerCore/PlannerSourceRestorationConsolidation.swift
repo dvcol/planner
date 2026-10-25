@@ -73,7 +73,10 @@ struct PlannerSourceRestorationConsolidation {
   private let labelRetirements: [LabelRetirement]
   let ruleVersion = 3
   let retired: Set<PlannerPortableBoundIdentity>
-  var requiresMaintenance: Bool { !retired.isEmpty || !labelRetirements.isEmpty }
+  var requiresMaintenance: Bool {
+    !retired.isEmpty || !labelRetirements.isEmpty || !ownedLinkRetirements.isEmpty
+      || !scheduleRetirements.isEmpty
+  }
   private var retiredMemberships: Set<PlannerPortableBoundIdentity> {
     Set(membershipRetirements.map(\.identity))
   }
@@ -206,6 +209,10 @@ struct PlannerSourceRestorationConsolidation {
     entryRetirements.contains { $0.entry === entry }
   }
 
+  func itemValue(_ item: PlannerSchemaV18.Item) throws -> ItemSnapshot {
+    try item.value(retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)))
+  }
+
   func itineraryValue(_ itinerary: PlannerSchemaV18.Itinerary) throws -> ItinerarySnapshot {
     let entries = try (itinerary.entries ?? []).filter { !retiresEntry($0) }.map { entry in
       if let rebinding = entryRebindings.first(where: { $0.entry === entry }) {
@@ -213,7 +220,8 @@ struct PlannerSourceRestorationConsolidation {
       }
       return try entry.value(retiringMemberships: retiredMemberships)
     }
-    return try itinerary.value(entrySnapshots: entries)
+    return try itinerary.value(
+      entrySnapshots: entries, retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)))
   }
 
   func stage(in context: ModelContext) throws {
@@ -317,14 +325,16 @@ struct PlannerSourceRestorationConsolidation {
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [OwnedLinkRetirement] {
-    guard !retired.isEmpty else { return [] }
+    let closed = closedOwnedIdentities(kind: .ownedLink, families: families, markers: markers)
+    guard !retired.isEmpty || !closed.isEmpty else { return [] }
     var retirements: [OwnedLinkRetirement] = []
     for link in try context.fetch(FetchDescriptor<PlannerSchemaV18.OwnedLink>()) {
+      let identity = try binding(.ownedLink, link.id, link.lifetimeId)
       guard let ownerKind = PlannerPortableIdentityKind(rawValue: link.ownerKind) else {
         throw unresolved("A native bookmark has an unsupported owner kind.")
       }
       let owner = try binding(ownerKind, link.ownerId, link.ownerLifetimeId)
-      guard retired.contains(owner) else { continue }
+      guard retired.contains(owner) || closed.contains(identity) else { continue }
       guard let row = rows.first(where: { $0.identity == owner }) else {
         throw unresolved("A retired bookmark owner is unresolved.")
       }
@@ -341,13 +351,8 @@ struct PlannerSourceRestorationConsolidation {
       }
       _ = try link.value(
         ownerId: owner.id, ownerLifetimeId: owner.lifetimeId, ownerKind: owner.kind.rawValue)
-      let identity = try binding(.ownedLink, link.id, link.lifetimeId)
-      let closed = markers.contains { marker in
-        guard case .ownedLink(let identifier, let lifetime) = marker.target else { return false }
-        return identifier == identity.id && lifetime == identity.lifetimeId
-      }
       let marker: PortableDeletionMarker?
-      if closed {
+      if closed.contains(identity) {
         marker = nil
       } else {
         marker = try PortableDeletionMarker(
@@ -366,14 +371,16 @@ struct PlannerSourceRestorationConsolidation {
     context: ModelContext, rows: [Row], retired: Set<PlannerPortableBoundIdentity>,
     families: [PlannerPortableRestorationFamily], markers: [PortableDeletionMarker]
   ) throws -> [ScheduleRetirement] {
-    guard !retired.isEmpty else { return [] }
+    let closed = closedOwnedIdentities(kind: .schedule, families: families, markers: markers)
+    guard !retired.isEmpty || !closed.isEmpty else { return [] }
     var retirements: [ScheduleRetirement] = []
     for schedule in try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()) {
+      let identity = try binding(.schedule, schedule.id, schedule.lifetimeId)
       guard let ownerKind = PlannerPortableIdentityKind(rawValue: schedule.sourceKind) else {
         throw unresolved("A native Schedule has an unsupported owner kind.")
       }
       let owner = try binding(ownerKind, schedule.sourceId, schedule.sourceLifetimeId)
-      guard retired.contains(owner) else { continue }
+      guard retired.contains(owner) || closed.contains(identity) else { continue }
       guard let row = rows.first(where: { $0.identity == owner }) else {
         throw unresolved("A retired Schedule owner is unresolved.")
       }
@@ -390,14 +397,8 @@ struct PlannerSourceRestorationConsolidation {
       }
       _ = try schedule.value(
         ownerId: owner.id, ownerLifetimeId: owner.lifetimeId, ownerKind: owner.kind.rawValue)
-      let identity = try binding(.schedule, schedule.id, schedule.lifetimeId)
-      let closed = markers.contains { marker in
-        guard case .source(let source) = marker.target else { return false }
-        return source.kind == "schedule" && source.id == identity.id
-          && source.lifetimeId == identity.lifetimeId
-      }
       let marker: PortableDeletionMarker?
-      if closed {
+      if closed.contains(identity) {
         marker = nil
       } else {
         marker = try PortableDeletionMarker(
@@ -412,6 +413,31 @@ struct PlannerSourceRestorationConsolidation {
         .init(schedule: schedule, identity: identity, marker: marker))
     }
     return retirements
+  }
+
+  private static func closedOwnedIdentities(
+    kind: PlannerPortableIdentityKind, families: [PlannerPortableRestorationFamily],
+    markers: [PortableDeletionMarker]
+  ) -> Set<PlannerPortableBoundIdentity> {
+    var identities: Set<PlannerPortableBoundIdentity> = []
+    for marker in markers {
+      switch marker.target {
+      case .ownedLink(let identifier, let lifetime) where kind == .ownedLink:
+        identities.insert(.init(kind: kind, id: identifier, lifetimeId: lifetime))
+      case .source(let source) where kind == .schedule && source.kind == "schedule":
+        identities.insert(.init(kind: kind, id: source.id, lifetimeId: source.lifetimeId))
+      default: continue
+      }
+    }
+    let closedFamilies = Set(markers.compactMap(\.closedFamilyId))
+    for family in families
+    where family.predecessor.kind == kind && closedFamilies.contains(family.familyId) {
+      for candidate in family.candidates {
+        identities.insert(
+          .init(kind: kind, id: family.predecessor.id, lifetimeId: candidate.lifetimeId))
+      }
+    }
+    return identities
   }
 
   private static func labelRebindings(

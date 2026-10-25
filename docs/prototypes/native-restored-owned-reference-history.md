@@ -128,3 +128,62 @@ stores after host/database closure. Failed and interrupted data remain retained.
 This adds no production rule, format, module or test boundary. Other source-family
 combinations, pre-existing owned restoration-family histories and native/system
 acceptance retain their separate gates.
+
+## Closed owned families and late delivery
+
+The next real-store tracer retains an owned bookmark/Schedule restoration family
+before retiring its losing Item or Itinerary owner. Maintenance closes that
+exact family while preserving its predecessor, both declared candidates and the
+winning source's complete contents. Reopen and ordinary redelivery retain the
+same graph. Reviewed import requires restoration authorization and creates a
+fresh owned lifetime while preserving the old closed family. The original
+no-history import cases remain in the parameterized test.
+
+A declared sibling delivered later on the surviving owner exposed a failure:
+reads rejected its already-closed lifetime instead of retiring the native copy.
+Existing source-restoration maintenance now admits exact closed owned identities
+and candidates of explicitly closed families even when no losing owner remains.
+It reuses the retained closure and records its normal durable maintenance
+transaction. Public identities alone never select a different live lifetime.
+
+A further tracer keeps a fresh authorized restoration live while that closed
+sibling arrives. Schedules passed, but duplicate bookmark-ID validation ran before
+projection and blocked Item/Itinerary reads. The production projection now omits
+only admitted retiring bookmarks before that guard. Remaining live bookmarks
+retain their ordinary identity, ownership and duplicate validation.
+
+The same tracer obstructs the actual recovery directory. Native rows, recovery
+files and writer control remain unchanged while preparation fails. Retry removes
+only the closed sibling. The exact fresh bookmark/Schedule fields and native
+records match their pre-delivery values, the exported graph stays identical, and
+existing user receipts remain untouched. Reopen, exact replay and authorized
+reimport also retain the fresh lifetime.
+
+| Boundary | Final result |
+| --- | --- |
+| Mac Core storage/import/recovery | 48 functions in eight affected suites pass |
+| iPhone Core storage/import/recovery | 46 functions in eight affected suites pass |
+| Existing real HTTP regressions | 12 functions pass |
+| Mac compilation | App, Share and test host build; seven relevant build files reconcile |
+| Inputs and compatibility | 813 shared Core inputs and 1,160 phone/HTTP inputs match; 514 frozen fixture inputs unchanged |
+
+There are no failures, skips or SQLite unlink warnings in the final cohorts.
+The [validation record](evidence/native-membership-consolidation/native-owned-family-history-validation.json)
+separates detailed Core/native-storage scenarios from the existing HTTP routing
+regressions. Unrelated fixture products in the raw compiler inventory receive no
+credit. Both genuine Schema18 and Schema12 migration functions execute on both
+Core runtimes. Schema18 changes only Item/Itinerary snapshot methods; stored
+model declarations and all other schema sources remain unchanged. Portable5,
+model19, rule3, writer gate23 and recovery envelope2 remain in place. No public
+request/result, package, target or test boundary is added. Strict Swift/Markdown
+lint and whitespace checks pass.
+
+Verified cleanup removes 24 passing Mac tracer stores, 148 passing phone stores
+and 25 passing HTTP/Intent stores after host/database closure. Failed and
+interrupted datasets and original result bundles remain retained. Source
+manifests are losslessly compressed.
+
+Further association/history combinations, actual Mac window interaction,
+installed Share, signed/shared storage, CloudKit/account and physical acceptance
+remain separate. Signing stays deferred. These data/HTTP checks add no native UI
+or system Shortcuts evidence.

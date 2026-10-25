@@ -60,7 +60,10 @@ enum PlannerSchemaV18: VersionedSchema {
       }
     }
 
-    func value(entrySnapshots: [ItineraryEntrySnapshot]? = nil) throws -> ItinerarySnapshot {
+    func value(
+      entrySnapshots: [ItineraryEntrySnapshot]? = nil,
+      retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = []
+    ) throws -> ItinerarySnapshot {
       guard let id, let lifetimeId, let createdAt, let updatedAt else {
         throw PlannerFailure(
           "readUnavailable", "The Itinerary has unresolved identity or timestamps.")
@@ -82,7 +85,11 @@ enum PlannerSchemaV18: VersionedSchema {
           try JSONDecoder().decode(PlannerEstimate.self, from: $0)
         })
       try input.validate()
-      let ownedLinks = try (links ?? []).map {
+      let ownedLinks = try (links ?? []).filter { link in
+        guard let identifier = link.id, let lifetime = link.lifetimeId else { return true }
+        return !retiringOwnedLinks.contains(
+          .init(kind: .ownedLink, id: identifier, lifetimeId: lifetime))
+      }.map {
         try $0.value(ownerId: id, ownerLifetimeId: lifetimeId, ownerKind: "itinerary")
       }.sorted { left, right in
         if left.rank != right.rank { return left.rank < right.rank }
@@ -341,7 +348,7 @@ enum PlannerSchemaV18: VersionedSchema {
       }
     }
 
-    func value() throws -> ItemSnapshot {
+    func value(retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = []) throws -> ItemSnapshot {
       guard let id, let lifetimeId, let createdAt, let updatedAt else {
         throw PlannerFailure("readUnavailable", "The Item has unresolved identity or timestamps.")
       }
@@ -359,7 +366,11 @@ enum PlannerSchemaV18: VersionedSchema {
         tagIds: Set(associations.filter { $0.label.kind == "tag" }.map { $0.label.id })
       )
       try input.validate()
-      let ownedLinks = try (links ?? []).map {
+      let ownedLinks = try (links ?? []).filter { link in
+        guard let identifier = link.id, let lifetime = link.lifetimeId else { return true }
+        return !retiringOwnedLinks.contains(
+          .init(kind: .ownedLink, id: identifier, lifetimeId: lifetime))
+      }.map {
         try $0.value(ownerId: id, ownerLifetimeId: lifetimeId)
       }
       .sorted { left, right in

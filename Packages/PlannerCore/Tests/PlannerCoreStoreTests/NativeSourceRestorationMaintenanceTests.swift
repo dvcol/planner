@@ -9,6 +9,101 @@ import Testing
 #endif
 
 struct NativeSourceRestorationMaintenanceTests {
+  @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
+  func losingOwnedRestorationHistoryClosesWithoutChangingTheWinningSource(
+    ownerKind: PlannerEntityKind, referenceKind: String
+  ) async throws {
+    let fixture = try await SourceRestorationFixture.make(kind: ownerKind)
+    if referenceKind == "link" {
+      try await fixture.deliverCandidateWithOwnedLink()
+    } else {
+      try await fixture.deliverCandidateWithSchedule(allDay: false)
+    }
+    let familyData = try await fixture.addOwnedRestorationHistory(referenceKind: referenceKind)
+    let result = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let after) = result else {
+      Issue.record("Discarded owned restoration history must remain exportable: \(result)")
+      return
+    }
+    var graph = try fixture.object(after)
+    let original = try fixture.object(fixture.baseline)
+    let families = try #require(graph["restorationFamilies"] as? [[String: Any]])
+    let ownedFamilies = families.filter {
+      $0["familyId"] as? String == "00000000-0000-4000-8000-000000000880"
+    }
+    #expect(ownedFamilies.count == 1)
+    #expect(
+      try NSDictionary(dictionary: #require(ownedFamilies.first)) == fixture.graph(familyData))
+    let originalMarkers = try #require(original["deletionMarkers"] as? [[String: Any]])
+    let markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+    let additions = markers.filter { marker in
+      !originalMarkers.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    #expect(additions.count == 2)
+    let root = try #require(
+      additions.first { $0["deletionId"] as? String == "00000000-0000-4000-8000-000000000884" })
+    #expect(root["operationId"] as? String == "00000000-0000-4000-8000-000000000885")
+    let closure = try #require(
+      additions.first { $0["closedFamilyId"] as? String == "00000000-0000-4000-8000-000000000880" })
+    let expectedRoot: [String: Any]
+    let expectedClosure: [String: Any]
+    if referenceKind == "link" {
+      expectedRoot = [
+        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
+        "lifetimeId": "00000000-0000-4000-8000-000000000870",
+      ]
+      expectedClosure = [
+        "kind": "ownedLink", "id": "00000000-0000-4000-8000-000000000871",
+        "lifetimeId": "00000000-0000-4000-8000-000000000872",
+      ]
+    } else {
+      expectedRoot = [
+        "kind": "source",
+        "source": [
+          "kind": "schedule", "id": "00000000-0000-4000-8000-000000000873",
+          "lifetimeId": "00000000-0000-4000-8000-000000000870",
+        ],
+      ]
+      expectedClosure = [
+        "kind": "source",
+        "source": [
+          "kind": "schedule", "id": "00000000-0000-4000-8000-000000000873",
+          "lifetimeId": "00000000-0000-4000-8000-000000000874",
+        ],
+      ]
+    }
+    #expect(root["target"] as? NSDictionary == NSDictionary(dictionary: expectedRoot))
+    #expect(closure["target"] as? NSDictionary == NSDictionary(dictionary: expectedClosure))
+    graph["deletionMarkers"] = markers.filter { marker in
+      !additions.contains { NSDictionary(dictionary: $0) == NSDictionary(dictionary: marker) }
+    }
+    graph["restorationFamilies"] = families.filter {
+      $0["familyId"] as? String != "00000000-0000-4000-8000-000000000880"
+    }
+    #expect(NSDictionary(dictionary: graph) == NSDictionary(dictionary: original))
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let session) = await reopened.bootstrap(),
+      case .exported(let persisted) = await reopened.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(persisted) == fixture.graph(after))
+    if referenceKind == "link" {
+      try await fixture.deliverCandidateWithOwnedLink()
+    } else {
+      try await fixture.deliverCandidateWithSchedule(allDay: false)
+    }
+    guard
+      case .exported(let redelivered) = await fixture.planner.exportData(session: fixture.session)
+    else { throw CancellationError() }
+    #expect(try fixture.graph(redelivered) == fixture.graph(after))
+    try await fixture.deliverClosedOwnedSibling(referenceKind: referenceKind)
+    let siblingResult = await fixture.planner.exportData(session: fixture.session)
+    guard case .exported(let afterSibling) = siblingResult else {
+      Issue.record("A known closed sibling must not block the live winner: \(siblingResult)")
+      return
+    }
+    #expect(try fixture.graph(afterSibling) == fixture.graph(after))
+  }
+
   @Test(arguments: [false, true])
   func relatedItemAndListFamiliesPreserveTheWinningPlanInEitherDeliveryOrder(itemFirst: Bool)
     async throws
@@ -278,17 +373,31 @@ struct NativeSourceRestorationMaintenanceTests {
     #expect(try fixture.graph(redelivered) == fixture.graph(after))
   }
 
-  @Test(arguments: [PlannerEntityKind.item, .itinerary], ["link", "schedule"])
+  @Test(
+    arguments: [PlannerEntityKind.item, .itinerary],
+    [
+      (referenceKind: "link", hasHistory: false), (referenceKind: "link", hasHistory: true),
+      (referenceKind: "schedule", hasHistory: false), (referenceKind: "schedule", hasHistory: true),
+    ])
   func discardedOwnedReferencesRequireExplicitRestorationForImport(
-    ownerKind: PlannerEntityKind, referenceKind: String
+    ownerKind: PlannerEntityKind, scenario: (referenceKind: String, hasHistory: Bool)
   ) async throws {
+    let referenceKind = scenario.referenceKind
     let fixture = try await SourceRestorationFixture.make(kind: ownerKind)
     if referenceKind == "link" {
       try await fixture.deliverCandidateWithOwnedLink()
     } else {
       try await fixture.deliverCandidateWithSchedule(allDay: false)
     }
-    let incoming = try await fixture.backupForLosingOwnedReference()
+    let restorationHistory: Data?
+    if scenario.hasHistory {
+      restorationHistory = try await fixture.addOwnedRestorationHistory(
+        referenceKind: referenceKind)
+    } else {
+      restorationHistory = nil
+    }
+    let incoming = try await fixture.backupForLosingOwnedReference(
+      restorationHistory: restorationHistory)
     guard case .decoded(let backup) = fixture.planner.decodeImport(incoming),
       case .exported(let before) = await fixture.planner.exportData(session: fixture.session),
       case .reviewed(let review) = await fixture.planner.prepareReview(
@@ -384,10 +493,16 @@ struct NativeSourceRestorationMaintenanceTests {
     expectedGraph[collection] = references
     let referenceFamilies = restored.backup.restorationFamilies.filter {
       $0.predecessor.kind == restoredIdentity.kind
+        && $0.candidates.contains { $0.operationId == restorationIdentifier }
     }
     let family = try #require(referenceFamilies.first)
     #expect(referenceFamilies.count == 1)
     #expect(family.predecessor.id == restoredIdentity.id)
+    if referenceKind == "link" {
+      #expect(family.predecessor.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000872")
+    } else {
+      #expect(family.predecessor.lifetimeId.uuidString == "00000000-0000-4000-8000-000000000874")
+    }
     #expect(family.candidates.count == 1)
     #expect(family.candidates.first?.lifetimeId == restoredIdentity.lifetimeId)
     #expect(family.candidates.first?.operationId == restorationIdentifier)
@@ -452,6 +567,42 @@ struct NativeSourceRestorationMaintenanceTests {
       return
     }
     #expect(try fixture.graph(reimported) == fixture.graph(restoredData))
+    if scenario.hasHistory {
+      let receipts = try fixture.envelope()["receipts"] as? NSArray
+      let liveLinks = try await fixture.rawOwnedLinkData()
+      let liveSchedules = try await fixture.rawScheduleData()
+      try await fixture.deliverClosedOwnedSibling(referenceKind: referenceKind)
+      let originalLinks = try await fixture.rawOwnedLinkData()
+      let originalSchedules = try await fixture.rawScheduleData()
+      let originalFiles = try fixture.files()
+      let originalControl = try Data(contentsOf: fixture.configuration.controlURL)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o500], ofItemAtPath: fixture.namespace.path)
+      defer {
+        try? FileManager.default.setAttributes(
+          [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+      }
+      guard case .failed(let failure) = await reopened.exportData(session: session) else {
+        Issue.record("Closed-sibling cleanup must first prepare independent recovery.")
+        return
+      }
+      #expect(failure.code == "maintenanceRequired")
+      #expect(try await fixture.rawOwnedLinkData() == originalLinks)
+      #expect(try await fixture.rawScheduleData() == originalSchedules)
+      #expect(try fixture.files() == originalFiles)
+      #expect(try Data(contentsOf: fixture.configuration.controlURL) == originalControl)
+      try FileManager.default.setAttributes(
+        [.posixPermissions: 0o700], ofItemAtPath: fixture.namespace.path)
+      let siblingOutcome = await reopened.exportData(session: session)
+      guard case .exported(let survivingRestoration) = siblingOutcome else {
+        Issue.record("The fresh live restoration must survive late siblings: \(siblingOutcome)")
+        return
+      }
+      #expect(try fixture.graph(survivingRestoration) == fixture.graph(restoredData))
+      #expect(try await fixture.rawOwnedLinkData() == liveLinks)
+      #expect(try await fixture.rawScheduleData() == liveSchedules)
+      #expect(try fixture.envelope()["receipts"] as? NSArray == receipts)
+    }
   }
 
   @Test func losingItineraryPreparationFailurePreservesStopsAndExpandedBindingsUntilRetry()
@@ -2454,6 +2605,97 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
+  @MainActor func deliverClosedOwnedSibling(referenceKind: String) throws {
+    let context = try nativeContext()
+    let input = PlannerLinkInput(
+      originalUrl: "https://example.com/late-sibling", label: "Late guide")
+    let snapshot = ScheduleSnapshot(
+      id: UUID(uuidString: "00000000-0000-4000-8000-000000000873")!,
+      lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000889")!,
+      form: .allDay(start: .init(year: 2026, month: 10, day: 28), end: nil))
+    let link: PlannerSchemaV18.OwnedLink?
+    let schedule: PlannerSchemaV18.Schedule?
+    switch source.kind {
+    case .item:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000814"
+        })
+      if referenceKind == "link" {
+        link = try .init(input: input, rank: 0, owner: owner)
+        schedule = nil
+      } else {
+        link = nil
+        schedule = try .init(snapshot: snapshot, owner: owner)
+      }
+    case .itinerary:
+      let owner = try #require(
+        context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).first {
+          $0.id == source.id && $0.lifetimeId?.uuidString == "00000000-0000-4000-8000-000000000814"
+        })
+      if referenceKind == "link" {
+        link = try .init(input: input, rank: 0, owner: owner)
+        schedule = nil
+      } else {
+        link = nil
+        schedule = try .init(snapshot: snapshot, owner: owner)
+      }
+    default: throw CancellationError()
+    }
+    if let link {
+      link.id = UUID(uuidString: "00000000-0000-4000-8000-000000000871")!
+      link.lifetimeId = snapshot.lifetimeId
+      context.insert(link)
+    }
+    if let schedule { context.insert(schedule) }
+    try context.save()
+  }
+
+  @MainActor func addOwnedRestorationHistory(referenceKind: String) throws -> Data {
+    let context = try nativeContext()
+    let referenceIdentifier: UUID
+    let kind: PlannerPortableIdentityKind
+    let lifetime: UUID
+    let target: PortableDeletionTarget
+    let predecessorLifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000870")!
+    if referenceKind == "link" {
+      referenceIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000871")!
+      kind = .ownedLink
+      lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000872")!
+      target = .ownedLink(id: referenceIdentifier, lifetimeId: predecessorLifetime)
+    } else {
+      referenceIdentifier = UUID(uuidString: "00000000-0000-4000-8000-000000000873")!
+      kind = .schedule
+      lifetime = UUID(uuidString: "00000000-0000-4000-8000-000000000874")!
+      target = .source(
+        .init(kind: "schedule", id: referenceIdentifier, lifetimeId: predecessorLifetime))
+    }
+    let family = PlannerPortableRestorationFamily(
+      familyId: UUID(uuidString: "00000000-0000-4000-8000-000000000880")!,
+      predecessor: .init(kind: kind, id: referenceIdentifier, lifetimeId: predecessorLifetime),
+      candidates: [
+        .init(
+          lifetimeId: lifetime,
+          operationId: UUID(uuidString: "00000000-0000-4000-8000-000000000886")!),
+        .init(
+          lifetimeId: UUID(uuidString: "00000000-0000-4000-8000-000000000889")!,
+          operationId: UUID(uuidString: "00000000-0000-4000-8000-000000000887")!),
+      ])
+    let marker = PortableDeletionMarker(
+      deletionId: UUID(uuidString: "00000000-0000-4000-8000-000000000884")!,
+      operationId: UUID(uuidString: "00000000-0000-4000-8000-000000000885")!,
+      target: target, closedFamilyId: nil)
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    let data = try encoder.encode(family)
+    context.insert(try PlannerSchemaV4.DeletionMarker(marker))
+    context.insert(
+      PlannerSchemaV16.LineageRecord(
+        identifier: family.familyId, kind: "restorationFamily", data: data))
+    try context.save()
+    return data
+  }
+
   @MainActor func addMixedMetadataToLosingItinerary() throws {
     let context = try nativeContext()
     let owner = try #require(
@@ -2493,7 +2735,7 @@ private struct SourceRestorationFixture {
     try context.save()
   }
 
-  @MainActor func backupForLosingOwnedReference() throws -> Data {
+  @MainActor func backupForLosingOwnedReference(restorationHistory: Data? = nil) throws -> Data {
     let context = try nativeContext()
     let sourceRecord: PortableSourceRecord
     let links: [PortableOwnedLink]
@@ -2538,6 +2780,31 @@ private struct SourceRestorationFixture {
       $0["lifetimeId"] as? String == "00000000-0000-4000-8000-000000000815"
     }
     graph["restorationFamilies"] = families
+    if let restorationHistory {
+      let family = try JSONDecoder().decode(
+        PlannerPortableRestorationFamily.self, from: restorationHistory)
+      families.append(try object(restorationHistory))
+      graph["restorationFamilies"] = families
+      let target: PortableDeletionTarget
+      switch family.predecessor.kind {
+      case .ownedLink:
+        target = .ownedLink(
+          id: family.predecessor.id, lifetimeId: family.predecessor.lifetimeId)
+      case .schedule:
+        target = .source(
+          .init(
+            kind: "schedule", id: family.predecessor.id,
+            lifetimeId: family.predecessor.lifetimeId))
+      default: throw CancellationError()
+      }
+      let marker = PortableDeletionMarker(
+        deletionId: UUID(uuidString: "00000000-0000-4000-8000-000000000884")!,
+        operationId: UUID(uuidString: "00000000-0000-4000-8000-000000000885")!,
+        target: target, closedFamilyId: nil)
+      var markers = try #require(graph["deletionMarkers"] as? [[String: Any]])
+      markers.append(try object(encoder.encode(marker)))
+      graph["deletionMarkers"] = markers
+    }
     return try JSONSerialization.data(withJSONObject: graph)
   }
 
