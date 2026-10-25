@@ -6,6 +6,82 @@ import XCTest
 
 @MainActor
 final class ItineraryWindowJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testNarrowTabletKeepsItsItineraryContextWhileScrollingAndRotating() throws {
+      try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
+      continueAfterFailure = false
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "itinerary-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      XCUIDevice.shared.orientation = .portrait
+      waitForOrientation(application, landscape: false)
+      openRoute("Windowed route", application: application)
+      let hideSidebar = application.buttons["Hide Sidebar"].firstMatch
+      if hideSidebar.exists && hideSidebar.isHittable {
+        hideSidebar.activateForPlannerJourney()
+      }
+      let catalog = application.descendants(matching: .any)
+        .matching(identifier: "saved.itinerary.contents").firstMatch
+      XCTAssertTrue(catalog.waitForExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["0 of 132 items done"].waitForExistence(timeout: 10))
+      XCTAssertLessThan(catalog.frame.width, 440)
+      assertVisibleItineraryContext("Windowed route", in: catalog, application: application)
+      let row = try revealExpandedActivity(
+        "Window Activity 020", in: catalog, application: application)
+      let identifier = row.identifier
+      capture(application, "Narrow tablet itinerary context after scrolling into a List")
+      let hierarchy = XCTAttachment(string: application.navigationBars.debugDescription)
+      hierarchy.name = "Narrow tablet itinerary navigation after scrolling"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      assertVisibleItineraryContext("Windowed route", in: catalog, application: application)
+      XCTAssertTrue(application.plannerElement("saved.itinerary.filters").isHittable)
+      let addEntry = application.plannerElement("saved.itinerary.entry.new")
+      XCTAssertTrue(addEntry.isHittable)
+      addEntry.activateForPlannerJourney()
+      let cancel = application.plannerElement("saved.itinerary.entry.cancel")
+      XCTAssertTrue(cancel.waitForExistence(timeout: 10))
+      cancel.activateForPlannerJourney()
+      XCTAssertTrue(catalog.waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        try revealExpandedActivity("Window Activity 020", in: catalog, application: application)
+          .identifier, identifier)
+      for landscape in [true, false] {
+        XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
+        waitForOrientation(application, landscape: landscape)
+        XCTAssertEqual(
+          try revealExpandedActivity("Window Activity 020", in: catalog, application: application)
+            .identifier, identifier)
+        capture(application, "Itinerary context after rotation, landscape \(landscape)")
+        assertVisibleItineraryContext("Windowed route", in: catalog, application: application)
+      }
+      application.terminate()
+    }
+
+    private func assertVisibleItineraryContext(
+      _ title: String, in catalog: XCUIElement, application: XCUIApplication
+    ) {
+      let headings = application.descendants(matching: .any)
+        .matching(identifier: "saved.itinerary.title").allElementsBoundByIndex
+      let nativeTitles = application.navigationBars.staticTexts.matching(identifier: title)
+        .allElementsBoundByIndex
+      let visible = (headings + nativeTitles).filter {
+        $0.exists && $0.isHittable && $0.label == title
+          && $0.frame.minX >= catalog.frame.minX && $0.frame.maxX <= catalog.frame.maxX
+      }
+      XCTAssertFalse(visible.isEmpty, "The current Itinerary must remain identifiable in its pane.")
+      for heading in visible {
+        for button in application.navigationBars.buttons.allElementsBoundByIndex
+        where button.isHittable {
+          XCTAssertFalse(heading.frame.intersects(button.frame))
+        }
+      }
+    }
+  #endif
+
   func testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges() throws {
     continueAfterFailure = false
     #if os(iOS)

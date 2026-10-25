@@ -225,7 +225,9 @@ struct SavedItineraryDetail: View {
             ScrollViewReader { proxy in
               List(selection: $selection) {
                 Section {
-                  itineraryTitle(itinerary)
+                  #if os(macOS)
+                    itineraryTitle(itinerary)
+                  #endif
                   if itinerary.state.archived == true {
                     Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(
                       .secondary)
@@ -288,6 +290,16 @@ struct SavedItineraryDetail: View {
                 }
               }
               .accessibilityIdentifier("saved.itinerary.contents")
+              #if os(iOS)
+                .safeAreaInset(edge: .top, spacing: 0) {
+                  if showsCollectionTitle {
+                    itineraryTitle(itinerary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(.bar)
+                  }
+                }
+              #endif
               .task(id: pendingScrollAnchor) {
                 guard let anchor = pendingScrollAnchor, let window,
                   let row = expandedRows.first(where: { $0.id == anchor })

@@ -260,10 +260,11 @@ import XCTest
       if application.windows.firstMatch.frame.width < 600 {
         XCTAssertGreaterThanOrEqual(title.frame.width, minimumWidth)
         XCTAssertFalse(
-          application.collectionViews["saved.itinerary.contents"].staticTexts["City trip"].exists)
+          application.staticTexts["saved.itinerary.title"].exists)
       } else {
-        XCTAssertTrue(
-          application.collectionViews["saved.itinerary.contents"].staticTexts["City trip"].exists)
+        let heading = application.staticTexts["saved.itinerary.title"]
+        XCTAssertTrue(heading.isHittable)
+        XCTAssertEqual(heading.label, "City trip")
       }
       XCTAssertTrue(filters.isHittable)
       let addEntry = application.plannerElement("saved.itinerary.entry.new")
