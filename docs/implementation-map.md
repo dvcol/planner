@@ -1,5 +1,21 @@
 # Native Planner implementation map
 
+## Current MVP priority, 26 October 2026
+
+The user moves JSON export/import outside MVP and asks to focus on core features.
+The [amended release criteria](release-goals.md#accepted-mvp-amendment-26-october-2026)
+now prioritize Items, Lists, capture and places, ordered itineraries, estimates,
+Calendar, maps, native UI quality and durable synchronized saves. Existing basic
+export/import tools can remain available. Further portability polish and advanced
+manual import/restoration qualification are post-MVP, not release blockers.
+Preserve implemented validation, saved data and existing recovery evidence.
+App Intents/MCP retain their established V3 stage after the core V2 release.
+Signing stays deferred; actual Mac UI, installed Share and physical sync remain
+distinct core acceptance gates. Historical checkpoints below retain their scope
+but do not override this priority.
+
+## Recent local checkpoints
+
 The [browser background checkpoint](prototypes/native-webpage-background.md) passes loading and failed-page resume on iPhone and dark iPad, four native executions. Held requests, retry/history controls and the original bookmark survive brief app switches and rotation. Four recovered-page originals are inspected and identical inputs/products verified. Production is unchanged; suspension, process death, Mac remounts and physical acceptance remain separate. Signing stays deferred.
 
 The [native Shortcuts optional-input checkpoint](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) passes two final-source iPhone/iPad journeys through Apple's actual List picker and Create action. Subtitle and Notes persist, one Todo appearance retains its exact identity through relaunch, and the other List stays empty. Each uniquely named test workflow is removed. All 1160 native inputs/products reconcile and eight originals are inspected, with animation-frame limits explicit. Production is unchanged; other system actions, cold/locked invocation, physical/shared-store gates and signing remain separate.
@@ -282,18 +298,22 @@ Earlier failed attempts retain their failure status. Native Swift Testing counts
 
 1. Qualify Q127 A's implemented Mac Calendar split pane through actual Day/Week/Month resizing, divider movement and width recovery when Mac UI execution is available. Compilation and iPad regressions do not close this gate.
 2. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have the local qualification recorded above. Existing single-pin/rich-link cards and these scoped checkpoints do not close every remaining lifecycle or system gate. Settle concrete navigation/interface choices before their dependent implementation; signing is not a prerequisite for contract preparation and local tests.
-3. Qualify the outstanding Mac UI workflows, including Calendar, import/restoration, keyboard/Undo and remaining compatibility cases. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause.
-4. Implement native Agent Control under Q100 B after actual protected signed-storage qualification, then verify native menus/windows and real clients against that storage.
+3. Qualify the outstanding core Mac UI workflows, including Calendar, capture, Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility cases. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause. Export/import-specific UI acceptance is post-MVP.
+4. For the later V3 integration stage, implement native Agent Control under Q100 B after actual protected signed-storage qualification, then verify native menus/windows and real clients against that storage. This is retained map scope, not a core V2 MVP prerequisite.
 5. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates. Simulator or local-store evidence cannot replace these.
-6. Extend actual Shortcuts qualification beyond [mobile discovery/warm iPhone Find](prototypes/native-shortcuts-system-ui.md#final-local-checkpoint) and [warm Item creation/cancellation on both simulators](prototypes/native-shortcuts-create-ui.md#final-local-checkpoint). The [optional Subtitle/Notes and selected-List creation](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) now also pass on both simulators. Qualify other system actions, Siri, remaining picker/property/confirmation behavior, cold/background launch, locked invocation and external plan opening. The separate Customer-build test-framework rejection does not prove a paid account fixes that service.
+6. For the later V3 integration stage, extend actual Shortcuts qualification beyond [mobile discovery/warm iPhone Find](prototypes/native-shortcuts-system-ui.md#final-local-checkpoint) and [warm Item creation/cancellation on both simulators](prototypes/native-shortcuts-create-ui.md#final-local-checkpoint). The [optional Subtitle/Notes and selected-List creation](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) now also pass on both simulators. Other system actions, Siri, remaining picker/property/confirmation behavior, cold/background launch, locked invocation and external plan opening remain unqualified. Keep these separate from the core MVP queue. The Customer-build test-framework rejection does not prove a paid account fixes that service.
 7. Complete the feature-complete whole-app UI pass, including light/dark, accessibility, all scene states, native controls, resizing/orientation and physical review. Recheck floating bars, titles, spacing and retained visual findings across the final scene states; scoped corrections qualify only their represented cases.
-8. Reconcile the complete specification and obtain the user's final coherence/layout acceptance before handoff and closure.
+8. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
 
-Backups, import/export and account recovery remain manual administration. Agent access stays at the accepted data layer. No timer/session restriction, new scope reduction, weaker conflict policy or signing workaround is introduced by this index.
+JSON export/import and advanced manual restoration are outside MVP under the
+26 October amendment. Existing administration tools and their safety contracts
+remain intact. Core save/sync failure handling remains required. Agent access
+stays at the accepted data layer with no timer/session restriction or signing
+workaround. Q163's accepted deferral remains in force.
 
 ## Tickets, contracts and original scope
 
-The existing tickets retain their Context, starting/end state, DoR, DoD and required unit/native/HTTP/physical tests. This index neither replaces those criteria nor marks them complete:
+The existing tickets retain their Context, starting/end state, DoR, DoD and required unit/native/HTTP/physical tests. The 26 October MVP amendment governs release priority; deferred requirements remain recorded rather than marked complete:
 
 - [Apple test access, issue 7](https://github.com/dvcol/planner/issues/7).
 - [Navigation prototype, issue 14](https://github.com/dvcol/planner/issues/14).

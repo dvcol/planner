@@ -1,5 +1,11 @@
 # Local restoration acceptance checklist
 
+The [26 October MVP amendment](release-goals.md#accepted-mvp-amendment-26-october-2026)
+moves JSON export/import and advanced manual restoration qualification outside
+MVP. Retain this completed evidence and implemented safeguards. Do not expand
+this checklist while core planning, native UI and save/sync acceptance remain.
+Core durability and synchronization safety keep their separate release gates.
+
 This checklist records A20 and Q147–Q163 local acceptance and its limits. It does not
 add restoration policies or authorize merging collections. A pending check is
 not an assumed production defect. Reproduce it through the existing real-store

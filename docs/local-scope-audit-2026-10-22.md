@@ -1,5 +1,11 @@
 # Remaining local scope audit, 22 October 2026
 
+The [26 October MVP amendment](release-goals.md#accepted-mvp-amendment-26-october-2026)
+supersedes the older requirement to complete JSON export/import qualification
+before daily use. Prioritize the core scenes and durable sync below; optional
+manual portability/restoration work is post-MVP. Existing evidence and safety
+contracts remain intact.
+
 ## Context and goal
 
 At `bd25816e`, the map index emphasizes import decisions, Mac automation and signing gates. Those gates do not cover every unfinished requirement. This audit compares the retained product brief and accepted contracts with production scenes, Core interfaces and executed tests. Its goal is an accurate implementation frontier, without reducing scope or treating a compilation result as feature completion.
