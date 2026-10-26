@@ -56,6 +56,8 @@ MVP depends on the core feature work and qualification tracked by [Navigation pr
 
 ## Observations retained from compatibility checks
 
+The [26 October reader pane-width review](prototypes/native-reader-pane-width.md) observes the sidebar Planner title as "Pl…" at ordinary text size while three columns are visible. Reader width/history checks pass, but this concrete title/toolbar crowding remains for correction. Its original capture and measured pane widths are retained. The full webpage heading stays readable.
+
 The [22 October scale-fixture follow-up](prototypes/native-item-windows.md#scale-evidence-and-current-fixture-follow-up-22-october-2026) adds eight inspected light-phone/dark-iPad captures. Its [phone landscape detail](prototypes/evidence/navigation/native-itinerary-window-compatibility/native-windowed-scale-current-phone/5FC92D99-CAC8-4DA5-AC80-BB3892DEB4D9.png) still places the floating TabView over the lower Activity estimate heading. Review that scroll/safe-area state and repeated navigation/content Item titles in the final native pass. The functional page/selection/rotation assertions pass; these captures do not grant full visual acceptance or change the feature-completion prerequisite.
 
 The [unresolved-backup portrait iPad capture](prototypes/evidence/navigation/native-itinerary-window-compatibility/native-backup-unresolved-tablet-dark/667BDAF6-F917-47F6-8E8D-F4334BA59C3B.png) shows part of the empty List message occluded beside the open sidebar. The native journey proves the ready empty catalog and absence of a partially imported List; it does not establish complete middle-pane readability. Review that empty state with the sidebar open and closed during final layout qualification.

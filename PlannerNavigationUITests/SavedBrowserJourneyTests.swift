@@ -1666,6 +1666,53 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
     page.links["Garden guide"].activateForPlannerJourney()
     XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        addTeardownBlock {
+          await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+        }
+        let landscape = NSPredicate { _, _ in
+          let frame = application.windows.firstMatch.frame
+          return frame.width > frame.height
+        }
+        await fulfillment(
+          of: [XCTNSPredicateExpectation(predicate: landscape, object: application)], timeout: 5)
+        XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 5))
+        let sidebar = application.buttons.matching(
+          NSPredicate(format: "label == %@ OR label == %@", "Show Sidebar", "Hide Sidebar")
+        ).firstMatch
+        XCTAssertTrue(sidebar.waitForPlannerHittability())
+        let originalWidth = page.frame.width
+        sidebar.activateForPlannerJourney()
+        let changedWidth = NSPredicate { _, _ in
+          page.exists && abs(page.frame.width - originalWidth) > 32
+        }
+        await fulfillment(
+          of: [XCTNSPredicateExpectation(predicate: changedWidth, object: page)], timeout: 5)
+        let resizedWidth = page.frame.width
+        XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 5))
+        XCTAssertTrue(application.buttons["saved.browser.return"].isHittable)
+        try await recordWindow(
+          application, name: "Native reader retains its linked page with sidebar")
+        sidebar.activateForPlannerJourney()
+        let restoredWidth = NSPredicate { _, _ in
+          page.exists && abs(page.frame.width - originalWidth) < 1
+        }
+        await fulfillment(
+          of: [XCTNSPredicateExpectation(predicate: restoredWidth, object: page)], timeout: 5)
+        XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 5))
+        let widths = XCTAttachment(
+          string:
+            "Reader width before: \(originalWidth), changed: \(resizedWidth), restored: \(page.frame.width)"
+        )
+        widths.name = "Actual reader widths across native sidebar changes"
+        widths.lifetime = .keepAlways
+        add(widths)
+        try await recordWindow(
+          application, name: "Native reader restores its width and linked page")
+      }
+    #endif
     let back = application.buttons["saved.browser.back"]
     XCTAssertTrue(back.waitForExistence(timeout: 5))
     XCTAssertTrue(back.isEnabled)
