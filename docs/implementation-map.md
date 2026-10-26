@@ -303,17 +303,22 @@ Earlier failed attempts retain their failure status. Native Swift Testing counts
 1. Qualify Q127 A's implemented Mac Calendar split pane through actual Day/Week/Month resizing, divider movement and width recovery when Mac UI execution is available. Compilation and iPad regressions do not close this gate.
 2. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have the local qualification recorded above. Existing single-pin/rich-link cards and these scoped checkpoints do not close every remaining lifecycle or system gate. Settle concrete navigation/interface choices before their dependent implementation; signing is not a prerequisite for contract preparation and local tests.
 3. Qualify the outstanding core Mac UI workflows, including Calendar, capture, Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility cases. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause. Export/import-specific UI acceptance is post-MVP.
-4. For the later V3 integration stage, implement native Agent Control under Q100 B after actual protected signed-storage qualification, then verify native menus/windows and real clients against that storage. This is retained map scope, not a core V2 MVP prerequisite.
-5. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates. Simulator or local-store evidence cannot replace these.
-6. For the later V3 integration stage, extend actual Shortcuts qualification beyond [mobile discovery/warm iPhone Find](prototypes/native-shortcuts-system-ui.md#final-local-checkpoint) and [warm Item creation/cancellation on both simulators](prototypes/native-shortcuts-create-ui.md#final-local-checkpoint). The [optional Subtitle/Notes and selected-List creation](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) now also pass on both simulators. Other system actions, Siri, remaining picker/property/confirmation behavior, cold/background launch, locked invocation and external plan opening remain unqualified. Keep these separate from the core MVP queue. The Customer-build test-framework rejection does not prove a paid account fixes that service.
-7. Complete the feature-complete whole-app UI pass, including light/dark, accessibility, all scene states, native controls, resizing/orientation and physical review. Recheck floating bars, titles, spacing and retained visual findings across the final scene states; scoped corrections qualify only their represented cases. Item details now show the saved List count; the brief's containing-List names and itinerary-membership visibility still need a core UI follow-up. A count alone does not close that complete reference-information requirement.
-8. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
+4. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates. Simulator or local-store evidence cannot replace these.
+5. Complete the feature-complete whole-app UI pass, including light/dark, accessibility, all scene states, native controls, resizing/orientation and physical review. Recheck floating bars, titles, spacing and retained visual findings across the final scene states; scoped corrections qualify only their represented cases. Item details now show the saved List count; the brief's containing-List names and itinerary-membership visibility still need a core UI follow-up. A count alone does not close that complete reference-information requirement.
+6. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
 
-JSON export/import and advanced manual restoration are outside MVP under the
-26 October amendment. Existing administration tools and their safety contracts
-remain intact. Core save/sync failure handling remains required. Agent access
-stays at the accepted data layer with no timer/session restriction or signing
-workaround. Q163's accepted deferral remains in force.
+## Post-MVP work
+
+- JSON export/import and advanced manual import/restoration qualification are
+  optional administration. Keep the existing basic tools and their validation;
+  do not expand this work while core MVP features and acceptance remain open.
+  Core save/sync failure handling stays in MVP.
+- For V3, implement native Agent Control under Q100 B after actual protected
+  signed-storage qualification, then verify native menus/windows and real clients.
+  Keep accepted access behavior and do not add signing workarounds.
+- For V3, extend actual Shortcuts qualification beyond [mobile discovery/warm iPhone Find](prototypes/native-shortcuts-system-ui.md#final-local-checkpoint) and [warm Item creation/cancellation on both simulators](prototypes/native-shortcuts-create-ui.md#final-local-checkpoint). The [optional Subtitle/Notes and selected-List creation](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) now also pass on both simulators. Other system actions, Siri, remaining picker/property/confirmation behavior, cold/background launch, locked invocation and external plan opening remain unqualified. Keep these separate from the core MVP queue. The Customer-build test-framework rejection does not prove a paid account fixes that service.
+- Q163's crossed-restoration reconciliation remains explicitly deferred, with
+  records preserved and the current rejection unchanged.
 
 ## Tickets, contracts and original scope
 
