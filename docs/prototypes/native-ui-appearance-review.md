@@ -220,5 +220,6 @@ keyboard interaction remains unqualified. Its last observed host still had the
 14 October boot and 17 October test broker; this checkpoint makes no unchanged
 startup retry. That runtime gate is separate from signing.
 
-Q163's crossed-family policy remains pending. Signing stays deferred, and the
-user's final coherence/layout review is still required.
+Q163 A was accepted after this UI checkpoint, explicitly deferring crossed-family
+reconciliation beyond MVP with its recorded recovery limitation. Signing stays
+deferred, and the user's final coherence/layout review is still required.

@@ -168,6 +168,155 @@ final class SavedAppIntentJourneyTests: XCTestCase {
       recordShortcutsWindow(application, name: "Installed Shortcuts created Item survives relaunch")
     }
 
+    func testSystemShortcutsCreatesAnItemWithOptionalFieldsInTheSelectedList() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      for listTitle in ["System destination", "Other destination"] {
+        application.beginPlannerListCreation()
+        let name = application.textFields["saved.list.name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.activateForPlannerJourney()
+        name.typeText(listTitle)
+        application.plannerElement("saved.list.save").activateForPlannerJourney()
+        XCTAssertTrue(application.staticTexts["No items"].firstMatch.waitForExistence(timeout: 10))
+      }
+      let shortcuts = openPlannerShortcutsCatalog()
+      if let hideSidebar = shortcuts.buttons.matching(
+        NSPredicate(format: "label == %@", "Hide Sidebar")
+      ).allElementsBoundByIndex.last,
+        hideSidebar.isHittable
+      {
+        hideSidebar.activateForPlannerJourney()
+      }
+      shortcuts.buttons["plus"].firstMatch.press(forDuration: 1)
+      let newShortcut = shortcuts.buttons["New Shortcut"].firstMatch
+      XCTAssertTrue(newShortcut.waitForExistence(timeout: 5))
+      newShortcut.activateForPlannerJourney()
+      let editor = shortcuts.buttons["Editor"].firstMatch
+      if editor.waitForExistence(timeout: 5) { editor.activateForPlannerJourney() }
+      let workflowName = "Planner rich " + String(UUID().uuidString.prefix(8))
+      namePlannerTestShortcut(workflowName, in: shortcuts)
+      let itemTitle = "System visit " + String(UUID().uuidString.prefix(8))
+      for (fieldName, fieldValue) in [
+        ("Title", itemTitle), ("Subtitle", "Meet at the west entrance"),
+        ("Notes", "Keep these system-supplied notes"),
+      ] {
+        let field = shortcuts.textFields[fieldName].firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        field.activateForPlannerJourney()
+        field.typeText(fieldValue)
+      }
+      shortcuts.buttons["Choose"].firstMatch.activateForPlannerJourney()
+      let destination = shortcuts.staticTexts["System destination"].firstMatch
+      XCTAssertTrue(destination.waitForExistence(timeout: 10))
+      XCTAssertTrue(destination.waitForPlannerHittability())
+      XCTAssertTrue(shortcuts.staticTexts["Other destination"].firstMatch.exists)
+      recordShortcutsWindow(shortcuts, name: "Installed Shortcuts native List choices")
+      destination.activateForPlannerJourney()
+      let closeInput = shortcuts.buttons.matching(identifier: "xmark").firstMatch
+      if closeInput.exists { closeInput.activateForPlannerJourney() }
+      recordShortcutsWindow(
+        shortcuts, name: "Installed Shortcuts selected List and optional inputs")
+      XCTAssertEqual(application.state, .runningBackground)
+      shortcuts.buttons.matching(
+        NSPredicate(format: "label == %@ OR label == %@", "play", "Run Shortcut")
+      ).firstMatch.activateForPlannerJourney()
+      let resultService = XCUIApplication(bundleIdentifier: "com.apple.ShortcutsUI")
+      let created = resultService.staticTexts["Created \(itemTitle)."].firstMatch
+      let creationReturned = created.waitForExistence(timeout: 20)
+      if resultService.windows.firstMatch.exists {
+        recordShortcutsWindow(resultService, name: "Installed Shortcuts rich Item creation result")
+      } else {
+        recordShortcutsWindow(shortcuts, name: "Installed Shortcuts missing rich Item result")
+      }
+      XCTAssertTrue(creationReturned)
+      resultService.buttons.matching(NSPredicate(format: "label == %@", "Done")).firstMatch
+        .activateForPlannerJourney()
+      deletePlannerTestShortcut(workflowName, in: shortcuts)
+      application.activate()
+      openPlannerTestList("System destination", in: application)
+      let appearance = application.savedPlannerItemRows(itemTitle).firstMatch
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows(itemTitle).count, 1)
+      let appearanceIdentifier = appearance.identifier
+      let completion = application.plannerElement(
+        appearanceIdentifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion."))
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      appearance.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Meet at the west entrance"].firstMatch.waitForExistence(timeout: 5)
+      )
+      XCTAssertTrue(application.staticTexts["Keep these system-supplied notes"].firstMatch.exists)
+      recordShortcutsWindow(
+        application, name: "System-created contextual Item with optional content")
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openPlannerTestList("System destination", in: application)
+      let restored = application.plannerElement(appearanceIdentifier)
+      XCTAssertTrue(restored.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows(itemTitle).count, 1)
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      restored.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Keep these system-supplied notes"].firstMatch.waitForExistence(
+          timeout: 5))
+      XCTAssertTrue(application.staticTexts["Meet at the west entrance"].firstMatch.exists)
+      openPlannerTestList("Other destination", in: application)
+      XCTAssertTrue(application.staticTexts["No items"].firstMatch.waitForExistence(timeout: 10))
+    }
+
+    private func openPlannerTestList(_ title: String, in application: XCUIApplication) {
+      application.openPlannerSection("Lists")
+      let row = application.savedPlannerListRow(title)
+      for _ in 0..<2 where !row.exists {
+        let back = application.plannerElement("BackButton")
+        XCTAssertTrue(back.waitForExistence(timeout: 5))
+        back.activateForPlannerJourney()
+      }
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      row.activateForPlannerJourney()
+    }
+
+    private func namePlannerTestShortcut(_ name: String, in shortcuts: XCUIApplication) {
+      let actionsMenu = shortcuts.buttons.containing(
+        NSPredicate(format: "label ENDSWITH %@", "Actions Menu")
+      ).firstMatch
+      actionsMenu.activateForPlannerJourney()
+      shortcuts.buttons["Rename"].firstMatch.activateForPlannerJourney()
+      let nameInput = shortcuts.navigationBars.textFields.firstMatch
+      XCTAssertTrue(nameInput.waitForExistence(timeout: 5))
+      nameInput.buttons["Clear text"].activateForPlannerJourney()
+      nameInput.typeText(name + "\n")
+    }
+
+    private func deletePlannerTestShortcut(_ name: String, in shortcuts: XCUIApplication) {
+      shortcuts.navigationBars.buttons["Back"].firstMatch.activateForPlannerJourney()
+      let workflow = shortcuts.buttons["Play, " + name].firstMatch
+      if !workflow.exists {
+        let library = shortcuts.navigationBars.buttons["Library"].firstMatch
+        if library.exists { library.activateForPlannerJourney() }
+        let allShortcuts = shortcuts.buttons["All Shortcuts"].firstMatch
+        if allShortcuts.exists { allShortcuts.activateForPlannerJourney() }
+      }
+      XCTAssertTrue(workflow.waitForExistence(timeout: 5))
+      workflow.press(forDuration: 1)
+      shortcuts.buttons["Delete"].firstMatch.activateForPlannerJourney()
+      shortcuts.buttons["Delete Shortcut"].firstMatch.activateForPlannerJourney()
+      shortcuts.launch()
+      let showSidebar = shortcuts.buttons["Show Sidebar"].firstMatch
+      if showSidebar.exists { showSidebar.activateForPlannerJourney() }
+      let library = shortcuts.navigationBars.buttons["Library"].firstMatch
+      if library.exists { library.activateForPlannerJourney() }
+      let allShortcuts = shortcuts.buttons["All Shortcuts"].firstMatch
+      if allShortcuts.exists { allShortcuts.activateForPlannerJourney() }
+      XCTAssertTrue(
+        shortcuts.navigationBars["All Shortcuts"].firstMatch.waitForExistence(timeout: 5))
+      XCTAssertFalse(shortcuts.buttons["Play, " + name].firstMatch.exists)
+    }
+
     private func openUnfilteredPlannerItems(in application: XCUIApplication) {
       application.openPlannerSection("Items")
       let filters = application.plannerElement("saved.items.filters")
