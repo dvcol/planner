@@ -1,18 +1,54 @@
 # Apple test access
 
-## Current setup direction, 26 October 2026
+## Current setup direction, 27 October 2026
 
-The user reports enrolling in the Apple Developer Program and has supplied the
-intended Team ID for local setup. Membership activation, Xcode account access,
-signing identities and provisioned capabilities still need actual verification.
-This supersedes the earlier decision to defer membership; it does not turn the
-historical ad hoc checks below into selected-team evidence.
+The user enrolled in the Apple Developer Program. The signed-in Apple Developer
+portal shows team `Y6HV37KJ2G`; identifier registration succeeds. This supersedes
+the earlier decision to defer membership without changing the scope of the
+historical ad hoc checks below. Provisioned builds and actual capability access
+remain separate checks.
 
 The supplied screenshot shows the enrolled developer team already added in
 Xcode's **Apple Accounts** settings. A local build-settings read resolves the
 supplied Team ID from ignored configuration. The user approved `dvcol.planner`,
 `group.dvcol.planner` and `iCloud.dvcol.planner`, with derived Share extension
-identifiers. Registration and provisioned capabilities remain unverified.
+identifiers. The following identifiers are now registered:
+
+| Kind | Registered identifier | Portal assignment |
+| --- | --- | --- |
+| Main app | `dvcol.planner` | App Group and iCloud container |
+| Mobile Share | `dvcol.planner.ShareMobile` | App Group |
+| Mac Share | `dvcol.planner.ShareMac` | App Group |
+| App Group | `group.dvcol.planner` | Shared by the three app identifiers above |
+| iCloud container | `iCloud.dvcol.planner` | Assigned to the main app with CloudKit support |
+
+Registration changes no saved Planner data and deploys no CloudKit schema.
+The app remains local-only. No store listing or publication was created.
+Each App ID was reopened after saving to verify its persisted assignments.
+[Registration evidence](evidence/apple-registration-2026-10-27/verification.json)
+includes the inspected original lists for
+[app identifiers](evidence/apple-registration-2026-10-27/app-identifiers.png),
+the [App Group](evidence/apple-registration-2026-10-27/app-group.png) and the
+[iCloud container](evidence/apple-registration-2026-10-27/icloud-container.png).
+
+### Private storage and quota
+
+The user explicitly requests using each user's iCloud storage rather than an
+app-owned public storage quota. Keep the planned private CloudKit database.
+Apple states that [private-database data](https://developer.apple.com/documentation/cloudkit/ckcontainer/privateclouddatabase?changes=__3)
+counts against the user's iCloud storage, while
+[public-database data](https://developer.apple.com/documentation/cloudkit/ckcontainer/publicclouddatabase?changes=_1)
+counts against the app's quota. The registered container is still required for
+the private database; its identifier does not select public storage. This is a
+quota distinction, not an assertion that every CloudKit limit or sync failure
+has been qualified.
+
+Automatic approval review rejected enabling Push Notifications because it was
+not part of the explicit identifier approval. Registration proceeded with the
+approved App Groups and iCloud capabilities only. Push remains disabled; review
+any actual background-sync requirement separately before enabling it.
+
+### Development identity
 
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and

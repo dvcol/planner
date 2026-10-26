@@ -28,10 +28,13 @@ an executed diagnostic, not XCTest execution or a signed CloudKit store test.
 ## Next step and gates
 
 The user approved `dvcol.planner`, `group.dvcol.planner` and
-`iCloud.dvcol.planner`. The in-app developer portal currently requires sign-in;
-registration has not occurred. The development identity now validates after the
-missing official Apple intermediate was installed, but actual signing timed out
-and the Keychain-prompt question remains pending.
+`iCloud.dvcol.planner`. These identifiers and the derived Share identifiers are
+now registered in the signed-in Apple Developer portal; see
+[Apple test access](../setup/apple-test-access.md#current-setup-direction-27-october-2026).
+Use the user's private CloudKit database and its personal iCloud storage quota.
+The development identity now validates after the missing official Apple
+intermediate was installed, but actual signing timed out and the Keychain-prompt
+question remains pending.
 
 After access is ready, use a configured, disposable native prototype to verify
 real container initialization, account observations and the accepted ownership
