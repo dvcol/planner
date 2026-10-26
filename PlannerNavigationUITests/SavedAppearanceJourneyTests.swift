@@ -3129,6 +3129,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let containerFrame = scrollContainer.frame
       var visibleFrame = containerFrame.intersection(application.windows.firstMatch.frame)
       let keyboard = application.keyboards.firstMatch
+      let keyboardWasVisible = keyboard.exists && !keyboard.frame.isEmpty
       if keyboard.exists && !keyboard.frame.isEmpty {
         visibleFrame.size.height = max(
           0, min(visibleFrame.maxY, keyboard.frame.minY) - visibleFrame.minY)
@@ -3147,6 +3148,13 @@ final class SavedAppearanceJourneyTests: XCTestCase {
         withNormalizedOffset: .init(dx: 0.96, dy: startPosition))
       let end = scrollContainer.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: endPosition))
       start.press(forDuration: 0.01, thenDragTo: end)
+      if keyboardWasVisible {
+        let dismissed = NSPredicate { _, _ in !keyboard.exists || keyboard.frame.isEmpty }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: dismissed, object: keyboard)], timeout: 5),
+          .completed, "Scrolling the Item editor must dismiss its software keyboard.")
+      }
     #endif
   }
 
@@ -3305,6 +3313,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertEqual(source.count, 1)
     let sourceIdentifier = source.firstMatch.identifier
     source.firstMatch.activateForPlannerJourney()
+    revealEditorElement(
+      application.staticTexts["Meet at the south entrance"], application: application)
     XCTAssertTrue(
       application.staticTexts["Meet at the south entrance"].waitForExistence(timeout: 10))
     application.terminate()

@@ -96,6 +96,7 @@ struct SavedNewItemForm: View {
       }
       .disabled(isSaving)
       .formStyle(.grouped)
+      .scrollDismissesKeyboard(.immediately)
       .navigationTitle("New item")
       .toolbarTitleDisplayMode(.inline)
       #if os(iOS)

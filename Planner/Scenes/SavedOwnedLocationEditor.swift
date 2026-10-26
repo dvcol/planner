@@ -42,9 +42,11 @@ struct SavedOwnedLocationEditor: View {
 
   var body: some View {
     Section {
-      TextField("Place name", text: $draft.name)
+      TextField("Place name", text: $draft.name, axis: .vertical)
+        .lineLimit(1...3)
         .accessibilityIdentifier("\(accessibilityIdentifierPrefix).name")
-      TextField("Address", text: $draft.address)
+      TextField("Address", text: $draft.address, axis: .vertical)
+        .lineLimit(1...3)
         .accessibilityIdentifier("\(accessibilityIdentifierPrefix).address")
       if draft.originalLocation?.coordinate != nil {
         Picker("Saved pin", selection: $draft.keepsSavedPin) {

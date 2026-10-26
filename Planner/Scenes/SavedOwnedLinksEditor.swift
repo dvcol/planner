@@ -59,6 +59,7 @@ struct SavedOwnedLinksEditor: View {
               .focused($focusedLinkIdentifier, equals: link.id)
               .accessibilityIdentifier("\(accessibilityIdentifierPrefix).url.\(link.id.uuidString)")
               #if os(iOS)
+                .textContentType(.URL)
                 .textInputAutocapitalization(.never)
                 .keyboardType(.URL)
               #endif

@@ -94,6 +94,7 @@ struct SavedEditItemForm: View {
       .disabled(store.isSaving)
       .formStyle(.grouped)
       .accessibilityIdentifier("saved.item.edit.form")
+      .scrollDismissesKeyboard(.immediately)
       .navigationTitle("Edit item")
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)

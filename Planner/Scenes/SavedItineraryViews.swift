@@ -1005,6 +1005,7 @@ private struct SavedItineraryForm: View {
       .disabled(store.isSaving)
       .formStyle(.grouped)
       .navigationTitle(itinerary == nil ? "New itinerary" : "Edit itinerary")
+      .scrollDismissesKeyboard(.immediately)
       .toolbarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {

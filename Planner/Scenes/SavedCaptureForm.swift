@@ -86,6 +86,7 @@ struct SavedCaptureForm: View {
       }
       .formStyle(.grouped)
       .accessibilityIdentifier("saved.capture.form")
+      .scrollDismissesKeyboard(.immediately)
       .disabled(isWorking || store.isSaving || applied)
       .safeAreaInset(edge: .top, spacing: 0) {
         if let message = store.alertMessage {
