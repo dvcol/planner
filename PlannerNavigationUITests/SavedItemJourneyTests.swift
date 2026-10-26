@@ -396,6 +396,23 @@ final class SavedItemJourneyTests: XCTestCase {
         XCTAssertTrue(
           application.descendants(matching: .any).matching(identifier: "saved.calendar.canvas")
             .firstMatch.waitForExistence(timeout: 5))
+        #if os(iOS)
+          if UIDevice.current.userInterfaceIdiom == .pad,
+            let hideSidebar = application.buttons.matching(identifier: "Hide Sidebar")
+              .allElementsBoundByIndex.first(where: \.isHittable)
+          {
+            hideSidebar.activateForPlannerJourney()
+          }
+          revealForContrastReview(
+            application.staticTexts[
+              "Choose another date or schedule an Item or Itinerary."
+            ].firstMatch,
+            in: application.scrollViews.containing(
+              .staticText, identifier: "No scheduled entries"
+            ), application: application)
+          try auditNativeScene(
+            application, name: "Fully visible empty Calendar agenda", auditTypes: .contrast)
+        #endif
       default: XCTFail("Unexpected design-review destination")
       }
       recordScreenshot(application, name: "Native design \(section) destination")
@@ -447,6 +464,13 @@ final class SavedItemJourneyTests: XCTestCase {
       XCTAssertTrue(completion.waitForPlannerBooleanState(true))
       activateCompletion(completion)
       XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      revealForContrastReview(
+        application.staticTexts[
+          "Completing this Item shows it as done in every List and Itinerary."
+        ].firstMatch,
+        in: application.collectionViews.containing(
+          .any, identifier: "saved.item.completion"
+        ), application: application)
       recordScreenshot(application, name: "Native design landscape retains selected Item")
       try auditNativeScene(application, name: "Landscape navigation and Item details")
       XCUIDevice.shared.orientation = .portrait
@@ -479,6 +503,54 @@ final class SavedItemJourneyTests: XCTestCase {
   }
 
   #if os(iOS)
+    private func revealForContrastReview(
+      _ element: XCUIElement, in scrollContentQuery: XCUIElementQuery,
+      application: XCUIApplication
+    ) {
+      let initialContent = scrollContentQuery.firstMatch
+      XCTAssertTrue(initialContent.waitForExistence(timeout: 5))
+      let containers = application.descendants(matching: initialContent.elementType)
+      guard
+        let scrollContent = containers.allElementsBoundByIndex.first(where: {
+          $0.frame == initialContent.frame && $0.identifier == initialContent.identifier
+        })
+      else {
+        XCTFail("The native scroll content is unavailable.")
+        return
+      }
+      let navigationBar = application.navigationBars.firstMatch
+      let tabBar = application.tabBars.firstMatch
+      for _ in 0..<8 {
+        if element.exists {
+          let windowFrame = application.windows.firstMatch.frame
+          var visibleTop = windowFrame.minY
+          var visibleBottom = windowFrame.maxY
+          if navigationBar.exists { visibleTop = max(visibleTop, navigationBar.frame.maxY) }
+          if tabBar.exists { visibleBottom = min(visibleBottom, tabBar.frame.minY) }
+          if windowFrame.contains(element.frame), element.frame.minY >= visibleTop,
+            element.frame.maxY <= visibleBottom, element.isHittable
+          {
+            return
+          }
+          if element.frame.minY < visibleTop {
+            let start = scrollContent.coordinate(
+              withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            let end = scrollContent.coordinate(
+              withNormalizedOffset: CGVector(dx: 0.5, dy: 0.65))
+            start.press(
+              forDuration: 0.05, thenDragTo: end, withVelocity: .slow,
+              thenHoldForDuration: 0.1)
+            continue
+          }
+        }
+        let start = scrollContent.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.65))
+        let end = scrollContent.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        start.press(
+          forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
+      }
+      XCTFail("The contrast target could not be revealed above the native bars: \(element)")
+    }
+
     private func revealEstimateForAppearanceReview(_ application: XCUIApplication) {
       let estimate = application.descendants(matching: .any)
         .matching(identifier: "saved.item.estimate").firstMatch
