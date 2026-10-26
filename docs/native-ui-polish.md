@@ -2,6 +2,12 @@
 
 Status: final review planned in [ticket 23](https://github.com/dvcol/planner/issues/23). The human brought forward a [navigation and appearance slice](prototypes/native-design-pass.md) on 18 October; its findings and evidence do not close the final review. This pass follows feature implementation and does not replace the behavior, persistence, sync or recovery gates in the [decision map](https://github.com/dvcol/planner/issues/1).
 
+The [26 October MVP amendment](release-goals.md#accepted-mvp-amendment-26-october-2026)
+limits the release pass to core planning, capture, maps, Calendar, settings and
+ordinary save/sync feedback. Existing basic export/import stays available, but
+its further polish and advanced restoration checks are post-MVP. Agent Control
+and App Intents remain V3. These deferred scenes do not hold up the core UI pass.
+
 The [25 October Item-title correction](prototypes/native-item-detail-title.md#final-local-checkpoint) removes duplicated mobile Form headings while retaining native navigation titles. All three detail contexts pass on light iPhone and dark iPad, with six inspected originals. This is an early correction; long-name truncation, other caller journeys and the full scene/accessibility review below remain open.
 
 ## Context and goal
@@ -18,8 +24,8 @@ After: every reachable product scene has been reviewed with real saved data on e
 
 ## Definition of ready
 
-- Release feature workflows and their acceptance criteria are implemented, including the saved graph, capture, calendar, agent data access and recovery. Any unresolved behavior is assigned to its feature ticket before polish starts.
-- The scene inventory includes catalogs, Inbox, Lists, Itineraries, calendar, capture/Share review, Item details, labels, settings, Agent Control and manual data administration, with empty, populated, filtered, archived, loading, failure and offline states where applicable.
+- Core release workflows are implemented, including the saved graph, capture, Calendar and ordinary save/sync failure handling. Assign unresolved behavior to its feature ticket. Deferred integrations and advanced portability do not prevent core polish.
+- Review the core scene inventory: catalogs, Inbox, Lists, Itineraries, Calendar, capture/Share review, Item details, labels and settings, with empty, populated, filtered, archived, loading, failure and offline states where applicable. The inventory retains deferred scenes for later releases.
 - Use the [current source and evidence inventory](native-ui-scene-inventory.md) to track those scenes. It records preparation and missing checks, not final acceptance.
 - Review datasets exercise repeated itinerary appearances, live List groups, long lists, long titles, notes, links, owned locations, mixed completion/archive states, timed and all-day schedules, and unavailable previews.
 - Agreed completion scopes, appearance identities, cumulative filtering, full-scope progress, saved Manual order and per-device presentation preferences are recorded and protected by existing behavior tests.
@@ -46,7 +52,7 @@ Run affected Swift formatting/lint, compiler checks and focused native UI journe
 
 ## Dependencies and completion boundary
 
-Depends on the finished saved feature work and qualification tracked by [Navigation prototype](https://github.com/dvcol/planner/issues/14), [Sync and Share prototype](https://github.com/dvcol/planner/issues/15), [MCP prototype](https://github.com/dvcol/planner/issues/16) and [Specification handoff](https://github.com/dvcol/planner/issues/17). The map remains open until its release gates are met. This ticket is complete only after the whole final application has passed the review above; completing a prototype screenshot correction does not complete it.
+MVP depends on the core feature work and qualification tracked by [Navigation prototype](https://github.com/dvcol/planner/issues/14), [Sync and Share prototype](https://github.com/dvcol/planner/issues/15) and [Specification handoff](https://github.com/dvcol/planner/issues/17). The [MCP prototype](https://github.com/dvcol/planner/issues/16) remains V3. The core pass is complete only after the MVP scenes pass the review above; a prototype screenshot correction does not complete it. Deferred scenes retain their later acceptance requirements.
 
 ## Observations retained from compatibility checks
 

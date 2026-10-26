@@ -2,6 +2,12 @@
 
 Status: preparation for [ticket 23](https://github.com/dvcol/planner/issues/23), based on production source at `7286a0db`. No scene receives final visual or accessibility acceptance from this inventory. Existing reports retain their own source epochs and executed results.
 
+Under the [26 October MVP amendment](release-goals.md#accepted-mvp-amendment-26-october-2026),
+prioritize the core planning scenes in this inventory. Existing basic export/import
+remains available; further portability and advanced restoration review is post-MVP.
+Agent Control, App Intents and external plan-opening qualification remain V3.
+Their rows below preserve later obligations without blocking the core UI pass.
+
 ## Context and goal
 
 The saved application now has native creation, capture, ordered plans, calendars, recovery and association Undo. Their reports qualify individual workflows. They do not provide a single record of every reachable scene or the presentation states still needing review.
