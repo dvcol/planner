@@ -7,6 +7,67 @@ import XCTest
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
   #if os(iOS)
+    func testItemTitleRemainsReadableDuringCreationAndEditingAtAccessibilitySizes() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openItems(application)
+      application.openSavedPlannerNewItemEditor()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Tokyo museum morning")
+      title.typeKey(XCUIKeyboardKey.return.rawValue, modifierFlags: [])
+      XCTAssertTrue(title.waitForPlannerValue("Tokyo museum morning"))
+      let notes = application.textFields["saved.item.notes"]
+      notes.activateForPlannerJourney()
+      notes.typeText("Keep this visit")
+      XCTAssertTrue(title.waitForPlannerValue("Tokyo museum morning"))
+      XCTAssertGreaterThan(
+        title.frame.height, application.textFields["saved.item.subtitle"].frame.height)
+      recordScreenshot(application, name: "Accessible Item title during creation")
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        try application.performAccessibilityAudit(for: .textClipped)
+      }
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Keep this visit"].waitForExistence(timeout: 10))
+      let back = application.navigationBars.buttons["Items"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+      let row = application.savedPlannerItemRows("Tokyo museum morning").firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      let sourceIdentifier = row.identifier
+      row.activateForPlannerJourney()
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Edit item").activateForPlannerJourney()
+      let editedTitle = application.textFields["saved.item.edit.title"]
+      XCTAssertTrue(editedTitle.waitForExistence(timeout: 10))
+      XCTAssertTrue(editedTitle.waitForPlannerValue("Tokyo museum morning"))
+      editedTitle.activateForPlannerJourney()
+      editedTitle.typeKey(XCUIKeyboardKey.return.rawValue, modifierFlags: [])
+      XCTAssertTrue(editedTitle.waitForPlannerValue("Tokyo museum morning"))
+      XCTAssertTrue(
+        application.textFields["saved.item.edit.notes"].waitForPlannerValue("Keep this visit"))
+      XCTAssertGreaterThan(
+        editedTitle.frame.height, application.textFields["saved.item.edit.subtitle"].frame.height)
+      recordScreenshot(application, name: "Accessible saved Item title during editing")
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        try application.performAccessibilityAudit(for: .textClipped)
+      }
+      application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openItems(application)
+      let reopened = application.savedPlannerItemRows("Tokyo museum morning").firstMatch
+      XCTAssertTrue(reopened.waitForExistence(timeout: 10))
+      XCTAssertEqual(reopened.identifier, sourceIdentifier)
+      reopened.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Keep this visit"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.descendants(matching: .any).matching(identifier: "saved.item.completion")
+          .firstMatch.waitForPlannerBooleanState(false))
+    }
+
     func testCatalogSwipeArchiveAndUnarchivePreserveTheItemAndCompletionAfterRelaunch() {
       continueAfterFailure = false
       let application = XCUIApplication()

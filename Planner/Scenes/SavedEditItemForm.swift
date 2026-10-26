@@ -21,6 +21,7 @@ struct SavedEditItemForm: View {
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
   @State private var operationIdentifier = UUID()
+  @FocusState private var titleIsFocused: Bool
 
   init(
     store: SavedPlannerStore, item: PlannerItemSourceRead,
@@ -55,7 +56,10 @@ struct SavedEditItemForm: View {
     NavigationStack {
       Form {
         Section {
-          TextField("Title", text: $title)
+          TextField("Title", text: $title, axis: .vertical)
+            .submitLabel(.done)
+            .focused($titleIsFocused)
+            .onSubmit { titleIsFocused = false }
             .accessibilityIdentifier("saved.item.edit.title")
           TextField("Subtitle", text: $subtitle)
             .accessibilityIdentifier("saved.item.edit.subtitle")

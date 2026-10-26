@@ -50,6 +50,7 @@ struct SavedNewItemForm: View {
   let cancel: () -> Void
   let save: () -> Void
   @State private var presentedLabelKind: SavedLabelKind?
+  @FocusState private var titleIsFocused: Bool
 
   var body: some View {
     NavigationStack {
@@ -61,7 +62,10 @@ struct SavedNewItemForm: View {
           }
         }
         Section {
-          TextField("Title", text: $draft.title)
+          TextField("Title", text: $draft.title, axis: .vertical)
+            .submitLabel(.done)
+            .focused($titleIsFocused)
+            .onSubmit { titleIsFocused = false }
             .accessibilityIdentifier("saved.item.title")
           TextField("Subtitle", text: $draft.subtitle)
             .accessibilityIdentifier("saved.item.subtitle")

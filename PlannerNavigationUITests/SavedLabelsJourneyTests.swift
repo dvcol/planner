@@ -332,7 +332,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     title.activateForPlannerJourney()
     title.typeText(value)
     #if os(iOS)
-      title.typeText("\n")
+      title.typeKey(XCUIKeyboardKey.return.rawValue, modifierFlags: [])
     #endif
     XCTAssertTrue(title.waitForPlannerValue(value))
   }

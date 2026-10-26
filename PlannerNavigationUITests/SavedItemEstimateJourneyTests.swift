@@ -278,7 +278,7 @@ final class SavedItemEstimateJourneyTests: XCTestCase {
     title.activateForPlannerJourney()
     title.typeText("Shortcut estimate")
     #if os(iOS)
-      title.typeText("\n")
+      title.typeKey(XCUIKeyboardKey.return.rawValue, modifierFlags: [])
     #endif
     XCTAssertTrue(title.waitForPlannerValue("Shortcut estimate"))
     chooseShortcut("Half-day (12 hours)", prefix: "saved.item.estimate", application: application)
