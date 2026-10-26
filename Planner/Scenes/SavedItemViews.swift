@@ -208,6 +208,19 @@ struct SavedItemCatalog: View {
         .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
       }
       .tag(item.id)
+      #if os(iOS)
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+          Button(
+            item.row.archived == true ? "Unarchive" : "Archive", systemImage: "archivebox"
+          ) {
+            Task {
+              _ = await store.setItemArchived(item.id, archived: item.row.archived != true)
+            }
+          }
+          .tint(.accentColor)
+          .disabled(!store.canCreate)
+        }
+      #endif
     case .loading, .loaded:
       ProgressView("Loading Item")
         .selectionDisabled()

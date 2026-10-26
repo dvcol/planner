@@ -6,6 +6,73 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testCatalogSwipeArchiveAndUnarchivePreserveTheItemAndCompletionAfterRelaunch() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openDesignSection("Items", in: application)
+      application.openSavedPlannerNewItemEditor()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Swipe archive")
+      let notes = application.textFields["saved.item.notes"]
+      notes.activateForPlannerJourney()
+      notes.typeText("Keep this note while archived")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Keep this note while archived"].waitForExistence(timeout: 10))
+      let back = application.navigationBars.buttons["Items"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+      let row = application.savedPlannerItemRows("Swipe archive").firstMatch
+      XCTAssertTrue(row.waitForPlannerHittability())
+      let sourceIdentifier = row.identifier
+      application.buttons["Mark Swipe archive done everywhere"].firstMatch
+        .activateForPlannerJourney()
+      let completion = application.buttons["Mark Swipe archive undone everywhere"].firstMatch
+      XCTAssertTrue(completion.waitForExistence(timeout: 5))
+      row.swipeLeft()
+      let archive = application.buttons["Archive"].firstMatch
+      XCTAssertTrue(archive.waitForExistence(timeout: 5))
+      XCTAssertTrue(archive.isHittable)
+      recordScreenshot(application, name: "Native Item row offers Archive after a swipe")
+      archive.activateForPlannerJourney()
+      XCTAssertTrue(row.waitForNonExistence(timeout: 10))
+      let filters = application.plannerElement("saved.items.filters")
+      application.chooseSavedPlannerStateFilter("Archived", control: filters)
+      XCTAssertTrue(row.waitForPlannerHittability())
+      XCTAssertEqual(row.identifier, sourceIdentifier)
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      row.swipeLeft()
+      let unarchive = application.buttons["Unarchive"].firstMatch
+      XCTAssertTrue(unarchive.waitForExistence(timeout: 5))
+      XCTAssertTrue(unarchive.isHittable)
+      recordScreenshot(application, name: "Native archived Item row offers Unarchive after a swipe")
+      unarchive.activateForPlannerJourney()
+      XCTAssertTrue(row.waitForNonExistence(timeout: 10))
+      application.chooseSavedPlannerStateFilter("Active", control: filters)
+      XCTAssertTrue(row.waitForPlannerHittability())
+      XCTAssertEqual(row.identifier, sourceIdentifier)
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openDesignSection("Items", in: application)
+      XCTAssertTrue(row.waitForPlannerHittability())
+      XCTAssertEqual(row.identifier, sourceIdentifier)
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      row.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Keep this note while archived"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.descendants(matching: .any).matching(identifier: "saved.item.completion")
+          .firstMatch.waitForPlannerBooleanState(true))
+      XCTAssertFalse(application.staticTexts["Archived"].exists)
+      recordScreenshot(application, name: "Swipe archive keeps Item identity notes and completion")
+    }
+  #endif
+
   func testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
