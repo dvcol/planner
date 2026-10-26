@@ -319,7 +319,10 @@ struct SavedPlannerView: View {
       }
       .sheet(item: $captureEntryPoint) { entryPoint in
         SavedCaptureForm(store: store, entryPoint: entryPoint) { source in
-          if case .global = entryPoint { selectedItemId = source.id }
+          if case .global = entryPoint {
+            selectedItemId = source.id
+            preferredCompactColumn = .detail
+          }
         }
       }
       .sheet(isPresented: $showAddItem) {

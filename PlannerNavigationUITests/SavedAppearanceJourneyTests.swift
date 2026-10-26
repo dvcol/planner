@@ -3126,8 +3126,26 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       }
       let editForm = application.collectionViews["saved.item.edit.form"]
       let scrollContainer = editForm.exists ? editForm : application.windows.firstMatch
-      let start = scrollContainer.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.74))
-      let end = scrollContainer.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.50))
+      let containerFrame = scrollContainer.frame
+      var visibleFrame = containerFrame.intersection(application.windows.firstMatch.frame)
+      let keyboard = application.keyboards.firstMatch
+      if keyboard.exists && !keyboard.frame.isEmpty {
+        visibleFrame.size.height = max(
+          0, min(visibleFrame.maxY, keyboard.frame.minY) - visibleFrame.minY)
+      }
+      guard !visibleFrame.isEmpty && containerFrame.height > 0 else {
+        XCTFail("The Item Form has no visible scroll area above the keyboard.")
+        return
+      }
+      let startPosition =
+        (visibleFrame.minY + visibleFrame.height * 0.74 - containerFrame.minY)
+        / containerFrame.height
+      let endPosition =
+        (visibleFrame.minY + visibleFrame.height * 0.50 - containerFrame.minY)
+        / containerFrame.height
+      let start = scrollContainer.coordinate(
+        withNormalizedOffset: .init(dx: 0.96, dy: startPosition))
+      let end = scrollContainer.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: endPosition))
       start.press(forDuration: 0.01, thenDragTo: end)
     #endif
   }
