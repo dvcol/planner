@@ -2313,6 +2313,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     createItem(application)
+    let listSummary = application.staticTexts["saved.item.lists.summary"]
+    XCTAssertTrue(listSummary.waitForExistence(timeout: 5))
+    XCTAssertEqual(listSummary.label, "Not in a list")
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
     let addToList = application.plannerElement("Add to list")
     XCTAssertTrue(addToList.waitForExistence(timeout: 5))
@@ -2328,6 +2331,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
     XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    XCTAssertEqual(listSummary.label, "Not in a list")
+    recordScreenshot(
+      application, name: "Unlisted Item keeps its readable native membership summary")
     openSection("Lists", application: application)
     XCTAssertTrue(application.staticTexts["No Lists yet"].waitForExistence(timeout: 10))
   }
@@ -2352,6 +2358,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     viewGlobalItem(application)
     let globalCompletion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
+    let listSummary = application.staticTexts["saved.item.lists.summary"]
+    XCTAssertTrue(listSummary.waitForExistence(timeout: 5))
+    XCTAssertEqual(listSummary.label, "In 1 list")
     activateGlobalCompletion(globalCompletion)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
@@ -2366,6 +2375,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     destination.activateForPlannerJourney()
     application.plannerElement("saved.item.list.cancel").activateForPlannerJourney()
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    XCTAssertEqual(listSummary.label, "In 1 list")
     openSection("Lists", application: application)
     let wishlist = application.savedPlannerListRow("Wishlist")
     revealSidebarIfNeeded(application, element: wishlist)
@@ -2382,6 +2392,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     add.activateForPlannerJourney()
     XCTAssertTrue(add.waitForNonExistence(timeout: 10))
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    XCTAssertTrue(
+      application.staticTexts.matching(identifier: "saved.item.lists.summary")
+        .matching(NSPredicate(format: "label == %@", "In 2 lists")).firstMatch
+        .waitForExistence(timeout: 5))
+    recordScreenshot(application, name: "Shared Item shows that it belongs to two Lists")
     XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
     openList("Wishlist", application: application)
     let destinationIdentifier = item.identifier
@@ -2426,6 +2441,10 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     viewGlobalItem(application)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
     XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    XCTAssertTrue(
+      application.staticTexts.matching(identifier: "saved.item.lists.summary")
+        .matching(NSPredicate(format: "label == %@", "In 2 lists")).firstMatch
+        .waitForExistence(timeout: 5))
   }
 
   func testRowMenuMoveKeepsAnExistingDestinationIdentityCompletionAndOrderAfterRelaunch() throws {

@@ -292,6 +292,18 @@ struct SavedItemDetail: View {
   @State private var showNewSchedule = false
   @State private var scheduleToEdit: PlannerScheduleSourceRead?
 
+  private var listMembershipSummary: String {
+    let membershipCount = item.references.filter { reference in
+      guard case .membership(_, _, let source) = reference else { return false }
+      return source == item.source
+    }.count
+    switch membershipCount {
+    case 0: return "Not in a list"
+    case 1: return "In 1 list"
+    default: return "In \(membershipCount) lists"
+    }
+  }
+
   var body: some View {
     Form {
       Section {
@@ -304,6 +316,8 @@ struct SavedItemDetail: View {
         if item.state.archived == true {
           Label("Archived", systemImage: "archivebox").foregroundStyle(.secondary)
         }
+        Label(listMembershipSummary, systemImage: "list.bullet.rectangle")
+          .accessibilityIdentifier("saved.item.lists.summary")
         Toggle(
           "Completed",
           isOn: Binding(get: { item.state.globalDone == true }, set: setCompletion)

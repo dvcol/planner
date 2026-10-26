@@ -16,6 +16,8 @@ but do not override this priority.
 
 ## Recent local checkpoints
 
+The [Item membership summary](prototypes/native-item-list-summary.md) now makes shared organization visible in global details with a native zero/one/multiple-List label. Four phone/dark-iPad executions pass Add/Cancel, duplicate Add, independent completion and relaunch checks; four originals are inspected and matching Mac compilation passes. The summary reuses existing Core references, with no new persistence, public interface or recovery work. Actual Mac UI and physical/sync gates remain separate.
+
 The [browser background checkpoint](prototypes/native-webpage-background.md) passes loading and failed-page resume on iPhone and dark iPad, four native executions. Held requests, retry/history controls and the original bookmark survive brief app switches and rotation. Four recovered-page originals are inspected and identical inputs/products verified. Production is unchanged; suspension, process death, Mac remounts and physical acceptance remain separate. Signing stays deferred.
 
 The [native Shortcuts optional-input checkpoint](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) passes two final-source iPhone/iPad journeys through Apple's actual List picker and Create action. Subtitle and Notes persist, one Todo appearance retains its exact identity through relaunch, and the other List stays empty. Each uniquely named test workflow is removed. All 1160 native inputs/products reconcile and eight originals are inspected, with animation-frame limits explicit. Production is unchanged; other system actions, cold/locked invocation, physical/shared-store gates and signing remain separate.
