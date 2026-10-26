@@ -1,3 +1,4 @@
 // Copy to Local.xcconfig for real signing inputs. No account or container is provisioned here.
 // DEVELOPMENT_TEAM = your-team-identifier
-// PRODUCT_BUNDLE_IDENTIFIER = your-provisioned-application-identifier
+// PLANNER_APPLICATION_BUNDLE_IDENTIFIER = your-provisioned-application-identifier
+// PLANNER_APP_GROUP_IDENTIFIER = your-provisioned-app-group-identifier

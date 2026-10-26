@@ -14,7 +14,7 @@ struct PlannerShareRootView: View {
     self.providers = providers
     self.didCancel = didCancel
     self.didSave = didSave
-    configuration = Result { try Self.sharedConfiguration() }
+    configuration = Result { try PlannerNativeStorage.sharedConfiguration() }
   }
 
   var body: some View {
@@ -38,26 +38,4 @@ struct PlannerShareRootView: View {
     }
   }
 
-  private static func sharedConfiguration() throws -> PlannerStorageConfiguration {
-    guard
-      let groupIdentifier = Bundle.main.object(forInfoDictionaryKey: "PlannerAppGroupIdentifier")
-        as? String,
-      !groupIdentifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-      let directory = FileManager.default.containerURL(
-        forSecurityApplicationGroupIdentifier: groupIdentifier)
-    else {
-      throw CocoaError(
-        .fileReadNoPermission,
-        userInfo: [
-          NSLocalizedDescriptionKey:
-            "Share cannot access Planner's data. Add the content in Planner."
-        ])
-    }
-    let plannerDirectory = directory.appending(path: "Planner", directoryHint: .isDirectory)
-    return .init(
-      storeURL: plannerDirectory.appending(path: "store/Planner.sqlite"),
-      controlURL: plannerDirectory.appending(path: "control/writer"),
-      recoveryDirectoryURL: plannerDirectory.appending(path: "recovery"),
-      processRole: .shareExtension, storageMode: .localOnly)
-  }
 }

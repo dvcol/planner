@@ -1,5 +1,26 @@
 # Apple test access
 
+## Current setup direction, 26 October 2026
+
+The user reports enrolling in the Apple Developer Program and has supplied the
+intended Team ID for local setup. Membership activation, Xcode account access,
+signing identities and provisioned capabilities still need actual verification.
+This supersedes the earlier decision to defer membership; it does not turn the
+historical ad hoc checks below into selected-team evidence.
+
+The requested eventual distribution is an unlisted App Store app for personal
+use. Apple's [unlisted distribution rules](https://developer.apple.com/support/unlisted-app-distribution/)
+exclude such apps from search and other listings, but anyone with the direct
+link can install them. Final App Review and approval of an unlisted request are
+required; approval is not assumed. No store submission or publication is
+authorized by identifier setup alone.
+
+Start with the Team ID in Account → Membership details, as described in Apple's
+[Team ID guidance](https://developer.apple.com/help/glossary/team-id/). The app,
+App Group and iCloud container identifiers are chosen and registered for that
+team afterward. Keep machine-specific signing inputs in ignored
+`Configuration/Local.xcconfig`; do not commit account secrets or signing material.
+
 Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/issues/7), refreshed on 2026-10-09 for Navigation prototype readiness. The read-only refresh matches the 2026-10-08 inventory below. Subsequent local native/Core/MCP execution is recorded separately below. Selected-team signing, physical-device launch, CloudKit access and extension execution remain unverified.
 
 ## Observed environment

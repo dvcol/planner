@@ -10,23 +10,32 @@ export/import tools can remain available. Further portability polish and advance
 manual import/restoration qualification are post-MVP, not release blockers.
 Preserve implemented validation, saved data and existing recovery evidence.
 App Intents/MCP retain their established V3 stage after the core V2 release.
-Signing stays deferred; actual Mac UI, installed Share and physical sync remain
-distinct core acceptance gates. Historical checkpoints below retain their scope
+Signing setup is now authorized with the user's enrolled team; actual Mac UI, installed Share and physical sync remain
+distinct core work and acceptance gates. CloudKit integration is not yet
+implemented: production currently selects local-only SwiftData storage.
+Historical checkpoints below retain their scope
 but do not override this priority.
 
 ## MVP finish line
 
-Core planning is implemented with local evidence: Item/List authoring, capture,
+Local planning is implemented with local evidence: Item/List authoring, capture,
 places and link previews, ordered itineraries, estimates and remaining time,
 Calendar, collection maps and the embedded reader. This is implementation
-progress, not final acceptance on every platform.
+progress, not final acceptance on every platform. The source audit confirms
+that `PlannerStorageConfiguration.StorageMode` only has `localOnly`,
+`Planner.openContainer` explicitly uses `cloudKitDatabase: .none`, and native
+account/cloud status remains unknown. Sync still needs implementation as well
+as signing and physical qualification. The earlier descriptions of sync as
+only a remaining test gate were incomplete.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
+| Private CloudKit integration | Missing. Core opens local-only storage; account/cloud observation is not integrated. | Implement the accepted managed SwiftData/private-CloudKit mode and account ownership/status handling, then qualify actual container and device behavior. |
+| Shared storage and installed Share | [Common main/extension path selection](prototypes/native-shared-storage.md) passes local real-storage checks and mobile regressions. Provisioned App Group access and installed extension integration remain open. | Selected App Group/capability setup, safe handling of existing local data, then actual installed app/extension checks. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. | Local phone/iPad checks, resizing and accessibility review. No signing prerequisite. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Builds pass; actual resizing, Calendar panes, keyboard and Undo still need qualification. | A working Mac XCTest runtime. The retained broker failure is separate from signing. |
-| Installed Share and synchronized daily use | Physical acceptance is open. | Signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. Failures here may require implementation fixes. |
+| Synchronized daily use | Implementation and physical acceptance are open. | Complete CloudKit integration, then signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. |
 | Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
 
 Existing basic export/import remains optional. Further export/import features,
@@ -36,6 +45,8 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [shared native storage correction](prototypes/native-shared-storage.md) makes the main app and Share select the same configured location, while preserving unconfigured local/prototype paths and refusing a silent transition away from existing local data. Four standalone real-storage scenarios and four phone/iPad UI executions pass; matching Mac compilation includes the four new app-hosted tests, whose execution remains open. The audit also corrects the sync status: CloudKit and account observation require implementation, not only signing tests. The user has enrolled in the Apple Developer Program and supplied the team for setup; unlisted distribution is the requested eventual route, subject to Apple's review and approval. Advanced portability stays post-MVP.
 
 The [iPad sidebar audit follow-up](prototypes/native-sidebar-title.md#ipad-clipping-audit-follow-up) retains three failed clipping diagnostics and discards two unsuccessful layout probes. The restored catalog interaction passes; all 1160 production/test inputs remain identical to `09ef6525` and match rebuilt Mac products. No production or test change remains. Inbox clipping/assistive review and Mac runtime stay open, with exact evidence retained to avoid repeating these probes. Core journey acceptance remains the next local priority; signing and portability stay deferred.
 
@@ -358,11 +369,13 @@ Keep existing basic export/import available without expanding it. New advanced
 portability or manual-restoration cases belong to post-MVP work and do not delay
 the core queue. Preserve safeguards for ordinary saves and synchronization.
 
-1. Finish the native UI pass for the core planning scenes. Prioritize the observed crowded catalog toolbar, search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
-2. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have the local qualification recorded above. Existing single-pin/rich-link cards and these scoped checkpoints do not close every remaining lifecycle or system gate. Settle concrete navigation/interface choices before their dependent implementation; signing is not a prerequisite for contract preparation and local tests.
-3. Qualify the outstanding core Mac UI workflows, including Calendar, capture, Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility cases. Q127 A's implemented Calendar split pane needs actual Day/Week/Month resizing, divider movement and width recovery. Compilation and iPad regressions do not close this gate. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause. Export/import-specific UI acceptance is post-MVP.
-4. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates. Simulator or local-store evidence cannot replace these.
-5. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
+1. Complete native main/Share shared-storage integration. Both entry points must use the same configured App Group store, control and recovery locations. Preserve existing unconfigured local data and require an explicit safe transition before first selecting an empty shared store. Provisioned capabilities and actual installed-extension access remain separate from local path tests.
+2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
+3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
+4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
+5. Qualify the outstanding core Mac UI workflows, including Calendar, capture, Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility cases. Q127 A's implemented Calendar split pane needs actual Day/Week/Month resizing, divider movement and width recovery. Compilation and iPad regressions do not close this gate. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause. Export/import-specific UI acceptance is post-MVP.
+6. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates after their implementation. Simulator or local-store evidence cannot replace these.
+7. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
 
 ## Post-MVP work
 

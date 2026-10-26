@@ -110,6 +110,7 @@ final class SavedPlannerStore {
   init() {
     let arguments = ProcessInfo.processInfo.arguments
     let directory: URL
+    let isLocalPrototype: Bool
     if let index = arguments.firstIndex(of: "--local-prototype-dataset") {
       guard arguments.indices.contains(index + 1),
         let identifier = UUID(uuidString: arguments[index + 1])
@@ -121,6 +122,7 @@ final class SavedPlannerStore {
       directory = FileManager.default.temporaryDirectory
         .appendingPathComponent("PlannerLocalPrototype", isDirectory: true)
         .appendingPathComponent(identifier.uuidString, isDirectory: true)
+      isLocalPrototype = true
     } else {
       guard
         let support = FileManager.default.urls(
@@ -132,13 +134,18 @@ final class SavedPlannerStore {
         return
       }
       directory = support.appendingPathComponent("Planner/Local", isDirectory: true)
+      isLocalPrototype = false
     }
-    planner = PlannerCore.Planner(
-      configuration: .init(
-        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-        controlURL: directory.appendingPathComponent("control/writer"),
-        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+    do {
+      let sharedDirectory =
+        isLocalPrototype ? nil : try PlannerNativeStorage.configuredSharedDirectory()
+      let configuration = try PlannerNativeStorage.mainConfiguration(
+        localDirectory: directory, sharedDirectory: sharedDirectory)
+      planner = PlannerCore.Planner(configuration: configuration)
+    } catch {
+      planner = nil
+      openingFailure = error.localizedDescription
+    }
   }
 
   deinit {
