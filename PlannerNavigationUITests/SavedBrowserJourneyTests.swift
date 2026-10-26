@@ -1053,6 +1053,13 @@ final class SavedBrowserJourneyTests: XCTestCase {
       XCTAssertEqual(server.delayedRequestCount, 1)
       let loading = application.progressIndicators["Loading webpage"].firstMatch
       XCTAssertTrue(loading.waitForExistence(timeout: 5))
+      XCUIDevice.shared.press(.home)
+      XCTAssertTrue(application.wait(for: .runningBackground, timeout: 5))
+      application.activate()
+      XCTAssertTrue(application.wait(for: .runningForeground, timeout: 5))
+      XCTAssertEqual(server.delayedRequestCount, 1)
+      XCTAssertTrue(loading.waitForExistence(timeout: 5))
+      XCTAssertTrue(application.buttons["saved.browser.return"].isHittable)
       XCUIDevice.shared.orientation = .landscapeLeft
       let landscape = NSPredicate { _, _ in
         let frame = application.windows.firstMatch.frame
@@ -1112,6 +1119,13 @@ final class SavedBrowserJourneyTests: XCTestCase {
       savedLink.activateForPlannerJourney()
       let unavailable = application.staticTexts["Page unavailable"].firstMatch
       XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
+      XCUIDevice.shared.press(.home)
+      XCTAssertTrue(application.wait(for: .runningBackground, timeout: 5))
+      application.activate()
+      XCTAssertTrue(application.wait(for: .runningForeground, timeout: 5))
+      XCTAssertTrue(unavailable.waitForExistence(timeout: 5))
+      XCTAssertTrue(application.buttons["Retry"].firstMatch.isHittable)
+      XCTAssertTrue(application.buttons["saved.browser.return"].isHittable)
       XCUIDevice.shared.orientation = .landscapeLeft
       let landscape = NSPredicate { _, _ in
         let frame = application.windows.firstMatch.frame
