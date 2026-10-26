@@ -8,6 +8,13 @@ signing identities and provisioned capabilities still need actual verification.
 This supersedes the earlier decision to defer membership; it does not turn the
 historical ad hoc checks below into selected-team evidence.
 
+The subsequent supplied screenshot shows the enrolled developer team already
+added in Xcode's **Apple Accounts** settings. A local build-settings read resolves
+the supplied Team ID from ignored configuration. A fresh read-only signing
+inventory still finds zero valid signing identities; certificate creation and
+actual provisioned builds remain open. Identifier names are awaiting confirmation
+before registration.
+
 The requested eventual distribution is an unlisted App Store app for personal
 use. Apple's [unlisted distribution rules](https://developer.apple.com/support/unlisted-app-distribution/)
 exclude such apps from search and other listings, but anyone with the direct
