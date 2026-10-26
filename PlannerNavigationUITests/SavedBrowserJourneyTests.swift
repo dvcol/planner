@@ -25,8 +25,25 @@ final class SavedBrowserJourneyTests: XCTestCase {
         noticeTitle: "Open content in your browser", fetchesBeforeHandoff: true)
     }
 
+    func testItineraryDownloadHandoffPreservesBothSavedLinksAndItsReturnContext() async throws {
+      try await qualifySystemBrowserFallback(
+        linkTitle: "Download guide", targetPath: "download-guide",
+        noticeTitle: "Open download in your browser", fetchesBeforeHandoff: false,
+        usesItinerary: true)
+    }
+
+    func testItineraryUnsupportedContentHandoffPreservesBothSavedLinksAndItsReturnContext()
+      async throws
+    {
+      try await qualifySystemBrowserFallback(
+        linkTitle: "Unsupported content", targetPath: "unsupported-content",
+        noticeTitle: "Open content in your browser", fetchesBeforeHandoff: true,
+        usesItinerary: true)
+    }
+
     private func qualifySystemBrowserFallback(
-      linkTitle: String, targetPath: String, noticeTitle: String, fetchesBeforeHandoff: Bool
+      linkTitle: String, targetPath: String, noticeTitle: String, fetchesBeforeHandoff: Bool,
+      usesItinerary: Bool = false
     ) async throws {
       continueAfterFailure = false
       let server = try BrowserJourneyServer()
@@ -37,17 +54,32 @@ final class SavedBrowserJourneyTests: XCTestCase {
       let application = XCUIApplication()
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
-      application.openPlannerSection("Items")
-      createLinkedItem(in: application, destination: destination)
-      let bookmark = application.descendants(matching: .any).matching(
-        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
-      ).firstMatch
-      XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
-      let bookmarkIdentifier = bookmark.identifier
+      let bookmarks: [(element: XCUIElement, destination: URL)]
+      if usesItinerary {
+        let garden = destination.deletingLastPathComponent().appendingPathComponent("garden")
+        let links = createLinkedItinerary(in: application, first: destination, second: garden)
+        bookmarks = [(links.0, destination), (links.1, garden)]
+      } else {
+        application.openPlannerSection("Items")
+        createLinkedItem(in: application, destination: destination)
+        let bookmark = application.descendants(matching: .any).matching(
+          NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+        ).firstMatch
+        bookmarks = [(bookmark, destination)]
+      }
+      for bookmark in bookmarks {
+        XCTAssertTrue(bookmark.element.waitForExistence(timeout: 10))
+      }
+      let bookmarkIdentifiers = bookmarks.map { $0.element.identifier }
+      let sourceName = usesItinerary ? "Itinerary" : "Item"
+      let bookmark = bookmarks[0].element
       bookmark.activateForPlannerJourney()
       let page = application.webViews.firstMatch
       let guide = page.staticTexts["Museum guide fixture"]
       XCTAssertTrue(guide.waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        application.buttons["saved.browser.return"].label,
+        usesItinerary ? "Return to itinerary" : "Return to item")
       page.links[linkTitle].activateForPlannerJourney()
       let explanation = application.alerts.firstMatch
       XCTAssertTrue(explanation.waitForExistence(timeout: 10))
@@ -65,7 +97,7 @@ final class SavedBrowserJourneyTests: XCTestCase {
       XCTAssertNotEqual(browser.state, .runningForeground)
       XCTAssertEqual(application.state, .runningForeground)
       try await recordWindow(
-        application, name: "\(linkTitle) offers its exact default-browser target")
+        application, name: "\(sourceName) \(linkTitle) offers its exact default-browser target")
       explanation.buttons["Open in default browser"].activateForPlannerJourney()
       let browserBecameForeground = browser.wait(for: .runningForeground, timeout: 10)
       let deadline = ContinuousClock.now.advanced(by: .seconds(10))
@@ -80,6 +112,7 @@ final class SavedBrowserJourneyTests: XCTestCase {
       let externalUserAgents = Array(
         server.userAgents(for: requestLine).dropFirst(priorTargetUserAgents.count))
       let observation: [String: Any] = [
+        "sourceKind": sourceName,
         "originalBookmark": destination.absoluteString,
         "requestedExternalTarget": externalDestination.absoluteString,
         "requestLine": requestLine,
@@ -93,11 +126,11 @@ final class SavedBrowserJourneyTests: XCTestCase {
       let requests = XCTAttachment(
         data: try JSONSerialization.data(withJSONObject: observation, options: .prettyPrinted),
         uniformTypeIdentifier: "public.json")
-      requests.name = "\(linkTitle) actual system-browser request provenance"
+      requests.name = "\(sourceName) \(linkTitle) actual system-browser request provenance"
       requests.lifetime = .keepAlways
       add(requests)
       let opened = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-      opened.name = "System browser after explicit \(linkTitle) handoff"
+      opened.name = "System browser after explicit \(sourceName) \(linkTitle) handoff"
       opened.lifetime = .keepAlways
       add(opened)
       XCTAssertTrue(browserBecameForeground)
@@ -115,13 +148,18 @@ final class SavedBrowserJourneyTests: XCTestCase {
       application.buttons["saved.browser.back"].activateForPlannerJourney()
       XCTAssertTrue(guide.waitForExistence(timeout: 10))
       application.buttons["saved.browser.return"].activateForPlannerJourney()
-      let retainedBookmark = application.descendants(matching: .any)
-        .matching(identifier: bookmarkIdentifier).firstMatch
-      XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
-      XCTAssertEqual(retainedBookmark.value as? String, destination.absoluteString)
+      for (index, bookmark) in bookmarks.enumerated() {
+        let retainedBookmark = application.descendants(matching: .any)
+          .matching(identifier: bookmarkIdentifiers[index]).firstMatch
+        XCTAssertTrue(retainedBookmark.waitForExistence(timeout: 10))
+        XCTAssertEqual(retainedBookmark.value as? String, bookmark.destination.absoluteString)
+      }
+      if usesItinerary {
+        XCTAssertTrue(application.staticTexts["Museum and garden"].firstMatch.exists)
+      }
       try await recordWindow(
         application,
-        name: "\(linkTitle) handoff preserves guide history and original bookmark")
+        name: "\(sourceName) \(linkTitle) handoff preserves history and saved links")
       application.terminate()
     }
 
