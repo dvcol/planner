@@ -1,5 +1,7 @@
 # Planner icon concept
 
+This blue exploration is superseded by the [monochrome native icon](planner-icon-v2.md).
+
 [Generated master](planner-icon-v1.png), created with the built-in image-generation
 tool on 26 October 2026. A white checkmark ends in a circular waypoint on blue,
 combining completion and a planned destination in one simple mark.
