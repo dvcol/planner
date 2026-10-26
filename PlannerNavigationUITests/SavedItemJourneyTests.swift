@@ -7,6 +7,45 @@ import XCTest
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
   #if os(iOS)
+    func testInboxSearchRetainsTheCompleteQueryAndRestoresTheSameItemWhenCleared() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Inbox")
+      let search = application.searchFields.firstMatch
+      XCTAssertTrue(search.waitForExistence(timeout: 10))
+      recordScreenshot(application, name: "Native Inbox search before editing")
+      application.openSavedPlannerNewItemEditor()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Tokyo museum visit near the garden")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      let back = application.navigationBars.buttons["Inbox"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+      let item = application.savedPlannerItemRows("Tokyo museum visit near the garden").firstMatch
+      XCTAssertTrue(item.waitForExistence(timeout: 10))
+      let sourceIdentifier = item.identifier
+      if !search.exists { application.swipeDown() }
+      XCTAssertTrue(search.waitForExistence(timeout: 5))
+      search.activateForPlannerJourney()
+      search.typeText("Tokyo museum visit near the garden")
+      XCTAssertTrue(search.waitForPlannerValue("Tokyo museum visit near the garden"))
+      XCTAssertTrue(item.waitForExistence(timeout: 10))
+      recordScreenshot(application, name: "Native Inbox search retains the complete query")
+      search.buttons["Clear text"].activateForPlannerJourney()
+      search.activateForPlannerJourney()
+      search.typeText("No such visit")
+      XCTAssertTrue(search.waitForPlannerValue("No such visit"))
+      XCTAssertTrue(item.waitForNonExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
+      search.buttons["Clear text"].activateForPlannerJourney()
+      XCTAssertTrue(item.waitForExistence(timeout: 10))
+      XCTAssertEqual(item.identifier, sourceIdentifier)
+      recordScreenshot(application, name: "Clearing native Inbox search restores the same Item")
+    }
+
     func testCompactListCatalogToolbarKeepsItsTitleAndActionsAvailable() throws {
       continueAfterFailure = false
       XCUIDevice.shared.orientation = .portrait
