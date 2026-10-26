@@ -50,6 +50,13 @@ any actual background-sync requirement separately before enabling it.
 
 ### Development identity
 
+The [disposable private-access check](../prototypes/cloud-access-preparation.md)
+compiles with signing disabled and has not been launched. Automatic approval
+review rejected `-allowProvisioningUpdates` because its profile/App ID/certificate
+mutations exceed the identifier registration approval. Explicit development
+signing-resource management and the documented silent-sync notification
+capability are the next setup approvals. Existing certificates must be preserved.
+
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and
 `errSecInternalComponent`. The required WWDR G3 intermediate was absent.
