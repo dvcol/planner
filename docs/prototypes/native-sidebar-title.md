@@ -32,3 +32,33 @@ search, contrast and full accessibility findings remain open. Actual Mac
 resizing/keyboard behavior, installed Share and physical sync/performance retain
 their separate acceptance gates. Signing stays deferred and advanced portability
 remains post-MVP.
+
+## iPad clipping audit follow-up
+
+The current maximum-text dark iPad catalog still fails the unfiltered native
+text-clipping audit after the visible app-title correction. Its first issue
+supplies an Inbox row capture. Giving the destination labels their required
+vertical size leaves that same warning. A conditional title-only style at
+accessibility sizes makes Calendar fit on one line, but still produces a generic
+clipping warning without an element screenshot. Neither probe establishes a
+passing layout, so both production probes and the diagnostic test change are
+discarded. No audit exception is added.
+
+The restored catalog interaction journey passes at maximum text size with
+Increase Contrast. All 1160 restored production/test inputs exactly match
+`09ef6525` and the rebuilt Mac products. The actual Add, archive, More, Settings,
+labels, sorting and List identity through relaunch remain qualified; this is
+functional evidence, not an iPad clipping-audit pass.
+
+The [follow-up results](evidence/native-sidebar-audit/final-validation.json)
+separate three failed audit executions, the passing restored journey and the
+compiler epochs. Four originals are inspected. Source variants, complete issues,
+commands, settings restoration and results are retained in the
+[verified archive](evidence/native-sidebar-audit/execution-records-index.json).
+
+The [read-only Mac observation](evidence/native-sidebar-audit/mac-runtime-observation.json)
+still reports the 14 October boot and 17 October native test-broker start. No
+unchanged Mac UI startup attempt is made. Native audit/assistive review and
+actual Mac interaction retain their separate limits; signing stays deferred.
+Continue the remaining core journey and acceptance audit before adding further
+layout machinery or revisiting these unsuccessful probes.
