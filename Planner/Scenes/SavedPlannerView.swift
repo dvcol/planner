@@ -1710,6 +1710,7 @@ struct SavedPlannerView: View {
       min: sidebarMinimumWidth, ideal: sidebarPreferredWidth, max: sidebarMaximumWidth
     )
     #if os(iOS)
+      .toolbar(removing: usesSidebarNavigation ? .title : nil)
       .onGeometryChange(for: CGFloat.self) { geometry in
         geometry.size.width
       } action: { width in

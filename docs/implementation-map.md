@@ -23,7 +23,7 @@ progress, not final acceptance on every platform.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Core UI polish and compatibility | In progress. Concrete findings include crowded sidebar titles, search clipping and contrast. | Local phone/iPad checks, resizing and accessibility review. No signing prerequisite. |
+| Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. | Local phone/iPad checks, resizing and accessibility review. No signing prerequisite. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Builds pass; actual resizing, Calendar panes, keyboard and Undo still need qualification. | A working Mac XCTest runtime. The retained broker failure is separate from signing. |
 | Installed Share and synchronized daily use | Physical acceptance is open. | Signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. Failures here may require implementation fixes. |
@@ -36,6 +36,8 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [native sidebar-title correction](prototypes/native-sidebar-title.md) removes the crowded default app title only from the regular iPad sidebar. Three native executions pass reader width/history/return and largest-text catalog actions/relaunch on iPad and phone; the phone keeps its visible title and passes its clipping audit. All 1160 inputs match Mac compilation, and three originals are inspected. The one-line native correction leaves the broader UI, actual Mac interaction and physical/sync gates open. Portability stays post-MVP and signing remains deferred.
 
 The [reader pane-width checkpoint](prototypes/native-reader-pane-width.md) preserves a linked webpage through actual dark-iPad sidebar changes from 839 to 559 to 839 points, then Back/Forward/Reload and exact bookmark Return. Its affected phone regression also passes: two native executions, matching 1160 inputs and Mac compilation, with three inspected originals. Production is unchanged. The same capture confirms the narrow sidebar Planner-title crowding as the next concrete UI finding. Wider remount/window, accessibility and physical gates remain open; signing stays deferred and portability stays post-MVP.
 

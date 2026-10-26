@@ -27,6 +27,10 @@ The narrow iPad capture also shows the sidebar's Planner title truncated to
 reader-width failure or a whole-window visual pass. The phone's compact webpage
 title also truncates beside its history controls; the page heading is readable.
 
+The subsequent [sidebar-title correction](native-sidebar-title.md) closes the
+represented iPad app-title crowding with a native toolbar modifier and reruns
+this reader journey. The observations above retain their original source epoch.
+
 This loaded-page transition does not qualify hidden-detail/compact remounts,
 multitasking windows, arbitrary websites, full accessibility or actual Mac
 resizing/keyboard behavior. Physical and signed/shared-store gates remain open.
