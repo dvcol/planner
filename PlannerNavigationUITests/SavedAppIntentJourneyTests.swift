@@ -103,6 +103,106 @@ final class SavedAppIntentJourneyTests: XCTestCase {
       XCTAssertTrue(completion.waitForPlannerBooleanState(false))
     }
 
+    func testSystemShortcutsCancelsEditedCreationWithoutSavingAnItem() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let resultService = openPlannerShortcutsCreatePrompt(for: application)
+      let cancelledTitle = "Cancelled system Item " + UUID().uuidString
+      resultService.textFields["Title"].firstMatch.typeText(cancelledTitle)
+      resultService.buttons["Cancel"].firstMatch.activateForPlannerJourney()
+      application.activate()
+      openUnfilteredPlannerItems(in: application)
+      XCTAssertTrue(
+        application.staticTexts["No Items yet"].firstMatch.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows(cancelledTitle).count, 0)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openUnfilteredPlannerItems(in: application)
+      XCTAssertTrue(
+        application.staticTexts["No Items yet"].firstMatch.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows(cancelledTitle).count, 0)
+      recordShortcutsWindow(
+        application, name: "Installed Shortcuts cancellation keeps the catalog empty")
+    }
+
+    func testSystemShortcutsCreatesAnItemThroughTheRequiredTitlePrompt() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let resultService = openPlannerShortcutsCreatePrompt(for: application)
+      let titleInput = resultService.textFields["Title"].firstMatch
+      XCTAssertTrue(titleInput.waitForExistence(timeout: 10))
+      let itemTitle = "System created " + UUID().uuidString
+      titleInput.typeText(itemTitle)
+      XCTAssertEqual(application.state, .runningBackground)
+      resultService.buttons.matching(NSPredicate(format: "label == %@", "Done")).firstMatch
+        .activateForPlannerJourney()
+      let createdMessage = resultService.staticTexts["Created \(itemTitle)."].firstMatch
+      let creationReturned = createdMessage.waitForExistence(timeout: 20)
+      recordShortcutsWindow(resultService, name: "Installed Shortcuts Create Item result")
+      XCTAssertTrue(creationReturned)
+      let done = resultService.buttons.matching(NSPredicate(format: "label == %@", "Done"))
+        .firstMatch
+      if done.exists { done.activateForPlannerJourney() }
+      application.activate()
+      application.openPlannerSection("Items")
+      let createdRow = application.savedPlannerItemRows(itemTitle).firstMatch
+      XCTAssertTrue(createdRow.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows(itemTitle).count, 1)
+      let itemIdentifier = createdRow.identifier
+      createdRow.activateForPlannerJourney()
+      let completion = application.descendants(matching: .any)
+        .matching(identifier: "saved.item.completion").firstMatch
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let restoredRow = application.plannerElement(itemIdentifier)
+      XCTAssertTrue(restoredRow.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows(itemTitle).count, 1)
+      restoredRow.activateForPlannerJourney()
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      recordShortcutsWindow(application, name: "Installed Shortcuts created Item survives relaunch")
+    }
+
+    private func openUnfilteredPlannerItems(in application: XCUIApplication) {
+      application.openPlannerSection("Items")
+      let filters = application.plannerElement("saved.items.filters")
+      if !filters.isHittable,
+        let sidebar = application.buttons.matching(identifier: "Hide Sidebar")
+          .allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        sidebar.activateForPlannerJourney()
+      }
+      XCTAssertTrue(filters.waitForPlannerHittability())
+      filters.activateForPlannerJourney()
+      let clearFilters = application.plannerElement("saved.filters.clear")
+      if clearFilters.isEnabled { clearFilters.activateForPlannerJourney() }
+      application.plannerElement("saved.filters.done").activateForPlannerJourney()
+      XCTAssertEqual(filters.label, "All")
+    }
+
+    private func openPlannerShortcutsCreatePrompt(for application: XCUIApplication)
+      -> XCUIApplication
+    {
+      let shortcuts = openPlannerShortcutsCatalog()
+      if let hideSidebar = shortcuts.buttons.matching(
+        NSPredicate(format: "label == %@", "Hide Sidebar")
+      ).allElementsBoundByIndex.last,
+        hideSidebar.isHittable
+      {
+        hideSidebar.activateForPlannerJourney()
+      }
+      XCTAssertEqual(application.state, .runningBackground)
+      shortcuts.buttons["plus"].firstMatch.activateForPlannerJourney()
+      let resultService = XCUIApplication(bundleIdentifier: "com.apple.ShortcutsUI")
+      XCTAssertTrue(resultService.textFields["Title"].firstMatch.waitForExistence(timeout: 10))
+      return resultService
+    }
+
     private func openPlannerShortcutsCatalog() -> XCUIApplication {
       let shortcuts = XCUIApplication(bundleIdentifier: "com.apple.shortcuts")
       shortcuts.launch()
