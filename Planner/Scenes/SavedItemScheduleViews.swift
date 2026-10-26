@@ -328,7 +328,7 @@ struct SavedScheduleForm: View {
             NavigationLink {
               SavedPlanningTimeZonePicker(selectedTimeZoneIdentifier: $planningTimeZone)
             } label: {
-              LabeledContent("Time zone", value: planningTimeZone)
+              LabeledContent("Time zone", value: planningTimeZoneLocationName(planningTimeZone))
             }
             .accessibilityIdentifier("saved.schedule.zone")
           }

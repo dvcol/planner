@@ -78,6 +78,12 @@ The final iPad compatibility run makes the spacing difference visible across des
 
 ## Navigation and appearance correction brought forward
 
+The [readable Schedule timezone row](prototypes/native-readable-schedule-zone.md)
+reuses the picker's location names in Item/Itinerary editors. Five final mobile
+executions preserve represented instants, saved identities and repeated-time
+choices. Saved descriptions retain their existing notation; broader schedule
+presentation and actual Mac interaction still need their separate review.
+
 The [26 October mobile List heading correction](prototypes/native-mobile-list-heading.md)
 restores the full wrapping content name required by Q113. Empty, populated and
 Map summaries share it on iPhone/iPad; the unified Mac toolbar stays unchanged.

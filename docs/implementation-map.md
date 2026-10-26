@@ -16,6 +16,8 @@ but do not override this priority.
 
 ## Recent local checkpoints
 
+The [Schedule editor wording correction](prototypes/native-readable-schedule-zone.md) reuses readable picker names while retaining saved timezone identifiers and instants. Item/Itinerary cancellation, save and relaunch pass on light phone/dark iPad, plus the Lord Howe repeated-time regression: five final native executions with matching Mac compilation. An obsolete iPad driver failure is reproduced on the committed base and corrected with the existing sidebar-aware helper. Actual Mac interaction and broader UI/physical acceptance remain open; advanced portability stays post-MVP.
+
 The [mobile List heading correction](prototypes/native-mobile-list-heading.md) restores Q113's full wrapping content name on iPhone/iPad in empty, populated and Map representations. Five final native executions pass ordinary light phone, maximum-text dark phone/iPad and exact List Map regressions. Eleven originals are inspected; all 1160 inputs match Mac compilation. The single Mac toolbar title is unchanged. Actual Mac interaction, broader UI acceptance and signed/physical gates remain open; advanced portability stays post-MVP.
 
 The [Itinerary browser handoff checkpoint](prototypes/native-itinerary-browser-handoff.md) passes linked downloads and unsupported content on phone/dark iPad, retaining both saved links and the plan return context. Two original Item regressions also pass: six native executions across four functions, with eight inspected Itinerary originals and actual Safari request records. All 1160 inputs match the workspace and Mac compilation. Production is unchanged; Mac runtime, physical and final UI acceptance remain open. Signing stays deferred and advanced portability remains post-MVP.

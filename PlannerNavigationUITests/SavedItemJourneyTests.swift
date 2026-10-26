@@ -772,8 +772,7 @@ final class SavedItemJourneyTests: XCTestCase {
       application.plannerElement("Schedule item").activateForPlannerJourney()
       selectPlanningTimeZone(planningTimeZone, search: timeZoneSearch, application: application)
       try enterScheduleClock(
-        application, identifier: "saved.schedule.start", date: date, hour: 1, minute: minute,
-        planningTimeZone: planningTimeZone)
+        application, identifier: "saved.schedule.start", date: date, hour: 1, minute: minute)
       XCTAssertFalse(application.plannerElement("saved.schedule.save").isEnabled)
       let occurrence = application.plannerElement("saved.schedule.start.occurrence")
       XCTAssertTrue(occurrence.waitForExistence(timeout: 5))
@@ -917,8 +916,7 @@ final class SavedItemJourneyTests: XCTestCase {
     }
 
     private func enterScheduleClock(
-      _ application: XCUIApplication, identifier: String, date: String, hour: Int, minute: Int,
-      planningTimeZone: String = "America/New_York"
+      _ application: XCUIApplication, identifier: String, date: String, hour: Int, minute: Int
     ) throws {
       let picker = application.descendants(matching: .any).matching(identifier: identifier)
         .firstMatch
@@ -969,9 +967,6 @@ final class SavedItemJourneyTests: XCTestCase {
       dismissScheduleClockPopover(application)
       XCTAssertTrue(picker.buttons[date].firstMatch.exists)
       XCTAssertTrue(picker.buttons[String(format: "%02d:%02d", hour, minute)].firstMatch.exists)
-      XCTAssertEqual(
-        application.plannerElement("saved.schedule.zone").label,
-        "Time zone, \(planningTimeZone)")
     }
 
     private func dismissScheduleClockPopover(_ application: XCUIApplication) {
@@ -1071,6 +1066,8 @@ final class SavedItemJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Native time zone search choices for \(identifier)")
     option.activateForPlannerJourney()
     XCTAssertTrue(timeZoneControl.waitForExistence(timeout: 5))
+    recordScreenshot(application, name: "Readable schedule time zone \(search)")
+    XCTAssertEqual(timeZoneControl.label, "Time zone, \(search)")
   }
 
   private func displayedStartInstant(_ description: String) throws -> Date {

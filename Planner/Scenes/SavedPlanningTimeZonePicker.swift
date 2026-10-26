@@ -60,7 +60,7 @@ private struct SavedPlanningTimeZoneResults: View {
   }
 }
 
-private func planningTimeZoneLocationName(_ identifier: String) -> String {
+func planningTimeZoneLocationName(_ identifier: String) -> String {
   let components = identifier.split(separator: "/")
   let location =
     components.count > 1 ? components.dropFirst().joined(separator: " / ") : identifier

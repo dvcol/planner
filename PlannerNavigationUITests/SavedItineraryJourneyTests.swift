@@ -272,6 +272,8 @@ final class SavedItineraryJourneyTests: XCTestCase {
     XCTAssertTrue(option.waitForExistence(timeout: 5))
     option.activateForPlannerJourney()
     XCTAssertTrue(timeZoneControl.waitForExistence(timeout: 5))
+    recordScreenshot(application, name: "Readable itinerary time zone \(search)")
+    XCTAssertEqual(timeZoneControl.label, "Time zone, \(search)")
   }
 
   private func displayedStartInstant(_ description: String) throws -> Date {
@@ -557,13 +559,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
   }
 
   private func openItineraries(_ application: XCUIApplication) {
-    #if os(macOS)
-      let section = application.plannerElement("saved.section.itineraries")
-    #else
-      let section = application.buttons["Itineraries"].firstMatch
-    #endif
-    XCTAssertTrue(section.waitForExistence(timeout: 10), application.debugDescription)
-    section.activateForPlannerJourney()
+    application.openPlannerSection("Itineraries")
     openCatalog(application)
   }
 
