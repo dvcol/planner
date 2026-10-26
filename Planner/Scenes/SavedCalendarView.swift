@@ -253,7 +253,7 @@ struct SavedCalendarView: View {
               agenda.frame(minWidth: 240, maxWidth: .infinity, alignment: .leading)
             }
             VStack(alignment: .leading, spacing: 20) {
-              monthPicker.frame(maxWidth: 400)
+              monthPicker.frame(maxWidth: 400).frame(maxWidth: .infinity)
               agenda
             }
           }

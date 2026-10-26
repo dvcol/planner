@@ -33,6 +33,12 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
     let schedule = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
     ).firstMatch
+    #if os(iOS)
+      for _ in 0..<4 {
+        if schedule.exists { break }
+        application.swipeUp()
+      }
+    #endif
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))
     let scheduleIdentifier = schedule.identifier.replacingOccurrences(
       of: "saved.item.schedule.", with: "")
@@ -40,6 +46,11 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
       application.plannerElement("saved.section.calendar").activateForPlannerJourney()
     #else
       application.openPlannerSection("Calendar")
+      if let sidebar = application.buttons.matching(identifier: "Hide Sidebar")
+        .allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        sidebar.tap()
+      }
     #endif
     let day = Calendar(identifier: .gregorian).dateComponents([.year, .month, .day], from: Date())
     let dateIdentifier =
@@ -66,13 +77,13 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
     XCTAssertTrue(entry.exists)
     XCTAssertEqual(entry.label, "Month museum")
     #if os(iOS)
-      let picker = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.date"
-      ).firstMatch
-      XCTAssertLessThanOrEqual(picker.frame.width, 440)
-      if application.frame.width >= 700 {
-        XCTAssertGreaterThanOrEqual(entry.frame.minX, picker.frame.maxX)
-      }
+      verifyMonthLayout(application, entry: entry, name: "Portrait Month layout")
+      XCUIDevice.shared.orientation = .landscapeLeft
+      defer { XCUIDevice.shared.orientation = .portrait }
+      XCTAssertTrue(entry.waitForExistence(timeout: 5))
+      XCTAssertEqual(entry.label, "Month museum")
+      XCTAssertTrue(indicator.exists)
+      verifyMonthLayout(application, entry: entry, name: "Landscape Month retains the selected day")
     #endif
     #if os(macOS)
       let screenshot = application.windows.firstMatch.screenshot()
@@ -84,4 +95,31 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
     attachment.lifetime = .keepAlways
     add(attachment)
   }
+
+  #if os(iOS)
+    private func verifyMonthLayout(
+      _ application: XCUIApplication, entry: XCUIElement, name: String
+    ) {
+      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      capture.name = name
+      capture.lifetime = .keepAlways
+      add(capture)
+      let picker = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.date"
+      ).firstMatch
+      let canvas = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.canvas"
+      ).firstMatch
+      XCTAssertTrue(picker.exists)
+      XCTAssertGreaterThanOrEqual(picker.frame.minX, canvas.frame.minX)
+      XCTAssertLessThanOrEqual(picker.frame.maxX, canvas.frame.maxX)
+      if entry.frame.minY >= picker.frame.maxY {
+        XCTAssertEqual(
+          picker.frame.midX, canvas.frame.midX, accuracy: 2,
+          "A stacked native month is centered within the available pane.")
+      } else {
+        XCTAssertGreaterThanOrEqual(entry.frame.minX, picker.frame.maxX)
+      }
+    }
+  #endif
 }
