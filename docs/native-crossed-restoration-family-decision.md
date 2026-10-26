@@ -1,7 +1,11 @@
 # Source and owned restoration families choosing different versions
 
-Status: Q163 pending. This review changes no production behavior and does not
-silently defer the case. Signing is unrelated.
+Status: Q163 A accepted on 26 October 2026. Crossed source/owned-family
+reconciliation is explicitly deferred beyond MVP. Preserve every record and the
+existing atomic rejection. An affected dataset remains unavailable for canonical
+reads/export until explicit recovery or later reconciliation. Ordinary Q161/Q162
+cases remain implemented. No new ownership/lifetime policy, production change or
+signing setup is authorized by this deferral.
 
 ## Reproduced conflict
 
@@ -59,9 +63,9 @@ explicitly settle competing source and owned-family authority.
   guide to Museum814 and discard guide889's values. This revises Q161 for a shared
   contested owned identity and requires a concrete ownership/history contract.
 
-These are product choices about surviving values and identities. A green
-preservation diagnostic proves safe rejection, not approval of A or completion
-of the reconciliation requirement.
+The user selected A. The existing green preservation diagnostic proves safe
+rejection; the user's decision explicitly accepts that recovery limitation for
+MVP. It does not implement reconciliation or authorize automatic data loss.
 
 ## Local qualification
 

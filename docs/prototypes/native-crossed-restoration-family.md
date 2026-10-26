@@ -11,7 +11,11 @@ unavailable after reopen. No record is discarded or rebound.
 The diagnostic compares complete source and owned values before rejection and
 after reopen, plus raw owned records, both source lifetimes, recovery namespace
 bytes and writer control. It confirms safe rejection, not a chosen resolution.
-The [Q163 decision](../native-crossed-restoration-family-decision.md) is pending.
+At this execution epoch the [Q163 decision](../native-crossed-restoration-family-decision.md)
+was pending. On 26 October 2026 the user selected A, explicitly deferring this
+case beyond MVP while preserving every record and the existing rejection.
+Affected datasets still cannot produce canonical reads/export. This later
+acceptance changes no tested behavior and adds no new execution credit.
 
 Only the existing test fixture gains an owner-lifetime argument. Its previous
 losing-owner default remains unchanged. The existing eight-case owned import

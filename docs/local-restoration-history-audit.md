@@ -8,9 +8,10 @@ the still-unqualified cases. It adds no policy, schema, format, gate, module or
 test boundary and does not qualify physical/cloud behavior.
 
 The [restoration checklist](restoration-acceptance-checklist.md) remains the
-current index. Its crossed source/owned-family case is a real policy question,
-[Q163](native-crossed-restoration-family-decision.md), rather than a generic
-instruction to build more reconciliation machinery.
+current index. [Q163 A](native-crossed-restoration-family-decision.md) explicitly
+defers crossed source/owned-family reconciliation beyond MVP. It preserves every
+record and the current rejection, including unavailable canonical reads/export
+for an affected dataset. It does not request more reconciliation machinery.
 
 ## Existing evidence by named obligation
 
@@ -68,9 +69,12 @@ found stale cached-container state on later delivery; its two-line shared
 correction discards the failed container after rollback. Subsequent payload
 checks require no production changes.
 
-[Q163](native-crossed-restoration-family-decision.md) remains pending for crossed
-source/owned-family authority. Preserve the current atomic rejection while that
-choice waits. Ordinary Q161/Q162 checkpoints do not settle that conflict.
+[Q163 A](native-crossed-restoration-family-decision.md) is accepted on 26 October
+2026. Crossed source/owned-family reconciliation is deferred beyond MVP. Preserve
+all records and the existing atomic rejection; canonical reads/export remain
+unavailable for an affected dataset until explicit recovery or later
+reconciliation. Ordinary Q161/Q162 qualification is unchanged. Historical
+pending notices retain their execution-epoch meaning.
 
 Mac interaction, Map/browser/change-stream lifecycle and accessibility, signed
 shared storage, installed Share, CloudKit/account convergence, actual system

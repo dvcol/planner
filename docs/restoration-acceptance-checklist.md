@@ -1,6 +1,6 @@
 # Local restoration acceptance checklist
 
-This checklist makes the remaining A20 and Q147–Q162 work concrete. It does not
+This checklist records A20 and Q147–Q163 local acceptance and its limits. It does not
 add restoration policies or authorize merging collections. A pending check is
 not an assumed production defect. Reproduce it through the existing real-store
 boundary before changing code. Prefer the existing closure and maintenance paths.
@@ -24,12 +24,12 @@ boundary before changing code. Prefer the existing closure and maintenance paths
 These checkpoints include bounded recovery, replay, migration and redelivery
 cases. They do not claim that every interaction below has already executed.
 
-## Remaining local checks
+## Local acceptance limits
 
-| Check | Required result | Gate |
+| Check | Qualified result | Limit |
 | --- | --- | --- |
-| Source-owner and owned-reference families choose different candidates | Four real-store cases preserve both complete versions under rejection, including reopen; this proves preservation, not reconciliation | [Q163](native-crossed-restoration-family-decision.md) needs an explicit authority or MVP deferral decision |
-| Named import, legacy admission, causal-history and interruption outcomes from older checkpoints | The [history audit](local-restoration-history-audit.md) links later evidence, including [prepared-only Move/Capture](prototypes/native-prepared-move-capture.md), and separates current qualification from historical open lists | Named Q161/Q162 payload faults are qualified locally; Q163 and separate native/system/physical gates remain. No general reconciliation framework is implied |
+| Source-owner and owned-reference families choose different candidates | Four real-store cases preserve both complete versions under rejection, including reopen | [Q163 A](native-crossed-restoration-family-decision.md) explicitly defers reconciliation beyond MVP. Preserve every record; affected datasets remain unavailable for canonical reads/export until explicit recovery or later reconciliation |
+| Named import, legacy admission, causal-history and interruption outcomes from older checkpoints | The [history audit](local-restoration-history-audit.md) links later evidence, including [prepared-only Move/Capture](prototypes/native-prepared-move-capture.md), and separates current qualification from historical open lists | Named Q161/Q162 payload faults are qualified locally. Separate native/system/physical gates remain. Historical open lists do not authorize a general reconciliation framework |
 
 A20 closes the whole declared family after Delete. It does not authorize
 redirecting independent references across closed families or predecessors.
