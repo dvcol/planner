@@ -22,6 +22,8 @@ struct PlannerChangeObservationFixtureView: View {
             Menu("Fixture writer") {
               Button("Update Hotel") { Task { await fixture.updateHotel() } }
                 .accessibilityIdentifier("fixture.writer.update")
+              Button("Rename containing plans") { Task { await fixture.renamePlans() } }
+                .accessibilityIdentifier("fixture.writer.renamePlans")
               Button("Move Hotel's pin") { Task { await fixture.moveHotel() } }
                 .accessibilityIdentifier("fixture.writer.moveHotel")
               Button("Delete Hotel") { Task { await fixture.deleteHotel() } }
@@ -195,6 +197,57 @@ private final class PlannerChangeObservationFixture {
       }
     }
     return .init(configuration: configuration, writer: writer, session: session, source: source)
+  }
+
+  func renamePlans() async {
+    guard
+      case .source(.item(let item)) = await writer.read(session: session, request: .source(source)),
+      let listReference = item.references.compactMap({ reference -> PlannerEntityReference? in
+        guard case .membership(_, let list, let owner) = reference, owner == source else {
+          return nil
+        }
+        return list
+      }).first,
+      case .source(.list(let list)) = await writer.read(
+        session: session, request: .source(listReference)),
+      let itineraryReference = list.references.compactMap({ reference -> PlannerEntityReference? in
+        guard case .itineraryEntry(_, let itinerary, let owner) = reference,
+          owner == listReference
+        else { return nil }
+        return itinerary
+      }).first
+    else {
+      status = "Independent writer could not read the containing plans"
+      return
+    }
+    let listResult = await writer.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .editList(
+          sourceId: listReference.id, changes: .init(name: .set("Weekend renamed")),
+          expectedFieldHashes: list.fieldHashes)))
+    guard case .applied(_, .complete) = listResult.outcome else {
+      status = "Independent writer did not rename the List"
+      return
+    }
+    guard
+      case .source(.itinerary(let itinerary)) = await writer.read(
+        session: session, request: .source(itineraryReference))
+    else {
+      status = "Renamed List; independent writer could not read the Itinerary"
+      return
+    }
+    let itineraryResult = await writer.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .editItinerary(
+          sourceId: itineraryReference.id, changes: .init(title: .set("City trip renamed")),
+          expectedFieldHashes: itinerary.fieldHashes)))
+    if case .applied(_, .complete) = itineraryResult.outcome {
+      status = "Renamed saved plans"
+    } else {
+      status = "Renamed List; independent writer did not rename the Itinerary"
+    }
   }
 
   func updateHotel() async {

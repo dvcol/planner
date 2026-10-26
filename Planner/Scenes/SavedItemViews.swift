@@ -331,6 +331,7 @@ struct SavedItemDetail: View {
         }
         Label(listMembershipSummary, systemImage: "list.bullet.rectangle")
           .accessibilityIdentifier("saved.item.lists.summary")
+        SavedItemPlansDisclosure(item: item)
         Toggle(
           "Completed",
           isOn: Binding(get: { item.state.globalDone == true }, set: setCompletion)
@@ -412,5 +413,134 @@ struct SavedItemDetail: View {
     guard let namespace = store.devicePreferenceNamespace else { return nil }
     return .init(
       namespace: namespace, sourceId: item.source.id, sourceLifetimeId: item.sourceLifetimeId)
+  }
+}
+
+private struct SavedItemPlansDisclosure: View {
+  @Environment(SavedPlannerStore.self) private var store
+  let item: PlannerItemSourceRead
+  @State private var isExpanded = false
+  @State private var loadedRequest: Request?
+  @State private var plans: [NamedPlan] = []
+  @State private var loadingFailed = false
+
+  private struct Request: Equatable {
+    let namespace: String?
+    let source: PlannerEntityReference
+    let lifetimeIdentifier: UUID
+    let revision: UUID
+    let references: [PlannerReferenceRead]
+    let isExpanded: Bool
+  }
+
+  private struct NamedPlan: Identifiable {
+    let source: PlannerEntityReference
+    let title: String
+    var id: PlannerEntityReference { source }
+  }
+
+  private var request: Request {
+    .init(
+      namespace: store.devicePreferenceNamespace, source: item.source,
+      lifetimeIdentifier: item.sourceLifetimeId, revision: store.changeRevision,
+      references: item.references, isExpanded: isExpanded)
+  }
+
+  private var containingLists: Set<PlannerEntityReference> {
+    Set(
+      item.references.compactMap { reference in
+        guard case .membership(_, let list, let source) = reference, source == item.source else {
+          return nil
+        }
+        return list
+      })
+  }
+
+  private func containingItineraries(
+    source: PlannerEntityReference, references: [PlannerReferenceRead]
+  ) -> Set<PlannerEntityReference> {
+    Set(
+      references.compactMap { reference in
+        guard case .itineraryEntry(_, let itinerary, let owner) = reference, owner == source else {
+          return nil
+        }
+        return itinerary
+      })
+  }
+
+  var body: some View {
+    Group {
+      if !containingLists.isEmpty
+        || !containingItineraries(source: item.source, references: item.references).isEmpty
+      {
+        DisclosureGroup(isExpanded: $isExpanded) {
+          if loadedRequest != request {
+            ProgressView("Loading plans")
+          } else if loadingFailed {
+            Text("Planner could not load the containing plans.").foregroundStyle(.secondary)
+            Button("Try again") { Task { await loadPlans() } }
+          } else {
+            ForEach(plans) { plan in
+              Label {
+                Text(plan.title)
+                  .fixedSize(horizontal: false, vertical: true)
+              } icon: {
+                if plan.source.kind == .list {
+                  Image(systemName: "list.bullet.rectangle")
+                } else {
+                  Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
+                }
+              }
+              .accessibilityElement(children: .combine)
+              .accessibilityLabel(plan.title)
+              .accessibilityValue(plan.source.kind == .list ? "List" : "Itinerary")
+              .accessibilityIdentifier(
+                "saved.item.plan.\(plan.source.kind.rawValue).\(plan.source.id.uuidString)")
+            }
+          }
+        } label: {
+          Text("Plans").accessibilityIdentifier("saved.item.plans")
+        }
+      }
+    }
+    .task(id: request) { await loadPlans() }
+  }
+
+  private func loadPlans() async {
+    let expectedRequest = request
+    guard expectedRequest.isExpanded, expectedRequest.namespace != nil else { return }
+    loadedRequest = nil
+    var loadedPlans: [NamedPlan] = []
+    var itineraries = containingItineraries(source: item.source, references: item.references)
+    for reference in containingLists {
+      let list = await store.readList(reference.id)
+      guard !Task.isCancelled, expectedRequest == request else { return }
+      guard let list else {
+        loadingFailed = true
+        loadedRequest = expectedRequest
+        return
+      }
+      loadedPlans.append(.init(source: list.source, title: list.content.name))
+      itineraries.formUnion(containingItineraries(source: list.source, references: list.references))
+    }
+    for reference in itineraries {
+      let itinerary = await store.readItinerary(reference.id)
+      guard !Task.isCancelled, expectedRequest == request else { return }
+      guard let itinerary else {
+        loadingFailed = true
+        loadedRequest = expectedRequest
+        return
+      }
+      loadedPlans.append(.init(source: itinerary.source, title: itinerary.content.title))
+    }
+    guard !Task.isCancelled, expectedRequest == request else { return }
+    plans = loadedPlans.sorted { first, second in
+      if first.source.kind != second.source.kind { return first.source.kind == .list }
+      let comparison = first.title.localizedStandardCompare(second.title)
+      if comparison != .orderedSame { return comparison == .orderedAscending }
+      return first.source.id.uuidString < second.source.id.uuidString
+    }
+    loadingFailed = false
+    loadedRequest = expectedRequest
   }
 }

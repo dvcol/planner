@@ -2,6 +2,80 @@ import XCTest
 
 @MainActor
 final class ChangeObservationJourneyTests: XCTestCase {
+  func testItemPlansShowLiveListAndItineraryNamesWithoutChangingTheSource() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--change-stream-fixture", "--fixture-dataset", UUID().uuidString,
+      "--fixture-itinerary", "--fixture-repeated-itinerary-list",
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let source = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 20))
+    let sourceIdentifier = source.identifier
+    source.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    let disclosure = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.plans").firstMatch
+    XCTAssertTrue(disclosure.waitForExistence(timeout: 5))
+    disclosure.activateForPlannerJourney()
+    let lists = application.staticTexts.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.plan.list."))
+    let itineraries = application.staticTexts.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.plan.itinerary."))
+    XCTAssertTrue(lists.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(itineraries.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(lists.count, 1)
+    XCTAssertEqual(itineraries.count, 1)
+    XCTAssertEqual(lists.firstMatch.label, "Weekend")
+    XCTAssertEqual(itineraries.firstMatch.label, "City trip")
+    let listIdentifier = lists.firstMatch.identifier
+    let itineraryIdentifier = itineraries.firstMatch.identifier
+    application.activatePlannerFixtureWriterAction("fixture.writer.removeCityTripEntry")
+    XCTAssertTrue(
+      application.staticTexts["Removed Hotel from City trip"].waitForExistence(timeout: 10))
+    XCTAssertTrue(itineraries.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(itineraries.count, 1)
+    XCTAssertEqual(itineraries.firstMatch.identifier, itineraryIdentifier)
+    application.activatePlannerFixtureWriterAction("fixture.writer.renamePlans")
+    XCTAssertTrue(application.staticTexts["Renamed saved plans"].waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      lists.matching(NSPredicate(format: "label == %@", "Weekend renamed")).firstMatch
+        .waitForExistence(timeout: 15))
+    XCTAssertTrue(
+      itineraries.matching(NSPredicate(format: "label == %@", "City trip renamed")).firstMatch
+        .waitForExistence(timeout: 15))
+    XCTAssertEqual(lists.firstMatch.identifier, listIdentifier)
+    XCTAssertEqual(itineraries.firstMatch.identifier, itineraryIdentifier)
+    let capture = XCTAttachment(screenshot: application.screenshot())
+    capture.name = "Item details show live List and indirect Itinerary names once"
+    capture.lifetime = .keepAlways
+    add(capture)
+    application.activatePlannerFixtureWriterAction("fixture.writer.removeMembership")
+    XCTAssertTrue(
+      application.staticTexts["Removed Hotel from Weekend"].waitForExistence(timeout: 10))
+    XCTAssertTrue(disclosure.waitForNonExistence(timeout: 15))
+    XCTAssertEqual(lists.count, 0)
+    XCTAssertEqual(itineraries.count, 0)
+    XCTAssertTrue(application.staticTexts["Not in a list"].exists)
+    XCTAssertTrue(application.staticTexts["Original notes"].exists)
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let retained = application.descendants(matching: .any)
+      .matching(identifier: sourceIdentifier).firstMatch
+    XCTAssertTrue(retained.waitForExistence(timeout: 20))
+    retained.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    XCTAssertFalse(disclosure.exists)
+    XCTAssertTrue(application.staticTexts["Not in a list"].exists)
+  }
+
   func testFilteredItineraryMapKeepsItsExactRepeatedBranchAfterAnIndependentContentEdit() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
