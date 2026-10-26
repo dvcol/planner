@@ -792,7 +792,10 @@ final class SavedItemJourneyTests: XCTestCase {
         if let scheduleIdentifier { XCTAssertEqual(schedule.identifier, scheduleIdentifier) }
         scheduleIdentifier = schedule.identifier
         let description = try XCTUnwrap(schedule.value as? String)
-        XCTAssertEqual(try displayedClockChangeInstant(description), formatter.date(from: expected))
+        XCTAssertTrue(description.hasSuffix(" · \(timeZoneSearch)"))
+        XCTAssertEqual(
+          try displayedClockChangeInstant(description, timeZoneIdentifier: planningTimeZone),
+          formatter.date(from: expected))
         application.terminate()
         application.launchSavedPlannerJourney()
         openItems(application)
@@ -852,6 +855,7 @@ final class SavedItemJourneyTests: XCTestCase {
       XCTAssertEqual(schedules.count, 1)
       let identity = schedule.identifier
       let description = try XCTUnwrap(schedule.value as? String)
+      XCTAssertTrue(description.hasSuffix(" · New York"))
       let components = description.components(separatedBy: " · ")
       XCTAssertEqual(components.count, 2)
       let endpoints = components[0].components(separatedBy: " – ")
@@ -906,12 +910,14 @@ final class SavedItemJourneyTests: XCTestCase {
       option.activateForPlannerJourney()
     }
 
-    private func displayedClockChangeInstant(_ description: String) throws -> Date {
+    private func displayedClockChangeInstant(
+      _ description: String, timeZoneIdentifier: String = "America/New_York"
+    ) throws -> Date {
       let components = description.components(separatedBy: " · ")
       XCTAssertEqual(components.count, 2)
       var formatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
         .timeZone(.specificName(.short))
-      formatStyle.timeZone = try XCTUnwrap(TimeZone(identifier: components[1]))
+      formatStyle.timeZone = try XCTUnwrap(TimeZone(identifier: timeZoneIdentifier))
       return try formatStyle.parseStrategy.parse(components[0])
     }
 
@@ -1009,8 +1015,10 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertEqual(schedule.label, "Start only")
     let identity = schedule.identifier
     let originalDescription = try XCTUnwrap(schedule.value as? String)
-    XCTAssertTrue(originalDescription.hasSuffix(" · Europe/Paris"))
-    let originalInstant = try displayedStartInstant(originalDescription)
+    recordScreenshot(application, name: "Readable saved schedule summary")
+    XCTAssertTrue(originalDescription.hasSuffix(" · Paris"))
+    let originalInstant = try displayedStartInstant(
+      originalDescription, timeZoneIdentifier: "Europe/Paris")
     openScheduleMenu(schedule)
     application.plannerElement("Edit schedule").activateForPlannerJourney()
     selectPlanningTimeZone("America/New_York", search: "New York", application: application)
@@ -1026,11 +1034,13 @@ final class SavedItemJourneyTests: XCTestCase {
       XCTWaiter.wait(
         for: [
           XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "value ENDSWITH %@", " · Asia/Tokyo"), object: schedule)
+            predicate: NSPredicate(format: "value ENDSWITH %@", " · Tokyo"), object: schedule)
         ], timeout: 10), .completed)
     let changedDescription = try XCTUnwrap(schedule.value as? String)
     XCTAssertNotEqual(changedDescription, originalDescription)
-    XCTAssertEqual(try displayedStartInstant(changedDescription), originalInstant)
+    XCTAssertEqual(
+      try displayedStartInstant(changedDescription, timeZoneIdentifier: "Asia/Tokyo"),
+      originalInstant)
     XCTAssertEqual(schedule.identifier, identity)
     XCTAssertEqual(scheduleRows.count, 1)
     XCTAssertTrue(application.staticTexts["Keep the travel notes"].exists)
@@ -1046,7 +1056,9 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertEqual(schedule.identifier, identity)
     XCTAssertEqual(scheduleRows.count, 1)
     XCTAssertEqual(
-      try displayedStartInstant(try XCTUnwrap(schedule.value as? String)), originalInstant)
+      try displayedStartInstant(
+        try XCTUnwrap(schedule.value as? String), timeZoneIdentifier: "Asia/Tokyo"), originalInstant
+    )
     XCTAssertTrue(application.staticTexts["Keep the travel notes"].exists)
     recordScreenshot(application, name: "Native planning timezone survives relaunch")
   }
@@ -1070,10 +1082,12 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertEqual(timeZoneControl.label, "Time zone, \(search)")
   }
 
-  private func displayedStartInstant(_ description: String) throws -> Date {
+  private func displayedStartInstant(
+    _ description: String, timeZoneIdentifier: String
+  ) throws -> Date {
     let components = description.components(separatedBy: " · ")
     XCTAssertEqual(components.count, 2)
-    let timeZone = try XCTUnwrap(TimeZone(identifier: components[1]))
+    let timeZone = try XCTUnwrap(TimeZone(identifier: timeZoneIdentifier))
     var formatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
     formatStyle.timeZone = timeZone
     return try formatStyle.parseStrategy.parse(components[0])

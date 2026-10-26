@@ -30,3 +30,6 @@ records the actual cohorts; execution records have read-back hash verification.
 Actual Mac interaction, broader scene/assistive review and physical/signed-store
 qualification remain open. Signing stays deferred, and advanced portability
 stays post-MVP. This checkpoint covers the editor's selected timezone row.
+
+The subsequent [saved-summary follow-up](native-schedule-summary-zone.md) extends
+the same readable names to saved cards while preserving occurrence information.

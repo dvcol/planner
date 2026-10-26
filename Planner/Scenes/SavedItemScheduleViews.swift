@@ -159,7 +159,7 @@ private struct SavedScheduleRow: View {
         dateFormatStyle.timeZone = timeZone
         dateDescription = start.formatted(dateFormatStyle)
       }
-      return dateDescription + " · " + planningTimeZone
+      return dateDescription + " · " + planningTimeZoneLocationName(planningTimeZone)
     case .allDay(let start, let end):
       return allDayScheduleDescription(start: start, end: end)
     }

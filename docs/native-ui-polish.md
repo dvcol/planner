@@ -81,8 +81,12 @@ The final iPad compatibility run makes the spacing difference visible across des
 The [readable Schedule timezone row](prototypes/native-readable-schedule-zone.md)
 reuses the picker's location names in Item/Itinerary editors. Five final mobile
 executions preserve represented instants, saved identities and repeated-time
-choices. Saved descriptions retain their existing notation; broader schedule
-presentation and actual Mac interaction still need their separate review.
+choices in that editor checkpoint.
+The subsequent [saved-summary follow-up](prototypes/native-schedule-summary-zone.md)
+now applies the same names to saved cards, retaining explicit clock-change
+offsets. Its seven mobile executions and matching Mac compilation keep their
+scoped qualification separate from actual Mac interaction and the remaining
+whole-scene review.
 
 The [26 October mobile List heading correction](prototypes/native-mobile-list-heading.md)
 restores the full wrapping content name required by Q113. Empty, populated and
