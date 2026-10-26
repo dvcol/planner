@@ -291,6 +291,14 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
   func testListMapOpensTheLocallyCompletedMembershipWithoutCompletingTheSource() {
     continueAfterFailure = false
     prepareTabletOrientation()
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock {
+          await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+        }
+      }
+    #endif
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -320,6 +328,26 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     application.chooseSavedPlannerCollectionRepresentation("Map")
     let pin = application.buttons["saved.map.pin.35.0,139.0"]
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
+          XCUIDevice.shared.orientation = orientation
+          let settled = NSPredicate { _, _ in
+            let frame = application.windows.firstMatch.frame
+            if orientation == .portrait && frame.height <= frame.width { return false }
+            if orientation != .portrait && frame.width <= frame.height { return false }
+            return pin.exists && pin.isHittable
+          }
+          let result = XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
+          let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+          capture.name = "Compact List Map \(orientation == .portrait ? "portrait" : "landscape")"
+          capture.lifetime = .keepAlways
+          add(capture)
+          XCTAssertEqual(result, .completed)
+        }
+      }
+    #endif
     pin.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["In Garden visits"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Completed"].firstMatch.exists)

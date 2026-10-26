@@ -37,6 +37,7 @@ struct SavedCollectionRepresentationMenu: View {
 
 struct SavedMapCollectionLayout<Summary: View, MapContent: View>: View {
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+  @Environment(\.verticalSizeClass) private var verticalSizeClass
   let summary: Summary
   let mapContent: MapContent
 
@@ -47,23 +48,20 @@ struct SavedMapCollectionLayout<Summary: View, MapContent: View>: View {
 
   var body: some View {
     GeometryReader { geometry in
-      Group {
-        if dynamicTypeSize.isAccessibilitySize {
-          mapContent.safeAreaInset(edge: .top, spacing: 0) {
+      mapContent
+        .safeAreaInset(edge: .top, spacing: 0) {
+          if dynamicTypeSize.isAccessibilitySize || verticalSizeClass == .compact {
             ScrollView { summary }
               .scrollBounceBehavior(.basedOnSize)
               .frame(height: geometry.size.height / 3)
+              .background(.background)
               .accessibilityLabel("Plan summary")
               .accessibilityIdentifier("saved.map.summary")
-          }
-        } else {
-          VStack(spacing: 0) {
-            summary
-            mapContent.frame(maxWidth: .infinity, maxHeight: .infinity)
+          } else {
+            summary.background(.background)
           }
         }
-      }
-      .frame(width: geometry.size.width, height: geometry.size.height)
+        .frame(width: geometry.size.width, height: geometry.size.height)
     }
   }
 }
