@@ -1758,6 +1758,7 @@ struct SavedPlannerView: View {
       #if os(iOS)
         SavedMapCollectionLayout {
           SavedListProgress(
+            listName: list.content.name,
             progress: list.progress, estimates: list.estimates,
             manualEstimate: list.content.manualEstimate, matchingCount: listRows.count,
             isArchived: list.state.archived == true
@@ -1777,6 +1778,7 @@ struct SavedPlannerView: View {
             VStack(spacing: 0) {
               #if os(iOS)
                 SavedListProgress(
+                  listName: list.content.name,
                   progress: list.progress, estimates: list.estimates,
                   manualEstimate: list.content.manualEstimate, matchingCount: 0,
                   isArchived: list.state.archived == true
@@ -1805,6 +1807,7 @@ struct SavedPlannerView: View {
               List(selection: membershipSelection) {
                 Section {
                   SavedListProgress(
+                    listName: list.content.name,
                     progress: list.progress, estimates: list.estimates,
                     manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
                     isArchived: list.state.archived == true

@@ -78,6 +78,12 @@ The final iPad compatibility run makes the spacing difference visible across des
 
 ## Navigation and appearance correction brought forward
 
+The [26 October mobile List heading correction](prototypes/native-mobile-list-heading.md)
+restores the full wrapping content name required by Q113. Empty, populated and
+Map summaries share it on iPhone/iPad; the unified Mac toolbar stays unchanged.
+Maximum-text scrolling and ordinary List Map regressions pass their scoped
+native checks. This closes that missing mobile heading, not final UI acceptance.
+
 The [21 October List header follow-up](prototypes/native-list-pane-header.md#unified-top-toolbar-follow-up) brings forward the user's duplicate-title, empty-summary alignment and overflow findings. It supersedes the intermediate lower header with one persistent native Mac toolbar and shared List/Item action ownership. Actual narrow/wide and empty/selected-title checks accompany editor, navigation and sort regressions. This focused slice does not close the final review of the other scenes.
 
 The [18 October native design review](prototypes/native-design-pass.md) replaces the regular iPad's floating-tab/per-destination-sidebar stack with one Notes-style native sidebar and panes, retaining system bottom tabs on iPhone. Native inline toolbar titles and readable List/Itinerary content headings remove the extra title tier and retain context when controls crowd the toolbar. Native Form/List surfaces follow device appearance. The review also repairs lost Itinerary presentation state, hidden List-catalog navigation and Calendar inspector dismissal during rotation. Its report links the executed light/dark mobile journeys, original representative captures, source reviews and compiler/runtime limitations.

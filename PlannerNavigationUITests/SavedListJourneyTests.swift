@@ -2,6 +2,65 @@ import XCTest
 
 @MainActor
 final class SavedListJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testFullListNameRemainsInEmptyAndPopulatedContent() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.beginPlannerListCreation()
+      let listName = "Tokyo museum visits, gardens and rainy-day alternatives"
+      let name = application.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      name.activateForPlannerJourney()
+      name.typeText(listName)
+      application.plannerElement("saved.list.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      let emptyContent = application.scrollViews.firstMatch
+      let emptyHeading = emptyContent.staticTexts[listName].firstMatch
+      recordScreenshot(application, name: "Full List name in empty content")
+      XCTAssertTrue(emptyHeading.waitForExistence(timeout: 5))
+      XCTAssertEqual(emptyHeading.label, listName)
+      XCTAssertGreaterThanOrEqual(emptyHeading.frame.minX, emptyContent.frame.minX)
+      XCTAssertLessThanOrEqual(emptyHeading.frame.maxX, emptyContent.frame.maxX)
+
+      application.openSavedPlannerListAddMenu()
+      application.plannerElement("saved.list.createItem").activateForPlannerJourney()
+      let itemTitle = application.textFields["saved.item.title"]
+      XCTAssertTrue(itemTitle.waitForExistence(timeout: 5))
+      itemTitle.activateForPlannerJourney()
+      itemTitle.typeText("One museum")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      if application.windows.firstMatch.frame.width < 600 {
+        application.plannerElement("BackButton").activateForPlannerJourney()
+      }
+      let content = application.descendants(matching: .any).matching(
+        identifier: "saved.list.contents"
+      ).firstMatch
+      XCTAssertTrue(content.waitForExistence(timeout: 10))
+      let heading = content.staticTexts[listName].firstMatch
+      for _ in 0..<5 {
+        if heading.exists && heading.isHittable { break }
+        content.swipeDown()
+      }
+      XCTAssertTrue(heading.waitForExistence(timeout: 5))
+      XCTAssertEqual(heading.label, listName)
+      XCTAssertGreaterThanOrEqual(heading.frame.minX, content.frame.minX)
+      XCTAssertLessThanOrEqual(heading.frame.maxX, content.frame.maxX)
+      recordScreenshot(application, name: "Full List name in populated content")
+      XCTAssertEqual(
+        application.progressIndicators["saved.list.progress"].label, "0 of 1 item done")
+      let item = application.savedPlannerItemRows("One museum").firstMatch
+      for _ in 0..<5 {
+        if item.exists && item.isHittable { break }
+        content.swipeUp()
+      }
+      XCTAssertTrue(item.waitForExistence(timeout: 5))
+      XCTAssertTrue(item.isHittable)
+      recordScreenshot(application, name: "Full List name content keeps its Item reachable")
+    }
+  #endif
+
   func testNewListNotesAreStagedAndRetainedAfterNativeRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
