@@ -304,12 +304,16 @@ Earlier failed attempts retain their failure status. Native Swift Testing counts
 
 ## Remaining implementation and acceptance
 
-1. Qualify Q127 A's implemented Mac Calendar split pane through actual Day/Week/Month resizing, divider movement and width recovery when Mac UI execution is available. Compilation and iPad regressions do not close this gate.
+Work through the core queue below in order where its environment is available.
+Keep existing basic export/import available without expanding it. New advanced
+portability or manual-restoration cases belong to post-MVP work and do not delay
+the core queue. Preserve safeguards for ordinary saves and synchronization.
+
+1. Finish the native UI pass for the core planning scenes. Prioritize the observed crowded catalog toolbar, search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
 2. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have the local qualification recorded above. Existing single-pin/rich-link cards and these scoped checkpoints do not close every remaining lifecycle or system gate. Settle concrete navigation/interface choices before their dependent implementation; signing is not a prerequisite for contract preparation and local tests.
-3. Qualify the outstanding core Mac UI workflows, including Calendar, capture, Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility cases. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause. Export/import-specific UI acceptance is post-MVP.
+3. Qualify the outstanding core Mac UI workflows, including Calendar, capture, Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility cases. Q127 A's implemented Calendar split pane needs actual Day/Week/Month resizing, divider movement and width recovery. Compilation and iPad regressions do not close this gate. Follow the retained runtime diagnosis; do not repeat unchanged startup attempts or assume a signing cause. Export/import-specific UI acceptance is post-MVP.
 4. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates. Simulator or local-store evidence cannot replace these.
-5. Complete the feature-complete whole-app UI pass, including light/dark, accessibility, all scene states, native controls, resizing/orientation and physical review. Recheck floating bars, titles, spacing and retained visual findings across the final scene states; scoped corrections qualify only their represented cases. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
-6. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
+5. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
 
 ## Post-MVP work
 
