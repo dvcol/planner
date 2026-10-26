@@ -124,6 +124,7 @@ struct SavedPlannerView: View {
   @State private var listSearchText = ""
   @State private var isOpeningList = false
   @State private var showNewList = false
+  @State private var showNewItinerary = false
   @State private var listEditDraft: SavedListEditDraft?
   @State private var showLabels = false
   @State private var showSettings = false
@@ -367,6 +368,7 @@ struct SavedPlannerView: View {
               && bulkCompletionDraft == nil
               && !showLabels
               && !showSettings
+              && !showNewItinerary
               && newItemDraft == nil
               && captureEntryPoint == nil
               && (selectedSection != .itineraries || selectedItineraryIdentifier == nil
@@ -715,7 +717,7 @@ struct SavedPlannerView: View {
           #if os(iOS)
             if identifier != nil { itineraryColumnVisibility = .doubleColumn }
           #endif
-        })
+        }), showNewItinerary: $showNewItinerary
     )
     .safeAreaInset(edge: .top) { recoveryNotice }
   }
@@ -2436,7 +2438,7 @@ struct SavedPlannerView: View {
   }
 
   private var hasPresentedWorkflow: Bool {
-    showLabels || showRecovery || showSettings || showNewList || showAddItem
+    showLabels || showRecovery || showSettings || showNewList || showNewItinerary || showAddItem
       || listEditDraft != nil || captureEntryPoint != nil || membershipMoveDraft != nil
       || listAdditionDraft != nil || itemEditDraft != nil || itemDeletionDraft != nil
       || listDeletionDraft != nil || itineraryDeletionDraft != nil || bulkCompletionDraft != nil

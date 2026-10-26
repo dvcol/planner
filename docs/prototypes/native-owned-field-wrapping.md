@@ -24,9 +24,13 @@ now scrolls to the global Notes row before asserting its exact content.
 The separate phone Itinerary links function fails while waiting for offscreen
 Add Link. An exact committed `aa00cc9e` baseline reproduces that failure.
 Experimental scrolling then exposes native text-replacement assumptions; those
-unproven test-driver edits are removed. This function remains unqualified and is
+unproven test-driver edits are removed. At this checkpoint, the function is unqualified and is
 not counted among the three passing executions. The complete failed results stay
 in the [execution archive](evidence/native-owned-field-wrapping/execution-records-index.json).
+
+The later [Itinerary follow-up](native-itinerary-link-editor.md) closes that named
+phone check and adds dark-iPad coverage. It also fixes a newly exposed competing
+validation-alert presenter. Earlier failed results retain their original status.
 
 ## Visual review and limits
 

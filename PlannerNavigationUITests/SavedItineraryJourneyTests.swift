@@ -16,8 +16,6 @@ final class SavedItineraryJourneyTests: XCTestCase {
     let notes = application.textFields["saved.itinerary.notes"]
     notes.activateForPlannerJourney()
     notes.typeText("Keep the route notes")
-    let addLink = application.plannerElement("saved.itinerary.link.add")
-    XCTAssertTrue(addLink.waitForExistence(timeout: 5))
     addItineraryLink(
       "https://maps.apple.com/?q=Tokyo", label: "Tokyo Map", application: application)
     addItineraryLink(
@@ -28,7 +26,9 @@ final class SavedItineraryJourneyTests: XCTestCase {
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
     let tokyo = links.matching(NSPredicate(format: "label == %@", "Tokyo Map")).firstMatch
     let kyoto = links.matching(NSPredicate(format: "label == %@", "Kyoto Map")).firstMatch
+    revealItineraryControl(tokyo, application: application)
     XCTAssertTrue(tokyo.waitForExistence(timeout: 10))
+    revealItineraryControl(kyoto, application: application)
     XCTAssertTrue(kyoto.waitForExistence(timeout: 10))
     XCTAssertEqual(links.count, 2)
     let tokyoIdentity = tokyo.identifier
@@ -46,13 +46,14 @@ final class SavedItineraryJourneyTests: XCTestCase {
     application.savedPlannerItineraryEditControl().activateForPlannerJourney()
     let tokyoIdentifier = tokyoIdentity.replacingOccurrences(of: "saved.item.link.", with: "")
     let tokyoURL = application.textFields["saved.itinerary.link.url.\(tokyoIdentifier)"]
+    revealItineraryControl(tokyoURL, application: application)
     XCTAssertTrue(tokyoURL.waitForExistence(timeout: 5))
-    replaceText(tokyoURL, with: "https://maps.apple.com/?q=Kobe", application: application)
+    replaceText(tokyoURL, with: "https://maps.apple.com/?q=Kobe")
     replaceText(
-      application.textFields["saved.itinerary.link.label.\(tokyoIdentifier)"], with: "Kobe Map",
-      application: application)
-    application.plannerElement("saved.itinerary.link.actions.\(tokyoIdentifier)")
-      .activateForPlannerJourney()
+      application.textFields["saved.itinerary.link.label.\(tokyoIdentifier)"], with: "Kobe Map")
+    let tokyoActions = application.plannerElement("saved.itinerary.link.actions.\(tokyoIdentifier)")
+    revealItineraryControl(tokyoActions, application: application)
+    tokyoActions.activateForPlannerJourney()
     application.plannerElement("Move down").activateForPlannerJourney()
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     let retainedTokyo = links.matching(identifier: tokyoIdentity).firstMatch
@@ -65,8 +66,10 @@ final class SavedItineraryJourneyTests: XCTestCase {
     let kyotoIdentifier = kyotoIdentity.replacingOccurrences(of: "saved.item.link.", with: "")
     for confirmsRemoval in [false, true] {
       application.savedPlannerItineraryEditControl().activateForPlannerJourney()
-      application.plannerElement("saved.itinerary.link.actions.\(kyotoIdentifier)")
-        .activateForPlannerJourney()
+      let kyotoActions = application.plannerElement(
+        "saved.itinerary.link.actions.\(kyotoIdentifier)")
+      revealItineraryControl(kyotoActions, application: application)
+      kyotoActions.activateForPlannerJourney()
       application.plannerElement("Remove link").activateForPlannerJourney()
       let action = confirmsRemoval ? "saved.itinerary.save" : "saved.itinerary.cancel"
       application.plannerElement(action).activateForPlannerJourney()
@@ -99,20 +102,62 @@ final class SavedItineraryJourneyTests: XCTestCase {
 
   private func addItineraryLink(_ originalURL: String, label: String, application: XCUIApplication)
   {
+    let addLink = application.plannerElement("saved.itinerary.link.add")
+    revealItineraryControl(addLink, application: application)
     let fields = application.textFields.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.link.url."))
     let existing = Set(fields.allElementsBoundByIndex.map(\.identifier))
-    application.plannerElement("saved.itinerary.link.add").activateForPlannerJourney()
+    addLink.activateForPlannerJourney()
     let field = fields.matching(NSPredicate(format: "NOT identifier IN %@", Array(existing)))
       .firstMatch
-    XCTAssertTrue(field.waitForExistence(timeout: 5))
+    revealItineraryControl(field, application: application)
     field.activateForPlannerJourney()
     field.typeText(originalURL)
+    XCTAssertTrue(field.waitForPlannerValue(originalURL))
     let labelIdentifier = field.identifier.replacingOccurrences(
       of: "saved.itinerary.link.url.", with: "saved.itinerary.link.label.")
     let labelField = application.textFields[labelIdentifier]
+    revealItineraryControl(labelField, application: application)
     labelField.activateForPlannerJourney()
     labelField.typeText(label)
+  }
+
+  private func revealItineraryControl(_ control: XCUIElement, application: XCUIApplication) {
+    for _ in 0..<8 where !control.isHittable {
+      #if os(macOS)
+        guard
+          let scrollView = application.windows.firstMatch.scrollViews.allElementsBoundByIndex.last
+        else {
+          XCTFail("The Itinerary scroll view is unavailable.")
+          return
+        }
+        scrollView.scroll(byDeltaX: 0, deltaY: -350)
+      #else
+        guard let form = application.collectionViews.allElementsBoundByIndex.last else {
+          XCTFail("The Itinerary scrollable content is unavailable.")
+          return
+        }
+        let formFrame = form.frame
+        var visibleFrame = formFrame.intersection(application.windows.firstMatch.frame)
+        let keyboard = application.keyboards.firstMatch
+        if keyboard.exists && !keyboard.frame.isEmpty {
+          visibleFrame.size.height = max(
+            0, min(visibleFrame.maxY, keyboard.frame.minY) - visibleFrame.minY)
+        }
+        guard formFrame.height > 0, !visibleFrame.isEmpty else {
+          XCTFail("The Itinerary has no visible scroll area above the keyboard.")
+          return
+        }
+        let startPosition =
+          (visibleFrame.minY + visibleFrame.height * 0.74 - formFrame.minY) / formFrame.height
+        let endPosition =
+          (visibleFrame.minY + visibleFrame.height * 0.35 - formFrame.minY) / formFrame.height
+        let start = form.coordinate(withNormalizedOffset: .init(dx: 0.97, dy: startPosition))
+        let end = form.coordinate(withNormalizedOffset: .init(dx: 0.97, dy: endPosition))
+        start.press(forDuration: 0.01, thenDragTo: end)
+      #endif
+    }
+    XCTAssertTrue(control.waitForPlannerHittability())
   }
 
   func testInvalidItineraryLinksKeepTheDraftAndSavedOwnerUntilCorrectedOrCanceled() {
@@ -138,8 +183,8 @@ final class SavedItineraryJourneyTests: XCTestCase {
     alert.buttons["OK"].activateForPlannerJourney()
     let urlFields = application.textFields.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.link.url."))
-    replaceText(
-      urlFields.firstMatch, with: "https://maps.apple.com/?q=Tokyo", application: application)
+    revealItineraryControl(urlFields.firstMatch, application: application)
+    replaceText(urlFields.firstMatch, with: "https://maps.apple.com/?q=Tokyo")
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     let links = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
@@ -150,9 +195,9 @@ final class SavedItineraryJourneyTests: XCTestCase {
     XCTAssertTrue(link.waitForPlannerValue("https://maps.apple.com/?q=Tokyo"))
     application.savedPlannerItineraryEditControl().activateForPlannerJourney()
     XCTAssertTrue(notes.waitForExistence(timeout: 5))
-    replaceText(notes, with: "Unapplied route notes", application: application)
-    replaceText(
-      urlFields.firstMatch, with: "file:///private/tmp/edited-route", application: application)
+    replaceText(notes, with: "Unapplied route notes")
+    revealItineraryControl(urlFields.firstMatch, application: application)
+    replaceText(urlFields.firstMatch, with: "file:///private/tmp/edited-route")
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     XCTAssertTrue(alert.waitForExistence(timeout: 10))
     XCTAssertTrue(alert.staticTexts["A bookmark must be an absolute HTTP or HTTPS URL."].exists)
@@ -535,18 +580,18 @@ final class SavedItineraryJourneyTests: XCTestCase {
     application.savedPlannerItineraryEditControl().activateForPlannerJourney()
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     XCTAssertFalse(application.plannerElement("saved.itinerary.save").isEnabled)
-    replaceText(title, with: "Canceled rename", application: application)
+    replaceText(title, with: "Canceled rename")
     application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Explore at our own pace"].waitForExistence(timeout: 5))
     application.savedPlannerItineraryEditControl().activateForPlannerJourney()
     XCTAssertTrue(title.waitForExistence(timeout: 5))
-    replaceText(title, with: "Tokyo Break", application: application)
+    replaceText(title, with: "Tokyo Break")
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Explore at our own pace"].waitForExistence(timeout: 10))
     application.savedPlannerItineraryEditControl().activateForPlannerJourney()
     XCTAssertTrue(notes.waitForExistence(timeout: 5))
     XCTAssertTrue(title.waitForPlannerValue("Tokyo Break"))
-    replaceText(notes, with: "Museum and dinner", application: application)
+    replaceText(notes, with: "Museum and dinner")
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Museum and dinner"].waitForExistence(timeout: 10))
     recordScreenshot(application, name: "Saved native Itinerary details")
@@ -591,22 +636,20 @@ final class SavedItineraryJourneyTests: XCTestCase {
     ).firstMatch
   }
 
-  private func replaceText(
-    _ field: XCUIElement, with value: String, application: XCUIApplication
-  ) {
+  /// Replace text through native input, starting from the end of the iOS field.
+  private func replaceText(_ field: XCUIElement, with value: String) {
     field.activateForPlannerJourney()
     #if os(macOS)
       field.typeKey("a", modifierFlags: .command)
+      field.typeText(value)
     #else
-      field.press(forDuration: 1)
-      let selectAll = application.descendants(matching: .any).matching(
-        NSPredicate(format: "label == %@ OR identifier == %@", "Select All", "Select All")
-      ).firstMatch
-      XCTAssertTrue(selectAll.waitForExistence(timeout: 5))
-      selectAll.activateForPlannerJourney()
+      let existingValue = field.value as? String ?? ""
+      field.coordinate(withNormalizedOffset: .init(dx: 0.98, dy: 0.5)).tap()
+      field.typeText(
+        String(repeating: XCUIKeyboardKey.delete.rawValue, count: existingValue.count) + value)
     #endif
-    field.typeText(value)
-    XCTAssertTrue(field.waitForPlannerValue(value))
+    XCTAssertTrue(
+      field.waitForPlannerValue(value), "Actual native value: \(String(describing: field.value))")
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {

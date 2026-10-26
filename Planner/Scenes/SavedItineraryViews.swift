@@ -13,10 +13,10 @@ struct SavedItineraryCatalog: View {
   let store: SavedPlannerStore
   @Binding var archive: SavedItemFilters.Archive
   @Binding var selection: UUID?
+  @Binding var showNewItinerary: Bool
   @State private var catalogWindow: SavedItemWindow?
   @State private var isLoading = false
   @State private var loadingFailure: String?
-  @State private var showNewItinerary = false
   @State private var sortPreferences = SavedCatalogSortPreferences()
 
   var body: some View {
