@@ -14,6 +14,27 @@ Signing stays deferred; actual Mac UI, installed Share and physical sync remain
 distinct core acceptance gates. Historical checkpoints below retain their scope
 but do not override this priority.
 
+## MVP finish line
+
+Core planning is implemented with local evidence: Item/List authoring, capture,
+places and link previews, ordered itineraries, estimates and remaining time,
+Calendar, collection maps and the embedded reader. This is implementation
+progress, not final acceptance on every platform.
+
+| Work left for MVP | Current state | What it needs |
+| --- | --- | --- |
+| Core UI polish and compatibility | In progress. Concrete findings include crowded sidebar titles, search clipping and contrast. | Local phone/iPad checks, resizing and accessibility review. No signing prerequisite. |
+| Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
+| Mac interaction | Builds pass; actual resizing, Calendar panes, keyboard and Undo still need qualification. | A working Mac XCTest runtime. The retained broker failure is separate from signing. |
+| Installed Share and synchronized daily use | Physical acceptance is open. | Signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. Failures here may require implementation fixes. |
+| Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
+
+Existing basic export/import remains optional. Further export/import features,
+advanced manual restoration and their test matrices are outside MVP. App
+Intents, Shortcuts and Agent Control remain V3. None of these deferred tracks
+blocks the core queue above. Preserve existing validation and data safeguards;
+ordinary save/sync failures still belong to MVP.
+
 ## Recent local checkpoints
 
 The [reader pane-width checkpoint](prototypes/native-reader-pane-width.md) preserves a linked webpage through actual dark-iPad sidebar changes from 839 to 559 to 839 points, then Back/Forward/Reload and exact bookmark Return. Its affected phone regression also passes: two native executions, matching 1160 inputs and Mac compilation, with three inspected originals. Production is unchanged. The same capture confirms the narrow sidebar Planner-title crowding as the next concrete UI finding. Wider remount/window, accessibility and physical gates remain open; signing stays deferred and portability stays post-MVP.
