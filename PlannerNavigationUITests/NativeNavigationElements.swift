@@ -157,7 +157,60 @@ extension XCUIApplication {
   }
 
   func savedPlannerCatalogSortControl(identifierPrefix: String = "saved.items") -> XCUIElement {
-    savedPlannerMenu(identifier: "\(identifierPrefix).sort", title: "Sort")
+    if identifierPrefix == "saved.lists" {
+      return savedPlannerSidebarControl(identifier: "saved.lists.sort", title: "Sort: ")
+    }
+    return savedPlannerMenu(identifier: "\(identifierPrefix).sort", title: "Sort")
+  }
+
+  func openSavedPlannerSettings() {
+    #if os(macOS)
+      typeKey(",", modifierFlags: .command)
+    #else
+      savedPlannerSidebarControl(identifier: "saved.settings.open", title: "Settings")
+        .activateForPlannerJourney()
+    #endif
+  }
+
+  func openSavedPlannerLabels() {
+    savedPlannerSidebarControl(identifier: "saved.categories.manage", title: "Manage labels")
+      .activateForPlannerJourney()
+  }
+
+  /// Keep sidebar actions tied to the Planner bar when another pane also has More.
+  private func savedPlannerSidebarControl(identifier: String, title: String) -> XCUIElement {
+    let direct = plannerElement(identifier)
+    if direct.exists && direct.isHittable { return direct }
+    #if os(macOS)
+      let sidebar = windows.firstMatch.buttons["Show Sidebar"].firstMatch
+      if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
+      return savedPlannerMenu(identifier: identifier, title: title)
+    #else
+      let menuAction = collectionViews.buttons.matching(
+        NSPredicate(format: "identifier == %@ OR label BEGINSWITH %@", identifier, title)
+      ).firstMatch
+      if menuAction.exists && menuAction.isHittable { return menuAction }
+      openPlannerSection("Lists")
+      for _ in 0..<3 {
+        if direct.exists && direct.isHittable { return direct }
+        let overflow = navigationBars["Planner"].buttons["OverflowBarButtonItem"].firstMatch
+        if overflow.exists && overflow.isHittable {
+          overflow.activateForPlannerJourney()
+          XCTAssertTrue(menuAction.waitForExistence(timeout: 5))
+          return menuAction
+        }
+        let sidebar = buttons["Show Sidebar"].firstMatch
+        if sidebar.exists && sidebar.isHittable {
+          sidebar.activateForPlannerJourney()
+          continue
+        }
+        let back = navigationBars.buttons["BackButton"].firstMatch
+        guard back.exists && back.isHittable else { break }
+        back.activateForPlannerJourney()
+      }
+      XCTAssertTrue(direct.waitForExistence(timeout: 5))
+      return direct
+    #endif
   }
 
   func dismissSavedPlannerCatalogOverflow() {
@@ -166,9 +219,7 @@ extension XCUIApplication {
         NSPredicate(format: "label BEGINSWITH %@", "Sort: ")
       ).firstMatch
       guard sort.exists else { return }
-      let title = navigationBars.staticTexts.firstMatch
-      XCTAssertTrue(title.exists)
-      title.activateForPlannerJourney()
+      windows.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.99, dy: 0.6)).tap()
       XCTAssertTrue(sort.waitForNonExistence(timeout: 5))
     #endif
   }

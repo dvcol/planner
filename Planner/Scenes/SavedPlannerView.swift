@@ -84,6 +84,7 @@ struct SavedPlannerView: View {
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var listPaneWidth: CGFloat = 0
+    @State private var sidebarContentWidth: CGFloat = 0
   #endif
 
   private var secondaryToolbarPlacement: ToolbarItemPlacement {
@@ -1561,6 +1562,28 @@ struct SavedPlannerView: View {
       sourceListName: list.content.name, itemTitle: itemTitle)
   }
 
+  private var manageLabelsControl: some View {
+    Button("Manage labels", systemImage: "square.grid.2x2") { showLabels = true }
+      .labelStyle(.iconOnly)
+      .help("Manage labels")
+      .disabled(!store.isReady)
+      .accessibilityIdentifier("saved.categories.manage")
+  }
+
+  #if os(iOS)
+    private var sidebarSettingsControl: some View {
+      Button("Settings", systemImage: "gearshape") { showSettings = true }
+        .labelStyle(.iconOnly)
+        .help("Settings")
+        .disabled(!store.isReady)
+        .accessibilityIdentifier("saved.settings.open")
+    }
+  #endif
+
+  private var listCatalogSortControl: some View {
+    SavedCatalogSortMenu(sort: listCatalogSort, accessibilityIdentifier: "saved.lists.sort")
+  }
+
   private var plannerSidebar: some View {
     List(selection: sidebarSelection) {
       if usesSidebarNavigation {
@@ -1681,26 +1704,30 @@ struct SavedPlannerView: View {
     .navigationSplitViewColumnWidth(
       min: sidebarMinimumWidth, ideal: sidebarPreferredWidth, max: sidebarMaximumWidth
     )
+    #if os(iOS)
+      .onGeometryChange(for: CGFloat.self) { geometry in
+        geometry.size.width
+      } action: { width in
+        sidebarContentWidth = width
+      }
+    #endif
     .toolbar {
-      ToolbarItem(placement: secondaryToolbarPlacement) {
-        Button("Manage labels", systemImage: "square.grid.2x2") { showLabels = true }
-          .labelStyle(.iconOnly)
-          .help("Manage labels")
-          .disabled(!store.isReady)
-          .accessibilityIdentifier("saved.categories.manage")
-      }
       #if os(iOS)
-        ToolbarItem(placement: secondaryToolbarPlacement) {
-          Button("Settings", systemImage: "gearshape") { showSettings = true }
-            .labelStyle(.iconOnly)
-            .help("Settings")
-            .disabled(!store.isReady)
-            .accessibilityIdentifier("saved.settings.open")
+        if horizontalSizeClass == .compact || sidebarContentWidth < 440 {
+          ToolbarOverflowMenu {
+            manageLabelsControl
+            sidebarSettingsControl
+            listCatalogSortControl
+          }
+        } else {
+          ToolbarItem(placement: secondaryToolbarPlacement) { manageLabelsControl }
+          ToolbarItem(placement: secondaryToolbarPlacement) { sidebarSettingsControl }
+          ToolbarItem { listCatalogSortControl }
         }
+      #else
+        ToolbarItem(placement: secondaryToolbarPlacement) { manageLabelsControl }
+        ToolbarItem { listCatalogSortControl }
       #endif
-      ToolbarItem {
-        SavedCatalogSortMenu(sort: listCatalogSort, accessibilityIdentifier: "saved.lists.sort")
-      }
       ToolbarItem {
         SavedCatalogArchiveFilterMenu(
           archive: $listCatalogArchive, pluralTitle: "Lists",

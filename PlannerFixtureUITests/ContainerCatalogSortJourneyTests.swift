@@ -401,7 +401,9 @@ import XCTest
       requireOrder(
         ["Alpha plan", "Manual plan", "Missing plan", "Zulu plan"], kind: "list",
         application: application)
-      let listSort = application.plannerElement("saved.lists.sort")
+      var listSort: XCUIElement {
+        application.savedPlannerCatalogSortControl(identifierPrefix: "saved.lists")
+      }
       choose("Full estimate", menu: listSort, application: application)
       requireOrder(
         ["Alpha plan", "Zulu plan", "Manual plan", "Missing plan"], kind: "list",
@@ -450,7 +452,8 @@ import XCTest
       launch(application, dataset: UUID().uuidString)
       for section in ["Lists", "Itineraries"] {
         openCatalog(section, application: application)
-        let sort = application.plannerElement("saved.\(section.lowercased()).sort")
+        let sort = application.savedPlannerCatalogSortControl(
+          identifierPrefix: "saved.\(section.lowercased())")
         #if os(iOS)
           XCTAssertTrue(sort.waitForExistence(timeout: 10))
         #endif
@@ -472,7 +475,9 @@ import XCTest
       let application = XCUIApplication()
       launch(application, dataset: UUID().uuidString)
       openCatalog("Lists", application: application)
-      let listSort = application.plannerElement("saved.lists.sort")
+      var listSort: XCUIElement {
+        application.savedPlannerCatalogSortControl(identifierPrefix: "saved.lists")
+      }
       choose("Full estimate", menu: listSort, application: application)
       requireOrder(
         ["Alpha plan", "Zulu plan", "Manual plan", "Missing plan"], kind: "list",
@@ -587,7 +592,7 @@ import XCTest
 
     private func openCatalog(_ section: String, application: XCUIApplication) {
       openSection(section, application: application)
-      let identifier = "saved.\(section.lowercased()).sort"
+      let identifier = "saved.\(section.lowercased()).archive"
       let catalogControl = application.plannerElement(identifier)
       #if os(macOS)
         if !catalogControl.exists,
@@ -634,11 +639,14 @@ import XCTest
         application.typeKey(.escape, modifierFlags: [])
         application.typeKey(.escape, modifierFlags: [])
       #else
-        if option.exists {
+        let nestedSort = application.collectionViews.buttons.matching(
+          NSPredicate(format: "label BEGINSWITH %@", "Sort: ")
+        ).firstMatch
+        if option.exists || nestedSort.exists {
           application.windows.firstMatch.coordinate(
             withNormalizedOffset: CGVector(dx: 0.12, dy: 0.8)
           ).tap()
-          XCTAssertTrue(menu.waitForPlannerHittability(), journeyDescription(application))
+          XCTAssertTrue(option.waitForNonExistence(timeout: 5), journeyDescription(application))
         }
       #endif
     }
@@ -679,6 +687,7 @@ import XCTest
         if resolved.openedOverflow { application.typeKey(.escape, modifierFlags: []) }
       #else
         XCTAssertEqual(resolved.element.label, expected)
+        application.dismissSavedPlannerCatalogOverflow()
       #endif
     }
 

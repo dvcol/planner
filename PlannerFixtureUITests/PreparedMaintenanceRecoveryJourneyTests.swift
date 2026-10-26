@@ -15,18 +15,7 @@ import XCTest
       XCTAssertTrue(item.waitForExistence(timeout: 15))
       let itemIdentifier = item.identifier
       application.openPlannerSection("Lists")
-      let settings = application.plannerElement("saved.settings.open")
-      if !settings.waitForExistence(timeout: 2) {
-        let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists {
-          sidebar.activateForPlannerJourney()
-        } else {
-          let back = application.navigationBars.buttons["BackButton"].firstMatch
-          if back.exists { back.activateForPlannerJourney() }
-        }
-      }
-      XCTAssertTrue(settings.waitForExistence(timeout: 10))
-      settings.activateForPlannerJourney()
+      application.openSavedPlannerSettings()
       XCTAssertFalse(application.plannerElement("saved.recovery.retry").exists)
       application.plannerElement("saved.settings.recovery").activateForPlannerJourney()
       let preparation = application.plannerElement(

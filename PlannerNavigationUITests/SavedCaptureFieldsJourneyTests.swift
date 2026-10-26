@@ -219,24 +219,7 @@ final class SavedCaptureFieldsJourneyTests: XCTestCase {
   }
 
   private func openLabels(_ application: XCUIApplication) {
-    let labels = application.plannerElement("saved.categories.manage")
-    if !labels.waitForExistence(timeout: 3) || !labels.isHittable {
-      #if os(macOS)
-        application.plannerElement("saved.section.lists").activateForPlannerJourney()
-      #else
-        application.buttons["Lists"].firstMatch.activateForPlannerJourney()
-      #endif
-      if !labels.waitForExistence(timeout: 2) || !labels.isHittable {
-        let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists {
-          sidebar.activateForPlannerJourney()
-        } else {
-          application.plannerElement("BackButton").activateForPlannerJourney()
-        }
-      }
-    }
-    XCTAssertTrue(labels.waitForExistence(timeout: 10))
-    labels.activateForPlannerJourney()
+    application.openSavedPlannerLabels()
   }
 
   private func selectLabel(_ kind: String, name: String, application: XCUIApplication) {

@@ -7,6 +7,113 @@ import XCTest
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
   #if os(iOS)
+    func testCompactListCatalogToolbarKeepsItsTitleAndActionsAvailable() throws {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      func revealCatalogSidebar() {
+        let sidebar = application.buttons["Show Sidebar"].firstMatch
+        if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
+      }
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Lists")
+      revealCatalogSidebar()
+      XCTAssertTrue(
+        application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 10))
+      let toolbar = application.navigationBars["Planner"]
+      let title = toolbar.staticTexts["Planner"]
+      recordScreenshot(application, name: "Adaptive Lists catalog toolbar")
+      XCTAssertTrue(toolbar.waitForExistence(timeout: 5))
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+      } else {
+        XCTAssertTrue(application.plannerElement("saved.section.lists").waitForPlannerHittability())
+      }
+      if title.exists { XCTAssertTrue(toolbar.frame.contains(title.frame)) }
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        try application.performAccessibilityAudit(for: .textClipped)
+      }
+      let archive = application.plannerElement("saved.lists.archive")
+      let create = application.plannerElement("saved.list.new")
+      let overflow = toolbar.buttons["OverflowBarButtonItem"].firstMatch
+      for control in [archive, create] {
+        XCTAssertTrue(control.waitForPlannerHittability())
+        XCTAssertTrue(toolbar.frame.contains(control.frame))
+        if title.exists { XCTAssertFalse(title.frame.intersects(control.frame)) }
+      }
+      if UIDevice.current.userInterfaceIdiom == .phone || toolbar.frame.width < 440 {
+        XCTAssertTrue(overflow.waitForPlannerHittability())
+        if title.exists { XCTAssertFalse(title.frame.intersects(overflow.frame)) }
+      }
+      if overflow.exists { overflow.activateForPlannerJourney() }
+      application.openSavedPlannerSettings()
+      XCTAssertTrue(
+        application.plannerElement("saved.settings.labels").waitForExistence(timeout: 10))
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      if overflow.exists { overflow.activateForPlannerJourney() }
+      application.openSavedPlannerLabels()
+      let closeLabels = application.plannerElement("saved.categories.done")
+      XCTAssertTrue(closeLabels.waitForExistence(timeout: 10))
+      closeLabels.activateForPlannerJourney()
+      if overflow.exists { overflow.activateForPlannerJourney() }
+      var sort: XCUIElement {
+        application.savedPlannerCatalogSortControl(identifierPrefix: "saved.lists")
+      }
+      XCTAssertTrue(sort.waitForPlannerHittability())
+      sort.activateForPlannerJourney()
+      let descending = application.buttons["Descending"].firstMatch
+      let nativeMenu = application.collectionViews.containing(.button, identifier: "Title")
+        .firstMatch
+      recordScreenshot(application, name: "Native Lists sort menu at large text")
+      for _ in 0..<8 where !descending.isHittable {
+        guard nativeMenu.exists else {
+          XCTFail("The native Sort menu is unavailable. \(application.debugDescription)")
+          return
+        }
+        nativeMenu.swipeUp()
+      }
+      XCTAssertTrue(descending.waitForPlannerHittability())
+      recordScreenshot(
+        application, name: "Native Lists sort choices remain reachable at large text")
+      descending.activateForPlannerJourney()
+      application.windows.firstMatch.coordinate(
+        withNormalizedOffset: CGVector(dx: 0.99, dy: 0.6)
+      ).tap()
+      revealCatalogSidebar()
+      archive.activateForPlannerJourney()
+      application.plannerElement("All Lists").activateForPlannerJourney()
+      XCTAssertEqual(archive.label, "All Lists")
+      create.activateForPlannerJourney()
+      let name = application.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      name.activateForPlannerJourney()
+      name.typeText("Toolbar list")
+      application.plannerElement("saved.list.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      application.openPlannerSection("Lists")
+      revealCatalogSidebar()
+      let back = application.navigationBars.buttons["BackButton"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+      let row = application.savedPlannerListRow("Toolbar list")
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      let sourceIdentifier = row.identifier
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Lists")
+      revealCatalogSidebar()
+      if back.exists { back.activateForPlannerJourney() }
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      XCTAssertEqual(row.identifier, sourceIdentifier)
+      XCTAssertEqual(archive.label, "Active Lists")
+      if overflow.exists { overflow.activateForPlannerJourney() }
+      XCTAssertTrue(sort.waitForPlannerHittability())
+      XCTAssertTrue(sort.label.contains("Descending"))
+      recordScreenshot(
+        application, name: "Lists catalog retains its source and options after relaunch")
+    }
+
     func testItemTitleRemainsReadableDuringCreationAndEditingAtAccessibilitySizes() throws {
       continueAfterFailure = false
       let application = XCUIApplication()

@@ -722,13 +722,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     #if os(macOS)
       application.typeKey(",", modifierFlags: .command)
     #else
-      let settings = application.plannerElement("saved.settings.open")
-      if !settings.waitForExistence(timeout: 2) {
-        let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists { sidebar.activateForPlannerJourney() }
-      }
-      XCTAssertTrue(settings.waitForExistence(timeout: 10))
-      settings.activateForPlannerJourney()
+      application.openSavedPlannerSettings()
     #endif
     XCTAssertTrue(application.plannerElement("saved.settings.labels").waitForExistence(timeout: 10))
   }
@@ -1294,33 +1288,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
   }
 
   private func openLabels(_ application: XCUIApplication) {
-    let labels = application.plannerElement("saved.categories.manage")
-    if !labels.exists || !labels.isHittable {
-      let sidebar = application.plannerElement("Show Sidebar")
-      if sidebar.exists { sidebar.activateForPlannerJourney() }
-    }
-    if !labels.waitForExistence(timeout: 3) || !labels.isHittable {
-      let nativeSection = application.plannerElement("saved.section.lists")
-      #if os(macOS)
-        let lists = nativeSection
-      #else
-        let lists = nativeSection.exists ? nativeSection : application.buttons["Lists"].firstMatch
-      #endif
-      XCTAssertTrue(lists.waitForExistence(timeout: 5))
-      lists.activateForPlannerJourney()
-      if !labels.waitForExistence(timeout: 2) || !labels.isHittable {
-        let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists {
-          sidebar.activateForPlannerJourney()
-        } else {
-          let back = application.plannerElement("BackButton")
-          XCTAssertTrue(back.exists, application.debugDescription)
-          back.activateForPlannerJourney()
-        }
-      }
-    }
-    XCTAssertTrue(labels.waitForExistence(timeout: 10))
-    labels.activateForPlannerJourney()
+    application.openSavedPlannerLabels()
   }
 
   private func newTag(_ application: XCUIApplication) {

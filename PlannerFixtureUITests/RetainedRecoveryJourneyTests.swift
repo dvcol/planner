@@ -312,13 +312,7 @@ import XCTest
 
     private func openSettings(_ application: XCUIApplication) {
       application.openPlannerSection("Lists")
-      let settings = application.plannerElement("saved.settings.open")
-      if !settings.waitForExistence(timeout: 2) {
-        let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists { sidebar.activateForPlannerJourney() }
-      }
-      XCTAssertTrue(settings.waitForExistence(timeout: 10))
-      settings.activateForPlannerJourney()
+      application.openSavedPlannerSettings()
       XCTAssertTrue(
         application.plannerElement("saved.settings.labels").waitForExistence(timeout: 10))
     }

@@ -3019,6 +3019,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #if os(macOS)
       application.typeKey(.escape, modifierFlags: [])
       application.typeKey(.escape, modifierFlags: [])
+    #else
+      application.dismissSavedPlannerCatalogOverflow()
     #endif
   }
 
@@ -3708,7 +3710,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     for title in ["Extra", "Middle"] { createList(title, application: application) }
     openCatalogSection("Lists", application: application)
     chooseSort(
-      "Descending", menu: application.plannerElement("saved.lists.sort"), application: application)
+      "Descending",
+      menu: application.savedPlannerCatalogSortControl(identifierPrefix: "saved.lists"),
+      application: application)
     application.savedPlannerListRow("Middle").activateForPlannerJourney()
     #if os(macOS)
       XCTAssertEqual(application.windows.firstMatch.title, "Middle")

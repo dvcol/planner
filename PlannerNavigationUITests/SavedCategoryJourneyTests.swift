@@ -295,13 +295,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
   }
 
   private func openCategories(_ application: XCUIApplication) {
-    let categories = application.plannerElement("saved.categories.manage")
-    if !categories.waitForExistence(timeout: 3) {
-      let sidebar = application.plannerElement("Show Sidebar")
-      if sidebar.exists { sidebar.activateForPlannerJourney() }
-    }
-    XCTAssertTrue(categories.waitForExistence(timeout: 10))
-    categories.activateForPlannerJourney()
+    application.openSavedPlannerLabels()
   }
 
   private func replaceText(

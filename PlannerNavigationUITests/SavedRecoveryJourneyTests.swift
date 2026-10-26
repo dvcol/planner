@@ -112,13 +112,7 @@ final class SavedRecoveryJourneyTests: XCTestCase {
     #if os(macOS)
       application.typeKey(",", modifierFlags: .command)
     #else
-      let settings = application.plannerElement("saved.settings.open")
-      if !settings.waitForExistence(timeout: 2) {
-        let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists { sidebar.activateForPlannerJourney() }
-      }
-      XCTAssertTrue(settings.waitForExistence(timeout: 10))
-      settings.activateForPlannerJourney()
+      application.openSavedPlannerSettings()
     #endif
     XCTAssertTrue(application.plannerElement("saved.settings.labels").waitForExistence(timeout: 10))
   }

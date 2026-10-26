@@ -406,8 +406,9 @@ struct SavedCatalogArchiveFilterMenu: View {
       }
       .pickerStyle(.inline)
     } label: {
-      Text(archive.rawValue.capitalized).fixedSize(horizontal: true, vertical: false)
+      Label(title, systemImage: "line.3.horizontal.decrease")
     }
+    .labelStyle(.iconOnly)
     .accessibilityLabel(title)
     .accessibilityIdentifier(accessibilityIdentifier)
     .help("Show \(title.lowercased())")

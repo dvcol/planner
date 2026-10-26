@@ -170,9 +170,7 @@ import XCTest
       XCTAssertTrue(lunch.waitForExistence(timeout: 10))
       XCTAssertEqual(lunch.label, "Recovery lunch")
       application.openPlannerSection("Lists")
-      let settings = application.plannerElement("saved.settings.open")
-      revealNavigation(to: settings, in: application)
-      settings.activateForPlannerJourney()
+      application.openSavedPlannerSettings()
       application.plannerElement("saved.settings.labels").activateForPlannerJourney()
       let category = application.plannerElement("saved.category.\(categoryIdentifier)")
       let tag = application.plannerElement("saved.tag.\(tagIdentifier)")
@@ -198,9 +196,7 @@ import XCTest
 
     private func openRetainedGraph(_ application: XCUIApplication) throws {
       application.openPlannerSection("Lists")
-      let settings = application.plannerElement("saved.settings.open")
-      revealNavigation(to: settings, in: application)
-      settings.activateForPlannerJourney()
+      application.openSavedPlannerSettings()
       application.plannerElement("saved.settings.recovery").activateForPlannerJourney()
       let snapshots = application.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.recovery.snapshot."))

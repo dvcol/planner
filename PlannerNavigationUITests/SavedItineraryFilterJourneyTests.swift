@@ -222,13 +222,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
 
   private func createLabels(_ application: XCUIApplication) {
     application.openPlannerSection("Lists")
-    let manage = application.plannerElement("saved.categories.manage")
-    if !manage.waitForExistence(timeout: 2) || !manage.isHittable {
-      let sidebar = application.plannerElement("Show Sidebar")
-      if sidebar.exists { sidebar.activateForPlannerJourney() }
-    }
-    XCTAssertTrue(manage.waitForExistence(timeout: 10))
-    manage.activateForPlannerJourney()
+    application.openSavedPlannerLabels()
     for (kind, name) in [("Category", "Culture"), ("Tag", "Rain"), ("Tag", "Indoor")] {
       application.plannerElement("saved.labels.new").activateForPlannerJourney()
       application.plannerElement("New \(kind.lowercased())").activateForPlannerJourney()
