@@ -8,12 +8,25 @@ signing identities and provisioned capabilities still need actual verification.
 This supersedes the earlier decision to defer membership; it does not turn the
 historical ad hoc checks below into selected-team evidence.
 
-The subsequent supplied screenshot shows the enrolled developer team already
-added in Xcode's **Apple Accounts** settings. A local build-settings read resolves
-the supplied Team ID from ignored configuration. A fresh read-only signing
-inventory still finds zero valid signing identities; certificate creation and
-actual provisioned builds remain open. Identifier names are awaiting confirmation
-before registration.
+The supplied screenshot shows the enrolled developer team already added in
+Xcode's **Apple Accounts** settings. A local build-settings read resolves the
+supplied Team ID from ignored configuration. The user approved `dvcol.planner`,
+`group.dvcol.planner` and `iCloud.dvcol.planner`, with derived Share extension
+identifiers. Registration and provisioned capabilities remain unverified.
+
+After the user created Apple Development, the certificate existed but a
+disposable signing probe failed with a missing issuer-chain warning and
+`errSecInternalComponent`. The required WWDR G3 intermediate was absent.
+The official Apple G3 certificate was downloaded from
+[Apple PKI](https://www.apple.com/certificateauthority/), its Apple-root chain
+verified, and the public intermediate added to the user's default Keychain.
+No trust override was added. Its SHA-256 is
+`dcf21878c77f4198e4b4614f03d696d89c66c66008d4244e1b99161aac91601f`.
+Apple documents G3's role in [software signing](https://developer.apple.com/help/account/certificates/wwdr-intermediate-certificates/).
+The subsequent inventory reports one valid identity. A fresh disposable signing
+attempt times out after 25 seconds; actual private-key use and provisioned app
+builds are not yet qualified. The user is asked whether a Keychain prompt appeared.
+No executable was launched or installed, and the temporary probe was removed.
 
 The requested eventual distribution is an unlisted App Store app for personal
 use. Apple's [unlisted distribution rules](https://developer.apple.com/support/unlisted-app-distribution/)
