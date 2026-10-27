@@ -235,3 +235,14 @@ captures and matching source/products are retained in the
 [Mac checkpoint](native-mobile-list-heading.md#mac-manual-authentication-retry-28-october-2026).
 Manual UI Automation authentication remains required. Whole-app appearance and
 physical/sync acceptance remain open.
+
+## Maximum-text itinerary Map checkpoint, 28 October 2026
+
+The existing repeated-stop Map journey passes on phone and iPad Simulator with
+verified maximum accessibility text, dark appearance and Increase Contrast.
+Both restore the original settings. The
+[Map checkpoint](native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
+retains four of six inspected originals, actual iPad rotation frames and exact
+appearance/bookmark checks. Native summary and choice-list scrolling keep the
+counted pin and both stops reachable. No styling or test changes are required.
+This remains one workflow, with broader accessibility and physical review open.

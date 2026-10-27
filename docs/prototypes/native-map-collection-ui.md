@@ -134,3 +134,31 @@ The [curated result](evidence/native-map-collection/mac-locations-size/result.js
 records the actual scope. Other Map contexts, resizing/keyboard interaction,
 full accessibility review and physical/provider performance remain separate
 acceptance work. Installed Share discovery and CloudKit remain separate gates.
+
+## Maximum-text repeated stops, 28 October 2026
+
+The existing repeated-stop journey passes on iPhone and iPad Simulator with
+dark appearance, Increase Contrast and the largest accessibility text size.
+The iPad execution takes 130.308 seconds; phone takes 117.063. Neither has
+failures or skips, and both restore their exact original appearance settings.
+
+Each creates two appearances of the same Maps-linked Item and completes only
+the first. The counted pin's native Locations choices open Stop 1 as completed
+and Stop 2 as Todo, preserving the same saved bookmark identity and original
+URL. The summary scrolls without displacing the pin. On iPad, actual portrait
+and landscape frame checks also keep the pin within its Map and retain the
+selected appearance and detail link.
+
+Six original captures are inspected; four are retained in the
+[verified checkpoint](evidence/native-map-collection/largest-itinerary-2026-10-28/result.json).
+The large native choice list and detail forms scroll to later content; the
+captures do not promise every field fits simultaneously. Map, pin and footer
+remain usable. No production or test change is needed for these executions.
+All 1,169 current source inputs match both runs and the latest Mac compilation.
+Simulator product hashes are verified before and after each run; unused physical
+build hashes in the collector receive no device-execution credit.
+
+This qualifies one direct repeated-stop workflow at maximum text on the two
+Simulators. Other contexts, repeated List branches at that size, full assistive
+review, actual Mac interaction and physical/provider performance remain open.
+Installed Share and the deferred account-transition/sync gates remain separate.

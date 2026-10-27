@@ -52,6 +52,13 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
+passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
+scrolling, counted-pin choices and iPad rotation preserve the two stops' separate
+local completion and exact saved bookmark. Six originals are inspected, four
+retained, and settings restored. This adds no production change or whole-app,
+Mac, installed Share or physical/sync acceptance claim.
+
 The [single mobile List heading](prototypes/native-mobile-list-heading.md#single-heading-and-matching-insets-28-october-2026)
 keeps the full name once across empty, populated, Map and relaunched views.
 One native List layout gives empty/populated headings and estimates matching
