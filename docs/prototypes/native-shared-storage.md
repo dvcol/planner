@@ -129,3 +129,32 @@ and registration observations. Profile contents, certificates, device IDs and
 unrelated system logs are excluded. Installed Share execution, mobile signing,
 physical devices and production CloudKit remain open. Account-transition testing
 stays explicitly deferred.
+
+## Physical build preparation, 27 October 2026
+
+A paired physical iOS device runs 27.0.1. The ordinary device build exits 0 in
+261.247 seconds. Main and embedded Share pass strict signature verification,
+reuse the existing development certificate, and have App Group profiles already
+covering that device. No additional device registration is requested.
+
+The final build-for-testing exits 0 in 16.658 seconds with 1,168 matched native
+inputs. Main, Share and the native test runner all pass strict signature and
+profile/device checks. Forty actual product files are hashed. The runner uses
+a team wildcard development profile and needs no App Group access;
+the Item operations execute through the real main app's native UI.
+
+The hardware-only `SavedRegisteredStorageJourneyTests` is compiled, and its
+method symbol is verified. It requires a disposable installation with an empty
+matching catalog. It launches without prototype arguments, saves one uniquely
+named Item, checks its public row identity and notes after normal relaunch, then
+confirms deletion of that Item and checks another relaunch. The existing Map
+provider/uncertainty journey is the second prepared check. No new target,
+production test hook or provider seam is introduced.
+
+These are preparation checks, not physical test passes. No installation or
+launch is requested by these commands. Execution awaits the user's reply that
+the device can remain unlocked and idle. The
+[curated evidence](evidence/native-shared-storage/physical-build-ready/result.json)
+excludes profiles, certificates and device identifiers. Production remains
+local-only; account-transition testing stays deferred. Installed Share and
+actual physical shared-store access remain unqualified until they execute.

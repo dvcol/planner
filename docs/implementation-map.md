@@ -37,7 +37,7 @@ can continue.
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
 | Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, installed Share and physical-device sync. |
-| Shared storage and installed Share | [Common main/extension path selection](prototypes/native-shared-storage.md) passes local real-storage checks and mobile regressions. Provisioned App Group access and installed extension integration remain open. | Selected App Group/capability setup, safe handling of existing local data, then actual installed app/extension checks. |
+| Shared storage | [Mac pass; iOS built][shared] | Share/device runtime. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Calendar panes pass; more journeys open. | UI review. |
@@ -454,8 +454,9 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    Five Mac storage tests and two mobile capture executions pass; actual Mac
    signatures/profiles permit group access. The user authorizes a fresh app
    containing test data, and the old prototype is untouched. Mac extension
-   discovery remains unresolved; installed Share execution, mobile signing and
-   physical access remain open. Keep the existing local-data safety guard.
+   discovery remains unresolved. [Signed iOS artifacts][shared] cover the paired
+   device; execution awaits its owner's readiness. Installed Share and actual
+   physical shared-store access remain open. Keep the local-data safety guard.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
 3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
 4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
@@ -502,3 +503,5 @@ The existing tickets retain their Context, starting/end state, DoR, DoD and requ
 The complete former issue body, including original requirements and implementation history, is retained in the [readable 22 October snapshot](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.md). Its [exact original source](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.source.txt) and [provenance](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.provenance.json) verify that no nonblank payload line changed. Only blank-line formatting differs in the readable copy.
 
 [Verified storage cleanup](prototypes/native-local-storage-cleanup.md) retains the previous audits and the 0.86 GiB, 0.42 GiB, 0.20 GiB and 0.14 GiB nominal-file removals. The [fixture-lifecycle follow-up](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/native-core-fixture-lifecycle.md) also disposes of its closed, marked test stores, including 172,739,251 measured nominal bytes from the refused alias-path epoch. Needed source/app/UI products, native archives and user datasets remain. Nominal totals do not promise an equal APFS free-space increase.
+
+[shared]: prototypes/native-shared-storage.md
