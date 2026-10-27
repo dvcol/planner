@@ -52,6 +52,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Mac reader fixture correction](prototypes/native-mac-reader-fixture.md)
+allows the existing sandboxed UI runner to serve its loopback test page.
+The saved-guide journey then passes, opening the real page through its bookmark
+and rich card and returning to the exact original bookmark. The startup failure,
+actual runner entitlements and inspected original are retained separately.
+Production permissions and manual automation authentication are unchanged.
+Reader resizing/lifecycle, installed Share and CloudKit remain separate work.
+
 The [Mac keyboard Undo checkpoint][mac-undo] passes four existing native
 journeys: second-window isolation and ordinary text Undo, original membership
 restoration, whole-Move reversal, active filters/valid selection and stale

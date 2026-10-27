@@ -7,5 +7,6 @@ SUPPORTED_PLATFORMS = iphoneos iphonesimulator macosx
 SDKROOT = auto
 TARGETED_DEVICE_FAMILY = 1,2
 TEST_TARGET_NAME = Planner
+CODE_SIGN_ENTITLEMENTS[sdk=macosx*] = Configuration/PlannerNavigationUITests-Mac.entitlements
 FRAMEWORK_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
