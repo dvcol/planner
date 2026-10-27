@@ -520,7 +520,11 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    and keyboard interaction remain open.
 5. Qualify the outstanding core Mac UI workflows, including capture,
    Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
-   cases. The [named Mac Undo journeys][mac-undo] now pass; unrepresented
+   cases. The [reader width follow-up](prototypes/native-reader-pane-width.md#mac-width-checks-prepared-28-october-2026)
+   adds actual Mac resizing to the existing history journey and passes Mac and
+   Simulator compilation; its prepared native batch awaits manual automation
+   readiness and has no runtime credit. The
+   [named Mac Undo journeys][mac-undo] now pass; unrepresented
    contexts retain their own gates. Q127 A's Calendar split pane passes
    Month/Day/Week resizing,
    divider movement and width recovery. The

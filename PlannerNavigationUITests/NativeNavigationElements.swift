@@ -634,6 +634,21 @@ extension XCUIApplication {
 }
 
 extension XCUIElement {
+  #if os(macOS)
+    func resizePlannerWindowForJourney(width: CGFloat) {
+      XCUIApplication().activate()
+      let edge = coordinate(withNormalizedOffset: .init(dx: 1, dy: 0.8))
+        .withOffset(.init(dx: -1, dy: 0))
+      let target = edge.withOffset(.init(dx: width - frame.width, dy: 0))
+      edge.click(forDuration: 0.1, thenDragTo: target)
+      let resized = NSPredicate { _, _ in abs(self.frame.width - width) < 8 }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: resized, object: self)], timeout: 5),
+        .completed, "Planner's own window must actually reach the requested width.")
+    }
+  #endif
+
   func waitForPlannerValue(_ expected: String) -> Bool {
     let predicate = NSPredicate(format: "value == %@", expected)
     return XCTWaiter.wait(

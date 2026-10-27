@@ -52,10 +52,10 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       addTeardownBlock {
         await MainActor.run {
           guard window.exists else { return }
-          SavedAppearanceJourneyTests.resizePlannerWindow(window, width: originalWidth)
+          window.resizePlannerWindowForJourney(width: originalWidth)
         }
       }
-      Self.resizePlannerWindow(window, width: 860)
+      window.resizePlannerWindowForJourney(width: 860)
       XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
       let hierarchy = XCTAttachment(string: window.debugDescription)
       hierarchy.name = "Long List title in a narrow native window"
@@ -85,7 +85,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let estimate = application.plannerElement("saved.list.estimate.full")
       XCTAssertTrue(estimate.waitForExistence(timeout: 5))
       XCTAssertLessThanOrEqual(estimate.frame.minY - toolbar.frame.maxY, toolbar.frame.height)
-      Self.resizePlannerWindow(window, width: 1200)
+      window.resizePlannerWindowForJourney(width: 1200)
       recordScreenshot(application, name: "Long List title uses the wide top toolbar")
       XCTAssertGreaterThan(
         title.frame.width, narrowTitleWidth,
@@ -102,7 +102,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       application.plannerElement("saved.item.save").activateForPlannerJourney()
       XCTAssertTrue(
         application.savedPlannerItemRows("Museum visit").firstMatch.waitForExistence(timeout: 10))
-      Self.resizePlannerWindow(window, width: 860)
+      window.resizePlannerWindowForJourney(width: 860)
       let populatedPane = application.plannerElement("saved.list.contents")
       XCTAssertTrue(populatedPane.waitForExistence(timeout: 5))
       XCTAssertTrue(toolbar.frame.contains(title.frame))
@@ -118,7 +118,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let populatedNarrowTitleWidth = title.frame.width
       recordScreenshot(
         application, name: "Permanent List header with a saved Item in a narrow window")
-      Self.resizePlannerWindow(window, width: 1200)
+      window.resizePlannerWindowForJourney(width: 1200)
       recordScreenshot(
         application, name: "Permanent List header with a saved Item in a wide window")
       XCTAssertGreaterThan(
@@ -3612,10 +3612,10 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       addTeardownBlock {
         await MainActor.run {
           guard window.exists else { return }
-          SavedAppearanceJourneyTests.resizePlannerWindow(window, width: originalWidth)
+          window.resizePlannerWindowForJourney(width: originalWidth)
         }
       }
-      Self.resizePlannerWindow(window, width: 860)
+      window.resizePlannerWindowForJourney(width: 860)
       assertNewItemFields(richFields, application: application)
       recordScreenshot(application, name: "Edited Item draft survives a narrow Mac window")
       let hideSidebar = window.buttons["Hide Sidebar"]
@@ -3625,7 +3625,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let showSidebar = window.buttons["Show Sidebar"]
       XCTAssertTrue(showSidebar.waitForExistence(timeout: 5))
       showSidebar.click()
-      Self.resizePlannerWindow(window, width: 1200)
+      window.resizePlannerWindowForJourney(width: 1200)
     #else
       waitForPlannerWindowOrientation(application, landscape: true)
       assertNewItemFields(richFields, application: application)
@@ -3750,21 +3750,6 @@ final class SavedAppearanceJourneyTests: XCTestCase {
         XCTWaiter.wait(
           for: [XCTNSPredicateExpectation(predicate: rotated, object: application)], timeout: 5),
         .completed, "Planner's window must actually reach the requested orientation.")
-    }
-  #endif
-
-  #if os(macOS)
-    private static func resizePlannerWindow(_ window: XCUIElement, width: CGFloat) {
-      XCUIApplication().activate()
-      let edge = window.coordinate(withNormalizedOffset: .init(dx: 1, dy: 0.8))
-        .withOffset(.init(dx: -1, dy: 0))
-      let target = edge.withOffset(.init(dx: width - window.frame.width, dy: 0))
-      edge.click(forDuration: 0.1, thenDragTo: target)
-      let resized = NSPredicate { _, _ in abs(window.frame.width - width) < 8 }
-      XCTAssertEqual(
-        XCTWaiter.wait(
-          for: [XCTNSPredicateExpectation(predicate: resized, object: window)], timeout: 5),
-        .completed, "Planner's own window must actually reach the requested width.")
     }
   #endif
 

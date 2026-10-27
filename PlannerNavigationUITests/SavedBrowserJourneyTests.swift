@@ -1712,6 +1712,37 @@ final class SavedBrowserJourneyTests: XCTestCase {
         try await recordWindow(
           application, name: "Native reader restores its width and linked page")
       }
+    #elseif os(macOS)
+      let window = application.windows.firstMatch
+      let originalWidth = window.frame.width
+      addTeardownBlock {
+        await MainActor.run {
+          guard window.exists else { return }
+          window.resizePlannerWindowForJourney(width: originalWidth)
+        }
+      }
+      var pageWidths: [CGFloat] = []
+      for width: CGFloat in [860, 1200] {
+        window.resizePlannerWindowForJourney(width: width)
+        XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 5))
+        for identifier in [
+          "saved.browser.return", "saved.browser.back", "saved.browser.forward",
+          "saved.browser.reload",
+        ] {
+          XCTAssertTrue(application.buttons[identifier].waitForPlannerHittability())
+        }
+        XCTAssertGreaterThanOrEqual(page.frame.minX, window.frame.minX)
+        XCTAssertLessThanOrEqual(page.frame.maxX, window.frame.maxX)
+        pageWidths.append(page.frame.width)
+        try await recordWindow(
+          application, name: "Native reader retains its linked page at Mac width \(Int(width))")
+      }
+      XCTAssertGreaterThan(pageWidths[1], pageWidths[0])
+      let widths = XCTAttachment(
+        string: "Narrow reader: \(pageWidths[0]), wide reader: \(pageWidths[1])")
+      widths.name = "Actual Mac reader widths across window resizing"
+      widths.lifetime = .keepAlways
+      add(widths)
     #endif
     let back = application.buttons["saved.browser.back"]
     XCTAssertTrue(back.waitForExistence(timeout: 5))

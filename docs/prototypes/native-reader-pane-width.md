@@ -35,3 +35,24 @@ This loaded-page transition does not qualify hidden-detail/compact remounts,
 multitasking windows, arbitrary websites, full accessibility or actual Mac
 resizing/keyboard behavior. Physical and signed/shared-store gates remain open.
 Signing stays deferred; advanced portability remains post-MVP.
+
+## Mac width checks prepared, 28 October 2026
+
+The existing history journey now also resizes the Mac window to 860 and 1200
+points while its linked Garden page is open. It checks actual webpage width,
+window bounds and reachable Return/Back/Forward/Reload controls before exercising
+history, reload and exact bookmark return. The existing List-header resize
+interaction moves to the shared native-element helpers, serving the reader,
+header and rich-draft journeys.
+
+The signed Mac build and Simulator build pass with 1,169 matching inputs each.
+All six production Mac executable paths remain unchanged. Only three UI-test
+files change. Affected strict Swift formatting passes. The
+[build checkpoint](evidence/native-reader-pane-width/mac-build-2026-10-28/result.json)
+retains both compiler outcomes and source overlays.
+
+Runtime qualification is pending the user's manual UI Automation readiness.
+The prepared batch includes the existing header regression, reader history/width
+checks and pending-load Return journey. Compilation supplies no resizing or
+page-retention credit. Signing is available; authentication remains required.
+Other lifecycle, installed Share, physical and synchronization gates remain open.
