@@ -503,6 +503,10 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    normal shared-store save/relaunch/cleanup and exact Map-link context after
    correcting a device startup crash. The [ordinary Mac installation][ordinary-share]
    still has no PlugInKit record; a fresh Sharing-settings observation is pending.
+   [Discovery checks](prototypes/native-shared-storage.md#mac-share-discovery-checks-28-october-2026)
+   confirm the installed copy, signatures and matching group/session. An
+   instrumented registration still yields no record or Planner-specific reason;
+   no speculative signing or metadata change is justified by these checks.
    Installed Share handoff/save remains open.
    Keep the local-data safety guard.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.

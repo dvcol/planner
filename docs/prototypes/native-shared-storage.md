@@ -234,3 +234,30 @@ also documents the current extension-point key. No speculative metadata or
 signing change is made. The
 [diagnostic records](evidence/native-shared-storage/ordinary-mac-2026-10-27/result.json)
 retain the clean build, installation hashes and separate registration outcomes.
+
+## Mac Share discovery checks, 28 October 2026
+
+Read-only AppKit lookup resolves the intended installed development app.
+Its 25 installed files still match the ordinary-build manifest, and main/Share
+strict signatures verify outside the command sandbox. Both have the approved
+App Group. The query runs in the console user's Aqua session. These checks do
+not identify a signing, wrong-app-copy or session mismatch.
+
+The command-sandbox PlugInKit query fails with Connection invalid; it cannot
+establish extension absence. Outside that sandbox, the exact query succeeds
+but has no matches. A control query lists seven built-in Share plugins, with
+no Planner record. One instrumented registration of the existing extension
+returns zero, followed by the same successful empty query. The system trace
+contains no Planner-specific message. Other plugins' redacted rejection messages
+cannot establish Planner's failure cause.
+
+Deprecated AppKit service enumeration also omits Planner for synthetic URL and
+text inputs. No picker is displayed and no service performs sharing; this does
+not qualify the modern native Share menu. The
+[discovery record](evidence/native-shared-storage/discovery-2026-10-28/result.json)
+retains the scoped probe and checks without unrelated full system logs.
+
+No production metadata, certificate, security setting or extension election is
+changed. The existing human Sharing-settings visibility/enabled-state observation
+remains pending. Installed handoff and a real extension save remain unqualified;
+the main-app and explicit-configuration capture tests do not replace them.
