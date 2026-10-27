@@ -63,6 +63,10 @@ The [deletion follow-up](prototypes/native-mobile-list-heading.md#itinerary-dele
 also passes the existing cancellation/selected-appearance/relaunch workflow on
 ordinary phone and iPad. Two native-driver corrections suffice; the shared Item
 and its Todo state survive, with production binaries unchanged.
+The [current physical iPad build](prototypes/native-shared-storage.md#current-itinerary-device-build-28-october-2026)
+now also passes compilation, profile and signature verification. Its two
+itinerary journeys wait for the device to be unlocked and the user to confirm
+availability; preparation supplies no physical execution credit.
 
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native

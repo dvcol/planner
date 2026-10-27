@@ -261,3 +261,23 @@ No production metadata, certificate, security setting or extension election is
 changed. The existing human Sharing-settings visibility/enabled-state observation
 remains pending. Installed handoff and a real extension save remain unqualified;
 the main-app and explicit-configuration capture tests do not replace them.
+
+## Current itinerary device build, 28 October 2026
+
+The current signed physical build passes in 52.305 seconds with all 1,169 native
+inputs matching the workspace. Main app, embedded Share and UI runner pass strict
+signature checks; their profiles cover the paired iPad and use the existing
+development certificate. Main and Share retain the approved App Group. All 37
+physical product files are hashed and verified.
+
+The physical iPad is reachable, but its native lock-state read reports that a
+passcode is required. The user is asked to unlock it and confirm availability.
+The existing itinerary creation/relaunch and selected-plan deletion journeys
+are prepared; their runner requires that readiness confirmation before starting.
+No installation or physical execution occurs during this preparation.
+
+The [preparation record](evidence/native-shared-storage/physical-itinerary-ready-2026-10-28/result.json)
+retains the commands and verification without device identifiers or profile and
+certificate contents. It supplies no physical itinerary, installed Share or sync
+credit. Production CloudKit remains disabled and the account-transition
+experiment stays user-deferred. Mac UI readiness remains a separate pending gate.
