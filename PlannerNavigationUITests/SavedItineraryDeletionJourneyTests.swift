@@ -115,7 +115,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     XCTAssertFalse(itemScheduleDescription?.isEmpty ?? true)
     openItinerary(removedItineraryIdentifier, application: application)
     openItineraryActions(application)
-    let deletion = application.plannerElement("saved.itinerary.delete")
+    let deletion = itineraryDeleteControl(application)
     XCTAssertTrue(deletion.waitForExistence(timeout: 5))
     deletion.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["5 saved references"].waitForExistence(timeout: 10))
@@ -188,13 +188,13 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     let bulk = application.plannerElement("Mark all done")
     XCTAssertTrue(bulk.exists)
     XCTAssertFalse(bulk.isEnabled)
-    application.plannerElement("saved.itinerary.delete").activateForPlannerJourney()
+    itineraryDeleteControl(application).activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No saved references"].waitForExistence(timeout: 10))
     recordScreenshot(application, name: "Empty Itinerary Delete has no saved references")
     application.plannerElement("saved.itinerary.delete.cancel").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     openItineraryActions(application)
-    application.plannerElement("saved.itinerary.delete").activateForPlannerJourney()
+    itineraryDeleteControl(application).activateForPlannerJourney()
     application.plannerElement("saved.itinerary.delete.confirm").activateForPlannerJourney()
     XCTAssertTrue(
       application.plannerElement("saved.itinerary.delete.confirm").waitForNonExistence(timeout: 10))
@@ -206,7 +206,8 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     appearance.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Museum booking"].waitForExistence(timeout: 10))
     #if os(iOS)
-      if !application.savedPlannerItineraryActionsControl().exists {
+      let addEntry = application.plannerElement("saved.itinerary.entry.new")
+      if !addEntry.exists || !addEntry.isHittable {
         let back = application.navigationBars.buttons["Selected plan"].firstMatch
         if back.exists {
           back.activateForPlannerJourney()
@@ -217,7 +218,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
       }
     #endif
     openItineraryActions(application)
-    application.plannerElement("saved.itinerary.delete").activateForPlannerJourney()
+    itineraryDeleteControl(application).activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["1 saved reference"].waitForExistence(timeout: 10))
     application.plannerElement("saved.itinerary.delete.confirm").activateForPlannerJourney()
     XCTAssertTrue(
@@ -265,6 +266,14 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     itinerary.activateForPlannerJourney()
     XCTAssertTrue(
       application.plannerElement("saved.itinerary.entry.new").waitForExistence(timeout: 10))
+  }
+
+  /// Native overflow menus can expose the label without the SwiftUI identifier.
+  private func itineraryDeleteControl(_ application: XCUIApplication) -> XCUIElement {
+    application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier == %@ OR label == %@", "saved.itinerary.delete", "Delete itinerary")
+    ).firstMatch
   }
 
   private func openItineraryActions(_ application: XCUIApplication) {

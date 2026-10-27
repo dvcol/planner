@@ -124,6 +124,29 @@ signature verification pass. Simulator appearance settings are restored. The
 prepared final Mac reader batch still awaits the existing manual-authentication
 readiness response. These checks do not close whole-app or physical acceptance.
 
+## Itinerary deletion follow-up, 28 October 2026
+
+The existing empty/selected-Itinerary deletion journey now passes on ordinary
+light phone and iPad Simulator. Cancel preserves the empty plan; confirmed
+deletion removes it. A subsequent plan with a selected Item appearance can also
+be deleted without retaining that detail. After relaunch, both plans are absent
+and the exact shared Item retains its notes and global Todo state.
+
+Only the existing test driver changes. Native overflow can expose Delete
+itinerary by label without its SwiftUI identifier, so the lookup accepts either
+across native roles. A read-only Add-entry visibility check now precedes Back
+navigation; querying the action-menu helper there previously tried to operate
+the itinerary toolbar from the Item page. Both actual driver failures remain
+separate from the two final passes.
+
+The [deletion result](evidence/native-itinerary-heading/2026-10-28/deletion-result.json)
+retains verified execution records and two of five inspected originals. All
+1,169 inputs match both final builds, and the six Simulator production binaries
+are unchanged. Appearance settings are restored; strict Swift formatting and
+signed Mac compilation/signature verification pass. Actual Mac deletion and
+reader execution still await the existing manual-authentication readiness
+response. This does not close the broader deletion matrix or physical review.
+
 ## Remaining gates
 
 Broader scene/assistive review, installed Share and physical/synchronized use

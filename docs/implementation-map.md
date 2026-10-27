@@ -59,6 +59,10 @@ Simulator executions cover creation/relaunch, exact reader Return and
 maximum-text dark-iPad Map branches/rotation. Matching signed Mac compilation
 and signature checks pass. Failed experiments remain separate; final Mac reader
 runtime awaits the existing manual-authentication readiness response.
+The [deletion follow-up](prototypes/native-mobile-list-heading.md#itinerary-deletion-follow-up-28-october-2026)
+also passes the existing cancellation/selected-appearance/relaunch workflow on
+ordinary phone and iPad. Two native-driver corrections suffice; the shared Item
+and its Todo state survive, with production binaries unchanged.
 
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
