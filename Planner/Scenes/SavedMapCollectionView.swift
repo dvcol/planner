@@ -290,6 +290,9 @@ struct SavedMapCollectionView: View {
           }
         }
       }
+      #if os(macOS)
+        .frame(minWidth: 400, minHeight: 320)
+      #endif
       .alert(
         "Location changed",
         isPresented: Binding(

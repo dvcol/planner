@@ -459,6 +459,10 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
 3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
 4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
+   The [Mac Locations correction](prototypes/native-map-collection-ui.md#mac-locations-sheet-27-october-2026)
+   fixes a collapsed sheet and passes provider/warning, dismissal and exact
+   bookmark checks on Mac and both simulators. Other Map contexts, Mac resizing
+   and keyboard interaction remain open.
 5. Qualify the outstanding core Mac UI workflows, including capture,
    Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
    cases. Q127 A's Calendar split pane now passes actual Month/Day/Week resizing,

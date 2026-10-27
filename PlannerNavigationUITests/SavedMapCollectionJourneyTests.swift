@@ -47,17 +47,46 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       }
     #endif
     locations.activateForPlannerJourney()
-    let provider = application.staticTexts.matching(
+    let locationsContent: XCUIElement
+    #if os(macOS)
+      locationsContent = application.sheets.firstMatch
+      XCTAssertTrue(locationsContent.waitForExistence(timeout: 5))
+    #else
+      locationsContent = application
+    #endif
+    let provider = locationsContent.staticTexts.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.provider.")
     ).firstMatch
     XCTAssertTrue(provider.waitForExistence(timeout: 5))
-    XCTAssertEqual(provider.label, "Google Maps")
-    XCTAssertTrue(provider.isHittable)
-    let uncertainty = application.staticTexts.matching(
+    let uncertainty = locationsContent.staticTexts.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.uncertainty.")
     ).firstMatch
     XCTAssertTrue(uncertainty.waitForExistence(timeout: 5))
-    XCTAssertEqual(uncertainty.label, "Place details haven't been verified for this search link.")
+    let locationsCapture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    locationsCapture.name = "Collection Map Locations before visibility assertions"
+    locationsCapture.lifetime = .keepAlways
+    add(locationsCapture)
+    #if os(macOS)
+      let textObservation = XCTAttachment(
+        string: """
+          Provider label: \(provider.label)
+          Provider value: \(String(describing: provider.value))
+          Provider frame: \(provider.frame)
+          Uncertainty label: \(uncertainty.label)
+          Uncertainty value: \(String(describing: uncertainty.value))
+          Uncertainty frame: \(uncertainty.frame)
+          """)
+      textObservation.name = "Native Map provider text accessibility"
+      textObservation.lifetime = .keepAlways
+      add(textObservation)
+      XCTAssertEqual(provider.value as? String, "Google Maps")
+      XCTAssertEqual(
+        uncertainty.value as? String, "Place details haven't been verified for this search link.")
+    #else
+      XCTAssertEqual(provider.label, "Google Maps")
+      XCTAssertEqual(uncertainty.label, "Place details haven't been verified for this search link.")
+    #endif
+    XCTAssertTrue(provider.isHittable)
     XCTAssertTrue(uncertainty.isHittable)
     #if os(iOS)
       if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
@@ -73,9 +102,12 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     capture.name = "Collection Map Locations retain provider and search uncertainty"
     capture.lifetime = .keepAlways
     add(capture)
-    application.buttons.matching(
+    locationsContent.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.map.location.source.")
     ).firstMatch.activateForPlannerJourney()
+    #if os(macOS)
+      XCTAssertTrue(locationsContent.waitForNonExistence(timeout: 5))
+    #endif
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
     let retainedLink = application.descendants(matching: .any).matching(
       identifier: originalIdentifier

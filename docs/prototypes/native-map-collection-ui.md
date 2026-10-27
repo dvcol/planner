@@ -101,3 +101,36 @@ Direct repeated itinerary stops now have distinguishable native choices, separat
 The next native journey creates one shared Maps-linked Item, completes its standalone Food stops membership, and references Food stops at two itinerary stops. Both itinerary children must initially remain Todo with 0 of 2 progress. Completing only the first itinerary appearance must leave the second Todo. Their counted marker must expose exact List/Stop/Item context, open the corresponding separate states and retain the same saved bookmark. The previously qualified direct-stop journey reuses the same native verification helper and runs alongside it. This adds no production seam or change before execution; a pass on the current implementation is recorded as existing behavior, not manufactured red/green evidence.
 
 The [phone](evidence/native-map-collection/native-expanded-map-phone/qualification.json) and [dark iPad](evidence/native-map-collection/native-expanded-map-dark-tablet/qualification.json) runs each pass both direct and expanded repeated-stop functions. The standalone completed List does not complete either itinerary branch; only the first itinerary child is then completed. Both exact Map choices retain their separate state and one saved bookmark identity. All four original captures are inspected. The runs and [Mac compiler packet](evidence/native-map-collection/native-expanded-map-mac-compiler/qualification.json) share 1,074 input hashes, with four Simulator products each and nine Mac products. There are no failures/skips or SQLite unlink diagnostics; tablet appearance is observed and restored. Production is unchanged from 28f85532, so this is qualification of existing behavior without red/green production credit. Mac UI, provider controls and the remaining acceptance gates stay separate.
+
+## Mac Locations sheet, 27 October 2026
+
+The existing provider/uncertainty journey now runs on the signed Mac app.
+Its first attempt fails because native static text exposes its content as an
+accessibility value, while the mobile test reads a label. The next attempts
+also expose a production defect: the Locations sheet fits its title and Close
+button but gives the List no visible height. An inspected owned-window capture
+confirms the blank sheet; background details must not satisfy its assertions.
+
+The Mac sheet now uses the same 400-by-320-point minimum as existing native
+selection forms. It remains a native NavigationStack, List and sheet; mobile
+presentation and saved data are unchanged. The test reads Mac static-text
+values, scopes its provider, warning and selection queries to the actual sheet,
+and requires dismissal before checking the exact original bookmark.
+
+The corrected Mac journey passes in 42.630 seconds with zero failures. Its
+capture shows the full provider attribution and search uncertainty, and row
+selection returns to the exact saved Item/link. Three earlier failed epochs
+retain their own results; this is not one all-green batch. The final Mac build
+exits 0 in 33.689 seconds, matching all 1,167 native inputs. App, embedded Share
+and runner signatures pass; manual automation authentication remains required.
+
+The same journey also passes on the light iPhone and iPad simulators, in 62.108
+and 59.232 seconds. Both original captures show the full provider and warning.
+Mobile compilation exits 0 in 28.328 seconds with the same 1,167 inputs. These
+checks preserve the existing mobile presentation and exact bookmark return;
+they do not substitute for physical-device execution.
+
+The [curated result](evidence/native-map-collection/mac-locations-size/result.json)
+records the actual scope. Other Map contexts, resizing/keyboard interaction,
+full accessibility review and physical/provider performance remain separate
+acceptance work. Installed Share discovery and CloudKit remain separate gates.
