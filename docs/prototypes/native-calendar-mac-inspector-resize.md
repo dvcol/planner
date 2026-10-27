@@ -89,3 +89,10 @@ compilation and strict signatures pass. Final dark-iPad Week inspector rotation
 also passes. These results supersede the earlier lack of any actual Mac resize
 execution, but do not close divider movement, explicitly measured hidden-pane
 width recovery or broader keyboard/accessibility acceptance.
+
+The subsequent [sizing and Mac follow-up](native-calendar-shared-time-ruler.md#accessibility-sizing-and-mac-follow-up)
+also passes the native all-day End date workflow after correcting segmented
+entry and popover dismissal. Three resize cases pass on the same production app
+bytes. Their narrow capture still clips the sidebar; the test currently checks
+retained details rather than the entire navigation area. That defect and the
+remaining divider/width-recovery checks keep full Q127 acceptance open.

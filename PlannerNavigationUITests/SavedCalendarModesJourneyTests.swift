@@ -177,7 +177,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     let lastWeekDay = try XCTUnwrap(calendar.date(byAdding: .day, value: -1, to: week.end))
     let lastMonthDay = try XCTUnwrap(calendar.date(byAdding: .day, value: -1, to: month.end))
     let end = min(proposedEnd, lastWeekDay, lastMonthDay)
-    selectDay(calendar.component(.day, from: end), application: application)
+    try selectDay(calendar.component(.day, from: end), application: application)
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
     #if os(macOS)
       application.plannerElement("saved.section.calendar").activateForPlannerJourney()
@@ -244,7 +244,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     add(capture)
   }
 
-  private func selectDay(_ day: Int, application: XCUIApplication) {
+  private func selectDay(_ day: Int, application: XCUIApplication) throws {
     let picker = application.descendants(matching: .any).matching(
       identifier: "saved.schedule.end"
     ).firstMatch
@@ -259,10 +259,29 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       format.calendar = calendar
       format.dateStyle = .short
       format.timeStyle = .none
+      let pattern = try XCTUnwrap(format.dateFormat)
+      let components: [Character] = ["d", "M", "y"]
+      let positions = try components.map { try XCTUnwrap(pattern.firstIndex(of: $0)) }
+      let dayComponent = try XCTUnwrap(positions.sorted().firstIndex(of: positions[0]))
       picker.activateForPlannerJourney()
-      application.typeKey("a", modifierFlags: .command)
-      application.typeText(format.string(from: date))
+      for _ in 0..<2 { application.typeKey(.leftArrow, modifierFlags: []) }
+      for _ in 0..<dayComponent { application.typeKey(.rightArrow, modifierFlags: []) }
+      application.typeText(String(calendar.component(.day, from: date)))
       application.typeKey(.tab, modifierFlags: [])
+      let popover = application.dialogs.firstMatch
+      XCTAssertTrue(popover.exists)
+      let editor = application.sheets.firstMatch
+      XCTAssertTrue(editor.exists)
+      editor.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.2)).click()
+      XCTAssertTrue(popover.waitForNonExistence(timeout: 5))
+      let field = XCTAttachment(string: picker.debugDescription)
+      field.name = "Native all-day End date after day-component entry"
+      field.lifetime = .keepAlways
+      add(field)
+      let capture = XCTAttachment(screenshot: calendarScreenshot(application))
+      capture.name = "Native all-day Schedule End date"
+      capture.lifetime = .keepAlways
+      add(capture)
     #else
       picker.buttons.firstMatch.activateForPlannerJourney()
       let selectedDay = application.buttons.containing(.staticText, identifier: String(day))
@@ -334,9 +353,24 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       XCTAssertGreaterThanOrEqual(heading.frame.minX, grid.frame.minX)
       let appointments = entries.allElementsBoundByIndex
       XCTAssertEqual(Set(appointments.map(\.identifier)).count, 4)
+      let ruler = grid.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-ruler"
+      ).firstMatch
+      XCTAssertTrue(ruler.exists)
       for (index, appointment) in appointments.enumerated() {
         XCTAssertGreaterThanOrEqual(appointment.frame.width, 44)
-        if !appointment.isHittable { grid.swipeLeft() }
+        for _ in 0..<12 {
+          let viewport = grid.frame.intersection(application.windows.firstMatch.frame)
+          let minimumVisibleX = max(viewport.minX, ruler.frame.maxX)
+          let appointmentCenter = appointment.frame.midX
+          if appointmentCenter >= minimumVisibleX && appointmentCenter <= viewport.maxX { break }
+          let scrollRight = appointmentCenter < minimumVisibleX
+          let start = grid.coordinate(
+            withNormalizedOffset: CGVector(dx: scrollRight ? 0.6 : 0.8, dy: 0.6))
+          let end = grid.coordinate(
+            withNormalizedOffset: CGVector(dx: scrollRight ? 0.8 : 0.6, dy: 0.6))
+          start.press(forDuration: 0.05, thenDragTo: end)
+        }
         XCTAssertTrue(appointment.isHittable)
         for other in appointments.dropFirst(index + 1) {
           XCTAssertFalse(appointment.frame.intersects(other.frame))
@@ -371,7 +405,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     let savedSchedule = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
     ).firstMatch
-    XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    try revealSavedSchedule(savedSchedule, application: application)
     let scheduleIdentifier = savedSchedule.identifier.replacingOccurrences(
       of: "saved.item.schedule.", with: "")
     let savedDescription = try XCTUnwrap(savedSchedule.value as? String)
@@ -445,9 +479,23 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     let item = application.savedPlannerItemRows("Timed museum").firstMatch
     XCTAssertTrue(item.waitForExistence(timeout: 10))
     item.activateForPlannerJourney()
-    XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    try revealSavedSchedule(savedSchedule, application: application)
     XCTAssertEqual(savedSchedule.value as? String, savedDescription)
   }
+
+  /// Reveals lazy Schedule rows before reading them at larger text sizes.
+  private func revealSavedSchedule(_ schedule: XCUIElement, application: XCUIApplication) throws {
+    #if os(iOS)
+      let details = try XCTUnwrap(
+        application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable))
+      for _ in 0..<6 {
+        if schedule.exists { break }
+        details.swipeUp()
+      }
+    #endif
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+  }
+
   private func modeControl(_ name: String, in picker: XCUIElement) -> XCUIElement {
     #if os(macOS)
       picker.radioButtons[name]

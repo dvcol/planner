@@ -90,3 +90,11 @@ execute four existing tests successfully. They qualify the local helper, not
 installed Share or provisioned App Group integration. Fixture cleanup remains
 limited by macOS container access protection. Production CloudKit and account
 observation remain unimplemented; account-transition testing is user-deferred.
+
+The [Calendar sizing follow-up](prototypes/native-calendar-shared-time-ruler.md#accessibility-sizing-and-mac-follow-up)
+adds large-text column sizing and corrects native test scrolling/date entry.
+Represented largest-text and ordinary mobile scenarios pass, as do actual Mac
+Month/Day/Week resizing and the corrected three-day all-day form. Their source
+epochs and failed attempts remain separate. Inspection also exposes a clipped
+sidebar at the narrow Mac width; passing retained-detail assertions do not close
+that defect or full pane/accessibility acceptance.

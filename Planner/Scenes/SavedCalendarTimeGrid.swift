@@ -49,6 +49,8 @@ struct SavedCalendarTimeGrid: View {
   @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
   @ScaledMetric(relativeTo: .subheadline) private var timedCardMinimumHeight = 80
   @ScaledMetric(relativeTo: .caption2) private var timeRulerWidth: CGFloat = 54
+  @ScaledMetric(relativeTo: .headline) private var dayColumnMinimumWidth: CGFloat = 120
+  @ScaledMetric(relativeTo: .subheadline) private var appointmentLaneMinimumWidth: CGFloat = 100
 
   private let pointsPerMinute: CGFloat = 1.5
 
@@ -153,7 +155,7 @@ struct SavedCalendarTimeGrid: View {
       let placements = timedPlacements(entriesForDay(day), interval: interval)
       maximumLanes = max(maximumLanes, placements.map(\.laneCount).max() ?? 1)
     }
-    return max(120, 8 + CGFloat(maximumLanes) * 100)
+    return max(dayColumnMinimumWidth, 8 + CGFloat(maximumLanes) * appointmentLaneMinimumWidth)
   }
 
   var body: some View {
@@ -161,7 +163,7 @@ struct SavedCalendarTimeGrid: View {
       let columnWidth = max(
         minimumColumnWidth,
         (geometry.size.width - timeRulerWidth) / CGFloat(max(1, days.count)))
-      let horizontalAnchor = min(1, timeRulerWidth / max(1, geometry.size.width - columnWidth))
+      let horizontalAnchor = min(1, timeRulerWidth / max(1, geometry.size.width - 1))
       ScrollViewReader { proxy in
         ScrollView([.horizontal, .vertical]) {
           LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
@@ -288,8 +290,10 @@ struct SavedCalendarTimeGrid: View {
     VStack(spacing: 0) {
       ForEach(0..<24, id: \.self) { hour in
         Rectangle().fill(.separator).frame(height: 0.5)
+          .overlay(alignment: .topLeading) {
+            Color.clear.frame(width: 1, height: 1).id(hourIdentifier(day, hour: hour))
+          }
           .frame(height: 60 * pointsPerMinute, alignment: .top)
-          .id(hourIdentifier(day, hour: hour))
       }
     }
   }

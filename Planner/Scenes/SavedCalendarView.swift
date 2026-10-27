@@ -191,6 +191,7 @@ struct SavedCalendarView: View {
       } else {
         DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
           .datePickerStyle(.compact)
+          .labelsHidden()
           .padding(.horizontal)
         if isLoading {
           ProgressView("Loading schedules").frame(maxWidth: .infinity, maxHeight: .infinity)
