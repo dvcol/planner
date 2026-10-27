@@ -98,3 +98,9 @@ Month/Day/Week resizing and the corrected three-day all-day form. Their source
 epochs and failed attempts remain separate. Inspection also exposes a clipped
 sidebar at the narrow Mac width; passing retained-detail assertions do not close
 that defect or full pane/accessibility acceptance.
+
+The [bounded Calendar split pane](prototypes/native-calendar-mac-inspector-resize.md#bounded-split-pane-27-october-2026)
+subsequently corrects the sidebar clipping. Three final Mac journeys pass
+820-point fitting, native divider movement and measured width recovery while
+retaining the exact Schedule. Week viewport retention, broader accessibility
+and physical acceptance remain open.

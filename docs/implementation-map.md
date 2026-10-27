@@ -40,7 +40,7 @@ can continue.
 | Shared storage and installed Share | [Common main/extension path selection](prototypes/native-shared-storage.md) passes local real-storage checks and mobile regressions. Provisioned App Group access and installed extension integration remain open. | Selected App Group/capability setup, safe handling of existing local data, then actual installed app/extension checks. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
-| Mac interaction | Calendar checks run; narrow sidebar clips. | UI fixes. |
+| Mac interaction | Calendar panes pass; more journeys open. | UI review. |
 | Synchronized daily use | Implementation and physical acceptance are open. | Complete CloudKit integration, then signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. |
 | Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
 
@@ -60,8 +60,12 @@ Actual Mac Month/Day/Week resize journeys pass; the corrected native End date
 journey also saves its intended three-day span. Failed cohorts and separate
 test-source epochs remain explicit, with matching actual app products and
 inspected originals. Manual automation authentication stays required. The
-narrow Mac capture exposes sidebar clipping despite retained details passing;
-that UI defect, divider/width-recovery checks, broader accessibility and physical
+narrow Mac capture exposed sidebar clipping despite retained details passing.
+The subsequent [bounded split-pane correction](prototypes/native-calendar-mac-inspector-resize.md#bounded-split-pane-27-october-2026)
+passes three strengthened Month/Day/Week journeys: 1,200/860/820/1,200-point
+windows, visible sidebar/details, native divider movement and measured width
+recovery. Week can still leave the selected booking outside its horizontal
+viewport after resizing. That follow-up, broader accessibility and physical
 acceptance remain open.
 
 The [development-signed Mac UI retry](prototypes/native-development-signed-mac-ui.md)

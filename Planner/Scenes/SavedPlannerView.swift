@@ -462,13 +462,17 @@ struct SavedPlannerView: View {
           plannerSidebar
         } detail: {
           #if os(macOS)
-            HSplitView {
-              calendarContent.frame(minWidth: 300)
-              if calendarInspectorPresented {
-                calendarDetailStack
-                  .frame(minWidth: 300, idealWidth: 360, maxWidth: 520)
+            GeometryReader { geometry in
+              HSplitView {
+                calendarContent.frame(minWidth: 300)
+                if calendarInspectorPresented {
+                  calendarDetailStack
+                    .frame(minWidth: 300, idealWidth: 360, maxWidth: 520)
+                }
               }
+              .frame(width: geometry.size.width, height: geometry.size.height)
             }
+            .frame(minWidth: calendarInspectorPresented ? 600 : 300)
           #else
             calendarContent
           #endif

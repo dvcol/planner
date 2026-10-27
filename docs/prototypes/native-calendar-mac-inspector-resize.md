@@ -96,3 +96,41 @@ entry and popover dismissal. Three resize cases pass on the same production app
 bytes. Their narrow capture still clips the sidebar; the test currently checks
 retained details rather than the entire navigation area. That defect and the
 remaining divider/width-recovery checks keep full Q127 acceptance open.
+
+## Bounded split pane, 27 October 2026
+
+Stronger native assertions reproduce the clipped sidebar at 860 points. Its
+Lists control is at x = -90 while the enclosing split layout spans 1,081 points.
+Removing the app-wide minimum instead makes macOS refuse the requested resize
+below 1,081 points. These observations concern Planner's nested layout; they do
+not establish an independent Apple SDK defect.
+
+The Mac split view now receives the navigation column's actual width and height
+through a GeometryReader. Its declared minimum is 600 points with both
+300-point panes present, or 300 with details hidden. The existing native panes,
+divider, app minimum and Schedule selection remain. Failed picker/frame/column
+probes are removed; no additional controller or dependency is introduced.
+
+The [evidence packet](evidence/native-calendar-shared-time-ruler/mac-pane-width/result.json)
+retains a failing baseline, five unsuccessful layout probes, an early New Item
+setup failure and the unchanged retry's passing Week execution. The final
+source then passes all three Month/Day/Week journeys together: three passes,
+zero failures and zero skips in 344.236 seconds. Each journey checks actual
+1,200-to-860-to-820-to-1,200-point window sizes, all five sidebar destinations,
+retained notes and the exact saved Schedule/caption. Hiding details recovers
+more than 100 Calendar points. The actual native divider moves 40 points in
+each direction without changing the selected booking.
+
+Original final captures for all three modes are inspected. The retained
+[before](evidence/native-calendar-shared-time-ruler/mac-pane-width/before-860.png)
+and [minimum-width Week](evidence/native-calendar-shared-time-ruler/mac-pane-width/week-820.png)
+captures show the sidebar correction. Current Mac and mobile compilation share
+all 1,164 native inputs; the final Mac run verifies actual signed products and
+keeps manual automation authentication required. The production change is
+Mac-only. No signing resources, account settings or saved-data rules change.
+
+These local checks qualify pane fitting, hide/reopen, width recovery and native
+divider movement. Week can still leave the selected booking outside its
+horizontally visible columns after resizing; compact header wrapping, broader
+keyboard/assistive review and physical acceptance remain open. This does not
+qualify shared storage, installed Share, CloudKit or account transitions.

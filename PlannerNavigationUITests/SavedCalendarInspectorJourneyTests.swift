@@ -116,6 +116,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       identifier: "saved.calendar.canvas"
     ).firstMatch
     XCTAssertTrue(calendar.exists)
+    let calendarWidthWithDetails = calendar.frame.width
     let widthWithDetails = entry.frame.width
     XCTAssertGreaterThan(widthWithDetails, 0)
     recordScreenshot(application, name: "Native Calendar inspector presentation before closing")
@@ -123,9 +124,14 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     XCTAssertEqual(schedule.value as? String, scheduleDescription)
     details.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["The same saved Item"].waitForNonExistence(timeout: 5))
+    #if os(macOS)
+      XCTAssertGreaterThan(calendar.frame.width, calendarWidthWithDetails + 100)
+    #endif
     let layout = XCTAttachment(
       string:
         "Entry width with details: \(widthWithDetails)\nEntry width after hiding: \(entry.frame.width)\n"
+        + "Calendar width with details: \(calendarWidthWithDetails)\n"
+        + "Calendar width after hiding: \(calendar.frame.width)\n"
     )
     layout.name = "Calendar inspector layout observations"
     layout.lifetime = .keepAlways
@@ -157,6 +163,13 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       application, name: "Selected Calendar details remain after narrowing the layout")
     assertInspectorContentVisible(application, schedule: schedule)
     XCTAssertEqual(entry.value as? String, entryDescription)
+    #if os(macOS)
+      Self.resizePlannerWindow(window, width: 820)
+      assertInspectorContentVisible(application, schedule: schedule)
+      XCTAssertEqual(schedule.identifier, scheduleIdentifier)
+      XCTAssertEqual(schedule.value as? String, scheduleDescription)
+      recordScreenshot(application, name: "Calendar panes fit the minimum window width")
+    #endif
     details.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["The same saved Item"].waitForNonExistence(timeout: 5))
     #if os(macOS)
@@ -179,6 +192,12 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     XCTAssertEqual(entry.value as? String, entryDescription)
     recordScreenshot(
       application, name: "Calendar reopens the same Schedule after both layout changes")
+    #if os(macOS)
+      try verifyCalendarDivider(application)
+      assertInspectorContentVisible(application, schedule: schedule)
+      XCTAssertEqual(schedule.identifier, scheduleIdentifier)
+      XCTAssertEqual(schedule.value as? String, scheduleDescription)
+    #endif
     let identities = XCTAttachment(
       string:
         "Mode: \(mode)\nSchedule: \(scheduleIdentifier)\nSaved caption: \(scheduleDescription)\n"
@@ -246,13 +265,24 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
   ) {
     let retainedNotes = application.staticTexts["The same saved Item"].firstMatch
     #if os(macOS)
+      let navigation = ["lists", "items", "inbox", "itineraries", "calendar"].map {
+        application.plannerElement("saved.section.\($0)")
+      }
       let geometry = XCTAttachment(
         string:
           "Window: \(application.windows.firstMatch.frame)\nNotes: \(retainedNotes.frame)\n"
-          + "Schedule: \(schedule.frame)\n")
+          + "Schedule: \(schedule.frame)\n"
+          + navigation.map { "\($0.identifier): \($0.frame)" }.joined(separator: "\n"))
       geometry.name = "Native Calendar inspector content bounds"
       geometry.lifetime = .keepAlways
       add(geometry)
+      for destination in navigation {
+        XCTAssertTrue(destination.waitForPlannerHittability())
+        XCTAssertFalse(destination.frame.isEmpty)
+        XCTAssertTrue(
+          application.windows.firstMatch.frame.contains(destination.frame),
+          "The sidebar destination must remain inside Planner's window: \(destination.identifier)")
+      }
     #endif
     for content in [retainedNotes, schedule] {
       XCTAssertTrue(content.waitForPlannerHittability())
@@ -277,6 +307,33 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
   #endif
 
   #if os(macOS)
+    /// Exercises the native divider in both directions without changing the selected booking.
+    private func verifyCalendarDivider(_ application: XCUIApplication) throws {
+      let calendar = application.plannerElement("saved.calendar.canvas")
+      let controls = XCTAttachment(string: application.splitters.debugDescription)
+      controls.name = "Native Calendar divider controls"
+      controls.lifetime = .keepAlways
+      add(controls)
+      let divider = try XCTUnwrap(
+        application.splitters.allElementsBoundByIndex.first {
+          $0.frame.height > 100 && abs($0.frame.midX - calendar.frame.maxX) < 8
+        })
+      for delta in [CGFloat(-40), 40] {
+        let previousWidth = calendar.frame.width
+        let coordinate = divider.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.5))
+        coordinate.click(
+          forDuration: 0.1, thenDragTo: coordinate.withOffset(.init(dx: delta, dy: 0)))
+        let resized = NSPredicate { _, _ in
+          abs(calendar.frame.width - previousWidth - delta) < 8
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: resized, object: calendar)], timeout: 5),
+          .completed, "The native divider must change Calendar's width by the requested amount.")
+        recordScreenshot(application, name: "Calendar after native divider movement \(delta)")
+      }
+    }
+
     private static func resizePlannerWindow(_ window: XCUIElement, width: CGFloat) {
       let application = XCUIApplication()
       application.activate()

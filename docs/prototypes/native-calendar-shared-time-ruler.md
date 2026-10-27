@@ -141,3 +141,8 @@ cards/headings at panned viewport edges also retain their visual-review limits.
 Divider movement, explicitly measured width recovery, full assistive review and
 physical acceptance remain open. No signing resources, iCloud/account settings,
 saved-data rules or production storage configuration change.
+
+The subsequent [bounded split-pane checkpoint](native-calendar-mac-inspector-resize.md#bounded-split-pane-27-october-2026)
+corrects that Mac sidebar clipping and passes strengthened Month/Day/Week pane,
+minimum-width, divider and width-recovery checks. Week viewport retention and
+the broader accessibility/physical gates remain open.
