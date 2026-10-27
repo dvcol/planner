@@ -73,13 +73,28 @@ The [temporary-artifact cleanup](evidence/native-mobile-list-heading/single-head
 removes 592,205,153 nominal bytes of superseded trial files after archive and
 capture read-back verification. Final results, build caches and app data remain.
 
-## Remaining gates
+## Mac manual-authentication retry, 28 October 2026
 
-An earlier Mac long-title resize journey passes in 64.911 seconds, with its
-separate 1,168-input snapshot retained. The final-source Mac attempt times out
-while enabling automation before any test starts. Signing is available; a
-manual-authentication readiness retry is requested. This supplies no fresh Mac
-runtime credit.
+The user-ready retry passes the existing long-title journey in 65.171 seconds,
+with no failures or skips. All 1,169 source inputs match the workspace and private
+snapshot; nine product hashes remain unchanged after execution. Main app,
+embedded Share and UI-runner signatures verify. Manual UI Automation
+authentication remains required before and after the run.
+
+The test creates an empty List, resizes between 860 and 1200 points, creates its
+first Item and repeats the resizing. The title stays in the top native toolbar,
+starts at the collection edge and remains clear of Filters. Widening releases
+title space in both states, and the populated narrow toolbar controls remain
+hittable. Four inspected original captures retain one left-aligned title and
+the compact estimate summary. Item-specific actions take toolbar space, so
+empty and populated titles can truncate at different points.
+
+The [verified result](evidence/native-mobile-list-heading/mac-manual-retry-2026-10-28/result.json)
+retains the originals and compact execution records. No production or test code
+changes were needed for this retry. The earlier final-source authentication
+timeout remains recorded separately and receives no test-execution credit.
+
+## Remaining gates
 
 Broader scene/assistive review, installed Share and physical/synchronized use
 remain open. Production CloudKit is still disabled and account-transition

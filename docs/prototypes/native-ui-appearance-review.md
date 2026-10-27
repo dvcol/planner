@@ -229,6 +229,9 @@ deferred, and the user's final coherence/layout review is still required.
 The [single-heading follow-up](native-mobile-list-heading.md#single-heading-and-matching-insets-28-october-2026)
 adds matching empty/populated mobile insets and preserves one full content name
 through Map switching and relaunch. Eight scoped mobile executions and inspected
-originals have local evidence. Signing is now available; the fresh Mac runtime
-attempt waits for manual UI Automation authentication. Whole-app appearance and
+originals have local evidence. The subsequent user-ready Mac retry passes the
+existing empty/populated long-title resize journey. Its four inspected original
+captures and matching source/products are retained in the
+[Mac checkpoint](native-mobile-list-heading.md#mac-manual-authentication-retry-28-october-2026).
+Manual UI Automation authentication remains required. Whole-app appearance and
 physical/sync acceptance remain open.
