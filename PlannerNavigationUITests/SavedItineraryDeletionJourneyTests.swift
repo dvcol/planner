@@ -1,5 +1,9 @@
 import XCTest
 
+#if os(iOS)
+  import UIKit
+#endif
+
 @MainActor
 final class SavedItineraryDeletionJourneyTests: XCTestCase {
   func testCreatingASecondItineraryOpensItsOwnEmptyContents() {
@@ -12,8 +16,44 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     XCTAssertNotEqual(originalIdentifier, newIdentifier)
     XCTAssertTrue(application.staticTexts["No items"].exists)
     XCTAssertTrue(application.savedPlannerItineraryActionsControl().exists)
+    application.dismissSavedPlannerItineraryOverflow()
     recordScreenshot(application, name: "New itinerary opens independently of the prior selection")
+    let hierarchy = XCTAttachment(string: application.windows.firstMatch.debugDescription)
+    hierarchy.name = "Selected Itinerary heading and native navigation title"
+    hierarchy.lifetime = .keepAlways
+    add(hierarchy)
+    #if os(iOS)
+      assertSingleItineraryTitle("New plan", in: application)
+    #endif
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItinerary(newIdentifier, application: application)
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      assertSingleItineraryTitle("New plan", in: application)
+    #endif
+    recordScreenshot(application, name: "Reopened itinerary retains its single title and identity")
   }
+
+  #if os(iOS)
+    /// Scope title checks to the native bar and content heading, excluding catalog rows.
+    private func assertSingleItineraryTitle(_ title: String, in application: XCUIApplication) {
+      let nativeTitles = application.navigationBars.staticTexts.matching(
+        NSPredicate(format: "label == %@", title))
+      let contentTitles = application.staticTexts.matching(identifier: "saved.itinerary.title")
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCTAssertTrue(contentTitles.firstMatch.waitForExistence(timeout: 5))
+        XCTAssertEqual(contentTitles.count, 1)
+        XCTAssertEqual(contentTitles.firstMatch.label, title)
+        XCTAssertEqual(
+          nativeTitles.count, 0, "The full content heading must not repeat in the bar.")
+      } else {
+        XCTAssertTrue(nativeTitles.firstMatch.waitForExistence(timeout: 5))
+        XCTAssertEqual(contentTitles.count, 0)
+        XCTAssertEqual(nativeTitles.count, 1)
+      }
+    }
+  #endif
 
   func
     testItineraryDeletionReviewsRepeatedEntriesAndRetainsIndependentListsAndPlansAfterCancelAndRelaunch()
@@ -326,21 +366,15 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
   private func openCatalog(
     _ section: String, creationIdentifier: String, application: XCUIApplication
   ) {
-    #if os(macOS)
-      let destination = application.plannerElement("saved.section.\(section.lowercased())")
-    #else
-      let destination = application.buttons[section].firstMatch
-    #endif
-    XCTAssertTrue(destination.waitForExistence(timeout: 10))
-    destination.activateForPlannerJourney()
+    application.openPlannerSection(section)
     let creation = application.plannerElement(creationIdentifier)
     if !creation.waitForExistence(timeout: 2) {
       let sidebar = application.plannerElement("Show Sidebar")
       let back = application.navigationBars.buttons[section].firstMatch
-      if sidebar.exists {
-        sidebar.activateForPlannerJourney()
-      } else if back.exists {
+      if back.exists {
         back.activateForPlannerJourney()
+      } else if sidebar.exists {
+        sidebar.activateForPlannerJourney()
       } else {
         let genericBack = application.plannerElement("BackButton")
         XCTAssertTrue(genericBack.exists)

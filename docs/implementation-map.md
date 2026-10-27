@@ -52,6 +52,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Itinerary heading/navigation correction](prototypes/native-mobile-list-heading.md#itinerary-heading-and-compact-navigation-28-october-2026)
+removes the repeated iPad bar title and fixes an iPhone second-plan loading stall
+by resetting compact navigation when the selected plan changes. Five final
+Simulator executions cover creation/relaunch, exact reader Return and
+maximum-text dark-iPad Map branches/rotation. Matching signed Mac compilation
+and signature checks pass. Failed experiments remain separate; final Mac reader
+runtime awaits the existing manual-authentication readiness response.
+
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
 scrolling, counted-pin choices and iPad rotation preserve the two stops' separate
@@ -524,8 +532,8 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    Keep the local-data safety guard.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
 3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
-   Latest mobile Undo captures also show the List title in both navigation and
-   content; reconcile that repetition during the native title pass.
+   The mobile List and Itinerary one-heading corrections now have their scoped
+   checkpoints above. Broader scene and assistive acceptance remains open.
 4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
    The [Mac Locations correction](prototypes/native-map-collection-ui.md#mac-locations-sheet-27-october-2026)
    fixes a collapsed sheet and passes provider/warning, dismissal and exact

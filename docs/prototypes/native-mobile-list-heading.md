@@ -94,6 +94,36 @@ retains the originals and compact execution records. No production or test code
 changes were needed for this retry. The earlier final-source authentication
 timeout remains recorded separately and receives no test-execution credit.
 
+## Itinerary heading and compact navigation, 28 October 2026
+
+The native iPad reproduction also exposes an Itinerary name twice: a truncated
+bar title and its full content heading. iPad now keeps the full content heading
+and clears the repeated bar title. iPhone retains its native title; the Mac
+title branch is unchanged.
+
+The same journey finds a separate phone defect: creating a second Itinerary can
+leave Opening Itinerary indefinitely. The exact committed production view also
+reproduces it before the title assertions. A narrow trace shows the new read
+being cancelled during compact navigation. Resetting that compact split-view
+stack when the selected plan changes fixes the represented case. Per-plan
+filters, saved identities and ordinary loader cancellation remain intact.
+Stable-container and sheet-dismissal experiments did not fix it and are removed.
+
+Five final executions across three existing native functions pass: second-plan
+creation, exact selection and relaunch twice on ordinary phone and once on
+maximum-text dark iPad with Increase Contrast; repeated List-branch Map selection
+and rotation on that iPad; and exact Itinerary-guide Return on phone. The existing
+test driver now opens collapsed navigation through the shared helper and prefers
+the actual back button before a sidebar fallback. No new test boundary is added.
+
+The [result](evidence/native-itinerary-heading/2026-10-28/result.json) retains the
+six failed production/diagnostic attempts separately from final passes. Eight
+original captures are inspected and four retained. All 1,169 native inputs match
+both final builds; strict Swift formatting and signed Mac app/Share/UI-runner
+signature verification pass. Simulator appearance settings are restored. The
+prepared final Mac reader batch still awaits the existing manual-authentication
+readiness response. These checks do not close whole-app or physical acceptance.
+
 ## Remaining gates
 
 Broader scene/assistive review, installed Share and physical/synchronized use

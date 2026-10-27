@@ -342,10 +342,11 @@ struct SavedItineraryDetail: View {
         #if os(iOS)
           .environment(\.editMode, $entryEditMode)
         #endif
-        .navigationTitle(itinerary.content.title)
         #if os(iOS)
+          .navigationTitle(showsCollectionTitle ? "" : itinerary.content.title)
           .navigationBarTitleDisplayMode(showsCollectionTitle ? .inline : .large)
         #else
+          .navigationTitle(itinerary.content.title)
           .toolbarTitleDisplayMode(.inline)
         #endif
         .searchable(text: $searchText, prompt: "Search this Itinerary")

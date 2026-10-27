@@ -267,6 +267,10 @@ struct SavedPlannerView: View {
       .onChange(of: selectedItineraryIdentifier) {
         selectedItineraryRow = nil
         itineraryPreferredCompactColumn = selectedItineraryIdentifier == nil ? .sidebar : .content
+        if !usesSidebarNavigation {
+          // A new plan must not reuse the compact stack of the previously opened plan.
+          itineraryNavigationIdentifier = UUID()
+        }
         if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
       }
       .onChange(of: calendarSelection) {
