@@ -69,6 +69,11 @@ actual private-service reads, native events, exact fresh-store content reads and
 confirmed cloud-fixture cleanup. Account transitions, production integration,
 installed Share and physical sync remain open; production is still local-only.
 
+The user explicitly defers account-transition testing on 27 October. No iCloud
+setting or account is changed. Keep that ownership/reset requirement open and
+continue independent local work; the deferral does not approve production sync
+activation without its safety evidence.
+
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and
 `errSecInternalComponent`. The required WWDR G3 intermediate was absent.

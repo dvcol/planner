@@ -28,6 +28,12 @@ account/cloud status remains unknown. Sync still needs implementation as well
 as signing and physical qualification. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
 
+On 27 October the user defers account-transition testing. Do not arm that
+experiment or change iCloud settings. This postpones the test rather than
+removing the ownership/reset safety requirement. Production CloudKit activation
+still depends on establishing it; independent local UI and signing/Share work
+can continue.
+
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
 | Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, installed Share and physical-device sync. |
@@ -53,8 +59,8 @@ verification. Failed startup/direct-executable attempts remain recorded; the
 final path uses normal Launch Services. Cloud fixtures are deleted and 7.86 MB
 of completed local probe stores removed. This qualifies single-Mac native
 transport, with production command/recovery integration, account ownership,
-installed Share and physical sync still open. A suitable environment for a real
-per-app iCloud transition is the next requested human input.
+installed Share and physical sync still open. The user subsequently defers the
+real per-app iCloud-transition test; no setting is changed.
 
 The [asynchronous private-CloudKit setup check](prototypes/cloud-setup-native.md)
 makes a successful real private-database metadata request and observes completed

@@ -70,8 +70,9 @@ validation and independent recovery publication. It therefore does not qualify
 Planner save acknowledgement, transaction/conflict behavior, coherent account
 ownership, installed Share, physical devices or production sync integration.
 
-Production Planner remains local-only. The next ownership/reset test requires
-an actual per-app iCloud-state change in a suitable test environment; human
-availability is requested before arming that experiment. Do not switch accounts
-or change iCloud settings automatically. Native/physical and final UI gates remain
+Production Planner remains local-only. On 27 October the user explicitly defers
+the ownership/reset test requiring a real per-app iCloud-state change. Do not arm
+that experiment, switch accounts or change iCloud settings. The safety gate
+remains unqualified; deferral does not authorize activating production sync.
+Independent local work can continue. Native/physical and final UI gates remain
 separate, while advanced export/import remains outside MVP.
