@@ -37,7 +37,7 @@ can continue.
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
 | Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, installed Share and physical-device sync. |
-| Shared storage | [Mac pass; iOS built][shared] | Share/device runtime. |
+| Shared storage | [Mac and device save pass][shared] | Installed Share handoff/save. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Calendar panes pass; more journeys open. | UI review. |
@@ -51,6 +51,13 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [physical iPad checkpoint](prototypes/native-shared-storage.md#physical-core-journeys-27-october-2026)
+passes normal shared-store creation, exact identity/notes through relaunch,
+confirmed test-Item cleanup, and the Map link/attribution/uncertainty journey.
+It first exposes a root SwiftUI metadata stack overflow. Two explicit root
+type boundaries fix that launch crash; a computed-property split alone fails.
+These two device passes do not qualify installed Share or CloudKit sync.
 
 The [Calendar shared time ruler](prototypes/native-calendar-shared-time-ruler.md#accessibility-sizing-and-mac-follow-up)
 now scales day/appointment widths with text and simplifies the native date
@@ -454,9 +461,10 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    Five Mac storage tests and two mobile capture executions pass; actual Mac
    signatures/profiles permit group access. The user authorizes a fresh app
    containing test data, and the old prototype is untouched. Mac extension
-   discovery remains unresolved. [Signed iOS artifacts][shared] cover the paired
-   device; execution awaits its owner's readiness. Installed Share and actual
-   physical shared-store access remain open. Keep the local-data safety guard.
+   discovery remains unresolved. [Two physical iPad journeys][shared] now pass
+   normal shared-store save/relaunch/cleanup and exact Map-link context after
+   correcting a device startup crash. Installed Share handoff/save remains open.
+   Keep the local-data safety guard.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
 3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
 4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.

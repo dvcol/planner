@@ -226,8 +226,8 @@ struct SavedPlannerView: View {
     #endif
   }
 
-  var body: some View {
-    ZStack { listLifecycleContent }
+  private var plannerLifecycleContent: some View {
+    AnyView(listLifecycleContent)
       .task(id: mapRequest) { await reloadMap() }
       .environment(\.savedWebsiteOpening, openWebsite)
       .disabled(isResolvingOpening)
@@ -302,6 +302,10 @@ struct SavedPlannerView: View {
           await loadSelectedAppearance()
         }
       }
+  }
+
+  var body: some View {
+    AnyView(plannerLifecycleContent)
       .sheet(isPresented: $showLabels) {
         SavedLabelsView(store: store)
       }

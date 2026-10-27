@@ -158,3 +158,48 @@ the device can remain unlocked and idle. The
 excludes profiles, certificates and device identifiers. Production remains
 local-only; account-transition testing stays deferred. Installed Share and
 actual physical shared-store access remain unqualified until they execute.
+
+## Physical core journeys, 27 October 2026
+
+With the user ready, Xcode installs the signed app, embedded Share extension and
+test runner on the paired iPad running 27.0.1. Both initial test methods start
+but fail because Planner crashes during launch. Two app-only crash reports
+show main-thread stack-guard failures while Swift recursively constructs the
+root view's generic metadata. This is a runtime defect, not a signing refusal.
+
+A computed-property split alone still fails both tests with the same stack
+pattern. The final correction separates lifecycle from presentation modifiers
+and uses two explicit `AnyView` boundaries at the root. It changes no saved-data,
+provider, signing or public-interface contract and adds no test hook or target.
+
+Both physical journeys then pass, with zero failures or skips: the Map case in
+51.383 seconds and normal shared storage in 48.616 seconds. Xcode exits 0 in
+107.978 seconds. The normal-app test uses no prototype launch arguments. Its
+unique Item retains the same public row identity and notes through relaunch;
+confirmed deletion and another relaunch verify its cleanup. The Map case uses
+its separate disposable dataset, preserves the exact original coordinate-search
+bookmark, and verifies provider attribution and the unverified-place warning.
+It does not qualify arbitrary provider lookups or ambiguous address choices.
+
+The final device build takes 23.397 seconds. Main, Share and runner retain valid
+signatures and profiles covering the device, with the existing certificate and
+approved App Group. All 37 device product hashes remain unchanged during the
+passing run. The affected Mac and Simulator builds also pass, in 31.750 and
+54.968 seconds, against the same 1,168 native inputs. Mac main/Share strict
+signature checks pass; no new Mac UI execution is implied.
+
+The existing compact iPhone Simulator Map journey also passes: one test, zero
+failures or skips in 75.082 seconds, with Xcode exiting 0 in 104.689 seconds.
+Its two distinct original captures are inspected. This adds compact navigation
+regression coverage, not a second physical device or a full accessibility pass.
+
+All three distinct original device captures are inspected; the two Locations
+attachments are byte-identical and retained once. Planner is reopened with
+normal launch arguments after the checks. The
+[evidence](evidence/native-shared-storage/physical-core-2026-10-27/result.json)
+retains the failed attempts separately from the passing run, without device
+identifiers, raw crash-report personal fields, profiles or certificates.
+
+Installed Share execution, broader physical/UI acceptance and production
+CloudKit remain open. Production stays local-only, and the explicit deferral
+of account-transition testing remains in force.

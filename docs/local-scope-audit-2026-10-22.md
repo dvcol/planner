@@ -64,8 +64,10 @@ The [shared native storage checkpoint](prototypes/native-shared-storage.md#regis
 now wires the registered App Group into main and both extensions. Five Mac
 storage tests pass, including actual provisioned main-app group access; two
 mobile capture regressions pass. The user authorizes a fresh test-data app,
-leaving the old prototype untouched. Installed extension discovery/execution,
-mobile signing and physical acceptance remain open.
+leaving the old prototype untouched. Signed physical iPad creation/relaunch and
+the Map link/uncertainty journey now pass after a root-view startup correction.
+Installed extension discovery/execution, broader physical acceptance and cloud
+synchronization remain open.
 
 | Original finding | Current implementation and evidence | Remaining acceptance |
 | --- | --- | --- |
