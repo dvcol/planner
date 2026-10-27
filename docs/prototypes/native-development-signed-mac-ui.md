@@ -59,3 +59,65 @@ The [retry result](evidence/native-development-signed-mac-ui/retry-2026-10-27/re
 and [Xcode summary](evidence/native-development-signed-mac-ui/retry-2026-10-27/test-summary.json)
 retain this outcome separately from the first interrupted trial. Production
 code and the open Mac UI acceptance gate remain unchanged.
+
+## Confirmed authentication gate
+
+A read-only system-log investigation on 27 October identifies the missing
+evidence from the runner log. The actual `testmanagerd` events show:
+
+| Time, Asia/Tokyo | Event |
+| --- | --- |
+| 17:05:23 | Requires authentication; requests “Enable UI Automation”. |
+| 17:06:22 | XCTest times out while enabling automation mode. |
+| 17:06:46 | Authentication succeeds after the test has failed. |
+| 17:06:46 | The expired test releases its client; automation disables. |
+
+Authentication completes 23.625 seconds after the runner's timeout. This
+establishes a real user-authentication gate in this attempt. It supersedes the
+earlier uncertainty based only on the runner log, and does not establish that
+every historical IDE-session stall has this cause.
+
+Apple's installed `/usr/bin/automationmodetool` independently reports:
+
+```text
+Automation Mode is disabled.
+This device requires user authentication to enable Automation Mode.
+```
+
+The current user owns the active console session. Xcode 27.1's first-launch
+check succeeds. Global `xcode-select` points to Command Line Tools, but the
+failed test explicitly selected the full Xcode installation. Changing that
+global selection is not required to address the observed authentication wait.
+`DevToolsSecurity` concerns debugger authorization; its disabled status alone
+does not prove an additional UI-test requirement.
+
+### User action
+
+For repeatable agent-run tests on this development Mac, run in Terminal:
+
+```sh
+sudo /usr/bin/automationmodetool enable-automationmode-without-authentication
+/usr/bin/automationmodetool
+```
+
+Enter the Mac administrator password locally when Terminal requests it. The
+second command must report that authentication is not required. Automation
+Mode itself can remain disabled while no UI test is running. This supported
+setting permits test tools to enable UI automation without a per-run password
+prompt; it changes a machine security preference. The installed Apple manual
+documents both this setting and its inverse:
+
+```sh
+sudo /usr/bin/automationmodetool disable-automationmode-without-authentication
+```
+
+Alternatively, retain the current policy and authenticate the native “Enable
+UI Automation” prompt promptly during the next test's 60-second startup wait.
+No certificate change, iCloud change, protected-service restart or SIP change
+is indicated by this diagnosis. No permission or security preference has been
+changed during the investigation.
+
+The [focused diagnosis](evidence/native-development-signed-mac-ui/automation-diagnosis/result.json)
+and [broker timeline](evidence/native-development-signed-mac-ui/automation-diagnosis/timeline.json)
+retain the read-only facts. Successful execution of the unchanged native test
+after the user's action remains the completion check.

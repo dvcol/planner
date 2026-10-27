@@ -58,7 +58,11 @@ Share and UI runner, with all 1164 native inputs and nine product hashes matched
 The selected existing title/resizing journey initially does not start within
 the bounded 120-second setup window. A user-requested retry exits after 85.392
 seconds with “Timed out while enabling automation mode,” before any test body.
-Neither runner result supplies UI acceptance or proves an approval requirement.
+Neither runner result supplies UI acceptance. A subsequent read-only system-log
+diagnosis confirms a native “Enable UI Automation” authentication wait: user
+authentication finishes about 24 seconds after XCTest times out. The report
+provides Apple's supported per-run or development-machine authorization paths;
+successful test execution after that user action remains open.
 No iCloud setting, account or production code changes. The explicit
 account-transition deferral and separate Mac runtime gate remain in effect.
 

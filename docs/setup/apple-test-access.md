@@ -79,6 +79,9 @@ now passes for the unconfigured local-only app, embedded Share and test runner.
 Strict signatures verify, but the bounded UI setup still starts no journey body.
 The user-requested retry exits with an automation-mode initialization timeout,
 without an explicit approval request or permission denial in its runtime log.
+The later system-log diagnosis confirms that macOS requested “Enable UI
+Automation” authentication, which completed after XCTest's timeout. Follow the
+report's supported authorization steps, then rerun the unchanged native test.
 Signing success does not close that runtime gate or qualify installed Share.
 
 After the user created Apple Development, the certificate existed but a
