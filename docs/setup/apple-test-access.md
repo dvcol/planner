@@ -43,19 +43,22 @@ the private database; its identifier does not select public storage. This is a
 quota distinction, not an assertion that every CloudKit limit or sync failure
 has been qualified.
 
-Automatic approval review rejected enabling Push Notifications because it was
-not part of the explicit identifier approval. Registration proceeded with the
-approved App Groups and iCloud capabilities only. Push remains disabled; review
-any actual background-sync requirement separately before enabling it.
+The user subsequently approved silent CloudKit notifications. Push Notifications
+is now saved and verified on the main App ID, with Broadcast disabled. This
+supersedes the earlier automatic-review rejection, which applied before that
+explicit approval. The [provisioning checkpoint](../prototypes/cloud-access-provisioning.md)
+records the inspected portal evidence and actual signed-build result. Mobile
+remote-notification background delivery remains to configure with integration.
 
 ### Development identity
 
 The [disposable private-access check](../prototypes/cloud-access-preparation.md)
-compiles with signing disabled and has not been launched. Automatic approval
-review rejected `-allowProvisioningUpdates` because its profile/App ID/certificate
-mutations exceed the identifier registration approval. Explicit development
-signing-resource management and the documented silent-sync notification
-capability are the next setup approvals. Existing certificates must be preserved.
+compiles with signing disabled and has not been launched. The user now authorizes
+Xcode's development signing-resource management, resolving the earlier rejection
+of `-allowProvisioningUpdates`. The [signed attempt](../prototypes/cloud-access-provisioning.md)
+reaches provisioning and exits before signing because the execution Mac is not
+registered and no matching Mac development profile exists. Registration of this
+Mac is the pending setup permission. Existing certificates must be preserved.
 
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and

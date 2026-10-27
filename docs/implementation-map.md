@@ -46,6 +46,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [development provisioning attempt](prototypes/cloud-access-provisioning.md)
+follows explicit signing and silent-sync approval. Main-App-ID Push Notifications
+is saved and verified. The disposable Mac build reaches provisioning, then exits
+before signing because the execution Mac is unregistered and no matching profile
+exists. Device registration permission is pending; no app is launched. Actual
+signature/private-cloud access, production sync integration and physical checks
+remain open. Earlier setup rejections are superseded by the user's approvals.
+
 The [private CloudKit access check](prototypes/cloud-access-preparation.md) compiles as a disposable native app against all 90 actual Core sources and the current schema, with approved identifiers and an explicit private Development container. It has not been launched; linker ad hoc signing supplies no provisioned-access proof. Automatic approval review rejected Xcode's account-side provisioning updates, so explicit development signing-resource approval is required. The documented silent-sync notification capability also needs approval. Production remains local-only; runtime/account, shared-store and physical sync gates stay open.
 
 The approved [Apple identifiers](setup/apple-test-access.md#current-setup-direction-27-october-2026) are registered under the user's team, with persisted App Group assignments for main/Mobile Share/Mac Share and the main app's iCloud-container assignment. The user confirms private CloudKit storage using each user's iCloud quota. Portal registration does not enable production synchronization: actual signing/private-key access, configured native prototype, CloudKit implementation and physical qualification remain open. Push Notifications remains disabled after automatic approval review rejected the additional capability as outside the explicit registration approval.

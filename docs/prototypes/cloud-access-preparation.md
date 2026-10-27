@@ -20,7 +20,11 @@ are retained in [the evidence](evidence/cloud-access-preparation/result.json).
 
 ## Required setup approval
 
-Automatic approval review rejected the signed-build command because
+The following describes the original preparation gate. The user has since
+approved both setup requests; the [subsequent provisioning attempt](cloud-access-provisioning.md)
+records the actual result and pending execution-Mac registration permission.
+
+Automatic approval review originally rejected the signed-build command because
 `-allowProvisioningUpdates` can create or update Apple-account profiles, App IDs
 and certificates. Xcode's installed help explicitly documents these effects.
 The approved identifiers exist, but development signing-resource management
@@ -34,7 +38,7 @@ Push Notifications capability remains a separate approval; it was rejected as
 outside identifier registration. No Push capability or notification entitlement
 has been added by this preparation.
 
-Production storage remains local-only. The next run still needs signing and
-provisioning approval, actual private-key access and an available iCloud account.
+Production storage remains local-only. After execution-Mac registration, the next
+run still needs actual private-key access and an available iCloud account.
 Installed Share, ownership cutoffs during native cloud delivery and physical
 two-device synchronization remain open.
