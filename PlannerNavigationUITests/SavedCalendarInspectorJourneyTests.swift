@@ -244,7 +244,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
   private func assertInspectorContentVisible(
     _ application: XCUIApplication, schedule: XCUIElement
   ) {
-    let retainedNotes = application.staticTexts["The same saved Item"]
+    let retainedNotes = application.staticTexts["The same saved Item"].firstMatch
     #if os(macOS)
       let geometry = XCTAttachment(
         string:

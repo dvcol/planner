@@ -76,3 +76,16 @@ The [reconciliation](evidence/native-calendar-mac-split-pane/final-reconciliatio
 Only `SavedCalendarView.swift` changes between the initial iPad epoch and final sources, adding the Mac-only viewport. The final Month execution verifies the affected mobile regression on those exact final sources. The preceding three passing iPad functions retain their own epoch. Core, Share, fixture and test interfaces are unchanged. Affected strict Swift/Markdown lint and whitespace checks pass.
 
 Q127 A is implemented and compiled, with affected iPad regression evidence. Its Mac acceptance gate remains open. Actual 1,200-to-860-to-1,200-point Day/Week/Month resizing, detail divider movement, hidden-pane width recovery and keyboard/accessibility require actual Mac execution. Signing remains deferred and is not inferred as the startup failure's cause.
+
+## Manual-approval runtime checkpoint, 27 October 2026
+
+The [shared-ruler checkpoint](native-calendar-shared-time-ruler.md) now records
+actual Mac execution after manual automation approval. An intermediate cohort
+passes Month, Day and Week through 1,200-to-860-to-1,200-point resizing while
+retaining the selected Schedule, source notes and saved caption. The same cohort
+fails its separate all-day date-entry driver before reaching that grid test.
+It remains three passes and one failure. Final-source Mac runtime is pending;
+compilation and strict signatures pass. Final dark-iPad Week inspector rotation
+also passes. These results supersede the earlier lack of any actual Mac resize
+execution, but do not close divider movement, explicitly measured hidden-pane
+width recovery or broader keyboard/accessibility acceptance.

@@ -40,7 +40,7 @@ can continue.
 | Shared storage and installed Share | [Common main/extension path selection](prototypes/native-shared-storage.md) passes local real-storage checks and mobile regressions. Provisioned App Group access and installed extension integration remain open. | Selected App Group/capability setup, safe handling of existing local data, then actual installed app/extension checks. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
-| Mac interaction | Builds pass; actual resizing, Calendar panes, keyboard and Undo still need qualification. | A working Mac XCTest runtime. The retained broker failure is separate from signing. |
+| Mac interaction | Manual approval works; final checks open. | See below. |
 | Synchronized daily use | Implementation and physical acceptance are open. | Complete CloudKit integration, then signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. |
 | Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
 
@@ -51,6 +51,16 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [Calendar shared time ruler](prototypes/native-calendar-shared-time-ruler.md)
+removes repeated hour labels from Day/Week and reserves visible space beside
+the pinned ruler. Final light-phone and dark-iPad runs pass seven tests, with
+matching native inputs, inspected original captures and unchanged saved
+Schedule descriptions. An intermediate Mac run passes Month/Day/Week resizing
+but fails native End date entry before its fourth grid test. The final Mac
+build and strict signatures pass; its corrected test driver and final-source
+runtime await manual-prompt readiness. Divider, width-recovery, broader
+accessibility and physical acceptance remain open.
 
 The [development-signed Mac UI retry](prototypes/native-development-signed-mac-ui.md)
 passes compilation and strict signature verification for the local-only app,

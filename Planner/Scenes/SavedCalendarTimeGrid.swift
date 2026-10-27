@@ -45,8 +45,10 @@ struct SavedCalendarTimeGrid: View {
   let scheduleDescription: (PlannerCalendarEntry) -> String
 
   @State private var allDayPresentation: AllDayPresentation?
+  @State private var horizontalScrollOffset: CGFloat = 0
   @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
   @ScaledMetric(relativeTo: .subheadline) private var timedCardMinimumHeight = 80
+  @ScaledMetric(relativeTo: .caption2) private var timeRulerWidth: CGFloat = 54
 
   private let pointsPerMinute: CGFloat = 1.5
 
@@ -151,24 +153,35 @@ struct SavedCalendarTimeGrid: View {
       let placements = timedPlacements(entriesForDay(day), interval: interval)
       maximumLanes = max(maximumLanes, placements.map(\.laneCount).max() ?? 1)
     }
-    return max(180, 60 + CGFloat(maximumLanes) * 100)
+    return max(120, 8 + CGFloat(maximumLanes) * 100)
   }
 
   var body: some View {
     GeometryReader { geometry in
       let columnWidth = max(
-        minimumColumnWidth, geometry.size.width / CGFloat(max(1, days.count)))
+        minimumColumnWidth,
+        (geometry.size.width - timeRulerWidth) / CGFloat(max(1, days.count)))
+      let horizontalAnchor = min(1, timeRulerWidth / max(1, geometry.size.width - columnWidth))
       ScrollViewReader { proxy in
         ScrollView([.horizontal, .vertical]) {
           LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
             Section {
               HStack(alignment: .top, spacing: 0) {
+                timeRuler
+                  .background(.background)
+                  .offset(x: horizontalScrollOffset)
+                  .zIndex(1)
                 ForEach(days, id: \.self) { day in
                   dayColumn(day, width: columnWidth)
                 }
               }
             } header: {
               HStack(alignment: .top, spacing: 0) {
+                Rectangle().fill(.bar)
+                  .frame(width: timeRulerWidth)
+                  .offset(x: horizontalScrollOffset)
+                  .zIndex(1)
+                  .accessibilityHidden(true)
                 ForEach(days, id: \.self) { day in
                   dayHeader(day, width: columnWidth)
                 }
@@ -177,10 +190,17 @@ struct SavedCalendarTimeGrid: View {
               .background(.bar)
             }
           }
-          .frame(width: CGFloat(days.count) * columnWidth)
+          .frame(width: timeRulerWidth + CGFloat(days.count) * columnWidth)
+        }
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+          max(0, geometry.contentOffset.x + geometry.contentInsets.leading)
+        } action: { _, offset in
+          horizontalScrollOffset = offset
         }
         .onAppear {
-          proxy.scrollTo(hourIdentifier(selectedDate, hour: initialHour), anchor: .leading)
+          proxy.scrollTo(
+            hourIdentifier(selectedDate, hour: initialHour),
+            anchor: .init(x: horizontalAnchor, y: 0.5))
         }
       }
     }
@@ -247,11 +267,11 @@ struct SavedCalendarTimeGrid: View {
           hourLines(day: day)
           ForEach(timedPlacements(entries, interval: interval), id: \.entry.schedule.id) {
             placement in
-            let laneWidth = (width - 60) / CGFloat(placement.laneCount)
+            let laneWidth = (width - 8) / CGFloat(placement.laneCount)
             entryButton(placement.entry, day: day, isTimed: true)
               .frame(width: laneWidth - 4, height: placement.height, alignment: .topLeading)
               .background(.regularMaterial, in: .rect(cornerRadius: 8))
-              .offset(x: 54 + CGFloat(placement.lane) * laneWidth, y: placement.top)
+              .offset(x: 4 + CGFloat(placement.lane) * laneWidth, y: placement.top)
           }
         }
         .frame(
@@ -265,20 +285,32 @@ struct SavedCalendarTimeGrid: View {
   }
 
   private func hourLines(day: Date) -> some View {
-    var hourFormat = Date.FormatStyle(date: .omitted, time: .shortened)
-    hourFormat.timeZone = .gmt
-    return VStack(alignment: .leading, spacing: 0) {
+    VStack(spacing: 0) {
       ForEach(0..<24, id: \.self) { hour in
-        let date = Date(timeIntervalSinceReferenceDate: Double(hour) * 3600)
-        HStack(spacing: 4) {
-          Text(date.formatted(hourFormat)).font(.caption2).foregroundStyle(.secondary)
-            .frame(width: 50, alignment: .trailing)
-          Rectangle().fill(.separator).frame(height: 0.5)
-        }
-        .frame(height: 60 * pointsPerMinute, alignment: .top)
-        .id(hourIdentifier(day, hour: hour))
+        Rectangle().fill(.separator).frame(height: 0.5)
+          .frame(height: 60 * pointsPerMinute, alignment: .top)
+          .id(hourIdentifier(day, hour: hour))
       }
     }
+  }
+
+  private var timeRuler: some View {
+    var hourFormat = Date.FormatStyle(date: .omitted, time: .shortened)
+    hourFormat.timeZone = .gmt
+    return VStack(alignment: .trailing, spacing: 0) {
+      ForEach(0..<24, id: \.self) { hour in
+        let date = Date(timeIntervalSinceReferenceDate: Double(hour) * 3600)
+        Text(date.formatted(hourFormat)).font(.caption2).foregroundStyle(.secondary)
+          .lineLimit(1)
+          .padding(.trailing, 8)
+          .frame(width: timeRulerWidth, height: 60 * pointsPerMinute, alignment: .topTrailing)
+      }
+    }
+    .frame(
+      height: 24 * 60 * pointsPerMinute + max(44, timedCardMinimumHeight), alignment: .top
+    )
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier("saved.calendar.time-ruler")
   }
 
   private func entryButton(_ entry: PlannerCalendarEntry, day: Date, isTimed: Bool) -> some View {

@@ -73,3 +73,20 @@ transition from existing local data remain open.
 | Share migration presentation | The [native migration journeys](prototypes/native-share-migration.md#ipad-sidebar-diagnosis-and-corrected-regression) exercise refusal before main-app migration, preserved data and subsequent capture on phone/iPad. | Installed Share/App Group access, actual Mac runtime and signed/physical qualification. |
 
 The remaining implementation list is maintained in the [current map](implementation-map.md#remaining-implementation-and-acceptance). Q127's Mac split pane is implemented but actual resizing remains unqualified. Q128/Q129 have approved Q147/Q148 contracts and subsequent local checkpoints. Native membership consolidation, Q156 post-import completion history and Q157 unreferenced source maintenance have implemented local checkpoints. Q158 and Q160 additionally qualify independent target rebinding. Q161/Q162 ordinary owned collections and label-identity collisions now have local implementation and fault checkpoints; Q163 A now explicitly defers crossed source/owned-family reconciliation beyond MVP, preserving every record and the existing rejection. Affected datasets remain unavailable for canonical reads/export until explicit recovery or later reconciliation. These are distinct from signing. The feature-complete whole-app UI pass and the human's final coherence/layout acceptance remain required.
+
+## Local runtime update, 27 October 2026
+
+Manual Enable UI Automation approval now permits actual Mac journeys. The
+[Calendar checkpoint](prototypes/native-calendar-shared-time-ruler.md) records
+three intermediate Mac resize passes and a separate failed all-day date-entry
+driver. Final-source Mac execution remains pending, with divider, width-growth
+and broader interaction acceptance still open. Its final phone/iPad cohort
+passes seven tests of the shared time ruler, saved bookings and represented
+inspector behavior. This supersedes the earlier absence of actual Mac resizing
+evidence without closing full Q127 acceptance.
+
+The [shared-storage app-hosted checks](prototypes/native-shared-storage.md) also
+execute four existing tests successfully. They qualify the local helper, not
+installed Share or provisioned App Group integration. Fixture cleanup remains
+limited by macOS container access protection. Production CloudKit and account
+observation remain unimplemented; account-transition testing is user-deferred.

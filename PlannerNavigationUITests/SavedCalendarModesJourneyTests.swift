@@ -228,9 +228,16 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
         bySettingHour: calendar.component(.hour, from: Date()), minute: 0, second: 0, of: today))
     let hourLabels = grid.staticTexts.matching(identifier: hour.formatted(format))
       .allElementsBoundByIndex
-    XCTAssertGreaterThanOrEqual(hourLabels.count, 2)
-    let positions = hourLabels.map { $0.frame.minY }
-    XCTAssertLessThanOrEqual(try XCTUnwrap(positions.max()) - XCTUnwrap(positions.min()), 1)
+    XCTAssertEqual(hourLabels.count, 1, "The week shares one time ruler.")
+    let ruler = grid.descendants(matching: .any).matching(
+      identifier: "saved.calendar.time-ruler"
+    ).firstMatch
+    XCTAssertTrue(ruler.exists)
+    let rulerPosition = ruler.frame.minX
+    XCTAssertGreaterThanOrEqual(rulerPosition, grid.frame.minX)
+    XCTAssertLessThanOrEqual(ruler.frame.maxX, grid.frame.maxX)
+    grid.swipeLeft()
+    XCTAssertEqual(ruler.frame.minX, rulerPosition, accuracy: 1)
     let capture = XCTAttachment(screenshot: calendarScreenshot(application))
     capture.name = "All-day span above aligned Week hours"
     capture.lifetime = .keepAlways
@@ -242,21 +249,34 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       identifier: "saved.schedule.end"
     ).firstMatch
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
-    picker.buttons.firstMatch.activateForPlannerJourney()
-    let selectedDay = application.buttons.containing(.staticText, identifier: String(day))
-      .firstMatch
-    XCTAssertTrue(selectedDay.waitForExistence(timeout: 5))
-    selectedDay.activateForPlannerJourney()
-    let dismissRegion = application.buttons.matching(identifier: "PopoverDismissRegion").firstMatch
-    XCTAssertTrue(dismissRegion.waitForExistence(timeout: 5))
-    let toolbar = application.plannerElement("saved.schedule.cancel").coordinate(
-      withNormalizedOffset: CGVector(dx: 1.4, dy: 0.5))
     #if os(macOS)
-      toolbar.click()
+      let calendar = Calendar(identifier: .gregorian)
+      guard let date = calendar.date(bySetting: .day, value: day, of: Date()) else {
+        XCTFail("The requested date must exist in the current month.")
+        return
+      }
+      let format = DateFormatter()
+      format.calendar = calendar
+      format.dateStyle = .short
+      format.timeStyle = .none
+      picker.activateForPlannerJourney()
+      application.typeKey("a", modifierFlags: .command)
+      application.typeText(format.string(from: date))
+      application.typeKey(.tab, modifierFlags: [])
     #else
+      picker.buttons.firstMatch.activateForPlannerJourney()
+      let selectedDay = application.buttons.containing(.staticText, identifier: String(day))
+        .firstMatch
+      XCTAssertTrue(selectedDay.waitForExistence(timeout: 5))
+      selectedDay.activateForPlannerJourney()
+      let dismissRegion = application.buttons.matching(identifier: "PopoverDismissRegion")
+        .firstMatch
+      XCTAssertTrue(dismissRegion.waitForExistence(timeout: 5))
+      let toolbar = application.plannerElement("saved.schedule.cancel").coordinate(
+        withNormalizedOffset: CGVector(dx: 1.4, dy: 0.5))
       toolbar.tap()
+      XCTAssertTrue(dismissRegion.waitForNonExistence(timeout: 5))
     #endif
-    XCTAssertTrue(dismissRegion.waitForNonExistence(timeout: 5))
   }
 
   func testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView() throws {
@@ -402,6 +422,11 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       XCTAssertEqual(entry.label, "Timed museum")
       XCTAssertEqual(entry.value as? String, calendarDescription)
       XCTAssertTrue(entry.isHittable)
+      let ruler = grid.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-ruler"
+      ).firstMatch
+      XCTAssertTrue(ruler.exists)
+      XCTAssertGreaterThanOrEqual(entry.frame.minX, ruler.frame.maxX - 1)
       if mode == "Week" {
         let heading = grid.staticTexts[Date().formatted(.dateTime.weekday().month().day())]
           .firstMatch
