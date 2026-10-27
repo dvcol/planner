@@ -77,6 +77,8 @@ activation without its safety evidence.
 A separate [development-signed Mac UI build](../prototypes/native-development-signed-mac-ui.md)
 now passes for the unconfigured local-only app, embedded Share and test runner.
 Strict signatures verify, but the bounded UI setup still starts no journey body.
+The user-requested retry exits with an automation-mode initialization timeout,
+without an explicit approval request or permission denial in its runtime log.
 Signing success does not close that runtime gate or qualify installed Share.
 
 After the user created Apple Development, the certificate existed but a

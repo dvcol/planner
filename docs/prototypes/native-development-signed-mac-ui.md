@@ -40,3 +40,22 @@ Actual Mac resizing, Calendar panes, keyboard, Undo and final UI acceptance rema
 open. Account-transition testing is deferred by the user; production CloudKit
 integration still requires its ownership/reset evidence. Independent local and
 Simulator work does not require that account-state experiment.
+
+## User-requested retry
+
+A second trial on 27 October reuses the same signed build after rechecking all
+1164 source inputs, nine product hashes and three strict signatures. The runner
+exits 65 after 85.392 seconds with “Timed out while enabling automation mode.”
+No test body starts. Xcode reports one runner-initialization failure and zero
+passing tests; the external setup deadline does not interrupt this trial.
+
+The runtime log contains no explicit approval request or permission denial.
+An unseen system prompt is not ruled out, but this result does not establish
+that user approval is required. No Planner or test-runner process remains.
+No permissions, system services, signing resources or iCloud settings change.
+
+The [retry result](evidence/native-development-signed-mac-ui/retry-2026-10-27/result.json),
+[redacted runtime log](evidence/native-development-signed-mac-ui/retry-2026-10-27/runtime.log)
+and [Xcode summary](evidence/native-development-signed-mac-ui/retry-2026-10-27/test-summary.json)
+retain this outcome separately from the first interrupted trial. Production
+code and the open Mac UI acceptance gate remain unchanged.
