@@ -6,7 +6,15 @@
     objects = {
         000000000000000000000001 = {
             isa = PBXProject;
-            attributes = { BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 2700; };
+            attributes = {
+                BuildIndependentTargetsInParallel = 1;
+                LastUpgradeCheck = 2700;
+                TargetAttributes = {
+                    000000000000000000000201 = { SystemCapabilities = { com.apple.ApplicationGroups.iOS = { enabled = 1; }; }; };
+                    A000000000000000000008A0 = { SystemCapabilities = { com.apple.ApplicationGroups.iOS = { enabled = 1; }; }; };
+                    A000000000000000000008A1 = { SystemCapabilities = { com.apple.ApplicationGroups.iOS = { enabled = 1; }; }; };
+                };
+            };
             buildConfigurationList = 000000000000000000000501;
             compatibilityVersion = "Xcode 16.0";
             developmentRegion = en;

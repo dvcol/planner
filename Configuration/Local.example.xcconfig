@@ -1,4 +1,6 @@
-// Copy to Local.xcconfig for real signing inputs. No account or container is provisioned here.
+// Copy to Local.xcconfig and select a development team before building for a device or Mac.
+// Planner's registered bundle and App Group identifiers are defaults in Base.xcconfig.
+// Other teams must override both with their own provisioned identifiers.
 // DEVELOPMENT_TEAM = your-team-identifier
 // PLANNER_APPLICATION_BUNDLE_IDENTIFIER = your-provisioned-application-identifier
 // PLANNER_APP_GROUP_IDENTIFIER = your-provisioned-app-group-identifier

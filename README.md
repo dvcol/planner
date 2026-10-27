@@ -23,6 +23,13 @@ The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses t
 
 The earlier read-only navigation comparison remains available with `./scripts/navigation-prototype.sh phone`, `tablet` or `mac`, or the Mac's Prototype menu. The launcher passes `--navigation-prototype`. For an isolated local review dataset, launch the default scene with `--local-prototype-dataset <UUID>`; reusing that UUID reopens its saved data. These prototypes use local storage. CloudKit, signed Share extensions and physical-device qualification remain open.
 
+For development signing, copy `Configuration/Local.example.xcconfig` to
+`Configuration/Local.xcconfig` and select your development team. The registered
+app and App Group defaults are `dvcol.planner` and `group.dvcol.planner`.
+Another team must supply its own provisioned identifiers. Main and Share select
+the same local shared store; CloudKit integration and installed Share runtime
+qualification remain open. See the [shared-storage checkpoint](docs/prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026).
+
 Open decisions are native child issues of the map, with native blocking dependencies. Start with the first unblocked, unassigned child, or the decision named by the user.
 
 [Whole-application native UI polish](https://github.com/dvcol/planner/issues/23) follows feature completion. Its [Context, DoR, DoD and validation plan](docs/native-ui-polish.md) cover the finished iPhone, iPad and Mac scenes with native SwiftUI components, actual captures and accessibility/device review.

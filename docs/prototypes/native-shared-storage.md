@@ -14,6 +14,10 @@ exists fails with an explanation and leaves the local data unchanged. This is
 a safety guard, not an implemented migration. An already initialized shared
 dataset stays separate from any old local copy.
 
+The [registered-app checkpoint](#registered-app-checkpoint-27-october-2026)
+below supersedes the earlier configuration and transition prerequisites for
+this installation. The older results retain their original scope.
+
 ## Executed checks
 
 - A standalone native Swift check compiles the production helper with 90 actual
@@ -75,3 +79,53 @@ The [result](evidence/native-shared-storage/app-hosted-2026-10-27/result.json)
 and retained records preserve that distinction. The earlier standalone and
 compile-only checkpoints keep their original outcomes. Safe data transition,
 entitlement wiring, installed Share and physical/cloud acceptance remain open.
+
+## Registered-app checkpoint, 27 October 2026
+
+The user confirms that the prototype contains only disposable test data and
+authorizes a fresh app. The registered app now uses `dvcol.planner`; both Share
+targets derive their identifiers from it. Main and Share entitlements request
+`group.dvcol.planner` on Mac and mobile. Development signing replaces the Mac's
+ad hoc default. The development team remains machine-local, and other teams
+can override the registered identifiers. Existing prototype data is untouched;
+the local-data guard remains in place. No migration feature is added.
+
+The five app-hosted storage tests pass with zero failures in 0.194 seconds.
+The added test resolves the provisioned App Group, writes and reads a temporary
+file there, removes it, and verifies matching main/Share store, control and
+recovery paths. The other four tests retain their actual disposable-store
+checks. This proves native main-app group access, not a save from an installed
+extension process.
+
+The final Mac build exits 0 in 7.894 seconds. Main and embedded Share pass strict
+deep signature verification, use the existing development certificate, and have
+matching profiles covering this Mac and the exact App Group. Neither signed
+product requests CloudKit yet. The mobile compiler exits 0 in 5.693 seconds;
+its actual app and extension Info plists contain the registered identifiers and
+same App Group. Mobile products are unsigned Simulator products.
+
+The existing untouched-link capture regression passes once on iPhone and once
+on iPad, preserving the exact original URL and saved Item navigation. These two
+executions do not exercise installed Share. All final phases match the same
+1,167 native inputs; 66 Mac and 26 mobile product files are hashed.
+
+An initial mobile metadata check found that the generated test Info plist
+omitted the custom application identifier. An explicit test Info plist fixes
+that defect; the final built test bundle contains `dvcol.planner`. The Intent
+journey now reads that configured value instead of the old prototype constant.
+No system Intent execution is claimed.
+
+The verified development app is installed at
+`~/Applications/Planner Development.app`. Launch Services recognizes that path,
+but PlugInKit still returns no matching `dvcol.planner.ShareMac`, including after
+explicit local registration. A bounded diagnostic logs a proxy-construction
+error with the target redacted by macOS; it does not establish the root cause.
+The user is asked whether Planner appears in the Sharing extensions list.
+No extension election, privacy setting or security policy is changed.
+
+The [evidence](evidence/native-shared-storage/registered-app/result.json) retains
+commands, input/product hashes, signature/profile checks, executed test results
+and registration observations. Profile contents, certificates, device IDs and
+unrelated system logs are excluded. Installed Share execution, mobile signing,
+physical devices and production CloudKit remain open. Account-transition testing
+stays explicitly deferred.

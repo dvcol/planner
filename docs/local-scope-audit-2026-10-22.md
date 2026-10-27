@@ -60,9 +60,12 @@ The storage audit additionally finds missing production integration: Core expose
 only local-only storage, opens SwiftData with CloudKit disabled, and has no
 implemented account/cloud observer. CloudKit is implementation work followed by
 actual container/device qualification. It is not solely a signing/test gate.
-The [shared native storage correction](prototypes/native-shared-storage.md) fixes
-the separate main/Share path mismatch locally; provisioned access and a safe
-transition from existing local data remain open.
+The [shared native storage checkpoint](prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026)
+now wires the registered App Group into main and both extensions. Five Mac
+storage tests pass, including actual provisioned main-app group access; two
+mobile capture regressions pass. The user authorizes a fresh test-data app,
+leaving the old prototype untouched. Installed extension discovery/execution,
+mobile signing and physical acceptance remain open.
 
 | Original finding | Current implementation and evidence | Remaining acceptance |
 | --- | --- | --- |

@@ -1,7 +1,8 @@
 #include "Base.xcconfig"
 
 PRODUCT_NAME = $(TARGET_NAME)
-PRODUCT_BUNDLE_IDENTIFIER = org.example.PlannerMCPPrototype.$(PRODUCT_NAME:rfc1034identifier)
+PRODUCT_BUNDLE_IDENTIFIER = $(PLANNER_APPLICATION_BUNDLE_IDENTIFIER).$(PRODUCT_NAME:rfc1034identifier)
+INFOPLIST_FILE = Configuration/PlannerNavigationUITests-Info.plist
 SUPPORTED_PLATFORMS = iphoneos iphonesimulator macosx
 SDKROOT = auto
 TARGETED_DEVICE_FAMILY = 1,2

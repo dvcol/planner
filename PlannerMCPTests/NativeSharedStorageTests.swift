@@ -6,6 +6,36 @@ import XCTest
 
 @MainActor
 final class NativeSharedStorageTests: XCTestCase {
+  func testConfiguredAppGroupIsWritableAndMainAndShareSelectTheSamePaths() throws {
+    let sharedDirectory = try XCTUnwrap(PlannerNativeStorage.configuredSharedDirectory())
+    let shared = try PlannerNativeStorage.sharedConfiguration()
+    let main = try PlannerNativeStorage.mainConfiguration(
+      localDirectory: FileManager.default.temporaryDirectory.appending(
+        path: UUID().uuidString, directoryHint: .isDirectory),
+      sharedDirectory: sharedDirectory)
+    XCTAssertEqual(main.storeURL, shared.storeURL)
+    XCTAssertEqual(main.controlURL, shared.controlURL)
+    XCTAssertEqual(main.recoveryDirectoryURL, shared.recoveryDirectoryURL)
+    XCTAssertEqual(main.processRole, .mainApplication)
+    XCTAssertEqual(shared.processRole, .shareExtension)
+
+    let fixture = sharedDirectory.deletingLastPathComponent().appending(
+      path: "PlannerSharedStorageQualification-" + UUID().uuidString,
+      directoryHint: .isDirectory)
+    try FileManager.default.createDirectory(at: fixture, withIntermediateDirectories: true)
+    defer {
+      do {
+        try FileManager.default.removeItem(at: fixture)
+      } catch {
+        XCTFail("The App Group write fixture could not be removed: \(error)")
+      }
+    }
+    let file = fixture.appending(path: "shared-access.txt")
+    let content = Data("Planner shared storage qualification".utf8)
+    try content.write(to: file, options: .atomic)
+    XCTAssertEqual(try Data(contentsOf: file), content)
+  }
+
   func testMainAndShareReadEachOthersSavesFromOneInitializedDataset() async throws {
     let fixture = try makePlannerIntentStorage()
     let sharedDirectory = fixture.directory.appending(

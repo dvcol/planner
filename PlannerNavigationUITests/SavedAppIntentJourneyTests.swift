@@ -391,7 +391,10 @@ final class SavedAppIntentJourneyTests: XCTestCase {
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
-    let definitions = IntentDefinitions(bundleIdentifier: "org.example.PlannerMCPPrototype")
+    let bundleIdentifier = try XCTUnwrap(
+      Bundle(for: SavedAppIntentJourneyTests.self).object(
+        forInfoDictionaryKey: "PlannerApplicationBundleIdentifier") as? String)
+    let definitions = IntentDefinitions(bundleIdentifier: bundleIdentifier)
     let creation = definitions.intents["CreatePlannerItemIntent"].makeIntent(
       title: "Train tickets", notes: "Collect at the station")
     let response: ResolvedIntentResult
