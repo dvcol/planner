@@ -61,10 +61,13 @@ seconds with “Timed out while enabling automation mode,” before any test bod
 Neither runner result supplies UI acceptance. A subsequent read-only system-log
 diagnosis confirms a native “Enable UI Automation” authentication wait: user
 authentication finishes about 24 seconds after XCTest times out. The report
-provides Apple's supported per-run or development-machine authorization paths;
-successful test execution after that user action remains open.
+records the selected manual-approval policy. With the user ready to approve,
+the unchanged title/layout test now passes: one test, zero failures in 67.622
+seconds, with four original captures inspected. Authentication remains required
+before and after the run; the startup gate clears for this execution. Other
+Mac journeys remain open and future runs retain manual prompt coordination.
 No iCloud setting, account or production code changes. The explicit
-account-transition deferral and separate Mac runtime gate remain in effect.
+account-transition deferral remains in effect.
 
 The [native private-CloudKit content checkpoint](prototypes/cloud-round-trip-native.md)
 passes six signed app executions: exact fixture resumption and fresh insertion,

@@ -81,8 +81,10 @@ The user-requested retry exits with an automation-mode initialization timeout,
 without an explicit approval request or permission denial in its runtime log.
 The later system-log diagnosis confirms that macOS requested “Enable UI
 Automation” authentication, which completed after XCTest's timeout. Follow the
-report's supported authorization steps, then rerun the unchanged native test.
-Signing success does not close that runtime gate or qualify installed Share.
+report's selected manual-approval policy. With the user ready to approve, the
+unchanged title/layout test passes with zero failures in 67.622 seconds.
+Authentication remains required before and after the run. Future tests retain
+manual prompt coordination; other Mac journeys and installed Share remain open.
 
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and

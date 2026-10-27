@@ -91,28 +91,14 @@ global selection is not required to address the observed authentication wait.
 `DevToolsSecurity` concerns debugger authorization; its disabled status alone
 does not prove an additional UI-test requirement.
 
-### User action
+### Manual authentication is the selected policy
 
-For repeatable agent-run tests on this development Mac, run in Terminal:
+The user chooses to retain per-run authentication. Announce the next Mac UI
+run while the user is ready, then let the user authenticate the native “Enable
+UI Automation” prompt during XCTest's approximately 60-second startup wait.
+Do not enable authentication-free automation. Apple's status tool may report
+Automation Mode disabled between runs; authentication must remain required.
 
-```sh
-sudo /usr/bin/automationmodetool enable-automationmode-without-authentication
-/usr/bin/automationmodetool
-```
-
-Enter the Mac administrator password locally when Terminal requests it. The
-second command must report that authentication is not required. Automation
-Mode itself can remain disabled while no UI test is running. This supported
-setting permits test tools to enable UI automation without a per-run password
-prompt; it changes a machine security preference. The installed Apple manual
-documents both this setting and its inverse:
-
-```sh
-sudo /usr/bin/automationmodetool disable-automationmode-without-authentication
-```
-
-Alternatively, retain the current policy and authenticate the native “Enable
-UI Automation” prompt promptly during the next test's 60-second startup wait.
 No certificate change, iCloud change, protected-service restart or SIP change
 is indicated by this diagnosis. No permission or security preference has been
 changed during the investigation.
@@ -120,4 +106,34 @@ changed during the investigation.
 The [focused diagnosis](evidence/native-development-signed-mac-ui/automation-diagnosis/result.json)
 and [broker timeline](evidence/native-development-signed-mac-ui/automation-diagnosis/timeline.json)
 retain the read-only facts. Successful execution of the unchanged native test
-after the user's action remains the completion check.
+after the user's action is established below.
+
+## Passing manual-approval retry
+
+On 27 October, the user is ready to approve the native prompt. The unchanged
+`testLongListTitleSharesTopToolbarAndUsesAvailableSpace` starts and passes in
+67.622 seconds, with one passing test and zero failures. The complete command
+exits 0 in 71.302 seconds without an external interruption. All 1164 native
+inputs, nine actual products and three strict signatures match before launch.
+
+The journey creates a disposable List with a long title, resizes the window
+to widths 860 and 1200, checks title placement, available title width, toolbar
+controls and estimate spacing, creates an Item and repeats the narrow/wide
+checks with selected details. All four original screenshots are inspected.
+They show the title and controls within the top toolbar, with more title space
+when the window widens. No production or test-source change is required.
+
+Apple's tool reports authentication required both before and after the run.
+No Planner or test-runner process remains. No security policy, iCloud setting,
+signing resource or protected service is changed. The startup gate is cleared
+for this execution; future runs retain manual prompt coordination.
+
+The [passing result](evidence/native-development-signed-mac-ui/manual-approval/result.json)
+and [Xcode summary](evidence/native-development-signed-mac-ui/manual-approval/test-summary.json)
+record the actual execution separately from both failed attempts. Original
+captures cover [empty narrow](evidence/native-development-signed-mac-ui/manual-approval/empty-narrow.png),
+[empty wide](evidence/native-development-signed-mac-ui/manual-approval/empty-wide.png),
+[populated narrow](evidence/native-development-signed-mac-ui/manual-approval/populated-narrow.png)
+and [populated wide](evidence/native-development-signed-mac-ui/manual-approval/populated-wide.png).
+Other Mac UI journeys, Calendar resizing, keyboard/Undo and full acceptance
+remain open. Account-transition testing remains separately deferred.
