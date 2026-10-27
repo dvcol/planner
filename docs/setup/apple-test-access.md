@@ -52,13 +52,19 @@ remote-notification background delivery remains to configure with integration.
 
 ### Development identity
 
-The [disposable private-access check](../prototypes/cloud-access-preparation.md)
-compiles with signing disabled and has not been launched. The user now authorizes
+The original [disposable private-access check](../prototypes/cloud-access-preparation.md)
+compiled with signing disabled; that unsigned version was not launched.
+The user now authorizes
 Xcode's development signing-resource management, resolving the earlier rejection
 of `-allowProvisioningUpdates`. The [signed attempt](../prototypes/cloud-access-provisioning.md)
 reaches provisioning and exits before signing because the execution Mac is not
-registered and no matching Mac development profile exists. Registration of this
-Mac is the pending setup permission. Existing certificates must be preserved.
+registered and no matching Mac development profile exists. After the user also
+authorizes registering this Mac, the [next build and native run](../prototypes/cloud-access-native.md)
+pass selected-team signature/profile checks, actual App Group access, iCloud
+account availability and synchronous initialization of an empty private store
+with all 16 production entities. Existing certificates are preserved. Actual
+server/mirroring, account transitions, installed Share and physical sync remain
+open; production storage is still local-only.
 
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and

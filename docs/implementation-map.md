@@ -46,6 +46,15 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [registered-Mac private-access check](prototypes/cloud-access-native.md)
+builds and launches with the existing selected-team development certificate.
+Actual profile/signature checks pass, the App Group resolves, iCloud account
+availability is reported and all 16 production entities initialize in a separate
+empty private-store path. No Planner content is inserted. This clears signing
+and basic native access for the disposable app; server/mirroring, account
+ownership cutoffs, production integration, installed Share and physical sync
+remain open.
+
 The [development provisioning attempt](prototypes/cloud-access-provisioning.md)
 follows explicit signing and silent-sync approval. Main-App-ID Push Notifications
 is saved and verified. The disposable Mac build reaches provisioning, then exits

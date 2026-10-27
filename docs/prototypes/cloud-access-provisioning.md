@@ -3,6 +3,10 @@
 Local setup checkpoint, 27 October 2026. This follows the
 [unsigned access-check preparation](cloud-access-preparation.md).
 
+The subsequent [registered-Mac build and native run](cloud-access-native.md)
+clear this checkpoint's provisioning blocker. The failed result below retains
+its original scope and evidence.
+
 The user explicitly approved development signing-resource management under team
 `Y6HV37KJ2G`, preserving existing certificates, and the main app's silent CloudKit
 notification capability. Push Notifications is now enabled for `dvcol.planner`.
