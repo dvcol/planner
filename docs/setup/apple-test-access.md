@@ -62,9 +62,12 @@ registered and no matching Mac development profile exists. After the user also
 authorizes registering this Mac, the [next build and native run](../prototypes/cloud-access-native.md)
 pass selected-team signature/profile checks, actual App Group access, iCloud
 account availability and synchronous initialization of an empty private store
-with all 16 production entities. Existing certificates are preserved. Actual
-server/mirroring, account transitions, installed Share and physical sync remain
-open; production storage is still local-only.
+with all 16 production entities. Existing certificates are preserved. Subsequent
+[asynchronous setup](../prototypes/cloud-setup-native.md) and
+[synthetic content round trips](../prototypes/cloud-round-trip-native.md) pass
+actual private-service reads, native events, exact fresh-store content reads and
+confirmed cloud-fixture cleanup. Account transitions, production integration,
+installed Share and physical sync remain open; production is still local-only.
 
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and

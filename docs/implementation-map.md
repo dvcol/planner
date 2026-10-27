@@ -30,7 +30,7 @@ only a remaining test gate were incomplete.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | Missing. Core opens local-only storage; account/cloud observation is not integrated. A [read-only production-schema check](prototypes/cloud-schema-readiness.md) passes basic attribute/relationship constraints. The approved app, Share, App Group and iCloud identifiers are now registered. | Complete actual signing, then run the configured native prototype and implement account ownership/status handling. Use each user's private database and iCloud quota. Qualify actual container and device behavior. |
+| Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, installed Share and physical-device sync. |
 | Shared storage and installed Share | [Common main/extension path selection](prototypes/native-shared-storage.md) passes local real-storage checks and mobile regressions. Provisioned App Group access and installed extension integration remain open. | Selected App Group/capability setup, safe handling of existing local data, then actual installed app/extension checks. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
@@ -45,6 +45,16 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [native private-CloudKit content checkpoint](prototypes/cloud-round-trip-native.md)
+passes six signed app executions: exact fixture resumption and fresh insertion,
+fresh-store identity/content reads, cleanup exports and independent deletion
+verification. Failed startup/direct-executable attempts remain recorded; the
+final path uses normal Launch Services. Cloud fixtures are deleted and 7.86 MB
+of completed local probe stores removed. This qualifies single-Mac native
+transport, with production command/recovery integration, account ownership,
+installed Share and physical sync still open. A suitable environment for a real
+per-app iCloud transition is the next requested human input.
 
 The [asynchronous private-CloudKit setup check](prototypes/cloud-setup-native.md)
 makes a successful real private-database metadata request and observes completed

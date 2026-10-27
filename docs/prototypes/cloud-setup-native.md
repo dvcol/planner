@@ -34,3 +34,7 @@ using separate fresh stores. Account changes, coherent recovery ownership,
 production integration, installed Share and physical-device synchronization
 remain open. Production Planner's local-only storage is unchanged. No production
 schema deployment or normal user-store access occurs in this diagnostic.
+
+The subsequent [content round trip](cloud-round-trip-native.md) now passes fresh
+insertion, exact remote reads and confirmed fixture deletion through the final
+native launch path. It retains separate command/recovery and ownership limits.
