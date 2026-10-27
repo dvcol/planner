@@ -183,6 +183,9 @@ struct SavedCalendarView: View {
         }
       }
       .pickerStyle(.segmented)
+      #if os(macOS)
+        .labelsHidden()
+      #endif
       .frame(maxWidth: 400)
       .padding(.horizontal)
       .accessibilityIdentifier("saved.calendar.mode")

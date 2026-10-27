@@ -146,3 +146,22 @@ The subsequent [bounded split-pane checkpoint](native-calendar-mac-inspector-res
 corrects that Mac sidebar clipping and passes strengthened Month/Day/Week pane,
 minimum-width, divider and width-recovery checks. Week viewport retention and
 the broader accessibility/physical gates remain open.
+
+## Compact Mac mode control, 27 October 2026
+
+The Mac segmented picker now hides its redundant visible label with native
+`labelsHidden()`. Day, Week and Month remain named controls; mobile presentation
+is unchanged. This removes the wrapped label beside the narrow mode control.
+
+The existing Week inspector journey passes with zero failures in 109.970
+seconds. It exercises 1,200-, 860- and 820-point layouts, native divider movement,
+width recovery and the exact selected Schedule. The Mac build exits 0 with all
+1,167 inputs matched; strict app, Share and runner signatures pass. Manual
+automation authentication remains required before and after execution.
+
+Two original owned-window captures were inspected at minimum and wide widths.
+The mode control stays on one row. The selected booking can still scroll out of
+the visible Week columns when narrowed; its exact details remain selected.
+That viewport polish and wider accessibility/device acceptance remain open.
+The [result and curated records](evidence/native-calendar-shared-time-ruler/compact-mode/result.json)
+retain this limited scope without repeating mobile tests for Mac-only styling.
