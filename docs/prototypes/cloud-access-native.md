@@ -53,3 +53,7 @@ then establish the accepted ownership and recovery cutoff before production
 integration. Production Planner remains local-only; the user data path is
 unchanged. Mobile background delivery, installed app/Share and two-device sync
 retain their separate implementation and acceptance work.
+
+The subsequent [asynchronous setup check](cloud-setup-native.md) now supplies
+private-service and successful native empty-store event evidence. It retains its
+separate content-sync and ownership limits.

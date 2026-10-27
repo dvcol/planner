@@ -46,6 +46,13 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [asynchronous private-CloudKit setup check](prototypes/cloud-setup-native.md)
+makes a successful real private-database metadata request and observes completed
+native setup, initial import and empty export events using the production
+schema. The verified signed app exits normally. No Planner content is inserted;
+content round trips, ownership cutoffs, production integration, installed Share
+and physical sync retain their separate gates.
+
 The [registered-Mac private-access check](prototypes/cloud-access-native.md)
 builds and launches with the existing selected-team development certificate.
 Actual profile/signature checks pass, the App Group resolves, iCloud account
