@@ -203,3 +203,34 @@ identifiers, raw crash-report personal fields, profiles or certificates.
 Installed Share execution, broader physical/UI acceptance and production
 CloudKit remain open. Production stays local-only, and the explicit deferral
 of account-transition testing remains in force.
+
+## Ordinary Mac installation, 27 October 2026
+
+The installed test build contains both `PlannerMCPTests.xctest` and Share.
+An ordinary application-only build, after removing only its inactive generated
+app product, succeeds in 12.236 seconds with the same 1,168 native inputs as
+the physical-core checkpoint. It contains only `PlannerShareMac.appex` in
+PlugIns. Main and Share pass strict deep signature checks. Both processed Info
+plists are unchanged from the test build.
+
+After the user saves drafts and quits Planner, the ordinary build replaces the
+installed development app. All 25 product files match their build hashes;
+the previous app bundle is retained temporarily. App data, security settings,
+extension elections and the old prototype are untouched by the installer.
+The app opens normally from its installed path.
+
+Launch Services registration returns 0 and its plist lint reports no errors.
+Explicit registration of the embedded extension also returns 0, but a fresh
+exact PlugInKit query still reports no matching `dvcol.planner.ShareMac` record.
+Removing the embedded test bundle is therefore insufficient to fix discovery.
+The actual Sharing-settings visibility observation is requested after this
+installation; no extension save or provider handoff is claimed.
+
+The installed Xcode Mac Share template agrees with the extension-point and
+principal-class structure. Its additional icon resource does not establish a
+registration requirement. Apple's
+[extension-key reference](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/AppExtensionKeys.html)
+also documents the current extension-point key. No speculative metadata or
+signing change is made. The
+[diagnostic records](evidence/native-shared-storage/ordinary-mac-2026-10-27/result.json)
+retain the clean build, installation hashes and separate registration outcomes.
