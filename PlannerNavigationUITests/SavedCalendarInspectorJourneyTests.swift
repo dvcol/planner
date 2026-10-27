@@ -164,10 +164,12 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
     assertInspectorContentVisible(application, schedule: schedule)
     XCTAssertEqual(entry.value as? String, entryDescription)
     #if os(macOS)
+      if mode == "Week" { assertTimedEntryVisible(entry, in: calendar) }
       Self.resizePlannerWindow(window, width: 820)
       assertInspectorContentVisible(application, schedule: schedule)
       XCTAssertEqual(schedule.identifier, scheduleIdentifier)
       XCTAssertEqual(schedule.value as? String, scheduleDescription)
+      if mode == "Week" { assertTimedEntryVisible(entry, in: calendar) }
       recordScreenshot(application, name: "Calendar panes fit the minimum window width")
     #endif
     details.activateForPlannerJourney()
@@ -197,6 +199,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       assertInspectorContentVisible(application, schedule: schedule)
       XCTAssertEqual(schedule.identifier, scheduleIdentifier)
       XCTAssertEqual(schedule.value as? String, scheduleDescription)
+      if mode == "Week" { assertTimedEntryVisible(entry, in: calendar) }
     #endif
     let identities = XCTAttachment(
       string:
@@ -307,6 +310,22 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
   #endif
 
   #if os(macOS)
+    /// Requires the selected card to stay beside the pinned ruler inside its Calendar pane.
+    private func assertTimedEntryVisible(_ entry: XCUIElement, in calendar: XCUIElement) {
+      let ruler = calendar.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-ruler"
+      ).firstMatch
+      let visible = NSPredicate { _, _ in
+        ruler.exists && entry.exists && entry.isHittable
+          && entry.frame.minX >= ruler.frame.maxX - 1
+          && entry.frame.maxX <= calendar.frame.maxX + 1
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: visible, object: calendar)], timeout: 5),
+        .completed, "The selected Week booking must stay inside the visible Calendar pane.")
+    }
+
     /// Exercises the native divider in both directions without changing the selected booking.
     private func verifyCalendarDivider(_ application: XCUIApplication) throws {
       let calendar = application.plannerElement("saved.calendar.canvas")

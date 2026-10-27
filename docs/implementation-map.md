@@ -52,6 +52,16 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [selected Calendar viewport correction](prototypes/native-calendar-shared-time-ruler.md#selected-card-viewport-27-october-2026)
+keeps the exact booking visible when the grid becomes narrower or shorter.
+Final Mac Week resize/divider, iPad Week rotation and phone Day/Week journeys
+each pass, with 1,168 matching inputs and inspected original captures. The
+width-only iPad failure remains recorded separately. Manual Mac automation
+authentication stays required. Broader assistive and physical acceptance
+remain open. The [ordinary Mac installation][ordinary-share] separately retains
+the unresolved Share discovery result after removing the embedded test bundle;
+its fresh Sharing-settings observation is still pending.
+
 The [physical iPad checkpoint](prototypes/native-shared-storage.md#physical-core-journeys-27-october-2026)
 passes normal shared-store creation, exact identity/notes through relaunch,
 confirmed test-Item cleanup, and the Map link/attribution/uncertainty journey.
@@ -71,9 +81,8 @@ narrow Mac capture exposed sidebar clipping despite retained details passing.
 The subsequent [bounded split-pane correction](prototypes/native-calendar-mac-inspector-resize.md#bounded-split-pane-27-october-2026)
 passes three strengthened Month/Day/Week journeys: 1,200/860/820/1,200-point
 windows, visible sidebar/details, native divider movement and measured width
-recovery. Week can still leave the selected booking outside its horizontal
-viewport after resizing. That follow-up, broader accessibility and physical
-acceptance remain open.
+recovery. The selected-card follow-up above closes its named Week viewport
+finding; broader accessibility and physical acceptance remain open.
 
 The [development-signed Mac UI retry](prototypes/native-development-signed-mac-ui.md)
 passes compilation and strict signature verification for the local-only app,
@@ -463,7 +472,9 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    containing test data, and the old prototype is untouched. Mac extension
    discovery remains unresolved. [Two physical iPad journeys][shared] now pass
    normal shared-store save/relaunch/cleanup and exact Map-link context after
-   correcting a device startup crash. Installed Share handoff/save remains open.
+   correcting a device startup crash. The [ordinary Mac installation][ordinary-share]
+   still has no PlugInKit record; a fresh Sharing-settings observation is pending.
+   Installed Share handoff/save remains open.
    Keep the local-data safety guard.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
 3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
@@ -477,8 +488,9 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    cases. Q127 A's Calendar split pane now passes actual Month/Day/Week resizing,
    divider movement and width recovery. The
    [compact mode control](prototypes/native-calendar-shared-time-ruler.md#compact-mac-mode-control-27-october-2026)
-   also passes the Week regression with inspected narrow/wide captures. Week
-   viewport retention and broader accessibility review remain open. Follow the
+   also passes the Week regression with inspected narrow/wide captures. The
+   selected-card correction above now passes Mac and mobile viewport checks;
+   broader accessibility review remains open. Follow the
    retained runtime diagnosis; do not repeat unchanged startup attempts or
    assume a signing cause. Export/import-specific UI acceptance is post-MVP.
 6. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates after their implementation. Simulator or local-store evidence cannot replace these.
@@ -513,3 +525,4 @@ The complete former issue body, including original requirements and implementati
 [Verified storage cleanup](prototypes/native-local-storage-cleanup.md) retains the previous audits and the 0.86 GiB, 0.42 GiB, 0.20 GiB and 0.14 GiB nominal-file removals. The [fixture-lifecycle follow-up](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/native-core-fixture-lifecycle.md) also disposes of its closed, marked test stores, including 172,739,251 measured nominal bytes from the refused alias-path epoch. Needed source/app/UI products, native archives and user datasets remain. Nominal totals do not promise an equal APFS free-space increase.
 
 [shared]: prototypes/native-shared-storage.md
+[ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026

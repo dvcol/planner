@@ -165,3 +165,43 @@ the visible Week columns when narrowed; its exact details remain selected.
 That viewport polish and wider accessibility/device acceptance remain open.
 The [result and curated records](evidence/native-calendar-shared-time-ruler/compact-mode/result.json)
 retain this limited scope without repeating mobile tests for Mac-only styling.
+
+## Selected-card viewport, 27 October 2026
+
+The time grid now retains an exact selected-card scroll target and brings it
+beside the pinned ruler when either viewport dimension shrinks. This corrects
+the narrow Week capture above without changing the selected Schedule, saved
+times or Item content. Unselected grids retain their ordinary scrolling.
+
+The first width-only correction passes Mac and phone checks, but fails the
+iPad Week rotation journey. After returning to landscape, the selected card
+starts at y=998.5 in an 820-point-high window. Observing height as well as width
+corrects that loss. The existing Mac journey now also requires the selected
+card to remain tappable and horizontally inside Calendar at 860 and 820 points
+and after the native divider cycle.
+
+Final-source checks each pass once with zero failures or skips:
+
+| Journey | Test seconds |
+| --- | ---: |
+| Mac Week minimum width, divider and selected details | 119.076 |
+| iPad Week inspector and portrait/landscape rotation | 82.356 |
+| iPhone Day/Week saved start-only entry and relaunch | 58.457 |
+
+Both builds pass with all 1,168 native inputs matching the workspace. Two
+earlier sandbox-limited build attempts exit during package/cache setup; the
+same scoped builds pass with normal authorized Xcode cache/service access.
+Main, Share and Mac runner strict signatures pass, and executable hashes
+remain unchanged during each test. The observed Mac test process uses the
+rebuilt derived product, separately from the installed ordinary app. Manual
+automation authentication remains required before and after the Mac run.
+
+The [packet](evidence/native-calendar-shared-time-ruler/selected-card-viewport/result.json)
+retains all six distinct test outcomes, build records and four inspected
+original captures: narrow/wide dark Mac, landscape light iPad and light phone.
+Broader accessibility, keyboard and physical Calendar acceptance remain open.
+Installed Share and production CloudKit receive no qualification from this fix.
+After curating those records, removing only superseded trial results and their
+duplicate exports frees 79,828,602 nominal file bytes. All three final passing
+results, built apps, caches and app data remain. This is not an APFS free-space
+measurement.

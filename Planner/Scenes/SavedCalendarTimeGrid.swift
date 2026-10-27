@@ -45,6 +45,7 @@ struct SavedCalendarTimeGrid: View {
   let scheduleDescription: (PlannerCalendarEntry) -> String
 
   @State private var allDayPresentation: AllDayPresentation?
+  @State private var selectedEntryTarget: (identifier: String, selection: SavedCalendarSelection)?
   @State private var horizontalScrollOffset: CGFloat = 0
   @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
   @ScaledMetric(relativeTo: .subheadline) private var timedCardMinimumHeight = 80
@@ -204,6 +205,14 @@ struct SavedCalendarTimeGrid: View {
             hourIdentifier(selectedDate, hour: initialHour),
             anchor: .init(x: horizontalAnchor, y: 0.5))
         }
+        .onChange(of: geometry.size) { previousSize, size in
+          guard size.width < previousSize.width || size.height < previousSize.height,
+            let selectedEntryTarget,
+            selection == selectedEntryTarget.selection
+          else { return }
+          proxy.scrollTo(
+            selectedEntryTarget.identifier, anchor: .init(x: horizontalAnchor, y: 0.5))
+        }
       }
     }
     .accessibilityElement(children: .contain)
@@ -318,9 +327,14 @@ struct SavedCalendarTimeGrid: View {
   }
 
   private func entryButton(_ entry: PlannerCalendarEntry, day: Date, isTimed: Bool) -> some View {
-    Button {
+    let identifier =
+      "saved.calendar.\(isTimed ? "timed" : "all-day").\(dateIdentifier(day)).\(entry.schedule.id.uuidString)"
+    return Button {
       allDayPresentation = nil
-      selection = .init(scheduleIdentifier: entry.schedule.id, source: entry.source)
+      let selected = SavedCalendarSelection(
+        scheduleIdentifier: entry.schedule.id, source: entry.source)
+      selectedEntryTarget = (identifier, selected)
+      selection = selected
     } label: {
       VStack(alignment: .leading, spacing: 4) {
         Text(entry.title).font(.subheadline.weight(.medium)).lineLimit(2)
@@ -332,11 +346,12 @@ struct SavedCalendarTimeGrid: View {
       .contentShape(.rect)
     }
     .buttonStyle(.plain)
+    .overlay(alignment: .topLeading) {
+      Color.clear.frame(width: 1, height: 1).id(identifier)
+    }
     .accessibilityLabel(entry.title)
     .accessibilityValue(scheduleDescription(entry))
-    .accessibilityIdentifier(
-      "saved.calendar.\(isTimed ? "timed" : "all-day").\(dateIdentifier(day)).\(entry.schedule.id.uuidString)"
-    )
+    .accessibilityIdentifier(identifier)
   }
 
   private func previewDescription(_ entry: PlannerCalendarEntry, isTimed: Bool) -> String {
