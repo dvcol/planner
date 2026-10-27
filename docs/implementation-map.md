@@ -52,6 +52,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Mac keyboard Undo checkpoint][mac-undo] passes four existing native
+journeys: second-window isolation and ordinary text Undo, original membership
+restoration, whole-Move reversal, active filters/valid selection and stale
+history rejection. A one-line test locator correction excludes the Touch Bar's
+duplicate OK button; its Mac/phone/iPad reruns pass. Production is unchanged.
+Separate product epochs, the failed interaction and native timing limitations
+remain recorded. Other contexts and full UI acceptance remain open.
+
 The [selected Calendar viewport correction](prototypes/native-calendar-shared-time-ruler.md#selected-card-viewport-27-october-2026)
 keeps the exact booking visible when the grid becomes narrower or shorter.
 Final Mac Week resize/divider, iPad Week rotation and phone Day/Week journeys
@@ -478,6 +486,8 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    Keep the local-data safety guard.
 2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
 3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
+   Latest mobile Undo captures also show the List title in both navigation and
+   content; reconcile that repetition during the native title pass.
 4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
    The [Mac Locations correction](prototypes/native-map-collection-ui.md#mac-locations-sheet-27-october-2026)
    fixes a collapsed sheet and passes provider/warning, dismissal and exact
@@ -485,7 +495,9 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    and keyboard interaction remain open.
 5. Qualify the outstanding core Mac UI workflows, including capture,
    Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
-   cases. Q127 A's Calendar split pane now passes actual Month/Day/Week resizing,
+   cases. The [named Mac Undo journeys][mac-undo] now pass; unrepresented
+   contexts retain their own gates. Q127 A's Calendar split pane passes
+   Month/Day/Week resizing,
    divider movement and width recovery. The
    [compact mode control](prototypes/native-calendar-shared-time-ruler.md#compact-mac-mode-control-27-october-2026)
    also passes the Week regression with inspected narrow/wide captures. The
@@ -526,3 +538,4 @@ The complete former issue body, including original requirements and implementati
 
 [shared]: prototypes/native-shared-storage.md
 [ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026
+[mac-undo]: prototypes/native-association-undo.md#native-mac-keyboard-undo-27-october-2026

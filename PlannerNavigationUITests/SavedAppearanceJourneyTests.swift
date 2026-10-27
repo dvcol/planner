@@ -635,7 +635,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(
       application.staticTexts["A newer membership is already using this Item and List."]
         .waitForExistence(timeout: 10))
-    application.plannerElement("OK").activateForPlannerJourney()
+    application.windows.firstMatch.buttons["OK"].activateForPlannerJourney()
     XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
     XCTAssertEqual(replacement.identifier, replacementIdentifier)
     XCTAssertTrue(replacementCompletion.waitForPlannerValue("To do"))

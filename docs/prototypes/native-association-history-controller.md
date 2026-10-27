@@ -1,6 +1,9 @@
 # Native association history controller qualification
 
-Status: Q108 A's five app-hosted controller tests pass together. Production code, targets and configuration are unchanged. This adds controller evidence, while actual Mac window/text-field UI qualification remains open.
+Status: Q108 A's five app-hosted controller tests pass together. This checkpoint
+changes no production code, targets or configuration. The later
+[native Mac checkpoint][mac-undo] separately qualifies represented window/text
+interactions; broader native UI acceptance remains open.
 
 ## Context, goal and starting state
 
@@ -46,6 +49,13 @@ The [validation packet](evidence/navigation/native-association-history-controlle
 
 The approved direct controller outcomes are now exercised with real Foundation, durable storage and filesystem failure. There is no production behavior change to deploy and no new target or test-only production interface.
 
-Actual Mac window isolation, focus and Edit Undo/text-field integration remain separate native UI obligations. These app-hosted tests do not resolve the recorded XCUITest automation-startup failure, prove every editing control, or establish iPhone/iPad rendered accessibility. Signing, physical CloudKit/account/Share, scale and final whole-app polish remain open.
+These controller tests alone do not qualify window isolation, focus or ordinary
+text Undo. The subsequent [native Mac checkpoint][mac-undo] supplies those
+represented UI observations separately. Other controls, rendered accessibility,
+physical CloudKit/account/Share, scale and final whole-app acceptance remain open.
 
-Q109 A, Q110 A and the [Q111 compound restoration contract](../native-compound-association-undo-contract-review.md) are accepted. Their implementation can proceed; no Move/grouped-owned-association implementation is claimed here.
+Q109/Q110 and the [Q111 contract](../native-compound-association-undo-contract-review.md)
+have separate [Move](native-move-undo.md) and
+[grouped-removal](native-owned-association-undo.md) implementation checkpoints.
+
+[mac-undo]: native-association-undo.md#native-mac-keyboard-undo-27-october-2026

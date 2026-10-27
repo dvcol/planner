@@ -1,6 +1,9 @@
 # Native whole-Move Undo
 
-Status: the represented whole-Move journey passes on dark iPhone and light iPad. Six real native history-controller functions and thirteen actual HTTP functions also pass. Grouped bookmark/label Undo remains approved follow-up work. Actual Mac window interaction and whole-app polish remain open.
+Status: the represented whole-Move journey passes on dark iPhone and light
+iPad. The [27 October Mac follow-up][mac-undo] also qualifies native keyboard
+Undo and relaunch. Earlier controller/HTTP results retain their recorded
+scope. Other variants and whole-app acceptance remain open.
 
 ## Context, goal and starting state
 
@@ -47,4 +50,10 @@ The phone's relaunch capture also shows part of its navigation title clipped beh
 
 The represented new-destination Move, named Undo, original contextual state and relaunch flow now pass through actual native controls. Core separately qualifies preexisting destination preservation, unsafe relationship rejection, independent contexts, save rollback, recovery and replay. This slice does not claim an executed native UI journey for every guarded/preexisting-destination variant.
 
-Continue the already approved atomic bookmark/label removal-group implementation. Broader Mac window/focus behavior, protected native Agent Control, physical CloudKit/account/Share, scale, signing and final whole-app polish retain their existing map gates. No association Redo or persistent editing history is added.
+The [grouped-removal checkpoint](native-owned-association-undo.md) implements
+bookmark/label removal Undo separately. Broader window/focus behavior, physical
+CloudKit/account/Share, scale and final whole-app acceptance retain their map
+gates. Agent Control remains outside MVP. No association Redo or persistent
+editing history is added.
+
+[mac-undo]: native-association-undo.md#native-mac-keyboard-undo-27-october-2026

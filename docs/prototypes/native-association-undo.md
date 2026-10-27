@@ -1,6 +1,9 @@
 # Native original-association Undo
 
-Status: Q106 A and Q107 A implementation checkpoint in progress. All 18 affected Core tests and 13 real HTTP admission functions pass. Represented phone/iPad restoration, stale-history rejection and filter/valid-selection follow-up pass. Mac history interactions, retry feedback and broader native-history acceptance remain open. This does not close the Navigation prototype or whole-app UI acceptance.
+Status: Q106/Q107 Core and represented mobile outcomes retain their recorded
+results. The 27 October checkpoint below additionally qualifies four native
+Mac membership, window/text and Move Undo journeys. Retry/in-flight feedback,
+other contexts and broader native UI acceptance remain open.
 
 ## Context, goal and starting state
 
@@ -88,11 +91,59 @@ The review suite also exposes an Item-creation expectation mismatch. Its request
 - Core qualification is recorded for restored identity/order/local state, recreated expanded counterparts, stale bindings, issuance/replay, recovery and genuine save failures. Keep its final source hashes and 18-test affected regression result attached.
 - HTTP qualification passes all 13 actual functions with native Undo excluded and existing data operations retained. Keep snapshots outside adapter/backup/receipt encodings; App Intents expose no Undo administration.
 - Phone tab placement, destination-change/relaunch restoration and the represented phone/iPad filter/valid-selection checks pass. Retain their original appearance identities and exact source epochs; broader scene/layout/accessibility acceptance remains separate.
-- Native stale-history rejection passes on iPad, and the linked follow-up qualifies represented mobile text Undo. Qualify retry/in-flight feedback, ordinary Mac text Undo and per-window isolation. Record unavailable actual Mac runtime separately rather than substituting compilation.
-- Strict lint passes all 22 affected Swift files and the report; final mobile and Mac targets compile. Publish exact evidence, diff/credential checks and map updates after committing and pushing the checkpoint. These checks do not substitute for the unavailable Mac runtime.
+- Represented mobile and the 27 October Mac journeys qualify stale rejection,
+  ordinary text Undo and per-window isolation. Native retry/in-flight feedback
+  retains its separate UI gate.
+- The initial slice retains strict lint of its 22 affected Swift files and
+  mobile/Mac compiler evidence. The later Mac checkpoint below adds actual UI
+  execution and its narrowly affected validation.
 
-The [Q108 proposal](../native-association-history-test-contract-review.md) is pending. It would supplement real UI journeys with actual Foundation/native-history controller tests in the existing app-hosted target, without production test hooks. It does not change Q106/Q107 behavior or establish Mac UI acceptance.
+Q108 is approved. Its [controller checkpoint](native-association-history-controller.md)
+qualifies the separate Foundation/storage outcomes without production test
+hooks. Those tests alone supply no native window/focus qualification.
 
 The later [native text-Undo journey](native-association-text-undo.md) uses the already approved UI seam independently of Q108. On phone and iPad, actual system text Undo clears an unsaved title while keeping the membership removed; after draft cancellation, the explicit removal action restores its original identity and Done state through relaunch. Four failed controller attempts remain recorded before the two final passes. This adds represented mobile text-editing evidence, not direct history-controller, actual Mac, per-window or asynchronous retry qualification.
 
-Owned bookmark/label associations remain required current-map work outside this first removal-Undo slice. The [Q109/Q110 proposal](../native-owned-association-undo-proposal.md) asks how to handle Move and compound owned-association removals before their concrete contract/tests. Association Redo remains deferred. Signed storage, physical-device CloudKit/account transitions and final whole-app UI polish remain explicit owning-map work.
+The subsequent [whole-Move](native-move-undo.md) and
+[grouped link/label](native-owned-association-undo.md) checkpoints implement
+their accepted contracts separately from this first removal slice. Association
+Redo remains deferred. Physical CloudKit/account/Share and final whole-app UI
+acceptance retain their owning-map gates.
+
+## Native Mac keyboard Undo, 27 October 2026
+
+Four existing journeys now run through actual Mac windows and keyboard Undo.
+They use disposable local datasets and the existing native UI seam, with no
+production history change or new test interface.
+
+| Mac journey | Passing test seconds |
+| --- | ---: |
+| Original membership, second-window isolation and text Undo | 91.159 |
+| Whole Move and original local Done through relaunch | 108.755 |
+| Todo filter, full progress and another valid detail selection | 105.615 |
+| Reject old Undo without replacing a newer Todo membership | 76.136 |
+
+The initial three-case group retains two passes and one failure. The stale-Undo
+case reaches its expected rejection, then its app-wide OK query matches both
+the alert button and its Touch Bar mirror. Scoping that test query to the
+native window resolves the interaction. Its assertions still require the same
+newer identity, Todo state and relaunch persistence. The corrected case passes
+on Mac, phone and iPad; mobile test durations are 216.261 and 213.412 seconds.
+Their native animation-notification waits remain timing limitations, not app
+responsiveness acceptance.
+
+Both changed-test builds pass with 1,168 matching native inputs. Only one UI
+test line differs; production sources are unchanged. Earlier three Mac passes
+retain their original products. App/runner hashes differ between build epochs
+and are recorded separately rather than presented as byte-identical or one
+all-green batch. Strict app/Share/runner signatures pass before each Mac run,
+executable hashes remain unchanged within runs, and manual automation
+authentication remains required before and after.
+
+The [packet](evidence/native-association-undo/mac-keyboard-2026-10-27/result.json)
+retains all seven executions, including the failed alert interaction, input and
+product hashes, commands and five inspected original captures. Mobile captures
+also show the List title in both navigation and content; title coherence stays
+on the UI-polish queue. Other native contexts, retry presentation,
+accessibility, installed Share and CloudKit/account/physical acceptance remain
+open. No Core/HTTP rerun is claimed for this UI-test-only correction.
