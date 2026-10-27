@@ -59,6 +59,12 @@ local completion and exact saved bookmark. Six originals are inspected, four
 retained, and settings restored. This adds no production change or whole-app,
 Mac, installed Share or physical/sync acceptance claim.
 
+The [repeated-List-branch follow-up](prototypes/native-map-collection-ui.md#maximum-text-repeated-list-branches-28-october-2026)
+adds two more passes at the same accessibility settings. A standalone Done
+membership does not pre-complete its itinerary children; selecting the counted
+pin preserves Stop 1 Done, Stop 2 Todo and the exact bookmark. Long native
+choice labels wrap and scroll. This requires no production change.
+
 The [single mobile List heading](prototypes/native-mobile-list-heading.md#single-heading-and-matching-insets-28-october-2026)
 keeps the full name once across empty, populated, Map and relaunched views.
 One native List layout gives empty/populated headings and estimates matching

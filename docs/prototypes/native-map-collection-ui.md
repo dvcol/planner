@@ -159,6 +159,30 @@ Simulator product hashes are verified before and after each run; unused physical
 build hashes in the collector receive no device-execution credit.
 
 This qualifies one direct repeated-stop workflow at maximum text on the two
-Simulators. Other contexts, repeated List branches at that size, full assistive
-review, actual Mac interaction and physical/provider performance remain open.
+Simulators. The List-branch follow-up below adds its own contextual evidence.
+Other contexts, full assistive review, Mac interaction and physical/provider
+performance remain open.
 Installed Share and the deferred account-transition/sync gates remain separate.
+
+## Maximum-text repeated List branches, 28 October 2026
+
+The existing repeated-List-branch journey passes on both Simulators with maximum
+accessibility text, dark mode and Increase Contrast. iPad takes 164.299 seconds;
+phone takes 138.412. Both have zero failures/skips and restore original settings.
+
+The standalone Food stops membership starts Done. Referencing that List twice
+creates two independently Todo itinerary children. Completing only the first
+produces 1 of 2 progress. The counted pin's choices distinguish each List, stop
+and Item context, open Completed versus Todo details and retain the exact bookmark
+identity and URL. iPad rotation keeps the pin and selected context within their
+native panes. A final standalone-List revisit is outside this journey.
+
+Six originals are inspected; the two branch-choice captures and compact native
+frame/execution records are retained in the
+[checkpoint](evidence/native-map-collection/largest-list-branches-2026-10-28/result.json).
+Long context labels wrap, and the native choices and detail forms scroll to later
+content. No production or test change is needed. All 1,169 source inputs match
+the workspace, both executed snapshots and the latest Mac compilation.
+
+Other plan combinations, full assistive/physical review, actual Mac interaction,
+installed Share and account/sync gates remain open.
