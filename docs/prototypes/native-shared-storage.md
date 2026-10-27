@@ -50,3 +50,28 @@ SwiftData with CloudKit disabled, and reports account/cloud state as unknown.
 Implement the accepted native integration, then qualify account changes and
 two-device behavior. This correction changes no Core schema, portable format or
 recovery algorithm and supplies no cloud-sync evidence.
+
+## App-hosted execution, 27 October 2026
+
+The four existing `NativeSharedStorageTests` now execute through the approved
+Mac app-hosted target. All four pass with zero failures in 0.267 seconds; the
+command exits 0 in 5.012 seconds. They cover reciprocal main/Share reads, local
+reopen, refusal to silently abandon local data, and separation of an initialized
+shared dataset from the existing local copy. The signed build takes 77.994
+seconds, with 1164 source inputs matched and seven actual product hashes.
+
+The host uses the existing navigation-prototype and disposable-dataset launch
+arguments. Each test uses real disposable storage through the production helper;
+no installed extension or provisioned App Group access is implied. Production,
+test source, signing resources and iCloud settings are unchanged for this run.
+
+All fixture-owning host processes have exited, and the test log contains no
+SQLite lifetime diagnostics. The strict cleanup verifier refuses removal because
+macOS denies command-line access to the app-container ownership markers. Four
+marked fixtures remain; no files are removed and no permission workaround is
+attempted. Cleanup remains incomplete, separately from the four passing tests.
+
+The [result](evidence/native-shared-storage/app-hosted-2026-10-27/result.json)
+and retained records preserve that distinction. The earlier standalone and
+compile-only checkpoints keep their original outcomes. Safe data transition,
+entitlement wiring, installed Share and physical/cloud acceptance remain open.
