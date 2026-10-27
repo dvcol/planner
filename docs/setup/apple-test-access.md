@@ -74,6 +74,11 @@ setting or account is changed. Keep that ownership/reset requirement open and
 continue independent local work; the deferral does not approve production sync
 activation without its safety evidence.
 
+A separate [development-signed Mac UI build](../prototypes/native-development-signed-mac-ui.md)
+now passes for the unconfigured local-only app, embedded Share and test runner.
+Strict signatures verify, but the bounded UI setup still starts no journey body.
+Signing success does not close that runtime gate or qualify installed Share.
+
 After the user created Apple Development, the certificate existed but a
 disposable signing probe failed with a missing issuer-chain warning and
 `errSecInternalComponent`. The required WWDR G3 intermediate was absent.

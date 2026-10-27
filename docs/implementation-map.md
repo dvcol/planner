@@ -52,6 +52,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [development-signed Mac UI retry](prototypes/native-development-signed-mac-ui.md)
+passes compilation and strict signature verification for the local-only app,
+Share and UI runner, with all 1164 native inputs and nine product hashes matched.
+The selected existing title/resizing journey still does not start within the
+bounded 120-second setup window. Its canceled runner result supplies no UI
+acceptance. No iCloud setting, account or production code changes. The explicit
+account-transition deferral and separate Mac runtime gate remain in effect.
+
 The [native private-CloudKit content checkpoint](prototypes/cloud-round-trip-native.md)
 passes six signed app executions: exact fixture resumption and fresh insertion,
 fresh-store identity/content reads, cleanup exports and independent deletion
