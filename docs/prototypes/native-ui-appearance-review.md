@@ -223,3 +223,12 @@ startup retry. That runtime gate is separate from signing.
 Q163 A was accepted after this UI checkpoint, explicitly deferring crossed-family
 reconciliation beyond MVP with its recorded recovery limitation. Signing stays
 deferred, and the user's final coherence/layout review is still required.
+
+## Subsequent List-title checkpoint, 28 October 2026
+
+The [single-heading follow-up](native-mobile-list-heading.md#single-heading-and-matching-insets-28-october-2026)
+adds matching empty/populated mobile insets and preserves one full content name
+through Map switching and relaunch. Eight scoped mobile executions and inspected
+originals have local evidence. Signing is now available; the fresh Mac runtime
+attempt waits for manual UI Automation authentication. Whole-app appearance and
+physical/sync acceptance remain open.

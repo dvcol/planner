@@ -138,14 +138,143 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       let application = XCUIApplication()
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
-      createList("Landscape loading", application: application)
-      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      application.beginPlannerListCreation()
+      let name = application.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      name.activateForPlannerJourney()
+      name.typeText("Landscape loading")
+      application.plannerElement("saved.list.save").activateForPlannerJourney()
+      let contents = application.collectionViews["saved.list.contents"]
+      XCTAssertTrue(contents.waitForExistence(timeout: 10))
       for identifier in ["saved.list.estimate.full", "saved.list.estimate.remaining"] {
         XCTAssertTrue(
           application.descendants(matching: .any).matching(identifier: identifier).firstMatch
             .waitForExistence(timeout: 5))
       }
+      let emptyState = application.staticTexts["No items"]
+      let tabBar = application.tabBars.firstMatch
+      let bottom = tabBar.exists ? tabBar.frame.minY : application.windows.firstMatch.frame.maxY
+      for _ in 0..<4 {
+        if emptyState.exists, emptyState.frame.maxY <= bottom {
+          break
+        }
+        contents.swipeUp(velocity: .slow)
+      }
       recordScreenshot(application, name: "First landscape List finishes loading")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Native landscape List after scrolling"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      XCTAssertTrue(emptyState.waitForExistence(timeout: 5))
+    }
+
+    func testMobileListUsesOneNativeTitleAcrossEmptyPopulatedAndMapContents() {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      createItem(application)
+      let name = "Tokyo museum visits and favourite gardens"
+      createList(name, application: application)
+      let list = application.savedPlannerListRow(name)
+      revealSidebarIfNeeded(application, element: list)
+      XCTAssertTrue(list.waitForExistence(timeout: 5))
+      let listIdentifier = list.identifier
+      list.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["saved.list.estimate.full"].waitForExistence(timeout: 10))
+      let emptyTitle = assertSingleMobileListTitle(name, in: application)
+      let emptyEstimate = application.staticTexts["saved.list.estimate.full"].frame
+      recordScreenshot(application, name: "One native title above empty List estimates")
+      addItem(application)
+      let row = application.savedPlannerItemRows("Nezu Museum").firstMatch
+      let originalIdentifier = row.identifier
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      let populatedTitle = assertSingleMobileListTitle(name, in: application)
+      let populatedEstimate = application.staticTexts["saved.list.estimate.full"].frame
+      XCTAssertEqual(populatedTitle.height, emptyTitle.height, accuracy: 1)
+      XCTAssertEqual(populatedTitle.minX, emptyTitle.minX, accuracy: 1)
+      XCTAssertEqual(populatedTitle.minY, emptyTitle.minY, accuracy: 1)
+      XCTAssertEqual(populatedEstimate.minX, emptyEstimate.minX, accuracy: 1)
+      XCTAssertEqual(
+        populatedEstimate.minY - populatedTitle.maxY,
+        emptyEstimate.minY - emptyTitle.maxY, accuracy: 1)
+      recordScreenshot(application, name: "One native title above populated List estimates")
+      application.openSavedPlannerListViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("Map")
+      XCTAssertTrue(application.plannerElement("saved.map.locations").waitForExistence(timeout: 10))
+      assertSingleMobileListTitle(name, in: application)
+      recordScreenshot(application, name: "One native title in the same List Map")
+      application.openSavedPlannerListViewMenu()
+      application.chooseSavedPlannerCollectionRepresentation("List")
+      revealMobileListRow(row, in: application)
+      XCTAssertEqual(row.identifier, originalIdentifier)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSection("Lists", application: application)
+      revealSidebarIfNeeded(application, element: list)
+      XCTAssertTrue(list.waitForExistence(timeout: 5))
+      XCTAssertEqual(list.identifier, listIdentifier)
+      list.activateForPlannerJourney()
+      revealMobileListRow(row, in: application)
+      XCTAssertEqual(row.identifier, originalIdentifier)
+      assertSingleMobileListTitle(name, in: application)
+      recordScreenshot(application, name: "Relaunch keeps one native List title and original row")
+    }
+
+    /// Returns the visible title bounds after sidebar and native transition labels settle.
+    @discardableResult
+    /// Check the content heading separately from hidden catalog rows and the native bar.
+    private func assertSingleMobileListTitle(_ name: String, in application: XCUIApplication)
+      -> CGRect
+    {
+      let hideSidebar = application.buttons["Hide Sidebar"].firstMatch
+      if hideSidebar.exists && hideSidebar.isHittable { hideSidebar.tap() }
+      let contents = application.collectionViews["saved.list.contents"]
+      let headings = application.staticTexts.matching(identifier: "saved.list.title")
+      let heading = headings.firstMatch
+      let navigationBar = application.navigationBars.containing(
+        .button, identifier: "saved.list.filters"
+      ).firstMatch
+      for _ in 0..<6 where contents.exists {
+        if heading.exists,
+          heading.frame.minY >= navigationBar.frame.maxY,
+          application.windows.firstMatch.frame.contains(heading.frame)
+        {
+          break
+        }
+        contents.swipeDown()
+      }
+      var titleFrame = CGRect.zero
+      let settled = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        guard heading.exists else { return false }
+        titleFrame = heading.frame
+        guard titleFrame.width > 0, titleFrame.height > 0,
+          frame.contains(titleFrame),
+          titleFrame.minY >= navigationBar.frame.maxY
+        else { return false }
+        return heading.isHittable
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 5),
+        .completed, "One visible title must retain the full accessibility name.")
+      XCTAssertEqual(headings.count, 1)
+      XCTAssertEqual(heading.label, name)
+      XCTAssertEqual(navigationBar.staticTexts.matching(identifier: name).count, 0)
+      return titleFrame
+    }
+
+    /// Load the native row through scrolling when its plan summary fills the viewport.
+    private func revealMobileListRow(_ row: XCUIElement, in application: XCUIApplication) {
+      let contents = application.collectionViews["saved.list.contents"]
+      for _ in 0..<6 where !row.exists { contents.swipeUp() }
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
     }
   #endif
 
@@ -4013,7 +4142,12 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     name.activateForPlannerJourney()
     name.typeText(title)
     application.plannerElement("saved.list.save").activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      XCTAssertTrue(
+        application.collectionViews["saved.list.contents"].waitForExistence(timeout: 10))
+    #else
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    #endif
   }
 
   private func addItem(_ application: XCUIApplication, title: String = "Nezu Museum") {
@@ -4034,8 +4168,12 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     candidate.activateForPlannerJourney()
     application.plannerElement("saved.membership.add").activateForPlannerJourney()
     XCTAssertFalse(application.plannerElement("saved.membership.add").waitForExistence(timeout: 2))
-    XCTAssertTrue(
-      application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
+    #if os(iOS)
+      revealMobileListRow(application.savedPlannerItemRows(title).firstMatch, in: application)
+    #else
+      XCTAssertTrue(
+        application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
+    #endif
   }
 
   private func openList(

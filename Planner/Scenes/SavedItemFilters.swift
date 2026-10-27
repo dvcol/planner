@@ -430,6 +430,7 @@ struct SavedListProgress: View {
           .font(.title2.bold())
           .fixedSize(horizontal: false, vertical: true)
           .accessibilityAddTraits(.isHeader)
+          .accessibilityIdentifier("saved.list.title")
       }
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(Color.secondary)

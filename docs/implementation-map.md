@@ -52,6 +52,15 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [single mobile List heading](prototypes/native-mobile-list-heading.md#single-heading-and-matching-insets-28-october-2026)
+keeps the full name once across empty, populated, Map and relaunched views.
+One native List layout gives empty/populated headings and estimates matching
+insets. Six primary phone/iPad executions and two targeted native-scroll checks
+pass, with eight inspected originals and matching final compilation. Rejected
+title/driver probes remain separate. The fresh Mac attempt stops at manual
+automation authentication before any test; signing is ready. Broader appearance,
+installed Share, account-transition and physical sync gates remain open.
+
 The [Mac reader fixture correction](prototypes/native-mac-reader-fixture.md)
 allows the existing sandboxed UI runner to serve its loopback test page.
 The saved-guide journey then passes, opening the real page through its bookmark

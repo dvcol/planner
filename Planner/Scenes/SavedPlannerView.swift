@@ -83,6 +83,7 @@ struct SavedPlannerView: View {
   @State private var inboxRepresentation = SavedCollectionRepresentation.list
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var listPaneWidth: CGFloat = 0
     @State private var sidebarContentWidth: CGFloat = 0
   #endif
@@ -1787,24 +1788,16 @@ struct SavedPlannerView: View {
       switch window.state {
       case .ready:
         let rows = listRows
-        if rows.isEmpty {
-          ScrollView {
-            VStack(spacing: 0) {
-              #if os(iOS)
-                SavedListProgress(
-                  listName: list.content.name,
-                  progress: list.progress, estimates: list.estimates,
-                  manualEstimate: list.content.manualEstimate, matchingCount: 0,
-                  isArchived: list.state.archived == true
-                ).padding()
-              #endif
-              ContentUnavailableView(
-                list.progress.totalCount == 0 ? "No items" : "No matching items",
-                systemImage: "checklist", description: appearanceChangeMessage.map { Text($0) })
+        #if os(macOS)
+          if rows.isEmpty {
+            ScrollView {
+              VStack(spacing: 0) {
+                ContentUnavailableView(
+                  list.progress.totalCount == 0 ? "No items" : "No matching items",
+                  systemImage: "checklist", description: appearanceChangeMessage.map { Text($0) })
+              }
             }
-          }
-        } else {
-          #if os(macOS)
+          } else {
             SavedMacMembershipTable(
               store: store, list: list, window: window, rows: rows,
               selection: membershipSelection, canReorderMemberships: canReorderMemberships,
@@ -1816,52 +1809,61 @@ struct SavedPlannerView: View {
               removeMembership: { membership in
                 removeMembership(membership, listIdentifier: list.source.id)
               })
-          #else
-            ScrollViewReader { proxy in
-              List(selection: membershipSelection) {
-                Section {
-                  SavedListProgress(
-                    listName: list.content.name,
-                    progress: list.progress, estimates: list.estimates,
-                    manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
-                    isArchived: list.state.archived == true
+          }
+        #else
+          ScrollViewReader { proxy in
+            List(selection: membershipSelection) {
+              Section {
+                SavedListProgress(
+                  listName: list.content.name,
+                  progress: list.progress, estimates: list.estimates,
+                  manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
+                  isArchived: list.state.archived == true
+                )
+                .selectionDisabled()
+                .listRowSeparator(.hidden)
+                if rows.isEmpty {
+                  ContentUnavailableView(
+                    list.progress.totalCount == 0 ? "No items" : "No matching items",
+                    systemImage: "checklist",
+                    description: appearanceChangeMessage.map { Text($0) }
                   )
                   .selectionDisabled()
                   .listRowSeparator(.hidden)
-                  ForEach(rows) { row in
-                    membershipRow(row, list: list, window: window)
-                      .id(row.id)
-                      .onScrollVisibilityChange { visible in
-                        setMembershipVisibility(row.id, visible)
-                      }
-                  }
-                  .onMove { offsets, destination in
-                    moveMembership(from: offsets, to: destination, in: rows, listId: list.source.id)
-                  }
                 }
-              }
-              .listStyle(.plain)
-              .accessibilityIdentifier("saved.list.contents")
-              .environment(\.editMode, $listEditMode)
-              .task(id: pendingListScrollAnchor) {
-                guard let anchor = pendingListScrollAnchor,
-                  let row = rows.first(where: { $0.id == anchor })
-                else {
-                  pendingListScrollAnchor = nil
-                  return
+                ForEach(rows) { row in
+                  membershipRow(row, list: list, window: window)
+                    .id(row.id)
+                    .onScrollVisibilityChange { visible in
+                      setMembershipVisibility(row.id, visible)
+                    }
                 }
-                /** Resolve the anchor page before restoring variable-height native rows. */
-                await window.requestRows(at: [row.index])
-                guard !Task.isCancelled, pendingListScrollAnchor == anchor,
-                  listWindow === window, window.state == .ready,
-                  listRows.contains(where: { $0.id == anchor })
-                else { return }
-                proxy.scrollTo(anchor, anchor: .center)
-                pendingListScrollAnchor = nil
+                .onMove { offsets, destination in
+                  moveMembership(from: offsets, to: destination, in: rows, listId: list.source.id)
+                }
               }
             }
-          #endif
-        }
+            .listStyle(.plain)
+            .accessibilityIdentifier("saved.list.contents")
+            .environment(\.editMode, $listEditMode)
+            .task(id: pendingListScrollAnchor) {
+              guard let anchor = pendingListScrollAnchor,
+                let row = rows.first(where: { $0.id == anchor })
+              else {
+                pendingListScrollAnchor = nil
+                return
+              }
+              /** Resolve the anchor page before restoring variable-height native rows. */
+              await window.requestRows(at: [row.index])
+              guard !Task.isCancelled, pendingListScrollAnchor == anchor,
+                listWindow === window, window.state == .ready,
+                listRows.contains(where: { $0.id == anchor })
+              else { return }
+              proxy.scrollTo(anchor, anchor: .center)
+              pendingListScrollAnchor = nil
+            }
+          }
+        #endif
       case .failed(let reason):
         ContentUnavailableView {
           Label("Items unavailable", systemImage: "exclamationmark.triangle")
@@ -1983,9 +1985,10 @@ struct SavedPlannerView: View {
             min: listRepresentation == .map ? 320 : 220,
             ideal: listRepresentation == .map ? 560 : 320, max: 800
           )
-          .navigationTitle(selectedList.content.name)
           .toolbarTitleDisplayMode(.inline)
           #if os(iOS)
+            // The wrapping content heading owns the name across native navigation restoration.
+            .navigationTitle("")
             .onGeometryChange(for: CGFloat.self) { geometry in
               geometry.size.width
             } action: { width in
@@ -1993,6 +1996,7 @@ struct SavedPlannerView: View {
             }
           #endif
           #if os(macOS)
+            .navigationTitle(selectedList.content.name)
             .safeAreaInset(edge: .top, spacing: 0) {
               listPaneHeader(selectedList)
             }
@@ -2024,7 +2028,15 @@ struct SavedPlannerView: View {
               }
             }
           #endif
-          .searchable(text: $listSearchText, prompt: "Search this List")
+          #if os(iOS)
+            .searchable(
+              text: $listSearchText,
+              placement: .navigationBarDrawer(
+                displayMode: verticalSizeClass == .compact ? .automatic : .always),
+              prompt: "Search this List")
+          #else
+            .searchable(text: $listSearchText, prompt: "Search this List")
+          #endif
           .searchPresentationToolbarBehavior(.avoidHidingContent)
           .overlay(alignment: .topTrailing) {
             if isOpeningList || listWindow?.state == .loading {
