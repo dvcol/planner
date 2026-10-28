@@ -445,6 +445,13 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           XCTAssertTrue(pin.isHittable)
           XCTAssertTrue(map.frame.contains(pin.frame))
         }
+        for index in pins.indices {
+          for other in pins.dropFirst(index + 1) {
+            XCTAssertFalse(
+              pins[index].frame.intersects(other.frame),
+              "Distinct itinerary places must remain individually readable after resizing.")
+          }
+        }
         XCTAssertTrue(bookmark.isHittable)
         XCTAssertEqual(bookmark.identifier, bookmarkIdentifier)
         XCTAssertEqual(bookmark.value as? String, originalURL)

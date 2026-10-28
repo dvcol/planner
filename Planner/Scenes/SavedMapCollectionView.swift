@@ -119,7 +119,7 @@ struct SavedMapCollectionView: View {
   @State private var directions = SavedMapDirections()
   @State private var camera = MapCameraPosition.automatic
   @State private var observedCamera: MapCamera?
-  @State private var mapWidth: CGFloat = 440
+  @State private var mapSize = CGSize.zero
   @State private var preservesUserCamera = false
   @State private var presentedSheet: PresentedSheet?
   @State private var pendingSelection: PlannerMapRowRead?
@@ -243,7 +243,7 @@ struct SavedMapCollectionView: View {
           } label: {
             Label(visibleMarkerTitle, systemImage: "mappin.circle.fill")
               .lineLimit(2)
-              .frame(maxWidth: max(44, min(220, mapWidth * 0.45)))
+              .frame(maxWidth: max(44, min(220, mapSize.width * 0.45)))
           }
           .buttonStyle(.borderedProminent)
           .buttonBorderShape(.capsule)
@@ -261,7 +261,12 @@ struct SavedMapCollectionView: View {
     .onGeometryChange(for: CGSize.self) { geometry in
       geometry.size
     } action: { size in
-      mapWidth = size.width
+      mapSize = size
+    }
+    .task(id: mapSize) {
+      let size = mapSize
+      await Task.yield()
+      guard !Task.isCancelled, mapSize == size, size.width > 0, size.height > 0 else { return }
       if preservesUserCamera || camera.positionedByUser {
         preservesUserCamera = true
         if let observedCamera { camera = .camera(observedCamera) }
@@ -307,6 +312,7 @@ struct SavedMapCollectionView: View {
 
   /// Automatic framing must follow the pane's size until the user positions the map.
   private func fitLocations() {
+    guard mapSize.width > 0, mapSize.height > 0 else { return }
     if collection.groups.count == 1, let coordinate = collection.groups.first?.coordinate {
       camera = .region(
         .init(
@@ -324,8 +330,15 @@ struct SavedMapCollectionView: View {
       if bounds.width > MKMapRect.world.width / 2 {
         camera = .automatic
       } else {
+        let padded = bounds.insetBy(
+          dx: -max(bounds.width / 2, 500), dy: -max(bounds.height / 2, 500))
+        let aspectRatio = mapSize.width / mapSize.height
+        let width = max(padded.width, padded.height * aspectRatio)
+        let height = max(padded.height, padded.width / aspectRatio)
         camera = .rect(
-          bounds.insetBy(dx: -max(bounds.width / 2, 500), dy: -max(bounds.height / 2, 500)))
+          .init(
+            x: padded.midX - width / 2, y: padded.midY - height / 2,
+            width: width, height: height))
       }
     } else {
       camera = .automatic

@@ -207,3 +207,34 @@ records it. Passing containment and width checks do not close that visual issue.
 The [phone capture](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/phone-maximum-pins.png)
 retains the represented maximum-text state. Camera fitting, physical routing and
 the broader assistive review remain open.
+
+## Camera fitting through native resizing, 29 October 2026
+
+The newly added separated-pin check reproduces the zoom-out above. Diagnostic
+events show 43 zero-height layouts among 86 geometry updates, with no
+user-positioned or preserved-camera event. Fitting directly in the geometry
+callback can apply the request before the native view finishes resizing.
+Positive-size guards and a viewport-shaped rectangle alone do not correct the
+captured outcome; those failed epochs receive no acceptance credit.
+
+The Map now tracks both viewport dimensions, ignores invalid sizes and fits its
+padded bounds to the current viewport proportions. A cancellable SwiftUI task
+defers the size-triggered fit, rejecting obsolete measurements after yielding.
+The existing user-camera branch remains. No fixed delay, new module, test hook
+or saved-data change is introduced; temporary diagnostic logging is removed.
+
+The [matching final evidence](evidence/native-map-collection/camera-resize-2026-10-29/result.json)
+passes one Mac case in 155.551 seconds and one maximum-text, dark, increased-
+contrast phone case in 193.538 seconds, with zero failures or skips. Mac's
+1200/1600-point checks now require each distinct marker to remain readable
+without intersecting another marker, as well as contained and hittable beside
+bounded details. Both original captures are inspected: the
+[1200-point view](evidence/native-map-collection/camera-resize-2026-10-29/mac-neighborhood-1200.png)
+stays around the nearby stops instead of the wider metropolitan area.
+Both platforms retain all walking/driving legs, transit fallback and the exact
+bookmark. Simulator settings and boot state are verified restored.
+
+Mac and Simulator builds pass in 18.009 and 30.439 seconds against the same
+1,170 inputs. This closes the represented automatic camera-fit defect. Manual
+pan/zoom persistence is not newly exercised by this fixture; physical routing
+and the broader assistive review retain their separate gates.

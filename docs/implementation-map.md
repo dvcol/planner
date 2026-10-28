@@ -53,6 +53,16 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [camera resize correction](prototypes/native-map-routing.md#camera-fitting-through-native-resizing-29-october-2026)
+now passes actual Mac 1200/1600-point resizing with three separated, contained
+and hittable markers beside bounded Item details. It defers fitting until a
+current positive viewport is available and adapts the fitted bounds to that
+viewport. Inspected captures retain neighborhood framing. The matching
+maximum-text dark-phone route regression also passes. This closes the scoped
+zoom-out finding below; physical routing and full assistive acceptance remain
+separate. The signed iPad Map build now passes with its existing approved profile;
+its physical runtime follows separately.
+
 The [Mac Map lifecycle follow-up](prototypes/native-map-routing.md#mac-pane-lifecycle-and-stationary-controls-29-october-2026)
 now starts and passes the actual three-place route/resize journey. A stable
 native split child fixes an itinerary reload loop; a progress overlay keeps
