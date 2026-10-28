@@ -561,7 +561,7 @@ struct SavedItineraryDetail: View {
     #if os(iOS)
       UIDevice.current.userInterfaceIdiom != .phone
     #else
-      true
+      false
     #endif
   }
 

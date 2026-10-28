@@ -47,6 +47,22 @@ fresh all-green four-test batch.
 
 This qualifies one direct-appearance Mac workflow with disposable local data.
 Nested List/Map/keyboard interaction, full accessibility, installed Share and
-synchronization retain separate gates. The duplicate Mac itinerary content and
-toolbar heading remains a separate UI follow-up. Account-transition testing
-stays user-deferred, and production CloudKit stays disabled.
+synchronization retain separate gates. Account-transition testing stays
+user-deferred, and production CloudKit stays disabled.
+
+## Single native heading follow-up
+
+Mac now keeps the itinerary name in its native toolbar and omits the duplicate
+content heading. iPhone and iPad retain their existing presentation. The
+existing creation/relaunch and empty/selected-plan deletion journeys both pass
+on the final source, in 81.135 and 136.544 seconds. They assert one title within
+the native toolbar before and after relaunch, no duplicate content title, and
+the containing itinerary title while its selected Museum details are open.
+
+The [heading evidence](evidence/native-itinerary-heading/mac-single-heading-2026-10-28/result.json)
+retains three inspected owned-window originals and verified build/runtime
+records. All 1,169 inputs match; nine product hashes stay stable during the run.
+Three signed bundles verify, manual automation authentication remains required,
+and the two-test command exits 0 with no failures, skips or runtime warnings.
+This closes the duplicate Mac heading follow-up for these workflows, without
+claiming complete resizing, nested Map or accessibility acceptance.

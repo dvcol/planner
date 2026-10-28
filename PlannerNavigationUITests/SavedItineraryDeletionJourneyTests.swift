@@ -22,25 +22,21 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     hierarchy.name = "Selected Itinerary heading and native navigation title"
     hierarchy.lifetime = .keepAlways
     add(hierarchy)
-    #if os(iOS)
-      assertSingleItineraryTitle("New plan", in: application)
-    #endif
+    assertSingleItineraryTitle("New plan", in: application)
     application.terminate()
     application.launchSavedPlannerJourney()
     openItinerary(newIdentifier, application: application)
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
-    #if os(iOS)
-      assertSingleItineraryTitle("New plan", in: application)
-    #endif
+    assertSingleItineraryTitle("New plan", in: application)
     recordScreenshot(application, name: "Reopened itinerary retains its single title and identity")
   }
 
-  #if os(iOS)
-    /// Scope title checks to the native bar and content heading, excluding catalog rows.
-    private func assertSingleItineraryTitle(_ title: String, in application: XCUIApplication) {
+  /// Scope title checks to the native bar and content heading, excluding catalog rows.
+  private func assertSingleItineraryTitle(_ title: String, in application: XCUIApplication) {
+    let contentTitles = application.staticTexts.matching(identifier: "saved.itinerary.title")
+    #if os(iOS)
       let nativeTitles = application.navigationBars.staticTexts.matching(
         NSPredicate(format: "label == %@", title))
-      let contentTitles = application.staticTexts.matching(identifier: "saved.itinerary.title")
       if UIDevice.current.userInterfaceIdiom == .pad {
         XCTAssertTrue(contentTitles.firstMatch.waitForExistence(timeout: 5))
         XCTAssertEqual(contentTitles.count, 1)
@@ -52,8 +48,16 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
         XCTAssertEqual(contentTitles.count, 0)
         XCTAssertEqual(nativeTitles.count, 1)
       }
-    }
-  #endif
+    #else
+      let window = application.windows.firstMatch
+      let nativeTitles = window.staticTexts.matching(
+        NSPredicate(format: "label == %@ OR value == %@", title, title))
+      XCTAssertTrue(nativeTitles.firstMatch.waitForExistence(timeout: 5))
+      XCTAssertEqual(contentTitles.count, 0)
+      XCTAssertEqual(nativeTitles.count, 1)
+      XCTAssertTrue(window.toolbars.firstMatch.frame.contains(nativeTitles.firstMatch.frame))
+    #endif
+  }
 
   func
     testItineraryDeletionReviewsRepeatedEntriesAndRetainsIndependentListsAndPlansAfterCancelAndRelaunch()
@@ -217,6 +221,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
       detail.lifetime = .keepAlways
       add(detail)
       recordScreenshot(application, name: "Selected itinerary appearance retains source notes")
+      assertSingleItineraryTitle("Selected plan", in: application)
     #endif
     XCTAssertTrue(sourceNotes.waitForExistence(timeout: 10))
     #if os(iOS)

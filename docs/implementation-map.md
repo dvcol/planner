@@ -83,9 +83,11 @@ The [Mac itinerary selection correction](prototypes/native-mac-itinerary-selecti
 then fixes the product failure found by that cohort. Direct rows now expose
 their concrete appearance selection at the native List boundary, so selecting
 Museum opens its details. The deletion/relaunch journey passes separately while
-preserving its shared Item. Mobile production paths are unchanged. Failed
-diagnostics remain distinct; nested Map/keyboard and duplicate Mac itinerary
-heading review retain their own follow-ups.
+preserving its shared Item. A final two-test creation/deletion run also passes
+with one native Mac toolbar title before/after relaunch and while appearance
+details are open. The duplicate content heading is removed; mobile production
+paths are unchanged. Failed diagnostics remain distinct. Nested Map/keyboard,
+broader resizing and accessibility retain their own follow-ups.
 
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
