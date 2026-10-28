@@ -262,6 +262,36 @@ changed. The existing human Sharing-settings visibility/enabled-state observatio
 remains pending. Installed handoff and a real extension save remain unqualified;
 the main-app and explicit-configuration capture tests do not replace them.
 
+## Duplicate Share registration cleanup, 28 October 2026
+
+The user's Settings capture shows four Planner entries, all with Sharing off.
+This establishes visible discovery despite the empty PlugInKit command query;
+that query alone cannot establish absence from the actual Settings interface.
+
+Scoped Launch Services inspection finds old test, probe and missing-app records.
+The authorized cleanup unregisters 26 obsolete Planner app paths and three test
+Share paths, then registers the canonical app at
+`~/Applications/Planner Development.app`. Its Planner Share-host records contain
+only that app and its embedded `dvcol.planner.ShareMac` extension. All 30 initial
+cleanup commands return zero. No global registry reset or extension-election
+change is made.
+
+Four inactive generated/backup app bundles are also removed from temporary
+storage, after exact process checks. One is an incomplete old bundle. Two bundle
+sizes were not recorded before removal; the other two account for 148,640,589
+nominal bytes. The canonical app still passes strict deep signature verification,
+and app data remains untouched.
+
+Settings initially still shows four entries after a pane refresh. After fully
+quitting Settings and reopening it, the user confirms one Planner Development
+entry remains and Sharing is enabled. Installed Share execution/save is not yet
+qualified; the next native check uses that installed app and a separate ShareLink
+source fixture with no embedded extension. It does not recreate a Planner Share
+host copy. Map layout and multi-place work continues
+separately, with production CloudKit disabled and account-transition testing
+still deferred. The [cleanup record](evidence/native-shared-storage/share-cleanup-2026-10-28/result.json)
+records registry verification and the user-confirmed Settings result separately.
+
 ## Current itinerary device build, 28 October 2026
 
 The current signed physical build passes in 52.305 seconds with all 1,169 native
