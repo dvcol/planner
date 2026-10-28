@@ -170,3 +170,40 @@ resolved. Physical routing, VoiceOver, maximum-text phone layout, positive
 transit ETA and controlled directions-provider failure/cancellation remain open.
 The maximum-text summary can scroll beneath the native toolbar; this footer
 slice does not establish whole-screen accessibility acceptance.
+
+## Mac pane lifecycle and stationary controls, 29 October 2026
+
+The user's foreground run starts the native case, clearing the startup gate for
+that attempt, then reproduces a real Opening Itinerary loop. Scoped temporary
+logging records 624 lifecycle events: the same loaded window disappears, clears
+its metadata and reloads repeatedly. Giving the Mac native split one stable
+VStack collection child stops this cycle. The loader's cancellation safeguards
+remain in place; the diagnostic logging is removed.
+
+The next failures expose a moving Routes target. Its separate calculation row
+changes footer height while XCTest is synthesizing the click. Sheet sizing and
+fresh-presentation-identity probes do not correct it and are removed. Progress
+now overlays the existing Routes icon, preserving control geometry and supplying
+an accessible Calculating routes value. On the maximum-text phone, compact Map
+labels retain full accessibility names and a 44-point target; full titles still
+scale in Locations. The existing driver scrolls to each native route section
+before reading results and waits for each sheet dismissal.
+
+The [matching checkpoint](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/result.json)
+passes one Mac case in 152.718 seconds and one dark, maximum-text, increased-
+contrast phone case in 191.076 seconds, with zero failures or skips. Both verify
+all three walking/driving legs, transit fallback and the exact saved bookmark.
+Mac additionally verifies 1200/1600-point resizing, bounded details and width
+recovery. Phone verifies initial pin containment and native route-list scrolling.
+Its settings and original boot state are verified restored. Matching Mac and
+Simulator builds pass in 27.870 and 27.350 seconds against 1,170 identical inputs.
+Strict affected-file formatting and diff checks pass; authentication policy and
+saved-data contracts are unchanged.
+
+Inspected captures also expose a remaining camera-framing defect: selected-detail
+resizing on Mac zooms out too far and bunches nearby labels together. The
+[selected-pane capture](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/mac-selected-1200.png)
+records it. Passing containment and width checks do not close that visual issue.
+The [phone capture](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/phone-maximum-pins.png)
+retains the represented maximum-text state. Camera fitting, physical routing and
+the broader assistive review remain open.

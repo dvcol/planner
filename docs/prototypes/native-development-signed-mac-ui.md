@@ -169,3 +169,11 @@ manual native approval and changes no authentication policy, protected service,
 iCloud setting or signing resource. A successful build is not Mac interaction
 acceptance, and another restart or unchanged background retry is not the next
 diagnostic.
+
+The user's subsequent foreground run starts one case and fails inside Planner's
+Opening Itinerary state. Scoped implementation corrections then produce a
+[passing Mac Map route/resize journey](native-map-routing.md#mac-pane-lifecycle-and-stationary-controls-29-october-2026).
+The current Mac checkpoint is therefore no longer blocked before test execution.
+This does not establish why the earlier prompt was invisible or guarantee every
+future startup. Manual authentication remains required; no security setting is
+changed.

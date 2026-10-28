@@ -53,6 +53,16 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Mac Map lifecycle follow-up](prototypes/native-map-routing.md#mac-pane-lifecycle-and-stationary-controls-29-october-2026)
+now starts and passes the actual three-place route/resize journey. A stable
+native split child fixes an itinerary reload loop; a progress overlay keeps
+Routes stationary while calculation completes. The matching maximum-text dark-
+phone journey also passes native route scrolling, pin containment and exact
+bookmark Return. These close the represented loading/control defects, with no
+authentication-policy change. Inspected Mac resize captures expose excessive
+camera zoom-out and overlapping nearby labels; camera fitting remains the next
+Map correction. Physical routing and full assistive acceptance stay open.
+
 The [adaptive Map footer](prototypes/native-map-routing.md#adaptive-route-controls-at-maximum-text)
 now passes all three travel modes in portrait and landscape on the dark iPad at
 maximum accessibility text with Increase Contrast. The icon-only Routes control

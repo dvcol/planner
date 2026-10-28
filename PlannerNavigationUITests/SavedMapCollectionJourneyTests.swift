@@ -310,6 +310,16 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       application.buttons["saved.map.pin.\($0)"]
     }
     for pin in pins { XCTAssertTrue(pin.waitForPlannerHittability()) }
+    let containedPins = NSPredicate { _, _ in
+      pins.allSatisfy { $0.isHittable && map.frame.contains($0.frame) }
+    }
+    let viewportResult = XCTWaiter.wait(
+      for: [XCTNSPredicateExpectation(predicate: containedPins, object: application)], timeout: 10)
+    let viewportCapture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    viewportCapture.name = "Distinct itinerary pins fit the visible Map"
+    viewportCapture.lifetime = .keepAlways
+    add(viewportCapture)
+    XCTAssertEqual(viewportResult, .completed)
     XCTAssertEqual(pins[0].label, "2 items")
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .pad {
@@ -323,14 +333,18 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       }
     #endif
     application.plannerElement("saved.map.routes").activateForPlannerJourney()
+    let closeRoutes = application.plannerElement("saved.map.route.close")
+    XCTAssertTrue(closeRoutes.waitForExistence(timeout: 5))
     for index in 0..<3 {
+      revealRouteLeg(index, in: application)
       let calculated = application.descendants(matching: .any).matching(
         identifier: "saved.map.route.calculated.\(index)"
       ).firstMatch
       XCTAssertTrue(
         calculated.waitForExistence(timeout: 35), "Walking must calculate each visible leg.")
     }
-    application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+    closeRoutes.activateForPlannerJourney()
+    XCTAssertTrue(closeRoutes.waitForNonExistence(timeout: 5))
     let routedMap = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     routedMap.name = "Three distinct itinerary places with native walking paths"
     routedMap.lifetime = .keepAlways
@@ -342,14 +356,17 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       application.buttons["Driving"].firstMatch.activateForPlannerJourney()
     #endif
     application.plannerElement("saved.map.routes").activateForPlannerJourney()
+    XCTAssertTrue(closeRoutes.waitForExistence(timeout: 5))
     for index in 0..<3 {
+      revealRouteLeg(index, in: application)
       let calculated = application.descendants(matching: .any).matching(
         identifier: "saved.map.route.calculated.\(index)"
       ).firstMatch
       XCTAssertTrue(
         calculated.waitForExistence(timeout: 35), "Driving must calculate each visible leg.")
     }
-    application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+    closeRoutes.activateForPlannerJourney()
+    XCTAssertTrue(closeRoutes.waitForNonExistence(timeout: 5))
     application.plannerElement("saved.map.travelMode").activateForPlannerJourney()
     #if os(macOS)
       application.menuItems["Public transport"].firstMatch.activateForPlannerJourney()
@@ -357,10 +374,12 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       application.buttons["Public transport"].firstMatch.activateForPlannerJourney()
     #endif
     application.plannerElement("saved.map.routes").activateForPlannerJourney()
+    XCTAssertTrue(closeRoutes.waitForExistence(timeout: 5))
     XCTAssertTrue(
       application.staticTexts[
         "Public transport times are estimates. Open a leg in Maps for its full route."
       ].waitForExistence(timeout: 5))
+    revealRouteLeg(0, in: application)
     let externalDirections = application.plannerElement("saved.map.route.open.0")
     XCTAssertTrue(externalDirections.waitForPlannerHittability())
     XCTAssertTrue(externalDirections.isEnabled)
@@ -368,7 +387,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       application.descendants(matching: .any).matching(
         identifier: "saved.map.route.calculated.0"
       ).firstMatch.exists)
-    application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+    closeRoutes.activateForPlannerJourney()
+    XCTAssertTrue(closeRoutes.waitForNonExistence(timeout: 5))
     pins[1].activateForPlannerJourney()
     let originalURL = "https://www.google.com/maps/search/?api=1&query=35.662,139.717"
     let bookmark = application.descendants(matching: .any).matching(
@@ -957,6 +977,26 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         start.press(forDuration: 0.05, thenDragTo: end)
       }
       XCTAssertTrue(status.isHittable)
+    #endif
+  }
+
+  /// Materialize each native route section before reading its asynchronously calculated result.
+  private func revealRouteLeg(_ index: Int, in application: XCUIApplication) {
+    #if os(iOS)
+      guard UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory else {
+        return
+      }
+      guard let list = application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable)
+      else {
+        XCTFail("The route details list is unavailable.")
+        return
+      }
+      let leg = application.plannerElement("saved.map.route.open.\(index)")
+      for _ in 0..<10 {
+        if leg.exists && leg.isHittable { return }
+        list.swipeUp(velocity: .slow)
+      }
+      XCTAssertTrue(leg.isHittable, "The route leg must remain reachable by native scrolling.")
     #endif
   }
 

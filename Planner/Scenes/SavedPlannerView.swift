@@ -2031,7 +2031,11 @@ struct SavedPlannerView: View {
       #if os(macOS)
         GeometryReader { geometry in
           HSplitView {
-            plannerCollectionColumn.frame(minWidth: 320)
+            // Keep one split item while the collection switches between loading and content.
+            VStack(spacing: 0) {
+              plannerCollectionColumn
+            }
+            .frame(minWidth: 320)
             if mapDetailsPresented {
               mapDetailPane
                 .frame(minWidth: 280, idealWidth: 360, maxWidth: 420)

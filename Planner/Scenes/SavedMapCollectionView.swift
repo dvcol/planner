@@ -184,10 +184,18 @@ struct SavedMapCollectionView: View {
       presentedSheet = .directions
     } label: {
       Label("Routes", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+        .opacity(directions.isLoading ? 0 : 1)
+        .overlay {
+          if directions.isLoading {
+            ProgressView().controlSize(.small).accessibilityHidden(true)
+          }
+        }
     }
     .buttonStyle(.bordered)
     .controlSize(.large)
     .labelStyle(.iconOnly)
+    .accessibilityLabel("Routes")
+    .accessibilityValue(directions.isLoading ? "Calculating routes" : "")
     .help("Routes")
     .accessibilityIdentifier("saved.map.routes")
   }
@@ -204,9 +212,6 @@ struct SavedMapCollectionView: View {
           travelModePicker
           routesButton
         }
-      }
-      if directions.isLoading {
-        ProgressView("Calculating routes").font(.callout)
       }
     }
   }
@@ -243,6 +248,9 @@ struct SavedMapCollectionView: View {
           .buttonStyle(.borderedProminent)
           .buttonBorderShape(.capsule)
           .controlSize(.large)
+          // Full titles scale in Locations; map labels stay compact beside nearby pins.
+          .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+          .frame(minWidth: 44, minHeight: 44)
           .accessibilityLabel(markerTitle)
           .accessibilityIdentifier(
             "saved.map.pin.\(group.coordinate.latitude),\(group.coordinate.longitude)")
