@@ -292,6 +292,155 @@ separately, with production CloudKit disabled and account-transition testing
 still deferred. The [cleanup record](evidence/native-shared-storage/share-cleanup-2026-10-28/result.json)
 records registry verification and the user-confirmed Settings result separately.
 
+## Installed native Share picker, 28 October 2026
+
+The native source fixture shares a synthetic HTTPS URL through `ShareLink`.
+It has no embedded extension or App Group. It uses the existing development
+certificate and test entitlements; no new identifier, profile or certificate is
+created. The final fixture-only build succeeds in 10.863 seconds against 1,172
+matched native inputs. The canonical installed app and all 25 of its files stay
+unchanged, with strict deep signatures verified before and after each run.
+
+Manual UI automation reaches actual test execution. The initial unobstructed
+native picker offers Reading List, AirDrop, Mail, Notes and Copy, but no Planner.
+Its first driver incorrectly matches an unrelated Apple-menu Recent Items entry;
+no extension review or Save occurs. The corrected driver scopes the actual
+`ShareSheet.Popover` and requires a hittable Planner service button. A subsequent
+retry finds Planner running without a window; the driver now opens a normal
+File → New Window when necessary rather than restarting a running app.
+
+The final corrected retry opens the native picker and fails to find Planner in
+23.511 seconds. Its capture also contains a macOS authentication dialog over
+the picker, so it does not establish an unobstructed final result. The user is
+asked to resolve the expected manual authentication dialog and independently
+check Safari's Share menu. The authentication-required policy remains unchanged.
+
+The installed activation predicate accepts actual native URL and plain-text
+providers. Scoped registration lint exits zero without metadata errors, and
+Launch Services retains the canonical app/extension pair. The exact PlugInKit
+query still returns no matches. These checks narrow the investigation but do
+not establish a root cause or qualify installed Share launch/save.
+
+The [picker evidence](evidence/native-shared-storage/installed-picker-2026-10-28/result.json)
+keeps the clear initial picker capture, exact final fixture sources and bounded
+run outcomes. Raw recent-item hierarchies, the authentication-dialog capture,
+full system logs and signing-resource contents are excluded. No production
+metadata, security setting or installed app is changed by these trials.
+
+### Discovery follow-up after manual approval
+
+The user confirms Planner is also absent from Safari's Share menu and that the
+expected automation dialog has been approved and closed. This rules out a
+failure confined to the source fixture. A scoped unregister/register cycle for
+the canonical app and its embedded extension returns zero for all three steps,
+but the exact PlugInKit query remains empty. Installed product files stay unchanged.
+
+The user's discovery daemon predates this installation by more than six days.
+It belongs to the user service domain, rather than the GUI domain. macOS refuses
+its requested restart with error 150, "Operation not permitted while System
+Integrity Protection is engaged." The service is not restarted and protection
+is unchanged. This is an operating-system refusal, not an automation approval
+failure, and stale discovery remains a hypothesis rather than an established cause.
+
+Read-only controls find 487 registered plugins, including 14 non-Apple entries.
+The installed OneNote Share extension is also absent from its exact query.
+No relevant restriction payload appears in the configuration profiles readable
+by this process. These controls do not prove a system-wide failure or exclude
+every device-management policy. No profile, election, certificate or app metadata
+is changed to make these observations pass.
+
+The unchanged test is retried after the user's approval confirmation, but Xcode
+reports "Timed out while enabling automation mode" before any test case starts.
+The bounded run receives no Share acceptance credit. Further identical UI retries
+are stopped until discovery changes. The next requested diagnostic is a normal
+Mac restart, followed by a fresh discovery query before another installed Share
+run. A restart is not yet proven to fix the issue. Signing remains verified and
+no security protection is weakened.
+
+The user subsequently confirms a normal restart and that Xcode is open. The
+execution service nevertheless reports the same discovery-process identity,
+an October 14 kernel boot date and thirteen days of uptime. `last reboot` and
+the launch-process age agree with that execution-side date. Planner's query
+still has no matches; the canonical signature verifies and its file count
+remains 25. The project binding reports the local host.
+
+These observations do not establish which session the user restarted or whether
+the execution connection is stale. The next diagnostic asks for `hostname` and
+`uptime` from the user's Terminal for comparison. No additional restart or UI
+run is requested before resolving that discrepancy.
+
+A later direct check observes the restart: uptime is six minutes, the discovery
+process has been replaced, and temporary build products have been cleared.
+The earlier Terminal comparison is no longer required. Planner nevertheless
+remains absent from its successful PlugInKit query. macOS 27.0.1 satisfies the
+app and extension's minimum 27.0, and the canonical signature still verifies.
+The fresh boot therefore does not restore discovery. Keep that negative result
+separate from the earlier stale-process hypothesis and continue with a minimal
+native registration control rather than repeating unchanged Share UI runs.
+
+Launching the canonical installed parent after the fresh boot also leaves its
+exact query empty. Apple Share services remain discoverable in the same user
+session. A minimal, independently signed native control with the standard Share
+declaration and icon is likewise absent; its parent was not launched, so this
+control does not establish a system-wide failure. Its temporary registration
+and application are removed afterward.
+
+The canonical app has no quarantine attribute and still passes signature
+verification, but `spctl --assess --type execute` rejects its development build
+with exit 3. Apple's [extension distribution guidance](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html)
+separately requires user approval of a containing app signed without Developer
+ID. This is a plausible admission cause, not a confirmed diagnosis. The next
+human check is a Finder Control-click → Open of the canonical app followed by
+the actual Safari Share menu. No global Gatekeeper setting, certificate,
+capability or production metadata is changed. UI automation approval and this
+app-opening approval remain separate.
+
+### Managed Share restriction established
+
+The user opens the exact canonical app through Finder and confirms that Planner
+is still absent; their Safari screenshot independently shows the omission.
+The post-opening PlugInKit query still succeeds with no matches. This opening
+step does not resolve discovery and Gatekeeper is not established as its cause.
+
+A bounded live `pkd` debug trace during registration provides the first concrete
+rejection reason. ManagedClient reports 29 denials for
+`com.apple.share-services`, including 25 with redacted plugin identities, and
+discovery records `plugin rejected by MCX`. The policy message says the Share
+extension point is implicitly denied by a payload. The payload identity and
+Planner-specific plugin identity are redacted, so this establishes the active
+Share management restriction without identifying its administering profile.
+
+Neither the readable configuration-profile report nor the two targeted managed
+preference files expose that rule; Foundation's effective preference reads are
+also absent. Those negative reads do not override the actual runtime denial.
+Apple documents this policy under the
+[Extensions management payload](https://developer.apple.com/documentation/devicemanagement/nsextensionmanagement).
+The device administrator must review `com.apple.NSExtension` and permit
+`dvcol.planner.ShareMac` and the required `com.apple.share-services` point under
+the applicable policy. Alternatively, installed Share can be qualified on a Mac
+whose policy permits it. No profile, restriction or security protection is
+removed or modified. Further identical Share runtime retries are held until
+admission changes; handoff/save remains unqualified.
+
+The fixture-only source host and opt-in UI journey now compile independently.
+An initial development-signing build fails because the fixture's unregistered
+test identifier has no development profile. A local ad-hoc build with no App
+Group entitlement succeeds in 58.326 seconds; no test identifier/profile is
+registered. The real installed app and extension retain their verified signing
+and App Group. The journey skips unless explicitly enabled for disposable
+installed data and deletes only its uniquely created Item after a successful
+handoff/readback. That success/cleanup path has not executed while discovery is
+blocked. Compilation supplies no installed-extension execution credit.
+
+The subsequent MVP focus moves installed Mac Share integration and qualification
+to post-MVP. In-app New Item and From Link or Text remain the Mac capture path.
+The prepared source host and opt-in test are retained in the
+[deferred source/evidence packet](evidence/native-shared-storage/managed-share-restriction-2026-10-28/result.json)
+rather than added to the active fixture target. The fixture app returns exactly
+to its preceding committed source. Existing production Share implementation,
+signing, saved data and the diagnosis remain intact. Further discovery work and
+administrator policy exceptions are not MVP tasks.
+
 ## Current itinerary device build, 28 October 2026
 
 The current signed physical build passes in 52.305 seconds with all 1,169 native

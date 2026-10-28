@@ -10,8 +10,9 @@ export/import tools can remain available. Further portability polish and advance
 manual import/restoration qualification are post-MVP, not release blockers.
 Preserve implemented validation, saved data and existing recovery evidence.
 App Intents/MCP retain their established V3 stage after the core V2 release.
-Signing setup is now authorized with the user's enrolled team; actual Mac UI, installed Share and physical sync remain
-distinct core work and acceptance gates. CloudKit integration is not yet
+Signing setup is now authorized with the user's enrolled team; actual Mac UI, mobile Share and physical sync remain
+distinct core work and acceptance gates. Installed Mac Share is post-MVP under
+the [28 October focus](release-goals.md#mac-share-mvp-focus-28-october-2026). CloudKit integration is not yet
 implemented: production currently selects local-only SwiftData storage.
 Historical checkpoints below retain their scope
 but do not override this priority.
@@ -31,13 +32,13 @@ only a remaining test gate were incomplete.
 On 27 October the user defers account-transition testing. Do not arm that
 experiment or change iCloud settings. This postpones the test rather than
 removing the ownership/reset safety requirement. Production CloudKit activation
-still depends on establishing it; independent local UI and signing/Share work
+still depends on establishing it; independent local core UI and mobile Share work
 can continue.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, installed Share and physical-device sync. |
-| Shared storage | [Mac and device save pass][shared] | Installed Share handoff/save. |
+| Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, mobile Share and physical-device sync. |
+| Shared storage | [Mac and device save pass][shared] | Mobile Share handoff/save; installed Mac Share is post-MVP. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
@@ -51,6 +52,60 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [multi-place routing slice](prototypes/native-map-routing.md) adds temporary
+native walking/driving paths and a Walking/Driving/Public transport picker.
+Light-phone and dark-tablet journeys pass with four appearances at three
+coordinates, all three walking and driving legs, transit fallback and exact
+saved-link selection. Their original walking-path captures are inspected.
+Padded camera bounds correct clipped tablet markers. The subsequent native
+split/inspector correction now passes full-width Map, bounded selected details,
+Hide/Reopen, exact bookmarks and Items/List rotation on the dark tablet. Five
+mobile journeys and matching Mac compilation pass, including phone Items and
+repeated-List context regressions. The prepared Mac run times out enabling UI
+automation before any case starts; actual Mac route UI/resizing, physical routing
+and broader accessibility still need qualification. A fresh
+signed Mac build and the real-storage controller
+case now pass for exact repeated appearances, unknown-stop gaps, mode/Cancel
+clearing and unchanged exported content. Its one closed fixture is retained
+because macOS denies the external cleanup tool's marker read; no deletion is
+claimed.
+
+The [Share cleanup](prototypes/native-shared-storage.md#duplicate-share-registration-cleanup-28-october-2026)
+follows the user's actual Settings capture of four disabled Planner entries.
+Scoped unregistering leaves one canonical app/Share pair in Launch Services;
+four inactive temporary app bundles are removed, preserving data and the
+verified installed app. After fully quitting and reopening Settings, the user
+confirms one Planner Development entry remains and Sharing is enabled. The empty
+PlugInKit query did not prove absence from Settings. Actual installed handoff/save
+remains open. The fixture-only native Share trial starts with manual automation
+approval, but its clear picker capture omits Planner. The corrected driver scopes
+the actual popover; its last retry also has an authentication-dialog overlay.
+Neither launch nor Save is qualified. Predicate/signature checks pass and the
+installed app remains unchanged. Safari also omits Planner. A scoped registration
+cycle does not fix discovery, and macOS refuses a protected-service restart under
+System Integrity Protection. A normal Mac restart is requested as the next
+diagnostic; it is not yet a proven fix. The latest UI attempt times out enabling
+automation before any case starts. Further identical Share retries wait for a
+changed discovery result.
+
+A subsequent check confirms a fresh boot and replacement discovery process;
+Planner still has no discovery match. The restart did not restore Share. OS
+compatibility and the installed signature pass. The next investigation uses a
+minimal native registration control, which also remains absent before launching
+its parent. That limited control does not establish a system-wide failure.
+The canonical app launches but its Gatekeeper assessment rejects; signature
+verification passes. The user subsequently opens the exact installed app through
+Finder and supplies a Safari capture still omitting Planner. A bounded live
+discovery trace now establishes a management-payload denial of
+`com.apple.share-services`, with `plugin rejected by MCX`. Plugin/payload
+identities are redacted, and readable profile/preference reports do not expose
+the rule. Post-MVP qualification would require the Mac administrator to review
+the `com.apple.NSExtension` policy for `dvcol.planner.ShareMac` and its Share
+extension point. No profile or security setting is changed. The isolated opt-in
+Share host/test compile without a new registered identifier or group access;
+their source is archived outside the active fixture target. Installed handoff/save
+remains unqualified. The earlier Terminal comparison is no longer needed.
 
 The [Itinerary heading/navigation correction](prototypes/native-mobile-list-heading.md#itinerary-heading-and-compact-navigation-28-october-2026)
 removes the repeated iPad bar title and fixes an iPhone second-plan loading stall
@@ -552,33 +607,17 @@ Keep existing basic export/import available without expanding it. New advanced
 portability or manual-restoration cases belong to post-MVP work and do not delay
 the core queue. Preserve safeguards for ordinary saves and synchronization.
 
-1. Qualify installed Share against the configured shared store. The
-   [registered-app checkpoint](prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026)
-   wires the approved identifiers and App Group into main and both extensions.
-   Five Mac storage tests and two mobile capture executions pass; actual Mac
-   signatures/profiles permit group access. The user authorizes a fresh app
-   containing test data, and the old prototype is untouched. Mac extension
-   discovery remains unresolved. [Two physical iPad journeys][shared] now pass
-   normal shared-store save/relaunch/cleanup and exact Map-link context after
-   correcting a device startup crash. The [ordinary Mac installation][ordinary-share]
-   still has no PlugInKit record; a fresh Sharing-settings observation is pending.
-   [Discovery checks](prototypes/native-shared-storage.md#mac-share-discovery-checks-28-october-2026)
-   confirm the installed copy, signatures and matching group/session. An
-   instrumented registration still yields no record or Planner-specific reason;
-   no speculative signing or metadata change is justified by these checks.
-   Installed Share handoff/save remains open.
-   Keep the local-data safety guard.
-2. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
-3. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
+1. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
+2. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
    The mobile List and Itinerary one-heading corrections now have their scoped
    checkpoints above. Broader scene and assistive acceptance remains open.
-4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
+3. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
    The [Mac Locations correction](prototypes/native-map-collection-ui.md#mac-locations-sheet-27-october-2026)
    fixes a collapsed sheet and passes provider/warning, dismissal and exact
    bookmark checks on Mac and both simulators. The contextual Map pair above
    adds actual window resizing; other contexts, native divider and keyboard
    interaction remain open.
-5. Qualify the outstanding core Mac UI workflows, including capture,
+4. Qualify the outstanding core Mac UI workflows, including capture,
    Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
    cases. The [reader width follow-up](prototypes/native-reader-pane-width.md#mac-width-checks-prepared-28-october-2026)
    now has [actual Mac reader passes](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
@@ -596,11 +635,16 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    broader accessibility review remains open. Follow the
    retained runtime diagnosis; do not repeat unchanged startup attempts or
    assume a signing cause. Export/import-specific UI acceptance is post-MVP.
-6. Complete signed/shared-store, installed Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates after their implementation. Simulator or local-store evidence cannot replace these.
-7. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
+5. Complete signed/shared-store, mobile Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates after their implementation. Simulator or local-store evidence cannot replace these.
+6. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
 
 ## Post-MVP work
 
+- Installed Mac Share integration and handoff/save qualification. In-app New Item
+  and From Link or Text remain the MVP capture paths on Mac. The implemented
+  extension and [managed-policy diagnosis](prototypes/native-shared-storage.md#managed-share-restriction-established)
+  remain recorded; further system discovery trials and policy exceptions are
+  deferred. Core shared storage and mobile Share stay in scope.
 - JSON export/import and advanced manual import/restoration qualification are
   optional administration. Keep the existing basic tools and their validation;
   do not expand this work while core MVP features and acceptance remain open.
@@ -614,7 +658,7 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
 
 ## Tickets, contracts and original scope
 
-The existing tickets retain their Context, starting/end state, DoR, DoD and required unit/native/HTTP/physical tests. The 26 October MVP amendment governs release priority; deferred requirements remain recorded rather than marked complete:
+The existing tickets retain their Context, starting/end state, DoR, DoD and required unit/native/HTTP/physical tests. The MVP scope amendments govern release priority; deferred requirements remain recorded rather than marked complete:
 
 - [Apple test access, issue 7](https://github.com/dvcol/planner/issues/7).
 - [Navigation prototype, issue 14](https://github.com/dvcol/planner/issues/14).
