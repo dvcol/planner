@@ -65,6 +65,15 @@ final class SavedMapCollection {
   @ObservationIgnored private var activeInputs: [LocationInput: PreviewOperation] = [:]
   @ObservationIgnored private var retryInputs: Set<LocationInput> = []
 
+  /// Keep unresolved rows in route order so directions never bridge an unknown stop.
+  var routingLocations: [(row: PlannerMapRowRead, coordinate: PlannerCoordinate?)] {
+    guard state == .ready, !resolutions.contains(.loading) else { return [] }
+    return zip(rows, resolutions).map { row, resolution in
+      if case .located(let coordinate) = resolution { return (row, coordinate) }
+      return (row, nil)
+    }
+  }
+
   init(addressPreviews: PlannerAddressPreviews, mapsPreviews: PlannerMapsPreviews) {
     self.addressPreviews = addressPreviews
     self.mapsPreviews = mapsPreviews

@@ -517,6 +517,11 @@ struct SavedPlannerView: View {
               websiteHost(isActive: selectedSection == .itineraries) {
                 itineraryAppearanceDetail
               }
+              .modifier(
+                SavedMapDetailColumn(
+                  isMap: selectedItineraryIdentifier.map {
+                    itineraryPresentations[$0]?.representation == .map
+                  } == true))
             }
             .id(itineraryNavigationIdentifier)
           }
@@ -536,6 +541,9 @@ struct SavedPlannerView: View {
       websiteHost(isActive: selectedSection == (scope == .items ? .items : .inbox)) {
         if let newItemDraft { newItemEditor(newItemDraft) } else { itemDetail }
       }
+      .modifier(
+        SavedMapDetailColumn(
+          isMap: (scope == .inbox ? inboxRepresentation : itemsRepresentation) == .map))
     }
   }
 
@@ -1987,7 +1995,8 @@ struct SavedPlannerView: View {
         listContents(selectedList)
           .navigationSplitViewColumnWidth(
             min: listRepresentation == .map ? 320 : 220,
-            ideal: listRepresentation == .map ? 560 : 320, max: 800
+            ideal: listRepresentation == .map ? 560 : 320,
+            max: listRepresentation == .map ? nil : 800
           )
           .toolbarTitleDisplayMode(.inline)
           #if os(iOS)
@@ -2122,6 +2131,7 @@ struct SavedPlannerView: View {
           appearanceDetail
         }
       }
+      .modifier(SavedMapDetailColumn(isMap: mapRequest != nil))
     }
     .id(listNavigationIdentifier)
     .navigationSplitViewStyle(.balanced)

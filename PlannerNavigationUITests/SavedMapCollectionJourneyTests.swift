@@ -283,6 +283,125 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       captureName: "Counted itinerary pin distinguishes independent repeated stops")
   }
 
+  func testItineraryMapFitsDistinctPlacesAndUsesAvailableWidth() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let places = [
+      ("Hotel", "35.668,139.712"), ("Museum", "35.662,139.717"),
+      ("Garden", "35.659,139.708"),
+    ]
+    for (name, coordinate) in places {
+      createItem(
+        name, link: "https://www.google.com/maps/search/?api=1&query=\(coordinate)",
+        in: application)
+      returnToCatalog(application)
+    }
+    createWeekendRoute(referencing: ["Hotel", "Museum", "Garden", "Hotel"], in: application)
+    application.openSavedPlannerItineraryViewMenu()
+    application.chooseSavedPlannerCollectionRepresentation("Map")
+    let map = application.descendants(matching: .any).matching(identifier: "saved.map.collection")
+      .firstMatch
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    let pins = ["35.668,139.712", "35.662,139.717", "35.659,139.708"].map {
+      application.buttons["saved.map.pin.\($0)"]
+    }
+    for pin in pins { XCTAssertTrue(pin.waitForPlannerHittability()) }
+    XCTAssertEqual(pins[0].label, "2 items")
+    application.plannerElement("saved.map.routes").activateForPlannerJourney()
+    for index in 0..<3 {
+      let calculated = application.descendants(matching: .any).matching(
+        identifier: "saved.map.route.calculated.\(index)"
+      ).firstMatch
+      XCTAssertTrue(
+        calculated.waitForExistence(timeout: 35), "Walking must calculate each visible leg.")
+    }
+    application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+    let routedMap = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    routedMap.name = "Three distinct itinerary places with native walking paths"
+    routedMap.lifetime = .keepAlways
+    add(routedMap)
+    application.plannerElement("saved.map.travelMode").activateForPlannerJourney()
+    #if os(macOS)
+      application.menuItems["Driving"].firstMatch.activateForPlannerJourney()
+    #else
+      application.buttons["Driving"].firstMatch.activateForPlannerJourney()
+    #endif
+    application.plannerElement("saved.map.routes").activateForPlannerJourney()
+    for index in 0..<3 {
+      let calculated = application.descendants(matching: .any).matching(
+        identifier: "saved.map.route.calculated.\(index)"
+      ).firstMatch
+      XCTAssertTrue(
+        calculated.waitForExistence(timeout: 35), "Driving must calculate each visible leg.")
+    }
+    application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+    application.plannerElement("saved.map.travelMode").activateForPlannerJourney()
+    #if os(macOS)
+      application.menuItems["Public transport"].firstMatch.activateForPlannerJourney()
+    #else
+      application.buttons["Public transport"].firstMatch.activateForPlannerJourney()
+    #endif
+    application.plannerElement("saved.map.routes").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts[
+        "Public transport times are estimates. Open a leg in Maps for its full route."
+      ].waitForExistence(timeout: 5))
+    let externalDirections = application.plannerElement("saved.map.route.open.0")
+    XCTAssertTrue(externalDirections.waitForPlannerHittability())
+    XCTAssertTrue(externalDirections.isEnabled)
+    XCTAssertFalse(
+      application.descendants(matching: .any).matching(
+        identifier: "saved.map.route.calculated.0"
+      ).firstMatch.exists)
+    application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+    pins[1].activateForPlannerJourney()
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=35.662,139.717"
+    let bookmark = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
+    ).firstMatch
+    revealDetailLink(bookmark, in: application)
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
+    let bookmarkIdentifier = bookmark.identifier
+    #if os(macOS)
+      let window = application.windows.firstMatch
+      let originalWidth = window.frame.width
+      defer {
+        if window.exists { window.resizePlannerWindowForJourney(width: originalWidth) }
+      }
+      var mapWidths: [CGFloat] = []
+      for width: CGFloat in [1200, 1600] {
+        window.resizePlannerWindowForJourney(width: width)
+        let capture = XCTAttachment(screenshot: window.screenshot())
+        capture.name = "Three distinct itinerary places at Mac width \(Int(width))"
+        capture.lifetime = .keepAlways
+        add(capture)
+        let geometry = XCTAttachment(
+          string:
+            "window=\(window.frame)\nmap=\(map.frame)\npins=\(pins.map(\.frame))\nbookmark=\(bookmark.frame)"
+        )
+        geometry.name = "Distinct-place Map and detail geometry at width \(Int(width))"
+        geometry.lifetime = .keepAlways
+        add(geometry)
+        let detailWidth = window.frame.maxX - map.frame.maxX
+        XCTAssertLessThanOrEqual(detailWidth, 421)
+        XCTAssertGreaterThan(map.frame.width, detailWidth)
+        for pin in pins {
+          XCTAssertTrue(pin.isHittable)
+          XCTAssertTrue(map.frame.contains(pin.frame))
+        }
+        XCTAssertTrue(bookmark.isHittable)
+        XCTAssertEqual(bookmark.identifier, bookmarkIdentifier)
+        XCTAssertEqual(bookmark.value as? String, originalURL)
+        mapWidths.append(map.frame.width)
+      }
+      XCTAssertGreaterThan(mapWidths[1] - mapWidths[0], 350)
+    #endif
+  }
+
   func testItineraryMapKeepsRepeatedListBranchesIndependentFromTheStandaloneList() {
     continueAfterFailure = false
     prepareTabletOrientation()

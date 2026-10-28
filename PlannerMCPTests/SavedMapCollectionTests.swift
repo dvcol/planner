@@ -817,6 +817,81 @@ final class SavedMapCollectionTests: XCTestCase {
     XCTAssertEqual(after, before)
   }
 
+  func testDirectionsKeepRepeatedAppearancesAndNeverBridgeMissingStops() async throws {
+    let (planner, session) = try await makePlanner()
+    let hotel = try await createItem(
+      title: "Hotel",
+      location: .init(
+        displayName: nil, formattedAddress: nil,
+        coordinate: .init(latitude: 35.668, longitude: 139.712)),
+      planner: planner, session: session)
+    let missing = try await apply(
+      .createItem(content: .init(title: "Unknown stop")), planner: planner, session: session)
+    let itinerary = try await apply(
+      .createItinerary(content: .init(title: "Ordered route")), planner: planner, session: session)
+    var entries: [UUID] = []
+    for source in [hotel, hotel, missing, hotel] {
+      let result = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .addItineraryEntry(
+            itineraryId: itinerary.id, source: source, placement: .last)))
+      guard case .applied(let applied, .complete) = result.outcome,
+        case .itineraryEntry(let identifier, _, _)? = applied.generatedReferences.first
+      else { throw CancellationError() }
+      entries.append(identifier)
+    }
+    let collection = SavedMapCollection(
+      addressPreviews: .init(provider: RecordingMapAddressProvider()),
+      mapsPreviews: .init(provider: RecordingMapLinkProvider()))
+    await collection.reload(
+      planner: planner, session: session,
+      query: .init(
+        scope: .itinerary(itinerary.id), completion: .all, archive: .all,
+        sort: .init(mode: .manual)),
+      identity: .init(namespace: "route-gaps", savedRevision: UUID()))
+    guard case .exported(let before) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    let directions = SavedMapDirections()
+    let request = SavedMapDirections.Request(collection: collection, directions: directions)
+    XCTAssertEqual(request.stops.map(\.title), ["Hotel", "Hotel", "Unknown stop", "Hotel"])
+    XCTAssertEqual(
+      request.stops.map(\.identity),
+      zip([hotel, hotel, missing, hotel], entries).map {
+        .appearance(
+          source: $0, appearance: .directItineraryItem(itineraryId: itinerary.id, entryId: $1))
+      })
+    XCTAssertEqual(
+      request.stops.map(\.coordinate),
+      [
+        .init(latitude: 35.668, longitude: 139.712),
+        .init(latitude: 35.668, longitude: 139.712), nil,
+        .init(latitude: 35.668, longitude: 139.712),
+      ])
+    await directions.reload(request)
+    XCTAssertEqual(directions.legs.count, 3)
+    guard case .sameLocation = directions.legs[0].outcome,
+      case .missingLocation = directions.legs[1].outcome,
+      case .missingLocation = directions.legs[2].outcome
+    else {
+      return XCTFail("Unknown stops must leave gaps; adjacent identical stops need no lookup.")
+    }
+    XCTAssertTrue(directions.routes.isEmpty)
+    XCTAssertFalse(directions.isLoading)
+    directions.mode = .driving
+    XCTAssertTrue(directions.legs.isEmpty, "Changing travel mode must remove old route geometry.")
+    directions.mode = .transit
+    await directions.reload(.init(collection: collection, directions: directions))
+    XCTAssertEqual(directions.legs.count, 3)
+    directions.cancel()
+    XCTAssertTrue(directions.legs.isEmpty)
+    guard case .exported(let after) = await planner.exportData(session: session) else {
+      throw CancellationError()
+    }
+    XCTAssertEqual(after, before, "Route planning must not modify saved plans or estimates.")
+  }
+
   private func makePlanner() async throws -> (PlannerCore.Planner, PlannerDatasetSession) {
     let storage = try makePlannerIntentStorage()
     print("Planner Map-collection fixture directory: \(storage.directory.path)")

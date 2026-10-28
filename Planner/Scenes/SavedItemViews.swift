@@ -76,7 +76,7 @@ struct SavedItemCatalog: View {
     }
     .navigationSplitViewColumnWidth(
       min: representation == .map ? 320 : 220,
-      ideal: representation == .map ? 560 : 320, max: 800
+      ideal: representation == .map ? 560 : 320, max: representation == .map ? nil : 800
     )
     .task(id: request) { await reload() }
     .task(id: visibleIdentifiers) {

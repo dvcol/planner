@@ -7,6 +7,18 @@ enum SavedCollectionRepresentation: String {
   case list, map
 }
 
+struct SavedMapDetailColumn: ViewModifier {
+  let isMap: Bool
+
+  func body(content: Content) -> some View {
+    if isMap {
+      content.navigationSplitViewColumnWidth(min: 280, ideal: 360, max: 420)
+    } else {
+      content
+    }
+  }
+}
+
 struct SavedCollectionRepresentationMenu: View {
   @Binding var representation: SavedCollectionRepresentation
   let accessibilityIdentifier: String
@@ -69,11 +81,13 @@ struct SavedMapCollectionLayout<Summary: View, MapContent: View>: View {
 struct SavedMapCollectionView: View {
   private enum PresentedSheet: Identifiable {
     case locations
+    case directions
     case group(SavedMapCoordinateIdentity)
 
     var id: String {
       switch self {
       case .locations: "locations"
+      case .directions: "directions"
       case .group(let coordinate): "\(coordinate.latitude),\(coordinate.longitude)"
       }
     }
@@ -114,8 +128,10 @@ struct SavedMapCollectionView: View {
   let collection: SavedMapCollection
   let select: (PlannerMapRowRead) -> Void
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+  @State private var directions = SavedMapDirections()
   @State private var camera = MapCameraPosition.automatic
   @State private var observedCamera: MapCamera?
+  @State private var mapWidth: CGFloat = 440
   @State private var preservesUserCamera = false
   @State private var presentedSheet: PresentedSheet?
   @State private var pendingSelection: PlannerMapRowRead?
@@ -164,8 +180,56 @@ struct SavedMapCollectionView: View {
     }
   }
 
+  private var travelModePicker: some View {
+    @Bindable var directions = directions
+    return Picker("Travel mode", selection: $directions.mode) {
+      ForEach(SavedMapDirections.TravelMode.allCases) { mode in
+        Text(mode.title).tag(mode)
+      }
+    }
+    .pickerStyle(.menu)
+    .accessibilityIdentifier("saved.map.travelMode")
+  }
+
+  private var routesButton: some View {
+    Button {
+      presentedSheet = .directions
+    } label: {
+      Label("Routes", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+    }
+    .buttonStyle(.bordered)
+    .controlSize(.large)
+    .accessibilityIdentifier("saved.map.routes")
+  }
+
+  private var routeControls: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      if dynamicTypeSize.isAccessibilitySize {
+        VStack(alignment: .leading, spacing: 12) {
+          travelModePicker
+          routesButton
+        }
+      } else {
+        HStack(spacing: 12) {
+          travelModePicker
+          Spacer(minLength: 0)
+          routesButton
+        }
+      }
+      if directions.isLoading {
+        ProgressView("Calculating routes").font(.callout)
+      } else if directions.mode == .transit {
+        Text("Public transport: open Routes for estimates and directions in Maps.")
+          .font(.caption).foregroundStyle(.secondary)
+      }
+    }
+  }
+
   var body: some View {
     Map(position: $camera) {
+      ForEach(Array(directions.routes.enumerated()), id: \.offset) { _, route in
+        MapPolyline(route.polyline).stroke(Color.accentColor, lineWidth: 4)
+      }
       ForEach(collection.groups) { group in
         let markerTitle = group.rows.count == 1 ? group.rows[0].title : "\(group.rows.count) items"
         let visibleMarkerTitle =
@@ -188,7 +252,7 @@ struct SavedMapCollectionView: View {
           } label: {
             Label(visibleMarkerTitle, systemImage: "mappin.circle.fill")
               .lineLimit(2)
-              .frame(maxWidth: 220)
+              .frame(maxWidth: max(44, min(220, mapWidth * 0.45)))
           }
           .buttonStyle(.borderedProminent)
           .buttonBorderShape(.capsule)
@@ -202,10 +266,14 @@ struct SavedMapCollectionView: View {
     }
     .onGeometryChange(for: CGSize.self) { geometry in
       geometry.size
-    } action: { _ in
-      guard let observedCamera else { return }
-      preservesUserCamera = preservesUserCamera || camera.positionedByUser
-      camera = .camera(observedCamera)
+    } action: { size in
+      mapWidth = size.width
+      if preservesUserCamera || camera.positionedByUser {
+        preservesUserCamera = true
+        if let observedCamera { camera = .camera(observedCamera) }
+      } else {
+        fitLocations()
+      }
     }
     .onMapCameraChange { context in observedCamera = context.camera }
     .mapControls {
@@ -215,96 +283,138 @@ struct SavedMapCollectionView: View {
     .accessibilityIdentifier("saved.map.collection")
     .overlay { status }
     .safeAreaInset(edge: .bottom, spacing: 0) {
-      footer
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.bar)
+      VStack(alignment: .leading, spacing: 12) {
+        if routeRequest.stops.count > 1 { routeControls }
+        footer
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding()
+      .background(.bar)
     }
     .onChange(of: collection.groups.map(\.id), initial: true) {
       guard !camera.positionedByUser && !preservesUserCamera else { return }
-      if collection.groups.count == 1, let coordinate = collection.groups.first?.coordinate {
-        camera = .region(
-          .init(
-            center: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
-            span: .init(latitudeDelta: 0.025, longitudeDelta: 0.025)))
-      } else {
-        camera = .automatic
-      }
+      fitLocations()
+    }
+    .onChange(of: directions.routes.count) {
+      guard !camera.positionedByUser && !preservesUserCamera else { return }
+      fitLocations()
     }
     .sheet(item: $presentedSheet, onDismiss: finishSelection) { sheet in
-      NavigationStack {
-        List {
-          ForEach(choices(for: sheet)) { choice in
-            VStack(alignment: .leading, spacing: 4) {
-              HStack {
-                Button {
-                  pendingSelection = choice.row
-                  presentedSheet = nil
-                } label: {
-                  VStack(alignment: .leading, spacing: 4) {
-                    Text(choice.row.title).foregroundStyle(.primary)
-                    if let context = choice.context {
-                      Text(context).font(.subheadline).foregroundStyle(.secondary)
-                    }
-                    Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
-                  }
-                  .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                  .contentShape(.rect)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(choice.accessibilityTitle)
-                .accessibilityValue(locationDescription(choice.row))
-                .accessibilityIdentifier("saved.map.location.\(choice.id)")
-                if (collection.addressChoices(for: choice.row.identity)?.candidates.count ?? 0) > 1
-                  || (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
-                  || collection.resolution(for: choice.row.identity) == .unavailable
-                {
-                  locationOptions(for: choice)
-                }
-              }
-              if let preview = collection.mapsPreview(for: choice.row.identity) {
+      switch sheet {
+      case .directions:
+        SavedMapDirectionsDetails(directions: directions)
+      default:
+        locationsSheet(for: sheet)
+      }
+    }
+    .task(id: routeRequest) { await directions.reload(routeRequest) }
+    .onDisappear { directions.cancel() }
+  }
+
+  /// Automatic framing must follow the pane's size until the user positions the map.
+  private func fitLocations() {
+    if collection.groups.count == 1, let coordinate = collection.groups.first?.coordinate {
+      camera = .region(
+        .init(
+          center: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
+          span: .init(latitudeDelta: 0.025, longitudeDelta: 0.025)))
+    } else if !collection.groups.isEmpty {
+      var bounds = MKMapRect.null
+      for group in collection.groups {
+        let point = MKMapPoint(
+          .init(latitude: group.coordinate.latitude, longitude: group.coordinate.longitude))
+        bounds = bounds.union(.init(x: point.x, y: point.y, width: 0, height: 0))
+      }
+      for route in directions.routes { bounds = bounds.union(route.polyline.boundingMapRect) }
+      // Keep native world wrapping for plans spanning more than half the globe.
+      if bounds.width > MKMapRect.world.width / 2 {
+        camera = .automatic
+      } else {
+        camera = .rect(
+          bounds.insetBy(dx: -max(bounds.width / 2, 500), dy: -max(bounds.height / 2, 500)))
+      }
+    } else {
+      camera = .automatic
+    }
+  }
+
+  private var routeRequest: SavedMapDirections.Request {
+    .init(collection: collection, directions: directions)
+  }
+
+  private func locationsSheet(for sheet: PresentedSheet) -> some View {
+    NavigationStack {
+      List {
+        ForEach(choices(for: sheet)) { choice in
+          VStack(alignment: .leading, spacing: 4) {
+            HStack {
+              Button {
+                pendingSelection = choice.row
+                presentedSheet = nil
+              } label: {
                 VStack(alignment: .leading, spacing: 4) {
-                  if let attribution = preview.attributionText {
-                    Text(attribution)
-                      .accessibilityIdentifier("saved.map.location.provider.\(choice.id)")
+                  Text(choice.row.title).foregroundStyle(.primary)
+                  if let context = choice.context {
+                    Text(context).font(.subheadline).foregroundStyle(.secondary)
                   }
-                  ForEach(Array(preview.uncertaintyReasons.enumerated()), id: \.offset) {
-                    index, reason in
-                    Text(reason)
-                      .fixedSize(horizontal: false, vertical: true)
-                      .accessibilityIdentifier(
-                        "saved.map.location.uncertainty.\(choice.id).\(index)")
-                  }
+                  Text(locationDescription(choice.row)).font(.caption).foregroundStyle(.secondary)
                 }
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .contentShape(.rect)
               }
+              .buttonStyle(.plain)
+              .accessibilityLabel(choice.accessibilityTitle)
+              .accessibilityValue(locationDescription(choice.row))
+              .accessibilityIdentifier("saved.map.location.\(choice.id)")
+              if (collection.addressChoices(for: choice.row.identity)?.candidates.count ?? 0) > 1
+                || (collection.mapsLinkChoices(for: choice.row.identity)?.links.count ?? 0) > 1
+                || collection.resolution(for: choice.row.identity) == .unavailable
+              {
+                locationOptions(for: choice)
+              }
+            }
+            if let preview = collection.mapsPreview(for: choice.row.identity) {
+              VStack(alignment: .leading, spacing: 4) {
+                if let attribution = preview.attributionText {
+                  Text(attribution)
+                    .accessibilityIdentifier("saved.map.location.provider.\(choice.id)")
+                }
+                ForEach(Array(preview.uncertaintyReasons.enumerated()), id: \.offset) {
+                  index, reason in
+                  Text(reason)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier(
+                      "saved.map.location.uncertainty.\(choice.id).\(index)")
+                }
+              }
+              .font(.caption)
+              .foregroundStyle(.secondary)
             }
           }
         }
-        .listStyle(.plain)
-        .navigationTitle("Locations")
-        .toolbar {
-          ToolbarItem(placement: .cancellationAction) {
-            Button("Close") { presentedSheet = nil }
-          }
+      }
+      .listStyle(.plain)
+      .navigationTitle("Locations")
+      .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+          Button("Close") { presentedSheet = nil }
         }
       }
-      #if os(macOS)
-        .frame(minWidth: 400, minHeight: 320)
-      #endif
-      .alert(
-        "Location changed",
-        isPresented: Binding(
-          get: { locationChoiceMessage != nil },
-          set: { if !$0 { locationChoiceMessage = nil } })
-      ) {
-        Button("OK") { locationChoiceMessage = nil }
-      } message: {
-        Text(locationChoiceMessage ?? "Choose this location again.")
-      }
-      .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.medium, .large])
     }
+    #if os(macOS)
+      .frame(minWidth: 400, minHeight: 320)
+    #endif
+    .alert(
+      "Location changed",
+      isPresented: Binding(
+        get: { locationChoiceMessage != nil },
+        set: { if !$0 { locationChoiceMessage = nil } })
+    ) {
+      Button("OK") { locationChoiceMessage = nil }
+    } message: {
+      Text(locationChoiceMessage ?? "Choose this location again.")
+    }
+    .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.medium, .large])
   }
 
   private func locationOptions(for choice: RowChoice) -> some View {
@@ -403,6 +513,7 @@ struct SavedMapCollectionView: View {
   private func choices(for sheet: PresentedSheet) -> [RowChoice] {
     switch sheet {
     case .locations: return collection.rows.map { .init(row: $0) }
+    case .directions: return []
     case .group(let coordinate):
       return collection.groups.first(where: { $0.id == coordinate })?.rows.map { .init(row: $0) }
         ?? []

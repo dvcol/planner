@@ -362,7 +362,7 @@ struct SavedItineraryDetail: View {
         .searchPresentationToolbarBehavior(.avoidHidingContent)
         .navigationSplitViewColumnWidth(
           min: usesMapRepresentation ? 320 : 260,
-          ideal: usesMapRepresentation ? 560 : 400, max: 800
+          ideal: usesMapRepresentation ? 560 : 400, max: usesMapRepresentation ? nil : 800
         )
         #if os(iOS)
           .onGeometryChange(for: CGSize.self) { geometry in
