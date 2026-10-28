@@ -91,7 +91,15 @@ struct SavedItemCatalog: View {
     }
     .navigationTitle(scope.title)
     .toolbarTitleDisplayMode(.inline)
-    .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
+    #if os(iOS)
+      .searchable(
+        text: $searchText, placement: representation == .map ? .toolbar : .automatic,
+        prompt: Text(scope.searchPrompt)
+      )
+      .searchToolbarBehavior(representation == .map ? .minimize : .automatic)
+    #else
+      .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
+    #endif
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     #if os(iOS)
       .onGeometryChange(for: CGFloat.self) { geometry in

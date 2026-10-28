@@ -358,7 +358,15 @@ struct SavedItineraryDetail: View {
           .navigationTitle(itinerary.content.title)
           .toolbarTitleDisplayMode(.inline)
         #endif
-        .searchable(text: $searchText, prompt: "Search this Itinerary")
+        #if os(iOS)
+          .searchable(
+            text: $searchText, placement: usesMapRepresentation ? .toolbar : .automatic,
+            prompt: "Search this Itinerary"
+          )
+          .searchToolbarBehavior(usesMapRepresentation ? .minimize : .automatic)
+        #else
+          .searchable(text: $searchText, prompt: "Search this Itinerary")
+        #endif
         .searchPresentationToolbarBehavior(.avoidHidingContent)
         .navigationSplitViewColumnWidth(
           min: usesMapRepresentation ? 320 : 260,

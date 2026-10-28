@@ -238,3 +238,41 @@ Mac and Simulator builds pass in 18.009 and 30.439 seconds against the same
 1,170 inputs. This closes the represented automatic camera-fit defect. Manual
 pan/zoom persistence is not newly exercised by this fixture; physical routing
 and the broader assistive review retain their separate gates.
+
+## Single-location framing and compact Search, 29 October 2026
+
+The Items and standalone-List Mac journeys both pass their navigation assertions,
+but inspected captures expose another framing defect: a single location starts
+near its pin, then zooms out to continent scale after resizing. An explicit
+native camera centered on that location at a 3,000-meter distance replaces its
+region request. The final 860/1200-point captures retain neighborhood framing,
+the exact bookmark and independent local completion. The original
+[before](evidence/native-map-collection/viewport-follow-up-2026-10-29/mac-before-860.png)
+and [after](evidence/native-map-collection/viewport-follow-up-2026-10-29/mac-after-860.png)
+captures are retained.
+
+At maximum text size, the phone's landscape search drawer leaves the Map with
+zero height. Toolbar placement alone does not fix it. Map mode now uses Apple's
+[minimized Search behavior](https://developer.apple.com/documentation/swiftui/searchtoolbarbehavior/minimize)
+in Items, Inbox, Lists and Itineraries; ordinary List-mode search keeps its
+presentation. The existing phone journey additionally requires the pin's whole
+frame to fit inside the Map. Its [final landscape capture](evidence/native-map-collection/viewport-follow-up-2026-10-29/phone-maximum-landscape.png)
+has a 74-point Map containing the 57.67-point pin. Search entry itself is not
+newly qualified by this layout check.
+
+The [execution record](evidence/native-map-collection/viewport-follow-up-2026-10-29/result.json)
+contains four passes, zero failures and zero skips: Mac Items and List in 65.840
+and 79.140 seconds, maximum-text phone List in 109.538 seconds, and maximum-text
+iPad Items in 96.217 seconds. Both mobile runs use dark appearance and Increase
+Contrast, restore settings and verify their original boot states. All final
+portrait/landscape and narrow/wide captures are inspected. The iPad test reuses
+the established detail-scroll helper before checking a bookmark below the fold;
+its earlier failure had already selected the correct Item. No production test
+hook or new test boundary is added.
+
+Final Mac and Simulator builds pass against 1,170 matching inputs. The phone
+execution precedes that one helper call in the separate Items test; every other
+input is identical. Both tested source epochs and the exact difference are
+retained. Physical Map acceptance, manual pan/zoom persistence and the broader
+assistive review stay open. A separate physical readiness retry still stops
+at the first Save, as recorded in the shared-storage follow-up.

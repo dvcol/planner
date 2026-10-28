@@ -53,6 +53,15 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [single-location and compact-Search follow-up](prototypes/native-map-routing.md#single-location-framing-and-compact-search-29-october-2026)
+closes continent-scale single-pin framing after Mac resizing and a zero-height
+phone Map at maximum text in landscape. Native minimized Search recovers space;
+four scoped Mac/phone/iPad executions pass with exact bookmarks, local completion
+and inspected captures. The renewed physical attempt still stops at the first
+New Item Save, with a floating video panel and rotation present in its recording.
+Physical automation waits for confirmed stopped playback and a resting,
+unobstructed iPad. Signing passes; physical Map acceptance remains open.
+
 The [camera resize correction](prototypes/native-map-routing.md#camera-fitting-through-native-resizing-29-october-2026)
 now passes actual Mac 1200/1600-point resizing with three separated, contained
 and hittable markers beside bounded Item details. It defers fitting until a

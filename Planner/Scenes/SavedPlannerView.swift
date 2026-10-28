@@ -1792,6 +1792,14 @@ struct SavedPlannerView: View {
     }
   }
 
+  #if os(iOS)
+    private var listSearchPlacement: SearchFieldPlacement {
+      if listRepresentation == .map { return .toolbar }
+      return .navigationBarDrawer(
+        displayMode: verticalSizeClass == .compact ? .automatic : .always)
+    }
+  #endif
+
   @ViewBuilder
   private func listContents(_ list: PlannerListSourceRead) -> some View {
     if listRepresentation == .map {
@@ -2152,9 +2160,10 @@ struct SavedPlannerView: View {
         #if os(iOS)
           .searchable(
             text: $listSearchText,
-            placement: .navigationBarDrawer(
-              displayMode: verticalSizeClass == .compact ? .automatic : .always),
-            prompt: "Search this List")
+            placement: listSearchPlacement,
+            prompt: "Search this List"
+          )
+          .searchToolbarBehavior(listRepresentation == .map ? .minimize : .automatic)
         #else
           .searchable(text: $listSearchText, prompt: "Search this List")
         #endif

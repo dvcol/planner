@@ -540,13 +540,15 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .phone {
+        let map = application.descendants(matching: .any)
+          .matching(identifier: "saved.map.collection").firstMatch
         for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
           XCUIDevice.shared.orientation = orientation
           let settled = NSPredicate { _, _ in
             let frame = application.windows.firstMatch.frame
             if orientation == .portrait && frame.height <= frame.width { return false }
             if orientation != .portrait && frame.width <= frame.height { return false }
-            return pin.exists && pin.isHittable
+            return pin.exists && pin.isHittable && map.frame.contains(pin.frame)
           }
           let result = XCTWaiter.wait(
             for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
@@ -554,6 +556,12 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           capture.name = "Compact List Map \(orientation == .portrait ? "portrait" : "landscape")"
           capture.lifetime = .keepAlways
           add(capture)
+          let geometry = XCTAttachment(
+            string:
+              "window=\(application.windows.firstMatch.frame)\nmap=\(map.frame)\npin=\(pin.frame)")
+          geometry.name = "Compact List Map navigation frames"
+          geometry.lifetime = .keepAlways
+          add(geometry)
           XCTAssertEqual(result, .completed)
         }
       }
@@ -668,6 +676,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     let savedLink = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
     ).firstMatch
+    revealDetailLink(savedLink, in: application)
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, originalURL)
     XCTAssertTrue(application.plannerElement("saved.item.actions").exists)

@@ -314,10 +314,10 @@ struct SavedMapCollectionView: View {
   private func fitLocations() {
     guard mapSize.width > 0, mapSize.height > 0 else { return }
     if collection.groups.count == 1, let coordinate = collection.groups.first?.coordinate {
-      camera = .region(
+      camera = .camera(
         .init(
-          center: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
-          span: .init(latitudeDelta: 0.025, longitudeDelta: 0.025)))
+          centerCoordinate: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
+          distance: 3_000))
     } else if !collection.groups.isEmpty {
       var bounds = MKMapRect.null
       for group in collection.groups {

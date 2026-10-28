@@ -519,3 +519,21 @@ also appears during teardown; no additional device cleanup is claimed.
 The [readiness record](evidence/native-map-collection/physical-readiness-2026-10-29/result.json)
 retains build, signature, execution and source-hash facts. Physical screen content,
 full hierarchies, device identifiers and provisioning contents are excluded.
+
+### Physical readiness retry, 29 October 2026
+
+After renewed readiness confirmation and a fresh unlocked-state check, the
+refreshed signed build passes in 34.820 seconds. Existing signatures, approved
+identifiers, App Group and device profile coverage pass without new provisioning
+resources. The next physical run again stops after its first New Item Save:
+one failure in 36.876 seconds, exit 65 in 55.298 seconds. Its recording still
+contains a floating video panel and rotation near Save. The persistence outcome
+and physical Map remain unproven.
+
+The [scoped follow-up record](evidence/native-map-collection/viewport-follow-up-2026-10-29/result.json)
+retains sanitized results and excludes physical screen content. A new readiness
+request asks for playback to stop and the iPad to rest still, unobstructed,
+unlocked and awake. No further physical UI runs before that confirmation. The
+next retry must rebuild current sources, which subsequently gained the final
+minimized-Search and test-scroll corrections. This is separate from signing and
+the user-deferred iCloud transition test.
