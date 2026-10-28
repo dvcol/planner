@@ -88,4 +88,4 @@ keeps the initial interrupted failure and diagnostic separate. Its four-test
 cohort has three passes and one itinerary failure; it is not an all-green batch.
 The reader passes do not qualify that itinerary failure or whole-app, installed
 Share, CloudKit, accessibility or third-party website acceptance. Itinerary
-selection receives its own follow-up.
+selection receives its [own correction and targeted pass](native-mac-itinerary-selection.md).

@@ -79,6 +79,14 @@ cohort has three passes and one itinerary-selection failure, with the latter
 tracked separately. Reader qualification adds no production change or complete
 Mac acceptance claim.
 
+The [Mac itinerary selection correction](prototypes/native-mac-itinerary-selection.md)
+then fixes the product failure found by that cohort. Direct rows now expose
+their concrete appearance selection at the native List boundary, so selecting
+Museum opens its details. The deletion/relaunch journey passes separately while
+preserving its shared Item. Mobile production paths are unchanged. Failed
+diagnostics remain distinct; nested Map/keyboard and duplicate Mac itinerary
+heading review retain their own follow-ups.
+
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
 scrolling, counted-pin choices and iPad rotation preserve the two stops' separate
@@ -563,8 +571,9 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    cases. The [reader width follow-up](prototypes/native-reader-pane-width.md#mac-width-checks-prepared-28-october-2026)
    now has [actual Mac reader passes](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
    for resizing/history and pending-load Return. Its cohort separately exposes
-   an itinerary row-selection failure; that local correction remains distinct
-   from reader qualification. The
+   an itinerary row-selection failure; its [separate correction](prototypes/native-mac-itinerary-selection.md)
+   now passes direct selection and deletion/relaunch while retaining the source
+   Item. Nested contexts and the remaining UI review stay open. The
    [named Mac Undo journeys][mac-undo] now pass; unrepresented
    contexts retain their own gates. Q127 A's Calendar split pane passes
    Month/Day/Week resizing,

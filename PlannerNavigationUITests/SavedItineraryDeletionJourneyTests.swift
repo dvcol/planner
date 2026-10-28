@@ -180,6 +180,13 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
   func testEmptyItineraryDeletionAndSelectedAppearanceDeletionRetainTheSourceItemAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
+    #if os(macOS)
+      let sourceNotes = application.staticTexts.matching(
+        NSPredicate(format: "label == %@ OR value == %@", "Museum booking", "Museum booking")
+      ).firstMatch
+    #else
+      let sourceNotes = application.staticTexts["Museum booking"]
+    #endif
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     let itemIdentifier = createItem("Museum", notes: "Museum booking", application: application)
@@ -204,7 +211,14 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(appearance.waitForExistence(timeout: 10))
     let appearanceIdentifier = appearance.identifier
     appearance.activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["Museum booking"].waitForExistence(timeout: 10))
+    #if os(macOS)
+      let detail = XCTAttachment(string: application.windows.firstMatch.debugDescription)
+      detail.name = "Selected itinerary appearance native detail"
+      detail.lifetime = .keepAlways
+      add(detail)
+      recordScreenshot(application, name: "Selected itinerary appearance retains source notes")
+    #endif
+    XCTAssertTrue(sourceNotes.waitForExistence(timeout: 10))
     #if os(iOS)
       let addEntry = application.plannerElement("saved.itinerary.entry.new")
       if !addEntry.exists || !addEntry.isHittable {
@@ -224,7 +238,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(
       application.plannerElement("saved.itinerary.delete.confirm").waitForNonExistence(timeout: 10))
     XCTAssertFalse(application.plannerElement(appearanceIdentifier).exists)
-    XCTAssertFalse(application.staticTexts["Museum booking"].exists)
+    XCTAssertFalse(sourceNotes.exists)
     XCTAssertFalse(application.alerts["Planner"].exists)
     recordScreenshot(application, name: "Itinerary Delete clears selected appearance detail")
     application.terminate()
@@ -233,7 +247,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     XCTAssertFalse(application.plannerElement(emptyIdentifier).exists)
     XCTAssertFalse(application.plannerElement(populatedIdentifier).exists)
     openItem(itemIdentifier, application: application)
-    XCTAssertTrue(application.staticTexts["Museum booking"].waitForExistence(timeout: 10))
+    XCTAssertTrue(sourceNotes.waitForExistence(timeout: 10))
     XCTAssertTrue(
       application.descendants(matching: .any).matching(identifier: "saved.item.completion")
         .firstMatch.waitForPlannerBooleanState(false))
@@ -277,17 +291,21 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
   }
 
   private func openItineraryActions(_ application: XCUIApplication) {
-    let actions = application.buttons.matching(
-      NSPredicate(
-        format: "identifier == %@ OR label == %@", "saved.itinerary.actions", "Itinerary actions")
-    ).firstMatch
-    if !actions.exists {
-      let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
-      XCTAssertTrue(overflow.waitForExistence(timeout: 5))
-      overflow.activateForPlannerJourney()
-    }
-    XCTAssertTrue(actions.waitForExistence(timeout: 5))
-    actions.activateForPlannerJourney()
+    #if os(macOS)
+      application.savedPlannerItineraryActionsControl().activateForPlannerJourney()
+    #else
+      let actions = application.buttons.matching(
+        NSPredicate(
+          format: "identifier == %@ OR label == %@", "saved.itinerary.actions", "Itinerary actions")
+      ).firstMatch
+      if !actions.exists {
+        let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+        overflow.activateForPlannerJourney()
+      }
+      XCTAssertTrue(actions.waitForExistence(timeout: 5))
+      actions.activateForPlannerJourney()
+    #endif
   }
 
   private func createItinerarySchedule(_ application: XCUIApplication) -> (
@@ -378,17 +396,25 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     application.openPlannerSection(section)
     let creation = application.plannerElement(creationIdentifier)
     if !creation.waitForExistence(timeout: 2) {
-      let sidebar = application.plannerElement("Show Sidebar")
-      let back = application.navigationBars.buttons[section].firstMatch
-      if back.exists {
-        back.activateForPlannerJourney()
-      } else if sidebar.exists {
-        sidebar.activateForPlannerJourney()
-      } else {
-        let genericBack = application.plannerElement("BackButton")
-        XCTAssertTrue(genericBack.exists)
-        genericBack.activateForPlannerJourney()
-      }
+      #if os(macOS)
+        if section == "Itineraries" {
+          let back = application.buttons["saved.itineraries.back"].firstMatch
+          XCTAssertTrue(back.waitForPlannerHittability())
+          back.activateForPlannerJourney()
+        }
+      #else
+        let sidebar = application.plannerElement("Show Sidebar")
+        let back = application.navigationBars.buttons[section].firstMatch
+        if back.exists {
+          back.activateForPlannerJourney()
+        } else if sidebar.exists {
+          sidebar.activateForPlannerJourney()
+        } else {
+          let genericBack = application.plannerElement("BackButton")
+          XCTAssertTrue(genericBack.exists)
+          genericBack.activateForPlannerJourney()
+        }
+      #endif
     }
     XCTAssertTrue(creation.waitForExistence(timeout: 10))
   }
@@ -413,10 +439,15 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
 
   private func addItineraryEntry(_ title: String, application: XCUIApplication) {
     application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
-    let choice = application.descendants(matching: .any).matching(
-      NSPredicate(
+    #if os(macOS)
+      let predicate = NSPredicate(
+        format: "identifier BEGINSWITH %@ AND (label == %@ OR value == %@)",
+        "saved.itinerary.entry.choice.", title, title)
+    #else
+      let predicate = NSPredicate(
         format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.", title)
-    ).firstMatch
+    #endif
+    let choice = application.descendants(matching: .any).matching(predicate).firstMatch
     XCTAssertTrue(choice.waitForExistence(timeout: 5))
     choice.activateForPlannerJourney()
     application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
@@ -461,7 +492,12 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    #if os(macOS)
+      let screenshot = application.windows.firstMatch.screenshot()
+    #else
+      let screenshot = application.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)

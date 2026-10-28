@@ -283,7 +283,16 @@ struct SavedItineraryDetail: View {
                     Text("No matching entries").foregroundStyle(.secondary)
                   }
                   ForEach(contents.visibleEntries) { entry in
-                    itineraryEntry(entry, in: contents)
+                    #if os(macOS)
+                      if entry.source.kind == .item {
+                        itineraryEntry(entry, in: contents)
+                          .tag(SavedItineraryRowSelection.direct(entryId: entry.id))
+                      } else {
+                        itineraryEntry(entry, in: contents)
+                      }
+                    #else
+                      itineraryEntry(entry, in: contents)
+                    #endif
                   }
                   .onMove { offsets, destination in
                     moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
