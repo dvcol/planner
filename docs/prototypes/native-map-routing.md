@@ -359,3 +359,29 @@ remounts, Mac gestures, heading, pitch or the broader assistive review.
 The physical retry stops before installation: a normal device query reconnects
 the paired iPad, but its current lock-state response requires a passcode. A fresh
 unlock is requested. Signing is ready; no physical Map acceptance is claimed.
+
+## Filtered appearance through List/Map switches, 29 October 2026
+
+Two existing iPad journeys now select the second Todo appearance while the first
+is locally Done, then apply the Done filter. Switching to List and back to Map
+keeps that valid, filtered-out Todo detail and its exact bookmark. The List shows
+one completed row; Map shows one matching location. Clearing the filter restores
+the counted marker for both appearances without changing the selected status.
+Both repeated direct stops and repeated List branches pass.
+
+The [execution record](evidence/native-map-collection/representation-lifecycle-2026-10-29/result.json)
+records two passes in 221.631 and 235.253 seconds, zero failures and zero skips,
+with 1,171 matched inputs. The affected build and strict Swift lint pass.
+Simulator settings and actual original boot state are restored. Inspected
+original [List](evidence/native-map-collection/representation-lifecycle-2026-10-29/direct-list.png)
+and [Map](evidence/native-map-collection/representation-lifecycle-2026-10-29/nested-map.png)
+captures show the retained Todo detail beside the filtered collection.
+
+The initial pair fails when the test queries the portrait collection toolbar
+after native navigation collapses it. Its failure hierarchy retains the correct
+Todo detail. The final driver uses the existing Show Sidebar workflow before
+querying collection controls. No production, public contract or saved-format
+change is needed. This qualifies these representation switches on light iPad
+Simulator at standard Large text; physical, Mac, VoiceOver and arbitrary scene
+restoration retain separate gates. The physical retry still needs the requested
+fresh iPad unlock.

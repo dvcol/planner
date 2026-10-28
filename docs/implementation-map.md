@@ -53,6 +53,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [filtered representation pair](prototypes/native-map-routing.md#filtered-appearance-through-listmap-switches-29-october-2026)
+passes List/Map switching for repeated direct stops and repeated List branches
+on iPad Simulator. A valid Todo detail remains selected while Done filtering
+shows the other occurrence; clearing restores both Map appearances. Exact
+bookmarks and independent completion survive. The driver uses native Show
+Sidebar when portrait navigation collapses the collection. Production is
+unchanged. Physical execution still needs the requested fresh iPad unlock.
+
 The [user-camera journey](prototypes/native-map-routing.md#user-camera-through-detail-pane-changes-29-october-2026)
 passes actual iPad Simulator pinch/drag, Hide details and pin reopening while
 preserving horizontal position, zoom and the exact bookmark. The same case

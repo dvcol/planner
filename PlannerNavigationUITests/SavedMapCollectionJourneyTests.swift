@@ -1129,7 +1129,79 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(retainedLink, in: application)
     XCTAssertTrue(retainedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(retainedLink.value as? String, originalURL)
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        verifyFilteredAppearanceSurvivesRepresentationChanges(
+          in: application, pin: pin, savedLink: retainedLink, originalURL: originalURL)
+      }
+    #endif
   }
+
+  #if os(iOS)
+    /// A hidden Todo selection must stay independent from the visible completed occurrence.
+    private func verifyFilteredAppearanceSurvivesRepresentationChanges(
+      in application: XCUIApplication, pin: XCUIElement, savedLink: XCUIElement,
+      originalURL: String
+    ) {
+      let bookmarkIdentifier = savedLink.identifier
+      let filters = application.plannerElement("saved.itinerary.filters")
+      func revealFilters() {
+        if filters.waitForExistence(timeout: 2) { return }
+        let sidebar = application.plannerElement("Show Sidebar")
+        if sidebar.exists { sidebar.activateForPlannerJourney() }
+        XCTAssertTrue(filters.waitForExistence(timeout: 10))
+      }
+      application.chooseSavedPlannerStateFilter("Done", control: filters)
+      let singlePin = NSPredicate { _, _ in pin.exists && pin.label == "Map museum" }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: singlePin, object: application)], timeout: 10),
+        .completed)
+      for representation in ["List", "Map"] {
+        revealFilters()
+        application.openSavedPlannerItineraryViewMenu()
+        application.chooseSavedPlannerCollectionRepresentation(representation)
+        revealFilters()
+        XCTAssertEqual(filters.label, "Done")
+        if representation == "List" {
+          let rows = application.buttons.matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+          XCTAssertTrue(rows.firstMatch.waitForExistence(timeout: 10))
+          XCTAssertEqual(rows.count, 1)
+          let completion = application.plannerElement(
+            rows.firstMatch.identifier.replacingOccurrences(
+              of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+          XCTAssertEqual(completion.value as? String, "Completed")
+        } else {
+          XCTAssertTrue(pin.waitForPlannerHittability())
+          XCTAssertEqual(pin.label, "Map museum")
+        }
+        if !savedLink.isHittable {
+          let sidebar = application.plannerElement("Hide Sidebar")
+          if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
+        }
+        revealDetailStatus("To do", in: application)
+        XCTAssertTrue(application.staticTexts["To do"].firstMatch.waitForExistence(timeout: 10))
+        revealDetailLink(savedLink, in: application)
+        XCTAssertTrue(savedLink.waitForPlannerHittability())
+        XCTAssertEqual(savedLink.identifier, bookmarkIdentifier)
+        XCTAssertEqual(savedLink.value as? String, originalURL)
+        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+        capture.name = "Filtered \(representation) retains the hidden Todo appearance"
+        capture.lifetime = .keepAlways
+        add(capture)
+      }
+      revealFilters()
+      application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+      let bothAppearances = NSPredicate { _, _ in pin.exists && pin.label == "2 items" }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: bothAppearances, object: application)],
+          timeout: 10), .completed)
+      revealDetailStatus("To do", in: application)
+      XCTAssertTrue(application.staticTexts["To do"].firstMatch.waitForExistence(timeout: 10))
+    }
+  #endif
 
   private func revealDetailStatus(_ title: String, in application: XCUIApplication) {
     #if os(iOS)
