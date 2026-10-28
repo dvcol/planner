@@ -285,6 +285,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
 
   func testItineraryMapFitsDistinctPlacesAndUsesAvailableWidth() {
     continueAfterFailure = false
+    prepareTabletOrientation()
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -310,6 +311,17 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     }
     for pin in pins { XCTAssertTrue(pin.waitForPlannerHittability()) }
     XCTAssertEqual(pins[0].label, "2 items")
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+        capture.name = "Tablet Map before selecting an Item"
+        capture.lifetime = .keepAlways
+        add(capture)
+        XCTAssertGreaterThan(
+          map.frame.width, application.windows.firstMatch.frame.width * 0.6,
+          "An unselected Map must use the available width instead of an empty details pane.")
+      }
+    #endif
     application.plannerElement("saved.map.routes").activateForPlannerJourney()
     for index in 0..<3 {
       let calculated = application.descendants(matching: .any).matching(
@@ -366,6 +378,26 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(bookmark, in: application)
     XCTAssertTrue(bookmark.waitForExistence(timeout: 10))
     let bookmarkIdentifier = bookmark.identifier
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+        capture.name = "Tablet Map and selected Item occupy separate bounded panes"
+        capture.lifetime = .keepAlways
+        add(capture)
+        let detailWidth = application.windows.firstMatch.frame.maxX - map.frame.maxX
+        XCTAssertLessThanOrEqual(detailWidth, 421)
+        XCTAssertGreaterThan(map.frame.width, detailWidth)
+        XCTAssertGreaterThanOrEqual(bookmark.frame.minX, map.frame.maxX)
+        let openMapWidth = map.frame.width
+        application.plannerElement("saved.map.details.toggle").activateForPlannerJourney()
+        XCTAssertGreaterThan(map.frame.width, openMapWidth)
+        XCTAssertTrue(pins[1].waitForPlannerHittability())
+        pins[1].activateForPlannerJourney()
+        XCTAssertTrue(bookmark.waitForPlannerHittability())
+        XCTAssertEqual(bookmark.identifier, bookmarkIdentifier)
+        XCTAssertEqual(bookmark.value as? String, originalURL)
+      }
+    #endif
     #if os(macOS)
       let window = application.windows.firstMatch
       let originalWidth = window.frame.width

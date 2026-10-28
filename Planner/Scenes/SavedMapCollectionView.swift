@@ -7,18 +7,6 @@ enum SavedCollectionRepresentation: String {
   case list, map
 }
 
-struct SavedMapDetailColumn: ViewModifier {
-  let isMap: Bool
-
-  func body(content: Content) -> some View {
-    if isMap {
-      content.navigationSplitViewColumnWidth(min: 280, ideal: 360, max: 420)
-    } else {
-      content
-    }
-  }
-}
-
 struct SavedCollectionRepresentationMenu: View {
   @Binding var representation: SavedCollectionRepresentation
   let accessibilityIdentifier: String

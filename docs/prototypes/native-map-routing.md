@@ -9,11 +9,12 @@ Public transport choices.
 
 ## Implementation in progress, 28 October 2026
 
-Map-mode detail columns request a 280–420-point width, with 360 points preferred.
-The collection column can grow beyond its former 800-point maximum. List-mode
-widths remain as before. These preferences do not yet solve the width request:
-the final portrait iPad still gives the Map about 340 points and details about
-479 points. Actual Mac resizing is also unqualified for this change.
+Wide Map mode now uses the main content area with optional bounded Item details.
+The tablet correction and its native controls pass below. The preceding attempt
+only supplied 280–420-point detail-column preferences and removed the collection's
+800-point maximum; its portrait iPad still gave the Map about 340 points and
+details about 479 points. Those ineffective preferences are replaced. Actual Mac
+resizing remains unqualified for this change.
 
 `SavedMapDirections` uses native `MKDirections` sequentially for adjacent stops
 and draws returned walking/driving geometry with `MapPolyline`. It keeps repeated
@@ -79,3 +80,39 @@ inside the pane. This corrects camera framing; width dominance remains open.
 Earlier driver failures and the actor-isolation compilation failure receive no
 acceptance credit. The final evidence records them separately and includes the
 exact source snapshot used for the successful mobile runs.
+
+## Map width and selected details
+
+A retained tablet regression reproduces the empty-detail problem on the routing
+commit: the Map is 340 points wide in an 820-point window. The layout now uses a
+two-column native split view in wide Map mode. With no selected Item, the Map
+uses the main area. Selecting an exact appearance opens bounded details: an
+iPad native inspector or a Mac native split pane. A native Item details toggle
+hides the pane; selecting the same pin reopens its original saved context.
+Phone navigation and the guarded New Item editor retain their existing layout.
+
+The extracted collection body exactly matches the preceding implementation
+apart from whitespace. List selection cleanup remains shared across both
+layouts. A compiler-limit failure is corrected by splitting the lifecycle view
+expression. The first width-correct run then exposes a missing inspector
+toolbar; placing details in a native NavigationStack restores that control.
+Neither failed attempt receives passing acceptance credit.
+
+The [final dark-tablet journey](evidence/native-map-collection/map-pane-width-2026-10-28/result.json)
+passes in 158.429 seconds with one test, zero failures and zero skips. The Map
+exceeds 60 percent of the window before selection. Selected details occupy at
+most 421 points, remain beside the Map, and are narrower than it. Hiding details
+increases Map width; selecting the same pin preserves its exact bookmark
+identity and original URL. The journey also rechecks all three walking/driving
+legs and the transit explanation/fallback. Both retained original captures are
+inspected. Simulator appearance, text size, contrast and boot state are restored.
+
+The matching Mac application/Share/UI-test build passes in 46.067 seconds. Actual
+Mac route UI, split-divider behavior, physical layout and broader accessibility
+acceptance remain open. Two additional dark-tablet regressions pass in 81.130
+and 95.179 seconds: Items retain exact pin/unlocated-note navigation, and a
+standalone List retains local completion independently of its source Item.
+Both exercise portrait/landscape changes and restore the selected bookmark.
+Their full command exits zero in 203.002 seconds, with settings restored. Phone
+regressions remain pending at this checkpoint; compilation alone does not
+qualify their UI behavior.

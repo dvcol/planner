@@ -81,6 +81,7 @@ struct SavedPlannerView: View {
   @State private var listRepresentation = SavedCollectionRepresentation.list
   @State private var itemsRepresentation = SavedCollectionRepresentation.list
   @State private var inboxRepresentation = SavedCollectionRepresentation.list
+  @State private var mapDetailsRequested = false
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -227,9 +228,30 @@ struct SavedPlannerView: View {
     #endif
   }
 
-  private var plannerLifecycleContent: some View {
+  private var mapLifecycleContent: some View {
     AnyView(listLifecycleContent)
       .task(id: mapRequest) { await reloadMap() }
+      .onChange(of: mapRequest?.scope) {
+        mapDetailsRequested = hasMapDetailSelection || website != nil
+      }
+      .onChange(of: selectedListId) { _, identifier in
+        appearanceChangeMessage = nil
+        if identifier != nil { listDeletionMessage = nil }
+        #if os(iOS)
+          if identifier != nil { columnVisibility = .doubleColumn }
+        #endif
+        if case .listMembership(let listIdentifier, _) = selectedAppearanceIdentity,
+          listIdentifier == identifier
+        {
+          return
+        }
+        selectedAppearanceIdentity = nil
+        selectedAppearance = nil
+      }
+  }
+
+  private var plannerLifecycleContent: some View {
+    AnyView(mapLifecycleContent)
       .environment(\.savedWebsiteOpening, openWebsite)
       .disabled(isResolvingOpening)
       .overlay { if isResolvingOpening { ProgressView("Opening plan") } }
@@ -291,6 +313,7 @@ struct SavedPlannerView: View {
       }
       .onChange(of: store.devicePreferenceNamespace) {
         associationUndo.clear()
+        mapDetailsRequested = false
         itineraryPresentations = [:]
         calendarSelection = nil
         recordSelectionChange()
@@ -490,6 +513,8 @@ struct SavedPlannerView: View {
         #if os(iOS)
           .inspector(isPresented: $calendarInspectorPresented) { calendarInspector }
         #endif
+      } else if mapRequest != nil && newItemDraft == nil {
+        mapColumns
       } else {
         plannerColumns
       }
@@ -517,11 +542,6 @@ struct SavedPlannerView: View {
               websiteHost(isActive: selectedSection == .itineraries) {
                 itineraryAppearanceDetail
               }
-              .modifier(
-                SavedMapDetailColumn(
-                  isMap: selectedItineraryIdentifier.map {
-                    itineraryPresentations[$0]?.representation == .map
-                  } == true))
             }
             .id(itineraryNavigationIdentifier)
           }
@@ -541,9 +561,6 @@ struct SavedPlannerView: View {
       websiteHost(isActive: selectedSection == (scope == .items ? .items : .inbox)) {
         if let newItemDraft { newItemEditor(newItemDraft) } else { itemDetail }
       }
-      .modifier(
-        SavedMapDetailColumn(
-          isMap: (scope == .inbox ? inboxRepresentation : itemsRepresentation) == .map))
     }
   }
 
@@ -977,6 +994,7 @@ struct SavedPlannerView: View {
         }
         recordSelectionChange()
         selectedItemId = source.id
+        mapDetailsRequested = true
         preferredCompactColumn = .detail
       }
     }
@@ -1011,6 +1029,7 @@ struct SavedPlannerView: View {
         appearanceChangeMessage = nil
         selectedAppearanceIdentity = appearance
         selectedAppearance = item
+        mapDetailsRequested = true
         preferredCompactColumn = .detail
       }
     }
@@ -1046,6 +1065,7 @@ struct SavedPlannerView: View {
         }
         recordSelectionChange()
         selectedItineraryRow = selection
+        mapDetailsRequested = true
         if usesSidebarNavigation {
           preferredCompactColumn = .detail
         } else {
@@ -1969,186 +1989,268 @@ struct SavedPlannerView: View {
     }
   #endif
 
+  private var hasMapDetailSelection: Bool {
+    switch selectedSection {
+    case .items, .inbox: selectedItemId != nil
+    case .lists: selectedAppearanceIdentity != nil
+    case .itineraries: selectedItineraryRow != nil
+    case .calendar: false
+    }
+  }
+
+  private var mapDetailsPresented: Bool {
+    mapDetailsRequested && (hasMapDetailSelection || website != nil)
+  }
+
+  private var mapDetailsVisibility: Binding<Bool> {
+    Binding(get: { mapDetailsPresented }, set: { mapDetailsRequested = $0 })
+  }
+
+  /// Map uses two navigation columns; its optional details occupy a separate native pane.
+  private var mapSidebarVisibility: Binding<NavigationSplitViewVisibility> {
+    Binding(
+      get: {
+        if columnVisibility == .automatic { return .automatic }
+        return columnVisibility == .all ? .all : .detailOnly
+      },
+      set: { visibility in
+        if visibility == .automatic {
+          columnVisibility = .automatic
+        } else if visibility == .detailOnly {
+          columnVisibility = .doubleColumn
+        } else {
+          columnVisibility = .all
+        }
+      })
+  }
+
+  private var mapColumns: some View {
+    NavigationSplitView(columnVisibility: mapSidebarVisibility) {
+      plannerSidebar
+    } detail: {
+      #if os(macOS)
+        GeometryReader { geometry in
+          HSplitView {
+            plannerCollectionColumn.frame(minWidth: 320)
+            if mapDetailsPresented {
+              mapDetailPane
+                .frame(minWidth: 280, idealWidth: 360, maxWidth: 420)
+            }
+          }
+          .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+        .frame(minWidth: mapDetailsPresented ? 600 : 320)
+      #else
+        plannerCollectionColumn
+      #endif
+    }
+    .id(listNavigationIdentifier)
+    .navigationSplitViewStyle(.balanced)
+    #if os(iOS)
+      .inspector(isPresented: mapDetailsVisibility) {
+        mapDetailPane.inspectorColumnWidth(min: 280, ideal: 360, max: 420)
+      }
+    #endif
+    .toolbar {
+      if !mapDetailsPresented {
+        ToolbarItem(placement: .primaryAction) { mapDetailsToggle }
+      }
+    }
+  }
+
+  private var mapDetailPane: some View {
+    NavigationStack {
+      plannerDetailColumn.toolbar {
+        ToolbarItem(placement: .primaryAction) { mapDetailsToggle }
+      }
+    }
+  }
+
+  private var mapDetailsToggle: some View {
+    Toggle(isOn: mapDetailsVisibility) {
+      Label("Item details", systemImage: "sidebar.right")
+    }
+    .toggleStyle(.button)
+    .labelStyle(.iconOnly)
+    .disabled(!hasMapDetailSelection && website == nil)
+    .help(mapDetailsPresented ? "Hide details" : "Show details")
+    .accessibilityIdentifier("saved.map.details.toggle")
+  }
+
+  @ViewBuilder
+  private var plannerCollectionColumn: some View {
+    if usesItineraryColumns {
+      if selectedItineraryIdentifier != nil {
+        itineraryDetail
+          .toolbar {
+            ToolbarItem(placement: .navigation) {
+              Button("Itineraries", systemImage: "chevron.backward") {
+                selectedItineraryIdentifier = nil
+              }
+              .accessibilityIdentifier("saved.itineraries.back")
+            }
+          }
+      } else {
+        itineraryCatalog
+      }
+    } else if isItemSection {
+      itemCatalog(scope: catalogScope)
+    } else if let selectedList {
+      listContents(selectedList)
+        .navigationSplitViewColumnWidth(
+          min: listRepresentation == .map ? 320 : 220,
+          ideal: listRepresentation == .map ? 560 : 320,
+          max: listRepresentation == .map ? nil : 800
+        )
+        .toolbarTitleDisplayMode(.inline)
+        #if os(iOS)
+          // The wrapping content heading owns the name across native navigation restoration.
+          .navigationTitle("")
+          .onGeometryChange(for: CGFloat.self) { geometry in
+            geometry.size.width
+          } action: { width in
+            listPaneWidth = width
+          }
+        #endif
+        #if os(macOS)
+          .navigationTitle(selectedList.content.name)
+          .safeAreaInset(edge: .top, spacing: 0) {
+            listPaneHeader(selectedList)
+          }
+          .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+              listRepresentationMenu
+              SavedItemFilterControl(
+                filters: $listFilters, accessibilityIdentifier: "saved.list.filters",
+                showsSummary: newItemDraft == nil)
+              if newItemDraft == nil {
+                listSortMenu
+                listActionsMenu(selectedList)
+                listAddMenu(selectedList)
+                if let selectedAppearance {
+                  appearanceContent(selectedAppearance, list: selectedList).actionsMenu
+                }
+              } else {
+                Menu {
+                  listSortMenu
+                  listActionsMenu(selectedList)
+                  listAddMenu(selectedList)
+                } label: {
+                  Label("List options", systemImage: "ellipsis")
+                }
+                .labelStyle(.iconOnly)
+                .help("List options")
+                .accessibilityIdentifier("saved.list.options")
+              }
+            }
+          }
+        #endif
+        #if os(iOS)
+          .searchable(
+            text: $listSearchText,
+            placement: .navigationBarDrawer(
+              displayMode: verticalSizeClass == .compact ? .automatic : .always),
+            prompt: "Search this List")
+        #else
+          .searchable(text: $listSearchText, prompt: "Search this List")
+        #endif
+        .searchPresentationToolbarBehavior(.avoidHidingContent)
+        .overlay(alignment: .topTrailing) {
+          if isOpeningList || listWindow?.state == .loading {
+            ProgressView("Updating List").controlSize(.small).padding()
+          }
+          if isPreparingBulkCompletion {
+            ProgressView("Preparing review").controlSize(.small).padding()
+          }
+          if isPreparingListDeletion {
+            ProgressView("Reviewing deletion").controlSize(.small).padding()
+          }
+        }
+        #if os(iOS)
+          .toolbar {
+            ToolbarItem {
+              SavedItemFilterControl(
+                filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
+            }
+            if horizontalSizeClass == .compact || listPaneWidth < 440 {
+              ToolbarOverflowMenu {
+                listRepresentationMenu
+                listSortMenu
+                listEditButton
+                listActionsMenu(selectedList)
+              }
+            } else {
+              ToolbarItem { listRepresentationMenu }
+              ToolbarItem { listSortMenu }
+              ToolbarItem { listEditButton }
+              ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
+            }
+            ToolbarItem {
+              listAddMenu(selectedList)
+            }
+          }
+        #endif
+    } else if isOpeningList {
+      ProgressView("Opening List")
+    } else if selectedListId != nil {
+      ContentUnavailableView {
+        Label("List unavailable", systemImage: "exclamationmark.triangle")
+      } description: {
+        if listWindowNamespace == store.devicePreferenceNamespace,
+          case .failed(let reason) = listWindow?.state
+        {
+          Text(reason)
+        } else {
+          Text("Planner could not open the selected List.")
+        }
+      } actions: {
+        Button("Try again") { Task { await loadSelectedList() } }
+      }
+    } else if let listDeletionMessage {
+      ContentUnavailableView(
+        "List deleted", systemImage: "trash", description: Text(listDeletionMessage))
+    } else if listCatalogWindow?.state == .ready, listCatalogWindow?.matchingCount == 0 {
+      ContentUnavailableView {
+        Label {
+          Text(listCatalogArchive == .active ? "No Lists yet" : "No matching Lists")
+        } icon: {
+          Image(systemName: "list.bullet.rectangle").foregroundStyle(Color.primary)
+        }
+      } description: {
+        Text("Change the archive filter or create a List to start planning.")
+      }
+      .accessibilityIdentifier("saved.lists.empty")
+    } else {
+      ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
+    }
+  }
+
+  private var plannerDetailColumn: some View {
+    websiteHost(isActive: usesSidebarNavigation || selectedSection == .lists) {
+      if let newItemDraft {
+        newItemEditor(newItemDraft)
+      } else if usesItineraryColumns {
+        itineraryAppearanceDetail
+      } else if isItemSection {
+        itemDetail
+      } else {
+        appearanceDetail
+      }
+    }
+  }
+
   private var plannerColumns: some View {
     NavigationSplitView(
       columnVisibility: $columnVisibility, preferredCompactColumn: compactColumnSelection
     ) {
       plannerSidebar
     } content: {
-      if usesItineraryColumns {
-        if selectedItineraryIdentifier != nil {
-          itineraryDetail
-            .toolbar {
-              ToolbarItem(placement: .navigation) {
-                Button("Itineraries", systemImage: "chevron.backward") {
-                  selectedItineraryIdentifier = nil
-                }
-                .accessibilityIdentifier("saved.itineraries.back")
-              }
-            }
-        } else {
-          itineraryCatalog
-        }
-      } else if isItemSection {
-        itemCatalog(scope: catalogScope)
-      } else if let selectedList {
-        listContents(selectedList)
-          .navigationSplitViewColumnWidth(
-            min: listRepresentation == .map ? 320 : 220,
-            ideal: listRepresentation == .map ? 560 : 320,
-            max: listRepresentation == .map ? nil : 800
-          )
-          .toolbarTitleDisplayMode(.inline)
-          #if os(iOS)
-            // The wrapping content heading owns the name across native navigation restoration.
-            .navigationTitle("")
-            .onGeometryChange(for: CGFloat.self) { geometry in
-              geometry.size.width
-            } action: { width in
-              listPaneWidth = width
-            }
-          #endif
-          #if os(macOS)
-            .navigationTitle(selectedList.content.name)
-            .safeAreaInset(edge: .top, spacing: 0) {
-              listPaneHeader(selectedList)
-            }
-            .toolbar {
-              ToolbarItemGroup(placement: .primaryAction) {
-                listRepresentationMenu
-                SavedItemFilterControl(
-                  filters: $listFilters, accessibilityIdentifier: "saved.list.filters",
-                  showsSummary: newItemDraft == nil)
-                if newItemDraft == nil {
-                  listSortMenu
-                  listActionsMenu(selectedList)
-                  listAddMenu(selectedList)
-                  if let selectedAppearance {
-                    appearanceContent(selectedAppearance, list: selectedList).actionsMenu
-                  }
-                } else {
-                  Menu {
-                    listSortMenu
-                    listActionsMenu(selectedList)
-                    listAddMenu(selectedList)
-                  } label: {
-                    Label("List options", systemImage: "ellipsis")
-                  }
-                  .labelStyle(.iconOnly)
-                  .help("List options")
-                  .accessibilityIdentifier("saved.list.options")
-                }
-              }
-            }
-          #endif
-          #if os(iOS)
-            .searchable(
-              text: $listSearchText,
-              placement: .navigationBarDrawer(
-                displayMode: verticalSizeClass == .compact ? .automatic : .always),
-              prompt: "Search this List")
-          #else
-            .searchable(text: $listSearchText, prompt: "Search this List")
-          #endif
-          .searchPresentationToolbarBehavior(.avoidHidingContent)
-          .overlay(alignment: .topTrailing) {
-            if isOpeningList || listWindow?.state == .loading {
-              ProgressView("Updating List").controlSize(.small).padding()
-            }
-            if isPreparingBulkCompletion {
-              ProgressView("Preparing review").controlSize(.small).padding()
-            }
-            if isPreparingListDeletion {
-              ProgressView("Reviewing deletion").controlSize(.small).padding()
-            }
-          }
-          #if os(iOS)
-            .toolbar {
-              ToolbarItem {
-                SavedItemFilterControl(
-                  filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
-              }
-              if horizontalSizeClass == .compact || listPaneWidth < 440 {
-                ToolbarOverflowMenu {
-                  listRepresentationMenu
-                  listSortMenu
-                  listEditButton
-                  listActionsMenu(selectedList)
-                }
-              } else {
-                ToolbarItem { listRepresentationMenu }
-                ToolbarItem { listSortMenu }
-                ToolbarItem { listEditButton }
-                ToolbarItem(placement: .primaryAction) { listActionsMenu(selectedList) }
-              }
-              ToolbarItem {
-                listAddMenu(selectedList)
-              }
-            }
-          #endif
-      } else if isOpeningList {
-        ProgressView("Opening List")
-      } else if selectedListId != nil {
-        ContentUnavailableView {
-          Label("List unavailable", systemImage: "exclamationmark.triangle")
-        } description: {
-          if listWindowNamespace == store.devicePreferenceNamespace,
-            case .failed(let reason) = listWindow?.state
-          {
-            Text(reason)
-          } else {
-            Text("Planner could not open the selected List.")
-          }
-        } actions: {
-          Button("Try again") { Task { await loadSelectedList() } }
-        }
-      } else if let listDeletionMessage {
-        ContentUnavailableView(
-          "List deleted", systemImage: "trash", description: Text(listDeletionMessage))
-      } else if listCatalogWindow?.state == .ready, listCatalogWindow?.matchingCount == 0 {
-        ContentUnavailableView {
-          Label {
-            Text(listCatalogArchive == .active ? "No Lists yet" : "No matching Lists")
-          } icon: {
-            Image(systemName: "list.bullet.rectangle").foregroundStyle(Color.primary)
-          }
-        } description: {
-          Text("Change the archive filter or create a List to start planning.")
-        }
-        .accessibilityIdentifier("saved.lists.empty")
-      } else {
-        ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
-      }
+      plannerCollectionColumn
     } detail: {
-      websiteHost(isActive: usesSidebarNavigation || selectedSection == .lists) {
-        if let newItemDraft {
-          newItemEditor(newItemDraft)
-        } else if usesItineraryColumns {
-          itineraryAppearanceDetail
-        } else if isItemSection {
-          itemDetail
-        } else {
-          appearanceDetail
-        }
-      }
-      .modifier(SavedMapDetailColumn(isMap: mapRequest != nil))
+      plannerDetailColumn
     }
     .id(listNavigationIdentifier)
     .navigationSplitViewStyle(.balanced)
-    .onChange(of: selectedListId) { _, identifier in
-      appearanceChangeMessage = nil
-      if identifier != nil { listDeletionMessage = nil }
-      #if os(iOS)
-        if identifier != nil { columnVisibility = .doubleColumn }
-      #endif
-      if case .listMembership(let listIdentifier, _) = selectedAppearanceIdentity,
-        listIdentifier == identifier
-      {
-        return
-      }
-      selectedAppearanceIdentity = nil
-      selectedAppearance = nil
-    }
   }
 
   private var listRepresentationMenu: some View {
@@ -2585,6 +2687,7 @@ struct SavedPlannerView: View {
     } else {
       selectedItemId = source.id
     }
+    mapDetailsRequested = true
   }
 
   private func prepareListBulkCompletion(_ list: PlannerListSourceRead, done: Bool) {
