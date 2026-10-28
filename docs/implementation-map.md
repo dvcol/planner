@@ -60,8 +60,11 @@ current positive viewport is available and adapts the fitted bounds to that
 viewport. Inspected captures retain neighborhood framing. The matching
 maximum-text dark-phone route regression also passes. This closes the scoped
 zoom-out finding below; physical routing and full assistive acceptance remain
-separate. The signed iPad Map build now passes with its existing approved profile;
-its physical runtime follows separately.
+separate. The [signed iPad build and profile checks](prototypes/native-shared-storage.md#physical-map-preparation-and-readiness-29-october-2026)
+pass. Its first physical attempt fails at New Item Save before reaching Map;
+the capture includes a floating overlay near Save. Device automation waits for
+confirmed idle, unobstructed availability. This is not a signing gate or physical
+Map acceptance.
 
 The [Mac Map lifecycle follow-up](prototypes/native-map-routing.md#mac-pane-lifecycle-and-stationary-controls-29-october-2026)
 now starts and passes the actual three-place route/resize journey. A stable

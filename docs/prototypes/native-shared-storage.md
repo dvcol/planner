@@ -495,3 +495,27 @@ remains user-deferred, and the prepared Mac run still needs manual automation
 readiness at this checkpoint. The subsequent
 [reader runtime checkpoint](native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
 records actual Mac reader passes and a separate itinerary-selection failure.
+
+## Physical Map preparation and readiness, 29 October 2026
+
+The current signed iOS app, embedded Share and UI runner build succeeds in
+202.382 seconds against the same 1,170 inputs as the passing Mac/phone camera
+checkpoint. Main and runner signatures pass. The existing approved team, app
+identifier, App Group and device coverage are verified without provisioning
+changes. A fresh check reports no passcode required.
+
+The physical iPad run starts one case on OS 27.0.1, then fails after the first
+New Item Save in 34.041 seconds; the whole command exits 65 in 47.130 seconds.
+The editor remains present. Its recording includes a floating overlay near the
+Save area and an orientation transition. The evidence does not establish the
+Save's persistence outcome or an app Save defect. The itinerary Map and route
+checks are not reached, so no physical Map acceptance is granted.
+
+Further device UI waits for the user's confirmation that the same iPad is idle,
+unobstructed, unlocked and awake. The signed build is ready. No account-transition
+experiment or CloudKit activation is armed. A host-side devicectl lookup warning
+also appears during teardown; no additional device cleanup is claimed.
+
+The [readiness record](evidence/native-map-collection/physical-readiness-2026-10-29/result.json)
+retains build, signature, execution and source-hash facts. Physical screen content,
+full hierarchies, device identifiers and provisioning contents are excluded.
