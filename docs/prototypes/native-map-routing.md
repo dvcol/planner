@@ -276,3 +276,58 @@ input is identical. Both tested source epochs and the exact difference are
 retained. Physical Map acceptance, manual pan/zoom persistence and the broader
 assistive review stay open. A separate physical readiness retry still stops
 at the first Save, as recorded in the shared-storage follow-up.
+
+## Native Map Search lifecycle, 29 October 2026
+
+Real iPhone checks expose a minimized-Search failure beyond the preceding layout
+pass: querying and clearing work, but the native Close leaves Search active.
+An explicit presentation binding, centered taps, automatic placement and toolbar
+content preferences do not restore it. A matching [Apple developer discussion](https://developer.apple.com/forums/thread/845737)
+includes an Apple engineer reproducing a similar hang. This is supporting platform
+evidence, not a substitute for Planner's actual failed checks.
+
+Standard iPhone search closes successfully, but its expanded field leaves the
+largest-text landscape Map with zero height. Moving the default item to the
+bottom makes Search unavailable in the tested tab layout. Dynamically hiding or
+minimizing that item does not qualify a reliable Close/toolbar return. Those
+probes receive no acceptance credit.
+
+Phone Map modes now share a native toolbar Search button and a NavigationStack/
+Form sheet. The sheet edits its own query and applies it when dismissed; Clear
+empties that query. Editing directly through the collection binding loses typed
+text in the Items recording. Staging the value and anchoring the sheet outside
+the toolbar button avoids refreshing its host during input. An active query
+uses a filled Search symbol and exposes its complete value to accessibility.
+iPad keeps its native searchable control; Mac and ordinary List-mode search
+retain their existing presentation. No provider, Core command, saved-data format,
+package, target or test hook changes.
+
+The [execution record](evidence/native-map-collection/search-lifecycle-2026-10-29/result.json)
+contains five passes, zero failures and zero skips against 1,171 matched native
+inputs. Phone Items, standalone List, repeated direct stops and repeated List
+branches retain query/clear/reopen behavior, exact bookmarks and independent
+completion. The iPad Items case retains native Search and portrait/landscape
+details. All use the largest accessibility text size, dark appearance and Increase
+Contrast; settings and original boot states are verified restored. Original
+[Search-sheet](evidence/native-map-collection/search-lifecycle-2026-10-29/phone-search.png),
+[landscape](evidence/native-map-collection/search-lifecycle-2026-10-29/phone-landscape.png)
+and [iPad](evidence/native-map-collection/search-lifecycle-2026-10-29/tablet-search-cleared.png)
+captures are inspected. The phone landscape Map again has 74 points of height
+and contains its complete 57.67-point pin.
+
+An earlier cohort fails while revealing the second nested appearance before
+Map opens. The isolated final case passes in 184.778 seconds; that earlier
+attempt supplies no Map acceptance, and no base-branch classification is claimed.
+Final strict Swift lint passes. A syntax-only correction spells the same sheet
+initializer with a named content closure after the UI runs; its exact one-block
+difference and both input manifests are retained. Matching final Simulator and
+signed-device builds pass in 13.083 and 12.960 seconds. The app and runner pass
+strict signature verification with access to macOS signing trust services.
+Physical execution still awaits the pending stopped-playback/stationary-device
+readiness answer. No physical Map, manual pan/zoom or broader assistive acceptance
+is claimed by this slice.
+
+Scoped Markdown lint finds no introduced issues; the same 165 line-length
+findings remain in the unmodified HEAD implementation map. Duplicate exported
+attachments are removed after curation, preserving original xcresults, the
+canonical installed app and pending physical-test products.

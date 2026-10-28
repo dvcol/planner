@@ -359,11 +359,10 @@ struct SavedItineraryDetail: View {
           .toolbarTitleDisplayMode(.inline)
         #endif
         #if os(iOS)
-          .searchable(
-            text: $searchText, placement: usesMapRepresentation ? .toolbar : .automatic,
-            prompt: "Search this Itinerary"
-          )
-          .searchToolbarBehavior(usesMapRepresentation ? .minimize : .automatic)
+          .modifier(
+            SavedCollectionSearch(
+              text: $searchText, placement: usesMapRepresentation ? .toolbar : .automatic,
+              prompt: "Search this Itinerary", usesMap: usesMapRepresentation))
         #else
           .searchable(text: $searchText, prompt: "Search this Itinerary")
         #endif

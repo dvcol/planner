@@ -53,6 +53,15 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [native Map Search follow-up](prototypes/native-map-routing.md#native-map-search-lifecycle-29-october-2026)
+now passes five largest-text, dark, increased-contrast phone/iPad journeys. A
+native phone query sheet avoids a stuck system Close transition while retaining
+queries, Clear, reopening and the full landscape pin. Exact Item/List/Itinerary
+contexts remain independent. iPad keeps native Search. Final Simulator and signed
+device builds and strict signatures pass. Physical execution still awaits the
+pending stopped-playback/stationary-iPad readiness answer; signing is ready.
+Manual pan/zoom and the broader assistive review remain separate qualifications.
+
 The [single-location and compact-Search follow-up](prototypes/native-map-routing.md#single-location-framing-and-compact-search-29-october-2026)
 closes continent-scale single-pin framing after Mac resizing and a zero-height
 phone Map at maximum text in landscape. Native minimized Search recovers space;

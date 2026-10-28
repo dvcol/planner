@@ -539,6 +539,9 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     let pin = application.buttons["saved.map.pin.35.0,139.0"]
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
     #if os(iOS)
+      verifyMapSearch(
+        in: application, prompt: "Search this List",
+        restoredControl: application.plannerElement("saved.list.filters"))
       if UIDevice.current.userInterfaceIdiom == .phone {
         let map = application.descendants(matching: .any)
           .matching(identifier: "saved.map.collection").firstMatch
@@ -668,6 +671,11 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     let pin = application.buttons["saved.map.pin.35.0,139.0"]
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
     XCTAssertTrue(pin.waitForPlannerHittability())
+    #if os(iOS)
+      verifyMapSearch(
+        in: application, prompt: "Search Items",
+        restoredControl: application.plannerElement("saved.items.filters"))
+    #endif
     let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     capture.name = "Native Items Map retains its pin and Locations control"
     capture.lifetime = .keepAlways
@@ -702,6 +710,81 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       }
     #endif
   }
+
+  #if os(iOS)
+    /// Filtering changes visibility without replacing the saved Map choice or its context.
+    private func verifyMapSearch(
+      in application: XCUIApplication, prompt: String, restoredControl: XCUIElement
+    ) {
+      let pin = application.buttons["saved.map.pin.35.0,139.0"]
+      let originalLabel = pin.label
+      let usesSheet = UIDevice.current.userInterfaceIdiom == .phone
+      let search: XCUIElement
+      if usesSheet {
+        search = application.textFields["saved.map.search.text"].firstMatch
+      } else {
+        search = application.searchFields[prompt].firstMatch
+      }
+      let openSearch = application.buttons["Search"].firstMatch
+      let done = application.buttons["saved.map.search.done"]
+      // Reopening must work after the first dismissal, with the query retained.
+      for attempt in 0..<2 {
+        if !search.isHittable {
+          XCTAssertTrue(openSearch.waitForPlannerHittability())
+          openSearch.activateForPlannerJourney()
+        }
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        search.activateForPlannerJourney()
+        search.typeText("No such map visit")
+        XCTAssertTrue(
+          search.waitForPlannerValue("No such map visit"),
+          "Observed search value: \(String(describing: search.value))")
+        if usesSheet {
+          if attempt == 0 {
+            let editorCapture = XCTAttachment(
+              screenshot: application.windows.firstMatch.screenshot())
+            editorCapture.name = "Native Map Search sheet before applying its query"
+            editorCapture.lifetime = .keepAlways
+            add(editorCapture)
+          }
+          done.activateForPlannerJourney()
+          XCTAssertTrue(done.waitForNonExistence(timeout: 5))
+        }
+        XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
+        XCTAssertTrue(pin.waitForNonExistence(timeout: 5))
+        if usesSheet {
+          XCTAssertTrue(openSearch.waitForPlannerHittability())
+          openSearch.activateForPlannerJourney()
+          XCTAssertTrue(
+            search.waitForPlannerValue("No such map visit"),
+            "Observed search value: \(String(describing: search.value))")
+          application.buttons["saved.map.search.clear"].activateForPlannerJourney()
+          done.activateForPlannerJourney()
+          XCTAssertTrue(done.waitForNonExistence(timeout: 5))
+        } else {
+          search.buttons["Clear text"].activateForPlannerJourney()
+          XCTAssertTrue(pin.waitForExistence(timeout: 10))
+          if !openSearch.isHittable {
+            let closeSearch = application.buttons.matching(
+              NSPredicate(format: "label ==[c] %@ OR label ==[c] %@", "close", "cancel")
+            ).firstMatch
+            XCTAssertTrue(closeSearch.waitForPlannerHittability())
+            closeSearch.activateForPlannerJourney()
+            XCTAssertTrue(closeSearch.waitForNonExistence(timeout: 5))
+          }
+        }
+        XCTAssertTrue(pin.waitForExistence(timeout: 10))
+        XCTAssertEqual(pin.label, originalLabel)
+        XCTAssertTrue(restoredControl.waitForPlannerHittability())
+        XCTAssertTrue(openSearch.waitForPlannerHittability())
+        XCTAssertTrue(pin.waitForPlannerHittability())
+      }
+      let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+      capture.name = "Clearing native Map search restores the same pin"
+      capture.lifetime = .keepAlways
+      add(capture)
+    }
+  #endif
 
   /// Keep the selected appearance and bookmark within native panes across size changes.
   private func verifyMapViewport(
@@ -908,6 +991,9 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     let pin = application.buttons["saved.map.pin.35.0,139.0"]
     XCTAssertTrue(pin.waitForExistence(timeout: 10))
     #if os(iOS)
+      verifyMapSearch(
+        in: application, prompt: "Search this Itinerary",
+        restoredControl: application.plannerElement("saved.itinerary.filters"))
       if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
         let summary = application.scrollViews["saved.map.summary"]
         XCTAssertTrue(summary.waitForExistence(timeout: 5))

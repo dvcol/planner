@@ -2158,12 +2158,10 @@ struct SavedPlannerView: View {
           }
         #endif
         #if os(iOS)
-          .searchable(
-            text: $listSearchText,
-            placement: listSearchPlacement,
-            prompt: "Search this List"
-          )
-          .searchToolbarBehavior(listRepresentation == .map ? .minimize : .automatic)
+          .modifier(
+            SavedCollectionSearch(
+              text: $listSearchText, placement: listSearchPlacement,
+              prompt: "Search this List", usesMap: listRepresentation == .map))
         #else
           .searchable(text: $listSearchText, prompt: "Search this List")
         #endif

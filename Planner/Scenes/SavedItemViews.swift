@@ -92,11 +92,10 @@ struct SavedItemCatalog: View {
     .navigationTitle(scope.title)
     .toolbarTitleDisplayMode(.inline)
     #if os(iOS)
-      .searchable(
-        text: $searchText, placement: representation == .map ? .toolbar : .automatic,
-        prompt: Text(scope.searchPrompt)
-      )
-      .searchToolbarBehavior(representation == .map ? .minimize : .automatic)
+      .modifier(
+        SavedCollectionSearch(
+          text: $searchText, placement: representation == .map ? .toolbar : .automatic,
+          prompt: scope.searchPrompt, usesMap: representation == .map))
     #else
       .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     #endif
