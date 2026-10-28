@@ -113,6 +113,19 @@ acceptance remain open. Two additional dark-tablet regressions pass in 81.130
 and 95.179 seconds: Items retain exact pin/unlocated-note navigation, and a
 standalone List retains local completion independently of its source Item.
 Both exercise portrait/landscape changes and restore the selected bookmark.
-Their full command exits zero in 203.002 seconds, with settings restored. Phone
-regressions remain pending at this checkpoint; compilation alone does not
-qualify their UI behavior.
+Their full command exits zero in 203.002 seconds, with settings restored.
+Two light-phone regressions also pass in 70.378 and 114.369 seconds: exact
+pin/unlocated-note navigation and repeated itinerary List branches independent
+of the standalone List. The command exits zero in 213.514 seconds and restores
+Simulator settings and boot state. All five mobile executions use the same
+1,172-input snapshot; later changes to the Mac-only installed-Share test are
+separate. The inactive generated Mac app is unregistered and removed after
+signature/process checks, preserving the canonical installed app and avoiding
+another Share entry. Actual Mac UI remains its own gate.
+
+A final matching Mac rebuild succeeds in 10.143 seconds after the Mac-only Share
+test cleanup is added. The one prepared Map resizing runtime exits 65 in 68.583
+seconds: XCTest times out while enabling automation mode before any case starts.
+It receives no Mac route/width acceptance credit. Keep manual automation
+authentication; another unchanged runtime needs human prompt readiness rather
+than a signing or code change.
