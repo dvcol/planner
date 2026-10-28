@@ -313,4 +313,6 @@ signed app. They add physical itinerary UI evidence, not normal shared-store,
 installed Share, broader deletion-matrix, accessibility or synchronization
 qualification. Production CloudKit stays disabled, account-transition testing
 remains user-deferred, and the prepared Mac run still needs manual automation
-readiness.
+readiness at this checkpoint. The subsequent
+[reader runtime checkpoint](native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
+records actual Mac reader passes and a separate itinerary-selection failure.

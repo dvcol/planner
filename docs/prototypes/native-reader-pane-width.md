@@ -56,3 +56,36 @@ The prepared batch includes the existing header regression, reader history/width
 checks and pending-load Return journey. Compilation supplies no resizing or
 page-retention credit. Signing is available; authentication remains required.
 Other lifecycle, installed Share, physical and synchronization gates remain open.
+
+## Mac runtime qualification, 28 October 2026
+
+With the user ready for manual automation approval, the reader history/resize
+journey passes in 54.291 seconds and pending-load Return passes in 37.605
+seconds. The webpage grows from 359 to 699 points when the native window grows
+from 860 to 1200 points. The linked Garden page survives both widths, Back,
+Forward and Reload, and Return preserves the exact saved bookmark. Closing a
+pending request leaves the Item intact; releasing that response does not reopen
+it, and reopening the guide starts fresh history.
+
+The original width assertion incorrectly required every browser action to be
+directly visible. A retained diagnostic shows macOS moving Forward and Reload
+into native toolbar overflow at the narrow width. The corrected journey opens
+that menu, checks the disabled Forward and enabled Reload actions, then verifies
+the ordinary history/reload workflow at the wide width. No production reader
+change is needed. Width restoration uses local `defer`; a live sample of the
+first interrupted failure had shown XCTest waiting in asynchronous teardown.
+
+All 1,169 native inputs are recorded. The exact two test-source overlays are
+retained against `bcd90f64`; product hashes remain stable within the represented
+runtime. Main, embedded Share and runner signatures pass, and automation still
+requires user authentication before and after execution. Four original reader
+captures are inspected and three retained. The owned-window overflow capture
+clips the part of the native menu outside that window; menu access and state
+are established by the actual native assertions.
+
+The [verified execution record](evidence/native-reader-pane-width/mac-runtime-2026-10-28/result.json)
+keeps the initial interrupted failure and diagnostic separate. Its four-test
+cohort has three passes and one itinerary failure; it is not an all-green batch.
+The reader passes do not qualify that itinerary failure or whole-app, installed
+Share, CloudKit, accessibility or third-party website acceptance. Itinerary
+selection receives its own follow-up.

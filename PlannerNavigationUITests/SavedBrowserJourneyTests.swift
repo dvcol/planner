@@ -1715,21 +1715,42 @@ final class SavedBrowserJourneyTests: XCTestCase {
     #elseif os(macOS)
       let window = application.windows.firstMatch
       let originalWidth = window.frame.width
-      addTeardownBlock {
-        await MainActor.run {
-          guard window.exists else { return }
-          window.resizePlannerWindowForJourney(width: originalWidth)
-        }
+      defer {
+        if window.exists { window.resizePlannerWindowForJourney(width: originalWidth) }
       }
       var pageWidths: [CGFloat] = []
       for width: CGFloat in [860, 1200] {
         window.resizePlannerWindowForJourney(width: width)
         XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 5))
-        for identifier in [
-          "saved.browser.return", "saved.browser.back", "saved.browser.forward",
-          "saved.browser.reload",
-        ] {
-          XCTAssertTrue(application.buttons[identifier].waitForPlannerHittability())
+        let controls = [
+          (identifier: "saved.browser.return", title: "Return to item"),
+          (identifier: "saved.browser.back", title: "Back"),
+          (identifier: "saved.browser.forward", title: "Forward"),
+          (identifier: "saved.browser.reload", title: "Reload"),
+        ]
+        let overflowControls = controls.filter { control in
+          let button = application.buttons[control.identifier]
+          return !button.exists || !button.isHittable
+        }
+        for control in controls
+        where !overflowControls.contains(where: {
+          $0.identifier == control.identifier
+        }) {
+          XCTAssertTrue(window.frame.contains(application.buttons[control.identifier].frame))
+        }
+        if !overflowControls.isEmpty {
+          let overflow = window.popUpButtons["more toolbar items"].firstMatch
+          XCTAssertTrue(overflow.waitForPlannerHittability())
+          overflow.activateForPlannerJourney()
+          for control in overflowControls {
+            let action = application.menuItems[control.title].firstMatch
+            XCTAssertTrue(action.waitForExistence(timeout: 5))
+            XCTAssertEqual(action.isEnabled, control.identifier != "saved.browser.forward")
+            if action.isEnabled { XCTAssertTrue(action.waitForPlannerHittability()) }
+          }
+          try await recordWindow(
+            application, name: "Native reader controls remain available in Mac toolbar overflow")
+          window.typeKey(.escape, modifierFlags: [])
         }
         XCTAssertGreaterThanOrEqual(page.frame.minX, window.frame.minX)
         XCTAssertLessThanOrEqual(page.frame.maxX, window.frame.maxX)

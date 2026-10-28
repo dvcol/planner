@@ -58,7 +58,7 @@ by resetting compact navigation when the selected plan changes. Five final
 Simulator executions cover creation/relaunch, exact reader Return and
 maximum-text dark-iPad Map branches/rotation. Matching signed Mac compilation
 and signature checks pass. Failed experiments remain separate; final Mac reader
-runtime awaits the existing manual-authentication readiness response.
+runtime is now covered by the scoped checkpoint below.
 The [deletion follow-up](prototypes/native-mobile-list-heading.md#itinerary-deletion-follow-up-28-october-2026)
 also passes the existing cancellation/selected-appearance/relaunch workflow on
 ordinary phone and iPad. Two native-driver corrections suffice; the shared Item
@@ -71,6 +71,13 @@ the shared Item. All native inputs and signed products remain unchanged, four
 original captures are inspected, and ordinary app launch is restored. These
 disposable-dataset journeys add no normal shared-store, installed Share or sync
 credit; Mac manual-automation readiness remains separate.
+
+The [Mac reader runtime checkpoint](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
+passes actual narrow/wide resizing, native overflow access, history/reload and
+pending-load Return. Manual automation authentication remains required. Its
+cohort has three passes and one itinerary-selection failure, with the latter
+tracked separately. Reader qualification adds no production change or complete
+Mac acceptance claim.
 
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
@@ -554,9 +561,10 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
 5. Qualify the outstanding core Mac UI workflows, including capture,
    Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
    cases. The [reader width follow-up](prototypes/native-reader-pane-width.md#mac-width-checks-prepared-28-october-2026)
-   adds actual Mac resizing to the existing history journey and passes Mac and
-   Simulator compilation; its prepared native batch awaits manual automation
-   readiness and has no runtime credit. The
+   now has [actual Mac reader passes](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
+   for resizing/history and pending-load Return. Its cohort separately exposes
+   an itinerary row-selection failure; that local correction remains distinct
+   from reader qualification. The
    [named Mac Undo journeys][mac-undo] now pass; unrepresented
    contexts retain their own gates. Q127 A's Calendar split pane passes
    Month/Day/Week resizing,
