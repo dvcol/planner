@@ -416,6 +416,9 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         XCTAssertTrue(bookmark.waitForPlannerHittability())
         XCTAssertEqual(bookmark.identifier, bookmarkIdentifier)
         XCTAssertEqual(bookmark.value as? String, originalURL)
+        verifyUserMapCamera(in: application, pins: pins)
+        XCTAssertEqual(bookmark.identifier, bookmarkIdentifier)
+        XCTAssertEqual(bookmark.value as? String, originalURL)
       }
     #endif
     #if os(macOS)
@@ -712,6 +715,76 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
   }
 
   #if os(iOS)
+    /// Compare geographic placement using pin spacing, independently of viewport scale.
+    private func verifyUserMapCamera(in application: XCUIApplication, pins: [XCUIElement]) {
+      let map = application.descendants(matching: .any)
+        .matching(identifier: "saved.map.collection").firstMatch
+      let details = application.plannerElement("saved.map.details.toggle")
+
+      func measure() -> (offset: CGFloat, spacing: CGFloat) {
+        let frames = pins.map(\.frame)
+        let spacing = abs(frames[1].midX - frames[0].midX)
+        XCTAssertGreaterThan(spacing, 1)
+        let center = frames.map(\.midX).reduce(CGFloat.zero, +) / CGFloat(frames.count)
+        return ((center - map.frame.midX) / spacing, spacing)
+      }
+
+      let initial = measure()
+      map.pinch(withScale: 1.2, velocity: 1)
+      let zoomed = NSPredicate { _, _ in
+        pins.allSatisfy(\.exists) && measure().spacing > initial.spacing * 1.05
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: zoomed, object: application)], timeout: 10),
+        .completed)
+      let beforePan = measure()
+      let start = map.coordinate(withNormalizedOffset: CGVector(dx: 0.06, dy: 0.6))
+      let end = map.coordinate(withNormalizedOffset: CGVector(dx: 0.11, dy: 0.6))
+      start.press(forDuration: 0.1, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
+      let panned = NSPredicate { _, _ in
+        pins.allSatisfy(\.exists) && abs(measure().offset - beforePan.offset) > 0.05
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: panned, object: application)], timeout: 10),
+        .completed)
+      let selected = measure()
+      let originalFrame = map.frame
+      for showsDetails in [false, true] {
+        if showsDetails {
+          pins[1].activateForPlannerJourney()
+        } else {
+          details.activateForPlannerJourney()
+        }
+        let resized = NSPredicate { _, _ in
+          if showsDetails {
+            return abs(map.frame.width - originalFrame.width) < 1
+              && abs(map.frame.height - originalFrame.height) < 1
+          }
+          return map.frame.width > originalFrame.width + 200
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: resized, object: application)], timeout: 10),
+          .completed)
+        let current = measure()
+        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+        capture.name = "User-positioned Map with details \(showsDetails)"
+        capture.lifetime = .keepAlways
+        add(capture)
+        let geometry = XCTAttachment(
+          string: "selected=\(selected)\ncurrent=\(current)\nmap=\(map.frame)")
+        geometry.name = "User camera geometry with details \(showsDetails)"
+        geometry.lifetime = .keepAlways
+        add(geometry)
+        XCTAssertEqual(current.offset, selected.offset, accuracy: 0.05)
+        if showsDetails {
+          XCTAssertEqual(current.spacing, selected.spacing, accuracy: selected.spacing * 0.05)
+        }
+      }
+    }
+
     /// Filtering changes visibility without replacing the saved Map choice or its context.
     private func verifyMapSearch(
       in application: XCUIApplication, prompt: String, restoredControl: XCUIElement

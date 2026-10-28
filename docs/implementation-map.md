@@ -53,6 +53,15 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [user-camera journey](prototypes/native-map-routing.md#user-camera-through-detail-pane-changes-29-october-2026)
+passes actual iPad Simulator pinch/drag, Hide details and pin reopening while
+preserving horizontal position, zoom and the exact bookmark. The same case
+rechecks three-place walking/driving routes and transit fallback. No production
+change is needed. Scene remounts, Mac gestures and full assistive review remain
+separate. The physical preflight reconnects the paired iPad but reports that it
+is locked; no install or test starts. A fresh unlock is requested, with signing
+already ready.
+
 The [native Map Search follow-up](prototypes/native-map-routing.md#native-map-search-lifecycle-29-october-2026)
 now passes five largest-text, dark, increased-contrast phone/iPad journeys. A
 native phone query sheet avoids a stuck system Close transition while retaining

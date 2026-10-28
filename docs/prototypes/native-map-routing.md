@@ -331,3 +331,31 @@ Scoped Markdown lint finds no introduced issues; the same 165 line-length
 findings remain in the unmodified HEAD implementation map. Duplicate exported
 attachments are removed after curation, preserving original xcresults, the
 canonical installed app and pending physical-test products.
+
+## User camera through detail-pane changes, 29 October 2026
+
+The existing three-place iPad journey now pinches and drags the actual Map before
+hiding details and reopening Museum through its pin. It proves that both gestures
+move the camera, then compares horizontal placement normalized by pin spacing.
+Hiding details widens the Map from 460 to 820 points. Reopening restores its
+original viewport, horizontal position and zoom within the declared tolerances,
+without changing the exact saved Museum bookmark. Production code is unchanged.
+
+The [execution record](evidence/native-map-collection/user-camera-2026-10-29/result.json)
+records one pass in 171.633 seconds, zero failures and zero skips against 1,171
+matched inputs. It also rechecks three walking and three driving results, transit
+fallback and distinct-pin framing. Original
+[hidden-details](evidence/native-map-collection/user-camera-2026-10-29/details-hidden.png)
+and [reopened-details](evidence/native-map-collection/user-camera-2026-10-29/details-open.png)
+captures are inspected. Simulator settings and the actual original boot state
+are restored. Strict Swift lint and the affected build pass.
+
+Two earlier test-driver failures receive no acceptance credit: the first queried
+the Map as a button; the second expected a direct toolbar toggle after it moved
+into native overflow. The final journey uses the existing pin-reopening workflow.
+This qualifies horizontal pan and zoom through this iPad pane change, not scene
+remounts, Mac gestures, heading, pitch or the broader assistive review.
+
+The physical retry stops before installation: a normal device query reconnects
+the paired iPad, but its current lock-state response requires a passcode. A fresh
+unlock is requested. Signing is ready; no physical Map acceptance is claimed.
