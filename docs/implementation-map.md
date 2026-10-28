@@ -40,7 +40,7 @@ can continue.
 | Shared storage | [Mac and device save pass][shared] | Installed Share handoff/save. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
-| Mac interaction | Calendar panes pass; more journeys open. | UI review. |
+| Mac interaction | Scoped journeys pass. | Remaining UI review. |
 | Synchronized daily use | Implementation and physical acceptance are open. | Complete CloudKit integration, then signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. |
 | Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
 
@@ -88,6 +88,15 @@ with one native Mac toolbar title before/after relaunch and while appearance
 details are open. The duplicate content heading is removed; mobile production
 paths are unchanged. Failed diagnostics remain distinct. Nested Map/keyboard,
 broader resizing and accessibility retain their own follow-ups.
+
+The [Mac contextual Map pair](prototypes/native-map-collection-ui.md#mac-repeated-contexts-and-window-resizing-28-october-2026)
+now passes exact repeated-Item and repeated-List choices, independent completion
+and retained bookmarks through actual 860/1,200-point window resizing. Native
+test locators are corrected without a production Map change. Six originals are
+inspected; the Map stays 320 points wide while details grow. Both shared-driver
+regressions also pass on iPhone Simulator with matching inputs and restored
+settings. Divider dragging, keyboard and broader assistive/physical acceptance
+remain separate.
 
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
@@ -566,8 +575,9 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
 4. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
    The [Mac Locations correction](prototypes/native-map-collection-ui.md#mac-locations-sheet-27-october-2026)
    fixes a collapsed sheet and passes provider/warning, dismissal and exact
-   bookmark checks on Mac and both simulators. Other Map contexts, Mac resizing
-   and keyboard interaction remain open.
+   bookmark checks on Mac and both simulators. The contextual Map pair above
+   adds actual window resizing; other contexts, native divider and keyboard
+   interaction remain open.
 5. Qualify the outstanding core Mac UI workflows, including capture,
    Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
    cases. The [reader width follow-up](prototypes/native-reader-pane-width.md#mac-width-checks-prepared-28-october-2026)

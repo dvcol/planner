@@ -186,3 +186,41 @@ the workspace, both executed snapshots and the latest Mac compilation.
 
 Other plan combinations, full assistive/physical review, actual Mac interaction,
 installed Share and account/sync gates remain open.
+
+## Mac repeated contexts and window resizing, 28 October 2026
+
+Both existing itinerary Map journeys now run through native Mac controls.
+The entry picker matches native text by label or value; collection queries use
+their exact identifiers without assuming UIKit's collection-view role. Progress
+assertions use the real native progress indicator and retain exact 0 of 2 and
+1 of 2 expectations. The initial two failures at the mobile static-text locator
+remain recorded separately from the passing Map interactions.
+
+The final Mac pair passes in 85.096 and 107.208 seconds. Repeated direct Items
+and repeated List children open independently Completed and Todo appearances
+through the counted pin's exact choices, retaining the original bookmark.
+The standalone List starts Done without pre-completing its itinerary children.
+The same native window actually reaches 860 and 1,200 points; pin, Locations and
+bookmark remain hittable within separate panes, and the original width returns.
+Six original captures are inspected. The Map stays 320 points wide at both
+sizes while details grow; this is window-resize evidence, not divider-drag or
+automatic Map-width-growth evidence.
+
+Production is unchanged from `4e841c8d`. Main app, embedded Share and runner
+signatures verify, and manual automation authentication stays required before
+and after execution. Nine product hashes stay stable during the final run;
+all 1,169 native inputs match the build and workspace. There are no failures,
+skips or runtime warnings. The intermediate two-pass Map run retains its own
+source epoch, without the later resize assertions.
+
+Both shared-driver regressions also pass on iPhone Simulator in 90.065 and
+109.644 seconds, with the same 1,169 inputs and original settings restored.
+The [verified checkpoint](evidence/native-map-collection/mac-context-resize-2026-10-28/result.json)
+records the failed locator epoch separately, native pane measurements, eight
+inspected originals and four retained captures, plus the exact build/runtime
+records. The final Mac and phone pairs each have zero failures/skips or runtime
+warnings; they are distinct platform executions.
+
+Native divider/keyboard interaction, full accessibility and physical/provider
+performance remain open. Installed Share and the user-deferred account-transition
+test retain their separate gates; production CloudKit stays disabled.

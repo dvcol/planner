@@ -395,7 +395,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(link, in: application)
     XCTAssertTrue(link.waitForExistence(timeout: 10))
     let bookmarkIdentifier = link.identifier
-    verifyTabletMapViewport(
+    verifyMapViewport(
       in: application, pin: pin, savedLink: link, originalURL: originalURL, context: "List")
     XCTAssertTrue(application.plannerElement("saved.appearance.actions").exists)
     application.openPlannerSection("Items")
@@ -493,7 +493,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, originalURL)
     XCTAssertTrue(application.plannerElement("saved.item.actions").exists)
-    verifyTabletMapViewport(
+    verifyMapViewport(
       in: application, pin: pin, savedLink: savedLink, originalURL: originalURL, context: "Items")
     returnToCatalog(application)
     application.plannerElement("saved.map.locations").activateForPlannerJourney()
@@ -516,7 +516,8 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     #endif
   }
 
-  private func verifyTabletMapViewport(
+  /// Keep the selected appearance and bookmark within native panes across size changes.
+  private func verifyMapViewport(
     in application: XCUIApplication, pin: XCUIElement, savedLink: XCUIElement,
     originalURL: String, context: String
   ) {
@@ -588,6 +589,39 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
           XCTAssertLessThanOrEqual(mapFrame.maxX, savedLink.frame.minX + 1)
         }
       }
+    #elseif os(macOS)
+      let window = application.windows.firstMatch
+      let originalWidth = window.frame.width
+      defer {
+        if window.exists { window.resizePlannerWindowForJourney(width: originalWidth) }
+      }
+      let savedLinkIdentifier = savedLink.identifier
+      let map = application.descendants(matching: .any)
+        .matching(identifier: "saved.map.collection").firstMatch
+      let locations = application.plannerElement("saved.map.locations")
+      for width: CGFloat in [860, 1200] {
+        window.resizePlannerWindowForJourney(width: width)
+        XCTAssertTrue(pin.waitForPlannerHittability())
+        XCTAssertTrue(savedLink.waitForPlannerHittability())
+        XCTAssertTrue(locations.isHittable)
+        XCTAssertTrue(window.frame.contains(map.frame))
+        XCTAssertTrue(map.frame.contains(pin.frame))
+        XCTAssertTrue(window.frame.contains(savedLink.frame))
+        XCTAssertLessThanOrEqual(map.frame.maxX, savedLink.frame.minX + 1)
+        XCTAssertEqual(savedLink.identifier, savedLinkIdentifier)
+        XCTAssertEqual(savedLink.value as? String, originalURL)
+        let capture = XCTAttachment(screenshot: window.screenshot())
+        capture.name = "Mac Map \(context) retains its exact details at width \(Int(width))"
+        capture.lifetime = .keepAlways
+        add(capture)
+        let geometry = XCTAttachment(
+          string:
+            "window=\(window.frame)\nmap=\(map.frame)\npin=\(pin.frame)\nlocations=\(locations.frame)\nlink=\(savedLink.frame)"
+        )
+        geometry.name = "Mac Map \(context) native pane frames at width \(Int(width))"
+        geometry.lifetime = .keepAlways
+        add(geometry)
+      }
     #endif
   }
 
@@ -606,10 +640,17 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     for source in sources {
       XCTAssertTrue(addEntry.waitForExistence(timeout: 10))
       addEntry.activateForPlannerJourney()
-      let choice = application.descendants(matching: .any).matching(
-        NSPredicate(
+      #if os(macOS)
+        let choicePredicate = NSPredicate(
+          format: "identifier BEGINSWITH %@ AND (label == %@ OR value == %@)",
+          "saved.itinerary.entry.choice.", source, source)
+      #else
+        let choicePredicate = NSPredicate(
           format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.",
           source)
+      #endif
+      let choice = application.descendants(matching: .any).matching(
+        choicePredicate
       ).firstMatch
       XCTAssertTrue(choice.waitForExistence(timeout: 5))
       choice.activateForPlannerJourney()
@@ -620,7 +661,9 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
   private func completeOnlyFirstRouteAppearance(in application: XCUIApplication) {
     let rows = application.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
-    XCTAssertTrue(application.staticTexts["0 of 2 items done"].exists)
+    let progress = application.progressIndicators["saved.itinerary.progress"]
+    XCTAssertTrue(progress.waitForExistence(timeout: 10))
+    XCTAssertEqual(progress.label, "0 of 2 items done")
     let first = rows.firstMatch
     revealCollectionControl(
       first, in: application, collectionIdentifier: "saved.itinerary.contents")
@@ -640,25 +683,29 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       secondIdentifier.replacingOccurrences(
         of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
     XCTAssertEqual(secondCheck.value as? String, "To do")
-    let progress = application.staticTexts["1 of 2 items done"]
-    let collection = application.collectionViews["saved.itinerary.contents"]
+    let collection = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.contents"
+    ).firstMatch
     for _ in 0..<8 {
       if progress.exists { break }
       collection.swipeDown(velocity: .slow)
     }
     XCTAssertTrue(progress.exists)
+    XCTAssertEqual(progress.label, "1 of 2 items done")
   }
 
   private func revealCollectionControl(
     _ control: XCUIElement, in application: XCUIApplication, collectionIdentifier: String
   ) {
-    let collection = application.collectionViews[collectionIdentifier]
+    let collection = application.descendants(matching: .any).matching(
+      identifier: collectionIdentifier
+    ).firstMatch
     XCTAssertTrue(collection.waitForExistence(timeout: 10))
     for _ in 0..<8 {
       if control.exists && control.isHittable { return }
       collection.swipeUp()
     }
-    let capture = XCTAttachment(screenshot: application.screenshot())
+    let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     capture.name = "Itinerary toolbar control remains unavailable after native scrolling"
     capture.lifetime = .keepAlways
     add(capture)
@@ -710,7 +757,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     revealDetailLink(link, in: application)
     XCTAssertTrue(link.waitForExistence(timeout: 10))
     let bookmarkIdentifier = link.identifier
-    verifyTabletMapViewport(
+    verifyMapViewport(
       in: application, pin: pin, savedLink: link, originalURL: originalURL,
       context: firstChoiceLabel)
     #if os(iOS)
