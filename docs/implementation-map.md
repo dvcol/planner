@@ -53,6 +53,16 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [adaptive Map footer](prototypes/native-map-routing.md#adaptive-route-controls-at-maximum-text)
+now passes all three travel modes in portrait and landscape on the dark iPad at
+maximum accessibility text with Increase Contrast. The icon-only Routes control
+and adaptive native layout preserve reachable controls and a fully visible pin;
+route details retain transit guidance. The matching ordinary phone routing
+regression and Mac compilation pass. Actual Mac runtime remains blocked before
+test execution: the user reports no authentication prompt despite the system
+logging a presentation request. A foreground diagnostic is prepared with manual
+authentication unchanged. This is separate from deferred Mac Share.
+
 The [multi-place routing slice](prototypes/native-map-routing.md) adds temporary
 native walking/driving paths and a Walking/Driving/Public transport picker.
 Light-phone and dark-tablet journeys pass with four appearances at three

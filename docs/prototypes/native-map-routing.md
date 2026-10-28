@@ -129,3 +129,44 @@ seconds: XCTest times out while enabling automation mode before any case starts.
 It receives no Mac route/width acceptance credit. Keep manual automation
 authentication; another unchanged runtime needs human prompt readiness rather
 than a signing or code change.
+
+## Adaptive route controls at maximum text
+
+The dark iPad accessibility run exposes a real footer defect: stacked travel
+controls leave too little visible Map for its pin. A first adaptive row passes
+Walking, but extending the journey to Public transport reproduces clipping in
+landscape. The final shared footer uses native ViewThatFits, keeps the travel
+picker at its natural width when it fits, and uses an accessible icon-only
+Routes button. The duplicate inline transit paragraph is removed; its complete
+guidance remains reachable in route details.
+
+The [final scoped evidence](evidence/native-map-collection/adaptive-route-controls-2026-10-28/result.json)
+records one passing iPad test, zero failures and zero skips, in 176.906 seconds.
+It checks Walking, Driving and Public transport in both orientations at the
+largest accessibility text size with dark appearance and Increase Contrast.
+Every control stays inside the Map pane, meets the 44-point target, and remains
+hittable without overlapping its neighbors. The counted pin stays completely
+inside the visible Map. Route details retain Same location and the full transit
+guidance, then return to the exact selected Item's notes. All six original
+captures and their actual selected-mode labels are inspected. The retained
+[landscape](evidence/native-map-collection/adaptive-route-controls-2026-10-28/final-transit-landscape.png)
+and [portrait](evidence/native-map-collection/adaptive-route-controls-2026-10-28/final-transit-portrait.png)
+captures show the final Public transport controls. This repeated-coordinate
+fixture performs no directions-provider lookup.
+
+The matching ordinary light-phone multi-place journey passes in 148.535 seconds,
+with three walking and driving legs, transit fallback and exact saved-bookmark
+selection. Its runtime exits zero in 177.467 seconds. The iPad runtime exits zero
+in 202.637 seconds. Both restore Simulator settings, and a separate actual
+inventory read verifies their original boot states. Final fixture, app and Mac
+builds pass in 14.001, 18.722 and 21.101 seconds against the same 1,170-input
+snapshot. Strict affected-file formatting and diff checks pass.
+
+The evidence retains failed candidates separately, including one setup race
+while the independent writer was still preparing. Waiting for its existing
+readiness controls fixes that test setup; it receives no footer acceptance
+credit. Actual Mac interaction still needs its startup authentication gate
+resolved. Physical routing, VoiceOver, maximum-text phone layout, positive
+transit ETA and controlled directions-provider failure/cancellation remain open.
+The maximum-text summary can scroll beneath the native toolbar; this footer
+slice does not establish whole-screen accessibility acceptance.

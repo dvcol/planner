@@ -187,28 +187,26 @@ struct SavedMapCollectionView: View {
     }
     .buttonStyle(.bordered)
     .controlSize(.large)
+    .labelStyle(.iconOnly)
+    .help("Routes")
     .accessibilityIdentifier("saved.map.routes")
   }
 
   private var routeControls: some View {
     VStack(alignment: .leading, spacing: 8) {
-      if dynamicTypeSize.isAccessibilitySize {
-        VStack(alignment: .leading, spacing: 12) {
-          travelModePicker
+      ViewThatFits(in: .horizontal) {
+        HStack(spacing: 12) {
+          travelModePicker.fixedSize(horizontal: true, vertical: false)
+          Spacer(minLength: 0)
           routesButton
         }
-      } else {
-        HStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 12) {
           travelModePicker
-          Spacer(minLength: 0)
           routesButton
         }
       }
       if directions.isLoading {
         ProgressView("Calculating routes").font(.callout)
-      } else if directions.mode == .transit {
-        Text("Public transport: open Routes for estimates and directions in Maps.")
-          .font(.caption).foregroundStyle(.secondary)
       }
     }
   }

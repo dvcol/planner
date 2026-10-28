@@ -146,6 +146,8 @@ import XCTest
       ]
       application.terminate()
       application.launchSavedPlannerJourney()
+      XCTAssertTrue(application.plannerElement("fixture.writer.menu").waitForExistence(timeout: 20))
+      XCTAssertTrue(application.buttons["Show Sidebar"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Itineraries")
       let itinerary = application.descendants(matching: .any).matching(
         NSPredicate(
@@ -190,40 +192,83 @@ import XCTest
       XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
       for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
         XCUIDevice.shared.orientation = orientation
-        let settled = NSPredicate { _, _ in
-          let frame = application.windows.firstMatch.frame
-          let matchesOrientation: Bool
-          if orientation == .portrait {
-            matchesOrientation = frame.height > frame.width
-          } else {
-            matchesOrientation = frame.width > frame.height
+        for modeTitle in ["Walking", "Driving", "Public transport"] {
+          let modeSelector = application.plannerElement("saved.map.travelMode")
+          XCTAssertTrue(modeSelector.waitForPlannerHittability())
+          modeSelector.activateForPlannerJourney()
+          let option = application.buttons[modeTitle].firstMatch
+          XCTAssertTrue(option.waitForExistence(timeout: 5))
+          option.activateForPlannerJourney()
+          let settled = NSPredicate { _, _ in
+            let frame = application.windows.firstMatch.frame
+            let matchesOrientation: Bool
+            if orientation == .portrait {
+              matchesOrientation = frame.height > frame.width
+            } else {
+              matchesOrientation = frame.width > frame.height
+            }
+            return matchesOrientation && pin.exists && pin.isHittable
           }
-          return matchesOrientation && pin.exists && pin.isHittable
+          let result = XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
+          let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+          capture.name =
+            "Itinerary native accessible Map \(modeTitle) rotation \(orientation.rawValue)"
+          capture.lifetime = .keepAlways
+          add(capture)
+          let hierarchy = XCTAttachment(string: application.debugDescription)
+          hierarchy.name = "Itinerary native accessible Map \(modeTitle) viewport hierarchy"
+          hierarchy.lifetime = .keepAlways
+          add(hierarchy)
+          XCTAssertEqual(result, .completed)
+          let map = application.descendants(matching: .any)
+            .matching(identifier: "saved.map.collection").firstMatch
+          let summary = application.scrollViews["saved.map.summary"]
+          let visibleTop = summary.exists ? max(map.frame.minY, summary.frame.maxY) : map.frame.minY
+          XCTAssertGreaterThanOrEqual(pin.frame.minY, visibleTop - 1)
+          XCTAssertLessThanOrEqual(pin.frame.maxY, map.frame.maxY + 1)
+          XCTAssertGreaterThanOrEqual(pin.frame.minX, map.frame.minX - 1)
+          XCTAssertLessThanOrEqual(pin.frame.maxX, map.frame.maxX + 1)
+          let locations = application.plannerElement("saved.map.locations")
+          XCTAssertTrue(locations.isHittable)
+          XCTAssertEqual(locations.label, "Locations")
+          XCTAssertTrue(application.staticTexts["2 of 2 items located"].firstMatch.isHittable)
+          XCTAssertTrue(application.staticTexts["Original notes"].exists)
+          let travelMode = application.plannerElement("saved.map.travelMode")
+          let routes = application.plannerElement("saved.map.routes")
+          let window = application.windows.firstMatch.frame
+          for control in [travelMode, routes, locations] {
+            XCTAssertTrue(control.isHittable)
+            XCTAssertGreaterThanOrEqual(control.frame.minX, map.frame.minX)
+            XCTAssertLessThanOrEqual(control.frame.maxX, map.frame.maxX)
+            XCTAssertGreaterThanOrEqual(control.frame.minY, window.minY)
+            XCTAssertLessThanOrEqual(control.frame.maxY, window.maxY)
+            if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+              XCTAssertGreaterThanOrEqual(control.frame.width, 44)
+              XCTAssertGreaterThanOrEqual(control.frame.height, 44)
+            }
+          }
+          XCTAssertFalse(travelMode.frame.intersects(routes.frame))
+          XCTAssertFalse(routes.frame.intersects(locations.frame))
+          routes.activateForPlannerJourney()
+          let routeList = try XCTUnwrap(
+            application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable))
+          var expectedRouteTexts = ["Same location"]
+          if modeTitle == "Public transport" {
+            expectedRouteTexts.insert(
+              "Public transport times are estimates. Open a leg in Maps for its full route.", at: 0)
+          }
+          for text in expectedRouteTexts {
+            let content = application.staticTexts[text].firstMatch
+            for _ in 0..<4 where !content.isHittable {
+              routeList.swipeUp(velocity: .slow)
+            }
+            XCTAssertTrue(content.waitForExistence(timeout: 10))
+            XCTAssertTrue(content.isHittable)
+          }
+          application.plannerElement("saved.map.route.close").activateForPlannerJourney()
+          XCTAssertTrue(application.staticTexts["Original notes"].waitForExistence(timeout: 10))
         }
-        let result = XCTWaiter.wait(
-          for: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
-        let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
-        capture.name = "Itinerary native accessible Map rotation \(orientation.rawValue)"
-        capture.lifetime = .keepAlways
-        add(capture)
-        let hierarchy = XCTAttachment(string: application.debugDescription)
-        hierarchy.name = "Itinerary native accessible Map viewport hierarchy"
-        hierarchy.lifetime = .keepAlways
-        add(hierarchy)
-        XCTAssertEqual(result, .completed)
-        let map = application.descendants(matching: .any)
-          .matching(identifier: "saved.map.collection").firstMatch
-        let summary = application.scrollViews["saved.map.summary"]
-        let visibleTop = summary.exists ? max(map.frame.minY, summary.frame.maxY) : map.frame.minY
-        XCTAssertGreaterThanOrEqual(pin.frame.minY, visibleTop - 1)
-        XCTAssertLessThanOrEqual(pin.frame.maxY, map.frame.maxY + 1)
-        XCTAssertGreaterThanOrEqual(pin.frame.minX, map.frame.minX - 1)
-        XCTAssertLessThanOrEqual(pin.frame.maxX, map.frame.maxX + 1)
-        let locations = application.plannerElement("saved.map.locations")
-        XCTAssertTrue(locations.isHittable)
-        XCTAssertEqual(locations.label, "Locations")
-        XCTAssertTrue(application.staticTexts["2 of 2 items located"].firstMatch.isHittable)
-        XCTAssertTrue(application.staticTexts["Original notes"].exists)
       }
     }
 
