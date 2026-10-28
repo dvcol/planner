@@ -137,3 +137,35 @@ captures cover [empty narrow](evidence/native-development-signed-mac-ui/manual-a
 and [populated wide](evidence/native-development-signed-mac-ui/manual-approval/populated-wide.png).
 Other Mac UI journeys, Calendar resizing, keyboard/Undo and full acceptance
 remain open. Account-transition testing remains separately deferred.
+
+## No visible prompt during the 28 October Map run
+
+The user reports that no Enable UI Automation prompt appeared in the latest
+core Map attempt. Its retained runtime exits 65 before any test starts. Logs
+between 22:12:57 and 22:13:58 JST show testmanagerd requesting automation mode,
+requiring authentication, and creating the corresponding LocalAuthentication
+context. The authentication agent reports makeKeyAndOrderFront and then a
+GotFocus transition to Active. Those internal events do not prove that the
+dialog was visible to the user or explain the missing presentation.
+
+The active console session matches the execution user; authentication remains
+required and Automation Mode is disabled between runs. A read-only window probe
+after the timeout finds no corresponding window, which cannot establish where
+it was during startup. Disabled debugger authorization, companion warnings and
+Mac Share discovery are not established causes of this failure. Mac Share is
+now explicitly post-MVP.
+
+The [compact diagnosis](evidence/native-development-signed-mac-ui/no-visible-prompt-2026-10-28/result.json)
+retains these distinctions. The next bounded diagnostic is the existing core
+Map journey started by the user in a foreground Terminal, after saving drafts
+and quitting the installed Planner. Its prepared launcher verifies the frozen
+source and signed test products before launch. A read-only probe samples display
+and authentication-window geometry during startup, without capturing screenshots,
+window titles or credentials. Metadata visibility is itself limited and cannot
+guarantee that a secure window will be reported.
+
+This foreground attempt is prepared, not executed or a proven fix. It retains
+manual native approval and changes no authentication policy, protected service,
+iCloud setting or signing resource. A successful build is not Mac interaction
+acceptance, and another restart or unchanged background retry is not the next
+diagnostic.
