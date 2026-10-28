@@ -281,3 +281,36 @@ retains the commands and verification without device identifiers or profile and
 certificate contents. It supplies no physical itinerary, installed Share or sync
 credit. Production CloudKit remains disabled and the account-transition
 experiment stays user-deferred. Mac UI readiness remains a separate pending gate.
+
+## Physical itinerary journeys, 28 October 2026
+
+After renewed human readiness and a fresh unlocked-state check, both prepared
+journeys pass on the physical iPad running 27.0.1, with zero failures or skips.
+Creating a second itinerary opens its own empty contents and retains its public
+identity and single heading after relaunch. The deletion journey verifies
+Cancel on an empty plan, confirmed empty-plan deletion and deletion while an
+Item appearance is selected. After relaunch both deleted plans remain absent;
+the original shared Museum Item retains its identity, notes and global Todo
+state.
+
+Creation takes 89.557 seconds and deletion takes 135.657 seconds. The complete
+command exits 0 in 236.503 seconds. All 1,169 native input hashes and 37 signed
+product-file hashes remain unchanged. Main app, embedded Share and runner pass
+the prepared signature checks. No production or test code changes are needed.
+The app is then launched normally without prototype arguments.
+
+All four original captures are inspected and three retained in the
+[execution evidence](evidence/native-shared-storage/physical-itinerary-2026-10-28/result.json).
+The native hierarchy reports a 1600-by-1200 main window; the screenshot files
+carry a 3200-by-2400 pixel matrix and EXIF orientation 8. The represented heading,
+review controls and cleared selection are checked, without claiming full-device
+layout or orientation acceptance. The read-back-verified archive retains
+redacted commands, source/product hashes, results, logs and heading hierarchy;
+device identifiers, names and profile/certificate contents are excluded.
+
+These journeys use disposable local-prototype datasets through the registered
+signed app. They add physical itinerary UI evidence, not normal shared-store,
+installed Share, broader deletion-matrix, accessibility or synchronization
+qualification. Production CloudKit stays disabled, account-transition testing
+remains user-deferred, and the prepared Mac run still needs manual automation
+readiness.

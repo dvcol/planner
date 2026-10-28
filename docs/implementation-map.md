@@ -64,9 +64,13 @@ also passes the existing cancellation/selected-appearance/relaunch workflow on
 ordinary phone and iPad. Two native-driver corrections suffice; the shared Item
 and its Todo state survive, with production binaries unchanged.
 The [current physical iPad build](prototypes/native-shared-storage.md#current-itinerary-device-build-28-october-2026)
-now also passes compilation, profile and signature verification. Its two
-itinerary journeys wait for the device to be unlocked and the user to confirm
-availability; preparation supplies no physical execution credit.
+passes compilation, profile and signature verification. After renewed readiness
+and an unlocked-state check, the [two physical itinerary journeys](prototypes/native-shared-storage.md#physical-itinerary-journeys-28-october-2026)
+also pass creation/relaunch and empty/selected-plan deletion while preserving
+the shared Item. All native inputs and signed products remain unchanged, four
+original captures are inspected, and ordinary app launch is restored. These
+disposable-dataset journeys add no normal shared-store, installed Share or sync
+credit; Mac manual-automation readiness remains separate.
 
 The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
 passes on phone and iPad Simulator in dark mode with Increase Contrast. Native

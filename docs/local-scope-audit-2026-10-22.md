@@ -66,6 +66,10 @@ storage tests pass, including actual provisioned main-app group access; two
 mobile capture regressions pass. The user authorizes a fresh test-data app,
 leaving the old prototype untouched. Signed physical iPad creation/relaunch and
 the Map link/uncertainty journey now pass after a root-view startup correction.
+The [physical itinerary follow-up](prototypes/native-shared-storage.md#physical-itinerary-journeys-28-october-2026)
+also passes second-plan creation/relaunch and empty/selected-plan deletion while
+retaining the shared Item. Those two journeys use disposable local-prototype
+datasets; they do not qualify the normal shared store or synchronization.
 Installed extension discovery/execution, broader physical acceptance and cloud
 synchronization remain open.
 
