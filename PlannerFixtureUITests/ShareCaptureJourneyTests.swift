@@ -2,6 +2,61 @@ import XCTest
 
 @MainActor
 final class ShareCaptureJourneyTests: XCTestCase {
+  func testRetryNativeInputKeepsOwnedEditsAndSavesTheRecoveredLink() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--share-extension-fixture", "--share-retry-url-input", "--fixture-dataset",
+      UUID().uuidString,
+    ]
+    application.launchSavedPlannerJourney()
+    let title = application.textFields["saved.capture.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.plannerElement("saved.capture.add").isEnabled)
+    title.activateForPlannerJourney()
+    title.typeText("My museum")
+    let notes = application.textFields["saved.capture.notes"]
+    XCTAssertTrue(notes.exists)
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the afternoon free")
+    let retry = application.plannerElement("saved.capture.input.retry.0")
+    for _ in 0..<8 where !retry.isHittable { application.swipeUp() }
+    XCTAssertTrue(retry.isHittable)
+    recordShareScreenshot(application, name: "Failed native Share input offers Retry and Remove")
+    retry.activateForPlannerJourney()
+    XCTAssertTrue(retry.waitForNonExistence(timeout: 10))
+    let addItem = application.plannerElement("saved.capture.add")
+    XCTAssertTrue(addItem.isEnabled)
+    recordShareScreenshot(application, name: "Retried Share input restores its original link")
+    addItem.activateForPlannerJourney()
+    application.openPlannerSection("Items")
+    let row = application.savedPlannerItemRows("My museum").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    let identifier = row.identifier
+    row.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the afternoon free"].waitForExistence(timeout: 10))
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND value == %@",
+        "saved.item.link.", "https://example.com/museum")
+    ).firstMatch
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let linkIdentifier = link.identifier
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.capture.cancel").waitForExistence(timeout: 10))
+    application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
+    application.openPlannerSection("Items")
+    XCTAssertEqual(row.identifier, identifier)
+    XCTAssertEqual(application.savedPlannerItemRows("My museum").count, 1)
+    row.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the afternoon free"].waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.descendants(matching: .any).matching(identifier: linkIdentifier).firstMatch
+        .waitForExistence(timeout: 10))
+    recordShareScreenshot(application, name: "Retried Share retains owned notes and bookmark")
+  }
+
   func testShareRequiresMainAppMigrationThenRetainsTheOriginalItemAndSavesNewContent() {
     continueAfterFailure = false
     let application = XCUIApplication()

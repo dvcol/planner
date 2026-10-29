@@ -89,6 +89,43 @@ test-driver selectors and URL launching, an installation-service failure before
 any case, the actual blocked Add diagnostic, and a later discovery-only failure.
 No failing startup is counted as an application test pass.
 
-One local capture follow-up remains: failed provider inputs offer Remove, while
-the accepted Retry capability exists only in Core. Add its native control through
-the existing capture update command, preserving current owned edits and links.
+The native Retry follow-up below now supplies the missing provider-input control.
+
+## Native provider input Retry, 29 October 2026
+
+The review offers Retry input beside Remove for failed or oversized native Share
+inputs. It uses the existing Core capture edit. Newly derived links reach the
+review only when its link fields are unchanged; unsaved title, notes and explicit
+link edits survive. No public contract, storage model or backup format changes.
+
+The existing native provider fixture fails its first URL load, then succeeds on
+Retry. The phone journey passes in 41.679 seconds, retaining owned title/notes
+and the exact bookmark through Save and relaunch. Ordinary Share review and
+Maps-link removal regressions pass in 46.117 and 51.261 seconds. An earlier
+relaunch assertion requested a Button for the native Link; its actual hierarchy
+contains the exact saved bookmark. Correcting only that selector resolves it.
+The same three dark-iPad cases pass in 44.365, 44.979 and 57.435 seconds. Both
+owned Simulators are shut down and deleted. Four retained original captures
+show readable Retry/Remove controls and saved notes/bookmarks in light phone and
+dark tablet layouts. These are controlled native provider fixtures, separate
+from the installed Safari journey above.
+
+Matching Simulator, signed device and signed Mac app/Share builds pass. All
+1,172 native inputs agree. Device signatures and existing profiles cover the
+authorized iPad. Mac temporary registrations fall from 3 to 0 while the installed
+app retains 3 mentions and unchanged file hashes. The unregister commands exit
+0 and 1 respectively; the final registry observation establishes removal.
+
+The physical Safari attempt starts one test and passes the empty-catalog check,
+but its Share button has no tappable point. Safari remains visible without the
+Share picker, so the later missing More-cell assertion supplies no extension
+discovery or saving result. No Item is created. A full-screen Safari layout with
+overlays dismissed is requested before another attempt. Personal Safari captures
+and raw device identifiers remain outside committed evidence. Signing and test
+startup are working; account-transition testing remains deferred.
+
+The [Retry evidence](evidence/navigation/native-share-products/mobile-input-retry-2026-10-29/result.json)
+retains source hashes, scoped commands/results and the earlier selector failure.
+All 90 Core sources are unchanged from the installed mobile checkpoint. Removing
+duplicate exported captures reclaims 41,761,570 nominal bytes after validating
+the committed captures; original result bundles and build products are kept.

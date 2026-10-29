@@ -260,17 +260,16 @@ struct SavedCaptureForm: View {
     ForEach(draft.inputIssues, id: \.inputIndex) { issue in
       Section {
         Label(issue.message, systemImage: "exclamationmark.triangle")
-        Button("Remove input") {
-          Task {
-            isWorking = true
-            defer { isWorking = false }
-            if let updated = await store.updateCapture(
-              draft, edit: .init(removeInputIndexes: [issue.inputIndex]))
-            {
-              adoptCaptureDraft(updated, replacing: draft)
-            }
+        if case .share = entryPoint, issue.state == .failed || issue.state == .oversized {
+          Button("Retry input") {
+            Task { await updateCaptureInputs(.init(retryInputIndexes: [issue.inputIndex])) }
           }
+          .accessibilityIdentifier("saved.capture.input.retry.\(issue.inputIndex)")
         }
+        Button("Remove input") {
+          Task { await updateCaptureInputs(.init(removeInputIndexes: [issue.inputIndex])) }
+        }
+        .accessibilityIdentifier("saved.capture.input.remove.\(issue.inputIndex)")
       }
     }
   }
@@ -390,11 +389,27 @@ struct SavedCaptureForm: View {
     }
   }
 
+  /// Updates derived values while preserving unsaved field and link edits.
   private func adoptCaptureDraft(
     _ updated: PlannerCaptureDraftRead, replacing previous: PlannerCaptureDraftRead
   ) {
     if title == previous.content.title { title = updated.content.title }
+    if links.map(\.input) == captureLinkInputs(previous) {
+      links = updated.links.map(SavedOwnedLinkDraft.init)
+    }
     draft = updated
+  }
+
+  private func updateCaptureInputs(_ edit: PlannerCaptureEdit) async {
+    guard let draft, !isWorking, !applied else { return }
+    isWorking = true
+    store.alertMessage = nil
+    defer { isWorking = false }
+    guard let updated = await store.updateCapture(draft, edit: edit),
+      self.draft?.generation == draft.generation,
+      captureNamespace == store.devicePreferenceNamespace
+    else { return }
+    adoptCaptureDraft(updated, replacing: draft)
   }
 
   private var canSave: Bool {

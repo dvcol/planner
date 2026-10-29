@@ -106,10 +106,12 @@ struct PlannerShareFixtureView: View {
 
   private func providers() -> [NSItemProvider] {
     let provider = NSItemProvider()
+    let urlInput = FixtureShareURLInput(
+      failsFirstLoad: ProcessInfo.processInfo.arguments.contains("--share-retry-url-input"))
     provider.registerDataRepresentation(forTypeIdentifier: UTType.url.identifier, visibility: .all)
     {
       completion in
-      completion(Data("https://example.com/museum".utf8), nil)
+      do { completion(try urlInput.load(), nil) } catch { completion(nil, error) }
       return nil
     }
     provider.registerDataRepresentation(
@@ -135,5 +137,24 @@ struct PlannerShareFixtureView: View {
         storeURL: configuration.storeURL, controlURL: configuration.controlURL,
         recoveryDirectoryURL: configuration.recoveryDirectoryURL, processRole: .mainApplication,
         storageMode: .localOnly))
+  }
+}
+
+private final class FixtureShareURLInput: @unchecked Sendable {
+  private let lock = NSLock()
+  private var failsNextLoad: Bool
+
+  init(failsFirstLoad: Bool) {
+    failsNextLoad = failsFirstLoad
+  }
+
+  func load() throws -> Data {
+    try lock.withLock {
+      if failsNextLoad {
+        failsNextLoad = false
+        throw CocoaError(.fileReadUnknown)
+      }
+      return Data("https://example.com/museum".utf8)
+    }
   }
 }

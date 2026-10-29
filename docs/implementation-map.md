@@ -59,9 +59,11 @@ The [installed mobile Share checkpoint][share] fixes an opaque native URL input
 that kept Add disabled in Safari. All 27 focused Core tests pass. Real Safari
 journeys pass on phone and dark iPad Simulators, including Cancel, exact bookmark
 readback, live refresh on foreground return, relaunch and synthetic Item cleanup.
-Matching signed device products are ready; physical Share awaits fresh device
-availability. Provider-input Retry still needs its native control. CloudKit
-remains local-only with the account-transition test deferred.
+The [native Retry follow-up][share-retry] adds the missing provider-input control
+and preserves recovered links and owned edits. Six phone/dark-iPad cases and
+signed device/Mac builds pass. Physical Share starts its test,
+but needs a full-screen Safari retry because its Share button has no tappable
+point. CloudKit remains local-only with the account-transition test deferred.
 
 The [Calendar day-heading correction](prototypes/native-calendar-shared-time-ruler.md#locale-independent-day-headings-and-physical-check-29-october-2026)
 replaces locale-dependent test lookups with stable native date identities.
@@ -523,9 +525,8 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
   requirements, rather than another account/team setup task.
 - **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
   now pass. Physical mobile Share, production synchronization/account safety,
-  physical scale and the remaining native accessibility/coherence review retain
-  their
-  distinct gates. The final human layout review remains required.
+  physical scale and the remaining native accessibility/coherence review have
+  separate gates. The final human layout review remains required.
 - **Deferred scope:** advanced import/restoration, installed Mac Share and V3
   Intents/Agent Control do not block the core MVP queue.
 
@@ -809,5 +810,7 @@ The complete former issue body, including original requirements and implementati
 
 [shared]: prototypes/native-shared-storage.md
 [share]: prototypes/native-share-products.md#installed-mobile-share-29-october-2026
+[share-retry]:
+  prototypes/native-share-products.md#native-provider-input-retry-29-october-2026
 [ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026
 [mac-undo]: prototypes/native-association-undo.md#native-mac-keyboard-undo-27-october-2026
