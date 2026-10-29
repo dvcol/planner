@@ -385,3 +385,25 @@ change is needed. This qualifies these representation switches on light iPad
 Simulator at standard Large text; physical, Mac, VoiceOver and arbitrary scene
 restoration retain separate gates. The physical retry still needs the requested
 fresh iPad unlock.
+
+## Physical automation startup, 29 October 2026
+
+After the user's fresh unlock confirmation, the prepared signed iPad retry
+passes its lock and strict signature checks. The runner launches, then fails its
+60-second automation-mode handshake before any application test case starts.
+The [execution record](evidence/native-map-collection/physical-startup-2026-10-29/result.json)
+reports exit 65 and zero started cases. XCTest's one failed result record is the
+runner-initialization error, not an executed Map assertion.
+
+Post-run device queries report unlocked, Developer Mode enabled, a connected
+tunnel and no remaining Planner test-runner process. Recorded diagnostics retain
+the same timeout without establishing its deeper cause. A later diagnostic
+collector warning cannot find devicectl; it occurs after the startup failure.
+The pending human question asks whether a permission prompt appeared on Mac or
+iPad before another attempt. Authentication policy and global Xcode selection
+remain unchanged.
+
+All 1,171 inputs match the previously committed final signed-build manifest.
+Current production inputs remain identical; only the later Simulator test
+extensions differ from this prepared runner. No physical Map acceptance is
+claimed. No signing or iCloud setting change is made.

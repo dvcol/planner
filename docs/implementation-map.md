@@ -53,6 +53,13 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [fresh physical Map attempt](prototypes/native-map-routing.md#physical-automation-startup-29-october-2026)
+passes unlock/signature checks and launches its signed runner, then times out
+enabling automation before any application test starts. Post-run checks retain
+an unlocked device, enabled Developer Mode and no leftover runner. The exact
+permission-prompt observation is requested before retrying. Current production
+inputs match that build; physical Map acceptance remains open.
+
 The [filtered representation pair](prototypes/native-map-routing.md#filtered-appearance-through-listmap-switches-29-october-2026)
 passes List/Map switching for repeated direct stops and repeated List branches
 on iPad Simulator. A valid Todo detail remains selected while Done filtering
