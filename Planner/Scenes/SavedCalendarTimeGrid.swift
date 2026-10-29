@@ -255,6 +255,7 @@ struct SavedCalendarTimeGrid: View {
     return VStack(alignment: .leading, spacing: 12) {
       Text(day, format: .dateTime.weekday().month().day())
         .font(.headline).padding(.horizontal, 8)
+        .accessibilityIdentifier("saved.calendar.day-heading.\(dateIdentifier(day))")
       ForEach(entries.prefix(2), id: \.schedule.id) { entry in
         entryButton(entry, day: day, isTimed: false)
           .frame(height: allDayCardHeight).padding(.horizontal, 8)

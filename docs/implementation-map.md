@@ -53,6 +53,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Calendar day-heading correction](prototypes/native-calendar-shared-time-ruler.md#locale-independent-day-headings-and-physical-check-29-october-2026)
+replaces locale-dependent test lookups with stable native date identities.
+The physical iPad booking survives Month/Day/Week and relaunch; two French/France
+Simulator regressions also pass, including overlapping appointments. All three
+builds share 1,171 inputs, with passing strict Swift lint and Mac signatures.
+No booking, language or timezone behavior changes. Full assistive and sync gates
+remain open.
+
 The [physical iPad Map retry](prototypes/native-map-routing.md#physical-ipad-route-and-pane-check-29-october-2026)
 now passes after the user reports the on-device automation prompt. The native
 journey verifies three distinct places, walking/driving legs, transit fallback,

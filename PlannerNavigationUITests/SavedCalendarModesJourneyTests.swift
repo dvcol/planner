@@ -340,15 +340,8 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed."))
       XCTAssertTrue(entries.firstMatch.waitForExistence(timeout: 10))
       XCTAssertEqual(entries.count, 4)
-      let dayHeading = Date().formatted(.dateTime.weekday().month().day())
-      #if os(macOS)
-        let headings = application.descendants(matching: .any)
-      #else
-        let headings = grid.staticTexts
-      #endif
-      let heading = headings.matching(
-        NSPredicate(format: "label == %@ OR value == %@", dayHeading, dayHeading)
-      ).firstMatch
+      let heading = application.descendants(matching: .any)
+        .matching(identifier: try dayHeadingIdentifier(for: Date())).firstMatch
       XCTAssertTrue(heading.waitForExistence(timeout: 5))
       XCTAssertGreaterThanOrEqual(heading.frame.minX, grid.frame.minX)
       let appointments = entries.allElementsBoundByIndex
@@ -462,8 +455,8 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       XCTAssertTrue(ruler.exists)
       XCTAssertGreaterThanOrEqual(entry.frame.minX, ruler.frame.maxX - 1)
       if mode == "Week" {
-        let heading = grid.staticTexts[Date().formatted(.dateTime.weekday().month().day())]
-          .firstMatch
+        let heading = application.descendants(matching: .any)
+          .matching(identifier: try dayHeadingIdentifier(for: Date())).firstMatch
         XCTAssertTrue(heading.waitForExistence(timeout: 5))
         XCTAssertGreaterThanOrEqual(heading.frame.minY, grid.frame.minY)
         XCTAssertLessThanOrEqual(heading.frame.maxY, grid.frame.maxY)
@@ -481,6 +474,16 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     item.activateForPlannerJourney()
     try revealSavedSchedule(savedSchedule, application: application)
     XCTAssertEqual(savedSchedule.value as? String, savedDescription)
+  }
+
+  /// The runner's locale can differ from the app's supported display language.
+  private func dayHeadingIdentifier(for date: Date) throws -> String {
+    let components = Calendar(identifier: .gregorian).dateComponents(
+      [.year, .month, .day], from: date)
+    let year = try XCTUnwrap(components.year)
+    let month = try XCTUnwrap(components.month)
+    let day = try XCTUnwrap(components.day)
+    return "saved.calendar.day-heading.\(year)-\(month)-\(day)"
   }
 
   /// Reveals lazy Schedule rows before reading them at larger text sizes.

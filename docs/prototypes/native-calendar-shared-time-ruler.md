@@ -205,3 +205,32 @@ After curating those records, removing only superseded trial results and their
 duplicate exports frees 79,828,602 nominal file bytes. All three final passing
 results, built apps, caches and app data remain. This is not an APFS free-space
 measurement.
+
+## Locale-independent day headings and physical check, 29 October 2026
+
+The first physical Calendar journey reaches Day/Week and its saved booking, then
+fails when the runner searches for French "jeu. 29 oct." while the app displays
+English "Thu 29 Oct". The original Week capture shows the correct visible,
+tappable booking. Relaunch is not reached in that failed attempt.
+
+Native day-heading Text now exposes an accessibility identifier using its
+existing civil-date key. The two affected tests query that identity rather than
+constructing translated display text in the runner. Displayed dates, language,
+bookings and timezones are unchanged; no new test boundary or storage change.
+
+The [execution record](evidence/native-calendar-shared-time-ruler/day-heading-2026-10-29/result.json)
+records a passing physical iPad booking/relaunch journey in 46.414 seconds and
+two French/France iPad Simulator passes in 60.088 and 73.014 seconds. The latter
+also verifies four independent overlapping start-only bookings in Day and Week.
+Final executions have zero failures and skips. Original
+[physical Week](evidence/native-calendar-shared-time-ruler/day-heading-2026-10-29/physical-week.png)
+and [overlap](evidence/native-calendar-shared-time-ruler/day-heading-2026-10-29/simulator-overlap.png)
+captures are inspected. Simulator settings and original boot state are restored.
+
+Physical, Simulator and Mac builds match all 1,171 inputs. Strict Swift lint and
+Mac app/runner signature checks pass. Mac supplies compiler credit only here.
+The temporary Mac app's registry mentions fall to zero; canonical installed-file
+hashes and its registry mentions remain unchanged. The unregister command exits
+1, recorded separately from that observed outcome. Sharing elections are not
+changed, and installed Mac Share remains deferred. CloudKit/account transitions,
+sync, broader physical and full assistive acceptance remain open.
