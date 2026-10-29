@@ -3,7 +3,13 @@ import Observation
 import SwiftData
 
 public actor Planner {
-  private let configuration: PlannerStorageConfiguration
+  private let baseConfiguration: PlannerStorageConfiguration
+  private var configuration: PlannerStorageConfiguration
+  private var privateCloudStorage: PlannerPrivateCloudStorage?
+  private var privateCloudOwner: String?
+  private var accountObservation: PlannerAccountObservation = .unknown
+  private var cloudAccountObservation: PlannerCloudAccountObservation?
+  private var accountResolutionId = UUID()
   private let captureHTTPTransport: any PlannerCaptureHTTPTransport
   private var nativeContainer:
     (container: ModelContainer, fileNumber: UInt64, systemNumber: UInt64)?
@@ -109,6 +115,7 @@ public actor Planner {
     configuration: PlannerStorageConfiguration,
     captureHTTPTransport: any PlannerCaptureHTTPTransport = PlannerNativeCaptureHTTPTransport()
   ) {
+    self.baseConfiguration = configuration
     self.configuration = configuration
     self.captureHTTPTransport = captureHTTPTransport
   }
@@ -207,6 +214,17 @@ public actor Planner {
     for path in requiredPaths {
       observations.append(try observeBoundFile(path, for: identifier))
     }
+    if let privateCloudStorage {
+      var selectionDirectory = privateCloudStorage.selectionURL.deletingLastPathComponent()
+      while !FileManager.default.fileExists(atPath: selectionDirectory.path) {
+        selectionDirectory.deleteLastPathComponent()
+      }
+      observations.append(try observeBoundFile(selectionDirectory, for: identifier))
+      if FileManager.default.fileExists(atPath: privateCloudStorage.selectionURL.path) {
+        observations.append(
+          try observeBoundFile(privateCloudStorage.selectionURL, for: identifier))
+      }
+    }
     // Recovery can be temporarily unavailable; its parent still observes replacement and repair.
     do {
       for path in [configuration.recoveryDirectoryURL, directory] {
@@ -248,9 +266,10 @@ public actor Planner {
     }
   }
 
-  public func bootstrap() -> PlannerBootstrapResult {
+  public func bootstrap() async -> PlannerBootstrapResult {
     do {
       try validateConfiguration()
+      guard try await selectStorage() else { return .mainAppSetupRequired }
       if configuration.processRole == .shareExtension,
         !FileManager.default.fileExists(atPath: configuration.controlURL.path)
       {
@@ -284,7 +303,7 @@ public actor Planner {
           try context.save()
           identity = PlannerStoreIdentity(
             schemaVersion: 23, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
-            ownershipBinding: "local:" + UUID().uuidString
+            ownershipBinding: privateOwnershipBinding ?? "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -329,6 +348,87 @@ public actor Planner {
     } catch {
       return .unavailable(failure(error, code: "unavailable"))
     }
+  }
+
+  private var privateOwnershipBinding: String? {
+    guard let privateCloudStorage, let privateCloudOwner else { return nil }
+    return privateCloudStorage.binding(owner: privateCloudOwner)
+  }
+
+  private func selectStorage() async throws -> Bool {
+    guard case .privateCloud(let containerIdentifier) = baseConfiguration.storageMode else {
+      return true
+    }
+    let storage = try PlannerPrivateCloudStorage(
+      configuration: baseConfiguration, containerIdentifier: containerIdentifier)
+    if cloudAccountObservation == nil {
+      cloudAccountObservation = PlannerCloudAccountObservation { [weak self] in
+        Task { await self?.cloudAccountChanged() }
+      }
+    }
+    let resolutionId = UUID()
+    accountResolutionId = resolutionId
+    let account: PlannerPrivateCloudStorage.Account
+    if baseConfiguration.processRole == .shareExtension {
+      // Share writes locally; only the main app verifies or changes cloud ownership.
+      account = .notObserved
+    } else {
+      account = await storage.account()
+    }
+    try Task.checkCancellation()
+    guard accountResolutionId == resolutionId else {
+      throw PlannerFailure("staleDatasetSession", "The iCloud account changed during setup; retry.")
+    }
+    return try coordinated {
+      let previous = try storage.selectedOwner()
+      let owner: String?
+      switch account {
+      case .available(let current):
+        if current != previous {
+          guard baseConfiguration.processRole == .mainApplication else { return false }
+          try storage.select(owner: current)
+        }
+        owner = current
+      case .unavailable:
+        owner = previous
+      case .notObserved:
+        guard previous != nil else { return false }
+        owner = previous
+      }
+      if privateCloudOwner != owner { invalidateAccountSessions() }
+      privateCloudStorage = storage
+      privateCloudOwner = owner
+      accountObservation = account.observation
+      configuration = storage.configuration(base: baseConfiguration, owner: owner)
+      return true
+    }
+  }
+
+  private func cloudAccountChanged() {
+    accountResolutionId = UUID()
+    accountObservation = .unknown
+    invalidateAccountSessions()
+  }
+
+  private func invalidateAccountSessions() {
+    let reason = PlannerFailure(
+      "staleDatasetSession", "The iCloud account changed; reopen the dataset.")
+    for subscription in changeSubscriptions.values {
+      subscription.observation.cancel()
+      subscription.continuation.finish(throwing: reason)
+    }
+    changeSubscriptions.removeAll()
+    sessions.removeAll()
+    querySnapshots.removeAll()
+    reviews.removeAll()
+    captureDrafts.removeAll()
+    associationUndoSnapshots.removeAll()
+    for reload in captureInputReloads.values { reload.task.cancel() }
+    for lookup in captureLookups.values { lookup.task.cancel() }
+    captureInputReloads.removeAll()
+    captureLookups.removeAll()
+    appliedCaptureOperations.removeAll()
+    nativeContainer = nil
   }
 
   /// Control activation is last: an interrupted baseline can be inspected and rebuilt on retry.
@@ -1523,7 +1623,7 @@ public actor Planner {
         case .status:
           return .status(
             PlannerNativeStatusRead(
-              recovery: readRecoveryObservation(identity), account: .unknown,
+              recovery: readRecoveryObservation(identity), account: accountObservation,
               cloud: PlannerCloudObservation(
                 state: .unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))
         case .appearance(let appearance):
@@ -10152,13 +10252,27 @@ public actor Planner {
   }
 
   private func loadIdentity() throws -> PlannerStoreIdentity {
+    if case .privateCloud = baseConfiguration.storageMode {
+      guard let privateCloudStorage,
+        try privateCloudStorage.selectedOwner() == privateCloudOwner
+      else {
+        cloudAccountChanged()
+        throw PlannerFailure("staleDatasetSession", "The active private-account selection changed.")
+      }
+    }
     let identity = try JSONDecoder().decode(
       PlannerStoreIdentity.self, from: Data(contentsOf: configuration.controlURL))
-    guard identity.ownershipBinding.hasPrefix("local:"),
-      !identity.ownershipBinding.dropFirst(6).isEmpty
-    else {
+    let ownershipMatches: Bool
+    if let privateOwnershipBinding {
+      ownershipMatches = identity.ownershipBinding == privateOwnershipBinding
+    } else {
+      ownershipMatches =
+        identity.ownershipBinding.hasPrefix("local:")
+        && !identity.ownershipBinding.dropFirst(6).isEmpty
+    }
+    guard ownershipMatches else {
       throw PlannerFailure(
-        "ownershipUnverified", "The local dataset has no established ownership binding.")
+        "ownershipUnverified", "The dataset has no matching ownership binding.")
     }
     return identity
   }
@@ -10253,12 +10367,13 @@ public actor Planner {
 
   private func coordinated<Value>(_ action: () throws -> Value) throws -> Value {
     try FileManager.default.createDirectory(
-      at: configuration.controlURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+      at: baseConfiguration.controlURL.deletingLastPathComponent(),
+      withIntermediateDirectories: true)
     let coordinator = NSFileCoordinator()
     var coordinationError: NSError?
     var outcome: Result<Value, any Error>?
     coordinator.coordinate(
-      writingItemAt: configuration.controlURL, options: [], error: &coordinationError
+      writingItemAt: baseConfiguration.controlURL, options: [], error: &coordinationError
     ) { _ in
       outcome = Result { try action() }
     }

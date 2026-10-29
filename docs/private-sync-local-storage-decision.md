@@ -1,8 +1,8 @@
 # Private synchronization and usable offline plans
 
-Q164, proposed on 29 October 2026. This decision is pending; production remains
-local-only. It concerns the MVP synchronization mechanism, not another recovery
-feature or a signing requirement.
+Q164 A accepted on 29 October 2026; production remains local-only while the
+replacement is implemented and qualified. It concerns the MVP synchronization
+mechanism, not another recovery feature or a signing requirement.
 
 ## Evidence and existing approval
 
@@ -33,7 +33,7 @@ that is not the account-removal case exercised here.
 
 ## A: Keep local plans authoritative, use private CKSyncEngine
 
-Recommended for the user's simpler MVP direction:
+Accepted for the user's simpler MVP direction:
 
 - Keep the existing SwiftData domain store configured with `.none`. Disabling
   CloudKit access does not automatically erase that store. Existing commands,
@@ -95,8 +95,12 @@ cache must not be presented as successful local preservation.
 Both options retain private-only storage, offline saves, account isolation,
 existing recovery evidence and the MVP's physical synchronization gates.
 Neither changes the deferred export/import, Mac Share or V3 scope. Current
-production data and cloud records stay untouched while this choice is pending.
+production data and cloud records stay untouched during isolated implementation.
 
-Q164 asks for A or B. There is no new account, subscription, credential or
-capability request. The user already supplied the approved identifiers and
-development signing setup.
+The user accepted A. This supersedes A10's automatic mirroring mechanism; B is
+retained above as the unselected alternative. There is no new account,
+subscription, credential or capability request. The approved identifiers and
+development signing setup remain in use.
+
+The first [account-bound local-storage checkpoint](prototypes/private-local-storage.md)
+implements ownership and local persistence without activating cloud transport.

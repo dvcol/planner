@@ -1,6 +1,14 @@
 # Core architecture
 
-Accepted decision record for [Core architecture](https://github.com/dvcol/planner/issues/12). The human accepted A1-A20 and explicitly approved A21/A22 on 2026-10-08. The approved packet fixes the public boundary, native value/schema/reference design, process ownership and recovery candidate for feasibility prototypes. No runnable project, compiled declaration or runtime test result is claimed. A10 keeps managed mirroring in one shared App Group store plus independent logical recovery; the earlier two-store bridge was not selected.
+Accepted decision record for [Core
+architecture](https://github.com/dvcol/planner/issues/12). The human accepted
+A1-A20 and explicitly approved A21/A22 on 2026-10-08. The approved packet fixes
+the public boundary, native value/schema/reference design, process ownership and
+recovery candidate for feasibility prototypes. No runnable project, compiled
+declaration or runtime test result is claimed. Q164 A supersedes A10's managed
+mirroring mechanism: local SwiftData remains authoritative, with private
+CKSyncEngine synchronization and independent account-scoped recovery. The
+earlier two-store bridge was not selected.
 
 ## Context and starting state
 
@@ -23,11 +31,11 @@ Read-only fact investigations checked Apple primary sources and installed Xcode 
 | The [SwiftData Group Lab](https://developer.apple.com/videos/play/wwdc2026/8017/) recommends main-app migration ownership, matching CloudKit configuration for shared clients, and coordinated store access. | An extension cannot treat App Group access as command serialization. Accepted A5 requires main-app initialization/migration before Share saves. |
 | A [ModelActor](https://developer.apple.com/documentation/swiftdata/modelactor) isolates its own context; the SwiftUI [mainContext](https://developer.apple.com/documentation/swiftdata/modelcontainer/maincontext) is main-actor-bound and autosaving in the environment. | Shared command code can have an owner in each process, but one actor cannot serialize the app and extension together. Unrestricted UI model mutation would bypass the accepted save boundary. |
 | [NSFileCoordinator](https://developer.apple.com/documentation/foundation/nsfilecoordinator) coordinates participating file access with bounded lifecycle protection; [atomic file replacement](https://developer.apple.com/documentation/foundation/nsdata) does not commit a database and recovery file together. [Extension completion](https://developer.apple.com/documentation/foundation/nsextensioncontext/completerequest(returningitems:completionhandler:)) is not a persistence receipt. | Save/copy/receipt interruption, concurrent writers and expiry require exact checkpoints. An atomic JSON copy alone does not establish R21/C16. |
-| Apple confirms account changes can clear mirrored local data, including unuploaded saves: [Frameworks Engineer guidance](https://developer.apple.com/forums/thread/811294), [SwiftData DTS guidance](https://developer.apple.com/forums/thread/813340). | Recovery must be independent, account-bound and explicitly restored; the mirrored cache alone is insufficient. |
+| Apple confirms account changes can clear mirrored local data, including unuploaded saves: [Frameworks Engineer guidance](https://developer.apple.com/forums/thread/811294), [SwiftData DTS guidance](https://developer.apple.com/forums/thread/813340). | The mirrored cache alone is insufficient. Q164 A keeps the editable domain store local and recovery independent and account-bound. |
 | OS 27 supplies [ResultsObserver](https://developer.apple.com/documentation/swiftdata/resultsobserver) and [batched fetching](https://developer.apple.com/documentation/swiftdata/modelcontext/fetch(_:batchsize:)). | Native observation/fetching is the first candidate, not proof of complete queries, bounded memory or the 5,000-Item/200-List responsiveness gate. |
 | [ModelConfiguration](https://developer.apple.com/documentation/swiftdata/modelconfiguration) supports explicit local/private-CloudKit configurations and store URLs. [ModelContext](https://developer.apple.com/documentation/swiftdata/modelcontext) saves pending changes; rollback restores the most recently committed state. | Native APIs do not commit a mirror plus recovery file together. Accepted A15 reports a post-commit copy error as incomplete recovery of an applied action. A custom bridge is not Apple's default recommendation. |
 | [PersistentIdentifier](https://developer.apple.com/documentation/swiftdata/persistentidentifier) is store-scoped; decoded identifiers are not equivalent to DefaultStore identifiers. Automatic mirroring cannot enforce unique source UUIDs. | JSON uses Planner-owned IDs. Accepted A12-A16 settle import/restoration and portable deletion policy. A22 approves the lifetime/reconciliation candidate; runtime proof remains required. |
-| Apple's [CloudKit approach guidance](https://developer.apple.com/documentation/cloudkit/deciding-whether-cloudkit-is-right-for-your-app) prefers managed NSPersistentCloudKitContainer synchronization when granular control is unnecessary; [SwiftData synchronization](https://developer.apple.com/documentation/swiftdata/syncing-model-data-across-a-persons-devices) uses that container. | Use one shared App Group store and managed private mirroring under A10/A15. The independent account-scoped recovery archive is Planner's additional requirement. No cited Apple source recommends our earlier two-SwiftData-store bidirectional bridge as this app's default. |
+| Apple's [CloudKit approach guidance](https://developer.apple.com/documentation/cloudkit/deciding-whether-cloudkit-is-right-for-your-app) prefers managed NSPersistentCloudKitContainer synchronization when granular control is unnecessary; [SwiftData synchronization](https://developer.apple.com/documentation/swiftdata/syncing-model-data-across-a-persons-devices) uses that container. | A10 originally selected managed private mirroring. Q164 A now requires granular account/offline ownership through authoritative local SwiftData and private CKSyncEngine. The independent account-scoped recovery archive remains Planner's additional requirement. No cited Apple source recommends our earlier two-SwiftData-store bidirectional bridge as this app's default. |
 
 ## Accepted first architecture round
 
@@ -67,7 +75,7 @@ The human answered this round and accepted the subsequent four recommendations, 
 | A7: Import conflict modes | Accepted two-mode direction, completed by A12-A14: whole-record Skip/Overwrite, default Skip, dependency-conflict skipping and explicit Overwrite restoration. | Skip retains the R5/R19 current-record default. Overwrite adds a reviewed alternative. Invalid files still obey R12; valid-file conflict handling does not silently create dangling references. |
 | A8: Sort preferences across accounts/datasets | Accepted. Scope per-device preferences by dataset/account and stable view/List identity. Account B starts with defaults even if a restored List shares A's UUID. Returning to A retains its choice. | Verify switch, relaunch, rename and same-UUID/different-dataset cases without changing shared Manual order. This concerns sort preferences, not a new calendar timezone policy. |
 | A9: Data-only JSON backups | Accepted. Backup contains data, not application state. Exclude per-device sort choices, display-zone overrides, navigation, selection and other device presentation state. Import preserves the receiving device's choices; a new view uses defaults. | Export still preserves saved Manual order, content, IDs, completion, references, schedules and planning zones. JSON round-trip verifies those values while receiver preferences remain unchanged. Credentials and transient provider caches remain excluded. |
-| A10: Apple-recommended architecture | Accepted technical direction is managed SwiftData/private-CloudKit mirroring in one shared store, independent account-scoped recovery for R13/R21 and main-app migration ownership under A5. | The earlier canonical-store-plus-mirror bridge is unaccepted and not documented as Apple's default. A recovery archive is Planner-added. Accepted A15 supplies the post-commit failure outcome; A22 approves the checkpoint/ownership candidate; prototypes must prove it. |
+| A10: Apple-recommended architecture | Originally accepted managed SwiftData/private-CloudKit mirroring; Q164 A now replaces that transport with authoritative local SwiftData and private CKSyncEngine, retaining independent account-scoped recovery for R13/R21 and main-app migration ownership under A5. | The earlier canonical-store-plus-mirror bridge is unaccepted and not documented as Apple's default. A recovery archive is Planner-added. Accepted A15 supplies the post-commit failure outcome; A22 approves the checkpoint/ownership candidate; prototypes must prove it. |
 | A11: Native comparison APIs | Accepted fixed-locale Foundation case/diacritic-insensitive matching and title comparison. Use native `range(of:options:range:locale:)` and `String.Comparator`, preserving whitespace terms and literal punctuation. Native `folding(options:locale:)` removes case/diacritic distinctions before comparison under `en_US_POSIX`. Equivalent titles tie by stable Item UUID ascending in both directions. | The [local catalog qualification](prototypes/evidence/navigation/core-list-catalog.json) reproduces inconsistent raw POSIX ordering and proves native folding across global, Inbox and List titles in both directions, preserving original text. French, English and Turkish device settings still require the complete fixture results, including composed/decomposed accents, punctuation and cross-field terms. No custom matcher, fuzzy dependency, numeric/width/forced ordering or asynchronous index dependency is needed. Store translation and performance remain open. |
 
 The native comparison facts come from Apple's [string searching guidance](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html), [comparator initializer](https://developer.apple.com/documentation/swift/string/comparator/init(options:locale:order:)) and [forced-ordering option](https://developer.apple.com/documentation/foundation/nsstring/compareoptions/forcedordering). Fixed locale removes device-language dependence; exact Unicode results remain runtime fixtures, not a claim of permanent collation invariance.
@@ -103,7 +111,7 @@ The [approved architecture blueprint](architecture-blueprint.md) records target/
 
 The approved design keeps one PlannerCore library for domain rules, canonical commands/queries, persistence coordination and JSON portability. Use source folders for responsibilities; additional package targets must have a concrete extension-safety or dependency purpose. Native screens, lifecycle controllers, App Intents registration and macOS MCP transport remain adapters.
 
-The diagram shows the accepted Apple-managed baseline and independent recovery role. A22 approves the checkpoint/account ownership design; the complete save/recovery mechanism must still pass its real-store and physical-device gates.
+The diagram shows the Q164 A local-store/private-sync direction and independent recovery role. A22 approves the checkpoint/account ownership design; the complete save/recovery mechanism must still pass its real-store and physical-device gates.
 
 ```mermaid
 flowchart LR
@@ -113,12 +121,22 @@ flowchart LR
   MCP[Temporary macOS MCP adapter] --> Core
   Core --> Store[Shared SwiftData App Group store]
   Core --> Recovery[Independent account-scoped recovery archive]
-  Store <--> Cloud[Managed private CloudKit mirroring]
+  Store <--> Sync[Private CKSyncEngine]
+  Sync <--> Cloud[User private CloudKit database]
 ```
 
 The arrows assign implementation ownership, not an atomic transaction across stores or one shared runtime actor. A command owner in each process would validate current identity/account/target state, apply the local action and establish the approved recovery acknowledgement. Cross-process coordination, imported changes and account resets must be designed separately. UI editors use unsaved draft values so persistence is not accidentally committed through autosave; queries expose current canonical meaning without copying persistent source content into each reference.
 
-Use native mirroring as the baseline under the human's A10 direction. The independent archive is an app requirement beyond the standard mirrored-store lifecycle. Snapshot/receipt generations, staging/recovery of interrupted operations, process coordination and account binding must be specified and proven. A different authoritative store or CKSyncEngine is a reconsideration if this baseline cannot meet the confirmed contract, not an Apple recommendation inferred merely because the APIs exist.
+Q164 A replaces automatic mirroring after the attended per-app iCloud test
+demonstrated cache removal. Keep local SwiftData configured with `.none` and
+synchronize through the explicit private database using CKSyncEngine. Disabling
+private access must preserve readable, editable local plans. Account-scoped
+stores, engine state and recovery remain isolated; returning to the same account
+resumes synchronization. Unbound local data requires explicit attachment before
+upload. No public, shared or developer-funded fallback is permitted. The
+[accepted decision](private-sync-local-storage-decision.md) records the evidence
+and remaining qualification. Existing recovery outcomes and process coordination
+remain required.
 
 The database transaction groups each complete action and operation receipt without saving unrelated drafts. An independent checkpoint preserves the complete Planner state for the correct account. Native export/import remains asynchronous; neither a successful archive nor an available account proves the latest save uploaded. A15 requires distinct unapplied, committed with recovery incomplete, and recoverably saved outcomes. Accepted A19 addresses the exceptional loss of both committed-receipt sources after an account reset.
 

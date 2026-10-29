@@ -23,9 +23,10 @@ Local planning is implemented with local evidence: Item/List authoring, capture,
 places and link previews, ordered itineraries, estimates and remaining time,
 Calendar, collection maps and the embedded reader. This is implementation
 progress, not final acceptance on every platform. The source audit confirms
-that `PlannerStorageConfiguration.StorageMode` only has `localOnly`,
-`Planner.openContainer` explicitly uses `cloudKitDatabase: .none`, and native
-account/cloud status remains unknown. Sync still needs implementation and
+that production selects `localOnly` and `Planner.openContainer` explicitly uses
+`cloudKitDatabase: .none`. Q164 A now approves retaining that local store and
+adding account-bound private CKSyncEngine synchronization. Sync still needs
+implementation and
 physical qualification. Existing development signing passes current native
 checks; it does not prove synchronization. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
@@ -44,7 +45,7 @@ Production remains local-only while integration is unfinished.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) passes private access, asynchronous setup, synthetic Item round trips and per-app cache reset/reimport using the actual schema. | Implement private account-bound synchronization/status while preserving device-local plans through cloud-cache reset. Qualify existing-data handling, ownership, Planner commands/recovery, mobile Share and physical-device sync. |
+| Private CloudKit integration | Production is still local-only. [Account-bound local storage](prototypes/private-local-storage.md) now has signed Core evidence; cloud transport is absent. [Signed native calibration](prototypes/cloud-round-trip-native.md) passes private access, asynchronous setup, synthetic Item round trips and per-app cache reset/reimport using the actual schema. | Implement private account-bound synchronization/status while preserving device-local plans through cloud-cache reset. Qualify existing-data handling, ownership, Planner commands/recovery, mobile Share and physical-device sync. |
 | Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
 | Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. Search clipping, broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
@@ -59,6 +60,15 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
+approved private configuration, real account resolution and account-scoped local
+files while retaining `.none` SwiftData storage. Unbound plans remain separate;
+Share uses the retained main-app binding without opening CloudKit. The focused
+Core cohort reports 19 passing tests, and the signed Mac public-Core diagnostic
+passes exact reopen/save/isolation and stale-selection checks. Production still
+selects local-only storage. Actual Off/On preservation, CKSyncEngine transport,
+explicit local attachment and physical synchronization remain open.
 
 The [physical Safari Share checkpoint][physical-share] passes on the authorized
 iPad in 59.661 seconds. It covers installed-extension launch, Cancel, explicit
@@ -524,12 +534,11 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ### Current actions, 29 October 2026
 
-- **Q164, private sync and offline plans:** the
-  [concrete proposal](private-sync-local-storage-decision.md) compares keeping
-  local SwiftData authoritative with private `CKSyncEngine`, versus retaining
-  automatic mirroring with explicit recovery to an offline working copy after
-  account removal. A10 approved the latter transport topology; changing it needs
-  the user's choice. The native off/on test proves cache removal, not failure of
+- **Q164 A accepted, private sync and offline plans:** the
+  [accepted decision](private-sync-local-storage-decision.md) keeps local
+  SwiftData authoritative and adds private `CKSyncEngine`. This supersedes
+  A10's automatic mirroring mechanism; no further architecture choice is pending.
+  The native off/on test proves cache removal, not failure of
   the existing independent recovery archive. Production activation stays off.
 - **Planner-only iCloud transition:** the user resumes this test on 29 October.
   The read-only native observer confirms account-change notifications, disabled

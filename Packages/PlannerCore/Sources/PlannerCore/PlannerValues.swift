@@ -2,7 +2,10 @@ import Foundation
 
 public struct PlannerStorageConfiguration: Sendable {
   public enum ProcessRole: Sendable { case mainApplication, shareExtension }
-  public enum StorageMode: Sendable { case localOnly }
+  public enum StorageMode: Sendable {
+    case localOnly
+    case privateCloud(containerIdentifier: String)
+  }
 
   public let storeURL: URL
   public let controlURL: URL
