@@ -53,6 +53,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [physical iPad Map retry](prototypes/native-map-routing.md#physical-ipad-route-and-pane-check-29-october-2026)
+now passes after the user reports the on-device automation prompt. The native
+journey verifies three distinct places, walking/driving legs, transit fallback,
+Map width and bounded details with exact bookmark reopening. Original captures
+are inspected. Device settings and authentication policy are unchanged. This
+closes that physical route/pane case; sync, scale and full assistive acceptance
+remain open.
+
 The [fresh physical Map attempt](prototypes/native-map-routing.md#physical-automation-startup-29-october-2026)
 passes unlock/signature checks and launches its signed runner, then times out
 enabling automation before any application test starts. Post-run checks retain

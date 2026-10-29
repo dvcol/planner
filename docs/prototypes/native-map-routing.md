@@ -407,3 +407,26 @@ All 1,171 inputs match the previously committed final signed-build manifest.
 Current production inputs remain identical; only the later Simulator test
 extensions differ from this prepared runner. No physical Map acceptance is
 claimed. No signing or iCloud setting change is made.
+
+## Physical iPad route and pane check, 29 October 2026
+
+The user reports the on-device automation prompt. The next signed retry starts
+the actual journey and passes in 147.338 seconds: one case, zero failures and
+zero skips. It creates Hotel → Museum → Garden → Hotel through native controls,
+checks every distinct pin, three actual walking results, three driving results
+and the public-transport explanation/external-Maps fallback.
+
+The [execution record](evidence/native-map-collection/physical-routes-2026-10-29/result.json)
+also qualifies Map width before selection, bounded selected details, Hide and
+pin reopening with the exact original Museum bookmark. Inspected original
+[walking](evidence/native-map-collection/physical-routes-2026-10-29/walking.png)
+and [selected-details](evidence/native-map-collection/physical-routes-2026-10-29/selected-details.png)
+captures show all three places, native street/path geometry and separate panes.
+
+This runs on the authorized iPad with iPadOS 27.0.1 and disposable local data.
+All 1,171 inputs match the committed prepared-build manifest; current production
+inputs are identical. The later Simulator gesture/representation extensions are
+absent from this runner and receive no physical credit. Dark appearance is
+observed without changing device settings. No permanent authentication-policy
+change is made. CloudKit, account transitions, sync, physical scale, VoiceOver,
+positive transit ETA and full UI acceptance remain separate gates.
