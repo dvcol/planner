@@ -25,8 +25,9 @@ Calendar, collection maps and the embedded reader. This is implementation
 progress, not final acceptance on every platform. The source audit confirms
 that `PlannerStorageConfiguration.StorageMode` only has `localOnly`,
 `Planner.openContainer` explicitly uses `cloudKitDatabase: .none`, and native
-account/cloud status remains unknown. Sync still needs implementation as well
-as signing and physical qualification. The earlier descriptions of sync as
+account/cloud status remains unknown. Sync still needs implementation and
+physical qualification. Existing development signing passes current native
+checks; it does not prove synchronization. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
 
 On 27 October the user defers account-transition testing. Do not arm that
@@ -497,6 +498,31 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ## Decisions and external actions needed
 
+### Current actions, 29 October 2026
+
+- **Planner-only iCloud transition:** the user deferred this test on 27 October.
+  Approval to resume is pending. Do not arm it or change iCloud settings before
+  that answer. Production remains local-only. The
+  [current source comparison](prototypes/evidence/cloud-round-trip-native/current-core-comparison-2026-10-29.json)
+  verifies that all 90 Core sources still match the successful native transport
+  calibration, so that evidence remains relevant without repeating setup.
+- **Signing and device access:** the enrolled team and registered identifiers
+  are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
+  resources; device availability and manual automation approval remain per-run
+  requirements, rather than another account/team setup task.
+- **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
+  now pass. Mobile Share, production synchronization/account safety, physical
+  scale and the remaining native accessibility/coherence review retain their
+  distinct gates. The final human layout review remains required.
+- **Deferred scope:** advanced import/restoration, installed Mac Share and V3
+  Intents/Agent Control do not block the core MVP queue.
+
+### Historical decision and qualification checkpoints
+
+These notes preserve each checkpoint's scope and pending labels. The MVP finish
+line and recent checkpoints supersede their signing, decision and release-blocker
+statements.
+
 - **Enlarged Item names and estimates are readable locally.** The [native readability checkpoint](prototypes/native-item-row-accessibility.md) wraps the existing shared row at accessibility sizes and gives the route more room beneath a long scrollable name. Two enlarged dark-iPad journeys, two ordinary iPad List/Itinerary checks and two enlarged light-phone checks pass; Mac app/Share compilation and lint pass. The separate ordinary-iPad Item-selection diagnostic now has the [native-sidebar correction](prototypes/native-item-row-accessibility.md#native-sidebar-dismissal-resolves-the-selection-diagnosis): actual captures identify the covering sidebar, and its native dismissal permits Item details and contrast auditing. Production row/navigation code remains unchanged. Broader native/physical and whole-app acceptance stay open.
 
 - **Q161 A and Q162 A are accepted; implementation remains open.** The [MVP restored-data policy](native-restored-owned-data-decision.md) keeps the winning source's complete owned collections and deterministically retains the smallest public identity for duplicate owner/label selections. Use existing closures and maintenance; preserve independent sources and exact historical replay. Q160's bounded checkpoint does not implement these newly approved cases. Signing stays deferred.
@@ -628,9 +654,16 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 - **Q128 A accepted, older-backup Overwrite.** Apply represented values to the current live lifetime and retain current incoming references. Closed owned data needs separate restoration authorization; otherwise apply nothing. Q147 A approves the [concrete graph/result contract](import-live-overwrite-contract-review.md); the [first real-store slice](prototypes/core-native-import-live-overwrite.md) preserves the restored Item lifetime, omitted List membership and local Done across value replacement, recovery, replay and unchanged reimport. The unchanged tracer passes Mac/iPhone; the affected Mac import family passes 59 functions/240 invocations. The [owned-reference follow-up](prototypes/core-native-import-live-overwrite.md#closed-bookmarks-and-schedules) qualifies fresh bookmark/Schedule authorization and fixes missing bookmark closure markers in Item/Itinerary deletion; 62 affected Mac functions and four iPhone functions pass with matching sources and safe fixture lifetimes. The [lineage/value matrix](prototypes/core-native-import-live-overwrite.md#retained-predecessor-lineage-and-all-source-kinds) now qualifies all five source kinds after one/two restoration cycles, with 74 matching Mac/iPhone functions and safe fixture lifetimes. The [context/history follow-up](prototypes/core-native-import-live-overwrite.md#authorized-contextual-history-and-retained-collisions) qualifies membership, direct-stop and expanded-List history, retained-ID rejection and later contextual commands with 76 matching Mac/iPhone functions. The [label/failure follow-up](prototypes/core-native-import-live-overwrite.md#restored-labels-and-recovery-failures) also qualifies exact label bindings, precommit rejection and recovery repair, with 78 matching Mac/iPhone functions. The [native administration checkpoint](prototypes/native-approved-restoration-imports.md) passes on phone/dark iPad with complete delivered exports and matching Mac compilation. Actual Mac interaction and broader reconciliation stay open. [Accepted policy](native-import-live-overwrite-decision.md).
 - **Q129 A accepted, Skip and unknown restorations.** Keep the complete current owner and family, exclude the unknown incoming candidate, skip dependent owners and import independent data. Q148 A approves the [concrete family/provenance contract](import-unknown-candidate-skip-contract-review.md); the [first local Q148 slice](prototypes/core-native-import-unknown-candidate-skip.md) now preserves the complete current Item/family, skips complete dependent Lists/Itineraries and imports independent data. Both candidate directions, shared/competing family IDs, known-provenance rejection and stale review pass; the affected 65-function Mac/iPhone cohorts have matching Core inputs. The [all-kind/failure follow-up](prototypes/core-native-import-unknown-candidate-skip.md#all-source-kinds-and-recovery-failures) qualifies all five kinds, precommit rejection and incomplete recovery/repair with 78 matching Mac/iPhone functions. The [native administration checkpoint](prototypes/native-approved-restoration-imports.md) passes phone/dark iPad with exact delivered graphs and matching Mac compilation. Actual Mac interaction and broader synchronization/consolidation remain open. [Worked policy](native-import-new-candidate-skip-decision.md).
 - **Current Mac UI validation.** The user fully quits Planner, reopens the isolated current build and confirms that the List title stays consistent before/after Item selection. This settles the requested human comparison. The older loaded-library mismatch and unsuccessful automated retries remain recorded with no new automated passing credit. Other Mac Schedule/Share workflows and whole-app acceptance remain open. Do not repeat unchanged startup attempts or infer a signing cause. [Runtime diagnosis](https://github.com/dvcol/planner/blob/4d03fbff/docs/prototypes/native-xctest-runtime-diagnosis.md#mac-automation-and-item-startup-follow-up-22-october-2026), [isolated comparison and user confirmation](prototypes/native-list-pane-header.md#isolated-current-build-comparison-retry).
-- **Signing and physical access.** Account/team setup remains deferred. Q100 B requires actual signed protected storage before native Agent Control. Signed shared storage, installed Share, physical CloudKit/account transitions and device performance still need their actual capability/device evidence. Local-only substitutes do not close them.
+- **Signing and physical access, updated 29 October.** Existing development
+  signing and registered App Group access pass scoped Mac/iPad checks. Physical
+  CloudKit/account transitions, synchronization and performance still need their
+  own evidence. Installed Mac Share is post-MVP; V3 Agent Control retains its
+  separate scope. Local-only results do not establish cloud behavior.
 
 ## Accepted local work in progress
+
+The following entries are historical implementation checkpoints. Use the current
+MVP finish line and recent checkpoints above for outstanding work and blockers.
 
 - **Readable-page external opening implemented.** The [native checkpoint](prototypes/native-webpage-readable-external-opening.md#final-local-checkpoint) adds Open in default browser through native mobile More and a Mac toolbar item. Actual Safari requests use the current linked page while preserving the original bookmark and Planner reading state. Six final phone/dark-iPad executions across three functions, twelve inspected originals and matching Mac compilation across 1,102 inputs pass. Earlier missing-action/menu/compiler failures remain recorded. Actual Mac interaction, external-page rendering, broader browser behavior and final title/accessibility polish remain open. Q155 A is accepted; signing stays deferred.
 
