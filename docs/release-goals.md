@@ -26,6 +26,27 @@ qualification; the current Mac management-policy restriction does not block
 MVP. Mobile Share capture, core Mac interaction, durable saves and private
 CloudKit synchronization retain their existing scope.
 
+## Private-cloud storage boundary, 29 October 2026
+
+The user requires Planner content to use only their private CloudKit database
+and its user-owned iCloud storage. There is no public, shared or developer-funded
+cloud fallback. This applies to development diagnostics and release builds.
+
+When private iCloud is disabled, unavailable or out of quota, preserve local
+content and remain device-local/offline, with truthful synchronization status.
+Do not redirect pending saves, recovery data or uploads to another database or
+hosting service. A full private quota does not authorize a storage upgrade or
+developer-billed fallback. Device-local App Group storage remains the accepted
+offline store; it is not developer cloud hosting.
+
+Apple documents the distinction between the
+[user's private database quota](https://developer.apple.com/documentation/cloudkit/ckcontainer/privateclouddatabase)
+and the
+[app's public database quota](https://developer.apple.com/documentation/cloudkit/ckcontainer/publicclouddatabase).
+Development/Production environment selection does not replace explicit private
+database selection. The integration must qualify unavailable-account and
+quota-error behavior before claiming synchronized daily-use acceptance.
+
 ## Confirmed priorities
 
 - The first daily-use release must support both saving/organizing places and assembling trips with scheduled itineraries. Ordinary tasks remain supported by the generic item model.

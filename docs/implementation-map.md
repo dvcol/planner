@@ -30,12 +30,15 @@ physical qualification. Existing development signing passes current native
 checks; it does not prove synchronization. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
 
-On 27 October the user defers account-transition testing and confirms that
-deferral on 29 October. Do not arm that
-experiment or change iCloud settings. This postpones the test rather than
-removing the ownership/reset safety requirement. Production CloudKit activation
-still depends on establishing it; independent local core UI and mobile Share work
-can continue.
+The user initially defers account-transition testing, then resumes the
+Planner-only test on 29 October. The
+[read-only native check](prototypes/cloud-account-availability-native.md)
+observes access loss and restoration to the same account after manual off/on.
+Managed-store interruption and production ownership/reset behavior remain
+separate gates. The user also requires
+[private-user storage only](release-goals.md#private-cloud-storage-boundary-29-october-2026):
+unavailable/full iCloud must never select a developer-funded cloud fallback.
+Production remains local-only while integration is unfinished.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
@@ -70,8 +73,8 @@ readback, live refresh on foreground return, relaunch and synthetic Item cleanup
 The [native Retry follow-up][share-retry] adds the missing provider-input control
 and preserves recovered links and owned edits. Six phone/dark-iPad cases and
 signed device/Mac builds pass. The physical checkpoint above supersedes the
-earlier Safari layout/picker failures. CloudKit remains local-only with the
-account-transition test deferred.
+earlier Safari layout/picker failures. Production remains local-only;
+account integration is unfinished.
 
 The [Calendar day-heading correction](prototypes/native-calendar-shared-time-ruler.md#locale-independent-day-headings-and-physical-check-29-october-2026)
 replaces locale-dependent test lookups with stable native date identities.
@@ -519,14 +522,17 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ### Current actions, 29 October 2026
 
-- **Planner-only iCloud transition:** the user defers this test on 27 October
-  and confirms that deferral on 29 October. Do not arm it or change iCloud
-  settings. Production remains local-only. The
-  [current source comparison](prototypes/evidence/cloud-round-trip-native/url-loader-comparison-2026-10-29.json)
-  verifies that 89 of 90 Core sources still match the successful native transport
-  calibration. Only native URL-provider decoding changed; storage configuration
-  and model inputs remain identical. That transport evidence remains relevant
-  without repeating setup.
+- **Planner-only iCloud transition:** the user resumes this test on 29 October.
+  The read-only native observer confirms account-change notifications, disabled
+  private access and restoration to the same account. The isolated managed-store
+  window ends without another disabled-state event; that interruption remains
+  unqualified. Its private fixture is freshly read, deleted and confirmed absent,
+  then its local scratch is removed. Planner is to remain enabled; no diagnostic
+  is waiting for a switch change. The
+  [native checkpoint](prototypes/cloud-account-availability-native.md) preserves
+  both outcomes and verifies all 90 current Core inputs. Production remains
+  local-only. The private-only storage requirement forbids a developer cloud
+  fallback when access is unavailable or the user's quota is full.
 - **Signing and device access:** the enrolled team and registered identifiers
   are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
   resources; device availability and manual automation approval remain per-run
