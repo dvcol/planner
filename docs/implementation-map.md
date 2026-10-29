@@ -34,15 +34,17 @@ The user initially defers account-transition testing, then resumes the
 Planner-only test on 29 October. The
 [read-only native check](prototypes/cloud-account-availability-native.md)
 observes access loss and restoration to the same account after manual off/on.
-Managed-store interruption and production ownership/reset behavior remain
-separate gates. The user also requires
+The attended managed-store check also passes: disabling access clears its native
+cache, and restoring the same account reimports the exact fixture. Production
+must preserve local plans independently of that cache reset. Its ownership and
+sync integration remain open. The user also requires
 [private-user storage only](release-goals.md#private-cloud-storage-boundary-29-october-2026):
 unavailable/full iCloud must never select a developer-funded cloud fallback.
 Production remains local-only while integration is unfinished.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, mobile Share and physical-device sync. |
+| Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) passes private access, asynchronous setup, synthetic Item round trips and per-app cache reset/reimport using the actual schema. | Implement private account-bound synchronization/status while preserving device-local plans through cloud-cache reset. Qualify existing-data handling, ownership, Planner commands/recovery, mobile Share and physical-device sync. |
 | Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
@@ -524,15 +526,17 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 - **Planner-only iCloud transition:** the user resumes this test on 29 October.
   The read-only native observer confirms account-change notifications, disabled
-  private access and restoration to the same account. The isolated managed-store
-  window ends without another disabled-state event; that interruption remains
-  unqualified. Its private fixture is freshly read, deleted and confirmed absent,
-  then its local scratch is removed. Planner is to remain enabled; no diagnostic
-  is waiting for a switch change. The
+  private access and restoration to the same account. After two missed manual
+  windows, the attended managed-store cycle passes with a longer deadline.
+  SwiftData clears its cloud-managed cache while disabled and reimports the exact
+  fixture after restoration. Fresh-store read/deletion checks pass; all synthetic
+  fixtures and run scratch are removed. Planner remains enabled, and no
+  diagnostic is waiting for a switch change. The
   [native checkpoint](prototypes/cloud-account-availability-native.md) preserves
-  both outcomes and verifies all 90 current Core inputs. Production remains
-  local-only. The private-only storage requirement forbids a developer cloud
-  fallback when access is unavailable or the user's quota is full.
+  the timed-out and passing outcomes and verifies all 90 current Core inputs.
+  Production remains local-only; integration must preserve local plans through
+  cache reset. The private-only requirement forbids a developer cloud fallback
+  when access is unavailable or the user's quota is full.
 - **Signing and device access:** the enrolled team and registered identifiers
   are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
   resources; device availability and manual automation approval remain per-run

@@ -74,7 +74,9 @@ Production Planner remains local-only. The user initially defers account testing
 then resumes Planner-only off/on on 29 October. The
 [read-only availability check](cloud-account-availability-native.md) verifies the
 actual loss/restoration signal and same account without opening Planner data.
-Managed-store interruption, ownership/reset integration and different-account
+Its subsequent managed-store off/on check verifies cache clearing while disabled
+and exact reimport after restoration. Production still must preserve local plans
+independently of that cache reset. Ownership integration and different-account
 behavior retain their own gates. The user changes settings manually; this does
 not authorize whole-account sign-out or production sync activation. Native and
 final UI gates remain separate; advanced export/import remains outside MVP.

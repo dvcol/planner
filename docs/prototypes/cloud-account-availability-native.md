@@ -42,33 +42,54 @@ uses only `privateCloudDatabase` and performs no cloud writes. These source and
 runtime observations do not replace future unavailable-account and quota-error
 tests of the production integration.
 
-## Isolated managed-store window and cleanup
+## Isolated managed-store off/on and cleanup
 
 A separate signed probe uses all 16 entities of actual PlannerSchemaV19, with
 an explicit private database and a unique disposable App Group store. All 90
 Core sources match the current native build inputs. The synthetic Item saves
-and completes private export before the second manual switch-off is requested.
+and completes private export before each manual switch-off is requested.
 
-No disabled-account event is observed during that bounded window. All 93 enabled
-samples retain the exact fixture. The native phase records
-`PlannerCloudStoreTransitionTimeout`, and the runner preserves that unqualified
-result. It does not establish store reset/reimport behavior or account fencing.
-The earlier Off request is explicitly cancelled; Planner is to remain enabled.
+Two eight-minute manual-action windows end before a disabled-account event is
+captured. Each retains 93 enabled samples with the exact fixture and records
+`PlannerCloudStoreTransitionTimeout`. Neither is reported as a passing
+interruption check. The first attempt's
+[evidence](evidence/cloud-store-transition-native/result.json) remains unchanged;
+the retry's timeout and subsequent successful cleanup are retained with the
+attended run below.
 
-A fresh store then imports and verifies the exact synthetic Item before deleting
-only it. Cleanup export succeeds, and another fresh store completes initial
-import and confirms its absence. Those processes pass in 6.186 and 4.321 seconds.
-After all store-owning processes exit, the scoped native cleanup removes nine
-regular files and 2,653,176 nominal bytes from only this run's scratch directory.
+The first fixture is freshly read, deleted and confirmed absent, then its nine
+scratch files are removed as previously recorded. The retry fixture is likewise
+read, deleted and confirmed absent before another fixture is issued.
 
-The [store evidence](evidence/cloud-store-transition-native/result.json) keeps the
-timeout, fresh-read/deletion successes, source and signing checks separate.
-Temporary diagnostic registration mentions fall from three to zero. Unregister
-commands return 1; the final registry observation establishes removal. The
-installed app retains three mentions and unchanged inspected file hashes;
-canonical registration returns 0. Reusable build products remain.
+A rebuild extends only the observation deadline to 30 minutes, with a matching
+external timeout. The user manually turns Planner off and on within the fresh
+window. Seventeen native samples include five No account observations. All five
+find zero synthetic Items in the cloud-managed local store: SwiftData clears its
+cache when this app loses access. No fixture write is requested while disabled.
 
-The read-only availability check has passed. The managed-store interruption
-still needs a future attended off/on cycle, and production CloudKit integration,
-ownership/recovery and two-device synchronization remain open. No public or
-developer-funded cloud fallback is introduced.
+After re-enabling, the opaque account comparison matches the initial account.
+The first enabled sample still has zero Items; then the exact public identity,
+lifetime, title, notes and global state reappear for three consecutive samples.
+The transition passes in 87.266 seconds. This qualifies native cache reset and
+reimport, not uninterrupted local preservation or a completed production sync.
+
+A fresh store imports and verifies that Item, deletes only it and completes
+export in 5.402 seconds. Another fresh store completes initial import and proves
+its absence in 4.906 seconds. After every store-owning process exits, scoped
+cleanup removes the retry and attended-run scratch directories: 18 regular files
+and 6,414,632 nominal bytes. The
+[attended evidence](evidence/cloud-store-off-on-native/result.json) includes the
+successful phases, prior retry, source/build records and matching hashes for all
+90 current Core inputs.
+
+The two temporary app registration mentions fall to zero. Unregister commands
+return 1; the final registry observation establishes removal. Installed Planner
+retains three mentions and unchanged inspected file hashes; canonical
+registration returns 0. Reusable build products remain. Planner is left enabled,
+and no diagnostic is waiting for a setting change.
+
+Both native availability and managed-store off/on checks have passed. Production
+integration must preserve device-local plans independently of the cloud cache's
+reset before enabling sync. Production CloudKit integration, ownership/recovery,
+quota handling and two-device synchronization remain open. No public or
+developer-funded cloud fallback is introduced; production remains local-only.
