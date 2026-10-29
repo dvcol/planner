@@ -7,6 +7,70 @@ import UniformTypeIdentifiers
 
 @Suite(.serialized)
 struct NativeCaptureLoadingTests {
+  @Test @MainActor
+  func opaqueURLRepresentationUsesTheNativeURLValueWithoutChangingTheOriginal() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let original = "https://example.com/%2f?x=%41"
+    let provider = NativeCaptureURLValueProvider(original: original)
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    #expect(draft.links.map(\.originalUrl) == [original] && draft.saveAllowed)
+    #expect(draft.content.title == "Saved link" && draft.content.notes == nil)
+    #expect(draft.inputIssues.isEmpty)
+  }
+
+  @Test @MainActor
+  func nativeURLObjectFallbackKeepsTheDecodedByteLimit() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let original = "https://example.com/" + String(repeating: "a", count: 1_048_576)
+    let provider = NativeCaptureURLValueProvider(original: original)
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    #expect(draft.links.isEmpty && !draft.saveAllowed)
+    #expect(draft.inputIssues.contains { $0.state == .oversized && $0.blocksSave })
+  }
+
+  @Test @MainActor
+  func nativeURLObjectFallbackCancelsProgressAndIgnoresLateValues() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let controlled = NativeCaptureControlledCompletion()
+    let provider = NativeCaptureURLValueProvider(
+      original: "https://example.com/old", controlled: controlled)
+    let loading = Task { await PlannerNativeCaptureLoader.load(providers: [provider]) }
+    let deadline = ContinuousClock.now.advanced(by: .seconds(2))
+    while !controlled.started && ContinuousClock.now < deadline { await Task.yield() }
+    #expect(controlled.started)
+    loading.cancel()
+    let loaded = await loading.value
+    #expect(provider.objectProgress.isCancelled)
+    controlled.deliver(Data("https://example.com/old".utf8))
+    await Task.yield()
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    #expect(draft.links.isEmpty && !draft.saveAllowed)
+    #expect(draft.inputIssues.contains { $0.state == .failed && $0.blocksSave })
+  }
+
   @Test(arguments: [-1, 0, 1]) @MainActor
   func nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset: Int) async throws {
     let directory = FileManager.default.temporaryDirectory
@@ -1127,6 +1191,47 @@ struct NativeCaptureLoadingTests {
     #expect(draft.links.map(\.originalUrl) == [original, "https://example.com/extra"])
     #expect(draft.inputIssues.contains { $0.lane == .text && $0.state == .held && !$0.blocksSave })
     #expect(draft.saveAllowed && before == after)
+  }
+}
+
+private final class NativeCaptureURLValueProvider: NSItemProvider, @unchecked Sendable {
+  let original: String
+  let controlled: NativeCaptureControlledCompletion?
+  let objectProgress = Progress(totalUnitCount: 1)
+
+  init(original: String, controlled: NativeCaptureControlledCompletion? = nil) {
+    self.original = original
+    self.controlled = controlled
+    super.init()
+  }
+
+  override var registeredTypeIdentifiers: [String] { [UTType.url.identifier] }
+
+  override func loadDataRepresentation(
+    forTypeIdentifier typeIdentifier: String,
+    completionHandler: @escaping @Sendable (Data?, (any Error)?) -> Void
+  ) -> Progress {
+    completionHandler(Data([0xff, 0xfe, 0x00]), nil)
+    return Progress(totalUnitCount: 1)
+  }
+
+  override func loadObject(
+    ofClass aClass: any NSItemProviderReading.Type,
+    completionHandler: @escaping @Sendable ((any NSItemProviderReading)?, (any Error)?) -> Void
+  ) -> Progress {
+    guard aClass == NSURL.self else {
+      completionHandler(nil, CocoaError(.coderReadCorrupt))
+      return objectProgress
+    }
+    if let controlled {
+      controlled.retain { data, error in
+        let url = data.flatMap { String(data: $0, encoding: .utf8) }.flatMap(URL.init(string:))
+        completionHandler(url.map { $0 as NSURL }, error)
+      }
+    } else {
+      completionHandler(URL(string: original).map { $0 as NSURL }, nil)
+    }
+    return objectProgress
   }
 }
 

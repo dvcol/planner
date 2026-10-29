@@ -240,6 +240,7 @@ import UniformTypeIdentifiers
       }
     }
     guard let text = decoded else {
+      if representation.lane == .url { return await loadURLValue(representation) }
       return issue(
         representation, state: .failed,
         message: "This input could not be decoded as plain text. Retry it or remove it before Add.",
@@ -250,6 +251,60 @@ import UniformTypeIdentifiers
     return .init(
       inputIndex: representation.index, input: input, unavailableIssue: nil, source: .provider,
       nativeRepresentation: representation)
+  }
+
+  /// Some native URL providers expose an object instead of a plain-text representation.
+  private static func loadURLValue(_ representation: PlannerNativeCaptureRepresentation) async
+    -> PlannerCaptureRetainedInput
+  {
+    let continuationState = NativeCaptureContinuation()
+    let result: Result<Data, any Error> = await withTaskCancellationHandler {
+      await withCheckedContinuation { continuation in
+        continuationState.install(continuation)
+        guard !Task.isCancelled else {
+          continuationState.cancel()
+          return
+        }
+        let progress = representation.provider.loadObject(ofClass: NSURL.self) { object, error in
+          if let error {
+            continuationState.finish(.failure(error))
+            return
+          }
+          guard let url = object as? URL, url.scheme != nil else {
+            continuationState.finish(.failure(CocoaError(.coderReadCorrupt)))
+            return
+          }
+          let original = url.absoluteString
+          guard original.utf8.count <= PlannerCaptureLimits.maximumDecodedBytes else {
+            continuationState.finish(.failure(CocoaError(.fileReadTooLarge)))
+            return
+          }
+          continuationState.finish(.success(Data(original.utf8)))
+        }
+        continuationState.setProgress(progress)
+      }
+    } onCancel: {
+      continuationState.cancel()
+    }
+    if case .failure(let error) = result,
+      (error as? CocoaError)?.code == .fileReadTooLarge
+    {
+      return issue(
+        representation, state: .oversized,
+        message:
+          "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
+        blocksSave: true)
+    }
+    guard case .success(let data) = result, let original = String(data: data, encoding: .utf8)
+    else {
+      return issue(
+        representation, state: .failed,
+        message: "This URL could not be loaded. Retry it or remove it before Add.",
+        blocksSave: true)
+    }
+    return .init(
+      inputIndex: representation.index, input: .url(original), unavailableIssue: nil,
+      source: .provider, nativeRepresentation: representation)
   }
 
   private static func mapInput(
