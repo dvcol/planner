@@ -30,7 +30,8 @@ physical qualification. Existing development signing passes current native
 checks; it does not prove synchronization. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
 
-On 27 October the user defers account-transition testing. Do not arm that
+On 27 October the user defers account-transition testing and confirms that
+deferral on 29 October. Do not arm that
 experiment or change iCloud settings. This postpones the test rather than
 removing the ownership/reset safety requirement. Production CloudKit activation
 still depends on establishing it; independent local core UI and mobile Share work
@@ -39,7 +40,7 @@ can continue.
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
 | Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, mobile Share and physical-device sync. |
-| Shared storage | [Mac and device save pass][shared] | Mobile Share handoff/save; installed Mac Share is post-MVP. |
+| Shared storage | [Saves][shared], [Sim Share][share] | Physical Share. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
@@ -53,6 +54,14 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [installed mobile Share checkpoint][share] fixes an opaque native URL input
+that kept Add disabled in Safari. All 27 focused Core tests pass. Real Safari
+journeys pass on phone and dark iPad Simulators, including Cancel, exact bookmark
+readback, live refresh on foreground return, relaunch and synthetic Item cleanup.
+Matching signed device products are ready; physical Share awaits fresh device
+availability. Provider-input Retry still needs its native control. CloudKit
+remains local-only with the account-transition test deferred.
 
 The [Calendar day-heading correction](prototypes/native-calendar-shared-time-ruler.md#locale-independent-day-headings-and-physical-check-29-october-2026)
 replaces locale-dependent test lookups with stable native date identities.
@@ -500,19 +509,22 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ### Current actions, 29 October 2026
 
-- **Planner-only iCloud transition:** the user deferred this test on 27 October.
-  Approval to resume is pending. Do not arm it or change iCloud settings before
-  that answer. Production remains local-only. The
-  [current source comparison](prototypes/evidence/cloud-round-trip-native/current-core-comparison-2026-10-29.json)
-  verifies that all 90 Core sources still match the successful native transport
-  calibration, so that evidence remains relevant without repeating setup.
+- **Planner-only iCloud transition:** the user defers this test on 27 October
+  and confirms that deferral on 29 October. Do not arm it or change iCloud
+  settings. Production remains local-only. The
+  [current source comparison](prototypes/evidence/cloud-round-trip-native/url-loader-comparison-2026-10-29.json)
+  verifies that 89 of 90 Core sources still match the successful native transport
+  calibration. Only native URL-provider decoding changed; storage configuration
+  and model inputs remain identical. That transport evidence remains relevant
+  without repeating setup.
 - **Signing and device access:** the enrolled team and registered identifiers
   are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
   resources; device availability and manual automation approval remain per-run
   requirements, rather than another account/team setup task.
 - **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
-  now pass. Mobile Share, production synchronization/account safety, physical
-  scale and the remaining native accessibility/coherence review retain their
+  now pass. Physical mobile Share, production synchronization/account safety,
+  physical scale and the remaining native accessibility/coherence review retain
+  their
   distinct gates. The final human layout review remains required.
 - **Deferred scope:** advanced import/restoration, installed Mac Share and V3
   Intents/Agent Control do not block the core MVP queue.
@@ -796,5 +808,6 @@ The complete former issue body, including original requirements and implementati
 [Verified storage cleanup](prototypes/native-local-storage-cleanup.md) retains the previous audits and the 0.86 GiB, 0.42 GiB, 0.20 GiB and 0.14 GiB nominal-file removals. The [fixture-lifecycle follow-up](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/native-core-fixture-lifecycle.md) also disposes of its closed, marked test stores, including 172,739,251 measured nominal bytes from the refused alias-path epoch. Needed source/app/UI products, native archives and user datasets remain. Nominal totals do not promise an equal APFS free-space increase.
 
 [shared]: prototypes/native-shared-storage.md
+[share]: prototypes/native-share-products.md#installed-mobile-share-29-october-2026
 [ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026
 [mac-undo]: prototypes/native-association-undo.md#native-mac-keyboard-undo-27-october-2026

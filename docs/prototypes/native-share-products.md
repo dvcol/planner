@@ -1,6 +1,8 @@
 # Native Share products and local review
 
-Status: source and initial local review/product checks are implemented. Compatibility and failure qualification continue. Signing and real shared-container setup remain deferred by the user.
+Status: native Share products and local review are implemented. Development
+signing and shared storage are configured. The installed mobile checkpoint below
+supersedes the original unsigned setup notes. Installed Mac Share is post-MVP.
 
 ## Context and goal
 
@@ -33,3 +35,60 @@ Build and runtime packets are retained under [navigation compatibility evidence]
 ## Remaining qualification
 
 Installed extension launch from real senders, cancellation/host closure, extension memory/deadline behavior on physical devices, actual group access and simultaneous processes remain open. CloudKit/account transitions and independent recovery keep their existing gates. Unsigned builds and fixture paths do not establish any of those outcomes. Final whole-app polish remains after feature completion.
+
+## Installed mobile Share, 29 October 2026
+
+The real Safari Share sheet now launches Planner's embedded mobile extension in
+disposable Simulators. This uncovered a production defect: Safari supplied an
+opaque URL representation, and the input loader treated it only as UTF-8 text.
+The review had no usable link and kept Add disabled after an explicit title edit.
+
+The loader now asks the same provider for a typed native URL when URL data cannot
+be decoded as text. Existing text representations retain their exact values.
+The fallback uses the existing cancellable continuation, overall deadline and
+1 MiB decoded budget. No storage model, public command or backup format changes.
+
+The focused native capture-loading suite passes all 27 test functions in
+31.497 seconds; compilation and execution take 335.573 seconds. Three new
+controlled-provider checks cover exact encoded URLs, oversized URL objects and
+cancelled requests delivering late values. The existing real-Foundation,
+MapKit, byte-budget, retry and callback-order cases also pass. The controlled
+provider checks do not replace the separate real Safari host journey.
+
+The first Safari trial passes on iPhone in 90.349 seconds. The expanded phone
+and iPad dark-mode journeys then pass in 95.190 and 94.005 seconds. They verify
+Cancel without an Item, explicit title entry, Save, exact bookmark identity after
+relaunch, and deletion of only the synthetic Item. Each disposable Simulator is
+shut down and removed successfully. The original phone review in light mode and
+iPad details in dark mode are inspected; the loading link card supplies no
+positive image-preview qualification.
+
+The final foreground-return journeys pass on phone and dark iPad in 87.567 and
+82.672 seconds. Planner remains running in the background, and its existing
+Items view refreshes without another navigation action. Item/bookmark identity
+then survives relaunch, and cleanup leaves no test Item. These runs and their
+matching Simulator/device builds share 1,172 source inputs. The Mac build
+predates this iOS-only test refinement; its production sources are identical.
+The signed device build and existing profiles are ready, but physical execution
+waits for confirmed device availability.
+
+The matching Mac app and Share build pass strict signature checks. Temporary
+build registrations are removed: their path mentions fall from 6 to 0, while
+the installed app retains 3 mentions and unchanged metadata/executable hashes.
+`pluginkit` exits 0 and `lsregister` exits 1; the post-cleanup registry observation
+establishes removal, rather than an assumed successful exit. Build products are
+preserved. Installed Mac Share remains outside MVP.
+
+Production CloudKit remains off. The user confirms the iCloud-transition
+deferral on 29 October; no cloud diagnostic or account-setting change is armed.
+
+The [curated evidence](evidence/navigation/native-share-products/mobile-installed-2026-10-29/result.json)
+includes original captures, source hashes and compressed execution records.
+Earlier failures retain their scope: initial unsigned App Group access,
+test-driver selectors and URL launching, an installation-service failure before
+any case, the actual blocked Add diagnostic, and a later discovery-only failure.
+No failing startup is counted as an application test pass.
+
+One local capture follow-up remains: failed provider inputs offer Remove, while
+the accepted Retry capability exists only in Core. Add its native control through
+the existing capture update command, preserving current owned edits and links.
