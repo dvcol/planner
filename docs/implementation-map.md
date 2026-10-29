@@ -40,7 +40,7 @@ can continue.
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
 | Private CloudKit integration | Production is still local-only; account/cloud observation is not integrated. [Signed native calibration](prototypes/cloud-round-trip-native.md) now passes private access, asynchronous setup and synthetic Item round trips using the actual schema. | Establish ownership/reset behavior with a real per-app iCloud transition, then implement production account-bound storage/status and safe existing-data handling. Qualify Planner commands/recovery, mobile Share and physical-device sync. |
-| Shared storage | [Saves][shared], [Sim Share][share] | Physical Share. |
+| Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
 | Core UI polish and compatibility | In progress. Concrete findings include search clipping, contrast and maximum-text sidebar word wrapping. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Local phone/iPad checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
@@ -55,15 +55,23 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [physical Safari Share checkpoint][physical-share] passes on the authorized
+iPad in 59.661 seconds. It covers installed-extension launch, Cancel, explicit
+title entry, Save, foreground refresh, exact Item/bookmark identity after relaunch
+and deletion of only the synthetic Item. Device signing and App Group access
+work. Other native senders, memory/scale and synchronization retain their gates.
+Personal Safari captures stay outside committed evidence. No iCloud setting or
+automation-authentication policy changes.
+
 The [installed mobile Share checkpoint][share] fixes an opaque native URL input
 that kept Add disabled in Safari. All 27 focused Core tests pass. Real Safari
 journeys pass on phone and dark iPad Simulators, including Cancel, exact bookmark
 readback, live refresh on foreground return, relaunch and synthetic Item cleanup.
 The [native Retry follow-up][share-retry] adds the missing provider-input control
 and preserves recovered links and owned edits. Six phone/dark-iPad cases and
-signed device/Mac builds pass. Physical Share starts its test,
-but needs a full-screen Safari retry because its Share button has no tappable
-point. CloudKit remains local-only with the account-transition test deferred.
+signed device/Mac builds pass. The physical checkpoint above supersedes the
+earlier Safari layout/picker failures. CloudKit remains local-only with the
+account-transition test deferred.
 
 The [Calendar day-heading correction](prototypes/native-calendar-shared-time-ruler.md#locale-independent-day-headings-and-physical-check-29-october-2026)
 replaces locale-dependent test lookups with stable native date identities.
@@ -524,8 +532,9 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
   resources; device availability and manual automation approval remain per-run
   requirements, rather than another account/team setup task.
 - **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
-  now pass. Physical mobile Share, production synchronization/account safety,
-  physical scale and the remaining native accessibility/coherence review have
+  now pass, together with the physical Safari Share journey. Other native Share
+  senders, production synchronization/account safety, physical scale and the
+  remaining native accessibility/coherence review have
   separate gates. The final human layout review remains required.
 - **Deferred scope:** advanced import/restoration, installed Mac Share and V3
   Intents/Agent Control do not block the core MVP queue.
@@ -812,5 +821,7 @@ The complete former issue body, including original requirements and implementati
 [share]: prototypes/native-share-products.md#installed-mobile-share-29-october-2026
 [share-retry]:
   prototypes/native-share-products.md#native-provider-input-retry-29-october-2026
+[physical-share]:
+  prototypes/native-share-products.md#physical-safari-share-29-october-2026
 [ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026
 [mac-undo]: prototypes/native-association-undo.md#native-mac-keyboard-undo-27-october-2026

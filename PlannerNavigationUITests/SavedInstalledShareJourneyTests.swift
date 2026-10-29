@@ -110,8 +110,23 @@
       }
       if !planner.waitForExistence(timeout: 3) {
         let more = safari.cells["More"].firstMatch
-        XCTAssertTrue(more.waitForExistence(timeout: 5))
-        more.activateForPlannerJourney()
+        let applications = safari.cells.matching(identifier: "shareCell")
+        for _ in 0..<16 {
+          if planner.isHittable || more.isHittable { break }
+          guard
+            let visibleApplication = applications.allElementsBoundByIndex.first(where: {
+              $0.isHittable
+            })
+          else {
+            XCTFail("The native Share app row is unavailable.")
+            return
+          }
+          visibleApplication.swipeLeft()
+        }
+        if !planner.isHittable {
+          XCTAssertTrue(more.waitForExistence(timeout: 5))
+          more.activateForPlannerJourney()
+        }
       }
       XCTAssertTrue(planner.waitForExistence(timeout: 10))
       recordShareScreenshot(safari, name: "System Share sheet discovers Planner")

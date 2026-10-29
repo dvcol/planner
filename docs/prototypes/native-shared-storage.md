@@ -18,6 +18,11 @@ The [registered-app checkpoint](#registered-app-checkpoint-27-october-2026)
 below supersedes the earlier configuration and transition prerequisites for
 this installation. The older results retain their original scope.
 
+The [physical Safari Share checkpoint](native-share-products.md#physical-safari-share-29-october-2026)
+adds installed mobile extension launch, cancellation, saving and foreground
+readback on the authorized iPad. Role-level fixtures and ordinary app saves
+remain distinct from that actual system handoff. CloudKit remains off.
+
 ## Executed checks
 
 - A standalone native Swift check compiles the production helper with 90 actual

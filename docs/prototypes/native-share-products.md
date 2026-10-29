@@ -123,9 +123,49 @@ discovery or saving result. No Item is created. A full-screen Safari layout with
 overlays dismissed is requested before another attempt. Personal Safari captures
 and raw device identifiers remain outside committed evidence. Signing and test
 startup are working; account-transition testing remains deferred.
+The physical checkpoint below supersedes that pending retry.
 
 The [Retry evidence](evidence/navigation/native-share-products/mobile-input-retry-2026-10-29/result.json)
 retains source hashes, scoped commands/results and the earlier selector failure.
 All 90 Core sources are unchanged from the installed mobile checkpoint. Removing
 duplicate exported captures reclaims 41,761,570 nominal bytes after validating
 the committed captures; original result bundles and build products are kept.
+
+## Physical Safari Share, 29 October 2026
+
+The authorized iPad's installed Safari journey passes in 59.661 seconds. It
+verifies an initially empty Item catalog, installed-extension launch, Cancel
+without an Item, explicit title entry, Save and live foreground refresh. Exact
+Item and bookmark identities survive relaunch, then native Delete removes only
+the synthetic Item. The complete command exits 0 in 63.466 seconds. No automation
+authentication policy, iCloud setting or signing resource changes.
+
+The prior full-screen retry reaches Safari's real Share picker but only exposes
+its first few apps to the test. Planner and More are outside those visible cells.
+The user independently confirms Planner is present. The driver now searches the
+native app row with bounded horizontal swipes before opening More. The passing
+physical run finds Planner directly and does not need that scrolling fallback;
+its success is credited to the actual handoff, not to an unexecuted branch.
+
+The corrected iOS-only test builds with the existing development signatures and
+profiles. Its 1,172 native inputs match the executed device products. Production
+sources are unchanged from the input-Retry checkpoint. The matching phone
+Simulator regression passes in 103.297 seconds. Its first attempt stays on
+Safari's Start Page before Share; one unchanged retry launches Safari during
+disposable-Simulator preparation, then completes the whole journey. Both owned
+Simulators are shut down and deleted. That passing run also finds Planner
+without exercising the scrolling fallback. Existing Mac compilation and six
+capture regressions retain their earlier, explicitly recorded source epoch.
+
+The retained app-only captures contain the synthetic catalog and saved Item.
+Personal Safari tabs, picker captures and raw device identifiers stay local.
+These establish the represented functional journey, not whole-app layout,
+VoiceOver, other senders, extension memory limits or synchronization. The user
+keeps account-transition testing deferred, and production storage stays local-only.
+
+The [physical evidence](evidence/navigation/native-share-products/mobile-physical-2026-10-29/physical-result.json)
+contains source/build checks, existing-profile verification, app-only captures
+and the actual passing case. The device command is explicitly redacted; original
+command/log hashes bind the local originals without publishing device identity.
+The earlier physical picker failure and phone startup failure retain their own
+outcomes rather than being counted as passed application behavior.
