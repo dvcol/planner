@@ -68,6 +68,7 @@ private struct SavedMapRequest: Equatable {
 
 struct SavedPlannerView: View {
   @Environment(\.undoManager) private var undoManager
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(PlannerAddressPreviews.self) private var addressPreviews
   @Environment(PlannerMapsPreviews.self) private var mapsPreviews
   @ScaledMetric(relativeTo: .body) private var sidebarMinimumWidth: CGFloat = 200
@@ -1634,33 +1635,13 @@ struct SavedPlannerView: View {
     List(selection: sidebarSelection) {
       if usesSidebarNavigation {
         Section {
-          NavigationLink(value: SavedPlannerSidebarSelection.lists) {
-            Label("Lists", systemImage: "list.bullet")
-              .foregroundStyle(SavedRowForeground())
+          if dynamicTypeSize.isAccessibilitySize {
+            sidebarDestinations
+              .labelStyle(.titleOnly)
+              .listRowInsets(.horizontal, 8)
+          } else {
+            sidebarDestinations
           }
-          .accessibilityIdentifier("saved.section.lists")
-          NavigationLink(value: SavedPlannerSidebarSelection.items) {
-            Label("Items", systemImage: "square.stack")
-              .foregroundStyle(SavedRowForeground())
-          }
-          .accessibilityIdentifier("saved.section.items")
-          NavigationLink(value: SavedPlannerSidebarSelection.inbox) {
-            Label("Inbox", systemImage: "tray")
-              .foregroundStyle(SavedRowForeground())
-          }
-          .accessibilityIdentifier("saved.section.inbox")
-          NavigationLink(value: SavedPlannerSidebarSelection.itineraries) {
-            Label(
-              "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath"
-            )
-            .foregroundStyle(SavedRowForeground())
-          }
-          .accessibilityIdentifier("saved.section.itineraries")
-          NavigationLink(value: SavedPlannerSidebarSelection.calendar) {
-            Label("Calendar", systemImage: "calendar")
-              .foregroundStyle(SavedRowForeground())
-          }
-          .accessibilityIdentifier("saved.section.calendar")
         }
       }
       Section {
@@ -1789,6 +1770,36 @@ struct SavedPlannerView: View {
         .disabled(!store.canCreate)
         .accessibilityIdentifier("saved.list.new")
       }
+    }
+  }
+
+  private var sidebarDestinations: some View {
+    Group {
+      NavigationLink(value: SavedPlannerSidebarSelection.lists) {
+        Label("Lists", systemImage: "list.bullet")
+          .foregroundStyle(SavedRowForeground())
+      }
+      .accessibilityIdentifier("saved.section.lists")
+      NavigationLink(value: SavedPlannerSidebarSelection.items) {
+        Label("Items", systemImage: "square.stack")
+          .foregroundStyle(SavedRowForeground())
+      }
+      .accessibilityIdentifier("saved.section.items")
+      NavigationLink(value: SavedPlannerSidebarSelection.inbox) {
+        Label("Inbox", systemImage: "tray")
+          .foregroundStyle(SavedRowForeground())
+      }
+      .accessibilityIdentifier("saved.section.inbox")
+      NavigationLink(value: SavedPlannerSidebarSelection.itineraries) {
+        Label("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+          .foregroundStyle(SavedRowForeground())
+      }
+      .accessibilityIdentifier("saved.section.itineraries")
+      NavigationLink(value: SavedPlannerSidebarSelection.calendar) {
+        Label("Calendar", systemImage: "calendar")
+          .foregroundStyle(SavedRowForeground())
+      }
+      .accessibilityIdentifier("saved.section.calendar")
     }
   }
 

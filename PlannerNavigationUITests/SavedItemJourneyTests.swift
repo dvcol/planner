@@ -69,6 +69,32 @@ final class SavedItemJourneyTests: XCTestCase {
         XCTAssertTrue(title.waitForExistence(timeout: 5))
       } else {
         XCTAssertTrue(application.plannerElement("saved.section.lists").waitForPlannerHittability())
+        let referenceHeight = application.plannerElement("saved.section.lists").frame.height
+        var measurements: [[String: Any]] = []
+        var destinations: [(element: XCUIElement, name: String)] = []
+        for (identifier, name) in [
+          ("lists", "Lists"), ("items", "Items"), ("inbox", "Inbox"),
+          ("itineraries", "Itineraries"), ("calendar", "Calendar"),
+        ] {
+          let destination = application.plannerElement("saved.section.\(identifier)")
+          XCTAssertTrue(destination.waitForPlannerHittability(), name)
+          destinations.append((destination, name))
+          measurements.append([
+            "name": name, "width": destination.frame.width,
+            "height": destination.frame.height, "referenceHeight": referenceHeight,
+          ])
+        }
+        let attachment = XCTAttachment(
+          data: try JSONSerialization.data(withJSONObject: measurements, options: .sortedKeys),
+          uniformTypeIdentifier: "public.json")
+        attachment.name = "Sidebar destination text geometry"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        for destination in destinations {
+          XCTAssertEqual(destination.element.label, destination.name)
+          XCTAssertEqual(
+            destination.element.frame.height, referenceHeight, accuracy: 1, destination.name)
+        }
       }
       if title.exists { XCTAssertTrue(toolbar.frame.contains(title.frame)) }
       if UIDevice.current.userInterfaceIdiom == .phone {

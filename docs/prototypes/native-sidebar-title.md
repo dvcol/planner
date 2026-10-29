@@ -62,3 +62,14 @@ unchanged Mac UI startup attempt is made. Native audit/assistive review and
 actual Mac interaction retain their separate limits; signing stays deferred.
 Continue the remaining core journey and acceptance audit before adding further
 layout machinery or revisiting these unsuccessful probes.
+
+## Subsequent destination-word correction
+
+The [29 October readability checkpoint](native-sidebar-word-readability.md)
+combines native title-only labels with smaller horizontal insets at accessibility
+sizes. All five primary destination words fit on one line in the inspected
+maximum-text capture; ordinary text retains icons. The current native journey
+adds complete-label and relative row-height checks, then passes separately on
+maximum/ordinary iPad and maximum-text iPhone. This closes the represented
+broken-word finding, while the generic iPad clipping audit and wider
+accessibility review remain open.
