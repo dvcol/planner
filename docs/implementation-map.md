@@ -524,6 +524,13 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ### Current actions, 29 October 2026
 
+- **Q164, private sync and offline plans:** the
+  [concrete proposal](private-sync-local-storage-decision.md) compares keeping
+  local SwiftData authoritative with private `CKSyncEngine`, versus retaining
+  automatic mirroring with explicit recovery to an offline working copy after
+  account removal. A10 approved the latter transport topology; changing it needs
+  the user's choice. The native off/on test proves cache removal, not failure of
+  the existing independent recovery archive. Production activation stays off.
 - **Planner-only iCloud transition:** the user resumes this test on 29 October.
   The read-only native observer confirms account-change notifications, disabled
   private access and restoration to the same account. After two missed manual
