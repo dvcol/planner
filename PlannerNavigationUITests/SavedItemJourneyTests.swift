@@ -371,6 +371,7 @@ final class SavedItemJourneyTests: XCTestCase {
 
   func testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch() throws {
     continueAfterFailure = false
+    let itemTitle = "Tokyo museum morning, lunch in the gardens and a visit to the bookshop"
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -379,7 +380,7 @@ final class SavedItemJourneyTests: XCTestCase {
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
-    title.typeText("Garden walk")
+    title.typeText(itemTitle)
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(
       application.descendants(matching: .any).matching(identifier: "saved.item.completion")
@@ -388,11 +389,12 @@ final class SavedItemJourneyTests: XCTestCase {
       let back = application.navigationBars.buttons["Items"].firstMatch
       if back.exists { back.activateForPlannerJourney() }
     #endif
-    let complete = application.buttons["Mark Garden walk done everywhere"].firstMatch
+    let complete = application.buttons["Mark \(itemTitle) done everywhere"].firstMatch
     XCTAssertTrue(complete.waitForExistence(timeout: 10))
     let completionIdentifier = complete.identifier
+    recordScreenshot(application, name: "Multiline Item row before completion")
     complete.activateForPlannerJourney()
-    let reopen = application.buttons["Mark Garden walk undone everywhere"].firstMatch
+    let reopen = application.buttons["Mark \(itemTitle) undone everywhere"].firstMatch
     XCTAssertTrue(reopen.waitForExistence(timeout: 10))
     recordScreenshot(application, name: "Native row completion in the Item catalog")
     application.terminate()
@@ -402,7 +404,7 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertEqual(reopen.identifier, completionIdentifier)
     reopen.activateForPlannerJourney()
     XCTAssertTrue(complete.waitForExistence(timeout: 10))
-    application.savedPlannerItemRows("Garden walk").firstMatch.activateForPlannerJourney()
+    application.savedPlannerItemRows(itemTitle).firstMatch.activateForPlannerJourney()
     let completion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(completion.waitForPlannerBooleanState(false))

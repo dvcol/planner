@@ -100,3 +100,27 @@ The stacked-metric retry passes in 171.554 seconds. Its [inspected saved-detail 
 The final maximum-size journey passes in 171.870 seconds. Its [inspected capture](evidence/navigation/native-design-refinement/tablet-pane-consistency-wrapped-warning-maximum/260B73D4-F8E8-4BBE-B138-D3D5F83B7FE3.png) shows complete duration words and the full missing-estimate warning without shrinking the selected text size. The saved address map remains embedded in details. The [final dark count capture](evidence/navigation/native-design-refinement/phone-pane-count-contrast-dark/89E26D84-88AC-45D1-9996-E372D65D5074.png) shows readable matching-count text beside unchanged full-scope progress. Original settings are restored after every appearance/content-size run. The [follow-up run index](evidence/navigation/native-design-refinement/pane-consistency-results.json) and [visual review](evidence/navigation/native-design-refinement/pane-consistency-visual-review.json) preserve source epochs and distinguish controller failures, functional success and visual findings.
 
 The [final Mac compiler check](evidence/navigation/native-design-refinement/native-pane-consistency-final-mac-build/exit.json) passes with local ad hoc signing and no developer-account configuration. Final mobile compilation, eight-file strict Swift lint, three-document Markdown lint and whitespace checks pass. This checkpoint keeps Mac native UI runtime, physical/signing work and full scene-state/accessibility acceptance open. The represented maximum-size capture still wraps long addresses within a word and intentionally truncates compact row metadata; it does not certify all large-text presentation.
+
+## Multiline completion alignment, 30 October 2026
+
+Item, List-membership and Itinerary Item rows now centre the completion control
+beside the complete row content instead of pinning it to the first title line.
+The symbol uses native `title2` sizing and retains the 44-point mobile touch area,
+existing semantic colours, action scope, accessibility labels and saved identities.
+
+The existing catalog-completion journey now creates a two-line title. It passes
+before and after the correction; functional success alone did not detect the
+visual defect. Inspected [before](evidence/navigation/native-design-refinement/multiline-completion-2026-10-30/before-unchecked.png),
+[unchecked after](evidence/navigation/native-design-refinement/multiline-completion-2026-10-30/after-unchecked.png)
+and [completed after](evidence/navigation/native-design-refinement/multiline-completion-2026-10-30/after-completed.png)
+captures confirm the larger, centred circle. The final native iPhone simulator
+journey passes in 41.279 seconds, including toggling without opening details and
+preserving the exact Item through relaunch. The compact [review packet](evidence/navigation/native-design-refinement/multiline-completion-2026-10-30/review.json)
+records unchanged inputs and the specific visual/functional scope. This is a row
+layout correction, with no additional iCloud test or full-app acceptance claim.
+
+Affected strict Swift lint, whitespace checks, simulator/Mac/signed-mobile builds
+and mobile signature verification pass. The update is installed on both authorized
+mobile devices; the installed Mac app remains unchanged. Markdown lint reports
+217 issues against 219 in the unchanged HEAD documents, with no introduced
+diagnostics. The task-owned simulator is deleted after capture export.

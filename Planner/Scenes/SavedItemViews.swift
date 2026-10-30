@@ -184,7 +184,7 @@ struct SavedItemCatalog: View {
         id: identifier, row: presentation.row, rowPresentation: presentation.rowPresentation)
       let completionVerb = item.row.globalDone == true ? "undone" : "done"
       let completionLabel = "Mark \(item.row.title) \(completionVerb) everywhere"
-      HStack(alignment: .top) {
+      HStack {
         Button {
           Task { _ = await store.setItemCompletion(item.id, done: item.row.globalDone != true) }
         } label: {
@@ -192,8 +192,9 @@ struct SavedItemCatalog: View {
             completionLabel,
             systemImage: item.row.globalDone == true ? "checkmark.circle.fill" : "circle"
           )
+          .font(.title2)
           #if os(iOS)
-            .frame(minWidth: 44, minHeight: 44, alignment: .top)
+            .frame(minWidth: 44, minHeight: 44)
             .contentShape(.rect)
           #endif
         }

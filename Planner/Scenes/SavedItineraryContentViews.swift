@@ -47,14 +47,15 @@ struct SavedItineraryItemRow: View {
   let toggleCompletion: () -> Void
 
   var body: some View {
-    HStack(alignment: .top) {
+    HStack {
       Button(action: toggleCompletion) {
         Label(
           completionLabel,
           systemImage: item.row.effectiveDone == true ? "checkmark.circle.fill" : "circle"
         )
+        .font(.title2)
         #if os(iOS)
-          .frame(minWidth: 44, minHeight: 44, alignment: .top)
+          .frame(minWidth: 44, minHeight: 44)
           .contentShape(.rect)
         #endif
       }
