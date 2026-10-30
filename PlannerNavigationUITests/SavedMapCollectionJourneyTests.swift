@@ -791,20 +791,33 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     ) {
       let pin = application.buttons["saved.map.pin.35.0,139.0"]
       let originalLabel = pin.label
-      let usesSheet = UIDevice.current.userInterfaceIdiom == .phone
+      let usesSheet =
+        UIDevice.current.userInterfaceIdiom == .phone
+        || UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
       let search: XCUIElement
       if usesSheet {
-        search = application.textFields["saved.map.search.text"].firstMatch
+        search =
+          application.descendants(matching: .any)
+          .matching(identifier: "saved.map.search.text").firstMatch
       } else {
         search = application.searchFields[prompt].firstMatch
       }
-      let openSearch = application.buttons["Search"].firstMatch
+      let openSearch: XCUIElement
+      if usesSheet {
+        openSearch = application.buttons["saved.collection.search"].firstMatch
+      } else {
+        openSearch = application.buttons["Search"].firstMatch
+      }
       let done = application.buttons["saved.map.search.done"]
       // Reopening must work after the first dismissal, with the query retained.
       for attempt in 0..<2 {
         if !search.isHittable {
-          XCTAssertTrue(openSearch.waitForPlannerHittability())
-          openSearch.activateForPlannerJourney()
+          if usesSheet {
+            application.openSavedPlannerCollectionSearch()
+          } else {
+            XCTAssertTrue(openSearch.waitForPlannerHittability())
+            openSearch.activateForPlannerJourney()
+          }
         }
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         search.activateForPlannerJourney()
@@ -826,8 +839,7 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
         XCTAssertTrue(pin.waitForNonExistence(timeout: 5))
         if usesSheet {
-          XCTAssertTrue(openSearch.waitForPlannerHittability())
-          openSearch.activateForPlannerJourney()
+          application.openSavedPlannerCollectionSearch()
           XCTAssertTrue(
             search.waitForPlannerValue("No such map visit"),
             "Observed search value: \(String(describing: search.value))")
@@ -849,7 +861,9 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
         XCTAssertTrue(pin.waitForExistence(timeout: 10))
         XCTAssertEqual(pin.label, originalLabel)
         XCTAssertTrue(restoredControl.waitForPlannerHittability())
-        XCTAssertTrue(openSearch.waitForPlannerHittability())
+        if !UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+          XCTAssertTrue(openSearch.waitForPlannerHittability())
+        }
         XCTAssertTrue(pin.waitForPlannerHittability())
       }
       let capture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())

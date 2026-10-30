@@ -52,7 +52,7 @@ No public/shared cloud fallback is configured.
 | --- | --- | --- |
 | Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented. Physical iPhone/iPad creation, bidirectional edits, deletion and relaunch pass. The earlier open Mac-peer diagnostic remains separate. | Off/on is deliberately deferred. Retain the existing failure/conflict limits; do not repeat passing normal sync checks without a new change or defect. |
 | Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
-| Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. Search clipping, broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
+| Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. The [responsive search correction](prototypes/native-search-accessibility.md#responsive-native-editor) passes scoped clipping and query-retention checks; broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
 | Synchronized daily use | Signed mobile journey passes. | UI polish next. |
@@ -65,6 +65,14 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [responsive native search checkpoint](prototypes/native-search-accessibility.md#responsive-native-editor)
+uses a wrapping Form through More at accessibility sizes and preserves the
+ordinary native search controls. Catalogue loading now remains outside the
+conditional search presentation. Seven focused mobile executions pass, including
+query/Clear, post-audit identity, Itinerary retention, Map search and completion
+after relaunch. Mac/mobile builds and signatures pass; the prepared Mac runtime
+pair awaits manual automation approval. Further iCloud testing stays deferred.
 
 The [multiline Item-row correction](prototypes/native-design-refinement.md#multiline-completion-alignment-30-october-2026)
 centres and enlarges completion symbols in Items, List memberships and Itineraries.
@@ -853,7 +861,14 @@ Keep existing basic export/import available without expanding it. New advanced
 portability or manual-restoration cases belong to post-MVP work and do not delay
 the core queue. Preserve safeguards for ordinary saves and synchronization.
 
-1. Finish acceptance of Q164's local-authoritative/private-CKSyncEngine integration. Account-bound storage, actual account/cloud observations, private transport and normal app/Share wiring are implemented; the [deployment checkpoint](prototypes/private-sync-deployment.md) records the passing real-cloud and native storage scope. The installed Mac app is unchanged. Actual two-device live updates/deletion, concurrent edits, interruption and unavailable/quota behavior retain their own gates. Combine one Planner-only iCloud off/on cycle with final integrated local-edit/relaunch and same-account resumption checks; no standalone switch test blocks implementation.
+1. Retain Q164's completed normal-sync checkpoint: signed, same-account
+   iPhone/iPad creation, edits in both directions, deletion and relaunch pass.
+   The [deployment checkpoint][mobile-sync] records that exact scope. Further
+   iCloud testing, including off/on, is deferred at the user's request. Do not
+   repeat passing normal checks without a new change or defect. Broader
+   concurrent-edit, interruption and quota cases remain unqualified. Core UI
+   work is the current priority.
+
 2. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
    The mobile List and Itinerary one-heading corrections now have their scoped
    checkpoints above. Broader scene and assistive acceptance remains open.
@@ -925,3 +940,6 @@ The complete former issue body, including original requirements and implementati
   prototypes/native-share-products.md#physical-safari-share-29-october-2026
 [ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026
 [mac-undo]: prototypes/native-association-undo.md#native-mac-keyboard-undo-27-october-2026
+
+[mobile-sync]:
+  prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync

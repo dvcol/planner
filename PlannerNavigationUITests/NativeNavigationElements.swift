@@ -100,6 +100,10 @@ extension XCUIApplication {
     plannerElement("saved.capture.new").activateForPlannerJourney()
   }
 
+  func openSavedPlannerCollectionSearch() {
+    openSavedPlannerMenu(identifier: "saved.collection.search", title: "Search")
+  }
+
   func openSavedPlannerListAddMenu() {
     openSavedPlannerMenu(identifier: "saved.list.addMenu", title: "Add")
   }

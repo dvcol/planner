@@ -78,17 +78,6 @@ struct SavedItemCatalog: View {
       min: representation == .map ? 320 : 220,
       ideal: representation == .map ? 560 : 320, max: representation == .map ? nil : 800
     )
-    .task(id: request) { await reload() }
-    .task(id: visibleIdentifiers) {
-      guard let window, !visibleIdentifiers.isEmpty else { return }
-      let indices = Set(
-        sourceRows.filter { visibleIdentifiers.contains($0.identifier) }.map(\.index))
-      await window.requestRows(at: indices)
-    }
-    .onDisappear {
-      window?.cancel()
-      visibleIdentifiers = []
-    }
     .navigationTitle(scope.title)
     .toolbarTitleDisplayMode(.inline)
     #if os(iOS)
@@ -100,6 +89,17 @@ struct SavedItemCatalog: View {
       .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     #endif
     .searchPresentationToolbarBehavior(.avoidHidingContent)
+    .task(id: request) { await reload() }
+    .task(id: visibleIdentifiers) {
+      guard let window, !visibleIdentifiers.isEmpty else { return }
+      let indices = Set(
+        sourceRows.filter { visibleIdentifiers.contains($0.identifier) }.map(\.index))
+      await window.requestRows(at: indices)
+    }
+    .onDisappear {
+      window?.cancel()
+      visibleIdentifiers = []
+    }
     #if os(iOS)
       .onGeometryChange(for: CGFloat.self) { geometry in
         geometry.size.width

@@ -70,15 +70,50 @@ final class SavedItemJourneyTests: XCTestCase {
 
     #endif
 
-    func testInboxSearchRetainsTheCompleteQueryAndRestoresTheSameItemWhenCleared() {
+    func testInboxSearchRetainsTheCompleteQueryAndRestoresTheSameItemWhenCleared() throws {
       continueAfterFailure = false
       let application = XCUIApplication()
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
       application.openPlannerSection("Inbox")
-      let search = application.searchFields.firstMatch
-      XCTAssertTrue(search.waitForExistence(timeout: 10))
+      let usesSheet = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+      let search: XCUIElement
+      if usesSheet {
+        search =
+          application.descendants(matching: .any)
+          .matching(identifier: "saved.map.search.text").firstMatch
+        XCTAssertFalse(application.searchFields.firstMatch.exists)
+      } else {
+        search = application.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 10))
+      }
       recordScreenshot(application, name: "Native Inbox search before editing")
+      if usesSheet { try application.performAccessibilityAudit(for: .textClipped) }
+      func setQuery(_ query: String) throws {
+        if usesSheet { application.openSavedPlannerCollectionSearch() }
+        if !search.exists { application.swipeDown() }
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        let clear: XCUIElement
+        if usesSheet {
+          clear = application.buttons["saved.map.search.clear"]
+        } else {
+          clear = search.buttons["Clear text"]
+        }
+        if clear.exists { clear.activateForPlannerJourney() }
+        if usesSheet { try application.performAccessibilityAudit(for: .textClipped) }
+        if !query.isEmpty {
+          search.activateForPlannerJourney()
+          search.typeText(query)
+          XCTAssertTrue(search.waitForPlannerValue(query))
+        }
+        recordScreenshot(application, name: "Native Inbox query: \(query)")
+        if usesSheet {
+          try application.performAccessibilityAudit(for: .textClipped)
+          let done = application.buttons["saved.map.search.done"]
+          done.activateForPlannerJourney()
+          XCTAssertTrue(done.waitForNonExistence(timeout: 5))
+        }
+      }
       application.openSavedPlannerNewItemEditor()
       let title = application.textFields["saved.item.title"]
       XCTAssertTrue(title.waitForExistence(timeout: 5))
@@ -90,23 +125,20 @@ final class SavedItemJourneyTests: XCTestCase {
       let item = application.savedPlannerItemRows("Tokyo museum visit near the garden").firstMatch
       XCTAssertTrue(item.waitForExistence(timeout: 10))
       let sourceIdentifier = item.identifier
-      if !search.exists { application.swipeDown() }
-      XCTAssertTrue(search.waitForExistence(timeout: 5))
-      search.activateForPlannerJourney()
-      search.typeText("Tokyo museum visit near the garden")
-      XCTAssertTrue(search.waitForPlannerValue("Tokyo museum visit near the garden"))
+      try setQuery("Tokyo museum visit near the garden")
       XCTAssertTrue(item.waitForExistence(timeout: 10))
       recordScreenshot(application, name: "Native Inbox search retains the complete query")
-      search.buttons["Clear text"].activateForPlannerJourney()
-      search.activateForPlannerJourney()
-      search.typeText("No such visit")
-      XCTAssertTrue(search.waitForPlannerValue("No such visit"))
+      try setQuery("No such visit")
       XCTAssertTrue(item.waitForNonExistence(timeout: 10))
       XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
-      search.buttons["Clear text"].activateForPlannerJourney()
+      try setQuery("")
       XCTAssertTrue(item.waitForExistence(timeout: 10))
       XCTAssertEqual(item.identifier, sourceIdentifier)
       recordScreenshot(application, name: "Clearing native Inbox search restores the same Item")
+      // Text-size audits can replace the active search presentation.
+      try application.performAccessibilityAudit(for: .textClipped)
+      XCTAssertTrue(item.waitForExistence(timeout: 10))
+      XCTAssertEqual(item.identifier, sourceIdentifier)
     }
 
     func testCompactListCatalogToolbarKeepsItsTitleAndActionsAvailable() throws {
@@ -750,23 +782,38 @@ final class SavedItemJourneyTests: XCTestCase {
     title.activateForPlannerJourney()
     title.typeText("Afternoon route")
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
-    let search = application.searchFields.firstMatch
-    #if os(iOS)
-      if !search.exists { application.swipeDown() }
-    #endif
+    let done = application.buttons["saved.map.search.done"]
+    func revealSearch() -> XCUIElement {
+      #if os(iOS)
+        if UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+          application.openSavedPlannerCollectionSearch()
+          return application.descendants(matching: .any)
+            .matching(identifier: "saved.map.search.text").firstMatch
+        }
+      #endif
+      let search = application.searchFields.firstMatch
+      #if os(iOS)
+        if !search.exists { application.swipeDown() }
+      #endif
+      return search
+    }
+    let search = revealSearch()
     XCTAssertTrue(search.waitForExistence(timeout: 10))
     search.activateForPlannerJourney()
     search.typeText("garden")
     XCTAssertTrue(search.waitForPlannerValue("garden"))
     recordScreenshot(application, name: "Native design Itinerary search before leaving")
+    if done.exists {
+      done.activateForPlannerJourney()
+      XCTAssertTrue(done.waitForNonExistence(timeout: 5))
+    }
     openDesignSection("Items", in: application)
     openDesignSection("Itineraries", in: application)
-    #if os(iOS)
-      if !search.exists { application.swipeDown() }
-    #endif
+    _ = revealSearch()
     XCTAssertTrue(search.waitForExistence(timeout: 10))
     recordScreenshot(application, name: "Native design Itinerary search after returning")
     XCTAssertTrue(search.waitForPlannerValue("garden"))
+    if done.exists { done.activateForPlannerJourney() }
   }
 
   private func openDesignSection(_ name: String, in application: XCUIApplication) {

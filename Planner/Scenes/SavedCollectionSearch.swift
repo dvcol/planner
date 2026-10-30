@@ -1,8 +1,9 @@
 #if os(iOS)
   import SwiftUI
 
-  /// Isolate iPhone Map search from the system's minimized-toolbar transition.
+  /// Use a roomy query editor for accessibility sizes and iPhone Map search.
   struct SavedCollectionSearch: ViewModifier {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Binding var text: String
     let placement: SearchFieldPlacement
     let prompt: String
@@ -12,16 +13,15 @@
     @FocusState private var isFocused: Bool
 
     func body(content: Content) -> some View {
-      if usesMap && UIDevice.current.userInterfaceIdiom == .phone {
+      if dynamicTypeSize.isAccessibilitySize
+        || (usesMap && UIDevice.current.userInterfaceIdiom == .phone)
+      {
         content
           .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-              Button("Search", systemImage: searchSymbol) {
-                query = text
-                isPresented = true
-              }
-              .labelStyle(.iconOnly)
-              .accessibilityValue(text)
+            if dynamicTypeSize.isAccessibilitySize {
+              ToolbarOverflowMenu { searchButton }
+            } else {
+              ToolbarItem(placement: .primaryAction) { searchButton }
             }
           }
           .sheet(
@@ -34,6 +34,16 @@
       }
     }
 
+    private var searchButton: some View {
+      Button("Search", systemImage: searchSymbol) {
+        query = text
+        isPresented = true
+      }
+      .labelStyle(.iconOnly)
+      .accessibilityValue(text)
+      .accessibilityIdentifier("saved.collection.search")
+    }
+
     private var searchSymbol: String {
       if text.isEmpty { return "magnifyingglass" }
       return "magnifyingglass.circle.fill"
@@ -42,7 +52,7 @@
     private var searchEditor: some View {
       NavigationStack {
         Form {
-          TextField(prompt, text: $query)
+          TextField(prompt, text: $query, axis: .vertical)
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
             .focused($isFocused)
@@ -62,7 +72,7 @@
         }
         .task { isFocused = true }
       }
-      .presentationDetents([.medium, .large])
+      .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.medium, .large])
     }
   }
 #endif

@@ -29,7 +29,7 @@ hashes against the actual final workspace. Source identity is checked through
 filter changes and Clear; no relaunch claim is added. Mac runtime remains
 unqualified. Simulator settings are restored and strict affected lint passes.
 
-## Open review
+## Original open review
 
 The native clipping audit still fails. Successful matching and Clear behavior
 do not close that warning or establish complete accessibility. The permanent
@@ -40,3 +40,60 @@ pass. Production search, persistence and Core behavior are unchanged.
 separates the failed clipping/presentation probes from final functional checks.
 Human/assistive UI review, actual Mac interaction and signed/physical tests
 remain open. Signing stays deferred and advanced portability remains post-MVP.
+
+## Responsive native editor
+
+The shared collection-search modifier now uses its existing native Form sheet at
+accessibility text sizes. Queries wrap vertically without reducing the chosen
+font size. Search lives in the native More menu at those sizes so the narrow
+pane title keeps its space beside Filters and Add. Ordinary collection search
+retains Apple's search field; ordinary phone Map search retains its existing
+sheet. Items, Inbox, List contents and Itinerary contents share the modifier.
+
+Done applies the query through the existing dismissal binding. Native Clear
+retains the saved Item/appearance and other filter criteria. No custom keyboard
+interception, provider request, Core interface or persistence change is added.
+A trial keyboard-submit convenience did not work with the multiline native
+field in this runtime and is removed; Done remains the explicit apply action.
+
+The original maximum-text phone audit reproduces the UISearchBarTextField
+clipping warning. A directly visible Search-button trial fixes that field but
+crowds the iPad pane title. Moving Search into the native overflow menu fixes
+that reproduced title issue. The retained diagnostic runs remain separate from
+final functional and clipping-audit credit.
+
+The existing Inbox journey now audits the initial catalogue, empty query editor
+and entered wrapping queries without a suppression handler. It verifies an
+exact long match, an exact no-match result and Clear restoring the same Item.
+The existing Itinerary journey verifies the query after switching destinations.
+Native test helpers open the real overflow action and query its actual input;
+there is no production test control or new test boundary.
+
+The ordinary-text audit probes a different search presentation. Catalogue loading
+and cancellation now sit outside the conditional search modifier so presentation
+changes do not own the data loader's lifetime. An earlier trial entered the
+Opening Items state after Clear; another tried to tap the field after the audit
+replaced it. The final ordinary journey edits and clears first, audits afterward,
+and verifies the same saved Item remains available. Its native execution passes
+in 44.591 seconds, with no failed-audit suppression.
+
+Final qualification on 30–31 October is seven passing native executions across
+four existing functions, with zero failures or skips. The light maximum-text
+phone and dark maximum-text iPad pass the clipping and exact query/Clear checks.
+The iPad also retains its Itinerary query across destinations. Ordinary dark
+phone checks cover query/Clear, row completion/relaunch and the existing Map
+flow; ordinary iPad retains its native minimized Map search and exact pin.
+
+The [compact review packet](evidence/native-search-accessibility/responsive-2026-10-30/review.json)
+separates diagnostic trials from final credit. All production inputs match the
+final workspace. A later Map-controller-only adjustment restores the original
+non-sheet native-button path and is separately qualified on ordinary iPad.
+The inspected [phone query](evidence/native-search-accessibility/responsive-2026-10-30/final-phone-query.png)
+and [iPad title](evidence/native-search-accessibility/responsive-2026-10-30/final-ipad-title.png)
+confirm wrapping input and a readable narrow-pane title.
+
+Strict affected Swift lint, whitespace checks, simulator/Mac/signed-mobile
+builds and deep/strict app/runner signature checks pass. Mac runtime awaits
+manual automation approval for two prepared existing journeys. Actual VoiceOver
+and final whole-app/physical acceptance remain open. No additional iCloud test,
+account transition or installed Mac replacement is performed by this checkpoint.
