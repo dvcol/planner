@@ -234,3 +234,57 @@ hashes and its registry mentions remain unchanged. The unregister command exits
 1, recorded separately from that observed outcome. Sharing elections are not
 changed, and installed Mac Share remains deferred. CloudKit/account transitions,
 sync, broader physical and full assistive acceptance remain open.
+
+## Phone rotation and compact Week, 30 October 2026
+
+The user reports broken phone landscape navigation, a grey Calendar rectangle
+and an unusable Week layout. The baseline native phone journey reproduces Week
+resetting to Month on rotation. Its capture also shows the time-ruler corner
+drawing a second material over the header and only three oversized day columns.
+
+Phone Calendar now retains its navigation stack in both orientations. Week uses
+compact weekday/date headings, tinted appointment blocks and one hour ruler.
+Ordinary weeks fit seven days on the tested phone; overlap lanes widen their own
+day instead of every day. Larger text and denser overlaps can still require
+horizontal scrolling. Full names, times and exact identities remain available
+in accessibility and details. Native date-heading buttons select the agenda's
+day without rescheduling anything.
+
+Wide Calendar panes place the selected-day agenda beside the time grid. Month
+keeps Apple's mobile `UICalendarView`, with independent calendar/agenda scrolling
+on wide layouts. Short phone landscape can show a scrollable partial month;
+the control keeps its natural size. A forced-height experiment is discarded
+after prolonged native layout waits. The time grid requests native
+[size-change anchoring](https://developer.apple.com/documentation/swiftui/view/defaultscrollanchor(_:for:))
+when its height changes. This does not keep every unselected booking immediately
+visible: the final iPad journey scrolls once to reach its late appointment after
+rotation. The agenda remains available beside the grid, and the existing
+selected-entry scroll target remains effective.
+
+The visual references are Fantastical's official
+[calendar-view guide](https://flexibits.com/fantastical-ios/help/calendar-views)
+and [iPad layout](https://flexibits.com/img/new-fantastical/hero/fantastical/platform/ipad%402x.png?updated=2023-09-17).
+No third-party calendar component or additional storage contract is introduced.
+
+The iPad checks also expose a clipped last row in the all-day overflow sheet.
+Its desktop minimum size now applies only on Mac, allowing mobile sheet sizing
+and scrolling to work natively. The nine-Schedule journey retains every identity
+and opens its last row. The new rotation driver waits for the actual saved row
+instead of requiring a tappable centre on an entire Form during dismissal.
+It can scroll to its exact unselected booking, so execution time does not assume
+that every booking is immediately visible.
+
+Qualification records and selected inspected originals are retained in the
+[execution packet](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/result.json).
+Final phone/iPad runtime and compiler results are recorded there separately from
+the failed baseline, cancelled sizing probe and intermediate iPad failures.
+The final opaque-card rotation runs pass on light iPhone and dark iPad with
+254 identical, unchanged native inputs. Original captures confirm that hour
+rules no longer draw through event text. Supporting Month, overlap, all-day
+span and nine-entry overflow executions are recorded at their actual source
+checkpoints; they are not relabeled as one final-source cohort. Final Mac app,
+Share and UI-test products compile and pass strict signature verification.
+Swift formatting and the two affected Markdown documents pass their lint checks.
+Broader accessibility, installed physical UI and actual Mac interaction remain
+separate checks. The iPhone development-trust problem and integrated private
+sync acceptance are unaffected by this UI change.

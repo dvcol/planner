@@ -2,6 +2,111 @@ import XCTest
 
 @MainActor
 final class SavedCalendarModesJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testCalendarKeepsItsWeekAndScheduleThroughPhoneRotation() throws {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      defer { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Calendar")
+      let modes = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.mode"
+      ).firstMatch
+      XCTAssertTrue(modes.waitForExistence(timeout: 10))
+      captureCalendarRotation(application, name: "Empty native month in portrait")
+      XCUIDevice.shared.orientation = .landscapeLeft
+      waitForCalendarOrientation(application, landscape: true)
+      captureCalendarRotation(application, name: "Empty native month in landscape")
+      XCUIDevice.shared.orientation = .portrait
+      waitForCalendarOrientation(application, landscape: false)
+      application.openPlannerSection("Items")
+      application.openSavedPlannerNewItemEditor()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 10))
+      title.activateForPlannerJourney()
+      title.typeText("Rotating museum")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Schedule item").activateForPlannerJourney()
+      application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.plannerElement("saved.schedule.save").waitForNonExistence(timeout: 10))
+      let saved = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
+      ).firstMatch
+      try revealSavedSchedule(saved, application: application)
+      let scheduleIdentifier = saved.identifier.replacingOccurrences(
+        of: "saved.item.schedule.", with: "")
+      let savedDescription = try XCTUnwrap(saved.value as? String)
+      captureCalendarRotation(application, name: "Saved Item in portrait")
+      XCUIDevice.shared.orientation = .landscapeLeft
+      waitForCalendarOrientation(application, landscape: true)
+      captureCalendarRotation(application, name: "Saved Item in landscape")
+      XCUIDevice.shared.orientation = .portrait
+      waitForCalendarOrientation(application, landscape: false)
+      application.openPlannerSection("Calendar")
+      modeControl("Week", in: modes).activateForPlannerJourney()
+      let grid = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-grid"
+      ).firstMatch
+      XCTAssertTrue(grid.waitForExistence(timeout: 10))
+      let headings = grid.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.day-heading.")
+      ).allElementsBoundByIndex
+      XCTAssertEqual(headings.count, 7)
+      for heading in headings {
+        XCTAssertGreaterThanOrEqual(heading.frame.minX, grid.frame.minX)
+        XCTAssertLessThanOrEqual(heading.frame.maxX, grid.frame.maxX)
+      }
+      captureCalendarRotation(application, name: "Week in portrait before rotation")
+      XCUIDevice.shared.orientation = .landscapeLeft
+      waitForCalendarOrientation(application, landscape: true)
+      captureCalendarRotation(application, name: "Week in landscape after rotation")
+      XCTAssertTrue(modeControl("Week", in: modes).isSelected)
+      XCTAssertTrue(grid.waitForExistence(timeout: 10))
+      let entry = grid.buttons.matching(
+        NSPredicate(format: "identifier ENDSWITH %@", scheduleIdentifier)
+      ).firstMatch
+      for _ in 0..<5 {
+        if entry.isHittable { break }
+        if entry.frame.minY >= grid.frame.maxY {
+          grid.swipeUp()
+        } else if entry.frame.maxY <= grid.frame.minY {
+          grid.swipeDown()
+        } else {
+          grid.swipeLeft()
+        }
+      }
+      XCTAssertTrue(entry.waitForPlannerHittability())
+      entry.activateForPlannerJourney()
+      try revealSavedSchedule(saved, application: application)
+      XCTAssertEqual(saved.value as? String, savedDescription)
+      XCUIDevice.shared.orientation = .portrait
+      waitForCalendarOrientation(application, landscape: false)
+      try revealSavedSchedule(saved, application: application)
+      XCTAssertEqual(saved.value as? String, savedDescription)
+      captureCalendarRotation(application, name: "Exact Schedule survives return to portrait")
+    }
+
+    private func waitForCalendarOrientation(_ application: XCUIApplication, landscape: Bool) {
+      let orientation = XCTNSPredicateExpectation(
+        predicate: NSPredicate { _, _ in
+          let frame = application.windows.firstMatch.frame
+          return landscape ? frame.width > frame.height : frame.height > frame.width
+        }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [orientation], timeout: 10), .completed)
+    }
+
+    private func captureCalendarRotation(_ application: XCUIApplication, name: String) {
+      let capture = XCTAttachment(screenshot: calendarScreenshot(application))
+      capture.name = name
+      capture.lifetime = .keepAlways
+      add(capture)
+    }
+  #endif
+
   func testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -70,6 +175,9 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       identifier: "saved.calendar.all-day-overflow"
     ).firstMatch
     XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+    #if os(iOS)
+      XCTAssertLessThanOrEqual(overflow.frame.maxY, application.windows.firstMatch.frame.maxY + 1)
+    #endif
     let schedules = overflow.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.all-day."))
     var scheduleIdentifiers: Set<String> = []
@@ -489,11 +597,15 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
   /// Reveals lazy Schedule rows before reading them at larger text sizes.
   private func revealSavedSchedule(_ schedule: XCUIElement, application: XCUIApplication) throws {
     #if os(iOS)
-      let details = try XCTUnwrap(
-        application.collectionViews.allElementsBoundByIndex.last(where: \.isHittable))
-      for _ in 0..<6 {
-        if schedule.exists { break }
-        details.swipeUp()
+      if !schedule.waitForExistence(timeout: 3) {
+        let details = application.collectionViews.containing(
+          .any, identifier: "saved.item.completion"
+        ).firstMatch
+        XCTAssertTrue(details.waitForExistence(timeout: 10))
+        for _ in 0..<6 {
+          if schedule.exists { break }
+          details.swipeUp()
+        }
       }
     #endif
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))

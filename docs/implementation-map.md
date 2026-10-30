@@ -64,6 +64,12 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [phone Calendar and Week pass](prototypes/native-calendar-shared-time-ruler.md#phone-rotation-and-compact-week-30-october-2026)
+corrects the reproduced phone rotation reset and grey header patch. Compact
+Week headings and appointment blocks, a wide agenda/grid split and native
+mobile overflow sizing are implemented. Its execution packet distinguishes
+local UI evidence from remaining physical, Mac interaction and sync acceptance.
+
 Normal app/Share private-sync wiring and reviewed device-only copying are
 implemented in the [deployment checkpoint](prototypes/private-sync-deployment.md).
 Bounded account verification now permits local startup when Apple lookup stalls;

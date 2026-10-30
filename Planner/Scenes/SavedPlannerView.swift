@@ -481,7 +481,7 @@ struct SavedPlannerView: View {
 
   private var usesCompactCalendarStack: Bool {
     #if os(iOS)
-      horizontalSizeClass != .regular
+      !usesSidebarNavigation
     #else
       false
     #endif

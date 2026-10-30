@@ -176,36 +176,25 @@ struct SavedCalendarView: View {
   }
 
   var body: some View {
-    VStack(spacing: 12) {
-      Picker("Calendar view", selection: $mode) {
-        ForEach(Mode.allCases, id: \.self) { mode in
-          Text(mode.rawValue).tag(mode)
-        }
-      }
-      .pickerStyle(.segmented)
-      #if os(macOS)
-        .labelsHidden()
-      #endif
-      .frame(maxWidth: 400)
-      .padding(.horizontal)
-      .accessibilityIdentifier("saved.calendar.mode")
+    VStack(spacing: 8) {
+      calendarControls
       if mode == .month {
         monthContent
       } else {
-        DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
-          .datePickerStyle(.compact)
-          .labelsHidden()
-          .padding(.horizontal)
         if isLoading {
           ProgressView("Loading schedules").frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if entries != nil {
-          SavedCalendarTimeGrid(
-            days: visibleDays, selectedDate: selectedDate, calendar: displayCalendar,
-            selection: $selection,
-            entriesForDay: { date in
-              (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
-            },
-            scheduleDescription: scheduleDescription)
+          GeometryReader { geometry in
+            if geometry.size.width >= 700 {
+              HStack(spacing: 0) {
+                ScrollView { agenda.padding() }.frame(width: 220)
+                Divider()
+                timeGrid
+              }
+            } else {
+              timeGrid
+            }
+          }
         } else {
           ContentUnavailableView {
             Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
@@ -247,21 +236,72 @@ struct SavedCalendarView: View {
     .task(id: loadIdentity) { await loadEntries() }
   }
 
+  private var modePicker: some View {
+    Picker("Calendar view", selection: $mode) {
+      ForEach(Mode.allCases, id: \.self) { mode in
+        Text(mode.rawValue).tag(mode)
+      }
+    }
+    .pickerStyle(.segmented)
+    .labelsHidden()
+    .frame(maxWidth: 400)
+    .accessibilityIdentifier("saved.calendar.mode")
+  }
+
+  private var datePicker: some View {
+    DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
+      .datePickerStyle(.compact)
+      .labelsHidden()
+      .fixedSize()
+  }
+
+  private var calendarControls: some View {
+    ViewThatFits(in: .horizontal) {
+      HStack(spacing: 12) {
+        modePicker
+        if mode != .month { datePicker }
+      }
+      VStack(spacing: 8) {
+        modePicker
+        if mode != .month { datePicker }
+      }
+    }
+    .padding(.horizontal)
+  }
+
+  private var timeGrid: some View {
+    SavedCalendarTimeGrid(
+      days: visibleDays, selectedDate: $selectedDate, calendar: displayCalendar,
+      selection: $selection,
+      entriesForDay: { date in
+        (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
+      },
+      scheduleDescription: scheduleDescription)
+  }
+
+  @ViewBuilder
   private var monthContent: some View {
-    ScrollView {
-      VStack(alignment: .leading, spacing: 20) {
-        #if os(iOS)
-          ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: 24) {
-              monthPicker.frame(width: 400)
-              agenda.frame(minWidth: 240, maxWidth: .infinity, alignment: .leading)
-            }
+    #if os(iOS)
+      GeometryReader { geometry in
+        if geometry.size.width >= 700 {
+          HStack(alignment: .top, spacing: 0) {
+            ScrollView { monthPicker.padding() }.frame(width: 340)
+            Divider()
+            ScrollView { agenda.padding() }.frame(maxWidth: .infinity)
+          }
+        } else {
+          ScrollView {
             VStack(alignment: .leading, spacing: 20) {
               monthPicker.frame(maxWidth: 400).frame(maxWidth: .infinity)
               agenda
             }
+            .padding()
           }
-        #else
+        }
+      }
+    #else
+      ScrollView {
+        VStack(alignment: .leading, spacing: 20) {
           ScrollView(.horizontal) {
             SavedCalendarMonthGrid(
               selectedDate: $selectedDate, visibleDate: $visibleDate, selection: $selection,
@@ -275,10 +315,10 @@ struct SavedCalendarView: View {
             }
           }
           agenda
-        #endif
+        }
+        .padding()
       }
-      .padding()
-    }
+    #endif
   }
 
   #if os(iOS)
