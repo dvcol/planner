@@ -139,3 +139,21 @@ The affected Core cohort passes 22 tests in seven suites. Mac/mobile compilation
 and strict formatting pass. This is a local staging/retry check; actual disk-full,
 quota, permanent server rejection and two-device live/account behavior still
 need their separate qualification. No domain, portable or recovery format changes.
+
+## Permanent upload rejection and correction
+
+The [signed follow-up](evidence/private-sync-permanent-error/runtime.json) passes
+in 126.598 seconds. CloudKit rejects a synthetic Item with 1.1 million characters
+of notes. The Item remains readable locally, the error stays visible, and an
+explicit retry after shortening its notes sends the corrected graph to a fresh
+peer. The complete-plan, staging-retry, queued Share edit, concurrent-field and
+deletion checks pass in the same run.
+
+The [earlier attempt](evidence/private-sync-permanent-error/before-runtime.json)
+left synchronization in progress with no lasting error; direct SDK inspection
+confirmed the large Item was absent remotely. Permanent errors now stay paused
+instead of being cleared by a later fetch. Only handled conflicts request an
+immediate follow-up; Apple's scheduler owns transient network retries. Local
+editing is not paused by an upload rejection. The affected Core cohort passes
+22 tests across seven suites, and strict formatting passes. This checks a real
+permanent record rejection, not quota exhaustion or every request-size limit.

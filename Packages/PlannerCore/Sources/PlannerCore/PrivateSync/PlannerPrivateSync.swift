@@ -247,6 +247,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
     var next = state
     var acknowledged: [PlannerCloudNode] = []
     var bases: [String: PlannerCloudNode] = [:]
+    var retryConflicts = false
     for record in changes.savedRecords {
       let node = try PlannerCloudNode(record: record)
       let previous = try state.serverRecords[node.name].map(PlannerCloudNode.restore)
@@ -278,13 +279,18 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
       case .serverRecordChanged:
         guard let server = failure.error.serverRecord else { throw failure.error }
         next.incomingRecords[server.recordID.recordName] = try PlannerCloudNode.archive(server)
+        retryConflicts = true
       case .unknownItem:
         next.incomingDeletions.insert(failure.record.recordID.recordName)
         engine.state.remove(pendingRecordZoneChanges: [.saveRecord(failure.record.recordID)])
+        retryConflicts = true
       case .zoneNotFound where !state.zoneCreated:
         engine.state.add(pendingDatabaseChanges: [
           .saveZone(CKRecordZone(zoneID: PlannerCloudNode.zoneID))
         ])
+        retryConflicts = true
+      case .batchRequestFailed:
+        break
       default:
         await report(failure.error)
       }
@@ -295,7 +301,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
       applying: .init(
         upserts: acknowledged,
         deletions: Set(changes.deletedRecordIDs.map(\.recordName)), bases: bases))
-    if !changes.failedRecordSaves.isEmpty || !changes.failedRecordDeletes.isEmpty {
+    if retryConflicts, sendFailure == nil {
       // Conflicts join a complete fetch before relationship validation.
       scheduleNetwork()
     }
@@ -464,10 +470,17 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
         sendFailure = .init(
           "privateCloudZoneRemoved",
           "The private cloud data area is unavailable. Local plans are preserved.")
-      default:
+      case .networkFailure, .networkUnavailable, .notAuthenticated,
+        .accountTemporarilyUnavailable, .requestRateLimited, .serviceUnavailable,
+        .zoneBusy, .operationCancelled, .serverResponseLost:
         sendFailure = .init(
           "privateSyncUnavailable",
           "Private synchronization is unavailable (CloudKit \(error.errorCode)). Local plans are preserved."
+        )
+      default:
+        sendFailure = .init(
+          "privateSyncNeedsAttention",
+          "Private synchronization needs attention (CloudKit \(error.errorCode)). Local plans are preserved; correct the problem, then try Sync now."
         )
       }
     } else if let reason = error as? PlannerFailure {
