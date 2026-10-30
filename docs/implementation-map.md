@@ -14,7 +14,9 @@ Signing setup is now authorized with the user's enrolled team; actual Mac UI, mo
 distinct core work and acceptance gates. Installed Mac Share is post-MVP under
 the [28 October focus](release-goals.md#mac-share-mvp-focus-28-october-2026).
 Private CKSyncEngine transport and normal app/Share wiring are implemented.
-SwiftData remains authoritative locally; integrated two-device acceptance is open.
+SwiftData remains authoritative locally. Basic same-account iPhone/iPad sync is
+qualified for creation, edits in both directions, deletion and relaunch. Further
+account-transition testing is deferred at the user's request.
 Historical checkpoints below retain their scope
 but do not override this priority.
 
@@ -29,10 +31,10 @@ while `Planner.openContainer` explicitly uses `cloudKitDatabase: .none` to retai
 local plans independently. Q164 A's private CKSyncEngine implementation has a
 [transport checkpoint](prototypes/private-sync-engine.md) passes full-plan and
 fresh-store deletion readback. The [deployment checkpoint](prototypes/private-sync-deployment.md)
-adds native app/Share integration and reviewed device-only copying. Live delivery and physical
-qualification remain open. Existing development signing passes current native
-checks; it does not prove synchronization. The earlier descriptions of sync as
-only a remaining test gate were incomplete.
+adds native app/Share integration and reviewed device-only copying. The
+[same-account physical mobile journey](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
+now proves normal live delivery in both directions, deletion and relaunch.
+Account-transition and broader failure cases remain separate, unqualified work.
 
 The user initially defers account-transition testing, then resumes the
 Planner-only test on 29 October. The
@@ -48,12 +50,12 @@ No public/shared cloud fallback is configured.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented alongside account-bound local storage and private CKSyncEngine transport. Full-plan/fresh-store deletion round trips pass; an open Mac peer's live deletion catch-up remains unresolved. | Qualify live delivery, pending work, conflicts/failures, ownership and physical sync. Combine off/on with final integrated checks; it does not block implementation. |
+| Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented. Physical iPhone/iPad creation, bidirectional edits, deletion and relaunch pass. The earlier open Mac-peer diagnostic remains separate. | Off/on is deliberately deferred. Retain the existing failure/conflict limits; do not repeat passing normal sync checks without a new change or defect. |
 | Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
 | Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. Search clipping, broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
-| Synchronized daily use | Implementation and physical acceptance are open. | Complete CloudKit integration, then signing/capabilities, installed devices and a test iCloud account for two-device sync, offline/concurrent edits, deletion and interruptions. |
+| Synchronized daily use | Signed mobile journey passes. | UI polish next. |
 | Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
 
 Existing basic export/import remains optional. Further export/import features,
@@ -64,6 +66,11 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [multiline Item-row correction](prototypes/native-design-refinement.md#multiline-completion-alignment-30-october-2026)
+centres and enlarges completion symbols in Items, List memberships and Itineraries.
+The focused native completion/relaunch journey and actual before/after captures
+qualify the catalog correction; no additional iCloud testing is required for it.
+
 The [phone Calendar and Week pass](prototypes/native-calendar-shared-time-ruler.md#phone-rotation-and-compact-week-30-october-2026)
 corrects the reproduced phone rotation reset and grey header patch. Compact
 Week headings and appointment blocks, a wide agenda/grid split and native
@@ -71,21 +78,19 @@ mobile overflow sizing are implemented. Its execution packet distinguishes
 local UI evidence from remaining physical, Mac interaction and sync acceptance.
 The matching mobile update is now installed, and the actual iPhone rotation
 journey passes with the same 254 inputs. This clears its observed app/test-runner
-trust blocker for that execution; integrated sync acceptance remains open.
+trust blocker for that execution.
 The [same-account mobile live-sync journey](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
 now passes in both directions, including exact identity, notes/title convergence,
-deletion and relaunch. The combined off/on and remaining failure/conflict checks
-are still separate acceptance work.
+deletion and relaunch. At the user's request, further iCloud testing is stopped.
+Off/on remains explicitly unqualified; the next priority is core UI polish.
 
 Normal app/Share private-sync wiring and reviewed device-only copying are
 implemented in the [deployment checkpoint](prototypes/private-sync-deployment.md).
 Bounded account verification now permits local startup when Apple lookup stalls;
 light-phone/dark-tablet offline creation/relaunch and six signed Mac storage
-checks pass. Development profiles now cover the same-account physical iPhone
-and iPad. Their first native run confirms live creation with the exact same Item
-identity on both; a test-editor replacement error prevents return-edit/deletion
-acceptance. The corrected native journey and combined private off/on check are
-prepared; their full device outcomes remain open.
+checks pass. Development profiles cover the same-account physical iPhone and
+iPad. Early editor/overlay failures are retained as historical diagnostics; the
+subsequent unobstructed journey passes the complete normal sync workflow above.
 
 The [private CKSyncEngine checkpoint](prototypes/private-sync-engine.md) adds
 field-based records and account-scoped transactional state, preserving local
