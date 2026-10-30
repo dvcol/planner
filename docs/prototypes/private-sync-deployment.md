@@ -1,9 +1,11 @@
 # Native private-sync deployment
 
 30 October 2026. Source wiring is implemented; the installed Mac Planner
-Development app is unchanged. Matching signed mobile updates are installed on
-the authorized iPhone and iPad. Final integrated synchronization acceptance
-remains open.
+Development app is unchanged. The signed sync-checkpoint builds were installed
+on the authorized iPhone and iPad. The normal same-account mobile journey now
+passes creation, edits in both directions, deletion and relaunch, as recorded
+[below](#unobstructed-two-device-live-sync). Off/on and broader failure checks
+remain unqualified and deferred at the user's request.
 
 ## App and Share
 

@@ -28,7 +28,7 @@ Calendar, collection maps and the embedded reader. This is implementation
 progress, not final acceptance on every platform. The source audit confirms
 that normal app/Share configurations select account-bound private synchronization,
 while `Planner.openContainer` explicitly uses `cloudKitDatabase: .none` to retain
-local plans independently. Q164 A's private CKSyncEngine implementation has a
+local plans independently. Q164 A's private CKSyncEngine
 [transport checkpoint](prototypes/private-sync-engine.md) passes full-plan and
 fresh-store deletion readback. The [deployment checkpoint](prototypes/private-sync-deployment.md)
 adds native app/Share integration and reviewed device-only copying. The
@@ -41,9 +41,9 @@ Planner-only test on 29 October. The
 [read-only native check](prototypes/cloud-account-availability-native.md)
 observes access loss and restoration to the same account after manual off/on.
 The attended managed-store check also passes: disabling access clears its native
-cache, and restoring the same account reimports the exact fixture. Production
-must preserve local plans independently of that cache reset. Its ownership and
-integrated acceptance remain open. The user also requires
+cache, and restoring the same account reimports the exact fixture. Q164's local
+store and private engine now replace that managed cache. Normal mobile sync is
+qualified; its off/on check remains deferred. The user also requires
 [private-user storage only](release-goals.md#private-cloud-storage-boundary-29-october-2026):
 unavailable/full iCloud must never select a developer-funded cloud fallback.
 No public/shared cloud fallback is configured.
@@ -918,7 +918,13 @@ the core queue. Preserve safeguards for ordinary saves and synchronization.
    broader accessibility review remains open. Follow the
    retained runtime diagnosis; do not repeat unchanged startup attempts or
    assume a signing cause. Export/import-specific UI acceptance is post-MVP.
-5. Complete signed/shared-store, mobile Share, CloudKit/account recovery, deletion/concurrent-edit convergence, interruption and physical performance gates after their implementation. Simulator or local-store evidence cannot replace these.
+5. Retain the signed shared-store, physical Safari Share and normal two-device
+   sync checkpoints above. Other mobile capture senders and remaining physical
+   UI/performance checks still need available devices. Follow the user's
+   [iCloud testing deferral](release-goals.md#current-sync-qualification-31-october-2026):
+   off/on, broader concurrent-edit, interruption and quota cases remain
+   unqualified without blocking the current UI work. Do not rerun passing normal
+   sync or substitute Simulator evidence for physical behavior.
 6. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
 
 ## Post-MVP work

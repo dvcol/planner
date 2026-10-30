@@ -47,6 +47,18 @@ Development/Production environment selection does not replace explicit private
 database selection. The integration must qualify unavailable-account and
 quota-error behavior before claiming synchronized daily-use acceptance.
 
+## Current sync qualification, 31 October 2026
+
+The [physical iPhone/iPad pair](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
+proves normal same-account creation, edits in both directions, deletion and
+relaunch. The user asks to stop further iCloud testing and prioritize core UI.
+Do not repeat these passing checks without a new change or defect. Off/on and
+broader conflict, interruption and quota checks remain unqualified and deferred;
+they are not prerequisites to continuing implementation or UI polish. Retain
+those limits in the final release review rather than claiming they passed.
+Private-user storage, local-plan preservation and existing safety rules remain
+required; this records the work priority and available evidence.
+
 ## Confirmed priorities
 
 - The first daily-use release must support both saving/organizing places and assembling trips with scheduled itineraries. Ordinary tasks remain supported by the generic item model.

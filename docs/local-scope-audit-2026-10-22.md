@@ -56,10 +56,14 @@ These scope findings do not approve new navigation choices or test seams. The st
 
 ## Current implementation frontier, 26 October 2026
 
-The storage audit additionally finds missing production integration: Core exposes
-only local-only storage, opens SwiftData with CloudKit disabled, and has no
-implemented account/cloud observer. CloudKit is implementation work followed by
-actual container/device qualification. It is not solely a signing/test gate.
+Updated 31 October 2026. The original storage-integration gap is implemented:
+SwiftData remains local and authoritative, while account-bound CKSyncEngine uses
+only the user's private CloudKit database. The
+[deployment checkpoint](prototypes/private-sync-deployment.md) records normal
+app/Share wiring and reviewed device-only copying. Its physical iPhone/iPad
+pair passes same-account creation, bidirectional live edits, deletion and
+relaunch. Off/on and broader failure checks remain unqualified and deferred at
+the user's request; their absence does not make production integration missing.
 The [shared native storage checkpoint](prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026)
 now wires the registered App Group into main and both extensions. Five Mac
 storage tests pass, including actual provisioned main-app group access; two
@@ -70,18 +74,35 @@ The [physical itinerary follow-up](prototypes/native-shared-storage.md#physical-
 also passes second-plan creation/relaunch and empty/selected-plan deletion while
 retaining the shared Item. Those two journeys use disposable local-prototype
 datasets; they do not qualify the normal shared store or synchronization.
-Installed extension discovery/execution, broader physical acceptance and cloud
-synchronization remain open.
+The later [physical Safari Share checkpoint](prototypes/native-share-products.md#physical-safari-share-29-october-2026)
+qualifies installed iPad handoff, Cancel, Save, foreground refresh and exact
+Item/bookmark readback through relaunch. Other senders and broader physical
+acceptance remain open. Installed Mac Share is explicitly post-MVP.
 
 | Original finding | Current implementation and evidence | Remaining acceptance |
 | --- | --- | --- |
 | Filtered native map | Shared complete Map rows, bounded temporary resolution and collection List/Map modes are implemented. [Native collection journeys](prototypes/native-map-collection-ui.md), [location controls](prototypes/native-map-location-controls.md), [accessibility checks](prototypes/native-map-accessibility.md) and [refresh/selection journeys](prototypes/native-change-observation.md) cover represented phone/iPad workflows. The [Mac contextual pair](prototypes/native-map-collection-ui.md#mac-repeated-contexts-and-window-resizing-28-october-2026) now passes exact repeated Item/List choices and independent completion through actual narrow/wide window resizing. | Native Map divider/keyboard interaction, full scene/accessibility review and physical/provider performance. Individual reports retain their exact contextual and source-epoch limits. |
 | Embedded linked webpages | The native reader is implemented. [Lifecycle](prototypes/native-webpage-lifecycle.md), [rotation](prototypes/native-webpage-rotation.md), [restored-context](prototypes/native-webpage-restored-context.md) and [restored-source](prototypes/native-webpage-restored-source.md) journeys qualify represented loading/history/return and removal cases. [Pending-load Return](prototypes/native-webpage-pending-return.md#final-local-checkpoint) additionally preserves the exact Item/bookmark and fresh reopened history after release of an abandoned response. Other navigation-policy checkpoints are indexed in the map. The [loaded reader pane-width checkpoint](prototypes/native-reader-pane-width.md) preserves the linked page/history and exact bookmark Return through actual iPad sidebar resizing; its phone regression also passes. The [Mac runtime pair](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026) passes actual window resizing, native toolbar overflow, history/reload and pending-load Return. | Remaining caller/remount and full accessibility review, third-party website/session acceptance and physical behavior. Metadata previews alone still supply no reader credit. |
-| Core change notifications | The [public Core stream](prototypes/core-change-stream.md#final-filesystemdata-core-checkpoint) and [native canonical refresh](prototypes/native-change-observation.md) are implemented and exercised with independent local writers, recovery transitions, retained drafts and represented contextual selections. | Implement missing CloudKit/account integration, then qualify account/cloud delivery, system/installed writers, wider window/lifecycle acceptance and physical scale. A local invalidation never proves cloud convergence. |
+| Core change notifications | The [public Core stream](prototypes/core-change-stream.md#final-filesystemdata-core-checkpoint) and [native canonical refresh](prototypes/native-change-observation.md) are implemented and exercised with independent local writers, recovery transitions, retained drafts and represented contextual selections. The [physical mobile pair](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync) separately qualifies normal live cloud edits and deletion. | Wider window/lifecycle acceptance, other installed writers and physical scale retain their own gates. Account-transition and broader cloud failures are deferred. A local invalidation never proves cloud convergence. |
 | Bulk database-save rollback | The [real save-failure checkpoint](prototypes/core-bulk-native-save-rollback.md) corrects and qualifies the represented rollback and retry/replay behavior. | Physical interruptions, cloud/account behavior and broader native/system acceptance keep their distinct gates. |
-| Share migration presentation | The [native migration journeys](prototypes/native-share-migration.md#ipad-sidebar-diagnosis-and-corrected-regression) exercise refusal before main-app migration, preserved data and subsequent capture on phone/iPad. | Installed Share/App Group access, actual Mac runtime and signed/physical qualification. |
+| Share migration presentation | The [native migration journeys](prototypes/native-share-migration.md#ipad-sidebar-diagnosis-and-corrected-regression) exercise refusal before main-app migration, preserved data and subsequent capture on phone/iPad. App Group access and installed iPad Safari Share now have the separate checkpoints above. | Other mobile senders and remaining migration/system acceptance stay open. Installed Mac Share is post-MVP. |
 
-The remaining implementation list is maintained in the [current map](implementation-map.md#remaining-implementation-and-acceptance). Q127's Mac split pane is implemented but actual resizing remains unqualified. Q128/Q129 have approved Q147/Q148 contracts and subsequent local checkpoints. Native membership consolidation, Q156 post-import completion history and Q157 unreferenced source maintenance have implemented local checkpoints. Q158 and Q160 additionally qualify independent target rebinding. Q161/Q162 ordinary owned collections and label-identity collisions now have local implementation and fault checkpoints; Q163 A now explicitly defers crossed source/owned-family reconciliation beyond MVP, preserving every record and the existing rejection. Affected datasets remain unavailable for canonical reads/export until explicit recovery or later reconciliation. These are distinct from signing. The feature-complete whole-app UI pass and the human's final coherence/layout acceptance remain required.
+The remaining implementation list is maintained in the [current
+map](implementation-map.md#remaining-implementation-and-acceptance). Q127's Mac
+split pane has an [actual Month/Day/Week resize
+checkpoint](prototypes/native-calendar-mac-inspector-resize.md), including
+native divider movement, retained Schedule identity and width recovery. Broader
+keyboard/assistive review remains open. Q128/Q129 have approved Q147/Q148
+contracts and subsequent local checkpoints. Native membership consolidation,
+Q156 post-import completion history and Q157 unreferenced source maintenance
+have implemented local checkpoints. Q158 and Q160 additionally qualify
+independent target rebinding. Q161/Q162 ordinary owned collections and
+label-identity collisions now have local implementation and fault checkpoints;
+Q163 A now explicitly defers crossed source/owned-family reconciliation beyond
+MVP, preserving every record and the existing rejection. Affected datasets
+remain unavailable for canonical reads/export until explicit recovery or later
+reconciliation. These are distinct from signing. The feature-complete whole-app
+UI pass and the human's final coherence/layout acceptance remain required.
 
 ## Local runtime update, 27 October 2026
 
