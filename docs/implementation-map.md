@@ -66,10 +66,18 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Map footer correction](prototypes/native-map-routing.md#accessible-route-controls-31-october-2026)
+keeps full travel-mode text clear of the count and leaves usable pin tap points
+at maximum accessibility text size. The exact-stop and global Items journeys
+pass on dark phone; the existing dark iPad/Increase Contrast rotation journey
+also passes. Inspected originals reject an intermediate functional pass whose
+picker caption still overlapped. Mac runtime and final assistive/device review
+remain separate gates; no iCloud check is added.
+
 The [single-overflow correction](prototypes/native-search-accessibility.md#single-overflow-owner-31-october-2026)
 restores collection View actions beside accessible Search. Two unchanged
-maximum-text phone search regressions pass. The route journey then exposes a
-separate overlapping-marker selection failure, which remains open.
+maximum-text phone search regressions pass. Its subsequent overlapping-marker
+selection failure is addressed by the separate Map footer checkpoint above.
 
 The [visible editor checkpoint](prototypes/native-design-refinement.md#visible-editor-review-31-october-2026)
 keeps test gestures above the keyboard and checks empty/valid Save states.

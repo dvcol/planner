@@ -310,11 +310,18 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       application.buttons["saved.map.pin.\($0)"]
     }
     for pin in pins { XCTAssertTrue(pin.waitForPlannerHittability()) }
-    let containedPins = NSPredicate { _, _ in
-      pins.allSatisfy { $0.isHittable && map.frame.contains($0.frame) }
+    let usablePins = NSPredicate { _, _ in
+      let frames = pins.map(\.frame)
+      for (index, frame) in frames.enumerated() {
+        let center = CGPoint(x: frame.midX, y: frame.midY)
+        for otherIndex in frames.indices where otherIndex != index {
+          if frames[otherIndex].contains(center) { return false }
+        }
+      }
+      return pins.allSatisfy { $0.isHittable && map.frame.contains($0.frame) }
     }
     let viewportResult = XCTWaiter.wait(
-      for: [XCTNSPredicateExpectation(predicate: containedPins, object: application)], timeout: 10)
+      for: [XCTNSPredicateExpectation(predicate: usablePins, object: application)], timeout: 10)
     let viewportCapture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     viewportCapture.name = "Distinct itinerary pins fit the visible Map"
     viewportCapture.lifetime = .keepAlways
@@ -389,6 +396,13 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
       ).firstMatch.exists)
     closeRoutes.activateForPlannerJourney()
     XCTAssertTrue(closeRoutes.waitForNonExistence(timeout: 5))
+    let transitViewportResult = XCTWaiter.wait(
+      for: [XCTNSPredicateExpectation(predicate: usablePins, object: application)], timeout: 10)
+    let transitMap = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
+    transitMap.name = "Distinct itinerary pins have clear tap points in Public transport mode"
+    transitMap.lifetime = .keepAlways
+    add(transitMap)
+    XCTAssertEqual(transitViewportResult, .completed)
     pins[1].activateForPlannerJourney()
     let originalURL = "https://www.google.com/maps/search/?api=1&query=35.662,139.717"
     let bookmark = application.descendants(matching: .any).matching(

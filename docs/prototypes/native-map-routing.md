@@ -430,3 +430,39 @@ absent from this runner and receive no physical credit. Dark appearance is
 observed without changing device settings. No permanent authentication-policy
 change is made. CloudKit, account transitions, sync, physical scale, VoiceOver,
 positive transit ETA and full UI acceptance remain separate gates.
+
+## Accessible route controls, 31 October 2026
+
+At maximum text size, oversized icon-only controls and the stacked travel-mode
+fallback compress the Map enough that tapping Museum opens Garden. Routes and
+Locations now cap only their icon sizing. The full mode name stays at the user's
+text size, using a native Menu label around the same Picker so wrapped text
+contributes its actual height. The mode and Routes share one row. Camera logic,
+provider requests, saved content and exact appearance identities are unchanged.
+
+The existing three-place journey now checks usable pin centres before routes
+and after returning from Public transport, then opens the original Museum
+bookmark. Rounded marker frames can still overlap; this does not claim every
+label rectangle is disjoint. Final dark-phone execution passes in 194.417
+seconds, including three walking legs, three driving legs and transit fallback.
+The global Items Map journey also passes in 162.811 seconds, preserving exact
+pin, search and unlocated-Item selection at the same maximum text size.
+
+The existing iPad fixture journey passes in 155.930 seconds with dark mode,
+maximum text and Increase Contrast. It checks all three modes in portrait and
+landscape, 44-point controls, route-sheet access and retained Item details.
+Inspected original [phone](evidence/native-map-collection/accessible-footer-2026-10-31/phone-transit.png),
+[portrait iPad](evidence/native-map-collection/accessible-footer-2026-10-31/tablet-transit-portrait.png)
+and [landscape iPad](evidence/native-map-collection/accessible-footer-2026-10-31/tablet-transit-landscape.png)
+captures keep the mode text clear of the count. An intermediate functional pass
+is rejected because visual review catches its native Picker caption overlapping
+that count. The [review packet](evidence/native-map-collection/accessible-footer-2026-10-31/review.json)
+separates those trials from final credit. All 254 phone inputs match the iPad's
+307-input epoch and the final workspace.
+
+Affected strict Swift lint, whitespace, simulator/Mac/signed-mobile builds and
+deep/strict signature checks pass. Scoped Markdown lint retains 162 baseline
+issues with no introduced diagnostics. The two task-owned simulators are deleted;
+all three preserved installed-Mac hashes match. Mac runtime, physical installation,
+VoiceOver and final whole-app acceptance remain separate. No additional iCloud
+test or installed Mac replacement is performed.

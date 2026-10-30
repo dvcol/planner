@@ -138,6 +138,8 @@ struct SavedMapCollectionView: View {
     }
     .buttonStyle(.bordered)
     .controlSize(.large)
+    // At accessibility sizes this action is icon-only; full names scale in the sheet.
+    .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
     .accessibilityIdentifier("saved.map.locations")
     .help("Locations")
   }
@@ -170,12 +172,17 @@ struct SavedMapCollectionView: View {
 
   private var travelModePicker: some View {
     @Bindable var directions = directions
-    return Picker("Travel mode", selection: $directions.mode) {
-      ForEach(SavedMapDirections.TravelMode.allCases) { mode in
-        Text(mode.title).tag(mode)
+    return Menu {
+      Picker("Travel mode", selection: $directions.mode) {
+        ForEach(SavedMapDirections.TravelMode.allCases) { mode in
+          Text(mode.title).tag(mode)
+        }
       }
+    } label: {
+      Text(directions.mode.title)
     }
-    .pickerStyle(.menu)
+    .accessibilityLabel("Travel mode")
+    .accessibilityValue(directions.mode.title)
     .accessibilityIdentifier("saved.map.travelMode")
   }
 
@@ -194,6 +201,8 @@ struct SavedMapCollectionView: View {
     .buttonStyle(.bordered)
     .controlSize(.large)
     .labelStyle(.iconOnly)
+    // Full route text scales in details; this action only displays an icon.
+    .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
     .accessibilityLabel("Routes")
     .accessibilityValue(directions.isLoading ? "Calculating routes" : "")
     .help("Routes")
@@ -201,18 +210,11 @@ struct SavedMapCollectionView: View {
   }
 
   private var routeControls: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      ViewThatFits(in: .horizontal) {
-        HStack(spacing: 12) {
-          travelModePicker.fixedSize(horizontal: true, vertical: false)
-          Spacer(minLength: 0)
-          routesButton
-        }
-        VStack(alignment: .leading, spacing: 12) {
-          travelModePicker
-          routesButton
-        }
-      }
+    HStack(spacing: 12) {
+      travelModePicker
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxWidth: .infinity, alignment: .leading)
+      routesButton
     }
   }
 
