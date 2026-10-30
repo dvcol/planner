@@ -27,6 +27,17 @@ Existing unbound local plans remain in their original store. Establishing a
 private account opens a separate account-bound store and does not silently
 upload, move or delete those plans. Explicit attachment remains follow-up work.
 
+The [offline Share follow-up](evidence/private-sync-offline-share/runtime.json)
+now proves that a private-configured extension opens an initialized unbound
+local store when no private owner has been selected. It reads the original
+Item and saves another Item without starting CloudKit. Main-app setup is still
+required for a new store. If account-specific control storage exists but its
+selection file is missing, access rejects with `ownershipUnverified`; it cannot
+silently fall back to unrelated device-only data. The original local Item is
+preserved. The earlier failing outcome is retained beside the passing result,
+and the affected Core cohort passes 22 tests across seven suites. No account
+switch, new format or remote fixture is needed for this check.
+
 Private builds must provide `PlannerCloudEnvironment` in their actual Info.plist.
 The diagnostic verifies that this matches its signed Development entitlement.
 App activation still needs matching build configuration and signature checks on

@@ -405,10 +405,8 @@ public actor Planner {
           try storage.select(owner: current)
         }
         owner = current
-      case .unavailable:
-        owner = previous
-      case .notObserved:
-        guard previous != nil else { return false }
+      case .unavailable, .notObserved:
+        if previous == nil { try storage.validateUnboundSelection() }
         owner = previous
       }
       if privateCloudOwner != owner { invalidateAccountSessions() }

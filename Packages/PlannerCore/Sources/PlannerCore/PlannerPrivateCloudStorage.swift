@@ -99,6 +99,19 @@ struct PlannerPrivateCloudStorage: Sendable {
       JSONEncoder().encode(Selection(version: 1, scope: scope, owner: owner)), to: selectionURL)
   }
 
+  /// A missing selector is safe only before any account-specific storage exists.
+  func validateUnboundSelection() throws {
+    let directory = selectionURL.deletingLastPathComponent()
+    guard FileManager.default.fileExists(atPath: directory.path) else { return }
+    let contents = try FileManager.default.contentsOfDirectory(
+      at: directory, includingPropertiesForKeys: [.isDirectoryKey])
+    guard
+      try !contents.contains(where: {
+        try $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
+      })
+    else { throw ownershipFailure() }
+  }
+
   func binding(owner: String) -> String { "private-cloud-v1:\(scope):\(owner)" }
 
   func configuration(base: PlannerStorageConfiguration, owner: String?)
