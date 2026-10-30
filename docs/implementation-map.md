@@ -66,6 +66,14 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [current action audit](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
+replaces stale sync-integration labels with the existing physical normal-sync
+result. Current Mac and device test-target builds pass, four signatures verify,
+and both attended-run preflights match 259 source/product inputs. No native
+interaction or physical installation is performed by this preparation. Manual
+readiness and the final core review remain required; no iCloud switch test is
+waiting or added.
+
 The [installed icon checkpoint](design/planner-icon-v2.md#installed-home-screen-31-october-2026)
 checks native Default/Dark Home Screen choices on phone and iPad Simulators.
 Both journeys pass with matching source inputs and four inspected original
@@ -649,44 +657,38 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ## Decisions and external actions needed
 
-### Current actions, 29 October 2026
+### Current actions, 31 October 2026
 
-- **Q164 A accepted, private sync and offline plans:** the
-  [accepted decision](private-sync-local-storage-decision.md) keeps local
-  SwiftData authoritative and adds private `CKSyncEngine`. This supersedes
-  A10's automatic mirroring mechanism; no further architecture choice is pending.
-  The native off/on test proves cache removal, not failure of
-  the existing independent recovery archive. Production activation stays off.
-- **Planner-only iCloud transition:** the user resumes this test on 29 October.
-  The read-only native observer confirms account-change notifications, disabled
-  private access and restoration to the same account. After two missed manual
-  windows, the attended managed-store cycle passes with a longer deadline.
-  SwiftData clears its cloud-managed cache while disabled and reimports the exact
-  fixture after restoration. Fresh-store read/deletion checks pass; all synthetic
-  fixtures and run scratch are removed. Planner remains enabled, and no
-  diagnostic is waiting for a switch change. The
-  [native checkpoint](prototypes/cloud-account-availability-native.md) preserves
-  the timed-out and passing outcomes and verifies all 90 current Core inputs.
-  Production remains local-only; integration must preserve local plans through
-  cache reset. The private-only requirement forbids a developer cloud fallback
-  when access is unavailable or the user's quota is full.
-- **CKSyncEngine implementation, 30 October:** real private-cloud complete-plan,
-  pending Share edit, independent-field/timestamp, deletion, staging-retry and
-  permanent-upload-rejection checks pass. Offline Share and missing-owner
-  safeguards also pass. The [deployment slice](prototypes/private-sync-deployment.md)
-  wires normal app/Share storage and explicit reviewed copying of device-only
-  plans; both platform builds and six signed native storage checks pass. Installed Planner is unchanged. Two-device
-  live delivery, final native controls and the combined off/on/read/edit/relaunch
-  checks remain open. No separate switch test blocks implementation.
+- **Private synchronization is implemented:** Q164's local SwiftData store and
+  private `CKSyncEngine` are wired into normal app/Share storage. The
+  [same-account physical mobile pair](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
+  passes creation, edits in both directions, deletion and relaunch. The earlier
+  managed-cache off/on result is historical evidence for the mechanism that
+  Q164 replaces; it does not qualify the new engine's off/on behavior. Further
+  iCloud testing is deferred at the user's request. No diagnostic is waiting
+  for an iCloud switch change, and no public/developer cloud fallback is allowed.
 - **Signing and device access:** the enrolled team and registered identifiers
   are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
   resources; device availability and manual automation approval remain per-run
   requirements, rather than another account/team setup task.
+- **Next attended Mac check:** the
+  [prepared two-case run](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
+  covers multiline-row completion/relaunch and Itinerary search retention.
+  It needs an unlocked, idle Mac and manual Enable UI Automation approval.
+  Do not change authentication policy or repeat an unattended startup timeout.
+- **Next physical capture check:** the prepared native Apple Maps Share journey
+  needs iPhone availability, saved drafts and explicit disposable test data.
+  Its Simulator trial reaches review/Cancel but not Save. Keep that limit
+  separate from the passing physical Safari Share result. Google Maps sender
+  acceptance also remains open. The prepared case has not run on a physical
+  device.
 - **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
   now pass, together with the physical Safari Share journey. Other native Share
-  senders, production synchronization/account safety, physical scale and the
-  remaining native accessibility/coherence review have
-  separate gates. The final human layout review remains required.
+  senders, physical scale and remaining native keyboard/accessibility/coherence
+  review retain their own gates. Default/Dark icon appearance passes on phone
+  and iPad Simulators; physical Home Screen and Mac Dock review remain open.
+  The final human layout review is still required. Broader cloud/account cases
+  retain their explicit deferral rather than an incomplete-implementation label.
 - **Deferred scope:** advanced import/restoration, installed Mac Share and V3
   Intents/Agent Control do not block the core MVP queue.
 
