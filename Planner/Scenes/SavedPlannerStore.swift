@@ -49,6 +49,10 @@ enum SavedReviewedChangeResult {
 @MainActor @Observable
 final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
+  private(set) var hasPrivateSynchronization = false
+  private(set) var synchronizationTitle = "Saved on this device"
+  private(set) var synchronizationMessage: String?
+  private(set) var isSynchronizing = false
   private var session: PlannerDatasetSession?
   @ObservationIgnored private var openingTask: Task<Void, Never>?
   @ObservationIgnored private var changeObservationTask: Task<Void, Never>?
@@ -78,10 +82,10 @@ final class SavedPlannerStore {
   var isReady: Bool { session != nil && !isOpening }
   var canCreate: Bool {
     isReady && !isSaving && !recoveryBlocked
-      && !isReconnectingChanges && changeObservationFailure == nil
+      && !isReconnectingChanges && !isSynchronizing && changeObservationFailure == nil
   }
   var canReconnectChanges: Bool {
-    isReady && !isSaving && !isCheckingRecovery && !isReconnectingChanges
+    isReady && !isSaving && !isCheckingRecovery && !isReconnectingChanges && !isSynchronizing
       && changeObservationFailure != nil
   }
   var hasIncompleteRecovery: Bool {
@@ -101,6 +105,7 @@ final class SavedPlannerStore {
 
   init(configuration: PlannerStorageConfiguration) {
     planner = PlannerCore.Planner(configuration: configuration)
+    if case .privateCloud = configuration.storageMode { hasPrivateSynchronization = true }
   }
 
   init(planner: PlannerCore.Planner) {
@@ -142,6 +147,7 @@ final class SavedPlannerStore {
       let configuration = try PlannerNativeStorage.mainConfiguration(
         localDirectory: directory, sharedDirectory: sharedDirectory)
       planner = PlannerCore.Planner(configuration: configuration)
+      if case .privateCloud = configuration.storageMode { hasPrivateSynchronization = true }
     } catch {
       planner = nil
       openingFailure = error.localizedDescription
@@ -194,7 +200,7 @@ final class SavedPlannerStore {
           switch change.payload {
           case .dataChanged: self?.changeRevision = UUID()
           case .recoveryStatusChanged: await self?.refreshRecoveryStatus()
-          case .accountStatusChanged, .cloudActivityChanged: break
+          case .accountStatusChanged, .cloudActivityChanged: await self?.refreshRecoveryStatus()
           }
         }
         guard !Task.isCancelled, self?.session == session else { return }
@@ -203,6 +209,12 @@ final class SavedPlannerStore {
         guard !Task.isCancelled, self?.session == session else { return }
         self?.changeObservationFailure =
           (error as? PlannerFailure)?.message ?? "Planner could not observe saved changes."
+        if (error as? PlannerFailure)?.code == "staleDatasetSession" {
+          Task { [weak self] in
+            await self?.refreshRecoveryStatus()
+            await self?.reconnectChanges()
+          }
+        }
       }
     }
   }
@@ -211,6 +223,22 @@ final class SavedPlannerStore {
     guard let planner, let expected = session, canReconnectChanges else { return }
     isReconnectingChanges = true
     defer { isReconnectingChanges = false }
+    await refreshSession(planner, expected: expected)
+  }
+
+  func synchronize() async {
+    guard let planner, let expected = session, isReady, !isSaving,
+      !isCheckingRecovery, !isReconnectingChanges, !isSynchronizing,
+      hasPrivateSynchronization
+    else { return }
+    isSynchronizing = true
+    defer { isSynchronizing = false }
+    await refreshSession(planner, expected: expected)
+  }
+
+  /// Rebind only to the same account and dataset so existing drafts keep their destination.
+  private func refreshSession(_ planner: PlannerCore.Planner, expected: PlannerDatasetSession) async
+  {
     changeObservationTask?.cancel()
     switch await planner.bootstrap() {
     case .ready(let ready):
@@ -250,7 +278,7 @@ final class SavedPlannerStore {
   ) async throws -> PlannerOperationResult {
     let (planner, session) = try await appIntentContext()
     try Task.checkCancellation()
-    guard !recoveryBlocked, !isReconnectingChanges,
+    guard !recoveryBlocked, !isReconnectingChanges, !isSynchronizing,
       changeObservationFailure == nil
     else {
       throw CocoaError(
@@ -270,7 +298,7 @@ final class SavedPlannerStore {
   {
     let (planner, session) = try await appIntentContext()
     try Task.checkCancellation()
-    guard !recoveryBlocked, !isReconnectingChanges,
+    guard !recoveryBlocked, !isReconnectingChanges, !isSynchronizing,
       changeObservationFailure == nil
     else {
       throw CocoaError(
@@ -305,6 +333,27 @@ final class SavedPlannerStore {
     finishRecoveryRefresh(refresh, result: result)
   }
 
+  private func updateSynchronizationStatus(_ status: PlannerNativeStatusRead) {
+    guard hasPrivateSynchronization else { return }
+    if case .unavailable = status.account {
+      synchronizationTitle = "iCloud unavailable"
+      synchronizationMessage =
+        "Your plans remain editable on this device. Sync resumes when private iCloud is available."
+      return
+    }
+    synchronizationMessage = status.cloud.reason?.message
+    switch status.cloud.state {
+    case .unknown:
+      synchronizationTitle = "Saved on this device"
+    case .idle:
+      synchronizationTitle = "Up to date with iCloud"
+    case .inProgress:
+      synchronizationTitle = "Syncing with iCloud"
+    case .error:
+      synchronizationTitle = "iCloud sync paused"
+    }
+  }
+
   private func invalidateRecoveryRefresh() {
     recoveryRefresh?.task.cancel()
     recoveryRefresh = nil
@@ -318,6 +367,7 @@ final class SavedPlannerStore {
     guard session == refresh.session else { return }
     switch result {
     case .status(let status):
+      updateSynchronizationStatus(status)
       switch status.recovery {
       case .known(
         let checkpoint, let incompleteIdentifiers, let maintenanceIdentifiers, let mutationBlocked):

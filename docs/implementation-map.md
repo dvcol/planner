@@ -80,6 +80,12 @@ Last updated timestamp. The final signed run takes 37.334 seconds and retains
 the complete-plan/deletion checks; 32 affected Core tests pass. Network outage,
 account/quotas and live two-device delivery remain separate gates.
 
+The [native sync status checkpoint](prototypes/private-sync-status.md) adds
+Settings status/Sync now for private-configured stores and reuses the guarded
+same-dataset/account reconnect path. Mac/mobile compilation and formatting pass;
+active UI/account-transition journeys remain open. Production is not activated,
+and the installed app is unchanged.
+
 The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
 approved private configuration, real account resolution and account-scoped local
 files while retaining `.none` SwiftData storage. Unbound plans remain separate;

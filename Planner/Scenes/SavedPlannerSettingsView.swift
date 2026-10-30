@@ -23,6 +23,29 @@ struct SavedPlannerSettingsView: View {
         if store.isReady {
           Form {
             SavedRecoveryStatusSection(store: store)
+            if store.hasPrivateSynchronization {
+              Section {
+                Label(store.synchronizationTitle, systemImage: "icloud")
+                  .accessibilityIdentifier("saved.settings.sync.status")
+                if let message = store.synchronizationMessage {
+                  Text(message).foregroundStyle(.secondary)
+                }
+                Button("Sync now", systemImage: "arrow.triangle.2.circlepath") {
+                  Task { await store.synchronize() }
+                }
+                .disabled(
+                  store.isSaving || store.isCheckingRecovery || store.isReconnectingChanges
+                    || store.isSynchronizing
+                )
+                .accessibilityIdentifier("saved.settings.sync.retry")
+              } header: {
+                Text("iCloud")
+              } footer: {
+                Text(
+                  "Sync uses your private iCloud storage. Your plans stay on this device when iCloud is unavailable."
+                )
+              }
+            }
             Section("Organization") {
               Button("Manage labels", systemImage: "square.grid.2x2") { showLabels = true }
                 .disabled(store.isSaving)
