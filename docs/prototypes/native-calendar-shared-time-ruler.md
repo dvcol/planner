@@ -288,3 +288,21 @@ Swift formatting and the two affected Markdown documents pass their lint checks.
 Broader accessibility, installed physical UI and actual Mac interaction remain
 separate checks. The iPhone development-trust problem and integrated private
 sync acceptance are unaffected by this UI change.
+
+### Installed iPhone follow-up
+
+The user confirms that the installed Planner opens normally, then reports that
+its UI differs from the rebuilt preview. The current signed build is installed
+on the authorized iPhone and launches successfully. Its main app, Share and
+test runner signatures verify, and their existing profiles cover both authorized
+mobile devices. No signing or account setting is changed.
+
+The actual iPhone rotation journey now passes in 57.032 seconds, with the same
+254 native inputs as the final Simulator checks. It preserves Week and the exact
+saved Schedule through rotation, using a disposable local dataset. The
+[physical result](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/physical-iphone.json)
+and [inspected landscape capture](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/physical-iphone-landscape.png)
+are retained. Planner returns to a normal launch afterward. This clears the
+observed main-app/test-runner trust blocker for this execution, not the remaining
+private-sync acceptance. The matching iPad update is also installed before the
+paired sync retry; broader physical UI and accessibility review remain open.

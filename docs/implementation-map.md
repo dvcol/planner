@@ -69,6 +69,9 @@ corrects the reproduced phone rotation reset and grey header patch. Compact
 Week headings and appointment blocks, a wide agenda/grid split and native
 mobile overflow sizing are implemented. Its execution packet distinguishes
 local UI evidence from remaining physical, Mac interaction and sync acceptance.
+The matching mobile update is now installed, and the actual iPhone rotation
+journey passes with the same 254 inputs. This clears its observed app/test-runner
+trust blocker for that execution; integrated sync acceptance remains open.
 
 Normal app/Share private-sync wiring and reviewed device-only copying are
 implemented in the [deployment checkpoint](prototypes/private-sync-deployment.md).

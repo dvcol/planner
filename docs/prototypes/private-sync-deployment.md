@@ -1,7 +1,9 @@
 # Native private-sync deployment
 
-30 October 2026. Source wiring is implemented; the installed Planner Development
-app is unchanged. Final integrated synchronization acceptance remains open.
+30 October 2026. Source wiring is implemented; the installed Mac Planner
+Development app is unchanged. Matching signed mobile updates are installed on
+the authorized iPhone and iPad. Final integrated synchronization acceptance
+remains open.
 
 ## App and Share
 
@@ -17,7 +19,8 @@ CloudKit environment. Debug uses Development; distribution configuration uses
 Production. The signed Debug Mac product verifies its existing team, exact
 container and matching declared/signed environment. The prepared device build
 also verifies its existing development signature, container, environment,
-silent-push entitlement and mobile background mode; it is not installed yet.
+silent-push entitlement and mobile background mode. Its later installed-device
+qualification is recorded below.
 Distribution still requires
 its own signature/environment verification before release.
 
@@ -180,3 +183,34 @@ combined private off/on cycle remain open; no iCloud setting has been changed.
 The user reports that no Developer App entry is shown on the iPhone. That
 deployment issue needs investigation; the current priority moves to the reported
 iPhone rotation and Calendar layout defects without additional security changes.
+
+## Installed mobile update and trust retry
+
+The user subsequently confirms that Planner opens normally on the iPhone, then
+reports the installed UI differs from the rebuilt preview. Source commit
+`e88f6e89` is compiled, signed and installed on both authorized mobile devices.
+The iPhone's normal app launch succeeds. Its real native Calendar rotation
+journey also passes in 57.032 seconds, preserving the exact Schedule and saved
+description with 254 unchanged source inputs. The app returns to a normal
+launch afterward. The
+[physical Calendar record](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/physical-iphone.json)
+uses a disposable local dataset and supplies no private-sync credit.
+
+Main app, Share and test runner signatures verify, with existing team profiles
+covering both devices. No certificate, account or security setting is changed.
+The earlier trust rejection no longer blocks this actual app/test-runner
+execution. Both devices report unlocked before the paired live-sync retry.
+Two-device edit/deletion and the combined private off/on cycle remain separate
+qualification; no iCloud switch has been changed in this retry.
+
+The resumed live pair creates Item
+`E889940B-7A26-4235-B95C-60EF388F1474` on iPhone and reads that exact identity on
+iPad. The iPad enters the complete replacement notes, but Save is covered by a
+floating video while the device rotates. The native tap reports no valid hit
+point; the editor remains open and no replacement Save is confirmed. The
+waiting iPhone test is cancelled. The source snapshot is unchanged, and this
+partial run supplies creation/receipt evidence only. Its synthetic Item remains
+for exact guarded cleanup. Retained local path:
+`/private/tmp/PlannerPrivateMobilePair-6e90dc3d-f94b-4a37-8d30-c0aa60674953`.
+The user is asked to close the overlay and leave both devices stationary before
+another physical interaction. Private off/on has not started.
