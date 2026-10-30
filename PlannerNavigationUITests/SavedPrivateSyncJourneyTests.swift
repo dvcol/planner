@@ -40,9 +40,7 @@
       let editedTitle = application.textFields["saved.item.edit.title"]
       XCTAssertTrue(editedTitle.waitForExistence(timeout: 10))
       editedTitle.activateForPlannerJourney()
-      editedTitle.typeText(
-        String(
-          repeating: XCUIKeyboardKey.delete.rawValue, count: ("Sync visit " + runIdentifier).count))
+      editedTitle.typeKey("a", modifierFlags: .command)
       editedTitle.typeText("Synced visit " + runIdentifier)
       XCTAssertTrue(editedTitle.waitForPlannerValue("Synced visit " + runIdentifier))
       XCTAssertTrue(
@@ -112,18 +110,7 @@
       row.activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["Created on iPhone"].waitForExistence(timeout: 10))
       capture(application, "Physical iPad receives the exact iPhone Item")
-      application.plannerElement("saved.item.actions").activateForPlannerJourney()
-      application.plannerElement("Edit item").activateForPlannerJourney()
-      let notes = application.textFields["saved.item.edit.notes"]
-      XCTAssertTrue(notes.waitForExistence(timeout: 10))
-      XCTAssertEqual(notes.value as? String, "Created on iPhone")
-      notes.activateForPlannerJourney()
-      notes.typeText(
-        String(repeating: XCUIKeyboardKey.delete.rawValue, count: "Created on iPhone".count))
-      notes.typeText("Edited on iPad")
-      XCTAssertTrue(notes.waitForPlannerValue("Edited on iPad"))
-      application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
-      XCTAssertTrue(application.staticTexts["Edited on iPad"].waitForExistence(timeout: 10))
+      editNotes(application, to: "Edited on iPad")
       let updated = application.savedPlannerItemRows("Synced visit " + runIdentifier).firstMatch
       XCTAssertTrue(
         updated.waitForExistence(timeout: 180), "The open iPad must receive the iPhone title edit.")
@@ -147,6 +134,165 @@
       XCTAssertTrue(updated.waitForNonExistence(timeout: 15))
       capture(application, "Physical iPad removes only the integrated-sync Item")
       clearSearch(application)
+    }
+
+    /// The human changes only Planner's iCloud switch at the announced phases.
+    func testPhysicalIPadKeepsLocalEditsThroughPrivateICloudOffOn() throws {
+      let runIdentifier = ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      try XCTSkipUnless(
+        UUID(uuidString: runIdentifier) != nil, "Requires an attended private-sync transition.")
+      continueAfterFailure = false
+      executionTimeAllowance = 2400
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      clearFilters(application)
+      search(application, for: runIdentifier)
+      application.openSavedPlannerNewItemEditor()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 10))
+      title.activateForPlannerJourney()
+      title.typeText("Offline visit " + runIdentifier)
+      let notes = application.textFields["saved.item.notes"]
+      notes.activateForPlannerJourney()
+      notes.typeText("Before private iCloud off")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Before private iCloud off"].waitForExistence(timeout: 10))
+      let row = application.savedPlannerItemRows("Offline visit " + runIdentifier).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      let identity = row.identifier
+      application.openSavedPlannerSettings()
+      XCTAssertTrue(
+        privateSyncStatus(application, title: "Up to date with iCloud").waitForExistence(
+          timeout: 120))
+      capture(application, "Private iCloud acknowledged the transition fixture")
+      print("PLANNER_SYNC_PHASE ready-to-disable \(identity)")
+      XCTAssertTrue(
+        privateSyncStatus(application, title: "iCloud unavailable").waitForExistence(timeout: 900))
+      capture(application, "Planner observes private iCloud disabled")
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Items")
+      search(application, for: runIdentifier)
+      XCTAssertTrue(row.waitForExistence(timeout: 30))
+      XCTAssertEqual(row.identifier, identity)
+      row.activateForPlannerJourney()
+      editNotes(application, to: "Saved while private iCloud off")
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      search(application, for: runIdentifier)
+      XCTAssertTrue(row.waitForExistence(timeout: 30))
+      XCTAssertEqual(row.identifier, identity)
+      row.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Saved while private iCloud off"].waitForExistence(timeout: 10))
+      capture(application, "Offline edit and exact Item survive actual app relaunch")
+      application.openSavedPlannerSettings()
+      XCTAssertTrue(
+        privateSyncStatus(application, title: "iCloud unavailable").waitForExistence(timeout: 30))
+      print("PLANNER_SYNC_PHASE ready-to-enable \(identity)")
+      XCTAssertTrue(
+        privateSyncStatus(application, title: "Up to date with iCloud").waitForExistence(
+          timeout: 900))
+      capture(application, "Private synchronization resumes after Planner is reenabled")
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      application.openPlannerSection("Items")
+      search(application, for: runIdentifier)
+      XCTAssertTrue(row.waitForExistence(timeout: 30))
+      XCTAssertEqual(row.identifier, identity)
+      row.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Verified after private iCloud resumed"].waitForExistence(
+          timeout: 180))
+      capture(application, "The resumed iPad receives the iPhone's verification edit")
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("saved.item.delete").activateForPlannerJourney()
+      let confirmation = application.plannerElement("saved.item.delete.confirm")
+      XCTAssertTrue(confirmation.waitForExistence(timeout: 10))
+      confirmation.activateForPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(row.waitForNonExistence(timeout: 15))
+      clearSearch(application)
+    }
+
+    func testPhysicalIPhoneVerifiesTheIPadEditAfterPrivateICloudResumes() throws {
+      let runIdentifier = ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      try XCTSkipUnless(
+        UUID(uuidString: runIdentifier) != nil, "Requires an attended private-sync transition.")
+      continueAfterFailure = false
+      executionTimeAllowance = 2400
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      clearFilters(application)
+      search(application, for: runIdentifier)
+      let row = application.savedPlannerItemRows("Offline visit " + runIdentifier).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 180))
+      let identity = row.identifier
+      row.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Before private iCloud off"].waitForExistence(timeout: 10))
+      print("PLANNER_SYNC_PHASE peer-has-transition-fixture \(identity)")
+      capture(application, "iPhone receives the fixture before private access changes")
+      XCTAssertTrue(
+        application.staticTexts["Saved while private iCloud off"].waitForExistence(timeout: 2100))
+      capture(application, "iPhone receives the iPad's queued offline edit")
+      editNotes(application, to: "Verified after private iCloud resumed")
+      let back = application.navigationBars.buttons["Items"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+      XCTAssertTrue(row.waitForNonExistence(timeout: 180))
+      capture(application, "iPhone receives final transition-fixture cleanup")
+      clearSearch(application)
+    }
+
+    private func privateSyncStatus(_ application: XCUIApplication, title: String) -> XCUIElement {
+      application.staticTexts.matching(
+        NSPredicate(format: "identifier == %@ AND label == %@", "saved.settings.sync.status", title)
+      ).firstMatch
+    }
+
+    /// Qualifies native text replacement before deleting only an explicitly selected test Item.
+    func testReplaceAndRemoveOnlyTheExactPrivateSyncFixture() throws {
+      let environment = ProcessInfo.processInfo.environment
+      let runIdentifier = environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      let sourceIdentifier = environment["PLANNER_PRIVATE_SYNC_FIXTURE_ID"] ?? ""
+      try XCTSkipUnless(
+        UUID(uuidString: runIdentifier) != nil && UUID(uuidString: sourceIdentifier) != nil,
+        "Requires an explicit synthetic sync fixture for native cleanup.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      clearFilters(application)
+      search(application, for: runIdentifier)
+      let row = application.buttons["saved.item." + sourceIdentifier].firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 30))
+      XCTAssertTrue(row.label.contains(runIdentifier))
+      row.activateForPlannerJourney()
+      editNotes(application, to: "Verified native replacement")
+      capture(application, "Native Select All replaces the exact fixture's complete notes")
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("saved.item.delete").activateForPlannerJourney()
+      let confirmation = application.plannerElement("saved.item.delete.confirm")
+      XCTAssertTrue(confirmation.waitForExistence(timeout: 10))
+      confirmation.activateForPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(row.waitForNonExistence(timeout: 15))
+      clearSearch(application)
+    }
+
+    private func editNotes(_ application: XCUIApplication, to value: String) {
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Edit item").activateForPlannerJourney()
+      let notes = application.textFields["saved.item.edit.notes"]
+      XCTAssertTrue(notes.waitForExistence(timeout: 10))
+      notes.activateForPlannerJourney()
+      notes.typeKey("a", modifierFlags: .command)
+      notes.typeText(value)
+      XCTAssertTrue(notes.waitForPlannerValue(value))
+      application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts[value].waitForExistence(timeout: 10))
     }
 
     private func clearFilters(_ application: XCUIApplication) {

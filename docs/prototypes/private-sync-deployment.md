@@ -126,3 +126,41 @@ through edits, deletion and relaunch. Only an explicit attended run enables it;
 ordinary test execution skips it. Final affected iOS app/Share/UI-runner
 compilation and strict Swift formatting pass. The iPhone/iPad pair has not yet
 executed and requires the iPhone to be connected, unlocked and made available.
+
+Both physical devices are now connected, unlocked and using Developer Mode.
+The first iPhone-specific profile refresh is blocked by Apple's **PLA Update
+available** response. The account holder then accepts the current Program
+License Agreement and authorizes iPhone registration if needed. Existing app,
+Share and runner profiles require an update to cover the iPhone. No iCloud
+switch has changed during this preparation.
+
+The combined transition journey is prepared in the same native UI target. Its
+iPad role waits for the fixture's private-cloud acknowledgement, announces when
+the human can disable only Planner, saves an edit while access is unavailable,
+and checks the exact Item and notes after actual app termination/relaunch. It
+then announces when to restore access. The iPhone role waits for the queued edit
+and sends a verification edit back; final cleanup removes only that fixture.
+Both roles use normal installed storage and the existing native controls, with
+no production hook, new target or provider. The source compiles, but this
+attended off/on journey has not executed. It follows the basic mobile sync run
+in the final integrated session, rather than blocking implementation separately.
+
+Provisioning subsequently succeeds under the existing development identity.
+Strict signature checks and current profiles cover both physical devices for
+the app, embedded Share extension and UI runner. The profile refresh leaves
+stale seals on two cached products; regenerating only those temporary bundles
+restores valid signatures. No production signing setting or installed Mac app
+changes to address that build-cache issue.
+
+The first same-account mobile attempt proves live creation: both native logs
+report `saved.item.14B49CD8-08D6-4DBD-97D0-53AD2567CD68`. It then fails before the
+iPad submits Save. The test taps the beginning of Notes, sends backspaces that
+do not replace the original value, and inserts a prefix instead. Retained field
+attributes show `Edited on iPadCrea…`; repeated native animation waits consume
+the peer timeout. The incorrect draft is not saved. This run therefore supplies
+no return-edit/deletion acceptance and does not establish a transport failure.
+The [compact result](evidence/private-sync-deployment/mobile-editor-diagnostic.json)
+and original input hashes remain at
+`/private/tmp/PlannerPrivateMobilePair-c79e077e-d8f7-4305-ab33-12da2bf2ce02`.
+The native test now uses Select All before replacement and has an exact-identity
+fixture check before cleanup; that correction needs its actual device result.

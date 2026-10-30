@@ -64,6 +64,16 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+Normal app/Share private-sync wiring and reviewed device-only copying are
+implemented in the [deployment checkpoint](prototypes/private-sync-deployment.md).
+Bounded account verification now permits local startup when Apple lookup stalls;
+light-phone/dark-tablet offline creation/relaunch and six signed Mac storage
+checks pass. Development profiles now cover the same-account physical iPhone
+and iPad. Their first native run confirms live creation with the exact same Item
+identity on both; a test-editor replacement error prevents return-edit/deletion
+acceptance. The corrected native journey and combined private off/on check are
+prepared; their full device outcomes remain open.
+
 The [private CKSyncEngine checkpoint](prototypes/private-sync-engine.md) adds
 field-based records and account-scoped transactional state, preserving local
 SwiftData and the existing recovery/closure rules. A signed 21.657-second native
