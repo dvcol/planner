@@ -1,0 +1,85 @@
+# Private CKSyncEngine implementation checkpoint
+
+30 October 2026. Implements the transport selected by Q164 A. The installed
+application remains unchanged and production configuration still selects
+`localOnly`. This is a bounded implementation checkpoint, not sync acceptance.
+
+## Implementation
+
+- Local SwiftData remains authoritative and explicitly uses `.none`.
+  CKSyncEngine targets only `CKContainer.privateCloudDatabase`. There is no
+  public/shared database or alternate backend, including on quota errors.
+- Fourteen native model kinds map their scalar values to versioned CloudKit
+  records. Stable record names include complete lifetime-bound identities.
+  Saved source content, association order, contextual completion, owned links,
+  bookings and existing deletion/provenance history use the same Core rules.
+- Individual fields merge against the last acknowledged record. An upload
+  acknowledgement preserves local edits made while the request was in flight.
+  Received data is validated before its domain graph and transport state commit
+  together. Existing canonical maintenance and independent recovery run afterward;
+  an incomplete recovery is reported and blocks new mutations without inventing
+  a successful user command.
+- Private-bound stores add one local transport-state model: physical schema 20,
+  writer gate 24. Device-only/unbound stores retain physical schema 19/gate 23.
+  Portable format 5 is unchanged. Engine serialization, server records, pending
+  incoming changes and local status stay outside portable backups. Local command
+  receipts and maintenance evidence are not copied between devices.
+- A file lease admits one main-app worker per account store. Share writes locally
+  without starting CloudKit. A waiting main-app window can claim a released lease.
+  Account/session generations reject obsolete callbacks. Apple's automatic
+  scheduling and transient retry behavior remain enabled.
+- Transport-only history does not invalidate data queries. Acknowledgements that
+  change no domain values skip relationship rebuilding. Real incoming changes
+  still invalidate canonical queries. Status distinguishes queued/active work,
+  failures and local transactions acknowledged by the server.
+
+## Passing evidence
+
+The [signed native result](evidence/private-sync-engine/runtime.json) passes in
+21.657 seconds using the actual public Core command/query/export interface and
+real Development private CloudKit. Separate launched app processes have separate
+local stores and use the approved team/container; no account setting changes.
+
+The fixture creates five sources and includes Item address/pin, mixed duration,
+notes, Item/Itinerary links, Category/Tag selections, List manual duration,
+membership, direct and expanded route entries, contextual completion, a timed
+Item booking and an inclusive all-day Itinerary booking. A fresh peer exports
+the exact same complete represented graph, including public identities,
+lifetimes, timestamps and history. After reviewed Item deletion, another fresh
+store exports the exact post-deletion graph. The original query generation also
+survives metadata-only upload acknowledgements.
+
+The first complete-plan attempt reproduced unwanted query invalidation after
+acknowledgement. Skipping unchanged domain updates corrects that case; the same
+native scenario passes afterward. An earlier history predicate incorrectly
+excluded nil-author transactions; the corrected predicate retains ordinary
+local changes and the independent-writer regressions pass.
+
+The affected real-Core cohort passes 22 tests across seven suites: private
+configuration, recovery failures, change streams, dataset presentation scope,
+Item creation in a List, Manual itinerary queries and archived progress.
+Strict Swift formatting and the Mac app compilation also pass. The native
+build/runtime wrapper verifies matching input hashes and Development signing.
+The installed app's Info.plist, executable and signature resource hashes are
+unchanged. Diagnostic source and bounded results are retained beside this file.
+
+## Open outcomes and next steps
+
+An already-open peer on this Mac did **not** observe a later deletion within
+120 seconds. Direct private SDK readback confirmed the Item was absent on the
+server; SDK logs reported no zones needing a fetch. Separate processes,
+foreground activation, engine recreation and an explicit subscription experiment
+did not establish live catch-up. The unsuccessful recreation/subscription
+changes were removed. The passing fresh-store checks do not close this failure.
+Actual two-device live delivery and explicit refresh remain required.
+
+Further local work includes deployment/Share configuration, explicit attachment
+of existing unbound plans, native status/retry qualification, genuine older-writer
+rejection, interrupted/pending work and conflict/failure coverage. Quota/account
+isolation, physical multi-device behavior and scale remain acceptance gates.
+Synthetic fixtures still need scoped cleanup after their follow-up checks.
+
+Per the user's latest direction, combine one attended Planner-only iCloud off/on
+cycle with final integrated sync checks. It must prove local read/edit/relaunch,
+same-account resume and no alternate cloud storage. No standalone switch test is
+waiting and no manual account action blocks continuing implementation.

@@ -8,6 +8,8 @@ enum PlannerSchemaV19: VersionedSchema {
   }
 
   @Model final class MembershipProvenance {
+    init() {}
+
     var membershipId: UUID? = nil
     var membershipLifetimeId: UUID? = nil
     var recordData: Data? = nil

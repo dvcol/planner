@@ -14,6 +14,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class Itinerary {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var titleContentOrigin: String? = nil
@@ -130,6 +132,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class Membership {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var listId: UUID? = nil
@@ -172,6 +176,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class ItineraryEntry {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var itineraryId: UUID? = nil
@@ -260,6 +266,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class ExpandedCompletion {
+    init() {}
+
     var listEntryId: UUID? = nil
     var listEntryLifetimeId: UUID? = nil
     var membershipId: UUID? = nil
@@ -305,6 +313,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class Item {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var titleContentOrigin: String? = nil
@@ -473,6 +483,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class OwnedLink {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var ownerId: UUID? = nil
@@ -551,6 +563,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class Schedule {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var sourceKind: String = "item"
@@ -648,6 +662,8 @@ enum PlannerSchemaV18: VersionedSchema {
     }
   }
   @Model final class List {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var nameContentOrigin: String? = nil
@@ -707,6 +723,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class Category {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var nameContentOrigin: String? = nil
@@ -756,6 +774,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class Tag {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var nameContentOrigin: String? = nil
@@ -805,6 +825,8 @@ enum PlannerSchemaV18: VersionedSchema {
   }
 
   @Model final class LabelAssociation {
+    init() {}
+
     var id: UUID? = nil
     var lifetimeId: UUID? = nil
     var ownerId: UUID? = nil

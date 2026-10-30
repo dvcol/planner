@@ -104,3 +104,10 @@ development signing setup remain in use.
 
 The first [account-bound local-storage checkpoint](prototypes/private-local-storage.md)
 implements ownership and local persistence without activating cloud transport.
+
+The [transport checkpoint](prototypes/private-sync-engine.md) now implements
+private CKSyncEngine and passes complete-plan/fresh-store deletion round trips.
+Live delivery and production integration remain open. On 30 October the user
+directs implementation to continue and combines Planner-only off/on with final
+integrated sync qualification; a standalone switch test is not an implementation
+gate.

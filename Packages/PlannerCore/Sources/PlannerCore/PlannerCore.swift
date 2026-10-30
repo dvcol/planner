@@ -10,6 +10,13 @@ public actor Planner {
   private var accountObservation: PlannerAccountObservation = .unknown
   private var cloudAccountObservation: PlannerCloudAccountObservation?
   private var accountResolutionId = UUID()
+  private var privateSync: PlannerPrivateSync?
+  private var privateSyncGeneration = UUID()
+  private var privateSyncObservation: Task<Void, Never>?
+  private var privateSyncClaim: Task<Void, Never>?
+  private var privateSyncHistory: DefaultHistoryToken?
+  private var cloudObservation = PlannerCloudObservation(
+    state: .unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)
   private let captureHTTPTransport: any PlannerCaptureHTTPTransport
   private var nativeContainer:
     (container: ModelContainer, fileNumber: UInt64, systemNumber: UInt64)?
@@ -121,6 +128,9 @@ public actor Planner {
   }
 
   deinit {
+    privateSyncObservation?.cancel()
+    privateSyncClaim?.cancel()
+    if let worker = privateSync { Task { await worker.stop() } }
     for subscription in changeSubscriptions.values {
       subscription.observation.cancel()
       subscription.continuation.finish()
@@ -275,15 +285,15 @@ public actor Planner {
       {
         return .mainAppSetupRequired
       }
-      return try coordinated {
+      let result: PlannerBootstrapResult = try coordinated {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...23).contains(identity.schemaVersion) else {
+          guard (1...writerVersion).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 23, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < writerVersion, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -302,7 +312,7 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 23, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: writerVersion, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: privateOwnershipBinding ?? "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
@@ -322,13 +332,15 @@ public actor Planner {
               "ownershipUnverified",
               "The independent recovery namespace belongs to another dataset.")
           }
-          if recorded.schemaVersion != identity.schemaVersion, identity.schemaVersion == 23 {
+          if recorded.schemaVersion != identity.schemaVersion,
+            identity.schemaVersion == writerVersion
+          {
             try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
           }
         } else {
           try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
         }
-        if identity.schemaVersion < 23 {
+        if identity.schemaVersion < writerVersion {
           identity = try activateNativeMaintenanceCompatibility(identity, metadataURL: metadataURL)
         }
         let maintenanceContext = ModelContext(try openContainer())
@@ -343,12 +355,16 @@ public actor Planner {
           ownershipBinding: identity.ownershipBinding, epochId: identity.epochId
         )
         sessions[session.sessionId] = session
-        return .ready(session)
+        return PlannerBootstrapResult.ready(session)
       }
+      if case .ready(let session) = result { await configurePrivateSync(session: session) }
+      return result
     } catch {
       return .unavailable(failure(error, code: "unavailable"))
     }
   }
+
+  private var writerVersion: Int { privateOwnershipBinding == nil ? 23 : 24 }
 
   private var privateOwnershipBinding: String? {
     guard let privateCloudStorage, let privateCloudOwner else { return nil }
@@ -411,6 +427,14 @@ public actor Planner {
   }
 
   private func invalidateAccountSessions() {
+    privateSyncGeneration = UUID()
+    privateSyncObservation?.cancel()
+    privateSyncObservation = nil
+    privateSyncClaim?.cancel()
+    privateSyncClaim = nil
+    if let worker = privateSync { Task { await worker.stop() } }
+    privateSync = nil
+    privateSyncHistory = nil
     let reason = PlannerFailure(
       "staleDatasetSession", "The iCloud account changed; reopen the dataset.")
     for subscription in changeSubscriptions.values {
@@ -436,7 +460,7 @@ public actor Planner {
     _ previous: PlannerStoreIdentity, metadataURL: URL
   ) throws -> PlannerStoreIdentity {
     let upgraded = PlannerStoreIdentity(
-      schemaVersion: 23, datasetId: previous.datasetId, epochId: previous.epochId,
+      schemaVersion: writerVersion, datasetId: previous.datasetId, epochId: previous.epochId,
       namespaceId: previous.namespaceId, ownershipBinding: previous.ownershipBinding)
     let context = ModelContext(try openContainer())
     context.autosaveEnabled = false
@@ -1238,6 +1262,14 @@ public actor Planner {
           receipts.contains { $0.operationId == operation.operationId }
           || (envelope?.receipts.contains { $0.operationId == operation.operationId } ?? false)
         if !hasAppliedHistory {
+          if privateOwnershipBinding != nil,
+            try privateSyncStateRecord(in: context)?.recoveryPending == true
+          {
+            throw PlannerFailure(
+              "privateSyncRecoveryIncomplete",
+              "Received changes still need independent recovery. Retry synchronization before saving."
+            )
+          }
           let prepared = try archive.proposals().contains {
             $0.originalOperationId == operation.operationId
           }
@@ -1624,8 +1656,7 @@ public actor Planner {
           return .status(
             PlannerNativeStatusRead(
               recovery: readRecoveryObservation(identity), account: accountObservation,
-              cloud: PlannerCloudObservation(
-                state: .unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))
+              cloud: try privateCloudObservation()))
         case .appearance(let appearance):
           let context = ModelContext(try openContainer())
           context.autosaveEnabled = false
@@ -3626,10 +3657,17 @@ public actor Planner {
   }
 
   private func latestHistoryToken(in context: ModelContext) throws -> DefaultHistoryToken? {
+    try latestDomainTransaction(in: context)?.token
+  }
+
+  private func latestDomainTransaction(in context: ModelContext) throws
+    -> DefaultHistoryTransaction?
+  {
     var descriptor = HistoryDescriptor<DefaultHistoryTransaction>(
+      predicate: #Predicate { $0.author == nil || $0.author != "PlannerPrivateSyncMetadata" },
       sortBy: [SortDescriptor(\.transactionIdentifier, order: .reverse)])
     descriptor.fetchLimit = 1
-    return try context.fetchHistory(descriptor).first?.token
+    return try context.fetchHistory(descriptor).first
   }
 
   private func staleSnapshot(_ generation: UUID) -> PlannerFailure {
@@ -10281,7 +10319,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 23
+      identity.schemaVersion == writerVersion
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -10301,11 +10339,15 @@ public actor Planner {
       return nativeContainer.container
     }
     nativeContainer = nil
-    let schema = Schema(versionedSchema: PlannerSchemaV19.self)
+    let usesPrivateSync = privateOwnershipBinding != nil
+    let schema = Schema(
+      versionedSchema: usesPrivateSync ? PlannerPrivateSchemaV20.self : PlannerSchemaV19.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
+    let plan: any SchemaMigrationPlan.Type =
+      usesPrivateSync ? PlannerPrivateMigrationPlan.self : PlannerMigrationPlan.self
     let container = try ModelContainer(
-      for: schema, migrationPlan: PlannerMigrationPlan.self, configurations: [modelConfiguration])
+      for: schema, migrationPlan: plan, configurations: [modelConfiguration])
     if let identity = try nativeStoreFileIdentity() {
       nativeContainer = (container, identity.fileNumber, identity.systemNumber)
     }
@@ -10340,7 +10382,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...23).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...24).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")
@@ -10388,4 +10430,338 @@ public actor Planner {
     if let failure = error as? PlannerFailure { return failure }
     return PlannerFailure(code, error.localizedDescription)
   }
+}
+
+extension Planner {
+  fileprivate func configurePrivateSync(session: PlannerDatasetSession) async {
+    guard configuration.processRole == .mainApplication, let storage = privateCloudStorage,
+      let binding = privateOwnershipBinding
+    else { return }
+    guard case .available = accountObservation else {
+      cloudObservation = .init(
+        state: .error, storeIdentity: binding, eventId: nil,
+        observedAt: .now,
+        reason: .init(
+          "privateCloudUnavailable",
+          "Private iCloud is unavailable. Plans remain editable on this device."))
+      return
+    }
+    if let worker = privateSync {
+      await worker.requestSync()
+      return
+    }
+    let generation = UUID()
+    privateSyncGeneration = generation
+    let unavailable = PlannerFailure(
+      "staleDatasetSession", "The private sync owner is no longer active.")
+    do {
+      let observer = try coordinated {
+        _ = try validateSession(session)
+        let container = try openContainer()
+        privateSyncHistory = try latestHistoryToken(in: ModelContext(container))
+        return try HistoryObserver(modelContainer: container)
+      }
+      let worker = try await PlannerPrivateSync.start(
+        binding: .init(
+          containerIdentifier: storage.containerIdentifier,
+          directory: configuration.controlURL.deletingLastPathComponent(), ownershipBinding: binding
+        ),
+        client: .init(
+          load: { [weak self] in
+            guard let self else { throw unavailable }
+            return try await self.loadPrivateSync(session: session, generation: generation)
+          },
+          nodes: { [weak self] in
+            guard let self else { throw unavailable }
+            return try await self.privateSyncNodes(session: session, generation: generation)
+          },
+          persist: { [weak self] state, changes in
+            guard let self else { throw unavailable }
+            return try await self.persistPrivateSync(
+              state, changes: changes, session: session, generation: generation)
+          },
+          status: { [weak self] observation in
+            await self?.updateCloudObservation(observation, generation: generation)
+          },
+          accountChanged: { [weak self] in
+            await self?.privateSyncAccountChanged(generation: generation)
+          }))
+      guard privateSyncGeneration == generation else {
+        await worker?.stop()
+        return
+      }
+      privateSync = worker
+      if let worker {
+        privateSyncClaim?.cancel()
+        privateSyncClaim = nil
+        privateSyncObservation?.cancel()
+        privateSyncObservation = Task { [weak self] in
+          for await _ in Observations({ observer.eventCounter }) {
+            guard !Task.isCancelled else { return }
+            if await self?.privateSyncDataChanged(session: session, generation: generation) == true
+            {
+              await worker.localDataChanged()
+            }
+          }
+        }
+      } else if privateSyncClaim == nil {
+        privateSyncClaim = Task { [weak self] in
+          while !Task.isCancelled {
+            do { try await Task.sleep(for: .seconds(5)) } catch { return }
+            await self?.configurePrivateSync(session: session)
+          }
+        }
+      }
+    } catch {
+      await updateCloudObservation(
+        .init(
+          state: .error, storeIdentity: binding, eventId: UUID().uuidString,
+          observedAt: .now, reason: failure(error, code: "privateSyncUnavailable")),
+        generation: generation)
+    }
+  }
+
+  fileprivate func privateSyncAccountChanged(generation: UUID) {
+    guard privateSyncGeneration == generation else { return }
+    cloudAccountChanged()
+  }
+
+  fileprivate func validatePrivateSync(session: PlannerDatasetSession, generation: UUID) throws
+    -> PlannerStoreIdentity
+  {
+    guard privateSyncGeneration == generation, privateOwnershipBinding != nil else {
+      throw PlannerFailure(
+        "staleDatasetSession", "Private synchronization has a different account binding.")
+    }
+    return try validateSession(session)
+  }
+
+  fileprivate func privateSyncDataChanged(session: PlannerDatasetSession, generation: UUID) async
+    -> Bool
+  {
+    do {
+      return try coordinated {
+        _ = try validatePrivateSync(session: session, generation: generation)
+        let token = try latestHistoryToken(in: ModelContext(try openContainer()))
+        guard token != privateSyncHistory else { return false }
+        privateSyncHistory = token
+        return true
+      }
+    } catch {
+      await updateCloudObservation(
+        .init(
+          state: .error, storeIdentity: privateOwnershipBinding, eventId: UUID().uuidString,
+          observedAt: .now, reason: failure(error, code: "privateSyncUnavailable")),
+        generation: generation)
+      return false
+    }
+  }
+
+  fileprivate func privateSyncStateRecord(in context: ModelContext) throws
+    -> PlannerPrivateSchemaV20.SyncState?
+  {
+    let records = try context.fetch(FetchDescriptor<PlannerPrivateSchemaV20.SyncState>())
+    guard records.count <= 1, records.allSatisfy({ $0.ownershipBinding == privateOwnershipBinding })
+    else {
+      throw PlannerFailure(
+        "ownershipUnverified", "Private transport state has ambiguous ownership.")
+    }
+    return records.first
+  }
+
+  fileprivate func loadPrivateSync(session: PlannerDatasetSession, generation: UUID) throws
+    -> PlannerPrivateSyncState?
+  {
+    try coordinated {
+      _ = try validatePrivateSync(session: session, generation: generation)
+      let context = ModelContext(try openContainer())
+      guard let record = try privateSyncStateRecord(in: context) else { return nil }
+      guard let data = record.stateData else {
+        throw PlannerFailure("cloudRecordInvalid", "Private transport state is missing.")
+      }
+      return try JSONDecoder().decode(PlannerPrivateSyncState.self, from: data)
+    }
+  }
+
+  fileprivate func privateSyncNodes(session: PlannerDatasetSession, generation: UUID) throws
+    -> [PlannerCloudNode]
+  {
+    try coordinated {
+      let identity = try validatePrivateSync(session: session, generation: generation)
+      let context = ModelContext(try openContainer())
+      context.autosaveEnabled = false
+      if try privateSyncStateRecord(in: context)?.recoveryPending == true {
+        throw PlannerFailure(
+          "privateSyncRecoveryIncomplete", "Received changes still need independent recovery.")
+      }
+      try ensureCanonicalNativeGraph(identity: identity, context: context)
+      return try PlannerCloudGraph.nodes(in: context)
+    }
+  }
+
+  fileprivate func persistPrivateSync(
+    _ state: PlannerPrivateSyncState, changes: PlannerCloudGraph.Changes?,
+    session: PlannerDatasetSession, generation: UUID
+  ) throws -> PlannerPrivateSyncPersistence {
+    try coordinated {
+      let identity = try validatePrivateSync(session: session, generation: generation)
+      guard state.version == 1, state.ownershipBinding == identity.ownershipBinding else {
+        throw PlannerFailure(
+          "ownershipUnverified", "Private synchronization state has different ownership.")
+      }
+      let context = ModelContext(try openContainer())
+      context.autosaveEnabled = false
+      context.author = "PlannerPrivateSyncMetadata"
+      let encoder = JSONEncoder()
+      encoder.outputFormatting = [.sortedKeys]
+      let bytes = try encoder.encode(state)
+      let existing = try privateSyncStateRecord(in: context)
+      let record = existing ?? .init(ownershipBinding: identity.ownershipBinding, stateData: bytes)
+      if let changes {
+        let local = try Dictionary(
+          uniqueKeysWithValues: PlannerCloudGraph.nodes(in: context).map { ($0.name, $0) })
+        let merged = try changes.upserts.map { remote in
+          try local[remote.name]?.merging(server: remote, base: changes.bases[remote.name])
+            ?? remote
+        }
+        let updates = merged.filter { local[$0.name] != $0 }
+        let deletions = changes.deletions.filter { local[$0] != nil }
+        do {
+          if !updates.isEmpty || !deletions.isEmpty {
+            try PlannerCloudGraph.stage(
+              .init(upserts: updates, deletions: deletions, bases: [:]), in: context)
+          }
+          let projection = try PlannerSourceRestorationConsolidation(
+            context: context, markers: deletionMarkers(context))
+          let before = projection.project(
+            try maintenanceSnapshot(context, sourceProjection: projection))
+          let consolidation = try PlannerMembershipConsolidation(
+            snapshot: before, detachedExpanded: [])
+          _ = try PlannerDataSnapshot(snapshot: before, canonical: consolidation.backup).validated()
+        } catch {
+          context.rollback()
+          nativeContainer = nil
+          throw error
+        }
+        if context.hasChanges {
+          context.author = "PlannerPrivateSyncImport"
+          record.recoveryPending = true
+        }
+      }
+      if record.stateData != bytes { record.stateData = bytes }
+      if existing == nil { context.insert(record) }
+      if context.hasChanges { try context.save() }
+      if record.recoveryPending {
+        do {
+          let committed = ModelContext(try openContainer())
+          committed.autosaveEnabled = false
+          try ensureCanonicalNativeGraph(identity: identity, context: committed)
+          let snapshot = try canonicalRecoverySnapshot(committed)
+          _ = try recoveryArchive(identity, context: committed).publish(
+            snapshot: snapshot,
+            receipts: committed.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()))
+          context.author = "PlannerPrivateSyncMetadata"
+          record.recoveryPending = false
+          try context.save()
+        } catch {
+          return .recoveryIncomplete(
+            .init(
+              "privateSyncRecoveryIncomplete",
+              "Received changes are saved locally but independent recovery needs Retry: "
+                + failure(error, code: "recoveryIncomplete").message))
+        }
+      }
+      return .saved
+    }
+  }
+
+  fileprivate func updateCloudObservation(_ observation: PlannerCloudObservation, generation: UUID)
+    async
+  {
+    guard privateSyncGeneration == generation else { return }
+    cloudObservation = observation
+    do {
+      try coordinated {
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        context.author = "PlannerPrivateSyncMetadata"
+        if let record = try privateSyncStateRecord(in: context) {
+          if case .idle = observation.state {
+            let transaction = try latestDomainTransaction(in: context)?.transactionIdentifier ?? 0
+            if record.syncedTransaction != transaction {
+              let nodes = try PlannerCloudGraph.nodes(in: context)
+              var synchronized = false
+              if let bytes = record.stateData {
+                let state = try JSONDecoder().decode(PlannerPrivateSyncState.self, from: bytes)
+                if state.incomingRecords.isEmpty, state.incomingDeletions.isEmpty,
+                  nodes.count == state.serverRecords.count
+                {
+                  synchronized = try nodes.allSatisfy { node in
+                    guard let data = state.serverRecords[node.name] else { return false }
+                    return try PlannerCloudNode(record: PlannerCloudNode.restore(data)) == node
+                  }
+                }
+              }
+              if synchronized {
+                record.syncedTransaction = transaction
+              } else {
+                cloudObservation = .init(
+                  state: .inProgress, storeIdentity: observation.storeIdentity,
+                  eventId: observation.eventId, observedAt: observation.observedAt, reason: nil)
+              }
+            }
+          }
+          let data = try JSONEncoder().encode(PlannerStoredCloudObservation(cloudObservation))
+          if record.statusData != data {
+            record.statusData = data
+            try context.save()
+          }
+        }
+      }
+    } catch {
+      cloudObservation = .init(
+        state: .error, storeIdentity: privateOwnershipBinding,
+        eventId: observation.eventId, observedAt: .now,
+        reason: failure(error, code: "privateSyncStatusUnavailable"))
+    }
+    for subscription in changeSubscriptions.values {
+      subscription.continuation.yield(
+        .init(notificationId: UUID(), payload: .cloudActivityChanged(value: cloudObservation)))
+    }
+  }
+
+  fileprivate func privateCloudObservation() throws -> PlannerCloudObservation {
+    guard let binding = privateOwnershipBinding else { return cloudObservation }
+    if case .unavailable(let reason) = accountObservation {
+      return .init(
+        state: .error, storeIdentity: binding, eventId: nil, observedAt: .now, reason: reason)
+    }
+    let context = ModelContext(try openContainer())
+    let record = try privateSyncStateRecord(in: context)
+    if record?.recoveryPending == true {
+      return .init(
+        state: .error, storeIdentity: binding, eventId: nil, observedAt: .now,
+        reason: .init(
+          "privateSyncRecoveryIncomplete", "Received changes still need independent recovery."))
+    }
+    let observation: PlannerCloudObservation
+    if privateSync != nil {
+      observation = cloudObservation
+    } else if let data = record?.statusData {
+      observation = try JSONDecoder().decode(PlannerStoredCloudObservation.self, from: data).read(
+        binding: binding)
+    } else {
+      observation = cloudObservation
+    }
+    if case .idle = observation.state,
+      record?.syncedTransaction
+        != (try latestDomainTransaction(in: context)?.transactionIdentifier ?? 0)
+    {
+      return .init(
+        state: .inProgress, storeIdentity: binding, eventId: observation.eventId,
+        observedAt: observation.observedAt, reason: nil)
+    }
+    return observation
+  }
+
 }

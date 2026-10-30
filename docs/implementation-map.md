@@ -12,8 +12,9 @@ Preserve implemented validation, saved data and existing recovery evidence.
 App Intents/MCP retain their established V3 stage after the core V2 release.
 Signing setup is now authorized with the user's enrolled team; actual Mac UI, mobile Share and physical sync remain
 distinct core work and acceptance gates. Installed Mac Share is post-MVP under
-the [28 October focus](release-goals.md#mac-share-mvp-focus-28-october-2026). CloudKit integration is not yet
-implemented: production currently selects local-only SwiftData storage.
+the [28 October focus](release-goals.md#mac-share-mvp-focus-28-october-2026).
+Private CKSyncEngine now has a bounded transport checkpoint; production still
+selects local-only SwiftData storage and app integration remains open.
 Historical checkpoints below retain their scope
 but do not override this priority.
 
@@ -25,9 +26,10 @@ Calendar, collection maps and the embedded reader. This is implementation
 progress, not final acceptance on every platform. The source audit confirms
 that production selects `localOnly` and `Planner.openContainer` explicitly uses
 `cloudKitDatabase: .none`. Q164 A now approves retaining that local store and
-adding account-bound private CKSyncEngine synchronization. Sync still needs
-implementation and
-physical qualification. Existing development signing passes current native
+adding account-bound private CKSyncEngine synchronization. Its
+[transport checkpoint](prototypes/private-sync-engine.md) passes full-plan and
+fresh-store deletion readback. App integration, live delivery and physical
+qualification remain open. Existing development signing passes current native
 checks; it does not prove synchronization. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
 
@@ -45,7 +47,7 @@ Production remains local-only while integration is unfinished.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | Production is still local-only. [Account-bound local storage](prototypes/private-local-storage.md) now has signed Core evidence; cloud transport is absent. [Signed native calibration](prototypes/cloud-round-trip-native.md) passes private access, asynchronous setup, synthetic Item round trips and per-app cache reset/reimport using the actual schema. | Implement private account-bound synchronization/status while preserving device-local plans through cloud-cache reset. Qualify existing-data handling, ownership, Planner commands/recovery, mobile Share and physical-device sync. |
+| Private CloudKit integration | Production is still local-only. [Account-bound local storage](prototypes/private-local-storage.md) and [CKSyncEngine transport](prototypes/private-sync-engine.md) have signed Core evidence. Full-plan/fresh-store deletion round trips pass; an open Mac peer's live deletion catch-up remains unresolved. | Complete app/status/Share integration and explicit local-plan attachment. Qualify live delivery, pending work, conflicts/failures, ownership and physical sync. Combine off/on with final integrated checks; it does not block implementation. |
 | Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
 | Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. Search clipping, broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
@@ -60,6 +62,16 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [private CKSyncEngine checkpoint](prototypes/private-sync-engine.md) adds
+field-based records and account-scoped transactional state, preserving local
+SwiftData and the existing recovery/closure rules. A signed 21.657-second native
+run proves exact complete-plan and post-deletion fresh-store readback. It also
+fixes metadata acknowledgements invalidating queries. The affected 22-test Core
+cohort and Mac compilation pass. Already-open peer catch-up remains a recorded
+failure; app activation, existing-plan attachment and broader sync acceptance
+remain open. The user combines off/on with final integrated testing, with no
+manual switch action currently required.
 
 The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
 approved private configuration, real account resolution and account-scoped local

@@ -8,6 +8,8 @@ enum PlannerSchemaV16: VersionedSchema {
   }
 
   @Model final class LineageRecord {
+    init() {}
+
     var recordIdentifier: UUID? = nil
     var recordKind: String = ""
     var recordData: Data? = nil

@@ -8,6 +8,8 @@ enum PlannerSchemaV4: VersionedSchema {
   }
 
   @Model final class DeletionMarker {
+    init() {}
+
     var deletionId: UUID? = nil
     var operationId: UUID? = nil
     var sourceId: UUID? = nil
