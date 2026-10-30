@@ -66,6 +66,15 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [visible editor checkpoint](prototypes/native-design-refinement.md#visible-editor-review-31-october-2026)
+keeps test gestures above the keyboard and checks empty/valid Save states.
+Reviewed light/dark phone and dark iPad navigation profiles pass, including
+Calendar, landscape completion and exact-Item relaunch. Screenshot review rejects
+a nominal-dark phone run that actually rendered light; an isolated system-dark
+run supplies the dark-phone evidence. Production styling stays unchanged.
+Expanded Save/landscape contrast diagnostics and final Mac/manual review remain
+open; this checkpoint adds no iCloud test.
+
 The [responsive native search checkpoint](prototypes/native-search-accessibility.md#responsive-native-editor)
 uses a wrapping Form through More at accessibility sizes and preserves the
 ordinary native search controls. Catalogue loading now remains outside the

@@ -494,11 +494,20 @@ final class SavedItemJourneyTests: XCTestCase {
     application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
+    XCTAssertFalse(application.plannerElement("saved.item.save").isEnabled)
+    recordScreenshot(application, name: "Native design empty Item draft")
     title.activateForPlannerJourney()
     title.typeText("Museum morning")
     let notes = application.textFields["saved.item.notes"]
     notes.activateForPlannerJourney()
     notes.typeText("Meet by the garden entrance")
+    XCTAssertTrue(application.plannerElement("saved.item.save").isEnabled)
+    #if os(iOS)
+      revealForContrastReview(
+        application.staticTexts["No estimate"].firstMatch,
+        in: application.collectionViews.containing(.any, identifier: "saved.item.notes"),
+        application: application)
+    #endif
     recordScreenshot(application, name: "Native design New Item editor")
     #if os(iOS)
       try auditNativeScene(application, name: "New Item editor")
@@ -683,30 +692,37 @@ final class SavedItemJourneyTests: XCTestCase {
       let navigationBar = application.navigationBars.firstMatch
       let tabBar = application.tabBars.firstMatch
       for _ in 0..<8 {
-        if element.exists {
-          let windowFrame = application.windows.firstMatch.frame
-          var visibleTop = windowFrame.minY
-          var visibleBottom = windowFrame.maxY
-          if navigationBar.exists { visibleTop = max(visibleTop, navigationBar.frame.maxY) }
-          if tabBar.exists { visibleBottom = min(visibleBottom, tabBar.frame.minY) }
-          if windowFrame.contains(element.frame), element.frame.minY >= visibleTop,
-            element.frame.maxY <= visibleBottom, element.isHittable
-          {
-            return
-          }
-          if element.frame.minY < visibleTop {
-            let start = scrollContent.coordinate(
-              withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-            let end = scrollContent.coordinate(
-              withNormalizedOffset: CGVector(dx: 0.5, dy: 0.65))
-            start.press(
-              forDuration: 0.05, thenDragTo: end, withVelocity: .slow,
-              thenHoldForDuration: 0.1)
-            continue
-          }
+        let windowFrame = application.windows.firstMatch.frame
+        let scrollFrame = scrollContent.frame
+        var visibleTop = max(windowFrame.minY, scrollFrame.minY)
+        var visibleBottom = min(windowFrame.maxY, scrollFrame.maxY)
+        if navigationBar.exists { visibleTop = max(visibleTop, navigationBar.frame.maxY) }
+        if tabBar.exists { visibleBottom = min(visibleBottom, tabBar.frame.minY) }
+        let keyboard = application.keyboards.firstMatch
+        if keyboard.exists { visibleBottom = min(visibleBottom, keyboard.frame.minY) }
+        guard visibleBottom > visibleTop else {
+          XCTFail("The native scroll content is fully covered.")
+          return
         }
-        let start = scrollContent.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.65))
-        let end = scrollContent.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let visibleFrame = CGRect(
+          x: scrollFrame.minX, y: visibleTop, width: scrollFrame.width,
+          height: visibleBottom - visibleTop)
+        var scrollTowardTop = false
+        if element.exists {
+          if visibleFrame.contains(element.frame), element.isHittable { return }
+          scrollTowardTop = element.frame.minY < visibleTop
+        }
+        let scrollOrigin = scrollContent.coordinate(withNormalizedOffset: .zero)
+        let upperPoint = scrollOrigin.withOffset(
+          CGVector(
+            dx: scrollFrame.width * 0.5,
+            dy: visibleTop - scrollFrame.minY + visibleFrame.height * 0.35))
+        let lowerPoint = scrollOrigin.withOffset(
+          CGVector(
+            dx: scrollFrame.width * 0.5,
+            dy: visibleTop - scrollFrame.minY + visibleFrame.height * 0.65))
+        let start = scrollTowardTop ? upperPoint : lowerPoint
+        let end = scrollTowardTop ? lowerPoint : upperPoint
         start.press(
           forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
       }

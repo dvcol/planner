@@ -124,3 +124,45 @@ and mobile signature verification pass. The update is installed on both authoriz
 mobile devices; the installed Mac app remains unchanged. Markdown lint reports
 217 issues against 219 in the unchanged HEAD documents, with no introduced
 diagnostics. The task-owned simulator is deleted after capture export.
+
+## Visible editor review, 31 October 2026
+
+The existing navigation journey now reveals the estimate section before
+capturing the New Item editor. Its shared scrolling helper calculates the
+uncovered viewport from the scroll container, navigation bar, tab bar and
+keyboard. Gestures stay inside that viewport, so they scroll the Form and dismiss
+the keyboard instead of dragging over its keys. Save is also checked as disabled
+for the empty draft and enabled after valid content is entered. Production
+controls, saved content and public interfaces are unchanged.
+
+Expanded contrast probes remain diagnostic. With the editor visible, XCTest
+flags the native Save control. Explicit primary text, the native prominent style
+and the native confirmation role do not resolve that report; all three styling
+probes are reverted. Additional landscape contrast audits report
+`saved.item.lists.summary` while that summary is scrolled offscreen. The visible
+completion footer is readable in the retained captures. Screenshot inspection
+also shows that both requested phone appearances rendered light in that cohort;
+its nominal dark function does not supply dark-theme evidence. These results
+do not prove an Apple defect or qualify Save/landscape contrast. The existing
+audit criteria are preserved, with no issue-filtering callback. The
+[diagnostic record](evidence/navigation/native-design-refinement/visible-editor-2026-10-31/diagnostics.json)
+retains the failures, source epochs and compressed logs. Manual review and
+broader accessibility acceptance remain open.
+
+Final existing-criteria journeys pass on a light phone at maximum accessibility
+text size (138.121 seconds), a dark phone at that size (121.556 seconds) and a
+dark iPad at ordinary text size (102.416 seconds). They cover draft validation,
+creation, saved details, Calendar, landscape completion and exact-Item relaunch.
+The isolated dark-phone run sets the simulator's system appearance before
+launch; its captures and the iPad captures show actual dark rendering. The
+earlier batched nominal-dark phone pass is not counted as dark-theme evidence.
+All three reviewed profiles retain matching 254-input manifests. The
+[review packet](evidence/navigation/native-design-refinement/visible-editor-2026-10-31/review.json)
+records the selected functions, inspected appearances and qualification limits.
+These are simulator navigation checks, with no physical-device or iCloud run.
+
+The affected Swift file passes strict formatting and whitespace checks. Mac app
+and UI-runner compilation and signature verification pass. The installed Mac
+app's three baseline hashes remain unchanged; its prepared runtime pair still
+awaits manual automation approval. Task-owned simulators are removed after
+capture export.
