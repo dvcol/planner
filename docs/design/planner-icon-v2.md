@@ -23,8 +23,31 @@ Both affected app builds pass with the same 1164 native inputs. Their actual
 compiled Info plists select AppIcon and their Assets.car files contain the icon
 stack, mark and dark/light appearance metadata. Exact inputs, commands and
 outcomes are in [the evidence](../prototypes/evidence/native-app-icon/final-validation.json).
-Installed Home Screen/Dock switching and physical devices remain unqualified.
-These resource checks do not claim a whole-app accessibility pass.
+Installed phone/iPad Simulator Home Screen appearances now have the checkpoint
+below. Mac Dock appearance and physical devices remain unqualified. These
+resource checks do not claim a whole-app accessibility pass.
+
+## Installed Home Screen, 31 October 2026
+
+The native Home Screen journey passes on iPhone 18 Pro (15.559 seconds) and
+iPad Pro 13-inch M5 (16.147 seconds), both on iOS 27.0. It uses the installed
+Planner icon, opens native Customize, selects Default then Dark, checks the
+selected controls and unchanged Planner identity, and restores Default. All four
+original captures are inspected: charcoal on near-white and white on charcoal
+retain the same shape at actual icon size. Both runs share 254 unchanged native
+inputs. Their app installation epochs are recorded separately, with identical
+icon manifest/artwork and unchanged production library; identical compiled asset
+catalogs are not claimed. Commands, results and hashes are in the
+[review packet](../prototypes/evidence/native-app-icon/home-screen-2026-10-31/review.json).
+
+System appearance alone leaves Home Screen icons at Default in the initial
+trial, so it supplies no dark-icon credit. Earlier trials expose an offscreen
+icon, an invalid hit-test assertion while the native customization panel is
+modal, and an iPad fixture with only the runner installed. Their failures and
+the control-only feasibility run remain separate from final acceptance. The
+test is restricted to Simulator and requires a disposable device with Planner
+installed. It adds no production styling or theme controller. Physical Home
+Screen, Mac Dock and automatic/Clear/Tinted choices remain unqualified.
 
 The package follows Apple's [Icon Composer guidance](https://developer.apple.com/documentation/xcode/creating-your-app-icon-using-icon-composer),
 the installed Xcode Icon Composer template and the icon manifest structure in

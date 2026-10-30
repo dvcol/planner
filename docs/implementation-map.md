@@ -52,7 +52,7 @@ No public/shared cloud fallback is configured.
 | --- | --- | --- |
 | Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented. Physical iPhone/iPad creation, bidirectional edits, deletion and relaunch pass. The earlier open Mac-peer diagnostic remains separate. | Off/on is deliberately deferred. Retain the existing failure/conflict limits; do not repeat passing normal sync checks without a new change or defect. |
 | Shared storage | [Saves][shared], [Safari][physical-share]. The [native Maps sender journey](prototypes/native-share-products.md#native-maps-sender-and-resumed-share-31-october-2026) is prepared; its Simulator run stops before Save. | Physical Maps check awaits device readiness; Google Maps sender remains open. |
-| Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. The [responsive search correction](prototypes/native-search-accessibility.md#responsive-native-editor) passes scoped clipping and query-retention checks; broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
+| Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. The [responsive search correction](prototypes/native-search-accessibility.md#responsive-native-editor) passes scoped clipping and query-retention checks; broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md#installed-home-screen-31-october-2026) has inspected Default/Dark Home Screen captures and passing native phone/iPad Simulator journeys. | Remaining scene, resizing and accessibility review, plus physical Home Screen and Mac Dock appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
 | Synchronized daily use | Signed mobile journey passes. | UI polish next. |
@@ -65,6 +65,12 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [installed icon checkpoint](design/planner-icon-v2.md#installed-home-screen-31-october-2026)
+checks native Default/Dark Home Screen choices on phone and iPad Simulators.
+Both journeys pass with matching source inputs and four inspected original
+captures. The production artwork is unchanged. Physical Home Screen, Mac Dock
+and whole-app assistive acceptance retain their separate gates.
 
 The [Share sender checkpoint](prototypes/native-share-products.md#native-maps-sender-and-resumed-share-31-october-2026)
 waits for an already-present Share sheet before reopening the host menu. The

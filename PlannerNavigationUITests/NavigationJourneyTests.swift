@@ -2,6 +2,41 @@ import XCTest
 
 @MainActor
 final class NavigationJourneyTests: XCTestCase {
+  #if os(iOS) && targetEnvironment(simulator)
+    /// Requires a disposable Simulator because it changes Home Screen appearance.
+    func testInstalledHomeScreenIconKeepsItsIdentityAcrossDefaultAndDarkAppearances() {
+      continueAfterFailure = false
+      XCUIDevice.shared.press(.home)
+      let homeScreen = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+      let icon = homeScreen.icons["Planner"].firstMatch
+      XCTAssertTrue(icon.waitForExistence(timeout: 10))
+      for _ in 0..<3 where !icon.isHittable { homeScreen.swipeLeft() }
+      XCTAssertTrue(icon.isHittable)
+      icon.press(forDuration: 1)
+      let editHomeScreen = homeScreen.buttons["Edit Home Screen"]
+      XCTAssertTrue(editHomeScreen.waitForExistence(timeout: 5))
+      editHomeScreen.activateForPlannerJourney()
+      homeScreen.buttons["Edit"].activateForPlannerJourney()
+      let customize = homeScreen.buttons["Customize"]
+      XCTAssertTrue(customize.waitForExistence(timeout: 5))
+      customize.activateForPlannerJourney()
+      let defaultAppearance = homeScreen.buttons["Default"]
+      XCTAssertTrue(defaultAppearance.waitForExistence(timeout: 5))
+      defaultAppearance.activateForPlannerJourney()
+      XCTAssertTrue(defaultAppearance.isSelected)
+      XCTAssertEqual(icon.label, "Planner")
+      recordScreenshot(homeScreen, name: "Installed Planner icon with Default appearance")
+      let darkAppearance = homeScreen.buttons["Dark"]
+      darkAppearance.activateForPlannerJourney()
+      XCTAssertTrue(darkAppearance.isSelected)
+      XCTAssertEqual(icon.label, "Planner")
+      recordScreenshot(homeScreen, name: "Installed Planner icon with Dark appearance")
+      defaultAppearance.activateForPlannerJourney()
+      XCTAssertTrue(defaultAppearance.isSelected)
+      XCUIDevice.shared.press(.home)
+    }
+  #endif
+
   func testItineraryCountsExplainHiddenArchivedItemsAndContainerComposition() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
