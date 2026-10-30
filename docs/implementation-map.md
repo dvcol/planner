@@ -66,6 +66,11 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [single-overflow correction](prototypes/native-search-accessibility.md#single-overflow-owner-31-october-2026)
+restores collection View actions beside accessible Search. Two unchanged
+maximum-text phone search regressions pass. The route journey then exposes a
+separate overlapping-marker selection failure, which remains open.
+
 The [visible editor checkpoint](prototypes/native-design-refinement.md#visible-editor-review-31-october-2026)
 keeps test gestures above the keyboard and checks empty/valid Save states.
 Reviewed light/dark phone and dark iPad navigation profiles pass, including

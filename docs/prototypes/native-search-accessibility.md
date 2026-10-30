@@ -97,3 +97,25 @@ builds and deep/strict app/runner signature checks pass. Mac runtime awaits
 manual automation approval for two prepared existing journeys. Actual VoiceOver
 and final whole-app/physical acceptance remain open. No additional iCloud test,
 account transition or installed Mac replacement is performed by this checkpoint.
+
+## Single overflow owner, 31 October 2026
+
+The accessibility Search modifier's own `ToolbarOverflowMenu` can replace the
+collection's existing overflow content. The maximum-text phone route journey
+reproduces this: only Search appears, so View cannot open Map. Search now uses a
+native secondary toolbar item and joins the collection's overflow menu instead
+of declaring another one. This changes one production line and preserves the
+query editor, identifiers and dismissal behavior.
+
+The unchanged route journey now reaches Map, calculates all three walking and
+driving legs, and opens Public transport. It subsequently fails because the
+Museum marker overlaps Garden and opens Garden; that separate layout finding
+receives no passing Map credit here. The unchanged Inbox query/Clear journey
+passes in 88.761 seconds and Itinerary query retention passes in 51.986 seconds,
+both in actual dark mode at the largest accessibility text size. Inspected
+captures retain a readable Inbox title and the query editor. The
+[review packet](evidence/native-search-accessibility/overflow-2026-10-31/review.json)
+separates the original menu failure, partial route progress and passing search
+regressions. Simulator compilation, strict affected-file formatting and
+whitespace checks pass. Mac runtime, physical use and broader acceptance retain
+their separate gates; no iCloud test is added.

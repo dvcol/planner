@@ -19,7 +19,7 @@
         content
           .toolbar {
             if dynamicTypeSize.isAccessibilitySize {
-              ToolbarOverflowMenu { searchButton }
+              ToolbarItem(placement: .secondaryAction) { searchButton }
             } else {
               ToolbarItem(placement: .primaryAction) { searchButton }
             }
