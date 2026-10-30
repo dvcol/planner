@@ -58,6 +58,25 @@ struct PlannerPrivateCloudStorage: Sendable {
   }
 
   func account() async -> Account {
+    await withCheckedContinuation { continuation in
+      let resolution = PlannerCloudAccountResolution(continuation: continuation)
+      let deadline = Task {
+        do { try await Task.sleep(for: .seconds(5)) } catch { return }
+        resolution.finish(
+          .unavailable(
+            .init(
+              "privateCloudUnavailable",
+              "Private iCloud verification is taking too long; plans stay on this device. Try Sync now again later."
+            )))
+      }
+      Task {
+        resolution.finish(await verifiedAccount())
+        deadline.cancel()
+      }
+    }
+  }
+
+  private func verifiedAccount() async -> Account {
     do {
       let container = CKContainer(identifier: containerIdentifier)
       guard try await container.accountStatus() == .available else {
@@ -130,6 +149,25 @@ struct PlannerPrivateCloudStorage: Sendable {
 
   private func ownershipFailure() -> PlannerFailure {
     .init("ownershipUnverified", "The retained private-account selection cannot be verified.")
+  }
+}
+
+/// CloudKit lookup may outlive the deadline; only one result reaches the caller.
+private final class PlannerCloudAccountResolution: @unchecked Sendable {
+  private let lock = NSLock()
+  private var continuation: CheckedContinuation<PlannerPrivateCloudStorage.Account, Never>?
+
+  init(continuation: CheckedContinuation<PlannerPrivateCloudStorage.Account, Never>) {
+    self.continuation = continuation
+  }
+
+  func finish(_ account: PlannerPrivateCloudStorage.Account) {
+    let waiting = lock.withLock {
+      let waiting = continuation
+      continuation = nil
+      return waiting
+    }
+    waiting?.resume(returning: account)
   }
 }
 

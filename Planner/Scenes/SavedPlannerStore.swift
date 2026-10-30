@@ -356,8 +356,13 @@ final class SavedPlannerStore {
     guard hasPrivateSynchronization else { return }
     if case .unavailable = status.account {
       synchronizationTitle = "iCloud unavailable"
-      synchronizationMessage =
-        "Your plans remain editable on this device. Sync resumes when private iCloud is available."
+      if session?.ownershipBinding.hasPrefix("private-cloud-v1:") == true {
+        synchronizationMessage =
+          "Your plans remain editable on this device. Sync resumes when private iCloud is available."
+      } else {
+        synchronizationMessage =
+          "Your plans are saved on this device. When private iCloud is available, reopen Planner to review and copy them."
+      }
       return
     }
     synchronizationMessage = status.cloud.reason?.message

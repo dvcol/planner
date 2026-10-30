@@ -7,6 +7,69 @@ import XCTest
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
   #if os(iOS)
+    #if targetEnvironment(simulator)
+      /// Runs normal application storage on a fresh simulator with no Apple Account.
+      func testNormalFirstLaunchWithoutICloudKeepsLocalPlansAfterRelaunch() throws {
+        continueAfterFailure = false
+        let application = XCUIApplication()
+        application.launchSavedPlannerJourney()
+        XCTAssertTrue(
+          application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 30))
+        recordScreenshot(application, name: "Normal first launch reaches its ready empty catalog")
+        application.openSavedPlannerSettings()
+        let syncStatus = application.staticTexts.matching(identifier: "saved.settings.sync.status")
+          .firstMatch
+        XCTAssertTrue(syncStatus.waitForExistence(timeout: 10))
+        XCTAssertEqual(syncStatus.label, "iCloud unavailable")
+        XCTAssertTrue(
+          application.staticTexts[
+            "Your plans are saved on this device. When private iCloud is available, reopen Planner to review and copy them."
+          ].exists)
+        XCTAssertFalse(application.plannerElement("saved.settings.sync.copyLocal").exists)
+        let retry = application.plannerElement("saved.settings.sync.retry")
+        XCTAssertTrue(retry.isEnabled)
+        retry.activateForPlannerJourney()
+        let retryFinished = XCTNSPredicateExpectation(
+          predicate: NSPredicate(format: "enabled == true"), object: retry)
+        XCTAssertEqual(XCTWaiter.wait(for: [retryFinished], timeout: 10), .completed)
+        XCTAssertEqual(syncStatus.label, "iCloud unavailable")
+        try application.performAccessibilityAudit(for: [.hitRegion, .sufficientElementDescription])
+        recordScreenshot(
+          application, name: "Normal first launch explains unavailable private iCloud")
+        application.plannerElement("saved.settings.done").activateForPlannerJourney()
+        application.openPlannerSection("Items")
+        XCTAssertFalse(application.savedPlannerItemRows("Offline museum").firstMatch.exists)
+        application.openSavedPlannerNewItemEditor()
+        let title = application.textFields["saved.item.title"]
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+        title.activateForPlannerJourney()
+        title.typeText("Offline museum")
+        let notes = application.textFields["saved.item.notes"]
+        notes.activateForPlannerJourney()
+        notes.typeText("Check opening hours")
+        application.plannerElement("saved.item.save").activateForPlannerJourney()
+        XCTAssertTrue(application.staticTexts["Check opening hours"].waitForExistence(timeout: 10))
+        let back = application.navigationBars.buttons["Items"].firstMatch
+        if back.exists { back.activateForPlannerJourney() }
+        let row = application.savedPlannerItemRows("Offline museum").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        let sourceIdentity = row.identifier
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        XCTAssertTrue(
+          application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 30))
+        application.openPlannerSection("Items")
+        let reopened = application.savedPlannerItemRows("Offline museum").firstMatch
+        XCTAssertTrue(reopened.waitForExistence(timeout: 10))
+        XCTAssertEqual(reopened.identifier, sourceIdentity)
+        reopened.activateForPlannerJourney()
+        XCTAssertTrue(application.staticTexts["Check opening hours"].waitForExistence(timeout: 10))
+        recordScreenshot(
+          application, name: "Device-only Item retains its identity and notes after relaunch")
+      }
+
+    #endif
+
     func testInboxSearchRetainsTheCompleteQueryAndRestoresTheSameItemWhenCleared() {
       continueAfterFailure = false
       let application = XCUIApplication()

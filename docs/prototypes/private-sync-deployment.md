@@ -67,3 +67,29 @@ read/edit/relaunch during one combined Planner-only iCloud off/on cycle,
 same-account resumption, quota/network/local-I/O failure behavior and native
 status/draft interaction. The unresolved already-open-peer outcome from the
 [transport checkpoint](private-sync-engine.md) remains explicit.
+
+## Bounded account verification and normal first launch
+
+A fresh account-free iPhone Simulator exposed a real startup delay: normal
+launch stayed on **Opening Planner** beyond the native check's 30-second limit.
+A temporary trace separately showed account-status lookup still pending after
+nine seconds, before local-store selection. That trace is removed from source.
+
+Account verification now has a five-second deadline. An unavailable or delayed
+account selects the existing local fallback; a late SDK result cannot adopt an
+owner or start synchronization. A subsequent retry verifies the account again.
+Already-bound plans retain their existing account selection. New device-only
+plans explain that later private access requires reopening and explicitly
+reviewing their copy, rather than promising an automatic upload.
+
+Normal app launches on two fresh, account-free simulators pass: light iPhone
+and dark iPad. Each exercises the actual unavailable status and Sync now,
+creates an Item with notes, terminates/relaunches Planner and reads the same
+public Item identity and notes. Settings hit-region and element-description
+audits pass; both Settings and Item captures are inspected. These launches use
+no local-prototype argument or production test hook. Test bodies take 72.518
+and 50.927 seconds respectively. The affected six signed Mac storage tests
+also pass, in 7.184 seconds, including the available-account reviewed copy.
+[Compact results](evidence/private-sync-deployment/account-deadline.json)
+retain the original result-folder paths. This is not the actual Planner-only
+off/on or two-device test; both remain in the final integrated session.

@@ -13,8 +13,8 @@ App Intents/MCP retain their established V3 stage after the core V2 release.
 Signing setup is now authorized with the user's enrolled team; actual Mac UI, mobile Share and physical sync remain
 distinct core work and acceptance gates. Installed Mac Share is post-MVP under
 the [28 October focus](release-goals.md#mac-share-mvp-focus-28-october-2026).
-Private CKSyncEngine now has a bounded transport checkpoint; production still
-selects local-only SwiftData storage and app integration remains open.
+Private CKSyncEngine transport and normal app/Share wiring are implemented.
+SwiftData remains authoritative locally; integrated two-device acceptance is open.
 Historical checkpoints below retain their scope
 but do not override this priority.
 
@@ -24,11 +24,12 @@ Local planning is implemented with local evidence: Item/List authoring, capture,
 places and link previews, ordered itineraries, estimates and remaining time,
 Calendar, collection maps and the embedded reader. This is implementation
 progress, not final acceptance on every platform. The source audit confirms
-that production selects `localOnly` and `Planner.openContainer` explicitly uses
-`cloudKitDatabase: .none`. Q164 A now approves retaining that local store and
-adding account-bound private CKSyncEngine synchronization. Its
+that normal app/Share configurations select account-bound private synchronization,
+while `Planner.openContainer` explicitly uses `cloudKitDatabase: .none` to retain
+local plans independently. Q164 A's private CKSyncEngine implementation has a
 [transport checkpoint](prototypes/private-sync-engine.md) passes full-plan and
-fresh-store deletion readback. App integration, live delivery and physical
+fresh-store deletion readback. The [deployment checkpoint](prototypes/private-sync-deployment.md)
+adds native app/Share integration and reviewed device-only copying. Live delivery and physical
 qualification remain open. Existing development signing passes current native
 checks; it does not prove synchronization. The earlier descriptions of sync as
 only a remaining test gate were incomplete.
@@ -40,14 +41,14 @@ observes access loss and restoration to the same account after manual off/on.
 The attended managed-store check also passes: disabling access clears its native
 cache, and restoring the same account reimports the exact fixture. Production
 must preserve local plans independently of that cache reset. Its ownership and
-sync integration remain open. The user also requires
+integrated acceptance remain open. The user also requires
 [private-user storage only](release-goals.md#private-cloud-storage-boundary-29-october-2026):
 unavailable/full iCloud must never select a developer-funded cloud fallback.
-Production remains local-only while integration is unfinished.
+No public/shared cloud fallback is configured.
 
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
-| Private CloudKit integration | Production is still local-only. [Account-bound local storage](prototypes/private-local-storage.md) and [CKSyncEngine transport](prototypes/private-sync-engine.md) have signed Core evidence. Full-plan/fresh-store deletion round trips pass; an open Mac peer's live deletion catch-up remains unresolved. | Complete app/status/Share integration and explicit local-plan attachment. Qualify live delivery, pending work, conflicts/failures, ownership and physical sync. Combine off/on with final integrated checks; it does not block implementation. |
+| Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented alongside account-bound local storage and private CKSyncEngine transport. Full-plan/fresh-store deletion round trips pass; an open Mac peer's live deletion catch-up remains unresolved. | Qualify live delivery, pending work, conflicts/failures, ownership and physical sync. Combine off/on with final integrated checks; it does not block implementation. |
 | Shared storage | [Saves][shared], [Safari][physical-share] | Other senders. |
 | Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. Search clipping, broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md) has light/dark appearances, inspected small renders and passing app builds. | Remaining phone/iPad scene checks, resizing and accessibility review, plus installed icon appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
@@ -824,7 +825,7 @@ Keep existing basic export/import available without expanding it. New advanced
 portability or manual-restoration cases belong to post-MVP work and do not delay
 the core queue. Preserve safeguards for ordinary saves and synchronization.
 
-1. Implement the accepted managed SwiftData/private-CloudKit storage mode, account/dataset binding and actual account/cloud observations. The current `localOnly` configuration and unknown observations do not provide synchronization. The accepted account/reset cutoff still needs a real configured container and device evidence; local file-writer observation does not establish cloud ownership or convergence.
+1. Finish acceptance of Q164's local-authoritative/private-CKSyncEngine integration. Account-bound storage, actual account/cloud observations, private transport and normal app/Share wiring are implemented; the [deployment checkpoint](prototypes/private-sync-deployment.md) records the passing real-cloud and native storage scope. The installed Mac app is unchanged. Actual two-device live updates/deletion, concurrent edits, interruption and unavailable/quota behavior retain their own gates. Combine one Planner-only iCloud off/on cycle with final integrated local-edit/relaunch and same-account resumption checks; no standalone switch test blocks implementation.
 2. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
    The mobile List and Itinerary one-heading corrections now have their scoped
    checkpoints above. Broader scene and assistive acceptance remains open.
