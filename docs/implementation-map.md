@@ -86,6 +86,11 @@ same-dataset/account reconnect path. Mac/mobile compilation and formatting pass;
 active UI/account-transition journeys remain open. Production is not activated,
 and the installed app is unchanged.
 
+The [genuine older-writer check](prototypes/private-sync-engine.md#genuine-older-writer-refusal)
+also passes: unchanged `f3efee75` Core rejects a private gate-24 store with
+`unsupportedVersion`, preserving all 32 fixture files. This closes that local
+compatibility check without activating production sync or changing accounts.
+
 The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
 approved private configuration, real account resolution and account-scoped local
 files while retaining `.none` SwiftData storage. Unbound plans remain separate;

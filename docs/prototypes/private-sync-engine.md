@@ -104,3 +104,14 @@ across nine suites, adding Item editing and container catalog sorting.
 This proves durable pending work and independent-field merging across process
 exit/reopen. It does not qualify a network outage, account removal, quota failure,
 or two-device live delivery; those gates remain open.
+
+## Genuine older-writer refusal
+
+A separate signed diagnostic links the unchanged Core sources from `f3efee75`,
+before private transport and writer gate 24. It opens the upgraded synthetic
+writer's actual account-bound paths using the existing public private
+configuration. Bootstrap rejects with `unsupportedVersion`; all 32 fixture file
+contents remain unchanged. The [native result](evidence/private-sync-older-writer/runtime.json)
+passes in 1.037 seconds. This qualifies the older-writer refusal, not every
+historical data migration. It requires no account setting or signing-resource
+change.
