@@ -169,3 +169,40 @@ and the actual passing case. The device command is explicitly redacted; original
 command/log hashes bind the local originals without publishing device identity.
 The earlier physical picker failure and phone startup failure retain their own
 outcomes rather than being counted as passed application behavior.
+
+## Native Maps sender and resumed Share, 31 October 2026
+
+A new existing-target journey requires an empty shared store, closes Planner,
+opens a coordinate in native Maps Search, and enters Planner through the real
+Share sheet. Its full intended contract includes Cancel without an Item, Save
+while Planner is closed, cold readback of the reviewed Apple Maps URL, exact
+Item/bookmark retention through relaunch and deletion of only its synthetic
+Item. The existing explicit empty-store environment guard remains required.
+No production test hook, target, dependency or public contract is added.
+
+The Simulator trial reaches Planner's review and Cancel. Maps repeatedly logs
+that its animations-complete notification was not received. The bounded run is
+interrupted at 480.081 seconds while returning to Maps for the second capture;
+no Save tap is reached. This is an incomplete journey, not a passing Maps
+capture/save checkpoint or proof of a Planner save defect. Its interrupted
+result bundle lacks Info.plist, so its attachments cannot be exported. Logs,
+commands and the original input epoch are retained in the
+[review packet](evidence/native-share-products/maps-sender-2026-10-31/review.json).
+The separate [Maps place-card capture](evidence/native-share-products/maps-sender-2026-10-31/maps-coordinate-card.png)
+shows the actual Share control; its background grid supplies no rendering credit.
+
+The Safari control exposes an independent driver problem after Cancel: its
+failure hierarchy already contains the Share app row, while the helper looks
+for Safari's Share button again. The helper now waits for an existing Planner
+entry before reopening the host menu. The unchanged Safari body then passes in
+74.034 seconds, including Cancel, Save, exact URL/identity through relaunch and
+cleanup. The [saved Item capture](evidence/native-share-products/maps-sender-2026-10-31/safari-saved-item.png)
+is inspected. Only that current control supplies passing functional credit.
+The full Maps trial predates this wait correction and is not rerun locally.
+
+Simulator, Mac and signed-device test-target builds pass. Main app and device
+runner signatures verify under the existing team/profiles; no signing resource
+is changed. The full Maps case is prepared for an attended device check with
+saved drafts and disposable test data. Its Save/relaunch acceptance remains
+open. No physical installation, iCloud test, authentication-policy change or
+installed Mac replacement is performed by this checkpoint.
