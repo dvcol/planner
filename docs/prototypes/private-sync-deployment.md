@@ -93,3 +93,36 @@ also pass, in 7.184 seconds, including the available-account reviewed copy.
 [Compact results](evidence/private-sync-deployment/account-deadline.json)
 retain the original result-folder paths. This is not the actual Planner-only
 off/on or two-device test; both remain in the final integrated session.
+
+## Integrated session prerequisite
+
+The first attended Mac/iPad attempt creates its synthetic Item on the Mac but
+does not find it on iPad. The iPad's native Settings and explicit Sync now both
+report **Up to date with iCloud**. The user then confirms those two devices use
+different iCloud accounts. This run cannot qualify same-account delivery and is
+not evidence of a sync defect. Its [compact outcome](evidence/private-sync-deployment/different-account-diagnostic.json), exact source identity and result folders
+remain retained at `/private/tmp/PlannerPrivateIntegrated-22b82e4d-88f9-49fe-b203-07d7bc6373c3`.
+
+The speculative dedicated-subscription/scoped-fetch probe is reverted; no
+transport change is retained from this mismatched-account run. An automatic
+approval rejection prevents a second paired run from creating another test
+Item. The user confirms iPhone and iPad share an account, so the next paired
+native check uses those devices. Neither device needs to sign out. The actual
+Planner-only off/on check remains combined with integrated sync acceptance.
+
+A guarded signed app-hosted cleanup verifies that the mismatched run's exact
+Item still has its original synthetic title and notes, then reviews and applies
+only that Item's deletion. The check passes in 4.222 seconds and observes private
+sync idle afterward. It touches no other Item or cloud zone; normal deletion
+history remains. Its temporary test source and result are retained at
+`/private/tmp/PlannerPrivateIntegratedFixtureCleanup.swift` and
+`/private/tmp/PlannerPrivateIntegratedCleanup.xcresult`, rather than adding a
+permanent one-off cleanup test to the app.
+
+The replacement physical journey is prepared in the existing native UI target.
+It uses normal installed storage and a fresh UUID in the synthetic Item's title,
+searches that complete query on both devices, and retains exact row identities
+through edits, deletion and relaunch. Only an explicit attended run enables it;
+ordinary test execution skips it. Final affected iOS app/Share/UI-runner
+compilation and strict Swift formatting pass. The iPhone/iPad pair has not yet
+executed and requires the iPhone to be connected, unlocked and made available.
