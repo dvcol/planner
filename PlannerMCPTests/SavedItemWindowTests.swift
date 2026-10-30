@@ -6,6 +6,57 @@ import XCTest
 
 @MainActor
 final class SavedItemWindowTests: XCTestCase {
+  func testMovingWindowsWithFiveThousandItemsAndTwoHundredLists() async throws {
+    let seededAt = Date()
+    let fixture = try await makeFixture(itemCount: 5_000, listName: "Scale plan", listCount: 200)
+    let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
+    let seededSeconds = Date().timeIntervalSince(seededAt)
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    let openedAt = Date()
+    await window.reload(
+      query: .init(
+        scope: .list(listIdentifier), completion: .all, archive: .all, sort: .init(mode: .manual)),
+      identity: .init(namespace: "scale-list", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 5_000)
+    XCTAssertEqual(window.rowIdentities.count, 5_000)
+    XCTAssertEqual(window.listSource?.progress.totalCount, 5_000)
+    let firstIdentity = try XCTUnwrap(window.rowIdentities.first)
+    let firstPageSeconds = Date().timeIntervalSince(openedAt)
+    guard case .loaded = window.presentation(at: 0),
+      case .loading = window.presentation(at: 64)
+    else { return XCTFail("The initial List must load only its first page.") }
+
+    await window.requestRows(at: [4_999])
+    guard case .loaded(let last) = window.presentation(at: 4_999),
+      case .loading = window.presentation(at: 0)
+    else { return XCTFail("Reaching the last page must release the offscreen first page.") }
+    XCTAssertEqual(
+      last.row.identity,
+      .appearance(
+        source: .init(kind: .item, id: fixture.identifiers[4_999]),
+        appearance: .listMembership(
+          listId: listIdentifier, membershipId: fixture.membershipIdentifiers[4_999]))
+    )
+    XCTAssertEqual(window.rowIdentities.first, firstIdentity)
+    XCTAssertEqual(window.listSource?.progress.totalCount, 5_000)
+
+    await window.reload(
+      catalogQuery: .init(sourceKind: .list),
+      identity: .init(namespace: "scale-catalog", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 200)
+    XCTAssertEqual(window.rowIdentities.count, 200)
+    await window.requestRows(at: [199])
+    guard case .loaded(let lastList) = window.presentation(at: 199),
+      case .loading = window.presentation(at: 0)
+    else { return XCTFail("The container catalog must also release offscreen presentations.") }
+    XCTAssertEqual(lastList.row.title, "Scale plan 199")
+    print(
+      "PLANNER_SCALE \(seededSeconds) seconds importing; \(firstPageSeconds) seconds opening; \(Date().timeIntervalSince(openedAt)) seconds paging 5000 Items and 200 Lists"
+    )
+  }
+
   func testListCatalogOpensOnePageAndKeepsCompleteSourceIdentitiesAndEstimates() async throws {
     let fixture = try await makeFixture(itemCount: 0)
     var expectedSources: [PlannerEntityReference] = []
@@ -1269,7 +1320,9 @@ final class SavedItemWindowTests: XCTestCase {
     return applied
   }
 
-  private func makeFixture(itemCount: Int, listName: String? = nil) async throws -> Fixture {
+  private func makeFixture(itemCount: Int, listName: String? = nil, listCount: Int = 1) async throws
+    -> Fixture
+  {
     let directory = FileManager.default.temporaryDirectory
       .appendingPathComponent("PlannerItemWindowFixtures", isDirectory: true)
       .appendingPathComponent(UUID().uuidString, isDirectory: true)
@@ -1320,16 +1373,19 @@ final class SavedItemWindowTests: XCTestCase {
       }
     }
     if let listIdentifier, let listName {
-      sources.append([
-        "kind": "list", "id": listIdentifier.uuidString,
-        "lifetimeId": listLifetimeIdentifier.uuidString,
-        "createdAt": 813_000_000, "updatedAt": 813_000_000,
-        "content": [
-          "name": listName, "notes": NSNull(), "color": NSNull(),
-          "iconName": NSNull(), "manualEstimate": NSNull(),
-        ],
-        "globalDone": NSNull(), "archived": false, "contentOrigins": ["name": "independent"],
-      ])
+      for index in 0..<listCount {
+        sources.append([
+          "kind": "list", "id": index == 0 ? listIdentifier.uuidString : UUID().uuidString,
+          "lifetimeId": index == 0 ? listLifetimeIdentifier.uuidString : UUID().uuidString,
+          "createdAt": 813_000_000, "updatedAt": 813_000_000,
+          "content": [
+            "name": index == 0 ? listName : listName + String(format: " %03d", index),
+            "notes": NSNull(), "color": NSNull(),
+            "iconName": NSNull(), "manualEstimate": NSNull(),
+          ],
+          "globalDone": NSNull(), "archived": false, "contentOrigins": ["name": "independent"],
+        ])
+      }
     }
     let data = try JSONSerialization.data(withJSONObject: [
       "format": "planner-data", "formatVersion": 2, "sources": sources,
