@@ -33,3 +33,30 @@ The [epoch reconciliation](evidence/navigation/native-itinerary-window-compatibi
 After those executions, strict formatting required wrapping one test-helper call. The [exact before/after comparison](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-final-tablet/post-run-formatting.json) proves that replacement explains the entire source difference, with no changed statement, argument value or assertion. A separate [mobile build](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-formatted-mobile-compiler/qualification.json) compiles that formatted source. The runtime captures and input/product manifests keep their original epoch; they are not relabeled as a post-format rerun.
 
 Actual Mac resizing, narrow/wide column collapse/remounts, multitasking windows, arbitrary webpages, all accessibility settings and physical acceptance remain open. The two new orientation bodies are iOS-only; Mac compilation gives no device-rotation or actual Mac UI credit. Signing stays deferred. Q143 A independently approves native Map-loader work, which follows this checkpoint.
+
+## Calendar reader through rotation, 31 October 2026
+
+The existing Calendar-source journey now follows the Garden link before
+rotating, observes actual landscape/portrait window dimensions, and requires
+native Back and Return to remain usable. Back reaches Museum. Return preserves
+the exact bookmark identity/URL and the original Schedule's full description.
+Switching to Items and back to Calendar retains that same booking.
+
+The light-phone execution passes in 89.912 seconds and dark iPad in 91.169
+seconds, with zero failures or skips. All 254 native inputs are identical and
+match the final workspace. No production correction is needed: this adds
+compatibility evidence at the existing actual native UI and loopback HTTP
+boundaries. It adds no target, dependency, test hook or provider seam.
+
+Four original captures are inspected and retained in the
+[review packet](evidence/native-webpage-rotation/calendar-2026-10-31/review.json).
+The [phone landscape](evidence/native-webpage-rotation/calendar-2026-10-31/phone-landscape.png)
+and [iPad landscape](evidence/native-webpage-rotation/calendar-2026-10-31/tablet-landscape.png)
+show the loaded Garden page and native controls while Calendar stays selected.
+Portrait captures retain the same page after returning from landscape.
+
+Strict affected Swift lint, whitespace and Simulator/Mac test-target builds
+pass. This qualifies the Calendar caller at ordinary Large text size, not
+arbitrary scene destruction, every accessibility setting, third-party login,
+physical devices or actual Mac interaction. No iCloud test or installed Mac
+replacement is performed. The attended Mac runtime remains pending.

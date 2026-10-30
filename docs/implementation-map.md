@@ -66,6 +66,13 @@ ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
 
+The [Calendar reader rotation checkpoint](prototypes/native-webpage-rotation.md#calendar-reader-through-rotation-31-october-2026)
+qualifies the existing Calendar caller on light phone and dark iPad. Both
+orientations preserve the loaded linked page, native Back history and Return
+to the exact bookmark and saved booking description. Two final native cases
+pass with identical inputs and inspected captures; production code is unchanged.
+Mac runtime, arbitrary remounts and broader assistive/device review remain open.
+
 The [Map footer correction](prototypes/native-map-routing.md#accessible-route-controls-31-october-2026)
 keeps full travel-mode text clear of the count and leaves usable pin tap points
 at maximum accessibility text size. The exact-stop and global Items journeys

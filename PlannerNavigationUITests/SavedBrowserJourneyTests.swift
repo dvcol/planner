@@ -1866,6 +1866,12 @@ final class SavedBrowserJourneyTests: XCTestCase {
 
   func testCalendarSourceOpensItsGuideAndReturnsToTheSameScheduleDetails() async throws {
     continueAfterFailure = false
+    #if os(iOS)
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+    #endif
     let server = try BrowserJourneyServer()
     let destination = try await server.start()
     defer { server.stop() }
@@ -1889,6 +1895,7 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))
     let scheduleIdentifier = schedule.identifier
       .replacingOccurrences(of: "saved.item.schedule.", with: "")
+    let savedScheduleDescription = try XCTUnwrap(schedule.value as? String)
     application.openPlannerSection("Calendar")
     let booking = application.descendants(matching: .any)
       .matching(identifier: "saved.calendar.schedule.\(scheduleIdentifier)").firstMatch
@@ -1906,10 +1913,34 @@ final class SavedBrowserJourneyTests: XCTestCase {
         .waitForExistence(timeout: 10))
     try await recordWindow(
       application, name: "Calendar source guide uses the existing navigation stack")
+    #if os(iOS)
+      let page = application.webViews.firstMatch
+      page.links["Garden guide"].activateForPlannerJourney()
+      XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+      for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
+        XCUIDevice.shared.orientation = orientation
+        let settled = NSPredicate { _, _ in
+          let frame = application.windows.firstMatch.frame
+          return orientation == .portrait ? frame.height > frame.width : frame.width > frame.height
+        }
+        await fulfillment(
+          of: [XCTNSPredicateExpectation(predicate: settled, object: application)], timeout: 10)
+        XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+        XCTAssertTrue(returnToPlanner.waitForPlannerHittability())
+        let back = application.buttons["saved.browser.back"]
+        XCTAssertTrue(back.isEnabled)
+        try await recordWindow(
+          application,
+          name: "Calendar reader retains its linked page at rotation \(orientation.rawValue)")
+      }
+      application.buttons["saved.browser.back"].activateForPlannerJourney()
+      XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
+    #endif
     returnToPlanner.activateForPlannerJourney()
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(schedule.value as? String, savedScheduleDescription)
     application.openPlannerSection("Items")
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     for _ in 0..<6 where !savedLink.isHittable { application.swipeUp() }
@@ -1924,6 +1955,7 @@ final class SavedBrowserJourneyTests: XCTestCase {
     XCTAssertTrue(savedLink.waitForExistence(timeout: 10))
     XCTAssertEqual(savedLink.value as? String, destination.absoluteString)
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(schedule.value as? String, savedScheduleDescription)
   }
 
   func testItineraryGuideReturnsToItsOwnPlanInsteadOfAnItemPlaceholder() async throws {
