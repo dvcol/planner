@@ -291,7 +291,11 @@
       notes.typeKey("a", modifierFlags: .command)
       notes.typeText(value)
       XCTAssertTrue(notes.waitForPlannerValue(value))
-      application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+      let save = application.plannerElement("saved.item.edit.save")
+      XCTAssertTrue(
+        save.waitForPlannerHittability(), "Save must be visible and unobstructed before submission."
+      )
+      save.activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts[value].waitForExistence(timeout: 10))
     }
 

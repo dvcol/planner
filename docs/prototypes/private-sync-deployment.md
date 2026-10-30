@@ -214,3 +214,8 @@ for exact guarded cleanup. Retained local path:
 `/private/tmp/PlannerPrivateMobilePair-6e90dc3d-f94b-4a37-8d30-c0aa60674953`.
 The user is asked to close the overlay and leave both devices stationary before
 another physical interaction. Private off/on has not started.
+The [partial result](evidence/private-sync-deployment/mobile-live-native-save-obstructed.json)
+retains the creation/receipt and cancellation outcomes without committing the
+unrelated video capture. The native edit helper now requires a hittable Save
+before submission. Strict Swift formatting and device compilation pass; its
+positive retry and exact fixture cleanup await idle, unobstructed devices.
