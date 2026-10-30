@@ -73,6 +73,13 @@ failure; app activation, existing-plan attachment and broader sync acceptance
 remain open. The user combines off/on with final integrated testing, with no
 manual switch action currently required.
 
+The [pending-edit follow-up](prototypes/private-sync-engine.md#durable-share-edits-and-independent-fields)
+now also passes a Share-only save, process exit and main-worker resume while
+preserving an independent title edit. It corrects a reproduced backwards
+Last updated timestamp. The final signed run takes 37.334 seconds and retains
+the complete-plan/deletion checks; 32 affected Core tests pass. Network outage,
+account/quotas and live two-device delivery remain separate gates.
+
 The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
 approved private configuration, real account resolution and account-scoped local
 files while retaining `.none` SwiftData storage. Unbound plans remain separate;

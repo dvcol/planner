@@ -70,6 +70,14 @@ struct PlannerCloudNode: Codable, Sendable, Equatable {
     }
     var merged = server
     for (key, value) in fields where value != base?.fields[key] { merged.fields[key] = value }
+    if let localValue = fields["updatedAt"], let serverValue = server.fields["updatedAt"] {
+      let decoder = JSONDecoder()
+      if let localDate = try decoder.decode(Date?.self, from: localValue),
+        let serverDate = try decoder.decode(Date?.self, from: serverValue)
+      {
+        merged.fields["updatedAt"] = serverDate > localDate ? serverValue : localValue
+      }
+    }
     return merged
   }
 

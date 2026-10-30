@@ -83,3 +83,24 @@ Per the user's latest direction, combine one attended Planner-only iCloud off/on
 cycle with final integrated sync checks. It must prove local read/edit/relaunch,
 same-account resume and no alternate cloud storage. No standalone switch test is
 waiting and no manual account action blocks continuing implementation.
+
+## Durable Share edits and independent fields
+
+The [follow-up native run](evidence/private-sync-pending-edit/runtime.json)
+passes on final source in 37.334 seconds. After a peer imports the plan and
+exits, its Share-role process saves new notes without starting a sync worker.
+Core reports pending cloud work, rather than falsely acknowledging that save.
+The other store independently saves and uploads a new title. Reopening the
+original peer's main-app worker preserves both edits and acknowledges the merged
+record. Complete-plan and fresh-store deletion readback also pass again.
+
+The [first attempt](evidence/private-sync-pending-edit/before-resume.json)
+preserved both content edits but replaced the later title-edit timestamp with
+the older queued notes timestamp. Record merging now retains the later saved
+`updatedAt` from either side. The production-interface check verifies the exact
+later timestamp after synchronization. The affected local cohort passes 32 tests
+across nine suites, adding Item editing and container catalog sorting.
+
+This proves durable pending work and independent-field merging across process
+exit/reopen. It does not qualify a network outage, account removal, quota failure,
+or two-device live delivery; those gates remain open.
