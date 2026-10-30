@@ -52,7 +52,26 @@ enum PlannerNativeStorage {
     guard let directory = try configuredSharedDirectory() else {
       throw sharedStorageUnavailable()
     }
-    return configuration(directory: directory, processRole: .shareExtension)
+    return try privateConfiguration(
+      configuration(directory: directory, processRole: .shareExtension))
+  }
+
+  static func privateConfiguration(_ local: PlannerStorageConfiguration) throws
+    -> PlannerStorageConfiguration
+  {
+    guard
+      let containerIdentifier = Bundle.main.object(
+        forInfoDictionaryKey: "PlannerCloudContainerIdentifier") as? String,
+      !containerIdentifier.isEmpty, !containerIdentifier.contains("$(")
+    else {
+      throw CocoaError(
+        .fileReadUnknown,
+        userInfo: [NSLocalizedDescriptionKey: "Planner's private iCloud configuration is missing."])
+    }
+    return .init(
+      storeURL: local.storeURL, controlURL: local.controlURL,
+      recoveryDirectoryURL: local.recoveryDirectoryURL, processRole: local.processRole,
+      storageMode: .privateCloud(containerIdentifier: containerIdentifier))
   }
 
   private static func sharedStorageUnavailable() -> CocoaError {

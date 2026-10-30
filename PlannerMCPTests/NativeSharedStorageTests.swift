@@ -18,6 +18,15 @@ final class NativeSharedStorageTests: XCTestCase {
     XCTAssertEqual(main.recoveryDirectoryURL, shared.recoveryDirectoryURL)
     XCTAssertEqual(main.processRole, .mainApplication)
     XCTAssertEqual(shared.processRole, .shareExtension)
+    guard case .privateCloud(let containerIdentifier) = shared.storageMode else {
+      return XCTFail("The deployed Share extension must select private synchronization.")
+    }
+    XCTAssertEqual(containerIdentifier, "iCloud.dvcol.planner")
+    let privateMain = try PlannerNativeStorage.privateConfiguration(main)
+    guard case .privateCloud(let mainContainer) = privateMain.storageMode else {
+      return XCTFail("The main app must use the same private configuration.")
+    }
+    XCTAssertEqual(mainContainer, containerIdentifier)
 
     let fixture = sharedDirectory.deletingLastPathComponent().appending(
       path: "PlannerSharedStorageQualification-" + UUID().uuidString,
@@ -134,6 +143,72 @@ final class NativeSharedStorageTests: XCTestCase {
     XCTAssertEqual(sharedItem.content.title, "Shared museum")
     XCTAssertEqual(localItem.content.title, "Local museum")
     XCTAssertEqual(localItem.content.notes, "Keep the original notes")
+  }
+
+  func testDeviceOnlyPlansRequireReviewAndConfirmationBeforePrivateCopy() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let original = try await seededStorage(
+      fixture.configuration, title: "Device-only copy qualification")
+    guard case .exported(let before) = await original.planner.exportData(session: original.session)
+    else {
+      return XCTFail("The original device-only plan must be readable.")
+    }
+    let store = SavedPlannerStore(
+      configuration: try PlannerNativeStorage.privateConfiguration(fixture.configuration))
+    await store.open()
+    XCTAssertTrue(store.isReady)
+    XCTAssertTrue(store.hasPrivateSynchronization)
+    XCTAssertTrue(
+      store.canCopyDevicePlans, "This signed check requires an available private account.")
+    let (privatePlanner, privateSession) = try await store.appIntentContext()
+    guard
+      case .failed(let absent) = await privatePlanner.read(
+        session: privateSession, request: .source(original.source))
+    else { return XCTFail("Opening private plans must not silently copy device-only content.") }
+    XCTAssertEqual(absent.code, "missingReference")
+
+    let backup = try await store.prepareDevicePlansCopy()
+    XCTAssertEqual(backup.backup.items.count, 1)
+    XCTAssertEqual(backup.backup.items.first?.content.title, "Device-only copy qualification")
+    let draft = SavedBackupImportDraft(devicePlans: backup)
+    XCTAssertTrue(draft.isDeviceCopy)
+    XCTAssertFalse(draft.isRecovery)
+    let review = try await store.prepareBackupImport(
+      backup, mode: .skip, restoreDeletedData: false)
+    guard
+      case .failed = await privatePlanner.read(
+        session: privateSession, request: .source(original.source))
+    else { return XCTFail("Preparing the copy must not save it.") }
+    guard case .applied = await store.applyReviewedChange(review, operationIdentifier: UUID()),
+      case .source(.item(let copied)) = await privatePlanner.read(
+        session: privateSession, request: .source(original.source)),
+      case .exported(let after) = await original.planner.exportData(session: original.session)
+    else { return XCTFail("Explicit confirmation must copy the represented plan.") }
+    XCTAssertEqual(copied.content.title, "Device-only copy qualification")
+    XCTAssertEqual(copied.content.notes, "Keep the original notes")
+    XCTAssertEqual(before, after, "Copying must preserve the complete original device-only store.")
+
+    let deletion = PlannerCommand.deleteSource(source: original.source)
+    guard
+      case .reviewed(let removal) = await privatePlanner.prepareReview(
+        session: privateSession, command: deletion),
+      case .applied(_, .complete) = await privatePlanner.execute(
+        .init(
+          operationId: UUID(), session: privateSession, command: deletion,
+          reviewToken: removal.reviewToken)
+      ).outcome
+    else { return XCTFail("Only the copied qualification Item must be removed afterward.") }
+    let deadline = Date().addingTimeInterval(60)
+    while Date() < deadline {
+      if case .status(let status) = await privatePlanner.read(
+        session: privateSession, request: .status),
+        case .idle = status.cloud.state
+      {
+        return
+      }
+      try await Task.sleep(for: .milliseconds(250))
+    }
+    XCTFail("The synthetic copied Item's removal must finish syncing.")
   }
 
   private func seededStorage(_ configuration: PlannerStorageConfiguration, title: String)

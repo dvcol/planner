@@ -25,7 +25,9 @@ capture without giving the extension responsibility for synchronization.
 
 Existing unbound local plans remain in their original store. Establishing a
 private account opens a separate account-bound store and does not silently
-upload, move or delete those plans. Explicit attachment remains follow-up work.
+upload, move or delete those plans. The later
+[deployment slice](private-sync-deployment.md) adds an explicitly reviewed copy
+while preserving the original store.
 
 The [offline Share follow-up](evidence/private-sync-offline-share/runtime.json)
 now proves that a private-configured extension opens an initialized unbound

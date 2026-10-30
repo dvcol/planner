@@ -4,6 +4,12 @@
 <dict>
   <key>PlannerAppGroupIdentifier</key>
   <string>$(PLANNER_APP_GROUP_IDENTIFIER)</string>
+  <key>PlannerCloudContainerIdentifier</key>
+  <string>$(PLANNER_CLOUD_CONTAINER_IDENTIFIER)</string>
+  <key>PlannerCloudEnvironment</key>
+  <string>$(PLANNER_CLOUD_ENVIRONMENT)</string>
+  <key>UIBackgroundModes</key>
+  <array><string>remote-notification</string></array>
   <key>UTExportedTypeDeclarations</key>
   <array>
     <dict>

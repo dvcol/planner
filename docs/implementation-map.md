@@ -590,6 +590,14 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
   Production remains local-only; integration must preserve local plans through
   cache reset. The private-only requirement forbids a developer cloud fallback
   when access is unavailable or the user's quota is full.
+- **CKSyncEngine implementation, 30 October:** real private-cloud complete-plan,
+  pending Share edit, independent-field/timestamp, deletion, staging-retry and
+  permanent-upload-rejection checks pass. Offline Share and missing-owner
+  safeguards also pass. The [deployment slice](prototypes/private-sync-deployment.md)
+  wires normal app/Share storage and explicit reviewed copying of device-only
+  plans; both platform builds and six signed native storage checks pass. Installed Planner is unchanged. Two-device
+  live delivery, final native controls and the combined off/on/read/edit/relaunch
+  checks remain open. No separate switch test blocks implementation.
 - **Signing and device access:** the enrolled team and registered identifiers
   are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
   resources; device availability and manual automation approval remain per-run

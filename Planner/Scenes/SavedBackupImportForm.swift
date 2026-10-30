@@ -4,6 +4,7 @@ import SwiftUI
 struct SavedBackupImportDraft: Identifiable {
   enum Source {
     case file(filename: String, backup: PlannerDecodedBackup)
+    case devicePlans(PlannerDecodedBackup)
     case recovery(PlannerRecoverySelection)
   }
 
@@ -18,6 +19,10 @@ struct SavedBackupImportDraft: Identifiable {
     source = .recovery(recoverySelection)
   }
 
+  init(devicePlans: PlannerDecodedBackup) {
+    source = .devicePlans(devicePlans)
+  }
+
   var recoverySelection: PlannerRecoverySelection? {
     guard case .recovery(let selection) = source else { return nil }
     return selection
@@ -25,9 +30,15 @@ struct SavedBackupImportDraft: Identifiable {
 
   var isRecovery: Bool { recoverySelection != nil }
 
+  var isDeviceCopy: Bool {
+    if case .devicePlans = source { return true }
+    return false
+  }
+
   var name: String {
     switch source {
     case .file(let filename, _): filename
+    case .devicePlans: "Device-only plans"
     case .recovery(let selection):
       switch selection.evidence {
       case .acknowledgedSnapshot: "Saved snapshot"
@@ -60,6 +71,12 @@ struct SavedBackupImportForm: View {
       Form {
         Section {
           Text(draft.name).font(.headline)
+          if draft.isDeviceCopy {
+            Text(
+              "Copy these plans to your current private iCloud account. Device-only originals stay unchanged. Existing matching plans are kept."
+            )
+            .foregroundStyle(.secondary)
+          }
           if let recoverySelection = draft.recoverySelection {
             LabeledContent("Destination", value: "Current Planner")
               .accessibilityIdentifier("saved.recovery.restore.target")
@@ -76,18 +93,20 @@ struct SavedBackupImportForm: View {
           }
           if appliedResult != nil {
             Label(
-              draft.isRecovery ? "Restore applied" : "Import applied",
+              appliedTitle,
               systemImage: "checkmark.circle"
             )
             .accessibilityIdentifier(
               draft.isRecovery ? "saved.recovery.restore.applied" : "saved.import.applied")
           } else {
-            Picker("Matching records", selection: $mode) {
-              Text("Skip").tag(PlannerImportMode.skip)
-              Text("Overwrite").tag(PlannerImportMode.overwrite)
+            if !draft.isDeviceCopy {
+              Picker("Matching records", selection: $mode) {
+                Text("Skip").tag(PlannerImportMode.skip)
+                Text("Overwrite").tag(PlannerImportMode.overwrite)
+              }
+              .accessibilityIdentifier("saved.import.mode")
+              .disabled(store.isSaving)
             }
-            .accessibilityIdentifier("saved.import.mode")
-            .disabled(store.isSaving)
             Text(modeExplanation)
               .foregroundStyle(.secondary)
             if mode == .overwrite && !draft.isRecovery {
@@ -148,7 +167,7 @@ struct SavedBackupImportForm: View {
         }
         if appliedResult == nil {
           ToolbarItem(placement: .confirmationAction) {
-            Button(draft.isRecovery ? "Restore" : "Import") { Task { await confirmImport() } }
+            Button(actionTitle) { Task { await confirmImport() } }
               .disabled(currentReview == nil || isReviewing || !store.canCreate)
               .accessibilityIdentifier("saved.import.confirm")
           }
@@ -175,8 +194,19 @@ struct SavedBackupImportForm: View {
   }
 
   private var navigationTitle: String {
+    if draft.isDeviceCopy { return appliedResult == nil ? "Review local plans" : "Copy result" }
     if appliedResult != nil { return draft.isRecovery ? "Restore Result" : "Import Result" }
     return draft.isRecovery ? "Review Recovery" : "Review Backup"
+  }
+
+  private var actionTitle: String {
+    if draft.isDeviceCopy { return "Copy to iCloud" }
+    return draft.isRecovery ? "Restore" : "Import"
+  }
+
+  private var appliedTitle: String {
+    if draft.isDeviceCopy { return "Plans copied" }
+    return draft.isRecovery ? "Restore applied" : "Import applied"
   }
 
   private var modeExplanation: String {
@@ -208,6 +238,9 @@ struct SavedBackupImportForm: View {
       case .file(_, let backup):
         prepared = try await store.prepareBackupImport(
           backup, mode: mode, restoreDeletedData: mode == .overwrite && restoreDeletedData)
+      case .devicePlans(let backup):
+        prepared = try await store.prepareBackupImport(
+          backup, mode: .skip, restoreDeletedData: false)
       case .recovery(let recoverySelection):
         prepared = try await store.prepareRecoveryRestoration(recoverySelection, mode: mode)
       }

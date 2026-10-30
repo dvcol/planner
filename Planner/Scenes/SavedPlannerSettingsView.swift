@@ -16,6 +16,7 @@ struct SavedPlannerSettingsView: View {
   @State private var importURL: URL?
   @State private var importDraft: SavedBackupImportDraft?
   @State private var importFailure: String?
+  @State private var isReadingDevicePlans = false
 
   var body: some View {
     NavigationStack {
@@ -38,6 +39,14 @@ struct SavedPlannerSettingsView: View {
                     || store.isSynchronizing
                 )
                 .accessibilityIdentifier("saved.settings.sync.retry")
+                if store.canCopyDevicePlans {
+                  Button("Copy device-only plans to iCloud", systemImage: "icloud.and.arrow.up") {
+                    Task { await prepareDevicePlansCopy() }
+                  }
+                  .disabled(!store.canCreate || isReadingDevicePlans)
+                  .accessibilityIdentifier("saved.settings.sync.copyLocal")
+                }
+                if isReadingDevicePlans { ProgressView("Reading device-only plans") }
               } header: {
                 Text("iCloud")
               } footer: {
@@ -174,6 +183,21 @@ struct SavedPlannerSettingsView: View {
       importDraft = .init(filename: selectedURL.lastPathComponent, backup: backup)
     } catch {
       guard !Task.isCancelled, importURL == selectedURL else { return }
+      importFailure = (error as? PlannerFailure)?.message ?? error.localizedDescription
+    }
+  }
+
+  private func prepareDevicePlansCopy() async {
+    guard !isReadingDevicePlans else { return }
+    isReadingDevicePlans = true
+    importFailure = nil
+    defer { isReadingDevicePlans = false }
+    do {
+      let backup = try await store.prepareDevicePlansCopy()
+      guard !Task.isCancelled else { return }
+      importDraft = .init(devicePlans: backup)
+    } catch {
+      guard !Task.isCancelled else { return }
       importFailure = (error as? PlannerFailure)?.message ?? error.localizedDescription
     }
   }

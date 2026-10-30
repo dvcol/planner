@@ -49,6 +49,7 @@ enum SavedReviewedChangeResult {
 @MainActor @Observable
 final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
+  @ObservationIgnored private var deviceOnlyConfiguration: PlannerStorageConfiguration?
   private(set) var hasPrivateSynchronization = false
   private(set) var synchronizationTitle = "Saved on this device"
   private(set) var synchronizationMessage: String?
@@ -97,6 +98,13 @@ final class SavedPlannerStore {
   }
   var currentDatasetIdentifier: UUID? { session?.datasetId }
 
+  var canCopyDevicePlans: Bool {
+    guard session?.ownershipBinding.hasPrefix("private-cloud-v1:") == true,
+      let deviceOnlyConfiguration
+    else { return false }
+    return FileManager.default.fileExists(atPath: deviceOnlyConfiguration.storeURL.path)
+  }
+
   var devicePreferenceNamespace: String? {
     guard let session else { return nil }
     let identity = session.datasetId.uuidString + ":" + session.ownershipBinding
@@ -105,7 +113,13 @@ final class SavedPlannerStore {
 
   init(configuration: PlannerStorageConfiguration) {
     planner = PlannerCore.Planner(configuration: configuration)
-    if case .privateCloud = configuration.storageMode { hasPrivateSynchronization = true }
+    if case .privateCloud = configuration.storageMode {
+      hasPrivateSynchronization = true
+      deviceOnlyConfiguration = .init(
+        storeURL: configuration.storeURL, controlURL: configuration.controlURL,
+        recoveryDirectoryURL: configuration.recoveryDirectoryURL,
+        processRole: .mainApplication, storageMode: .localOnly)
+    }
   }
 
   init(planner: PlannerCore.Planner) {
@@ -144,10 +158,15 @@ final class SavedPlannerStore {
     do {
       let sharedDirectory =
         isLocalPrototype ? nil : try PlannerNativeStorage.configuredSharedDirectory()
-      let configuration = try PlannerNativeStorage.mainConfiguration(
+      let local = try PlannerNativeStorage.mainConfiguration(
         localDirectory: directory, sharedDirectory: sharedDirectory)
+      let configuration =
+        isLocalPrototype ? local : try PlannerNativeStorage.privateConfiguration(local)
       planner = PlannerCore.Planner(configuration: configuration)
-      if case .privateCloud = configuration.storageMode { hasPrivateSynchronization = true }
+      if case .privateCloud = configuration.storageMode {
+        hasPrivateSynchronization = true
+        deviceOnlyConfiguration = local
+      }
     } catch {
       planner = nil
       openingFailure = error.localizedDescription
@@ -246,7 +265,7 @@ final class SavedPlannerStore {
         ready.ownershipBinding == expected.ownershipBinding
       else {
         changeObservationFailure =
-          "The available Planner data changed. Reopen this window to continue."
+          "The available Planner account changed. Quit and reopen Planner to use its data."
         return
       }
       session = ready
@@ -441,6 +460,37 @@ final class SavedPlannerStore {
     case .exported(let data): return data
     case .failed(let reason): throw reason
     }
+  }
+
+  /// Read the original unbound store; only a separately confirmed import may upload its plans.
+  func prepareDevicePlansCopy() async throws -> PlannerDecodedBackup {
+    guard canCreate, canCopyDevicePlans, let deviceOnlyConfiguration, let expected = session else {
+      throw CocoaError(.fileReadUnknown)
+    }
+    let local = PlannerCore.Planner(configuration: deviceOnlyConfiguration)
+    let localSession: PlannerDatasetSession
+    switch await local.bootstrap() {
+    case .ready(let ready): localSession = ready
+    case .unavailable(let reason): throw reason
+    default: throw CocoaError(.fileReadUnknown)
+    }
+    let data: Data
+    switch await local.exportData(session: localSession) {
+    case .exported(let exported): data = exported
+    case .failed(let reason): throw reason
+    }
+    let decoded = try await decodeBackup(data)
+    guard session == expected else {
+      throw CocoaError(
+        .fileReadUnknown,
+        userInfo: [NSLocalizedDescriptionKey: "Planner data changed; review the copy again."])
+    }
+    guard !decoded.backup.sources.isEmpty else {
+      throw CocoaError(
+        .fileReadUnknown,
+        userInfo: [NSLocalizedDescriptionKey: "There are no device-only plans to copy."])
+    }
+    return decoded
   }
 
   func readRecoveryCopies() async throws -> [PlannerRecoveryView] {
