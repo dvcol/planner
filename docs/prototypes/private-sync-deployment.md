@@ -219,3 +219,36 @@ retains the creation/receipt and cancellation outcomes without committing the
 unrelated video capture. The native edit helper now requires a hittable Save
 before submission. Strict Swift formatting and device compilation pass; its
 positive retry and exact fixture cleanup await idle, unobstructed devices.
+
+## Unobstructed two-device live sync
+
+After the user closes the floating video and confirms both devices are idle,
+the native replacement and exact-fixture cleanup passes in 40.523 seconds.
+It verifies the complete saved replacement before deleting only Item
+`E889940B-7A26-4235-B95C-60EF388F1474`. The
+[unobstructed native result](evidence/private-sync-deployment/mobile-native-save-unobstructed.json)
+qualifies the Save-readiness check and closes that fixture cleanup.
+
+The subsequent [live pair](evidence/private-sync-deployment/mobile-live-pair.json)
+passes on both physical devices: iPhone 92.367 seconds, iPad 78.153 seconds,
+with unchanged sources and no skips. iPhone creates Item
+`CB1F083B-E796-41A8-91DF-8C6C1B1DA093`; iPad receives its exact identity and
+changes its notes; iPhone receives those notes and changes its title. The open
+iPad receives both values, preserves them through relaunch and deletes only
+that Item. The open iPhone receives the deletion and confirms it after relaunch.
+Both devices clear the test search afterward.
+
+This establishes normal native-app private synchronization, bidirectional live
+edits and deletion across the two same-account mobile devices. It does not
+close the separate Mac already-open-peer diagnostic, conflict/failure cases or
+the combined private-iCloud off/on check. The latter is prepared as the next
+integrated session; no iCloud switch has changed in the live journey.
+
+The user then asks to stop overtesting iCloud and prioritize Item-row UI. The
+prepared off/on session is cancelled before its draft Save or any iCloud switch
+change. Its unfinished test-owned draft is discarded by normal app relaunch;
+both devices return to ordinary Planner use. The
+[deferred-session result](evidence/private-sync-deployment/mobile-off-on-deferred.json)
+records both cancellations separately from the successful live pair. Off/on
+remains unqualified; no further run is planned in the current UI pass. Normal
+two-device creation, bidirectional edits, deletion and relaunch are proven.

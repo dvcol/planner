@@ -72,6 +72,10 @@ local UI evidence from remaining physical, Mac interaction and sync acceptance.
 The matching mobile update is now installed, and the actual iPhone rotation
 journey passes with the same 254 inputs. This clears its observed app/test-runner
 trust blocker for that execution; integrated sync acceptance remains open.
+The [same-account mobile live-sync journey](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
+now passes in both directions, including exact identity, notes/title convergence,
+deletion and relaunch. The combined off/on and remaining failure/conflict checks
+are still separate acceptance work.
 
 Normal app/Share private-sync wiring and reviewed device-only copying are
 implemented in the [deployment checkpoint](prototypes/private-sync-deployment.md).
