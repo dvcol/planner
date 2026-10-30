@@ -163,4 +163,20 @@ The [compact result](evidence/private-sync-deployment/mobile-editor-diagnostic.j
 and original input hashes remain at
 `/private/tmp/PlannerPrivateMobilePair-c79e077e-d8f7-4305-ab33-12da2bf2ce02`.
 The native test now uses Select All before replacement and has an exact-identity
-fixture check before cleanup; that correction needs its actual device result.
+fixture check before cleanup. Its physical iPad regression passes in 39.678
+seconds, reading the exact complete replacement before deleting only that
+fixture. The original screenshot is inspected, source hashes are unchanged and
+the [compact native result](evidence/private-sync-deployment/native-editor-replacement.json)
+retains the original result path. An earlier queued attempt loses its test
+connection before any test starts while the device is locked; it supplies no
+regression credit.
+
+The subsequent paired retry stops before the iPhone test starts because iOS
+reports **Developer App Certificate is not trusted**. Both signed bundles still
+use `Apple Development: Dinh-Van Colomban (KX26Z8L8LW)` under team `Y6HV37KJ2G`.
+The waiting iPad receiver is cancelled; that retry creates no new Item. Manual
+device-only developer trust is requested. Full two-device edit/deletion and the
+combined private off/on cycle remain open; no iCloud setting has been changed.
+The user reports that no Developer App entry is shown on the iPhone. That
+deployment issue needs investigation; the current priority moves to the reported
+iPhone rotation and Calendar layout defects without additional security changes.
