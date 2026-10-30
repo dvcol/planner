@@ -10679,6 +10679,13 @@ extension Planner {
     async
   {
     guard privateSyncGeneration == generation else { return }
+    if case .error = observation.state, case .error = cloudObservation.state,
+      observation.storeIdentity == cloudObservation.storeIdentity,
+      observation.reason?.code == cloudObservation.reason?.code,
+      observation.reason?.message == cloudObservation.reason?.message
+    {
+      return
+    }
     cloudObservation = observation
     do {
       try coordinated {

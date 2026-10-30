@@ -115,3 +115,27 @@ contents remain unchanged. The [native result](evidence/private-sync-older-write
 passes in 1.037 seconds. This qualifies the older-writer refusal, not every
 historical data migration. It requires no account setting or signing-resource
 change.
+
+## Retry after rejected incoming staging
+
+The [new regression](evidence/private-sync-staging-retry/before-peer.json)
+reproduces a missed download after a temporary local binding failure. A test-owned
+peer invalidates only its disposable writer-control epoch during the initial
+fetch, observes the actual staging error, then restores the original bytes.
+Previously, retry reused the engine's advanced in-memory fetch state and did not
+recover the expected graph. No iCloud account setting changes in this test.
+
+The worker now pauses after an inbox/state write fails, ignores subsequent
+transport updates and reloads the last durable state when retry is requested.
+Account invalidation still works while paused. New incoming conflict/deletion
+knowledge also receives this protection. An already durable inbox remains
+available when graph validation rejects its application. Repeated identical
+cloud errors coalesce instead of creating further metadata writes.
+
+The [final signed run](evidence/private-sync-staging-retry/runtime.json) passes
+in 77.189 seconds, including observed failure, repaired retry, exact complete-plan
+readback, pending Share edits, field/timestamp merging and fresh-store deletion.
+The affected Core cohort passes 22 tests in seven suites. Mac/mobile compilation
+and strict formatting pass. This is a local staging/retry check; actual disk-full,
+quota, permanent server rejection and two-device live/account behavior still
+need their separate qualification. No domain, portable or recovery format changes.

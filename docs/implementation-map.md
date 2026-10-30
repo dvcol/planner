@@ -91,6 +91,13 @@ also passes: unchanged `f3efee75` Core rejects a private gate-24 store with
 `unsupportedVersion`, preserving all 32 fixture files. This closes that local
 compatibility check without activating production sync or changing accounts.
 
+The [incoming staging retry correction](prototypes/private-sync-engine.md#retry-after-rejected-incoming-staging)
+reproduces and fixes a missed download after a disposable local binding failure.
+Retry reloads durable engine state, and repeated errors coalesce. The final signed
+77.189-second journey retains the earlier full-plan, Share-edit and deletion
+checks; the focused 22-test cohort passes. Actual quota/disk-full and permanent
+server rejection, active app integration and physical live sync remain open.
+
 The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
 approved private configuration, real account resolution and account-scoped local
 files while retaining `.none` SwiftData storage. Unbound plans remain separate;

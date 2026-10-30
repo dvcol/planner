@@ -30,6 +30,8 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   private var sendFailure: PlannerFailure?
   private var fetching = false
   private var sending = false
+  private enum PersistenceState { case ready, reloadRequired, reloading }
+  private var persistenceState = PersistenceState.ready
 
   private init(client: Client, state: PlannerPrivateSyncState, lease: PlannerPrivateSyncLease) {
     self.client = client
@@ -44,13 +46,14 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
     let state = try await client.load() ?? .init(ownershipBinding: binding.ownershipBinding)
     try state.validated(binding: binding.ownershipBinding)
     let worker = PlannerPrivateSync(client: client, state: state, lease: lease)
-    await worker.initialize(containerIdentifier: binding.containerIdentifier)
+    await worker.initialize(
+      database: CKContainer(identifier: binding.containerIdentifier).privateCloudDatabase)
     return worker
   }
 
-  private func initialize(containerIdentifier: String) async {
+  private func initialize(database: CKDatabase) async {
     let configuration = CKSyncEngine.Configuration(
-      database: CKContainer(identifier: containerIdentifier).privateCloudDatabase,
+      database: database,
       stateSerialization: state.serialization, delegate: self)
     engine = CKSyncEngine(configuration)
     if !state.zoneCreated {
@@ -71,6 +74,12 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   }
 
   func requestSync() async {
+    guard valid else { return }
+    if persistenceState == .reloading { return }
+    if persistenceState == .reloadRequired {
+      await reload()
+      return
+    }
     sendFailure = nil
     await localDataChanged()
     scheduleNetwork()
@@ -87,7 +96,36 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
     } catch { await report(error) }
   }
 
-  private var isValid: Bool { valid }
+  /// Failed inbox/state writes must not advance the engine beyond durable data.
+  private func reload() async {
+    guard let previous = engine else { return }
+    persistenceState = .reloading
+    defer {
+      if persistenceState == .reloading { persistenceState = .reloadRequired }
+    }
+    networkRequested = false
+    let previousNetwork = networkTask
+    previousNetwork?.cancel()
+    await previous.cancelOperations()
+    await previousNetwork?.value
+    await tail?.value
+    guard valid else { return }
+    do {
+      let saved = try await client.load() ?? state
+      try saved.validated(binding: state.ownershipBinding)
+      guard valid else { return }
+      state = saved
+      engine = nil
+      sentNodes.removeAll()
+      fetching = false
+      sending = false
+      persistenceState = .ready
+      sendFailure = nil
+      await initialize(database: previous.database)
+    } catch { await report(error) }
+  }
+
+  private var isValid: Bool { valid && persistenceState == .ready }
 
   /// Delegate events and local observations share one transaction queue across actor suspension.
   private func ordered<Value: Sendable>(
@@ -106,6 +144,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
     guard valid, engine === syncEngine else { return }
     if case .accountChange(let change) = event {
       if case .signIn(let user) = change.changeType, matchesUser(user.recordName) {
+        guard isValid else { return }
         if !state.zoneCreated {
           syncEngine.state.add(pendingDatabaseChanges: [
             .saveZone(CKRecordZone(zoneID: PlannerCloudNode.zoneID))
@@ -120,9 +159,13 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
       Task { await self.stop() }
       return
     }
+    guard isValid else { return }
     do {
       try await ordered { [self] in try await receive(event, engine: syncEngine) }
-    } catch { await report(error) }
+    } catch {
+      if case .fetchedRecordZoneChanges = event { persistenceState = .reloadRequired }
+      await report(error)
+    }
   }
 
   private func matchesUser(_ recordName: String) -> Bool {
@@ -135,7 +178,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   }
 
   private func receive(_ event: CKSyncEngine.Event, engine: CKSyncEngine) async throws {
-    guard valid else { return }
+    guard isValid else { return }
     switch event {
     case .stateUpdate(let update):
       var next = state
@@ -259,7 +302,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   }
 
   private func finishIncoming() async throws {
-    guard valid else { return }
+    guard isValid else { return }
     guard !state.incomingRecords.isEmpty || !state.incomingDeletions.isEmpty else {
       try await persist(state)
       return
@@ -283,9 +326,9 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   }
 
   private func enqueueLocalChanges() async throws -> Bool {
-    guard valid, let engine else { return false }
+    guard isValid, let engine else { return false }
     let nodes = try await client.nodes()
-    guard valid else { return false }
+    guard isValid else { return false }
     let local = Dictionary(uniqueKeysWithValues: nodes.map { ($0.name, $0) })
     var changes: [CKSyncEngine.PendingRecordZoneChange] = []
     for node in nodes where !state.incomingDeletions.contains(node.name) {
@@ -308,7 +351,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   func nextRecordZoneChangeBatch(
     _ context: CKSyncEngine.SendChangesContext, syncEngine: CKSyncEngine
   ) async -> CKSyncEngine.RecordZoneChangeBatch? {
-    guard valid, engine === syncEngine else { return nil }
+    guard isValid, engine === syncEngine else { return nil }
     do {
       return try await ordered { [self] in try await batch(context, engine: syncEngine) }
     } catch {
@@ -320,9 +363,9 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   private func batch(
     _ context: CKSyncEngine.SendChangesContext, engine: CKSyncEngine
   ) async throws -> CKSyncEngine.RecordZoneChangeBatch? {
-    guard valid, sendFailure == nil else { return nil }
+    guard isValid, sendFailure == nil else { return nil }
     let nodes = try await client.nodes()
-    guard valid else { return nil }
+    guard isValid else { return nil }
     let local = Dictionary(uniqueKeysWithValues: nodes.map { ($0.name, $0) })
     let pending = engine.state.pendingRecordZoneChanges.filter {
       context.options.scope.contains($0)
@@ -355,8 +398,20 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   private func persist(
     _ next: PlannerPrivateSyncState, applying changes: PlannerCloudGraph.Changes? = nil
   ) async throws {
-    guard valid else { throw CancellationError() }
-    let result = try await client.persist(next, changes)
+    guard isValid else { throw CancellationError() }
+    let result: PlannerPrivateSyncPersistence
+    do {
+      result = try await client.persist(next, changes)
+    } catch {
+      if case nil = changes {
+        persistenceState = .reloadRequired
+      } else if next.incomingRecords.contains(where: { state.incomingRecords[$0.key] != $0.value })
+        || !next.incomingDeletions.isSubset(of: state.incomingDeletions)
+      {
+        persistenceState = .reloadRequired
+      }
+      throw error
+    }
     guard valid else { return }
     state = next
     if case .recoveryIncomplete(let reason) = result {
@@ -368,7 +423,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   }
 
   private func scheduleNetwork() {
-    guard valid else { return }
+    guard isValid else { return }
     if networkTask != nil {
       networkRequested = true
       return
@@ -384,14 +439,14 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
         scheduleNetwork()
       }
     }
-    guard valid, let engine else { return }
+    guard isValid, let engine else { return }
     do { try await engine.fetchChanges() } catch {
       await report(error)
     }
-    guard valid, !Task.isCancelled, sendFailure == nil else { return }
+    guard isValid, !Task.isCancelled, sendFailure == nil else { return }
     do {
       try await engine.sendChanges(.init(scope: .zoneIDs([PlannerCloudNode.zoneID])))
-      if valid, !Task.isCancelled { try await engine.fetchChanges() }
+      if isValid, !Task.isCancelled { try await engine.fetchChanges() }
     } catch { await report(error) }
   }
 
