@@ -393,7 +393,7 @@ struct SavedPlannerView: View {
         SavedBulkCompletionForm(store: store, draft: draft)
       }
       .alert(
-        "Planner",
+        "Plan 2Do",
         isPresented: Binding(
           get: {
             store.alertMessage != nil && itemEditDraft == nil && itemDeletionDraft == nil
@@ -1726,7 +1726,7 @@ struct SavedPlannerView: View {
     .safeAreaInset(edge: .top) {
       if selectedSection == .lists { recoveryNotice }
     }
-    .navigationTitle("Planner")
+    .navigationTitle("Plan 2Do")
     .toolbarTitleDisplayMode(.inline)
     .navigationSplitViewColumnWidth(
       min: sidebarMinimumWidth, ideal: sidebarPreferredWidth, max: sidebarMaximumWidth
@@ -2841,7 +2841,7 @@ private struct SavedListForm: View {
     }
     .interactiveDismissDisabled(store.isSaving)
     .alert(
-      "Planner",
+      "Plan 2Do",
       isPresented: Binding(
         get: { store.alertMessage != nil }, set: { if !$0 { store.alertMessage = nil } })
     ) {

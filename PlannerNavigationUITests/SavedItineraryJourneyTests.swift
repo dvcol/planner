@@ -523,7 +523,7 @@ final class SavedItineraryJourneyTests: XCTestCase {
     XCTAssertFalse(converted.exists)
     XCTAssertTrue(application.staticTexts["Keep the route"].exists)
     XCTAssertTrue(application.staticTexts["No items"].exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     recordScreenshot(application, name: "Native Itinerary schedule removal survives relaunch")
   }
 

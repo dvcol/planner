@@ -240,7 +240,7 @@
 
     private func openPlannerShare(in sender: XCUIApplication) {
       let planner = sender.descendants(matching: .any).matching(
-        NSPredicate(format: "label == %@", "Planner")
+        NSPredicate(format: "label == %@", "Plan 2Do")
       ).firstMatch
       if !planner.waitForExistence(timeout: 3) {
         let share = sender.buttons.matching(

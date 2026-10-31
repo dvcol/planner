@@ -113,7 +113,7 @@ struct SavedPlannerSettingsView: View {
           ProgressView("Opening Planner")
         }
       }
-      .navigationTitle("Planner Settings")
+      .navigationTitle("Plan 2Do Settings")
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

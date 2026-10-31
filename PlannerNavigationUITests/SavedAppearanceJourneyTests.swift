@@ -538,7 +538,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
         showSidebar.activateForPlannerJourney()
       }
       if !filter.exists || !filter.isHittable {
-        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+        let overflow = application.navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"]
           .firstMatch
         XCTAssertTrue(overflow.waitForPlannerHittability())
         overflow.activateForPlannerJourney()

@@ -41,7 +41,7 @@ final class DeletionRecoveryJourneyTests: XCTestCase {
       application, name: "Applied deletion retains an honest recovery failure and Close action")
     close.activateForPlannerJourney()
     XCTAssertTrue(confirm.waitForNonExistence(timeout: 10))
-    let alert = application.alerts["Planner"]
+    let alert = application.alerts["Plan 2Do"]
     if alert.waitForExistence(timeout: 3) {
       XCTAssertTrue(alert.staticTexts[message].exists)
       alert.buttons["OK"].activateForPlannerJourney()

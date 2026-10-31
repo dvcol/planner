@@ -317,7 +317,7 @@ private struct SavedLabelForm: View {
       SavedSourceDeletionForm(store: store, draft: draft) { _ in deletionCompleted = true }
     }
     .alert(
-      "Planner",
+      "Plan 2Do",
       isPresented: Binding(
         get: { store.alertMessage != nil && deletionDraft == nil },
         set: { if !$0 { store.alertMessage = nil } })

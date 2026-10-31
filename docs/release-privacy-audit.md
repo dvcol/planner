@@ -1,7 +1,8 @@
 # Release privacy audit
 
-31 October 2026. This is a source and built-bundle review, not an App Store
-privacy submission or an approval of final release materials.
+31 October 2026. This records the source and built-bundle review, followed by
+the explicitly approved Apple privacy declaration. It is not final MVP or
+release acceptance.
 
 ## Required-reason APIs
 
@@ -78,10 +79,15 @@ audit. See
 - [ ] Generate/review Xcode's aggregate privacy report and any upload warnings.
 - [x] Prepare public policy/support pages using the existing GitHub issue
       tracker, without private contact details.
-- [ ] Complete App Store privacy answers from the actual release artifact.
+- [x] Complete App Store privacy answers from the actual release artifact and
+      explicit owner approval. Apple reports the responses published as
+      “Data Not Collected.”
 
-No account setting, cloud schema, developer identifier, distribution resource,
-App Store listing or public repository branch is changed by this audit.
+The initial audit itself changed no account or distribution settings. Subsequent
+authorized release preparation deployed the reviewed Production schema, created
+the Plan 2Do listing and uploaded both distribution packages. The owner separately
+approved publishing the reviewed privacy responses and Apple's compliance
+confirmation. These actions do not release the app.
 
 ## Initial release metadata
 
@@ -93,3 +99,14 @@ See
 [Apple's export guidance](https://developer.apple.com/documentation/security/complying-with-encryption-export-regulations).
 This declaration does not replace any additional question Apple presents for the
 final uploaded artifact.
+
+## Distribution artifact readback
+
+The final signed iOS and arm64 Mac packages have app and Share display names
+Plan 2Do, version `1.0.0` (build `1`) and the reviewed encryption declaration.
+The main app has Production private CloudKit access; Share uses the shared local
+container without a direct CloudKit entitlement. Distribution packaging disables
+debugging and contains no test bundles. Both signatures verify, and Xcode reports
+successful uploads. App Store Connect reports both builds “Ready to Submit.”
+Any later validation warnings remain separate checks. No installed development
+app was replaced.

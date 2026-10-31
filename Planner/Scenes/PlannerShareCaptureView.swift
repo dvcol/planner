@@ -32,13 +32,13 @@ struct PlannerShareCaptureView: View {
           Group {
             if let failure = store.openingFailure {
               ContentUnavailableView(
-                "Open Planner to prepare Share", systemImage: "exclamationmark.triangle",
+                "Open Plan 2Do to prepare Share", systemImage: "exclamationmark.triangle",
                 description: Text(failure))
             } else if store.recoveryBlocked {
               ContentUnavailableView(
-                "Open Planner to review recovery", systemImage: "exclamationmark.triangle",
+                "Open Plan 2Do to review recovery", systemImage: "exclamationmark.triangle",
                 description: Text(
-                  "Further changes are paused until Planner's local recovery is ready. Open Planner to review or retry recovery, then share again."
+                  "Further changes are paused until Plan 2Do's local recovery is ready. Open Plan 2Do to review or retry recovery, then share again."
                 ))
             } else {
               ProgressView("Loading shared content")

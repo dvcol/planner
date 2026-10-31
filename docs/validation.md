@@ -32,6 +32,15 @@ GitHub caches cannot be recalled by rewriting branch references.
   The older Simulator theme mismatch has no proven cause.
 - Affected Simulator, Mac and signed mobile builds pass. The signed mobile build
   has not been newly installed for this editor change.
+- The final Plan 2Do packaging change passes the existing phone Simulator
+  creation/cancel/completion/relaunch journey in 61.841 seconds. Affected Swift
+  formatting, shell syntax, project/scheme and Info-plist checks pass. Signed
+  iOS and arm64 Mac Release archives and App Store exports pass signature and
+  bundle inspection with version `1.0.0` (build `1`), the intended app/group
+  identifiers and Production private CloudKit. Xcode reports successful upload
+  for both packages. App Store Connect subsequently reports both builds
+  “Ready to Submit.” This does not prove review, final acceptance or release;
+  the installed development app remains untouched.
 - Recorded same-account physical iPhone/iPad create, bidirectional edits, delete
   and relaunch pass with private CKSyncEngine synchronization. Further
   account-transition and stress scenarios remain deferred.
@@ -49,10 +58,11 @@ probes did not establish a fix and were reverted; no audit exclusion is added.
 Functional passes do not constitute a passing Save contrast audit.
 
 Hands-on keyboard, assistive/layout and final daily-use acceptance remain open
-in the [canonical map](https://github.com/dvcol/planner/issues/1). Unlisted
-release preparation separately awaits the final name and Production schema
-approval. Reviewed application source is published on `main`; generated
-artifacts are excluded from the handoff.
+in the [canonical map](https://github.com/dvcol/planner/issues/1). Apple accepted
+Plan 2Do; the approved Production schema is deployed and both release packages
+uploaded. Store assets, review metadata and remaining declarations still precede
+submission and unlisted approval. Reviewed application source is published on
+`main`; generated artifacts are excluded from the handoff.
 
 ## Repository cleanup
 

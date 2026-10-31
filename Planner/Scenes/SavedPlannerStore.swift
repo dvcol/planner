@@ -201,9 +201,9 @@ final class SavedPlannerStore {
       await refreshRecoveryStatus()
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired:
-      openingFailure = "Open Planner once to set up its shared data before using Share."
+      openingFailure = "Open Plan 2Do once to set up its shared data before using Share."
     case .mainAppMigrationRequired:
-      openingFailure = "Open Planner to update its shared data before using Share."
+      openingFailure = "Open Plan 2Do to update its shared data before using Share."
     }
   }
 
@@ -274,9 +274,9 @@ final class SavedPlannerStore {
       changeRevision = UUID()
     case .unavailable(let reason): changeObservationFailure = reason.message
     case .mainAppSetupRequired:
-      changeObservationFailure = "Open Planner to finish setting up its shared data."
+      changeObservationFailure = "Open Plan 2Do to finish setting up its shared data."
     case .mainAppMigrationRequired:
-      changeObservationFailure = "Open Planner to finish updating its shared data."
+      changeObservationFailure = "Open Plan 2Do to finish updating its shared data."
     }
   }
 
@@ -305,7 +305,7 @@ final class SavedPlannerStore {
         userInfo: [
           NSLocalizedDescriptionKey:
             changeObservationFailure ?? recoveryStatusFailure
-            ?? "Planner cannot make this change now. Open Planner to review its status."
+            ?? "Planner cannot make this change now. Open Plan 2Do to review its status."
         ])
     }
     return await executeAdmittedChange(
@@ -324,7 +324,7 @@ final class SavedPlannerStore {
         .fileWriteUnknown,
         userInfo: [
           NSLocalizedDescriptionKey: changeObservationFailure ?? recoveryStatusFailure
-            ?? "Planner cannot make this change now. Open Planner to review its status."
+            ?? "Planner cannot make this change now. Open Plan 2Do to review its status."
         ])
     }
     switch await planner.prepareReview(

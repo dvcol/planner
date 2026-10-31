@@ -129,9 +129,9 @@ final class ShareCaptureJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     XCTAssertTrue(
-      application.staticTexts["Open Planner to prepare Share"].waitForExistence(timeout: 10))
+      application.staticTexts["Open Plan 2Do to prepare Share"].waitForExistence(timeout: 10))
     XCTAssertTrue(
-      application.staticTexts["Open Planner to update its shared data before using Share."].exists)
+      application.staticTexts["Open Plan 2Do to update its shared data before using Share."].exists)
     XCTAssertFalse(application.plannerElement("saved.capture.add").exists)
     XCTAssertFalse(application.plannerElement("saved.capture.review").exists)
     XCTAssertFalse(application.textFields["saved.capture.title"].exists)
@@ -222,7 +222,7 @@ final class ShareCaptureJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     XCTAssertTrue(
-      application.staticTexts["Open Planner to review recovery"].waitForExistence(timeout: 10))
+      application.staticTexts["Open Plan 2Do to review recovery"].waitForExistence(timeout: 10))
     XCTAssertFalse(application.plannerElement("saved.capture.add").exists)
     XCTAssertFalse(application.plannerElement("saved.capture.review").exists)
     XCTAssertFalse(application.textFields["saved.capture.title"].exists)
@@ -328,7 +328,7 @@ final class ShareCaptureJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     XCTAssertTrue(
-      application.staticTexts["Open Planner to prepare Share"].waitForExistence(timeout: 10))
+      application.staticTexts["Open Plan 2Do to prepare Share"].waitForExistence(timeout: 10))
     XCTAssertFalse(application.plannerElement("saved.capture.add").exists)
     XCTAssertFalse(application.plannerElement("saved.capture.title").exists)
     recordShareScreenshot(

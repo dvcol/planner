@@ -33,7 +33,7 @@ final class DeletionEmptyResultsJourneyTests: XCTestCase {
     XCTAssertFalse(application.staticTexts["Hidden saved notes"].exists)
     XCTAssertFalse(application.plannerElement("saved.item.completion").exists)
     XCTAssertFalse(application.staticTexts["Item unavailable"].exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     capture(application, name: "Deleting the last visible Item leaves its filtered catalog empty")
     application.chooseSavedPlannerStateFilter("All archive states", control: filters)
     XCTAssertTrue(hidden.waitForExistence(timeout: 10))
@@ -99,7 +99,7 @@ final class DeletionEmptyResultsJourneyTests: XCTestCase {
     XCTAssertFalse(hiddenItem.exists)
     XCTAssertFalse(application.plannerElement("saved.appearance.actions").exists)
     XCTAssertFalse(application.staticTexts["List unavailable"].exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     requireNoSelectedList(application)
     capture(application, name: "Deleting the last visible List leaves its active catalog empty")
     chooseListArchive("All Lists", control: archive, application: application)
@@ -159,7 +159,7 @@ final class DeletionEmptyResultsJourneyTests: XCTestCase {
     var menu = control
     #if os(iOS)
       if !menu.exists || !menu.isHittable {
-        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+        let overflow = application.navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"]
         XCTAssertTrue(overflow.waitForExistence(timeout: 5))
         overflow.activateForPlannerJourney()
         if !menu.exists {

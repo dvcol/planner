@@ -187,7 +187,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
       if create.exists && create.isHittable {
         create.activateForPlannerJourney()
       } else {
-        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+        let overflow = application.navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"]
           .firstMatch
         XCTAssertTrue(overflow.waitForPlannerHittability())
         overflow.activateForPlannerJourney()
@@ -260,7 +260,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     var filter = application.plannerElement("saved.lists.archive")
     #if os(iOS)
       if !filter.exists || !filter.isHittable {
-        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+        let overflow = application.navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"]
           .firstMatch
         XCTAssertTrue(overflow.waitForPlannerHittability())
         overflow.activateForPlannerJourney()

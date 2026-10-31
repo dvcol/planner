@@ -1,6 +1,6 @@
 # Privacy policy
 
-Effective 31 October 2026. This policy applies to the personal planning app
+Effective 31 October 2026. This policy applies to the Plan 2Do planning app
 identified by bundle ID `dvcol.planner`.
 
 ## Your plans

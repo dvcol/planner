@@ -29,3 +29,13 @@ does not select a developer-funded database.
 An approved schema deployment, the final App Store name/record, distribution
 signing/upload and manual review/unlisted release remain distinct release steps.
 No further iCloud off/on or conflict stress session is requested by this review.
+
+## Approved deployment
+
+The owner approved deployment after reviewing Production schema permanence and
+future versioned migrations. CloudKit Console reports “Changes Deployed” and
+“The schema is deployed to Production.” The reviewed two types, indexes and
+default role definitions are deployed; no record transfer or environment reset
+was requested. The app continues to use private CloudKit only. Store-build
+sync qualification remains separate from schema deployment. The temporary
+confirmation capture is kept only for the active owner review, outside Git.

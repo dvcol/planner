@@ -218,7 +218,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     XCTAssertFalse(application.plannerElement(appearanceIdentifier).exists)
     XCTAssertFalse(application.plannerElement("saved.appearance.actions").exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     recordScreenshot(application, name: "Item deletion clears the removed List appearance")
     application.terminate()
     application.launchSavedPlannerJourney()
@@ -228,7 +228,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     XCTAssertFalse(application.plannerElement(appearanceIdentifier).exists)
     XCTAssertFalse(application.plannerElement("saved.appearance.actions").exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     XCTAssertFalse(application.plannerElement(itemIdentifier).exists)
   }

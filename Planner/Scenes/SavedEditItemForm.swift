@@ -141,7 +141,7 @@ struct SavedEditItemForm: View {
     }
     .interactiveDismissDisabled(store.isSaving)
     .alert(
-      "Planner",
+      "Plan 2Do",
       isPresented: Binding(
         get: { store.alertMessage != nil },
         set: { if !$0 { store.alertMessage = nil } })

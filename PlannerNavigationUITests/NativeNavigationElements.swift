@@ -197,7 +197,7 @@ extension XCUIApplication {
       openPlannerSection("Lists")
       for _ in 0..<3 {
         if direct.exists && direct.isHittable { return direct }
-        let overflow = navigationBars["Planner"].buttons["OverflowBarButtonItem"].firstMatch
+        let overflow = navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"].firstMatch
         if overflow.exists && overflow.isHittable {
           overflow.activateForPlannerJourney()
           XCTAssertTrue(menuAction.waitForExistence(timeout: 5))
@@ -603,7 +603,7 @@ extension XCUIApplication {
           create.activateForPlannerJourney()
           return
         }
-        if let overflow = navigationBars["Planner"].buttons.matching(
+        if let overflow = navigationBars["Plan 2Do"].buttons.matching(
           identifier: "OverflowBarButtonItem"
         ).allElementsBoundByIndex.first(where: \.isHittable) {
           overflow.activateForPlannerJourney()

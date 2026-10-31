@@ -1,6 +1,6 @@
 # Support
 
-Support for the personal planning app identified by bundle ID `dvcol.planner`.
+Support for the Plan 2Do planning app identified by bundle ID `dvcol.planner`.
 
 ## Getting started
 

@@ -140,7 +140,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     application.plannerElement("saved.itinerary.delete.confirm").activateForPlannerJourney()
     XCTAssertTrue(
       application.plannerElement("saved.itinerary.delete.confirm").waitForNonExistence(timeout: 10))
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     openCatalog("Itineraries", creationIdentifier: "saved.itinerary.new", application: application)
     XCTAssertFalse(application.plannerElement(removedItineraryIdentifier).exists)
     XCTAssertTrue(application.plannerElement(retainedItineraryIdentifier).exists)
@@ -178,7 +178,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
         .firstMatch.waitForPlannerBooleanState(false))
     openCatalog("Itineraries", creationIdentifier: "saved.itinerary.new", application: application)
     XCTAssertFalse(application.plannerElement(removedItineraryIdentifier).exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
   }
 
   func testEmptyItineraryDeletionAndSelectedAppearanceDeletionRetainTheSourceItemAfterRelaunch() {
@@ -244,7 +244,7 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
       application.plannerElement("saved.itinerary.delete.confirm").waitForNonExistence(timeout: 10))
     XCTAssertFalse(application.plannerElement(appearanceIdentifier).exists)
     XCTAssertFalse(sourceNotes.exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     recordScreenshot(application, name: "Itinerary Delete clears selected appearance detail")
     application.terminate()
     application.launchSavedPlannerJourney()

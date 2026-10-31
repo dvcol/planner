@@ -1,8 +1,9 @@
 # Store listing draft
 
 Prepared locally on 31 October 2026. These are editable submission materials,
-not a submitted listing or a claim of final MVP acceptance. App Store name
-availability and the account's existing app record have not been checked.
+not a submitted listing or a claim of final MVP acceptance. App Store Connect
+accepted Plan 2Do and created app `6829213508` for iOS and macOS. MapCheck,
+CheckPoint and Plan & Do were unavailable.
 
 ## Distribution constraint
 
@@ -14,7 +15,7 @@ releasing. Follow the
 
 ## English listing
 
-**Working name:** Planner
+**Name:** Plan 2Do
 
 **Subtitle:** Places, lists and itineraries
 
@@ -30,11 +31,11 @@ copying their content.
 - Track completion, full estimates and remaining time.
 - Arrange itinerary stops and view saved places on a map.
 - Schedule items and itineraries in day, week and month views.
-- Open saved guides inside Planner and return to your plan.
+- Open saved guides inside Plan 2Do and return to your plan.
 - Keep plans on your device, with optional synchronization through your private
   iCloud storage across devices using the same Apple Account.
 
-Planner has native layouts for iPhone, iPad and Mac, with light and dark
+Plan 2Do has native layouts for iPhone, iPad and Mac, with light and dark
 appearances. Location lookups, route information and websites require their
 providers to be available; your saved planning content remains usable offline.
 
@@ -44,7 +45,7 @@ providers to be available; your saved planning content remains usable offline.
 
 ## App Review notes draft
 
-The app works locally without a Planner account or iCloud sign-in. To review its
+The app works locally without a Plan 2Do account or iCloud sign-in. To review its
 main workflow, create an Item, add it to a List, then create an Itinerary using
 that Item or List. Map mode shows saved or resolved locations. Calendar
 schedules can be added independently of activity estimates. External maps,
@@ -70,16 +71,17 @@ sent to Apple.
 
 ## Submission fields still to prepare
 
-- Confirm the available App Store name; the working name is not registered by
-  this draft. Release metadata is prepared as version `1.0.0`, build `1`.
+- Plan 2Do is registered for iOS and macOS as app `6829213508`. Release
+  metadata is prepared as version `1.0.0`, build `1`.
 - Select final screenshots from the accepted release build. Existing QA
   screenshots are evidence, not automatically finished store assets.
 - Public support and privacy pages use the existing GitHub repository:
   `https://github.com/dvcol/planner/blob/main/docs/support.md` and
   `https://github.com/dvcol/planner/blob/main/docs/privacy-policy.md`.
   Apple-only review contact fields still need the owner's details.
-- Complete app privacy, age rating, encryption/export-compliance and review
-  contact fields from the actual release configuration.
+- Complete remaining review contact and content-rights/distribution fields.
+  Privacy responses and the age rating are saved as recorded below; inspect any
+  further encryption/export-compliance question Apple presents.
 - Request unlisted distribution through Apple's process after submission for
   review. Use manual release while the intended distribution is being arranged.
 
@@ -102,6 +104,21 @@ the reviewed data paths and unfinished release checks. Do not infer a complete
 “Data Not Collected” answer solely from the use of private iCloud. The public
 support channel is the existing issue tracker. No private developer-account
 contact details are copied into these pages.
+
+## Saved Apple state, 31 October 2026
+
+- Both platform drafts have the description, keywords, support URL and review
+  notes saved, with manual release selected. No review submission or release
+  has occurred.
+- Signed iOS and arm64 Mac `1.0.0` (build `1`) uploads succeeded. Apple reports
+  both builds “Ready to Submit”; both are selected in their saved drafts.
+- The owner approved the reviewed “Data Not Collected” declaration and Apple's
+  final compliance confirmation. The privacy responses are published, with the
+  policy URL above. The open-web reader produces a saved age rating of 16+.
+- One reviewed native iPhone screenshot is uploaded. iPad/Mac store screenshots,
+  Apple-only review contact details, the review sign-in
+  checkbox and remaining content-rights/distribution declarations are unfinished.
+  Unlisted distribution is not yet requested or approved.
 
 ## Apple submission references
 

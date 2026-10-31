@@ -54,7 +54,7 @@
         000000000000000000000118 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlannerCoreTests.xcconfig; sourceTree = "<group>"; };
         000000000000000000000119 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000000120 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerCoreStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-        000000000000000000000111 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000000111 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Plan 2Do.app"; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000000112 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerMCPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000000113 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
         000000000000000000000114 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Planner.xcconfig; sourceTree = "<group>"; };

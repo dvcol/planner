@@ -156,8 +156,8 @@ final class SavedItemJourneyTests: XCTestCase {
       revealCatalogSidebar()
       XCTAssertTrue(
         application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 10))
-      let toolbar = application.navigationBars["Planner"]
-      let title = toolbar.staticTexts["Planner"]
+      let toolbar = application.navigationBars["Plan 2Do"]
+      let title = toolbar.staticTexts["Plan 2Do"]
       recordScreenshot(application, name: "Adaptive Lists catalog toolbar")
       XCTAssertTrue(toolbar.waitForExistence(timeout: 5))
       if UIDevice.current.userInterfaceIdiom == .phone {
@@ -1414,7 +1414,7 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertFalse(editedDescription?.isEmpty ?? true)
     XCTAssertNotEqual(editedDescription, originalDescription)
     XCTAssertTrue(application.staticTexts["Keep the gallery notes"].exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     recordScreenshot(application, name: "Native Schedule edit preserves its identity")
     application.terminate()
     application.launchSavedPlannerJourney()
@@ -1726,7 +1726,7 @@ final class SavedItemJourneyTests: XCTestCase {
     XCTAssertEqual(startOnlySchedules.count, 1)
     XCTAssertEqual(startOnlySchedules.firstMatch.identifier, retainedIdentifier)
     XCTAssertTrue(application.staticTexts["Keep the meeting notes"].exists)
-    XCTAssertFalse(application.alerts["Planner"].waitForExistence(timeout: 2))
+    XCTAssertFalse(application.alerts["Plan 2Do"].waitForExistence(timeout: 2))
     recordScreenshot(application, name: "Native schedule removal preserves another appointment")
     application.terminate()
     application.launchSavedPlannerJourney()
@@ -1753,7 +1753,7 @@ final class SavedItemJourneyTests: XCTestCase {
     let completion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(completion.waitForPlannerBooleanState(false))
-    XCTAssertFalse(application.alerts["Planner"].waitForExistence(timeout: 2))
+    XCTAssertFalse(application.alerts["Plan 2Do"].waitForExistence(timeout: 2))
     recordScreenshot(application, name: "Native Item remains after removing its last schedule")
   }
 

@@ -98,7 +98,7 @@ final class SavedListDeletionJourneyTests: XCTestCase {
     application.plannerElement("saved.list.delete.confirm").activateForPlannerJourney()
     XCTAssertTrue(
       application.plannerElement("saved.list.delete.confirm").waitForNonExistence(timeout: 10))
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     XCTAssertFalse(application.plannerElement("saved.appearance.actions").exists)
     openCatalog("Lists", creationIdentifier: "saved.list.new", application: application)
     XCTAssertTrue(
@@ -148,7 +148,7 @@ final class SavedListDeletionJourneyTests: XCTestCase {
         .firstMatch.waitForPlannerBooleanState(false))
     openCatalog("Lists", creationIdentifier: "saved.list.new", application: application)
     XCTAssertFalse(application.plannerElement(removedListIdentifier).exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
   }
 
   func testEmptyListDeletionAndSelectedMembershipCleanupPreserveTheOriginalItem() {
@@ -205,7 +205,7 @@ final class SavedListDeletionJourneyTests: XCTestCase {
     XCTAssertFalse(application.plannerElement("saved.appearance.actions").exists)
     XCTAssertFalse(application.plannerElement(membershipIdentifier).exists)
     XCTAssertFalse(application.staticTexts["Museum booking"].exists)
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
     recordScreenshot(application, name: "Selected List deletion clears its child detail")
     application.terminate()
     application.launchSavedPlannerJourney()
@@ -218,7 +218,7 @@ final class SavedListDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(
       application.descendants(matching: .any).matching(identifier: "saved.item.completion")
         .firstMatch.waitForPlannerBooleanState(false))
-    XCTAssertFalse(application.alerts["Planner"].exists)
+    XCTAssertFalse(application.alerts["Plan 2Do"].exists)
   }
 
   private func createList(_ name: String, application: XCUIApplication) -> String {

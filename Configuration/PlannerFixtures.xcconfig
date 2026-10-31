@@ -1,6 +1,9 @@
 #include "Planner.xcconfig"
 
 PRODUCT_NAME = PlannerFixtures
+PRODUCT_MODULE_NAME = PlannerFixtures
+EXECUTABLE_NAME = PlannerFixtures
+PLANNER_APPLICATION_DISPLAY_NAME = Planner fixtures
 PRODUCT_BUNDLE_IDENTIFIER = org.example.PlannerFixtures
 INFOPLIST_KEY_CFBundleDisplayName = Planner fixtures
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) PLANNER_FIXTURES
