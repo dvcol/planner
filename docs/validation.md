@@ -9,21 +9,22 @@ discard them. Raw run output is not a repository or publication deliverable.
 
 Older prototype notes describe the results of their original runs. Their raw
 artifacts and tracker snapshots have now been discarded. Required fixtures in
-`Packages`, `PlannerFixtures` and `docs/fixtures` remain part of the source.
-Published Git history still contains earlier artifacts; removing those objects
-requires a separately reviewed history rewrite.
+`Packages`, `PlannerFixtures` and `docs/fixtures` remain part of the source. The
+owner approved purging the earlier artifacts from published branch history. Main
+and both prototype branches now use the cleaned history. Existing clones and
+GitHub caches cannot be recalled by rewriting branch references.
 
 ## Latest focused checks, 31 October 2026
 
 - Mac Map: `testItineraryMapFitsDistinctPlacesAndUsesAvailableWidth` passes in
-  159.645 seconds on the signed build from application checkpoint `278da3da`.
-  Three distinct pins remain tappable, repeated Hotel stops share a counted
-  marker, walking and driving calculate all three legs, and transit offers its
-  explicit Maps fallback. Resizing to 1200 and 1600 points preserves the
-  selected bookmark identity and bounds details while expanding the Map. The
-  test does not open the external transit route. Three original captures were
-  inspected, then the raw output was discarded. Manual automation authentication
-  is unchanged.
+  159.645 seconds on the signed build from application checkpoint `a15d57877908`
+  (formerly `278da3da`). Three distinct pins remain tappable, repeated Hotel
+  stops share a counted marker, walking and driving calculate all three legs,
+  and transit offers its explicit Maps fallback. Resizing to 1200 and 1600
+  points preserves the selected bookmark identity and bounds details while
+  expanding the Map. The test does not open the external transit route. Three
+  original captures were inspected, then the raw output was discarded. Manual
+  automation authentication is unchanged.
 - Phone Simulator: the Dark maximum-text navigation/save/relaunch journey passes
   in 121.079 seconds with Increase Contrast. The normal-size Light draft-guard
   journey passes in 79.297 seconds. New Item hides the tab bar while editing and
@@ -50,18 +51,25 @@ Functional passes do not constitute a passing Save contrast audit.
 Hands-on keyboard, assistive/layout and final daily-use acceptance remain open
 in the [canonical map](https://github.com/dvcol/planner/issues/1). Unlisted
 release preparation separately awaits the final name and Production schema
-approval. Public source must pass a secrets/privacy review; generated artifacts
-are excluded from that handoff.
+approval. Reviewed application source is published on `main`; generated
+artifacts are excluded from the handoff.
 
 ## Repository cleanup
 
-Generated validation artifacts and obsolete design previews are removed from
-the current tree and ignored for future runs. Application code, configuration,
-test fixtures and shipping icon assets are unchanged. Completed local Map
+Generated validation artifacts and obsolete design previews are removed from the
+current tree and ignored for future runs. The cleanup preserves application
+code, configuration, test fixtures and shipping icon assets. Completed local Map
 outputs and obsolete release archives are discarded after review; the current
 build cache and installed app are preserved.
 
 Gitleaks 8.30.1 finds no secrets in the cleaned tracked tree. This automated
-check complements the device/account metadata review; it is not a guarantee
-that arbitrary future changes contain no sensitive data. Published history
-still requires the separately reviewed purge before source publication.
+check complements the device/account metadata review; it is not a guarantee that
+arbitrary future changes contain no sensitive data. The filtered-history scan
+has one reviewed false positive: ordinary prose about search tokens. All nine
+branch-tip comparisons preserve source and required fixtures, and the cleaned
+history passes Git integrity checks.
+
+The owner explicitly approved discarding abandoned local source variants and
+orphan objects. Local garbage collection is complete; the retained Git pack is
+7.61 MiB and the post-cleanup integrity check passes. Main contains the reviewed
+MVP, and the current checkout follows main.

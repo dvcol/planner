@@ -1,8 +1,8 @@
 # Native Planner MVP map
 
-The [GitHub decision map](https://github.com/dvcol/planner/issues/1) is canonical.
-This file mirrors its low-resolution index; open work and dependencies live
-in GitHub native sub-issues.
+The [GitHub decision map](https://github.com/dvcol/planner/issues/1) is
+canonical. This file mirrors its low-resolution index; open work and
+dependencies live in GitHub native sub-issues.
 
 ## Destination
 
@@ -17,13 +17,14 @@ workflows and recorded limitations.
 - The map is an index. Open work lives in native child issues; native blocked-by
   relationships define the frontier. Detailed answers live in resolution
   comments and linked artifacts, not this body.
-- Core feature code is implemented locally. Signing/setup is ready and normal
-  same-account mobile sync passes. Remaining work is the focused
+- Core feature code is implemented and published. Signing/setup is ready and
+  normal same-account mobile sync passes. Remaining work is the focused
   native/physical/assistive acceptance frontier; these statements do not declare
   the release accepted.
-- Validated workspace checkpoint: `278da3da` on `prototype/navigation`.
-  Published branch: `9eb878c5`. Newer application source awaits privacy review
-  and the proposed artifact-history cleanup before publication.
+- Application validation checkpoint: `a15d57877908` (formerly `278da3da`). The
+  reviewed implementation and artifact cleanup are published on `main` at
+  `b18c3cc1`; the prototype histories are also purged. Later release metadata
+  does not change those native journey results.
 - Prefer the simplest sufficient MVP. Reuse passing evidence, run serial
   affected-target checks, and investigate reproducible defects. Do not fill time
   with broader matrices or repeat normal iCloud checks without a relevant
@@ -39,8 +40,8 @@ workflows and recorded limitations.
 - The user explicitly authorized this bulk historical-state/scope
   reconciliation. The normal one-HITL-decision-per-session rule applies to new
   decisions, not these already-authorized administrative dispositions.
-- The [pre-cleanup implementation
-  index](https://github.com/dvcol/planner/blob/9eb878c50984966d373d9d1a0017205c9a4bb6e4/docs/implementation-map.md)
+- The
+  [pre-cleanup implementation index](https://github.com/dvcol/planner/blob/9eb878c50984966d373d9d1a0017205c9a4bb6e4/docs/implementation-map.md)
   preserves published history. The current workspace keeps detailed checkpoints
   separately from this low-resolution index.
 
@@ -83,12 +84,11 @@ workflows and recorded limitations.
 - [Native long-list capabilities](https://github.com/dvcol/planner/issues/20):
   paged native presentations, full-scope identities and measured performance
   limits.
-- [Native calendar date
-  capabilities](https://github.com/dvcol/planner/issues/21): explicit DST,
-  timezone and inclusive civil-date behavior.
-- [Completion scopes and derived
-  progress](https://github.com/dvcol/planner/issues/22): shared/global versus
-  contextual state, appearance-based progress and archive rules.
+- [Native calendar date capabilities](https://github.com/dvcol/planner/issues/21):
+  explicit DST, timezone and inclusive civil-date behavior.
+- [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22):
+  shared/global versus contextual state, appearance-based progress and archive
+  rules.
 
 ## Not yet specified
 
@@ -99,8 +99,8 @@ rather than silently choosing or expanding this map.
 
 ## Out of scope
 
-- [MCP session prototype](https://github.com/dvcol/planner/issues/16) and [Local
-  MCP compatibility](https://github.com/dvcol/planner/issues/6): V3 Agent
+- [MCP session prototype](https://github.com/dvcol/planner/issues/16) and
+  [Local MCP compatibility](https://github.com/dvcol/planner/issues/6): V3 Agent
   Control/MCP and remaining App Intents/Shortcuts/Siri qualification; retained
   context, not MVP blockers.
 - Advanced JSON export/import, restoration-family expansion and their
@@ -117,15 +117,15 @@ rather than silently choosing or expanding this map.
 
 ## Remaining implementation and acceptance
 
-Use the canonical map's native child issues and blocking relationships.
-The core feature implementation is present; remaining acceptance must not be
-reported as complete. No signing setup or further iCloud stress run is queued.
+Use the canonical map's native child issues and blocking relationships. The core
+feature implementation is present; remaining acceptance must not be reported as
+complete. No signing setup or further iCloud stress run is queued.
 
 ## Historical checkpoints
 
 [Detailed implementation checkpoints](implementation-checkpoints.md) retain the
 previous chronological report with its actual versions, tests and limitations.
-[Decision checkpoints](decision-checkpoints.md) retain the old decision register.
-Generated tracker snapshots and raw run artifacts are discarded after review.
-[Current validation](validation.md) keeps concise results and known limits;
-Git history and named issue comments retain source and decisions.
+[Decision checkpoints](decision-checkpoints.md) retain the old decision
+register. Generated tracker snapshots and raw run artifacts are discarded after
+review. [Current validation](validation.md) keeps concise results and known
+limits; Git history and named issue comments retain source and decisions.

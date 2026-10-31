@@ -25,10 +25,10 @@ reopen accepted answers or override the current native tracker state.
 - The native Google Maps sender remains unqualified because that app is not
   installed on the available devices. The user-reported physical Apple Maps
   checks and passing Safari/in-app Google-link evidence remain separate.
-- The owner permits public application source after a secrets/privacy review.
-  Generated run artifacts are discarded after use. Purging artifacts already
-  published in Git history needs a separately reviewed history rewrite; no newer
-  source has yet been pushed.
+- Reviewed application source and the approved artifact-history purge are
+  published on `main`. Generated run artifacts are discarded after use. The
+  owner also approved permanent local garbage collection; that cleanup is
+  complete and the source handoff is available.
 - Unlisted distribution preparation separately awaits the final app name and
   approval of the concrete Production schema preview. Signing is ready; these
   inputs do not require another iCloud off/on or stress session.
