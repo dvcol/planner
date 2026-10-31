@@ -5,26 +5,25 @@ privacy submission or an approval of final release materials.
 
 ## Required-reason APIs
 
-| Executable bundle | Use | Declaration |
-| --- | --- | --- |
-| Main app | Device-only sort and capture preferences | UserDefaults: CA92.1 |
-| Share extensions | Capture destination preferences | UserDefaults: CA92.1 |
-| All three | Local store inode/device metadata | FileTimestamp: C617.1 |
-| Mac SwiftNIO resource bundle | SDK file API wrappers | FileTimestamp: 0A2A.1 |
+- Main app: device-only sort/capture preferences, UserDefaults `CA92.1`.
+- Share extensions: capture destination preferences, UserDefaults `CA92.1`.
+- All three: local store inode/device metadata, FileTimestamp `C617.1`.
+- Mac SwiftNIO resource bundle: SDK file API wrappers, FileTimestamp `0A2A.1`.
 
 The main app already declared UserDefaults. Both extensions compile
 `SavedCaptureForm`, which reads and writes `UserDefaults.standard`, but had no
 manifest. Each extension now has its own `PrivacyInfo.xcprivacy`. Their
-filesystem-synchronized Xcode groups include the resource without a project
-or target change.
+filesystem-synchronized Xcode groups include the resource without a project or
+target change.
 
 Core's `nativeStoreFileIdentity()` reads file metadata to identify the local
-store. It does not read creation/modification dates or use CloudKit record
-dates as filesystem timestamps. C617.1 covers metadata within the app or shared
+store. It does not read creation/modification dates or use CloudKit record dates
+as filesystem timestamps. C617.1 covers metadata within the app or shared
 app-group container. No disk-space, keyboard or boot-time reason is added
 without a corresponding use. See Apple's
 [required-reason guidance](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api)
-and [API categories and reasons](https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype).
+and
+[API categories and reasons](https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype).
 
 ## Bundled dependencies
 
@@ -37,25 +36,24 @@ linked into the Mac product.
 The inspected universal Mac Release archive contains the app manifest and
 SwiftNIO's `swift-nio_NIOPosix.bundle` manifest. SwiftNIO declares its own file
 API wrapper reason and no tracking/collected types. Undefined symbols include
-`stat`, `fstat`, `fstatat` and `lstat`; linked symbols alone do not establish the
-purpose or execution of every API. The shared Core call and SDK declaration
+`stat`, `fstat`, `fstatat` and `lstat`; linked symbols alone do not establish
+the purpose or execution of every API. The shared Core call and SDK declaration
 are reviewed separately. No advertising or analytics SDK is in the resolved
 package set.
 
 The corrected signed Debug Mac app and embedded Share extension contain the
-expected manifests. Both app and UI-runner signatures verify through the
-normal trust service. Plist validation passes for all three source manifests.
-The signed mobile app and embedded Share extension also contain both reasons,
-and their signatures verify.
+expected manifests. Both app and UI-runner signatures verify through the normal
+trust service. Plist validation passes for all three source manifests. The
+signed mobile app and embedded Share extension also contain both reasons, and
+their signatures verify.
 
 Fresh unsigned universal Mac and iOS Release archives both build successfully.
 Each contains the corrected app and Share manifests plus SwiftNIO's resource
 manifest, with no hosted test bundle. Both declare the intended app/group/
 private-container identifiers, Production environment and version `0.0.1`.
-The bundle review
-retains parsed manifests, product hashes, exact archive commands and compressed
-build logs. This proves packaging, not distribution signing, deployed cloud
-schema or App Store upload acceptance.
+Concise bundle-review results are retained; raw archive logs and obsolete
+archives are discarded after inspection. This proves packaging, not distribution
+signing, deployed cloud schema or App Store upload acceptance.
 
 ## Data paths and declaration limits
 
@@ -64,21 +62,34 @@ MapKit/geocoding/directions, LinkPresentation, bounded Maps-link HTTP requests
 and WebKit's default persistent website store. No public/shared CloudKit
 fallback or developer-hosted planning/analytics endpoint is introduced.
 
-The draft [privacy policy](privacy-policy-draft.md) describes those behaviors;
-the [support draft](support-draft.md) proposes the existing public issue tracker
-without copying private developer-account contact information.
+The [privacy policy](privacy-policy.md) describes those behaviors; the
+[support page](support.md) uses the existing public issue tracker without
+copying private developer-account contact information.
 
-Final App Store privacy answers remain subject to the release artifact and
-owner review. Apple distinguishes on-device processing, requests, open-web
-browsing and developer/partner collection. Private CloudKit alone is not the
-entire audit. See [Apple's privacy-label guidance](https://developer.apple.com/app-store/app-privacy-details/).
+Final App Store privacy answers remain subject to the release artifact and owner
+review. Apple distinguishes on-device processing, requests, open-web browsing
+and developer/partner collection. Private CloudKit alone is not the entire
+audit. See
+[Apple's privacy-label guidance](https://developer.apple.com/app-store/app-privacy-details/).
 
 ## Remaining release checks
 
 - [x] Read back mobile app/Share and both Release archive manifests.
 - [ ] Generate/review Xcode's aggregate privacy report and any upload warnings.
-- [ ] Approve the final policy, support contact and public hosting URLs.
+- [x] Prepare public policy/support pages using the existing GitHub issue
+      tracker, without private contact details.
 - [ ] Complete App Store privacy answers from the actual release artifact.
 
 No account setting, cloud schema, developer identifier, distribution resource,
 App Store listing or public repository branch is changed by this audit.
+
+## Initial release metadata
+
+The first store version is `1.0.0` (build `1`). Main and Share manifests declare
+`ITSAppUsesNonExemptEncryption = false`: networking uses Apple's HTTPS/CloudKit/
+WebKit facilities; the reviewed CryptoKit calls calculate SHA-256 hashes. No
+proprietary cipher or bundled non-OS encryption implementation is introduced.
+See
+[Apple's export guidance](https://developer.apple.com/documentation/security/complying-with-encryption-export-regulations).
+This declaration does not replace any additional question Apple presents for the
+final uploaded artifact.

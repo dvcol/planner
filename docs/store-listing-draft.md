@@ -6,10 +6,11 @@ availability and the account's existing app record have not been checked.
 
 ## Distribution constraint
 
-This app is for the owner's personal use and unlisted distribution only.
-These materials satisfy submission requirements; they are not a public launch
-or marketing plan. Keep release manual and wait for unlisted approval before
-releasing. Follow the [standing release constraint](release-goals.md#personal-unlisted-distribution-reaffirmed-31-october-2026).
+This app is for the owner's personal use and unlisted distribution only. These
+materials satisfy submission requirements; they are not a public launch or
+marketing plan. Keep release manual and wait for unlisted approval before
+releasing. Follow the
+[standing release constraint](release-goals.md#personal-unlisted-distribution-reaffirmed-31-october-2026).
 
 ## English listing
 
@@ -43,9 +44,9 @@ providers to be available; your saved planning content remains usable offline.
 
 ## App Review notes draft
 
-The app works locally without a Planner account or iCloud sign-in. To review
-its main workflow, create an Item, add it to a List, then create an Itinerary
-using that Item or List. Map mode shows saved or resolved locations. Calendar
+The app works locally without a Planner account or iCloud sign-in. To review its
+main workflow, create an Item, add it to a List, then create an Itinerary using
+that Item or List. Map mode shows saved or resolved locations. Calendar
 schedules can be added independently of activity estimates. External maps,
 previews and websites depend on their providers and network access.
 
@@ -57,25 +58,26 @@ request. No paid content, subscription or developer-hosted account is required.
 
 ## Unlisted request draft
 
-This application is intended for the developer's personal use across their
-Apple devices, rather than discovery by a general App Store audience. Direct
+This application is intended for the developer's personal use across their Apple
+devices, rather than discovery by a general App Store audience. Direct
 installation from an unlisted link is the intended distribution workflow.
 Planning data stays local with optional private iCloud synchronization. We
-understand that an unlisted link does not restrict who can install the app,
-and that App Review and unlisted-distribution approval are separate decisions.
+understand that an unlisted link does not restrict who can install the app, and
+that App Review and unlisted-distribution approval are separate decisions.
 
-These statements need owner review before either submission. No request has
-been sent to Apple.
+These statements need owner review before either submission. No request has been
+sent to Apple.
 
 ## Submission fields still to prepare
 
 - Confirm the available App Store name; the working name is not registered by
-  this draft. Choose the release version/build number.
+  this draft. Release metadata is prepared as version `1.0.0`, build `1`.
 - Select final screenshots from the accepted release build. Existing QA
   screenshots are evidence, not automatically finished store assets.
-- Provide a support page with the owner's approved contact details and a public
-  privacy-policy URL. Do not substitute developer-account contact details
-  without approval.
+- Public support and privacy pages use the existing GitHub repository:
+  `https://github.com/dvcol/planner/blob/main/docs/support.md` and
+  `https://github.com/dvcol/planner/blob/main/docs/privacy-policy.md`.
+  Apple-only review contact fields still need the owner's details.
 - Complete app privacy, age rating, encryption/export-compliance and review
   contact fields from the actual release configuration.
 - Request unlisted distribution through Apple's process after submission for
@@ -94,11 +96,12 @@ The implemented data paths provide the starting point for the policy:
 - Exported backups contain the user's planning data and go to a destination
   selected by the user. Further portability qualification is outside MVP.
 
-The [privacy audit](release-privacy-audit.md), [policy draft](privacy-policy-draft.md)
-and [support draft](support-draft.md) now capture the reviewed data paths and
-unfinished release checks. Do not infer a complete “Data Not Collected” answer
-solely from the use of private iCloud. The owner still needs to approve the
-final policy and public contact information.
+The [privacy audit](release-privacy-audit.md),
+[privacy policy](privacy-policy.md) and [support page](support.md) now capture
+the reviewed data paths and unfinished release checks. Do not infer a complete
+“Data Not Collected” answer solely from the use of private iCloud. The public
+support channel is the existing issue tracker. No private developer-account
+contact details are copied into these pages.
 
 ## Apple submission references
 
