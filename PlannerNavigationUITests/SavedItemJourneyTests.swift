@@ -833,17 +833,7 @@ final class SavedItemJourneyTests: XCTestCase {
   }
 
   private func openDesignSection(_ name: String, in application: XCUIApplication) {
-    let sidebarDestination = application.plannerElement("saved.section.\(name.lowercased())")
-    #if os(macOS)
-      if !sidebarDestination.isHittable {
-        application.windows.firstMatch.buttons["Show Sidebar"].firstMatch
-          .activateForPlannerJourney()
-      }
-      XCTAssertTrue(sidebarDestination.waitForExistence(timeout: 5))
-      sidebarDestination.activateForPlannerJourney()
-    #else
-      application.openPlannerSection(name)
-    #endif
+    application.openPlannerSection(name)
   }
 
   #if !os(macOS)
