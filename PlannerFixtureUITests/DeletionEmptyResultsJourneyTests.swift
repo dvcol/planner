@@ -159,7 +159,7 @@ final class DeletionEmptyResultsJourneyTests: XCTestCase {
     var menu = control
     #if os(iOS)
       if !menu.exists || !menu.isHittable {
-        let overflow = application.navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"]
+        let overflow = application.navigationBars.buttons["OverflowBarButtonItem"]
         XCTAssertTrue(overflow.waitForExistence(timeout: 5))
         overflow.activateForPlannerJourney()
         if !menu.exists {

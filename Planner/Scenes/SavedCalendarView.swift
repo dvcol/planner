@@ -1,6 +1,10 @@
 import PlannerCore
 import SwiftUI
 
+#if os(iOS)
+  import UIKit
+#endif
+
 struct SavedCalendarSelection: Hashable {
   let scheduleIdentifier: UUID
   let source: PlannerEntityReference
@@ -31,6 +35,18 @@ struct SavedCalendarView: View {
   @State private var isLoading = true
   @State private var mode = Mode.month
   @State private var showsTimeZonePreferences = false
+  @State private var showsDateSelection = false
+  #if os(iOS)
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  #endif
+
+  private var usesCompactControls: Bool {
+    #if os(iOS)
+      UIDevice.current.userInterfaceIdiom == .phone || horizontalSizeClass == .compact
+    #else
+      false
+    #endif
+  }
 
   init(store: SavedPlannerStore, selection: Binding<SavedCalendarSelection?>) {
     self.store = store
@@ -176,8 +192,8 @@ struct SavedCalendarView: View {
   }
 
   var body: some View {
-    VStack(spacing: 8) {
-      calendarControls
+    VStack(spacing: usesCompactControls ? 0 : 8) {
+      if !usesCompactControls { calendarControls }
       if mode == .month {
         monthContent
       } else {
@@ -207,22 +223,48 @@ struct SavedCalendarView: View {
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("saved.calendar.canvas")
     .environment(\.timeZone, displayTimeZone)
-    .navigationTitle("Calendar")
-    .toolbarTitleDisplayMode(.inline)
+    #if os(iOS)
+      .modifier(SavedCollectionNavigationTitle(title: "Calendar"))
+    #else
+      .navigationTitle("Calendar")
+      .toolbarTitleDisplayMode(.inline)
+    #endif
     .toolbar {
-      Button("Display time zone", systemImage: "globe") {
-        showsTimeZonePreferences = true
+      if usesCompactControls {
+        ToolbarItem(placement: .primaryAction) { compactModeMenu }
       }
-      .labelStyle(.iconOnly)
-      .help("Calendar time zone")
-      .disabled(!store.isReady)
-      .accessibilityIdentifier("saved.calendar.zone.open")
-      Button("Today", systemImage: "calendar") {
-        selectedDate = Date()
-        visibleDate = selectedDate
+      ToolbarItemGroup(placement: .primaryAction) {
+        Button("Display time zone", systemImage: "globe") {
+          showsTimeZonePreferences = true
+        }
+        .labelStyle(.iconOnly)
+        .help("Calendar time zone")
+        .disabled(!store.isReady)
+        .accessibilityIdentifier("saved.calendar.zone.open")
+        Button("Today", systemImage: "calendar") {
+          selectedDate = Date()
+          visibleDate = selectedDate
+        }
+        .labelStyle(.titleOnly)
+        .help("Go to today")
       }
-      .labelStyle(.titleOnly)
-      .help("Go to today")
+    }
+    .sheet(isPresented: $showsDateSelection) {
+      NavigationStack {
+        ScrollView {
+          DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
+            .datePickerStyle(.graphical)
+            .padding()
+            .accessibilityIdentifier("saved.calendar.selected-date")
+        }
+        .navigationTitle("Choose date")
+        .toolbar {
+          ToolbarItem(placement: .confirmationAction) {
+            Button("Done") { showsDateSelection = false }
+          }
+        }
+      }
+      .presentationDetents([.medium, .large])
     }
     .sheet(isPresented: $showsTimeZonePreferences) {
       SavedCalendarDisplayZoneSettings(
@@ -236,6 +278,23 @@ struct SavedCalendarView: View {
     .task(id: loadIdentity) { await loadEntries() }
   }
 
+  private var compactModeMenu: some View {
+    Menu {
+      Picker("Calendar view", selection: $mode) {
+        ForEach(Mode.allCases, id: \.self) { mode in
+          Text(mode.rawValue).tag(mode)
+        }
+      }
+      Button("Choose date", systemImage: "calendar") { showsDateSelection = true }
+        .accessibilityIdentifier("saved.calendar.choose-date")
+    } label: {
+      Text(mode.rawValue)
+    }
+    .accessibilityLabel("Calendar view")
+    .accessibilityValue(mode.rawValue)
+    .accessibilityIdentifier("saved.calendar.mode")
+  }
+
   private var modePicker: some View {
     Picker("Calendar view", selection: $mode) {
       ForEach(Mode.allCases, id: \.self) { mode in
@@ -245,6 +304,7 @@ struct SavedCalendarView: View {
     .pickerStyle(.segmented)
     .labelsHidden()
     .frame(maxWidth: 400)
+    .accessibilityValue(mode.rawValue)
     .accessibilityIdentifier("saved.calendar.mode")
   }
 
@@ -338,14 +398,14 @@ struct SavedCalendarView: View {
       } else if let entries {
         let matchingEntries = entries.filter { occurs($0, on: selectedDate) }.sorted(by: precedes)
         if matchingEntries.isEmpty {
-          GroupBox {
+          VStack(alignment: .leading, spacing: 8) {
+            Label("No scheduled entries", systemImage: "calendar").font(.headline)
             Text("Choose another date or schedule an Item or Itinerary.")
               .font(.subheadline)
-              .foregroundStyle(Color.primary)
-              .frame(maxWidth: .infinity, alignment: .leading)
-          } label: {
-            Label("No scheduled entries", systemImage: "calendar")
+              .foregroundStyle(.secondary)
           }
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(.vertical, 8)
         } else {
           Text(selectedDate, format: .dateTime.weekday().month().day()).font(.headline)
           ForEach(matchingEntries, id: \.schedule.id) { entry in

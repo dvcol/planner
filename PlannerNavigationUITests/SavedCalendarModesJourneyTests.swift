@@ -47,10 +47,8 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       XCUIDevice.shared.orientation = .portrait
       waitForCalendarOrientation(application, landscape: false)
       application.openPlannerSection("Calendar")
-      modeControl("Week", in: modes).activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Week")
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 10))
       let headings = grid.descendants(matching: .any).matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.day-heading.")
@@ -64,7 +62,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       XCUIDevice.shared.orientation = .landscapeLeft
       waitForCalendarOrientation(application, landscape: true)
       captureCalendarRotation(application, name: "Week in landscape after rotation")
-      XCTAssertTrue(modeControl("Week", in: modes).isSelected)
+      XCTAssertEqual(modes.value as? String, "Week")
       XCTAssertTrue(grid.waitForExistence(timeout: 10))
       let entry = grid.buttons.matching(
         NSPredicate(format: "identifier ENDSWITH %@", scheduleIdentifier)
@@ -150,10 +148,8 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       identifier: "saved.calendar.mode"
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
-    modeControl("Day", in: modes).activateForPlannerJourney()
-    let grid = application.descendants(matching: .any).matching(
-      identifier: "saved.calendar.time-grid"
-    ).firstMatch
+    application.chooseSavedCalendarMode("Day")
+    let grid = application.savedCalendarTimeGrid()
     XCTAssertTrue(grid.waitForExistence(timeout: 5))
     let timed = grid.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.")
@@ -296,10 +292,8 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       identifier: "saved.calendar.mode"
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
-    modeControl("Week", in: modes).activateForPlannerJourney()
-    let grid = application.descendants(matching: .any).matching(
-      identifier: "saved.calendar.time-grid"
-    ).firstMatch
+    application.chooseSavedCalendarMode("Week")
+    let grid = application.savedCalendarTimeGrid()
     XCTAssertTrue(grid.waitForExistence(timeout: 5))
     let banners = grid.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.all-day."))
@@ -439,10 +433,8 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
     for mode in ["Day", "Week"] {
-      modeControl(mode, in: modes).activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode(mode)
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
       let entries = grid.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed."))
@@ -525,24 +517,14 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     let modes = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.mode"
     ).firstMatch
-    let hierarchy = XCTAttachment(
-      string: ["Day", "Week", "Month"].map { name in
-        let control = modeControl(name, in: modes)
-        return "Mode: \(name); type: \(control.elementType.rawValue); label: \(control.label)"
-      }.joined(separator: "\n"))
-    hierarchy.name = "Native Calendar mode selector hierarchy"
-    hierarchy.lifetime = .keepAlways
-    add(hierarchy)
     let capture = XCTAttachment(screenshot: calendarScreenshot(application))
     capture.name = "Native Calendar mode selector"
     capture.lifetime = .keepAlways
     add(capture)
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
     for mode in ["Day", "Week"] {
-      modeControl(mode, in: modes).activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode(mode)
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
       let capture = XCTAttachment(screenshot: calendarScreenshot(application))
       capture.name = "Native \(mode) time grid"
@@ -609,14 +591,6 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
       }
     #endif
     XCTAssertTrue(schedule.waitForExistence(timeout: 10))
-  }
-
-  private func modeControl(_ name: String, in picker: XCUIElement) -> XCUIElement {
-    #if os(macOS)
-      picker.radioButtons[name]
-    #else
-      picker.buttons[name]
-    #endif
   }
 
   private func calendarScreenshot(_ application: XCUIApplication) -> XCUIScreenshot {

@@ -74,11 +74,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       identifier: "saved.calendar.mode"
     ).firstMatch
     XCTAssertTrue(modes.waitForExistence(timeout: 5))
-    #if os(macOS)
-      modes.radioButtons[mode].activateForPlannerJourney()
-    #else
-      modes.buttons[mode].activateForPlannerJourney()
-    #endif
+    application.chooseSavedCalendarMode(mode)
     let entry: XCUIElement
     if mode == "Month" {
       entry =
@@ -87,9 +83,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
             of: "saved.item.schedule.", with: "saved.calendar.schedule.")
         ).firstMatch
     } else {
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 10))
       let identity = try XCTUnwrap(scheduleIdentifier.split(separator: ".").last)
       entry =

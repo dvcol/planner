@@ -78,14 +78,15 @@ struct SavedItemCatalog: View {
       min: representation == .map ? 320 : 220,
       ideal: representation == .map ? 560 : 320, max: representation == .map ? nil : 800
     )
-    .navigationTitle(scope.title)
-    .toolbarTitleDisplayMode(.inline)
     #if os(iOS)
+      .modifier(SavedCollectionNavigationTitle(title: scope.title))
       .modifier(
         SavedCollectionSearch(
           text: $searchText, placement: representation == .map ? .toolbar : .automatic,
           prompt: scope.searchPrompt, usesMap: representation == .map))
     #else
+      .navigationTitle(scope.title)
+      .toolbarTitleDisplayMode(.inline)
       .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     #endif
     .searchPresentationToolbarBehavior(.avoidHidingContent)

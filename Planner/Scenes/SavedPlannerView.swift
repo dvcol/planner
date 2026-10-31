@@ -1692,7 +1692,7 @@ struct SavedPlannerView: View {
           }
         }
       } header: {
-        Text("Lists").foregroundStyle(Color.primary)
+        if usesSidebarNavigation { Text("Lists").foregroundStyle(Color.primary) }
       }
     }
     .listStyle(.sidebar)
@@ -1726,8 +1726,13 @@ struct SavedPlannerView: View {
     .safeAreaInset(edge: .top) {
       if selectedSection == .lists { recoveryNotice }
     }
-    .navigationTitle("Plan 2Do")
-    .toolbarTitleDisplayMode(.inline)
+    #if os(iOS)
+      .modifier(
+        SavedCollectionNavigationTitle(title: usesSidebarNavigation ? "Plan 2Do" : "Lists"))
+    #else
+      .navigationTitle("Plan 2Do")
+      .toolbarTitleDisplayMode(.inline)
+    #endif
     .navigationSplitViewColumnWidth(
       min: sidebarMinimumWidth, ideal: sidebarPreferredWidth, max: sidebarMaximumWidth
     )

@@ -7,6 +7,41 @@ import XCTest
 #endif
 
 extension XCUIApplication {
+  /// Compact single-child layouts expose the grid through the enclosing Calendar scroll view.
+  func savedCalendarTimeGrid() -> XCUIElement {
+    #if os(macOS)
+      let grid = descendants(matching: .any).matching(identifier: "saved.calendar.time-grid")
+        .firstMatch
+    #else
+      let grid = scrollViews.matching(
+        NSPredicate(
+          format: "identifier IN %@", ["saved.calendar.time-grid", "saved.calendar.canvas"])
+      ).containing(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.day-heading.")
+      ).firstMatch
+    #endif
+    XCTAssertTrue(grid.waitForExistence(timeout: 5))
+    return grid
+  }
+
+  /// Selects the native toolbar menu on phones and the segmented control on wider layouts.
+  func chooseSavedCalendarMode(_ name: String) {
+    let control = descendants(matching: .any).matching(identifier: "saved.calendar.mode").firstMatch
+    XCTAssertTrue(control.waitForExistence(timeout: 5))
+    #if os(macOS)
+      control.radioButtons[name].activateForPlannerJourney()
+    #else
+      if control.elementType == .segmentedControl {
+        control.buttons[name].activateForPlannerJourney()
+      } else {
+        control.activateForPlannerJourney()
+        let choice = buttons[name].firstMatch
+        XCTAssertTrue(choice.waitForExistence(timeout: 5))
+        choice.activateForPlannerJourney()
+      }
+    #endif
+  }
+
   func activatePlannerFixtureWriterAction(_ identifier: String) {
     plannerElement("fixture.writer.menu").activateForPlannerJourney()
     let action = plannerElement(identifier)
@@ -197,7 +232,7 @@ extension XCUIApplication {
       openPlannerSection("Lists")
       for _ in 0..<3 {
         if direct.exists && direct.isHittable { return direct }
-        let overflow = navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"].firstMatch
+        let overflow = navigationBars.buttons["OverflowBarButtonItem"].firstMatch
         if overflow.exists && overflow.isHittable {
           overflow.activateForPlannerJourney()
           XCTAssertTrue(menuAction.waitForExistence(timeout: 5))
@@ -603,7 +638,7 @@ extension XCUIApplication {
           create.activateForPlannerJourney()
           return
         }
-        if let overflow = navigationBars["Plan 2Do"].buttons.matching(
+        if let overflow = navigationBars.buttons.matching(
           identifier: "OverflowBarButtonItem"
         ).allElementsBoundByIndex.first(where: \.isHittable) {
           overflow.activateForPlannerJourney()

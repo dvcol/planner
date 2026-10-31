@@ -1,6 +1,10 @@
 import CoreGraphics
 import XCTest
 
+#if os(iOS)
+  import UIKit
+#endif
+
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
   #if os(macOS)
@@ -129,6 +133,68 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   #endif
 
   #if os(iOS)
+    func testPhoneCatalogHeadersStayLeadingAndCalendarModeFitsItsToolbar() throws {
+      guard UIDevice.current.userInterfaceIdiom == .phone else {
+        throw XCTSkip("Phone tab headers use the compact navigation layout.")
+      }
+      continueAfterFailure = false
+      defer { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
+        XCUIDevice.shared.orientation = orientation
+        let landscape = orientation == .landscapeLeft
+        let rotated = NSPredicate { _, _ in
+          let frame = application.windows.firstMatch.frame
+          return landscape ? frame.width > frame.height : frame.height > frame.width
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: rotated, object: nil)], timeout: 10),
+          .completed)
+        for section in ["Calendar", "Lists", "Items", "Inbox", "Itineraries"] {
+          application.openPlannerSection(section)
+          let navigation = application.navigationBars.firstMatch
+          recordScreenshot(
+            application, name: "\(section) phone header \(landscape ? "landscape" : "portrait")")
+          if section == "Calendar" {
+            let mode = application.descendants(matching: .any)
+              .matching(identifier: "saved.calendar.mode").firstMatch
+            XCTAssertTrue(mode.waitForExistence(timeout: 5))
+            XCTAssertTrue(
+              navigation.frame.contains(mode.frame),
+              "The Calendar mode control must not consume a separate content row.")
+            if landscape {
+              mode.activateForPlannerJourney()
+              application.plannerElement("saved.calendar.choose-date").activateForPlannerJourney()
+              let datePicker = application.descendants(matching: .any)
+                .matching(identifier: "saved.calendar.selected-date").firstMatch
+              XCTAssertTrue(datePicker.waitForExistence(timeout: 5))
+              application.buttons["Done"].activateForPlannerJourney()
+              XCTAssertTrue(datePicker.waitForNonExistence(timeout: 5))
+              for name in ["Day", "Week", "Month"] {
+                application.chooseSavedCalendarMode(name)
+                XCTAssertEqual(mode.value as? String, name)
+              }
+            }
+          }
+          let title = navigation.staticTexts[section].firstMatch
+          XCTAssertTrue(title.waitForExistence(timeout: 5))
+          let window = application.windows.firstMatch.frame
+          XCTAssertLessThanOrEqual(title.frame.minX, window.minX + window.width * 0.2)
+          let minimumWidth = (section as NSString).size(
+            withAttributes: [.font: UIFont.preferredFont(forTextStyle: .headline)]).width
+          XCTAssertGreaterThanOrEqual(title.frame.width, minimumWidth - 1)
+          if section == "Lists" {
+            XCTAssertFalse(
+              application.collectionViews["saved.lists.catalog"].staticTexts["Lists"].exists,
+              "The phone List catalog must not repeat its navigation heading.")
+          }
+        }
+      }
+    }
+
     func testCreatingFirstListInLandscapeLoadsItsContents() {
       continueAfterFailure = false
       addTeardownBlock {
@@ -538,7 +604,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
         showSidebar.activateForPlannerJourney()
       }
       if !filter.exists || !filter.isHittable {
-        let overflow = application.navigationBars["Plan 2Do"].buttons["OverflowBarButtonItem"]
+        let overflow = application.navigationBars.buttons["OverflowBarButtonItem"]
           .firstMatch
         XCTAssertTrue(overflow.waitForPlannerHittability())
         overflow.activateForPlannerJourney()

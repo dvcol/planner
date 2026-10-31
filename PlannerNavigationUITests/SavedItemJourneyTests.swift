@@ -156,8 +156,9 @@ final class SavedItemJourneyTests: XCTestCase {
       revealCatalogSidebar()
       XCTAssertTrue(
         application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 10))
-      let toolbar = application.navigationBars["Plan 2Do"]
-      let title = toolbar.staticTexts["Plan 2Do"]
+      let catalogTitle = UIDevice.current.userInterfaceIdiom == .phone ? "Lists" : "Plan 2Do"
+      let toolbar = application.navigationBars[catalogTitle]
+      let title = toolbar.staticTexts[catalogTitle]
       recordScreenshot(application, name: "Adaptive Lists catalog toolbar")
       XCTAssertTrue(toolbar.waitForExistence(timeout: 5))
       if UIDevice.current.userInterfaceIdiom == .phone {

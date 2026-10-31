@@ -76,8 +76,12 @@ struct SavedItineraryCatalog: View {
           description: Text("Change the archive filter or create an Itinerary to start planning."))
       }
     }
-    .navigationTitle("Itineraries")
-    .toolbarTitleDisplayMode(.inline)
+    #if os(iOS)
+      .modifier(SavedCollectionNavigationTitle(title: "Itineraries"))
+    #else
+      .navigationTitle("Itineraries")
+      .toolbarTitleDisplayMode(.inline)
+    #endif
     .navigationSplitViewColumnWidth(min: 240, ideal: 320, max: 480)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {

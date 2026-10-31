@@ -24,6 +24,7 @@ func calendarClockChangeSpanDescription(
 }
 
 struct SavedCalendarTimeGrid: View {
+  @Environment(\.colorScheme) private var colorScheme
   private struct AllDayPresentation: Identifiable {
     let date: Date
     var id: Date { date }
@@ -194,7 +195,7 @@ struct SavedCalendarTimeGrid: View {
                   dayHeader(day, width: minimumWidths[index] + extraWidth)
                 }
               }
-              .padding(.vertical, 8)
+              .padding(.vertical, 4)
               .background(.background)
               .overlay(alignment: .bottom) { Divider() }
             }
@@ -276,7 +277,7 @@ struct SavedCalendarTimeGrid: View {
                 .frame(minWidth: 28, minHeight: 28)
                 .background {
                   if calendar.isDate(day, inSameDayAs: selectedDate) {
-                    Circle().fill(.tint.opacity(0.16))
+                    Circle().fill(.tint.opacity(colorScheme == .dark ? 0.32 : 0.16))
                   }
                 }
             }
@@ -294,7 +295,9 @@ struct SavedCalendarTimeGrid: View {
       ForEach(entries.prefix(2), id: \.schedule.id) { entry in
         entryButton(entry, day: day, isTimed: false, isCompact: isWeek)
           .frame(height: isWeek ? weekCardMinimumHeight : allDayCardHeight)
-          .background(.tint.opacity(0.12), in: .rect(cornerRadius: 4))
+          .background(
+            .tint.opacity(colorScheme == .dark ? 0.28 : 0.12), in: .rect(cornerRadius: 4)
+          )
           .padding(.horizontal, 2)
       }
       if entries.count > 2 {
@@ -321,7 +324,9 @@ struct SavedCalendarTimeGrid: View {
             let laneWidth = (width - 4) / CGFloat(placement.laneCount)
             entryButton(placement.entry, day: day, isTimed: true, isCompact: isWeek)
               .frame(width: laneWidth - 2, height: placement.height, alignment: .topLeading)
-              .background(.tint.opacity(0.12), in: .rect(cornerRadius: 4))
+              .background(
+                .tint.opacity(colorScheme == .dark ? 0.28 : 0.12), in: .rect(cornerRadius: 4)
+              )
               .background(.background, in: .rect(cornerRadius: 4))
               .overlay(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 2).fill(.tint).frame(width: 2)
@@ -345,7 +350,7 @@ struct SavedCalendarTimeGrid: View {
   private func hourLines(day: Date) -> some View {
     VStack(spacing: 0) {
       ForEach(0..<24, id: \.self) { hour in
-        Rectangle().fill(.separator).frame(height: 0.5)
+        Rectangle().fill(.separator).opacity(0.5).frame(height: 0.5)
           .overlay(alignment: .topLeading) {
             Color.clear.frame(width: 1, height: 1).id(hourIdentifier(day, hour: hour))
           }

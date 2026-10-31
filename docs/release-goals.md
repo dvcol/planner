@@ -43,6 +43,25 @@ distribution is not an owner-only installation restriction. Do not silently
 add a custom login/access-control system or expand the personal MVP to address
 that distinction.
 
+## Personal TestFlight delivery, 1 November 2026
+
+The owner pivots immediate delivery to internal TestFlight and pauses all App
+Store listing work. Keep the existing store drafts unsubmitted, release manual,
+availability unset and private contact fields blank. Do not send an unlisted
+request. Any future App Store delivery retains the unlisted-only constraint.
+
+Use the existing Account Holder in a Personal internal group, with explicitly
+selected iOS and Mac builds. Do not create public invitation links or add other
+accounts without authorization. Each build expires 90 days after upload; a new
+build must be distributed before expiry for uninterrupted use.
+
+The current focus is the reported iPhone landscape space/header problems,
+Calendar layout and dark appearance, and TestFlight's exit-feedback prompt.
+Reuse native components and focused Simulator checks. Obtain an actual
+termination diagnostic before claiming an exit-crash cause or fix. The owner
+declines review-contact entry for now; this is intentional incomplete future
+submission metadata, not a blocker to the internal testing group.
+
 ## Private-cloud storage boundary, 29 October 2026
 
 The user requires Planner content to use only their private CloudKit database

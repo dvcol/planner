@@ -29,12 +29,24 @@ reopen accepted answers or override the current native tracker state.
   published on `main`. Generated run artifacts are discarded after use. The
   owner also approved permanent local garbage collection; that cleanup is
   complete and the source handoff is available.
-- Apple accepted Plan 2Do for iOS and macOS. The approved CloudKit schema is
-  deployed to Production, and both signed `1.0.0` (build `1`) packages uploaded
-  successfully. The owner-approved “Data Not Collected” privacy responses are
-  published. Neither platform is submitted for review or released; release
-  remains manual pending unlisted approval.
-- Submission still needs Mac store screenshots, Apple-only review contact
-  details, the review sign-in checkbox decision and remaining Apple declarations. Both
-  processed builds are selected in their saved drafts. These are release gates,
-  not a reason for another iCloud off/on or stress session.
+- Immediate delivery is now internal TestFlight. Personal contains the existing
+  Account Holder and the processed iOS and Mac `1.0.0` (build `1`) packages.
+  Both builds are ready to test; the account invitation is issued. No external
+  group or public invitation link is created. Future builds are assigned
+  explicitly, and the 90-day expiry remains a delivery constraint.
+- The owner pauses listing work. Store drafts remain unsubmitted with manual
+  release, availability unset and contact fields blank. The approved privacy
+  responses are published and content rights are saved. Apple requires contact
+  fields before saving the review-only sign-in toggle; that future review form
+  remains incomplete by request. No unlisted request is sent.
+- Current TestFlight feedback concerns iPhone landscape spacing, inconsistent
+  headers, Calendar density/dark appearance and a repeated exit-feedback prompt.
+  The owner-supplied crash reports consistently show `RUNNINGBOARD 0xdead10cc`,
+  suspension while holding a file/database lock. Build 1's private-sync worker retained
+  an App Group file lock for its lifetime. The correction passes focused iOS/Mac
+  ownership tests; phone header, List-title and Calendar-rotation journeys pass.
+  Build 2 preparation continues. Actual iPhone suspension remains a final
+  verification step, separate from normal sync checks. See the
+  [follow-up checkpoint](prototypes/testflight-phone-followup.md). The prior Mac
+  store-capture sizing attempts did not produce a usable image, and their
+  test-only changes were reverted.

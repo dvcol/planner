@@ -8,13 +8,8 @@ import XCTest
       continueAfterFailure = false
       let application = try openNovemberCalendar(
         scenario: "calendar-clock-alignment", month: 3, day: 8)
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Day"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Day")
+      let grid = application.savedCalendarTimeGrid()
       let appointment = grid.buttons.matching(
         NSPredicate(format: "label == %@", "Spring museum")
       ).firstMatch
@@ -29,7 +24,7 @@ import XCTest
         .firstMatch
       XCTAssertTrue(boundary.waitForExistence(timeout: 10))
       XCTAssertEqual(boundary.frame.height, 180, accuracy: 1)
-      modes.buttons["Week"].activateForPlannerJourney()
+      application.chooseSavedCalendarMode("Week")
       XCTAssertTrue(appointment.waitForExistence(timeout: 10))
       let monday = grid.buttons.matching(NSPredicate(format: "label == %@", "Monday museum"))
         .firstMatch
@@ -63,22 +58,17 @@ import XCTest
     func testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-clock-alignment")
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Day"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Day")
+      let grid = application.savedCalendarTimeGrid()
       let backward = grid.buttons.matching(NSPredicate(format: "label == %@", "Backward span"))
         .firstMatch
       let later = grid.buttons.matching(NSPredicate(format: "label == %@", "Autumn museum"))
         .firstMatch
       XCTAssertTrue(backward.waitForExistence(timeout: 10))
       XCTAssertTrue(later.waitForExistence(timeout: 10))
-      XCTAssertEqual(backward.frame.height, 90, accuracy: 1)
-      XCTAssertEqual(later.frame.minY - backward.frame.minY, 90, accuracy: 1)
-      XCTAssertEqual(later.frame.height, 180, accuracy: 1)
+      XCTAssertEqual(backward.frame.height, 64, accuracy: 1)
+      XCTAssertEqual(later.frame.minY - backward.frame.minY, 60, accuracy: 1)
+      XCTAssertEqual(later.frame.height, 120, accuracy: 1)
       for _ in 0..<6 {
         if backward.isHittable { break }
         grid.swipeDown()
@@ -94,18 +84,22 @@ import XCTest
       capture.name = "Backward span retains both endpoints on the aligned Day grid"
       capture.lifetime = .keepAlways
       add(capture)
-      modes.buttons["Week"].activateForPlannerJourney()
+      application.chooseSavedCalendarMode("Week")
       XCTAssertTrue(later.waitForExistence(timeout: 10))
       let monday = grid.buttons.matching(NSPredicate(format: "label == %@", "Monday autumn"))
         .firstMatch
       XCTAssertTrue(monday.waitForExistence(timeout: 10))
       XCTAssertEqual(later.frame.minY, monday.frame.minY, accuracy: 1)
       XCTAssertEqual(later.frame.height, monday.frame.height, accuracy: 1)
-      modes.buttons["Day"].activateForPlannerJourney()
+      application.chooseSavedCalendarMode("Day")
+      let dayHeading = grid.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.day-heading.")
+      ).firstMatch
       for _ in 0..<6 {
-        if backward.isHittable { break }
+        if backward.isHittable, backward.frame.minY >= dayHeading.frame.maxY { break }
         grid.swipeDown()
       }
+      XCTAssertGreaterThanOrEqual(backward.frame.minY, dayHeading.frame.maxY)
       backward.activateForPlannerJourney()
       let source = application.descendants(matching: .any).matching(
         identifier: "saved.item.schedule.\(identifier)"
@@ -116,7 +110,7 @@ import XCTest
         separator: " ")
       XCTAssertTrue(normalizedSource.contains("1:55 AM EDT"), sourceDescription)
       XCTAssertTrue(normalizedSource.contains("1:05 AM EST"), sourceDescription)
-      XCTAssertTrue(sourceDescription.hasSuffix("America/New_York"), sourceDescription)
+      XCTAssertTrue(sourceDescription.hasSuffix(" · New York"), sourceDescription)
     }
 
     func testHalfHourForwardChangeAndOvernightClippingUseClockBounds() throws {
@@ -130,13 +124,8 @@ import XCTest
         let application = try openNovemberCalendar(
           scenario: "calendar-clock-alignment", zone: fixture.zone,
           month: fixture.month, day: fixture.day)
-        let modes = application.descendants(matching: .any).matching(
-          identifier: "saved.calendar.mode"
-        ).firstMatch
-        modes.buttons["Day"].activateForPlannerJourney()
-        let grid = application.descendants(matching: .any).matching(
-          identifier: "saved.calendar.time-grid"
-        ).firstMatch
+        application.chooseSavedCalendarMode("Day")
+        let grid = application.savedCalendarTimeGrid()
         let appointment = grid.buttons.matching(NSPredicate(format: "label == %@", fixture.title))
           .firstMatch
         XCTAssertTrue(appointment.waitForExistence(timeout: 10))
@@ -161,7 +150,7 @@ import XCTest
         capture.lifetime = .keepAlways
         add(capture)
         if fixture.zone == "Australia/Lord_Howe" {
-          modes.buttons["Week"].activateForPlannerJourney()
+          application.chooseSavedCalendarMode("Week")
           let monday = grid.buttons.matching(NSPredicate(format: "label == %@", "Island Monday"))
             .firstMatch
           XCTAssertTrue(monday.waitForExistence(timeout: 10))
@@ -176,13 +165,8 @@ import XCTest
       continueAfterFailure = false
       let application = try openNovemberCalendar(
         scenario: "calendar-clock-alignment", zone: "Australia/Lord_Howe", month: 4, day: 5)
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Day"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Day")
+      let grid = application.savedCalendarTimeGrid()
       let first = grid.buttons.matching(NSPredicate(format: "label == %@", "Island first"))
         .firstMatch
       let second = grid.buttons.matching(NSPredicate(format: "label == %@", "Island second"))
@@ -208,13 +192,8 @@ import XCTest
     func testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-repeated-short-span")
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Week"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Week")
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
       let appointment = grid.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.2026-11-1.")
@@ -257,13 +236,8 @@ import XCTest
     func testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-repeated-span")
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Day"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Day")
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
       let appointment = grid.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.2026-11-1.")
@@ -284,7 +258,7 @@ import XCTest
       XCTAssertFalse(description.hasPrefix("Start only"))
       let scheduleIdentifier = try XCTUnwrap(appointment.identifier.split(separator: ".").last)
       for mode in ["Week", "Month"] {
-        modes.buttons[mode].activateForPlannerJourney()
+        application.chooseSavedCalendarMode(mode)
         let entry: XCUIElement
         if mode == "Month" {
           entry = application.buttons["saved.calendar.schedule.\(scheduleIdentifier)"].firstMatch
@@ -340,13 +314,8 @@ import XCTest
     func testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-repeated-times")
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Day"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Day")
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
       let appointments = grid.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.2026-11-1."))
@@ -375,7 +344,7 @@ import XCTest
       XCTAssertTrue(descriptions.contains { $0.hasSuffix("EDT") })
       XCTAssertTrue(descriptions.contains { $0.hasSuffix("EST") })
       for mode in ["Week", "Month"] {
-        modes.buttons[mode].activateForPlannerJourney()
+        application.chooseSavedCalendarMode(mode)
         let entries: XCUIElementQuery
         if mode == "Month" {
           entries = application.buttons.matching(
@@ -430,13 +399,8 @@ import XCTest
     func testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-late-point")
-      let modes = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.mode"
-      ).firstMatch
-      modes.buttons["Day"].activateForPlannerJourney()
-      let grid = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.time-grid"
-      ).firstMatch
+      application.chooseSavedCalendarMode("Day")
+      let grid = application.savedCalendarTimeGrid()
       XCTAssertTrue(grid.waitForExistence(timeout: 5))
       let appointment = grid.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.2026-11-1.")
