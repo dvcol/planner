@@ -1933,6 +1933,19 @@ final class SavedBrowserJourneyTests: XCTestCase {
           application,
           name: "Calendar reader retains its linked page at rotation \(orientation.rawValue)")
       }
+      XCUIDevice.shared.press(.home)
+      let backgrounded = NSPredicate { _, _ in
+        application.state == .runningBackground || application.state == .runningBackgroundSuspended
+      }
+      await fulfillment(
+        of: [XCTNSPredicateExpectation(predicate: backgrounded, object: application)], timeout: 10)
+      application.activate()
+      XCTAssertEqual(application.state, .runningForeground)
+      XCTAssertTrue(page.staticTexts["Garden guide fixture"].waitForExistence(timeout: 10))
+      XCTAssertTrue(application.buttons["saved.browser.back"].isEnabled)
+      XCTAssertTrue(returnToPlanner.waitForPlannerHittability())
+      try await recordWindow(
+        application, name: "Calendar reader retains its linked page after background and resume")
       application.buttons["saved.browser.back"].activateForPlannerJourney()
       XCTAssertTrue(page.staticTexts["Museum guide fixture"].waitForExistence(timeout: 10))
     #endif

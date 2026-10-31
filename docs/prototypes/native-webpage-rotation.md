@@ -60,3 +60,26 @@ pass. This qualifies the Calendar caller at ordinary Large text size, not
 arbitrary scene destruction, every accessibility setting, third-party login,
 physical devices or actual Mac interaction. No iCloud test or installed Mac
 replacement is performed. The attended Mac runtime remains pending.
+
+## Calendar reader background and resume, 31 October 2026
+
+The same Calendar-source journey now presses Home after following Garden and
+rotating back to portrait. It observes background or suspended state, activates
+Planner, and requires the loaded Garden page, enabled Back and usable Return.
+Back still reaches Museum; Return and subsequent destination switching retain
+the exact saved bookmark and full Schedule description.
+
+One light-phone execution passes in 82.677 seconds and one dark-iPad execution
+in 100.610 seconds. Both use the same 254 unchanged native inputs. The original
+[phone](evidence/native-webpage-rotation/calendar-resume-2026-10-31/phone-resumed.png)
+and [iPad](evidence/native-webpage-rotation/calendar-resume-2026-10-31/tablet-resumed.png)
+resume captures are inspected: the page and native controls remain readable,
+with Calendar selected. The
+[review packet](evidence/native-webpage-rotation/calendar-resume-2026-10-31/review.json)
+retains commands, results, source/product hashes and compressed logs.
+
+Production is unchanged. One incremental Simulator build and these two serial
+executions cover the added behavior; no broad regression suite, physical-device,
+Mac UI or iCloud run is repeated. Ordinary background/resume is qualified for
+this caller. Forced process termination, arbitrary scene destruction, every
+third-party website and full assistive acceptance are outside this result.

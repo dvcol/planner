@@ -79,6 +79,14 @@ qualifies installed iPad handoff, Cancel, Save, foreground refresh and exact
 Item/bookmark readback through relaunch. Other senders and broader physical
 acceptance remain open. Installed Mac Share is explicitly post-MVP.
 
+The [31 October Simulator Maps sender](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026)
+now passes Cancel, Save while Planner is closed, exact URL/identity readback,
+relaunch and synthetic cleanup. The
+[Calendar reader resume follow-up](prototypes/native-webpage-rotation.md#calendar-reader-background-and-resume-31-october-2026)
+also passes rotation, background/activation, retained linked-page history and
+exact booking Return on light phone and dark iPad. These close represented
+emulator gaps without claiming physical sender or full assistive acceptance.
+
 | Original finding | Current implementation and evidence | Remaining acceptance |
 | --- | --- | --- |
 | Filtered native map | Shared complete Map rows, bounded temporary resolution and collection List/Map modes are implemented. [Native collection journeys](prototypes/native-map-collection-ui.md), [location controls](prototypes/native-map-location-controls.md), [accessibility checks](prototypes/native-map-accessibility.md) and [refresh/selection journeys](prototypes/native-change-observation.md) cover represented phone/iPad workflows. The [Mac contextual pair](prototypes/native-map-collection-ui.md#mac-repeated-contexts-and-window-resizing-28-october-2026) now passes exact repeated Item/List choices and independent completion through actual narrow/wide window resizing. | Native Map divider/keyboard interaction, full scene/accessibility review and physical/provider performance. Individual reports retain their exact contextual and source-epoch limits. |

@@ -53,7 +53,7 @@ No public/shared cloud fallback is configured.
 | Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented. Physical iPhone/iPad creation, bidirectional edits, deletion and relaunch pass. The earlier open Mac-peer diagnostic remains separate. | Off/on is deliberately deferred. Retain the existing failure/conflict limits; do not repeat passing normal sync checks without a new change or defect. |
 | Shared storage | [Saves][shared], [Safari][physical-share]. The [native Maps sender journey](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026) passes Cancel, Save with Planner closed, exact URL/identity through relaunch and cleanup in Simulator. Its saved details show the native map preview. | Physical Maps sender checks and Google Maps app handoff remain open. |
 | Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. The [responsive search correction](prototypes/native-search-accessibility.md#responsive-native-editor) passes scoped clipping and query-retention checks; broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md#installed-home-screen-31-october-2026) has inspected Default/Dark Home Screen captures and passing native phone/iPad Simulator journeys. | Remaining scene, resizing and accessibility review, plus physical Home Screen and Mac Dock appearance checks. No signing prerequisite for local polish. |
-| Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
+| Map, reader and live-refresh lifecycle checks | Implemented. The [Calendar reader](prototypes/native-webpage-rotation.md#calendar-reader-background-and-resume-31-october-2026) additionally retains page/history and exact booking return through rotation and background/resume on phone and dark iPad Simulators. | Remaining platform/assistive review; unrepresented remounts and website sessions retain explicit coverage limits. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
 | Synchronized daily use | Signed mobile journey passes. | UI polish next. |
 | Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
@@ -64,7 +64,36 @@ Intents, Shortcuts and Agent Control remain V3. None of these deferred tracks
 blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
+### Current finish checklist, 31 October 2026
+
+The core feature implementation is present. Today's emulator work closes the
+native Maps sender's complete Save journey and ordinary Calendar-reader resume.
+Keep the remaining release checks finite:
+
+- On an available Mac, run the prepared completion/search pair, review native
+  keyboard/divider behavior and inspect the Dock icon. Manual automation
+  approval remains required. Refresh the prepared products and their protected
+  input manifest first: today's UI-test edits make the older preflight stale.
+- On available mobile devices, finish native Maps/Google Maps sender checks and
+  review the current core scenes, scrolling/performance and Home Screen icon.
+  Simulator sender results do not replace those physical observations.
+- Complete hands-on accessibility and final coherence/layout review. The native
+  Save contrast audit remains diagnostic; its passing functional journeys and
+  readable captures do not convert that audit into an automated pass.
+
+These require attended platform review, not another signing setup. No device or
+Mac readiness is requested while the user is away. Broader unrepresented
+website/remount cases are coverage limits, not an unlimited test matrix. Address
+new reproducible defects if found; do not repeat passing normal sync or expand
+the deferred import, Mac Share or V3 work to fill the remaining time.
+
 ## Recent local checkpoints
+
+The [Calendar reader resume checkpoint](prototypes/native-webpage-rotation.md#calendar-reader-background-and-resume-31-october-2026)
+passes one light-phone and one dark-iPad Simulator execution. Home and activation
+retain the linked page and history; Return preserves the exact saved bookmark
+and booking. Original resume captures are inspected. Production is unchanged;
+only the affected journey and incremental Simulator build are run.
 
 The [complete native Maps Share checkpoint](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026)
 passes on a fresh phone Simulator. Two test gestures are corrected to expose
