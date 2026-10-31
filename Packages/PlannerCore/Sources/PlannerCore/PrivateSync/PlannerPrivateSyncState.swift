@@ -2,6 +2,7 @@ import CloudKit
 import Darwin
 import Foundation
 import SwiftData
+import Synchronization
 
 /// Private transport bookkeeping is local and excluded from Planner data backups.
 enum PlannerPrivateSchemaV20: VersionedSchema {
@@ -104,24 +105,42 @@ struct PlannerStoredCloudObservation: Codable {
 
 /// One main-app worker owns an account's engine; extensions never acquire this lease.
 final class PlannerPrivateSyncLease: @unchecked Sendable {
-  private let descriptor: Int32
+  #if os(iOS)
+    // iOS has one main-app process. A lifetime App Group flock prevents safe suspension.
+    private static let activeDirectories = Mutex<Set<URL>>([])
+    private let directory: URL
+  #else
+    private let descriptor: Int32
+  #endif
 
   init?(directory: URL) throws {
     try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let url = directory.appendingPathComponent("sync-worker.lock")
-    let opened = open(url.path, O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)
-    guard opened >= 0 else { throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO) }
-    guard flock(opened, LOCK_EX | LOCK_NB) == 0 else {
-      let code = errno
-      close(opened)
-      if code == EWOULDBLOCK { return nil }
-      throw POSIXError(POSIXErrorCode(rawValue: code) ?? .EIO)
-    }
-    descriptor = opened
+    #if os(iOS)
+      let canonicalDirectory = directory.resolvingSymlinksInPath().standardizedFileURL
+      guard Self.activeDirectories.withLock({ $0.insert(canonicalDirectory).inserted }) else {
+        return nil
+      }
+      self.directory = canonicalDirectory
+    #else
+      let url = directory.appendingPathComponent("sync-worker.lock")
+      let opened = open(url.path, O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)
+      guard opened >= 0 else { throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO) }
+      guard flock(opened, LOCK_EX | LOCK_NB) == 0 else {
+        let code = errno
+        close(opened)
+        if code == EWOULDBLOCK { return nil }
+        throw POSIXError(POSIXErrorCode(rawValue: code) ?? .EIO)
+      }
+      descriptor = opened
+    #endif
   }
 
   deinit {
-    flock(descriptor, LOCK_UN)
-    close(descriptor)
+    #if os(iOS)
+      Self.activeDirectories.withLock { _ = $0.remove(directory) }
+    #else
+      flock(descriptor, LOCK_UN)
+      close(descriptor)
+    #endif
   }
 }
