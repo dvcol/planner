@@ -41,6 +41,32 @@ providers to be available; your saved planning content remains usable offline.
 
 `itinerary,travel,places,lists,tasks,calendar,trip,organize`
 
+## App Review notes draft
+
+The app works locally without a Planner account or iCloud sign-in. To review
+its main workflow, create an Item, add it to a List, then create an Itinerary
+using that Item or List. Map mode shows saved or resolved locations. Calendar
+schedules can be added independently of activity estimates. External maps,
+previews and websites depend on their providers and network access.
+
+Optional sync uses only the signed-in user's private iCloud database. It does
+not provide a public/shared database fallback. The app is intended for the
+owner's personal planning across iPhone, iPad and Mac. We are requesting
+unlisted distribution and will keep release manual while Apple reviews that
+request. No paid content, subscription or developer-hosted account is required.
+
+## Unlisted request draft
+
+This application is intended for the developer's personal use across their
+Apple devices, rather than discovery by a general App Store audience. Direct
+installation from an unlisted link is the intended distribution workflow.
+Planning data stays local with optional private iCloud synchronization. We
+understand that an unlisted link does not restrict who can install the app,
+and that App Review and unlisted-distribution approval are separate decisions.
+
+These statements need owner review before either submission. No request has
+been sent to Apple.
+
 ## Submission fields still to prepare
 
 - Confirm the available App Store name; the working name is not registered by
@@ -68,10 +94,11 @@ The implemented data paths provide the starting point for the policy:
 - Exported backups contain the user's planning data and go to a destination
   selected by the user. Further portability qualification is outside MVP.
 
-Audit the final bundled code/SDKs and required-reason API manifest before
-finalizing privacy declarations. Do not infer a complete “Data Not Collected”
-answer solely from the use of private iCloud. The owner still needs to approve
-the final policy and public contact information.
+The [privacy audit](release-privacy-audit.md), [policy draft](privacy-policy-draft.md)
+and [support draft](support-draft.md) now capture the reviewed data paths and
+unfinished release checks. Do not infer a complete “Data Not Collected” answer
+solely from the use of private iCloud. The owner still needs to approve the
+final policy and public contact information.
 
 ## Apple submission references
 
