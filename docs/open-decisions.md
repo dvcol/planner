@@ -34,7 +34,7 @@ reopen accepted answers or override the current native tracker state.
   successfully. The owner-approved “Data Not Collected” privacy responses are
   published. Neither platform is submitted for review or released; release
   remains manual pending unlisted approval.
-- Submission still needs store screenshots, Apple-only review contact details,
-  the review sign-in checkbox decision and remaining Apple declarations. Both
+- Submission still needs Mac store screenshots, Apple-only review contact
+  details, the review sign-in checkbox decision and remaining Apple declarations. Both
   processed builds are selected in their saved drafts. These are release gates,
   not a reason for another iCloud off/on or stress session.

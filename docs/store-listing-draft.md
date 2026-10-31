@@ -115,8 +115,10 @@ contact details are copied into these pages.
 - The owner approved the reviewed “Data Not Collected” declaration and Apple's
   final compliance confirmation. The privacy responses are published, with the
   policy URL above. The open-web reader produces a saved age rating of 16+.
-- One reviewed native iPhone screenshot is uploaded. iPad/Mac store screenshots,
-  Apple-only review contact details, the review sign-in
+- Reviewed native iPhone and 13-inch iPad screenshots are uploaded, with Apple's
+  reuse confirmation for smaller display sizes. The existing Item creation and
+  relaunch journey passes on the disposable iPad Simulator as well. Mac store
+  screenshots, Apple-only review contact details, the review sign-in
   checkbox and remaining content-rights/distribution declarations are unfinished.
   Unlisted distribution is not yet requested or approved.
 

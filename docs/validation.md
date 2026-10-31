@@ -41,6 +41,11 @@ GitHub caches cannot be recalled by rewriting branch references.
   for both packages. App Store Connect subsequently reports both builds
   “Ready to Submit.” This does not prove review, final acceptance or release;
   the installed development app remains untouched.
+- A single existing Item creation/cancel/completion/relaunch journey also passes
+  in 76.007 seconds on a disposable 13-inch iPad Simulator for the required store
+  capture. Reviewed native iPhone and iPad images are uploaded to App Store Connect;
+  their raw run artifacts are discarded after use. No physical device or
+  additional sync scenario is involved.
 - Recorded same-account physical iPhone/iPad create, bidirectional edits, delete
   and relaunch pass with private CKSyncEngine synchronization. Further
   account-transition and stress scenarios remain deferred.
