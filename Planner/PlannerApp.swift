@@ -15,7 +15,7 @@ struct PlannerApp: App {
   @State private var addressPreviews = PlannerAddressPreviews(
     provider: AppleAddressPreviewProvider())
   @State private var mapsPreviews = PlannerMapsPreviews(provider: NativeMapsPreviewProvider())
-  #if os(macOS)
+  #if os(macOS) && DEBUG
     @Environment(\.openWindow) private var openWindow
     @FocusedBinding(\.navigationPrototypeLayout) private var prototypeLayout:
       NavigationPrototypeLayout?
@@ -37,7 +37,13 @@ struct PlannerApp: App {
   var body: some Scene {
     WindowGroup(id: SavedPlanOpeningCoordinator.mainWindowSceneIdentifier, for: UUID.self) {
       $windowIdentifier in
-      if ProcessInfo.processInfo.arguments.contains("--navigation-prototype") {
+      #if DEBUG
+        let navigationPrototypeRequested = ProcessInfo.processInfo.arguments.contains(
+          "--navigation-prototype")
+      #else
+        let navigationPrototypeRequested = false
+      #endif
+      if navigationPrototypeRequested {
         NavigationPrototypeView()
       } else {
         SavedPlannerMainWindow(
@@ -57,31 +63,35 @@ struct PlannerApp: App {
       .commands {
         SidebarCommands()
         InspectorCommands()
-        CommandMenu("Prototype") {
-          Button("Open navigation comparison") { openWindow(id: "navigation-prototype") }
-          Divider()
-          if let layout = Binding($prototypeLayout) {
-            Picker("Layout comparison", selection: layout) {
-              ForEach(NavigationPrototypeLayout.allCases, id: \.self) { candidate in
-                Text(candidate.rawValue).tag(candidate)
+        #if DEBUG
+          CommandMenu("Prototype") {
+            Button("Open navigation comparison") { openWindow(id: "navigation-prototype") }
+            Divider()
+            if let layout = Binding($prototypeLayout) {
+              Picker("Layout comparison", selection: layout) {
+                ForEach(NavigationPrototypeLayout.allCases, id: \.self) { candidate in
+                  Text(candidate.rawValue).tag(candidate)
+                }
               }
+              .pickerStyle(.inline)
             }
-            .pickerStyle(.inline)
+            Divider()
+            Button("About navigation prototype") { showPrototypeInformation = true }
+            .disabled(showPrototypeInformation == nil)
           }
-          Divider()
-          Button("About navigation prototype") { showPrototypeInformation = true }
-          .disabled(showPrototypeInformation == nil)
-        }
+        #endif
       }
     #endif
     #if os(macOS)
       Settings {
         SavedPlannerSettingsView(store: savedPlanner)
       }
-      Window("Navigation comparison", id: "navigation-prototype") {
-        NavigationPrototypeView()
-      }
-      .defaultSize(width: 1200, height: 800)
+      #if DEBUG
+        Window("Navigation comparison", id: "navigation-prototype") {
+          NavigationPrototypeView()
+        }
+        .defaultSize(width: 1200, height: 800)
+      #endif
     #endif
   }
 }
