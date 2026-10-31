@@ -33,11 +33,20 @@
       XCTAssertTrue(search.waitForExistence(timeout: 5))
       search.activateForPlannerJourney()
       search.typeText("35.662,139.717\n")
-      XCTAssertTrue(maps.buttons["Share"].firstMatch.waitForExistence(timeout: 15))
+      XCTAssertTrue(maps.buttons["CardButtonTypeShare"].firstMatch.waitForExistence(timeout: 15))
       recordShareScreenshot(maps, name: "Native Maps coordinate before installed Share")
       openPlannerShare(in: maps)
       let title = maps.textFields["saved.capture.title"]
       XCTAssertTrue(title.waitForExistence(timeout: 15))
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(
+                format: "value != nil AND NOT (value IN %@)", ["", "Title", "Saved link"]),
+              object: title)
+          ], timeout: 12), .completed)
+      let sharedTitle = try XCTUnwrap(title.value as? String)
       recordShareScreenshot(maps, name: "Installed extension reviews the native Maps provider")
       maps.plannerElement("saved.capture.cancel").activateForPlannerJourney()
       XCTAssertTrue(title.waitForNonExistence(timeout: 10))
@@ -50,6 +59,7 @@
       maps.activate()
       openPlannerShare(in: maps)
       XCTAssertTrue(title.waitForExistence(timeout: 15))
+      XCTAssertTrue(title.waitForPlannerValue(sharedTitle))
       let originalLink = maps.textFields.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.capture.link.url.")
       ).firstMatch
@@ -233,7 +243,10 @@
         NSPredicate(format: "label == %@", "Planner")
       ).firstMatch
       if !planner.waitForExistence(timeout: 3) {
-        let share = sender.buttons["Share"].firstMatch
+        let share = sender.buttons.matching(
+          NSPredicate(
+            format: "identifier IN %@ OR label == %@", ["CardButtonTypeShare", "Share"], "Share")
+        ).firstMatch
         if !share.exists {
           let pageMenu = sender.buttons["MoreMenuButton"]
           XCTAssertTrue(pageMenu.waitForExistence(timeout: 5))

@@ -278,7 +278,7 @@ struct SavedCaptureForm: View {
   private func mapsPreviewSection(_ draft: PlannerCaptureDraftRead) -> some View {
     let previewLinks = draft.links.filter { $0.kind == .appleMaps || $0.kind == .googleMaps }
     let linksChanged = links.map(\.input) != captureLinkInputs(draft)
-    if linksChanged || !previewLinks.isEmpty {
+    if linksChanged || !previewLinks.isEmpty || draft.preview.candidate != nil {
       Section {
         if !linksChanged, previewLinks.count > 1 {
           Picker("Preview link", selection: $selectedPreviewLinkIdentifier) {
@@ -329,7 +329,9 @@ struct SavedCaptureForm: View {
       } header: {
         Text("Maps preview")
       } footer: {
-        Text("This preview is temporary. Your own fields and the original link are saved.")
+        Text(
+          "Review the title before adding. This map preview is temporary; your reviewed fields and the original link are saved."
+        )
       }
     }
   }
@@ -380,7 +382,7 @@ struct SavedCaptureForm: View {
       self.draft?.generation == draft.generation, links.map(\.input) == captureLinkInputs(draft),
       !isWorking, !applied
     else { return }
-    self.draft = updated
+    adoptCaptureDraft(updated, replacing: draft)
   }
 
   private func captureLinkInputs(_ draft: PlannerCaptureDraftRead) -> [PlannerLinkInput] {
@@ -393,11 +395,24 @@ struct SavedCaptureForm: View {
   private func adoptCaptureDraft(
     _ updated: PlannerCaptureDraftRead, replacing previous: PlannerCaptureDraftRead
   ) {
-    if title == previous.content.title { title = updated.content.title }
+    if title == previous.content.title || title == suggestedTitle(for: previous) {
+      title = suggestedTitle(for: updated)
+    }
     if links.map(\.input) == captureLinkInputs(previous) {
       links = updated.links.map(SavedOwnedLinkDraft.init)
     }
     draft = updated
+  }
+
+  /// Uses a shared Maps name for an empty or fallback review title.
+  private func suggestedTitle(for draft: PlannerCaptureDraftRead) -> String {
+    guard case .share = entryPoint,
+      draft.content.title.isEmpty || draft.content.title == "Saved link",
+      let candidate = draft.preview.candidate,
+      let name = candidate.displayName?.trimmingCharacters(in: .whitespacesAndNewlines),
+      !name.isEmpty
+    else { return draft.content.title }
+    return name
   }
 
   private func updateCaptureInputs(_ edit: PlannerCaptureEdit) async {
@@ -494,7 +509,7 @@ struct SavedCaptureForm: View {
     else { return }
     captureNamespace = namespace
     draft = prepared
-    title = prepared.content.title
+    title = suggestedTitle(for: prepared)
     subtitle = prepared.content.subtitle ?? ""
     notes = prepared.content.notes ?? ""
     estimate = prepared.content.estimate

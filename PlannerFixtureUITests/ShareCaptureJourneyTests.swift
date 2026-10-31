@@ -2,6 +2,69 @@ import XCTest
 
 @MainActor
 final class ShareCaptureJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testSharedMapNamePrefillsReviewAndKeepsTheReviewedTitleAfterRelaunch() {
+      continueAfterFailure = false
+      for expectedTitle in ["Nezu Museum", "My rainy day visit"] {
+        let application = XCUIApplication()
+        application.launchArguments = [
+          "--share-extension-fixture", "--share-native-map-item", "--fixture-dataset",
+          UUID().uuidString,
+        ]
+        application.launchSavedPlannerJourney()
+        let title = application.textFields["saved.capture.title"]
+        XCTAssertTrue(title.waitForPlannerValue("Nezu Museum"))
+        application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
+        application.openPlannerSection("Items")
+        XCTAssertFalse(application.savedPlannerItemRows("Nezu Museum").firstMatch.exists)
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        XCTAssertTrue(title.waitForPlannerValue("Nezu Museum"))
+        if expectedTitle != "Nezu Museum" {
+          title.activateForPlannerJourney()
+          title.typeText(
+            String(repeating: XCUIKeyboardKey.delete.rawValue, count: "Nezu Museum".count))
+          title.typeText(expectedTitle)
+          XCTAssertTrue(title.waitForPlannerValue(expectedTitle))
+        }
+        recordShareScreenshot(application, name: "Reviewed native Maps title: \(expectedTitle)")
+        application.plannerElement("saved.capture.add").activateForPlannerJourney()
+        application.openPlannerSection("Items")
+        let row = application.savedPlannerItemRows(expectedTitle).firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        let identifier = row.identifier
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
+        application.openPlannerSection("Items")
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        XCTAssertEqual(row.identifier, identifier)
+        XCTAssertEqual(application.savedPlannerItemRows(expectedTitle).count, 1)
+        row.activateForPlannerJourney()
+        XCTAssertTrue(
+          application.descendants(matching: .any).matching(identifier: "saved.item.completion")
+            .firstMatch.waitForExistence(timeout: 10))
+        application.plannerElement("saved.item.actions").activateForPlannerJourney()
+        application.plannerElement("Edit item").activateForPlannerJourney()
+        XCTAssertTrue(
+          application.textFields["saved.item.edit.title"].waitForPlannerValue(expectedTitle))
+        for field in ["name", "address"] {
+          let input = application.textFields["saved.item.edit.location.\(field)"]
+          for _ in 0..<6 where !input.exists || !input.isHittable { application.swipeUp() }
+          XCTAssertTrue(input.waitForExistence(timeout: 5))
+          XCTAssertEqual(input.value as? String, input.placeholderValue)
+        }
+        XCTAssertFalse(
+          application.descendants(matching: .any).matching(
+            identifier: "saved.item.edit.location.pin"
+          ).firstMatch.exists)
+        application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+        recordShareScreenshot(application, name: "Shared title survives relaunch: \(expectedTitle)")
+        application.terminate()
+      }
+    }
+  #endif
+
   func testRetryNativeInputKeepsOwnedEditsAndSavesTheRecoveredLink() {
     continueAfterFailure = false
     let application = XCUIApplication()

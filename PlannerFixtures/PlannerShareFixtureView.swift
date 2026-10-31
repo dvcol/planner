@@ -1,3 +1,5 @@
+import CoreLocation
+import MapKit
 import PlannerCore
 import SwiftData
 import SwiftUI
@@ -105,6 +107,15 @@ struct PlannerShareFixtureView: View {
   }
 
   private func providers() -> [NSItemProvider] {
+    #if os(iOS)
+      if ProcessInfo.processInfo.arguments.contains("--share-native-map-item") {
+        let item = MKMapItem(
+          location: CLLocation(latitude: 35.662, longitude: 139.717),
+          address: MKAddress(fullAddress: "Fixture address", shortAddress: nil))
+        item.name = "Nezu Museum"
+        return [NSItemProvider(object: item)]
+      }
+    #endif
     let provider = NSItemProvider()
     let urlInput = FixtureShareURLInput(
       failsFirstLoad: ProcessInfo.processInfo.arguments.contains("--share-retry-url-input"))
