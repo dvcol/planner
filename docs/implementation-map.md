@@ -21,7 +21,7 @@ workflows and recorded limitations.
   same-account mobile sync passes. Remaining work is the focused
   native/physical/assistive acceptance frontier; these statements do not declare
   the release accepted.
-- Validated workspace checkpoint: `9a20a3a6` on `prototype/navigation`.
+- Validated workspace checkpoint: `278da3da` on `prototype/navigation`.
   Published branch: `9eb878c5`. Newer source/evidence is not yet published;
   final handoff must reconcile that explicitly.
 - Prefer the simplest sufficient MVP. Reuse passing evidence, run serial
