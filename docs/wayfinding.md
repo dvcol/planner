@@ -1,78 +1,124 @@
-# Working through the planner map
+# Working through the Planner map
 
-The canonical plan is the GitHub issue linked from the README. Read that map first when continuing planning, selecting a ticket, or evaluating completion. The original [product brief](product-brief.md) is preserved as supplied; the map's agreed boundaries govern refinements to it.
+The [Native personal planner decision map](https://github.com/dvcol/planner/issues/1)
+is canonical. Read its destination and notes before choosing work. Its native
+child issues and blocked-by relationships define the current frontier.
 
-## Choose and resolve a ticket
+## Current destination and execution boundary
 
-1. Read the map's destination, notes, resolved-decision pointers, and remaining fog.
-2. Select an open, unblocked, unassigned native child in sub-issue order, or the ticket named by the user. Use GitHub's native dependencies to identify blockers.
-3. Assign the ticket to `dvcolomban` before work. Read prerequisite resolution comments and linked artifacts as needed.
-4. Verify every definition-of-ready item. Establish the exact public test interfaces with the user before writing tests; prior explicit agreement carries forward.
-5. Work the ticket using its named skill. Human decisions require the user's answers. Resolve at most one human-in-the-loop ticket per session; research tickets may run in parallel.
-6. Post the answer as a resolution comment with named source/artifact links, rationale, evidence, and limitations. Preserve the original question and acceptance criteria in the issue body.
-7. Close the issue and append only its named link and a short gist to the map. Read the current map before updating it so concurrent resolutions are preserved.
-8. Turn newly precise questions into native child issues, then wire dependencies after creation. Remove graduated fog from the map. Revisit invalidated decisions explicitly rather than silently changing their answers.
+The user carried execution into this map. Its destination is now an implemented,
+reviewed core V2 daily-use MVP with explicit human acceptance. The accepted
+[release amendments](release-goals.md) govern scope. Advanced portability and
+restoration, installed Mac Share, further iCloud stress checks and V3 system/agent
+integration are outside the current frontier; preserve their evidence and limits.
 
-Research uses primary sources and a throwaway `research/<name>` branch with a committed report linked from its ticket. Prototypes are temporary evidence, not production delivery. Add a glossary definition when a domain term is settled; use an ADR only for a consequential, non-obvious tradeoff.
+The map is a low-resolution index, not a chronological progress log. Keep only
+Destination, Notes, Decisions so far, Not yet specified and Out of scope in its
+body. Open tickets are native children, not another body checklist. Detailed
+answers belong in their resolution comments and linked assets. The local
+[implementation map](implementation-map.md) mirrors that index; its linked
+checkpoint archives are historical evidence, not competing task queues.
+
+## Choose and work a ticket
+
+1. Read the map, then choose an open, unblocked, unassigned native child in
+   sub-issue order, or the ticket the user named.
+2. Claim it by assigning `dvcolomban` before work. Read its type label,
+   prerequisites, question and existing resolution context.
+3. Check readiness. Prior explicit interface, test-boundary and action approvals
+   carry forward; do not repeatedly request them. Device availability and manual
+   automation approval are separate from signing readiness.
+4. Use the ticket's named workflow. A new human decision requires the human's
+   answer; an agent must not infer final layout or daily-use acceptance.
+5. Post the answer as a resolution comment with named evidence links and exact
+   limitations. Close only when that ticket's applicable criteria pass.
+6. Add a named context pointer and short gist to Decisions so far. Scope
+   dispositions belong in Out of scope. Preserve the current map when updating
+   it so another session's changes are not lost.
+7. Create newly precise child tickets first, then wire native dependencies.
+   Unformulated in-scope questions remain fog; known deferred work does not.
+
+Resolve at most one new human-in-the-loop decision per session. The user's
+explicit bulk-cleanup request permits administrative reconciliation of already
+completed setup, duplicate tickets and accepted scope changes; it does not
+permit inventing human answers or claiming missing acceptance passed.
 
 ## Ticket standard
 
-Every ticket must contain substantive, ticket-specific sections:
+Each child carries exactly one type label: `wayfinder:research`,
+`wayfinder:prototype`, `wayfinder:grilling` or `wayfinder:task`. Use no triage
+labels on map tickets. Name tickets in human-facing prose and wrap their links
+around those names; do not substitute bare numbers or slugs.
 
-```markdown
-## Context
-## Starting state
-## Goal and question
-## Expected end state
-## Definition of ready
-## Required tests and validation
-## Definition of done
-```
+Keep a precise `Question` and substantive ticket-specific Context, Starting
+state, Expected end state, Definition of ready, Required tests and validation,
+and Definition of done. Checklists identify observable outcomes and actual
+prerequisites. A task earns its place by unblocking a decision or the expressly
+authorized MVP acceptance, not by expanding the destination.
 
-Context explains why the question matters and links requirements and prerequisite decisions. Starting state separates verified facts from uncertainties. Goal states one session-sized question; expected end state names observable outputs downstream work can use.
+A historical prototype can be consolidated when its remaining review has one
+explicit successor. Post the disposition, preserve its original question and
+evidence, and close as superseded/not planned rather than pretending every
+original criterion passed. Close an out-of-scope ticket as not planned and
+retain its context in the map's Out of scope section. A future effort charts a
+fresh frontier rather than silently reopening the deferred work as MVP.
 
-Readiness lists native blockers, access, fixtures, and confirmed interfaces where code is involved. Completion lists decisions, artifacts, validation, user confirmation where required, and map updates. Use checklists for both.
+## Native tracker operations
 
-Tests identify the public interface, level, inputs, expected outcomes, and execution environment. Each scenario must have a concrete expectation by resolution; a title such as "test sync" is insufficient. For behavior still being decided, record the competing scenario and settle its expected outcome with the user rather than assuming it.
+Use the matching authenticated connector where sufficient. The repository's
+configured `gh` is the fallback for unavailable connector capabilities or write
+permissions. Always target `dvcol/planner` explicitly.
 
-Research and grilling tickets define tests for subsequent implementation and close with evidence or an agreed decision. Code-producing prototypes close only after their required automated and device checks pass. A documentation ticket can state that unit tests are inapplicable, with a reason and its actual evidence checks. Link downstream test obligations instead of pretending they already passed.
+- The map carries `wayfinder:map`; its tickets use native sub-issue relationships.
+- Read sub-issues with `GET /repos/dvcol/planner/issues/1/sub_issues`.
+- Read blockers with `GET /repos/dvcol/planner/issues/{number}/dependencies/blocked_by`.
+- Add/remove blocking relationships with GitHub's native dependency endpoints.
+  They require the blocker's database issue ID, not its issue number.
+- Create tickets before wiring edges. Reject self-dependencies and cycles.
+  Independent acceptance tickets must not wait for each other unnecessarily.
+- Preserve unrelated assignees/edits and check current bodies before replacing
+  them. Keep an exact before snapshot when condensing large historical bodies.
 
-The map is an index. Open tickets live in native sub-issues, dependency state lives in native blocking relationships, and an answer lives in its resolution comment and linked artifacts.
+Use structured JSON or body files for writes, then read back issue state,
+labels, native parents and dependencies. A successful command alone is not
+proof that the intended frontier is visible. A body convention is appropriate
+only if the tracker itself lacks native dependencies.
 
-## Build native prototypes
+## Code and verification
 
-Follow the accepted [Build workflow](https://github.com/dvcol/planner/issues/18). Core architecture must define the native project/package paths, app and Share extension targets, test targets, shared schemes, configuration and entitlement files, and signing inputs. Use a local Swift package for PlannerCore and Swift Package Manager for dependencies. Pin resolved dependencies in the appropriate repository files. Native Xcode project configuration is authoritative initially.
+Load `code-quality`, `code-architecture` and `code-testing` when applicable.
+Use TDD when the user requests it. Reuse already approved public Core, native UI
+and provider boundaries; no test-only production controls to ease acceptance.
 
-Code-producing prototypes must commit runnable configuration alongside their source. Prefer Xcode buildable folders where appropriate and verify app/extension source and resource membership. Share build/test schemes so a clean checkout exposes the documented commands without relying on personal Xcode state.
+Follow the accepted [Build workflow](https://github.com/dvcol/planner/issues/18):
+committed native Xcode configuration, shared schemes, local Swift packages and
+pinned dependencies. Use serial affected-target builds/tests. Record actual
+source/product versions, destinations, discovered/executed cases and original
+captures. Inspect real readability; compilation, wrapper success or a metadata
+preview does not establish native behavior.
 
-Record the stable Xcode/SDK baseline and exact focused `xcodebuild` commands, schemes, and destinations. Verify scheme discovery, dependency resolution, app/extension builds, embedded products, launch, and the affected test suites. Record discovered and executed test counts and result artifacts. Package tests do not substitute for app, extension, UI, signing, or physical-device checks. Signed-device and CloudKit evidence belongs to the relevant access and prototype tickets.
+Reuse passing evidence unless a relevant change, defect or unresolved concern
+justifies more work. Distinguish functional results, visual judgment, provider
+availability, Simulator behavior and physical/system acceptance. Preserve failed
+attempts and investigate current changes before calling a failure pre-existing.
+Documentation-only tracker cleanup needs link/state/graph/evidence checks, not
+another application, device or iCloud suite.
 
-The repository contains planning documents until code-producing work supplies these artifacts. Specification handoff must link the committed prototype projects and their verified build/test evidence, and identify any production scaffolding still required.
+## Publication and completion
 
-The current [Apple test access inventory](setup/apple-test-access.md) records observed tooling, available destinations, and the remaining human setup inputs. Recheck it when execution starts.
+Before staging or committing, confirm the repository working directory and
+follow the personal Git instructions. Ask before opening an upstream PR and
+create it as a draft. Tracker-maintenance authorization does not itself publish
+all unrelated local application commits; identify unpublished checkpoints
+honestly and avoid links to nonexistent remote artifacts.
 
-Team selection can wait during specification and local work. Navigation and MCP prototypes using disposable local fixtures verify their own applicable build, signing, destination and client access; they do not depend on completing private CloudKit provisioning. The sync/share prototype retains Apple test access as a native blocker and requires its physical-device, container and extension checks. This distinction changes readiness, not the accepted runtime or daily-use quality gates.
+New charting is complete when the map, child tickets and native relationships
+are published and verified, with its planning artifacts committed and pushed.
+For an existing-map cleanup, verify the published tracker changes and commit
+its local mirror/history; record any source/evidence publication still pending
+in the final handoff ticket.
 
-## Use /tdd for code
-
-Consult the installed `tdd` skill before writing tests. Agree public test interfaces first. Work one vertical slice at a time: one failing behavior test, the minimum implementation that passes, then the next scenario. Record the red and green evidence.
-
-Test observable behavior through public interfaces and independently specified expected values. Mock genuine external boundaries, prefer real temporary persistence stores, and avoid test-only production parameters. Use Swift Testing for unit and suitable integration checks, XCTest/XCUITest for UI automation, and reproducible physical-device procedures for CloudKit behavior automation cannot establish.
-
-For each code-producing ticket, record commands, SDK/device versions, fixtures, results, and limitations. Run affected-target build/type checks and applicable lint before completion. Investigate failures against the change before attributing them to the baseline. Full-repository local validation requires explicit user authorization; use affected-target equivalents otherwise.
-
-## Tracker operations
-
-Use `gh` against `dvcol/planner`. The map has the `wayfinder:map` label. Each child has exactly one type label: `wayfinder:grilling`, `wayfinder:research`, `wayfinder:prototype`, or `wayfinder:task`.
-
-Create child issues first, then add native sub-issue relationships and native dependencies. Dependency REST operations use a blocker's database issue ID, not its issue number. Native relationships remain canonical; use body fallbacks only when the tracker itself lacks support.
-
-Claim with `gh issue edit --add-assignee dvcolomban`. Resolve with an issue comment and close operation. Refer to maps and tickets by their exact titles wrapped around links, not bare numbers.
-
-Before any commit in a worktree, confirm its working directory. Keep research branches isolated. Ask before opening an upstream pull request, and open it as a draft.
-
-## Completion
-
-Charting is complete when the actual map and all populated children are published, their labels and native relationships verified, and the planning source is committed and pushed.
-
-The whole map is complete only when every in-scope ticket and fog patch is resolved, required prototypes pass, and the specification's requirement-to-decision-to-test coverage is audited. Production implementation tickets inherit the resolved context, interfaces, and test obligations.
+The MVP map closes only after its in-scope acceptance children resolve and the
+human gives the final daily-use/coherence approval. Deferred work and recorded
+coverage limits remain explicit; administrative issue cleanup is not release
+acceptance.

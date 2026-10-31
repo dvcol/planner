@@ -1,5 +1,23 @@
 # Native UI polish after feature completion
 
+## Current acceptance boundary, 31 October 2026
+
+The [native UI acceptance ticket](https://github.com/dvcol/planner/issues/23)
+is the single owner for remaining core Mac, physical mobile and hands-on
+assistive/layout review. The former Navigation prototype's duplicate acceptance
+work is consolidated here. Feature implementation and scoped Simulator/native
+passes remain distinct from the human's final approval.
+
+This ticket and physical mobile Maps Share can proceed independently. Final
+core daily-use approval waits for both. MCP, advanced export/import/restoration,
+installed Mac Share and additional iCloud stress tests are not prerequisites.
+The native Save contrast finding remains diagnostic; readable captures and
+functional passes do not turn its automated audit into a pass.
+
+The historical criteria and scene checkpoints below remain context. Their old
+Agent Control/MCP or broad administration dependencies do not override this
+current MVP boundary. The canonical ticket names the finite remaining checks.
+
 Status: final review planned in [ticket 23](https://github.com/dvcol/planner/issues/23). The human brought forward a [navigation and appearance slice](prototypes/native-design-pass.md) on 18 October; its findings and evidence do not close the final review. This pass follows feature implementation and does not replace the behavior, persistence, sync or recovery gates in the [decision map](https://github.com/dvcol/planner/issues/1).
 
 The [26 October MVP amendment](release-goals.md#accepted-mvp-amendment-26-october-2026)

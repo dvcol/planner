@@ -1,6 +1,9 @@
 # Planner
 
-A personal native planning app for iPhone, iPad, and Mac. Native prototypes are implementing and testing the accepted decision map.
+A personal native planning app for iPhone, iPad, and Mac. Core MVP features are
+implemented locally; final native, physical and accessibility acceptance remains
+open in the canonical decision map. The newer implementation/evidence checkpoint
+has not yet been published to the remote branch.
 
 - [Native personal planner decision map](https://github.com/dvcol/planner/issues/1) is the canonical plan. Read it first when continuing the project.
 - [Product brief](docs/product-brief.md) preserves the original requirements. The map records the agreed scope refinements.
@@ -21,17 +24,29 @@ The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and na
 
 The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses the committed `Planner.xcodeproj` and local `Packages/PlannerCore` Swift package. Open the project in Xcode and use the shared `PlannerNavigation` scheme for the app and native UI journeys. The default scene opens saved local Lists and Items. Create an Item with title/notes, complete or reopen it in its detail view, and add an existing Item to a List without copying it. Select a List row to open its contextual details; use its circle to complete that entry and its actions menu to view the global Item. Nonempty Lists show native progress. Reorder a saved List with mobile Edit handles or Mac row drag-and-drop; the row's context menu also offers Move to Beginning/End. Order and local completion survive relaunch. [Native qualification](docs/prototypes/navigation-local-qualification.md) records the exact tested revisions and remaining runtime gates.
 
-The earlier read-only navigation comparison remains available with `./scripts/navigation-prototype.sh phone`, `tablet` or `mac`, or the Mac's Prototype menu. The launcher passes `--navigation-prototype`. For an isolated local review dataset, launch the default scene with `--local-prototype-dataset <UUID>`; reusing that UUID reopens its saved data. These prototypes use local storage. CloudKit, signed Share extensions and physical-device qualification remain open.
+The earlier read-only navigation comparison remains available with
+`./scripts/navigation-prototype.sh phone`, `tablet` or `mac`, or the Mac's
+Prototype menu. The launcher passes `--navigation-prototype`. For an isolated
+local review dataset, pass `--local-prototype-dataset <UUID>` to the default scene.
+Reusing that UUID reopens its saved data. These isolated prototypes use local
+storage. The normal app/Share path now uses the configured shared local store
+and private CKSyncEngine transport. Normal
+physical iPhone/iPad sync and installed iPad Safari Share pass; other physical
+senders and final platform/assistive review remain open.
 
 For development signing, copy `Configuration/Local.example.xcconfig` to
 `Configuration/Local.xcconfig` and select your development team. The registered
 app and App Group defaults are `dvcol.planner` and `group.dvcol.planner`.
 Another team must supply its own provisioned identifiers. Main and Share select
-the same local shared store; CloudKit integration and installed Share runtime
-qualification remain open. See the [shared-storage checkpoint](docs/prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026).
+the same local shared store. The [shared-storage checkpoint](docs/prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026)
+and [private-sync deployment](docs/prototypes/private-sync-deployment.md) retain
+the actual integration, normal physical-sync results and remaining limits.
 
 Open decisions are native child issues of the map, with native blocking dependencies. Start with the first unblocked, unassigned child, or the decision named by the user.
 
 [Whole-application native UI polish](https://github.com/dvcol/planner/issues/23) follows feature completion. Its [Context, DoR, DoD and validation plan](docs/native-ui-polish.md) cover the finished iPhone, iPad and Mac scenes with native SwiftUI components, actual captures and accessibility/device review.
 
-Planner's own calendar, private iCloud synchronization and JSON portability are included. [Apple Calendar export](docs/itineraries-and-scheduling.md#accepted-export-scope-scheduling-q7) is deferred outside the current V0-V3 map.
+Planner's own calendar and private iCloud synchronization are in the core MVP.
+Further JSON portability work is post-MVP under the accepted release amendment.
+[Apple Calendar export](docs/itineraries-and-scheduling.md#accepted-export-scope-scheduling-q7)
+is deferred outside the current V0-V3 map.

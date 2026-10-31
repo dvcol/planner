@@ -1,5 +1,31 @@
 # Apple test access
 
+## Current MVP access, 31 October 2026
+
+The [Apple test access](https://github.com/dvcol/planner/issues/7) setup task is
+resolved for the core MVP. The user selected team `Y6HV37KJ2G` and identifiers
+`dvcol.planner`, `group.dvcol.planner` and `iCloud.dvcol.planner`; approved signing
+and device provisioning have supplied actual signed Mac/mobile execution.
+
+[Shared-store qualification](../prototypes/native-shared-storage.md),
+[physical Safari Share](../prototypes/native-share-products.md#physical-safari-share-29-october-2026)
+and [normal physical mobile sync](../prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
+record the represented App Group/private-container and runtime evidence.
+Signing setup is no longer an open MVP blocker. Device readiness, manual Mac
+UI-automation approval and final behavior acceptance are separate tasks.
+
+The accepted [release amendments](../release-goals.md) defer installed Mac Share,
+V3 system/agent qualification and more iCloud stress testing. Access success does
+not turn any deferred or unexecuted behavior into a pass. No new signing,
+account, device or security-setting change is made by this status update.
+
+## Historical access inventory
+
+The dated observations below are retained as history. In particular, the old
+zero-identities, missing-team and unsigned-only statements describe their
+recorded dates; they are not the current access frontier. Use the canonical
+map's native child issues for remaining work.
+
 ## Current setup direction, 27 October 2026
 
 The user enrolled in the Apple Developer Program. The signed-in Apple Developer

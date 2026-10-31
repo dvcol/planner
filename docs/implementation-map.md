@@ -1,1038 +1,131 @@
-# Native Planner implementation map
-
-## Current MVP priority, 26 October 2026
-
-The user moves JSON export/import outside MVP and asks to focus on core features.
-The [amended release criteria](release-goals.md#accepted-mvp-amendment-26-october-2026)
-now prioritize Items, Lists, capture and places, ordered itineraries, estimates,
-Calendar, maps, native UI quality and durable synchronized saves. Existing basic
-export/import tools can remain available. Further portability polish and advanced
-manual import/restoration qualification are post-MVP, not release blockers.
-Preserve implemented validation, saved data and existing recovery evidence.
-App Intents/MCP retain their established V3 stage after the core V2 release.
-Signing setup is now authorized with the user's enrolled team; actual Mac UI, mobile Share and physical sync remain
-distinct core work and acceptance gates. Installed Mac Share is post-MVP under
-the [28 October focus](release-goals.md#mac-share-mvp-focus-28-october-2026).
-Private CKSyncEngine transport and normal app/Share wiring are implemented.
-SwiftData remains authoritative locally. Basic same-account iPhone/iPad sync is
-qualified for creation, edits in both directions, deletion and relaunch. Further
-account-transition testing is deferred at the user's request.
-Historical checkpoints below retain their scope
-but do not override this priority.
-
-## MVP finish line
-
-Local planning is implemented with local evidence: Item/List authoring, capture,
-places and link previews, ordered itineraries, estimates and remaining time,
-Calendar, collection maps and the embedded reader. This is implementation
-progress, not final acceptance on every platform. The source audit confirms
-that normal app/Share configurations select account-bound private synchronization,
-while `Planner.openContainer` explicitly uses `cloudKitDatabase: .none` to retain
-local plans independently. Q164 A's private CKSyncEngine
-[transport checkpoint](prototypes/private-sync-engine.md) passes full-plan and
-fresh-store deletion readback. The [deployment checkpoint](prototypes/private-sync-deployment.md)
-adds native app/Share integration and reviewed device-only copying. The
-[same-account physical mobile journey](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
-now proves normal live delivery in both directions, deletion and relaunch.
-Account-transition and broader failure cases remain separate, unqualified work.
-
-The user initially defers account-transition testing, then resumes the
-Planner-only test on 29 October. The
-[read-only native check](prototypes/cloud-account-availability-native.md)
-observes access loss and restoration to the same account after manual off/on.
-The attended managed-store check also passes: disabling access clears its native
-cache, and restoring the same account reimports the exact fixture. Q164's local
-store and private engine now replace that managed cache. Normal mobile sync is
-qualified; its off/on check remains deferred. The user also requires
-[private-user storage only](release-goals.md#private-cloud-storage-boundary-29-october-2026):
-unavailable/full iCloud must never select a developer-funded cloud fallback.
-No public/shared cloud fallback is configured.
-
-| Work left for MVP | Current state | What it needs |
-| --- | --- | --- |
-| Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented. Physical iPhone/iPad creation, bidirectional edits, deletion and relaunch pass. The earlier open Mac-peer diagnostic remains separate. | Off/on is deliberately deferred. Retain the existing failure/conflict limits; do not repeat passing normal sync checks without a new change or defect. |
-| Shared storage | [Saves][shared], [Safari][physical-share]. The [native Maps sender journey](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026) passes Cancel, Save with Planner closed, exact URL/identity through relaunch and cleanup in Simulator. Its saved details show the native map preview. | Physical Maps sender checks and Google Maps app handoff remain open. |
-| Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. The [responsive search correction](prototypes/native-search-accessibility.md#responsive-native-editor) passes scoped clipping and query-retention checks; broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md#installed-home-screen-31-october-2026) has inspected Default/Dark Home Screen captures and passing native phone/iPad Simulator journeys. | Remaining scene, resizing and accessibility review, plus physical Home Screen and Mac Dock appearance checks. No signing prerequisite for local polish. |
-| Map, reader and live-refresh lifecycle checks | Implemented. The [Calendar reader](prototypes/native-webpage-rotation.md#calendar-reader-background-and-resume-31-october-2026) additionally retains page/history and exact booking return through rotation and background/resume on phone and dark iPad Simulators. | Remaining platform/assistive review; unrepresented remounts and website sessions retain explicit coverage limits. |
-| Mac interaction | Scoped journeys pass. | Remaining UI review. |
-| Synchronized daily use | Signed mobile journey passes. | UI polish next. |
-| Final core review | Open. | Review the working core journeys on all three platforms after the checks above. |
-
-Existing basic export/import remains optional. Further export/import features,
-advanced manual restoration and their test matrices are outside MVP. App
-Intents, Shortcuts and Agent Control remain V3. None of these deferred tracks
-blocks the core queue above. Preserve existing validation and data safeguards;
-ordinary save/sync failures still belong to MVP.
-
-### Current finish checklist, 31 October 2026
-
-The core feature implementation is present. Today's emulator work closes the
-native Maps sender's complete Save journey and ordinary Calendar-reader resume.
-Keep the remaining release checks finite:
-
-- On an available Mac, run the prepared completion/search pair, review native
-  keyboard/divider behavior and inspect the Dock icon. Manual automation
-  approval remains required. Refresh the prepared products and their protected
-  input manifest first: today's UI-test edits make the older preflight stale.
-- On available mobile devices, finish native Maps/Google Maps sender checks and
-  review the current core scenes, scrolling/performance and Home Screen icon.
-  Simulator sender results do not replace those physical observations.
-- Complete hands-on accessibility and final coherence/layout review. The native
-  Save contrast audit remains diagnostic; its passing functional journeys and
-  readable captures do not convert that audit into an automated pass.
-
-These require attended platform review, not another signing setup. No device or
-Mac readiness is requested while the user is away. Broader unrepresented
-website/remount cases are coverage limits, not an unlimited test matrix. Address
-new reproducible defects if found; do not repeat passing normal sync or expand
-the deferred import, Mac Share or V3 work to fill the remaining time.
-
-## Recent local checkpoints
-
-The [Calendar reader resume checkpoint](prototypes/native-webpage-rotation.md#calendar-reader-background-and-resume-31-october-2026)
-passes one light-phone and one dark-iPad Simulator execution. Home and activation
-retain the linked page and history; Return preserves the exact saved bookmark
-and booking. Original resume captures are inspected. Production is unchanged;
-only the affected journey and incremental Simulator build are run.
-
-The [complete native Maps Share checkpoint](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026)
-passes on a fresh phone Simulator. Two test gestures are corrected to expose
-the Title row and the saved bookmark before interaction/readback; production
-code is unchanged. The one final journey covers Cancel, Save while Planner is
-closed, cold readback, stable identities through relaunch and exact cleanup.
-Original captures show the native map preview. Physical senders remain separate.
-
-The [current action audit](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
-replaces stale sync-integration labels with the existing physical normal-sync
-result. Current Mac and device test-target builds pass, four signatures verify,
-and both attended-run preflights match 259 source/product inputs. No native
-interaction or physical installation is performed by this preparation. Manual
-readiness and the final core review remain required; no iCloud switch test is
-waiting or added.
-
-The [installed icon checkpoint](design/planner-icon-v2.md#installed-home-screen-31-october-2026)
-checks native Default/Dark Home Screen choices on phone and iPad Simulators.
-Both journeys pass with matching source inputs and four inspected original
-captures. The production artwork is unchanged. Physical Home Screen, Mac Dock
-and whole-app assistive acceptance retain their separate gates.
-
-The [Share sender checkpoint](prototypes/native-share-products.md#native-maps-sender-and-resumed-share-31-october-2026)
-waits for an already-present Share sheet before reopening the host menu. The
-unchanged Safari Cancel/Save/relaunch/cleanup body passes. A complete Maps
-journey is compiled and signed, but its Simulator trial hits the 480-second
-bound before Save amid native animation-completion warnings. It supplies no
-passing Maps Save credit. The physical run awaits user readiness; production
-code and iCloud-testing priorities are unchanged.
-
-The [Calendar reader rotation checkpoint](prototypes/native-webpage-rotation.md#calendar-reader-through-rotation-31-october-2026)
-qualifies the existing Calendar caller on light phone and dark iPad. Both
-orientations preserve the loaded linked page, native Back history and Return
-to the exact bookmark and saved booking description. Two final native cases
-pass with identical inputs and inspected captures; production code is unchanged.
-Mac runtime, arbitrary remounts and broader assistive/device review remain open.
-
-The [Map footer correction](prototypes/native-map-routing.md#accessible-route-controls-31-october-2026)
-keeps full travel-mode text clear of the count and leaves usable pin tap points
-at maximum accessibility text size. The exact-stop and global Items journeys
-pass on dark phone; the existing dark iPad/Increase Contrast rotation journey
-also passes. Inspected originals reject an intermediate functional pass whose
-picker caption still overlapped. Mac runtime and final assistive/device review
-remain separate gates; no iCloud check is added.
-
-The [single-overflow correction](prototypes/native-search-accessibility.md#single-overflow-owner-31-october-2026)
-restores collection View actions beside accessible Search. Two unchanged
-maximum-text phone search regressions pass. Its subsequent overlapping-marker
-selection failure is addressed by the separate Map footer checkpoint above.
-
-The [visible editor checkpoint](prototypes/native-design-refinement.md#visible-editor-review-31-october-2026)
-keeps test gestures above the keyboard and checks empty/valid Save states.
-Reviewed light/dark phone and dark iPad navigation profiles pass, including
-Calendar, landscape completion and exact-Item relaunch. Screenshot review rejects
-a nominal-dark phone run that actually rendered light; an isolated system-dark
-run supplies the dark-phone evidence. Production styling stays unchanged.
-Expanded Save/landscape contrast diagnostics and final Mac/manual review remain
-open; this checkpoint adds no iCloud test.
-
-The [responsive native search checkpoint](prototypes/native-search-accessibility.md#responsive-native-editor)
-uses a wrapping Form through More at accessibility sizes and preserves the
-ordinary native search controls. Catalogue loading now remains outside the
-conditional search presentation. Seven focused mobile executions pass, including
-query/Clear, post-audit identity, Itinerary retention, Map search and completion
-after relaunch. Mac/mobile builds and signatures pass; the prepared Mac runtime
-pair awaits manual automation approval. Further iCloud testing stays deferred.
-
-The [multiline Item-row correction](prototypes/native-design-refinement.md#multiline-completion-alignment-30-october-2026)
-centres and enlarges completion symbols in Items, List memberships and Itineraries.
-The focused native completion/relaunch journey and actual before/after captures
-qualify the catalog correction; no additional iCloud testing is required for it.
-
-The [phone Calendar and Week pass](prototypes/native-calendar-shared-time-ruler.md#phone-rotation-and-compact-week-30-october-2026)
-corrects the reproduced phone rotation reset and grey header patch. Compact
-Week headings and appointment blocks, a wide agenda/grid split and native
-mobile overflow sizing are implemented. Its execution packet distinguishes
-local UI evidence from remaining physical, Mac interaction and sync acceptance.
-The matching mobile update is now installed, and the actual iPhone rotation
-journey passes with the same 254 inputs. This clears its observed app/test-runner
-trust blocker for that execution.
-The [same-account mobile live-sync journey](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
-now passes in both directions, including exact identity, notes/title convergence,
-deletion and relaunch. At the user's request, further iCloud testing is stopped.
-Off/on remains explicitly unqualified; the next priority is core UI polish.
-
-Normal app/Share private-sync wiring and reviewed device-only copying are
-implemented in the [deployment checkpoint](prototypes/private-sync-deployment.md).
-Bounded account verification now permits local startup when Apple lookup stalls;
-light-phone/dark-tablet offline creation/relaunch and six signed Mac storage
-checks pass. Development profiles cover the same-account physical iPhone and
-iPad. Early editor/overlay failures are retained as historical diagnostics; the
-subsequent unobstructed journey passes the complete normal sync workflow above.
-
-The [private CKSyncEngine checkpoint](prototypes/private-sync-engine.md) adds
-field-based records and account-scoped transactional state, preserving local
-SwiftData and the existing recovery/closure rules. A signed 21.657-second native
-run proves exact complete-plan and post-deletion fresh-store readback. It also
-fixes metadata acknowledgements invalidating queries. The affected 22-test Core
-cohort and Mac compilation pass. Already-open peer catch-up remains a recorded
-failure; app activation, existing-plan attachment and broader sync acceptance
-remain open. The user combines off/on with final integrated testing, with no
-manual switch action currently required.
-
-The [pending-edit follow-up](prototypes/private-sync-engine.md#durable-share-edits-and-independent-fields)
-now also passes a Share-only save, process exit and main-worker resume while
-preserving an independent title edit. It corrects a reproduced backwards
-Last updated timestamp. The final signed run takes 37.334 seconds and retains
-the complete-plan/deletion checks; 32 affected Core tests pass. Network outage,
-account/quotas and live two-device delivery remain separate gates.
-
-The [native sync status checkpoint](prototypes/private-sync-status.md) adds
-Settings status/Sync now for private-configured stores and reuses the guarded
-same-dataset/account reconnect path. Mac/mobile compilation and formatting pass;
-active UI/account-transition journeys remain open. Production is not activated,
-and the installed app is unchanged.
-
-The [genuine older-writer check](prototypes/private-sync-engine.md#genuine-older-writer-refusal)
-also passes: unchanged `f3efee75` Core rejects a private gate-24 store with
-`unsupportedVersion`, preserving all 32 fixture files. This closes that local
-compatibility check without activating production sync or changing accounts.
-
-The [incoming staging retry correction](prototypes/private-sync-engine.md#retry-after-rejected-incoming-staging)
-reproduces and fixes a missed download after a disposable local binding failure.
-Retry reloads durable engine state, and repeated errors coalesce. The final signed
-77.189-second journey retains the earlier full-plan, Share-edit and deletion
-checks; the focused 22-test cohort passes. Actual quota/disk-full and permanent
-server rejection, active app integration and physical live sync remain open.
-
-The [Q164 local-storage slice](prototypes/private-local-storage.md) adds the
-approved private configuration, real account resolution and account-scoped local
-files while retaining `.none` SwiftData storage. Unbound plans remain separate;
-Share uses the retained main-app binding without opening CloudKit. The focused
-Core cohort reports 19 passing tests, and the signed Mac public-Core diagnostic
-passes exact reopen/save/isolation and stale-selection checks. Production still
-selects local-only storage. Actual Off/On preservation, CKSyncEngine transport,
-explicit local attachment and physical synchronization remain open.
-
-The [physical Safari Share checkpoint][physical-share] passes on the authorized
-iPad in 59.661 seconds. It covers installed-extension launch, Cancel, explicit
-title entry, Save, foreground refresh, exact Item/bookmark identity after relaunch
-and deletion of only the synthetic Item. Device signing and App Group access
-work. Other native senders, memory/scale and synchronization retain their gates.
-Personal Safari captures stay outside committed evidence. No iCloud setting or
-automation-authentication policy changes.
-
-The [installed mobile Share checkpoint][share] fixes an opaque native URL input
-that kept Add disabled in Safari. All 27 focused Core tests pass. Real Safari
-journeys pass on phone and dark iPad Simulators, including Cancel, exact bookmark
-readback, live refresh on foreground return, relaunch and synthetic Item cleanup.
-The [native Retry follow-up][share-retry] adds the missing provider-input control
-and preserves recovered links and owned edits. Six phone/dark-iPad cases and
-signed device/Mac builds pass. The physical checkpoint above supersedes the
-earlier Safari layout/picker failures. Production remains local-only;
-account integration is unfinished.
-
-The [Calendar day-heading correction](prototypes/native-calendar-shared-time-ruler.md#locale-independent-day-headings-and-physical-check-29-october-2026)
-replaces locale-dependent test lookups with stable native date identities.
-The physical iPad booking survives Month/Day/Week and relaunch; two French/France
-Simulator regressions also pass, including overlapping appointments. All three
-builds share 1,171 inputs, with passing strict Swift lint and Mac signatures.
-No booking, language or timezone behavior changes. Full assistive and sync gates
-remain open.
-
-The [physical iPad Map retry](prototypes/native-map-routing.md#physical-ipad-route-and-pane-check-29-october-2026)
-now passes after the user reports the on-device automation prompt. The native
-journey verifies three distinct places, walking/driving legs, transit fallback,
-Map width and bounded details with exact bookmark reopening. Original captures
-are inspected. Device settings and authentication policy are unchanged. This
-closes that physical route/pane case; sync, scale and full assistive acceptance
-remain open.
-
-The [fresh physical Map attempt](prototypes/native-map-routing.md#physical-automation-startup-29-october-2026)
-passes unlock/signature checks and launches its signed runner, then times out
-enabling automation before any application test starts. Post-run checks retain
-an unlocked device, enabled Developer Mode and no leftover runner. The exact
-permission-prompt observation is requested before retrying. Current production
-inputs match that build; physical Map acceptance remains open.
-
-The [filtered representation pair](prototypes/native-map-routing.md#filtered-appearance-through-listmap-switches-29-october-2026)
-passes List/Map switching for repeated direct stops and repeated List branches
-on iPad Simulator. A valid Todo detail remains selected while Done filtering
-shows the other occurrence; clearing restores both Map appearances. Exact
-bookmarks and independent completion survive. The driver uses native Show
-Sidebar when portrait navigation collapses the collection. Production is
-unchanged. Physical execution still needs the requested fresh iPad unlock.
-
-The [user-camera journey](prototypes/native-map-routing.md#user-camera-through-detail-pane-changes-29-october-2026)
-passes actual iPad Simulator pinch/drag, Hide details and pin reopening while
-preserving horizontal position, zoom and the exact bookmark. The same case
-rechecks three-place walking/driving routes and transit fallback. No production
-change is needed. Scene remounts, Mac gestures and full assistive review remain
-separate. The physical preflight reconnects the paired iPad but reports that it
-is locked; no install or test starts. A fresh unlock is requested, with signing
-already ready.
-
-The [native Map Search follow-up](prototypes/native-map-routing.md#native-map-search-lifecycle-29-october-2026)
-now passes five largest-text, dark, increased-contrast phone/iPad journeys. A
-native phone query sheet avoids a stuck system Close transition while retaining
-queries, Clear, reopening and the full landscape pin. Exact Item/List/Itinerary
-contexts remain independent. iPad keeps native Search. Final Simulator and signed
-device builds and strict signatures pass. Physical execution still awaits the
-pending stopped-playback/stationary-iPad readiness answer; signing is ready.
-Manual pan/zoom and the broader assistive review remain separate qualifications.
-
-The [single-location and compact-Search follow-up](prototypes/native-map-routing.md#single-location-framing-and-compact-search-29-october-2026)
-closes continent-scale single-pin framing after Mac resizing and a zero-height
-phone Map at maximum text in landscape. Native minimized Search recovers space;
-four scoped Mac/phone/iPad executions pass with exact bookmarks, local completion
-and inspected captures. The renewed physical attempt still stops at the first
-New Item Save, with a floating video panel and rotation present in its recording.
-Physical automation waits for confirmed stopped playback and a resting,
-unobstructed iPad. Signing passes; physical Map acceptance remains open.
-
-The [camera resize correction](prototypes/native-map-routing.md#camera-fitting-through-native-resizing-29-october-2026)
-now passes actual Mac 1200/1600-point resizing with three separated, contained
-and hittable markers beside bounded Item details. It defers fitting until a
-current positive viewport is available and adapts the fitted bounds to that
-viewport. Inspected captures retain neighborhood framing. The matching
-maximum-text dark-phone route regression also passes. This closes the scoped
-zoom-out finding below; physical routing and full assistive acceptance remain
-separate. The [signed iPad build and profile checks](prototypes/native-shared-storage.md#physical-map-preparation-and-readiness-29-october-2026)
-pass. Its first physical attempt fails at New Item Save before reaching Map;
-the capture includes a floating overlay near Save. Device automation waits for
-confirmed idle, unobstructed availability. This is not a signing gate or physical
-Map acceptance.
-
-The [Mac Map lifecycle follow-up](prototypes/native-map-routing.md#mac-pane-lifecycle-and-stationary-controls-29-october-2026)
-now starts and passes the actual three-place route/resize journey. A stable
-native split child fixes an itinerary reload loop; a progress overlay keeps
-Routes stationary while calculation completes. The matching maximum-text dark-
-phone journey also passes native route scrolling, pin containment and exact
-bookmark Return. These close the represented loading/control defects, with no
-authentication-policy change. Inspected Mac resize captures expose excessive
-camera zoom-out and overlapping nearby labels; camera fitting remains the next
-Map correction. Physical routing and full assistive acceptance stay open.
-
-The [adaptive Map footer](prototypes/native-map-routing.md#adaptive-route-controls-at-maximum-text)
-now passes all three travel modes in portrait and landscape on the dark iPad at
-maximum accessibility text with Increase Contrast. The icon-only Routes control
-and adaptive native layout preserve reachable controls and a fully visible pin;
-route details retain transit guidance. The matching ordinary phone routing
-regression and Mac compilation pass. Actual Mac runtime remains blocked before
-test execution: the user reports no authentication prompt despite the system
-logging a presentation request. A foreground diagnostic is prepared with manual
-authentication unchanged. This is separate from deferred Mac Share.
-
-The [multi-place routing slice](prototypes/native-map-routing.md) adds temporary
-native walking/driving paths and a Walking/Driving/Public transport picker.
-Light-phone and dark-tablet journeys pass with four appearances at three
-coordinates, all three walking and driving legs, transit fallback and exact
-saved-link selection. Their original walking-path captures are inspected.
-Padded camera bounds correct clipped tablet markers. The subsequent native
-split/inspector correction now passes full-width Map, bounded selected details,
-Hide/Reopen, exact bookmarks and Items/List rotation on the dark tablet. Five
-mobile journeys and matching Mac compilation pass, including phone Items and
-repeated-List context regressions. The prepared Mac run times out enabling UI
-automation before any case starts; actual Mac route UI/resizing, physical routing
-and broader accessibility still need qualification. A fresh
-signed Mac build and the real-storage controller
-case now pass for exact repeated appearances, unknown-stop gaps, mode/Cancel
-clearing and unchanged exported content. Its one closed fixture is retained
-because macOS denies the external cleanup tool's marker read; no deletion is
-claimed.
-
-The [Share cleanup](prototypes/native-shared-storage.md#duplicate-share-registration-cleanup-28-october-2026)
-follows the user's actual Settings capture of four disabled Planner entries.
-Scoped unregistering leaves one canonical app/Share pair in Launch Services;
-four inactive temporary app bundles are removed, preserving data and the
-verified installed app. After fully quitting and reopening Settings, the user
-confirms one Planner Development entry remains and Sharing is enabled. The empty
-PlugInKit query did not prove absence from Settings. Actual installed handoff/save
-remains open. The fixture-only native Share trial starts with manual automation
-approval, but its clear picker capture omits Planner. The corrected driver scopes
-the actual popover; its last retry also has an authentication-dialog overlay.
-Neither launch nor Save is qualified. Predicate/signature checks pass and the
-installed app remains unchanged. Safari also omits Planner. A scoped registration
-cycle does not fix discovery, and macOS refuses a protected-service restart under
-System Integrity Protection. A normal Mac restart is requested as the next
-diagnostic; it is not yet a proven fix. The latest UI attempt times out enabling
-automation before any case starts. Further identical Share retries wait for a
-changed discovery result.
-
-A subsequent check confirms a fresh boot and replacement discovery process;
-Planner still has no discovery match. The restart did not restore Share. OS
-compatibility and the installed signature pass. The next investigation uses a
-minimal native registration control, which also remains absent before launching
-its parent. That limited control does not establish a system-wide failure.
-The canonical app launches but its Gatekeeper assessment rejects; signature
-verification passes. The user subsequently opens the exact installed app through
-Finder and supplies a Safari capture still omitting Planner. A bounded live
-discovery trace now establishes a management-payload denial of
-`com.apple.share-services`, with `plugin rejected by MCX`. Plugin/payload
-identities are redacted, and readable profile/preference reports do not expose
-the rule. Post-MVP qualification would require the Mac administrator to review
-the `com.apple.NSExtension` policy for `dvcol.planner.ShareMac` and its Share
-extension point. No profile or security setting is changed. The isolated opt-in
-Share host/test compile without a new registered identifier or group access;
-their source is archived outside the active fixture target. Installed handoff/save
-remains unqualified. The earlier Terminal comparison is no longer needed.
-
-The [Itinerary heading/navigation correction](prototypes/native-mobile-list-heading.md#itinerary-heading-and-compact-navigation-28-october-2026)
-removes the repeated iPad bar title and fixes an iPhone second-plan loading stall
-by resetting compact navigation when the selected plan changes. Five final
-Simulator executions cover creation/relaunch, exact reader Return and
-maximum-text dark-iPad Map branches/rotation. Matching signed Mac compilation
-and signature checks pass. Failed experiments remain separate; final Mac reader
-runtime is now covered by the scoped checkpoint below.
-The [deletion follow-up](prototypes/native-mobile-list-heading.md#itinerary-deletion-follow-up-28-october-2026)
-also passes the existing cancellation/selected-appearance/relaunch workflow on
-ordinary phone and iPad. Two native-driver corrections suffice; the shared Item
-and its Todo state survive, with production binaries unchanged.
-The [current physical iPad build](prototypes/native-shared-storage.md#current-itinerary-device-build-28-october-2026)
-passes compilation, profile and signature verification. After renewed readiness
-and an unlocked-state check, the [two physical itinerary journeys](prototypes/native-shared-storage.md#physical-itinerary-journeys-28-october-2026)
-also pass creation/relaunch and empty/selected-plan deletion while preserving
-the shared Item. All native inputs and signed products remain unchanged, four
-original captures are inspected, and ordinary app launch is restored. These
-disposable-dataset journeys add no normal shared-store, installed Share or sync
-credit; Mac manual-automation readiness remains separate.
-
-The [Mac reader runtime checkpoint](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
-passes actual narrow/wide resizing, native overflow access, history/reload and
-pending-load Return. Manual automation authentication remains required. Its
-cohort has three passes and one itinerary-selection failure, with the latter
-tracked separately. Reader qualification adds no production change or complete
-Mac acceptance claim.
-
-The [Mac itinerary selection correction](prototypes/native-mac-itinerary-selection.md)
-then fixes the product failure found by that cohort. Direct rows now expose
-their concrete appearance selection at the native List boundary, so selecting
-Museum opens its details. The deletion/relaunch journey passes separately while
-preserving its shared Item. A final two-test creation/deletion run also passes
-with one native Mac toolbar title before/after relaunch and while appearance
-details are open. The duplicate content heading is removed; mobile production
-paths are unchanged. Failed diagnostics remain distinct. Nested Map/keyboard,
-broader resizing and accessibility retain their own follow-ups.
-
-The [Mac contextual Map pair](prototypes/native-map-collection-ui.md#mac-repeated-contexts-and-window-resizing-28-october-2026)
-now passes exact repeated-Item and repeated-List choices, independent completion
-and retained bookmarks through actual 860/1,200-point window resizing. Native
-test locators are corrected without a production Map change. Six originals are
-inspected; the Map stays 320 points wide while details grow. Both shared-driver
-regressions also pass on iPhone Simulator with matching inputs and restored
-settings. Divider dragging, keyboard and broader assistive/physical acceptance
-remain separate.
-
-The [maximum-text itinerary Map journey](prototypes/native-map-collection-ui.md#maximum-text-repeated-stops-28-october-2026)
-passes on phone and iPad Simulator in dark mode with Increase Contrast. Native
-scrolling, counted-pin choices and iPad rotation preserve the two stops' separate
-local completion and exact saved bookmark. Six originals are inspected, four
-retained, and settings restored. This adds no production change or whole-app,
-Mac, installed Share or physical/sync acceptance claim.
-
-The [repeated-List-branch follow-up](prototypes/native-map-collection-ui.md#maximum-text-repeated-list-branches-28-october-2026)
-adds two more passes at the same accessibility settings. A standalone Done
-membership does not pre-complete its itinerary children; selecting the counted
-pin preserves Stop 1 Done, Stop 2 Todo and the exact bookmark. Long native
-choice labels wrap and scroll. This requires no production change.
-
-The [single mobile List heading](prototypes/native-mobile-list-heading.md#single-heading-and-matching-insets-28-october-2026)
-keeps the full name once across empty, populated, Map and relaunched views.
-One native List layout gives empty/populated headings and estimates matching
-insets. Six primary phone/iPad executions and two targeted native-scroll checks
-pass, with eight inspected originals and matching final compilation. Rejected
-title/driver probes remain separate. The subsequent
-[Mac manual-authentication retry](prototypes/native-mobile-list-heading.md#mac-manual-authentication-retry-28-october-2026)
-passes the existing long-title journey through empty/populated states and
-narrow/wide resizing. Four inspected originals and 1,169 matching source inputs
-support that scoped result; manual automation authentication stays required.
-Broader appearance, installed Share, account-transition and physical sync gates
-remain open.
-
-The [Mac reader fixture correction](prototypes/native-mac-reader-fixture.md)
-allows the existing sandboxed UI runner to serve its loopback test page.
-The saved-guide journey then passes, opening the real page through its bookmark
-and rich card and returning to the exact original bookmark. The startup failure,
-actual runner entitlements and inspected original are retained separately.
-Production permissions and manual automation authentication are unchanged.
-Reader resizing/lifecycle, installed Share and CloudKit remain separate work.
-
-The [Mac keyboard Undo checkpoint][mac-undo] passes four existing native
-journeys: second-window isolation and ordinary text Undo, original membership
-restoration, whole-Move reversal, active filters/valid selection and stale
-history rejection. A one-line test locator correction excludes the Touch Bar's
-duplicate OK button; its Mac/phone/iPad reruns pass. Production is unchanged.
-Separate product epochs, the failed interaction and native timing limitations
-remain recorded. Other contexts and full UI acceptance remain open.
-
-The [selected Calendar viewport correction](prototypes/native-calendar-shared-time-ruler.md#selected-card-viewport-27-october-2026)
-keeps the exact booking visible when the grid becomes narrower or shorter.
-Final Mac Week resize/divider, iPad Week rotation and phone Day/Week journeys
-each pass, with 1,168 matching inputs and inspected original captures. The
-width-only iPad failure remains recorded separately. Manual Mac automation
-authentication stays required. Broader assistive and physical acceptance
-remain open. The [ordinary Mac installation][ordinary-share] separately retains
-the unresolved Share discovery result after removing the embedded test bundle;
-its fresh Sharing-settings observation is still pending.
-
-The [physical iPad checkpoint](prototypes/native-shared-storage.md#physical-core-journeys-27-october-2026)
-passes normal shared-store creation, exact identity/notes through relaunch,
-confirmed test-Item cleanup, and the Map link/attribution/uncertainty journey.
-It first exposes a root SwiftUI metadata stack overflow. Two explicit root
-type boundaries fix that launch crash; a computed-property split alone fails.
-These two device passes do not qualify installed Share or CloudKit sync.
-
-The [Calendar shared time ruler](prototypes/native-calendar-shared-time-ruler.md#accessibility-sizing-and-mac-follow-up)
-now scales day/appointment widths with text and simplifies the native date
-picker. Corrected largest-text scenarios and seven ordinary-size phone/iPad
-regressions have passing executions, preserving saved Schedule descriptions.
-Actual Mac Month/Day/Week resize journeys pass; the corrected native End date
-journey also saves its intended three-day span. Failed cohorts and separate
-test-source epochs remain explicit, with matching actual app products and
-inspected originals. Manual automation authentication stays required. The
-narrow Mac capture exposed sidebar clipping despite retained details passing.
-The subsequent [bounded split-pane correction](prototypes/native-calendar-mac-inspector-resize.md#bounded-split-pane-27-october-2026)
-passes three strengthened Month/Day/Week journeys: 1,200/860/820/1,200-point
-windows, visible sidebar/details, native divider movement and measured width
-recovery. The selected-card follow-up above closes its named Week viewport
-finding; broader accessibility and physical acceptance remain open.
-
-The [development-signed Mac UI retry](prototypes/native-development-signed-mac-ui.md)
-passes compilation and strict signature verification for the local-only app,
-Share and UI runner, with all 1164 native inputs and nine product hashes matched.
-The selected existing title/resizing journey initially does not start within
-the bounded 120-second setup window. A user-requested retry exits after 85.392
-seconds with “Timed out while enabling automation mode,” before any test body.
-Neither runner result supplies UI acceptance. A subsequent read-only system-log
-diagnosis confirms a native “Enable UI Automation” authentication wait: user
-authentication finishes about 24 seconds after XCTest times out. The report
-records the selected manual-approval policy. With the user ready to approve,
-the unchanged title/layout test now passes: one test, zero failures in 67.622
-seconds, with four original captures inspected. Authentication remains required
-before and after the run; the startup gate clears for this execution. Other
-Mac journeys remain open and future runs retain manual prompt coordination.
-No iCloud setting, account or production code changes. The explicit
-account-transition deferral remains in effect.
-
-The [native private-CloudKit content checkpoint](prototypes/cloud-round-trip-native.md)
-passes six signed app executions: exact fixture resumption and fresh insertion,
-fresh-store identity/content reads, cleanup exports and independent deletion
-verification. Failed startup/direct-executable attempts remain recorded; the
-final path uses normal Launch Services. Cloud fixtures are deleted and 7.86 MB
-of completed local probe stores removed. This qualifies single-Mac native
-transport, with production command/recovery integration, account ownership,
-installed Share and physical sync still open. The user subsequently defers the
-real per-app iCloud-transition test; no setting is changed.
-
-The [asynchronous private-CloudKit setup check](prototypes/cloud-setup-native.md)
-makes a successful real private-database metadata request and observes completed
-native setup, initial import and empty export events using the production
-schema. The verified signed app exits normally. No Planner content is inserted;
-content round trips, ownership cutoffs, production integration, installed Share
-and physical sync retain their separate gates.
-
-The [registered-Mac private-access check](prototypes/cloud-access-native.md)
-builds and launches with the existing selected-team development certificate.
-Actual profile/signature checks pass, the App Group resolves, iCloud account
-availability is reported and all 16 production entities initialize in a separate
-empty private-store path. No Planner content is inserted. This clears signing
-and basic native access for the disposable app; server/mirroring, account
-ownership cutoffs, production integration, installed Share and physical sync
-remain open.
-
-The [development provisioning attempt](prototypes/cloud-access-provisioning.md)
-follows explicit signing and silent-sync approval. Main-App-ID Push Notifications
-is saved and verified. The disposable Mac build reaches provisioning, then exits
-before signing because the execution Mac is unregistered and no matching profile
-exists. Device registration permission is pending; no app is launched. Actual
-signature/private-cloud access, production sync integration and physical checks
-remain open. Earlier setup rejections are superseded by the user's approvals.
-
-The [private CloudKit access check](prototypes/cloud-access-preparation.md) compiles as a disposable native app against all 90 actual Core sources and the current schema, with approved identifiers and an explicit private Development container. It has not been launched; linker ad hoc signing supplies no provisioned-access proof. Automatic approval review rejected Xcode's account-side provisioning updates, so explicit development signing-resource approval is required. The documented silent-sync notification capability also needs approval. Production remains local-only; runtime/account, shared-store and physical sync gates stay open.
-
-The approved [Apple identifiers](setup/apple-test-access.md#current-setup-direction-27-october-2026) are registered under the user's team, with persisted App Group assignments for main/Mobile Share/Mac Share and the main app's iCloud-container assignment. The user confirms private CloudKit storage using each user's iCloud quota. Portal registration does not enable production synchronization: actual signing/private-key access, configured native prototype, CloudKit implementation and physical qualification remain open. Push Notifications remains disabled after automatic approval review rejected the additional capability as outside the explicit registration approval.
-
-The [phone Map rotation correction](prototypes/native-map-phone-rotation.md) keeps one native Map host while adapting its summary inset. It fixes a reproduced landscape failure and a discarded portrait-return regression. The exact completed List appearance, original bookmark and globally Todo Item survive two passing light-phone/dark-iPad executions; all 1164 inputs match Mac compilation, with six final and three diagnostic originals inspected. The [existing itinerary regression](prototypes/native-itinerary-map-layout-regression.md) also passes repeated-List pin choices, independent local completion and actual iPad rotation, with three inspected originals and matching Mac products. Actual Mac interaction, broader UI and physical/shared-cloud gates remain open. Development provisioning approval and private-key access remain pending. Portability remains post-MVP.
-
-The [shared native storage correction](prototypes/native-shared-storage.md) makes the main app and Share select the same configured location, while preserving unconfigured local/prototype paths and refusing a silent transition away from existing local data. Four standalone real-storage scenarios and four phone/iPad UI executions pass; matching Mac compilation includes the four new app-hosted tests, whose execution remains open. The audit also corrects the sync status: CloudKit and account observation require implementation, not only signing tests. The user has enrolled in the Apple Developer Program and supplied the team for setup; unlisted distribution is the requested eventual route, subject to Apple's review and approval. Advanced portability stays post-MVP.
-
-The [iPad sidebar audit follow-up](prototypes/native-sidebar-title.md#ipad-clipping-audit-follow-up) retains three failed clipping diagnostics and discards two unsuccessful layout probes. The restored catalog interaction passes; all 1160 production/test inputs remain identical to `09ef6525` and match rebuilt Mac products. No production or test change remains. Inbox clipping/assistive review and Mac runtime stay open, with exact evidence retained to avoid repeating these probes. Core journey acceptance remains the next local priority; signing and portability stay deferred.
-
-The [native sidebar-title correction](prototypes/native-sidebar-title.md) removes the crowded default app title only from the regular iPad sidebar. Three native executions pass reader width/history/return and largest-text catalog actions/relaunch on iPad and phone; the phone keeps its visible title and passes its clipping audit. All 1160 inputs match Mac compilation, and three originals are inspected. The one-line native correction leaves the broader UI, actual Mac interaction and physical/sync gates open. Portability stays post-MVP and signing remains deferred.
-
-The [reader pane-width checkpoint](prototypes/native-reader-pane-width.md) preserves a linked webpage through actual dark-iPad sidebar changes from 839 to 559 to 839 points, then Back/Forward/Reload and exact bookmark Return. Its affected phone regression also passes: two native executions, matching 1160 inputs and Mac compilation, with three inspected originals. Production is unchanged. The same capture confirms the narrow sidebar Planner-title crowding as the next concrete UI finding. Wider remount/window, accessibility and physical gates remain open; signing stays deferred and portability stays post-MVP.
-
-The [Itinerary validation/link-editor checkpoint](prototypes/native-itinerary-link-editor.md) fixes competing parent/editor error presentation during creation. Five final phone/dark-iPad executions pass invalid-link correction, rejected-edit cancellation, title/notes persistence and complete link edit/reorder/removal through relaunch. The private native driver now scrolls its Form and replaces text from the endpoint, closing the earlier named phone check. All 1160 inputs match Mac compilation; eight images are inspected. Core and storage are unchanged. Actual Mac UI, broader UI and physical gates remain open; signing stays deferred and portability stays post-MVP.
-
-The [native location-input correction](prototypes/native-owned-field-wrapping.md) uses bounded native wrapping for place/address fields and keyboard dismissal on Form scroll. Three qualified phone/dark-iPad executions preserve rich authoring, original List membership, bookmarks and Apple Maps owned-address precedence through relaunch. All 1160 inputs match Mac compilation. The separate phone Itinerary links test reproduces its initial offscreen-control failure on the committed base and remains open; unproven driver edits are removed. Core and recovery are unchanged. Broader UI, Mac interaction and physical gates remain open, with portability post-MVP.
-
-The [core authoring checkpoint](prototypes/native-core-authoring-acceptance.md) fixes global Capture leaving compact navigation on the catalog after saving. Four final light-phone/dark-iPad executions pass rich Item creation from a List and Google Maps capture through relaunch, retaining exact sources, memberships, bookmarks and native map cards. An actual keyboard-overlap diagnosis also corrects the private test gesture. Ten final originals are inspected and matching Mac compilation passes. Core and recovery are unchanged; broader UI, Mac runtime and physical gates remain open. Export/import remains post-MVP.
-
-The [saved Schedule summary follow-up](prototypes/native-schedule-summary-zone.md) extends readable timezone names to Item/Itinerary cards while retaining date-specific occurrence information. Seven final mobile executions across five functions preserve cancellation, identities, represented instants, invalid-edit rejection and the Calendar caption. All 1160 inputs match Mac compilation, with seven inspected final originals. The Mac broker state remains unchanged; actual Mac UI, broader assistive review and physical acceptance stay open. Advanced portability remains post-MVP.
-
-The [Schedule editor wording correction](prototypes/native-readable-schedule-zone.md) reuses readable picker names while retaining saved timezone identifiers and instants. Item/Itinerary cancellation, save and relaunch pass on light phone/dark iPad, plus the Lord Howe repeated-time regression: five final native executions with matching Mac compilation. An obsolete iPad driver failure is reproduced on the committed base and corrected with the existing sidebar-aware helper. Actual Mac interaction and broader UI/physical acceptance remain open; advanced portability stays post-MVP.
-
-The [mobile List heading correction](prototypes/native-mobile-list-heading.md) restores Q113's full wrapping content name on iPhone/iPad in empty, populated and Map representations. Five final native executions pass ordinary light phone, maximum-text dark phone/iPad and exact List Map regressions. Eleven originals are inspected; all 1160 inputs match Mac compilation. The single Mac toolbar title is unchanged. Actual Mac interaction, broader UI acceptance and signed/physical gates remain open; advanced portability stays post-MVP.
-
-The [Itinerary browser handoff checkpoint](prototypes/native-itinerary-browser-handoff.md) passes linked downloads and unsupported content on phone/dark iPad, retaining both saved links and the plan return context. Two original Item regressions also pass: six native executions across four functions, with eight inspected Itinerary originals and actual Safari request records. All 1160 inputs match the workspace and Mac compilation. Production is unchanged; Mac runtime, physical and final UI acceptance remain open. Signing stays deferred and advanced portability remains post-MVP.
-
-The [native search checkpoint](prototypes/native-search-accessibility.md) qualifies complete long-query matching, a different exact query's empty result and native Clear restoring the same Item on maximum-text dark phone/iPad. Four originals are inspected; all 1160 final inputs and matching Mac compilation reconcile. Native placement/presentation probes leave the clipping warning or iPad Clear focus transition unchanged and are reverted. These findings remain for UI/assistive review; no clipping pass or continuous-focus claim is added. Production and Core are unchanged, signing stays deferred and advanced portability remains post-MVP.
-
-The [native Month alignment correction](prototypes/native-calendar-month-alignment.md) centers the stacked system-sized picker while retaining the existing side-by-side agenda layout. Three final phone/iPad executions pass ordinary and maximum-text rotation checks, with matching Mac compilation and six inspected originals. The first stretching probe is discarded after visual review catches a stray date. Native tight weekday text and broader UI findings remain open. No Core, recovery or public contract changes are added; advanced portability stays post-MVP and signing remains deferred.
-
-The [native reading-position checkpoint](prototypes/native-ui-contrast-reading.md) passes the current phone/iPad navigation journeys at maximum text size, dark appearance and Increase Contrast, with matching Mac compilation and six inspected originals. Calendar guidance passes unfiltered contrast when fully visible; landscape guidance is positioned fully between the native bars. Saved identity, notes and completion survive relaunch. Save, the visible iPad sidebar and partially obscured-label audit warnings remain open; failed styling probes are reverted and no permanent audit exclusions are added. The wide iPad Month layout also remains a polish follow-up. Production, Core and recovery are unchanged; signing stays deferred.
-
-The [Lists catalog toolbar](prototypes/native-list-catalog-toolbar.md) groups secondary actions in native More on compact iPhone and narrow iPad sidebars, leaving Add and the icon-only archive control directly available. Four native UI executions pass, covering largest-text phone/iPad interaction, shared label identity and per-dataset sorting through relaunch. The phone clipping audit and affected Mac compilation pass. The iPad native-title audit warning, largest-text sidebar word wrapping and broader UI/device acceptance remain open. No Core, recovery or public-interface change is added; signing stays deferred and advanced portability remains post-MVP.
-
-The [native Item title correction](prototypes/native-item-title-wrapping.md) replaces single-line truncation with native wrapping during creation and editing. Four final-source phone/iPad and affected estimate/label journeys pass, with four inspected title captures and matching Mac compilation. Phone passes two clipping audits; iPad field-layout qualification leaves its separate whole-window search warning open. The unfiltered audit identifies the remaining crowded compact title, search and contrast findings rather than marking whole-app accessibility complete. No Core, recovery or signing change is added.
-
-The [Item containing-plan names](prototypes/native-item-plan-names.md) now appear in a lazy native Plans disclosure. The real independent-writer journey passes on final-source iPhone and dark iPad, including repeated-List deduplication, indirect Itinerary membership, live renames/removals and source identity/notes/completion through relaunch. Two originals are inspected; all 1160 inputs reconcile with matching Mac app/Share and actual fixture/test compilation. No Core, schema, recovery or public interface changes are added. Actual Mac UI, broader accessibility and physical/sync acceptance remain separate.
-
-The [native Item archive swipe](prototypes/native-item-swipe-archive.md) adds Archive/Unarchive to the shared mobile Item-catalog row through the existing command. Four final phone/dark-iPad executions pass the archive round trip and direct-completion regression, preserving exact identity, notes and global Done through relaunch. Six originals are inspected and matching Mac compilation passes. No Core, recovery or public-interface change is added; other native/physical acceptance remains separate.
-
-The [Item membership summary](prototypes/native-item-list-summary.md) now makes shared organization visible in global details with a native zero/one/multiple-List label. Four phone/dark-iPad executions pass Add/Cancel, duplicate Add, independent completion and relaunch checks; four originals are inspected and matching Mac compilation passes. The summary reuses existing Core references, with no new persistence, public interface or recovery work. Actual Mac UI and physical/sync gates remain separate.
-
-The [browser background checkpoint](prototypes/native-webpage-background.md) passes loading and failed-page resume on iPhone and dark iPad, four native executions. Held requests, retry/history controls and the original bookmark survive brief app switches and rotation. Four recovered-page originals are inspected and identical inputs/products verified. Production is unchanged; suspension, process death, Mac remounts and physical acceptance remain separate. Signing stays deferred.
-
-The [native Shortcuts optional-input checkpoint](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) passes two final-source iPhone/iPad journeys through Apple's actual List picker and Create action. Subtitle and Notes persist, one Todo appearance retains its exact identity through relaunch, and the other List stays empty. Each uniquely named test workflow is removed. All 1160 native inputs/products reconcile and eight originals are inspected, with animation-frame limits explicit. Production is unchanged; other system actions, cold/locked invocation, physical/shared-store gates and signing remain separate.
-
-[Q163 A](native-crossed-restoration-family-decision.md) is accepted on 26 October 2026. The [local restoration checklist](restoration-acceptance-checklist.md) now records qualified ordinary behavior and the accepted MVP recovery limit, with no pending local restoration decision. Crossed source/owned-family reconciliation is explicitly deferred beyond MVP. All records and the existing atomic rejection remain; affected datasets cannot produce canonical reads/export until explicit recovery or later reconciliation. Ordinary Q161/Q162 behavior and qualification are unchanged. This closes the pending policy choice without adding recovery machinery. Earlier checkpoint notices below retain their historical execution scope. Signing stays deferred.
-
-The [native Shortcuts creation checkpoint](prototypes/native-shortcuts-create-ui.md#final-local-checkpoint) passes four final phone/iPad executions through the actual Title prompt. Edited Cancel leaves the unrestricted catalog empty; Done creates exactly one Item with the same identity and unfinished completion through relaunch. Six originals are inspected and all 1160 shared inputs/products reconcile. Existing native discovery/Find tests and production are unchanged. Other system actions, optional inputs, cold/locked launch and physical/shared-store gates remain open; signing stays deferred.
-
-The [native Shortcuts checkpoint](prototypes/native-shortcuts-system-ui.md#final-local-checkpoint) qualifies actual catalog discovery on iPhone/iPad and warm iPhone Find execution against the current saved Item. Three final executions pass, including owned-workflow cleanup and exact Item identity/completion through app relaunch. All 1160 shared inputs and built products reconcile; originals and diagnostic failures retain their own scope. Production is unchanged. Other system actions, Siri/pickers/confirmation, cold/locked launch, Mac/physical acceptance and Q163 remain open. Signing stays deferred; the separate Customer-build test-framework rejection is unchanged.
-
-The [pending-reader Return checkpoint](prototypes/native-webpage-pending-return.md#final-local-checkpoint) adds four passing phone/dark-iPad executions across two native functions. Return closes a held real HTTP navigation; releasing that response leaves the exact Item/bookmark intact, and reopening starts with the original guide and fresh history. Six originals are inspected, final source/products reconcile and the matching Mac UI target compiles. Production is unchanged. Edge gestures, other window lifecycles, Q163 and system/physical gates remain open; signing stays deferred.
-
-The [native accessibility follow-up](prototypes/native-ui-appearance-review.md#native-accessibility-audit-follow-up) improves empty-state readability and scales native sidebar widths with Dynamic Type after actual largest-text iPad captures exposed broken destination words. Five final-source phone/iPad executions pass light/dark navigation, rotation, exact identity/notes/completion through relaunch and 45 scoped audits; nine original captures are inspected. Final Mac app/Share compilation and strict lint pass. Broader contrast/clipping findings remain explicit, alongside actual Mac UI, physical/system acceptance and pending Q163. Signing stays deferred.
-
-The [final appearance follow-up](prototypes/native-ui-appearance-review.md#dark-iphone-reader-calendar-and-map) passes six additional production journeys: dark iPhone reader/Calendar/Map and dark iPad rich-draft rotation, cumulative filters and recovery inspection. Fourteen original captures are inspected and source/products verified. Native components need no production layout change in these represented states. Mac runtime, complete accessibility/physical acceptance and the human final review remain separate gates; Q163 stays pending and signing deferred.
-
-The populated dark iPad [appearance follow-up](prototypes/native-ui-appearance-review.md#populated-dark-ipad-follow-up) passes three production journeys for exact browser return, itinerary composition/filter counts with native contrast audit, and List-map selection through rotation. Five original captures are inspected. A shared Map caption correction also passes its affected native journey with "1 of 1 item located". Inputs/products are verified; other scene/accessibility/physical gates and actual Mac interaction remain open. Q163 stays pending and signing deferred.
-
-The [native appearance review](prototypes/native-ui-appearance-review.md) starts the final UI pass. It caught a test setup defect: the named iOS Dark journey still rendered light. The corrected public device-appearance setup now passes genuine light/dark navigation on both phone and iPad, including rotation, with sixteen inspected captures and verified source/products. The app display name is shortened to Planner, with its unchanged bundle identifier read from the compiled product. Full scene/accessibility/physical acceptance and actual Mac interaction remain open. Q163 stays pending and signing deferred.
-
-The [collision interruption checkpoint](prototypes/native-restored-label-collisions.md#process-interruption-follow-up) qualifies actual pre/post-save termination for Category and Tag selections, retaining the Item/List/Itinerary cases. Complete winning graphs, owner state, original receipts, recovery files and reopened data survive with truthful fresh/original maintenance identities. Eight Mac parent functions and six phone shared-helper functions pass with production/schema/format/gate inputs unchanged. The [finite recovery audit](local-restoration-history-audit.md#current-local-recovery-frontier) now closes the named ordinary Q161/Q162 payload fault follow-ups. Q163 remains a policy gate; native UI/system/physical acceptance remains separate and signing deferred.
-
-The [label-collision fault checkpoint](prototypes/native-restored-label-collisions.md#native-save-and-publication-failures) now qualifies Category/Tag collisions under actual native-save rollback and publication failure. Selection701 survives,702 closes, complete owner/source state and receipts remain exact, and Retry preserves truthful preparation/commit identities. Six Mac functions and three phone functions pass with all production/schema/format/gate inputs unchanged. Collision-specific process interruption remains local work. Q163 stays pending and signing deferred.
-
-The [Item/List interruption checkpoint](prototypes/native-restored-owned-reference-history.md#item-and-list-process-interruption) extends the existing actual pre/post-save SIGKILL test to mixed Item contents and repeated-List branches, retaining the Itinerary cases. Before-save recovery uses fresh maintenance; after-save Retry acknowledges the original commit. Complete winning graphs, local states, receipts, prior recovery files, writer control and reopen remain exact. Seven Mac parent functions and three phone shared-helper functions pass; only the existing test file changes. Label-collision faults remain local work. Q163 stays pending and signing deferred.
-
-The [mixed Item native-save checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-item-native-save-rollback) now preserves both complete versions, owned guide/booking/labels and exact itinerary appearances through actual isolated write failure, unverified Retry rejection and fresh maintenance. The winning graph, hashes, timestamps, old receipts, reopen and late redelivery stay exact. Seven Mac functions and three phone functions pass; only the existing test file changes. Item/List process interruption and collision faults remain local checks. Q163 stays pending and signing deferred.
-
-The [owned List native-save checkpoint](prototypes/native-restored-owned-memberships.md#native-save-rollback-and-late-redelivery) now preserves both versions, original membership authority and repeated-branch completion through actual SQLite write failure, unverified Retry rejection and fresh maintenance. It exposed stale relationship state after rollback and later independent delivery; the shared maintenance catch now discards only its failed container. Final affected runs pass 57 Mac Core functions, 52 iPhone Core functions and twelve real HTTP functions, with matching products/inputs and unchanged schema sources/formats/gates. List process interruption, Item native-save/interruption and collision faults remain local checks. Q163 stays pending and signing deferred.
-
-The [mixed Item publication checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-item-publication-failure) preserves the winner's complete notes, guide, booking, labels and independent appearances through actual publication failure and Retry. Only four exact losing-owned closures are added; user receipts, field hashes, timestamps, reopen and redelivery remain exact. Seven Mac and five phone functions pass, including affected shared-Itinerary failure regressions. Only the existing test file changes. Item/List native-save/interruption and collision faults remain local work; Q163 stays pending and signing deferred.
-
-The [List publication checkpoint](prototypes/native-restored-owned-memberships.md#recovery-publication-failure) preserves standalone and repeated-branch state through actual recovery-publication failure. Full winning content stays readable, new writes reject, and Retry acknowledges the original maintenance without changing user receipts. Stale identities, reopen and redelivery retain their original outcomes. Final Mac/phone cohorts each pass five functions and eleven cases; only the existing test file changes. List native-save/interruption, Item-owned metadata and collision faults remain local work; Q163 stays pending and signing deferred.
-
-The [mixed Itinerary interruption checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-process-interruption) qualifies actual pre/post-save SIGKILL. Before commit, fresh maintenance leaves the old proposal unverified; after commit, Retry acknowledges the original maintenance. The complete winning graph, original receipts, prior recovery files and writer control survive. Final Mac checks pass six parent functions, with two verified interrupted children and three native-failure children; phone passes the three affected shared-path functions. Production remains unchanged. Distinct Item/List/collision faults and native/system/physical acceptance remain local/separate; Q163 stays pending and signing deferred.
-
-The [mixed Itinerary native-save checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-native-save-rollback) preserves both versions and all owned contents through an actual isolated SQLite write failure. An unverified preparation cannot Retry as applied; fresh maintenance retains it and produces the exact winning graph through reopen/redelivery. Final Mac checks pass five parent functions plus three actual child executions; phone passes three affected functions. Only the existing test file changes. Actual mixed-payload interruption and distinct Item/List/collision faults remain local work; Q163 stays pending and signing deferred.
-
-The [mixed Itinerary publication checkpoint](prototypes/native-restored-owned-reference-history.md#mixed-itinerary-publication-failure) qualifies links, bookings, labels and stops together through real post-save publication failure. The complete winning graph remains readable, a new write rejects, explicit Retry acknowledges the original maintenance, and reopen/redelivery preserve exact values. Final Mac/phone cohorts each pass three functions and five cases with only one test file changed. Native-save/actual interruption and distinct Item/List/collision faults remain separate; Q163 stays pending and signing deferred.
-
-The [prepared Move/Capture checkpoint](prototypes/native-prepared-move-capture.md) now preserves unverified proposals before resolving missing/newer relationships, unavailable original drafts or blocked maintenance. Changed payloads reject and an unrelated edited Capture draft survives. Final Mac/phone cohorts each pass five functions and 66 invocations, with only the existing test file changed and all production/fixtures/schema inputs preserved. This qualifies copied preparation input, not actual command-specific process death. Q161 payload-specific fault checks, Q163 and native/system/physical acceptance remain; signing stays deferred.
-
-The [older-history audit](local-restoration-history-audit.md) now separates already-qualified strict Move/Capture/Overwrite, legacy aliases, causal history, maintenance termination and native recovery controls from their historical open lists. Eight existing current-source functions pass 119 invocations on both Mac and iPhone across matched inputs/products, with no production/test changes. The subsequent prepared-only Move/Capture checkpoint closes that replay follow-up; payload-specific fault promises and Q163 remain. Actual Mac/system/physical acceptance and whole-app polish remain separate; signing stays deferred.
-
-The [crossed-family checkpoint](prototypes/native-crossed-restoration-family.md) reproduces one unresolved authority conflict: the winning Item/Itinerary owns the losing candidate of a separate guide/booking family. Complete saved values, recovery and writer control survive rejected reads/export and reopen. Final Mac and phone cohorts each pass two functions and twelve cases; production code remains unchanged. [Q163](native-crossed-restoration-family-decision.md) requests an explicit precedence or MVP deferral choice. This is a policy gate, separate from signing. The older named-history audit and independent native acceptance remain local work.
-
-The [closed label-family checkpoint](prototypes/native-restored-owned-reference-history.md#closed-label-selection-families) now preserves deleted or fresh Category/Tag selections on Item/Itinerary owners through late copies, recovery obstruction/read retry, replay and reopen. Unknown lifetimes reject without mutation. Exact filtering precedes duplicate validation; stored declarations, formats and gates remain unchanged. Final affected cohorts pass 52 Mac and 50 iPhone functions, four existing real HTTP regressions and Mac app/Share compilation. The [local checklist](restoration-acceptance-checklist.md) now retains the owner/owned-family interaction and older named-history audit. Signing stays deferred.
-
-The [closed stop-family checkpoint](prototypes/native-restored-owned-reference-history.md#closed-itinerary-stop-families) now retires proven late direct/List stops and exact expanded rows without retiring their surviving Itinerary. Deleted and fresh-Undo states retain full route graphs, completion, replay and reopen through preparation obstruction/retry. Unknown stop lifetimes reject without mutation. Final affected cohorts pass 51 Mac and 49 iPhone functions, four existing real HTTP regressions and Mac app/Share compilation, with no format/schema/gate change. The [local checklist](restoration-acceptance-checklist.md) keeps remaining label/history checks explicit. Signing stays deferred.
-
-The [closed membership-family check](prototypes/native-restored-owned-reference-history.md#closed-membership-family-after-undo) now follows Remove/Undo through late sibling and repeated expanded-state delivery. It preserves the exact fresh membership, independent branch completion, full export, old Remove replay and reopened state. Three focused functions pass on Mac and iPhone with all production inputs unchanged. The remaining association checks are named in the [local checklist](restoration-acceptance-checklist.md). Signing stays deferred.
-
-The [unknown-source boundary](prototypes/native-restored-owned-reference-history.md#unknown-source-lifetimes-after-deletion) now rejects undeclared lifetimes after Delete consistently across source reads and export, preserving all native rows, recovery files and writer control. All five source kinds reproduced the mismatch before the shared admission guard. Final affected cohorts pass 50 Mac and 48 iPhone functions, four existing real HTTP regressions and Mac app/Share compilation, with unchanged fixtures, schema sources, formats and gates. Remaining local recovery checks are listed in the [acceptance checklist](restoration-acceptance-checklist.md); signing stays deferred.
-
-The [closed source-family checkpoint](prototypes/native-restored-owned-reference-history.md#closed-source-families) now retires known late candidates after Delete across all five source kinds, preserving either deletion or the exact fresh authorized restoration. Recovery obstruction and ordinary-read retry, full graphs, receipts, reopen, old Delete replay and redelivery pass. Final affected cohorts pass 49 Mac and 47 iPhone functions plus four existing real HTTP regressions and Mac app/Share compilation. All 514 frozen fixtures and 18 schema sources remain unchanged; no format or gate changes. The [local restoration checklist](restoration-acceptance-checklist.md) names the remaining association, authority and history checks. Signing stays deferred.
-
-The [native Item-selection follow-up](prototypes/native-item-row-accessibility.md#native-sidebar-dismissal-resolves-the-selection-diagnosis) identifies the portrait iPad sidebar covering the catalog. Dismissing it through the native detail-pane backdrop makes the same row open its notes and pass contrast. The test driver now performs that dismissal; production row/navigation code is unchanged. Four passing native executions cover repeated dark-iPad Item/List contrast and local completion plus light-phone Item contrast, with matched inputs/products and original captures. Broader window, accessibility and physical acceptance remain open.
-
-The [closed owned-family checkpoint](prototypes/native-restored-owned-reference-history.md#closed-owned-families-and-late-delivery) now keeps already-closed late bookmarks/Schedules from blocking a surviving owner, while preserving a fresh authorized restoration. Exact native fields, full graphs and receipts survive recovery obstruction/Retry, reopen, replay and reimport. Final affected cohorts pass 48 Mac and 46 iPhone functions, plus 12 existing real HTTP functions and Mac app/Share compilation, with reconciled inputs/products and 514 unchanged fixtures. Snapshot filtering uses the existing maintenance transaction; no format/model version or writer gate changes. Further association histories and native/physical acceptance remain open; signing stays deferred.
-
-The [combined Itinerary case](prototypes/native-restored-owned-reference-history.md#combined-itinerary-contents) now retires losing links, bookings, labels and stops together in one existing transaction. The complete winning route, metadata, shared sources and history survive reopen/redelivery. The Mac tracer and all 23 affected iPhone maintenance functions pass with matched inputs/products; production code is unchanged. Several simultaneous source families and pre-existing owned restoration histories remain open.
-
-The [Q161 Itinerary-stop checkpoint](prototypes/native-restored-owned-itinerary-stops.md) now retires losing-owned direct/List stops and expanded rows while preserving complete winning routes, repeated appearance states and shared sources. Exact closures, stale-action rejection, saved Done history, malformed-binding rejection and real preparation obstruction/retry pass. Final affected cohorts pass 40 Mac and 38 iPhone functions in five suites, including genuine Schema18/12 migrations, across reconciled inputs/products, 514 unchanged fixtures and unchanged schema sources. All ordinary owned collection kinds now have Core checkpoints. Mixed/owned restoration histories, bookmark/Schedule closure/import qualification and native/physical acceptance remain local/open work. Formats/gates stay unchanged; signing stays deferred.
-
-The [Q161 List-membership checkpoint](prototypes/native-restored-owned-memberships.md) now retires losing-List memberships and their exact expanded rows while preserving shared Items, winning membership identities and repeated-stop completion. Original Add provenance, saved Reopen history, stale-action rejection, contradictory-binding rejection and real preparation obstruction/retry are qualified. Final affected cohorts pass 36 Mac and 34 iPhone functions across five suites, including genuine Schema18/12 migrations, with reconciled inputs/products and 514 unchanged fixtures. The schema edit is snapshot-method-only; formats/gates stay unchanged. Losing Itinerary-owned stops, broader owned/import histories and native/physical acceptance remain open. Signing stays deferred.
-
-The [Q161 owned-label checkpoint](prototypes/native-restored-owned-labels.md) now preserves the winner's exact Category/Tag selections and closes losing-owned associations for Item and Itinerary owners. Shared labels, source values/timestamps, original receipts and edit replay survive reopen/redelivery. Real preparation obstruction/retry passes. An actual Mac/phone difference exposed marker ordering; matching the existing saved-snapshot order fixes the unchanged Mac tracer. Final affected cohorts pass 30 Mac and 28 iPhone functions across reconciled inputs/products, with no SQLite unlink diagnostics. Existing formats/gates remain unchanged. Losing List memberships, itinerary stops/expanded state, broader owned/import histories and native/physical acceptance remain open; signing stays deferred.
-
-The [Q161 booking checkpoint](prototypes/native-restored-owned-bookings.md) now preserves winning Item/Itinerary timed and all-day bookings while retiring exact validated losing-owner Schedule rows. Stale booking IDs do not redirect; original creation replay, complete exports, reopen, redelivery and real preparation obstruction/retry pass. Final affected cohorts pass 28 Mac and 26 iPhone functions across matching inputs/products, with strict lint and no SQLite unlink diagnostics. Existing formats/gates remain unchanged. Losing owned labels, List memberships, itinerary stops/expanded state, individual owned-identity closure/import histories and broader native/physical acceptance remain open. Signing stays deferred.
-
-The [Q162 Core checkpoint](prototypes/native-restored-label-collisions.md) keeps the smallest restored Category/Tag selection identity for Item and Itinerary owners, closes duplicates without aliases and preserves source values/timestamps. Exact closed-identity redelivery and real preparation obstruction/retry pass. Final affected cohorts pass 26 Mac and 24 iPhone functions with reconciled inputs/products and no SQLite unlink diagnostics. Existing formats/gates remain unchanged. Label-specific save/publication/interruption, broader association history and native/HTTP/physical acceptance remain open; Q161's other owned collections continue locally, with signing deferred.
-
-The [first Q161 owned-link checkpoint](prototypes/native-restored-owned-links.md) keeps the winning Item/Itinerary's links and retires exact validated links owned by losing candidates through existing maintenance. Final affected cohorts pass 23 Mac and 21 iPhone functions across matching inputs/products, including real preparation obstruction and retry; strict formatting passes. Portable5/model19/rule3/gate23 remain unchanged. Other owned collections, broader owned histories and Q162 collisions remain local implementation work; signing stays deferred.
-
-Planner is a personal native iPhone, iPad and Mac app using Xcode, SwiftUI and shared Core interfaces. Platform layouts must feel native. Quality and stability take priority over schedule; there is no deadline. Apple Calendar export remains outside this map.
-
-This map remains open. Signing is deferred, and it is not the only remaining gate. The [decision register](open-decisions.md) distinguishes accepted behavior, current implementation and executed evidence. An accepted choice, successful build or isolated test does not close a broader requirement.
-
-## MVP implementation preference
-
-Prefer the simplest existing path that meets the accepted behavior. Reuse native/platform components and shared code; add a new abstraction, recovery mechanism or version only when a concrete requirement needs it. Keep bounded unsupported cases explicit rather than expanding into a general reconciliation system. Do not broaden a completed slice solely to cover hypothetical permutations. Preserve data-loss protections and accepted guarantees; bring genuinely necessary behavior tradeoffs to the user with the smaller option first. Feature completion and native UI polish take priority over optional infrastructure.
-
-## Decisions and external actions needed
-
-### Current actions, 31 October 2026
-
-- **Emulator-first finish:** the user is away from devices today. Complete
-  focused Simulator checks and local corrections without waiting for hardware.
-  Do not start an attended Mac or physical-device run without fresh readiness.
-  Additional iCloud testing and post-MVP scope remain deferred.
-- **Private synchronization is implemented:** Q164's local SwiftData store and
-  private `CKSyncEngine` are wired into normal app/Share storage. The
-  [same-account physical mobile pair](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
-  passes creation, edits in both directions, deletion and relaunch. The earlier
-  managed-cache off/on result is historical evidence for the mechanism that
-  Q164 replaces; it does not qualify the new engine's off/on behavior. Further
-  iCloud testing is deferred at the user's request. No diagnostic is waiting
-  for an iCloud switch change, and no public/developer cloud fallback is allowed.
-- **Signing and device access:** the enrolled team and registered identifiers
-  are configured. Signed Mac and physical iPad checkpoints pass. Reuse those
-  resources; device availability and manual automation approval remain per-run
-  requirements, rather than another account/team setup task.
-- **Next attended Mac check:** the
-  [prepared two-case run](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
-  covers multiline-row completion/relaunch and Itinerary search retention.
-  It needs an unlocked, idle Mac and manual Enable UI Automation approval.
-  Do not change authentication policy or repeat an unattended startup timeout.
-  Refresh its source/product preflight after the current Simulator-only driver
-  work when that attended session becomes available.
-- **Next physical capture check:** the prepared native Apple Maps Share journey
-  needs iPhone availability, saved drafts and explicit disposable test data.
-  Its full Simulator journey now passes; keep that scope separate from physical
-  acceptance and the passing physical Safari Share result. Google Maps sender
-  acceptance also remains open. The prepared case has not run on a physical
-  device.
-- **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
-  now pass, together with the physical Safari Share journey. Other native Share
-  senders, physical scale and remaining native keyboard/accessibility/coherence
-  review retain their own gates. Default/Dark icon appearance passes on phone
-  and iPad Simulators; physical Home Screen and Mac Dock review remain open.
-  The final human layout review is still required. Broader cloud/account cases
-  retain their explicit deferral rather than an incomplete-implementation label.
-- **Deferred scope:** advanced import/restoration, installed Mac Share and V3
-  Intents/Agent Control do not block the core MVP queue.
-
-### Historical decision and qualification checkpoints
-
-These notes preserve each checkpoint's scope and pending labels. The MVP finish
-line and recent checkpoints supersede their signing, decision and release-blocker
-statements.
-
-- **Enlarged Item names and estimates are readable locally.** The [native readability checkpoint](prototypes/native-item-row-accessibility.md) wraps the existing shared row at accessibility sizes and gives the route more room beneath a long scrollable name. Two enlarged dark-iPad journeys, two ordinary iPad List/Itinerary checks and two enlarged light-phone checks pass; Mac app/Share compilation and lint pass. The separate ordinary-iPad Item-selection diagnostic now has the [native-sidebar correction](prototypes/native-item-row-accessibility.md#native-sidebar-dismissal-resolves-the-selection-diagnosis): actual captures identify the covering sidebar, and its native dismissal permits Item details and contrast auditing. Production row/navigation code remains unchanged. Broader native/physical and whole-app acceptance stay open.
-
-- **Q161 A and Q162 A are accepted; implementation remains open.** The [MVP restored-data policy](native-restored-owned-data-decision.md) keeps the winning source's complete owned collections and deterministically retains the smallest public identity for duplicate owner/label selections. Use existing closures and maintenance; preserve independent sources and exact historical replay. Q160's bounded checkpoint does not implement these newly approved cases. Signing stays deferred.
-
-- **Enlarged itinerary names keep the route usable.** The [fitted heading checkpoint](prototypes/native-itinerary-context-scroll.md#fitted-accessibility-checkpoint) measures native Text and bounds its native scroll area only at accessibility sizes. Short names retain fitted spacing; the full long name stays readable without consuming the route. Six final mobile executions and the matching Mac app/Share build pass across 1,160 identical inputs, including both orientations, exact repeated-stop identity and native Add/Map controls. Earlier driver/layout failures remain retained. This adds no component, public contract or saved-data logic. Actual Mac, VoiceOver/physical and whole-app acceptance remain open; signing stays deferred.
-
-- **Scrolled iPad itinerary context corrected locally.** The [native heading follow-up](prototypes/native-itinerary-context-scroll.md) keeps the existing readable heading in a SwiftUI safe-area inset while the summary and route continue scrolling. The unchanged new tracer fails before and passes after the correction; three dark-iPad functions, three light-phone regressions and the light-iPad scrolling check pass, alongside the Mac app/Share build. Exact appearances, repeated-stop completion, native Add/Cancel and List/Map navigation remain qualified through existing tests. Native-bar truncation, long-title/accessibility extremes, actual Mac interaction and whole-app acceptance keep their separate gates. No data/API or signing change is introduced.
-
-- **Q159 A and Q160 A are accepted.** The [aggregate target-reference contract](native-restored-target-reference-contract-review.md) is approved for implementation through the existing storage/maintenance paths. It retains original provenance, bounded exclusions and old replay while declaring portable5/rule3/gate23. Keep this implementation minimal under the MVP preference above; do not add general candidate-owned collection merging or label-collision machinery. Signing stays deferred.
-- **Q160 bounded targets are implemented and locally qualified.** The [final checkpoint](prototypes/native-restored-target-reference.md#final-local-checkpoint) covers independent membership Item targets, referenced Lists and Category/Tag selections on Items/Itineraries, with original history, repeated-branch independence and atomic existing maintenance. Latest checks pass 96 Mac Core functions, eighteen affected phone functions, twelve HTTP functions and final native phone/dark-iPad representatives; a preceding 89-function phone cohort covers broader unchanged paths. Genuine gate22 refusal after23, migration, recovery/interruption, exact replay, old-backup admission and invalid expanded-state rejection are qualified. Captured inputs/products reconcile and 83 closed passing fixtures are cleaned. Candidate-owned collection transfer, label-collision reconciliation and signed/system/physical/whole-app gates remain open. Signing stays deferred.
-
-- **Q158 A is implemented and locally qualified.** The [direct-entry checkpoint](prototypes/native-source-restoration-entry-rebinding.md) preserves exact entry identity/order/local state/history while atomically rebinding to the winner and retiring the loser. Final cohorts pass 44 Mac, 41 iPhone and twelve real HTTP functions across 813 Core/1,160 native inputs and verified products. Genuine gate21 writers reject22; eight interrupted datasets and original recovery files remain retained. Verified cleanup removes 278 passing fixtures. Physical model19 and portable4 stay unchanged. Other candidate-owned/reference cases and actual Mac/system/physical/whole-app gates remain required. Signing stays deferred.
-
-- **Q157 A is implemented and locally qualified for its bounded rule.** The [source-restoration checkpoint](prototypes/native-source-restoration-maintenance.md) preserves exact winners/history across all five source kinds. Initial Mac cohorts pass 69 plus six migration functions; iPhone passes 52. Final follow-ups pass 21 Mac, 18 iPhone and twelve real HTTP functions across matching inputs/products, including source-specific SIGKILL/save failures, scalar-reference refusals and open-reader refresh. Genuine compatibility20 writers refuse21. Corrected post-exit fixtures eliminate the earlier adapter unlink warnings; verified cleanup removes 123 completed fixtures while retaining failed/interrupted data. Broader reconciliation, actual Mac/system/physical gates and whole-app acceptance remain open.
-
-- **Read-only estimate accessibility corrected locally.** The [native audit follow-up](prototypes/native-estimate-accessibility.md) fixes four actual hit-region findings by marking metrics/warnings as static text. The unchanged new journey fails before and passes after the two-line correction. Six light-phone/dark-iPad executions across three functions, eleven real HTTP functions, matching native Mac builds and strict lint pass across 1,157 inputs. Seventeen current originals are retained and six inspected; verified cleanup preserves failures. Source/appearance semantics and data formats stay unchanged. Actual VoiceOver, Mac runtime and whole-app accessibility/layout acceptance remain open. Q157 has its separate bounded checkpoint; signing stays deferred.
-
-- **Q156 local completion and recovery qualification advances.** The [maintenance checkpoint](prototypes/native-post-closure-completion.md#native-checkbox-refresh-and-maintenance-follow-up) passes 289 Mac/360 iPhone storage functions across 139 suites each, eleven HTTP functions and native light-phone/dark-iPad journeys. Later follow-ups qualify smaller canonical roots and actual child SIGKILL after a blocked activation, preserving the v4 copy, identities and fourteen historical files. The latest [partial-history checkpoint](prototypes/native-post-closure-completion.md#partial-observed-history-delivery) passes three Mac/27 iPhone functions: missing markers/heads block reads and new writes, saved replay stays exact, and returning the original record restores unchanged data/recovery before deliberate actions resume. Production remains unchanged across these qualification follow-ups. Frozen models/fixtures and older-Core rejection retain their evidence. Verified cleanup preserves failed/interrupted datasets. The [Remove/Add generation follow-up](prototypes/native-post-closure-completion.md#completion-after-a-real-membership-removal) passes 39 Mac/35 iPhone functions: proven same-generation roots preserve informed state, unaware memberships stay suppressed, and old replay remains exact. The [pre-publication interruption follow-up](prototypes/native-post-closure-completion.md#termination-before-baseline-publication) also passes ten Mac/seven iPhone functions, preserving the old baseline through actual child termination and fresh retry. Other interruption states, broader lifetime/family reconciliation, actual Mac/system/physical and whole-app acceptance remain open. Q157 has its bounded source-maintenance checkpoint; signing stays deferred.
-
-- **Phone itinerary headings corrected; tablet heading retained.** The [phone-only checkpoint](prototypes/native-item-detail-title.md#phone-only-local-checkpoint) removes the repeated collection title in List and Map while retaining native controls and the existing iPad/Mac heading. Three final phone functions, four dark-iPad regressions, matching native builds, ten HTTP functions/twelve invocations and strict lint pass across 1,155 identical inputs. Sixteen originals are retained and eight inspected. Failed all-device/size-class prototypes and the failed initial route selection remain recorded; the unchanged tablet retry passes. Subsequent iPad scroll qualification is recorded above; selection stability, broader reconciliation and final whole-app acceptance remain open. Q156 has its separate implemented checkpoint; signing stays deferred.
-
-- **Repeated itinerary membership recovery qualified through native controls.** The [native follow-up](prototypes/native-legacy-closed-alias-delivery.md#repeated-itinerary-native-follow-up) passes eight executions on light phone/dark iPad, covering complete/partial provenance and unchanged standalone regressions. Native Add creates fresh Todo appearances; only the second List stop stays Done after relaunch/redelivery, with exact identities and original global Todo/note preserved. The unchanged test detects the retired row with pre-fix Core. Matching Mac builds, ten HTTP functions/twelve invocations, 1,155 reconciled inputs/products and strict lint pass. Thirty-six original PNGs are retained and twelve inspected; their duplicate/narrow itinerary-title findings are tracked by the separate title checkpoint above. Only fixture/test code changes, with verified store/export cleanup. Broader lifetimes/families, physical/system acceptance and final polish remain open; Q156 and signing stay separate.
-
-- **Repeated itinerary alias recovery qualified over HTTP.** The [new journey](prototypes/native-legacy-closed-alias-delivery.md#repeated-itinerary-http-follow-up) covers complete/partial provenance with two List stops and one direct Item stop. A fresh Add starts both branches Todo; completing the second preserves the first, standalone List and direct stop. Stale expanded reads/Complete reject, late copies cannot revive retired rows, and exact replay/export/reopen preserve the completed graph. The unchanged new test detects six failures with pre-fix Core. Current Core passes ten HTTP functions/twelve invocations across six suites, with matching Mac app/Share/fixture builds, 1,155 reconciled inputs, nine verified products and strict lint. Only the test method changes; ten closed passing stores are safely removed. Expanded native UI, broader lifetimes/families and physical/system acceptance remain open. Q156 and signing remain separate.
-
-- **Calendar Item titles and guide returns qualified locally.** The [caller follow-up](prototypes/native-item-detail-title.md#calendar-caller-local-checkpoint) adds one native journey for Calendar selection and guide Return, plus the unchanged deleted-source regression. Four executions pass on light iPhone/dark iPad with 1,155 matching inputs. Exact Item, bookmark and Schedule state survive valid Return; invalid Return keeps the guide and reaches Calendar safely. Ten originals are retained and six inspected, with an open portrait sidebar recorded as a layout limit. The old-heading calibration detects the actual duplicate. Shipping sources stay unchanged; only the UI journey is added. The [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-25-october-2026) now separates its historical missing features from implemented local paths and remaining acceptance. Other callers, full layout/accessibility, Mac/physical/system gates and Q156 remain open; signing stays deferred.
-
-- **Mobile Item details use one native title.** The [focused correction](prototypes/native-item-detail-title.md#final-local-checkpoint) removes the repeated Form heading from global Item, List-appearance and itinerary-appearance details on iPhone/iPad. All three final title journeys pass on light phone/dark tablet, with six inspected originals and 1,155 matching inputs. Complete/partial membership regressions pass separately, and Mac app/Share/fixture compilation plus nine HTTP functions use matching shipping inputs. The retained iPad driver failures are followed by an exact-List correction and an old-UI calibration. Mac in-pane headings stay intact. Broader caller, long-title, resize/accessibility and whole-app acceptance remain open; Q156 and signing stay separate.
-
-- **Native partial-history List workflow qualified locally.** The [follow-up](prototypes/native-legacy-closed-alias-delivery.md#native-partial-provenance-list-follow-up) adds a named partial-input fixture and preserves the original native journey body. Both complete/partial cases pass on light iPhone and dark iPad, giving four executions and sixteen inspected original captures. Native Add creates a fresh Todo appearance; its exact identity/local Done survives relaunch and another partial delivery, while source identity, note and global Todo remain intact. Matching native builds, nine HTTP regressions and strict lint pass across 1,154 identical inputs. Only three fixture/test files change. Six closed Mac stores and duplicate exports are safely removed. Expanded contexts, broader reconciliation, physical/system acceptance and whole-app polish remain open; Q156 and signing stay separate.
-
-- **Partial-history membership delivery qualified over real HTTP.** The [follow-up](prototypes/native-legacy-closed-alias-delivery.md#partial-provenance-through-http) verifies empty List/Map reads, safe ordinary re-add, stale appearance rejection and exact replay/reopen when a known retired row arrives without its separate provenance record. The unchanged test detects six failures with only pre-fix Core substituted; current Core passes both input variants and all nine HTTP functions in six suites. Matching native builds and strict lint pass, with 1,154 reconciled inputs and one changed test file. Six closed passing stores are safely removed; four calibration stores remain. Shipping code/formats stay unchanged. Expanded/native partial-input cases, broader reconciliation, physical/system acceptance and final polish remain open. Q156 and signing stay separate.
-
-- **Retired membership with partially delivered provenance corrected locally.** The [Q155 follow-up](prototypes/native-legacy-closed-alias-delivery.md#partial-native-provenance-follow-up) reproduces an old membership reappearing when its separate native provenance record is absent. Detection and retirement now use its proven live baseline binding while preserving explicit history. The unchanged tracer and 35-case recovery matrix pass. The affected Mac cohort passes 274 functions/923 invocations and iPhone passes 269/918 across ninety suites; matching app/Share/fixture builds and nine HTTP regressions pass. Models, frozen fixtures and formats are unchanged. Broader incomplete-history/lifetime reconciliation, partial-input native/HTTP journeys, physical/system acceptance and final polish remain open. Q156 and signing stay separate.
-
-- **Mobile List title duplication corrected.** The [native follow-up](prototypes/native-list-pane-header.md#mobile-single-title-follow-up) reproduces two visible titles, then removes the repeated summary heading so the native bar owns the name in empty/populated List and Map modes. The unchanged tracer and completion/relaunch regression pass four native executions across light iPhone/dark iPad. Full accessible names, live controls and horizontal estimate alignment are checked; fourteen current captures plus the original failure are inspected. Matching Mac app/Share/fixture builds, nine HTTP regressions and strict lint pass. No Core/model/data-format change is made. Native long-name truncation, other title contexts, broader accessibility/physical acceptance and whole-app polish remain open; Q156 and signing are separate.
-
-- **Known retired membership qualified through native List controls.** The [follow-up](prototypes/native-legacy-closed-alias-delivery.md#native-list-follow-up) passes on light iPhone and dark iPad. Native Add creates one fresh Todo appearance; its local Done state and exact identity survive relaunch plus another old native delivery, while the shared Item keeps its original note and global Todo. Eight original captures are inspected, matching Mac app/Share/fixture compilation and nine HTTP checks pass, and strict lint passes. Only a fixture, its dispatcher and one UI journey change. Verified cleanup removes four closed Mac stores and duplicate capture exports. The captures retain mobile duplicate/truncated-title findings for the final UI pass. Expanded itinerary/native cases, broader lifetimes and physical/system acceptance remain open; Q156 and signing are separate.
-
-- **Known retired-alias actions qualified over real HTTP.** The [follow-up](prototypes/native-legacy-closed-alias-delivery.md#real-http-follow-up) proves that List/Map reads exclude the retired copy, stale appearance reads/Complete/Remove cannot target a fresh Add or global Item completion, and redelivery/replay/reopen preserve the full graph. The unchanged new test fails with the pre-fix Core and passes with current Core; all nine final HTTP functions in six suites pass with matching Mac app/Share/MCP compilation and strict lint. All 1,150 existing inputs remain unchanged; only the test is added. Six owned passing stores are safely removed, with failed epochs retained. Broader aliases, native appearance journeys, physical/system tests and whole-app polish remain open. Q156 and signing are separate.
-
-- **Known retired copies no longer revive a removed canonical membership.** The [legacy-alias checkpoint](prototypes/native-legacy-closed-alias-delivery.md) reproduces the resurrection, retains the failing graphs and fixes shared detection/retirement using exact saved pair/generation and closure evidence. A new ordinary re-add stays Todo; independent membership order/state and all retained history survive linked/detached redelivery and recovery faults. Mac passes 274 functions/914 invocations; iPhone passes 269/909 across ninety affected suites, with five Mac-only process/save-failure functions. Seven MCP checks, native builds and strict lint pass. Models, fixtures and formats are unchanged. Verified cleanup removes 1,661 closed stores, about 1.21 GB nominal, preserving failures and interruption inputs. Unknown authority, broader lifetimes/families, alias-specific adapters, physical/system tests and final polish remain open. Q156 and signing are separate.
-
-- **Requested-content browser handoffs qualified locally.** The [download/unsupported-content checkpoint](prototypes/native-webpage-download.md#final-requested-content-handoff-checkpoint) passes eight final phone/dark-iPad executions across four functions. Four actual Safari requests reach the exact targets after explicit Open; Planner retains the guide, history and original bookmark on return. Both Keep reading regressions pass. Twelve original captures are inspected and matching Mac app/Share/navigation-test compilation plus strict lint pass. Only native tests change. File completion/rendering, other owners, actual Mac interaction, physical devices and final UI acceptance remain open. Q156 and signing are separate.
-
-- **Native recovery Retry now refreshes failed collection reads.** The [local follow-up](prototypes/native-maintenance-post-save-interruption.md#native-late-input-recovery-follow-up) reproduces a stuck recovery status after successful Retry with later native membership input. One production line invalidates collection reads after success. The unchanged new journey and affected regressions pass eight executions across five functions on phone/dark iPad, including failed Retry and unverified preparations. Original Item identity/content survive another save and relaunch. Ten passing captures are inspected; matching Mac app/Share/fixture builds, seven MCP checks and strict lint pass. Core inputs and formats are unchanged. Broader interruption/reconciliation, Mac UI, physical/system tests and final whole-app polish remain open; Q156 and signing are separate.
-
-- **Recovery remains reachable after relaunch and later native input.** The [post-commit interruption checkpoint](prototypes/native-maintenance-post-save-interruption.md) fixes a real cycle that prevented a fresh Planner from obtaining a dataset handle for explicit Retry. Bootstrap/status require verified applied evidence and a complete canonical projection, retain blocked mutations and publish nothing automatically. Actual SIGKILL after maintenance commit, later membership arrival, saved-command recovery and invalid-input rejection pass through existing boundaries. Mac passes 270 functions/899 invocations in ninety suites; iPhone passes 22 functions/69 invocations in six suites. Isolated failed-save, seven real MCP checks and app/Share/fixture builds also pass. Models, 514 fixtures and public formats are unchanged. Verified cleanup removes 878 owned closed stores, about 601 MB nominal, preserving failed epochs. Native presentation of this exact sequence, broader interruption/family reconciliation and physical/system gates remain open. Q156 and signing remain separate.
-
-- **Native new-window POST form qualified locally.** The [browser checkpoint](prototypes/native-webpage-new-window.md#final-new-window-post-form-checkpoint) proves an actual form's method and submitted value reach the real HTTP fixture exactly once, render in the existing reader and retain one-step Back plus the exact saved bookmark. The new phone/dark-iPad journeys and ordinary new-window/cookie regressions pass six executions across three functions, with six inspected original captures, matching 1,150 inputs and Mac app/Share/UI-test compilation. Only tests and the bounded HTTP fixture change. Other form encodings, scripted popups, actual Mac/physical UI and whole-app polish remain open. Q156 and signing are separate.
-
-- **Ordinary narrow-iPad Items Map title rechecked locally.** The [current native journey](prototypes/native-map-viewport-compatibility.md#current-narrow-ipad-title-recheck-25-october-2026) passes exact pin/bookmark selection, both rotations and an unlocated-Item return. Three inspected original captures show the full Items title in its actual 340-point pane. All 1,150 inputs match the earlier qualified Mac compiler epoch, with four Simulator and nine Mac products verified. The initial missing-cache attempt starts zero tests and stays failed. Production is unchanged; other titles/text sizes/layouts, Mac runtime, physical acceptance and whole-app polish remain open. Neither signing nor Q156 blocks this checkpoint.
-
-- **Exact completion closure with surviving references qualified locally.** The [completion-marker follow-up](prototypes/native-closed-expanded-completion-admission.md) detects delayed Todo and Done rows for an explicitly closed completion even while its List stop and membership remain live. Existing maintenance preserves all three appearances, full export/recovery data, original import replay and no-op recovery files. Matching Mac/iPhone cohorts pass 269 functions and 898 invocations across ninety suites, with unchanged models, fixtures, prior test bodies and staging. Mac app/Share/fixture builds and seven real HTTP checks pass. The original Todo failure remains retained. Later explicit assertions, alias-root admission, broader lifetime/family reconciliation and native/physical/system gates remain open. Signing stays deferred.
-
-- **Delayed completion for removed itinerary stops qualified locally.** The [exact-stop closure follow-up](prototypes/native-closed-itinerary-completion-delivery.md) retires delayed completion rows for a proven removed stop while preserving its fresh-lifetime Undo, independent repeated appearances, full export and original command replay. Missing authority and cross-List input reject before persistence; preparation/publication failure and maintenance Retry retain atomic outcomes. Matching Mac/iPhone cohorts pass 268 functions and 896 invocations across ninety suites, with unchanged models, frozen fixtures and existing test bodies. Mac app/Share/fixture builds and seven real HTTP checks pass. Original failures and the obsolete phone interruption remain retained. Independent live-context closure admission, broader lifetime/family reconciliation and native/physical/system gates remain open. Signing stays deferred.
-
-- **Q153 A/Q154 A/Q155 A accepted; portable provenance and retired contexts qualified locally.** The [approved contract](native-membership-consolidation-contract-review.md) and [schema-19 foundation](prototypes/native-membership-schema-migration.md) remain accepted. The [portable-v3 checkpoint](prototypes/native-membership-portable-provenance.md#final-local-checkpoint) preserves minimal membership provenance through decode, import/export, ordinary edits and recovery failure/retry. The [retired-context follow-up](prototypes/native-membership-portable-aliases.md) now retains completion history after its losing membership row is retired, protects exact pair/removal-generation and repeated-entry scope, and qualifies current-provenance Skip/legacy Overwrite. Matching Mac/iPhone cohorts pass 100 functions and 390 invocations each, with frozen schemas/fixtures unchanged. The original duplicate query and baseline automatic maintenance now have the separate checkpoint below. Ordinary Add/Remove now have the scoped strict-command checkpoint below. Remaining command observations/evidence, exact retired-alias actions and broader reconciliation remain local work. Signing is separate; no policy answer blocks continuation.
-
-- **Maintenance recovery envelope compatibility qualified locally.** The [Q155 follow-up](prototypes/native-maintenance-recovery-envelope.md) reads legacy/version-2 checkpoints, preserves acknowledged maintenance through ordinary saves and real command recovery retry, and reports the actual portable format. It rejects 23 malformed acknowledgement cases without opening native storage. Matching corrected Mac/iPhone cohorts pass 137 functions and 481 invocations each. An earlier phone run's 48 SQLite lifetime warnings reproduce on the unchanged base; the two fixture lifetimes are corrected and final logs are clean. The separate canonical-maintenance checkpoint below now qualifies baseline preparation, native commit, status and retry; prepared-copy inspection now has its separate checkpoint below; committed-maintenance Retry UI remains open. Signing is separate.
-
-- **Baseline native membership consolidation qualified locally.** The [checkpoint](prototypes/native-membership-canonical-maintenance.md) resolves independent duplicate memberships without changing shared Item completion/content, preserves original receipt checkpoints and closed completion history, and durably prepares/commits/acknowledges automatic maintenance. Verified retry and truthful read-only status pass real-store failure tests; waiting commands stay unapplied. Corrected Mac/iPhone cohorts each pass 184 functions and 547 invocations with no SQLite lifetime diagnostics. The earlier 102 warnings reproduce on unchanged base and the premature fixture cleanup is corrected. Mac and iPhone app/Share/fixture compilation and four final Mac HTTP/Intent adapter checks pass. A stale schema expectation is confirmed on the unchanged base and corrected without changing the server schema. Ordinary Add/Remove now have the scoped strict-command checkpoint below. Further command observations/evidence, exact retired-alias actions, committed-maintenance Retry UI/interruption and broader reconciliation remain local work. Signing stays deferred.
-
-- **Maintenance native-save failure qualified on Mac.** The [follow-up](prototypes/native-maintenance-save-failure.md) uses the existing isolated real filesystem fault. A waiting command remains unapplied, a preparation alone cannot authorize acknowledgement, and a fresh attempt includes an independent native membership arriving after failure. The old preparation stays unverified; the waiting command then executes once. A focused 12-function/42-invocation cohort and both actual products pass with no SQLite lifetime diagnostics. Production code and existing common test bodies stay unchanged; the new fault test is Mac-only. Further failure/interruption stages and native/physical acceptance remain open; the scoped interruption and Retry UI checkpoints are recorded separately. Signing stays deferred.
-
-- **Prepared maintenance copies inspectable natively.** The [checkpoint](prototypes/native-prepared-maintenance-inspection.md) lists and selects unacknowledged preparations without opening native storage or claiming execution. Exact-field/binding validation rejects malformed or silently shortened input; acknowledged maintenance is excluded. Matching Mac/iPhone Core cohorts pass 190 functions and 565 invocations per platform, with no SQLite lifetime diagnostics. Phone and dark-iPad controls preserve the unverified status through explicit review and retain the exact saved Item after cancel/relaunch. Mac app/Share/fixture compilation and four HTTP/Intent adapter regressions pass. A [reviewed-restore follow-up](prototypes/native-prepared-maintenance-inspection.md#reviewed-maintenance-copy-restoration) passes 23 functions/78 invocations per platform, restoring the full graph while leaving original preparation evidence unverified. Committed-maintenance Retry UI, preparation-write failure, interruption, strict per-action observations and versioned evidence remain open local work. Signing stays deferred.
-
-- **Ordinary Add/Remove strict history qualified locally.** The [checkpoint](prototypes/native-membership-strict-commands.md) retains strict removal authority, records an informed re-add's basis, preserves native Undo, and uses version-three fingerprints/version-two stored and prepared evidence. The frozen Remove literal matches. Late unaware memberships are suppressed under their retained closed generation, including a sole stale membership; shared Item content and the informed Todo state survive. Mac/iPhone each pass 195 functions/570 invocations across matching 806 Core inputs. Six real MCP/status checks, native phone/dark-iPad Undo/relaunch, four inspected originals and native app/Share/fixture compilation pass. Move, Overwrite, Capture reuse, other affected command/import evidence, broader generation/lifetime reconciliation, exact eligible-alias actions and interruption remain open local work. The partially informed case now has its separate follow-up below. Signing stays deferred.
-
-- **Partially informed membership additions qualified locally.** The [Q155 follow-up](prototypes/native-membership-partial-removal-generations.md) suppresses an Add that missed a second concurrent removal without requiring an older closed context for its exact observation basis. It retains that generation's original completion history, preserves repeated itinerary scopes and supports reviewed portable round-trip. A later informed Add stays Todo; old suppressed-appearance actions cannot target it, and missing authority rejects. Matching Mac/iPhone cohorts pass 196 functions/572 invocations each, with 806 matching Core inputs, frozen fixtures/models preserved and no SQLite lifetime diagnostics. All six changed Swift files pass strict formatting. Move/Overwrite/Capture observations, broader lifetime/family reconciliation and remaining recovery controls stay open. Signing stays deferred.
-
-- **Strict Move history qualified locally.** The [Q155 follow-up](prototypes/native-membership-strict-move.md) records the origin's strict removal and original basis, observes the destination's known removals for a new Todo membership, and preserves an existing destination. Version-three fingerprints and version-two prepared/stored evidence retain original Move targets through replay after a later remove/re-add. An independent legacy literal qualifies old receipt replay/recovery without promoting old closures. Matching Mac/iPhone cohorts pass 198 functions/575 invocations each, including atomic Move Undo/recovery cases; six real MCP checks and Mac app/Share/fixture compilation pass. The later Capture and Overwrite checkpoints cover those commands. Other affected command/import evidence, broader reconciliation, exact eligible aliases and interruption/native recovery controls remain open. Signing stays deferred.
-
-- **Prepared-maintenance process interruption qualified on Mac.** The [Q155 follow-up](prototypes/native-maintenance-pre-save-interruption.md) stops an isolated disposable child at the actual native willSave after durable preparation. Public inspection keeps that copy unverified; fresh bootstrap includes a third membership arriving later, publishes under a new maintenance identity, rejects the old retry and executes the waiting command once. The related Mac cohort passes 22 functions/65 invocations; all 88 production inputs match the preceding Mac/iPhone checkpoint. Raw child/process/file evidence is retained. Other preparation/publication interruption stages and physical/system gates remain open. Post-commit interruption and committed-maintenance Retry controls have their separate checkpoints. Signing stays deferred.
-
-- **Capture membership history qualified locally.** The [Q155 follow-up](prototypes/native-membership-strict-capture.md) makes reviewed reuse observe prior removals, retain another selected List's local state and preserve the Item's content/timestamp. Selected-List captures retain version-three fingerprints/version-two evidence; no-op reuse preserves the exact export, and replay cannot retarget a later re-add or require the vanished draft. Final Mac/iPhone cohorts each pass 235 functions/672 invocations across 807 matching Core inputs. All models and 513 frozen fixtures remain unchanged; ten real MCP functions and Mac app/Share/fixture compilation pass. Standard serial lookup scheduling preserves every assertion/deadline, and host-exit Apply cleanup resolves six diagnostics reproduced on unchanged phone production. Initial failures/comparisons remain retained. The later Overwrite checkpoint covers that path. Other affected evidence, prepared-only Capture interruption and broader reconciliation remain local work. Signing stays deferred.
-
-- **Overwrite membership history qualified locally.** The [Q155 follow-up](prototypes/native-membership-strict-overwrite.md) records a reviewed membership removal as a strict pair barrier when both sources survive, preserving the original observation basis. Incoming old closures are retained without promotion. Version-three fingerprints and version-two prepared/stored evidence preserve exact replay after re-adds, while approved restoration rebinding and frozen legacy replay remain valid. Matching Mac/iPhone cohorts pass 238 functions/676 invocations each across 808 Core inputs; six real MCP checks and Mac app/Share/fixture builds pass. All models and 513 old fixtures remain unchanged; one independent fingerprint literal is added. Preparation-only admission remains unverified, without an actual interruption claim. Other affected evidence, broader reconciliation and native/external gates remain open. Signing stays deferred.
-
-- **Restored membership delivery qualified locally.** The [Q155 follow-up](prototypes/native-membership-restored-delivery.md) keeps an original-ID Undo readable after its strictly closed old lifetime and completion records arrive. The fresh membership and two repeated route branches retain their own states; unproven competing lifetimes remain unavailable without maintenance writes. Complete import/recovery graph validation stays strict, including a correctly checksummed legacy closed-record rejection. Matching Mac/iPhone cohorts pass 246 functions/688 invocations in 88 suites across 808 Core inputs, with unchanged models and 514 frozen fixtures. Twelve simulator teardown diagnostics are reproduced on preceding production and eliminated by changing only five fixture factories. Current production/app/MCP inputs retain the six-function adapter qualification and app/Share/fixture builds. Expanded-only, legacy-barrier and broader lifetime/family reconciliation remain open. Signing stays deferred.
-
-- **Expanded-only membership delivery qualified locally.** The [Q155 follow-up](prototypes/native-membership-expanded-only-delivery.md) admits delayed expanded-completion data for a proven strictly retired membership even when its old membership row never arrives. Original-ID Undo and repeated List branches retain their current independent states. Unknown or cross-List input rejects unchanged; actual preparation-write failure rolls back before a successful fresh retry. Matching Mac/iPhone cohorts pass 247 functions/693 invocations across 88 suites and 808 Core inputs, with unchanged models and 514 frozen fixtures. Six real MCP checks and Mac app/Share/fixture builds pass. Active-orphan, legacy-barrier, entry/source-lifetime and broader family reconciliation remain open. Signing stays deferred.
-
-- **Eligible membership alias actions qualified locally.** The [Q155 follow-up](prototypes/native-membership-eligible-alias-actions.md) shares exact alias resolution across appearance reads/completion, Remove, Move, reorder and Add/Move/reorder placement anchors. Repeated branches remain independent; wrong-List actions and closed-generation aliases cannot target another relationship or an ordinary re-add. Stored replay and original canonical-association Undo retain their scoped results. Matching Mac/iPhone cohorts pass 249 functions/703 invocations in 88 suites across 808 Core inputs, with unchanged models and 514 frozen fixtures. Six existing real MCP checks and Mac app/Share/fixture builds pass. Later smaller-root delivery, prepared-only root changes and alias-specific HTTP/native journeys remain open, alongside broader reconciliation and physical/system gates. Signing stays deferred.
-
-- **Completion history before duplicate delivery qualified locally.** The [Q155 follow-up](prototypes/native-membership-first-completion-history.md) retains explicit Complete/Reopen transitions for previously unaliased standalone, expanded and direct contexts, including reviewed bulk actions. Late initial-Done seeds cannot override those changes. Smaller canonical delivery preserves rank, original contributions, causal history and exact repeated scopes. Preparation obstruction and isolated native-save failures prove rollback/retry through actual storage. Matching Mac/iPhone cohorts pass 255 functions/722 invocations in 90 suites across 808 Core inputs, with unchanged models and 514 frozen fixtures. Seven real MCP checks and app/Share/fixture builds pass; bulk HTTP teardown warnings reproduce on unchanged production and are corrected through marked-fixture lifetime. First no-change assertions, divergent native/history flags, prepared-only replay and broader reconciliation remain open. Signing stays deferred.
-
-- **Prepared contextual replay qualified locally.** The [Q155 follow-up](prototypes/native-membership-prepared-context-replay.md) recognizes original completion, reorder and reviewed-bulk preparations before current target resolution or fresh review. Matching retries remain unverified after target removal/re-add; changed commands reject without writes. New bindings use the existing version-two wrapper and old unversioned preparations reconstruct their original saved graph, sharing exact eligible-alias resolution. Matching Mac/iPhone cohorts pass 256 functions/758 invocations in 90 suites across 809 Core inputs, with unchanged models, 514 frozen fixtures, fingerprint algorithms and preparation codec. Seven existing HTTP regressions, app/Share/fixture builds and isolated native bulk failure/retry pass. First no-change assertions, divergent flags, replay with incomplete maintenance, other prepared command families and broader reconciliation remain open. Signing stays deferred.
-
-- **Explicit same-state completion qualified locally.** The [Q155 follow-up](prototypes/native-membership-explicit-completion-assertions.md) records first and later explicit Complete/Reopen intent even when the scalar flag already matches, including every reviewed bulk target. Exact causal heads and immutable initial contributions survive later Done duplicates; same-state owner timestamps stay unchanged. Matching Mac/iPhone cohorts pass 256 functions/770 invocations in 90 suites across 809 Core inputs, with unchanged models, 514 frozen fixtures, public interfaces and fingerprint algorithms. Preparation obstruction, isolated native bulk save rollback/retry, seven existing HTTP regressions and app/Share/fixture builds pass. Divergent flags, pending-maintenance replay, other prepared command families and broader reconciliation remain open. Signing stays deferred.
-
-- **Prepared replay during pending maintenance qualified locally.** The [Q155 follow-up](prototypes/native-membership-pending-maintenance-replay.md) lets existing contextual preparations report their original unverified status while committed maintenance lacks recovery acknowledgement. Actual native consolidation and post-save publication obstruction prove read-only replay/mismatch handling, unchanged data/files and continued rejection of new commands. Matching Mac/iPhone cohorts pass 256 functions/788 invocations in 90 suites across 809 Core inputs, with unchanged models, 514 frozen fixtures and fingerprint/codec interfaces. Seven existing HTTP regressions, app/Share/fixture builds and isolated native bulk save rollback/retry pass. Other prepared command families, divergent flags, broader reconciliation and native/system gates remain open. Signing stays deferred.
-
-- **History-backed scalar repair qualified locally.** The [Q155 follow-up](prototypes/native-membership-history-backed-flags.md) detects delayed native flags that disagree with proven standalone/direct/expanded completion history and repairs them through coordinated maintenance. The complete prior export, causal identities, order and user-edit timestamps remain exact; no explicit action or unnecessary live provenance is inferred. Matching Mac/iPhone cohorts pass 256 functions/800 invocations in 90 suites across 809 Core inputs, with unchanged models, 514 frozen fixtures and causal/fingerprint algorithms. Seven existing HTTP regressions, app/Share/fixture builds and isolated native bulk rollback/retry pass. Missing/partial completion records, repair-specific faults, broader reconciliation and native/system gates remain open. Signing stays deferred.
-
-- **Canonical recovery copies after later native input qualified locally.** The [read-only follow-up](prototypes/native-canonical-recovery-copy.md) breaks the cycle between pending recovery and later duplicate rows. Command and verified-maintenance Retry publish a complete canonical copy without executing a command or new native maintenance; a later normal read performs maintenance under its own preparation/commit. Original results/checkpoints, source data and replay survive. Unproven input leaves applied evidence incomplete and recovery files unchanged, then retains the valid Done contribution after correction. Matching Mac/iPhone coverage passes 267 functions/891 invocations in ninety suites with unchanged models and 514 frozen fixtures. Seven real MCP checks and app/Share/fixture builds pass. Concurrent-input/interruption qualification, native presentation, broader lifetime/family reconciliation and physical/system gates remain open. Signing stays deferred.
-
-- **Duplicate itinerary completion rows qualified locally.** The [follow-up](prototypes/native-duplicate-expanded-rows.md) detects fully linked copies of one expanded appearance, keeps a valid baseline row and reconciles every observed value through existing completion history. Both physical row orders retain the Done seed and explicit Reopen; unrelated branches, direct/global state, source content and order survive. Identical Done copies add no invented Todo seed. Matching Mac/iPhone coverage passes 265 functions/887 invocations in ninety suites with four bounded phone hosts, unchanged models and 514 frozen fixtures. The first passing epoch missed reversed-row loss; the retained stronger failure and refined cohorts establish that correction. Seven real MCP checks and app/Share/fixture builds pass. Broader context closure, lifetimes/families, remaining native acceptance and physical/system gates stay open. Signing remains deferred.
-
-- **Exact legacy membership closure admission qualified locally.** The [Q154/Q155 follow-up](prototypes/native-legacy-membership-closure.md) retires exactly closed membership copies and their expanded rows, including a sole late copy and an already closed family candidate. Independent current identity/order/completion and repeated branches survive; ordinary re-add starts Todo and stale actions cannot target it. Preparation/publication failures retain truthful recovery outcomes and retry. No legacy closure becomes a strict pair barrier. Matching Mac/iPhone coverage passes 264 functions/878 invocations across ninety suites, with unchanged models and 514 frozen fixtures; iPhone uses four bounded hosts after the expanded single-host cohort reaches its file limit. The unchanged baseline passes, and original failures remain retained. Seven real MCP checks and Mac app/Share/fixture builds pass. Broader legacy alias/barrier admission, other lifetimes/families and native/physical/system gates remain open. Signing stays deferred.
-
-- **Eligible delayed itinerary completion qualified locally.** The [Q155 follow-up](prototypes/native-eligible-expanded-delivery.md) preserves an eligible retired membership's independently delivered initial completion in its exact List-entry branch. Complete live identities can also repair missing native relationship links without inventing provenance. Original Todo and incoming Done seeds, explicit Reopen, repeated input, source/order/history preservation and real preparation failure/retry pass sixteen cases; three negative cases reject missing authority, conflicting pointers and changed entry lifetimes without applying a waiting write or changing recovery. Mac/iPhone cohorts each pass 263 functions/864 invocations in ninety suites, with matching 809 Core/1,150 native inputs, 514 unchanged fixtures and nineteen unchanged model sources. Strict formatting, Mac app/Share/fixture builds and seven existing HTTP regressions pass. Broader closure/lifetime/family reconciliation, interruption, native/system gates and final UI polish remain open. Signing stays deferred.
-
-- **Delayed canonical membership references qualified locally.** The [Q155 follow-up](prototypes/native-delayed-canonical-roots.md) repairs valid older aliases after a smaller membership becomes canonical, preserving exact completion, order, content, replay and exports. A genuinely missing smaller membership remains unavailable until it arrives; closed legacy history and valid same-identity restoration families remain unchanged. Only affected scopes are normalized, leaving an independent itinerary branch's implicit state intact. Mac/iPhone cohorts each pass 261 functions/845 invocations in ninety suites across 809 Core inputs and 1,150 matching native inputs. The 514 frozen fixtures, nineteen model sources and preceding assertions are unchanged. Mac app/Share/fixture builds, seven existing HTTP regressions and strict formatting of three Swift files pass. Broader lifetime/family reconciliation, further failure/interruption, native/system gates and final UI polish remain open. Signing stays deferred.
-
-- **Fixed completion-appearance scope qualified locally.** The [Q155 follow-up](prototypes/native-completion-alias-scope.md) rejects aliases that switch appearance kind or itinerary entry identity while preserving valid duplicate-membership aliases. Six real native cases retain exact error fields, blocked edits, unchanged recovery, historical replay and corrected-arrival exports. Mac/iPhone cohorts each pass 258 functions/836 invocations in ninety suites across 809 Core inputs, with unchanged models, 514 fixtures and preceding assertion bodies. Mac console omissions are reconciled through actual starts, structured function results and complete phone counts. Mac app/Share/fixture builds, seven existing HTTP regressions and strict formatting pass. Broader pair/generation/lifetime reconciliation, failure/interruption and native/system gates remain open. The delayed-reference cases now have their separate checkpoint above. Signing stays deferred.
-
-- **Referenced completion-history admission qualified locally.** The [Q155 follow-up](prototypes/native-partial-completion-history.md) shares existing import causal-reference validation with native admission. Missing heads, predecessors and aliases, wrong aliases, duplicate observations and cycles reject current reads/new edits without changing recovery files; historical replay stays exact, and arriving valid records restore the original complete export. Eighteen native cases join matching Mac/iPhone cohorts of 258 functions/830 invocations in ninety suites across 809 Core inputs, with unchanged models, 514 fixtures and prior consolidation test bodies. Mac app/Share/fixture builds, seven existing HTTP regressions and strict formatting pass. Broader owner/context/lifetime reconciliation, partial relationships, other prepared commands, interruption/failure and native/system gates remain open. Signing stays deferred.
-
-- **Missing completed itinerary rows repaired locally.** The [Q155 follow-up](prototypes/native-missing-expanded-completion.md) recreates an absent expanded completion only from proven history and exact live membership/List-entry bindings. Individual and reviewed bulk actions retain their complete exports, independent repeated scopes, retired sibling, later Reopen and original replay result. Real preparation failure preserves recovery files and retries safely. Matching Mac/iPhone cohorts pass 257 functions/812 invocations in ninety suites across 809 Core inputs; 514 fixtures, nineteen models and previous consolidation test bodies are unchanged. Mac app/Share/fixture builds, seven existing HTTP checks and strict formatting pass. Partial causal history, changed owner bindings, repair-specific native-save/interruption faults and broader reconciliation remain open. Signing stays deferred.
-
-- **Committed-maintenance Retry UI qualified locally.** The [native checkpoint](prototypes/native-committed-maintenance-retry-ui.md) exposes the existing recovery action when automatic maintenance alone has an incomplete recovery copy. Real native consolidation and filesystem failures qualify successful Retry, failed Retry, blocked changes, original Item identity/notes and relaunch; unverified preparations still offer no committed Retry. Six final phone/dark-iPad executions across four functions pass with 1,150 matching inputs, plus Mac app/Share/fixture compilation and seven existing HTTP regressions. Core inputs and frozen models/fixtures are unchanged; six Swift files pass strict formatting and nine original captures are inspected. Original failures remain retained. Actual Mac interaction, further interruption/failure stages, broader reconciliation and final UI acceptance remain open. Signing stays deferred.
-
-- **Map marker and camera corrections qualified locally.** The [final native checkpoint](prototypes/native-itinerary-toolbar-compatibility.md#final-local-marker-and-camera-checkpoint) keeps complete counted pins inside the viewport after iPad rotation, uses compact numeric markers at accessibility sizes and preserves the actual user-positioned camera through same-collection writer refresh. Exact Item/List/repeated-Itinerary navigation, provider controls, native Compass and automatic pin refresh pass through the recorded phone/iPad journeys. Matching Mac app/Share and fixture compilation and strict formatting pass. Actual Mac interaction, continuous physical resizing and final whole-app polish remain open.
-
-- **Contextual Map compatibility qualified.** The [final checkpoint](prototypes/native-map-context-compatibility.md#final-local-checkpoint) passes fourteen phone/iPad executions across seven functions, including List and repeated-Itinerary rotation, full bookmark-row visibility and largest-text/Increase Contrast controls. All 1,094 inputs match Mac compilation; seventeen originals are inspected. Itinerary title crowding, Mac UI and broader physical/final polish remain open. Twelve prior duplicate export directories are safely removed, retaining original results and captures.
-
-- **Q151/Q152 local restoration implementation qualified.** A valid backup can contain a restored candidate while the current Item is deleted. The original execution rejected that case; Q149 required a live owner. The [accepted policy](import-no-live-restored-values-decision.md) and [approved concrete contract](import-no-live-restored-values-contract-review.md) create a fresh local restoration from represented values under current retained lineage, with explicit restoration authority and separate reference guards. The [first local Core checkpoint](prototypes/core-native-import-fresh-local-values.md#first-local-checkpoint) now implements Item/Tour restoration with matching 81-function, 331-fixture Mac/iPhone cohorts. The expanded Mac/iPad cohorts now pass 83 functions across 352 fixtures each for closed lineages, all five source kinds, genuine persistence/recovery failures, exact owned-reference reimport and direct/expanded completion history. Valid foreign-reference candidates and incompatible retained contexts reject atomically. The [native manual checkpoint](prototypes/core-native-import-fresh-local-values.md#phone-manual-administration-checkpoint) passes phone/dark-iPad preview, refusal without authority, apply, exact appearance/global-state checks and relaunch. All ten actual delivered backups match complete literal graphs; restored/repeated/relaunched exports are byte-identical per run. Broader family consolidation and actual Mac/physical/system qualification remain separate. Signing is deferred.
-
-- **Known-candidate Overwrite qualified.** The [follow-up](prototypes/core-native-import-known-values.md#final-local-checkpoint) applies reviewed incoming values to the current live identity for omitted/full/subset known-family metadata. All five kinds, exact graphs and recovery failures pass; final Mac/iPhone cohorts each pass 80 functions/329 fixtures, with matching Core inputs and Mac app compilation. Broader family admission and actual Mac/physical acceptance remain open.
-
-- **Collection Map rotation qualified locally.** The [viewport checkpoint](prototypes/native-map-viewport-compatibility.md#final-local-checkpoint) passes iPad portrait/landscape containment and exact pin/bookmark selection, plus phone navigation and matching Mac compilation. Native iPad width remains 340 points within the flexible preferred range. Failed scrolling diagnostics remain separate; Mac divider/window interaction and broader compatibility remain open.
-
-- **Narrow List actions corrected.** The [pane-width checkpoint](prototypes/native-list-toolbar-compatibility.md#final-local-checkpoint) keeps Filters/Add direct and secondary actions in native More on narrow iPad panes. Six passing native executions cover controls, filtered phone drag and repeated iPad moves with relaunch; matching Mac compilation passes. The failed default-velocity drag remains a stability finding. Duplicate title tiers/top spacing, actual Mac UI and final polish remain open.
-
-- **Native Items/Inbox toolbar corrected.** Narrow mobile panes keep Filters and Add direct, with View/Sort in the native More menu. The [compatibility checkpoint](prototypes/native-catalog-toolbar-compatibility.md#affected-native-regressions-and-final-compilation) passes four dark-iPad functions and five distinct phone functions across retained epochs, plus matching Mac compilation. The selected-List toolbar has its separate checkpoint above. Map viewport/resize qualification, Mac interaction and final whole-app polish remain open.
-
-- **Q127 A implemented; Mac resize qualification open.** Native `HSplitView` replaces the Mac inspector, with a contained Month scroll viewport. Matching Mac compilation and four iPad regression executions pass across the retained epochs, with twenty-four inspected captures. The bounded Mac attempt starts zero requested functions because automation initialization times out; no resize pass or signing cause is claimed. [Exact evidence and open gates](prototypes/native-calendar-mac-inspector-resize.md#local-split-pane-checkpoint).
-- **Q128 A accepted, older-backup Overwrite.** Apply represented values to the current live lifetime and retain current incoming references. Closed owned data needs separate restoration authorization; otherwise apply nothing. Q147 A approves the [concrete graph/result contract](import-live-overwrite-contract-review.md); the [first real-store slice](prototypes/core-native-import-live-overwrite.md) preserves the restored Item lifetime, omitted List membership and local Done across value replacement, recovery, replay and unchanged reimport. The unchanged tracer passes Mac/iPhone; the affected Mac import family passes 59 functions/240 invocations. The [owned-reference follow-up](prototypes/core-native-import-live-overwrite.md#closed-bookmarks-and-schedules) qualifies fresh bookmark/Schedule authorization and fixes missing bookmark closure markers in Item/Itinerary deletion; 62 affected Mac functions and four iPhone functions pass with matching sources and safe fixture lifetimes. The [lineage/value matrix](prototypes/core-native-import-live-overwrite.md#retained-predecessor-lineage-and-all-source-kinds) now qualifies all five source kinds after one/two restoration cycles, with 74 matching Mac/iPhone functions and safe fixture lifetimes. The [context/history follow-up](prototypes/core-native-import-live-overwrite.md#authorized-contextual-history-and-retained-collisions) qualifies membership, direct-stop and expanded-List history, retained-ID rejection and later contextual commands with 76 matching Mac/iPhone functions. The [label/failure follow-up](prototypes/core-native-import-live-overwrite.md#restored-labels-and-recovery-failures) also qualifies exact label bindings, precommit rejection and recovery repair, with 78 matching Mac/iPhone functions. The [native administration checkpoint](prototypes/native-approved-restoration-imports.md) passes on phone/dark iPad with complete delivered exports and matching Mac compilation. Actual Mac interaction and broader reconciliation stay open. [Accepted policy](native-import-live-overwrite-decision.md).
-- **Q129 A accepted, Skip and unknown restorations.** Keep the complete current owner and family, exclude the unknown incoming candidate, skip dependent owners and import independent data. Q148 A approves the [concrete family/provenance contract](import-unknown-candidate-skip-contract-review.md); the [first local Q148 slice](prototypes/core-native-import-unknown-candidate-skip.md) now preserves the complete current Item/family, skips complete dependent Lists/Itineraries and imports independent data. Both candidate directions, shared/competing family IDs, known-provenance rejection and stale review pass; the affected 65-function Mac/iPhone cohorts have matching Core inputs. The [all-kind/failure follow-up](prototypes/core-native-import-unknown-candidate-skip.md#all-source-kinds-and-recovery-failures) qualifies all five kinds, precommit rejection and incomplete recovery/repair with 78 matching Mac/iPhone functions. The [native administration checkpoint](prototypes/native-approved-restoration-imports.md) passes phone/dark iPad with exact delivered graphs and matching Mac compilation. Actual Mac interaction and broader synchronization/consolidation remain open. [Worked policy](native-import-new-candidate-skip-decision.md).
-- **Current Mac UI validation.** The user fully quits Planner, reopens the isolated current build and confirms that the List title stays consistent before/after Item selection. This settles the requested human comparison. The older loaded-library mismatch and unsuccessful automated retries remain recorded with no new automated passing credit. Other Mac Schedule/Share workflows and whole-app acceptance remain open. Do not repeat unchanged startup attempts or infer a signing cause. [Runtime diagnosis](https://github.com/dvcol/planner/blob/4d03fbff/docs/prototypes/native-xctest-runtime-diagnosis.md#mac-automation-and-item-startup-follow-up-22-october-2026), [isolated comparison and user confirmation](prototypes/native-list-pane-header.md#isolated-current-build-comparison-retry).
-- **Signing and physical access, updated 29 October.** Existing development
-  signing and registered App Group access pass scoped Mac/iPad checks. Physical
-  CloudKit/account transitions, synchronization and performance still need their
-  own evidence. Installed Mac Share is post-MVP; V3 Agent Control retains its
-  separate scope. Local-only results do not establish cloud behavior.
-
-## Accepted local work in progress
-
-The following entries are historical implementation checkpoints. Use the current
-MVP finish line and recent checkpoints above for outstanding work and blockers.
-
-- **Readable-page external opening implemented.** The [native checkpoint](prototypes/native-webpage-readable-external-opening.md#final-local-checkpoint) adds Open in default browser through native mobile More and a Mac toolbar item. Actual Safari requests use the current linked page while preserving the original bookmark and Planner reading state. Six final phone/dark-iPad executions across three functions, twelve inspected originals and matching Mac compilation across 1,102 inputs pass. Earlier missing-action/menu/compiler failures remain recorded. Actual Mac interaction, external-page rendering, broader browser behavior and final title/accessibility polish remain open. Q155 A is accepted; signing stays deferred.
-
-- **Executable data-link behavior qualified locally.** The [native checkpoint](prototypes/native-webpage-unsupported-links.md#final-executable-data-link-checkpoint) activates a harmless HTML/script data URL, receives the exact unsupported-link notice and keeps the guide, onward HTTP navigation and original bookmark intact. The new phone/dark-iPad journeys and custom-scheme regressions pass four executions across two functions, with four inspected originals and matching Mac compilation across 1,102 inputs. Production is unchanged. Other executable forms, actual Mac/physical behavior and final visual acceptance remain open. Q155 and signing are separate.
-
-- **Repeated-itinerary Map navigation corrected.** The [24 October checkpoint](prototypes/native-change-observation.md#final-repeated-itinerary-filter-checkpoint) prevents compact Map/List switching from reopening a retained stop automatically. Its exact repeated branch stays Done while two other appearances stay Todo through a shared-content edit and refiltering. Four phone/dark-iPad executions across three functions, five inspected originals and matching Mac compilation across 1,102 inputs pass. Calendar-source and restored-branch browser regressions pass. Actual Mac interaction, broader lifecycle/device acceptance and final UI polish remain open; Q153 and signing remain separate.
-
-- **Items/Inbox Map navigation corrected.** The [catalog-selection checkpoint](prototypes/native-change-observation.md#final-catalog-map-selection-checkpoint) retains current source details after an independent edit removes its filtered pin. Compact Back and Map/List switching no longer reopen details automatically; explicitly selecting the same Item still works. Both catalog scopes pass on phone/dark iPad, plus List-context and creation/cancellation regressions: four executions, ten inspected originals and matching Mac compilation across 1,102 inputs. Actual Mac UI, broader lifecycles, physical devices and final whole-app polish remain open. Q153 and signing are unchanged.
-
-- **Filtered Map selection and compact Back corrected.** The [selection checkpoint](prototypes/native-change-observation.md#final-filtered-map-selection-checkpoint) retains the exact completed List appearance when an independent writer removes its filtered pin. Compact Back no longer becomes an automatic detail push when a later search restores the row. Native empty-state backgrounds are readable in light/dark. Four final phone/dark-iPad executions, seven inspected originals, current Mac app/Share/fixture compilation and strict formatting pass, with the one formatting-only runtime/compiler difference recorded. Other contextual/window lifecycles, actual Mac UI, physical devices and final whole-app polish remain open.
-
-- **Actual webpage file-link qualification.** The [file-link checkpoint](prototypes/native-webpage-unsupported-links.md#final-file-link-checkpoint) passes the activated file-link journey and affected custom-scheme regression on phone/dark iPad, with four inspected original captures and matching Mac compilation across 1,102 native inputs. File links leave the guide readable without a Planner notice; the custom scheme retains its exact-target notice. Saved bookmarks stay unchanged. Production is unchanged; executable-specific cases, actual Mac interaction, physical devices and final whole-app polish remain open.
-
-- **Q149 A locally qualified, competing incoming values.** The [approved contract](import-competing-candidate-values-contract-review.md) applies represented backup values to the current live owner without admitting a competing candidate/family. The [local checkpoint](prototypes/core-native-import-competing-values.md) passes eight real one/two-cycle lineage cases, twenty all-kind/recovery cases and matching 80-function/320-fixture Mac/iPhone cohorts. Phone/dark-iPad administration passes with byte-identical complete exports and matching Mac compilation. Broader older-ancestor/family consolidation, actual Mac interaction and physical convergence remain open.
-- **Q150 A accepted, browser Return after association restoration.** The [accepted policy](native-browser-restored-context-decision.md) permits returning to the exact explicitly restored public context while its Item lifetime stays unchanged. The [expanded native checkpoint](prototypes/native-webpage-restored-context.md#current-itinerary-setup-checkpoint) qualifies restored standalone membership, direct itinerary entry, exact repeated List branch and restored-container fallback on phone/dark iPad. A compact parent-split correction removes a retained reader after its appearance disappears. Original local Done, current shared notes and bookmarks survive; a fresh source-Item lifetime still invalidates the old reader. Matching Mac app/Share and actual fixture targets compile. Actual Mac UI and physical/system gates remain separate.
-- **Fresh source lifetime browser Return qualified.** The [restoration checkpoint](prototypes/native-webpage-restored-source.md#final-local-checkpoint) passes six phone/dark-iPad native executions across three functions and matching Mac compilation. A real Delete/Restore keeps the guide readable, rejects its old Item lifetime on Return and permits explicit selection of the restored public Item afterward. Shipping production is unchanged. Q150 remains a separate association policy; actual Mac interaction and broader lifecycle/physical gates remain open.
-- **Q130 local refresh checkpoint.** [Twelve public stream functions, 38 affected Intent/Undo functions and eight native UI executions](prototypes/native-change-observation.md#final-local-refresh-checkpoint) pass. Selected details and collection Map refresh after independent writes; recovery damage/repair and validated reconnect preserve edited drafts on phone/dark iPad. Ten original captures are inspected and matching Mac compilation passes. Broader view/window/browser-source lifecycles remain local work; signed account/cloud, actual Mac UI and physical scale remain separate. [Approved full contract](core-change-stream-contract-review.md).
-- **Browser source-return checkpoint.** The [Q141 follow-up](prototypes/native-webpage-source-return.md#final-local-source-return-checkpoint) passes 22 native executions and thirty inspected captures on phone/dark iPad, with matching Mac compilation. Reading survives Item deletion or removal of its List appearance; Return validates the exact origin and reaches its surviving collection with an explanation. The compact List destination remains registered while its underlying detail empties. Healthy Item/List/Itinerary/Calendar returns, Map/detail refresh and guarded-draft regressions pass at that checkpoint. The [containing-List follow-up](prototypes/native-webpage-container-return.md#final-local-containing-list-checkpoint) now passes twelve further native executions and twenty-two inspected captures with matching Mac compilation. Return checks the parent canonically and reaches Lists after its deletion while preserving the shared Item. The [Itinerary-return follow-up](prototypes/native-webpage-itinerary-return.md#final-local-itinerary-return-checkpoint) adds fourteen passing native executions across seven functions on phone/dark iPad, with thirty-six retained originals, twelve inspected captures and matching Mac compilation. Owned-guide deletion, deleted-parent Item guides and exact direct-entry removal now reach the correct surviving context while preserving shared content and local/global state. Other expanded/repeated removals, replacement lifetimes, interactive reader closure, actual Mac UI and final polish remain open.
-- **Repeated List browser return.** The [expanded-branch checkpoint](prototypes/native-webpage-expanded-return.md#final-local-repeated-branch-checkpoint) adds six passing native executions across three functions on phone/dark iPad, with eighteen retained originals, six inspected captures and matching Mac compilation. Removing the exact first List branch keeps its guide readable; Return preserves the other branch's Done state, the standalone Done membership and global Todo. Shipping production is unchanged. Other removal/replacement lifetimes, interactive closure, actual Mac UI and final polish remain open.
-- **Calendar browser return after deletion.** The [Calendar-source checkpoint](prototypes/native-webpage-calendar-return.md#final-local-calendar-return-checkpoint) adds eight passing native executions across four functions on phone/dark iPad, twenty retained originals, sixteen inspected captures and matching Mac compilation. Return closes the compact reader and reaches Calendar; later tabs clear deleted selections while preserving shared Items, Lists, membership state and valid bookings. Other lifetimes, interactive closure, actual Mac UI/resizing, physical qualification and final whole-app polish remain open.
-- **Explicit reader destination navigation.** The [main-destination checkpoint](prototypes/native-webpage-destination-navigation.md#final-local-destination-navigation-checkpoint) adds four passing native executions across two functions on phone/dark iPad, ten inspected originals and matching Mac compilation. Selecting Items or Lists from the Calendar reader, or Calendar from the Item reader, displays that destination’s content while retaining the exact bookmark and booking. Shipping production is unchanged. Other appearance/selection transitions, gestures, actual Mac UI and final polish remain open.
-- **Actual default-browser handoff.** The [failed-linked-page checkpoint](prototypes/native-webpage-system-browser.md#final-local-system-browser-checkpoint) adds six passing native executions across three functions on phone/dark iPad, including two actual Safari handoffs and affected retries. Exact foreground/request evidence preserves the original bookmark, all ten originals are inspected, and matching Mac compilation passes. Shipping production is unchanged. Other content/owner handoffs, remaining app-link activation, Mac UI, physical devices and final polish remain open.
-- **Confirmed webpage-to-Maps launch.** The [native launch checkpoint](prototypes/native-webpage-maps-opening.md#final-local-maps-launch-checkpoint) adds two passing native executions on phone/dark iPad and matching Mac compilation. Planner confirms the exact target before Maps becomes foreground; return preserves the guide and original bookmark. Six original captures are inspected. Maps rendering/readiness is not proven. Shipping code, HTTP helper and existing journeys are unchanged. Other external app/content cases, Mac UI, physical gates and final polish remain open.
-- **Q144 native chooser locally qualified.** The [additional hosted-window trial](prototypes/native-map-place-choice-view.md) remains failed. Through the existing production-source fixture boundary, [eight phone/iPad UI executions and twelve loader functions](prototypes/native-map-place-choices.md#final-local-chooser-checkpoint) now pass, with sixteen inspected captures and matching Mac compilation. Temporary place choices stay exact per appearance and clear on relaunch without changing saved content. Live providers, actual Mac UI, accessibility/resize acceptance and final polish remain open.
-- **Q145/Q146 local checkpoint.** Planner confirms reported app-link navigation; Q146 A retains Apple's intercepted Phone menu. [Ten passing native executions](prototypes/native-webpage-external-apps.md#final-local-checkpoint) cover direct/generated/redirected app links, native Phone-menu cancellation and affected browser fallbacks, with eleven original captures inspected and matching Mac compilation. The earlier failed iPad invocation remains failed; four unchanged passing bodies are reconciled separately. The [dismissal follow-up](prototypes/native-webpage-external-dismissal.md#final-local-dismissal-checkpoint) adds eight passing native executions and eleven inspected captures for initial HTTP app redirects and interactive sheet dismissal, plus matching Mac compilation. The represented Maps opening now has its separate checkpoint above; other system opening, broader accessibility, Mac UI and physical gates remain open.
-- **Native map and webpage follow-up.** Q131-Q141 accept collection List/Map modes, wider native Map columns, temporary location resolution, counted shared pins and SwiftUI browsing. Q142 A accepts the [shared Map-row contract](map-row-contract-review.md); the [Core/HTTP read](prototypes/core-map-row-windows.md) passes local Mac/iPhone and affected HTTP regressions. Q143 A approves the [complete-collection loader and direct test seam](native-map-collection-contract-review.md). The [native loader checkpoint](prototypes/native-map-collection.md#final-local-qualification) passes twelve actual app-hosted Mac functions for complete inputs, exact address/link choices, shared detail/cache reuse, mixed-provider bounds across real datasets, deadline/Retry, filtered branch context and coherent restart after concurrent saves. The matching mobile app/Share targets compile; the direct test target is explicitly Mac-only. The [first collection UI slice](prototypes/native-map-collection-ui.md) adds native Items/Inbox List/Map. Its Items pin/Locations journey passes on phone and dark iPad; ordinary catalog completion/relaunch passes on phone, and matching Mac app/Share compilation passes. Coincident source choices and useful single-coordinate scale now also pass both simulators. List Map now also passes phone and dark iPad with exact membership completion, unchanged global Todo and a retained bookmark, plus affected Items regressions. Direct repeated itinerary stops now also pass both simulators with separate completion and a shared bookmark, with the native toolbar regression corrected by the final targeted pairs. Repeated List-branch choices now also pass both simulators, preserving independent itinerary state despite standalone List completion. [Native Maps-link selection](prototypes/native-map-location-controls.md#final-saved-link-picker-checkpoint) now adds the bound saved-bookmark Picker. Four final phone and four dark-iPad journeys, twelve production-loader regressions and Mac compilation share matching sources; both saved bookmarks survive temporary pin changes. [Per-location Retry](prototypes/native-map-location-controls.md#final-native-retry-checkpoint) now also passes phone/dark-iPad journeys and affected saved-link Picker regressions, preserving unresolved searches and their exact bookmarks. [Provider attribution and uncertainty](prototypes/native-map-location-controls.md#final-provider-context-checkpoint) now also pass four final functions on each Simulator, including longer repeated-List rows, with matching Mac compilation. Remaining provider controls/refresh and broader resizing/accessibility remain open. The ordinary narrow-iPad Items title has the current recheck above. Real provider/physical scale stays separate. The [reader lifecycle follow-up](prototypes/native-webpage-lifecycle.md) now passes nine phone and eleven dark-tablet functions, covering valid source returns, repeated recovery/history, live reader replacement and a controlled old-response release. The [new-window follow-up](prototypes/native-webpage-new-window.md) also qualifies ordinary reported new-window links in the existing reader on both simulators, plus affected recovery/replacement regressions. The [rotation follow-up](prototypes/native-webpage-rotation.md) qualifies failure/loading across actual phone/tablet orientation changes without changing production. The [first-party cookie follow-up](prototypes/native-webpage-cookies.md#final-local-qualification) now qualifies persistence through viewer closure and actual Planner relaunch, plus explicit expiry, on phone and dark iPad. Six native executions across three functions and matching Mac compilation pass; production is unchanged. The [requested-download follow-up](prototypes/native-webpage-download.md#final-requested-download-checkpoint) now qualifies the native exact-URL explanation and Keep reading cancellation on phone/dark iPad, plus cookie/history/recovery regressions and matching Mac compilation. The [unsupported-content checkpoint](prototypes/native-webpage-download.md#final-unsupported-content-checkpoint) now qualifies native exact-URL prompts, retained-guide cancellation, initial-bookmark return, subsequent real network recovery and the semantic dark empty-page background. Eight final native executions across five functions and matching Mac compilation pass. The [failed-page target checkpoint](prototypes/native-webpage-failure-target.md#final-local-qualification) now binds the visible URL, Retry and external action to the actual failed destination, with a readable underlying error. Six phone/dark-iPad executions across three functions and matching Mac compilation pass; all six original captures are inspected. The [unsupported-link checkpoint](prototypes/native-webpage-unsupported-links.md#final-custom-scheme-checkpoint) now cancels reported unsupported schemes and shows a native exact-target notice with Keep reading and no external action. Eight phone/dark-iPad executions across four functions and matching Mac compilation pass, including affected failure/download/content regressions. File and executable data-link cases have their separate checkpoints above; broader executable forms and external-app routing remain open. The failed-linked-page Safari handoff now has the separate checkpoint above; other external contexts remain open. Mac compilation passes; actual Mac UI, column/window resizing and broader browser policies remain open. [Accepted workflows, DoR/DoD and required tests](native-map-browser-workflow-review.md).
-
-## Current local evidence
-
-These are implementation checkpoints with explicit limits, not release completion. Directed external plan opening remains V3; advanced manual import/restoration acceptance is post-MVP. Their historical limits below do not add work to the core MVP queue.
-
-| Area | Executed evidence | Remaining scope |
-| --- | --- | --- |
-| Directed plan opening | [All 13 post-focus-fix production-interface cases](https://github.com/dvcol/planner/blob/9de04bdf/docs/prototypes/native-plan-opening-handoff.md) pass in both direct and ordinary Xcode-hosted Mac execution. | Actual external/cold/system activation, recipient focus and external-request draft decisions. Ordinary window/draft tests do not prove system delivery. |
-| Native List header | [One shared Mac toolbar](https://github.com/dvcol/planner/blob/9de04bdf/docs/prototypes/native-list-pane-header.md#unified-top-toolbar-follow-up) owns the leading title and selected-Item actions. Six Mac cases and two mobile executions pass, including empty/populated, narrow/wide and guarded drafts. | Complete app visual/accessibility review and physical acceptance. |
-| Bulk database-save rollback | [Genuine failed-save qualification](https://github.com/dvcol/planner/blob/5d3812c2/docs/prototypes/core-bulk-native-save-rollback.md) catches retained unverified proposals after rollback and corrects their cleanup. Final Mac five-function/seven-execution and iPhone four-function/six-execution runs pass with matching inputs and no SQLite lifecycle diagnostics. | The real file-size fault executes only on Mac. Native confirmation, physical/storage interruptions and cloud/account behavior retain separate gates. |
-| Undo and labels | [Grouped association Undo](https://github.com/dvcol/planner/blob/e8663be1/docs/prototypes/native-owned-association-undo.md#mac-follow-up-21-october-2026) passes represented Mac Command-Z/restoration/relaunch. [Label appearance/files](https://github.com/dvcol/planner/blob/fd7ee6b6/docs/prototypes/native-label-appearance.md#mac-file-follow-up-22-october-2026) pass, including six exact exports. | Native Edit-menu expiry and broader Mac import-conflict/restoration. |
-| Calendar | [Three cases across Mac, phone and tablet](https://github.com/dvcol/planner/blob/b2c67502/docs/prototypes/native-calendar-day-week.md#mac-runtime-follow-up-22-october-2026), nine executions, verify date accessibility, Month/display zone, identity/relaunch, overflow and overlap. | Mac all-day span/date entry, source-row actions, Q127 resizing and broader stability. The earlier iPad startup failure and unchanged passing retry remain recorded. |
-| Windowed scale | [Both retained exhaustive runs](https://github.com/dvcol/planner/blob/ba052c13/docs/prototypes/native-item-windows.md#scale-evidence-and-current-fixture-follow-up-22-october-2026) already use the windowed loader and each records 5,000 distinct identities. Current fixture page/selection/rotation checks pass on both simulators with 1,061 matching inputs. The [30 October Mac checkpoint](prototypes/native-mvp-scale.md) passes 5,000 contextual Items plus a 200-List catalog with measured local timings and offscreen presentation release. | Historical exhaustive epochs remain separate from the current focused runs. Physical memory/latency, hitches, Map scale and final visual acceptance remain open. |
-| Browser origin removal | [Fourteen final native executions](prototypes/native-webpage-itinerary-return.md#final-local-itinerary-return-checkpoint) cover represented Item/List/Itinerary deletion, exact association removal and ordinary Itinerary Return on phone/dark iPad. All 1,081 inputs match Mac compilation; thirty-six captures are retained and twelve inspected. | A represented expanded-branch removal now has the additional checkpoint above. Other appearance removal/replacement lifetimes, interactive reader closure, Mac UI and final polish remain open. |
-| Native browser fallbacks | [Requested downloads and unsupported content](prototypes/native-webpage-download.md#final-unsupported-content-checkpoint) retain exact URLs and saved bookmarks, with Keep reading or initial Return to item. The [actual requested-content handoff](prototypes/native-webpage-download.md#final-requested-content-handoff-checkpoint) additionally passes eight final phone/dark-iPad executions, including four exact Safari requests, retained guide/history and both cancellation regressions. Twelve originals are inspected and matching Mac compilation passes. | The [Itinerary linked-content handoffs](prototypes/native-itinerary-browser-handoff.md) now have their own checkpoint. Mac UI, physical acceptance and final appearance remain open. File saving remains outside this slice; browser rendering/completion is not established by foreground/request evidence. |
-| Native first-party website cookies | [Persistent-cookie journeys](prototypes/native-webpage-cookies.md#final-local-qualification) qualify viewer closure, actual app relaunch and explicit expiry on phone/dark iPad; affected history/recovery and matching Mac compilation pass. Production unchanged. | Third-party login/cookies, Mac cross-window sharing and physical-device behavior. Q137 does not introduce tab/history restoration. |
-| Native Map loader | [Twelve app-hosted Mac functions](prototypes/native-map-collection.md#final-local-qualification) qualify complete offscreen inputs, exact temporary choices, shared address/link work, mixed-provider/dataset bounds, deadline/Retry, branch filtering and concurrent-save refresh. Matching mobile app/Share compilation passes; thirteen final owned fixtures are safely disposed of. | Remaining native provider/control, layout/accessibility and physical/provider acceptance, tracked below. The direct test cohort is Mac-only. |
-| Native collection Map UI | [Items, List and direct itinerary Map slices](prototypes/native-map-collection-ui.md) qualify exact pin/Locations, coincident sources, List-local and repeated-stop choices. Final targeted itinerary pairs pass on phone/dark iPad after a native toolbar-priority correction. Separate completion and shared bookmark identities survive; ordinary itinerary/relaunch and affected reader/Map regressions have their recorded source epochs. Inputs/products reconcile and selected original captures are inspected. Matching Mac app/Share compilation passes.  [Native location controls](prototypes/native-map-location-controls.md) additionally qualify saved Maps-link selection, Retry and provider context on phone/dark iPad. The [Map accessibility correction](prototypes/native-map-accessibility.md#final-local-qualification) now qualifies readable footer controls and complete initial warnings at the largest accessibility size with Increase Contrast on both mobile layouts, plus ordinary provider/repeated-List regressions. | Controlled ambiguous-address choices and represented local refresh/draft cases have separate checkpoints above. Broad layout/accessibility/resize acceptance remains. The ordinary narrow-iPad Items title has the current recheck above. No actual Mac or physical UI credit. |
-| Shared Map read | [Q142 saved-data windows](prototypes/core-map-row-windows.md) pass ten Mac Core functions, eight iPhone Simulator Core functions and six affected real HTTP functions. Exact repeated appearances, offscreen inputs, header matching and stale rejection are covered. | Remaining aggregate native acceptance and physical/provider behavior, tracked in the loader/UI rows above. |
-| Native webpage reader | The [lifecycle checkpoint](prototypes/native-webpage-lifecycle.md#final-local-qualification) passes nine phone and eleven dark-tablet functions, covering recovery/history, exact returns, replacement and controlled old-response release. The [new-window follow-up](prototypes/native-webpage-new-window.md#final-local-qualification) qualifies ordinary reported new-window links on both simulators plus four affected recovery/replacement functions. The [rotation follow-up](prototypes/native-webpage-rotation.md) adds five final failure/loading/cancellation executions on phone/tablet. Each checkpoint retains its own 1,070-input/product reconciliation, captures and Mac compilation. | Column/window resizing and remounts, third-party website sessions and Mac cross-window sharing, other form encodings and scripted popups, other external handoffs and remaining app-link activation, remaining source lifetimes, Mac runtime and full UI polish. |
-| Native capture HTTP | [Eight functions/nine invocations](https://github.com/dvcol/planner/blob/d3d0dd14/docs/prototypes/native-capture-http-transport.md#real-socket-follow-up-22-october-2026) pass on each of Mac and iOS. Real sockets cover HEAD, redirect, cancellation, timeout and client closure. Two documented live Mac links return HTTP 200. | General provider behavior, redirect families, protocol/allocation limits and physical lifecycle. |
-| Genuine native map references | [Independent iPhone/iPad Simulator archives](https://github.com/dvcol/planner/blob/82ec576a/docs/prototypes/genuine-native-map-reference.md#ios-follow-up-22-october-2026) pass public capture/edit/save/export. Genuine references remain temporary and provider fields stay out of saved content/backups. | Actual Maps sender envelope, original URL binding and installed/physical Share. |
-| Native Share migration | [The corrected phone/tablet regressions](prototypes/native-share-migration.md#ipad-sidebar-diagnosis-and-corrected-regression) each pass all six functions, including genuine old-schema refusal, main-app migration, preservation, capture and relaunch. The driver dismisses the covering portrait iPad sidebar before Filters. Separate Mac compilation passes with all 14 original schema resources. | Failed diagnostic/compiler attempts remain recorded. Actual Mac runtime, installed/physical Share and signed shared storage remain open. |
-| Native preview SDK | [The unchanged preview package](https://github.com/dvcol/planner/blob/6595ecea/docs/prototypes/native-preview-qualification.md#ios-sdk-follow-up-22-october-2026) passes 18 functions/28 invocations per iOS simulator with real Apple image/plain metadata and fixed-address geocoding enabled. All 751 inputs and products reconcile. | Arbitrary websites, broader provider behavior, physical allocation/latency and final UI review. Controlled cache tests are distinct from live SDK calls. |
-| Saved-app previews | [Four native functions per simulator](https://github.com/dvcol/planner/blob/80478af0/docs/prototypes/native-preview-qualification.md#saved-app-sdk-follow-up-22-october-2026) pass image/plain paint, Retry, bookmark validation/order/removal and real address-map journeys, including live List references and relaunch. Eight accepted executions retain their separate epochs and failed probes. Only test interactions change; final iOS/Mac builds and 1,061-input reconciliation pass. | Mac native preview UI, every appearance/text-size combination, final scroll clearance, arbitrary providers/addresses and physical acceptance. This is not a whole-app visual pass. |
-| Import after restoration | [Skip retains current restored records](https://github.com/dvcol/planner/blob/3f3c2079/docs/prototypes/core-native-import-live-lifetime-skip.md) across all five source kinds and their complete graphs, while eligible independent data imports. Review/apply, recovery, replay and idempotent reopen checks pass. Its affected Mac checkpoint passes 53 functions/221 executions, with iOS compilation and input reconciliation. | Q128 A is accepted; different-live-lifetime Overwrite has its Q147 A contract approved, with the [first values and owned-reference slices](prototypes/core-native-import-live-overwrite.md) locally qualified; the all-five-kind lineage/value matrix is qualified, and contextual history/collision handling passes 76 matching Mac/iPhone functions. Label bindings, precommit rejection and incomplete recovery/repair also pass 78 matching Mac/iPhone functions. The [native administration checkpoint](prototypes/native-approved-restoration-imports.md) passes on phone/dark iPad with complete delivered exports and matching Mac compilation. Actual Mac interaction and broader reconciliation stay open. Broader internal reference handling and incoming-family reconciliation remain local work. Native administration, physical convergence and final acceptance stay open. |
-| References within known restoration families | [Current open-family bindings](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/core-native-import-family-bindings.md) resolve authorized external dependencies to their live native sources, retaining complete owners, identities/order/state/history. Both import modes, all five source kinds, stale review, family deletion, query/progress, recovery, replay and reopen are covered. | Closed predecessors never redirect. Unknown incoming candidates, family consolidation and broader internally declared bindings are not completed by this slice. |
-| Internally declared closed predecessors | [Whole-owner Skip](https://github.com/dvcol/planner/blob/c18a63a1/docs/prototypes/core-native-import-declared-predecessor.md) retains the restored current source, skips complete dependent containers and imports independent data. Review/apply, recovery, replay and reopen pass. Mac and iPhone each pass 58 functions/229 executions with matched inputs and safe fixture disposal. | Q128 A Overwrite and Q129 A unknown-candidate Skip have approved Q147 A/Q148 A contracts and the scoped local checkpoints linked above; broader implementation/qualification remains open. Broader family consolidation, native administration and physical convergence remain open. |
-| Internally declared known candidates | [Known open-family normalization](https://github.com/dvcol/planner/blob/b69f40f7/docs/prototypes/core-native-import-declared-family.md) passes the retained 59-function/231-execution Mac/iPhone suites. The [full-graph follow-up](https://github.com/dvcol/planner/blob/b76e8fba/docs/prototypes/core-native-import-declared-family.md#full-graph-declared-source-follow-up) additionally qualifies all five declared source kinds through four functions/ten executions per platform, preserving complete owners, route/label reads, owned data, recovery and replay. All 81 production/package inputs remain unchanged. | Q129 A unknown-candidate Skip has its [first Q148 local checkpoint](prototypes/core-native-import-unknown-candidate-skip.md); the all-kind and represented failure follow-up passes matching Mac/iPhone cohorts; native administration remains open. Broader family/reference/history reconciliation, native administration and physical/system gates remain open. |
-| Self-contained incoming-family references | [Faithful empty-planner restoration](prototypes/core-native-import-incoming-family.md) resolves authorized incoming candidate references for all five source kinds under both modes. Mac and iPhone each pass the affected 60-function/242-execution import/receipt cohort, including ten new cases, with matching inputs and safe fixture disposal. | Q128 A/Q129 A are accepted; Q147 A/Q148 A approve the concrete contracts; their scoped local checkpoints above leave broader implementation open alongside competing family/history identities, native administration and physical convergence. This checkpoint does not adopt unknown candidates over current owners. |
-| Import test lifecycle | [Final Mac and iPhone runs](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/native-core-fixture-lifecycle.md) each pass 57 functions/228 invocations with zero failures, skips or SQLite lifecycle diagnostics. All 740 Core inputs and argument counts reconcile. Each final run's 228 marked fixtures are removed only after host/file closure; twenty CLI safety checks pass. | The original iPhone assertion pass with 443 diagnostics remains unqualified for lifecycle. The pre-feature baseline reproduces 77 warnings in 21 invocations. These corrected affected suites do not qualify all test families, UI, physical or system behavior. |
-
-Earlier failed attempts retain their failure status. Native Swift Testing counts are taken from executed cases and structured results, not a wrapper exit alone. Current captures and interface tests do not establish unexecuted physical or system behavior.
+# Native Planner MVP map
+
+The [GitHub decision map](https://github.com/dvcol/planner/issues/1) is canonical.
+This file mirrors its low-resolution index; open work and dependencies live
+in GitHub native sub-issues.
+
+## Destination
+
+Reach an implemented, reviewed core V2 Planner MVP for daily personal use on
+iPhone, iPad and Mac, then obtain the user's explicit acceptance of its native
+workflows and recorded limitations.
+
+## Notes
+
+- This effort explicitly carries execution and acceptance into the map, as
+  authorized by the user; it is no longer a specification-only exercise.
+- The map is an index. Open work lives in native child issues; native blocked-by
+  relationships define the frontier. Detailed answers live in resolution
+  comments and linked artifacts, not this body.
+- Core feature code is implemented locally. Signing/setup is ready and normal
+  same-account mobile sync passes. Remaining work is the focused
+  native/physical/assistive acceptance frontier; these statements do not declare
+  the release accepted.
+- Validated workspace checkpoint: `d18a25a4` on `prototype/navigation`.
+  Published branch: `9eb878c5`. Newer source/evidence is not yet published;
+  final handoff must reconcile that explicitly.
+- Prefer the simplest sufficient MVP. Reuse passing evidence, run serial
+  affected-target checks, and investigate reproducible defects. Do not fill time
+  with broader matrices or repeat normal iCloud checks without a relevant
+  change.
+- Planner data uses local-authoritative storage and the user's private iCloud
+  database only. No public/shared/developer-funded cloud fallback.
+- Consult `code-quality`, `code-architecture` and `code-testing` when
+  applicable. Use TDD when requested. Existing interface approvals carry
+  forward; tracker cleanup creates no new product answers or test seams.
+- Human review is still human review. Claim work before executing it; do not
+  infer app acceptance from this administrative cleanup. The user is away from
+  devices today.
+- The user explicitly authorized this bulk historical-state/scope
+  reconciliation. The normal one-HITL-decision-per-session rule applies to new
+  decisions, not these already-authorized administrative dispositions.
+- The [pre-cleanup implementation
+  index](https://github.com/dvcol/planner/blob/9eb878c50984966d373d9d1a0017205c9a4bb6e4/docs/implementation-map.md)
+  preserves published history. The current workspace keeps detailed checkpoints
+  separately from this low-resolution index.
+
+## Decisions so far
+
+- [Release goals](https://github.com/dvcol/planner/issues/2): core V2 is the
+  first daily-use release; later user amendments keep advanced administration
+  and V3 out of MVP.
+- [Planner vocabulary](https://github.com/dvcol/planner/issues/3): shared Items,
+  contextual appearances and independent completion/archive vocabulary.
+- [Apple capabilities](https://github.com/dvcol/planner/issues/4): native Apple
+  framework and entitlement feasibility, with runtime limits recorded.
+- [Place-data provenance](https://github.com/dvcol/planner/issues/5): owned
+  content remains distinct from temporary provider previews.
+- [Apple test access](https://github.com/dvcol/planner/issues/7): approved team,
+  identifiers, signing and MVP device/container access are established; behavior
+  acceptance stays separate.
+- [Duration and search](https://github.com/dvcol/planner/issues/8): exact
+  planning estimates, cumulative criteria and stable shared query behavior.
+- [Itineraries and scheduling](https://github.com/dvcol/planner/issues/9): live
+  ordered references and canonical timed/all-day schedules with explicit
+  civil-time rules.
+- [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10):
+  preserve durable local data and truthful outcomes; advanced manual recovery
+  qualification is deferred.
+- [URL and share capture](https://github.com/dvcol/planner/issues/11): reviewed
+  partial capture retains original links and explicit source/appearance scope.
+- [Core architecture](https://github.com/dvcol/planner/issues/12): shared Core
+  with local-authoritative SwiftData and the accepted private CKSyncEngine
+  amendment.
+- [Shared command contracts](https://github.com/dvcol/planner/issues/13): one
+  authority/read model; system/agent adapters retain their later-stage scope.
+- [Navigation prototype](https://github.com/dvcol/planner/issues/14):
+  established native workflows; duplicate final acceptance is consolidated under
+  the remaining UI gate.
+- [Build workflow](https://github.com/dvcol/planner/issues/18): native Xcode
+  project, shared schemes and local Swift packages.
+- [Native search capabilities](https://github.com/dvcol/planner/issues/19): the
+  native lexical baseline and its measured/qualification limits.
+- [Native long-list capabilities](https://github.com/dvcol/planner/issues/20):
+  paged native presentations, full-scope identities and measured performance
+  limits.
+- [Native calendar date
+  capabilities](https://github.com/dvcol/planner/issues/21): explicit DST,
+  timezone and inclusive civil-date behavior.
+- [Completion scopes and derived
+  progress](https://github.com/dvcol/planner/issues/22): shared/global versus
+  contextual state, appearance-based progress and archive rules.
+
+## Not yet specified
+
+No additional MVP product decision is identified by the current audit. Known
+acceptance work is already represented by open native child issues, not fog. If
+review exposes a consequential new choice, create one precise decision ticket
+rather than silently choosing or expanding this map.
+
+## Out of scope
+
+- [MCP session prototype](https://github.com/dvcol/planner/issues/16) and [Local
+  MCP compatibility](https://github.com/dvcol/planner/issues/6): V3 Agent
+  Control/MCP and remaining App Intents/Shortcuts/Siri qualification; retained
+  context, not MVP blockers.
+- Advanced JSON export/import, restoration-family expansion and their
+  administration polish: deferred by the accepted MVP amendment; existing tools
+  and safeguards remain intact.
+- Installed Mac Share: explicitly deferred; Mac in-app creation/capture remains
+  in scope.
+- More iCloud off/on, conflict, interruption and quota stress qualification:
+  currently deferred and unqualified; normal physical sync evidence is retained
+  without promising untested outcomes.
+- Apple Calendar export, embedded Google Maps/API-key billing and shared
+  planning retain their existing exclusions. App Store/unlisted distribution
+  follows the core acceptance handoff.
 
 ## Remaining implementation and acceptance
 
-Work through the core queue below in order where its environment is available.
-Keep existing basic export/import available without expanding it. New advanced
-portability or manual-restoration cases belong to post-MVP work and do not delay
-the core queue. Preserve safeguards for ordinary saves and synchronization.
+Use the canonical map's native child issues and blocking relationships.
+The core feature implementation is present; remaining acceptance must not be
+reported as complete. No signing setup or further iCloud stress run is queued.
 
-1. Retain Q164's completed normal-sync checkpoint: signed, same-account
-   iPhone/iPad creation, edits in both directions, deletion and relaunch pass.
-   The [deployment checkpoint][mobile-sync] records that exact scope. Further
-   iCloud testing, including off/on, is deferred at the user's request. Do not
-   repeat passing normal checks without a new change or defect. Broader
-   concurrent-edit, interruption and quota cases remain unqualified. Core UI
-   work is the current priority.
+## Historical checkpoints
 
-2. Finish the native UI pass for the core planning scenes. Prioritize search clipping and contrast findings, then check light/dark, accessibility, native controls and resizing/orientation. Item details now show the saved List count and containing List/Itinerary names through a native Plans disclosure. Its phone/dark-iPad journey closes that named UI gap; broader scene and accessibility review remains required.
-   The mobile List and Itinerary one-heading corrections now have their scoped
-   checkpoints above. Broader scene and assistive acceptance remains open.
-3. Complete the [scope-audit follow-ups](local-scope-audit-2026-10-22.md) for native Map, embedded-browser and change-stream lifecycles. Filtered annotations, exact temporary choices and represented independent-writer refresh/draft cases now have their separate checkpoints above. Bulk-save rollback and native Share migration presentation now have local qualification. These checkpoints do not close every remaining lifecycle or system gate.
-   The [Mac Locations correction](prototypes/native-map-collection-ui.md#mac-locations-sheet-27-october-2026)
-   fixes a collapsed sheet and passes provider/warning, dismissal and exact
-   bookmark checks on Mac and both simulators. The contextual Map pair above
-   adds actual window resizing; other contexts, native divider and keyboard
-   interaction remain open.
-4. Qualify the outstanding core Mac UI workflows, including capture,
-   Item/List/Itinerary navigation, keyboard/Undo and remaining compatibility
-   cases. The [reader width follow-up](prototypes/native-reader-pane-width.md#mac-width-checks-prepared-28-october-2026)
-   now has [actual Mac reader passes](prototypes/native-reader-pane-width.md#mac-runtime-qualification-28-october-2026)
-   for resizing/history and pending-load Return. Its cohort separately exposes
-   an itinerary row-selection failure; its [separate correction](prototypes/native-mac-itinerary-selection.md)
-   now passes direct selection and deletion/relaunch while retaining the source
-   Item. Nested contexts and the remaining UI review stay open. The
-   [named Mac Undo journeys][mac-undo] now pass; unrepresented
-   contexts retain their own gates. Q127 A's Calendar split pane passes
-   Month/Day/Week resizing,
-   divider movement and width recovery. The
-   [compact mode control](prototypes/native-calendar-shared-time-ruler.md#compact-mac-mode-control-27-october-2026)
-   also passes the Week regression with inspected narrow/wide captures. The
-   selected-card correction above now passes Mac and mobile viewport checks;
-   broader accessibility review remains open. Follow the
-   retained runtime diagnosis; do not repeat unchanged startup attempts or
-   assume a signing cause. Export/import-specific UI acceptance is post-MVP.
-5. Retain the signed shared-store, physical Safari Share and normal two-device
-   sync checkpoints above. Other mobile capture senders and remaining physical
-   UI/performance checks still need available devices. Follow the user's
-   [iCloud testing deferral](release-goals.md#current-sync-qualification-31-october-2026):
-   off/on, broader concurrent-edit, interruption and quota cases remain
-   unqualified without blocking the current UI work. Do not rerun passing normal
-   sync or substitute Simulator evidence for physical behavior.
-6. Reconcile the specification against the amended release stages and obtain the user's final core coherence/layout acceptance before MVP handoff. Include physical UI review. Keep post-MVP obligations explicit rather than claiming they passed or making them block V2.
-
-## Post-MVP work
-
-- Installed Mac Share integration and handoff/save qualification. In-app New Item
-  and From Link or Text remain the MVP capture paths on Mac. The implemented
-  extension and [managed-policy diagnosis](prototypes/native-shared-storage.md#managed-share-restriction-established)
-  remain recorded; further system discovery trials and policy exceptions are
-  deferred. Core shared storage and mobile Share stay in scope.
-- JSON export/import and advanced manual import/restoration qualification are
-  optional administration. Keep the existing basic tools and their validation;
-  do not expand this work while core MVP features and acceptance remain open.
-  Core save/sync failure handling stays in MVP.
-- For V3, implement native Agent Control under Q100 B after actual protected
-  signed-storage qualification, then verify native menus/windows and real clients.
-  Keep accepted access behavior and do not add signing workarounds.
-- For V3, extend actual Shortcuts qualification beyond [mobile discovery/warm iPhone Find](prototypes/native-shortcuts-system-ui.md#final-local-checkpoint) and [warm Item creation/cancellation on both simulators](prototypes/native-shortcuts-create-ui.md#final-local-checkpoint). The [optional Subtitle/Notes and selected-List creation](prototypes/native-shortcuts-optional-create-ui.md#final-local-checkpoint) now also pass on both simulators. Other system actions, Siri, remaining picker/property/confirmation behavior, cold/background launch, locked invocation and external plan opening remain unqualified. Keep these separate from the core MVP queue. The Customer-build test-framework rejection does not prove a paid account fixes that service.
-- Q163's crossed-restoration reconciliation remains explicitly deferred, with
-  records preserved and the current rejection unchanged.
-
-## Tickets, contracts and original scope
-
-The existing tickets retain their Context, starting/end state, DoR, DoD and required unit/native/HTTP/physical tests. The MVP scope amendments govern release priority; deferred requirements remain recorded rather than marked complete:
-
-- [Apple test access, issue 7](https://github.com/dvcol/planner/issues/7).
-- [Navigation prototype, issue 14](https://github.com/dvcol/planner/issues/14).
-- [Sync and Share prototype, issue 15](https://github.com/dvcol/planner/issues/15).
-- [MCP prototype, issue 16](https://github.com/dvcol/planner/issues/16).
-- [Specification handoff, issue 17](https://github.com/dvcol/planner/issues/17).
-- [Whole-app UI polish, issue 23](https://github.com/dvcol/planner/issues/23).
-
-The complete former issue body, including original requirements and implementation history, is retained in the [readable 22 October snapshot](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.md). Its [exact original source](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.source.txt) and [provenance](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.provenance.json) verify that no nonblank payload line changed. Only blank-line formatting differs in the readable copy.
-
-[Verified storage cleanup](prototypes/native-local-storage-cleanup.md) retains the previous audits and the 0.86 GiB, 0.42 GiB, 0.20 GiB and 0.14 GiB nominal-file removals. The [fixture-lifecycle follow-up](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/native-core-fixture-lifecycle.md) also disposes of its closed, marked test stores, including 172,739,251 measured nominal bytes from the refused alias-path epoch. Needed source/app/UI products, native archives and user datasets remain. Nominal totals do not promise an equal APFS free-space increase.
-
-[shared]: prototypes/native-shared-storage.md
-[share]: prototypes/native-share-products.md#installed-mobile-share-29-october-2026
-[share-retry]:
-  prototypes/native-share-products.md#native-provider-input-retry-29-october-2026
-[physical-share]:
-  prototypes/native-share-products.md#physical-safari-share-29-october-2026
-[ordinary-share]: prototypes/native-shared-storage.md#ordinary-mac-installation-27-october-2026
-[mac-undo]: prototypes/native-association-undo.md#native-mac-keyboard-undo-27-october-2026
-
-[mobile-sync]:
-  prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync
+[Detailed implementation checkpoints](implementation-checkpoints.md) retain the
+previous chronological report with its actual versions, tests and limitations.
+[Decision checkpoints](decision-checkpoints.md) retain the old decision register.
+The exact before-edit issue bodies and relationships are preserved in the
+[tracker snapshot](history/tracker-before-mvp-reconciliation-2026-10-31.json.gz).
+These archives are historical evidence, not additional current task queues.
