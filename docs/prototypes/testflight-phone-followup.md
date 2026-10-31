@@ -37,4 +37,7 @@ now scrolls the complete card below the pinned header before tapping and checks
 the current friendly timezone caption. No clock-placement rule changed.
 
 The affected Mac app views also compile successfully. Build 2 keeps version
-1.0.0 and is prepared for internal TestFlight, with App Store drafts paused.
+1.0.0. The signed iOS archive and host signature verification pass, and Apple
+accepts its TestFlight upload. Processing confirmation and group assignment need
+a renewed App Store Connect browser session. Mac remains on build 1; App Store drafts stay
+paused. Reviewed run artifacts and the disposable Simulator were removed.

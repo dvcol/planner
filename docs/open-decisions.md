@@ -45,7 +45,9 @@ reopen accepted answers or override the current native tracker state.
   suspension while holding a file/database lock. Build 1's private-sync worker retained
   an App Group file lock for its lifetime. The correction passes focused iOS/Mac
   ownership tests; phone header, List-title and Calendar-rotation journeys pass.
-  Build 2 preparation continues. Actual iPhone suspension remains a final
+  Signed iOS `1.0.0 (2)` uploaded successfully and is processing at Apple.
+  Status confirmation and Personal group assignment need an App Store Connect
+  browser sign-in. Actual iPhone suspension remains a final
   verification step, separate from normal sync checks. See the
   [follow-up checkpoint](prototypes/testflight-phone-followup.md). The prior Mac
   store-capture sizing attempts did not produce a usable image, and their
