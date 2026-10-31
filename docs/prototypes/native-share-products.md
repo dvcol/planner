@@ -206,3 +206,30 @@ is changed. The full Maps case is prepared for an attended device check with
 saved drafts and disposable test data. Its Save/relaunch acceptance remains
 open. No physical installation, iCloud test, authentication-policy change or
 installed Mac replacement is performed by this checkpoint.
+
+## Complete native Maps Share in Simulator, 31 October 2026
+
+The existing native Apple Maps journey now passes in 117.103 seconds on a fresh
+light iPhone 18 Pro Simulator, iOS 27.0. It uses native Maps Search and the
+installed Share extension. Cancel creates no Item; Add saves while Planner is
+closed. Cold launch reads the exact original URL, and another relaunch preserves
+the Item and bookmark identities. Deleting only the synthetic Item leaves the
+catalog empty. The [original saved-Item capture](evidence/native-share-products/maps-save-simulator-2026-10-31/saved-item-map-and-link.png)
+also shows the rendered native map, provider attribution and uncertainty text.
+
+Two preceding invocations expose driver errors. After reviewing the link, the
+first taps a Title row partly covered by the toolbar and cannot enter text. The
+driver now scrolls the actual capture Form until the complete row clears the
+toolbar. The next invocation saves correctly but queries a bookmark below the
+visible lazy Form. The driver reuses the existing edge-scroll pattern beside
+the embedded map before both bookmark reads. These corrections change no
+production code, input validation, stored values or expected assertions. The
+failed invocations retain their failure status in the
+[review packet](evidence/native-share-products/maps-save-simulator-2026-10-31/review.json).
+
+Testing stays scoped to this one journey: two diagnosed failures and one final
+pass, with 254 frozen native inputs and five product hashes. The shared Safari
+driver is unchanged, so its already-passing journey is not repeated. The
+affected Simulator build, strict Swift formatting and whitespace checks pass.
+Physical Maps senders, Google Maps app handoff and broader device acceptance
+remain open. No Mac interaction, physical installation or iCloud test is added.

@@ -58,7 +58,17 @@
       let originalURL = try XCTUnwrap(originalLink.value as? String)
       let host = try XCTUnwrap(URL(string: originalURL)?.host?.lowercased())
       XCTAssertTrue(["maps.apple.com", "maps.apple"].contains(host), originalURL)
-      for _ in 0..<8 where !title.isHittable { maps.swipeDown() }
+      let captureForm = maps.collectionViews["saved.capture.form"]
+      let titleRow = captureForm.cells.containing(.textField, identifier: "saved.capture.title")
+        .firstMatch
+      let toolbar = maps.navigationBars["Review Capture"]
+      for _ in 0..<8 {
+        if titleRow.exists && titleRow.frame.minY >= toolbar.frame.maxY && title.isHittable {
+          break
+        }
+        captureForm.swipeDown()
+      }
+      XCTAssertTrue(titleRow.exists && titleRow.frame.minY >= toolbar.frame.maxY)
       title.activateForPlannerJourney()
       if let initialTitle = title.value as? String {
         title.typeText(
@@ -90,6 +100,7 @@
         NSPredicate(
           format: "identifier BEGINSWITH %@ AND value == %@", "saved.item.link.", originalURL)
       ).firstMatch
+      revealDetailLink(link, in: application)
       XCTAssertTrue(link.waitForExistence(timeout: 10))
       let linkIdentifier = link.identifier
       recordShareScreenshot(
@@ -100,6 +111,7 @@
       XCTAssertTrue(row.waitForExistence(timeout: 10))
       XCTAssertEqual(row.identifier, itemIdentifier)
       row.activateForPlannerJourney()
+      revealDetailLink(link, in: application)
       XCTAssertTrue(
         application.descendants(matching: .any).matching(identifier: linkIdentifier).firstMatch
           .waitForExistence(timeout: 10))
@@ -204,6 +216,16 @@
       application.openPlannerSection("Items")
       XCTAssertTrue(row.waitForNonExistence(timeout: 10))
       XCTAssertEqual(itemRows.count, 0)
+    }
+
+    /// Scroll beside the embedded map so the gesture reveals the saved bookmark.
+    private func revealDetailLink(_ link: XCUIElement, in application: XCUIApplication) {
+      let window = application.windows.firstMatch
+      for _ in 0..<4 where !link.exists || !link.isHittable {
+        let start = window.coordinate(withNormalizedOffset: CGVector(dx: 0.99, dy: 0.75))
+        let end = window.coordinate(withNormalizedOffset: CGVector(dx: 0.99, dy: 0.25))
+        start.press(forDuration: 0.05, thenDragTo: end)
+      }
     }
 
     private func openPlannerShare(in sender: XCUIApplication) {

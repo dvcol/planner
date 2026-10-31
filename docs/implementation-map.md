@@ -51,7 +51,7 @@ No public/shared cloud fallback is configured.
 | Work left for MVP | Current state | What it needs |
 | --- | --- | --- |
 | Private CloudKit integration | [App/Share wiring and reviewed local-plan copying](prototypes/private-sync-deployment.md) are implemented. Physical iPhone/iPad creation, bidirectional edits, deletion and relaunch pass. The earlier open Mac-peer diagnostic remains separate. | Off/on is deliberately deferred. Retain the existing failure/conflict limits; do not repeat passing normal sync checks without a new change or defect. |
-| Shared storage | [Saves][shared], [Safari][physical-share]. The [native Maps sender journey](prototypes/native-share-products.md#native-maps-sender-and-resumed-share-31-october-2026) is prepared; its Simulator run stops before Save. | Physical Maps check awaits device readiness; Google Maps sender remains open. |
+| Shared storage | [Saves][shared], [Safari][physical-share]. The [native Maps sender journey](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026) passes Cancel, Save with Planner closed, exact URL/identity through relaunch and cleanup in Simulator. Its saved details show the native map preview. | Physical Maps sender checks and Google Maps app handoff remain open. |
 | Core UI polish and compatibility | In progress. [Primary sidebar words](prototypes/native-sidebar-word-readability.md) now fit at maximum text size, with native mobile regressions and Mac compilation. The [responsive search correction](prototypes/native-search-accessibility.md#responsive-native-editor) passes scoped clipping and query-retention checks; broader contrast and accessibility remain open. The [monochrome native icon](design/planner-icon-v2.md#installed-home-screen-31-october-2026) has inspected Default/Dark Home Screen captures and passing native phone/iPad Simulator journeys. | Remaining scene, resizing and accessibility review, plus physical Home Screen and Mac Dock appearance checks. No signing prerequisite for local polish. |
 | Map, reader and live-refresh lifecycle checks | Implemented; remaining window/remount, session and accessibility cases are listed in the [scope audit](local-scope-audit-2026-10-22.md#current-implementation-frontier-26-october-2026). | Existing local test boundaries and corrections for reproduced core defects. |
 | Mac interaction | Scoped journeys pass. | Remaining UI review. |
@@ -65,6 +65,13 @@ blocks the core queue above. Preserve existing validation and data safeguards;
 ordinary save/sync failures still belong to MVP.
 
 ## Recent local checkpoints
+
+The [complete native Maps Share checkpoint](prototypes/native-share-products.md#complete-native-maps-share-in-simulator-31-october-2026)
+passes on a fresh phone Simulator. Two test gestures are corrected to expose
+the Title row and the saved bookmark before interaction/readback; production
+code is unchanged. The one final journey covers Cancel, Save while Planner is
+closed, cold readback, stable identities through relaunch and exact cleanup.
+Original captures show the native map preview. Physical senders remain separate.
 
 The [current action audit](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
 replaces stale sync-integration labels with the existing physical normal-sync
@@ -659,6 +666,10 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
 
 ### Current actions, 31 October 2026
 
+- **Emulator-first finish:** the user is away from devices today. Complete
+  focused Simulator checks and local corrections without waiting for hardware.
+  Do not start an attended Mac or physical-device run without fresh readiness.
+  Additional iCloud testing and post-MVP scope remain deferred.
 - **Private synchronization is implemented:** Q164's local SwiftData store and
   private `CKSyncEngine` are wired into normal app/Share storage. The
   [same-account physical mobile pair](prototypes/private-sync-deployment.md#unobstructed-two-device-live-sync)
@@ -676,10 +687,12 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
   covers multiline-row completion/relaunch and Itinerary search retention.
   It needs an unlocked, idle Mac and manual Enable UI Automation approval.
   Do not change authentication policy or repeat an unattended startup timeout.
+  Refresh its source/product preflight after the current Simulator-only driver
+  work when that attended session becomes available.
 - **Next physical capture check:** the prepared native Apple Maps Share journey
   needs iPhone availability, saved drafts and explicit disposable test data.
-  Its Simulator trial reaches review/Cancel but not Save. Keep that limit
-  separate from the passing physical Safari Share result. Google Maps sender
+  Its full Simulator journey now passes; keep that scope separate from physical
+  acceptance and the passing physical Safari Share result. Google Maps sender
   acceptance also remains open. The prepared case has not run on a physical
   device.
 - **Core acceptance:** physical Map routes/panes and a Calendar booking/relaunch
