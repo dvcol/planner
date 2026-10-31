@@ -21,7 +21,7 @@ workflows and recorded limitations.
   same-account mobile sync passes. Remaining work is the focused
   native/physical/assistive acceptance frontier; these statements do not declare
   the release accepted.
-- Validated workspace checkpoint: `d18a25a4` on `prototype/navigation`.
+- Validated workspace checkpoint: `9a20a3a6` on `prototype/navigation`.
   Published branch: `9eb878c5`. Newer source/evidence is not yet published;
   final handoff must reconcile that explicitly.
 - Prefer the simplest sufficient MVP. Reuse passing evidence, run serial
@@ -34,8 +34,8 @@ workflows and recorded limitations.
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.
 - Human review is still human review. Claim work before executing it; do not
-  infer app acceptance from this administrative cleanup. The user is away from
-  devices today.
+  infer app acceptance from this administrative cleanup. The user has returned;
+  attended checks require current device readiness.
 - The user explicitly authorized this bulk historical-state/scope
   reconciliation. The normal one-HITL-decision-per-session rule applies to new
   decisions, not these already-authorized administrative dispositions.

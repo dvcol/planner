@@ -72,5 +72,32 @@ technologies. [Apple audit guidance](https://developer.apple.com/documentation/a
 
 Save, clipped search fields, partially obscured labels, broader scene coverage,
 actual Mac interaction and physical-device acceptance remain separate work.
-Signing stays deferred. Advanced export/import and manual restoration remain
+Signing is now ready. Advanced export/import and manual restoration remain
 post-MVP; no Core or recovery work is added by this checkpoint.
+
+## Focused Save checkpoint, 31 October 2026
+
+One fresh Simulator run adds contrast to the existing New Item editor activity
+at maximum accessibility text with Increase Contrast. It fails on Save in
+37.445 seconds. The temporary audit change is reverted after evidence export;
+no production palette change or audit exception is introduced.
+
+The test requests Dark and reports that appearance, but the inspected original
+initial navigation and editor render in Light. This mismatch is not explained
+by the current evidence and is not a Dark qualification. The Save warning
+remains open. The [focused record](evidence/native-save-contrast-2026-10-31/review.json)
+retains setup, commands, hashes, the failure and inspected original captures.
+
+A bounded follow-up sets Simulator appearance to Dark before launch; simctl
+reports Dark, but the original editor again renders Light and flags Save
+(31.137 seconds). Its Increase Contrast setup command used invalid syntax, so
+this run is ordinary-contrast evidence only. The subsequent native
+`borderedProminent` probe correctly enables Increase Contrast and renders a
+blue Save button, but that exact control still fails contrast (31.235 seconds).
+Both original editor/control captures are inspected. These results do not
+establish a cause for the appearance mismatch or prove an Apple defect.
+
+The temporary button style and audit changes are both reverted. No production
+workaround or audit exclusion remains; Save and actual Dark qualification
+stay open in the existing UI acceptance ticket. No physical device, iCloud
+setting, global developer selection or security policy is changed.
