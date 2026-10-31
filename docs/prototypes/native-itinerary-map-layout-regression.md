@@ -15,9 +15,9 @@ One native execution passes. All 1164 native inputs match the existing Mac
 compilation; its nine actual products are reverified rather than rebuilt.
 Simulator appearance, contrast and text-size restoration pass. The test restores
 portrait orientation during teardown. Three original captures are inspected.
-[Structured results](evidence/native-itinerary-map-layout-regression/final-validation.json),
-[inspection records](evidence/native-itinerary-map-layout-regression/visual-inspection.json)
-and [compressed execution records](evidence/native-itinerary-map-layout-regression/execution-records-index.json)
+Structured results,
+inspection records
+and compressed execution records
 retain the exact scope and identities. Only this run's raw scratch is removed
 after archive verification; reusable builds and user data are preserved.
 

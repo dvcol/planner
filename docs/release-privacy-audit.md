@@ -52,7 +52,7 @@ Fresh unsigned universal Mac and iOS Release archives both build successfully.
 Each contains the corrected app and Share manifests plus SwiftNIO's resource
 manifest, with no hosted test bundle. Both declare the intended app/group/
 private-container identifiers, Production environment and version `0.0.1`.
-The [bundle review](prototypes/evidence/native-release-privacy-2026-10-31/review.json)
+The bundle review
 retains parsed manifests, product hashes, exact archive commands and compressed
 build logs. This proves packaging, not distribution signing, deployed cloud
 schema or App Store upload acceptance.

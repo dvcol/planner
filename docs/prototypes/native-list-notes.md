@@ -28,7 +28,7 @@ The expanded editing controller needed two corrections: selecting the nested mob
 
 The final editing journey passes in 115.692 seconds. It verifies canceled changes, a notes-only multiline save, preservation during an independent name change, an explicit clear, unchanged-editor Save disabling, the original source identity, the same one-hour manual estimate and relaunch.
 
-The unchanged creation and original empty-List journeys also pass in the earlier combined invocation, in 59.945 and 27.004 seconds. That invocation remains failed because its editing controller had not yet been corrected. [Function-level source reconciliation](evidence/navigation/native-itinerary-window-compatibility/native-list-notes-edit-phone-final/retained-function-evidence.json) confirms those passing functions and all affected production inputs are unchanged; they are retained without repeating them solely for a clean aggregate.
+The unchanged creation and original empty-List journeys also pass in the earlier combined invocation, in 59.945 and 27.004 seconds. That invocation remains failed because its editing controller had not yet been corrected. Function-level source reconciliation confirms those passing functions and all affected production inputs are unchanged; they are retained without repeating them solely for a clean aggregate.
 
 The original phone captures were inspected. They show readable native Form controls, exact multiline notes, an explicitly cleared field, the retained estimate controls and disabled Save for an unchanged editor.
 
@@ -46,4 +46,4 @@ The unsigned generic iOS build passes. Its arm64 app embeds exactly one arm64 mo
 
 Actual Mac editing remains unqualified because of the runner gate. No signing/account setup, physical installation, sync behavior or feature-complete whole-app polish is claimed. The map remains open. Label appearance and the remaining Intent decisions are separate work; no unanswered choice is implemented here.
 
-The [evidence directory](evidence/navigation/native-itinerary-window-compatibility/) retains the `native-list-notes-*` commands, frozen input hashes, original logs, actual XCTest summaries and named captures. Full-display recordings are not published. Test datasets use the existing unique local prototype path; this report does not claim the guarded App Intent fixture cleanup procedure applies to native UI datasets.
+The evidence directory retains the `native-list-notes-*` commands, frozen input hashes, original logs, actual XCTest summaries and named captures. Full-display recordings are not published. Test datasets use the existing unique local prototype path; this report does not claim the guarded App Intent fixture cleanup procedure applies to native UI datasets.

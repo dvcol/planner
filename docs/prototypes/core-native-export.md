@@ -29,7 +29,7 @@ After the unchanged tracer passes, add full-graph preservation, export during ge
 
 ## Qualification
 
-The [execution record](evidence/navigation/core-native-export.json) retains commands, source epochs, package logs and native summaries/test trees. The approved declaration's unavailable body supplies executable red; the same tracer bytes pass after active graph export. Production remains fixed after that first green.
+The execution record retains commands, source epochs, package logs and native summaries/test trees. The approved declaration's unavailable body supplies executable red; the same tracer bytes pass after active graph export. Production remains fixed after that first green.
 
 | Qualified surface | Functions | Suites | Invocations | Failures/skips |
 | --- | ---: | ---: | ---: | ---: |

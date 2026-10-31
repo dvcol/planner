@@ -36,12 +36,12 @@ not a private-key, iCloud account, container-access or schema failure. Earlier
 unsigned products are not evidence of selected-team signing. Existing Planner
 data and certificates remain untouched.
 
-[Evidence](evidence/cloud-access-provisioning/result.json) retains the actual
+Evidence retains the actual
 command, exit, diagnostic source/configuration and build log in a seven-member
 verified archive, plus hashes of all 90 Core and three probe inputs. Only the
 execution Mac's serial is redacted from the archived log; the raw log hash is
 recorded. The original
-[persisted-capability screenshot](evidence/cloud-access-provisioning/push-enabled.png)
+persisted-capability screenshot
 was inspected. No compiled or runtime success is claimed for this signed attempt.
 
 After approved registration, retry provisioning, inspect the actual signature,

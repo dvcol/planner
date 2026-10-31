@@ -36,7 +36,7 @@ The installed SDK has a modern asynchronous throwing requestConfirmation dialog 
 
 The public callAsFunction interface accepts only donate. AppIntentsTesting's AnyAppIntent.run has no confirmation-response argument; no public response-control API was found in the installed interface. Its [system testing setup](https://developer.apple.com/documentation/appintentstesting/testing-your-app-intents-code) uses the live system infrastructure. The existing Customer-build rejection remains unresolved and signing stays deferred. That does not prove a paid account fixes it.
 
-The [SDK packet](prototypes/evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-confirmation-sdk-facts/) retains the actual source, typecheck command/exit and inspected interface hashes. Its generic syntax example is not a proposed All Items bulk scope. No confirmation, GUI or Planner mutation was invoked. These are declaration facts, not runtime approval/cancellation evidence.
+The SDK packet retains the actual source, typecheck command/exit and inspected interface hashes. Its generic syntax example is not a proposed All Items bulk scope. No confirmation, GUI or Planner mutation was invoked. These are declaration facts, not runtime approval/cancellation evidence.
 
 ## Q120 alternatives and impacts
 

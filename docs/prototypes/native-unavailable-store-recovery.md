@@ -24,7 +24,7 @@ Initial inspection/export checks qualify existing behavior and are not a missing
 
 The production change is a seven-line footer in the existing recovery Form. A new disposable fixture saves a Tag, Item and association through Core, then retains the original SQLite directory elsewhere. It leaves the initialized writer identity and independent recovery intact. Relaunch does not reseed or restore that database.
 
-The [evidence packet](evidence/navigation/native-unavailable-store-recovery/) separates the original behavior probe, the missing-explanation red and controller corrections. The functional red executed one failing journey before the footer existed. Its hierarchy records the missing explanation; its sole manual image shows the unavailable screen, not the failed footer assertion. Earlier selected-copy captures show the disabled Restore action without a reason. Two compilation failures executed no journeys and receive no TDD credit.
+The evidence packet separates the original behavior probe, the missing-explanation red and controller corrections. The functional red executed one failing journey before the footer existed. Its hierarchy records the missing explanation; its sole manual image shows the unavailable screen, not the failed footer assertion. Earlier selected-copy captures show the disabled Restore action without a reason. Two compilation failures executed no journeys and receive no TDD credit.
 
 Final qualification uses the same five frozen Swift files:
 

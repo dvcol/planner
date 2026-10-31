@@ -35,7 +35,7 @@ application remains unchanged and production configuration still selects
 
 ## Passing evidence
 
-The [signed native result](evidence/private-sync-engine/runtime.json) passes in
+The signed native result passes in
 21.657 seconds using the actual public Core command/query/export interface and
 real Development private CloudKit. Separate launched app processes have separate
 local stores and use the approved team/container; no account setting changes.
@@ -86,7 +86,7 @@ waiting and no manual account action blocks continuing implementation.
 
 ## Durable Share edits and independent fields
 
-The [follow-up native run](evidence/private-sync-pending-edit/runtime.json)
+The follow-up native run
 passes on final source in 37.334 seconds. After a peer imports the plan and
 exits, its Share-role process saves new notes without starting a sync worker.
 Core reports pending cloud work, rather than falsely acknowledging that save.
@@ -94,7 +94,7 @@ The other store independently saves and uploads a new title. Reopening the
 original peer's main-app worker preserves both edits and acknowledges the merged
 record. Complete-plan and fresh-store deletion readback also pass again.
 
-The [first attempt](evidence/private-sync-pending-edit/before-resume.json)
+The first attempt
 preserved both content edits but replaced the later title-edit timestamp with
 the older queued notes timestamp. Record merging now retains the later saved
 `updatedAt` from either side. The production-interface check verifies the exact
@@ -111,14 +111,14 @@ A separate signed diagnostic links the unchanged Core sources from `f3efee75`,
 before private transport and writer gate 24. It opens the upgraded synthetic
 writer's actual account-bound paths using the existing public private
 configuration. Bootstrap rejects with `unsupportedVersion`; all 32 fixture file
-contents remain unchanged. The [native result](evidence/private-sync-older-writer/runtime.json)
+contents remain unchanged. The native result
 passes in 1.037 seconds. This qualifies the older-writer refusal, not every
 historical data migration. It requires no account setting or signing-resource
 change.
 
 ## Retry after rejected incoming staging
 
-The [new regression](evidence/private-sync-staging-retry/before-peer.json)
+The new regression
 reproduces a missed download after a temporary local binding failure. A test-owned
 peer invalidates only its disposable writer-control epoch during the initial
 fetch, observes the actual staging error, then restores the original bytes.
@@ -132,7 +132,7 @@ knowledge also receives this protection. An already durable inbox remains
 available when graph validation rejects its application. Repeated identical
 cloud errors coalesce instead of creating further metadata writes.
 
-The [final signed run](evidence/private-sync-staging-retry/runtime.json) passes
+The final signed run passes
 in 77.189 seconds, including observed failure, repaired retry, exact complete-plan
 readback, pending Share edits, field/timestamp merging and fresh-store deletion.
 The affected Core cohort passes 22 tests in seven suites. Mac/mobile compilation
@@ -142,14 +142,14 @@ need their separate qualification. No domain, portable or recovery format change
 
 ## Permanent upload rejection and correction
 
-The [signed follow-up](evidence/private-sync-permanent-error/runtime.json) passes
+The signed follow-up passes
 in 126.598 seconds. CloudKit rejects a synthetic Item with 1.1 million characters
 of notes. The Item remains readable locally, the error stays visible, and an
 explicit retry after shortening its notes sends the corrected graph to a fresh
 peer. The complete-plan, staging-retry, queued Share edit, concurrent-field and
 deletion checks pass in the same run.
 
-The [earlier attempt](evidence/private-sync-permanent-error/before-runtime.json)
+The earlier attempt
 left synchronization in progress with no lasting error; direct SDK inspection
 confirmed the large Item was absent remotely. Permanent errors now stay paused
 instead of being cleared by a later fetch. Only handled conflicts request an

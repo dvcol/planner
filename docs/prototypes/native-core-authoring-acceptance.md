@@ -29,7 +29,7 @@ Owned-address and Google coordinate-search cards both render native Apple maps.
 The example.com bookmarks retain useful links and Retry when their image
 preview is unavailable. Strict affected Swift and Markdown lint pass.
 
-[Verification](evidence/native-core-authoring-acceptance/final-validation.json)
+Verification
 and compacted execution records retain both failed diagnoses and the final
 runs. The earlier rich-authoring pass predates the Capture fix and is recorded
 as intermediate evidence. The four final-source runs supply the completion

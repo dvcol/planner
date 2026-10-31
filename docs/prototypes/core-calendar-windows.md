@@ -28,7 +28,7 @@ The final Core run passes 12 functions across five suites, with 13 invocations b
 
 The final authenticated HTTP run passes four functions across three suites, with no failures or skips. It verifies exact typed wire values, schema advertisement, malformed fields/paging, stale generations, unchanged export and existing Item/Schedule query compatibility. Ten affected Swift files pass strict lint. The macOS app/test host and iOS app/native UI test host compile. No native UI functions ran for this step.
 
-[Execution evidence](evidence/navigation/core-calendar-windows/execution.json) retains commands, source hashes, original result summaries and logs. Both review axes have no remaining confirmed implementation findings; adapter documentation now includes the approved wire forms.
+Execution evidence retains commands, source hashes, original result summaries and logs. Both review axes have no remaining confirmed implementation findings; adapter documentation now includes the approved wire forms.
 
 ## Remaining work
 

@@ -29,7 +29,7 @@ checks, not a whole-app accessibility audit.
 The original failing reproduction remains recorded. Two intermediate driver
 failures are also retained: a container queried as a Button, and a lazy row
 queried before scrolling at maximum text. Neither is reported as a passing run.
-[Final verification](evidence/native-mobile-list-heading/final-validation.json)
+Final verification
 lists the matching final cohorts. Execution records are compacted with read-back
 hash verification; original captures remain directly viewable.
 
@@ -61,7 +61,7 @@ did not establish that visual result: ContentUnavailableView exposes its padded
 graphic/text group as one static-text element. No extra production inset or row
 sizing workaround is needed.
 
-The [checkpoint](evidence/native-mobile-list-heading/single-heading-2026-10-28/result.json)
+The checkpoint
 retains eight inspected originals, passing executions and rejected attempts.
 Final Mac and Simulator builds match 1,169 current inputs. The six primary
 passes have their own source/product snapshot; subsequent changes are a
@@ -69,7 +69,7 @@ production comment and the landscape test driver. The primary title journey
 and its helpers are byte-identical. Maximum-text Map summaries remain
 scrollable; this does not promise every summary field fits simultaneously.
 
-The [temporary-artifact cleanup](evidence/native-mobile-list-heading/single-heading-2026-10-28/cleanup.json)
+The temporary-artifact cleanup
 removes 592,205,153 nominal bytes of superseded trial files after archive and
 capture read-back verification. Final results, build caches and app data remain.
 
@@ -89,7 +89,7 @@ hittable. Four inspected original captures retain one left-aligned title and
 the compact estimate summary. Item-specific actions take toolbar space, so
 empty and populated titles can truncate at different points.
 
-The [verified result](evidence/native-mobile-list-heading/mac-manual-retry-2026-10-28/result.json)
+The verified result
 retains the originals and compact execution records. No production or test code
 changes were needed for this retry. The earlier final-source authentication
 timeout remains recorded separately and receives no test-execution credit.
@@ -116,7 +116,7 @@ and rotation on that iPad; and exact Itinerary-guide Return on phone. The existi
 test driver now opens collapsed navigation through the shared helper and prefers
 the actual back button before a sidebar fallback. No new test boundary is added.
 
-The [result](evidence/native-itinerary-heading/2026-10-28/result.json) retains the
+The result retains the
 six failed production/diagnostic attempts separately from final passes. Eight
 original captures are inspected and four retained. All 1,169 native inputs match
 both final builds; strict Swift formatting and signed Mac app/Share/UI-runner
@@ -139,7 +139,7 @@ navigation; querying the action-menu helper there previously tried to operate
 the itinerary toolbar from the Item page. Both actual driver failures remain
 separate from the two final passes.
 
-The [deletion result](evidence/native-itinerary-heading/2026-10-28/deletion-result.json)
+The deletion result
 retains verified execution records and two of five inspected originals. All
 1,169 inputs match both final builds, and the six Simulator production binaries
 are unchanged. Appearance settings are restored; strict Swift formatting and

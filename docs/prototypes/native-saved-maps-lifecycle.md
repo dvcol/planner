@@ -32,7 +32,7 @@ The installed XCTest SDK declares modified-key typing on iOS and macOS. A focuse
 
 ## Results and remaining work
 
-[The evidence packet](evidence/navigation/native-saved-maps-lifecycle/) retains actual commands, compressed logs, frozen source hashes and result exits.
+The evidence packet retains actual commands, compressed logs, frozen source hashes and result exits.
 
 | Controlled native journey | iPhone seconds | iPad seconds |
 | --- | --- | --- |

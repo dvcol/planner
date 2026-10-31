@@ -29,7 +29,7 @@ After this tracer passes unchanged, observe a genuine post-save recovery obstruc
 
 ## Qualification
 
-The [execution record](evidence/navigation/core-native-status-read.json) retains exact commands, source epochs, package logs and native summaries/test trees. The approved declaration's unavailable body supplies the executable red; the unchanged tracer passes after projecting actual evidence. One implementation compile failed because optional chaining selected String sequence flatMap; parenthesizing the optional checkpoint fixed it before the first green. Core production bytes remain fixed after that green.
+The execution record retains exact commands, source epochs, package logs and native summaries/test trees. The approved declaration's unavailable body supplies the executable red; the unchanged tracer passes after projecting actual evidence. One implementation compile failed because optional chaining selected String sequence flatMap; parenthesizing the optional checkpoint fixed it before the first green. Core production bytes remain fixed after that green.
 
 | Qualified surface | Functions | Suites | Invocations | Failures/skips |
 | --- | ---: | ---: | ---: | ---: |

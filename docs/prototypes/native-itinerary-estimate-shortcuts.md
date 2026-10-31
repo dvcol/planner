@@ -38,7 +38,7 @@ All four named original Planner-window captures were opened individually. Both p
 
 ## Evidence and remaining gates
 
-[The evidence packet](evidence/navigation/native-itinerary-estimate-shortcuts/) contains literal run exits, compressed logs, input/product hashes, original named captures, source reviews and the bounded audit. Source reviews found no confirmed Standards or Spec issue; runtime credit comes only from the two completed native invocations. The audit verifies the exact current source and products before commit. Historical packets retain their own source epochs.
+The evidence packet contains literal run exits, compressed logs, input/product hashes, original named captures, source reviews and the bounded audit. Source reviews found no confirmed Standards or Spec issue; runtime credit comes only from the two completed native invocations. The audit verifies the exact current source and products before commit. Historical packets retain their own source epochs.
 
 The earlier [rich draft resizing report](native-rich-draft-layout.md) retains the phone/tablet rotation, Save and relaunch qualification and its links to prior layout evidence. [Item shortcuts](native-estimate-shortcuts.md) and [List shortcuts](native-container-estimate-shortcuts.md) retain their separately qualified callers. This Itinerary result does not requalify those historical invocations against changed test source.
 

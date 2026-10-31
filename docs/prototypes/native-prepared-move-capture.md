@@ -34,7 +34,7 @@ through ordinary hash-guarded Item editing makes the fixture valid; the correcte
 60-case preparation cohort passes. This is a fixture correction and supplies no
 production bug/fix claim. Failed inputs/results remain retained.
 
-The [final validation](evidence/native-membership-consolidation/native-prepared-move-capture-validation.json)
+The final validation
 records five functions and 66 invocations passing on each of Mac and iPhone
 Simulator. Alongside the 60 preparation cases, affected Move, Capture reuse and
 two Overwrite paths pass. There are no failures, skips, timeouts or SQLite-unlink

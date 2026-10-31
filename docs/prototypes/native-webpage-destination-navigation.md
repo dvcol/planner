@@ -10,13 +10,13 @@ Start with the unchanged shipping app and one phone function. Qualify the correc
 
 ## Initial phone result
 
-The [initial complete phone journey](evidence/native-webpage-destination-navigation/destination-navigation-phone-initial/) passes after 90.892 seconds against unchanged shipping code. Selecting Items or Lists closes the Calendar reader; selecting Calendar closes the Item reader and retains its exact booking and bookmark. This contradicts the suspected phone navigation defect, so there is no production correction. All 1,081 source inputs and four products validate before reuse; four original captures are retained.
+The initial complete phone journey passes after 90.892 seconds against unchanged shipping code. Selecting Items or Lists closes the Calendar reader; selecting Calendar closes the Item reader and retains its exact booking and bookmark. This contradicts the suspected phone navigation defect, so there is no production correction. All 1,081 source inputs and four products validate before reuse; four original captures are retained.
 
 Strict lint identified two overlong lines introduced by this new test. The initial command still launched the native test after lint failed; retain that distinction. Format those two test lines and require successful lint before subsequent invocations. The test’s behavior and assertions stay unchanged. Qualify the complete workflow and affected ordinary Return against the same final formatted sources on phone and dark iPad, then compile the matching Mac targets. Do not infer tablet or Mac runtime behavior from this phone pass.
 
 ## Final local destination-navigation checkpoint
 
-The [final reconciliation](evidence/native-webpage-destination-navigation/final-reconciliation.json) records four passing native executions across two functions on phone and dark iPad, with no failures or skips. The new complete workflow qualifies explicit Calendar-reader → Items, Calendar-reader → Lists and Item-reader → Calendar navigation. Ordinary Return also passes on both devices. The app remains foreground, each newly selected destination displays its own content, and the original bookmark identity/URL and Schedule survive. No production correction is needed for these represented transitions.
+The final reconciliation records four passing native executions across two functions on phone and dark iPad, with no failures or skips. The new complete workflow qualifies explicit Calendar-reader → Items, Calendar-reader → Lists and Item-reader → Calendar navigation. Ordinary Return also passes on both devices. The app remains foreground, each newly selected destination displays its own content, and the original bookmark identity/URL and Schedule survive. No production correction is needed for these represented transitions.
 
 All 1,081 source inputs match across both final runtimes and Mac compilation. Each runtime’s four products validate before reuse. The matching Mac app/Share/fixture/UI build validates nine products and supplies compiler evidence only. All ten original captures are inspected. The initial complete phone pass retains its distinct pre-formatting test-source epoch and is excluded from these final totals.
 
@@ -24,4 +24,4 @@ Only the existing native journey class changes. Shipping app/Core/Share code, pr
 
 ## Generated export cleanup
 
-After reconciliation, 3 duplicate temporary attachment-export directories are removed, totaling 2,822,177 nominal bytes. The [cleanup record](evidence/native-webpage-destination-navigation/generated-export-cleanup.json) retains exact paths and counts. Original xcresult bundles, retained captures/manifests, source roots, reusable products and user datasets remain. Nominal bytes do not promise equal APFS free-space recovery.
+After reconciliation, 3 duplicate temporary attachment-export directories are removed, totaling 2,822,177 nominal bytes. The cleanup record retains exact paths and counts. Original xcresult bundles, retained captures/manifests, source roots, reusable products and user datasets remain. Nominal bytes do not promise equal APFS free-space recovery.

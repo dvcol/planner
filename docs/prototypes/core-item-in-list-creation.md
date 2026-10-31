@@ -16,7 +16,7 @@ The human approved the public command/read, real persistence I/O, HTTP and nativ
 
 ## Results
 
-The [evidence packet](evidence/navigation/core-item-in-list-creation/) retains each source epoch and its original output. `membership-red` fails because the accepted destination produces no membership; `membership-green` passes after atomic membership creation. `destination-review-red` rejects the missing review capability; `destination-review-green` passes after adding it. `review-command-red` exposes a reviewed creation becoming global when its destination is omitted; the final implementation rejects that changed command.
+The evidence packet retains each source epoch and its original output. `membership-red` fails because the accepted destination produces no membership; `membership-green` passes after atomic membership creation. `destination-review-red` rejects the missing review capability; `destination-review-green` passes after adding it. `review-command-red` exposes a reviewed creation becoming global when its destination is omitted; the final implementation rejects that changed command.
 
 `file-limit-rollback-red` uses a process-local file-growth limit at the real native save boundary and records SQLite I/O error 778. The database rolls back, but prepared recovery evidence incorrectly prevents an unchanged retry. `file-limit-rollback-green` passes after removing that proposal on a known failed save. The limit exists only inside an isolated test child and is restored before verification. Postcommit recovery obstruction separately proves that an applied graph remains applied and can repair its independent recovery copy without creating duplicates.
 

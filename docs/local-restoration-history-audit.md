@@ -39,7 +39,7 @@ in the existing membership evidence directory. No full-repository run is added.
 
 Both current cohorts pass all eight functions and 119 invocations in four suites,
 with no skips, failures, timeouts or SQLite-unlink diagnostics. The
-[validation record](prototypes/evidence/native-membership-consolidation/native-history-audit-validation.json)
+validation record
 verifies actual products, 813 matching Core inputs and 1160 unchanged native
 inputs against the preceding preservation checkpoint. That includes the 514
 frozen store fixtures and every production/schema input. Historical evidence

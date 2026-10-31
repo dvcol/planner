@@ -15,12 +15,12 @@ Simulator settings restoration is verified; the iPad test restores portrait
 orientation during teardown. Affected strict
 Swift and Markdown lint pass.
 
-The [structured results](evidence/native-reader-pane-width/final-validation.json)
+The structured results
 retain actual executed identifiers. Three inspected originals show both iPad
 widths and the phone reader; their hashes and dimensions are in the
-[inspection record](evidence/native-reader-pane-width/visual-inspection.json).
+inspection record.
 The raw native width attachment is retained in the
-[execution archive](evidence/native-reader-pane-width/execution-records-index.json).
+execution archive.
 
 The narrow iPad capture also shows the sidebar's Planner title truncated to
 "Pl…" beside its controls. That is a remaining toolbar-polish finding, not a
@@ -48,7 +48,7 @@ header and rich-draft journeys.
 The signed Mac build and Simulator build pass with 1,169 matching inputs each.
 All six production Mac executable paths remain unchanged. Only three UI-test
 files change. Affected strict Swift formatting passes. The
-[build checkpoint](evidence/native-reader-pane-width/mac-build-2026-10-28/result.json)
+build checkpoint
 retains both compiler outcomes and source overlays.
 
 Runtime qualification is pending the user's manual UI Automation readiness.
@@ -83,7 +83,7 @@ captures are inspected and three retained. The owned-window overflow capture
 clips the part of the native menu outside that window; menu access and state
 are established by the actual native assertions.
 
-The [verified execution record](evidence/native-reader-pane-width/mac-runtime-2026-10-28/result.json)
+The verified execution record
 keeps the initial interrupted failure and diagnostic separate. Its four-test
 cohort has three passes and one itinerary failure; it is not an all-green batch.
 The reader passes do not qualify that itinerary failure or whole-app, installed

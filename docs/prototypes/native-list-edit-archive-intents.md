@@ -42,7 +42,7 @@ These required scenarios pass on first execution against the implemented actions
 - Actual post-save recovery-copy failure retains the edited name/notes, blocks the next edit and keeps the original incomplete operation. Native recovery retry completes it without changing the applied field hashes; an explicit later edit then works, 0.190 s.
 - Actual post-save archive recovery failure retains the archived source and blocks Unarchive. Native retry acknowledges the original operation, and later explicit Unarchive succeeds. The empty List remains No items rather than completed throughout, 0.188 s.
 
-The existing real filesystem obstruction and public Intent/Store/Core boundaries are reused. Recovery administration is not registered as an Intent. Original commands, source overlays, results and logs are retained in [the compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/) under the matching `app-intent-list-edit-*` and `app-intent-list-archive-*` packet names.
+The existing real filesystem obstruction and public Intent/Store/Core boundaries are reused. Recovery administration is not registered as an Intent. Original commands, source overlays, results and logs are retained in the compatibility evidence under the matching `app-intent-list-edit-*` and `app-intent-list-archive-*` packet names.
 
 - A real storage-opening failure makes both actions throw, leaves the store unavailable and preserves the obstructing file, 0.146 s. No successful change or empty-data fallback is fabricated.
 
@@ -50,7 +50,7 @@ The archive graph deliberately starts with a locally Done standalone List member
 
 ## Combined adapter qualification
 
-All 35 affected Item/List tests pass together with zero failures or skips, in 12.266 seconds. The [actual final result](evidence/navigation/native-itinerary-window-compatibility/app-intent-list-edit-archive-final-qualification/) retains the XCTest summary, original log and frozen inputs. This adds seven new edit/archive cases to the prior 28; it is not a full app-hosted-target or repository test run.
+All 35 affected Item/List tests pass together with zero failures or skips, in 12.266 seconds. The actual final result retains the XCTest summary, original log and frozen inputs. This adds seven new edit/archive cases to the prior 28; it is not a full app-hosted-target or repository test run.
 
 Mac's extracted app metadata declares ten actions, including `EditPlannerListIntent` and `SetPlannerListArchiveIntent`, plus the existing two entities and two queries. The artifact hash and exact identifiers are retained. Metadata proves compilation/extraction only; actual Siri/Shortcuts discovery/invocation and system restrictions remain open. The tests keep using disposable real storage and public SDK invocation without donations.
 

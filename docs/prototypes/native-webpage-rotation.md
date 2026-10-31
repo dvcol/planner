@@ -18,19 +18,19 @@ Observe a behavioral failure before any necessary production change. Keep actual
 
 ## Failure-state result and pending-load case
 
-The [first phone journey](evidence/navigation/native-itinerary-window-compatibility/native-browser-failure-rotation-phone/test-summary.json) passes without changing production. Both actual orientations retain the failure controls, and Retry recovers the original saved website. This is a compatibility pass, not a behavioral red.
+The first phone journey passes without changing production. Both actual orientations retain the failure controls, and Retry recovers the original saved website. This is a compatibility pass, not a behavioral red.
 
 Next hold a real page response after an explicit Museum-page link. Rotate while it is pending and require the native loading indicator and Return control. Release the response and require its distinct Delayed Guide content, then native Back to Museum and Return to the unchanged bookmark/Item. The fixture's delayed response gets its own literal title/body so the previously committed Museum page cannot satisfy the completion assertion. Requalify the existing old-response cancellation case against that fixture change.
 
 ## Final local qualification
 
-The [final phone run](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-final-phone/test-summary.json) passes both failure and pending-load rotation cases. The [dark iPad run](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-final-tablet/test-summary.json) passes those two cases plus the existing old-response cancellation journey against the updated fixture. These are five final executions of three distinct functions, with zero failures/skips and SQLite unlink diagnostics. Planner production code is unchanged.
+The final phone run passes both failure and pending-load rotation cases. The dark iPad run passes those two cases plus the existing old-response cancellation journey against the updated fixture. These are five final executions of three distinct functions, with zero failures/skips and SQLite unlink diagnostics. Planner production code is unchanged.
 
 Both orientations are observed through the actual native window's dimensions. Failure controls remain usable; pending work retains its loading indicator and Return action. After release, the distinct Delayed Guide renders, Back reaches Museum and Return preserves the original saved identity/URL and Item. These are functional rotation checks. The retained captures occur after portrait recovery; they do not establish a complete landscape visual/accessibility audit.
 
-The [epoch reconciliation](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-final-tablet/epoch-reconciliation.json) matches all 1,070 inputs across both final runs and [Mac compilation](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-mac-compiler/qualification.json). Each runtime's four products and Mac's nine products match at collection time. All five original final captures are retained; the phone/tablet pending-response captures are inspected individually. Strict affected Swift/Markdown lint and whitespace checks pass.
+The epoch reconciliation matches all 1,070 inputs across both final runs and Mac compilation. Each runtime's four products and Mac's nine products match at collection time. All five original final captures are retained; the phone/tablet pending-response captures are inspected individually. Strict affected Swift/Markdown lint and whitespace checks pass.
 
-After those executions, strict formatting required wrapping one test-helper call. The [exact before/after comparison](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-final-tablet/post-run-formatting.json) proves that replacement explains the entire source difference, with no changed statement, argument value or assertion. A separate [mobile build](evidence/navigation/native-itinerary-window-compatibility/native-browser-rotation-formatted-mobile-compiler/qualification.json) compiles that formatted source. The runtime captures and input/product manifests keep their original epoch; they are not relabeled as a post-format rerun.
+After those executions, strict formatting required wrapping one test-helper call. The exact before/after comparison proves that replacement explains the entire source difference, with no changed statement, argument value or assertion. A separate mobile build compiles that formatted source. The runtime captures and input/product manifests keep their original epoch; they are not relabeled as a post-format rerun.
 
 Actual Mac resizing, narrow/wide column collapse/remounts, multitasking windows, arbitrary webpages, all accessibility settings and physical acceptance remain open. The two new orientation bodies are iOS-only; Mac compilation gives no device-rotation or actual Mac UI credit. Signing stays deferred. Q143 A independently approves native Map-loader work, which follows this checkpoint.
 
@@ -49,9 +49,9 @@ compatibility evidence at the existing actual native UI and loopback HTTP
 boundaries. It adds no target, dependency, test hook or provider seam.
 
 Four original captures are inspected and retained in the
-[review packet](evidence/native-webpage-rotation/calendar-2026-10-31/review.json).
-The [phone landscape](evidence/native-webpage-rotation/calendar-2026-10-31/phone-landscape.png)
-and [iPad landscape](evidence/native-webpage-rotation/calendar-2026-10-31/tablet-landscape.png)
+review packet.
+The phone landscape
+and iPad landscape
 show the loaded Garden page and native controls while Calendar stays selected.
 Portrait captures retain the same page after returning from landscape.
 
@@ -71,11 +71,11 @@ the exact saved bookmark and full Schedule description.
 
 One light-phone execution passes in 82.677 seconds and one dark-iPad execution
 in 100.610 seconds. Both use the same 254 unchanged native inputs. The original
-[phone](evidence/native-webpage-rotation/calendar-resume-2026-10-31/phone-resumed.png)
-and [iPad](evidence/native-webpage-rotation/calendar-resume-2026-10-31/tablet-resumed.png)
+phone
+and iPad
 resume captures are inspected: the page and native controls remain readable,
 with Calendar selected. The
-[review packet](evidence/native-webpage-rotation/calendar-resume-2026-10-31/review.json)
+review packet
 retains commands, results, source/product hashes and compressed logs.
 
 Production is unchanged. One incremental Simulator build and these two serial

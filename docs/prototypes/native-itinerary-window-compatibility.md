@@ -42,7 +42,7 @@ Keep repository Swift/configuration inputs and compiled products frozen througho
 | `phone-list-origin-labels` | New controller looks for a List row while compact navigation still shows the saved Item detail. Fails in 105.421 s. The controller now uses the existing rich-creation journey's native Back step. |
 | `phone-list-origin-labels-context-qualified` | Discard, labels, rotation, Save, exact shared-label identities and original local Todo appearance after relaunch pass in 139.900 s. |
 
-The [evidence packet](evidence/navigation/native-itinerary-window-compatibility/) retains each epoch separately. Successful gestures do not erase failed attempts or prove their cause. The native results above precede the subsequent Q103 shared-loader extension and catalog migration. Their exact source epochs remain separate; affected current-source native qualification continues with Q103.
+The evidence packet retains each epoch separately. Successful gestures do not erase failed attempts or prove their cause. The native results above precede the subsequent Q103 shared-loader extension and catalog migration. Their exact source epochs remain separate; affected current-source native qualification continues with Q103.
 
 ## Visual review and limitations
 

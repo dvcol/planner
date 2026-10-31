@@ -1,35 +1,65 @@
 # MCP HTTP qualification evidence
 
-Work for [MCP session prototype](https://github.com/dvcol/planner/issues/16), now on prototype/navigation. Q33 approved the [HTTP/adapter contract](../adapter-contract.md) and [reader observations](../content-and-reader-review.md#credential-reader-declaration-accepted-contract-q32-a). Earlier sections retain their transport-only revisions; later sections qualify real Core commands over authenticated HTTP. The latest slice covers [Itinerary entries and appearances](#itinerary-entries-and-appearances-over-http).
+Work for [MCP session prototype](https://github.com/dvcol/planner/issues/16),
+now on prototype/navigation. Q33 approved the
+[HTTP/adapter contract](../adapter-contract.md) and
+[reader observations](../content-and-reader-review.md#credential-reader-declaration-accepted-contract-q32-a).
+Earlier sections retain their transport-only revisions; later sections qualify
+real Core commands over authenticated HTTP. The latest slice covers
+[Itinerary entries and appearances](#itinerary-entries-and-appearances-over-http).
 
 ## Context and observable boundary
 
-The native [build setup](mcp-native-build.md) compiles on Mac and iOS simulators. The initial transport fixtures below ran before PlannerCore had a domain implementation; later sections record its real Item integration. Handler tests receive the official SDK's public HTTPRequest and return HTTPResponse. The listener test makes an actual loopback HTTP request through URLSession. Tests assert wire-visible status, headers and body, without inspecting handler state or mocking internal collaborators. Credential issuance, real clients and reader execution remain unproved.
+The native [build setup](mcp-native-build.md) compiles on Mac and iOS
+simulators. The initial transport fixtures below ran before PlannerCore had a
+domain implementation; later sections record its real Item integration. Handler
+tests receive the official SDK's public HTTPRequest and return HTTPResponse. The
+listener test makes an actual loopback HTTP request through URLSession. Tests
+assert wire-visible status, headers and body, without inspecting handler state
+or mocking internal collaborators. Credential issuance, real clients and reader
+execution remain unproved.
 
-Each request is a POST to /mcp, Host 127.0.0.1:44444, Content-Type application/json, Accept application/json and text/event-stream, MCP-Protocol-Version 2025-11-25, and literal body {"jsonrpc":"2.0","id":1,"method":"ping"}. The test-only literal credential is 43 A characters and is never a live credential. Missing Authorization, or Authorization containing Bearer followed by 43 B characters, must return 401 without X-Planner-Access-Window. A credential used by tests is ordinary handler configuration, not an injectable production UUID/logger/factory callback.
+Each request is a POST to /mcp, Host 127.0.0.1:44444, Content-Type
+application/json, Accept application/json and text/event-stream,
+MCP-Protocol-Version 2025-11-25, and literal body
+{"jsonrpc":"2.0","id":1,"method":"ping"}. The test-only literal credential is 43
+A characters and is never a live credential. Missing Authorization, or
+Authorization containing Bearer followed by 43 B characters, must return 401
+without X-Planner-Access-Window. A credential used by tests is ordinary handler
+configuration, not an injectable production UUID/logger/factory callback.
 
 ## Executed red and green
 
-| Slice | Executed result | Actual result summary |
-| --- | --- | --- |
-| Missing credential, red | One test executed, one failed. The working native test observed status 501 rather than 401. | [Red](evidence/mcp/authentication-missing-red.json) |
-| Missing credential, green | One test executed, one passed after rejecting absent Authorization. | [Green](evidence/mcp/authentication-missing-green.json) |
-| Incorrect credential, red | Two tests executed, one passed and the new test failed on 501 rather than 401. | [Red](evidence/mcp/authentication-incorrect-red.json) |
-| Incorrect credential, green | Two tests executed, both passed after comparing against the configured credential. | [Green](evidence/mcp/authentication-incorrect-green.json) |
-| Authorized ping, red | Three tests executed, two passed and the new ping test failed on unavailable status/result/window. | [Red](evidence/mcp/ping-red.json) |
-| Authorized ping, green | Three tests executed, all passed after dispatch through the official SDK and preservation of its response. | [Green](evidence/mcp/ping-green.json) |
-| Endpoint routing, red | Four tests executed, three passed. An authenticated ping to /admin returned 200 and an access-window header instead of 404 without that header. | [Red](evidence/mcp/routing-red.json) |
-| Endpoint routing, green | Four tests executed, all passed after restricting dispatch to /mcp before authentication. | [Green](evidence/mcp/routing-green.json) |
-| Loopback listener, red | Five tests executed, four passed. The new socket test reached the listener's unavailable error after compiling successfully. | [Red](evidence/mcp/listener-red.json) |
-| Loopback listener, green | Five tests executed, all passed after adding native HTTP framing and forwarding the received request to the existing official-SDK handler. | [Green](evidence/mcp/listener-green.json) |
-| Stop admission, red | Six tests executed, five passed. After Stop, the handler still admitted the old credential and returned 200 with the access-window header. | [Red](evidence/mcp/revocation-red.json) |
-| Stop admission, green | Six tests executed, all passed after Stop invalidated the handler's credential before closing sockets. | [Green](evidence/mcp/revocation-green.json) |
-| Unsupported initialization, red | Twelve tests executed, eleven passed. An initialize body requesting 2099-01-01 succeeded with a result/access-window header by selecting a supported fallback. | [Red](evidence/mcp/unsupported-initialization-red.json) |
-| Unsupported initialization, green | Twelve tests executed, all passed after rejecting a decoded initialize request whose version is outside the SDK's supported set. The failure names the rejected and supported versions. | [Green](evidence/mcp/unsupported-initialization-green.json) |
+| Slice                             | Executed result                                                                                                                                                                         | Actual result summary |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Missing credential, red           | One test executed, one failed. The working native test observed status 501 rather than 401.                                                                                             | Red                   |
+| Missing credential, green         | One test executed, one passed after rejecting absent Authorization.                                                                                                                     | Green                 |
+| Incorrect credential, red         | Two tests executed, one passed and the new test failed on 501 rather than 401.                                                                                                          | Red                   |
+| Incorrect credential, green       | Two tests executed, both passed after comparing against the configured credential.                                                                                                      | Green                 |
+| Authorized ping, red              | Three tests executed, two passed and the new ping test failed on unavailable status/result/window.                                                                                      | Red                   |
+| Authorized ping, green            | Three tests executed, all passed after dispatch through the official SDK and preservation of its response.                                                                              | Green                 |
+| Endpoint routing, red             | Four tests executed, three passed. An authenticated ping to /admin returned 200 and an access-window header instead of 404 without that header.                                         | Red                   |
+| Endpoint routing, green           | Four tests executed, all passed after restricting dispatch to /mcp before authentication.                                                                                               | Green                 |
+| Loopback listener, red            | Five tests executed, four passed. The new socket test reached the listener's unavailable error after compiling successfully.                                                            | Red                   |
+| Loopback listener, green          | Five tests executed, all passed after adding native HTTP framing and forwarding the received request to the existing official-SDK handler.                                              | Green                 |
+| Stop admission, red               | Six tests executed, five passed. After Stop, the handler still admitted the old credential and returned 200 with the access-window header.                                              | Red                   |
+| Stop admission, green             | Six tests executed, all passed after Stop invalidated the handler's credential before closing sockets.                                                                                  | Green                 |
+| Unsupported initialization, red   | Twelve tests executed, eleven passed. An initialize body requesting 2099-01-01 succeeded with a result/access-window header by selecting a supported fallback.                          | Red                   |
+| Unsupported initialization, green | Twelve tests executed, all passed after rejecting a decoded initialize request whose version is outside the SDK's supported set. The failure names the rejected and supported versions. | Green                 |
 
-The authentication filter discovers and executes AuthenticationTests in PlannerMCPTests. Later runs select the whole affected PlannerMCPTests target. Xcode's XCTest compatibility layer separately reports zero XCTest cases; Swift Testing and the xcresult summaries report the actual executed tests above. None is skipped or an expected failure. Test execution launches the signed native test host, not a protocol mock. The handler tests do not establish a live listener; ListenerTests starts and stops one disposable real socket. Neither establishes a reviewed UI.
+The authentication filter discovers and executes AuthenticationTests in
+PlannerMCPTests. Later runs select the whole affected PlannerMCPTests target.
+Xcode's XCTest compatibility layer separately reports zero XCTest cases; Swift
+Testing and the xcresult summaries report the actual executed tests above. None
+is skipped or an expected failure. Test execution launches the signed native
+test host, not a protocol mock. The handler tests do not establish a live
+listener; ListenerTests starts and stops one disposable real socket. Neither
+establishes a reviewed UI.
 
-For each row, run this affected-target command with its distinct result bundle and capture the actual exit code. Red exits 65 on its assertion failure; green exits zero. Missing source, compiler errors and zero discovered tests do not count as red.
+For each row, run this affected-target command with its distinct result bundle
+and capture the actual exit code. Red exits 65 on its assertion failure; green
+exits zero. Missing source, compiler errors and zero discovered tests do not
+count as red.
 
 ```sh
 env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project Planner.xcodeproj -scheme Planner -configuration Debug -destination 'platform=macOS,arch=arm64' -only-testing:PlannerMCPTests/AuthenticationTests -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData -resultBundlePath /private/tmp/PlannerMCPWrongCredentialGreen.xcresult
@@ -37,668 +67,2342 @@ env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun xcresulttool 
 env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift format lint --strict Planner/AgentControl/PlannerMCPRequestHandler.swift PlannerMCPTests/AuthenticationTests.swift
 ```
 
-Results use the Mac/toolchain in the build evidence. Full xcresult bundles and logs remain machine-local under /private/tmp/PlannerMCPAuthenticationRed, PlannerMCPAuthenticationGreen, PlannerMCPWrongCredentialRed, PlannerMCPWrongCredentialGreen, PlannerMCPPingRed, PlannerMCPPingGreen, PlannerMCPRoutingRed, PlannerMCPRoutingGreen, PlannerMCPListenerRed and PlannerMCPListenerGreen, with xcresult/log extensions. Committed JSON summaries come from xcresulttool, omitting only local hardware identifiers under the Apple test access reporting rule. They preserve the executed counts and observed failing assertions. They are not regenerated expectations or fabricated passing results.
+Results use the Mac/toolchain in the build evidence. Full xcresult bundles and
+logs remain machine-local under /private/tmp/PlannerMCPAuthenticationRed,
+PlannerMCPAuthenticationGreen, PlannerMCPWrongCredentialRed,
+PlannerMCPWrongCredentialGreen, PlannerMCPPingRed, PlannerMCPPingGreen,
+PlannerMCPRoutingRed, PlannerMCPRoutingGreen, PlannerMCPListenerRed and
+PlannerMCPListenerGreen, with xcresult/log extensions. Committed JSON summaries
+come from xcresulttool, omitting only local hardware identifiers under the Apple
+test access reporting rule. They preserve the executed counts and observed
+failing assertions. They are not regenerated expectations or fabricated passing
+results.
 
-The ping fixture uses configured access window 00000000-0000-4000-8000-000000000701, the valid literal credential and JSON-RPC integer ID 7. Expected response is HTTP 200, JSON-RPC 2.0, integer ID 7, empty result object, no error, no MCP-Session-Id and X-Planner-Access-Window matching that admitted window. The test reads the actual SDK response body. The native adapter adds the header while retaining the SDK body/status/headers. It never manufactures a ping result.
+The ping fixture uses configured access window
+00000000-0000-4000-8000-000000000701, the valid literal credential and JSON-RPC
+integer ID 7. Expected response is HTTP 200, JSON-RPC 2.0, integer ID 7, empty
+result object, no error, no MCP-Session-Id and X-Planner-Access-Window matching
+that admitted window. The test reads the actual SDK response body. The native
+adapter adds the header while retaining the SDK body/status/headers. It never
+manufactures a ping result.
 
-This initial integration creates an official Server and StatelessHTTPServerTransport for each HTTP exchange, then stops them when that response resolves. It neither patches SDK sources nor introduces transport sessions or a client registry. That lifecycle is an unqualified integration candidate for the later initialization, context, cancellation and overlapping-request fixtures. A single ping does not prove that the inspected SDK defects or full client capability/version isolation are resolved.
+This initial integration creates an official Server and
+StatelessHTTPServerTransport for each HTTP exchange, then stops them when that
+response resolves. It neither patches SDK sources nor introduces transport
+sessions or a client registry. That lifecycle is an unqualified integration
+candidate for the later initialization, context, cancellation and
+overlapping-request fixtures. A single ping does not prove that the inspected
+SDK defects or full client capability/version isolation are resolved.
 
 ## Real loopback observation
 
-PlannerMCPLoopbackListener binds only 127.0.0.1. SwiftNIO 2.104.0 handles HTTP framing and sends each complete request to the existing handler; the official SDK owns MCP parsing, validation, dispatch and response bytes. A response includes its actual Content-Length and closes that HTTP connection. Separate connections are accepted independently. This step adds no Agent Control lifetime, idle expiry, session registry or client-count limit.
+PlannerMCPLoopbackListener binds only 127.0.0.1. SwiftNIO 2.104.0 handles HTTP
+framing and sends each complete request to the existing handler; the official
+SDK owns MCP parsing, validation, dispatch and response bytes. A response
+includes its actual Content-Length and closes that HTTP connection. Separate
+connections are accepted independently. This step adds no Agent Control
+lifetime, idle expiry, session registry or client-count limit.
 
-The test asks the OS for an available port with port zero so disposable parallel fixtures do not occupy the user's 44444 endpoint. The listener's default remains 44444. The real URLSession request uses literal ping ID 7 and asserts the actual 200/JSON-RPC result, matching access window, absent session ID and 127.0.0.1 host. Its five-second request timeout only bounds a failing test request; it is not an access expiry. The ping test alone does not prove listener closure, idle connection cancellation or revoked credentials.
+The test asks the OS for an available port with port zero so disposable parallel
+fixtures do not occupy the user's 44444 endpoint. The listener's default
+remains 44444. The real URLSession request uses literal ping ID 7 and asserts
+the actual 200/JSON-RPC result, matching access window, absent session ID and
+127.0.0.1 host. Its five-second request timeout only bounds a failing test
+request; it is not an access expiry. The ping test alone does not prove listener
+closure, idle connection cancellation or revoked credentials.
 
-The separate Stop-admission fixture starts and stops a real disposable listener, then submits the old credential through the approved HTTP handler boundary. It now returns 401 without an access-window header. Stop awaits credential revocation before its socket cleanup. This proves rejection after completed Stop, not every Stop/probe race or cleanup-failure case. An already-admitted command's commit/cancellation outcome still needs the real Core facade. A stopped handler cannot issue another credential; fresh Enable composition remains unimplemented.
+The separate Stop-admission fixture starts and stops a real disposable listener,
+then submits the old credential through the approved HTTP handler boundary. It
+now returns 401 without an access-window header. Stop awaits credential
+revocation before its socket cleanup. This proves rejection after completed
+Stop, not every Stop/probe race or cleanup-failure case. An already-admitted
+command's commit/cancellation outcome still needs the real Core facade. A
+stopped handler cannot issue another credential; fresh Enable composition
+remains unimplemented.
 
-The first revocation test attempt lacked its MCP import and failed compilation. That is not red evidence. The committed red summary comes from the corrected executable run at /private/tmp/PlannerMCPRevocationExecutableRed.xcresult; green is /private/tmp/PlannerMCPRevocationGreen.xcresult. Both executed six tests with no skipped or expected failures. Matching logs remain local.
+The first revocation test attempt lacked its MCP import and failed compilation.
+That is not red evidence. The committed red summary comes from the corrected
+executable run at /private/tmp/PlannerMCPRevocationExecutableRed.xcresult; green
+is /private/tmp/PlannerMCPRevocationGreen.xcresult. Both executed six tests with
+no skipped or expected failures. Matching logs remain local.
 
 ## Existing behavior qualification
 
-These additional fixtures observed existing native/SDK behavior and passed on their first executable run. No implementation was changed to make them pass, and no red result is claimed. Each uses the real loopback listener and URLSession rather than bypassing native header handling.
+These additional fixtures observed existing native/SDK behavior and passed on
+their first executable run. No implementation was changed to make them pass, and
+no red result is claimed. Each uses the real loopback listener and URLSession
+rather than bypassing native header handling.
 
-| Observation | Exact input and outcome | Actual evidence |
-| --- | --- | --- |
-| Listener closure | After Stop completes, a new HTTP request to its previous endpoint fails with URLError.cannotConnectToHost, code -1004. Seven tests pass. | [Summary](evidence/mcp/listener-closure.json) |
-| Origin validation | Valid authenticated ping with Origin `https://untrusted.example` receives HTTP 403 and no access-window header. Eight tests pass. | [Summary](evidence/mcp/origin-validation.json) |
-| Header validation | Four distinct parameterized ping cases change one header: Host untrusted.example gives 421; Accept text/plain gives 406; Content-Type text/plain gives 415; MCP-Protocol-Version 2099-01-01 gives 400. All omit the access-window header. | [Summary](evidence/mcp/header-validation.json), [executed case tree](evidence/mcp/header-validation-tests.json) |
+| Observation       | Exact input and outcome                                                                                                                                                                                                                   | Actual evidence             |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| Listener closure  | After Stop completes, a new HTTP request to its previous endpoint fails with URLError.cannotConnectToHost, code -1004. Seven tests pass.                                                                                                  | Summary                     |
+| Origin validation | Valid authenticated ping with Origin `https://untrusted.example` receives HTTP 403 and no access-window header. Eight tests pass.                                                                                                         | Summary                     |
+| Header validation | Four distinct parameterized ping cases change one header: Host untrusted.example gives 421; Accept text/plain gives 406; Content-Type text/plain gives 415; MCP-Protocol-Version 2099-01-01 gives 400. All omit the access-window header. | Summary, executed case tree |
 
-The final header run reports nine test functions, including one function with four executed cases. It does not report twelve test functions. There are zero failed, skipped or expected failures. Bundles/logs are /private/tmp/PlannerMCPClosureQualification, PlannerMCPOriginQualification and PlannerMCPHeaderQualification with xcresult/log extensions. Native connection-refused diagnostics belong to the intentional closed-listener fixture. No source-content or store result is inferred from these transport-only checks.
+The final header run reports nine test functions, including one function with
+four executed cases. It does not report twelve test functions. There are zero
+failed, skipped or expected failures. Bundles/logs are
+/private/tmp/PlannerMCPClosureQualification, PlannerMCPOriginQualification and
+PlannerMCPHeaderQualification with xcresult/log extensions. Native
+connection-refused diagnostics belong to the intentional closed-listener
+fixture. No source-content or store result is inferred from these transport-only
+checks.
 
 ## Request-scoped SDK qualification
 
-Two more existing-behavior fixtures pass without an implementation change or a claimed red run. [Initialization evidence](evidence/mcp/initialization.json) records ten test functions passed. Fixture A initializes with integer ID 1 and version 2025-11-25, then initializes again with integer ID 2 and that same version. Fixture B initializes with integer ID 1 and version 2024-11-05. Each real HTTP response has its literal expected ID/version, empty advertised capabilities, current access-window header and no error/session ID. The requests omit the protocol-version header during initialization and supply their requested version in the standard body. This observes the request-scoped integration, not a patched SDK or initialized-client registry.
+Two more existing-behavior fixtures pass without an implementation change or a
+claimed red run. Initialization evidence records ten test functions passed.
+Fixture A initializes with integer ID 1 and version 2025-11-25, then initializes
+again with integer ID 2 and that same version. Fixture B initializes with
+integer ID 1 and version 2024-11-05. Each real HTTP response has its literal
+expected ID/version, empty advertised capabilities, current access-window header
+and no error/session ID. The requests omit the protocol-version header during
+initialization and supply their requested version in the standard body. This
+observes the request-scoped integration, not a patched SDK or initialized-client
+registry.
 
-[Concurrent ping evidence](evidence/mcp/concurrent-ping.json) records eleven test functions passed. Two URLSession requests are submitted with async let, one carrying integer ID 1 and one string ID "1". Each receives its correctly typed ID, empty result and current window exactly through its own returned exchange. Neither returns an error or session header. Their five-second test request budgets do not add an Agent Control timeout. Bundles/logs are /private/tmp/PlannerMCPInitializationQualification and PlannerMCPConcurrentPingQualification with xcresult/log extensions.
+Concurrent ping evidence records eleven test functions passed. Two URLSession
+requests are submitted with async let, one carrying integer ID 1 and one string
+ID "1". Each receives its correctly typed ID, empty result and current window
+exactly through its own returned exchange. Neither returns an error or session
+header. Their five-second test request budgets do not add an Agent Control
+timeout. Bundles/logs are /private/tmp/PlannerMCPInitializationQualification and
+PlannerMCPConcurrentPingQualification with xcresult/log extensions.
 
-Concurrent submission of two pings is a narrow routing observation. It does not prove the approved same-ID Hotel/Museum reads, overlap in the shared Core writer, retained per-caller tool/capability context, actual-client concurrency or the required 64-read load measurements. Empty advertised capabilities are accurate while no Planner tools exist; they are not the final tool catalog. Those original gates remain open.
+Concurrent submission of two pings is a narrow routing observation. It does not
+prove the approved same-ID Hotel/Museum reads, overlap in the shared Core
+writer, retained per-caller tool/capability context, actual-client concurrency
+or the required 64-read load measurements. Empty advertised capabilities are
+accurate while no Planner tools exist; they are not the final tool catalog.
+Those original gates remain open.
 
-The accepted Q29 contract additionally requires useful failure for unsupported versions without accidental downgrade. The pinned SDK defaults to its latest supported version for an unsupported initialization body; the new failing fixture observed that behavior over real HTTP. The native adapter now uses the SDK's public `Request<Initialize>` decoder, Initialize.name and Version.supported to reject that one case before dispatch. It returns the SDK's HTTP 400 error with no successful result/window header. Other envelope parsing, supported negotiation, method dispatch and result encoding remain SDK-owned. This is the approved stricter native constraint, not a fork or replacement handshake implementation. Red/green bundles are /private/tmp/PlannerMCPUnsupportedInitializationRed.xcresult and PlannerMCPUnsupportedInitializationDiagnosticGreen.xcresult, with matching logs.
+The accepted Q29 contract additionally requires useful failure for unsupported
+versions without accidental downgrade. The pinned SDK defaults to its latest
+supported version for an unsupported initialization body; the new failing
+fixture observed that behavior over real HTTP. The native adapter now uses the
+SDK's public `Request<Initialize>` decoder, Initialize.name and
+Version.supported to reject that one case before dispatch. It returns the SDK's
+HTTP 400 error with no successful result/window header. Other envelope parsing,
+supported negotiation, method dispatch and result encoding remain SDK-owned.
+This is the approved stricter native constraint, not a fork or replacement
+handshake implementation. Red/green bundles are
+/private/tmp/PlannerMCPUnsupportedInitializationRed.xcresult and
+PlannerMCPUnsupportedInitializationDiagnosticGreen.xcresult, with matching logs.
 
 ## Incomplete request shutdown
 
-The [actual incomplete-request result](evidence/mcp/incomplete-request-stop.json) records thirteen test functions passed, zero failures/skips. A real Network framework TCP connection sends a POST /mcp header declaring Content-Length 10, then supplies no body. The fixture invokes Stop while the connection is waiting for the remaining request. Stop returns, and the peer receives closure without response content. End of stream or a peer-reset error is accepted as socket closure; client cancellation does not satisfy that assertion. Client cancellation occurs only after observation or for test cleanup.
+The actual incomplete-request result records thirteen test functions passed,
+zero failures/skips. A real Network framework TCP connection sends a POST /mcp
+header declaring Content-Length 10, then supplies no body. The fixture invokes
+Stop while the connection is waiting for the remaining request. Stop returns,
+and the peer receives closure without response content. End of stream or a
+peer-reset error is accepted as socket closure; client cancellation does not
+satisfy that assertion. Client cancellation occurs only after observation or for
+test cleanup.
 
-This qualification passed with the existing listener implementation; no red run or production change is claimed. The one-minute Swift Testing trait bounds the fixture only and does not create an Agent Control duration/idle limit. Native Network APIs handle connection/send/receive; test helpers wrap that actual I/O and never inspect NIO or handler internals. Bundle/log are /private/tmp/PlannerMCPIncompleteRequestQualification.xcresult and PlannerMCPIncompleteRequestQualification.log. This proves shutdown of an unfinished HTTP exchange, not before/after-commit domain cancellation or every app/reader lifecycle race.
+This qualification passed with the existing listener implementation; no red run
+or production change is claimed. The one-minute Swift Testing trait bounds the
+fixture only and does not create an Agent Control duration/idle limit. Native
+Network APIs handle connection/send/receive; test helpers wrap that actual I/O
+and never inspect NIO or handler internals. Bundle/log are
+/private/tmp/PlannerMCPIncompleteRequestQualification.xcresult and
+PlannerMCPIncompleteRequestQualification.log. This proves shutdown of an
+unfinished HTTP exchange, not before/after-commit domain cancellation or every
+app/reader lifecycle race.
 
 ### Accepted socket lifecycle correction
 
-A later affected regression exposed a sixty-second timeout in the same unfinished-request test. Cancellation on every accepting-loop exit was necessary but insufficient: a full run then crashed with Deinited NIOAsyncWriter without calling finish(). Moving writer creation into the consuming task initially dropped reads before its handlers were installed; gating socket reads fixed that loss but a trace-free repetition still hung. Trace logging changed the timing, so its passing stress run was not accepted as final proof. Draining the event-loop group before joining serving tasks also failed and emitted an already-shut-down scheduling diagnostic.
+A later affected regression exposed a sixty-second timeout in the same
+unfinished-request test. Cancellation on every accepting-loop exit was necessary
+but insufficient: a full run then crashed with Deinited NIOAsyncWriter without
+calling finish(). Moving writer creation into the consuming task initially
+dropped reads before its handlers were installed; gating socket reads fixed that
+loss but a trace-free repetition still hung. Trace logging changed the timing,
+so its passing stress run was not accepted as final proof. Draining the
+event-loop group before joining serving tasks also failed and emitted an
+already-shut-down scheduling diagnostic.
 
-The final implementation registers every accepted socket before initialization can complete, closes all of them on Stop and rejects late registrations once stopping begins. Closed sockets are removed from the registry. The accepting stream carries sockets; only a consuming task creates the scoped async writer, with native socket reads disabled until those handlers are installed. Every accepting-loop exit cancels its child tasks. Stop closes accepted sockets, joins the serving task, then shuts down event loops. No temporary trace remains and no request/session timeout is added.
+The final implementation registers every accepted socket before initialization
+can complete, closes all of them on Stop and rejects late registrations once
+stopping begins. Closed sockets are removed from the registry. The accepting
+stream carries sockets; only a consuming task creates the scoped async writer,
+with native socket reads disabled until those handlers are installed. Every
+accepting-loop exit cancels its child tasks. Stop closes accepted sockets, joins
+the serving task, then shuts down event loops. No temporary trace remains and no
+request/session timeout is added.
 
-[Actual lifecycle evidence](evidence/mcp/accepted-socket-stop.json) preserves the initial timeout and failed cancellation attempt, one test function passing all 100 trace-free repetitions, and all 21 affected MCP functions passing afterward, with zero failures/skips/expected failures. The existing real TCP fixture asserts peer closure without response data. No private transport inspection or test-only injection seam was added. Strict source/document lint pass. These checks qualify the local socket lifecycle; cancellation before/after a domain commit remains a separate gate.
+Actual lifecycle evidence preserves the initial timeout and failed cancellation
+attempt, one test function passing all 100 trace-free repetitions, and all 21
+affected MCP functions passing afterward, with zero failures/skips/expected
+failures. The existing real TCP fixture asserts peer closure without response
+data. No private transport inspection or test-only injection seam was added.
+Strict source/document lint pass. These checks qualify the local socket
+lifecycle; cancellation before/after a domain commit remains a separate gate.
 
-Final bundles/logs are /private/tmp/PlannerMCPShutdownRegisteredChannels.xcresult and PlannerMCPShutdownRegisteredChannels.log, plus PlannerMCPOwnedRowsFinalRegression.xcresult and PlannerMCPOwnedRowsFinalRegression.log. The first timeout bundle is PlannerMCPOwnedRowsRegression.xcresult; the unfinished-writer crash bundle is PlannerMCPOwnedRowsRegressionGreen.xcresult. Earlier failed local iterations remain in their logs and are not represented as passing evidence.
+Final bundles/logs are
+/private/tmp/PlannerMCPShutdownRegisteredChannels.xcresult and
+PlannerMCPShutdownRegisteredChannels.log, plus
+PlannerMCPOwnedRowsFinalRegression.xcresult and
+PlannerMCPOwnedRowsFinalRegression.log. The first timeout bundle is
+PlannerMCPOwnedRowsRegression.xcresult; the unfinished-writer crash bundle is
+PlannerMCPOwnedRowsRegressionGreen.xcresult. Earlier failed local iterations
+remain in their logs and are not represented as passing evidence.
 
 ## Remaining scope
 
-The app has no Enable/Stop UI and does not instantiate the listener outside tests. The thirteen transport functions above remain passing alongside the source-read journey below. Further command routing/caller context and native app lifecycle remain future slices. All four actual clients remain the original ticket's gates. Permanent Delete/admin authority and unchanged data after rejected domain requests require separate real-facade qualification.
+The app has no Enable/Stop UI and does not instantiate the listener outside
+tests. The thirteen transport functions above remain passing alongside the
+source-read journey below. Further command routing/caller context and native app
+lifecycle remain future slices. All four actual clients remain the original
+ticket's gates. Permanent Delete/admin authority and unchanged data after
+rejected domain requests require separate real-facade qualification.
 
-The signed reader remains a native gate. A host-access read-only signing inventory found zero valid signing identities on 2026-10-09. The built app has only ad hoc signing and no provisioned App Group/application identity. The [existing Apple test access inputs](../setup/apple-test-access.md#human-inputs-and-actions) need the user's selected signing team and actual identifiers before those capability checks; no credential/certificate values belong in chat or source. Local HTTP qualification can continue independently. Do not weaken Data Protection Keychain/App Group requirements or the accepted reader checks to obtain a passing result.
+The signed reader remains a native gate. A host-access read-only signing
+inventory found zero valid signing identities on 2026-10-09. The built app has
+only ad hoc signing and no provisioned App Group/application identity. The
+[existing Apple test access inputs](../setup/apple-test-access.md#human-inputs-and-actions)
+need the user's selected signing team and actual identifiers before those
+capability checks; no credential/certificate values belong in chat or source.
+Local HTTP qualification can continue independently. Do not weaken Data
+Protection Keychain/App Group requirements or the accepted reader checks to
+obtain a passing result.
 
 ## Clean-source reproduction
 
-Exported committed snapshot eb7a392 with git archive into /private/tmp/PlannerMCPCleanCheckout, without personal Xcode state, ignored Local.xcconfig, previous build products or uncommitted source. Its Mac test command used a new /private/tmp/PlannerMCPCleanDerivedData directory, the committed resolved pins and the same affected PlannerMCPTests target. Existing downloaded package checkouts are a dependency cache, not app build products. [Actual clean-source result](evidence/mcp/clean-source-green.json) records three tests executed and passed, zero failed/skipped, on macOS 27.0.1. The full result bundle is /private/tmp/PlannerMCPCleanCheckout.xcresult and log is /private/tmp/PlannerMCPCleanCheckout.log.
+Exported committed snapshot eb7a392 with git archive into
+/private/tmp/PlannerMCPCleanCheckout, without personal Xcode state, ignored
+Local.xcconfig, previous build products or uncommitted source. Its Mac test
+command used a new /private/tmp/PlannerMCPCleanDerivedData directory, the
+committed resolved pins and the same affected PlannerMCPTests target. Existing
+downloaded package checkouts are a dependency cache, not app build products.
+Actual clean-source result records three tests executed and passed, zero
+failed/skipped, on macOS 27.0.1. The full result bundle is
+/private/tmp/PlannerMCPCleanCheckout.xcresult and log is
+/private/tmp/PlannerMCPCleanCheckout.log.
 
-The native test-host log includes nonfatal connection/re-registration diagnostics for the system com.apple.linkd.autoShortcut service. This report does not classify them as pre-existing or claim App Intents/Shortcuts integration passed. Those capabilities are not implemented; their signed runtime checks remain required. The HTTP test assertions and actual result bundle pass despite those diagnostics.
+The native test-host log includes nonfatal connection/re-registration
+diagnostics for the system com.apple.linkd.autoShortcut service. This report
+does not classify them as pre-existing or claim App Intents/Shortcuts
+integration passed. Those capabilities are not implemented; their signed runtime
+checks remain required. The HTTP test assertions and actual result bundle pass
+despite those diagnostics.
 
-Committed snapshot 6593e79 was also archived into /private/tmp/PlannerMCPTransportCleanCheckout and tested using fresh /private/tmp/PlannerMCPTransportCleanDerivedData products. [Actual result](evidence/mcp/clean-transport-green.json) records eleven test functions passed, zero failures/skips, including all four header cases. This snapshot precedes the later unsupported-initialization slice and does not qualify that later guard. Its full bundle/log are /private/tmp/PlannerMCPTransportClean.xcresult and PlannerMCPTransportClean.log. A separate generic iOS Simulator build of 6593e79 passed using fresh /private/tmp/PlannerMCPMobileTransportDerivedData products, log /private/tmp/PlannerMCPMobileTransportBuild.log; no simulator UI or physical-device result is claimed.
+Committed snapshot 6593e79 was also archived into
+/private/tmp/PlannerMCPTransportCleanCheckout and tested using fresh
+/private/tmp/PlannerMCPTransportCleanDerivedData products. Actual result records
+eleven test functions passed, zero failures/skips, including all four header
+cases. This snapshot precedes the later unsupported-initialization slice and
+does not qualify that later guard. Its full bundle/log are
+/private/tmp/PlannerMCPTransportClean.xcresult and PlannerMCPTransportClean.log.
+A separate generic iOS Simulator build of 6593e79 passed using fresh
+/private/tmp/PlannerMCPMobileTransportDerivedData products, log
+/private/tmp/PlannerMCPMobileTransportBuild.log; no simulator UI or
+physical-device result is claimed.
 
-The final implementation snapshot 6fe98ee was archived into /private/tmp/PlannerMCPFinalTransportCleanCheckout and tested using another fresh /private/tmp/PlannerMCPFinalTransportCleanDerivedData directory. [Actual final result](evidence/mcp/clean-final-transport-green.json) records twelve test functions passed, zero failures/skips, including the unsupported-initialization failure diagnostic and four header cases. The full bundle/log are /private/tmp/PlannerMCPFinalTransportClean.xcresult and PlannerMCPFinalTransportClean.log. No personal Xcode state, Local.xcconfig or previous app products were copied. The dependency cache remained the exact pinned package source.
+The final implementation snapshot 6fe98ee was archived into
+/private/tmp/PlannerMCPFinalTransportCleanCheckout and tested using another
+fresh /private/tmp/PlannerMCPFinalTransportCleanDerivedData directory. Actual
+final result records twelve test functions passed, zero failures/skips,
+including the unsupported-initialization failure diagnostic and four header
+cases. The full bundle/log are
+/private/tmp/PlannerMCPFinalTransportClean.xcresult and
+PlannerMCPFinalTransportClean.log. No personal Xcode state, Local.xcconfig or
+previous app products were copied. The dependency cache remained the exact
+pinned package source.
 
 ## Shared Core source reads
 
-Q36 A accepted the concrete local storage fixture. [Core qualification](core-local-qualification.md) now records thirteen real disk-backed Item creation, edit, replay, validation, query, Archive and precommit recovery-access functions. The HTTP handler can bind that same Planner facade and its issued dataset session. The first read slice advertises only the implemented Item-source `planner_read` form; subsequent sections describe its expanded catalog. The thin adapter validates domain arguments and encodes Core results; the pinned official SDK still owns the HTTP/JSON-RPC exchange. The transport-only initializer advertises no tools.
+Q36 A accepted the concrete local storage fixture.
+[Core qualification](core-local-qualification.md) now records thirteen real
+disk-backed Item creation, edit, replay, validation, query, Archive and
+precommit recovery-access functions. The HTTP handler can bind that same Planner
+facade and its issued dataset session. The first read slice advertises only the
+implemented Item-source `planner_read` form; subsequent sections describe its
+expanded catalog. The thin adapter validates domain arguments and encodes Core
+results; the pinned official SDK still owns the HTTP/JSON-RPC exchange. The
+transport-only initializer advertises no tools.
 
-The [source-routing evidence](evidence/mcp/source-read-routing.json) records an executable failing test before tool registration, followed by fourteen passing test functions, zero failures/skips. Two actual loopback requests concurrently submit the same integer JSON-RPC ID 7, requesting Hotel and Museum from the real store. Each returned exchange contains its own Item identity, title, notes and global Todo/Active flags, its current access-window header and no MCP session header. The public Core query still returns exactly two Items afterward. No simulated store or SDK dispatcher is used.
+The source-routing evidence records an executable failing test before tool
+registration, followed by fourteen passing test functions, zero failures/skips.
+Two actual loopback requests concurrently submit the same integer JSON-RPC ID 7,
+requesting Hotel and Museum from the real store. Each returned exchange contains
+its own Item identity, title, notes and global Todo/Active flags, its current
+access-window header and no MCP session header. The public Core query still
+returns exactly two Items afterward. No simulated store or SDK dispatcher is
+used.
 
-The final run also passes fourteen functions after descriptive local-name changes. The per-device summary counts seventeen executed cases because the existing header function has four parameters; it does not mean seventeen functions. Red/green/final bundles are /private/tmp/PlannerMCPSameIdentifierSourceRed.xcresult, PlannerMCPSameIdentifierSourceGreen.xcresult and PlannerMCPSourceReadFinal.xcresult, with matching logs. A fresh generic iOS Simulator app build passed in /private/tmp/PlannerMCPSourceReadMobileBuild.log. That build does not run the Mac-only listener or establish device behavior.
+The final run also passes fourteen functions after descriptive local-name
+changes. The per-device summary counts seventeen executed cases because the
+existing header function has four parameters; it does not mean seventeen
+functions. Red/green/final bundles are
+/private/tmp/PlannerMCPSameIdentifierSourceRed.xcresult,
+PlannerMCPSameIdentifierSourceGreen.xcresult and
+PlannerMCPSourceReadFinal.xcresult, with matching logs. A fresh generic iOS
+Simulator app build passed in /private/tmp/PlannerMCPSourceReadMobileBuild.log.
+That build does not run the Mac-only listener or establish device behavior.
 
-This is unsigned HTTP/Core integration evidence. It does not qualify native Enable/Stop, the signed credential reader, any selected client, app lock/sleep/quit, load, before/after-commit interruption or the rest of the tool catalog. Mixed integer/string IDs are still qualified only for ping. The historical clean-source runs above precede this source adapter and do not establish a clean-source build of it.
+This is unsigned HTTP/Core integration evidence. It does not qualify native
+Enable/Stop, the signed credential reader, any selected client, app
+lock/sleep/quit, load, before/after-commit interruption or the rest of the tool
+catalog. Mixed integer/string IDs are still qualified only for ping. The
+historical clean-source runs above precede this source adapter and do not
+establish a clean-source build of it.
 
-The [MCP structured-content recommendation](https://modelcontextprotocol.io/specification/2025-11-25/server/tools#structured-content) asks for serialized JSON in text output as well. The Item read initially returned only a short sentence there. The expanded real HTTP assertion fails parsing that sentence as JSON; the adapter now serializes the complete structured value through JSONEncoder into the text block. The text and structured objects compare equal, while the existing literal Hotel/Museum content assertions still pass. [Actual evidence](evidence/mcp/source-json-text.json) records one executed failing function followed by fourteen passing functions. Bundles are /private/tmp/PlannerMCPSourceTextRed.xcresult and PlannerMCPSourceTextExecutableGreen.xcresult. An intermediate SDK-overload compile failure executed no tests and is excluded from behavioral evidence. Error-result text and selected clients remain unqualified by this narrow change.
+The
+[MCP structured-content recommendation](https://modelcontextprotocol.io/specification/2025-11-25/server/tools#structured-content)
+asks for serialized JSON in text output as well. The Item read initially
+returned only a short sentence there. The expanded real HTTP assertion fails
+parsing that sentence as JSON; the adapter now serializes the complete
+structured value through JSONEncoder into the text block. The text and
+structured objects compare equal, while the existing literal Hotel/Museum
+content assertions still pass. Actual evidence records one executed failing
+function followed by fourteen passing functions. Bundles are
+/private/tmp/PlannerMCPSourceTextRed.xcresult and
+PlannerMCPSourceTextExecutableGreen.xcresult. An intermediate SDK-overload
+compile failure executed no tests and is excluded from behavioral evidence.
+Error-result text and selected clients remain unqualified by this narrow change.
 
-The source fixture now has two independently executed parameter cases: integer 7 for both requests, and integer 1 for Hotel with string "1" for Museum. Each returns its own correctly typed request ID and requested Item, with equivalent full text/structured JSON. Both retain the two public query identities. [Actual summary](evidence/mcp/mixed-source-routing.json) and [executed case tree](evidence/mcp/mixed-source-routing-tests.json) record fourteen passing functions, with two source cases and four header cases. Bundle/log are /private/tmp/PlannerMCPMixedSourceQualification.xcresult and PlannerMCPMixedSourceQualification.log. This qualifies the previously outstanding mixed source-ID fixture. It passed existing implementation on first execution; no red or production change is claimed. Actual selected-client overlap remains required separately.
+The source fixture now has two independently executed parameter cases: integer 7
+for both requests, and integer 1 for Hotel with string "1" for Museum. Each
+returns its own correctly typed request ID and requested Item, with equivalent
+full text/structured JSON. Both retain the two public query identities. Actual
+summary and executed case tree record fourteen passing functions, with two
+source cases and four header cases. Bundle/log are
+/private/tmp/PlannerMCPMixedSourceQualification.xcresult and
+PlannerMCPMixedSourceQualification.log. This qualifies the previously
+outstanding mixed source-ID fixture. It passed existing implementation on first
+execution; no red or production change is claimed. Actual selected-client
+overlap remains required separately.
 
 ## Shared Core creation
 
-The first `planner_execute` slice advertises createItem with title and optional notes. It constructs the accepted native operation and calls Planner.execute with the app's issued session. Other known content fields return unavailable; unknown fields reject with a JSON Pointer. The adapter owns no generated identities, checkpoint counters or domain storage. The returned result preserves Core's applied/rejected/unverified discriminator, and an incomplete checkpoint remains applied. Those interruption outcomes still need real failure qualification. An encoding failure after execute returns unavailable without claiming the action was rejected.
+The first `planner_execute` slice advertises createItem with title and optional
+notes. It constructs the accepted native operation and calls Planner.execute
+with the app's issued session. Other known content fields return unavailable;
+unknown fields reject with a JSON Pointer. The adapter owns no generated
+identities, checkpoint counters or domain storage. The returned result preserves
+Core's applied/rejected/unverified discriminator, and an incomplete checkpoint
+remains applied. Those interruption outcomes still need real failure
+qualification. An encoding failure after execute returns unavailable without
+claiming the action was rejected.
 
-[Actual creation evidence](evidence/mcp/create-routing.json) records one executed failing function before routing, then fifteen passing hosted functions. HTTP creates Hotel/Original notes using operation 00000000-0000-4000-8000-000000000901, and an identical HTTP replay returns its original Item and checkpoint "1". A fresh Core facade reopens the disk store, reads Hotel as Todo/Active, queries exactly one Item and reads the original complete operation evidence. Both tool results contain equivalent full JSON text/structured output. No private database inspection or fake store supplies the expected result.
+Actual creation evidence records one executed failing function before routing,
+then fifteen passing hosted functions. HTTP creates Hotel/Original notes using
+operation 00000000-0000-4000-8000-000000000901, and an identical HTTP replay
+returns its original Item and checkpoint "1". A fresh Core facade reopens the
+disk store, reads Hotel as Todo/Active, queries exactly one Item and reads the
+original complete operation evidence. Both tool results contain equivalent full
+JSON text/structured output. No private database inspection or fake store
+supplies the expected result.
 
-Red/green/final bundles are /private/tmp/PlannerMCPCreateRoutingRed.xcresult, PlannerMCPCreateRoutingGreen.xcresult and PlannerMCPCreateRoutingFinal.xcresult, with matching logs. Source/document lint pass. The final rerun follows a review correction to avoid a false rejected claim after result-encoding failure; the test does not force that branch. This qualifies the disposable HTTP creation path, not any selected client or the complete command catalog. Native UI, signed reader, client/lifecycle/load and the other original gates remain open.
+Red/green/final bundles are /private/tmp/PlannerMCPCreateRoutingRed.xcresult,
+PlannerMCPCreateRoutingGreen.xcresult and PlannerMCPCreateRoutingFinal.xcresult,
+with matching logs. Source/document lint pass. The final rerun follows a review
+correction to avoid a false rejected claim after result-encoding failure; the
+test does not force that branch. This qualifies the disposable HTTP creation
+path, not any selected client or the complete command catalog. Native UI, signed
+reader, client/lifecycle/load and the other original gates remain open.
 
-The [native-administration fixture](evidence/mcp/forbidden-administration.json) independently submits deleteSource, applyImport and restoreRecovery through actual HTTP. Each names the known command type without preparing its native-only payload. All three return an operation-bound rejection with forbiddenOperation at /command/type before native payload validation. Hotel/Original notes stays Todo/Active, the query retains its single identity, the checkpoint remains unchanged, no proposal appears and the rejected operation has no reliable receipt evidence. The denial therefore cannot masquerade as a saved or rolled-back domain action. The red run executes two functions with the new parameterized function failing; green passes sixteen functions. Bundles/logs are /private/tmp/PlannerMCPForbiddenAdminRed and PlannerMCPForbiddenAdminGreen with xcresult/log extensions. This proves these admission denials, not native Delete/import/recovery execution or every indirect abuse case.
+The native-administration fixture independently submits deleteSource,
+applyImport and restoreRecovery through actual HTTP. Each names the known
+command type without preparing its native-only payload. All three return an
+operation-bound rejection with forbiddenOperation at /command/type before native
+payload validation. Hotel/Original notes stays Todo/Active, the query retains
+its single identity, the checkpoint remains unchanged, no proposal appears and
+the rejected operation has no reliable receipt evidence. The denial therefore
+cannot masquerade as a saved or rolled-back domain action. The red run executes
+two functions with the new parameterized function failing; green passes sixteen
+functions. Bundles/logs are /private/tmp/PlannerMCPForbiddenAdminRed and
+PlannerMCPForbiddenAdminGreen with xcresult/log extensions. This proves these
+admission denials, not native Delete/import/recovery execution or every indirect
+abuse case.
 
 ## Shared Core identity queries
 
-The first `planner_query` slice uses Planner.query for global/Inbox Item identities and completion/archive selection. Its advertised schema describes that subset; other known query fields return unavailable rather than being ignored. No duplicate search engine or stored presentation preference is introduced. Counts are decimal strings, the generation is Core-issued and only Item source rows exist in this fixture. Full search/filter/sort, contextual progress and snapshot-window reads remain unimplemented.
+The first `planner_query` slice uses Planner.query for global/Inbox Item
+identities and completion/archive selection. Its advertised schema describes
+that subset; other known query fields return unavailable rather than being
+ignored. No duplicate search engine or stored presentation preference is
+introduced. Counts are decimal strings, the generation is Core-issued and only
+Item source rows exist in this fixture. Full search/filter/sort, contextual
+progress and snapshot-window reads remain unimplemented.
 
-[Actual query evidence](evidence/mcp/query-routing.json) records one executed failing function followed by seventeen passing hosted functions. Museum is created before Hotel through the real Core; the default HTTP query still returns exactly Hotel then Museum identities, with count "2" and equivalent text/structured JSON. A subsequent native query retains exactly those two Items. Red/green bundles/logs are /private/tmp/PlannerMCPQueryRoutingRed and PlannerMCPQueryRoutingGreen with xcresult/log extensions. Source/document lint pass. This qualifies default identity discovery, not the remaining query fields, load, native navigation or any selected client.
+Actual query evidence records one executed failing function followed by
+seventeen passing hosted functions. Museum is created before Hotel through the
+real Core; the default HTTP query still returns exactly Hotel then Museum
+identities, with count "2" and equivalent text/structured JSON. A subsequent
+native query retains exactly those two Items. Red/green bundles/logs are
+/private/tmp/PlannerMCPQueryRoutingRed and PlannerMCPQueryRoutingGreen with
+xcresult/log extensions. Source/document lint pass. This qualifies default
+identity discovery, not the remaining query fields, load, native navigation or
+any selected client.
 
 ## Shared Core operation status
 
-`planner_operation_status` calls the authorized facade without executing or replaying a command. Its [actual evidence](evidence/mcp/operation-status-routing.json) records one executed failing function, then eighteen passing hosted functions in both green and final runs. HTTP inspection of Hotel's saved operation returns appliedRecoveryComplete, its original Item identity and checkpoint "1". Inspection of a fresh unknown operation returns noReliableEvidence, with no invented result or rollback reason. Both have equivalent text/structured JSON. Subsequent public query/recovery inspection retains one Hotel, the unchanged checkpoint and no prepared proposal.
+`planner_operation_status` calls the authorized facade without executing or
+replaying a command. Its actual evidence records one executed failing function,
+then eighteen passing hosted functions in both green and final runs. HTTP
+inspection of Hotel's saved operation returns appliedRecoveryComplete, its
+original Item identity and checkpoint "1". Inspection of a fresh unknown
+operation returns noReliableEvidence, with no invented result or rollback
+reason. Both have equivalent text/structured JSON. Subsequent public
+query/recovery inspection retains one Hotel, the unchanged checkpoint and no
+prepared proposal.
 
-Bundles/logs are /private/tmp/PlannerMCPOperationStatusRed, PlannerMCPOperationStatusGreen and PlannerMCPOperationStatusFinal with xcresult/log extensions. The final run follows missing-property admission classification review; that branch is not exercised by this fixture. Source/document lint pass. Other status variants are encoded but await real interruption/failure evidence. The test does not qualify selected clients, native Enable/Stop, the signed reader, lifecycle or load.
+Bundles/logs are /private/tmp/PlannerMCPOperationStatusRed,
+PlannerMCPOperationStatusGreen and PlannerMCPOperationStatusFinal with
+xcresult/log extensions. The final run follows missing-property admission
+classification review; that branch is not exercised by this fixture.
+Source/document lint pass. Other status variants are encoded but await real
+interruption/failure evidence. The test does not qualify selected clients,
+native Enable/Stop, the signed reader, lifecycle or load.
 
 ## Shared Core guarded edits
 
-The execute schema now includes Item title/notes patches. Missing/null/value becomes unchanged/clear/set in the approved typed command. Read hashes become native PlannerFieldHash inputs; Core validates their spelling, source binding and changed-field comparison under its existing writer gate. The adapter computes no hash or conflict winner. Core failure details use one shared wire projection so stale conflicts are preserved rather than discarded.
+The execute schema now includes Item title/notes patches. Missing/null/value
+becomes unchanged/clear/set in the approved typed command. Read hashes become
+native PlannerFieldHash inputs; Core validates their spelling, source binding
+and changed-field comparison under its existing writer gate. The adapter
+computes no hash or conflict winner. Core failure details use one shared wire
+projection so stale conflicts are preserved rather than discarded.
 
-[Actual notes-edit evidence](evidence/mcp/notes-routing.json) records three executed command functions with the new edit function failing, then nineteen passing hosted functions. An HTTP patch changes Hotel's notes from Original notes to Friday booking with complete checkpoint "2". A second operation tries Monday booking using the old notes hash. It returns rejected/staleEdit with conflictingFields [notes], currentValues.notes Friday booking and the current hash from Core. A public read retains Friday, its timestamp and every field hash; status retains the successful edit's original affected Item and checkpoint. Both applied/rejected responses carry equivalent full text/structured JSON.
+Actual notes-edit evidence records three executed command functions with the new
+edit function failing, then nineteen passing hosted functions. An HTTP patch
+changes Hotel's notes from Original notes to Friday booking with complete
+checkpoint "2". A second operation tries Monday booking using the old notes
+hash. It returns rejected/staleEdit with conflictingFields [notes],
+currentValues.notes Friday booking and the current hash from Core. A public read
+retains Friday, its timestamp and every field hash; status retains the
+successful edit's original affected Item and checkpoint. Both applied/rejected
+responses carry equivalent full text/structured JSON.
 
-Bundles/logs are /private/tmp/PlannerMCPNotesRoutingRed and PlannerMCPNotesRoutingGreen with xcresult/log extensions. The ten affected Core package tests also pass, and a fresh generic iOS Simulator app build succeeds. Source/document lint pass. Only notes Set/stale rejection is executed in this adapter fixture; title, clear, replay, malformed hashes and other patch cases remain separate qualification. Native/client/signing/lifecycle/load gates remain open.
+Bundles/logs are /private/tmp/PlannerMCPNotesRoutingRed and
+PlannerMCPNotesRoutingGreen with xcresult/log extensions. The ten affected Core
+package tests also pass, and a fresh generic iOS Simulator app build succeeds.
+Source/document lint pass. Only notes Set/stale rejection is executed in this
+adapter fixture; title, clear, replay, malformed hashes and other patch cases
+remain separate qualification. Native/client/signing/lifecycle/load gates remain
+open.
 
 ## Shared Core Archive and Unarchive
 
-The execute schema now advertises Item setArchive with a parsed source UUID and strict Bool. The adapter constructs the accepted Core command; it does not delete content, alter completion or invent a receipt/checkpoint. Unsupported source kinds never fall back to an Item/global action.
+The execute schema now advertises Item setArchive with a parsed source UUID and
+strict Bool. The adapter constructs the accepted Core command; it does not
+delete content, alter completion or invent a receipt/checkpoint. Unsupported
+source kinds never fall back to an Item/global action.
 
-[Actual archive routing evidence](evidence/mcp/archive-routing.json) records one executed failing function, then twenty passing hosted functions. Two saved sources begin Hotel/Original notes and Museum/Museum notes, both Todo/Active. HTTP Archive saves Hotel at complete checkpoint "3"; HTTP source read retains its content and global Todo with archived true. The ordinary HTTP query discovers only Museum. HTTP Unarchive completes at checkpoint "4". Replaying the original Archive returns checkpoint "3" while the ordinary HTTP query still discovers Hotel and Museum. Final public native reads retain both original sources/content as Todo/Active. Every tool result has equivalent full text/structured JSON.
+Actual archive routing evidence records one executed failing function, then
+twenty passing hosted functions. Two saved sources begin Hotel/Original notes
+and Museum/Museum notes, both Todo/Active. HTTP Archive saves Hotel at complete
+checkpoint "3"; HTTP source read retains its content and global Todo with
+archived true. The ordinary HTTP query discovers only Museum. HTTP Unarchive
+completes at checkpoint "4". Replaying the original Archive returns checkpoint
+"3" while the ordinary HTTP query still discovers Hotel and Museum. Final public
+native reads retain both original sources/content as Todo/Active. Every tool
+result has equivalent full text/structured JSON.
 
-Bundles/logs are /private/tmp/PlannerMCPArchiveRoutingRed and PlannerMCPArchiveRoutingGreen with xcresult/log extensions. Source/document lint pass. This supplies the required disposable read/create/edit/archive command subset through actual HTTP and Core. It does not replace selected-client calls, native Agent Control, signed reader, lifecycle/load, container/global-Done cases or full graph/CloudKit evidence.
+Bundles/logs are /private/tmp/PlannerMCPArchiveRoutingRed and
+PlannerMCPArchiveRoutingGreen with xcresult/log extensions. Source/document lint
+pass. This supplies the required disposable read/create/edit/archive command
+subset through actual HTTP and Core. It does not replace selected-client calls,
+native Agent Control, signed reader, lifecycle/load, container/global-Done cases
+or full graph/CloudKit evidence.
 
 ## Concurrent Item read measurements
 
-The accepted workload now has [actual isolated load evidence](evidence/mcp/read-load.json). One hosted function passed, with 64 completed Hotel reads at each concurrency below. All 384 requests returned the original source/window identity, Hotel/Original notes and Todo/Active. Each workload recorded zero rejected, cancelled or failed requests. Final public Core reads, query and recovery inspection retained the original content, timestamp, field hashes, single identity, acknowledged checkpoint and absence of prepared proposals. The existing implementation passed its first executable run; no behavioral red or production change is claimed.
+The accepted workload now has actual isolated load evidence. One hosted function
+passed, with 64 completed Hotel reads at each concurrency below. All 384
+requests returned the original source/window identity, Hotel/Original notes and
+Todo/Active. Each workload recorded zero rejected, cancelled or failed requests.
+Final public Core reads, query and recovery inspection retained the original
+content, timestamp, field hashes, single identity, acknowledged checkpoint and
+absence of prepared proposals. The existing implementation passed its first
+executable run; no behavioral red or production change is claimed.
 
 | Concurrent requests | Completed | Median ms | p95 ms | p99 ms | Sampled peak footprint MiB | Settled footprint MiB |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 | 64 | 4.9 | 7.1 | 15.6 | 59.0 | 58.7 |
-| 2 | 64 | 4.5 | 7.6 | 23.9 | 59.1 | 59.1 |
-| 4 | 64 | 9.9 | 20.0 | 33.9 | 59.5 | 59.5 |
-| 8 | 64 | 17.2 | 52.1 | 62.5 | 60.1 | 60.1 |
-| 16 | 64 | 39.6 | 92.1 | 100.1 | 61.3 | 61.3 |
-| 32 | 64 | 70.2 | 122.1 | 128.2 | 63.2 | 63.2 |
+| ------------------- | --------- | --------- | ------ | ------ | -------------------------- | --------------------- |
+| 1                   | 64        | 4.9       | 7.1    | 15.6   | 59.0                       | 58.7                  |
+| 2                   | 64        | 4.5       | 7.6    | 23.9   | 59.1                       | 59.1                  |
+| 4                   | 64        | 9.9       | 20.0   | 33.9   | 59.5                       | 59.5                  |
+| 8                   | 64        | 17.2      | 52.1   | 62.5   | 60.1                       | 60.1                  |
+| 16                  | 64        | 39.6      | 92.1   | 100.1  | 61.3                       | 61.3                  |
+| 32                  | 64        | 70.2      | 122.1  | 128.2  | 63.2                       | 63.2                  |
 
-These are end-to-end URLSession latencies in one Debug test-host process on the recorded arm64 Mac. The task group maintains up to the selected concurrency until 64 requests settle. Each level uses a fresh ephemeral URLSession whose maximum connections per host equals the workload. These values configure the measurement, not Agent Control capacity. The listener uses an OS-assigned disposable loopback port. Request and test time budgets do not add an access expiry.
+These are end-to-end URLSession latencies in one Debug test-host process on the
+recorded arm64 Mac. The task group maintains up to the selected concurrency
+until 64 requests settle. Each level uses a fresh ephemeral URLSession whose
+maximum connections per host equals the workload. These values configure the
+measurement, not Agent Control capacity. The listener uses an OS-assigned
+disposable loopback port. Request and test time budgets do not add an access
+expiry.
 
-Mach TASK_VM_INFO supplies native process footprint, resident size and process-lifetime peak counters. The latter are cumulative across the six sequential workloads. Sampled trial peaks observe baseline and request completions, so they can miss a transient peak between observations. Settled memory is sampled 250 ms after URLSession invalidation. At the end, cumulative peak footprint is 63.2 MiB and peak resident size is 173.6 MiB, including the entire app and test-host overhead. The evidence preserves exact bytes, baseline/settled counters and latency distributions. This short run does not establish leak-free sustained operation or a saturation threshold.
+Mach TASK_VM_INFO supplies native process footprint, resident size and
+process-lifetime peak counters. The latter are cumulative across the six
+sequential workloads. Sampled trial peaks observe baseline and request
+completions, so they can miss a transient peak between observations. Settled
+memory is sampled 250 ms after URLSession invalidation. At the end, cumulative
+peak footprint is 63.2 MiB and peak resident size is 173.6 MiB, including the
+entire app and test-host overhead. The evidence preserves exact bytes,
+baseline/settled counters and latency distributions. This short run does not
+establish leak-free sustained operation or a saturation threshold.
 
-Run only ReadLoadTests when using these performance values so other hosted suites do not compete for resources:
+Run only ReadLoadTests when using these performance values so other hosted
+suites do not compete for resources:
 
 ```sh
 env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -only-testing:PlannerMCPTests/ReadLoadTests -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData -resultBundlePath /private/tmp/PlannerMCPReadLoadExecutableQualification.xcresult
 env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun xcresulttool get test-results summary --path /private/tmp/PlannerMCPReadLoadExecutableQualification.xcresult --format json
 ```
 
-The matching log is /private/tmp/PlannerMCPReadLoadExecutableQualification.log. Its six PLANNER_MCP_READ_LOAD JSON records supply the committed measurements. An earlier C-macro import compile failure ran no tests and is excluded from behavior evidence. Native linkd.autoShortcut diagnostics remain recorded; this test does not qualify Intents/Shortcuts. Actual selected-client overlap, native selection/query responsiveness, Agent Control UI/reader/lifecycle, mutation load, physical iOS and CloudKit remain separate gates.
+The matching log is /private/tmp/PlannerMCPReadLoadExecutableQualification.log.
+Its six PLANNER_MCP_READ_LOAD JSON records supply the committed measurements. An
+earlier C-macro import compile failure ran no tests and is excluded from
+behavior evidence. Native linkd.autoShortcut diagnostics remain recorded; this
+test does not qualify Intents/Shortcuts. Actual selected-client overlap, native
+selection/query responsiveness, Agent Control UI/reader/lifecycle, mutation
+load, physical iOS and CloudKit remain separate gates.
 
 ## Clean-domain reproduction
 
-Archived committed b530c0d99047046c24b918271429f28761bfe376 into /private/tmp/PlannerMCPDomainClean-b530c0d. The checkout contains no personal Xcode state, ignored Local.xcconfig or previous app products. Native project discovery succeeds. Fresh /private/tmp/PlannerMCPDomainCleanDerived-b530c0d and PlannerCoreDomainCleanScratch-b530c0d products run the affected hosted MCP and Core package store suites. Committed remote pins use the already downloaded dependency source cache.
+Archived committed b530c0d99047046c24b918271429f28761bfe376 into
+/private/tmp/PlannerMCPDomainClean-b530c0d. The checkout contains no personal
+Xcode state, ignored Local.xcconfig or previous app products. Native project
+discovery succeeds. Fresh /private/tmp/PlannerMCPDomainCleanDerived-b530c0d and
+PlannerCoreDomainCleanScratch-b530c0d products run the affected hosted MCP and
+Core package store suites. Committed remote pins use the already downloaded
+dependency source cache.
 
-[Actual clean-domain evidence](evidence/mcp/clean-domain-green.json) records nineteen passing hosted functions, zero failed/skipped/expected failures, and ten passing Core package functions across three suites. Bundle/log are /private/tmp/PlannerMCPDomainClean-b530c0d.xcresult and PlannerMCPDomainClean-b530c0d.log; package log is /private/tmp/PlannerCoreDomainClean-b530c0d.log. This reproduces the implemented Item source/create/edit/query/status slice and authority rejection. It does not qualify Archive, all field/input/failure variants, native Agent Control, signed reader, selected clients, app lifecycle/load, physical iOS or CloudKit. No owning ticket gate or human review is waived.
+Actual clean-domain evidence records nineteen passing hosted functions, zero
+failed/skipped/expected failures, and ten passing Core package functions across
+three suites. Bundle/log are /private/tmp/PlannerMCPDomainClean-b530c0d.xcresult
+and PlannerMCPDomainClean-b530c0d.log; package log is
+/private/tmp/PlannerCoreDomainClean-b530c0d.log. This reproduces the implemented
+Item source/create/edit/query/status slice and authority rejection. It does not
+qualify Archive, all field/input/failure variants, native Agent Control, signed
+reader, selected clients, app lifecycle/load, physical iOS or CloudKit. No
+owning ticket gate or human review is waived.
 
 ## Clean Archive reproduction and SDK correction
 
-Archived committed 94c75fc0f18e5d2bec4196b45070cbd96ed1de39 into /private/tmp/PlannerMCPLocalClean-94c75fc. [Actual clean Archive evidence](evidence/mcp/clean-archive-green.json) records native project discovery, twenty passing hosted MCP functions, thirteen passing Core package functions across five suites, and a successful generic iOS Simulator app build. No personal Xcode state, ignored Local.xcconfig or previous app products were copied. All three runs use fresh products and the existing exact resolved dependency source cache. ReadLoadTests is excluded from the ordinary hosted run to keep the separately recorded performance measurement isolated.
+Archived committed 94c75fc0f18e5d2bec4196b45070cbd96ed1de39 into
+/private/tmp/PlannerMCPLocalClean-94c75fc. Actual clean Archive evidence records
+native project discovery, twenty passing hosted MCP functions, thirteen passing
+Core package functions across five suites, and a successful generic iOS
+Simulator app build. No personal Xcode state, ignored Local.xcconfig or previous
+app products were copied. All three runs use fresh products and the existing
+exact resolved dependency source cache. ReadLoadTests is excluded from the
+ordinary hosted run to keep the separately recorded performance measurement
+isolated.
 
-The native bundle/log are /private/tmp/PlannerMCPLocalClean-94c75fc.xcresult and PlannerMCPLocalClean-94c75fc.log. The package log is /private/tmp/PlannerCoreLocalClean-94c75fc.log; the mobile compile log is /private/tmp/PlannerMCPLocalMobileBuild-94c75fc.log. Fresh product locations and actual discovery are in the evidence. This reproduces the Archive-enabled Item slice and precommit obstruction fixture. Generic iOS compilation is not simulator UI or physical-device proof.
+The native bundle/log are /private/tmp/PlannerMCPLocalClean-94c75fc.xcresult and
+PlannerMCPLocalClean-94c75fc.log. The package log is
+/private/tmp/PlannerCoreLocalClean-94c75fc.log; the mobile compile log is
+/private/tmp/PlannerMCPLocalMobileBuild-94c75fc.log. Fresh product locations and
+actual discovery are in the evidence. This reproduces the Archive-enabled Item
+slice and precommit obstruction fixture. Generic iOS compilation is not
+simulator UI or physical-device proof.
 
-The clean build exposed four deprecated text-result constructor calls in execution/query/status adapters. The official SDK's compatibility factories simply return Tool.Content.text with nil annotations and metadata. Commit db5d1f5 uses that current enum case directly, preserving the same result. [Actual correction regression](evidence/mcp/text-api-regression.json) records twenty passing affected hosted functions and no source deprecation diagnostics in the rebuild log. Bundle/log are /private/tmp/PlannerMCPTextAPIFinal.xcresult and PlannerMCPTextAPIFinal.log. That correction uses existing derived products; the earlier clean Archive snapshot does not qualify its later source. No behavior change, new test or behavioral red is claimed.
+The clean build exposed four deprecated text-result constructor calls in
+execution/query/status adapters. The official SDK's compatibility factories
+simply return Tool.Content.text with nil annotations and metadata. Commit
+db5d1f5 uses that current enum case directly, preserving the same result. Actual
+correction regression records twenty passing affected hosted functions and no
+source deprecation diagnostics in the rebuild log. Bundle/log are
+/private/tmp/PlannerMCPTextAPIFinal.xcresult and PlannerMCPTextAPIFinal.log.
+That correction uses existing derived products; the earlier clean Archive
+snapshot does not qualify its later source. No behavior change, new test or
+behavioral red is claimed.
 
-Native metadata extraction and linkd.autoShortcut diagnostics remain recorded. Intents/Shortcuts are unimplemented and unqualified. Source/document lint pass. Native Enable/Stop/menu presentation, signed reader, selected clients, full lifecycle, cross-process interruption and CloudKit remain required. This issue stays open until its original gates and human review pass.
+Native metadata extraction and linkd.autoShortcut diagnostics remain recorded.
+Intents/Shortcuts are unimplemented and unqualified. Source/document lint pass.
+Native Enable/Stop/menu presentation, signed reader, selected clients, full
+lifecycle, cross-process interruption and CloudKit remain required. This issue
+stays open until its original gates and human review pass.
 
 ## Owned Item row windows over HTTP
 
-The accepted Q43 Item query presentation context and generation-bound rows request now use the existing planner_query/planner_read tools. Tool discovery advertises the added context and source/rows union. The adapter parses finite Foundation date numbers, timezone strings, native UUIDs and canonical checked decimal Int64 ranges, then delegates query/window semantics to Core. It repeats Core's fixed presentation context in snapshots and windows and retains typed staleSnapshot details. It adds no independent search engine, state mutation or row cap.
+The accepted Q43 Item query presentation context and generation-bound rows
+request now use the existing planner_query/planner_read tools. Tool discovery
+advertises the added context and source/rows union. The adapter parses finite
+Foundation date numbers, timezone strings, native UUIDs and canonical checked
+decimal Int64 ranges, then delegates query/window semantics to Core. It repeats
+Core's fixed presentation context in snapshots and windows and retains typed
+staleSnapshot details. It adds no independent search engine, state mutation or
+row cap.
 
-The executable [wire red and green](evidence/mcp/owned-row-wire.json) run the same real loopback HTTP journey against an actual temporary SwiftData/recovery dataset. The query/row read returns Nezu Museum, its independently owned Meeting point A/Tokyo/coordinate and 120-minute estimate at a fixed Tokyo reference time. Text JSON and structured content agree. The row excludes full notes and hashes, and an out-of-range window remains a valid empty result in that same generation/context. One intermediate build failed at using an internal Core failure initializer; it is recorded as a build outcome, not behavior red.
+The executable wire red and green run the same real loopback HTTP journey
+against an actual temporary SwiftData/recovery dataset. The query/row read
+returns Nezu Museum, its independently owned Meeting point A/Tokyo/coordinate
+and 120-minute estimate at a fixed Tokyo reference time. Text JSON and
+structured content agree. The row excludes full notes and hashes, and an
+out-of-range window remains a valid empty result in that same
+generation/context. One intermediate build failed at using an internal Core
+failure initializer; it is recorded as a build outcome, not behavior red.
 
-Two additional functions passed existing implementation on first execution. After another facade archives Hotel, the old HTTP window reports failed/staleSnapshot with its requested generation and null current generation; it never returns empty success. A fresh query is empty while Hotel/Original notes remains archived. Nine malformed window requests and three invalid presentation requests check canonical ranges/overflow/types, UUID syntax, valid zones and escaped unknown-field paths. They preserve an earlier valid default-context generation, including its empty Int64.max window.
+Two additional functions passed existing implementation on first execution.
+After another facade archives Hotel, the old HTTP window reports
+failed/staleSnapshot with its requested generation and null current generation;
+it never returns empty success. A fresh query is empty while Hotel/Original
+notes remains archived. Nine malformed window requests and three invalid
+presentation requests check canonical ranges/overflow/types, UUID syntax, valid
+zones and escaped unknown-field paths. They preserve an earlier valid
+default-context generation, including its empty Int64.max window.
 
-Three HTTP row functions pass with zero failures/skips, and the affected native MCP target passes all 24 functions across 15 suites. Strict source/document lint and diff checks pass. Red bundle/log are /private/tmp/PlannerMCPOwnedRowWireRed.xcresult and PlannerMCPOwnedRowWireRed.log; green uses PlannerMCPOwnedRowWireCompiledGreen; qualification uses PlannerMCPOwnedRowWireQualification; affected regression uses PlannerMCPOwnedRowWireRegression, with the same extensions.
+Three HTTP row functions pass with zero failures/skips, and the affected native
+MCP target passes all 24 functions across 15 suites. Strict source/document lint
+and diff checks pass. Red bundle/log are
+/private/tmp/PlannerMCPOwnedRowWireRed.xcresult and
+PlannerMCPOwnedRowWireRed.log; green uses PlannerMCPOwnedRowWireCompiledGreen;
+qualification uses PlannerMCPOwnedRowWireQualification; affected regression uses
+PlannerMCPOwnedRowWireRegression, with the same extensions.
 
-This is the existing Item-only Core projection: localDone/previewLink are null, hasLinks is false and scheduleSummary is none because those records do not exist yet. The encoder does not establish the accepted bookmark/schedule selection algorithms or add provider requests. Full-graph contextual rows, saved completion/drag interactions, real chosen MCP clients, account/interruptions and performance remain separate gates. Earlier screenshots qualify their recorded UI source, not this wire behavior.
+This is the existing Item-only Core projection: localDone/previewLink are null,
+hasLinks is false and scheduleSummary is none because those records do not exist
+yet. The encoder does not establish the accepted bookmark/schedule selection
+algorithms or add provider requests. Full-graph contextual rows, saved
+completion/drag interactions, real chosen MCP clients, account/interruptions and
+performance remain separate gates. Earlier screenshots qualify their recorded UI
+source, not this wire behavior.
 
 ## Global Item completion over HTTP
 
-The ordinary planner_execute union now advertises setCompletion with an explicit globalItem scope and Boolean done. The adapter constructs the accepted Core command and delegates saved state, lifetime/operation fingerprint and recovery outcome to the facade. Correctly shaped appearance completion remains unavailable in this Item-only prototype. Unknown fields from another scope reject with their exact JSON Pointer; no appearance request becomes a global action.
+The ordinary planner_execute union now advertises setCompletion with an explicit
+globalItem scope and Boolean done. The adapter constructs the accepted Core
+command and delegates saved state, lifetime/operation fingerprint and recovery
+outcome to the facade. Correctly shaped appearance completion remains
+unavailable in this Item-only prototype. Unknown fields from another scope
+reject with their exact JSON Pointer; no appearance request becomes a global
+action.
 
-[Actual completion wire evidence](evidence/mcp/item-completion-wire.json) records four row-routing functions in the executed red and green. The new journey completes Hotel over HTTP, reads global/effective Done from its query window, reopens it to Todo, and replays the earlier completion request. The replay returns the original checkpoint 2 while current source content/timestamp/hashes/Todo remain unchanged at checkpoint 3. Closing the listener and reopening the native store retains Original notes/Todo and acknowledged recovery. Successful text JSON matches structured results.
+Actual completion wire evidence records four row-routing functions in the
+executed red and green. The new journey completes Hotel over HTTP, reads
+global/effective Done from its query window, reopens it to Todo, and replays the
+earlier completion request. The replay returns the original checkpoint 2 while
+current source content/timestamp/hashes/Todo remain unchanged at checkpoint 3.
+Closing the listener and reopening the native store retains Original notes/Todo
+and acknowledged recovery. Successful text JSON matches structured results.
 
-A follow-up admission function passed existing implementation on first execution with nine checks. Its tightened scope-field expectation then produced a second executed red: a mixed appearance/global scope was classified unavailable rather than unknownField. Exact per-variant scope validation fixes that failure. The final function covers ten malformed Boolean/scope/UUID/missing/unknown-field requests, including a correctly shaped listMembership appearance reporting unavailable. Every rejection echoes its operation ID without applied evidence, preserves source values/flags/timestamps/hashes and leaves checkpoint 1 with no prepared proposals. Rejected-operation text JSON matches structured content.
+A follow-up admission function passed existing implementation on first execution
+with nine checks. Its tightened scope-field expectation then produced a second
+executed red: a mixed appearance/global scope was classified unavailable rather
+than unknownField. Exact per-variant scope validation fixes that failure. The
+final function covers ten malformed Boolean/scope/UUID/missing/unknown-field
+requests, including a correctly shaped listMembership appearance reporting
+unavailable. Every rejection echoes its operation ID without applied evidence,
+preserves source values/flags/timestamps/hashes and leaves checkpoint 1 with no
+prepared proposals. Rejected-operation text JSON matches structured content.
 
-The final affected native MCP target passes all 26 functions across 15 suites, including the five row-routing functions, with zero failures/skips/expected failures. Strict source/document lint and diff checks pass. An earlier single-function selector ran zero tests and is explicitly excluded. A failed local edit assertion left the adapter unchanged; that repeat run is also not represented as green.
+The final affected native MCP target passes all 26 functions across 15 suites,
+including the five row-routing functions, with zero failures/skips/expected
+failures. Strict source/document lint and diff checks pass. An earlier
+single-function selector ran zero tests and is explicitly excluded. A failed
+local edit assertion left the adapter unchanged; that repeat run is also not
+represented as green.
 
-Bundles/logs use /private/tmp/PlannerMCPItemCompletionWireExecutedRed, PlannerMCPItemCompletionWireImplementedGreen, PlannerMCPItemCompletionWireQualification, PlannerMCPCompletionScopeFieldsRed and PlannerMCPItemCompletionWireRegression with xcresult/log extensions. The zero-test selection is PlannerMCPItemCompletionWireRed. The unchanged-code repeat is PlannerMCPItemCompletionWireGreen.
+Bundles/logs use /private/tmp/PlannerMCPItemCompletionWireExecutedRed,
+PlannerMCPItemCompletionWireImplementedGreen,
+PlannerMCPItemCompletionWireQualification, PlannerMCPCompletionScopeFieldsRed
+and PlannerMCPItemCompletionWireRegression with xcresult/log extensions. The
+zero-test selection is PlannerMCPItemCompletionWireRed. The unchanged-code
+repeat is PlannerMCPItemCompletionWireGreen.
 
-This adds global Item data flow, not appearance/local/bulk commands or native checkbox writes. Full-graph precedence and other contexts, actual chosen MCP clients, interruption/account/CloudKit convergence and performance remain their own gates. Backup/export/recovery administration remains outside the agent tool union.
+This adds global Item data flow, not appearance/local/bulk commands or native
+checkbox writes. Full-graph precedence and other contexts, actual chosen MCP
+clients, interruption/account/CloudKit convergence and performance remain their
+own gates. Backup/export/recovery administration remains outside the agent tool
+union.
 
 ## Owned Item links over HTTP
 
-The route now advertises optional ordered links on createItem, validates their exact nested input fields and delegates bookmark validation/identity creation to the same Core facade. LinkInput contains originalUrl and nullable label, with an omitted/null linkId for a new record. Classification and providerReference remain read-only. Invalid fields, types, UUIDs, foreign existing IDs and unsupported URL schemes reject the entire creation; they cannot save the valid prefix of a links array. Source reads return every owned link in saved order. Rows reuse the same link codec for their single selected previewLink, without loading notes, full link collections or field hashes into the row result.
+The route now advertises optional ordered links on createItem, validates their
+exact nested input fields and delegates bookmark validation/identity creation to
+the same Core facade. LinkInput contains originalUrl and nullable label, with an
+omitted/null linkId for a new record. Classification and providerReference
+remain read-only. Invalid fields, types, UUIDs, foreign existing IDs and
+unsupported URL schemes reject the entire creation; they cannot save the valid
+prefix of a links array. Source reads return every owned link in saved order.
+Rows reuse the same link codec for their single selected previewLink, without
+loading notes, full link collections or field hashes into the row result.
 
-The [executed wire evidence](evidence/mcp/owned-links-wire.json) records a six-function red with one failure at the unimplemented creation route and its six-function green. The actual authenticated loopback HTTP journey creates Museum with Map, Menu and reservation links, reads their stable unique IDs and exact original strings/nulls, then reads only Menu as the website preview. Structured JSON and the text JSON agree. Replaying creation retains the same whole result, source and already issued row window; reopening the real store preserves the links and independent notes. This extends the [Core storage/migration proof](core-local-qualification.md#owned-item-links-and-v1-migration); it is not a simulated fixture save.
+The executed wire evidence records a six-function red with one failure at the
+unimplemented creation route and its six-function green. The actual
+authenticated loopback HTTP journey creates Museum with Map, Menu and
+reservation links, reads their stable unique IDs and exact original
+strings/nulls, then reads only Menu as the website preview. Structured JSON and
+the text JSON agree. Replaying creation retains the same whole result, source
+and already issued row window; reopening the real store preserves the links and
+independent notes. This extends the
+[Core storage/migration proof](core-local-qualification.md#owned-item-links-and-v1-migration);
+it is not a simulated fixture save.
 
-A subsequent malformed-input function passes existing implementation on first execution, bringing its concrete suite to seven passing functions. Thirteen requests cover null/nonobject arrays, missing label, wrong String/Boolean/UUID types, a valid foreign owned identity, file URLs, forged classification/providerReference, escaped unknown-field paths and a valid first link followed by an invalid second link. Every rejection echoes the operation identity, creates no applied Core receipt, and retains the original complete source, generation window and checkpoint 1 with no prepared proposal. This is qualification, not another red/green cycle. A test syntax error caught by Swift formatting before native execution is excluded from behavior evidence.
+A subsequent malformed-input function passes existing implementation on first
+execution, bringing its concrete suite to seven passing functions. Thirteen
+requests cover null/nonobject arrays, missing label, wrong String/Boolean/UUID
+types, a valid foreign owned identity, file URLs, forged
+classification/providerReference, escaped unknown-field paths and a valid first
+link followed by an invalid second link. Every rejection echoes the operation
+identity, creates no applied Core receipt, and retains the original complete
+source, generation window and checkpoint 1 with no prepared proposal. This is
+qualification, not another red/green cycle. A test syntax error caught by Swift
+formatting before native execution is excluded from behavior evidence.
 
-All 28 affected MCP functions pass with zero failures/skips. Strict source formatting, affected document lint and whitespace checks pass. Native result bundles/logs are /private/tmp/PlannerMCPOwnedLinksWireRed, PlannerMCPOwnedLinksWireGreen, PlannerMCPOwnedLinksWireQualification and PlannerMCPOwnedLinksWireRegression with xcresult/log extensions.
+All 28 affected MCP functions pass with zero failures/skips. Strict source
+formatting, affected document lint and whitespace checks pass. Native result
+bundles/logs are /private/tmp/PlannerMCPOwnedLinksWireRed,
+PlannerMCPOwnedLinksWireGreen, PlannerMCPOwnedLinksWireQualification and
+PlannerMCPOwnedLinksWireRegression with xcresult/log extensions.
 
-This adds ordinary owned data input/readback, keeping backup/export/import/recovery administration outside MCP. Guarded link replacement, Capture/provider-reference parsing, website image/error/cancellation I/O, native rich-row writes and the full appearance/Schedule graph remain open. Actual selected-client, signed reader, physical account/CloudKit/Share and performance gates remain required. Native logs retain the existing com.apple.linkd.autoShortcut diagnostics; these MCP results do not qualify App Intents.
+This adds ordinary owned data input/readback, keeping
+backup/export/import/recovery administration outside MCP. Guarded link
+replacement, Capture/provider-reference parsing, website
+image/error/cancellation I/O, native rich-row writes and the full
+appearance/Schedule graph remain open. Actual selected-client, signed reader,
+physical account/CloudKit/Share and performance gates remain required. Native
+logs retain the existing com.apple.linkd.autoShortcut diagnostics; these MCP
+results do not qualify App Intents.
 
 ## Guarded owned location over HTTP
 
-The execute route now accepts a complete owned location on Item creation and guarded editing. Missing edit location stays unchanged, null clears it, and a supplied object must contain displayName, formattedAddress and coordinate with explicit nulls for absent optional members. A coordinate object requires both numeric latitude and longitude. The adapter constructs the typed Core value; Core validates geographic bounds and compares the location's complete field hash under its writer gate. No geocoding request or partial coordinate patch is added.
+The execute route now accepts a complete owned location on Item creation and
+guarded editing. Missing edit location stays unchanged, null clears it, and a
+supplied object must contain displayName, formattedAddress and coordinate with
+explicit nulls for absent optional members. A coordinate object requires both
+numeric latitude and longitude. The adapter constructs the typed Core value;
+Core validates geographic bounds and compares the location's complete field hash
+under its writer gate. No geocoding request or partial coordinate patch is
+added.
 
-[Actual location wire evidence](evidence/mcp/owned-location-wire.json) records eight executed functions in the red, with the new location journey failing at the unsupported creation field, then eight passing functions in the green. HTTP creation saves Hotel/Original notes/Meeting point A with a nullable name and integral coordinates. A guarded edit replaces it with Entrance/Meeting point B and fractional coordinates. A stale combined title/location patch rejects together with only location listed as conflicting, its complete current value and current hash. Clearing the location completes checkpoint 3. Replaying the earlier B edit returns its original checkpoint 2 while Hotel/Original notes and the cleared location remain unchanged.
+Actual location wire evidence records eight executed functions in the red, with
+the new location journey failing at the unsupported creation field, then eight
+passing functions in the green. HTTP creation saves Hotel/Original notes/Meeting
+point A with a nullable name and integral coordinates. A guarded edit replaces
+it with Entrance/Meeting point B and fractional coordinates. A stale combined
+title/location patch rejects together with only location listed as conflicting,
+its complete current value and current hash. Clearing the location completes
+checkpoint 3. Replaying the earlier B edit returns its original checkpoint 2
+while Hotel/Original notes and the cleared location remain unchanged.
 
-A further qualification function passes existing implementation on first execution. Twelve malformed values each traverse creation and compound notes/location editing, for twenty-four rejected requests. They cover wrong top-level and nullable-member types, missing required members, incomplete coordinate pairs, nonnumeric values, latitude/longitude outside their bounds and escaped unknown fields in both objects. Every rejection retains the operation identity without applied Core evidence, the original complete source and row generation/window, and acknowledged checkpoint 1 with no prepared proposal. This is qualification, not another red/green cycle.
+A further qualification function passes existing implementation on first
+execution. Twelve malformed values each traverse creation and compound
+notes/location editing, for twenty-four rejected requests. They cover wrong
+top-level and nullable-member types, missing required members, incomplete
+coordinate pairs, nonnumeric values, latitude/longitude outside their bounds and
+escaped unknown fields in both objects. Every rejection retains the operation
+identity without applied Core evidence, the original complete source and row
+generation/window, and acknowledged checkpoint 1 with no prepared proposal. This
+is qualification, not another red/green cycle.
 
-The concrete row suite passes nine functions. All 29 affected MCP functions across 14 suites pass with zero failures/skips; ReadLoadTests is excluded to preserve its separately recorded isolated measurement. Strict affected Swift lint and native compilation, document lint and diff checks pass. Bundles/logs are /private/tmp/PlannerMCPLocationWireRed, PlannerMCPLocationWireGreen, PlannerMCPLocationWireQualification and PlannerMCPLocationWireRegression with xcresult/log extensions.
+The concrete row suite passes nine functions. All 29 affected MCP functions
+across 14 suites pass with zero failures/skips; ReadLoadTests is excluded to
+preserve its separately recorded isolated measurement. Strict affected Swift
+lint and native compilation, document lint and diff checks pass. Bundles/logs
+are /private/tmp/PlannerMCPLocationWireRed, PlannerMCPLocationWireGreen,
+PlannerMCPLocationWireQualification and PlannerMCPLocationWireRegression with
+xcresult/log extensions.
 
-This extends the [saved Core location proof](core-local-qualification.md#guarded-owned-location-edits). It does not qualify native map editing/geocoding, contextual completion or the full Schedule/reference graph. Chosen-client, signed reader, physical account/CloudKit/Share, interruption and performance gates remain required. No backup/export/import/recovery administration or access expiry is added to agent tools. Native linkd.autoShortcut diagnostics remain recorded without App Intents qualification; earlier native screenshots qualify only their recorded source.
+This extends the
+[saved Core location proof](core-local-qualification.md#guarded-owned-location-edits).
+It does not qualify native map editing/geocoding, contextual completion or the
+full Schedule/reference graph. Chosen-client, signed reader, physical
+account/CloudKit/Share, interruption and performance gates remain required. No
+backup/export/import/recovery administration or access expiry is added to agent
+tools. Native linkd.autoShortcut diagnostics remain recorded without App Intents
+qualification; earlier native screenshots qualify only their recorded source.
 
 ## Guarded owned bookmark replacement over HTTP
 
-Item editing now accepts the same strict ordered LinkInput schema as creation. Missing links remains unchanged; an empty array removes owned links. Null is invalid for the required collection. Retained link IDs are checked by Core against the selected source/lifetime, and omitted IDs request new owned records. The adapter parses and constructs the accepted command without generating IDs, hashes or conflict winners. Shared parsing reports the exact creation/edit JSON Pointer.
+Item editing now accepts the same strict ordered LinkInput schema as creation.
+Missing links remains unchanged; an empty array removes owned links. Null is
+invalid for the required collection. Retained link IDs are checked by Core
+against the selected source/lifetime, and omitted IDs request new owned records.
+The adapter parses and constructs the accepted command without generating IDs,
+hashes or conflict winners. Shared parsing reports the exact creation/edit JSON
+Pointer.
 
-[Actual bookmark-edit wire evidence](evidence/mcp/owned-link-edit-wire.json) records ten executed functions in the red with the new replacement journey failing, then ten passing functions in the green. HTTP editing retains Hotel's Menu identity while changing it to Dinner and the Tabelog URL/classification, removes its Map link and adds a Gallery link with a nullable label. A stale combined title/links patch rejects with the complete current links and current guard, preserving the whole saved source. Empty array completes checkpoint 3. Replaying the earlier replacement returns its original checkpoint 2 while Hotel/Original notes and its empty links remain unchanged. Text JSON and structured results agree.
+Actual bookmark-edit wire evidence records ten executed functions in the red
+with the new replacement journey failing, then ten passing functions in the
+green. HTTP editing retains Hotel's Menu identity while changing it to Dinner
+and the Tabelog URL/classification, removes its Map link and adds a Gallery link
+with a nullable label. A stale combined title/links patch rejects with the
+complete current links and current guard, preserving the whole saved source.
+Empty array completes checkpoint 3. Replaying the earlier replacement returns
+its original checkpoint 2 while Hotel/Original notes and its empty links remain
+unchanged. Text JSON and structured results agree.
 
-A further function passes existing implementation on first execution, bringing the concrete suite to eleven functions. Seven compound notes/links requests cover null, missing nullable label, malformed UUID, repeated and foreign owned identities, a valid prefix followed by a file URL, and escaped unknown-field paths. Every rejection retains operation identity without applied evidence, leaves the complete source and issued row window unchanged, and preserves the other source's links/hashes/timestamp. Independent recovery stays at checkpoint 2 with no prepared proposal.
+A further function passes existing implementation on first execution, bringing
+the concrete suite to eleven functions. Seven compound notes/links requests
+cover null, missing nullable label, malformed UUID, repeated and foreign owned
+identities, a valid prefix followed by a file URL, and escaped unknown-field
+paths. Every rejection retains operation identity without applied evidence,
+leaves the complete source and issued row window unchanged, and preserves the
+other source's links/hashes/timestamp. Independent recovery stays at checkpoint
+2 with no prepared proposal.
 
-All 31 affected MCP functions across 14 suites pass with zero failures/skips, excluding ReadLoadTests to preserve its isolated measurement. Strict affected Swift lint/native compilation, document lint and diff checks pass. Bundles/logs use /private/tmp/PlannerMCPLinkEditWireRed, PlannerMCPLinkEditWireGreen, PlannerMCPLinkEditWireQualification and PlannerMCPLinkEditWireRegression with xcresult/log extensions. The [Core replacement proof](core-local-qualification.md#guarded-owned-bookmark-replacement) separately establishes retained lifetimes, order, row invalidation and disk reopen.
+All 31 affected MCP functions across 14 suites pass with zero failures/skips,
+excluding ReadLoadTests to preserve its isolated measurement. Strict affected
+Swift lint/native compilation, document lint and diff checks pass. Bundles/logs
+use /private/tmp/PlannerMCPLinkEditWireRed, PlannerMCPLinkEditWireGreen,
+PlannerMCPLinkEditWireQualification and PlannerMCPLinkEditWireRegression with
+xcresult/log extensions. The
+[Core replacement proof](core-local-qualification.md#guarded-owned-bookmark-replacement)
+separately establishes retained lifetimes, order, row invalidation and disk
+reopen.
 
-Native bookmark editing, provider image/no-image/error/obsolete-result handling, rich-row writes, the full reference/Schedule graph, chosen clients/signed reader and physical account/CloudKit/Share/interruption/performance remain open. The limited operation result identifies its affected source; new link IDs are observable in source reads and backups. Full reference-result variants remain subsequent work. No backup/export/import/recovery administration or access expiry is added. Native metadata/linkd.autoShortcut diagnostics remain recorded without App Intents qualification, and prior native screenshots remain bound to their original revision.
+Native bookmark editing, provider image/no-image/error/obsolete-result handling,
+rich-row writes, the full reference/Schedule graph, chosen clients/signed reader
+and physical account/CloudKit/Share/interruption/performance remain open. The
+limited operation result identifies its affected source; new link IDs are
+observable in source reads and backups. Full reference-result variants remain
+subsequent work. No backup/export/import/recovery administration or access
+expiry is added. Native metadata/linkd.autoShortcut diagnostics remain recorded
+without App Intents qualification, and prior native screenshots remain bound to
+their original revision.
 
 ## Direct timed appointments over HTTP
 
-`planner_execute` now advertises and decodes the existing `createSchedule` command for direct Item timed forms. Every supplied form contains kind, numeric Foundation-reference-date start, nullable numeric end and a planning timezone String. Strict object/type validation precedes the same public Core writer used by native callers; semantic end/timezone/owner validation remains in Core. The adapter does not infer an end or silently normalize dates. Known all-day and Itinerary variants report unavailable until implemented.
+`planner_execute` now advertises and decodes the existing `createSchedule`
+command for direct Item timed forms. Every supplied form contains kind, numeric
+Foundation-reference-date start, nullable numeric end and a planning timezone
+String. Strict object/type validation precedes the same public Core writer used
+by native callers; semantic end/timezone/owner validation remains in Core. The
+adapter does not infer an end or silently normalize dates. Known all-day and
+Itinerary variants report unavailable until implemented.
 
-The first authenticated loopback creation fails before the decoder exists, then the same test passes. It saves two independent start-only appointments and queries real rows at fixed instants in Tokyo and Paris. Summaries preserve Schedule identity, original instants, end=null and planning zone, while selecting the exact-start entry or the next future entry with one additional record. The complete structured value matches the text JSON. Replaying the earlier operation returns its original checkpoint without removing the later Schedule or changing Item content/hashes/Last updated. Both records exist in independent checkpoint 3.
+The first authenticated loopback creation fails before the decoder exists, then
+the same test passes. It saves two independent start-only appointments and
+queries real rows at fixed instants in Tokyo and Paris. Summaries preserve
+Schedule identity, original instants, end=null and planning zone, while
+selecting the exact-start entry or the next future entry with one additional
+record. The complete structured value matches the text JSON. Replaying the
+earlier operation returns its original checkpoint without removing the later
+Schedule or changing Item content/hashes/Last updated. Both records exist in
+independent checkpoint 3.
 
-First-pass qualification sends 16 invalid or unsupported requests. Null/incomplete/unknown forms, String/Bool dates, invalid end/zone, escaped unknown fields, malformed/missing owner and deferred variants return their expected failure code/property path and original operation ID. They create no applied receipt or prepared proposal and preserve the exact source, old window and checkpoint 1. A valid supplied end subsequently preserves fractional seconds exactly and invalidates the old row generation.
+First-pass qualification sends 16 invalid or unsupported requests.
+Null/incomplete/unknown forms, String/Bool dates, invalid end/zone, escaped
+unknown fields, malformed/missing owner and deferred variants return their
+expected failure code/property path and original operation ID. They create no
+applied receipt or prepared proposal and preserve the exact source, old window
+and checkpoint 1. A valid supplied end subsequently preserves fractional seconds
+exactly and invalidates the old row generation.
 
-[Evidence](evidence/mcp/direct-schedule-wire.json) records the actual twelve-function red run with one failure, twelve-function green, thirteen-function qualification and final 33-function affected MCP regression in 14 suites, with no skips in successful runs. ReadLoadTests stays excluded from the regression to preserve its separate measurement. Strict affected formatting and whitespace checks pass.
+Evidence records the actual twelve-function red run with one failure,
+twelve-function green, thirteen-function qualification and final 33-function
+affected MCP regression in 14 suites, with no skips in successful runs.
+ReadLoadTests stays excluded from the regression to preserve its separate
+measurement. Strict affected formatting and whitespace checks pass.
 
-Full Schedule source/reference reads, all-day and Itinerary assignments, edit/remove and inherited summaries remain required. The current source codec rejects unsupported nonempty association arrays; row windows can already encode direct timed summaries correctly. Native saved picker/row actions, provider I/O, actual Share, signed client/reader, physical CloudKit/account tests and performance remain open. Existing native linkd metadata diagnostics remain unqualified. Backup/export/import/recovery administration is manual.
+Full Schedule source/reference reads, all-day and Itinerary assignments,
+edit/remove and inherited summaries remain required. The current source codec
+rejects unsupported nonempty association arrays; row windows can already encode
+direct timed summaries correctly. Native saved picker/row actions, provider I/O,
+actual Share, signed client/reader, physical CloudKit/account tests and
+performance remain open. Existing native linkd metadata diagnostics remain
+unqualified. Backup/export/import/recovery administration is manual.
 
 ## Read scheduled Items with owned association metadata
 
-`planner_read` now returns the declared ReferenceRead values for saved Item bookmarks and direct Schedules. An ownedLink record contains its stable ID and Item owner with null source/appearance. A Schedule record contains its stable ID and planned Item source with null owner/appearance. Every declared member is emitted; the adapter does not replace a nonempty collection with an empty success. Labels and other unimplemented association variants remain outside this current graph.
+`planner_read` now returns the declared ReferenceRead values for saved Item
+bookmarks and direct Schedules. An ownedLink record contains its stable ID and
+Item owner with null source/appearance. A Schedule record contains its stable ID
+and planned Item source with null owner/appearance. Every declared member is
+emitted; the adapter does not replace a nonempty collection with an empty
+success. Labels and other unimplemented association variants remain outside this
+current graph.
 
-The actual HTTP red run rejects the new scheduled-source journey and four existing bookmark-source journeys after Core starts returning typed association values. All five failures come from the old empty-reference guard. The exhaustive codec resolves them, and the same fourteen-function suite passes. The scheduled Item retains full content/bookmarks, hashes and Last updated, with exact association identities and nullable fields. Structured and text JSON remain identical.
+The actual HTTP red run rejects the new scheduled-source journey and four
+existing bookmark-source journeys after Core starts returning typed association
+values. All five failures come from the old empty-reference guard. The
+exhaustive codec resolves them, and the same fourteen-function suite passes. The
+scheduled Item retains full content/bookmarks, hashes and Last updated, with
+exact association identities and nullable fields. Structured and text JSON
+remain identical.
 
-[Joint evidence](evidence/navigation/core-item-reference-read.json) records the exact red count of nine passes/five failures, fourteen-function green, native Core qualification and the 34-function affected MCP regression with no skips. ReadLoadTests remains separate. Full Schedule source/form reads and guarded edits, additional graph variants, signed clients/reader and physical-device validation remain required. Backup/export/import/recovery administration stays manual.
+Joint evidence records the exact red count of nine passes/five failures,
+fourteen-function green, native Core qualification and the 34-function affected
+MCP regression with no skips. ReadLoadTests remains separate. Full Schedule
+source/form reads and guarded edits, additional graph variants, signed
+clients/reader and physical-device validation remain required.
+Backup/export/import/recovery administration stays manual.
 
 ## Read a Schedule's original form and guarded hash
 
-`planner_read` now advertises Item and Schedule source kinds. A Schedule request selects the same public Core read, returning the existing source envelope with its own identity, planned Item reference, original timed form and exactly the form hash. It emits explicit nulls for inapplicable timestamps/completion/archive/progress and empty labels/references. Item source encoding remains separate. Source and row summaries reuse one exhaustive ScheduleForm codec.
+`planner_read` now advertises Item and Schedule source kinds. A Schedule request
+selects the same public Core read, returning the existing source envelope with
+its own identity, planned Item reference, original timed form and exactly the
+form hash. It emits explicit nulls for inapplicable
+timestamps/completion/archive/progress and empty labels/references. Item source
+encoding remains separate. Source and row summaries reuse one exhaustive
+ScheduleForm codec.
 
-The actual HTTP Schedule request fails in the fifteen-function red run because admission accepts only Item kind. The same journey passes after strict admission and typed encoding are added. It verifies every meaningful field, all inapplicable nulls and identical text/structured JSON. [Joint evidence](evidence/navigation/core-schedule-source-read.json) records fourteen passes/one failure in red, fifteen-function green, native form/hash qualification and the 35-function affected MCP regression with no skips. ReadLoadTests stays excluded.
+The actual HTTP Schedule request fails in the fifteen-function red run because
+admission accepts only Item kind. The same journey passes after strict admission
+and typed encoding are added. It verifies every meaningful field, all
+inapplicable nulls and identical text/structured JSON. Joint evidence records
+fourteen passes/one failure in red, fifteen-function green, native form/hash
+qualification and the 35-function affected MCP regression with no skips.
+ReadLoadTests stays excluded.
 
-Guarded Schedule edits/removal, all-day/Itinerary forms and remaining graph/source variants stay open, alongside native saved editors and physical-device validation. Administration remains manual; existing native metadata/linkd diagnostics remain unqualified.
+Guarded Schedule edits/removal, all-day/Itinerary forms and remaining
+graph/source variants stay open, alongside native saved editors and
+physical-device validation. Administration remains manual; existing native
+metadata/linkd diagnostics remain unqualified.
 
 ## Guarded complete Schedule edits over HTTP
 
-`planner_execute` now advertises and admits `editSchedule` with the retained Schedule ID, exactly one complete form and its prior form hash. Creation and editing use the same strict timed-form parser/schema with their exact property paths. The adapter constructs `PlannerScheduleChanges` and delegates semantic validation, complete-form conflict handling and durable saving to Core. It assigns no replacement identity or conflict winner.
+`planner_execute` now advertises and admits `editSchedule` with the retained
+Schedule ID, exactly one complete form and its prior form hash. Creation and
+editing use the same strict timed-form parser/schema with their exact property
+paths. The adapter constructs `PlannerScheduleChanges` and delegates semantic
+validation, complete-form conflict handling and durable saving to Core. It
+assigns no replacement identity or conflict winner.
 
-The actual sixteen-function red run has one failure at unsupported edit admission. The same sixteen-function suite passes after implementation. The journey retains fractional start/end values and the original Schedule identity, returns the complete current form/hash for a stale edit, and preserves Item content/hashes/Last updated. A later start-only Paris form reaches checkpoint 4. Exact replay of the former edit returns its original checkpoint 3 without replacing that newer form. Text and structured JSON agree for successes and rejections.
+The actual sixteen-function red run has one failure at unsupported edit
+admission. The same sixteen-function suite passes after implementation. The
+journey retains fractional start/end values and the original Schedule identity,
+returns the complete current form/hash for a stale edit, and preserves Item
+content/hashes/Last updated. A later start-only Paris form reaches checkpoint 4.
+Exact replay of the former edit returns its original checkpoint 3 without
+replacing that newer form. Text and structured JSON agree for successes and
+rejections.
 
-First-pass qualification adds one function with 21 malformed or unavailable requests. Invalid UUID/objects/DateNumber types/end/timezone/hash values, attempted source-content patches, escaped unknown fields and deferred all-day forms reject at their expected paths with the original operation identity. None creates an applied receipt or prepared proposal. The saved source, issued row window, Item hashes/time and checkpoint 2 remain unchanged.
+First-pass qualification adds one function with 21 malformed or unavailable
+requests. Invalid UUID/objects/DateNumber types/end/timezone/hash values,
+attempted source-content patches, escaped unknown fields and deferred all-day
+forms reject at their expected paths with the original operation identity. None
+creates an applied receipt or prepared proposal. The saved source, issued row
+window, Item hashes/time and checkpoint 2 remain unchanged.
 
-[Evidence](evidence/mcp/schedule-edit-wire.json) records sixteen-function red/green, seventeen-function qualification and 37 passing affected MCP functions across 14 suites, with no skips in successful runs. ReadLoadTests remains separate. Strict affected formatting, native Mac compilation, document lint and whitespace checks pass. The [Core evidence](core-local-qualification.md#guarded-complete-schedule-form-replacement) separately proves disk reopen, retained lifetimes and independent before/after recovery.
+Evidence records sixteen-function red/green, seventeen-function qualification
+and 37 passing affected MCP functions across 14 suites, with no skips in
+successful runs. ReadLoadTests remains separate. Strict affected formatting,
+native Mac compilation, document lint and whitespace checks pass. The
+[Core evidence](core-local-qualification.md#guarded-complete-schedule-form-replacement)
+separately proves disk reopen, retained lifetimes and independent before/after
+recovery.
 
-Zone-only editing/removal, all-day/Itinerary forms and remaining graph variants, native saved editors, signed clients/reader and physical-device/CloudKit/Share/interruption/performance gates remain required. Backup/export/import/recovery administration stays manual. Existing native metadata/linkd diagnostics remain unqualified, and prior screenshots qualify their recorded revisions only.
+Zone-only editing/removal, all-day/Itinerary forms and remaining graph variants,
+native saved editors, signed clients/reader and
+physical-device/CloudKit/Share/interruption/performance gates remain required.
+Backup/export/import/recovery administration stays manual. Existing native
+metadata/linkd diagnostics remain unqualified, and prior screenshots qualify
+their recorded revisions only.
 
 ## Fixed-instant planning timezone changes over HTTP
 
-`planner_execute` now advertises and admits `changeScheduleZone` with a Schedule ID, timezone String and exactly the complete-form hash. Strict admission rejects attempted start/end patches. Core validates the timezone and form guard, reconstructs the current timed form with unchanged instants, and performs the existing durable save/recovery. Both Schedule edit variants share strict hash parsing/schema and the native save path.
+`planner_execute` now advertises and admits `changeScheduleZone` with a Schedule
+ID, timezone String and exactly the complete-form hash. Strict admission rejects
+attempted start/end patches. Core validates the timezone and form guard,
+reconstructs the current timed form with unchanged instants, and performs the
+existing durable save/recovery. Both Schedule edit variants share strict hash
+parsing/schema and the native save path.
 
-The actual eighteen-function red run has one unsupported-command failure, followed by eighteen-function green. The journey preserves fractional start/end instants and identity through Tokyo-to-Paris, returns complete current form/hash for stale requests, and keeps a later UTC zone when replaying the original Paris action. Native Item hashes/Last updated and independent recovery remain intact; text/structured JSON match.
+The actual eighteen-function red run has one unsupported-command failure,
+followed by eighteen-function green. The journey preserves fractional start/end
+instants and identity through Tokyo-to-Paris, returns complete current form/hash
+for stale requests, and keeps a later UTC zone when replaying the original Paris
+action. Native Item hashes/Last updated and independent recovery remain intact;
+text/structured JSON match.
 
-First-pass qualification adds one function with eleven invalid requests covering UUID/zone/hash types and values, an Item identity used as Schedule, attempted start patch and escaped unknown fields. Rejections preserve operation identity, full source, issued rows and checkpoint 2 without applied receipts/proposals. A valid start-only UTC change retains end=null and invalidates old rows. Changing a replay's zone rejects as payload mismatch while retaining the originally applied status and checkpoint 3.
+First-pass qualification adds one function with eleven invalid requests covering
+UUID/zone/hash types and values, an Item identity used as Schedule, attempted
+start patch and escaped unknown fields. Rejections preserve operation identity,
+full source, issued rows and checkpoint 2 without applied receipts/proposals. A
+valid start-only UTC change retains end=null and invalidates old rows. Changing
+a replay's zone rejects as payload mismatch while retaining the originally
+applied status and checkpoint 3.
 
-[Joint evidence](evidence/navigation/core-schedule-zone.json) records nineteen-function qualification and 39 passing affected MCP functions across 14 suites, with no skips. It includes the native fixed-instant/reopen/recovery proof, strict affected formatting and unsigned Simulator compilation. ReadLoadTests remains separately qualified. Removal, all-day/Itinerary forms and the remaining graph, native saved editors, chosen clients/signed reader and physical CloudKit/account/Share/interruption/performance gates remain open. Administration stays manual and existing native metadata/linkd diagnostics remain unqualified.
+Joint evidence records nineteen-function qualification and 39 passing affected
+MCP functions across 14 suites, with no skips. It includes the native
+fixed-instant/reopen/recovery proof, strict affected formatting and unsigned
+Simulator compilation. ReadLoadTests remains separately qualified. Removal,
+all-day/Itinerary forms and the remaining graph, native saved editors, chosen
+clients/signed reader and physical
+CloudKit/account/Share/interruption/performance gates remain open.
+Administration stays manual and existing native metadata/linkd diagnostics
+remain unqualified.
 
 ## Selected Schedule removal over HTTP
 
-`planner_execute` now advertises `removeSchedule` with exactly the selected Schedule UUID. Core owns validation, removal, replay and recovery; the route adds no global Item deletion or fallback scope. The execute tool's destructive hint is true because this union can remove saved data. Authority and the accepted access-window policy are unchanged.
+`planner_execute` now advertises `removeSchedule` with exactly the selected
+Schedule UUID. Core owns validation, removal, replay and recovery; the route
+adds no global Item deletion or fallback scope. The execute tool's destructive
+hint is true because this union can remove saved data. Authority and the
+accepted access-window policy are unchanged.
 
-The twenty-function red run fails only at unsupported removal admission; the same suite passes after implementation. The actual HTTP journey removes one of two assignments, retains the Item and other assignment, invalidates its old row generation and saves minimal deletion metadata. A later Item edit remains current when the original removal is replayed. That replay returns its original checkpoint, and changing the selected Schedule under its operation identity rejects without deleting another assignment.
+The twenty-function red run fails only at unsupported removal admission; the
+same suite passes after implementation. The actual HTTP journey removes one of
+two assignments, retains the Item and other assignment, invalidates its old row
+generation and saves minimal deletion metadata. A later Item edit remains
+current when the original removal is replayed. That replay returns its original
+checkpoint, and changing the selected Schedule under its operation identity
+rejects without deleting another assignment.
 
-Qualification covers eleven invalid or unavailable requests with exact failure paths and operation identities. Source, issued rows, checkpoint and absence of applied receipts/proposals remain unchanged. Removing the final appointment then returns an explicit unscheduled row with its original Item title/content/hashes/Last updated. The first qualification run used `displayTitle` instead of the declared `title` in one test assertion. Correcting that assertion yields 21 passing row-routing functions; no production fix or additional behavior red is claimed.
+Qualification covers eleven invalid or unavailable requests with exact failure
+paths and operation identities. Source, issued rows, checkpoint and absence of
+applied receipts/proposals remain unchanged. Removing the final appointment then
+returns an explicit unscheduled row with its original Item
+title/content/hashes/Last updated. The first qualification run used
+`displayTitle` instead of the declared `title` in one test assertion. Correcting
+that assertion yields 21 passing row-routing functions; no production fix or
+additional behavior red is claimed.
 
-[Actual evidence](evidence/mcp/schedule-removal-wire.json) records the red, green, corrected qualification and 41 passing affected MCP functions across 14 suites, with no skips. Native compilation, strict affected Swift lint, document lint and diff checks pass. ReadLoadTests remains separate. The underlying [Core removal evidence](core-local-qualification.md#selected-schedule-removal-and-minimal-deletion-metadata) qualifies local save/recovery, not CloudKit deletion versus an old offline edit.
+Actual evidence records the red, green, corrected qualification and 41 passing
+affected MCP functions across 14 suites, with no skips. Native compilation,
+strict affected Swift lint, document lint and diff checks pass. ReadLoadTests
+remains separate. The underlying
+[Core removal evidence](core-local-qualification.md#selected-schedule-removal-and-minimal-deletion-metadata)
+qualifies local save/recovery, not CloudKit deletion versus an old offline edit.
 
-All-day/Itinerary forms, the remaining shared graph, native saved controls/provider I/O, actual Share, chosen clients/signed reader and physical CloudKit/account/performance gates remain open. Backup/export/import/recovery administration remains manual.
+All-day/Itinerary forms, the remaining shared graph, native saved
+controls/provider I/O, actual Share, chosen clients/signed reader and physical
+CloudKit/account/performance gates remain open. Backup/export/import/recovery
+administration remains manual.
 
 ## Timed and all-day Schedule forms over HTTP
 
-`planner_execute` now advertises the declared timed/all-day union for Schedule creation and complete editing. All-day forms require exactly kind, start and nullable end. Each supplied civil date requires exactly integer year/month/day. Core owns Gregorian round-trip and inclusive-end validation, identity, hash guards and durable saving. The route adds no independent calendar engine, timezone to all-day data or activity-derived end.
+`planner_execute` now advertises the declared timed/all-day union for Schedule
+creation and complete editing. All-day forms require exactly kind, start and
+nullable end. Each supplied civil date requires exactly integer year/month/day.
+Core owns Gregorian round-trip and inclusive-end validation, identity, hash
+guards and durable saving. The route adds no independent calendar engine,
+timezone to all-day data or activity-derived end.
 
-The real HTTP creation fails at unsupported admission in the executed red. Strict admission then reaches the saved source; an intermediate test incorrectly reads content from the outer envelope instead of value. Correcting its assertions yields the passing journey, without a production fix for that mistake. Tokyo/Paris row contexts retain the complete civil range. Stale edits return the complete current all-day form/hash; zone-only changes reject. Original creation/edit replay retains a later start-only timed conversion and returns its original checkpoint. Selected removal leaves the Item unchanged and independently records its minimal deletion marker.
+The real HTTP creation fails at unsupported admission in the executed red.
+Strict admission then reaches the saved source; an intermediate test incorrectly
+reads content from the outer envelope instead of value. Correcting its
+assertions yields the passing journey, without a production fix for that
+mistake. Tokyo/Paris row contexts retain the complete civil range. Stale edits
+return the complete current all-day form/hash; zone-only changes reject.
+Original creation/edit replay retains a later start-only timed conversion and
+returns its original checkpoint. Selected removal leaves the Item unchanged and
+independently records its minimal deletion marker.
 
-Qualification covers 22 malformed/invalid civil forms through both create and edit, 44 rejected requests. Each retains its operation ID and exact failure path, no applied evidence/proposals, unchanged source/window and checkpoint 2. A valid leap-day form with explicit null end then saves at checkpoint 3. Existing timed admission tests retain malformed civil fixtures instead of expecting the now-supported all-day kind to be unavailable. Structured and text JSON agree.
+Qualification covers 22 malformed/invalid civil forms through both create and
+edit, 44 rejected requests. Each retains its operation ID and exact failure
+path, no applied evidence/proposals, unchanged source/window and checkpoint 2. A
+valid leap-day form with explicit null end then saves at checkpoint 3. Existing
+timed admission tests retain malformed civil fixtures instead of expecting the
+now-supported all-day kind to be unavailable. Structured and text JSON agree.
 
-[Actual evidence](evidence/mcp/all-day-schedule-wire.json) records the unsupported-admission red, corrected one-function green, 23 passing scheduling row journeys and 43 passing affected MCP functions across 15 suites. Native Mac compilation, strict affected Swift/document lint and diff checks pass; ReadLoadTests remains separate. The [native Core evidence](core-local-qualification.md#inclusive-all-day-schedules-and-schema-5) qualifies underlying all-day persistence and migration.
+Actual evidence records the unsupported-admission red, corrected one-function
+green, 23 passing scheduling row journeys and 43 passing affected MCP functions
+across 15 suites. Native Mac compilation, strict affected Swift/document lint
+and diff checks pass; ReadLoadTests remains separate. The
+[native Core evidence](core-local-qualification.md#inclusive-all-day-schedules-and-schema-5)
+qualifies underlying all-day persistence and migration.
 
-Itinerary assignments/full graph, native saved calendar/date controls/provider I/O, actual Share and chosen signed clients/reader remain open. CloudKit form cohesion, deletion versus obsolete offline edits, account/interruption and physical performance remain unproven. Backup/export/import/recovery administration remains manual.
+Itinerary assignments/full graph, native saved calendar/date controls/provider
+I/O, actual Share and chosen signed clients/reader remain open. CloudKit form
+cohesion, deletion versus obsolete offline edits, account/interruption and
+physical performance remain unproven. Backup/export/import/recovery
+administration remains manual.
 
 ## List creation, guarded edits and detail reads
 
-The adapter now admits the declared createList/editList commands and List source reads. List content contains name, nullable notes/color/icon and four current hashes. Reads retain Core-issued identity/timestamps, Active archive state, null global completion and derived empty progress with 0/0 CountString values. All writes use the same native Core writer, operation receipt and typed independent-recovery path.
+The adapter now admits the declared createList/editList commands and List source
+reads. List content contains name, nullable notes/color/icon and four current
+hashes. Reads retain Core-issued identity/timestamps, Active archive state, null
+global completion and derived empty progress with 0/0 CountString values. All
+writes use the same native Core writer, operation receipt and typed
+independent-recovery path.
 
-[Executed evidence](evidence/mcp/list-source-wire.json) records separate unsupported creation/edit red failures, passing one/two-function greens and 46 passing affected MCP functions across 16 suites. The actual HTTP journeys prove exact owned metadata, optional omitted/null/empty values, native reopen, whole-patch conflict rejection, current color/null conflict details and original replay retaining later data. The tools/list response advertises both strict commands. Forty-four invalid requests preserve source details, an issued Item row window, unrelated Schedule data, checkpoint and absence of applied/prepared evidence. Strict affected Swift lint and whitespace checks pass.
+Executed evidence records separate unsupported creation/edit red failures,
+passing one/two-function greens and 46 passing affected MCP functions across 16
+suites. The actual HTTP journeys prove exact owned metadata, optional
+omitted/null/empty values, native reopen, whole-patch conflict rejection,
+current color/null conflict details and original replay retaining later data.
+The tools/list response advertises both strict commands. Forty-four invalid
+requests preserve source details, an issued Item row window, unrelated Schedule
+data, checkpoint and absence of applied/prepared evidence. Strict affected Swift
+lint and whitespace checks pass.
 
-At this List create/edit revision, Archive remains a separate slice; the later Archive section records its implementation. Catalogs, memberships/local completion/order and saved native List controls remain required. Administration stays manual. This adapter change adds no schema or portable-format version. ReadLoadTests, actual chosen clients and signing/reader, actual Share and physical CloudKit/account/interruption/performance remain separate qualification gates.
+At this List create/edit revision, Archive remains a separate slice; the later
+Archive section records its implementation. Catalogs, memberships/local
+completion/order and saved native List controls remain required. Administration
+stays manual. This adapter change adds no schema or portable-format version.
+ReadLoadTests, actual chosen clients and signing/reader, actual Share and
+physical CloudKit/account/interruption/performance remain separate qualification
+gates.
 
 ## Advertised List Archive and Unarchive
 
-The existing setArchive wire form now advertises Item and List sources. The actual tools/list response exposed the previous Item-only declaration as a failing test before correction. [Executed evidence](evidence/navigation/core-list-archive.json) records the corrected advertised form, HTTP Archive/Unarchive and exact old Archive replay retaining the later Active state. Full List reads retain content/hashes, null global completion and derived empty progress. Native Core owns saving and independent recovery; no agent administration is added.
+The existing setArchive wire form now advertises Item and List sources. The
+actual tools/list response exposed the previous Item-only declaration as a
+failing test before correction. Executed evidence records the corrected
+advertised form, HTTP Archive/Unarchive and exact old Archive replay retaining
+the later Active state. Full List reads retain content/hashes, null global
+completion and derived empty progress. Native Core owns saving and independent
+recovery; no agent administration is added.
 
-At this revision, HTTP List Archive tests use empty Lists. The native membership slice below separately qualifies nonempty association retention; catalogs and saved native controls, actual chosen clients/signing/reader, Share, CloudKit/account/interruption and physical performance remain open. ReadLoadTests remains separate.
+At this revision, HTTP List Archive tests use empty Lists. The native membership
+slice below separately qualifies nonempty association retention; catalogs and
+saved native controls, actual chosen clients/signing/reader, Share,
+CloudKit/account/interruption and physical performance remain open.
+ReadLoadTests remains separate.
 
 ## Membership reference and receipt reads
 
-The native Core membership slice now returns a complete `ReferenceRead` with membership ID, List owner, Item source and exact listMembership appearance. Applied receipts can contain source references and full reference records together; the source-only convenience projections remain available to existing native callers. Existing source-only receipts retain their JSON shape and decode during genuine historical migration.
+The native Core membership slice now returns a complete `ReferenceRead` with
+membership ID, List owner, Item source and exact listMembership appearance.
+Applied receipts can contain source references and full reference records
+together; the source-only convenience projections remain available to existing
+native callers. Existing source-only receipts retain their JSON shape and decode
+during genuine historical migration.
 
-An actual loopback HTTP test seeds one membership through the public native facade, then reads the List, Item and operation status through the listener. Both source details retain its complete reference. List progress is partial 0/1. The operation's generated reference and mixed affected reference/List identities survive transport encoding and native receipt reopen. [Evidence](evidence/navigation/core-membership-creation.json) records all 48 passing affected MCP functions with zero failures/skips. This slice does not admit or advertise HTTP addMembership; that command route remains a separate step. ReadLoadTests, chosen signed clients/reader, native UI, Share and physical cloud/account/performance gates stay open.
+An actual loopback HTTP test seeds one membership through the public native
+facade, then reads the List, Item and operation status through the listener.
+Both source details retain its complete reference. List progress is partial 0/1.
+The operation's generated reference and mixed affected reference/List identities
+survive transport encoding and native receipt reopen. Evidence records all 48
+passing affected MCP functions with zero failures/skips. This slice does not
+admit or advertise HTTP addMembership; that command route remains a separate
+step. ReadLoadTests, chosen signed clients/reader, native UI, Share and physical
+cloud/account/performance gates stay open.
 
 ## Admitted exact List appearance detail
 
-`planner_read` now admits and advertises `{kind: "appearance", appearance: {kind: "listMembership", listId, membershipId}}`. It rejects missing/unknown/wrongly typed fields before forwarding the immutable native appearance. Core validates the exact association. Successful detail contains appearance, source, full current Item content, globalDone/localDone/effectiveDone, archived and Item field hashes; no global fallback or copied context content is introduced. Shared Item source and appearance content use one encoder for their identical declared content shape.
+`planner_read` now admits and advertises
+`{kind: "appearance", appearance: {kind: "listMembership", listId, membershipId}}`.
+It rejects missing/unknown/wrongly typed fields before forwarding the immutable
+native appearance. Core validates the exact association. Successful detail
+contains appearance, source, full current Item content,
+globalDone/localDone/effectiveDone, archived and Item field hashes; no global
+fallback or copied context content is introduced. Shared Item source and
+appearance content use one encoder for their identical declared content shape.
 
-[Evidence](evidence/navigation/core-membership-appearance.json) records actual loopback red/green and 50 passing affected MCP functions with no failures/skips. The tools/list response includes the strict appearance declaration. Global Done and a later shared notes edit are visible in the next read while local Todo/appearance identity remain unchanged. Twenty-four malformed/mismatched appearance cases fail with exact paths, without changing source data/time/hashes, issued row window or recovery; UUID case variants identify the same appearance. Contextual rows, local/bulk completion and HTTP membership creation remain required. This does not qualify signed clients/reader, saved native UI, actual Share or physical cloud/account/accessibility/performance. ReadLoadTests stays separate.
+Evidence records actual loopback red/green and 50 passing affected MCP functions
+with no failures/skips. The tools/list response includes the strict appearance
+declaration. Global Done and a later shared notes edit are visible in the next
+read while local Todo/appearance identity remain unchanged. Twenty-four
+malformed/mismatched appearance cases fail with exact paths, without changing
+source data/time/hashes, issued row window or recovery; UUID case variants
+identify the same appearance. Contextual rows, local/bulk completion and HTTP
+membership creation remain required. This does not qualify signed
+clients/reader, saved native UI, actual Share or physical
+cloud/account/accessibility/performance. ReadLoadTests stays separate.
 
 ## Exact List query and compact row windows
 
-`planner_query` now admits and advertises an exact standalone List scope and title/Manual sort choices. Query identities encode the shared Item source plus the exact listMembership appearance. Progress and unresolved-reference results come from Core rather than hardcoded empty arrays. Global/Inbox reads retain source identities. Strict scope/sort decoding rejects malformed values and wrong fields before Core; native Core rejects unsupported Manual scope/direction and missing sources. Other declared sort modes return unavailable.
+`planner_query` now admits and advertises an exact standalone List scope and
+title/Manual sort choices. Query identities encode the shared Item source plus
+the exact listMembership appearance. Progress and unresolved-reference results
+come from Core rather than hardcoded empty arrays. Global/Inbox reads retain
+source identities. Strict scope/sort decoding rejects malformed values and wrong
+fields before Core; native Core rejects unsupported Manual scope/direction and
+missing sources. Other declared sort modes return unavailable.
 
-[Executed evidence](evidence/navigation/core-membership-rows.json) records the actual unsupported-admission red, passing HTTP journey and 52 passing affected MCP functions across 17 suites with zero failures/skips. The tools/list response advertises strict List and sort shapes. A Todo/Active query shows one row while full-scope progress remains 1/2 for its archived Done child. Compact rows include the chosen non-Maps bookmark and owned location, with no full notes/link/hash payload. Source edits make old windows stale; refreshed identities/progress retain their exact context. Thirty-one malformed/mismatched scope/sort requests preserve source data/time/hashes, saved references, issued windows and checkpoint 3 without prepared proposals. UUID case variants resolve the same List. Structured/text JSON agree.
+Executed evidence records the actual unsupported-admission red, passing HTTP
+journey and 52 passing affected MCP functions across 17 suites with zero
+failures/skips. The tools/list response advertises strict List and sort shapes.
+A Todo/Active query shows one row while full-scope progress remains 1/2 for its
+archived Done child. Compact rows include the chosen non-Maps bookmark and owned
+location, with no full notes/link/hash payload. Source edits make old windows
+stale; refreshed identities/progress retain their exact context. Thirty-one
+malformed/mismatched scope/sort requests preserve source data/time/hashes, saved
+references, issued windows and checkpoint 3 without prepared proposals. UUID
+case variants resolve the same List. Structured/text JSON agree.
 
-This adds no schema or portable-format version. HTTP membership creation and local/bulk completion remain to admit. Saved native screens, remaining filters/sorts/catalogs, actual chosen signed clients/reader, Share and physical cloud/account/interruption/accessibility/performance stay open. ReadLoadTests remains separate; backup/export/import/recovery administration stays manual.
+This adds no schema or portable-format version. HTTP membership creation and
+local/bulk completion remain to admit. Saved native screens, remaining
+filters/sorts/catalogs, actual chosen signed clients/reader, Share and physical
+cloud/account/interruption/accessibility/performance stay open. ReadLoadTests
+remains separate; backup/export/import/recovery administration stays manual.
 
 ## Exact local completion command
 
-`planner_execute` now admits and advertises the declared appearance completion scope alongside globalItem. The local branch requires an exact listMembership with List and association UUIDs and a Boolean done value. Missing, unknown or wrongly typed properties reject at their exact paths; Core validates the actual binding. The same native command saves one local flag with its receipt and independent recovery. Applied/status results retain the complete membership reference plus owning List, and no global fallback is available.
+`planner_execute` now admits and advertises the declared appearance completion
+scope alongside globalItem. The local branch requires an exact listMembership
+with List and association UUIDs and a Boolean done value. Missing, unknown or
+wrongly typed properties reject at their exact paths; Core validates the actual
+binding. The same native command saves one local flag with its receipt and
+independent recovery. Applied/status results retain the complete membership
+reference plus owning List, and no global fallback is available.
 
-[Evidence](evidence/navigation/core-membership-completion.json) records actual HTTP admission red/green and 53 passing affected MCP functions across 17 suites, with no failures/skips. Completing one of two List appearances leaves the other and shared Item unchanged, makes the old window stale and derives complete progress despite zero Todo rows. A later local Reopen persists; original Done replay/status return checkpoint 6 while retaining that Todo state. Actual tools/list advertises strict local/global scope variants. Twenty-seven malformed/mismatched local commands preserve the original issued window, checkpoint 5 and absence of applied/prepared evidence. Structured/text JSON agree. An intermediate test status request omitted its required formatVersion; corrected before the passing journey. The older valid-but-missing appearance fixture now returns missingReference, preserving its original source and recovery.
+Evidence records actual HTTP admission red/green and 53 passing affected MCP
+functions across 17 suites, with no failures/skips. Completing one of two List
+appearances leaves the other and shared Item unchanged, makes the old window
+stale and derives complete progress despite zero Todo rows. A later local Reopen
+persists; original Done replay/status return checkpoint 6 while retaining that
+Todo state. Actual tools/list advertises strict local/global scope variants.
+Twenty-seven malformed/mismatched local commands preserve the original issued
+window, checkpoint 5 and absence of applied/prepared evidence. Structured/text
+JSON agree. An intermediate test status request omitted its required
+formatVersion; corrected before the passing journey. The older valid-but-missing
+appearance fixture now returns missingReference, preserving its original source
+and recovery.
 
-At this appearance-only revision, HTTP membership creation and full-context bulk review/actions remained separate. Saved native circles and global Done explanation, remaining query modes/catalogs, repeated Itinerary contexts, actual Share and signed clients/reader, CloudKit/account/interruption and physical performance/accessibility stay open. ReadLoadTests remains separate; administration stays manual. No native schema or portable-format change is introduced.
+At this appearance-only revision, HTTP membership creation and full-context bulk
+review/actions remained separate. Saved native circles and global Done
+explanation, remaining query modes/catalogs, repeated Itinerary contexts, actual
+Share and signed clients/reader, CloudKit/account/interruption and physical
+performance/accessibility stay open. ReadLoadTests remains separate;
+administration stays manual. No native schema or portable-format change is
+introduced.
 
 ## List catalog query and compact windows
 
-`planner_query` now advertises strict Item and List catalog variants. List discovery uses optional cumulative name text and Active/Archived/All state, with defaults of empty text and Active. Catalogs return exact source identities with nil scheduling context; compact List rows omit notes/hashes and have null Item completion/metadata fields. Equivalent names retain separate identities and deterministic UUID ties. The handler constructs the native catalog request without a second domain implementation.
+`planner_query` now advertises strict Item and List catalog variants. List
+discovery uses optional cumulative name text and Active/Archived/All state, with
+defaults of empty text and Active. Catalogs return exact source identities with
+nil scheduling context; compact List rows omit notes/hashes and have null Item
+completion/metadata fields. Equivalent names retain separate identities and
+deterministic UUID ties. The handler constructs the native catalog request
+without a second domain implementation.
 
-[Evidence](evidence/navigation/core-list-catalog.json) records actual HTTP red/green and 55 passing affected MCP functions across 18 suites with no failures/skips. Discovery and one-row windows preserve original case/accents, actual archive state and structured/text JSON agreement. Twenty-nine malformed, mixed-variant and unimplemented-kind cases report exact paths while preserving source content, timestamps, hashes, issued windows and independent checkpoint. The actual tools/list catalog schema rejects Item-only scope/completion/sort/presentation fields.
+Evidence records actual HTTP red/green and 55 passing affected MCP functions
+across 18 suites with no failures/skips. Discovery and one-row windows preserve
+original case/accents, actual archive state and structured/text JSON agreement.
+Twenty-nine malformed, mixed-variant and unimplemented-kind cases report exact
+paths while preserving source content, timestamps, hashes, issued windows and
+independent checkpoint. The actual tools/list catalog schema rejects Item-only
+scope/completion/sort/presentation fields.
 
-At this catalog-only revision, remaining catalog kinds, complete filters/sorts, HTTP membership creation, bulk review/actions, saved native controls and physical/signed integrations remained separate. ReadLoadTests and CloudKit convergence are unqualified. This adds no schema or portable-format change; backup/export/import/recovery administration stays manual.
+At this catalog-only revision, remaining catalog kinds, complete filters/sorts,
+HTTP membership creation, bulk review/actions, saved native controls and
+physical/signed integrations remained separate. ReadLoadTests and CloudKit
+convergence are unqualified. This adds no schema or portable-format change;
+backup/export/import/recovery administration stays manual.
 
 ## Live Item addition to Lists over HTTP
 
-Before this slice, native Lists could add an existing Item but planner_execute returned unavailable for addMembership. The tool now advertises and strictly admits that command with Item/List UUIDs and explicit placement. First/last accept only kind; before/after require an exact association UUID. Unknown properties, malformed identities and mixed placement shapes reject at their propertyPath. Core owns source/anchor validation, duplicate membership behavior, ordering, receipt replay, saving and independent recovery. The adapter does not copy Item content or reset local completion.
+Before this slice, native Lists could add an existing Item but planner_execute
+returned unavailable for addMembership. The tool now advertises and strictly
+admits that command with Item/List UUIDs and explicit placement. First/last
+accept only kind; before/after require an exact association UUID. Unknown
+properties, malformed identities and mixed placement shapes reject at their
+propertyPath. Core owns source/anchor validation, duplicate membership behavior,
+ordering, receipt replay, saving and independent recovery. The adapter does not
+copy Item content or reset local completion.
 
-The [execution manifest](evidence/navigation/mcp-membership-creation.json) records the resumed missing-route red and first/last green. The earlier [startup evidence](evidence/navigation/mcp-membership-startup.json) remains a zero-execution failure at its recorded revision. Mac test execution now resumed normally without restarting a protected service. An anchored method-only filter selected zero tests despite Xcode success; the corrected suite filter executed two, with one failing at unavailable anchored admission/schema. After implementation, seven new assertions used path instead of the existing propertyPath response field; that test mismatch was corrected.
+The execution manifest records the resumed missing-route red and first/last
+green. The earlier startup evidence remains a zero-execution failure at its
+recorded revision. Mac test execution now resumed normally without restarting a
+protected service. An anchored method-only filter selected zero tests despite
+Xcode success; the corrected suite filter executed two, with one failing at
+unavailable anchored admission/schema. After implementation, seven new
+assertions used path instead of the existing propertyPath response field; that
+test mismatch was corrected.
 
-Final qualification passes 22 functions in nine affected HTTP suites with zero failures/skips. The two new journeys cover first/last and before/after ordering, typed generated membership references, one shared source, unchanged Item timestamps/hashes, independent local completion, duplicate retention, original receipt replay, changed-payload rejection and reopening. Actual tools/list advertises both strict placement variants. Seven malformed requests preserve three memberships, their Manual order, Todo progress and checkpoint 7. Structured and text JSON agree. Existing source/List reads, local/global completion, archive, catalog, Schedule and operation-status behavior pass in the same run. Native app/test compilation, strict affected Swift/Markdown lint and diff checks pass; raw logs retain SDK/service diagnostics.
+Final qualification passes 22 functions in nine affected HTTP suites with zero
+failures/skips. The two new journeys cover first/last and before/after ordering,
+typed generated membership references, one shared source, unchanged Item
+timestamps/hashes, independent local completion, duplicate retention, original
+receipt replay, changed-payload rejection and reopening. Actual tools/list
+advertises both strict placement variants. Seven malformed requests preserve
+three memberships, their Manual order, Todo progress and checkpoint 7.
+Structured and text JSON agree. Existing source/List reads, local/global
+completion, archive, catalog, Schedule and operation-status behavior pass in the
+same run. Native app/test compilation, strict affected Swift/Markdown lint and
+diff checks pass; raw logs retain SDK/service diagnostics.
 
-At this addition-only revision, membership removal/move/reorder over HTTP, bulk review and native drag remained separate. Core/storage schema 7 and portable format 1 are unchanged, with CloudKit disabled. External/cross-window refresh, actual chosen clients, signing/reader/Share, physical sync/account/performance/accessibility and ReadLoad remain unqualified. Backup/export/import/recovery administration stays manual.
+At this addition-only revision, membership removal/move/reorder over HTTP, bulk
+review and native drag remained separate. Core/storage schema 7 and portable
+format 1 are unchanged, with CloudKit disabled. External/cross-window refresh,
+actual chosen clients, signing/reader/Share, physical
+sync/account/performance/accessibility and ReadLoad remain unqualified.
+Backup/export/import/recovery administration stays manual.
 
 ## Saved List Manual reordering over HTTP
 
-Before this slice, Core and the native app could reorder a saved membership but planner_execute rejected that command. It now advertises and admits reorderMembership with exact listId/membershipId UUIDs and first/last or anchored before/after placement. Addition and reorder share the existing strict placement schema/parser. Core retains ownership of association validation, order, durable outcomes and receipt replay. Reorder creates no Item or membership and does not change shared content or contextual completion.
+Before this slice, Core and the native app could reorder a saved membership but
+planner_execute rejected that command. It now advertises and admits
+reorderMembership with exact listId/membershipId UUIDs and first/last or
+anchored before/after placement. Addition and reorder share the existing strict
+placement schema/parser. Core retains ownership of association validation,
+order, durable outcomes and receipt replay. Reorder creates no Item or
+membership and does not change shared content or contextual completion.
 
-The real authenticated HTTP test first failed at the missing route, then passed alongside both addition journeys. Earlier attempts are recorded separately: an incorrect scheme executed no tests; the fixture initially requested entity receipts for associations, then used Core's generatedReferences; extracting the schema without its Value type caused a zero-execution build failure. These are not the behavior red. A later test macro syntax error was caught and corrected before Xcode execution.
+The real authenticated HTTP test first failed at the missing route, then passed
+alongside both addition journeys. Earlier attempts are recorded separately: an
+incorrect scheme executed no tests; the fixture initially requested entity
+receipts for associations, then used Core's generatedReferences; extracting the
+schema without its Value type caused a zero-execution build failure. These are
+not the behavior red. A later test macro syntax error was caught and corrected
+before Xcode execution.
 
-Final qualification passes 14 functions in four affected HTTP suites with zero failures/skips. The reorder journey moves Hotel after Museum, moves it back, replays the original receipt without restoring the old order, rejects a changed replay payload, and reopens to check the same local Done appearance, global Todo, shared content/time/hashes and identities. Anchored requests work in both directions. Actual tools/list advertises strict required identity/placement fields. Thirteen malformed/mismatched requests cover unknown/escaped properties, wrong identities, foreign/self anchors and mixed placement shapes, preserving Manual order, List timestamp/references and progress. Structured/text results agree. Native app/test compilation, strict affected Swift/Markdown lint and diff checks pass.
+Final qualification passes 14 functions in four affected HTTP suites with zero
+failures/skips. The reorder journey moves Hotel after Museum, moves it back,
+replays the original receipt without restoring the old order, rejects a changed
+replay payload, and reopens to check the same local Done appearance, global
+Todo, shared content/time/hashes and identities. Anchored requests work in both
+directions. Actual tools/list advertises strict required identity/placement
+fields. Thirteen malformed/mismatched requests cover unknown/escaped properties,
+wrong identities, foreign/self anchors and mixed placement shapes, preserving
+Manual order, List timestamp/references and progress. Structured/text results
+agree. Native app/test compilation, strict affected Swift/Markdown lint and diff
+checks pass.
 
-[Execution evidence](evidence/navigation/mcp-membership-reordering.json) retains exact commands, counts, separate source snapshots and actual local bundles. Core schema 7 and portable format 1 are unchanged, with CloudKit disabled. At that reorder-only revision, membership removal/move, repeated Itinerary contexts, bulk review, external/cross-window native refresh, chosen clients, signing/reader/Share, physical sync/account/performance/accessibility and ReadLoad remained open. Backup/export/import/recovery administration stays manual.
+Execution evidence retains exact commands, counts, separate source snapshots and
+actual local bundles. Core schema 7 and portable format 1 are unchanged, with
+CloudKit disabled. At that reorder-only revision, membership removal/move,
+repeated Itinerary contexts, bulk review, external/cross-window native refresh,
+chosen clients, signing/reader/Share, physical
+sync/account/performance/accessibility and ReadLoad remained open.
+Backup/export/import/recovery administration stays manual.
 
 ## Membership removal and cross-List Move over HTTP
 
-The starting Core implemented removal and atomic cross-List Move, but planner_execute rejected both commands. It now advertises and admits removeMembership with exact listId/membershipId, and moveMembership with those identities plus destinationListId and placement. Move reuses the existing strict first/last or before/after placement schema/parser. The adapter submits one Core operation; it does not perform separate removal and addition saves. Removing an association retains its shared Item and grants no source deletion or administration.
+The starting Core implemented removal and atomic cross-List Move, but
+planner_execute rejected both commands. It now advertises and admits
+removeMembership with exact listId/membershipId, and moveMembership with those
+identities plus destinationListId and placement. Move reuses the existing strict
+first/last or before/after placement schema/parser. The adapter submits one Core
+operation; it does not perform separate removal and addition saves. Removing an
+association retains its shared Item and grants no source deletion or
+administration.
 
-Each real authenticated HTTP journey failed at its missing route before passing. Removal retains shared content, Item timestamps/hashes and another List's appearance. Ordinary re-add creates a new Todo context; replay returns the original receipt without removing it, and a changed replay payload rejects. Move creates a new local Todo context without copying the Item. A subsequent Move to that existing destination preserves its identity, local Done and Manual position. Reopen confirms those outcomes, empty original Lists and unchanged shared source data. Structured/text JSON agree for successful and rejected calls.
+Each real authenticated HTTP journey failed at its missing route before passing.
+Removal retains shared content, Item timestamps/hashes and another List's
+appearance. Ordinary re-add creates a new Todo context; replay returns the
+original receipt without removing it, and a changed replay payload rejects. Move
+creates a new local Todo context without copying the Item. A subsequent Move to
+that existing destination preserves its identity, local Done and Manual
+position. Reopen confirms those outcomes, empty original Lists and unchanged
+shared source data. Structured/text JSON agree for successful and rejected
+calls.
 
-Final qualification passes 17 functions in five affected suites with zero failures/skips. Three new functions cover both mutation journeys and actual tools/list discovery. Fourteen malformed/mismatched requests cover required/extra/escaped fields, invalid or wrong-kind identities, same-List moves, foreign anchors and mixed placement shapes. Rejection retains both Lists' references/timestamps, Item hashes, local completion, the issued row window and checkpoint 7. Addition, reorder, ordinary Item and List routing pass in the same run. An earlier admission run passed 16 of 17 functions; its one failure contained three incorrect expected codes for extra fields. The existing parser returns unknownField, and only those test literals changed before the final run.
+Final qualification passes 17 functions in five affected suites with zero
+failures/skips. Three new functions cover both mutation journeys and actual
+tools/list discovery. Fourteen malformed/mismatched requests cover
+required/extra/escaped fields, invalid or wrong-kind identities, same-List
+moves, foreign anchors and mixed placement shapes. Rejection retains both Lists'
+references/timestamps, Item hashes, local completion, the issued row window and
+checkpoint 7. Addition, reorder, ordinary Item and List routing pass in the same
+run. An earlier admission run passed 16 of 17 functions; its one failure
+contained three incorrect expected codes for extra fields. The existing parser
+returns unknownField, and only those test literals changed before the final run.
 
-The [execution manifest](evidence/navigation/mcp-membership-mutations.json) records both route reds, each green, the failed admission and final qualification with separate source hashes and exact bundles. Native Mac app/test compilation, strict format lint for both changed Swift files and changed-report Markdown lint pass. Core schema 7 and portable format 1 are unchanged from the [Core mutation slice](core-local-qualification.md#membership-removal-and-cross-list-moves); CloudKit remains disabled. Native removal/Move actions, full graph and bulk operations, external refresh, chosen clients, signing/reader/Share and physical convergence remain open. Backup/export/import/recovery administration stays manual.
+The execution manifest records both route reds, each green, the failed admission
+and final qualification with separate source hashes and exact bundles. Native
+Mac app/test compilation, strict format lint for both changed Swift files and
+changed-report Markdown lint pass. Core schema 7 and portable format 1 are
+unchanged from the
+[Core mutation slice](core-local-qualification.md#membership-removal-and-cross-list-moves);
+CloudKit remains disabled. Native removal/Move actions, full graph and bulk
+operations, external refresh, chosen clients, signing/reader/Share and physical
+convergence remain open. Backup/export/import/recovery administration stays
+manual.
 
 ## Guarded Item subtitle over HTTP
 
-Core and the native editor could change an Item's subtitle, but planner_execute rejected that field. The editItem schema/parser now accepts a String to set it or null to clear it. Omission keeps it unchanged. The adapter uses the existing text parser and one guarded Core operation. It retains title, notes, completion and archive state.
+Core and the native editor could change an Item's subtitle, but planner_execute
+rejected that field. The editItem schema/parser now accepts a String to set it
+or null to clear it. Omission keeps it unchanged. The adapter uses the existing
+text parser and one guarded Core operation. It retains title, notes, completion
+and archive state.
 
-The [execution evidence](evidence/mcp/item-subtitle-wire.json) records an executed one-function red at rejected subtitle admission, followed by the same passing function. A stronger first-run qualification adds replay and invalid-input assertions with production fixed. Four affected functions pass in one suite, including notes editing, creation/replay and three forbidden administration parameter cases. Set/clear and stale rejection expose the current subtitle/hash. Exact old replay after clearing preserves the clear and original receipt; a changed replay payload rejects. A Boolean subtitle in a compound patch and a missing guard leave content, timestamps and hashes unchanged, without applied evidence. Actual tools/list advertises the nullable field and strict change properties. Structured/text JSON agree.
+The execution evidence records an executed one-function red at rejected subtitle
+admission, followed by the same passing function. A stronger first-run
+qualification adds replay and invalid-input assertions with production fixed.
+Four affected functions pass in one suite, including notes editing,
+creation/replay and three forbidden administration parameter cases. Set/clear
+and stale rejection expose the current subtitle/hash. Exact old replay after
+clearing preserves the clear and original receipt; a changed replay payload
+rejects. A Boolean subtitle in a compound patch and a missing guard leave
+content, timestamps and hashes unchanged, without applied evidence. Actual
+tools/list advertises the nullable field and strict change properties.
+Structured/text JSON agree.
 
-These HTTP functions execute through a temporary Apple Swift Package Manager runner. It symlinks the actual adapter/test files, uses the real local Core package, and pins all seven dependency revisions to the application's resolved versions. No application source, domain implementation, mock or production injection is substituted. Its manifest and commands are in the evidence. The first temporary manifest omitted the listener's NIO products and failed before execution; adding those existing products corrected setup. The native Mac app and test bundle also pass build-for-testing, with zero runtime functions in that build.
+These HTTP functions execute through a temporary Apple Swift Package Manager
+runner. It symlinks the actual adapter/test files, uses the real local Core
+package, and pins all seven dependency revisions to the application's resolved
+versions. No application source, domain implementation, mock or production
+injection is substituted. Its manifest and commands are in the evidence. The
+first temporary manifest omitted the listener's NIO products and failed before
+execution; adding those existing products corrected setup. The native Mac app
+and test bundle also pass build-for-testing, with zero runtime functions in that
+build.
 
-App-hosted XCTest attempts stalled before executing this journey. A sampled owned host waits in XCTest configuration/IDE-session preparation; only identified runners/hosts were terminated. Those startup failures do not count as behavior reds. The earlier native subtitle slice's notes-over-HTTP command selected zero functions despite exiting successfully; 8edb83d corrects its report/evidence. The notes regression now executes and passes in this package qualification. Xcode app-host runtime remains open.
+App-hosted XCTest attempts stalled before executing this journey. A sampled
+owned host waits in XCTest configuration/IDE-session preparation; only
+identified runners/hosts were terminated. Those startup failures do not count as
+behavior reds. The earlier native subtitle slice's notes-over-HTTP command
+selected zero functions despite exiting successfully; 8edb83d corrects its
+report/evidence. The notes regression now executes and passes in this package
+qualification. Xcode app-host runtime remains open.
 
-Strict affected Swift/Markdown lint and source/diff checks pass. Raw logs remain under `/private/tmp/PlannerMCPSubtitle*`; the evidence distinguishes startup/setup failure, executed red, green, qualification and native build. Schema 7 and portable format 1 are unchanged, with CloudKit disabled. Signed clients/reader, UI access lifecycle, physical account/Share sync, interruption, accessibility and performance remain open. Backup/export/import/recovery administration stays manual.
+Strict affected Swift/Markdown lint and source/diff checks pass. Raw logs remain
+under `/private/tmp/PlannerMCPSubtitle*`; the evidence distinguishes
+startup/setup failure, executed red, green, qualification and native build.
+Schema 7 and portable format 1 are unchanged, with CloudKit disabled. Signed
+clients/reader, UI access lifecycle, physical account/Share sync, interruption,
+accessibility and performance remain open. Backup/export/import/recovery
+administration stays manual.
 
 ## Guarded activity estimate edits over HTTP
 
-Core supports estimate edits, but MCP rejected them as unavailable. The editItem schema/parser now admits a complete estimate object with canonical decimal Int64 minutes and one of the six existing display units. Null clears it; omission preserves it. Minutes must be positive and within Int64. The adapter adds no conversion, floating-point quantity, calendar arithmetic or limit below Int64.max. Core retains changed-field guards, atomic compound edits, saving and recovery.
+Core supports estimate edits, but MCP rejected them as unavailable. The editItem
+schema/parser now admits a complete estimate object with canonical decimal Int64
+minutes and one of the six existing display units. Null clears it; omission
+preserves it. Minutes must be positive and within Int64. The adapter adds no
+conversion, floating-point quantity, calendar arithmetic or limit below
+Int64.max. Core retains changed-field guards, atomic compound edits, saving and
+recovery.
 
-The [execution evidence](evidence/mcp/item-estimate-wire.json) records one executed HTTP red, the unchanged passing journey and stronger qualification with production fixed. An intermediate compile failed because location must precede estimate in the typed initializer; that correction did not change the test. Seven functions pass in two affected suites. Three new functions execute nine invocations, including seven positive parameter cases across all units and the one-minute/Int64.max boundaries.
+The execution evidence records one executed HTTP red, the unchanged passing
+journey and stronger qualification with production fixed. An intermediate
+compile failed because location must precede estimate in the typed initializer;
+that correction did not change the test. Seven functions pass in two affected
+suites. Three new functions execute nine invocations, including seven positive
+parameter cases across all units and the one-minute/Int64.max boundaries.
 
-The real wire journey sets and reads exactly 9007199254740993 minutes/year. A stale title/estimate patch changes neither field and reports the complete current estimate/hash. Clearing produces nil; stale details then encode null. Old set and clear replay return their original receipts without rewriting later content. A changed unit under the applied operation identity rejects as operationPayloadMismatch. The existing start-only timed appointment remains unchanged. Actual tools/list advertises the nullable strict object and canonical string minutes; structured and text JSON agree.
+The real wire journey sets and reads exactly 9007199254740993 minutes/year. A
+stale title/estimate patch changes neither field and reports the complete
+current estimate/hash. Clearing produces nil; stale details then encode null.
+Old set and clear replay return their original receipts without rewriting later
+content. A changed unit under the applied operation identity rejects as
+operationPayloadMismatch. The existing start-only timed appointment remains
+unchanged. Actual tools/list advertises the nullable strict object and canonical
+string minutes; structured and text JSON agree.
 
-Thirty invalid compound requests retain the Item's content, timestamp and hashes without applied evidence. They cover invalid object/member types, missing/extra members, nonpositive/overflow minutes, numeric and noncanonical spellings, unknown units and missing guards. Seven valid unit/boundary cases persist exactly through wire source reads and native Core reopening with complete recovery evidence. Existing creation, notes, subtitle and forbidden administration journeys pass in the same run.
+Thirty invalid compound requests retain the Item's content, timestamp and hashes
+without applied evidence. They cover invalid object/member types, missing/extra
+members, nonpositive/overflow minutes, numeric and noncanonical spellings,
+unknown units and missing guards. Seven valid unit/boundary cases persist
+exactly through wire source reads and native Core reopening with complete
+recovery evidence. Existing creation, notes, subtitle and forbidden
+administration journeys pass in the same run.
 
-The temporary native runner uses the actual adapter/tests/Core and the application's seven resolved dependency revisions, as in the subtitle slice. Native Mac app/test build-for-testing passes with zero runtime functions. Strict affected Swift/Markdown lint and whitespace checks pass. App-hosted XCTest startup remains open. Schema 7 and portable format 1 remain localOnly with CloudKit disabled. Native estimate controls/conversions await Q48/Q49, then simulator validation. Signed clients, physical sync/account/Share, interruption and performance remain open. Administration stays manual.
+The temporary native runner uses the actual adapter/tests/Core and the
+application's seven resolved dependency revisions, as in the subtitle slice.
+Native Mac app/test build-for-testing passes with zero runtime functions. Strict
+affected Swift/Markdown lint and whitespace checks pass. App-hosted XCTest
+startup remains open. Schema 7 and portable format 1 remain localOnly with
+CloudKit disabled. Native estimate controls/conversions await Q48/Q49, then
+simulator validation. Signed clients, physical sync/account/Share, interruption
+and performance remain open. Administration stays manual.
 
 ## Canonical Item text queries over HTTP
 
-Core search is qualified at c004152, but planner_query rejected Item text. Its strict schema/parser now admits optional String text, defaulting empty when absent, and passes it unchanged to the existing Core query. Null and other types reject as invalidInput at /query/text. The adapter adds no search engine, presentation preference or mutation.
+Core search is qualified at c004152, but planner_query rejected Item text. Its
+strict schema/parser now admits optional String text, defaulting empty when
+absent, and passes it unchanged to the existing Core query. Null and other types
+reject as invalidInput at /query/text. The adapter adds no search engine,
+presentation preference or mutation.
 
-The [execution evidence](evidence/mcp/item-text-query-wire.json) records one executed red and the unchanged passing journey. In red, the tool signals error for text admission; the success-only text assertion then encounters the plain-text failure message. Stronger first-run qualification follows with production fixed. Seventeen functions pass across seven affected HTTP suites, including two new text journeys.
+The execution evidence records one executed red and the unchanged passing
+journey. In red, the tool signals error for text admission; the success-only
+text assertion then encounters the plain-text failure message. Stronger
+first-run qualification follows with production fixed. Seventeen functions pass
+across seven affected HTTP suites, including two new text journeys.
 
-Actual Global/Inbox cross-field queries return only Ramen for vegetarian/menu and issue coherent HTTP row windows. Six further queries exercise every currently saved text-field kind. Five malformed text types retain the issued window and public content/time/hashes/references. Success structured/text JSON agree; failed queries retain the existing structured failure plus human-readable text message. Actual tools/list advertises optional String text and strict properties.
+Actual Global/Inbox cross-field queries return only Ramen for vegetarian/menu
+and issue coherent HTTP row windows. Six further queries exercise every
+currently saved text-field kind. Five malformed text types retain the issued
+window and public content/time/hashes/references. Success structured/text JSON
+agree; failed queries retain the existing structured failure plus human-readable
+text message. Actual tools/list advertises optional String text and strict
+properties.
 
-List text narrows effective completion and archive state while progress remains one of all three children. Ordinary Todo/Active returns none; All/All returns the two matching appearances in Manual order. Local Done remains independent of global Todo, and searching changes no reference, order, timestamp or content hash.
+List text narrows effective completion and archive state while progress remains
+one of all three children. Ordinary Todo/Active returns none; All/All returns
+the two matching appearances in Manual order. Local Done remains independent of
+global Todo, and searching changes no reference, order, timestamp or content
+hash.
 
-The temporary native runner uses actual adapter/test/Core files and seven application dependency revisions. Native Mac app/test build-for-testing, strict affected Swift/Markdown lint and whitespace checks pass. This build executes zero runtime functions; Mac app-host startup remains open. Schema 7/portable 1 remain localOnly with CloudKit disabled. [Native search controls](navigation-local-qualification.md#native-item-and-list-text-search) are subsequently qualified at 642c7a0; shared labels, other filters/sorts, full graph, automatic native refresh, device performance, signed clients and physical sync/account/Share remain open. Administration stays manual.
+The temporary native runner uses actual adapter/test/Core files and seven
+application dependency revisions. Native Mac app/test build-for-testing, strict
+affected Swift/Markdown lint and whitespace checks pass. This build executes
+zero runtime functions; Mac app-host startup remains open. Schema 7/portable 1
+remain localOnly with CloudKit disabled.
+[Native search controls](navigation-local-qualification.md#native-item-and-list-text-search)
+are subsequently qualified at 642c7a0; shared labels, other filters/sorts, full
+graph, automatic native refresh, device performance, signed clients and physical
+sync/account/Share remain open. Administration stays manual.
 
 ## Canonical duration queries over HTTP
 
-Core duration bounds are qualified at f01092a, but planner_query rejected the duration group. Its strict schema/parser now admits an optional nullable group with required minimumMinutes, maximumMinutes and includeUnknown members. Null bounds are unbounded; supplied bounds must be canonical nonnegative decimal Int64 strings. Core owns inclusive comparisons, unknown/empty-group behavior and reversed-range rejection. The adapter passes the accepted value to that query without converting through Double or changing saved estimates, preferences or schedules.
+Core duration bounds are qualified at f01092a, but planner_query rejected the
+duration group. Its strict schema/parser now admits an optional nullable group
+with required minimumMinutes, maximumMinutes and includeUnknown members. Null
+bounds are unbounded; supplied bounds must be canonical nonnegative decimal
+Int64 strings. Core owns inclusive comparisons, unknown/empty-group behavior and
+reversed-range rejection. The adapter passes the accepted value to that query
+without converting through Double or changing saved estimates, preferences or
+schedules.
 
-The [execution evidence](evidence/mcp/item-duration-query-wire.json) records a fixture compile correction, an executed missing-route red and the unchanged passing journey. The fixture originally compared non-Equatable content values; public title/estimate assertions corrected it before behavioral red. Only the adapter changes between executed red and green. Stronger first-run schema/admission/List qualification then leaves adapter source fixed. Twenty functions pass across eight affected HTTP suites, including three new functions.
+The execution evidence records a fixture compile correction, an executed
+missing-route red and the unchanged passing journey. The fixture originally
+compared non-Equatable content values; public title/estimate assertions
+corrected it before behavioral red. Only the adapter changes between executed
+red and green. Stronger first-run schema/admission/List qualification then
+leaves adapter source fixed. Twenty functions pass across eight affected HTTP
+suites, including three new functions.
 
-Actual Global/Inbox queries include exactly 120 minutes at the maximum, exclude 121 and include unknown estimates only when requested. Null and empty groups impose no duration restriction. Seven further queries preserve adjacent values above Double's exact-integer range, Int64.max and zero-bound behavior. Issued HTTP row windows remain readable. Success structured/text JSON agree, and tools/list advertises the strict nullable group, string/null bounds and Boolean unknown choice.
+Actual Global/Inbox queries include exactly 120 minutes at the maximum, exclude
+121 and include unknown estimates only when requested. Null and empty groups
+impose no duration restriction. Seven further queries preserve adjacent values
+above Double's exact-integer range, Int64.max and zero-bound behavior. Issued
+HTTP row windows remain readable. Success structured/text JSON agree, and
+tools/list advertises the strict nullable group, string/null bounds and Boolean
+unknown choice.
 
-Thirty-eight malformed requests reject as structured failures at their propertyPath without a partial generation or rows. They cover malformed groups, missing/extra members, numeric/noncanonical/negative/overflow bounds, invalid unknown choices and reversed ranges. The prior row window and inspected source's estimate, representation, hashes, timestamp and references remain unchanged.
+Thirty-eight malformed requests reject as structured failures at their
+propertyPath without a partial generation or rows. They cover malformed groups,
+missing/extra members, numeric/noncanonical/negative/overflow bounds, invalid
+unknown choices and reversed ranges. The prior row window and inspected source's
+estimate, representation, hashes, timestamp and references remain unchanged.
 
-List duration, literal text, effective completion and archive filters narrow cumulatively. The ordinary query returns no appearances while full progress remains two of five children; All/All retains the two bounded appearances in saved Manual order. Including unknown adds one appearance; clearing only duration retains the text constraint. Local Done remains independent of global Todo, and queries preserve the List's references, order, hashes and timestamp.
+List duration, literal text, effective completion and archive filters narrow
+cumulatively. The ordinary query returns no appearances while full progress
+remains two of five children; All/All retains the two bounded appearances in
+saved Manual order. Including unknown adds one appearance; clearing only
+duration retains the text constraint. Local Done remains independent of global
+Todo, and queries preserve the List's references, order, hashes and timestamp.
 
-The temporary native runner uses actual adapter/test/Core files and all seven application dependency revisions. Native Mac app/test build-for-testing, strict affected Swift/Markdown lint and whitespace checks pass. The Mac build executes zero runtime functions; app-host startup remains open. Schema 7/portable 1 remain localOnly with CloudKit disabled. Native duration controls await Q48/Q49. Other filters/sorts, shared labels, full graph, automatic refresh, device performance, signed clients and physical sync/account/Share remain open. Administration stays manual.
+The temporary native runner uses actual adapter/test/Core files and all seven
+application dependency revisions. Native Mac app/test build-for-testing, strict
+affected Swift/Markdown lint and whitespace checks pass. The Mac build executes
+zero runtime functions; app-host startup remains open. Schema 7/portable 1
+remain localOnly with CloudKit disabled. Native duration controls await Q48/Q49.
+Other filters/sorts, shared labels, full graph, automatic refresh, device
+performance, signed clients and physical sync/account/Share remain open.
+Administration stays manual.
 
 ## Advertised duration sorting over HTTP
 
-Core 18a912b supports duration ordering, while tools/list still advertises only title/Manual. The Item query schema now advertises duration as well. The existing parser passes that mode to the qualified Core query; the adapter adds no separate sorter or preference mutation.
+Core 18a912b supports duration ordering, while tools/list still advertises only
+title/Manual. The Item query schema now advertises duration as well. The
+existing parser passes that mode to the qualified Core query; the adapter adds
+no separate sorter or preference mutation.
 
-The [execution evidence](evidence/mcp/item-duration-sort-wire.json) records one executed red because tools/list omits duration, followed by the unchanged passing journey after only that schema enum changes. Global/Inbox/List sorting already executes through Core in red. Fixed-source qualification passes 21 functions in eight affected HTTP suites, including one new journey.
+The execution evidence records one executed red because tools/list omits
+duration, followed by the unchanged passing journey after only that schema enum
+changes. Global/Inbox/List sorting already executes through Core in red.
+Fixed-source qualification passes 21 functions in eight affected HTTP suites,
+including one new journey.
 
-Both directions return exact identity sequences, keep unknown estimates last, use ascending titles for equal estimates and distinguish adjacent values above Double's exact-integer range. List rows retain exact membership identities and full two-of-seven progress, including an archived completed child. These HTTP sort queries explicitly use All completion/All archive states; the archived child is visible. Issued windows place both unknown Items last. Returning to Manual restores the original source sequence, while List references, hashes, timestamps and independent local completion remain unchanged. Successful structured and text JSON agree.
+Both directions return exact identity sequences, keep unknown estimates last,
+use ascending titles for equal estimates and distinguish adjacent values above
+Double's exact-integer range. List rows retain exact membership identities and
+full two-of-seven progress, including an archived completed child. These HTTP
+sort queries explicitly use All completion/All archive states; the archived
+child is visible. Issued windows place both unknown Items last. Returning to
+Manual restores the original source sequence, while List references, hashes,
+timestamps and independent local completion remain unchanged. Successful
+structured and text JSON agree.
 
-The temporary native runner uses actual adapter/test/Core files and seven application dependency revisions. Native Mac app/test build-for-testing, strict affected Swift/Markdown lint and whitespace checks pass. The Mac build executes zero runtime functions. Schema 7/portable 1 remain localOnly with CloudKit disabled. Native estimate/filter/sort controls, Created/Last updated sorting, other filters, shared labels, full graph, external refresh, paging, device performance, signed clients and physical sync/account/Share remain open. Administration stays manual.
+The temporary native runner uses actual adapter/test/Core files and seven
+application dependency revisions. Native Mac app/test build-for-testing, strict
+affected Swift/Markdown lint and whitespace checks pass. The Mac build executes
+zero runtime functions. Schema 7/portable 1 remain localOnly with CloudKit
+disabled. Native estimate/filter/sort controls, Created/Last updated sorting,
+other filters, shared labels, full graph, external refresh, paging, device
+performance, signed clients and physical sync/account/Share remain open.
+Administration stays manual.
 
 ## Advertised chronological sorting over HTTP
 
-Core 2ac41af supports Created and Last updated, while tools/list omits those modes. The Item query schema now advertises all five declared modes: title, created, lastUpdated, duration and manual. The existing parser uses the same canonical Core query. Requests specify their desired order without changing native preferences or saved Manual ranks.
+Core 2ac41af supports Created and Last updated, while tools/list omits those
+modes. The Item query schema now advertises all five declared modes: title,
+created, lastUpdated, duration and manual. The existing parser uses the same
+canonical Core query. Requests specify their desired order without changing
+native preferences or saved Manual ranks.
 
-The [execution evidence](evidence/mcp/item-chronological-sort-wire.json) records one executed schema red and the unchanged passing journey. Core-backed positive date queries already execute in red, but the advertised enum is incomplete. Green changes that enum and the existing duration test's expected supported-mode list. Fixed-source qualification passes 22 functions across nine affected actual HTTP suites, including one new journey.
+The execution evidence records one executed schema red and the unchanged passing
+journey. Core-backed positive date queries already execute in red, but the
+advertised enum is incomplete. Green changes that enum and the existing duration
+test's expected supported-mode list. Fixed-source qualification passes 22
+functions across nine affected actual HTTP suites, including one new journey.
 
-Global/Inbox/List queries return literal expected source/appearance sequences for both date modes and directions. A guarded notes edit changes Last updated without rewriting Created. Membership addition/local completion leaves every inspected Item's timestamps/hashes unchanged. Exact List membership identities, full one-of-three progress and issued row-window positions remain coherent. Returning to Manual recovers the original source order and local completion. Successful structured/text JSON agree. Existing invalid scopes/sorts still reject, including undeclared calendar mode and descending Manual, while retaining saved data and prior windows.
+Global/Inbox/List queries return literal expected source/appearance sequences
+for both date modes and directions. A guarded notes edit changes Last updated
+without rewriting Created. Membership addition/local completion leaves every
+inspected Item's timestamps/hashes unchanged. Exact List membership identities,
+full one-of-three progress and issued row-window positions remain coherent.
+Returning to Manual recovers the original source order and local completion.
+Successful structured/text JSON agree. Existing invalid scopes/sorts still
+reject, including undeclared calendar mode and descending Manual, while
+retaining saved data and prior windows.
 
-The temporary native runner uses actual adapter/test/Core files and seven application dependency revisions. Native Mac app/test build-for-testing, strict affected Swift/Markdown lint and whitespace checks pass. Mac compilation executes zero runtime functions. Date fixtures use actual sequential command timestamps verified through public reads; explicit equal-date fixtures remain open. Schema 7/portable 1 remain localOnly with CloudKit disabled. Native estimate/filter/sort controls, shared labels, full graph, external observation, paging, device responsiveness, signed clients and physical sync/account/Share remain open. Administration stays manual.
+The temporary native runner uses actual adapter/test/Core files and seven
+application dependency revisions. Native Mac app/test build-for-testing, strict
+affected Swift/Markdown lint and whitespace checks pass. Mac compilation
+executes zero runtime functions. Date fixtures use actual sequential command
+timestamps verified through public reads; explicit equal-date fixtures remain
+open. Schema 7/portable 1 remain localOnly with CloudKit disabled. Native
+estimate/filter/sort controls, shared labels, full graph, external observation,
+paging, device responsiveness, signed clients and physical sync/account/Share
+remain open. Administration stays manual.
 
 ## Category source creation and reads over HTTP
 
-Before this slice, Core `85d33b6` persists Categories but the adapter rejects Category creation/source reads. The stateless official-SDK adapter now advertises and admits typed createCategory with exactly name/color/iconName, forwards the command to Core, and returns its complete applied/recovery value. Category source reads return their declared content, timestamps and field hashes, with null completion/archive/progress. The existing catalog delegation discovers generated Categories using Core's cumulative insensitive name search. Manual administration stays outside agent tools.
+Before this slice, Core `85d33b6` persists Categories but the adapter rejects
+Category creation/source reads. The stateless official-SDK adapter now
+advertises and admits typed createCategory with exactly name/color/iconName,
+forwards the command to Core, and returns its complete applied/recovery value.
+Category source reads return their declared content, timestamps and field
+hashes, with null completion/archive/progress. The existing catalog delegation
+discovers generated Categories using Core's cumulative insensitive name search.
+Manual administration stays outside agent tools.
 
-One real HTTP creation/read journey executes a functional red with three issues, then passes after admission/mapping. It saves exact Unicode/whitespace text and color/icon, replays the complete original result, checks wire fields against a public reopened native read and discovers the generated identity. A separate qualification journey inspects actual tools/list command and read advertisements, then rejects six malformed/invalid inputs with exact error paths and no source, receipt, proposal or acknowledgement. Structured/text JSON agree. An initial nested test macro and a misplaced Schedule reference mapping fail compilation and are corrected before the passing executions.
+One real HTTP creation/read journey executes a functional red with three issues,
+then passes after admission/mapping. It saves exact Unicode/whitespace text and
+color/icon, replays the complete original result, checks wire fields against a
+public reopened native read and discovers the generated identity. A separate
+qualification journey inspects actual tools/list command and read
+advertisements, then rejects six malformed/invalid inputs with exact error paths
+and no source, receipt, proposal or acknowledgement. Structured/text JSON agree.
+An initial nested test macro and a misplaced Schedule reference mapping fail
+compilation and are corrected before the passing executions.
 
-Final fixed-source qualification passes 23 functions across eight actual HTTP suites. Native Mac app and MCP test-bundle compilation, strict affected Swift/Markdown lint and whitespace checks pass; compilation executes zero app-hosted runtime functions. The temporary Apple SPM runner uses actual adapter/test/Core sources with seven matching application dependency revisions. The [evidence record](evidence/mcp/category-source-wire.json) retains the source hashes, exact commands, failed attempts and limits. Schema 8/portable 1 remain localOnly with CloudKit disabled. Category editing/associations/deletion, Tags, native label management, full manual JSON administration, signed clients, physical sync/account/Share and Mac app runtime remain open.
+Final fixed-source qualification passes 23 functions across eight actual HTTP
+suites. Native Mac app and MCP test-bundle compilation, strict affected
+Swift/Markdown lint and whitespace checks pass; compilation executes zero
+app-hosted runtime functions. The temporary Apple SPM runner uses actual
+adapter/test/Core sources with seven matching application dependency revisions.
+The evidence record retains the source hashes, exact commands, failed attempts
+and limits. Schema 8/portable 1 remain localOnly with CloudKit disabled.
+Category editing/associations/deletion, Tags, native label management, full
+manual JSON administration, signed clients, physical sync/account/Share and Mac
+app runtime remain open.
 
 ## Guarded Category edits over HTTP
 
-Core `5e5ca95` already saves guarded Category edits, while the HTTP adapter rejects editCategory. The adapter now advertises name/color/iconName patches and their field hashes, admits the typed command, and forwards it to Core. The existing source reader and conflict serializer return current values and hashes. Optional color/icon values can be cleared; a Category has no notes, completion or archive field. Manual administration remains outside agent tools.
+Core `5e5ca95` already saves guarded Category edits, while the HTTP adapter
+rejects editCategory. The adapter now advertises name/color/iconName patches and
+their field hashes, admits the typed command, and forwards it to Core. The
+existing source reader and conflict serializer return current values and hashes.
+Optional color/icon values can be cleared; a Category has no notes, completion
+or archive field. Manual administration remains outside agent tools.
 
-The real HTTP journey first executes a red because editCategory is unavailable. After admission, it passes a guarded rename, icon/color clears using unchanged original field guards, atomic rejection of a compound stale patch, a null current color in conflict details, original receipt replay after later changes, and a public native reopen. Structured and text JSON agree. Two early test builds fail from incorrect storage initializer arguments. A later test expectation incorrectly names the rejected wire state notApplied; it is corrected to the declared rejected value. The evidence distinguishes these test corrections from the functional red and does not claim an unchanged test file throughout.
+The real HTTP journey first executes a red because editCategory is unavailable.
+After admission, it passes a guarded rename, icon/color clears using unchanged
+original field guards, atomic rejection of a compound stale patch, a null
+current color in conflict details, original receipt replay after later changes,
+and a public native reopen. Structured and text JSON agree. Two early test
+builds fail from incorrect storage initializer arguments. A later test
+expectation incorrectly names the rejected wire state notApplied; it is
+corrected to the declared rejected value. The evidence distinguishes these test
+corrections from the functional red and does not claim an unchanged test file
+throughout.
 
-A separate qualification journey inspects the actual tools/list edit schema and rejects eleven invalid patches with exact codes and paths. Each rejection retains the saved content, source lifetime, timestamps and field hashes. It produces no applied operation evidence, new checkpoint or prepared proposal. Final fixed-source qualification passes 32 functions across nine actual HTTP suites, including seven existing List journeys. The temporary runner adds a symlink to that existing test file and continues using the application's seven dependency revisions.
+A separate qualification journey inspects the actual tools/list edit schema and
+rejects eleven invalid patches with exact codes and paths. Each rejection
+retains the saved content, source lifetime, timestamps and field hashes. It
+produces no applied operation evidence, new checkpoint or prepared proposal.
+Final fixed-source qualification passes 32 functions across nine actual HTTP
+suites, including seven existing List journeys. The temporary runner adds a
+symlink to that existing test file and continues using the application's seven
+dependency revisions.
 
-Native Mac app and MCP test-bundle build-for-testing, strict affected Swift/Markdown lint and whitespace checks pass. The Mac build executes zero app-hosted runtime functions. Core's prior 106-function and six-function iPhone qualifications belong to `5e5ca95`; this wire-only slice does not rerun them. [Execution evidence](evidence/mcp/category-edit-wire.json) records the exact commands, source hashes and limits. Schema 8/portable 1 remain localOnly with CloudKit disabled. Category associations/deletion, Tags, native label management, manual JSON administration, signed clients, physical sync/account/Share and Mac app runtime remain open.
+Native Mac app and MCP test-bundle build-for-testing, strict affected
+Swift/Markdown lint and whitespace checks pass. The Mac build executes zero
+app-hosted runtime functions. Core's prior 106-function and six-function iPhone
+qualifications belong to `5e5ca95`; this wire-only slice does not rerun them.
+Execution evidence records the exact commands, source hashes and limits. Schema
+8/portable 1 remain localOnly with CloudKit disabled. Category
+associations/deletion, Tags, native label management, manual JSON
+administration, signed clients, physical sync/account/Share and Mac app runtime
+remain open.
 
 ## Tag source creation and reads over HTTP
 
-Before this slice, Core persists Tags in schema 9, while the HTTP adapter rejects Tag creation/source reads. It now advertises and admits `createTag`, validates only name/color/iconName and delegates the typed command to Core's durable writer. `planner_read` accepts a Tag identity and returns exact metadata, timestamps and field hashes, with null completion/archive/progress. No Tag edit command or administration tool is added.
+Before this slice, Core persists Tags in schema 9, while the HTTP adapter
+rejects Tag creation/source reads. It now advertises and admits `createTag`,
+validates only name/color/iconName and delegates the typed command to Core's
+durable writer. `planner_read` accepts a Tag identity and returns exact
+metadata, timestamps and field hashes, with null completion/archive/progress. No
+Tag edit command or administration tool is added.
 
-The public HTTP creation journey fails before admission, then passes unchanged through creation, exact replay, source reads, reopening and cumulative accent/case-insensitive catalog discovery. A second journey exposes a query advertisement gap: `tools/list` describes List catalogs even though Core already admits label discovery. A separate Category/Tag catalog variant now advertises the required `archive: all`; the List variant retains its existing archive options. The unchanged second journey passes after that correction. Six invalid creation payloads reject with useful paths and no saved source, applied operation evidence or recovery proposal/checkpoint.
+The public HTTP creation journey fails before admission, then passes unchanged
+through creation, exact replay, source reads, reopening and cumulative
+accent/case-insensitive catalog discovery. A second journey exposes a query
+advertisement gap: `tools/list` describes List catalogs even though Core already
+admits label discovery. A separate Category/Tag catalog variant now advertises
+the required `archive: all`; the List variant retains its existing archive
+options. The unchanged second journey passes after that correction. Six invalid
+creation payloads reject with useful paths and no saved source, applied
+operation evidence or recovery proposal/checkpoint.
 
-Final qualification passes 34 actual HTTP functions in nine suites against the official Swift MCP SDK, with all seven dependency revisions matching the application's resolved pins. Native Mac application/test-bundle compilation, strict five-file Swift lint, affected Markdown lint and whitespace checks pass. Mac compilation executes zero app-hosted runtime functions. The [evidence record](evidence/mcp/tag-creation-wire.json) retains each red/green pair, unchanged journey hashes, final source hashes and native result bundle. The List catalog test now expects three advertised query variants while retaining its original List property assertions.
+Final qualification passes 34 actual HTTP functions in nine suites against the
+official Swift MCP SDK, with all seven dependency revisions matching the
+application's resolved pins. Native Mac application/test-bundle compilation,
+strict five-file Swift lint, affected Markdown lint and whitespace checks pass.
+Mac compilation executes zero app-hosted runtime functions. The evidence record
+retains each red/green pair, unchanged journey hashes, final source hashes and
+native result bundle. The List catalog test now expects three advertised query
+variants while retaining its original List property assertions.
 
-[Core Tag qualification](core-local-qualification.md#shared-tag-creation-and-schema-9) remains the schema-9 migration/recovery evidence. Tag editing/deletion and native management, Item/Itinerary associations, complete manual JSON workflows, physical iCloud/account/Share validation and whole-app UI polish remain open. These HTTP changes preserve the accepted stateless agent data scope.
+[Core Tag qualification](core-local-qualification.md#shared-tag-creation-and-schema-9)
+remains the schema-9 migration/recovery evidence. Tag editing/deletion and
+native management, Item/Itinerary associations, complete manual JSON workflows,
+physical iCloud/account/Share validation and whole-app UI polish remain open.
+These HTTP changes preserve the accepted stateless agent data scope.
 
 ## Guarded Tag edits over HTTP
 
-Before this slice, Core supports guarded Tag edits while the adapter admits only Tag creation/reads. `planner_execute` now advertises and parses `editTag` with nonempty name/color/icon changes and corresponding field hashes. It delegates the complete typed patch to Core. Stale Tag details encode conflicting fields, typed current values and current hashes, including a null optional color after clearing it.
+Before this slice, Core supports guarded Tag edits while the adapter admits only
+Tag creation/reads. `planner_execute` now advertises and parses `editTag` with
+nonempty name/color/icon changes and corresponding field hashes. It delegates
+the complete typed patch to Core. Stale Tag details encode conflicting fields,
+typed current values and current hashes, including a null optional color after
+clearing it.
 
-The actual HTTP edit journey fails before admission, then passes unchanged after implementation through rename, independent icon/color changes, optional clears, stale compound rejection, exact replay and reopening. A separate advertisement/invalid-patch journey verifies the three allowed fields and eleven malformed/invalid patches. Rejected requests preserve content, lifetime, timestamps and hashes, with no applied operation evidence or extra recovery checkpoint/proposals. Structured content and text JSON agree.
+The actual HTTP edit journey fails before admission, then passes unchanged after
+implementation through rename, independent icon/color changes, optional clears,
+stale compound rejection, exact replay and reopening. A separate
+advertisement/invalid-patch journey verifies the three allowed fields and eleven
+malformed/invalid patches. Rejected requests preserve content, lifetime,
+timestamps and hashes, with no applied operation evidence or extra recovery
+checkpoint/proposals. Structured content and text JSON agree.
 
-Final fixed-source qualification passes 36 HTTP functions in nine suites with the official Swift MCP SDK and all seven resolved dependency revisions matching the application. Native Mac application/test compilation, strict two-file Swift lint, affected Markdown lint and whitespace checks pass. Mac compilation executes zero app-hosted runtime functions. The [evidence record](evidence/mcp/tag-edit-wire.json) retains red/green, journey/source hashes and result bundles. [Core Tag guards](core-local-qualification.md#guarded-tag-content-edits) retain the prior 112 Core store and twelve native Core function qualification.
+Final fixed-source qualification passes 36 HTTP functions in nine suites with
+the official Swift MCP SDK and all seven resolved dependency revisions matching
+the application. Native Mac application/test compilation, strict two-file Swift
+lint, affected Markdown lint and whitespace checks pass. Mac compilation
+executes zero app-hosted runtime functions. The evidence record retains
+red/green, journey/source hashes and result bundles.
+[Core Tag guards](core-local-qualification.md#guarded-tag-content-edits) retain
+the prior 112 Core store and twelve native Core function qualification.
 
-Tag native management, Item/Itinerary label associations/deletion, complete manual JSON workflows, physical iCloud/account/Share validation and whole-app UI polish remain open. These edits continue the accepted stateless agent data scope and add no administrative tool.
+Tag native management, Item/Itinerary label associations/deletion, complete
+manual JSON workflows, physical iCloud/account/Share validation and whole-app UI
+polish remain open. These edits continue the accepted stateless agent data scope
+and add no administrative tool.
 
 ## Live Item label selections over HTTP
 
-Core `9172187` already persists guarded Item label selections. The HTTP adapter now advertises and admits Category/Tag identity sets for Item creation and edits. Omitted creation sets are empty; omitted edit sets stay unchanged. Empty arrays clear selections. Null, malformed UUIDs and invalid label bindings reject the complete command. UUID case variants and duplicates normalize to one selected identity. Item reads return live label names, colors and icons, their source references, normalized selections and association references. Renaming a shared label updates this metadata without changing the Item's own timestamp or edit hashes.
+Core `9172187` already persists guarded Item label selections. The HTTP adapter
+now advertises and admits Category/Tag identity sets for Item creation and
+edits. Omitted creation sets are empty; omitted edit sets stay unchanged. Empty
+arrays clear selections. Null, malformed UUIDs and invalid label bindings reject
+the complete command. UUID case variants and duplicates normalize to one
+selected identity. Item reads return live label names, colors and icons, their
+source references, normalized selections and association references. Renaming a
+shared label updates this metadata without changing the Item's own timestamp or
+edit hashes.
 
-The primary actual HTTP journey fails because label creation fields are unavailable, then passes unchanged after implementation. It creates a labelled Item, reads exact metadata and references, renames a Category, applies independent Category/Tag selection edits, rejects an entire stale notes/Category patch and returns the current conflicting identity set and hash. Original receipt replay preserves later selections. Public Core reopening and independent recovery retain the saved graph and closed association marker. An initial runner attempt discovers no matching test because its temporary source directory needs a symlink for the new file; that attempt is not functional evidence.
+The primary actual HTTP journey fails because label creation fields are
+unavailable, then passes unchanged after implementation. It creates a labelled
+Item, reads exact metadata and references, renames a Category, applies
+independent Category/Tag selection edits, rejects an entire stale notes/Category
+patch and returns the current conflicting identity set and hash. Original
+receipt replay preserves later selections. Public Core reopening and independent
+recovery retain the saved graph and closed association marker. An initial runner
+attempt discovers no matching test because its temporary source directory needs
+a symlink for the new file; that attempt is not functional evidence.
 
-A separate qualification journey verifies the actual tools/list advertisements and rejects nineteen malformed or invalid requests with precise codes and paths. Rejections preserve the Item's notes, selections, references, timestamps and hashes, with no applied receipt, new checkpoint or prepared proposal. Duplicate UUID spellings create one association per owner/label pair and replay as the same normalized command. Clear followed by ordinary re-add produces fresh association identities; replaying the earlier clear leaves those later selections intact. The first qualification build assumed references were Hashable; the test was corrected to their declared Equatable API without changing production code.
+A separate qualification journey verifies the actual tools/list advertisements
+and rejects nineteen malformed or invalid requests with precise codes and paths.
+Rejections preserve the Item's notes, selections, references, timestamps and
+hashes, with no applied receipt, new checkpoint or prepared proposal. Duplicate
+UUID spellings create one association per owner/label pair and replay as the
+same normalized command. Clear followed by ordinary re-add produces fresh
+association identities; replaying the earlier clear leaves those later
+selections intact. The first qualification build assumed references were
+Hashable; the test was corrected to their declared Equatable API without
+changing production code.
 
-Final fixed-source qualification passes 38 actual HTTP functions in eleven suites. Native Mac app/test compilation, strict four-file Swift lint, affected Markdown lint and whitespace checks pass. Mac compilation executes zero app-hosted runtime functions. The temporary Apple SPM runner uses the official Swift MCP SDK and all seven resolved revisions match the app. The [evidence record](evidence/mcp/item-label-wire.json) retains the red/green logs, qualification results and frozen source hashes. The primary test remains byte-identical through the final green run.
+Final fixed-source qualification passes 38 actual HTTP functions in eleven
+suites. Native Mac app/test compilation, strict four-file Swift lint, affected
+Markdown lint and whitespace checks pass. Mac compilation executes zero
+app-hosted runtime functions. The temporary Apple SPM runner uses the official
+Swift MCP SDK and all seven resolved revisions match the app. The evidence
+record retains the red/green logs, qualification results and frozen source
+hashes. The primary test remains byte-identical through the final green run.
 
-Schema 10 and portable format 1 remain localOnly. This adapter slice changes no Core storage or native UI code. Label filtering and row metadata, native label selection/management, Itinerary labels, label-source deletion, complete manual JSON administration, physical iCloud/account/Share validation and whole-app UI polish remain open. Q53's native Labels presentation choice is still unanswered.
+Schema 10 and portable format 1 remain localOnly. This adapter slice changes no
+Core storage or native UI code. Label filtering and row metadata, native label
+selection/management, Itinerary labels, label-source deletion, complete manual
+JSON administration, physical iCloud/account/Share validation and whole-app UI
+polish remain open. Q53's native Labels presentation choice is still unanswered.
 
 ## Category and Tag query groups over HTTP
 
-Core `19c06ba` already filters Item queries by Category/Tag identity groups. `planner_query` now advertises and admits those groups as `{ids: [UUID], match: "any"|"all"}` or null. Omitted match defaults Any. Omitted, null and empty groups are inactive. UUID case variants and duplicate selections normalize through native UUID sets. The adapter delegates matching to Core instead of adding a second filter engine. Other active query fields narrow cumulatively.
+Core `19c06ba` already filters Item queries by Category/Tag identity groups.
+`planner_query` now advertises and admits those groups as
+`{ids: [UUID], match: "any"|"all"}` or null. Omitted match defaults Any.
+Omitted, null and empty groups are inactive. UUID case variants and duplicate
+selections normalize through native UUID sets. The adapter delegates matching to
+Core instead of adding a second filter engine. Other active query fields narrow
+cumulatively.
 
-The primary actual HTTP journey fails at unavailable group admission, then passes unchanged after implementation. Ten Global/Inbox examples cover Any/All, duplicate names with distinct identities, default matching, cumulative text/duration narrowing and inactive groups. List queries retain exact membership appearance identities and moving row windows. Effective completion remains global OR local; their full progress stays one of three even when filters expose one Item. Read-only queries preserve the acknowledged checkpoint and create no prepared proposals.
+The primary actual HTTP journey fails at unavailable group admission, then
+passes unchanged after implementation. Ten Global/Inbox examples cover Any/All,
+duplicate names with distinct identities, default matching, cumulative
+text/duration narrowing and inactive groups. List queries retain exact
+membership appearance identities and moving row windows. Effective completion
+remains global OR local; their full progress stays one of three even when
+filters expose one Item. Read-only queries preserve the acknowledged checkpoint
+and create no prepared proposals.
 
-A separate qualification journey verifies the actual tools/list group schema, required identities, optional default match and strict object fields. Twenty-four malformed inputs reject with exact codes and JSON Pointer paths, including escaped unknown keys. Each rejection leaves no fabricated generation or rows. The previously issued row window retains the same JSON values, and saved selections, metadata, references, Item timestamp/hashes and recovery remain unchanged.
+A separate qualification journey verifies the actual tools/list group schema,
+required identities, optional default match and strict object fields.
+Twenty-four malformed inputs reject with exact codes and JSON Pointer paths,
+including escaped unknown keys. Each rejection leaves no fabricated generation
+or rows. The previously issued row window retains the same JSON values, and
+saved selections, metadata, references, Item timestamp/hashes and recovery
+remain unchanged.
 
-Final frozen-source qualification passes 40 actual HTTP functions in thirteen suites with the official Swift MCP SDK and all seven resolved revisions matching the app. Native Mac app/test compilation, strict three-file Swift lint, affected Markdown lint and whitespace checks pass. Compilation executes zero app-hosted runtime functions. The [evidence record](evidence/mcp/item-label-query-wire.json) retains red/green, exact commands and source hashes. Core's 121-function store and twelve-function iPhone qualifications belong to `19c06ba` and are not rerun for this adapter-only change.
+Final frozen-source qualification passes 40 actual HTTP functions in thirteen
+suites with the official Swift MCP SDK and all seven resolved revisions matching
+the app. Native Mac app/test compilation, strict three-file Swift lint, affected
+Markdown lint and whitespace checks pass. Compilation executes zero app-hosted
+runtime functions. The evidence record retains red/green, exact commands and
+source hashes. Core's 121-function store and twelve-function iPhone
+qualifications belong to `19c06ba` and are not rerun for this adapter-only
+change.
 
-Schema 10 and portable format 1 remain localOnly. Native label-filter controls, label row metadata, List-identity and scheduled/address/link filters, Itinerary queries/labels, label deletion, manual JSON administration, physical sync/account/Share validation and whole-app UI polish remain open. Q53's native Labels presentation choice is still unanswered.
+Schema 10 and portable format 1 remain localOnly. Native label-filter controls,
+label row metadata, List-identity and scheduled/address/link filters, Itinerary
+queries/labels, label deletion, manual JSON administration, physical
+sync/account/Share validation and whole-app UI polish remain open. Q53's native
+Labels presentation choice is still unanswered.
 
 ## List identity query groups over HTTP
 
-Core `6ad2b58` already filters Item queries by retained live List memberships. The HTTP adapter previously rejects this group as unavailable. `planner_query` now advertises and admits `lists` using the same strict identity-group schema and parser as Categories/Tags. Omitted match defaults Any; omitted, null and empty groups are inactive. UUID case variants and duplicates normalize through native UUID sets. Matching remains in Core, with cumulative restrictions from the other active filters.
+Core `6ad2b58` already filters Item queries by retained live List memberships.
+The HTTP adapter previously rejects this group as unavailable. `planner_query`
+now advertises and admits `lists` using the same strict identity-group schema
+and parser as Categories/Tags. Omitted match defaults Any; omitted, null and
+empty groups are inactive. UUID case variants and duplicates normalize through
+native UUID sets. Matching remains in Core, with cumulative restrictions from
+the other active filters.
 
-The primary actual HTTP journey executes a functional red before admission, then passes unchanged through the first qualification. Ten Global/Inbox cases cover Any/All, default matching, duplicate List names with distinct identities, archived containers, overlapping membership sources, inactive groups and cumulative label/text/duration narrowing. Three List cases preserve exact appearance identities and full progress of one of two even when filtering exposes no rows. Moving row reads retain global Todo, local Done and effective Done. Recovery remains at its acknowledged checkpoint without prepared proposals.
+The primary actual HTTP journey executes a functional red before admission, then
+passes unchanged through the first qualification. Ten Global/Inbox cases cover
+Any/All, default matching, duplicate List names with distinct identities,
+archived containers, overlapping membership sources, inactive groups and
+cumulative label/text/duration narrowing. Three List cases preserve exact
+appearance identities and full progress of one of two even when filtering
+exposes no rows. Moving row reads retain global Todo, local Done and effective
+Done. Recovery remains at its acknowledged checkpoint without prepared
+proposals.
 
-The admission journey checks the actual tools/list schema and twelve malformed groups with precise codes and JSON Pointer paths, including an escaped unknown key. Rejected queries fabricate no generation or rows, preserve an already issued row window's JSON values, and leave content, source states, bindings, timestamps, hashes and recovery unchanged. Its first build incorrectly compares a non-Equatable source state. The assertion is corrected to its declared fields before runtime qualification. Native compilation then finds a warning in the primary test's nested require/expect expression. Extracting the same required identities removes that introduced warning; the record keeps both journey hashes instead of claiming an unchanged file through final qualification.
+The admission journey checks the actual tools/list schema and twelve malformed
+groups with precise codes and JSON Pointer paths, including an escaped unknown
+key. Rejected queries fabricate no generation or rows, preserve an already
+issued row window's JSON values, and leave content, source states, bindings,
+timestamps, hashes and recovery unchanged. Its first build incorrectly compares
+a non-Equatable source state. The assertion is corrected to its declared fields
+before runtime qualification. Native compilation then finds a warning in the
+primary test's nested require/expect expression. Extracting the same required
+identities removes that introduced warning; the record keeps both journey hashes
+instead of claiming an unchanged file through final qualification.
 
-Final frozen-source qualification passes 42 actual HTTP functions in fifteen suites with the official Swift MCP SDK and all seven dependency revisions matching the app. Native Mac app/test compilation, strict three-file Swift lint, affected Markdown lint and whitespace checks pass. Compilation executes zero app-hosted runtime functions. The [evidence record](evidence/mcp/item-list-query-wire.json) retains red/green, corrections, exact commands and source hashes. [Core List filtering](core-local-qualification.md#list-membership-identity-filters) retains the prior 123-function store and fourteen-function iPhone qualification at `6ad2b58`; this adapter-only slice does not rerun unchanged Core code.
+Final frozen-source qualification passes 42 actual HTTP functions in fifteen
+suites with the official Swift MCP SDK and all seven dependency revisions
+matching the app. Native Mac app/test compilation, strict three-file Swift lint,
+affected Markdown lint and whitespace checks pass. Compilation executes zero
+app-hosted runtime functions. The evidence record retains red/green,
+corrections, exact commands and source hashes.
+[Core List filtering](core-local-qualification.md#list-membership-identity-filters)
+retains the prior 123-function store and fourteen-function iPhone qualification
+at `6ad2b58`; this adapter-only slice does not rerun unchanged Core code.
 
-Schema 10 and portable format 1 remain localOnly. Native filter controls, label row metadata, scheduled/address/link filters, Itinerary queries/labels, label deletion, manual JSON administration, physical sync/account/Share validation and whole-app UI polish remain open. Q53 Labels management and Q54 native filter presentation remain unanswered.
+Schema 10 and portable format 1 remain localOnly. Native filter controls, label
+row metadata, scheduled/address/link filters, Itinerary queries/labels, label
+deletion, manual JSON administration, physical sync/account/Share validation and
+whole-app UI polish remain open. Q53 Labels management and Q54 native filter
+presentation remain unanswered.
 
 ## Owned address and link query filters over HTTP
 
-Core `177dd0e` already applies cumulative address/link presence restrictions. The HTTP adapter previously rejects them as unavailable. `planner_query` now advertises optional Boolean `hasAddress` and `hasLinks`, defaulting false, and admits them through strict typed parsing. Omission and false leave the restriction inactive. True delegates matching to existing Core predicates. Null, strings, numbers, arrays and objects reject rather than coercing or clearing a filter. No additional search engine, provider lookup or administrative action is added.
+Core `177dd0e` already applies cumulative address/link presence restrictions.
+The HTTP adapter previously rejects them as unavailable. `planner_query` now
+advertises optional Boolean `hasAddress` and `hasLinks`, defaulting false, and
+admits them through strict typed parsing. Omission and false leave the
+restriction inactive. True delegates matching to existing Core predicates. Null,
+strings, numbers, arrays and objects reject rather than coercing or clearing a
+filter. No additional search engine, provider lookup or administrative action is
+added.
 
-The primary actual HTTP journey executes a functional red before admission, then passes unchanged through final qualification. Eight Global/Inbox examples cover inactive defaults, address-only, links-only, both, Maps bookmarks, coordinate-only and blank-address values, and cumulative label/List/text/duration restrictions. Three List examples retain exact membership identities and complete-scope progress of one of three even when no rows match. Moving reads retain global Todo/local Done, saved address and eligible website preview values. A Maps-only row has owned coordinates and a link while its website preview remains null.
+The primary actual HTTP journey executes a functional red before admission, then
+passes unchanged through final qualification. Eight Global/Inbox examples cover
+inactive defaults, address-only, links-only, both, Maps bookmarks,
+coordinate-only and blank-address values, and cumulative
+label/List/text/duration restrictions. Three List examples retain exact
+membership identities and complete-scope progress of one of three even when no
+rows match. Moving reads retain global Todo/local Done, saved address and
+eligible website preview values. A Maps-only row has owned coordinates and a
+link while its website preview remains null.
 
-A separate journey inspects actual tools/list Boolean/default schema values and rejects fourteen non-Boolean requests with precise invalidInput field paths. Those failures return no fabricated generation or rows. The previously issued row window retains equal JSON values; saved content, states, references, timestamps, hashes and independent recovery remain unchanged. Its initial setup has an extra closing parenthesis that prevents formatting; extracting the input fixes it before runtime qualification. This correction does not change the primary red/green file.
+A separate journey inspects actual tools/list Boolean/default schema values and
+rejects fourteen non-Boolean requests with precise invalidInput field paths.
+Those failures return no fabricated generation or rows. The previously issued
+row window retains equal JSON values; saved content, states, references,
+timestamps, hashes and independent recovery remain unchanged. Its initial setup
+has an extra closing parenthesis that prevents formatting; extracting the input
+fixes it before runtime qualification. This correction does not change the
+primary red/green file.
 
-Final frozen-source qualification passes 44 actual HTTP functions in seventeen suites with the official Swift MCP SDK and all seven dependency revisions matching the app. Native Mac app/test compilation, strict three-file Swift lint, affected Markdown lint and whitespace checks pass. Mac compilation executes zero app-hosted runtime functions. The [evidence record](evidence/mcp/item-presence-query-wire.json) retains red/green, exact commands and source hashes. [Core presence qualification](core-local-qualification.md#owned-address-and-link-filters) retains the prior 125-function store and sixteen-function iPhone results at `177dd0e`; this adapter-only slice does not rerun unchanged Core.
+Final frozen-source qualification passes 44 actual HTTP functions in seventeen
+suites with the official Swift MCP SDK and all seven dependency revisions
+matching the app. Native Mac app/test compilation, strict three-file Swift lint,
+affected Markdown lint and whitespace checks pass. Mac compilation executes zero
+app-hosted runtime functions. The evidence record retains red/green, exact
+commands and source hashes.
+[Core presence qualification](core-local-qualification.md#owned-address-and-link-filters)
+retains the prior 125-function store and sixteen-function iPhone results at
+`177dd0e`; this adapter-only slice does not rerun unchanged Core.
 
-Schema 10 and portable format 1 remain localOnly. Native filter controls, scheduled filtering, native paging, Itinerary queries/labels, label deletion, manual JSON administration, physical sync/account/Share validation and whole-app UI polish remain open. Q53 Labels management, Q54 filter presentation and Q55 live row labels await user decisions.
+Schema 10 and portable format 1 remain localOnly. Native filter controls,
+scheduled filtering, native paging, Itinerary queries/labels, label deletion,
+manual JSON administration, physical sync/account/Share validation and whole-app
+UI polish remain open. Q53 Labels management, Q54 filter presentation and Q55
+live row labels await user decisions.
 
 ## Itinerary source creation and reads over HTTP
 
-Core `301d237` persists complete Itinerary sources, while the HTTP adapter previously rejects their creation and reads. `planner_execute` now advertises and admits `createItinerary` with title, optional notes/color/icon/location, owned links and Category/Tag selections. `planner_read` accepts the Itinerary source identity and returns its eight content fields and hashes, timestamps, live label metadata, typed references, archive state and empty-container progress. The adapter delegates domain validation and durable saving to Core.
+Core `301d237` persists complete Itinerary sources, while the HTTP adapter
+previously rejects their creation and reads. `planner_execute` now advertises
+and admits `createItinerary` with title, optional notes/color/icon/location,
+owned links and Category/Tag selections. `planner_read` accepts the Itinerary
+source identity and returns its eight content fields and hashes, timestamps,
+live label metadata, typed references, archive state and empty-container
+progress. The adapter delegates domain validation and durable saving to Core.
 
-The primary actual HTTP journey fails before admission, then passes unchanged through complete creation, live Category rename, another ordinary writer, original receipt replay, public Core reopen and independent recovery inspection. A label rename changes the displayed metadata while retaining the Itinerary's own content, hashes and timestamps. Saved link identities survive reopening. Structured content and text JSON agree. The first implementation attempt still leaves the unavailable source-read fallback; replacing that branch produces the unchanged green.
+The primary actual HTTP journey fails before admission, then passes unchanged
+through complete creation, live Category rename, another ordinary writer,
+original receipt replay, public Core reopen and independent recovery inspection.
+A label rename changes the displayed metadata while retaining the Itinerary's
+own content, hashes and timestamps. Saved link identities survive reopening.
+Structured content and text JSON agree. The first implementation attempt still
+leaves the unavailable source-read fallback; replacing that branch produces the
+unchanged green.
 
-A separate journey checks the actual tools/list schema and sixteen invalid requests. Rejections retain the existing source's content, labels, references, hashes, timestamps and state, with no applied receipt, new recovery checkpoint or prepared proposal. Its first attempt names the rejection path field incorrectly; it is corrected to the declared propertyPath. Three nested fixtures then omit required nullable location/link fields and reach those admission errors before their intended checks. Supplying those explicit nulls corrects the fixtures without changing production validation. All attempts remain in the evidence.
+A separate journey checks the actual tools/list schema and sixteen invalid
+requests. Rejections retain the existing source's content, labels, references,
+hashes, timestamps and state, with no applied receipt, new recovery checkpoint
+or prepared proposal. Its first attempt names the rejection path field
+incorrectly; it is corrected to the declared propertyPath. Three nested fixtures
+then omit required nullable location/link fields and reach those admission
+errors before their intended checks. Supplying those explicit nulls corrects the
+fixtures without changing production validation. All attempts remain in the
+evidence.
 
-Final frozen-source qualification passes 47 actual HTTP functions in twenty suites. The temporary Apple SPM runner uses actual adapter/test/Core files, the official Swift MCP SDK and seven resolved revisions matching the app. A preceding 46-function run omitted the existing source-reader regression from its linked test files; linking it adds that test to the final run without changing production sources. Native Mac application/test-bundle build-for-testing and strict four-file Swift lint pass. Compilation executes zero app-hosted runtime functions. Affected Markdown lint and whitespace checks pass. The [evidence record](evidence/mcp/itinerary-source-wire.json) retains the commands, attempts, result bundle and 189 source hashes. The primary journey remains byte-identical from its functional red through final qualification.
+Final frozen-source qualification passes 47 actual HTTP functions in twenty
+suites. The temporary Apple SPM runner uses actual adapter/test/Core files, the
+official Swift MCP SDK and seven resolved revisions matching the app. A
+preceding 46-function run omitted the existing source-reader regression from its
+linked test files; linking it adds that test to the final run without changing
+production sources. Native Mac application/test-bundle build-for-testing and
+strict four-file Swift lint pass. Compilation executes zero app-hosted runtime
+functions. Affected Markdown lint and whitespace checks pass. The evidence
+record retains the commands, attempts, result bundle and 189 source hashes. The
+primary journey remains byte-identical from its functional red through final
+qualification.
 
-Schema 11 and portable format 1 remain localOnly. Core's 131-function store and sixteen-function native iPhone qualification belongs to `301d237`; this adapter-only slice does not rerun it. Itinerary entries and appearance completion, edits/archive, catalogs/queries, schedules and native UI remain open. Deletion convergence, manual administration, physical iCloud/account/Share, native filters/paging and whole-app polish retain their owning gates. Q53/Q54/Q55 remain unanswered.
+Schema 11 and portable format 1 remain localOnly. Core's 131-function store and
+sixteen-function native iPhone qualification belongs to `301d237`; this
+adapter-only slice does not rerun it. Itinerary entries and appearance
+completion, edits/archive, catalogs/queries, schedules and native UI remain
+open. Deletion convergence, manual administration, physical
+iCloud/account/Share, native filters/paging and whole-app polish retain their
+owning gates. Q53/Q54/Q55 remain unanswered.
 
 ## Guarded Itinerary edits over HTTP
 
-Core `b308a62` already saves guarded Itinerary edits. The HTTP adapter now advertises and admits `editItinerary` with the eight accepted content fields and their field hashes. It parses Set/Clear/Unchanged into the existing typed command and delegates validation, conflict checks and durable saving to Core. Optional content accepts explicit null clears; links and label selections use empty collections. No completion or archive field becomes an edit field.
+Core `b308a62` already saves guarded Itinerary edits. The HTTP adapter now
+advertises and admits `editItinerary` with the eight accepted content fields and
+their field hashes. It parses Set/Clear/Unchanged into the existing typed
+command and delegates validation, conflict checks and durable saving to Core.
+Optional content accepts explicit null clears; links and label selections use
+empty collections. No completion or archive field becomes an edit field.
 
-The actual HTTP journey fails before edit admission, then passes unchanged through a title edit, an independent seven-field patch using original echoed hashes, optional clears, retained link identity, live label replacement, stale compound rejection, original receipt replay after later edits, native Core reopen and independent recovery. All eight stale-field cases return exact typed current values and hashes, including null optional content, complete link reads and normalized identity sets. Rejected patches leave the full read equal to its saved baseline. Structured content and text JSON agree.
+The actual HTTP journey fails before edit admission, then passes unchanged
+through a title edit, an independent seven-field patch using original echoed
+hashes, optional clears, retained link identity, live label replacement, stale
+compound rejection, original receipt replay after later edits, native Core
+reopen and independent recovery. All eight stale-field cases return exact typed
+current values and hashes, including null optional content, complete link reads
+and normalized identity sets. Rejected patches leave the full read equal to its
+saved baseline. Structured content and text JSON agree.
 
-A separate journey verifies the actual tools/list schema: exactly eight change/hash fields, strict objects, required source/changes/guards, a nonempty patch and non-null collections. Twenty-eight malformed or invalid requests reject with exact codes and property paths. Cases include wrong scalar types, malformed nested location/link data, a foreign owned-link identity, duplicate link identities, invalid label bindings, bad/missing hashes and escaped unknown keys. Each leaves no applied operation evidence, new checkpoint or prepared proposal; saved content, metadata, references, timestamps, hashes and recovery remain unchanged.
+A separate journey verifies the actual tools/list schema: exactly eight
+change/hash fields, strict objects, required source/changes/guards, a nonempty
+patch and non-null collections. Twenty-eight malformed or invalid requests
+reject with exact codes and property paths. Cases include wrong scalar types,
+malformed nested location/link data, a foreign owned-link identity, duplicate
+link identities, invalid label bindings, bad/missing hashes and escaped unknown
+keys. Each leaves no applied operation evidence, new checkpoint or prepared
+proposal; saved content, metadata, references, timestamps, hashes and recovery
+remain unchanged.
 
-Final frozen-source qualification passes 49 actual HTTP functions in twenty-two suites. Native Mac application/test-bundle build-for-testing, strict three-file Swift lint, affected Markdown lint and whitespace checks pass. Mac compilation executes zero app-hosted runtime functions. The temporary Apple SPM runner uses actual adapter/test/Core files, the official Swift MCP SDK and seven resolved revisions matching the app. The [evidence record](evidence/mcp/itinerary-edit-wire.json) retains the functional red/green, commands, result bundle and 196 source hashes. The primary journey remains byte-identical from functional red through final qualification. No added file emits a warning.
+Final frozen-source qualification passes 49 actual HTTP functions in twenty-two
+suites. Native Mac application/test-bundle build-for-testing, strict three-file
+Swift lint, affected Markdown lint and whitespace checks pass. Mac compilation
+executes zero app-hosted runtime functions. The temporary Apple SPM runner uses
+actual adapter/test/Core files, the official Swift MCP SDK and seven resolved
+revisions matching the app. The evidence record retains the functional
+red/green, commands, result bundle and 196 source hashes. The primary journey
+remains byte-identical from functional red through final qualification. No added
+file emits a warning.
 
-Core's 134-function store and eight-function native iPhone qualification belongs to `b308a62`; unchanged Core is not rerun for this adapter-only slice. Schema 11 and portable format 1 remain localOnly. Itinerary entries/independent appearance completion, archive, catalogs/queries, schedules and native UI remain open, alongside native filters/paging, deletion convergence, manual administration, physical iCloud/account/Share and whole-app polish. Q53/Q54/Q55 remain unanswered.
+Core's 134-function store and eight-function native iPhone qualification belongs
+to `b308a62`; unchanged Core is not rerun for this adapter-only slice. Schema 11
+and portable format 1 remain localOnly. Itinerary entries/independent appearance
+completion, archive, catalogs/queries, schedules and native UI remain open,
+alongside native filters/paging, deletion convergence, manual administration,
+physical iCloud/account/Share and whole-app polish. Q53/Q54/Q55 remain
+unanswered.
 
 ## Itinerary entries and appearances over HTTP
 
-Context: Core at `460566c` supports repeated itinerary entries, independent direct/expanded completion, removal and saved-order edits. HTTP previously exposes complete Itinerary sources/edits but cannot organize entries or read/complete their appearances. This slice admits addItineraryEntry, removeItineraryEntry and reorderItineraryEntry, plus directItineraryItem and expandedListItem appearance reads/completion, through the same public Core.
+Context: Core at `460566c` supports repeated itinerary entries, independent
+direct/expanded completion, removal and saved-order edits. HTTP previously
+exposes complete Itinerary sources/edits but cannot organize entries or
+read/complete their appearances. This slice admits addItineraryEntry,
+removeItineraryEntry and reorderItineraryEntry, plus directItineraryItem and
+expandedListItem appearance reads/completion, through the same public Core.
 
-DoR is the accepted Q33 adapter contract, repeated-appearance/Q8 rules and qualified Core commands. Strict appearance schemas and decoding are shared by read/completion adapters. Every kind requires its exact IDs, rejects unknown fields and retains UUID/path validation. Organization reuses the existing placement rules; the adapter does not duplicate domain state logic. Ordinary entry removal cannot delete a shared source. Tool descriptions state global precedence and retained local flags.
+DoR is the accepted Q33 adapter contract, repeated-appearance/Q8 rules and
+qualified Core commands. Strict appearance schemas and decoding are shared by
+read/completion adapters. Every kind requires its exact IDs, rejects unknown
+fields and retains UUID/path validation. Organization reuses the existing
+placement rules; the adapter does not duplicate domain state logic. Ordinary
+entry removal cannot delete a shared source. Tool descriptions state global
+precedence and retained local flags.
 
-The entry tracer initially fails compilation at a nested test macro, then fails at unavailable command admission. Its unchanged functional-red file passes intentional repeats with distinct IDs, removal/reordering, context closure, ordinary re-add, native reopen, receipt replay and recovery. The appearance tracer fails at unavailable direct completion, then exercises direct/expanded reads, independent flags, global Done/Reopen, local clearing under global Done, earlier completion replay preserving later Todo, live notes from a second writer and independent recovery. Its first green run finds an incorrect test expectation of a null scalar ID. The accepted composite reference contains exactly kind/appearance, so that assertion is corrected; behavioral assertions remain.
+The entry tracer initially fails compilation at a nested test macro, then fails
+at unavailable command admission. Its unchanged functional-red file passes
+intentional repeats with distinct IDs, removal/reordering, context closure,
+ordinary re-add, native reopen, receipt replay and recovery. The appearance
+tracer fails at unavailable direct completion, then exercises direct/expanded
+reads, independent flags, global Done/Reopen, local clearing under global Done,
+earlier completion replay preserving later Todo, live notes from a second writer
+and independent recovery. Its first green run finds an incorrect test
+expectation of a null scalar ID. The accepted composite reference contains
+exactly kind/appearance, so that assertion is corrected; behavioral assertions
+remain.
 
-Actual tools/list advertises all three entry commands and all three appearance variants with exact required fields and strict objects. The read/completion appearance schemas agree. Thirty-four malformed or wrong-scope wire requests reject with exact codes/property paths. Cases cover malformed UUIDs, missing/null values, unsupported kinds, escaped extra keys, forbidden field combinations, wrong owner, source UUID used as entry identity, cross-List membership and wrong entry kind. Rejected mutations have no applied evidence or new checkpoint. Native Item/Itinerary state, timestamps, hashes, references and acknowledged bytes remain unchanged. Successful and rejected operation text JSON agrees with structured content; failed reads retain their text failure presentation.
+Actual tools/list advertises all three entry commands and all three appearance
+variants with exact required fields and strict objects. The read/completion
+appearance schemas agree. Thirty-four malformed or wrong-scope wire requests
+reject with exact codes/property paths. Cases cover malformed UUIDs,
+missing/null values, unsupported kinds, escaped extra keys, forbidden field
+combinations, wrong owner, source UUID used as entry identity, cross-List
+membership and wrong entry kind. Rejected mutations have no applied evidence or
+new checkpoint. Native Item/Itinerary state, timestamps, hashes, references and
+acknowledged bytes remain unchanged. Successful and rejected operation text JSON
+agrees with structured content; failed reads retain their text failure
+presentation.
 
-The first complete HTTP run exposes two legacy fixtures assuming a List-only schema and that direct itinerary kind is unsupported. They now select the existing listMembership schema from the union and use an actually unsupported kind. Their scope/data-preservation assertions remain. Final DoD passes 53 actual HTTP functions in 26 suites, native Mac app/test-bundle compilation and strict lint on seven affected Swift files, on 222 frozen source/resolution hashes. Mac compilation executes zero app-hosted runtime functions. The [evidence record](evidence/mcp/itinerary-entry-wire.json) retains all attempts and source hashes. Affected Markdown and whitespace checks accompany the commit.
+The first complete HTTP run exposes two legacy fixtures assuming a List-only
+schema and that direct itinerary kind is unsupported. They now select the
+existing listMembership schema from the union and use an actually unsupported
+kind. Their scope/data-preservation assertions remain. Final DoD passes 53
+actual HTTP functions in 26 suites, native Mac app/test-bundle compilation and
+strict lint on seven affected Swift files, on 222 frozen source/resolution
+hashes. Mac compilation executes zero app-hosted runtime functions. The evidence
+record retains all attempts and source hashes. Affected Markdown and whitespace
+checks accompany the commit.
 
-Core source remains unchanged from `460566c`, whose 152-function store and five-function native iPhone qualification still applies. Core is not rerun for this adapter-only slice. Schema 13/portable format 1 remain localOnly. Full-context bulk, Itinerary archive/catalog/query/schedule/native UI, native controls/paging, deletion/admin, physical sync/account/Share and whole-app polish remain open. Q48/Q49/Q51/Q52/Q53/Q54/Q55 retain their pending decisions.
+Core source remains unchanged from `460566c`, whose 152-function store and
+five-function native iPhone qualification still applies. Core is not rerun for
+this adapter-only slice. Schema 13/portable format 1 remain localOnly.
+Full-context bulk, Itinerary archive/catalog/query/schedule/native UI, native
+controls/paging, deletion/admin, physical sync/account/Share and whole-app
+polish remain open. Q48/Q49/Q51/Q52/Q53/Q54/Q55 retain their pending decisions.
 
 ## Itinerary archive over HTTP
 
-Context: archive decoding already admits Itinerary identity, while its advertised schema lists only Item/List and Core rejects Itinerary archive. The Core now saves container-only Archive/Unarchive, and tools/list advertises exactly Item, List and Itinerary archive sources. The execution description explains that referenced sources retain their archive state. Strict UUID, Bool, required-field and unknown-field admission remains shared with existing archive commands.
+Context: archive decoding already admits Itinerary identity, while its
+advertised schema lists only Item/List and Core rejects Itinerary archive. The
+Core now saves container-only Archive/Unarchive, and tools/list advertises
+exactly Item, List and Itinerary archive sources. The execution description
+explains that referenced sources retain their archive state. Strict UUID, Bool,
+required-field and unknown-field admission remains shared with existing archive
+commands.
 
-DoR is the accepted archive contract and the public Core archive tracer. The actual HTTP journey fails on the missing advertised variant. Its first schema edit mistakenly changes the similarly shaped entry-source enum; the failed rerun retains that diagnosis, and the correction restores Item/List-only entry admission while adding Itinerary only to archive. The unchanged HTTP test then passes discovery, archive/source read, Unarchive, original receipt replay, changed-payload rejection and six malformed/missing-source requests. Saved references, local progress, content and hashes survive reopen; Item state and timestamps remain unchanged. Successful and rejected operation text agrees with structured content. Rejected new operations have no applied evidence.
+DoR is the accepted archive contract and the public Core archive tracer. The
+actual HTTP journey fails on the missing advertised variant. Its first schema
+edit mistakenly changes the similarly shaped entry-source enum; the failed rerun
+retains that diagnosis, and the correction restores Item/List-only entry
+admission while adding Itinerary only to archive. The unchanged HTTP test then
+passes discovery, archive/source read, Unarchive, original receipt replay,
+changed-payload rejection and six malformed/missing-source requests. Saved
+references, local progress, content and hashes survive reopen; Item state and
+timestamps remain unchanged. Successful and rejected operation text agrees with
+structured content. Rejected new operations have no applied evidence.
 
-The first complete HTTP run finds one legacy List archive fixture expecting the former two-kind enum. Only that discovery expectation is updated; its List preservation/replay behavior remains. Final DoD passes 54 HTTP functions in 27 suites, Mac app/test-bundle compilation and strict six-file Swift lint against 225 frozen source/resolution hashes. Mac compilation executes zero app-hosted runtime functions. The [combined evidence](evidence/navigation/core-itinerary-archive.json) retains every attempt, exact commands, public Core qualification and native counts. Core source remains unchanged after its 154-function store and seven-function native iPhone qualification, so those checks are not repeated for the HTTP-only fixture correction. Affected Markdown and whitespace checks accompany the commit.
+The first complete HTTP run finds one legacy List archive fixture expecting the
+former two-kind enum. Only that discovery expectation is updated; its List
+preservation/replay behavior remains. Final DoD passes 54 HTTP functions in 27
+suites, Mac app/test-bundle compilation and strict six-file Swift lint against
+225 frozen source/resolution hashes. Mac compilation executes zero app-hosted
+runtime functions. The combined evidence retains every attempt, exact commands,
+public Core qualification and native counts. Core source remains unchanged after
+its 154-function store and seven-function native iPhone qualification, so those
+checks are not repeated for the HTTP-only fixture correction. Affected Markdown
+and whitespace checks accompany the commit.
 
-Schema 13/portable format 1 remain localOnly. Itinerary catalog/query/schedule/native UI, full-context bulk, native controls/paging, deletion/admin, physical sync/account/Share and whole-app polish retain their map gates. Pending user decisions remain open.
+Schema 13/portable format 1 remain localOnly. Itinerary
+catalog/query/schedule/native UI, full-context bulk, native controls/paging,
+deletion/admin, physical sync/account/Share and whole-app polish retain their
+map gates. Pending user decisions remain open.
 
 ## Itinerary catalogs over HTTP
 
-Context: catalog decoding already accepts an Itinerary kind, but the advertised container variant lists only List and Core discovery is unavailable. tools/list now advertises exactly List/Itinerary container catalogs, retaining the separate label variant and strict required/unknown-field grammar. The adapter continues delegating native matching, archive selection and ordered identities to Core.
+Context: catalog decoding already accepts an Itinerary kind, but the advertised
+container variant lists only List and Core discovery is unavailable. tools/list
+now advertises exactly List/Itinerary container catalogs, retaining the separate
+label variant and strict required/unknown-field grammar. The adapter continues
+delegating native matching, archive selection and ordered identities to Core.
 
-DoR is the accepted catalog/row contract and public Core tracer. The HTTP test initially omits a required nullable coordinate member in setup. After correction, its functional red finds the missing advertised enum. Its unchanged file then passes SDK/listener discovery, duplicate-title identities, Active/Archived/All, cumulative insensitive title terms, one-row windows and exact compact row keys. Owned addresses and selected website links survive serialization; completion remains null and the non-Item schedule summary is none. Success text JSON agrees with structured content. Three malformed Itinerary catalog variants reject with exact codes/property paths. Queries leave content, hashes, timestamps, references and independent recovery bytes unchanged.
+DoR is the accepted catalog/row contract and public Core tracer. The HTTP test
+initially omits a required nullable coordinate member in setup. After
+correction, its functional red finds the missing advertised enum. Its unchanged
+file then passes SDK/listener discovery, duplicate-title identities,
+Active/Archived/All, cumulative insensitive title terms, one-row windows and
+exact compact row keys. Owned addresses and selected website links survive
+serialization; completion remains null and the non-Item schedule summary is
+none. Success text JSON agrees with structured content. Three malformed
+Itinerary catalog variants reject with exact codes/property paths. Queries leave
+content, hashes, timestamps, references and independent recovery bytes
+unchanged.
 
-The affected legacy HTTP run records five issues from fixtures that expect a List-only const and unavailable Itinerary discovery. The discovery expectation is changed to the two-kind enum, and the now-supported request leaves the invalid-case set; its remaining 28 invalid variants still preserve sources/recovery/windows. Existing behavioral assertions remain. Final DoD passes 55 actual HTTP functions in 28 suites, Mac app/test-bundle compilation and strict six-file Swift lint on 227 frozen source/resolution hashes. Mac compilation executes zero app-hosted runtime functions. The [combined evidence](evidence/navigation/core-itinerary-catalog.json) includes Core/native qualification and all attempts. Affected Markdown/whitespace checks accompany the commit.
+The affected legacy HTTP run records five issues from fixtures that expect a
+List-only const and unavailable Itinerary discovery. The discovery expectation
+is changed to the two-kind enum, and the now-supported request leaves the
+invalid-case set; its remaining 28 invalid variants still preserve
+sources/recovery/windows. Existing behavioral assertions remain. Final DoD
+passes 55 actual HTTP functions in 28 suites, Mac app/test-bundle compilation
+and strict six-file Swift lint on 227 frozen source/resolution hashes. Mac
+compilation executes zero app-hosted runtime functions. The combined evidence
+includes Core/native qualification and all attempts. Affected
+Markdown/whitespace checks accompany the commit.
 
-Schema 13/portable format 1 remain localOnly. Contextual Itinerary Item queries, bulk, schedules/native UI, native controls/paging, deletion/admin, physical sync/account/Share and whole-app polish retain their map gates. Q56 and earlier pending decisions remain unanswered.
+Schema 13/portable format 1 remain localOnly. Contextual Itinerary Item queries,
+bulk, schedules/native UI, native controls/paging, deletion/admin, physical
+sync/account/Share and whole-app polish retain their map gates. Q56 and earlier
+pending decisions remain unanswered.
 
 ## Contextual Itinerary Item queries over HTTP
 
-Context: tools/list advertises global, Inbox and standalone List Item scopes; Itinerary scope is rejected. Discovery now includes a strict itinerary variant requiring itineraryId, with unknown fields rejected. The adapter delegates filtering, independent appearance identities, full unfiltered progress and generation-bound row hydration to Core.
+Context: tools/list advertises global, Inbox and standalone List Item scopes;
+Itinerary scope is rejected. Discovery now includes a strict itinerary variant
+requiring itineraryId, with unknown fields rejected. The adapter delegates
+filtering, independent appearance identities, full unfiltered progress and
+generation-bound row hydration to Core.
 
-DoR is the accepted query/appearance contract and public Core tracer. The first HTTP red finds the missing scope and emits two nested-macro warnings. Extracting the required identities before comparison preserves assertions and removes those warnings; a second functional red still finds the missing scope. Its unchanged file then passes real SDK/listener discovery, hidden archived children, repeated source appearances, exact expanded IDs and local/effective row flags. Success text JSON agrees with structured content. Seven invalid scope variants reject with exact codes/property paths and retain source references, timestamps, recovery bytes and checkpoint generation.
+DoR is the accepted query/appearance contract and public Core tracer. The first
+HTTP red finds the missing scope and emits two nested-macro warnings. Extracting
+the required identities before comparison preserves assertions and removes those
+warnings; a second functional red still finds the missing scope. Its unchanged
+file then passes real SDK/listener discovery, hidden archived children, repeated
+source appearances, exact expanded IDs and local/effective row flags. Success
+text JSON agrees with structured content. Seven invalid scope variants reject
+with exact codes/property paths and retain source references, timestamps,
+recovery bytes and checkpoint generation.
 
-The compatibility run records two old expectations: two scope variants and the former error path for itinerary without an ID. Updating only those expectations retains their behavioral preservation checks. Final DoD passes 56 actual HTTP functions in 29 suites on 231 frozen source/resolution hashes, Mac app/test-bundle compilation and strict seven-file Swift lint. Mac compilation executes zero app-hosted runtime functions. The [combined evidence](evidence/navigation/core-itinerary-item-query.json) includes Core/native qualification and every attempt.
+The compatibility run records two old expectations: two scope variants and the
+former error path for itinerary without an ID. Updating only those expectations
+retains their behavioral preservation checks. Final DoD passes 56 actual HTTP
+functions in 29 suites on 231 frozen source/resolution hashes, Mac
+app/test-bundle compilation and strict seven-file Swift lint. Mac compilation
+executes zero app-hosted runtime functions. The combined evidence includes
+Core/native qualification and every attempt.
 
-Schema 13/portable format 1 remain localOnly. Explicit Manual itinerary queries await Q56. Bulk, schedules/native UI, native controls/paging, deletion/admin, physical sync/account/Share and whole-app polish remain open.
+Schema 13/portable format 1 remain localOnly. Explicit Manual itinerary queries
+await Q56. Bulk, schedules/native UI, native controls/paging, deletion/admin,
+physical sync/account/Share and whole-app polish remain open.
 
 ## HTTP compatibility with the Core bulk boundary
 
-The new Core prepareReview/setBulkCompletion API leaves existing HTTP admission unchanged. The actual SDK/listener compatibility target passes 56 functions in 29 suites on the initial 235-file frozen source set. A later change only groups targets inside the unadvertised Core bulk helper; no existing HTTP path invokes it. Final bulk Core/native checks and Mac compilation qualify that change, as recorded in the [combined evidence](evidence/navigation/core-bulk-completion.json).
+The new Core prepareReview/setBulkCompletion API leaves existing HTTP admission
+unchanged. The actual SDK/listener compatibility target passes 56 functions in
+29 suites on the initial 235-file frozen source set. A later change only groups
+targets inside the unadvertised Core bulk helper; no existing HTTP path invokes
+it. Final bulk Core/native checks and Mac compilation qualify that change, as
+recorded in the combined evidence.
 
-MCP bulk/review commands are not implemented or qualified by this compatibility run. Existing non-null-token rejection remains. Genuine save/recovery-failure qualification and native/Intent confirmation also remain open.
+MCP bulk/review commands are not implemented or qualified by this compatibility
+run. Existing non-null-token rejection remains. Genuine save/recovery-failure
+qualification and native/Intent confirmation also remain open.
 
 ## Reviewed bulk completion over HTTP
 
-Context: Core can review and apply full-context completion, while the adapter rejects bulk commands and advertises no review tool. The actual stateless SDK/listener now advertises planner_prepare_review and admits setBulkCompletion through planner_execute. List, Itinerary and itineraryListEntry scopes share one strict production codec. Preparation returns the normalized command, complete contextual appearance identities, exact count and an opaque Core token. It saves no domain data, receipt or recovery checkpoint. The token binds the dataset session and target lifetimes, with no time-only expiry.
+Context: Core can review and apply full-context completion, while the adapter
+rejects bulk commands and advertises no review tool. The actual stateless
+SDK/listener now advertises planner_prepare_review and admits setBulkCompletion
+through planner_execute. List, Itinerary and itineraryListEntry scopes share one
+strict production codec. Preparation returns the normalized command, complete
+contextual appearance identities, exact count and an opaque Core token. It saves
+no domain data, receipt or recovery checkpoint. The token binds the dataset
+session and target lifetimes, with no time-only expiry.
 
-DoR is the approved agent-applied review contract, Q8 global precedence, independent repeated appearances and the qualified Core boundary. Apply includes hidden/archived children and preserves global Item flags, source data and other contexts. Missing, malformed, foreign or stale handles reject before mutation with typed staleReview details requiring a fresh review. A replayed applied operation returns its original evidence without a token and retains later edits. Ordinary data commands remain available without review; native deletion/import/recovery administration remains forbidden.
+DoR is the approved agent-applied review contract, Q8 global precedence,
+independent repeated appearances and the qualified Core boundary. Apply includes
+hidden/archived children and preserves global Item flags, source data and other
+contexts. Missing, malformed, foreign or stale handles reject before mutation
+with typed staleReview details requiring a fresh review. A replayed applied
+operation returns its original evidence without a token and retains later edits.
+Ordinary data commands remain available without review; native
+deletion/import/recovery administration remains forbidden.
 
-The primary real-HTTP tracer first fails at missing review discovery. An implementation build fails because the SDK's concrete structured-content initializer requires try; that source correction permits the unchanged tracer to pass. Its journey covers all three scopes, exact reviewed identities/counts, archived children, global Done/Reopen, independent flags, missing-token rejection, receipt replay and equal structured/text JSON. The supplemental tracer first finds null stale-review details for a malformed handle. Sharing the production failure encoder fixes that response without changing assertions. Sixteen invalid reviews, three invalid/foreign tokens, a changed target set and revoked access retain domain values and acknowledged recovery. Transport requests carry no MCP session header.
+The primary real-HTTP tracer first fails at missing review discovery. An
+implementation build fails because the SDK's concrete structured-content
+initializer requires try; that source correction permits the unchanged tracer to
+pass. Its journey covers all three scopes, exact reviewed identities/counts,
+archived children, global Done/Reopen, independent flags, missing-token
+rejection, receipt replay and equal structured/text JSON. The supplemental
+tracer first finds null stale-review details for a malformed handle. Sharing the
+production failure encoder fixes that response without changing assertions.
+Sixteen invalid reviews, three invalid/foreign tokens, a changed target set and
+revoked access retain domain values and acknowledged recovery. Transport
+requests carry no MCP session header.
 
-Frozen-source qualification passes 58 functions in 31 suites in the affected actual-HTTP target, three affected Core functions in two suites and three native Core functions on iPhone with zero failures/skips. Native Mac app/test-bundle compilation executes zero runtime functions. Strict nine-file Swift lint, affected Markdown lint and whitespace checks pass. All seven HTTP dependency revisions match the app. The [evidence record](evidence/navigation/mcp-bulk-completion.json) retains attempts, exact commands and 239 source/resolution hashes, with the [simulator summary](evidence/navigation/mcp-bulk-completion-ios27-summary.json). Warning sources AllDayScheduleTests and ItemLabelQueryRoutingTests match baseline 1d0b917; the App Intents metadata-skip warning also appears in the baseline Mac qualification.
+Frozen-source qualification passes 58 functions in 31 suites in the affected
+actual-HTTP target, three affected Core functions in two suites and three native
+Core functions on iPhone with zero failures/skips. Native Mac app/test-bundle
+compilation executes zero runtime functions. Strict nine-file Swift lint,
+affected Markdown lint and whitespace checks pass. All seven HTTP dependency
+revisions match the app. The evidence record retains attempts, exact commands
+and 239 source/resolution hashes, with the simulator summary. Warning sources
+AllDayScheduleTests and ItemLabelQueryRoutingTests match baseline 1d0b917; the
+App Intents metadata-skip warning also appears in the baseline Mac
+qualification.
 
-This qualifies the wire boundary. Native/Intent confirmation, genuine SQLite save-failure rollback and postcommit recovery-failure qualification remain open. Capture review is not added. Itinerary schedules/native UI, controls/paging, deletion/admin, physical sync/account/Share and whole-app polish keep their owning gates. Schema 13/portable format 1 remain unchanged and localOnly; pending decisions are not inferred.
+This qualifies the wire boundary. Native/Intent confirmation, genuine SQLite
+save-failure rollback and postcommit recovery-failure qualification remain open.
+Capture review is not added. Itinerary schedules/native UI, controls/paging,
+deletion/admin, physical sync/account/Share and whole-app polish keep their
+owning gates. Schema 13/portable format 1 remain unchanged and localOnly;
+pending decisions are not inferred.
 
-The subsequent [native List confirmation](navigation-local-qualification.md#native-reviewed-list-bulk-completion) is qualified on iPhone and iPad against this unchanged wire/Core source. Itinerary/List-entry presentation, Intent confirmation and controlled native stale-target/failure interaction remain open.
+The subsequent
+[native List confirmation](navigation-local-qualification.md#native-reviewed-list-bulk-completion)
+is qualified on iPhone and iPad against this unchanged wire/Core source.
+Itinerary/List-entry presentation, Intent confirmation and controlled native
+stale-target/failure interaction remain open.
 
 ## Explicit Manual itinerary queries over HTTP
 
-Context: the query codec already forwards typed Manual sorting, but Core restricts it to standalone Lists. Q56 A extends ascending Manual to Itineraries through the same stateless SDK/listener. tools/list now explains explicit saved List/Itinerary order and the unchanged alphabetical omitted-sort default. No transport/session or saved-data declaration changes.
+Context: the query codec already forwards typed Manual sorting, but Core
+restricts it to standalone Lists. Q56 A extends ascending Manual to Itineraries
+through the same stateless SDK/listener. tools/list now explains explicit saved
+List/Itinerary order and the unchanged alphabetical omitted-sort default. No
+transport/session or saved-data declaration changes.
 
-DoR is the approved shared query behavior and public Core tracer. The real HTTP journey uses Zulu Hotel → Food List → Zulu Hotel with saved Beta Museum → Alpha Cafe child order. Manual returns that route; omission returns Alpha, Beta, Zulu, Zulu. Repeated Hotel entry IDs remain distinct. Two-row hydration preserves order, identity and archive flags. Todo/Active narrows the rows while progress remains one of four. Three invalid sort/scope combinations return invalidInput at /query/sort without invalidating the original window or changing acknowledged recovery bytes/checkpoint. Successful structured and text JSON agree.
+DoR is the approved shared query behavior and public Core tracer. The real HTTP
+journey uses Zulu Hotel → Food List → Zulu Hotel with saved Beta Museum → Alpha
+Cafe child order. Manual returns that route; omission returns Alpha, Beta, Zulu,
+Zulu. Repeated Hotel entry IDs remain distinct. Two-row hydration preserves
+order, identity and archive flags. Todo/Active narrows the rows while progress
+remains one of four. Three invalid sort/scope combinations return invalidInput
+at /query/sort without invalidating the original window or changing acknowledged
+recovery bytes/checkpoint. Successful structured and text JSON agree.
 
-The first wire attempt fails because the new test parses plain error text as JSON. Restricting JSON comparison to successful replies follows the existing response contract and retains every behavioral assertion. Both affected HTTP functions then pass. Final qualification passes 59 real HTTP functions in 31 suites on the same 246-file source freeze as the Core/native checks. Mac app/test compilation executes zero runtime functions; affected Swift/Markdown lint and whitespace checks pass. The [combined evidence](evidence/navigation/core-itinerary-manual.json) retains failed and successful attempts.
+The first wire attempt fails because the new test parses plain error text as
+JSON. Restricting JSON comparison to successful replies follows the existing
+response contract and retains every behavioral assertion. Both affected HTTP
+functions then pass. Final qualification passes 59 real HTTP functions in 31
+suites on the same 246-file source freeze as the Core/native checks. Mac
+app/test compilation executes zero runtime functions; affected Swift/Markdown
+lint and whitespace checks pass. The combined evidence retains failed and
+successful attempts.
 
-Schema 13/portable format 1 remain unchanged and localOnly. Native ordered contents/entry controls, schedules, controls/paging, deletion/admin, native failure/Intent confirmation, SQLite rollback, Mac runtime, physical sync/account/Share and whole-app polish remain open. Manual stays ascending only and API callers must request it explicitly.
+Schema 13/portable format 1 remain unchanged and localOnly. Native ordered
+contents/entry controls, schedules, controls/paging, deletion/admin, native
+failure/Intent confirmation, SQLite rollback, Mac runtime, physical
+sync/account/Share and whole-app polish remain open. Manual stays ascending only
+and API callers must request it explicitly.
 
 ## Itinerary-owned schedules over HTTP
 
-Context: the MCP declaration already accepts Item/Itinerary Schedule owners, but Core previously rejected the Itinerary form. The schema-14 Core slice now implements that accepted owner union. HTTP admission and the wire format remain unchanged.
+Context: the MCP declaration already accepts Item/Itinerary Schedule owners, but
+Core previously rejected the Itinerary form. The schema-14 Core slice now
+implements that accepted owner union. HTTP admission and the wire format remain
+unchanged.
 
-The new journey runs against the actual authenticated loopback listener and public Core. It creates an empty Itinerary's all-day Schedule, reads its exact owner/form/hash, edits the inclusive end under the same identity, replays creation without overwriting the edit, and removes/replays removal without resurrection. Core read and independent recovery confirm retained owner notes/empty progress, no remaining assignment and one minimal deletion marker. Structured results and their textual envelopes agree.
+The new journey runs against the actual authenticated loopback listener and
+public Core. It creates an empty Itinerary's all-day Schedule, reads its exact
+owner/form/hash, edits the inclusive end under the same identity, replays
+creation without overwriting the edit, and removes/replays removal without
+resurrection. Core read and independent recovery confirm retained owner
+notes/empty progress, no remaining assignment and one minimal deletion marker.
+Structured results and their textual envelopes agree.
 
-Three focused Mac HTTP runs pass with zero failures/skips: this journey and both existing all-day Item routing journeys. The initial new-test compilation failure caused by a nested Swift Testing macro is retained separately with zero runtime. The [qualification record](evidence/navigation/core-itinerary-schedule.json) includes the actual summary and frozen sources. This establishes actual HTTP behavior with the compiled Mac app, not Mac UI behavior. Native Itinerary controls, inherited scheduling queries, calendar UI, portable administration and physical sync/account/Share validation retain their gates.
+Three focused Mac HTTP runs pass with zero failures/skips: this journey and both
+existing all-day Item routing journeys. The initial new-test compilation failure
+caused by a nested Swift Testing macro is retained separately with zero runtime.
+The qualification record includes the actual summary and frozen sources. This
+establishes actual HTTP behavior with the compiled Mac app, not Mac UI behavior.
+Native Itinerary controls, inherited scheduling queries, calendar UI, portable
+administration and physical sync/account/Share validation retain their gates.
 
 ## Contextual Schedule row summaries over HTTP
 
-Context and goal. At baseline `77e14cd`, row-window encoding supports only none/directItem, so agents cannot distinguish inherited planning or the current itinerary's span. DoR is the accepted summary declaration and the public Core implementation. The intended end returns the same owner-pool decision to agents and native views, with no new transport/session or mutation grammar.
+Context and goal. At baseline `77e14cd`, row-window encoding supports only
+none/directItem, so agents cannot distinguish inherited planning or the current
+itinerary's span. DoR is the accepted summary declaration and the public Core
+implementation. The intended end returns the same owner-pool decision to agents
+and native views, with no new transport/session or mutation grammar.
 
-The actual authenticated loopback journey queries global, standalone-List and Itinerary windows from a shared Item/List graph. Global/List rows retain the direct appointment; both direct/expanded itinerary appearances return itinerarySpan with the same actual Schedule/Itinerary identity, inclusive form and additionalCount zero. Removing the direct appointment through HTTP changes the global summary to exactly inScheduledPlan, without an invented date/owner. Removing the itinerary Schedule then changes it to exactly none while preserving global Todo. Successful structured and textual envelopes agree.
+The actual authenticated loopback journey queries global, standalone-List and
+Itinerary windows from a shared Item/List graph. Global/List rows retain the
+direct appointment; both direct/expanded itinerary appearances return
+itinerarySpan with the same actual Schedule/Itinerary identity, inclusive form
+and additionalCount zero. Removing the direct appointment through HTTP changes
+the global summary to exactly inScheduledPlan, without an invented date/owner.
+Removing the itinerary Schedule then changes it to exactly none while preserving
+global Todo. Successful structured and textual envelopes agree.
 
-Nine runtime tests pass in four affected HTTP suites with zero failures/skips, including existing Schedule lifecycle, all-day, membership-row and itinerary-query compatibility. These execute real Mac HTTP against the compiled app and do not qualify Mac UI. The [combined evidence](evidence/navigation/core-schedule-row-summaries.json) records source freezes and the separate native qualification. Scheduled/unscheduled query admission, calendar and typed unresolved summaries remain open. Schema 14, portable format 1 and localOnly remain unchanged.
+Nine runtime tests pass in four affected HTTP suites with zero failures/skips,
+including existing Schedule lifecycle, all-day, membership-row and
+itinerary-query compatibility. These execute real Mac HTTP against the compiled
+app and do not qualify Mac UI. The combined evidence records source freezes and
+the separate native qualification. Scheduled/unscheduled query admission,
+calendar and typed unresolved summaries remain open. Schema 14, portable format
+1 and localOnly remain unchanged.
 
 ## Scheduled and unscheduled queries over HTTP
 
-Context and goal. Baseline `4a58320` reserves the declared scheduled field but rejects it as unavailable. DoR is the accepted any-retained-assignment filter and qualified Core matching. The intended end admits the exact string enum and returns the same cumulative results to agents through actual authenticated loopback HTTP.
+Context and goal. Baseline `4a58320` reserves the declared scheduled field but
+rejects it as unavailable. DoR is the accepted any-retained-assignment filter
+and qualified Core matching. The intended end admits the exact string enum and
+returns the same cumulative results to agents through actual authenticated
+loopback HTTP.
 
-Required /tdd qualification. The first valid Scheduled request returns an error envelope, then the unchanged tracer passes after schema/parser implementation. The journey distinguishes a direct appointment, planning inherited through a live List and an unplanned Item. It verifies omitted/all defaults, Scheduled/Unscheduled, cumulative address/text/completion, standalone List progress and Itinerary results. Tool advertisement exposes the exact string enum and all default. Null, unknown strings, booleans, numbers, arrays and objects reject at `/query/scheduled` with invalidInput and no issued generation. Previously issued rows remain unchanged after rejection, and successful text/structured envelopes agree.
+Required /tdd qualification. The first valid Scheduled request returns an error
+envelope, then the unchanged tracer passes after schema/parser implementation.
+The journey distinguishes a direct appointment, planning inherited through a
+live List and an unplanned Item. It verifies omitted/all defaults,
+Scheduled/Unscheduled, cumulative address/text/completion, standalone List
+progress and Itinerary results. Tool advertisement exposes the exact string enum
+and all default. Null, unknown strings, booleans, numbers, arrays and objects
+reject at `/query/scheduled` with invalidInput and no issued generation.
+Previously issued rows remain unchanged after rejection, and successful
+text/structured envelopes agree.
 
-DoD passes eight functions in six affected HTTP suites with zero failures/skips, including Itinerary Schedule lifecycle, contextual Item queries, presence admission/results and existing query compatibility. The [shared record](evidence/navigation/core-scheduling-query.json) retains both red/green attempts, actual summaries, five-file strict Swift lint, three-file Markdown lint and 268 frozen sources. The tests execute real HTTP hosted by the compiled Mac app; Mac UI runtime remains zero. Native scheduling filter controls and the other recorded map gates remain open. Schema 14/portable 1/localOnly stay unchanged.
+DoD passes eight functions in six affected HTTP suites with zero failures/skips,
+including Itinerary Schedule lifecycle, contextual Item queries, presence
+admission/results and existing query compatibility. The shared record retains
+both red/green attempts, actual summaries, five-file strict Swift lint,
+three-file Markdown lint and 268 frozen sources. The tests execute real HTTP
+hosted by the compiled Mac app; Mac UI runtime remains zero. Native scheduling
+filter controls and the other recorded map gates remain open. Schema 14/portable
+1/localOnly stay unchanged.
 
 ## Schedule catalogs over HTTP
 
-Context and goal. Baseline `0fd15c7` omits the declared Schedule catalog from tool advertisement. DoR is the qualified public Core catalog, existing authenticated loopback transport and approved query/read shapes. The intended end advertises and admits empty-text/archive-all Schedule discovery, then returns exact assignment identities and complete source-bound forms to agents.
+Context and goal. Baseline `0fd15c7` omits the declared Schedule catalog from
+tool advertisement. DoR is the qualified public Core catalog, existing
+authenticated loopback transport and approved query/read shapes. The intended
+end advertises and admits empty-text/archive-all Schedule discovery, then
+returns exact assignment identities and complete source-bound forms to agents.
 
-Required /tdd qualification. The first actual HTTP tracer fails on the absent advertisement. Its error helper initially attempts to parse plain error prose as JSON, corrected to compare successful structured/textual envelopes only. The final corrected test is copied byte-for-byte to the committed baseline and fails at the same missing advertisement; it passes against the implementation. The journey checks two archived owners with identical titles, timed start-only and inclusive all-day forms, UUID-ordered one-row windows, nullable inapplicable state, exact source/form reads and form-only hashes. Invalid or omitted archive, nonempty/incorrect text and undeclared fields reject without issuing a generation or changing saved recovery. HTTP removal invalidates the old window and refresh retains only the other assignment.
+Required /tdd qualification. The first actual HTTP tracer fails on the absent
+advertisement. Its error helper initially attempts to parse plain error prose as
+JSON, corrected to compare successful structured/textual envelopes only. The
+final corrected test is copied byte-for-byte to the committed baseline and fails
+at the same missing advertisement; it passes against the implementation. The
+journey checks two archived owners with identical titles, timed start-only and
+inclusive all-day forms, UUID-ordered one-row windows, nullable inapplicable
+state, exact source/form reads and form-only hashes. Invalid or omitted archive,
+nonempty/incorrect text and undeclared fields reject without issuing a
+generation or changing saved recovery. HTTP removal invalidates the old window
+and refresh retains only the other assignment.
 
-DoD passes nine functions in six affected HTTP suites with zero final failures/skips. The existing List compact-row assertion also failed because its expected keys omitted labels. A separate run of its unmodified two-function baseline suite reproduces both key mismatches before the current test adds labels and verifies the empty array. The [combined evidence](evidence/navigation/schedule-catalog.json) retains these attempts, actual reports, six-file Swift lint and source hashes. The Mac app compiles as the HTTP host; native Mac UI runtime is zero. This slice does not introduce calendar presentation or change persisted data. Schema 14/portable 1/localOnly remain unchanged.
+DoD passes nine functions in six affected HTTP suites with zero final
+failures/skips. The existing List compact-row assertion also failed because its
+expected keys omitted labels. A separate run of its unmodified two-function
+baseline suite reproduces both key mismatches before the current test adds
+labels and verifies the empty array. The combined evidence retains these
+attempts, actual reports, six-file Swift lint and source hashes. The Mac app
+compiles as the HTTP host; native Mac UI runtime is zero. This slice does not
+introduce calendar presentation or change persisted data. Schema 14/portable
+1/localOnly remain unchanged.

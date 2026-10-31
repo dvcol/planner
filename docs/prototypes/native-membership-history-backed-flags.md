@@ -14,11 +14,11 @@ All twelve new cases failed on preceding production. The first diagnostic surfac
 
 ## Final local checkpoint
 
-The [matched verification](evidence/native-membership-consolidation/divergent-completion-validation.json) records 256 functions, 90 suites and 800 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual source/product hashes, all four changed Swift files' strict formatting, 514 unchanged frozen fixtures and nineteen unchanged model source files are checked.
+The matched verification records 256 functions, 90 suites and 800 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual source/product hashes, all four changed Swift files' strict formatting, 514 unchanged frozen fixtures and nineteen unchanged model source files are checked.
 
 Seven existing real MCP HTTP regressions and matching Mac app/Share/fixture builds pass. A separate isolated native bulk save-failure test uses final Mac products and proves rollback/retry for three command scopes; its actual child log is retained. That command test does not establish fault injection for this exact automatic flag-repair path.
 
-[Eight retained phases](evidence/native-membership-consolidation/divergent-completion-attempts.json) include the original failures, the extra-provenance failure and final passing platform/adapter/native-save checks. Only closed marked stores from original passing logs are removed after host and handle verification.
+Eight retained phases include the original failures, the extra-provenance failure and final passing platform/adapter/native-save checks. Only closed marked stores from original passing logs are removed after host and handle verification.
 
 ## Remaining scope
 

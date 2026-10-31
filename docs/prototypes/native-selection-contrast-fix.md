@@ -20,7 +20,7 @@ The selected List journey audits both before and after its real local checkbox a
 
 ## Qualification and visual review
 
-The [light Item capture](evidence/navigation/native-selection-contrast-fix/q99-tablet-readable-light/EFC4BB92-18AE-45BF-B227-7385BD9B3BF7.png) and [inactive selected List capture after completion](evidence/navigation/native-selection-contrast-fix/q99-tablet-readable-light/C6B056EA-0D7F-4760-A341-782B8766F2B3.png) show the stronger row captions, explicit detail labels and unchanged native selection surfaces. Both unfiltered light iPad journeys pass on the corrected source.
+The light Item capture and inactive selected List capture after completion show the stronger row captions, explicit detail labels and unchanged native selection surfaces. Both unfiltered light iPad journeys pass on the corrected source.
 
 | Destination and appearance | Executed result |
 | --- | --- |
@@ -32,13 +32,13 @@ The [light Item capture](evidence/navigation/native-selection-contrast-fix/q99-t
 | iPhone dark | Same three journeys pass, 37.711 seconds |
 | Mobile and production Mac | Targeted compiler checks pass; Mac supplies no runtime evidence |
 
-The restored checkpoint has exactly the same source hashes as the qualified iPad build. The [comparison](evidence/navigation/native-selection-contrast-fix/restored-source-comparison.json) records no differences. The separate phone runs use the checkpoint build. Phone audits cover pushed details, with no persistent selected-row claim.
+The restored checkpoint has exactly the same source hashes as the qualified iPad build. The comparison records no differences. The separate phone runs use the checkpoint build. Phone audits cover pushed details, with no persistent selected-row claim.
 
-The [dark increased-contrast capture](evidence/navigation/native-selection-contrast-fix/q99-tablet-readable-dark-increased/39D4549F-EFDB-4E40-9EA7-445CDBD22DD6.png) shows Capture overlapping Window Item 014 and its duration. Moving Capture to the top removes that audit failure but truncates the Items title. A preferred-column-width probe does not visibly widen that column. A secondary-action probe still crowds the title, and its controller fails while looking for a direct Capture button inside the new native More menu. None of those toolbar probes ships. Original placement and test actions are restored.
+The dark increased-contrast capture shows Capture overlapping Window Item 014 and its duration. Moving Capture to the top removes that audit failure but truncates the Items title. A preferred-column-width probe does not visibly widen that column. A secondary-action probe still crowds the title, and its controller fails while looking for a direct Capture button inside the new native More menu. None of those toolbar probes ships. Original placement and test actions are restored.
 
 Q101 subsequently selects one native Add menu. Its [separate implementation and qualification](native-catalog-add-menu.md) follow this checkpoint and preserve the other choices as discarded alternatives. Approved Q98 itinerary work remains independent.
 
-Literal results, source/product hashes, unsuccessful probes and original captures are retained in the [evidence packet](evidence/navigation/native-selection-contrast-fix/). The [production Mac compiler packet](evidence/navigation/native-scene-appearance/q99-contrast-checkpoint-mac-build/) records the actual app compilation. Runtime freezes source and products and restores Simulator appearance settings. The [visual review](evidence/navigation/native-selection-contrast-fix/visual-review.json) names only inspected originals. Exporting an additional capture does not establish its visual acceptance.
+Literal results, source/product hashes, unsuccessful probes and original captures are retained in the evidence packet. The production Mac compiler packet records the actual app compilation. Runtime freezes source and products and restores Simulator appearance settings. The visual review names only inspected originals. Exporting an additional capture does not establish its visual acceptance.
 
 ## Completion limits
 

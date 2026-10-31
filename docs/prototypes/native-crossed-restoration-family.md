@@ -34,7 +34,7 @@ unchanged; this adds no schema, format, gate, framework or test boundary.
 | `native-crossed-owned-family-preservation-mac-corrected` | Complete-value assertions, two functions and twelve cases, pass |
 | `native-crossed-owned-family-preservation-phone` | Same final assertions, two functions and twelve cases, pass |
 
-The [validation artifact](evidence/native-membership-consolidation/native-crossed-owned-family-validation.json)
+The validation artifact
 reconciles final frozen inputs and actual products before another build. All 813
 Core inputs match the phone epoch; the phone retains 1160 inputs. All 90 Core
 production inputs, 514 frozen store fixtures and schema sources match the prior

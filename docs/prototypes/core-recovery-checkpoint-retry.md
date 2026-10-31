@@ -29,7 +29,7 @@ After this tracer passes unchanged, add graph preservation, continued I/O failur
 
 ## Qualification
 
-The [execution record](evidence/navigation/core-recovery-checkpoint-retry.json) retains commands, source epochs, package logs and native result summaries/test trees. The declared interface's unavailable body supplies the executable red; the same tracer bytes pass after implementing checkpoint work. Production remains fixed after that first green.
+The execution record retains commands, source epochs, package logs and native result summaries/test trees. The declared interface's unavailable body supplies the executable red; the same tracer bytes pass after implementing checkpoint work. Production remains fixed after that first green.
 
 | Qualified surface | Functions | Suites | Invocations | Failures/skips |
 | --- | ---: | ---: | ---: | ---: |

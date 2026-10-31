@@ -64,7 +64,7 @@ remains UI polish; the passing reading check does not close that layout review.
 
 ## Limits
 
-The [execution evidence](evidence/native-ui-contrast/) keeps failed probes and
+The execution evidence keeps failed probes and
 diagnostics distinct from final permanent checks. Apple describes automated
 audits as a starting point and still requires testing with assistive
 technologies. [Apple audit guidance](https://developer.apple.com/documentation/accessibility/performing-accessibility-audits-for-your-app),
@@ -85,7 +85,7 @@ no production palette change or audit exception is introduced.
 The test requests Dark and reports that appearance, but the inspected original
 initial navigation and editor render in Light. This mismatch is not explained
 by the current evidence and is not a Dark qualification. The Save warning
-remains open. The [focused record](evidence/native-save-contrast-2026-10-31/review.json)
+remains open. The focused record
 retains setup, commands, hashes, the failure and inspected original captures.
 
 A bounded follow-up sets Simulator appearance to Dark before launch; simctl

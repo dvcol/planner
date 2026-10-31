@@ -27,7 +27,7 @@ Five capture functions passed at the real HTTP boundary. They cover advertised s
 
 The final affected run passed 24 functions in seven suites, covering 31 invocations, with zero failures and zero skips. It includes capture, authentication, source reads, ordinary commands, bulk admission/review, operation status and manual estimates. The macOS app and test host compiled in that run. Five affected Swift files passed strict lint. Both review axes found no remaining confirmed source findings.
 
-[Execution evidence](evidence/navigation/mcp-capture/execution.json) records exact narrow commands, completed result summaries and hashes. Source hashes were checked after the process exited. A disk-full build attempt could not start; only regenerable task build caches were removed before qualification resumed. Test storage cleanup is deferred until the process exits, rather than unlinking an open native store. The separate pending Maps lookup work is excluded from the commit and evidence.
+Execution evidence records exact narrow commands, completed result summaries and hashes. Source hashes were checked after the process exited. A disk-full build attempt could not start; only regenerable task build caches were removed before qualification resumed. Test storage cleanup is deferred until the process exits, rather than unlinking an open native store. The separate pending Maps lookup work is excluded from the commit and evidence.
 
 ## Remaining map work
 

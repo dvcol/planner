@@ -8,8 +8,8 @@ console retaining a previously selected Development type's details.
 
 The actual Confirm Deployment dialog proposes two new types, 119 indexes for
 `PlannerNode_v1`, 23 indexes for `CD_Item`, and default `_world`, `_icloud` and
-`_creator` role definitions. The [original preview and rendered
-diff](evidence/native-cloud-production-review-2026-10-31/review.json) are retained.
+`_creator` role definitions. The original preview and rendered
+diff are retained.
 Deploy has not been pressed. No record query, data transfer, schema edit or
 reset was performed.
 

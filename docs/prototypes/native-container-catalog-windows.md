@@ -22,7 +22,7 @@ The main native Lists and Itineraries catalogs use the new overload. `SavedConta
 
 ## Evidence recorded so far
 
-The [evidence packet](evidence/navigation/native-itinerary-window-compatibility/) retains exact source epochs, commands, product hashes and results.
+The evidence packet retains exact source epochs, commands, product hashes and results.
 
 | Epoch | Result |
 | --- | --- |
@@ -132,4 +132,4 @@ A subsequent observation expects three native rows while the third child is belo
 
 The original passing List-search, ordered-route and final itinerary-filter captures were inspected. Full progress, separate filtered counts, independent checks and system bottom tabs remain visible in dark mode. Faint composition captions and floating-bar edge readability remain final UI review findings. These represented results do not close Mac runtime, accessibility or physical acceptance.
 
-The [caller/draft checkpoint index](evidence/navigation/native-itinerary-window-compatibility/origin-draft-and-caller-checkpoint-validation/observed-results.json) preserves individual passing functions, failed attempts and compiler-only epochs. Final mobile and Mac app/UI targets compile; strict lint passes both affected Swift files and both reports. Recorded production Swift inputs match this checkpoint. This continuation changes native test observations and adds qualification; production behavior remains unchanged.
+The caller/draft checkpoint index preserves individual passing functions, failed attempts and compiler-only epochs. Final mobile and Mac app/UI targets compile; strict lint passes both affected Swift files and both reports. Recorded production Swift inputs match this checkpoint. This continuation changes native test observations and adds qualification; production behavior remains unchanged.

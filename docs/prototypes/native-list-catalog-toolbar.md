@@ -44,7 +44,7 @@ The affected Mac app, Share and native UI/fixture targets compile. This provides
 no credit for actual Mac interaction or signed shared storage. Strict Swift
 formatting covers all affected Swift files.
 
-The [execution evidence](evidence/native-list-catalog-toolbar/) retains failed
+The execution evidence retains failed
 diagnostics separately from final qualification. Native menu scrolling must
 target the menu rather than the catalog, and dismissing an iPad menu can also
 hide its overlay sidebar. The corrected UI driver follows those native states.

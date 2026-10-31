@@ -13,7 +13,7 @@ The Light draft-guard journey passes at normal text size (79.297 seconds): an
 untouched draft closes, Keep editing preserves changes, invalid Save stays open,
 and explicit Save retains the Item and its original List appearance.
 
-The [evidence packet](evidence/native-item-draft-layout-2026-10-31/review.json)
+The evidence packet
 retains commands, source hashes, results and inspected original captures.
 Simulator, Mac and signed mobile builds pass; the mobile build is prepared,
 without a physical-device installation. Mac runtime and physical/assistive

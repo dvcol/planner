@@ -31,7 +31,7 @@ The initial native run fails at the missing saved map. The first integrated run 
 
 ## Evidence and remaining work
 
-[The evidence directory](evidence/navigation/native-saved-maps-preview/) records commands, source hashes, compressed logs and actual exits. The read-only resolver/cache and unit evidence are committed in `50516fb`.
+The evidence directory records commands, source hashes, compressed logs and actual exits. The read-only resolver/cache and unit evidence are committed in `50516fb`.
 
 | Boundary / phase | Represented result |
 | --- | --- |

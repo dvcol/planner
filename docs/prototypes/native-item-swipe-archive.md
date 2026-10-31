@@ -15,7 +15,7 @@ uses the established typed-independent Toggle lookup. Original failure results
 remain failures. The existing direct row-completion regression passes in that
 diagnostic cohort; it is not counted as a final-source result.
 
-The [final validation](evidence/native-item-swipe-archive/final-validation.json)
+The final validation
 records two passing functions on iPhone and dark iPad, four final executions with
 zero failures, skips or SQLite-unlink warnings. Active/Archived filtering follows
 both actions. The original Item identity, notes and global Done survive the

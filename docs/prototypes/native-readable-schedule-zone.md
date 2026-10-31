@@ -24,7 +24,7 @@ remain separate from the final passing cohorts.
 
 All 1160 final native inputs match the workspace and Mac app/Share/UI-test
 compilation. Strict affected Swift and Markdown lint pass.
-[Final verification](evidence/native-readable-schedule-zone/final-validation.json)
+Final verification
 records the actual cohorts; execution records have read-back hash verification.
 
 Actual Mac interaction, broader scene/assistive review and physical/signed-store

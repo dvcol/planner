@@ -30,4 +30,4 @@ The ordinary-app Capture regression also passes one function on each simulator. 
 
 The current-source Mac fixture/test-host compilation and ordinary app build pass with signing disabled. Strict formatting passes all three affected Swift files; the report passes focused Markdown lint. No Core, HTTP or Mac runtime check is credited. This slice does not qualify every window size, orientation, accessibility setting or the separate whole-app polish gate.
 
-The [evidence packet](evidence/navigation/native-catalog-title-layout/execution.json) retains the calibrated baseline, earlier diagnostic attempts, eleven original images, native frames, exact commands, compressed raw logs and source/product hashes. The report distinguishes a real clipped title from the corrected test-rounding error.
+The evidence packet retains the calibrated baseline, earlier diagnostic attempts, eleven original images, native frames, exact commands, compressed raw logs and source/product hashes. The report distinguishes a real clipped title from the corrected test-rounding error.

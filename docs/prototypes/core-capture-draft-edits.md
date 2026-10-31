@@ -32,7 +32,7 @@ Red/green traces establish the absent facade, input removal, link editing, retry
 
 Mac and iPhone Simulator each passed 153 affected Core functions in 68 suites, covering 405 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Four affected Swift files passed strict lint; the Mac app and navigation test host compiled successfully.
 
-[Execution evidence](evidence/navigation/core-capture-draft-edits/execution.json) records commands, final source hashes, completed result summaries, test trees and red/green logs. Native UI runtime and physical Share/capture execution remain unqualified.
+Execution evidence records commands, final source hashes, completed result summaries, test trees and red/green logs. Native UI runtime and physical Share/capture execution remain unqualified.
 
 ## Remaining map work
 

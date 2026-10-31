@@ -32,7 +32,7 @@ Each simulator qualified nine distinct functions in four suites, with nine selec
 
 The four owned-field journeys prove subtitle, duration, independent address and bookmark label/identity after relaunch; shared labels through Cancel/Add and relaunch; sole-link removal without promoting automatic text; and invalidated reuse with disabled Add, explicit retained selection and unchanged original data. The regressions cover Done/Archived reuse and remembered destinations, ordinary reviewed cancellation, untouched link/plain-text capture and native bookmark validation/order/removal.
 
-Four affected Swift files passed strict lint. The final macOS app and test host built successfully; Mac UI runtime was not executed. Both source review axes found no remaining confirmed findings. [Execution evidence](evidence/navigation/native-capture-owned-fields/execution.json) contains the source hashes, actual per-run outcomes, qualified selections and original screenshots. Source hashes were checked after all build/test processes exited. The pending Maps lookup work was excluded.
+Four affected Swift files passed strict lint. The final macOS app and test host built successfully; Mac UI runtime was not executed. Both source review axes found no remaining confirmed findings. Execution evidence contains the source hashes, actual per-run outcomes, qualified selections and original screenshots. Source hashes were checked after all build/test processes exited. The pending Maps lookup work was excluded.
 
 ## Remaining map work
 

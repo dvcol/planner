@@ -15,9 +15,9 @@ again before launch. The app exits normally in 7.686 seconds. The private databa
 reports one zone before initialization and two after observation. Zone names and
 account/device identifiers are not recorded.
 
-[Evidence](evidence/cloud-setup-native/result.json) retains 93 input hashes, seven
+Evidence retains 93 input hashes, seven
 actual bundle-file hashes and a verified 16-member source/command/log archive.
-The [runtime result](evidence/cloud-setup-native/runtime.json) includes the actual
+The runtime result includes the actual
 event sequence. Its observer is installed before ModelContainer initialization,
 and the container stays alive throughout observation. Events are supplied by the
 real native framework; no synthetic event injection is used.

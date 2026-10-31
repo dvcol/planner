@@ -8,12 +8,12 @@ Delayed guide; Back reaches Museum. The failed-page case retains its error,
 Retry and Return controls, then recovers the original guide after rotation.
 Both return to the same saved bookmark identity and original URL.
 
-The [phone](evidence/native-webpage-background/browser-background-phone/boundary-validation.json)
-and [dark iPad](evidence/native-webpage-background/browser-background-dark-tablet/boundary-validation.json)
+The phone
+and dark iPad
 each pass both journeys, four executions without failures, skips or SQLite-unlink
 warnings. The iPad's original appearance is restored. All 1160 native inputs
 match both executed epochs; actual products are verified before build reuse.
-The [validation record](evidence/native-webpage-background/final-validation.json)
+The validation record
 binds the results and four retained original captures inspected after recovery.
 The phone title still truncates beside native history controls.
 

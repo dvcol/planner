@@ -29,6 +29,6 @@ The initial test draft used an incorrect session type; a subsequent compilation 
 
 Mac and iPhone Simulator each passed 139 affected Core functions in 66 suites, covering 367 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Twenty-eight affected Swift files passed strict lint. The native Mac app and navigation test host compiled successfully. Both read-only review axes found no remaining confirmed issues.
 
-[Evidence](evidence/navigation/core-native-import-providers/execution.json) records commands, source hashes, completed result summaries and red/green traces. The [schema-17 producer record](../../Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV17/producer.json) identifies the original native seed and file hashes.
+Evidence records commands, source hashes, completed result summaries and red/green traces. The [schema-17 producer record](../../Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV17/producer.json) identifies the original native seed and file hashes.
 
 No native UI runtime, capture execution, live provider resolution, physical CloudKit convergence, account transition or Share execution is claimed. Incoming candidate/family consolidation, broader rebinding, complete generated/affected results, native forms, direct database-save failure, Calendar, large-data performance and whole-app polish remain open.

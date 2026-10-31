@@ -14,8 +14,8 @@ their existing presentation, identities and metadata.
 
 The shared destination view preserves all NavigationLink values, accessibility
 identifiers, order and foreground styles. Core, persistence and synchronization
-are unchanged. The [before](evidence/native-sidebar-word-readability/before-maximum-tablet.png)
-and [final maximum-text capture](evidence/native-sidebar-word-readability/maximum-tablet.png)
+are unchanged. The before
+and final maximum-text capture
 show complete destination words after the correction.
 
 ## Diagnosis and test scope
@@ -59,7 +59,7 @@ runtimes are iOS 27.0, built with Xcode 27.1; the simulator SDK is 27.1 and Mac
 SDK is 27.0. Settings are restored to their actual initial values, and both
 simulators return to their original shutdown state.
 
-The [evidence](evidence/native-sidebar-word-readability/result.json) preserves
+The evidence preserves
 the baseline, failed probe, intermediate and final results, commands, source
 epochs and native attachments. Six selected original captures are inspected.
 Strict affected Swift lint and whitespace checks pass.

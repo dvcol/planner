@@ -34,7 +34,7 @@ The unchanged real-file Skip/Overwrite/relaunch function passes once per simulat
 
 All 26 original review/result/relaunch, export and real-file captures were individually reviewed. Affected strict Swift/Markdown lint and whitespace checks pass. The final Mac fixture app/test host compiles, with zero Mac runtime functions. Core, HTTP, schema and portable format are unchanged; no new Core/HTTP runs are credited. Frozen fixture/main source and product hashes remain unchanged across final qualification.
 
-[Execution evidence](evidence/navigation/native-reviewed-recovery-restoration/execution.json) retains commands, initial failures, terminal results/trees, complete passing manifests, original captures, actual public outputs/provenance and source/product hashes.
+Execution evidence retains commands, initial failures, terminal results/trees, complete passing manifests, original captures, actual public outputs/provenance and source/product hashes.
 
 ## Remaining gates
 

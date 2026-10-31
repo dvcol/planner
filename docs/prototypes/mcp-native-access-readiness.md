@@ -12,9 +12,9 @@ After the user returned to the unlocked Mac, the [Q101 native Capture journey](n
 
 ## Refreshed CLI facts
 
-[Recorded commands](evidence/mcp/native-access-readiness/installed-cli.json) identify Codex CLI 0.162.1 and Claude Code 2.1.295. Version/help commands are not successful MCP calls.
+Recorded commands identify Codex CLI 0.162.1 and Claude Code 2.1.295. Version/help commands are not successful MCP calls.
 
-The installed Codex parser recognizes a temporary runtime `http_headers_helper` override. `codex mcp get` returns a streamable-HTTP configuration with that field redacted. The probe uses a dummy `/usr/bin/false` helper, not a credential reader; it invokes no Planner tool and proves no connection. No MCP add/configuration mutation command was used. The command reports a denied PATH-alias cache write, retained in its stderr. [Exact probe](evidence/mcp/native-access-readiness/codex-header-configuration-probe.json).
+The installed Codex parser recognizes a temporary runtime `http_headers_helper` override. `codex mcp get` returns a streamable-HTTP configuration with that field redacted. The probe uses a dummy `/usr/bin/false` helper, not a credential reader; it invokes no Planner tool and proves no connection. No MCP add/configuration mutation command was used. The command reports a denied PATH-alias cache write, retained in its stderr. Exact probe.
 
 [Official OpenAI documentation](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) documents local HTTP helper commands that return a JSON header map. [Official Claude documentation](https://code.claude.com/docs/en/mcp) documents `headersHelper`, including connection-time execution, trust and reconnect rules. These support the planned same-executable reader route. Installed-parser recognition and documentation do not prove helper execution, refresh, trust, actual tools or either desktop route.
 
@@ -22,7 +22,7 @@ All four selected routes still need separately recorded results: Codex CLI, loca
 
 ## Earlier Mac runtime retry
 
-The existing final Mac compiler products were reused after their source/product checks. One bounded ordinary Apple Maps/owned-address UI journey was attempted. [Literal packet](evidence/navigation/native-scene-appearance/mac-maps-current-runtime/exit.json) reports exit 65: XCTest timed out while enabling automation mode. Zero Test Cases started. The [readiness record](evidence/mcp/native-access-readiness/mac-runtime.json) and compressed log retain the failure.
+The existing final Mac compiler products were reused after their source/product checks. One bounded ordinary Apple Maps/owned-address UI journey was attempted. Literal packet reports exit 65: XCTest timed out while enabling automation mode. Zero Test Cases started. The readiness record and compressed log retain the failure.
 
 That attempt supplies no native UI, map, interaction or visual credit. No permission or signing-account setting was changed. The later Q101 pass is separately recorded above, with its actual production source/products, failed assertions, correction and window captures. It establishes the selected Capture workflow, not Agent Control or signed storage. Physical and CloudKit qualification remain unmet.
 
@@ -37,4 +37,4 @@ That attempt supplies no native UI, map, interaction or visual credit. No permis
 | Native Mac UI behavior | Earlier pre-test failure; later Q101 Capture journey passes | Qualify remaining native scenes and Agent Control lifecycle |
 | App Group, protected Keychain, account/sync/Share and physical gates | No valid development identity; actual capabilities unverified | Free signing setup and required scenarios; CloudKit still requires membership or a reviewed replacement |
 
-[Source hashes, factual review and evidence hashes](evidence/mcp/native-access-readiness/) retain the earlier source inspection, configuration recognition and startup failure. The linked Q101 packet supplies the later native result. Q100 B's signed-storage requirement is still unmet. These checks close no map ticket; all remaining acceptance gates stay in place.
+Source hashes, factual review and evidence hashes retain the earlier source inspection, configuration recognition and startup failure. The linked Q101 packet supplies the later native result. Q100 B's signed-storage requirement is still unmet. These checks close no map ticket; all remaining acceptance gates stay in place.

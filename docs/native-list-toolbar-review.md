@@ -34,7 +34,7 @@ UIKit overflow entries can expose their native labels while omitting SwiftUI ide
 
 ## Recorded qualification
 
-All packets below are under [the compatibility evidence](prototypes/evidence/navigation/native-itinerary-window-compatibility/). Each retains its original source epoch, command, log and result; a later passing invocation does not change an earlier failure.
+All packets below are under the compatibility evidence. Each retains its original source epoch, command, log and result; a later passing invocation does not change an earlier failure.
 
 | Check | Result | Packet |
 | --- | --- | --- |

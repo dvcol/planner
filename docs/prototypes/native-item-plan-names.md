@@ -32,7 +32,7 @@ Share and native-test compilation verifies nine products; the actual fixture app
 and its tests additionally compile with four verified products. Strict affected
 Swift formatting, Markdown lint and whitespace checks pass.
 
-[The validation packet](evidence/native-item-plan-names/final-validation.json)
+The validation packet
 keeps the earlier failures and passing source epochs separate from these final
 executions. The iPad appearance is restored after each dark-mode run.
 Actual Mac interaction, broader accessibility and physical/cloud acceptance keep

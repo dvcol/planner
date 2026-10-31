@@ -10,11 +10,11 @@ The four-case public real-store tracer covers delivery with and without the old 
 
 ## Local qualification
 
-The [matched checkpoint](evidence/native-membership-consolidation/expanded-only-validation.json) passes 247 functions in 88 suites and 693 invocations on each of Mac and iPhone Simulator. The 808 Core inputs match across platforms; the phone manifest contains 1,147 inputs. Both actual Core test products per platform are verified. Final runs have no skipped tests or SQLite unlink diagnostics. Strict formatting passes for the three changed Swift files.
+The matched checkpoint passes 247 functions in 88 suites and 693 invocations on each of Mac and iPhone Simulator. The 808 Core inputs match across platforms; the phone manifest contains 1,147 inputs. Both actual Core test products per platform are verified. Final runs have no skipped tests or SQLite unlink diagnostics. Strict formatting passes for the three changed Swift files.
 
 All 514 frozen fixtures and nineteen model source files remain unchanged. The prior consolidation tests remain byte-identical outside the expanded-delivery tracer and its new native-input helper. Only two production Core files and that test file change. The complete app, Core and MCP source manifests match the final adapter execution. Six real MCP functions pass; the Mac app, Share extension and fixture app compile. This is local ad-hoc build evidence, with no new system-invocation or native UI claim.
 
-The [attempt record](evidence/native-membership-consolidation/expanded-only-attempts.json) retains the actual failing runtime case, subsequent passes, source manifests, products and raw logs. Cleanup removes 1,267 distinct marked disposable stores using only original passing logs after host-exit and open-file checks. The failed run remains retained. This checkpoint adds no schema, portable format, public command, target or test hook.
+The attempt record retains the actual failing runtime case, subsequent passes, source manifests, products and raw logs. Cleanup removes 1,267 distinct marked disposable stores using only original passing logs after host-exit and open-file checks. The failed run remains retained. This checkpoint adds no schema, portable format, public command, target or test hook.
 
 ## Remaining scope
 

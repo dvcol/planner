@@ -10,7 +10,7 @@ appearance identities, full progress count, first-page loading, last-page access
 and release of offscreen row presentations. It then verifies the 200-List catalog
 and its last page. The affected existing List-header regression also passes.
 
-The [focused run](evidence/native-mvp-scale/result.json) passes two tests in
+The focused run passes two tests in
 20.525 seconds. On this execution Mac, the fixture import takes 11.780 seconds,
 opening the 5,000-Item List takes 4.130 seconds, and the combined List/catalog
 query and paging portion takes 8.219 seconds. These are observed same-process

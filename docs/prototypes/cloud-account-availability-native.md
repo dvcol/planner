@@ -20,7 +20,7 @@ identity requests. Thirty-nine samples observe Available; restored private
 metadata access and the same initial account are verified before stopping.
 The native launch exits 0 after 299.297 seconds. Planner is left enabled.
 
-The [evidence](evidence/cloud-account-availability-native/observation-result.json)
+The evidence
 retains structured samples, signed configuration, source hashes and scoped
 commands. It qualifies the actual per-app availability signal, not whole-account
 sign-out, a different account, SwiftData reset behavior, Planner command/recovery
@@ -53,7 +53,7 @@ Two eight-minute manual-action windows end before a disabled-account event is
 captured. Each retains 93 enabled samples with the exact fixture and records
 `PlannerCloudStoreTransitionTimeout`. Neither is reported as a passing
 interruption check. The first attempt's
-[evidence](evidence/cloud-store-transition-native/result.json) remains unchanged;
+evidence remains unchanged;
 the retry's timeout and subsequent successful cleanup are retained with the
 attended run below.
 
@@ -78,7 +78,7 @@ export in 5.402 seconds. Another fresh store completes initial import and proves
 its absence in 4.906 seconds. After every store-owning process exits, scoped
 cleanup removes the retry and attended-run scratch directories: 18 regular files
 and 6,414,632 nominal bytes. The
-[attended evidence](evidence/cloud-store-off-on-native/result.json) includes the
+attended evidence includes the
 successful phases, prior retry, source/build records and matching hashes for all
 90 current Core inputs.
 

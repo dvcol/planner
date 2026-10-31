@@ -21,10 +21,10 @@ navigation remain in Release. This adds no target, dependency or test seam.
 - All 254 native inputs stay unchanged during execution and match collection.
   Strict affected Swift formatting, whitespace and the new Markdown checks pass.
 
-The [saved Item after relaunch](evidence/native-release-configuration-2026-10-31/saved-item-after-relaunch.png)
-and [unavailable-iCloud explanation](evidence/native-release-configuration-2026-10-31/private-icloud-unavailable.png)
+The saved Item after relaunch
+and unavailable-iCloud explanation
 are inspected original native captures. The
-[review record](evidence/native-release-configuration-2026-10-31/review.json)
+review record
 retains source/product hashes, commands, compressed logs and exact scope.
 
 ## Release and publication limits

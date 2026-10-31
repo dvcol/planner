@@ -46,6 +46,6 @@ Both contract reviews required distinguishing new/rescheduled drafts from unchan
 
 ## Evidence and remaining work
 
-[The evidence packet](evidence/navigation/native-schedule-clock-input/) retains compiler/runtime commands, literal results, frozen source/product hashes, original hierarchy/capture files, historical controller attempts and the Foundation sources/logs. The [Calendar resize report](native-calendar-grid-inspector-layout.md) links the prior compatibility checks; this investigation supplies no new layout acceptance.
+The evidence packet retains compiler/runtime commands, literal results, frozen source/product hashes, original hierarchy/capture files, historical controller attempts and the Foundation sources/logs. The [Calendar resize report](native-calendar-grid-inspector-layout.md) links the prior compatibility checks; this investigation supplies no new layout acceptance.
 
 Q94 label presentation and Q95 Item windows remain independent pending choices. Q96 concerns the new production time-input interface and real-Foundation unit seam. Signing, Mac UI runtime, physical CloudKit/account/Share qualification and whole-app native SwiftUI polish remain under their existing gates. No complete scheduling or map gate is closed.

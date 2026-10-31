@@ -30,7 +30,7 @@ The actual selected-copy files are each 575 bytes; the ordinary Settings files a
 
 Original recovery picker/delivery and ordinary Settings delivery captures were inspected separately on both devices. Strict affected Swift/Markdown lint passes. The final Mac app/test host compiles with zero Mac runtime functions. Core, HTTP, schemas and portable format are unchanged; no new Core/HTTP test runs are credited. The missing-control red remains excluded from passing qualification.
 
-[Execution evidence](evidence/navigation/native-recovery-export/execution.json) retains exact commands, native results/trees, original captures, all four public outputs/provenance and source/product hashes.
+Execution evidence retains exact commands, native results/trees, original captures, all four public outputs/provenance and source/product hashes.
 
 ## Remaining gates
 

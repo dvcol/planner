@@ -51,11 +51,11 @@ The final correction gives the existing Edit Item Form the stable accessibility 
 
 The first identified-Form invocation times out during repeated sixty-second animation-notification waits around the URL field, before the final Edit check. It receives no function pass credit. The runner has already shut down the test iPad when the reset begins, so the redundant shutdown command fails with that explicit state. A fresh inventory verifies Shutdown before booting only that same device without erasing data. The unchanged-source retry passes in 210.364 seconds. That sequence does not establish the cause of the earlier waits.
 
-Every failed or timed-out invocation remains separate from passing functions in the [run index](evidence/navigation/native-rich-draft-layout/historical-run-index.json).
+Every failed or timed-out invocation remains separate from passing functions in the run index.
 
 ## Evidence and remaining gates
 
-The [evidence packet](evidence/navigation/native-rich-draft-layout/) records commands, source epochs, source/product hashes, literal outcomes, native window captures and separate source reviews. The final builds archive 945 inputs per platform. Runtime wrappers freeze 469 source/configuration inputs and verify six product hashes before and after each invocation. Later builds can replace live products; historical hashes retain their original epochs.
+The evidence packet records commands, source epochs, source/product hashes, literal outcomes, native window captures and separate source reviews. The final builds archive 945 inputs per platform. Runtime wrappers freeze 469 source/configuration inputs and verify six product hashes before and after each invocation. Later builds can replace live products; historical hashes retain their original epochs.
 
 All seventeen retained original named Planner-window PNGs were individually inspected; eight belong to final-source passing invocations. The selected final phone/tablet captures show readable estimate, location and bookmark controls in the native editor at both orientations. The saved rich-creation captures include an address map, while the example bookmark cards show the native unavailable/Retry fallback. These visual observations are not controlled provider-success or whole-app polish qualification.
 

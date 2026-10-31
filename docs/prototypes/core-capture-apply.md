@@ -33,7 +33,7 @@ Spec review also found that a caught native save failure retained its prepared p
 
 Mac and iPhone Simulator each passed 159 affected Core functions in 69 suites, covering 423 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Seven affected Swift files passed strict lint; the Mac app and navigation test host compiled successfully. Standards and Spec rechecks found no remaining confirmed findings.
 
-[Execution evidence](evidence/navigation/core-capture-apply/execution.json) records final source hashes, exact narrow commands, completed result summaries and red/green traces. Native capture UI runtime and physical extension execution remain unqualified.
+Execution evidence records final source hashes, exact narrow commands, completed result summaries and red/green traces. Native capture UI runtime and physical extension execution remain unqualified.
 
 ## Remaining map work
 

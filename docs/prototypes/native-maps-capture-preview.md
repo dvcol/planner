@@ -30,7 +30,7 @@ Early test attempts also exposed text-versus-button selectors, replacing a field
 
 The final fixture run passed all nine functions on both iPhone and iPad, with no failures or skips. Four existing capture regressions also passed on the final iPhone production build. The qualified selection therefore contains thirteen functions across three suites on iPhone and nine functions in one suite on iPad. Earlier passing regressions and failed diagnostic runs are recorded separately and excluded from those counts.
 
-Four changed Swift files passed strict lint. The final macOS production app built successfully; Mac UI runtime was not executed. Both source and spec reviews found no remaining confirmed findings after the corrections. Four original screenshots were visually inspected for the native map, source selection and adaptive review Form. [Execution evidence](evidence/navigation/native-maps-capture-preview/execution.json) records the completed bundle summaries, exact function outcomes, diagnostics, source/product hashes and original screenshots. Source hashes were checked after all build/test processes exited.
+Four changed Swift files passed strict lint. The final macOS production app built successfully; Mac UI runtime was not executed. Both source and spec reviews found no remaining confirmed findings after the corrections. Four original screenshots were visually inspected for the native map, source selection and adaptive review Form. Execution evidence records the completed bundle summaries, exact function outcomes, diagnostics, source/product hashes and original screenshots. Source hashes were checked after all build/test processes exited.
 
 ## Remaining map gates
 

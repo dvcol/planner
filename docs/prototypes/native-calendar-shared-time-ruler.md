@@ -18,7 +18,7 @@ The ruler follows the existing Dynamic Type scaling and system appearance.
 
 ## Executed checks
 
-The [result packet](evidence/native-calendar-shared-time-ruler/result.json)
+The result packet
 separates final builds, successful mobile runs and earlier unsuccessful attempts.
 All 1,164 final native inputs match both builds and both mobile runs. Actual
 mobile product hashes match after execution. The final Mac app, Share extension
@@ -38,9 +38,9 @@ and orientation changes. Both runs restore their previous system appearance.
 
 Three retained original captures were inspected:
 
-- [iPad Week](evidence/native-calendar-shared-time-ruler/tablet-week.png)
-- [iPad details](evidence/native-calendar-shared-time-ruler/tablet-details.png)
-- [iPhone Week](evidence/native-calendar-shared-time-ruler/phone-week.png)
+- iPad Week
+- iPad details
+- iPhone Week
 
 The compressed records retain commands, input/product hashes, source snapshots,
 terminal results and earlier failure evidence. Broad automatic failure videos
@@ -92,7 +92,7 @@ raises a native error. Bounded native drags first bring each card's center into
 the visible area beside the ruler. Exact identities, widths, non-overlap and
 actual hittability assertions remain.
 
-The [follow-up packet](evidence/native-calendar-shared-time-ruler/accessibility/result.json)
+The follow-up packet
 retains the following distinct executions and their failures:
 
 | Cohort | Passed | Failed |
@@ -131,10 +131,10 @@ byte-identical across the represented successful checks. Each UI execution
 retains its own test-source and product hashes. This is not one all-green batch.
 
 Four inspected original captures are retained: corrected
-[largest-text phone](evidence/native-calendar-shared-time-ruler/accessibility/phone-largest-week.png),
-[ordinary phone](evidence/native-calendar-shared-time-ruler/accessibility/phone-ordinary-week.png),
-the [Mac saved span](evidence/native-calendar-shared-time-ruler/accessibility/mac-saved-three-day-span.png)
-and a [narrow Mac finding](evidence/native-calendar-shared-time-ruler/accessibility/mac-narrow-sidebar-finding.png).
+largest-text phone,
+ordinary phone,
+the Mac saved span
+and a narrow Mac finding.
 The last capture shows a clipped sidebar despite the existing detail assertions
 passing. That defect remains open. Largest-text sidebar wrapping and partial
 cards/headings at panned viewport edges also retain their visual-review limits.
@@ -163,7 +163,7 @@ Two original owned-window captures were inspected at minimum and wide widths.
 The mode control stays on one row. The selected booking can still scroll out of
 the visible Week columns when narrowed; its exact details remain selected.
 That viewport polish and wider accessibility/device acceptance remain open.
-The [result and curated records](evidence/native-calendar-shared-time-ruler/compact-mode/result.json)
+The result and curated records
 retain this limited scope without repeating mobile tests for Mac-only styling.
 
 ## Selected-card viewport, 27 October 2026
@@ -196,7 +196,7 @@ remain unchanged during each test. The observed Mac test process uses the
 rebuilt derived product, separately from the installed ordinary app. Manual
 automation authentication remains required before and after the Mac run.
 
-The [packet](evidence/native-calendar-shared-time-ruler/selected-card-viewport/result.json)
+The packet
 retains all six distinct test outcomes, build records and four inspected
 original captures: narrow/wide dark Mac, landscape light iPad and light phone.
 Broader accessibility, keyboard and physical Calendar acceptance remain open.
@@ -218,13 +218,13 @@ existing civil-date key. The two affected tests query that identity rather than
 constructing translated display text in the runner. Displayed dates, language,
 bookings and timezones are unchanged; no new test boundary or storage change.
 
-The [execution record](evidence/native-calendar-shared-time-ruler/day-heading-2026-10-29/result.json)
+The execution record
 records a passing physical iPad booking/relaunch journey in 46.414 seconds and
 two French/France iPad Simulator passes in 60.088 and 73.014 seconds. The latter
 also verifies four independent overlapping start-only bookings in Day and Week.
 Final executions have zero failures and skips. Original
-[physical Week](evidence/native-calendar-shared-time-ruler/day-heading-2026-10-29/physical-week.png)
-and [overlap](evidence/native-calendar-shared-time-ruler/day-heading-2026-10-29/simulator-overlap.png)
+physical Week
+and overlap
 captures are inspected. Simulator settings and original boot state are restored.
 
 Physical, Simulator and Mac builds match all 1,171 inputs. Strict Swift lint and
@@ -275,7 +275,7 @@ It can scroll to its exact unselected booking, so execution time does not assume
 that every booking is immediately visible.
 
 Qualification records and selected inspected originals are retained in the
-[execution packet](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/result.json).
+execution packet.
 Final phone/iPad runtime and compiler results are recorded there separately from
 the failed baseline, cancelled sizing probe and intermediate iPad failures.
 The final opaque-card rotation runs pass on light iPhone and dark iPad with
@@ -300,8 +300,8 @@ mobile devices. No signing or account setting is changed.
 The actual iPhone rotation journey now passes in 57.032 seconds, with the same
 254 native inputs as the final Simulator checks. It preserves Week and the exact
 saved Schedule through rotation, using a disposable local dataset. The
-[physical result](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/physical-iphone.json)
-and [inspected landscape capture](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/physical-iphone-landscape.png)
+physical result
+and inspected landscape capture
 are retained. Planner returns to a normal launch afterward. This clears the
 observed main-app/test-runner trust blocker for this execution, not the remaining
 private-sync acceptance. The matching iPad update is also installed before the

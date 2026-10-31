@@ -20,4 +20,4 @@ Run the exact failing function against an unmodified committed package export be
 
 The unmodified base fails one function with two issues at the partial-state assertion in 0.333 seconds, matching the Q93 working-tree failure. The base export with only this test correction passes one function with zero failures/skips in 0.335 seconds. All production source and resource hashes remain identical between those runs. The corrected test file matches the working-tree file byte for byte.
 
-The [evidence packet](evidence/navigation/core-archived-membership-progress/) records commands, original compressed logs, exact base/overlay source hashes and the tested source. This resolves the stale assertion independently of the uncommitted Q93 implementation. It supplies no new native UI, HTTP, physical-device, CloudKit or whole-map completion evidence.
+The evidence packet records commands, original compressed logs, exact base/overlay source hashes and the tested source. This resolves the stale assertion independently of the uncommitted Q93 implementation. It supplies no new native UI, HTTP, physical-device, CloudKit or whole-map completion evidence.

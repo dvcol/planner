@@ -31,7 +31,7 @@ Each simulator qualified ten distinct functions in four suites, with ten selecte
 
 The List journeys prove staged destinations through Cancel/Add, one persisted membership, local detail/action scope and bookmark identity after relaunch. They also prove separate successful choices for two Lists and global capture, persistence after relaunch, a disabled entry point for an archived List, and fallback to no selected Lists when a remembered destination is archived.
 
-Three affected Swift files passed strict lint. The final Mac app and test host built successfully; Mac UI runtime was not executed. The three affected prototype reports passed Markdown lint. [Execution evidence](evidence/navigation/native-list-capture/execution.json) records actual outcomes, the qualified selection, source/artifact hashes and original inspected screenshots. Product hashes match the regression build; final source hashes were checked after all build/test processes exited. Maps lookup work was excluded.
+Three affected Swift files passed strict lint. The final Mac app and test host built successfully; Mac UI runtime was not executed. The three affected prototype reports passed Markdown lint. Execution evidence records actual outcomes, the qualified selection, source/artifact hashes and original inspected screenshots. Product hashes match the regression build; final source hashes were checked after all build/test processes exited. Maps lookup work was excluded.
 
 ## Remaining map work
 

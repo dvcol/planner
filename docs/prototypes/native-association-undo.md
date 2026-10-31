@@ -35,7 +35,7 @@ The iPad recreated-membership journey passes in 204.703 s. A locally Done member
 
 ## Evidence and TDD
 
-The [Core packet](evidence/navigation/native-association-undo/) retains exact source hashes, changed-source archives, commands, product hashes and underlying results. Native and HTTP epochs are in [the compatibility packet](evidence/navigation/native-itinerary-window-compatibility/). Compiler success alone supplies no runtime credit.
+The Core packet retains exact source hashes, changed-source archives, commands, product hashes and underlying results. Native and HTTP epochs are in the compatibility packet. Compiler success alone supplies no runtime credit.
 
 | Epoch | Observed result |
 | --- | --- |
@@ -55,7 +55,7 @@ The [Core packet](evidence/navigation/native-association-undo/) retains exact so
 | `association-undo-itinerary-missing-registration-phone` / `association-undo-itinerary-qualified-red-phone` | These runs fail before Undo because of row-refresh timing and a header locator. They supply no missing-Undo qualification. Corrected observations wait for row identities and use the established native header. |
 | `association-undo-itinerary-native-header-red-phone` / `association-undo-itinerary-phone-first-green` | The corrected journey fails at missing Undo, then passes in 89.686 s. It restores one repeated List entry and its independent Done state through relaunch. Placement remains defective in its screenshot. |
 
-The [observed run index](evidence/navigation/native-association-undo/final-validation/observed-results.json) retains successful and failed invocations separately. Production-source comparisons confirm that all 149 recorded production Swift inputs in those passing phone and tablet Undo epochs match the initial `b042022e` checkpoint. Later changes to those UI test files correct native queries and add qualification; they do not change that checkpoint's product.
+The observed run index retains successful and failed invocations separately. Production-source comparisons confirm that all 149 recorded production Swift inputs in those passing phone and tablet Undo epochs match the initial `b042022e` checkpoint. Later changes to those UI test files correct native queries and add qualification; they do not change that checkpoint's product.
 
 The final affected Core invocation passes 18 tests across seven suites in 0.910 s, including the original creation save-failure regression. Those are test-run durations, not a performance claim.
 
@@ -74,9 +74,9 @@ The repeated-Itinerary journey now enables Todo before its Calendar round-trip a
 | `phone-native-undo-itinerary-filters` | Passes in 120.402 s in dark mode, including Calendar/return and relaunch. Appearance is restored. |
 | `native-undo-filter-selection-build` / `native-undo-filter-selection-mac-build` | Both final affected targets compile. Mac compilation supplies no runtime credit. |
 
-This follow-up changes tests and reporting only. No production correction, new interface or direct history-controller test is introduced. Its [run index](evidence/navigation/native-association-undo/filter-selection-validation/observed-results.json) and [production comparison](evidence/navigation/native-association-undo/filter-selection-validation/production-source-comparison.json) retain the exact current production epoch, which includes the subsequent native duration-filter work. Earlier Core/HTTP results retain their original source epochs.
+This follow-up changes tests and reporting only. No production correction, new interface or direct history-controller test is introduced. Its run index and production comparison retain the exact current production epoch, which includes the subsequent native duration-filter work. Earlier Core/HTTP results retain their original source epochs.
 
-The List journeys each encounter two previously observed 60-second XCTest animation-notification waits around the native context menu. They still complete within their recorded allowance. These waits supply no responsiveness acceptance and are not attributed to a new Undo product defect. Four [inspected originals](evidence/navigation/native-association-undo/filter-selection-validation/visual-review.json) show retained filters/full counts and the wide Hotel selection. Faint composition captions and scrolled content beneath floating bars remain final-polish findings.
+The List journeys each encounter two previously observed 60-second XCTest animation-notification waits around the native context menu. They still complete within their recorded allowance. These waits supply no responsiveness acceptance and are not attributed to a new Undo product defect. Four inspected originals show retained filters/full counts and the wide Hotel selection. Faint composition captions and scrolled content beneath floating bars remain final-polish findings.
 
 ## HTTP admission qualification
 
@@ -140,7 +140,7 @@ all-green batch. Strict app/Share/runner signatures pass before each Mac run,
 executable hashes remain unchanged within runs, and manual automation
 authentication remains required before and after.
 
-The [packet](evidence/native-association-undo/mac-keyboard-2026-10-27/result.json)
+The packet
 retains all seven executions, including the failed alert interaction, input and
 product hashes, commands and five inspected original captures. Mobile captures
 also show the List title in both navigation and content; title coherence stays

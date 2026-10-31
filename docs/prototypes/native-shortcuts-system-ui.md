@@ -98,11 +98,11 @@ open; it does not qualify the entire catalog's visual layout.
 
 ## Final local checkpoint
 
-The final shared source passes [two iPhone executions](evidence/native-shortcuts-system-ui/shortcuts-system-iphone-discovery-and-read/boundary-validation.json)
-and [one iPad execution](evidence/native-shortcuts-system-ui/shortcuts-system-ipad-discovery/boundary-validation.json),
+The final shared source passes two iPhone executions
+and one iPad execution,
 with no failures, skips or SQLite-unlink diagnostics. Both epochs match all 1160
 workspace inputs; their four actual built product paths are verified before reuse.
-The [final validation](evidence/native-shortcuts-system-ui/final-validation.json)
+The final validation
 checks those inputs, products, source overlays and original capture hashes. The
 existing AppIntentsTesting case is byte-identical to the committed original.
 The additions are iOS-only and compile through the actual native UI target.
@@ -121,7 +121,7 @@ readable. The iPad capture shows the selected Planner sidebar row and count of
 four; the sidebar covers its catalog, so this is not full catalog layout
 acceptance. Earlier transition captures, wrong-role assumptions and failed
 assertions remain separate evidence epochs. Their source, commands and logs use
-a [lossless diagnostic archive](evidence/native-shortcuts-system-ui/diagnostics-index.json).
+a lossless diagnostic archive.
 Every archived member was read and hash-compared before duplicate removal.
 The index preserves each probe's original pass/fail count; its complete summary,
 hierarchy, source and captures remain in the archive. Final run packets and

@@ -60,9 +60,9 @@ maintenance failure/interruption regressions. Function counts include
 parameterized functions, rather than counting assertions as tests.
 
 Packets under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/)
+`native-membership-consolidation`
 use the `native-label-*` prefix. The
-[validation record](evidence/native-membership-consolidation/native-label-collision-validation.json)
+validation record
 reconciles final inputs/products and lossless source-manifest compression.
 The initial test-interface compile error, original collision rejection, redelivery
 failures and earlier failed phone cohort remain retained. A folder's `green`
@@ -102,7 +102,7 @@ control unchanged. The preparation is unverified, its Retry rejects without
 writes, and fresh maintenance uses a different identity. No production change is
 needed after the failed-container correction in the List checkpoint.
 
-The [validation record](evidence/native-membership-consolidation/native-label-collision-fault-validation.json)
+The validation record
 reconciles six passing Mac functions and three iPhone Simulator functions. The
 Mac cohort retains three successful native-fault children, including four actual
 collision write failures in one child. Phone qualifies publication/preparation
@@ -133,7 +133,7 @@ winning graph contains exactly selection701/801 and closure702/802. Owner/source
 values, original user receipts, prior recovery bytes, writer control and reopened
 data stay exact.
 
-The [final validation](evidence/native-membership-consolidation/native-label-collision-interruption-validation.json)
+The final validation
 reconciles eight passing Mac parent functions and six passing phone shared-helper
 functions. The Mac runner retains ten deliberately killed children across all
 five source kinds and a successful native-fault child containing four collision

@@ -31,7 +31,7 @@ The codec checks compare independently specified JSON for every completion conte
 
 Mac package and native iOS execution each pass 19 functions across seven suites, with 40 invocations and zero failures or skips. Six affected Swift files pass strict lint. The Mac app and navigation test host compile; this slice executes no native UI journeys. Standards and Spec review findings are resolved. Storage schema 15 and portable format 2 remain unchanged.
 
-Final commands, counts, logs and source epochs are recorded in [execution evidence](evidence/navigation/core-native-import-lineage-snapshot/execution.json).
+Final commands, counts, logs and source epochs are recorded in execution evidence.
 
 ## Remaining work
 

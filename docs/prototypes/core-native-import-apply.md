@@ -38,4 +38,4 @@ A direct local-save failure remains unqualified. An SQLite INSERT trigger causes
 
 Import into nonempty datasets, the recorded import summary, native content-origin/provider-reference persistence, additional deletion targets, restoration-family execution, local-save failure proof and native import forms remain open. The pre-save fidelity check rejects any incoming fields the current native representation cannot preserve. This stage does not qualify every accepted portable backup or complete the map's import ticket.
 
-Commands, actual results, source hashes, fixture provenance and failed experiments are recorded in [execution evidence](evidence/navigation/core-native-import-restore/execution.json). Earlier [lineage snapshot proof](core-native-import-lineage-snapshot.md) remains separate.
+Commands, actual results, source hashes, fixture provenance and failed experiments are recorded in execution evidence. Earlier [lineage snapshot proof](core-native-import-lineage-snapshot.md) remains separate.

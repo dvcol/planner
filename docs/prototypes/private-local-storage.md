@@ -29,7 +29,7 @@ upload, move or delete those plans. The later
 [deployment slice](private-sync-deployment.md) adds an explicitly reviewed copy
 while preserving the original store.
 
-The [offline Share follow-up](evidence/private-sync-offline-share/runtime.json)
+The offline Share follow-up
 now proves that a private-configured extension opens an initialized unbound
 local store when no private owner has been selected. It reads the original
 Item and saves another Item without starting CloudKit. Main-app setup is still
@@ -75,7 +75,7 @@ preflight also finds that an arbitrary generated Info key is missing. Supplying
 an actual Info.plist fixes that configuration, and the final signature check
 verifies both declared and signed environments. Failed logs remain separate.
 
-The [evidence manifest](evidence/private-local-storage/manifest.json) retains
+The evidence manifest retains
 source/configuration hashes, exact native commands, signing verification,
 runtime results and the focused test log. Production activation, actual per-app
 Off/On preservation, different-account isolation and transport remain open.

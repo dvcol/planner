@@ -30,7 +30,7 @@ The initial implementation build failed because it attempted to construct Core's
 
 Original phone/tablet Skip, Overwrite, applied-result, before/after and identity captures were inspected separately. The early iPad Overwrite capture does not show its offscreen replacement row; the later visible-detail captures supply that proof. Strict lint passes for six Swift files. The affected Mac app/UI-test host compiles, with zero Mac runtime functions. Core, HTTP, schemas and portable format are unchanged; no new Core/HTTP invocations are attributed to this UI step.
 
-[Execution evidence](evidence/navigation/native-backup-import/execution.json) retains exact commands, raw summaries/trees, compressed logs, original captures, the delayed-index export and source/product hashes.
+Execution evidence retains exact commands, raw summaries/trees, compressed logs, original captures, the delayed-index export and source/product hashes.
 
 ## Remaining gates
 
@@ -50,7 +50,7 @@ Both affected native journeys pass on each simulator, with two functions per dev
 
 The five production files are unchanged from the native import implementation. Original addition, unchanged and retained-Tag captures were inspected separately on both devices. Strict lint passes for the changed Swift test and this report. The affected Mac app/test host compiles; no Mac runtime function runs. This step adds no Core or HTTP invocations and does not qualify graph-wide restoration, deleted-identity restoration, an account transition or the independent recovery copy.
 
-[Restoration execution evidence](evidence/navigation/native-backup-restore/execution.json) records the two completed native runs, original captures, exact commands and frozen source/product hashes.
+Restoration execution evidence records the two completed native runs, original captures, exact commands and frozen source/product hashes.
 
 ## Canceling a reviewed replacement
 
@@ -60,7 +60,7 @@ The accepted explicit-confirmation rule and the same native UI/real-file seam pr
 
 The journey passes once per simulator, with zero failures or skips. Both original replacement-review and retained-current-Tag captures were inspected. The five production files remain unchanged. Strict affected Swift/Markdown lint and Mac app/test-host compilation pass; zero Mac runtime functions and no new Core/HTTP invocations are credited. This closes the represented Tag review-cancellation check, while stale-review, invalid-input, broader graph and recovery-failure gates remain open.
 
-[Cancellation execution evidence](evidence/navigation/native-backup-cancel/execution.json) retains the actual results, commands, original captures and frozen source/product hashes.
+Cancellation execution evidence retains the actual results, commands, original captures and frozen source/product hashes.
 
 ## Malformed-file rejection and retry
 
@@ -74,7 +74,7 @@ Both affected native journeys pass per simulator, with two functions on each dev
 
 The exact 11-byte fixture and both staged copies have the same hash. Original native error, valid retry and retained-Tag captures were inspected separately. Strict affected Swift/Markdown lint and Mac app/test-host compilation pass. The five production files remain unchanged; zero Mac runtime functions and no new Core/HTTP test runs are credited. Other structural/dependency/version failures, full-graph restoration, stale review and recovery failures retain their gates.
 
-[Malformed-input execution evidence](evidence/navigation/native-backup-malformed/execution.json) retains the fixture bytes/provenance, completed results, commands, original captures and frozen source/product hashes.
+Malformed-input execution evidence retains the fixture bytes/provenance, completed results, commands, original captures and frozen source/product hashes.
 
 ## Local graph follow-up, 21 October 2026
 

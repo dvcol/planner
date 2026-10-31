@@ -29,7 +29,7 @@ An earlier diagnostic used an exceptionally long MapItem name. Apple's native de
 
 ## Qualification
 
-Mac passed 183 affected Core functions in 70 suites, covering 482 invocations. iPhone Simulator passed 182 functions in the same 70 suites, covering 481 invocations; the extra Mac function covers secure-archive padding. HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Six changed Swift files passed strict lint; the Mac navigation app and test host compiled. Both review rechecks found no confirmed actionable issues. Completed commands, source hashes, results and diagnostic provenance are recorded in [execution evidence](evidence/navigation/core-native-map-capture/execution.json). Native UI runtime and physical Share execution remain unqualified.
+Mac passed 183 affected Core functions in 70 suites, covering 482 invocations. iPhone Simulator passed 182 functions in the same 70 suites, covering 481 invocations; the extra Mac function covers secure-archive padding. HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Six changed Swift files passed strict lint; the Mac navigation app and test host compiled. Both review rechecks found no confirmed actionable issues. Completed commands, source hashes, results and diagnostic provenance are recorded in execution evidence. Native UI runtime and physical Share execution remain unqualified.
 
 ## Remaining map work
 

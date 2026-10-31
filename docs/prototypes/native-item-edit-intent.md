@@ -39,17 +39,17 @@ The required invalid-input and unavailable-identity qualification passes on firs
 
 The existing real post-save filesystem obstruction qualifies incomplete recovery in 0.199 seconds. The title and notes remain applied after reopening, the next edit is blocked with the same incomplete operation retained, native recovery retry completes that original operation without changing its content hashes, and an explicit later edit succeeds on the same source. These two qualification cases required no production correction; they are not claimed as new executable reds.
 
-Exact frozen sources, original logs, commands and exits are retained under [the navigation compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/), in the packets named `app-intent-edit-notes-executable-red`, `app-intent-edit-notes-first-green`, `app-intent-edit-title-red`, `app-intent-edit-title-green`, `app-intent-edit-clear-notes-red`, `app-intent-edit-clear-notes-green`, `app-intent-edit-invalid-identity` and `app-intent-edit-recovery`.
+Exact frozen sources, original logs, commands and exits are retained under the navigation compatibility evidence, in the packets named `app-intent-edit-notes-executable-red`, `app-intent-edit-notes-first-green`, `app-intent-edit-title-red`, `app-intent-edit-title-green`, `app-intent-edit-clear-notes-red`, `app-intent-edit-clear-notes-green`, `app-intent-edit-invalid-identity` and `app-intent-edit-recovery`.
 
 ## Final focused adapter qualification
 
-All 17 `PlannerItemIntentTests` execute on the final source with zero failures or skips, in 6.320 seconds. The [final regression packet](evidence/navigation/native-itinerary-window-compatibility/app-intent-edit-final-qualification/) retains the complete original log and frozen source overlay. This is the current Item adapter class, including five new edit cases, three Archive cases and the nine earlier creation/read/query/completion cases. It is not the complete Intent catalog or a full-repository test run.
+All 17 `PlannerItemIntentTests` execute on the final source with zero failures or skips, in 6.320 seconds. The final regression packet retains the complete original log and frozen source overlay. This is the current Item adapter class, including five new edit cases, three Archive cases and the nine earlier creation/read/query/completion cases. It is not the complete Intent catalog or a full-repository test run.
 
 The Mac app's extracted metadata declares five actions, including `EditPlannerItemIntent`, plus the existing Item entity and query. The recorded metadata digest and identifiers supply compiler/discovery-artifact evidence only. They do not prove system discovery or invocation. Mobile compilation and its extracted metadata are recorded separately below when available.
 
 ## Mobile compilation and limits
 
-The [mobile build packet](evidence/navigation/native-itinerary-window-compatibility/app-intent-edit-mobile-build/) records the actual production app and existing native UI target compiling for generic iPhone/iPad Simulator with signing disabled. The final source overlay matches the build inputs. Its extracted metadata contains the same five Item actions, existing Item entity and query as Mac. This is compiler/metadata evidence, with no Simulator Intent invocation or physical-device runtime credit.
+The mobile build packet records the actual production app and existing native UI target compiling for generic iPhone/iPad Simulator with signing disabled. The final source overlay matches the build inputs. Its extracted metadata contains the same five Item actions, existing Item entity and query as Mac. This is compiler/metadata evidence, with no Simulator Intent invocation or physical-device runtime credit.
 
 Strict Swift formatting lint passes the two changed Item Intent files; Markdown lint and diff whitespace checks pass. The related Mac-only Picker assertion correction is qualified separately in [the native Mac report](native-mac-session-refresh.md). No Core, backup, HTTP, entitlement, package or target contract changes are introduced here.
 

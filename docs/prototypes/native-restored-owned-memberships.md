@@ -73,9 +73,9 @@ prior source, owned-bookmark/booking/label, independent target and generic
 maintenance failure/interruption coverage.
 
 Evidence under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/)
+`native-membership-consolidation`
 uses `native-owned-list-membership-*` and `native-owned-list-stale-flag-*`.
-The [validation record](evidence/native-membership-consolidation/native-owned-list-membership-validation.json)
+The validation record
 reconciles final source/products, migration execution, unchanged fixtures and the
 method-only Schema18 edit. Original failures remain retained. Verified cleanup
 removed two passing Mac tracer fixtures and 263 passing phone fixtures after
@@ -110,7 +110,7 @@ returns the same checkpoint. Original user receipts remain unchanged. Stale
 membership/expanded identities still fail after recovery, and reopen/redelivery
 preserve the same complete graph.
 
-The [validation record](evidence/native-membership-consolidation/native-owned-list-publication-validation.json)
+The validation record
 reconciles five passing functions and eleven invocations on each of Mac and
 iPhone Simulator. All four main List cases execute with affected preparation,
 completion-history, provenance and committed-recovery regressions. There are no
@@ -151,7 +151,7 @@ expanded graph in the test observer. Raw binding comparison fixes that observer;
 it is distinct from the later reproduced production defect. All original
 failure packets remain retained.
 
-The [final validation](evidence/native-membership-consolidation/native-owned-list-save-validation.json)
+The final validation
 reconciles 57 passing Mac functions and 52 iPhone Simulator functions in eight
 affected suites, plus twelve passing real MCP HTTP functions. Mac app and Share
 extension builds pass. Executed products and 813 shared Core inputs match;

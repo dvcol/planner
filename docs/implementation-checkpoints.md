@@ -109,7 +109,7 @@ code is unchanged. The one final journey covers Cancel, Save while Planner is
 closed, cold readback, stable identities through relaunch and exact cleanup.
 Original captures show the native map preview. Physical senders remain separate.
 
-The [current action audit](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
+The current action audit
 replaces stale sync-integration labels with the existing physical normal-sync
 result. Current Mac and device test-target builds pass, four signatures verify,
 and both attended-run preflights match 259 source/product inputs. No native
@@ -719,7 +719,7 @@ Prefer the simplest existing path that meets the accepted behavior. Reuse native
   resources; device availability and manual automation approval remain per-run
   requirements, rather than another account/team setup task.
 - **Next attended Mac check:** the
-  [prepared two-case run](prototypes/evidence/navigation/mvp-readiness-2026-10-31/review.json)
+  prepared two-case run
   covers multiline-row completion/relaunch and Itinerary search retention.
   It needs an unlocked, idle Mac and manual Enable UI Automation approval.
   Do not change authentication policy or repeat an unattended startup timeout.
@@ -1028,7 +1028,7 @@ The existing tickets retain their Context, starting/end state, DoR, DoD and requ
 - [Specification handoff, issue 17](https://github.com/dvcol/planner/issues/17).
 - [Whole-app UI polish, issue 23](https://github.com/dvcol/planner/issues/23).
 
-The complete former issue body, including original requirements and implementation history, is retained in the [readable 22 October snapshot](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.md). Its [exact original source](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.source.txt) and [provenance](https://github.com/dvcol/planner/blob/86ff02f4/docs/history/decision-map-2026-10-22.provenance.json) verify that no nonblank payload line changed. Only blank-line formatting differs in the readable copy.
+The complete former issue body, including original requirements and implementation history, is retained in the readable 22 October snapshot. Its exact original source and provenance verify that no nonblank payload line changed. Only blank-line formatting differs in the readable copy.
 
 [Verified storage cleanup](prototypes/native-local-storage-cleanup.md) retains the previous audits and the 0.86 GiB, 0.42 GiB, 0.20 GiB and 0.14 GiB nominal-file removals. The [fixture-lifecycle follow-up](https://github.com/dvcol/planner/blob/a2a4783f/docs/prototypes/native-core-fixture-lifecycle.md) also disposes of its closed, marked test stores, including 172,739,251 measured nominal bytes from the refused alias-path epoch. Needed source/app/UI products, native archives and user datasets remain. Nominal totals do not promise an equal APFS free-space increase.
 

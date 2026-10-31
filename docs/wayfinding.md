@@ -1,6 +1,7 @@
 # Working through the Planner map
 
-The [Native personal planner decision map](https://github.com/dvcol/planner/issues/1)
+The
+[Native personal planner decision map](https://github.com/dvcol/planner/issues/1)
 is canonical. Read its destination and notes before choosing work. Its native
 child issues and blocked-by relationships define the current frontier.
 
@@ -9,15 +10,17 @@ child issues and blocked-by relationships define the current frontier.
 The user carried execution into this map. Its destination is now an implemented,
 reviewed core V2 daily-use MVP with explicit human acceptance. The accepted
 [release amendments](release-goals.md) govern scope. Advanced portability and
-restoration, installed Mac Share, further iCloud stress checks and V3 system/agent
-integration are outside the current frontier; preserve their evidence and limits.
+restoration, installed Mac Share, further iCloud stress checks and V3
+system/agent integration are outside the current frontier; retain concise
+outcomes and limits.
 
 The map is a low-resolution index, not a chronological progress log. Keep only
 Destination, Notes, Decisions so far, Not yet specified and Out of scope in its
 body. Open tickets are native children, not another body checklist. Detailed
 answers belong in their resolution comments and linked assets. The local
 [implementation map](implementation-map.md) mirrors that index; its linked
-checkpoint archives are historical evidence, not competing task queues.
+checkpoint notes record past decisions, not competing task queues. The
+[artifact policy](validation.md#artifact-policy) governs validation output.
 
 ## Choose and work a ticket
 
@@ -30,8 +33,8 @@ checkpoint archives are historical evidence, not competing task queues.
    automation approval are separate from signing readiness.
 4. Use the ticket's named workflow. A new human decision requires the human's
    answer; an agent must not infer final layout or daily-use acceptance.
-5. Post the answer as a resolution comment with named evidence links and exact
-   limitations. Close only when that ticket's applicable criteria pass.
+5. Post the answer as a resolution comment with a concise validation summary and
+   exact limitations. Close only when the applicable criteria pass.
 6. Add a named context pointer and short gist to Decisions so far. Scope
    dispositions belong in Out of scope. Preserve the current map when updating
    it so another session's changes are not lost.
@@ -58,8 +61,8 @@ authorized MVP acceptance, not by expanding the destination.
 
 A historical prototype can be consolidated when its remaining review has one
 explicit successor. Post the disposition, preserve its original question and
-evidence, and close as superseded/not planned rather than pretending every
-original criterion passed. Close an out-of-scope ticket as not planned and
+recorded outcome, and close as superseded/not planned rather than pretending
+every original criterion passed. Close an out-of-scope ticket as not planned and
 retain its context in the map's Out of scope section. A future effort charts a
 fresh frontier rather than silently reopening the deferred work as MVP.
 
@@ -69,9 +72,11 @@ Use the matching authenticated connector where sufficient. The repository's
 configured `gh` is the fallback for unavailable connector capabilities or write
 permissions. Always target `dvcol/planner` explicitly.
 
-- The map carries `wayfinder:map`; its tickets use native sub-issue relationships.
+- The map carries `wayfinder:map`; its tickets use native sub-issue
+  relationships.
 - Read sub-issues with `GET /repos/dvcol/planner/issues/1/sub_issues`.
-- Read blockers with `GET /repos/dvcol/planner/issues/{number}/dependencies/blocked_by`.
+- Read blockers with
+  `GET /repos/dvcol/planner/issues/{number}/dependencies/blocked_by`.
 - Add/remove blocking relationships with GitHub's native dependency endpoints.
   They require the blocker's database issue ID, not its issue number.
 - Create tickets before wiring edges. Reject self-dependencies and cycles.
@@ -80,29 +85,31 @@ permissions. Always target `dvcol/planner` explicitly.
   them. Keep an exact before snapshot when condensing large historical bodies.
 
 Use structured JSON or body files for writes, then read back issue state,
-labels, native parents and dependencies. A successful command alone is not
-proof that the intended frontier is visible. A body convention is appropriate
-only if the tracker itself lacks native dependencies.
+labels, native parents and dependencies. A successful command alone is not proof
+that the intended frontier is visible. A body convention is appropriate only if
+the tracker itself lacks native dependencies.
 
 ## Code and verification
 
-Load `code-quality`, `code-architecture` and `code-testing` when applicable.
-Use TDD when the user requests it. Reuse already approved public Core, native UI
-and provider boundaries; no test-only production controls to ease acceptance.
+Load `code-quality`, `code-architecture` and `code-testing` when applicable. Use
+TDD when the user requests it. Reuse already approved public Core, native UI and
+provider boundaries; no test-only production controls to ease acceptance.
 
-Follow the accepted [Build workflow](https://github.com/dvcol/planner/issues/18):
-committed native Xcode configuration, shared schemes, local Swift packages and
-pinned dependencies. Use serial affected-target builds/tests. Record actual
-source/product versions, destinations, discovered/executed cases and original
-captures. Inspect real readability; compilation, wrapper success or a metadata
-preview does not establish native behavior.
+Follow the accepted
+[Build workflow](https://github.com/dvcol/planner/issues/18): committed native
+Xcode configuration, shared schemes, local Swift packages and pinned
+dependencies. Use serial affected-target builds/tests. Record the source
+revision, command/test, platform, result and limits in a concise summary.
+Inspect original captures locally, then discard raw output after review under
+the artifact policy. Compilation, wrapper success or a metadata preview does not
+establish native behavior.
 
 Reuse passing evidence unless a relevant change, defect or unresolved concern
 justifies more work. Distinguish functional results, visual judgment, provider
-availability, Simulator behavior and physical/system acceptance. Preserve failed
-attempts and investigate current changes before calling a failure pre-existing.
-Documentation-only tracker cleanup needs link/state/graph/evidence checks, not
-another application, device or iCloud suite.
+availability, Simulator behavior and physical/system acceptance. Summarize
+failed attempts and investigate current changes before calling a failure
+pre-existing. Documentation-only tracker cleanup needs link/state/graph/evidence
+checks, not another application, device or iCloud suite.
 
 ## Publication and completion
 
@@ -114,9 +121,9 @@ honestly and avoid links to nonexistent remote artifacts.
 
 New charting is complete when the map, child tickets and native relationships
 are published and verified, with its planning artifacts committed and pushed.
-For an existing-map cleanup, verify the published tracker changes and commit
-its local mirror/history; record any source/evidence publication still pending
-in the final handoff ticket.
+For an existing-map cleanup, verify the published tracker changes and commit its
+local mirror/history; record any source/evidence publication still pending in
+the final handoff ticket.
 
 The MVP map closes only after its in-scope acceptance children resolve and the
 human gives the final daily-use/coherence approval. Deferred work and recorded

@@ -27,7 +27,7 @@ Spec review found that Add submitted an empty edit when the parsed title and not
 
 Each final mobile run passed four functions in two suites, with four invocations, zero failures and zero skips. The journeys cover edited URL capture and cancellation/relaunch, an unchanged Saved link, unchanged plain-text title/notes without invented links, and reuse of an archived completed Item with its remembered List destination, stable link and no duplicate Item. Six affected Swift files passed strict lint. The macOS app and test host built successfully; no Mac UI runtime was executed. Both review rechecks found no remaining confirmed findings in this slice.
 
-[Execution evidence](evidence/navigation/native-text-link-capture/execution.json) records the narrow commands, source hashes, completed result summaries and original native screenshots. Final source hashes were checked after every build/test process exited. The unrelated pending Maps HTTP lookup work was excluded from qualification and the commit.
+Execution evidence records the narrow commands, source hashes, completed result summaries and original native screenshots. Final source hashes were checked after every build/test process exited. The unrelated pending Maps HTTP lookup work was excluded from qualification and the commit.
 
 ## Remaining map work
 

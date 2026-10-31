@@ -56,7 +56,7 @@ The external runner waited for process exit, verified all five named UUID fixtur
 
 Affected Mac and iPhone Simulator fixture apps and test hosts compile with signing disabled. No UI test was executed for this Core slice. Strict Swift lint passes the two affected production files and new test file. The report and adapter documentation pass Markdown lint. Logs retain an AllDayScheduleTests redundant-`#require` warning also observed in the pre-behavior-change run. A NativeCaptureLoadingTests warning appears in later logs; that source is unchanged from the base commit. The affected sources have no reported compiler warnings.
 
-The [evidence packet](evidence/navigation/core-container-catalog-sorting/) retains exact commands, raw compressed output, initial and reviewed source revisions, source/product hashes, the external runner and cleanup receipts. The baseline is Xcode 27.0 build 27A266a, Apple Swift 6.4 and macOS 27.0.1. Final standards and specification reviews found no remaining behavior or standards issues. The specification review identified the warning-history wording above, which has been corrected.
+The evidence packet retains exact commands, raw compressed output, initial and reviewed source revisions, source/product hashes, the external runner and cleanup receipts. The baseline is Xcode 27.0 build 27A266a, Apple Swift 6.4 and macOS 27.0.1. Final standards and specification reviews found no remaining behavior or standards issues. The specification review identified the warning-history wording above, which has been corrected.
 
 ## Remaining map gates
 

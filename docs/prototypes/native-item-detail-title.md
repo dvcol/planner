@@ -2,99 +2,288 @@
 
 ## Context and scope
 
-Mobile Item details now use one native navigation title. The original captures showed the title in both the navigation bar and the first Form section on iPhone and iPad. Global Item, standalone List appearance and itinerary appearance details each had that duplication. The user requested native hierarchy and removal of repeated headings; this is a focused correction before final whole-app polish.
+Mobile Item details now use one native navigation title. The original captures
+showed the title in both the navigation bar and the first Form section on iPhone
+and iPad. Global Item, standalone List appearance and itinerary appearance
+details each had that duplication. The user requested native hierarchy and
+removal of repeated headings; this is a focused correction before final
+whole-app polish.
 
-Keep the mobile native title and the Form's useful state, subtitle, context, notes, estimates, labels, location and links. Retain Mac's in-pane heading because its shared window toolbar may describe the containing collection. Preserve identity, completion scope, navigation and saved content. No custom title layout, new presentation mode, public data interface or test seam is proposed.
+Keep the mobile native title and the Form's useful state, subtitle, context,
+notes, estimates, labels, location and links. Retain Mac's in-pane heading
+because its shared window toolbar may describe the containing collection.
+Preserve identity, completion scope, navigation and saved content. No custom
+title layout, new presentation mode, public data interface or test seam is
+proposed.
 
 ## Global Item tracer
 
-The existing native UI boundary hosts a new journey against the saved retired-membership fixture. It selects the real Item, verifies the native navigation title, then counts matching headings inside the actual Form containing the production completion Toggle. This separates the detail heading from any underlying catalog row. It also checks the global Todo state, original note and reachable actions.
+The existing native UI boundary hosts a new journey against the saved
+retired-membership fixture. It selects the real Item, verifies the native
+navigation title, then counts matching headings inside the actual Form
+containing the production completion Toggle. This separates the detail heading
+from any underlying catalog row. It also checks the global Todo state, original
+note and reachable actions.
 
-The [original phone run](evidence/native-membership-consolidation/native-item-title-red/exit.json) fails because the Form still contains one title instead of zero while the native title is present. The capture remains an actual XCTest attachment. Xcode also reports a failure collecting additional Simulator diagnostics because its diagnostic subprocess cannot locate simctl; that happens after the exact title assertion fails and is retained separately from the product failure.
+The original phone run fails because the Form still contains one title instead
+of zero while the native title is present. The capture remains an actual XCTest
+attachment. Xcode also reports a failure collecting additional Simulator
+diagnostics because its diagnostic subprocess cannot locate simctl; that happens
+after the exact title assertion fails and is retained separately from the
+product failure.
 
-The first production change retains the global Item Form heading only on Mac. List and itinerary details remain separate follow-ups until their own native cases execute. No completion or saved-data rule changes.
+The first production change retains the global Item Form heading only on Mac.
+List and itinerary details remain separate follow-ups until their own native
+cases execute. No completion or saved-data rule changes.
 
-The [unchanged global tracer passes](evidence/native-membership-consolidation/native-item-title-global-green/exit.json) after that mobile-only correction, including native actions, the retained note/global Todo and return to the same source row. Four actual products are verified before the next UI build reuses them. This is one scope, not acceptance of all detail contexts or platforms.
+The unchanged global tracer passes after that mobile-only correction, including
+native actions, the retained note/global Todo and return to the same source row.
+Four actual products are verified before the next UI build reuses them. This is
+one scope, not acceptance of all detail contexts or platforms.
 
 ## List and itinerary appearances
 
-The [List-appearance run](evidence/native-membership-consolidation/native-item-title-list-red/exit.json) and [itinerary-appearance run](evidence/native-membership-consolidation/native-item-title-itinerary-red/exit.json) each independently reproduce one repeated Form title with the native title already present. The List case creates a real membership through native Add; the itinerary case selects its existing saved route child. Both reach their exact duplicate-title assertion. The List correction then passes [its unchanged test and the global regression](evidence/native-membership-consolidation/native-item-title-list-green/exit.json).
+The List-appearance run and itinerary-appearance run each independently
+reproduce one repeated Form title with the native title already present. The
+List case creates a real membership through native Add; the itinerary case
+selects its existing saved route child. Both reach their exact duplicate-title
+assertion. The List correction then passes its unchanged test and the global
+regression.
 
-Each Form now keeps that heading only on Mac. Mobile retains its native title and existing state/context/content controls. The three changes add no custom layout or stored state. Broader Calendar/reader caller acceptance, long-title truncation, resizing, accessibility sizes, actual Mac interaction and final whole-app review remain separate.
+Each Form now keeps that heading only on Mac. Mobile retains its native title
+and existing state/context/content controls. The three changes add no custom
+layout or stored state. Broader Calendar/reader caller acceptance, long-title
+truncation, resizing, accessibility sizes, actual Mac interaction and final
+whole-app review remain separate.
 
 ## Native readiness and retained failures
 
-The first complete [phone cohort](evidence/native-membership-consolidation/native-item-title-phone-final/test-summary.json) passes all five functions. The corresponding [iPad cohort](evidence/native-membership-consolidation/native-item-title-ipad-final/test-summary.json) passes four and fails the itinerary journey before it reaches the detail-title assertion. That result remains failed.
+The first complete phone cohort passes all five functions. The corresponding
+iPad cohort passes four and fails the itinerary journey before it reaches the
+detail-title assertion. That result remains failed.
 
-The failed itinerary recording shows the catalog at eight seconds and the correct saved plan Form at ten seconds. The [unaltered extracted frames and their video provenance](evidence/native-membership-consolidation/native-item-title-ipad-final/failure-frame-extraction.json) retain that timing. The driver searched for a scrollable Form immediately after selecting the asynchronously loaded plan. It now waits for the exact plan title and full completion progress before finding the scroll surface. No production timing or test-only control changes.
+The failed itinerary recording shows the catalog at eight seconds and the
+correct saved plan Form at ten seconds. The unaltered extracted frames and their
+video provenance retain that timing. The driver searched for a scrollable Form
+immediately after selecting the asynchronously loaded plan. It now waits for the
+exact plan title and full completion progress before finding the scroll surface.
+No production timing or test-only control changes.
 
-The [readiness-corrected old-UI calibration](evidence/native-membership-consolidation/native-item-title-ready-itinerary-red/test-summary.json) substitutes only the original itinerary-detail source in the disposable build. It reaches the same duplicate-title assertion and fails with one Form heading instead of zero. Its [source record](evidence/native-membership-consolidation/native-item-title-ready-itinerary-red/calibration.json) verifies that the workspace stays unchanged. The corrected driver therefore still detects the original visual defect.
+The readiness-corrected old-UI calibration substitutes only the original
+itinerary-detail source in the disposable build. It reaches the same
+duplicate-title assertion and fails with one Form heading instead of zero. Its
+source record verifies that the workspace stays unchanged. The corrected driver
+therefore still detects the original visual defect.
 
-The [current phone cohort](evidence/native-membership-consolidation/native-item-title-phone-ready-final/test-summary.json) then passes all five functions with the corrected driver and current production UI. Both complete-history and partial-history membership journeys retain their original source and local completion across relaunch. The nine-function [Mac HTTP checkpoint and native compilation](evidence/native-membership-consolidation/native-item-title-adapter-mac/execution.json) use the same shipping sources. The [input comparison](evidence/native-membership-consolidation/native-item-title-build-input-comparison.json) records the single later difference, the iOS-only UI driver's readiness check. Nine actual Mac products and four phone products are hash-verified before reuse. This does not claim actual Mac UI execution.
+The current phone cohort then passes all five functions with the corrected
+driver and current production UI. Both complete-history and partial-history
+membership journeys retain their original source and local completion across
+relaunch. The nine-function Mac HTTP checkpoint and native compilation use the
+same shipping sources. The input comparison records the single later difference,
+the iOS-only UI driver's readiness check. Nine actual Mac products and four
+phone products are hash-verified before reuse. This does not claim actual Mac UI
+execution.
 
-Waiting for the owner alone is insufficient on iPad. The [second iPad cohort](evidence/native-membership-consolidation/native-item-title-ipad-ready-final/test-summary.json) again passes four functions and fails the generic scroll-container lookup. The driver now targets the existing production List identifier, `saved.itinerary.contents`, and performs the same bounded native scroll gesture inside that exact pane. This uses the accepted native UI boundary and introduces no production hook. The [iPad old-UI calibration](evidence/native-membership-consolidation/native-item-title-ipad-list-calibration-red/test-summary.json) then reaches the original title assertion and detects the duplicate heading. Both failed iPad cohorts keep their failed status; the successful membership functions within them remain distinct from the failed title journey.
+Waiting for the owner alone is insufficient on iPad. The second iPad cohort
+again passes four functions and fails the generic scroll-container lookup. The
+driver now targets the existing production List identifier,
+`saved.itinerary.contents`, and performs the same bounded native scroll gesture
+inside that exact pane. This uses the accepted native UI boundary and introduces
+no production hook. The iPad old-UI calibration then reaches the original title
+assertion and detects the duplicate heading. Both failed iPad cohorts keep their
+failed status; the successful membership functions within them remain distinct
+from the failed title journey.
 
 ## Final local checkpoint
 
-| Boundary | Result |
-| --- | --- |
-| [Light iPhone title journeys](evidence/native-membership-consolidation/native-item-title-phone-list-driver-final/test-summary.json) | All three current functions pass, with no failure or skip. |
-| [Dark iPad title journeys](evidence/native-membership-consolidation/native-item-title-ipad-list-driver-final/test-summary.json) | The same three current functions pass, with no failure or skip. |
+| Boundary                                        | Result                                                                                                                                                                      |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light iPhone title journeys                     | All three current functions pass, with no failure or skip.                                                                                                                  |
+| Dark iPad title journeys                        | The same three current functions pass, with no failure or skip.                                                                                                             |
 | Complete/partial-history membership regressions | Both unchanged functions pass on each device in the earlier five-function epochs linked above. The failed iPad itinerary function does not change those individual results. |
-| Mac build and HTTP | App, Share and fixture compilation plus nine real HTTP functions pass. The only later input difference is the iOS-only UI driver, as recorded in the [final reconciliation](evidence/native-membership-consolidation/native-item-title-final-verification.json). |
+| Mac build and HTTP                              | App, Share and fixture compilation plus nine real HTTP functions pass. The only later input difference is the iOS-only UI driver, as recorded in the final reconciliation.  |
 
-Both final mobile runs have 1,155 matching inputs, including the same production changes and final test driver. Four actual mobile products per run are verified; nine Mac products were separately verified. None of the final runs records a SQLite unlink warning. Strict Swift formatting, affected Markdown lint and whitespace checks pass.
+Both final mobile runs have 1,155 matching inputs, including the same production
+changes and final test driver. Four actual mobile products per run are verified;
+nine Mac products were separately verified. None of the final runs records a
+SQLite unlink warning. Strict Swift formatting, affected Markdown lint and
+whitespace checks pass.
 
-All six final title captures are retained and directly inspected. Each shows the native title once and the original useful state/content. The List and itinerary cases retain their contextual state. The intermediate failure captures and result bundles remain available. Six closed passing Mac fixture stores were [safely disposed of](evidence/native-membership-consolidation/native-item-title-mac-fixture-cleanup.json). Four [byte-verified duplicate capture exports](evidence/native-membership-consolidation/native-item-title-duplicate-export-cleanup.json) were removed while preserving their originals, result bundles, compiled products, failures and Simulator datasets.
+All six final title captures are retained and directly inspected. Each shows the
+native title once and the original useful state/content. The List and itinerary
+cases retain their contextual state. The intermediate failure captures and
+result bundles remain available. Six closed passing Mac fixture stores were
+safely disposed of. Four byte-verified duplicate capture exports were removed
+while preserving their originals, result bundles, compiled products, failures
+and Simulator datasets.
 
-This closes the represented duplicate-heading correction. Calendar/reader caller journeys, long-name truncation, resizing/accessibility, actual Mac UI and feature-complete whole-app acceptance remain open. Q156's completion-history declaration and signed/physical/system qualification are separate gates.
+This closes the represented duplicate-heading correction. Calendar/reader caller
+journeys, long-name truncation, resizing/accessibility, actual Mac UI and
+feature-complete whole-app acceptance remain open. Q156's completion-history
+declaration and signed/physical/system qualification are separate gates.
 
 ## Calendar and reader caller follow-up
 
-This slice uses the existing native UI seam, saved change-observation fixture and real loopback HTTP server. Create one Item booking through native controls, open that exact Schedule in Calendar, and require one native Item title without a duplicate Form heading. Open the saved guide and return to the same Item, preserving global Todo, original notes, the bookmark identity/URL and exact Schedule identity/value. This tests the phone navigation stack and iPad inspector as actual callers of the corrected shared Item detail. It introduces no production or test interface change. An isolated old-heading build must detect the original duplicate before current-source qualification.
+This slice uses the existing native UI seam, saved change-observation fixture
+and real loopback HTTP server. Create one Item booking through native controls,
+open that exact Schedule in Calendar, and require one native Item title without
+a duplicate Form heading. Open the saved guide and return to the same Item,
+preserving global Todo, original notes, the bookmark identity/URL and exact
+Schedule identity/value. This tests the phone navigation stack and iPad
+inspector as actual callers of the corrected shared Item detail. It introduces
+no production or test interface change. An isolated old-heading build must
+detect the original duplicate before current-source qualification.
 
 ### Calendar driver and calibration
 
-The [first attempt](evidence/native-membership-consolidation/native-calendar-item-title-red/test-summary.json) stops before the heading assertion because the mobile button helper cannot select the completion Toggle. The [next attempt](evidence/native-membership-consolidation/native-calendar-item-title-toggle-red/test-summary.json) counts two matching texts, including the valid saved location name Hotel. The exact assertion now counts only a visible matching heading above completion. The [old-heading calibration](evidence/native-membership-consolidation/native-calendar-item-title-heading-red/test-summary.json) reaches that assertion and detects one duplicate while retaining the native title. The original capture is inspected; the saved location name remains valid content.
+The first attempt stops before the heading assertion because the mobile button
+helper cannot select the completion Toggle. The next attempt counts two matching
+texts, including the valid saved location name Hotel. The exact assertion now
+counts only a visible matching heading above completion. The old-heading
+calibration reaches that assertion and detects one duplicate while retaining the
+native title. The original capture is inspected; the saved location name remains
+valid content.
 
-Two current-source attempts expose driver problems after passing the heading assertion. [Anchoring the Form lookup to a recycled completion row](evidence/native-membership-consolidation/native-calendar-item-title-phone/test-summary.json) loses its scroll target. The driver now uses native gestures inside the observed Form bounds. The [subsequent attempt](evidence/native-membership-consolidation/native-calendar-item-title-window-phone/test-summary.json) passes the guide round trip but expects the Items catalog immediately after switching tabs; that tab correctly retains its detail selection. The final driver uses native Back before checking the original source row. All failed invocations retain their failure status. No production change is made to accommodate these driver corrections.
+Two current-source attempts expose driver problems after passing the heading
+assertion. Anchoring the Form lookup to a recycled completion row loses its
+scroll target. The driver now uses native gestures inside the observed Form
+bounds. The subsequent attempt passes the guide round trip but expects the Items
+catalog immediately after switching tabs; that tab correctly retains its detail
+selection. The final driver uses native Back before checking the original source
+row. All failed invocations retain their failure status. No production change is
+made to accommodate these driver corrections.
 
-The [tracer reconciliation](evidence/native-membership-consolidation/native-calendar-item-title-tracer-reconciliation.json) verifies the byte-identical prefix through the calibrated heading assertion and unchanged bodies for the three existing title journeys. The later changes concern reaching links and the retained catalog selection.
+The tracer reconciliation verifies the byte-identical prefix through the
+calibrated heading assertion and unchanged bodies for the three existing title
+journeys. The later changes concern reaching links and the retained catalog
+selection.
 
 ### Calendar caller local checkpoint
 
-| Run | Executed result |
-| --- | --- |
-| [Light iPhone guide return](evidence/native-membership-consolidation/native-calendar-item-title-catalog-phone/test-summary.json) | One function passes: native title, actual guide GET/render, Return, unchanged completion/note/bookmark/booking and original source row. |
-| [Dark iPad guide return and deletion](evidence/native-membership-consolidation/native-calendar-item-title-ipad/test-summary.json) | Both functions pass through the native Calendar inspector and existing deleted-source fallback. |
-| [Light iPhone deletion regression](evidence/native-membership-consolidation/native-calendar-item-title-deletion-phone/test-summary.json) | The unchanged existing function passes, retaining the guide after deletion and returning to the surviving Calendar without recreating its source or booking. |
+| Run                                 | Executed result                                                                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Light iPhone guide return           | One function passes: native title, actual guide GET/render, Return, unchanged completion/note/bookmark/booking and original source row.                      |
+| Dark iPad guide return and deletion | Both functions pass through the native Calendar inspector and existing deleted-source fallback.                                                              |
+| Light iPhone deletion regression    | The unchanged existing function passes, retaining the guide after deletion and returning to the surviving Calendar without recreating its source or booking. |
 
-All four executions pass with no skip or SQLite unlink diagnostic. The [final verification](evidence/native-membership-consolidation/native-calendar-item-title-final-verification.json) matches all 1,155 inputs across the three successful runs and current workspace. Four actual mobile products per run are verified before reuse or after the final run. [Existing Mac build inputs and nine products](evidence/native-membership-consolidation/native-calendar-item-title-shipping-input-comparison.json) still match all shipping sources; only the iOS-only UI test differs. This test-only follow-up claims no new Mac compilation, HTTP regression run or actual Mac UI execution. Strict Swift formatting, affected Markdown lint and whitespace checks pass.
+All four executions pass with no skip or SQLite unlink diagnostic. The final
+verification matches all 1,155 inputs across the three successful runs and
+current workspace. Four actual mobile products per run are verified before reuse
+or after the final run. Existing Mac build inputs and nine products still match
+all shipping sources; only the iOS-only UI test differs. This test-only
+follow-up claims no new Mac compilation, HTTP regression run or actual Mac UI
+execution. Strict Swift formatting, affected Markdown lint and whitespace checks
+pass.
 
-Ten original current captures are retained. Six are directly inspected: both title/Return captures on each device and the returned Calendar on each device, plus the separate old-heading calibration. The wide iPad captures retain the native inspector title, booking and owned location. The portrait deletion capture has an open sidebar overlay and supplies no unobstructed Calendar-layout acceptance. The fixture writer footer also supplies no shipping-layout credit. Three [verified duplicate exports](evidence/native-membership-consolidation/native-calendar-item-title-duplicate-export-cleanup.json) are removed while retaining every selected original, result bundle, failed run, product and dataset.
+Ten original current captures are retained. Six are directly inspected: both
+title/Return captures on each device and the returned Calendar on each device,
+plus the separate old-heading calibration. The wide iPad captures retain the
+native inspector title, booking and owned location. The portrait deletion
+capture has an open sidebar overlay and supplies no unobstructed Calendar-layout
+acceptance. The fixture writer footer also supplies no shipping-layout credit.
+Three verified duplicate exports are removed while retaining every selected
+original, result bundle, failed run, product and dataset.
 
-This qualifies the represented Calendar Item caller and valid/invalid guide-return paths. Other caller contexts, full layout/accessibility review, Mac runtime, physical/system acceptance and Q156's separate history declaration remain open. Signing stays deferred.
+This qualifies the represented Calendar Item caller and valid/invalid
+guide-return paths. Other caller contexts, full layout/accessibility review, Mac
+runtime, physical/system acceptance and Q156's separate history declaration
+remain open. Signing stays deferred.
 
 ## Itinerary container title follow-up
 
-The repeated-membership native captures retain a different title issue: the phone shows the Itinerary name in both its inline native bar and a manual List heading, while the narrow iPad bar can omit the name beside its controls. The existing native UI boundary observes actual titles, native control separation and Add/Cancel in List and Map. The first experimental tracer incorrectly extended a single-native-title requirement to every mobile layout. The [existing itinerary compatibility contract](native-itinerary-toolbar-compatibility.md#initial-native-outcomes) deliberately retains a full readable collection heading beside a possibly truncated native title on wide iPad. Its final title-tier acceptance remains open. Preserve that wide treatment while correcting the compact duplicate; the all-device prototypes below are diagnosis rather than an approved replacement. Source identities, saved state and the test boundary stay unchanged. Signing and Q156 are separate.
+The repeated-membership native captures retain a different title issue: the
+phone shows the Itinerary name in both its inline native bar and a manual List
+heading, while the narrow iPad bar can omit the name beside its controls. The
+existing native UI boundary observes actual titles, native control separation
+and Add/Cancel in List and Map. The first experimental tracer incorrectly
+extended a single-native-title requirement to every mobile layout. The
+[existing itinerary compatibility contract](native-itinerary-toolbar-compatibility.md#initial-native-outcomes)
+deliberately retains a full readable collection heading beside a possibly
+truncated native title on wide iPad. Its final title-tier acceptance remains
+open. Preserve that wide treatment while correcting the compact duplicate; the
+all-device prototypes below are diagnosis rather than an approved replacement.
+Source identities, saved state and the test boundary stay unchanged. Signing and
+Q156 are separate.
 
-The [original phone tracer](evidence/native-membership-consolidation/native-itinerary-single-title-red-phone/exit.json) detects two visible names. The [original iPad tracer](evidence/native-membership-consolidation/native-itinerary-single-title-red-ipad/exit.json) detects an absent native title. Removing only the manual heading [still fails on iPad](evidence/native-membership-consolidation/native-itinerary-single-title-no-heading-ipad/exit.json). Apple's unified large-toolbar-title preference [passes the phone tracer](evidence/native-membership-consolidation/native-itinerary-single-title-large-phone/exit.json), but [does not fix the iPad's initial title](evidence/native-membership-consolidation/native-itinerary-single-title-large-ipad/exit.json). Each failed epoch remains failed.
+The original phone tracer detects two visible names. The original iPad tracer
+detects an absent native title. Removing only the manual heading still fails on
+iPad. Apple's unified large-toolbar-title preference passes the phone tracer,
+but does not fix the iPad's initial title. Each failed epoch remains failed.
 
-The iOS-specific navigation-bar large-title setting [passes an initial iPad sequence](evidence/native-membership-consolidation/native-itinerary-single-title-navigation-ipad/exit.json) and [five affected phone functions](evidence/native-membership-consolidation/native-itinerary-single-title-final-phone/exit.json). Capture inspection shows that the initial iPad sidebar was open, unlike the original failure. The tracer therefore now explicitly collapses it before selecting the plan and verifies the narrow pane. With the original production view substituted in the disposable snapshot, [that exact tightened tracer fails](evidence/native-membership-consolidation/native-itinerary-single-title-collapsed-previous-ui/exit.json). The subsequent current-view iPad cohort also retains title failures. These passes do not close the tablet bug; the first transition from the inline catalog remains under diagnosis. No final correction or whole-app acceptance is claimed by these intermediate runs.
+The iOS-specific navigation-bar large-title setting passes an initial iPad
+sequence and five affected phone functions. Capture inspection shows that the
+initial iPad sidebar was open, unlike the original failure. The tracer therefore
+now explicitly collapses it before selecting the plan and verifies the narrow
+pane. With the original production view substituted in the disposable snapshot,
+that exact tightened tracer fails. The subsequent current-view iPad cohort also
+retains title failures. These passes do not close the tablet bug; the first
+transition from the inline catalog remains under diagnosis. No final correction
+or whole-app acceptance is claimed by these intermediate runs.
 
-Further bounded iPad probes move the large-title preference to the catalog or root, try an editor toolbar role on the child or owning split view, add an explicit principal title, and try Apple's inline-large mode. They all retain the absent native title after the sidebar is explicitly collapsed. The [principal](evidence/native-membership-consolidation/native-itinerary-single-title-principal-ipad/selected-captures.json) and [inline-large](evidence/native-membership-consolidation/native-itinerary-single-title-inline-large-ipad/selected-captures.json) originals show the missing title directly, so this is not merely an accessibility element-type mismatch. A dedicated Simulator reboot removes the long idle waits but does not fix the title. The failed results and exact experimental source inputs are retained; none establishes a tablet fix or signing cause.
+Further bounded iPad probes move the large-title preference to the catalog or
+root, try an editor toolbar role on the child or owning split view, add an
+explicit principal title, and try Apple's inline-large mode. They all retain the
+absent native title after the sidebar is explicitly collapsed. The principal and
+inline-large originals show the missing title directly, so this is not merely an
+accessibility element-type mismatch. A dedicated Simulator reboot removes the
+long idle waits but does not fix the title. The failed results and exact
+experimental source inputs are retained; none establishes a tablet fix or
+signing cause.
 
-The initial scoped candidate uses the pane's compact size class to choose a native large title and omit its content heading. The [access-enabled phone run](evidence/native-membership-consolidation/native-itinerary-compact-title-phone-retry/exit.json) passes five functions after a separate sandbox-cache refusal starts no tests. However, the [matching iPad run](evidence/native-membership-consolidation/native-itinerary-compact-title-ipad/exit.json) passes two functions and fails both existing title-readiness checks: this split pane also reports a compact size class, so it loses the readable heading. The [original capture](evidence/native-membership-consolidation/native-itinerary-compact-title-ipad/failed-wide-heading.png) confirms the missing heading beside a truncated native title. The candidate is rejected; its phone and Mac passes do not qualify the retained implementation.
+The initial scoped candidate uses the pane's compact size class to choose a
+native large title and omit its content heading. The access-enabled phone run
+passes five functions after a separate sandbox-cache refusal starts no tests.
+However, the matching iPad run passes two functions and fails both existing
+title-readiness checks: this split pane also reports a compact size class, so it
+loses the readable heading. The original capture confirms the missing heading
+beside a truncated native title. The candidate is rejected; its phone and Mac
+passes do not qualify the retained implementation.
 
-The retained candidate uses Apple's device idiom to apply the single native title on iPhone. This keeps iPad's existing heading even when its split pane reports a compact class. No normal test expectation changes after the failed tablet run. Its [first tablet cohort](evidence/native-membership-consolidation/native-itinerary-phone-scope-final-ipad/exit.json) passes both title checks and the repeated-membership relaunch, but fails the More journey before its route opens. The [actual hierarchy](evidence/native-membership-consolidation/native-itinerary-phone-scope-final-ipad/failure-ui-hierarchy.txt.gz) still shows the catalog and an empty detail pane, rather than an offscreen route row. No new layout change is made on that evidence. The unchanged four-function [retry passes](evidence/native-membership-consolidation/native-itinerary-phone-scope-ipad-rerun/exit.json). The initial selection failure remains an unattributed stability finding; it is not dismissed as pre-existing or assigned to signing.
+The retained candidate uses Apple's device idiom to apply the single native
+title on iPhone. This keeps iPad's existing heading even when its split pane
+reports a compact class. No normal test expectation changes after the failed
+tablet run. Its first tablet cohort passes both title checks and the
+repeated-membership relaunch, but fails the More journey before its route opens.
+The actual hierarchy still shows the catalog and an empty detail pane, rather
+than an offscreen route row. No new layout change is made on that evidence. The
+unchanged four-function retry passes. The initial selection failure remains an
+unattributed stability finding; it is not dismissed as pre-existing or assigned
+to signing.
 
 ## Phone-only local checkpoint
 
-The retained implementation shows the Itinerary name once through the native iPhone navigation title in List and Map. iPad and Mac keep their existing readable collection heading. Device idiom is used for this phone-only correction because a narrow iPad split pane can itself report the compact size class. Filters/Add stay direct; native More, selection and saved data keep their existing behavior. This adds no custom title bar, new public declaration or test boundary.
+The retained implementation shows the Itinerary name once through the native
+iPhone navigation title in List and Map. iPad and Mac keep their existing
+readable collection heading. Device idiom is used for this phone-only correction
+because a narrow iPad split pane can itself report the compact size class.
+Filters/Add stay direct; native More, selection and saved data keep their
+existing behavior. This adds no custom title bar, new public declaration or test
+boundary.
 
-The [final verifier](evidence/native-membership-consolidation/native-itinerary-phone-title-validation.json) reconciles all 1,155 inputs across the final phone, unchanged tablet retry and Mac build. Three phone functions pass the List/Map/List title tracer, native Item detail and primary-action checks. Four dark-iPad functions pass existing title/Add/Map, More/Edit/Reorder/Schedule, Item-detail and repeated-membership relaunch checks. Ten real HTTP functions/twelve invocations, app/Share/fixture compilation and strict formatting pass. Four actual mobile products are verified at each build and nine current Mac products are verified. All 514 frozen Core fixtures and production models/formats stay unchanged. The phone tracer's assertion body is identical to the original actual two-title failure.
+The final verifier reconciles all 1,155 inputs across the final phone, unchanged
+tablet retry and Mac build. Three phone functions pass the List/Map/List title
+tracer, native Item detail and primary-action checks. Four dark-iPad functions
+pass existing title/Add/Map, More/Edit/Reorder/Schedule, Item-detail and
+repeated-membership relaunch checks. Ten real HTTP functions/twelve invocations,
+app/Share/fixture compilation and strict formatting pass. Four actual mobile
+products are verified at each build and nine current Mac products are verified.
+All 514 frozen Core fixtures and production models/formats stay unchanged. The
+phone tracer's assertion body is identical to the original actual two-title
+failure.
 
-Sixteen current original PNGs are retained and [eight are inspected](evidence/native-membership-consolidation/native-itinerary-phone-title-inspected-captures.json), including all three phone collection states, both tablet representations, both Item details and exact repeated-stop state after relaunch. The return-to-List phone capture still contains a loading row near the floating tab bar; it supplies no final paging/bottom-inset acceptance. Tablet native title truncation/absence, scrolled content under floating bars and the initial route-selection stability finding remain open. The historical all-device title expectation is not substituted for the accepted wide heading, and no tablet title fix or whole-app visual acceptance is claimed.
+Sixteen current original PNGs are retained and eight are inspected, including
+all three phone collection states, both tablet representations, both Item
+details and exact repeated-stop state after relaunch. The return-to-List phone
+capture still contains a loading row near the floating tab bar; it supplies no
+final paging/bottom-inset acceptance. Tablet native title truncation/absence,
+scrolled content under floating bars and the initial route-selection stability
+finding remain open. The historical all-device title expectation is not
+substituted for the accepted wide heading, and no tablet title fix or whole-app
+visual acceptance is claimed.
 
-Thirty verified closed passing Mac fixture stores and six duplicate passing attachment exports are removed, freeing 44,537,507 nominal bytes. Original result bundles, selected unchanged pixels, every failed diagnostic and interrupted/recovery input remain. Q156 A is accepted separately and its completion-history implementation remains local work. Signing, actual Mac UI, physical/system tests and final whole-app acceptance stay separate.
+Thirty verified closed passing Mac fixture stores and six duplicate passing
+attachment exports are removed, freeing 44,537,507 nominal bytes. Original
+result bundles, selected unchanged pixels, every failed diagnostic and
+interrupted/recovery input remain. Q156 A is accepted separately and its
+completion-history implementation remains local work. Signing, actual Mac UI,
+physical/system tests and final whole-app acceptance stay separate.

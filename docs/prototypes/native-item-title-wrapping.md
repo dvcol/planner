@@ -26,7 +26,7 @@ regressions. Their 1160 native inputs match the workspace and both Mac compiler
 phases. Nine Mac app/Share/test products and four fixture/test products are
 verified. All temporary Simulator settings are restored.
 
-[The final validation](evidence/native-ui-accessibility-frontier/final-validation.json)
+The final validation
 records those outcomes and the explicit audit limits. The compact execution
 archive is read back and hash-compared before its duplicate packet directories
 are removed.

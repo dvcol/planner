@@ -29,7 +29,7 @@ The first reload regression failed because Core rejected the unavailable native 
 
 ## Qualification
 
-Mac and iPhone Simulator each passed 176 affected Core functions in 70 suites, covering 470 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Five changed Swift files passed strict lint; the Mac navigation app and test host compiled successfully. Both review rechecks found no remaining confirmed findings. Completed commands, results, source hashes and red/green regressions are recorded in [execution evidence](evidence/navigation/core-native-capture-retry/execution.json). Native UI runtime and physical Share execution remain unqualified.
+Mac and iPhone Simulator each passed 176 affected Core functions in 70 suites, covering 470 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Five changed Swift files passed strict lint; the Mac navigation app and test host compiled successfully. Both review rechecks found no remaining confirmed findings. Completed commands, results, source hashes and red/green regressions are recorded in execution evidence. Native UI runtime and physical Share execution remain unqualified.
 
 ## Remaining map work
 

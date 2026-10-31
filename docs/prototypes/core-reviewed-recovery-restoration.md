@@ -36,7 +36,7 @@ The new restoration suite has six functions and fifteen invocations. Its empty-t
 
 Existing ordinary-import and deleted-data review assertions provide the other six Core functions and eleven invocations. HTTP's native administration case exercises six rejected command kinds, including restoreRecovery. Production HTTP/Intents interfaces are unchanged. The actual Mac app compiles as part of that HTTP run; no native Mac UI runtime is credited. HTTP ran before the final test-only fixture correction; its production and test-host sources/products remain unchanged, so it was not repeated.
 
-Affected strict Swift/Markdown lint and whitespace checks pass. [Execution evidence](evidence/navigation/core-reviewed-recovery-restoration/execution.json) retains commands, functional red/green and later qualification logs, terminal native summaries/trees, final source/product hashes and review outcomes. Final compiled hashes describe the final qualification, not an independently retained source snapshot of the earlier red.
+Affected strict Swift/Markdown lint and whitespace checks pass. Execution evidence retains commands, functional red/green and later qualification logs, terminal native summaries/trees, final source/product hashes and review outcomes. Final compiled hashes describe the final qualification, not an independently retained source snapshot of the earlier red.
 
 ## Remaining gates
 

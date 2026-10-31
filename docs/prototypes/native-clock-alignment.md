@@ -29,6 +29,6 @@ The stronger spring journey passes once on each simulator, with zero failures or
 
 ## Evidence and remaining gates
 
-The [execution record](evidence/navigation/native-clock-alignment/execution.json) retains exact commands, summaries/trees, source/product hashes, source snapshots for the test revisions and original filtered PNG/TXT exports. Automatic failure videos/event traces are excluded. The initial full phone qualification was deliberately interrupted to address the endpoint review finding and is excluded from pass counts.
+The execution record retains exact commands, summaries/trees, source/product hashes, source snapshots for the test revisions and original filtered PNG/TXT exports. Automatic failure videos/event traces are excluded. The initial full phone qualification was deliberately interrupted to address the endpoint review finding and is excluded from pass counts.
 
 Core, HTTP, schema 18 and portable version 2 are unchanged; this UI slice receives no new Core/HTTP test credit. Mac compilation is separate from native Mac runtime. Other temporal variants, VoiceOver/keyboard, Dynamic Type, compact/adaptive layouts, performance, physical sync/account/Share and whole-app polish remain open. Apple Calendar export stays outside the map.

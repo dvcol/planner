@@ -19,13 +19,13 @@ All 1160 native inputs match the Mac app, Share and UI-test product compilation.
 Affected strict Swift and Markdown lint pass. The production correction is one
 native modifier; existing test functions and selectors are unchanged.
 
-The [structured result](evidence/native-sidebar-title/final-validation.json)
+The structured result
 records the actual executed identifiers. Three original captures were inspected;
 their dimensions, hashes and observations are in the
-[inspection record](evidence/native-sidebar-title/visual-inspection.json).
+inspection record.
 Commands, source/product hashes, results, logs and the execution scripts are
 preserved in the read-back-verified
-[archive](evidence/native-sidebar-title/execution-records-index.json).
+archive.
 
 Maximum-text sidebar destination words still wrap across lines. Other scene,
 search, contrast and full accessibility findings remain open. Actual Mac
@@ -50,13 +50,13 @@ Increase Contrast. All 1160 restored production/test inputs exactly match
 labels, sorting and List identity through relaunch remain qualified; this is
 functional evidence, not an iPad clipping-audit pass.
 
-The [follow-up results](evidence/native-sidebar-audit/final-validation.json)
+The follow-up results
 separate three failed audit executions, the passing restored journey and the
 compiler epochs. Four originals are inspected. Source variants, complete issues,
 commands, settings restoration and results are retained in the
-[verified archive](evidence/native-sidebar-audit/execution-records-index.json).
+verified archive.
 
-The [read-only Mac observation](evidence/native-sidebar-audit/mac-runtime-observation.json)
+The read-only Mac observation
 still reports the 14 October boot and 17 October native test-broker start. No
 unchanged Mac UI startup attempt is made. Native audit/assistive review and
 actual Mac interaction retain their separate limits; signing stays deferred.

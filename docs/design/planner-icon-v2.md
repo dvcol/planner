@@ -7,7 +7,7 @@ use the same geometry and placement. The platform supplies its enclosure and
 subtle grayscale material. No colored accent or colored gradient is included.
 
 The original blue concept remains historical. The generated
-[light](planner-icon-v2-light.png) and [dark](planner-icon-v2-dark.png) palette
+light and dark palette
 studies are retained; the production icon uses the single transparent foreground
 rather than independent flattened images.
 
@@ -22,7 +22,7 @@ is fitted to the 1024-point canvas through its native layer scale.
 Both affected app builds pass with the same 1164 native inputs. Their actual
 compiled Info plists select AppIcon and their Assets.car files contain the icon
 stack, mark and dark/light appearance metadata. Exact inputs, commands and
-outcomes are in [the evidence](../prototypes/evidence/native-app-icon/final-validation.json).
+outcomes are in the evidence.
 Installed phone/iPad Simulator Home Screen appearances now have the checkpoint
 below. Mac Dock appearance and physical devices remain unqualified. These
 resource checks do not claim a whole-app accessibility pass.
@@ -38,7 +38,7 @@ retain the same shape at actual icon size. Both runs share 254 unchanged native
 inputs. Their app installation epochs are recorded separately, with identical
 icon manifest/artwork and unchanged production library; identical compiled asset
 catalogs are not claimed. Commands, results and hashes are in the
-[review packet](../prototypes/evidence/native-app-icon/home-screen-2026-10-31/review.json).
+review packet.
 
 System appearance alone leaves Home Screen icons at Default in the initial
 trial, so it supplies no dark-icon credit. Earlier trials expose an offscreen

@@ -64,9 +64,9 @@ owned-collection, independent target, List branch and generic maintenance
 failure/interruption coverage.
 
 Evidence under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/)
+`native-membership-consolidation`
 uses `native-owned-itinerary-stop-*`. The
-[validation record](evidence/native-membership-consolidation/native-owned-itinerary-stop-validation.json)
+validation record
 reconciles final inputs/products, migrations, schema sources, frozen fixtures and
 lossless manifest compression. The original behavioral red remains retained.
 Verified cleanup removed two passing Mac tracer fixtures and 188 passing phone

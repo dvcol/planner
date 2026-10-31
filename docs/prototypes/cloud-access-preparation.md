@@ -16,7 +16,7 @@ Both the initial build and final incremental build succeed with
 checks pass. The final build adds no provisioning resources and is not launched.
 The linker may apply an ad hoc binary signature; this supplies no selected-team
 provisioning or capability proof. Actual products, inputs, source and commands
-are retained in [the evidence](evidence/cloud-access-preparation/result.json).
+are retained in the evidence.
 
 ## Required setup approval
 

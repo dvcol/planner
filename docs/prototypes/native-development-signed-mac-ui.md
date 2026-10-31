@@ -29,10 +29,10 @@ is terminated. The prior Mac startup gate therefore persists despite working
 development signing; do not repeat this unchanged startup path or count its
 successful compilation as UI execution.
 
-[Evidence](evidence/native-development-signed-mac-ui/result.json) retains exact
+Evidence retains exact
 source/product hashes, signature checks, commands, build/runtime results and a
 verified 21-member archive. The
-[result summary](evidence/native-development-signed-mac-ui/test-summary.json)
+result summary
 keeps the cancellation scope visible. The execution Mac's provisioning identifier
 is redacted from retained logs/summary. Production code is unchanged.
 
@@ -54,9 +54,9 @@ An unseen system prompt is not ruled out, but this result does not establish
 that user approval is required. No Planner or test-runner process remains.
 No permissions, system services, signing resources or iCloud settings change.
 
-The [retry result](evidence/native-development-signed-mac-ui/retry-2026-10-27/result.json),
-[redacted runtime log](evidence/native-development-signed-mac-ui/retry-2026-10-27/runtime.log)
-and [Xcode summary](evidence/native-development-signed-mac-ui/retry-2026-10-27/test-summary.json)
+The retry result,
+redacted runtime log
+and Xcode summary
 retain this outcome separately from the first interrupted trial. Production
 code and the open Mac UI acceptance gate remain unchanged.
 
@@ -103,8 +103,8 @@ No certificate change, iCloud change, protected-service restart or SIP change
 is indicated by this diagnosis. No permission or security preference has been
 changed during the investigation.
 
-The [focused diagnosis](evidence/native-development-signed-mac-ui/automation-diagnosis/result.json)
-and [broker timeline](evidence/native-development-signed-mac-ui/automation-diagnosis/timeline.json)
+The focused diagnosis
+and broker timeline
 retain the read-only facts. Successful execution of the unchanged native test
 after the user's action is established below.
 
@@ -128,13 +128,13 @@ No Planner or test-runner process remains. No security policy, iCloud setting,
 signing resource or protected service is changed. The startup gate is cleared
 for this execution; future runs retain manual prompt coordination.
 
-The [passing result](evidence/native-development-signed-mac-ui/manual-approval/result.json)
-and [Xcode summary](evidence/native-development-signed-mac-ui/manual-approval/test-summary.json)
+The passing result
+and Xcode summary
 record the actual execution separately from both failed attempts. Original
-captures cover [empty narrow](evidence/native-development-signed-mac-ui/manual-approval/empty-narrow.png),
-[empty wide](evidence/native-development-signed-mac-ui/manual-approval/empty-wide.png),
-[populated narrow](evidence/native-development-signed-mac-ui/manual-approval/populated-narrow.png)
-and [populated wide](evidence/native-development-signed-mac-ui/manual-approval/populated-wide.png).
+captures cover empty narrow,
+empty wide,
+populated narrow
+and populated wide.
 Other Mac UI journeys, Calendar resizing, keyboard/Undo and full acceptance
 remain open. Account-transition testing remains separately deferred.
 
@@ -155,7 +155,7 @@ it was during startup. Disabled debugger authorization, companion warnings and
 Mac Share discovery are not established causes of this failure. Mac Share is
 now explicitly post-MVP.
 
-The [compact diagnosis](evidence/native-development-signed-mac-ui/no-visible-prompt-2026-10-28/result.json)
+The compact diagnosis
 retains these distinctions. The next bounded diagnostic is the existing core
 Map journey started by the user in a foreground Terminal, after saving drafts
 and quitting the installed Planner. Its prepared launcher verifies the frozen

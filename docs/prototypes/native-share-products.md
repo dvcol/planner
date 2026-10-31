@@ -30,7 +30,7 @@ Two journeys pass on each simulator. Reviewed capture, Cancel without an Item, e
 
 Six original captures were inspected. The shared review uses native Form, navigation and toolbar actions; saved phone details retain the bookmark, and tablet details retain the selected row. Setup-required screens clearly direct the user to Planner. The website card in saved fixture details uses the existing controlled preview provider and is not live website-service proof.
 
-Build and runtime packets are retained under [navigation compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/). Extension compile/embedding packets are retained separately under [native Share product evidence](evidence/navigation/native-share-products/). Foundation evaluates the actual activation predicates successfully for URL, UTF-8 text and native MapKit registrations, rejecting unsupported-image-only and empty registrations. This is a metadata check, not installed-host invocation. Two existing direct-capture compatibility journeys pass on both simulators. Text/estimate cancellation and Inbox persistence pass in 86.826 seconds on dark iPhone and 92.147 on light iPad; untouched-link Save passes in 23.320 and 23.948 seconds. These qualify the existing form paths at the recorded source epoch, not a whole-app appearance audit. Later recovery failure corrections and qualification are tracked in [native Share recovery outcomes](native-share-recovery.md). Native Mac runtime and installed-host qualification remain separate gates.
+Build and runtime packets are retained under navigation compatibility evidence. Extension compile/embedding packets are retained separately under native Share product evidence. Foundation evaluates the actual activation predicates successfully for URL, UTF-8 text and native MapKit registrations, rejecting unsupported-image-only and empty registrations. This is a metadata check, not installed-host invocation. Two existing direct-capture compatibility journeys pass on both simulators. Text/estimate cancellation and Inbox persistence pass in 86.826 seconds on dark iPhone and 92.147 on light iPad; untouched-link Save passes in 23.320 and 23.948 seconds. These qualify the existing form paths at the recorded source epoch, not a whole-app appearance audit. Later recovery failure corrections and qualification are tracked in [native Share recovery outcomes](native-share-recovery.md). Native Mac runtime and installed-host qualification remain separate gates.
 
 ## Remaining qualification
 
@@ -82,7 +82,7 @@ preserved. Installed Mac Share remains outside MVP.
 Production CloudKit remains off. The user confirms the iCloud-transition
 deferral on 29 October; no cloud diagnostic or account-setting change is armed.
 
-The [curated evidence](evidence/navigation/native-share-products/mobile-installed-2026-10-29/result.json)
+The curated evidence
 includes original captures, source hashes and compressed execution records.
 Earlier failures retain their scope: initial unsigned App Group access,
 test-driver selectors and URL launching, an installation-service failure before
@@ -125,7 +125,7 @@ and raw device identifiers remain outside committed evidence. Signing and test
 startup are working; account-transition testing remains deferred.
 The physical checkpoint below supersedes that pending retry.
 
-The [Retry evidence](evidence/navigation/native-share-products/mobile-input-retry-2026-10-29/result.json)
+The Retry evidence
 retains source hashes, scoped commands/results and the earlier selector failure.
 All 90 Core sources are unchanged from the installed mobile checkpoint. Removing
 duplicate exported captures reclaims 41,761,570 nominal bytes after validating
@@ -163,7 +163,7 @@ These establish the represented functional journey, not whole-app layout,
 VoiceOver, other senders, extension memory limits or synchronization. The user
 keeps account-transition testing deferred, and production storage stays local-only.
 
-The [physical evidence](evidence/navigation/native-share-products/mobile-physical-2026-10-29/physical-result.json)
+The physical evidence
 contains source/build checks, existing-profile verification, app-only captures
 and the actual passing case. The device command is explicitly redacted; original
 command/log hashes bind the local originals without publishing device identity.
@@ -187,8 +187,8 @@ no Save tap is reached. This is an incomplete journey, not a passing Maps
 capture/save checkpoint or proof of a Planner save defect. Its interrupted
 result bundle lacks Info.plist, so its attachments cannot be exported. Logs,
 commands and the original input epoch are retained in the
-[review packet](evidence/native-share-products/maps-sender-2026-10-31/review.json).
-The separate [Maps place-card capture](evidence/native-share-products/maps-sender-2026-10-31/maps-coordinate-card.png)
+review packet.
+The separate Maps place-card capture
 shows the actual Share control; its background grid supplies no rendering credit.
 
 The Safari control exposes an independent driver problem after Cancel: its
@@ -196,7 +196,7 @@ failure hierarchy already contains the Share app row, while the helper looks
 for Safari's Share button again. The helper now waits for an existing Planner
 entry before reopening the host menu. The unchanged Safari body then passes in
 74.034 seconds, including Cancel, Save, exact URL/identity through relaunch and
-cleanup. The [saved Item capture](evidence/native-share-products/maps-sender-2026-10-31/safari-saved-item.png)
+cleanup. The saved Item capture
 is inspected. Only that current control supplies passing functional credit.
 The full Maps trial predates this wait correction and is not rerun locally.
 
@@ -214,7 +214,7 @@ light iPhone 18 Pro Simulator, iOS 27.0. It uses native Maps Search and the
 installed Share extension. Cancel creates no Item; Add saves while Planner is
 closed. Cold launch reads the exact original URL, and another relaunch preserves
 the Item and bookmark identities. Deleting only the synthetic Item leaves the
-catalog empty. The [original saved-Item capture](evidence/native-share-products/maps-save-simulator-2026-10-31/saved-item-map-and-link.png)
+catalog empty. The original saved-Item capture
 also shows the rendered native map, provider attribution and uncertainty text.
 
 Two preceding invocations expose driver errors. After reviewing the link, the
@@ -225,7 +225,7 @@ visible lazy Form. The driver reuses the existing edge-scroll pattern beside
 the embedded map before both bookmark reads. These corrections change no
 production code, input validation, stored values or expected assertions. The
 failed invocations retain their failure status in the
-[review packet](evidence/native-share-products/maps-save-simulator-2026-10-31/review.json).
+review packet.
 
 Testing stays scoped to this one journey: two diagnosed failures and one final
 pass, with 254 frozen native inputs and five product hashes. The shared Safari

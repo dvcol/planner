@@ -32,7 +32,7 @@ durable proposal with the saved export. This changes internal projection
 normalization; command fingerprints, replay encoding and historical receipts are
 unchanged.
 
-The [ordering diagnosis](evidence/native-membership-consolidation/native-owned-label-order-diagnosis.json)
+The ordering diagnosis
 retains actual marker sequences and six compressed original preparations with
 decoded hashes. The validation record confirms that all shared inputs matched
 between the initial failing Mac and passing phone cohorts.
@@ -65,9 +65,9 @@ owned-link/booking, Q162 collision, target-rebinding and generic maintenance
 failure/interruption checks.
 
 Evidence packets under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/)
+`native-membership-consolidation`
 use `native-owned-label-*`. The
-[validation record](evidence/native-membership-consolidation/native-owned-label-validation.json)
+validation record
 reconciles final inputs/products and lossless manifest compression. Both original
 behavioral failures and the passing old phone cohort remain retained separately
 from the final qualification. A folder's `green` suffix does not establish success.

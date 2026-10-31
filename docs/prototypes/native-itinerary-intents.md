@@ -34,7 +34,7 @@ Run the affected Intent classes together, compile actual Mac/Simulator/unsigned 
 | Get from cached entity | Missing Get throws, 0.482 s | 0.036 s; canonical renamed title and explicit missing-source failure |
 | Catalog search/suggestions | Missing search throws after real fixture creation, 6.045 s | 6.170 s; all 65 identities across the 64-row boundary, canonical order, archived source and insensitive title matching |
 
-All packets are in [the compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/) under `app-intent-itinerary-*`. Each retains its own original source epoch; following passes do not change earlier failed outcomes. Timings are XCTest durations rather than application latency or physical performance.
+All packets are in the compatibility evidence under `app-intent-itinerary-*`. Each retains its own original source epoch; following passes do not change earlier failed outcomes. Timings are XCTest durations rather than application latency or physical performance.
 
 ## Failure and identity qualification
 

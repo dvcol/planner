@@ -31,7 +31,7 @@ The typed `NSString` loading probe handled generic UTF-8 but could not coerce th
 
 ## Qualification
 
-Mac and iPhone Simulator each passed 170 affected Core functions in 70 suites, covering 450 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Four affected Swift files passed strict lint; the Mac navigation app and test host compiled successfully. [Execution evidence](evidence/navigation/core-native-capture-loading/execution.json) records source hashes, exact narrow commands, completed results and regression traces. No native UI runtime or physical Share execution is established by these provider fixtures.
+Mac and iPhone Simulator each passed 170 affected Core functions in 70 suites, covering 450 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Four affected Swift files passed strict lint; the Mac navigation app and test host compiled successfully. Execution evidence records source hashes, exact narrow commands, completed results and regression traces. No native UI runtime or physical Share execution is established by these provider fixtures.
 
 ## Remaining map work
 

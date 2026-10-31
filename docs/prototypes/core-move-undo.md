@@ -30,7 +30,7 @@ Applied-but-recovery-incomplete Move and inverse cases pass together in 0.128 se
 
 The final affected invocation passes **27 test functions in nine suites**, zero failures, in 1.514 seconds. It includes Move, original membership/entry restoration, expanded contexts, issuance/replay, stale lifetimes, native save failure, recovery and originating-List creation failure. Parameterized cases retain their exact per-input observations in the log. The earlier 16-function intermediate invocation also passes and remains recorded.
 
-The [execution index](evidence/navigation/core-move-undo/final-validation/observed-results.json) retains all eleven Core epochs, including both initial diagnostics and the actual save-failure red. The [validation record](evidence/navigation/core-move-undo/final-validation/checks.json) binds the final package inputs to current source and records affected strict Swift/Markdown lint, whitespace and local links. Its [manifest](evidence/navigation/core-move-undo/final-validation/evidence-sha256.json) covers the evidence and source snapshots. The bounded credential-pattern scan has no findings.
+The execution index retains all eleven Core epochs, including both initial diagnostics and the actual save-failure red. The validation record binds the final package inputs to current source and records affected strict Swift/Markdown lint, whitespace and local links. Its manifest covers the evidence and source snapshots. The bounded credential-pattern scan has no findings.
 
 The native caller still returns only a Boolean, so its Undo registration must be implemented and exercised separately. Native compiler/runtime evidence belongs to that next slice; no interaction credit is claimed here.
 

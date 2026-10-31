@@ -51,11 +51,11 @@ identifiers. The following identifiers are now registered:
 Registration changes no saved Planner data and deploys no CloudKit schema.
 The app remains local-only. No store listing or publication was created.
 Each App ID was reopened after saving to verify its persisted assignments.
-[Registration evidence](evidence/apple-registration-2026-10-27/verification.json)
+Registration evidence
 includes the inspected original lists for
-[app identifiers](evidence/apple-registration-2026-10-27/app-identifiers.png),
-the [App Group](evidence/apple-registration-2026-10-27/app-group.png) and the
-[iCloud container](evidence/apple-registration-2026-10-27/icloud-container.png).
+app identifiers,
+the App Group and the
+iCloud container.
 
 ### Private storage and quota
 

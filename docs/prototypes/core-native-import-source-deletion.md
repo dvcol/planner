@@ -29,6 +29,6 @@ The initial tracer reproduces all ten Overwrite gate rejections. The final sourc
 
 Spec review found no confirmed defect. Standards review found a misleading helper name; it now describes removal of unretained records, including sources. Compilation checks also caught an incorrect decoding-result case and recursive test-macro use; both were corrected before runtime qualification.
 
-Final qualification passes 110 Core functions in 50 suites on both Mac and iOS Simulator, with 290 invocations on each. Native HTTP passes 16 functions in four suites, with 22 invocations. Strict lint passes for four changed Swift files, and the Mac app/navigation test-host build passes. [Commands, source hashes, native summaries, logs and post-process fixture cleanup](evidence/navigation/core-native-import-source-deletion/execution.json) retain the evidence.
+Final qualification passes 110 Core functions in 50 suites on both Mac and iOS Simulator, with 290 invocations on each. Native HTTP passes 16 functions in four suites, with 22 invocations. Strict lint passes for four changed Swift files, and the Mac app/navigation test-host build passes. Commands, source hashes, native summaries, logs and post-process fixture cleanup retain the evidence.
 
 Restoration families/rebinding, origin/provider persistence, complete import summaries/forms and direct local-save failure proof remain open. These local tests do not prove physical deletion convergence, account transitions or Share behavior. No new native UI runtime is claimed.

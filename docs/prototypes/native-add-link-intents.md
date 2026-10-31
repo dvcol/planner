@@ -32,7 +32,7 @@ Mac, the actual Simulator app/native UI-test target and the unsigned generic dev
 
 All three builds verify the same 1024 frozen inputs. Only the existing native Link production/test files change relative to the Core checkpoint; 14 newly archived inputs are its already committed genuine legacy fixture. Every other prior input stays unchanged. The device app embeds exactly one mobile Share extension; both executables are arm64. Strict affected Swift/Markdown lint and platform type checks pass. Compilation and production-interface tests do not qualify actual Shortcuts/Siri invocation, dependent system picker injection or locked/background launch.
 
-The [evidence directory](evidence/navigation/native-itinerary-window-compatibility/) retains `app-intent-add-links-*` packets with original commands, actual exits, logs, source overlays/hashes, summaries, native catalogs, parameter/output checks, product checks and fixture-lifecycle evidence.
+The evidence directory retains `app-intent-add-links-*` packets with original commands, actual exits, logs, source overlays/hashes, summaries, native catalogs, parameter/output checks, product checks and fixture-lifecycle evidence.
 
 ## Remaining map work
 

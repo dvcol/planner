@@ -43,7 +43,7 @@ The final controller opens a hittable native overflow only if the target is stil
 
 ## Evidence and review
 
-The [run index](evidence/navigation/native-container-estimate-shortcuts/historical-run-index.json) separates the three passing function invocations, two failed iPad setup invocations and eight compiler-only attempts. The two final builds archive 945 source inputs each. Both final runtime invocations verify 469 source/configuration hashes and six product hashes before and after execution. These exact products match the final compiler epochs at this report's audit; later builds may replace the live products.
+The run index separates the three passing function invocations, two failed iPad setup invocations and eight compiler-only attempts. The two final builds archive 945 source inputs each. Both final runtime invocations verify 469 source/configuration hashes and six product hashes before and after execution. These exact products match the final compiler epochs at this report's audit; later builds may replace the live products.
 
 All six retained named Planner-window PNGs were individually inspected. Four belong to final-source invocations; two preserve the initial passing iPhone epoch. They show readable two-day Manual estimates and cleared zero-minute calculated estimates. Strict affected Swift lint, report Markdown lint and whitespace checks pass. Standards and Spec reviews have no remaining source/controller findings; their earlier menu-role and relaunch-precision findings are resolved.
 

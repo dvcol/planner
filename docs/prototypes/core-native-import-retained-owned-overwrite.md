@@ -31,4 +31,4 @@ Final qualification: 49 Core functions in 22 suites, 97 invocations, pass on Mac
 
 Reference additions/removals, live deletion/restoration, origin/provider persistence, import summaries, native forms and direct save-failure proof remain open. No physical synchronization or new UI journey is implied.
 
-[Execution evidence](evidence/navigation/core-native-import-retained-owned-overwrite/execution.json) retains commands, native results, functional red, source epochs and qualification. Earlier [source-field Overwrite evidence](core-native-import-source-overwrite.md) remains applicable.
+Execution evidence retains commands, native results, functional red, source epochs and qualification. Earlier [source-field Overwrite evidence](core-native-import-source-overwrite.md) remains applicable.

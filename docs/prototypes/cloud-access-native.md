@@ -31,13 +31,13 @@ configuration. Its unique empty store lives under
 `PlannerCloudAccessProbe/PROTOTYPE-<UUID>` in the App Group. It inserts no Planner
 content and never opens the normal Planner store.
 
-[Evidence](evidence/cloud-access-native/result.json) retains hashes of all 90 Core
+Evidence retains hashes of all 90 Core
 sources, three probe inputs and seven actual bundle files, including the debug
 library and embedded profile. A verified 17-member archive contains source,
 commands, logs, signed entitlements and runners. It excludes profile contents,
 device identifiers, certificate files and private keys. The executed
-[runtime result](evidence/cloud-access-native/runtime.json) and
-[signing checks](evidence/cloud-access-native/signing-verification.json) are
+runtime result and
+signing checks are
 separately readable. The prior failed provisioning evidence remains unchanged.
 
 ## Remaining scope

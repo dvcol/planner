@@ -48,7 +48,7 @@ Some subsequent failures were controller defects. Collection-view hittability di
 | `q98-phone-return-and-relaunch` | The readiness wait and original capture establish a real return to the catalog, caused by clearing the parent context during the detail push. |
 | `q98-phone-parent-context-qualified` | iPhone, light appearance, 152.223 seconds, pass through paging, local completion, independent repeated appearance, native detail/Back and relaunch. |
 
-The selected original inspected captures and findings are in [visual-review.json](evidence/navigation/native-itinerary-windows/visual-review.json). Appearance and Increase Contrast are restored after each Simulator run. Each compiler/runtime epoch retains commands, source/product hashes, source overlays and logs. Source and compiled products remain frozen throughout each native runtime.
+The selected original inspected captures and findings are in visual-review.json. Appearance and Increase Contrast are restored after each Simulator run. Each compiler/runtime epoch retains commands, source/product hashes, source overlays and logs. Source and compiled products remain frozen throughout each native runtime.
 
 ## Remaining definition of done
 

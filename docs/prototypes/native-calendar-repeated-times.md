@@ -36,7 +36,7 @@ An earlier phone pair had one setup failure before entering Calendar. Its captur
 
 The affected iOS app/fixture/test products and Mac app/UI-test host compile. Strict Swift formatting lint, Markdown lint and whitespace checks pass. Standards and Spec reviews have no remaining confirmed findings. Core and HTTP behavior are unchanged by this step; their prior qualification remains in [Calendar capture retention](calendar-capture-retention.md), without claiming a new invocation here.
 
-[Execution evidence](evidence/navigation/calendar-repeated-times/execution.json) records the actual commands, counts, current source/product hashes and raw report summaries. It retains original red/green screenshots, the phone readiness failure and compressed execution logs. All four final captures per device were inspected individually at their original resolution. Day/Week show separate readable EDT/EST captions, Month shows the full dated descriptions, and the complete late card fits above the phone tab bar and inside the iPad viewport.
+Execution evidence records the actual commands, counts, current source/product hashes and raw report summaries. It retains original red/green screenshots, the phone readiness failure and compressed execution logs. All four final captures per device were inspected individually at their original resolution. Day/Week show separate readable EDT/EST captions, Month shows the full dated descriptions, and the complete late card fits above the phone tab bar and inside the iPad viewport.
 
 ## Remaining work
 

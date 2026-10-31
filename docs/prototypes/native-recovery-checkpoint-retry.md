@@ -39,7 +39,7 @@ The final standards review inspected 16 original captures individually: four suc
 
 Affected strict Swift/Markdown lint, whitespace checks and the final Mac app/test-host build pass. Mac runtime remains zero. Core/HTTP, storage schema 18 and portable format 2 are unchanged; no new Core/HTTP test runs are credited. Busy indicators/disabled controls are implemented, but prolonged in-flight rendering and cancellation need separate qualification.
 
-The [execution packet](evidence/navigation/native-recovery-checkpoint-retry/execution.json) retains complete final baseline and focused-error capture manifests, raw test results, earlier functional red/navigation/layout diagnostics, commands and both stages' source/product hashes. Initial failures and pre-layout screenshots are excluded from final pass/visual credit.
+The execution packet retains complete final baseline and focused-error capture manifests, raw test results, earlier functional red/navigation/layout diagnostics, commands and both stages' source/product hashes. Initial failures and pre-layout screenshots are excluded from final pass/visual credit.
 
 ## Remaining gates
 

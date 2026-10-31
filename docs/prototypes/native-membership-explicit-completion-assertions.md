@@ -16,11 +16,11 @@ The first attempted three-collection Swift Testing declaration failed compilatio
 
 ## Final local checkpoint
 
-The [matched verification](evidence/native-membership-consolidation/first-assertion-validation.json) records 256 functions, 90 suites and 770 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual source and product hashes, all three changed Swift files' strict formatting, 514 unchanged frozen fixtures and nineteen unchanged model source files are checked.
+The matched verification records 256 functions, 90 suites and 770 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual source and product hashes, all three changed Swift files' strict formatting, 514 unchanged frozen fixtures and nineteen unchanged model source files are checked.
 
 Seven existing real MCP HTTP regressions and matching Mac app/Share/fixture builds pass. A separate isolated native bulk test uses the final Mac products and proves save-failure rollback/retry for List, Itinerary and List-branch actions. The actual child log is retained. Passing marked test stores are removed only after original-log, host-exit and closed-handle checks.
 
-[Seven retained phases](evidence/native-membership-consolidation/first-assertion-attempts.json) include compilation failure, actual runtime red, focused green and final platform/adapter/native-save runs. No actual cloud convergence, native UI, physical-device or system invocation credit is inferred from these checks.
+Seven retained phases include compilation failure, actual runtime red, focused green and final platform/adapter/native-save runs. No actual cloud convergence, native UI, physical-device or system invocation credit is inferred from these checks.
 
 ## Remaining scope
 

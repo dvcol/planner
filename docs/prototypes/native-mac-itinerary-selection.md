@@ -38,7 +38,7 @@ runner signatures pass; manual automation authentication remains required
 before and after the run. Three owned-window originals are inspected and
 retained. Strict affected Swift formatting and documentation checks pass.
 
-The [verified evidence](evidence/native-itinerary-heading/mac-selection-2026-10-28/result.json)
+The verified evidence
 retains the distinct driver failures, exact-identity diagnostic, native-value
 diagnostic, selection trace and rejected optional-tag attempt separately from
 the final pass. The earlier second-plan creation/relaunch pass takes 78.535
@@ -59,7 +59,7 @@ on the final source, in 81.135 and 136.544 seconds. They assert one title within
 the native toolbar before and after relaunch, no duplicate content title, and
 the containing itinerary title while its selected Museum details are open.
 
-The [heading evidence](evidence/native-itinerary-heading/mac-single-heading-2026-10-28/result.json)
+The heading evidence
 retains three inspected owned-window originals and verified build/runtime
 records. All 1,169 inputs match; nine product hashes stay stable during the run.
 Three signed bundles verify, manual automation authentication remains required,

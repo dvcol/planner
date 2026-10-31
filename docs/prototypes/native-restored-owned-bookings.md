@@ -47,9 +47,9 @@ generic maintenance failure/interruption checks. Counts describe test functions,
 including parameterized functions, rather than individual assertions.
 
 Evidence under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/)
+`native-membership-consolidation`
 uses the `native-owned-booking-*` prefix. The
-[validation record](evidence/native-membership-consolidation/native-owned-booking-validation.json)
+validation record
 reconciles final inputs/products and lossless source-manifest compression. The
 initial test comparison compile error and wrong creation-result selection are
 retained separately from the qualified behavioral red run. Neither establishes a

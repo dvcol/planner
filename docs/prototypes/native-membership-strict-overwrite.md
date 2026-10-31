@@ -12,13 +12,13 @@ The first broader candidate rejected approved competing-restoration imports beca
 
 ## Local qualification
 
-The [matched checkpoint](evidence/native-membership-consolidation/strict-overwrite-validation.json) passes 238 functions in 83 suites and 676 invocations on each of Mac and iPhone Simulator. All 808 Core inputs match across both platforms and the adapter build; the full phone manifest contains 1,147 inputs. Both actual Core test products per platform and the final Mac application products are verified. Strict formatting passes for all seven changed Swift files. The final Core runs have no skipped tests or SQLite unlink diagnostics.
+The matched checkpoint passes 238 functions in 83 suites and 676 invocations on each of Mac and iPhone Simulator. All 808 Core inputs match across both platforms and the adapter build; the full phone manifest contains 1,147 inputs. Both actual Core test products per platform and the final Mac application products are verified. Strict formatting passes for all seven changed Swift files. The final Core runs have no skipped tests or SQLite unlink diagnostics.
 
 All 513 previously frozen fixture inputs and nineteen model source files remain unchanged. One independently produced fingerprint fixture is added. The existing competing-value test files are byte-identical to the preceding checkpoint; their expected outcomes were not weakened. The initial broader candidate failed two functions with eighteen issues on both platforms. The corrected production collector passes them through the same tests.
 
 Six real MCP functions pass, and the Mac app, Share extension and fixture app compile. System linkd connection diagnostics do not qualify Shortcuts/Siri invocation. This checkpoint adds no native UI journey, installed Share, signed shared-storage or physical-device claim.
 
-[Eighteen completed phases](evidence/native-membership-consolidation/strict-overwrite-attempts.json) retain their source manifests, actual products and statuses, including runtime failures, the initial test compilation error and compiler-cache sandbox failure. One edit preflight failed without changing source and repeated the prior failing candidate; it is recorded as such. After host-exit and open-file checks, 1,298 distinct marked disposable stores from passing runs were removed. Failed-run stores and evidence remain retained, with no reclaimed-byte estimate.
+Eighteen completed phases retain their source manifests, actual products and statuses, including runtime failures, the initial test compilation error and compiler-cache sandbox failure. One edit preflight failed without changing source and repeated the prior failing candidate; it is recorded as such. After host-exit and open-file checks, 1,298 distinct marked disposable stores from passing runs were removed. Failed-run stores and evidence remain retained, with no reclaimed-byte estimate.
 
 ## Remaining scope
 

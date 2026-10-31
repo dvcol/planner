@@ -18,7 +18,7 @@ outstanding status read, preserving the existing draft destination protection.
 An unavailable iCloud account is described as local editing with paused sync.
 
 Mac and iOS Simulator app builds and strict formatting pass. The
-[build summary](evidence/private-sync-status/builds.json) records the two UI source
+build summary records the two UI source
 hashes and compile scope. The separate signed Core runs qualify private transport,
 pending Share edits and independent-field merging; compilation does not prove
 these Settings controls, draft interaction or account-transition UI journeys.

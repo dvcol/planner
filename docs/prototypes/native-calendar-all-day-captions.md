@@ -17,7 +17,7 @@ The accepted Calendar scope preserves all-day civil dates across travel and reta
 
 ## Tests and qualification
 
-The caption regression failed at its exact accessibility-value assertion before production changes: both entries exposed All day while their saved descriptions had different date spans. After reusing the native formatter, one focused journey passes on each simulator. Final qualification passes five functions in two suites per simulator, without failures or skips. Strict lint passes three Swift files, and the Mac app/test host builds with zero Mac UI functions. Both source review axes have no confirmed findings. [Execution evidence](evidence/navigation/native-calendar-all-day-captions/execution.json) records actual result trees, commands, verified final source hashes and two inspected native captures from the same revision. Ordering is separately committed and qualified in [the agenda ordering evidence](native-calendar-agenda-order.md).
+The caption regression failed at its exact accessibility-value assertion before production changes: both entries exposed All day while their saved descriptions had different date spans. After reusing the native formatter, one focused journey passes on each simulator. Final qualification passes five functions in two suites per simulator, without failures or skips. Strict lint passes three Swift files, and the Mac app/test host builds with zero Mac UI functions. Both source review axes have no confirmed findings. Execution evidence records actual result trees, commands, verified final source hashes and two inspected native captures from the same revision. Ordering is separately committed and qualified in [the agenda ordering evidence](native-calendar-agenda-order.md).
 
 ## Remaining work
 

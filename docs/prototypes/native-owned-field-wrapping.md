@@ -26,7 +26,7 @@ Add Link. An exact committed `aa00cc9e` baseline reproduces that failure.
 Experimental scrolling then exposes native text-replacement assumptions; those
 unproven test-driver edits are removed. At this checkpoint, the function is unqualified and is
 not counted among the three passing executions. The complete failed results stay
-in the [execution archive](evidence/native-owned-field-wrapping/execution-records-index.json).
+in the execution archive.
 
 The later [Itinerary follow-up](native-itinerary-link-editor.md) closes that named
 phone check and adds dark-iPad coverage. It also fixes a newly exposed competing
@@ -38,7 +38,7 @@ Four qualified originals show the active/wrapped phone address, the scrolled
 phone draft, the dark iPad draft and the owned-address map. Four diagnostic
 originals retain the earlier clipping, unbounded growth, duplicated keyboard
 controls and wrapped-URL hyphen findings. Their hashes and dimensions are in the
-[inspection record](evidence/native-owned-field-wrapping/visual-inspection.json).
+inspection record.
 
 The dark iPad draft shows the full represented address across three lines. A
 phone address can remain partly behind the active keyboard until scrolling.

@@ -16,7 +16,7 @@ No public picker-timezone binding was found. Planner can resolve complete civil 
 
 A DynamicOptionsProvider can offer only timed Schedule entities while reusing the existing Schedule entity/default query. This needs no extra EntityQuery type. Execution still must read the current form and reject an all-day, missing or changed selection; filtering suggestions alone does not enforce the command.
 
-The [SDK evidence recipe](prototypes/evidence/navigation/native-itinerary-window-compatibility/app-intent-schedule-zone-final-clean/civil-sdk-facts-recipe.json) retains the selected probe source, actual extracted metadata and exact reported commands. macOS object compilation and metadata extraction, and the iOS typecheck, have separately recorded exit zero. The standalone macOS typecheck exit was not captured separately. These are compiler facts, not actual system-picker qualification.
+The SDK evidence recipe retains the selected probe source, actual extracted metadata and exact reported commands. macOS object compilation and metadata extraction, and the iOS typecheck, have separately recorded exit zero. The standalone macOS typecheck exit was not captured separately. These are compiler facts, not actual system-picker qualification.
 
 ## Q118: creation action layout
 

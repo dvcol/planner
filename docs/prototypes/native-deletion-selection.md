@@ -46,7 +46,7 @@ Mac's combined qualification first fails local ad hoc signing with an internal C
 
 ## Evidence, review and limits
 
-[The packet](evidence/navigation/native-deletion-selection/) retains exact commands, original compressed logs, exit results and source/product hashes for every attempt. Five named original own-app/window captures from the represented rows were individually inspected. They show the compact catalog return and regular replacement selection with the correct List context. Automatic failure/desktop captures are not published.
+The packet retains exact commands, original compressed logs, exit results and source/product hashes for every attempt. Five named original own-app/window captures from the represented rows were individually inspected. They show the compact catalog return and regular replacement selection with the correct List context. Automatic failure/desktop captures are not published.
 
 Independent Standards and Spec source reviews report no remaining confirmed Q89 findings after the contextual correction. Final strict lint passes for all 19 affected native Swift files, including the tablet controller correction. Report Markdown lint also passes. Native compilation succeeds for both platforms. That source epoch did not start its final Mac tests; current runtime evidence belongs to the continuation.
 

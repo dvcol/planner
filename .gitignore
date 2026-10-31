@@ -4,3 +4,12 @@ DerivedData/
 *.xcresult/
 xcuserdata/
 Configuration/Local.xcconfig
+
+# Generated validation output stays temporary.
+docs/prototypes/evidence/
+docs/setup/evidence/
+docs/design/previews/
+docs/history/
+*.log
+*.log.gz
+*.xcarchive/

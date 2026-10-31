@@ -32,7 +32,7 @@ These controls do not fill a Schedule end or reschedule an entry. No derived cou
 
 ## Execution
 
-Six functions are qualified on iPhone and six on iPad. The phone bundle passes all six. The tablet mixed bundle passes five and fails the Itinerary test's catalog navigation; a separate corrected Itinerary run passes. The seven production Swift files are identical across those tablet runs. The [execution record](evidence/navigation/native-container-estimates/execution.json) keeps the mixed bundle labeled Failed and identifies the corrected function rather than claiming an entirely green tablet batch.
+Six functions are qualified on iPhone and six on iPad. The phone bundle passes all six. The tablet mixed bundle passes five and fails the Itinerary test's catalog navigation; a separate corrected Itinerary run passes. The seven production Swift files are identical across those tablet runs. The execution record keeps the mixed bundle labeled Failed and identifies the corrected function rather than claiming an entirely green tablet batch.
 
 The captures verify native unit/remainder controls, manual/reset state, lower/upper bounds, the exceeded-budget warning, and zero remaining with a retained manual total. The Q76 case resolves a missing finished estimate through the actual Item editor. Itinerary notes and container identities survive cancel/save/relaunch. The existing Item duration editor and ordinary List creation/cancellation also pass on both devices.
 
@@ -52,7 +52,7 @@ The executed native red failed because the preview was absent. Intermediate phon
 
 The existing filter regression exposed a zero-sized child StaticText beneath the native ProgressView. Its exported hierarchy retained the correct root ProgressIndicator label. The corrected phone journey passes cumulative header/child filters, independent Done/Todo branches and relaunch. It checks the actual progress component after bounded scrolling reveals its header, and chooses a visible native tab with verified selection. Three failed regression attempts are excluded from qualification. The 321-second fixture journey is functional evidence; it does not close responsiveness or scale gates.
 
-The [execution record](evidence/navigation/contextual-list-estimates/execution.json) retains exact bundles, counts, source hashes and exclusions. Twelve affected Swift files pass strict lint. Mac app/UI host compilation passes with zero Mac UI runtime. Catalog estimate previews, further uncertainty/archive UI fixtures, Calendar, administration/restoration, native scale, signed physical sync/account/Share and whole-app polish remain open.
+The execution record retains exact bundles, counts, source hashes and exclusions. Twelve affected Swift files pass strict lint. Mac app/UI host compilation passes with zero Mac UI runtime. Catalog estimate previews, further uncertainty/archive UI fixtures, Calendar, administration/restoration, native scale, signed physical sync/account/Share and whole-app polish remain open.
 
 The following [catalog slice](catalog-container-estimates.md) adds compact full/remaining captions to List and Itinerary catalogs, including manual and uncertainty information. It retains the broader context/scale, Calendar, administration/restoration, native Mac runtime, signed-device and whole-app polish gates.
 

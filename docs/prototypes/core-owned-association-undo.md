@@ -30,6 +30,6 @@ The first affected regression run finds an old Itinerary assertion expecting onl
 
 ## Evidence and remaining work
 
-The [execution index](evidence/navigation/core-owned-association-undo/final-validation/observed-results.json) retains fourteen source epochs, including actual behavior failures and the compiler diagnostic. [Validation](evidence/navigation/core-owned-association-undo/final-validation/checks.json) records exact final package inputs, affected strict Swift/Markdown lint, whitespace and local-link checks. The [manifest](evidence/navigation/core-owned-association-undo/final-validation/evidence-sha256.json) hashes source snapshots and execution evidence.
+The execution index retains fourteen source epochs, including actual behavior failures and the compiler diagnostic. Validation records exact final package inputs, affected strict Swift/Markdown lint, whitespace and local-link checks. The manifest hashes source snapshots and execution evidence.
 
 Native editor response propagation, specific Undo naming, actual editing journeys and agent admission regressions remain the next slice. No Mac UI, physical CloudKit/account/Share, signing, scale or whole-app polish credit is claimed here.

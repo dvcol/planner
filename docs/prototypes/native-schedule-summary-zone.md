@@ -21,7 +21,7 @@ Strict affected Swift and Markdown lint pass. Seven selected final originals
 and the before capture are inspected, with the executed function identities
 checked against each actual test command.
 
-[Final verification](evidence/native-schedule-summary-zone/final-validation.json)
+Final verification
 and the compacted execution records retain the failed reproduction and final
 cohorts. These checks cover the represented summaries, not full accessibility
 or physical acceptance.

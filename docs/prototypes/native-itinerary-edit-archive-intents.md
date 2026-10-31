@@ -36,7 +36,7 @@ The rich edit preserves color/icon, owned link identities, shared labels, owned 
 
 For archive, full estimate stays 210 minutes. Own remaining changes 150 to 0 to 150 across Archive/Unarchive. Child progress remains one Done out of three, with zero child archive flags. Shared Item/List and another itinerary keep their original data, references, timestamps and independent completion; no schedule end is filled from the estimate.
 
-All packets are under [the compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/) with `app-intent-itinerary-edit-*` and `app-intent-itinerary-archive-*` names. Each retains its actual original source epoch, command, log and result.
+All packets are under the compatibility evidence with `app-intent-itinerary-edit-*` and `app-intent-itinerary-archive-*` names. Each retains its actual original source epoch, command, log and result.
 
 ## Failure and preservation qualification
 

@@ -41,9 +41,9 @@ The final focused `xcodebuild test` invocation runs all five `SavedAssociationUn
 | Actual recovery failure, retained retry and queue resumption | Pass | 0.148 s |
 | Separate histories/managers and ordinary target preservation | Pass | 0.124 s |
 
-The [observed-results index](evidence/navigation/native-association-history-controller/final-validation/observed-results.json) retains all nine invocation records, including the compile failure and the failed explicit-action test. The [source comparison](evidence/navigation/native-association-history-controller/final-validation/source-comparison.json) checks the final source against compiled inputs and verifies that all 149 production Swift inputs remain unchanged. The final compiler/run qualifies the added tests; existing Core/HTTP and phone/iPad results retain their recorded source epochs and are not rerun for this test-only change.
+The observed-results index retains all nine invocation records, including the compile failure and the failed explicit-action test. The source comparison checks the final source against compiled inputs and verifies that all 149 production Swift inputs remain unchanged. The final compiler/run qualifies the added tests; existing Core/HTTP and phone/iPad results retain their recorded source epochs and are not rerun for this test-only change.
 
-The [validation packet](evidence/navigation/native-association-history-controller/final-validation/checks.json) records affected strict Swift/Markdown lint, whitespace and local-link checks. Its [manifest](evidence/navigation/native-association-history-controller/final-validation/evidence-sha256.json) binds the evidence, including the actual Foundation diagnostic and final product/xcresult summaries. The bounded credential scan has no findings. No rendered captures are claimed by these controller tests.
+The validation packet records affected strict Swift/Markdown lint, whitespace and local-link checks. Its manifest binds the evidence, including the actual Foundation diagnostic and final product/xcresult summaries. The bounded credential scan has no findings. No rendered captures are claimed by these controller tests.
 
 ## Definition of done and remaining gates
 

@@ -52,6 +52,6 @@ The final runtime freezes 469 source/configuration inputs and six products. Sour
 
 ## Evidence and remaining work
 
-[The evidence packet](evidence/navigation/native-calendar-grid-inspector-layout/) retains literal exits and function durations, both compiler invocations, the zero-function setup command, the qualified runtime command, source/product manifests, original captures and observed identities/captions. The [earlier Month report](native-calendar-inspector-layout.md) links prior picker and rich-draft compatibility evidence.
+The evidence packet retains literal exits and function durations, both compiler invocations, the zero-function setup command, the qualified runtime command, source/product manifests, original captures and observed identities/captions. The [earlier Month report](native-calendar-inspector-layout.md) links prior picker and rich-draft compatibility evidence.
 
 This is an ordinary one-Schedule iPad inspector qualification. Actual midnight/month-rollover execution, dense overlap/all-day layouts during resizing, split-screen/Stage Manager, phone pushed navigation, Mac window runtime, keyboard/VoiceOver/Dynamic Type and measured physical performance remain separate. Q94 label presentation and Q95 native catalog windows still await human answers. Signing, physical CloudKit/account/Share validation and whole-app native SwiftUI polish remain deferred or open under their existing gates. No whole-map issue is closed.

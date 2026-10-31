@@ -50,7 +50,7 @@ Both corrected app/UI compiler targets pass, including the local ad hoc Mac buil
 
 ## Evidence and remaining gates
 
-[The evidence packet](evidence/navigation/native-item-picker-archive/) retains exact exits, logs, original named captures, observed identity attachments and source/product hashes. Before and after the text correction are separate source epochs. Current compiler inputs and final runtime inputs are compared with the repository before commit. Original workflow passes are not substituted for the final native invocations.
+The evidence packet retains exact exits, logs, original named captures, observed identity attachments and source/product hashes. Before and after the text correction are separate source epochs. Current compiler inputs and final runtime inputs are compared with the repository before commit. Original workflow passes are not substituted for the final native invocations.
 
 This successful workflow closes the specifically recorded archived-candidate exclusion and reopen-after-Unarchive gap. It does not qualify a candidate becoming archived while an already open picker has a selected row, delayed cancellation, read failure/Retry, dataset transitions, performance or accessibility. The picker still reads all active candidates while open. Mac runtime, signed physical devices, CloudKit/account/Share and whole-app native polish remain open. No issue or whole-map gate closes here.
 

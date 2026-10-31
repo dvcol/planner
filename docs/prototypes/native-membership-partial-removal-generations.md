@@ -21,8 +21,8 @@ The first attempt had test compilation errors and executed no tests. The correct
 
 ## Qualification and remaining scope
 
-The [matching Mac/iPhone checkpoint](evidence/native-membership-consolidation/partial-removal-validation.json) passes 196 functions in 79 suites and 572 invocations per platform. All 806 Core inputs match, the full phone manifest contains 1,145 inputs, and both actual products per platform are verified. All 512 frozen fixture inputs and nineteen model source files stay unchanged. No SQLite lifetime diagnostics or skipped tests occur. Strict formatting passes for all six changed Swift files.
+The matching Mac/iPhone checkpoint passes 196 functions in 79 suites and 572 invocations per platform. All 806 Core inputs match, the full phone manifest contains 1,145 inputs, and both actual products per platform are verified. All 512 frozen fixture inputs and nineteen model source files stay unchanged. No SQLite lifetime diagnostics or skipped tests occur. Strict formatting passes for all six changed Swift files.
 
-The [nine recorded attempts](evidence/native-membership-consolidation/partial-removal-attempts.json) retain their compiler/runtime distinctions. After process and file-closure checks, 1,113 distinct marked disposable stores from passing runs are removed. Failed fixtures and verification evidence remain retained. No physical reclaimed-byte claim is made.
+The nine recorded attempts retain their compiler/runtime distinctions. After process and file-closure checks, 1,113 distinct marked disposable stores from passing runs are removed. Failed fixtures and verification evidence remain retained. No physical reclaimed-byte claim is made.
 
 These are Core/store/import and compiler checks. No new native UI, MCP HTTP or installed-extension journey is claimed for this follow-up. Actual Mac UI, installed Share, protected signed storage, CloudKit delivery/convergence and physical performance remain separate gates. This follow-up does not complete Q155. Move/Overwrite/Capture observations and evidence, broader lifetime/family reconciliation, exact eligible-alias actions and interruption/recovery controls remain local work.

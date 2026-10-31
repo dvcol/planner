@@ -32,7 +32,7 @@ The actual delivered phone file is 919 bytes and tablet file 921 bytes. Both use
 
 All eight original selection, picker, delivery and post-relaunch captures were inspected. The final fixture app/test host compiles on Mac, with zero Mac runtime functions. Strict affected Swift/Markdown lint and whitespace checks pass. Frozen source/product hashes are unchanged across the final phone/tablet runs. Core, HTTP, production views, schema and portable format are unchanged; no new Core/HTTP runs are credited.
 
-[Execution evidence](evidence/navigation/native-retained-recovery-export/execution.json) retains the exact commands, initial failure and final results, complete attachment manifests, original captures, delivered public files/provenance and source/product hashes.
+Execution evidence retains the exact commands, initial failure and final results, complete attachment manifests, original captures, delivered public files/provenance and source/product hashes.
 
 ## Remaining gates
 

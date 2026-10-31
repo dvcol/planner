@@ -34,7 +34,7 @@ Mac, the actual Simulator app/native UI-test target and unsigned generic device 
 
 All three verified epochs have 1027 identical frozen inputs. Only the native Link file changes among prior inputs; two production-interface test files are added. The existing Core and other prior files are unchanged. The device app embeds exactly one mobile Share extension; both executables are arm64. Strict affected Swift/Markdown lint and platform type checks pass.
 
-The [evidence directory](evidence/navigation/native-itinerary-window-compatibility/) retains `app-intent-remove-links-*`, `app-intent-reorder-links-*` and `app-intent-link-mutations-*` packets with original commands, exits, logs, frozen sources, result summaries, metadata contracts and fixture-lifecycle reports.
+The evidence directory retains `app-intent-remove-links-*`, `app-intent-reorder-links-*` and `app-intent-link-mutations-*` packets with original commands, exits, logs, frozen sources, result summaries, metadata contracts and fixture-lifecycle reports.
 
 ## Remaining map work
 

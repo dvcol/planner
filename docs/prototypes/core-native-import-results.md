@@ -31,6 +31,6 @@ The initial test failed because the result lacked `importSummary`. A compiler fa
 
 macOS and iPhone Simulator each passed 123 Core functions in 55 suites, covering 345 invocations. The native HTTP regression passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Eight affected Swift files passed strict lint. The Mac app and navigation test host compiled successfully. No native UI runtime was exercised for this Core change.
 
-[Evidence](evidence/navigation/core-native-import-results/execution.json) records commands, source hashes, red/green logs and completed Xcode result summaries.
+Evidence records commands, source hashes, red/green logs and completed Xcode result summaries.
 
 Incoming candidate/family consolidation, broader rebinding, origin/provider persistence, native import forms, complete generated/affected result coverage and direct database-save failure proof remain open. Physical CloudKit convergence, account changes, Share, Calendar and whole-app polish are not qualified by this step.

@@ -32,4 +32,4 @@ Final qualification passes 48 Core functions in 22 suites, 95 invocations, on Ma
 
 Owned-data replacement, deletion/restoration, origin/provider persistence, import summaries, native forms and direct save-failure proof remain open. This stage does not complete the import ticket or qualify physical synchronization.
 
-Commands, native results, source hashes and retained failures are in [execution evidence](evidence/navigation/core-native-import-source-overwrite/execution.json). The earlier [additive import evidence](core-native-import-additions.md) remains applicable.
+Commands, native results, source hashes and retained failures are in execution evidence. The earlier [additive import evidence](core-native-import-additions.md) remains applicable.

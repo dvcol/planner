@@ -35,8 +35,8 @@ Q163 remains pending and signing stays deferred.
 
 ## Final local checkpoint
 
-The final [phone](evidence/native-webpage-pending-return/pending-return-final-phone/boundary-validation.json)
-and [dark iPad](evidence/native-webpage-pending-return/pending-return-final-dark-tablet/boundary-validation.json)
+The final phone
+and dark iPad
 runs each pass the new pending-load journey and existing ordinary saved-link/rich-card
 Return journey. Four executions across two functions have no failures, skips or
 SQLite-unlink warnings. Both pending-load runs observe one held request and
@@ -53,7 +53,7 @@ setting. The initial passing phone epoch differs only in the new test's name;
 its assertion bodies are byte-identical and its result stays separate from the
 four final executions.
 
-The [matching Mac compiler check](evidence/native-webpage-pending-return/pending-return-mac-compiler/qualification.json)
+The matching Mac compiler check
 builds app, Share and the affected native UI-test target using the established
 local ad-hoc recipe without an Apple-account setup. Its nine products include
 the native run configuration. All 1160 source/configuration/resource inputs
@@ -61,7 +61,7 @@ match across the final phone, iPad and compiler epochs. Actual products are
 verified before build-directory reuse. Compilation supplies no Mac UI runtime
 or protected signed-storage credit.
 
-The [combined validation record](evidence/native-webpage-pending-return/final-validation.json)
+The combined validation record
 binds these final epochs, inspected originals and checks. Only the existing
 native journey class changes. Production app/Core/Share code,
 fixtures, interfaces and dependencies remain unchanged from 131b6caf. No

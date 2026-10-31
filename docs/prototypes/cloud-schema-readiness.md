@@ -20,7 +20,7 @@ and [CloudKit model guidance](https://developer.apple.com/documentation/coredata
 The diagnostic uses the installed SDK's actual Schema metadata rather than
 guessing from property declarations alone.
 
-[Evidence](evidence/cloud-schema-readiness/result.json) retains the result,
+Evidence retains the result,
 diagnostic source, compiler command, process exits and input hashes. The Core
 source snapshot matches the qualified Mac build and current repository. This is
 an executed diagnostic, not XCTest execution or a signed CloudKit store test.

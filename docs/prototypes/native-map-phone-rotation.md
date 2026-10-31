@@ -19,13 +19,13 @@ verifies that the shared Item remains Todo. All 1164 production/test inputs matc
 the Mac app, Share and UI-test compilation. Strict affected Swift lint and
 Markdown lint pass. Simulator settings are restored after each execution.
 
-The [structured results](evidence/native-map-phone-rotation/final-validation.json)
+The structured results
 retain the actual executed identifier, diagnostics and comparison to unchanged
 production at `0dbd3c63`. Nine original captures are inspected: three diagnostic
 and six final images. Their hashes and observations are in the
-[inspection record](evidence/native-map-phone-rotation/visual-inspection.json).
+inspection record.
 Detailed commands, logs and source/product inventories are compressed in the
-[execution archive](evidence/native-map-phone-rotation/execution-records-index.json).
+execution archive.
 
 The landscape phone Map is still shallow because native navigation, search and
 tabs share the limited height; this check proves a reachable pin, not generous

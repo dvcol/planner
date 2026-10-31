@@ -30,9 +30,9 @@ The unlocked Mac now starts native tests. The first attempt opens Capture but us
 
 The iPhone Item/List pushed-detail contrast audits pass, 12.155 and 11.743 seconds. Its first menu attempt stops at the wide-layout Cancel lookup; compact New Item correctly uses its declared native Back control. The corrected controller uses Cancel where present and Back otherwise. The iPhone Add journey then passes for Items and Inbox, 48.847 seconds. The earlier combined invocation retains exit 65 for its controller failure. No production navigation change is made for either controller correction.
 
-Commands, literal results, source/product hashes, unsuccessful attempts and original captures are retained in the [evidence packet](evidence/navigation/native-catalog-add-menu/). Mobile runtime freezes source and products and restores appearance/accessibility settings.
+Commands, literal results, source/product hashes, unsuccessful attempts and original captures are retained in the evidence packet. Mobile runtime freezes source and products and restores appearance/accessibility settings.
 
-The inspected [iPad Items toolbar](evidence/navigation/native-catalog-add-menu/q101-tablet-menu-and-contrast-dark-increased/77C160BF-F85F-46D6-9E22-B9356AA1B121.png) retains the full title and leaves bottom rows unobscured. The [Inbox toolbar](evidence/navigation/native-catalog-add-menu/q101-tablet-final-dark-increased/F5AB0208-3ECF-407B-A408-C43C8C9061B1.png) uses the same native controls. The passing Mac [saved Item](evidence/navigation/native-catalog-add-menu/q101-mac-static-estimate-qualified/299FFCD9-9ED7-4D6A-9E20-E675284A4112.png) and [staged Capture](evidence/navigation/native-catalog-add-menu/q101-mac-static-estimate-qualified/4CB017AE-045C-43EF-ADBD-3B655D8A9FAD.png) show actual native panes, Form controls, readable duration and bookmark. These captures establish those represented presentations only.
+The inspected iPad Items toolbar retains the full title and leaves bottom rows unobscured. The Inbox toolbar uses the same native controls. The passing Mac saved Item and staged Capture show actual native panes, Form controls, readable duration and bookmark. These captures establish those represented presentations only.
 
 ## Completion boundary
 

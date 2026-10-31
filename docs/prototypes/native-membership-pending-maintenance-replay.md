@@ -16,11 +16,11 @@ The first run also exposed an incorrect fixture expectation: while the recovery 
 
 ## Final local checkpoint
 
-The [matched verification](evidence/native-membership-consolidation/pending-maintenance-replay-validation.json) records 256 functions, 90 suites and 788 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual products and current source hashes are verified. Both changed Swift files pass strict formatting; all 514 frozen fixtures and nineteen model source files remain unchanged.
+The matched verification records 256 functions, 90 suites and 788 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual products and current source hashes are verified. Both changed Swift files pass strict formatting; all 514 frozen fixtures and nineteen model source files remain unchanged.
 
 Seven existing real MCP HTTP regressions and matching Mac app, Share and fixture builds pass. A separate isolated native bulk save-failure test uses final Mac products and verifies rollback/retry for List, Itinerary and List-branch scopes. Its actual child log is retained. Native lineage staging, the other command-evidence tests, fingerprint algorithms, preparation codec and saved-context binding module remain unchanged.
 
-[Seven retained phases](evidence/native-membership-consolidation/pending-maintenance-replay-attempts.json) preserve actual failed and passing runtime results, source/product manifests and original logs. Only marked stores from completed passing logs are removed, after their hosts and database handles are verified closed.
+Seven retained phases preserve actual failed and passing runtime results, source/product manifests and original logs. Only marked stores from completed passing logs are removed, after their hosts and database handles are verified closed.
 
 ## Remaining scope
 

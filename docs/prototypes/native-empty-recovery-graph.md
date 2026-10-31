@@ -33,7 +33,7 @@ Affected strict Swift lint and the final Mac app/test-host build pass. Mac runti
 
 The standards review inspected all ten original targeted captures individually, five per device, and found no material visual or source issue. Root inspected the iPad review/route/List and phone review/route/label captures. The List retains its 4-hour manual estimate and finished state; its itinerary branch independently shows one unfinished child. This visual observation does not add a new automated duration assertion or close broader native UI polish.
 
-The [execution packet](evidence/navigation/native-empty-recovery-graph/execution.json) retains actual counts, complete targeted capture manifests, exact commands and source/product hashes for both qualified revisions. Earlier failing functions, compile errors and selected diagnostics remain separately labeled.
+The execution packet retains actual counts, complete targeted capture manifests, exact commands and source/product hashes for both qualified revisions. Earlier failing functions, compile errors and selected diagnostics remain separately labeled.
 
 ## Remaining gates
 

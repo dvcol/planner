@@ -31,7 +31,7 @@ Four fixture functions pass on both simulators, with no failures or skips: booke
 
 One existing ordinary Schedule edit function also passes on iPad, covering Cancel, clearing the end, identity preservation and relaunch. The affected native app/fixture/test products and Mac app/UI-test host compile. Five changed Swift files pass strict lint, and the report/decision register pass Markdown lint. Whitespace checks and both source review axes are clear. Core and HTTP code are unchanged; no new Core/HTTP invocations are attributed to this UI step.
 
-[Execution evidence](evidence/navigation/calendar-booked-clock-change/execution.json) records exact commands, raw summaries/trees, compressed logs, source/product hashes, the three red failures, Vision's recognized text and original captures. New booked/short-span, source and late-card captures were inspected individually at original resolution. The earlier repeated-hour qualification remains in [its report](native-calendar-repeated-times.md).
+Execution evidence records exact commands, raw summaries/trees, compressed logs, source/product hashes, the three red failures, Vision's recognized text and original captures. New booked/short-span, source and late-card captures were inspected individually at original resolution. The earlier repeated-hour qualification remains in [its report](native-calendar-repeated-times.md).
 
 The subsequent [start-only source-row slice](native-source-clock-change-points.md) distinguishes its repeated-hour descriptions with its own red/green evidence.
 

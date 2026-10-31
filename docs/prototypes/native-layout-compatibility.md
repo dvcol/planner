@@ -44,7 +44,7 @@ The six-function Mac compatibility batch passes on the corrected source, includi
 
 ## Current qualification
 
-The [evidence packet](evidence/navigation/native-layout-compatibility/) retains literal results, frozen sources, compiler links, product hashes and named Planner-window captures. Its [run index](evidence/navigation/native-layout-compatibility/historical-run-index.json) separates individual outcomes, incomplete runner exits, whole batches and compiler-only attempts.
+The evidence packet retains literal results, frozen sources, compiler links, product hashes and named Planner-window captures. Its run index separates individual outcomes, incomplete runner exits, whole batches and compiler-only attempts.
 
 | Platform | Qualified functions | Layout journey | Invocation results |
 | --- | --- | --- | --- |
@@ -62,7 +62,7 @@ All 40 retained named captures were individually inspected. Twenty-two belong to
 
 The first iPad batch passes Add (322.632 s), Item deletion (79.054 s), List deletion (141.021 s) and draft rotation/relaunch (117.635 s). Capture fails during fixture creation, before capture begins: the portrait toolbar places New List inside its native overflow. The retained own-app hierarchy identifies that overflow and no directly visible New List button. The Capture controller now follows the same native overflow path already used by the other List-creation tests. Its destination review, cancellation, exact bookmark, membership scope and relaunch assertions are unchanged. The focused iPad Capture retry passes in 92.929 seconds; the focused iPhone retry passes in 70.591 seconds. The original iPad batch remains failed.
 
-The [source comparison](evidence/navigation/native-layout-compatibility/capture-controller-source-equivalence.json) verifies that this iOS-only test-controller adjustment is the sole changed input among the 945 final build inputs. Production, the appearance test class and shared helpers are identical to the preceding compatibility runs. The active macOS Capture source is identical as well. Earlier passing Mac functions and simulator appearance functions retain their actual epochs; the two focused Capture runs qualify the changed mobile controller. No extra runtime credit comes from this source comparison.
+The source comparison verifies that this iOS-only test-controller adjustment is the sole changed input among the 945 final build inputs. Production, the appearance test class and shared helpers are identical to the preceding compatibility runs. The active macOS Capture source is identical as well. Earlier passing Mac functions and simulator appearance functions retain their actual epochs; the two focused Capture runs qualify the changed mobile controller. No extra runtime credit comes from this source comparison.
 
 ## Phone context-menu timing investigation
 
@@ -70,7 +70,7 @@ The first current-source phone compatibility batch passes Item deletion (66.342 
 
 An isolated control build removes only the new compact membership-selection column request. Production source outside that line, test functions and helpers remain identical. It has separate source/product hashes and a distinct build directory, and never mutates the repository or the active final products. Its one-function diagnostic run allows 360 seconds so a repeated animation-notification delay can finish and be compared. This allowance does not establish UI latency or resolve the original timeout.
 
-The [one-line comparison](evidence/navigation/native-layout-compatibility/compact-selection-control-comparison.json) verifies all 945 build inputs, with exactly one production-source difference and identical test source. The control passes in 298.406 seconds and reproduces both 60-second notification waits at the same interactions. The new compact-selection line does not sufficiently explain the waits. No speculative navigation/gesture rewrite follows. The corrected-source focused Add retry passes in 299.612 seconds with a 360-second allowance, zero failures/skips and both identical notification waits. Its source and products match the preceding phone batch at that qualification epoch. The earlier five-function batch remains failed. Both notification waits remain recorded without a responsiveness or performance claim.
+The one-line comparison verifies all 945 build inputs, with exactly one production-source difference and identical test source. The control passes in 298.406 seconds and reproduces both 60-second notification waits at the same interactions. The new compact-selection line does not sufficiently explain the waits. No speculative navigation/gesture rewrite follows. The corrected-source focused Add retry passes in 299.612 seconds with a 360-second allowance, zero failures/skips and both identical notification waits. Its source and products match the preceding phone batch at that qualification epoch. The earlier five-function batch remains failed. Both notification waits remain recorded without a responsiveness or performance claim.
 
 ## Remaining scope
 

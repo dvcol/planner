@@ -44,7 +44,7 @@ The measured baseline preceded implementation. The same public scenario then ret
 
 The actual MCP HTTP run passes four tests with zero failures or skips. The macOS app and HTTP test host compile through that run. The iOS app and native UI test host also compile. The changed Core file passes strict Swift lint; both review axes report no confirmed findings. No native UI journey or physical CloudKit/account test ran in this step.
 
-[Execution evidence](evidence/navigation/calendar-capture-retention/execution.json) records final source/product hashes, exact probe versions, before/final measurements and logs. The input fixture is the verified compressed input in the preceding scale evidence, with SHA-256 `ceece309121ad136cf6cff6a8369c35c97e70e57ea94d7ba54586d68a4c4bb65`.
+Execution evidence records final source/product hashes, exact probe versions, before/final measurements and logs. The input fixture is the verified compressed input in the preceding scale evidence, with SHA-256 `ceece309121ad136cf6cff6a8369c35c97e70e57ea94d7ba54586d68a4c4bb65`.
 
 ## Remaining gates
 

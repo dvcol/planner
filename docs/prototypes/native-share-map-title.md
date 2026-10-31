@@ -27,10 +27,10 @@ location fields and absent owned pin. Three original captures are inspected.
 The initial attempt reaches the saved Item but queries its completion Switch
 as a Button. That failed attempt is retained separately. The corrected driver
 uses the actual descendant control and reads the real saved location fields.
-The [review record](evidence/native-share-title-2026-10-31/review.json) includes
+The review record includes
 commands, source hashes, failed/passing logs and four original PNGs, including
-the [suggested title](evidence/native-share-title-2026-10-31/suggested-title.png)
-and [edited title after relaunch](evidence/native-share-title-2026-10-31/edited-after-relaunch.png).
+the suggested title
+and edited title after relaunch.
 
 Affected strict Swift formatting and whitespace checks pass. The fixture and
 signed mobile app/Share/UI-runner builds succeed. The shared Mac app/Share

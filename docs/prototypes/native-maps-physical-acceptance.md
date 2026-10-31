@@ -14,7 +14,7 @@ is created. All protected source/product inputs remain unchanged. These are
 failed automation attempts, not passing native sender acceptance and not
 evidence of a Planner capture defect.
 
-The [review record](evidence/native-maps-physical-2026-10-31/review.json) retains
+The review record retains
 the precise outcomes and original-log hashes. Compressed excerpts include the
 relevant test/search events; full logs and system attachments remain local
 because they also enumerate unrelated app windows. No manual-authentication,

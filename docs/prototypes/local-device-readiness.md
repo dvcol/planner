@@ -4,7 +4,7 @@ Status: physical-device SDK compilation passes. Signing/account setup remains de
 
 ## Verified local result
 
-The existing native Planner scheme builds for `generic/platform=iOS`, arm64, with `CODE_SIGNING_ALLOWED=NO` and one build job. It uses the checked-in Xcode project and pinned Swift packages. The app contains only its mobile Share extension. Source/product hashes, exact command and compiler log are retained in [the device build packet](evidence/navigation/native-share-products/device-unsigned-planner-host/).
+The existing native Planner scheme builds for `generic/platform=iOS`, arm64, with `CODE_SIGNING_ALLOWED=NO` and one build job. It uses the checked-in Xcode project and pinned Swift packages. The app contains only its mobile Share extension. Source/product hashes, exact command and compiler log are retained in the device build packet.
 
 This proves device-SDK compilation, not execution on iPhone/iPad, entitlement grants or synchronization. The optional local configuration file is absent, and the build does not configure a development team or install a profile.
 

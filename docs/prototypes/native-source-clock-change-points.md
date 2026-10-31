@@ -26,7 +26,7 @@ Two selected fixture functions pass on both iPhone and iPad simulators, with no 
 
 One ordinary start-only Schedule edit journey also passes on iPad, covering Cancel, saving with no end and relaunch. The affected iOS products and Mac app/UI-test host compile; zero Mac runtime functions ran. The two changed Swift files pass strict lint. The affected reports and decision register pass Markdown lint, and whitespace checks pass. Core/HTTP code is unchanged, with zero new Core/HTTP invocations attributed to this step.
 
-[Execution evidence](evidence/navigation/source-clock-change-points/execution.json) retains exact commands, raw summaries/trees, compressed logs, original fixture captures and source/product hashes. Final phone/tablet fixture runs use the same frozen source and products. The earlier booked-span and painted short-card qualification remains in [its report](native-calendar-booked-clock-change.md).
+Execution evidence retains exact commands, raw summaries/trees, compressed logs, original fixture captures and source/product hashes. Final phone/tablet fixture runs use the same frozen source and products. The earlier booked-span and painted short-card qualification remains in [its report](native-calendar-booked-clock-change.md).
 
 ## Remaining gates
 

@@ -44,7 +44,7 @@ The final Mac app and native test host compile. Four affected Swift files pass s
 | Item planning zone, Cancel/Save, unchanged instant and relaunch | Pass | Pass |
 | Itinerary planning zone, Cancel/Save, unchanged owner/instant and relaunch | Pass | Pass |
 
-The [execution record](evidence/navigation/native-calendar-display-zone/execution.json) retains actual result summaries/trees, failed diagnostic attempts, source/product hashes and original native captures. [Phone](evidence/navigation/native-calendar-display-zone/phone-civil-date.png) and [tablet](evidence/navigation/native-calendar-display-zone/tablet-civil-date.png) captures show the retained all-day date under the override. Phone agenda captions can extend beneath the floating tab bar until scrolled; the whole-app polish gate retains that layout concern.
+The execution record retains actual result summaries/trees, failed diagnostic attempts, source/product hashes and original native captures. Phone and tablet captures show the retained all-day date under the override. Phone agenda captions can extend beneath the floating tab bar until scrolled; the whole-app polish gate retains that layout concern.
 
 ## Remaining gates
 

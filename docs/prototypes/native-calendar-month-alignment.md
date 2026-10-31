@@ -30,7 +30,7 @@ products. Strict Swift formatting and Markdown lint pass.
 
 The six final original captures are inspected. Execution packets, settings
 restoration, input/product hashes and earlier failed/probe runs are retained in
-[the evidence](evidence/native-calendar-month-layout/final-validation.json).
+the evidence.
 
 This is a layout correction, not a whole-app accessibility pass. Native iPad
 weekday labels remain tight at maximum text size. The phone landscape capture

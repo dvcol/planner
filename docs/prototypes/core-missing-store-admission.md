@@ -28,7 +28,7 @@ After this tracer passes unchanged, exercise read/query/review/row/appearance an
 
 ## Qualification
 
-The [execution record](evidence/navigation/core-missing-store-admission.json) retains exact commands, source epochs, package logs and native summaries/test trees. The functional red observes the authorized create returning applied/complete checkpoint 2 after store loss. The unchanged tracer passes after the shared opener requires existing storage by default. Only first-time main-app bootstrap opts into initialization; production remains fixed after that first green.
+The execution record retains exact commands, source epochs, package logs and native summaries/test trees. The functional red observes the authorized create returning applied/complete checkpoint 2 after store loss. The unchanged tracer passes after the shared opener requires existing storage by default. Only first-time main-app bootstrap opts into initialization; production remains fixed after that first green.
 
 | Qualified surface | Functions | Suites | Invocations | Failures/skips |
 | --- | ---: | ---: | ---: | ---: |

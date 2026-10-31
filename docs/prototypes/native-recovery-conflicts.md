@@ -31,7 +31,7 @@ The unchanged export and addition/Cancel functions each pass per device in the p
 
 All eight original captures from the final conflict runs were inspected. Strict affected Swift lint, Markdown lint, whitespace checks and the final Mac fixture app/test-host build pass. Mac has zero runtime functions. Production code, Core/HTTP, storage schema and portable format are unchanged; no new Core/HTTP runs or delivered-file semantic checks are credited.
 
-The [execution packet](evidence/navigation/native-recovery-conflicts/execution.json) retains final targeted results, complete final capture manifests, selected passing compatibility-function attachments, raw regression results, the launch-failure hierarchy, logs, commands and source/product hashes. Regression attachment manifests intentionally contain only the two credited compatibility functions; the failed bundle's full attachment inventory is not claimed retained.
+The execution packet retains final targeted results, complete final capture manifests, selected passing compatibility-function attachments, raw regression results, the launch-failure hierarchy, logs, commands and source/product hashes. Regression attachment manifests intentionally contain only the two credited compatibility functions; the failed bundle's full attachment inventory is not claimed retained.
 
 ## Remaining gates
 

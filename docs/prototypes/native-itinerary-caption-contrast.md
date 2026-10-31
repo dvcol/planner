@@ -62,13 +62,13 @@ The mobile target compiles at each diagnostic source epoch and after correction.
 
 ## Evidence and visual review
 
-The [observed results](evidence/navigation/native-itinerary-caption-contrast/final-validation/observed-results.json) index all fifteen build/runtime epochs, including failures. Each packet retains its command, result, logs, source/product hashes and available original attachments. The [source comparison](evidence/navigation/native-itinerary-caption-contrast/final-validation/production-source-comparison.json) verifies 149 production Swift inputs per epoch. Before-correction packets differ from the final source only in `SavedItineraryViews.swift`; corrected packets match it.
+The observed results index all fifteen build/runtime epochs, including failures. Each packet retains its command, result, logs, source/product hashes and available original attachments. The source comparison verifies 149 production Swift inputs per epoch. Before-correction packets differ from the final source only in `SavedItineraryViews.swift`; corrected packets match it.
 
-Seventeen original captures were inspected directly and recorded with hashes in the [visual review](evidence/navigation/native-itinerary-caption-contrast/final-validation/visual-review.json). That review includes all four expanded red element captures, the unobscured full scene and all four corrected full scenes. It does not claim every exported attachment was inspected.
+Seventeen original captures were inspected directly and recorded with hashes in the visual review. That review includes all four expanded red element captures, the unobscured full scene and all four corrected full scenes. It does not claim every exported attachment was inspected.
 
-Compare the [expanded light baseline](evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/B65090E5-663E-4AAD-846B-492A85CD3DDE.png) with the [corrected iPad light scene](evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-primary-light/CBBD094D-7E74-433C-9E22-6536967D9D8D.png). The same composition, counts and Entries heading are now readable in primary text. The native List hierarchy, progress and visible Hotel remain intact. The empty detail pane is intentional because this journey selects no Item.
+Compare the expanded light baseline with the corrected iPad light scene. The same composition, counts and Entries heading are now readable in primary text. The native List hierarchy, progress and visible Hotel remain intact. The empty detail pane is intentional because this journey selects no Item.
 
-The corrected [phone light](evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-primary-light/82370377-E23E-409D-A69F-029633019D3E.png), [iPad dark with Increase Contrast](evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-primary-dark-increased/D7DEC4B3-BC4F-490A-B9C7-1F1775F1CD1B.png) and [phone dark](evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-primary-dark/7034335F-5CAD-44A9-82E3-329592DD16B9.png) preserve clear captions and an unobscured Hotel row. The [evidence manifest](evidence/navigation/native-itinerary-caption-contrast/final-validation/evidence-sha256.json) binds the retained files.
+The corrected phone light, iPad dark with Increase Contrast and phone dark preserve clear captions and an unobscured Hotel row. The evidence manifest binds the retained files.
 
 ## Remaining acceptance
 

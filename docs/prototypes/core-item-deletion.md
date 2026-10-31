@@ -18,7 +18,7 @@ Later admission tests passed against that implementation. Five second-writer cas
 
 The final narrow qualification passed 33 Core functions in 23 suites, 15 iOS 27 simulator Core functions in 10 suites, and three macOS 27 HTTP functions in three suites, with no failures or skips. Nine affected Swift files pass strict formatting lint; the targets compile. The first HTTP attempt stopped at compilation because one renamed fixture variable retained its old name. Its corrected retry passed; the only source difference between the two 281-file qualification epochs is that HTTP test file. No additional missing-feature red is claimed for qualification additions.
 
-The [machine-readable evidence](evidence/navigation/core-item-deletion.json) includes commands, logs, result summaries, source hashes and observed behavior. The [simulator summary](evidence/navigation/core-item-deletion-ios27-summary.json) and [HTTP summary](evidence/navigation/mcp-source-deletion-summary.json) retain the actual results. No private database queries or production test-only seams were added.
+The machine-readable evidence includes commands, logs, result summaries, source hashes and observed behavior. The simulator summary and HTTP summary retain the actual results. No private database queries or production test-only seams were added.
 
 ## Implementation and remaining gates
 

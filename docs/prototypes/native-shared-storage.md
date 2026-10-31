@@ -44,7 +44,7 @@ remain distinct from that actual system handoff. CloudKit remains off.
   embedded Share Info plists on both platforms contain the same empty default
   App Group setting. No real group access or provisioning is claimed.
 
-The [evidence](evidence/native-shared-storage/final-validation.json) retains exact
+The evidence retains exact
 commands, source/product hashes, outcomes and original captures. Failed preflight
 and compile-only results retain those scopes.
 
@@ -80,7 +80,7 @@ macOS denies command-line access to the app-container ownership markers. Four
 marked fixtures remain; no files are removed and no permission workaround is
 attempted. Cleanup remains incomplete, separately from the four passing tests.
 
-The [result](evidence/native-shared-storage/app-hosted-2026-10-27/result.json)
+The result
 and retained records preserve that distinction. The earlier standalone and
 compile-only checkpoints keep their original outcomes. Safe data transition,
 entitlement wiring, installed Share and physical/cloud acceptance remain open.
@@ -128,7 +128,7 @@ error with the target redacted by macOS; it does not establish the root cause.
 The user is asked whether Planner appears in the Sharing extensions list.
 No extension election, privacy setting or security policy is changed.
 
-The [evidence](evidence/native-shared-storage/registered-app/result.json) retains
+The evidence retains
 commands, input/product hashes, signature/profile checks, executed test results
 and registration observations. Profile contents, certificates, device IDs and
 unrelated system logs are excluded. Installed Share execution, mobile signing,
@@ -159,7 +159,7 @@ production test hook or provider seam is introduced.
 These are preparation checks, not physical test passes. No installation or
 launch is requested by these commands. Execution awaits the user's reply that
 the device can remain unlocked and idle. The
-[curated evidence](evidence/native-shared-storage/physical-build-ready/result.json)
+curated evidence
 excludes profiles, certificates and device identifiers. Production remains
 local-only; account-transition testing stays deferred. Installed Share and
 actual physical shared-store access remain unqualified until they execute.
@@ -201,7 +201,7 @@ regression coverage, not a second physical device or a full accessibility pass.
 All three distinct original device captures are inspected; the two Locations
 attachments are byte-identical and retained once. Planner is reopened with
 normal launch arguments after the checks. The
-[evidence](evidence/native-shared-storage/physical-core-2026-10-27/result.json)
+evidence
 retains the failed attempts separately from the passing run, without device
 identifiers, raw crash-report personal fields, profiles or certificates.
 
@@ -237,7 +237,7 @@ registration requirement. Apple's
 [extension-key reference](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/AppExtensionKeys.html)
 also documents the current extension-point key. No speculative metadata or
 signing change is made. The
-[diagnostic records](evidence/native-shared-storage/ordinary-mac-2026-10-27/result.json)
+diagnostic records
 retain the clean build, installation hashes and separate registration outcomes.
 
 ## Mac Share discovery checks, 28 October 2026
@@ -259,7 +259,7 @@ cannot establish Planner's failure cause.
 Deprecated AppKit service enumeration also omits Planner for synthetic URL and
 text inputs. No picker is displayed and no service performs sharing; this does
 not qualify the modern native Share menu. The
-[discovery record](evidence/native-shared-storage/discovery-2026-10-28/result.json)
+discovery record
 retains the scoped probe and checks without unrelated full system logs.
 
 No production metadata, certificate, security setting or extension election is
@@ -294,7 +294,7 @@ qualified; the next native check uses that installed app and a separate ShareLin
 source fixture with no embedded extension. It does not recreate a Planner Share
 host copy. Map layout and multi-place work continues
 separately, with production CloudKit disabled and account-transition testing
-still deferred. The [cleanup record](evidence/native-shared-storage/share-cleanup-2026-10-28/result.json)
+still deferred. The cleanup record
 records registry verification and the user-confirmed Settings result separately.
 
 ## Installed native Share picker, 28 October 2026
@@ -326,7 +326,7 @@ Launch Services retains the canonical app/extension pair. The exact PlugInKit
 query still returns no matches. These checks narrow the investigation but do
 not establish a root cause or qualify installed Share launch/save.
 
-The [picker evidence](evidence/native-shared-storage/installed-picker-2026-10-28/result.json)
+The picker evidence
 keeps the clear initial picker capture, exact final fixture sources and bounded
 run outcomes. Raw recent-item hierarchies, the authentication-dialog capture,
 full system logs and signing-resource contents are excluded. No production
@@ -440,7 +440,7 @@ blocked. Compilation supplies no installed-extension execution credit.
 The subsequent MVP focus moves installed Mac Share integration and qualification
 to post-MVP. In-app New Item and From Link or Text remain the Mac capture path.
 The prepared source host and opt-in test are retained in the
-[deferred source/evidence packet](evidence/native-shared-storage/managed-share-restriction-2026-10-28/result.json)
+deferred source/evidence packet
 rather than added to the active fixture target. The fixture app returns exactly
 to its preceding committed source. Existing production Share implementation,
 signing, saved data and the diagnosis remain intact. Further discovery work and
@@ -460,7 +460,7 @@ The existing itinerary creation/relaunch and selected-plan deletion journeys
 are prepared; their runner requires that readiness confirmation before starting.
 No installation or physical execution occurs during this preparation.
 
-The [preparation record](evidence/native-shared-storage/physical-itinerary-ready-2026-10-28/result.json)
+The preparation record
 retains the commands and verification without device identifiers or profile and
 certificate contents. It supplies no physical itinerary, installed Share or sync
 credit. Production CloudKit remains disabled and the account-transition
@@ -484,7 +484,7 @@ the prepared signature checks. No production or test code changes are needed.
 The app is then launched normally without prototype arguments.
 
 All four original captures are inspected and three retained in the
-[execution evidence](evidence/native-shared-storage/physical-itinerary-2026-10-28/result.json).
+execution evidence.
 The native hierarchy reports a 1600-by-1200 main window; the screenshot files
 carry a 3200-by-2400 pixel matrix and EXIF orientation 8. The represented heading,
 review controls and cleared selection are checked, without claiming full-device
@@ -521,7 +521,7 @@ unobstructed, unlocked and awake. The signed build is ready. No account-transiti
 experiment or CloudKit activation is armed. A host-side devicectl lookup warning
 also appears during teardown; no additional device cleanup is claimed.
 
-The [readiness record](evidence/native-map-collection/physical-readiness-2026-10-29/result.json)
+The readiness record
 retains build, signature, execution and source-hash facts. Physical screen content,
 full hierarchies, device identifiers and provisioning contents are excluded.
 
@@ -535,7 +535,7 @@ one failure in 36.876 seconds, exit 65 in 55.298 seconds. Its recording still
 contains a floating video panel and rotation near Save. The persistence outcome
 and physical Map remain unproven.
 
-The [scoped follow-up record](evidence/native-map-collection/viewport-follow-up-2026-10-29/result.json)
+The scoped follow-up record
 retains sanitized results and excludes physical screen content. A new readiness
 request asks for playback to stop and the iPad to rest still, unobstructed,
 unlocked and awake. No further physical UI runs before that confirmation. The

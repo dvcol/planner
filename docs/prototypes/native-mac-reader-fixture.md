@@ -18,7 +18,7 @@ bookmark, and preserves the single Item. The inspected original capture shows
 the page in Planner's detail pane beside its Items catalog. The failed run
 remains a fixture-startup failure, without product UI credit.
 
-The [execution record](evidence/native-reader-mac-fixture-2026-10-28/result.json)
+The execution record
 retains both outcomes, separate input/product epochs, strict signature checks
 and the original capture. Corrected Mac and Simulator builds match 1,169 inputs.
 Separate mobile List presentation edits were present in those snapshots; this

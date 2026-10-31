@@ -34,4 +34,4 @@ Final qualification: 46 Core functions in 22 suites, 86 invocations, pass on bot
 
 Replacement execution, live deletions, restoration, recorded import summaries, unsupported origins/provider values, native forms and direct local-save failure proof remain open. This stage does not complete the import ticket.
 
-Commands, counts, source hashes and retained failures are recorded in [execution evidence](evidence/navigation/core-native-import-additions/execution.json). Earlier [empty restore proof](core-native-import-apply.md), [preview proof](native-delayed-link-result.md) and [loading proof](native-loading-fixture.md) remain applicable.
+Commands, counts, source hashes and retained failures are recorded in execution evidence. Earlier [empty restore proof](core-native-import-apply.md), [preview proof](native-delayed-link-result.md) and [loading proof](native-loading-fixture.md) remain applicable.

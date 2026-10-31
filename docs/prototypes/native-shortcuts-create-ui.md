@@ -49,10 +49,10 @@ changing production filter defaults or cancellation behavior.
 
 ## Final local checkpoint
 
-Both final functions pass on [iPhone](evidence/native-shortcuts-create-ui/shortcuts-create-qualified-phone/boundary-validation.json)
-and [iPad](evidence/native-shortcuts-create-ui/shortcuts-create-tablet/boundary-validation.json),
+Both final functions pass on iPhone
+and iPad,
 four actual executions with no failures, skips or SQLite-unlink diagnostics.
-The [final validation](evidence/native-shortcuts-create-ui/final-validation.json)
+The final validation
 reconciles all 1160 shared workspace inputs, actual built products, source overlays
 and six inspected original captures. Existing discovery, Find, lookup helpers
 and the original AppIntentsTesting case remain byte-identical. The additions
@@ -69,7 +69,7 @@ Shortcut, production test hook, account or signing change is added.
 The six final originals show the empty unfiltered catalog, actual Created dialog
 and saved Item details after relaunch on both devices. These represented light
 scenes do not replace whole-app accessibility, dark-mode or physical acceptance.
-Earlier diagnostics retain their original results in a [lossless archive](evidence/native-shortcuts-create-ui/diagnostics-index.json),
+Earlier diagnostics retain their original results in a lossless archive,
 including the zero-execution compiler failure with no new products qualified.
 Every member was read and hash-compared before duplicate removal. Final packets
 stay separate and source manifests retain their decoded hashes after compression.

@@ -30,7 +30,7 @@ The final inspection function passes once on each simulator, with zero failures 
 
 Strict lint passes for six affected Swift files and this report. The final Mac app/test-host build passes with zero Mac runtime functions. Core, HTTP, schemas and portable formats are unchanged; no new Core/HTTP test runs are credited. The initial failed runs remain excluded from passing qualification. Both failed bundles also log a later diagnostic simctl lookup error; their recorded XCTest failures are the preceding control assertions.
 
-[Execution evidence](evidence/navigation/native-recovery-inspection/execution.json) records commands, raw summaries/test trees, compressed logs, the failed native query hierarchy, original passing captures and source/product hashes.
+Execution evidence records commands, raw summaries/test trees, compressed logs, the failed native query hierarchy, original passing captures and source/product hashes.
 
 ## Remaining gates
 

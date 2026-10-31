@@ -47,9 +47,9 @@ SQLite unlink diagnostics. These counts describe test functions, including
 parameterized functions, rather than an inflated count of their assertions.
 
 Evidence is under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/),
+`native-membership-consolidation`,
 in `native-owned-content-link-*` and `native-owned-content-links-*` packets.
-The [validation record](evidence/native-membership-consolidation/native-owned-content-links-validation.json)
+The validation record
 reconciles final inputs/products and records lossless manifest compression.
 The first green attempt retained one faulty fixture expectation about unrelated
 Item lifetimes; the corrected expectation compares the entire original set.

@@ -46,6 +46,6 @@ The final builds each record 945 compiler inputs and six products. Each native i
 
 ## Evidence and remaining gates
 
-[The evidence packet](evidence/navigation/native-capture-estimate-shortcuts/) retains literal exits, compressed logs, source/product hashes, original named captures and the bounded audit. [Itinerary qualification](native-itinerary-estimate-shortcuts.md) links the earlier rich-draft resizing, Item and List results, each with its own source epoch. The extended Capture test replaces the earlier test name; earlier passing packets remain historical evidence of their original test source.
+The evidence packet retains literal exits, compressed logs, source/product hashes, original named captures and the bounded audit. [Itinerary qualification](native-itinerary-estimate-shortcuts.md) links the earlier rich-draft resizing, Item and List results, each with its own source epoch. The extended Capture test replaces the earlier test name; earlier passing packets remain historical evidence of their original test source.
 
 Q94 label navigation is the next pending presentation choice. Whole-app polish follows feature completion. Mac UI automation remains unqualified for this slice, and compiler success does not replace it. Signing, physical devices, account transitions, CloudKit convergence, Share, accessibility, large-catalog retention/memory, scrolling hitches and physical latency remain open. No issue or whole-map gate is closed by these checks.

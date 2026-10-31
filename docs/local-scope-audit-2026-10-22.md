@@ -10,7 +10,7 @@ contracts remain intact.
 
 At `bd25816e`, the map index emphasizes import decisions, Mac automation and signing gates. Those gates do not cover every unfinished requirement. This audit compares the retained product brief and accepted contracts with production scenes, Core interfaces and executed tests. Its goal is an accurate implementation frontier, without reducing scope or treating a compilation result as feature completion.
 
-The [release goals](release-goals.md) retain the [product brief](product-brief.md) as a scope reference. The [historical exclusions](history/decision-map-2026-10-22.md) defer embedded Google Maps and Apple Calendar export. They do not defer the filtered native map or embedded linked webpages. Backup and recovery administration remain manual.
+The [release goals](release-goals.md) retain the [product brief](product-brief.md) as a scope reference. The historical exclusions defer embedded Google Maps and Apple Calendar export. They do not defer the filtered native map or embedded linked webpages. Backup and recovery administration remain manual.
 
 ## Filtered native map
 

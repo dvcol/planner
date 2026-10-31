@@ -32,7 +32,7 @@ retains the actual Safari request records and other screenshots separately.
 These checks establish the represented linked-content handoff and current
 return context, not all browser policies or whole-app accessibility.
 
-[Final verification](evidence/native-itinerary-browser-handoff/final-validation.json)
+Final verification
 records the exact cohort and scope. First-party cookie persistence already has
 its own [viewer-closure and relaunch qualification](native-webpage-cookies.md#final-local-qualification),
 so it is not rerun for this source-only test extension.

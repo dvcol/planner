@@ -36,7 +36,7 @@ do not close that warning or establish complete accessibility. The permanent
 functional journey has no audit-suppression handler and claims no clipping-audit
 pass. Production search, persistence and Core behavior are unchanged.
 
-[The execution evidence](evidence/native-search-accessibility/final-validation.json)
+The execution evidence
 separates the failed clipping/presentation probes from final functional checks.
 Human/assistive UI review, actual Mac interaction and signed/physical tests
 remain open. Signing stays deferred and advanced portability remains post-MVP.
@@ -84,12 +84,12 @@ The iPad also retains its Itinerary query across destinations. Ordinary dark
 phone checks cover query/Clear, row completion/relaunch and the existing Map
 flow; ordinary iPad retains its native minimized Map search and exact pin.
 
-The [compact review packet](evidence/native-search-accessibility/responsive-2026-10-30/review.json)
+The compact review packet
 separates diagnostic trials from final credit. All production inputs match the
 final workspace. A later Map-controller-only adjustment restores the original
 non-sheet native-button path and is separately qualified on ordinary iPad.
-The inspected [phone query](evidence/native-search-accessibility/responsive-2026-10-30/final-phone-query.png)
-and [iPad title](evidence/native-search-accessibility/responsive-2026-10-30/final-ipad-title.png)
+The inspected phone query
+and iPad title
 confirm wrapping input and a readable narrow-pane title.
 
 Strict affected Swift lint, whitespace checks, simulator/Mac/signed-mobile
@@ -114,7 +114,7 @@ receives no passing Map credit here. The unchanged Inbox query/Clear journey
 passes in 88.761 seconds and Itinerary query retention passes in 51.986 seconds,
 both in actual dark mode at the largest accessibility text size. Inspected
 captures retain a readable Inbox title and the query editor. The
-[review packet](evidence/native-search-accessibility/overflow-2026-10-31/review.json)
+review packet
 separates the original menu failure, partial route progress and passing search
 regressions. Simulator compilation, strict affected-file formatting and
 whitespace checks pass. Mac runtime, physical use and broader acceptance retain

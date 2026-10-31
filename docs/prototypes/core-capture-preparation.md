@@ -37,6 +37,6 @@ The first budget draft incorrectly applied the native 32-provider bound to direc
 
 Mac and iPhone Simulator each passed 145 affected Core functions in 67 suites, covering 386 invocations. Native HTTP passed 16 functions in four suites, covering 22 invocations. Failures and skips were zero. Three affected Swift files passed strict lint. The native Mac app and navigation test host compiled successfully. Both read-only review rechecks found no remaining confirmed findings.
 
-[Evidence](evidence/navigation/core-capture-preparation/execution.json) records exact commands, completed native result summaries, source hashes and red/green traces. No native UI runtime or physical capture/Share execution is claimed.
+Evidence records exact commands, completed native result summaries, source hashes and red/green traces. No native UI runtime or physical capture/Share execution is claimed.
 
 Remaining capture work includes Core-owned NSItemProvider loading/provenance, provider limits and lifecycle, update/remove/retry, Maps lookup and obsolete-result handling, reviewed create/reuse with atomic memberships and durable recovery, native review/Share/Intent/MCP integration, and physical sender/extension evidence. Import reconciliation/results/forms, direct database-save failure, Calendar, scale/paging and final native UI polish remain open.

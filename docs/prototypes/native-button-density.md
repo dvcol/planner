@@ -40,7 +40,7 @@ The initial iPad failures expose controller assumptions. Returning from Calendar
 
 Mac builds pass, but actual execution times out while enabling automation mode with XCTFuture error 1000 before any Test Case. App and runner signatures verify. The read-only console probe does not establish lock state; the user's awake/unlocked/idle availability answer is pending. No new Mac runtime credit is claimed for this refinement, and no permission or signing changes are performed.
 
-Source/product hashes, exact commands, logs, original captures and inspection records are retained under [navigation compatibility evidence](evidence/navigation/native-itinerary-window-compatibility/). Compiler evidence alone does not establish usable controls or appearance acceptance.
+Source/product hashes, exact commands, logs, original captures and inspection records are retained under navigation compatibility evidence. Compiler evidence alone does not establish usable controls or appearance acceptance.
 
 ## Remaining scope
 

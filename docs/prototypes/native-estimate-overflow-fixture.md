@@ -36,4 +36,4 @@ The ordinary iOS app/UI host, ordinary Mac app and Mac fixture app/UI host compi
 
 The first fixture build ran out of disk space before the test executed; it is not runtime red evidence. The completed tablet catalog DerivedData cache was removed while its separate result bundles, logs and captures were retained. The unchanged single fixture regression was then retried. An unsigned Mac UI attempt produced no test-start output for over four minutes and was interrupted. Its ad hoc retry could not overwrite the generated test binary. These attempts are retained separately and do not qualify native runtime.
 
-The [execution record](evidence/navigation/native-estimate-overflow-fixture/) contains exact bundles, commands, source/configuration hashes and inspected captures. Q52 provider scenarios, broader native Mac journeys and the other map gates remain open.
+The execution record contains exact bundles, commands, source/configuration hashes and inspected captures. Q52 provider scenarios, broader native Mac journeys and the other map gates remain open.

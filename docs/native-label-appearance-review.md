@@ -12,7 +12,7 @@ Apple supplies a native [ColorPicker](https://developer.apple.com/documentation/
 
 Modern cross-platform [Color resolution](https://developer.apple.com/documentation/swiftui/color/resolved) exposes nonlinear sRGB components as Float. Exact existing PlannerColor Double values must not be round-tripped through that representation unless the user changes the color. Extended-gamut color selection also needs explicit sRGB conversion and finite/range validation. The current content contract rejects invalid components rather than silently clamping them. Clearing color or icon remains an explicit choice.
 
-The [read-only SDK observation](prototypes/evidence/navigation/native-itinerary-window-compatibility/native-label-appearance-sdk-facts/agent-sdk-observation.json) retains the probe, exact commands and reported exits for macOS 27 and iOS 27. The agent's original tool output reported nonfatal sandbox messages and exit 0 for both. Root inspected the retained source without rerunning it. This is declaration evidence only, not picker behavior or runtime color conversion. No account or signing settings changed.
+The read-only SDK observation retains the probe, exact commands and reported exits for macOS 27 and iOS 27. The agent's original tool output reported nonfatal sandbox messages and exit 0 for both. Root inspected the retained source without rerunning it. This is declaration evidence only, not picker behavior or runtime color conversion. No account or signing settings changed.
 
 ## Accepted decision
 

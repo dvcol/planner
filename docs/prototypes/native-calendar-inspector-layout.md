@@ -54,6 +54,6 @@ Final compiler manifests each contain 945 inputs and six products. The final run
 
 ## Evidence and remaining work
 
-[The evidence packet](evidence/navigation/native-calendar-inspector-layout/) retains actual exits, logs, source snapshots/hashes, compiler products, original images, observed Schedule identity/caption and width attachments, and the bounded audit. The [picker qualification](native-item-picker-archive.md) links on-demand selection, earlier rich-draft resizing, estimates and creation evidence, each with its own source epoch.
+The evidence packet retains actual exits, logs, source snapshots/hashes, compiler products, original images, observed Schedule identity/caption and width attachments, and the bounded audit. The [picker qualification](native-item-picker-archive.md) links on-demand selection, earlier rich-draft resizing, estimates and creation evidence, each with its own source epoch.
 
 The recorded Calendar view is Month. Day/Week resizing, compact phone navigation, actual Mac window dragging/runtime, split-screen/Stage Manager, keyboard/accessibility, physical-device performance and human layout acceptance remain separate. No production change, scheduling mutation, signing work or whole-app polish is included. Q94 label presentation and Q95 native catalog windows remain unanswered. No issue or whole-map gate is closed.

@@ -16,7 +16,7 @@ The focused command built the Mac app/test products and launched the UI-test run
 
 Read-only developer-security status reports disabled. Filtered runner/testmanager error logs contain only their output header. Neither observation establishes why startup did not reach the journey. The interruption itself is agent-requested, not a naturally observed startup timeout. No developer-security, automation, signing or system setting was changed. No native Computer Use was invoked.
 
-The [execution record](evidence/navigation/native-mac-membership-probe/execution.json) retains the exact command, raw summary/tree, lossless original log, pre-run source/configuration hashes, stop observation and product hashes. The pre-run 94 source/configuration files remain unchanged. The later unavailable-store fixture work is outside those recorded native app/test sources.
+The execution record retains the exact command, raw summary/tree, lossless original log, pre-run source/configuration hashes, stop observation and product hashes. The pre-run 94 source/configuration files remain unchanged. The later unavailable-store fixture work is outside those recorded native app/test sources.
 
 ## Remaining gates
 

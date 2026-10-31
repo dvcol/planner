@@ -13,7 +13,7 @@ membership again keeps two. Original appearance identities, independent local
 completion and the two-List summary survive relaunch. The existing empty-list
 destination journey additionally proves "Not in a list" before and after Cancel.
 
-The [validation record](evidence/native-item-list-summary/final-validation.json)
+The validation record
 retains the deliberate red, two passing phone executions and two passing
 dark-iPad executions. Four originals are inspected and retained. Phone's later
 zero-List assertions and a capture-call formatting correction have explicit

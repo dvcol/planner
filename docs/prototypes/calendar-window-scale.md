@@ -45,7 +45,7 @@ The final affected Core run passes 32 invocations across 11 suites. It covers Ca
 
 No native UI journey ran for this Core-only step. The macOS app and HTTP test host compile as part of the real HTTP run. Physical device, CloudKit and account-recovery evidence is unchanged.
 
-[Execution evidence](evidence/navigation/calendar-window-scale/execution.json) retains the exact probe, public export templates, compressed fixture, measured SQL logs and summaries. `generate-fixture.py` reconstructs the exact 5,118,801-byte input and checks its hash. The archived probe expects that input at `/private/tmp/PlannerCalendarScale5000.json`; its result path is fixed, so copy each result before another run. Rebuild its temporary package against the intended checkout before comparing versions.
+Execution evidence retains the exact probe, public export templates, compressed fixture, measured SQL logs and summaries. `generate-fixture.py` reconstructs the exact 5,118,801-byte input and checks its hash. The archived probe expects that input at `/private/tmp/PlannerCalendarScale5000.json`; its result path is fixed, so copy each result before another run. Rebuild its temporary package against the intended checkout before comparing versions.
 
 ## Remaining gates
 

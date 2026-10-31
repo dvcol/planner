@@ -32,7 +32,7 @@ The final new suite passes seven cases in 0.755 seconds. The affected run passes
 
 Mac, the actual Simulator app/native UI-test target and unsigned generic device builds pass. All three verify 1025 identical frozen inputs. Only the native Link file and shared test-helper visibility change among previous inputs; one new test file is added. Every other prior input remains unchanged. Native metadata has 49 actions and the original eight entities/queries. The two additions have correctly typed required owner/Link fields, optional URL/label Strings and dialog-only outputs. All 47 prior parameter/output contracts, entity properties and enum cases remain unchanged. Only the Link query's advertised search capability changes. The device app embeds one arm64 mobile Share extension alongside its arm64 app. Strict affected Swift/Markdown lint and platform type checks pass.
 
-The [evidence directory](evidence/navigation/native-itinerary-window-compatibility/) retains `app-intent-edit-links-*` packets with original commands, exits, logs, source overlays/hashes, result summaries, before/after query metadata, catalogs, product checks and fixture-lifecycle reports.
+The evidence directory retains `app-intent-edit-links-*` packets with original commands, exits, logs, source overlays/hashes, result summaries, before/after query metadata, catalogs, product checks and fixture-lifecycle reports.
 
 ## Remaining map work
 

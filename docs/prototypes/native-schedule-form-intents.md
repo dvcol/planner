@@ -22,7 +22,7 @@ The [civil input and replacement contract](../native-schedule-civil-intent-contr
 
 ## Qualification
 
-The final hosted invocation passes **68 tests, 0 failures and 0 skipped**: 20 new creation/replacement/safety cases and 48 affected Schedule read, end, zone, removal, provider and clock regressions. [Its original packet](evidence/navigation/native-itinerary-window-compatibility/app-intent-schedule-form-final/) retains selected commands, the actual result summary, source hashes and verified fixture closure.
+The final hosted invocation passes **68 tests, 0 failures and 0 skipped**: 20 new creation/replacement/safety cases and 48 affected Schedule read, end, zone, removal, provider and clock regressions. Its original packet retains selected commands, the actual result summary, source hashes and verified fixture closure.
 
 The new cases establish:
 
@@ -33,11 +33,11 @@ The new cases establish:
 - Missing, wrong-kind, removed, precancelled and unavailable selections fail without substitution, resurrection or partial changes.
 - Actual precommit recovery-filesystem faults leave each of the six actions unapplied. Actual post-save obstruction retains each whole result, blocks later changes and repairs its original operation without duplicating or reapplying the booking.
 
-Metadata verifies six new actions returning Schedule entities, required typed targets, native date/dateTime kinds, optional ends and no occurrence defaults. All previous 75 action contracts, entity properties, queries, enums and four discoverable shortcuts remain unchanged; the Earlier/Later enum is the sole new enum. Mac, Simulator and unsigned-device builds and extraction report 81 actions from the same 1,056 hashed source inputs. Strict lint on six affected Swift files, documentation lint and whitespace checks pass. [Final validation](evidence/navigation/native-itinerary-window-compatibility/app-intent-schedule-form-final/final-validation.json) retains their commands and exits.
+Metadata verifies six new actions returning Schedule entities, required typed targets, native date/dateTime kinds, optional ends and no occurrence defaults. All previous 75 action contracts, entity properties, queries, enums and four discoverable shortcuts remain unchanged; the Earlier/Later enum is the sole new enum. Mac, Simulator and unsigned-device builds and extraction report 81 actions from the same 1,056 hashed source inputs. Strict lint on six affected Swift files, documentation lint and whitespace checks pass. Final validation retains their commands and exits.
 
 ## Red/green evidence
 
-Missing-action compiler reds precede each creation/replacement family and its green run. The first timed Item red also produced cascading type-inference diagnostics, corrected with an explicit expected form type. A separate [contradictory-fields red](evidence/navigation/native-itinerary-window-compatibility/app-intent-schedule-civil-contradiction-red/) demonstrated a real adapter validation gap: a mismatched weekday could create a booking. Exact supplied-field comparison fixes it while continuing to ignore the embedded timezone. The original failed run remains failed and has separate verified disposal of its closed fixture. Subsequent input and final suites pass.
+Missing-action compiler reds precede each creation/replacement family and its green run. The first timed Item red also produced cascading type-inference diagnostics, corrected with an explicit expected form type. A separate contradictory-fields red demonstrated a real adapter validation gap: a mismatched weekday could create a booking. Exact supplied-field comparison fixes it while continuing to ignore the embedded timezone. The original failed run remains failed and has separate verified disposal of its closed fixture. Subsequent input and final suites pass.
 
 Each early green receives only its actual selected-case credit. No passing compiler result, declared metadata or store fixture is represented as actual system Shortcuts invocation.
 

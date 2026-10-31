@@ -28,7 +28,7 @@ After this tracer passes unchanged, qualify invalid/unknown/acknowledged proposa
 
 ## Qualification
 
-The [record](evidence/navigation/core-recovery-proposal-selection.json) retains exact commands, source epochs, native result summaries/test trees and the package logs. The functional tracer failed at the explicit unavailable proposal-selection response, then passed with unchanged test bytes. Production remains fixed after that first green; later admission tests extend the same public/file boundary.
+The record retains exact commands, source epochs, native result summaries/test trees and the package logs. The functional tracer failed at the explicit unavailable proposal-selection response, then passed with unchanged test bytes. Production remains fixed after that first green; later admission tests extend the same public/file boundary.
 
 | Qualified surface | Functions | Suites | Invocations | Failures/skips |
 | --- | ---: | ---: | ---: | ---: |

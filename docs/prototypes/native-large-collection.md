@@ -55,4 +55,4 @@ The current-source Mac fixture/test-host compilation and ordinary app build both
 
 The original iPad captures still show a catalog heading clipped beneath its native toolbar. App-wide adaptive polish remains open.
 
-The [evidence packet](evidence/navigation/native-large-collection/execution.json) separates setup errors, diagnostic attempts, superseded source revisions and final runs. Its commands, source and product hashes, raw compressed logs, result summaries and original images make those boundaries reviewable.
+The evidence packet separates setup errors, diagnostic attempts, superseded source revisions and final runs. Its commands, source and product hashes, raw compressed logs, result summaries and original images make those boundaries reviewable.

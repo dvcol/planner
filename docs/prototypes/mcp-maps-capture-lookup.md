@@ -28,7 +28,7 @@ Controlled provider I/O then qualified preview field encoding, unchanged owned c
 
 The final affected run passed 29 functions across eight suites, with 37 invocations and no failures or skips. The five new lookup functions cover six invocations; the rejection matrix additionally exercises ten distinct requests within one function. The macOS app and native test host compiled in that run. Three affected Swift files passed strict lint. The result bundle and normalized Swift Testing log agree on the completed outcomes; the log records the parameter invocations separately.
 
-The named lookup fixture directories were cleaned after both the test command and its logged native host process had exited. No live native store was unlinked by a test function. [Execution evidence](evidence/navigation/mcp-maps-lookup/execution.json) records the exact commands, completed bundle summaries, diagnostics, source hashes and artifacts. Both source and spec reviews found no remaining confirmed findings and independently verified all eight source and ten artifact hashes.
+The named lookup fixture directories were cleaned after both the test command and its logged native host process had exited. No live native store was unlinked by a test function. Execution evidence records the exact commands, completed bundle summaries, diagnostics, source hashes and artifacts. Both source and spec reviews found no remaining confirmed findings and independently verified all eight source and ten artifact hashes.
 
 ## Remaining map gates
 

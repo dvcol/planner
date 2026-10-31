@@ -5,46 +5,127 @@ implemented locally; final native, physical and accessibility acceptance remains
 open in the canonical decision map. The newer implementation/evidence checkpoint
 has not yet been published to the remote branch.
 
-- [Native personal planner decision map](https://github.com/dvcol/planner/issues/1) is the canonical plan. Read it first when continuing the project.
-- [Product brief](docs/product-brief.md) preserves the original requirements. The map records the agreed scope refinements.
-- [Working through the map](docs/wayfinding.md) defines ticket readiness, completion, research, prototypes, and `/tdd` expectations.
-- [Release goals](docs/release-goals.md) records the accepted V0–V3 stages, native platform expectations, and quality gates. V2 is the first daily-use release; there is no deadline.
-- [Glossary](GLOSSARY.md) records the planner's domain terms. [Planner vocabulary](docs/planner-vocabulary.md) records accepted state, membership, shared-label and reference behavior, with concrete future test obligations.
-- [Duration and search](docs/duration-and-search.md) records accepted estimate units/pickers, cumulative filters, lexical matching, remembered sort controls and long-list quality gates. [Search fixtures](docs/search-fixtures.md) supplies exact future test inputs and result sequences.
-- [Itineraries and scheduling](docs/itineraries-and-scheduling.md) records flat composition, repeated live references with independent local completion, schedule forms and instant-preserving planning-zone edits. [Completion scopes](docs/completion-scopes.md) records global precedence and local-only bulk actions; progress counts independently completed item appearances, including repeats.
-- [Offline conflicts and recovery](docs/offline-conflicts-and-recovery.md) records Archive plus confirmed Delete with no Trash, contextual completion retention, deletion precedence, unique memberships, converged order, data-only JSON backups, reviewed Skip/Overwrite imports, whole-invalid-file rejection, separate account recovery and truthful save/status policy. Concrete future tests distinguish product requirements from unproven Apple runtime behavior.
-- [URL and share capture](docs/url-and-share-capture.md) records accepted link/identifier-first capture, editable review, text/mixed-input handling, destinations, duplicate/reuse choices, temporary lookup previews, cancellation/replay and local save behavior. Exact public interfaces/limits and native UI/runtime proof remain architecture, contract and prototype gates.
-- [Core architecture](docs/core-architecture.md) records accepted A1-A22. The [approved blueprint](docs/architecture-blueprint.md) fixes project/package ownership, records and focused native commands. The [approved architecture packet](docs/architecture-review-packet.md) defines concrete public fields/methods, native validation, reference/provenance ownership and prototype evidence. Runnable projects, compilation and runtime feasibility remain prototype gates.
-- [Shared command contracts](docs/shared-command-contracts.md) records accepted integration authority, wire formats, capture limits, Agent Control and MCP client behavior. Its Contract Q1-Q26 choices are accepted with the later amendment removing maximum duration, idle expiry and countdown: access stays enabled until Stop or app quit. Q27 selects field-hash edit guards and Q28 accepts a same-app credential reader. Q30 C removes extra app-imposed client/request caps, retaining concurrent-client proof and measured capacity. Q29 selects the official Swift SDK and its supported sessionless HTTP baseline. Q33 A accepts the complete contract packet. Actual client compatibility remains a prototype gate; approved Core behavior carries forward.
-- [Swift MCP SDK comparison](docs/research/swift-mcp-sdk-options.md) distinguishes official sessionless HTTP from complete modern protocol support. It records released native alternatives, pinned source/test/CI evidence and concurrent-client defects that the prototype must qualify. It supplied the evidence for the later accepted official-SDK choice and does not claim Planner runtime proof.
-- [Content and credential-reader declarations](docs/content-and-reader-review.md) specify the source-content/hash catalog under the delegated Q27 guard and the accepted Q32 A same-app Keychain reader with authenticated SDK ping. Q31's repeated conflict question is withdrawn; Q33 A accepts the complete packet. Native value, reader, store and client tests are future obligations.
-- [Adapter contract](docs/adapter-contract.md) declares ordinary commands, reads, review/results, capture and native status through PlannerCore. [Portable data and recovery contract](docs/portable-data-contract.md) declares versioned data-only backup, whole-owner import, original-association Undo and separate recovery evidence. Q33 A accepts their fixed interfaces and inputs/expected outcomes for prototype work; native implementation and runtime proof remain open.
+[Validation status](docs/validation.md) records current results and limits. Raw
+logs, screenshots and test bundles are temporary and discarded after review.
 
-The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and native MapKit, targeting iOS, iPadOS, and macOS 27 or newer. Shared domain services will support the UI, App Intents, and manually enabled localhost MCP access.
+- [Native personal planner decision map](https://github.com/dvcol/planner/issues/1)
+  is the canonical plan. Read it first when continuing the project.
+- [Product brief](docs/product-brief.md) preserves the original requirements.
+  The map records the agreed scope refinements.
+- [Working through the map](docs/wayfinding.md) defines ticket readiness,
+  completion, research, prototypes, and `/tdd` expectations.
+- [Release goals](docs/release-goals.md) records the accepted V0–V3 stages,
+  native platform expectations, and quality gates. V2 is the first daily-use
+  release; there is no deadline.
+- [Glossary](GLOSSARY.md) records the planner's domain terms.
+  [Planner vocabulary](docs/planner-vocabulary.md) records accepted state,
+  membership, shared-label and reference behavior, with concrete future test
+  obligations.
+- [Duration and search](docs/duration-and-search.md) records accepted estimate
+  units/pickers, cumulative filters, lexical matching, remembered sort controls
+  and long-list quality gates. [Search fixtures](docs/search-fixtures.md)
+  supplies exact future test inputs and result sequences.
+- [Itineraries and scheduling](docs/itineraries-and-scheduling.md) records flat
+  composition, repeated live references with independent local completion,
+  schedule forms and instant-preserving planning-zone edits.
+  [Completion scopes](docs/completion-scopes.md) records global precedence and
+  local-only bulk actions; progress counts independently completed item
+  appearances, including repeats.
+- [Offline conflicts and recovery](docs/offline-conflicts-and-recovery.md)
+  records Archive plus confirmed Delete with no Trash, contextual completion
+  retention, deletion precedence, unique memberships, converged order, data-only
+  JSON backups, reviewed Skip/Overwrite imports, whole-invalid-file rejection,
+  separate account recovery and truthful save/status policy. Concrete future
+  tests distinguish product requirements from unproven Apple runtime behavior.
+- [URL and share capture](docs/url-and-share-capture.md) records accepted
+  link/identifier-first capture, editable review, text/mixed-input handling,
+  destinations, duplicate/reuse choices, temporary lookup previews,
+  cancellation/replay and local save behavior. Exact public interfaces/limits
+  and native UI/runtime proof remain architecture, contract and prototype gates.
+- [Core architecture](docs/core-architecture.md) records accepted A1-A22. The
+  [approved blueprint](docs/architecture-blueprint.md) fixes project/package
+  ownership, records and focused native commands. The
+  [approved architecture packet](docs/architecture-review-packet.md) defines
+  concrete public fields/methods, native validation, reference/provenance
+  ownership and prototype evidence. Runnable projects, compilation and runtime
+  feasibility remain prototype gates.
+- [Shared command contracts](docs/shared-command-contracts.md) records accepted
+  integration authority, wire formats, capture limits, Agent Control and MCP
+  client behavior. Its Contract Q1-Q26 choices are accepted with the later
+  amendment removing maximum duration, idle expiry and countdown: access stays
+  enabled until Stop or app quit. Q27 selects field-hash edit guards and Q28
+  accepts a same-app credential reader. Q30 C removes extra app-imposed
+  client/request caps, retaining concurrent-client proof and measured capacity.
+  Q29 selects the official Swift SDK and its supported sessionless HTTP
+  baseline. Q33 A accepts the complete contract packet. Actual client
+  compatibility remains a prototype gate; approved Core behavior carries
+  forward.
+- [Swift MCP SDK comparison](docs/research/swift-mcp-sdk-options.md)
+  distinguishes official sessionless HTTP from complete modern protocol support.
+  It records released native alternatives, pinned source/test/CI evidence and
+  concurrent-client defects that the prototype must qualify. It supplied the
+  evidence for the later accepted official-SDK choice and does not claim Planner
+  runtime proof.
+- [Content and credential-reader declarations](docs/content-and-reader-review.md)
+  specify the source-content/hash catalog under the delegated Q27 guard and the
+  accepted Q32 A same-app Keychain reader with authenticated SDK ping. Q31's
+  repeated conflict question is withdrawn; Q33 A accepts the complete packet.
+  Native value, reader, store and client tests are future obligations.
+- [Adapter contract](docs/adapter-contract.md) declares ordinary commands,
+  reads, review/results, capture and native status through PlannerCore.
+  [Portable data and recovery contract](docs/portable-data-contract.md) declares
+  versioned data-only backup, whole-owner import, original-association Undo and
+  separate recovery evidence. Q33 A accepts their fixed interfaces and
+  inputs/expected outcomes for prototype work; native implementation and runtime
+  proof remain open.
 
-The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses the committed `Planner.xcodeproj` and local `Packages/PlannerCore` Swift package. Open the project in Xcode and use the shared `PlannerNavigation` scheme for the app and native UI journeys. The default scene opens saved local Lists and Items. Create an Item with title/notes, complete or reopen it in its detail view, and add an existing Item to a List without copying it. Select a List row to open its contextual details; use its circle to complete that entry and its actions menu to view the global Item. Nonempty Lists show native progress. Reorder a saved List with mobile Edit handles or Mac row drag-and-drop; the row's context menu also offers Move to Beginning/End. Order and local completion survive relaunch. [Native qualification](docs/prototypes/navigation-local-qualification.md) records the exact tested revisions and remaining runtime gates.
+The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and
+native MapKit, targeting iOS, iPadOS, and macOS 27 or newer. Shared domain
+services will support the UI, App Intents, and manually enabled localhost MCP
+access.
+
+The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses
+the committed `Planner.xcodeproj` and local `Packages/PlannerCore` Swift
+package. Open the project in Xcode and use the shared `PlannerNavigation` scheme
+for the app and native UI journeys. The default scene opens saved local Lists
+and Items. Create an Item with title/notes, complete or reopen it in its detail
+view, and add an existing Item to a List without copying it. Select a List row
+to open its contextual details; use its circle to complete that entry and its
+actions menu to view the global Item. Nonempty Lists show native progress.
+Reorder a saved List with mobile Edit handles or Mac row drag-and-drop; the
+row's context menu also offers Move to Beginning/End. Order and local completion
+survive relaunch.
+[Native qualification](docs/prototypes/navigation-local-qualification.md)
+records the exact tested revisions and remaining runtime gates.
 
 The earlier read-only navigation comparison remains available with
 `./scripts/navigation-prototype.sh phone`, `tablet` or `mac`, or the Mac's
 Prototype menu. The launcher passes `--navigation-prototype`. For an isolated
-local review dataset, pass `--local-prototype-dataset <UUID>` to the default scene.
-Reusing that UUID reopens its saved data. These isolated prototypes use local
-storage. The normal app/Share path now uses the configured shared local store
-and private CKSyncEngine transport. Normal
-physical iPhone/iPad sync and installed iPad Safari Share pass; other physical
-senders and final platform/assistive review remain open.
+local review dataset, pass `--local-prototype-dataset <UUID>` to the default
+scene. Reusing that UUID reopens its saved data. These isolated prototypes use
+local storage. The normal app/Share path now uses the configured shared local
+store and private CKSyncEngine transport. Normal physical iPhone/iPad sync and
+installed iPad Safari Share pass; other physical senders and final
+platform/assistive review remain open.
 
 For development signing, copy `Configuration/Local.example.xcconfig` to
 `Configuration/Local.xcconfig` and select your development team. The registered
 app and App Group defaults are `dvcol.planner` and `group.dvcol.planner`.
 Another team must supply its own provisioned identifiers. Main and Share select
-the same local shared store. The [shared-storage checkpoint](docs/prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026)
+the same local shared store. The
+[shared-storage checkpoint](docs/prototypes/native-shared-storage.md#registered-app-checkpoint-27-october-2026)
 and [private-sync deployment](docs/prototypes/private-sync-deployment.md) retain
 the actual integration, normal physical-sync results and remaining limits.
 
-Open decisions are native child issues of the map, with native blocking dependencies. Start with the first unblocked, unassigned child, or the decision named by the user.
+Open decisions are native child issues of the map, with native blocking
+dependencies. Start with the first unblocked, unassigned child, or the decision
+named by the user.
 
-[Whole-application native UI polish](https://github.com/dvcol/planner/issues/23) follows feature completion. Its [Context, DoR, DoD and validation plan](docs/native-ui-polish.md) cover the finished iPhone, iPad and Mac scenes with native SwiftUI components, actual captures and accessibility/device review.
+[Whole-application native UI polish](https://github.com/dvcol/planner/issues/23)
+follows feature completion. Its
+[Context, DoR, DoD and validation plan](docs/native-ui-polish.md) cover the
+finished iPhone, iPad and Mac scenes with native SwiftUI components, actual
+captures and accessibility/device review.
 
 Planner's own calendar and private iCloud synchronization are in the core MVP.
 Further JSON portability work is post-MVP under the accepted release amendment.

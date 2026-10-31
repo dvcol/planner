@@ -18,7 +18,7 @@ The journey must observe duplicate bookmarks, generated source/membership identi
 
 ## Results
 
-The [evidence packet](evidence/navigation/mcp-item-in-list-creation/) records commands, source exports, overlays, binaries and original output for every epoch. Exports use committed base `e3426aa` with only the two MCP production files and the new HTTP test file overlaid; unfinished native UI code is excluded.
+The evidence packet records commands, source exports, overlays, binaries and original output for every epoch. Exports use committed base `e3426aa` with only the two MCP production files and the new HTTP test file overlaid; unfinished native UI code is excluded.
 
 `creation-behavior-red` reaches the real listener and fails because destination-bearing creation is rejected. `creation-green` passes after decoding the optional destination. `review-red` keeps that first journey passing and fails because ordinary creation has no HTTP review. `review-qualified` passes both journeys after routing and roundtrip encoding are added.
 

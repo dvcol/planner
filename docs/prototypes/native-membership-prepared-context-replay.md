@@ -16,11 +16,11 @@ The first sixteen cases failed on preceding production. Eighteen then passed wit
 
 ## Final local checkpoint
 
-The [matched verification](evidence/native-membership-consolidation/prepared-context-validation.json) records 256 functions, 90 suites and 758 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual products and current source hashes are verified. All 514 frozen fixtures and nineteen model source files remain unchanged; four changed Swift files pass strict formatting.
+The matched verification records 256 functions, 90 suites and 758 invocations on each of Mac and iPhone Simulator, with no skips or SQLite lifetime diagnostics. All 809 Core inputs match; the full phone manifest contains 1,148 inputs. Actual products and current source hashes are verified. All 514 frozen fixtures and nineteen model source files remain unchanged; four changed Swift files pass strict formatting.
 
 Seven existing real MCP HTTP regressions pass, and the Mac app, Share extension and fixture app compile against the same current inputs. The separate isolated native bulk save-failure test uses the final Mac products and verifies rollback/retry for List, Itinerary and List-branch scopes. Its actual child log is retained. These adapter checks do not establish an alias-specific HTTP journey or actual Siri/Shortcuts invocation.
 
-[Eight retained phases](evidence/native-membership-consolidation/prepared-context-attempts.json) preserve actual failures, source/product manifests and raw logs. Passing marked disposable stores are removed only after the original logs establish success and the verifier confirms exited hosts and closed database handles. Failed phases remain available for diagnosis.
+Eight retained phases preserve actual failures, source/product manifests and raw logs. Passing marked disposable stores are removed only after the original logs establish success and the verifier confirms exited hosts and closed database handles. Failed phases remain available for diagnosis.
 
 ## Remaining scope
 

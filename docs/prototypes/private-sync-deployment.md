@@ -52,7 +52,7 @@ original complete export unchanged. The copied synthetic Item is removed through
 Core afterward. These are production-interface checks, not evidence of every
 native control or integrated sync.
 
-The independent [already-deleted-record check](evidence/private-sync-deployment/already-deleted-record.json)
+The independent already-deleted-record check
 passes: a queued local removal finishes syncing after another writer deletes
 that same synthetic record on the server.
 
@@ -61,7 +61,7 @@ the exact `Planner-v1` Development private zone against the test-owned local
 graphs and source names. It removes only that disposable zone, then removes 26
 selected UUID probe directories in a second process after SQLite readers exit.
 The audit and both cleanup results are retained in
-[the evidence folder](evidence/private-sync-deployment/cleanup-audit.json).
+the evidence folder.
 No installed, original Planner or legacy managed-cloud data is removed.
 After the copy test, one remaining synthetic cloud-history record is also
 verified against its owned local graph and removed; unrelated records would
@@ -95,7 +95,7 @@ audits pass; both Settings and Item captures are inspected. These launches use
 no local-prototype argument or production test hook. Test bodies take 72.518
 and 50.927 seconds respectively. The affected six signed Mac storage tests
 also pass, in 7.184 seconds, including the available-account reviewed copy.
-[Compact results](evidence/private-sync-deployment/account-deadline.json)
+Compact results
 retain the original result-folder paths. This is not the actual Planner-only
 off/on or two-device test; both remain in the final integrated session.
 
@@ -105,7 +105,7 @@ The first attended Mac/iPad attempt creates its synthetic Item on the Mac but
 does not find it on iPad. The iPad's native Settings and explicit Sync now both
 report **Up to date with iCloud**. The user then confirms those two devices use
 different iCloud accounts. This run cannot qualify same-account delivery and is
-not evidence of a sync defect. Its [compact outcome](evidence/private-sync-deployment/different-account-diagnostic.json), exact source identity and result folders
+not evidence of a sync defect. Its compact outcome, exact source identity and result folders
 remain retained at `/private/tmp/PlannerPrivateIntegrated-22b82e4d-88f9-49fe-b203-07d7bc6373c3`.
 
 The speculative dedicated-subscription/scoped-fetch probe is reverted; no
@@ -164,14 +164,14 @@ do not replace the original value, and inserts a prefix instead. Retained field
 attributes show `Edited on iPadCrea…`; repeated native animation waits consume
 the peer timeout. The incorrect draft is not saved. This run therefore supplies
 no return-edit/deletion acceptance and does not establish a transport failure.
-The [compact result](evidence/private-sync-deployment/mobile-editor-diagnostic.json)
+The compact result
 and original input hashes remain at
 `/private/tmp/PlannerPrivateMobilePair-c79e077e-d8f7-4305-ab33-12da2bf2ce02`.
 The native test now uses Select All before replacement and has an exact-identity
 fixture check before cleanup. Its physical iPad regression passes in 39.678
 seconds, reading the exact complete replacement before deleting only that
 fixture. The original screenshot is inspected, source hashes are unchanged and
-the [compact native result](evidence/private-sync-deployment/native-editor-replacement.json)
+the compact native result
 retains the original result path. An earlier queued attempt loses its test
 connection before any test starts while the device is locked; it supplies no
 regression credit.
@@ -195,7 +195,7 @@ The iPhone's normal app launch succeeds. Its real native Calendar rotation
 journey also passes in 57.032 seconds, preserving the exact Schedule and saved
 description with 254 unchanged source inputs. The app returns to a normal
 launch afterward. The
-[physical Calendar record](evidence/native-calendar-shared-time-ruler/phone-landscape-2026-10-30/physical-iphone.json)
+physical Calendar record
 uses a disposable local dataset and supplies no private-sync credit.
 
 Main app, Share and test runner signatures verify, with existing team profiles
@@ -216,7 +216,7 @@ for exact guarded cleanup. Retained local path:
 `/private/tmp/PlannerPrivateMobilePair-6e90dc3d-f94b-4a37-8d30-c0aa60674953`.
 The user is asked to close the overlay and leave both devices stationary before
 another physical interaction. Private off/on has not started.
-The [partial result](evidence/private-sync-deployment/mobile-live-native-save-obstructed.json)
+The partial result
 retains the creation/receipt and cancellation outcomes without committing the
 unrelated video capture. The native edit helper now requires a hittable Save
 before submission. Strict Swift formatting and device compilation pass; its
@@ -228,10 +228,10 @@ After the user closes the floating video and confirms both devices are idle,
 the native replacement and exact-fixture cleanup passes in 40.523 seconds.
 It verifies the complete saved replacement before deleting only Item
 `E889940B-7A26-4235-B95C-60EF388F1474`. The
-[unobstructed native result](evidence/private-sync-deployment/mobile-native-save-unobstructed.json)
+unobstructed native result
 qualifies the Save-readiness check and closes that fixture cleanup.
 
-The subsequent [live pair](evidence/private-sync-deployment/mobile-live-pair.json)
+The subsequent live pair
 passes on both physical devices: iPhone 92.367 seconds, iPad 78.153 seconds,
 with unchanged sources and no skips. iPhone creates Item
 `CB1F083B-E796-41A8-91DF-8C6C1B1DA093`; iPad receives its exact identity and
@@ -250,7 +250,7 @@ The user then asks to stop overtesting iCloud and prioritize Item-row UI. The
 prepared off/on session is cancelled before its draft Save or any iCloud switch
 change. Its unfinished test-owned draft is discarded by normal app relaunch;
 both devices return to ordinary Planner use. The
-[deferred-session result](evidence/private-sync-deployment/mobile-off-on-deferred.json)
+deferred-session result
 records both cancellations separately from the successful live pair. Off/on
 remains unqualified; no further run is planned in the current UI pass. Normal
 two-device creation, bidirectional edits, deletion and relaunch are proven.

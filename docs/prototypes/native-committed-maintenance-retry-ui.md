@@ -12,7 +12,7 @@ The successful native journey relaunches before Retry, verifies the original Ite
 
 ## Qualification
 
-The [verification record](evidence/native-membership-consolidation/committed-maintenance-ui-validation.json) checks the actual executed functions, structured results, source manifests, products, formatting and inspected captures. The [attempt index](evidence/native-membership-consolidation/committed-maintenance-ui-attempts.json) retains each phase separately.
+The verification record checks the actual executed functions, structured results, source manifests, products, formatting and inspected captures. The attempt index retains each phase separately.
 
 - The original phone run fails at the missing Retry button on unchanged production. A later diagnostic lookup error is retained separately and establishes no signing cause.
 - Four initial phone functions pass after the visibility fix. Two subsequent iPad failures expose test navigation assumptions: List creation needs the existing overflow-aware helper, and a covering sidebar must be dismissed before opening Recovery. Those failures and hierarchies remain retained; the production fix is unchanged.
@@ -22,7 +22,7 @@ The [verification record](evidence/native-membership-consolidation/committed-mai
 
 Nine original screenshots are retained and visually inspected: three initial phone, three dark-iPad and three final phone captures. Status, Retry, its explanatory footer and the real error disclosure are readable and contained in the native Form. These scoped captures do not establish whole-app visual or accessibility acceptance.
 
-After verifying closed handles, original result readability and exact attachment manifests, [cleanup](evidence/native-membership-consolidation/committed-maintenance-ui-export-cleanup.json) removes five duplicate attachment-export directories, totaling 36,977,593 nominal bytes. Original passing and failing result bundles, manifests and selected captures remain retained. This is not a measurement of physically reclaimed disk space. One closed marked HTTP fixture store is also removed through the existing verifier.
+After verifying closed handles, original result readability and exact attachment manifests, cleanup removes five duplicate attachment-export directories, totaling 36,977,593 nominal bytes. Original passing and failing result bundles, manifests and selected captures remain retained. This is not a measurement of physically reclaimed disk space. One closed marked HTTP fixture store is also removed through the existing verifier.
 
 ## Remaining gates
 

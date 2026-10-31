@@ -41,8 +41,8 @@ before proceeding; the runner retains a fixed deadline.
 
 ## Final local checkpoint
 
-The final [iPad](evidence/native-shortcuts-optional-create-ui/shortcuts-optional-qualified-tablet/boundary-validation.json)
-and [iPhone](evidence/native-shortcuts-optional-create-ui/shortcuts-optional-qualified-phone/boundary-validation.json)
+The final iPad
+and iPhone
 journeys pass, two actual executions with no failures, skips or SQLite-unlink
 warnings. They assert one Todo appearance in the selected List, complete
 subtitle/notes, the same appearance identity and values after app relaunch, and
@@ -50,7 +50,7 @@ an empty Other destination. The app remains backgrounded before submission.
 Only the new journey and native UI helpers are added; existing tests remain
 byte-identical.
 
-The [validation record](evidence/native-shortcuts-optional-create-ui/final-validation.json)
+The validation record
 reconciles all 1160 native inputs, final source overlays, products verified
 before reuse and eight inspected original captures. The existing native UI target
 compiles and executes this source on both devices. Production interfaces and sources are unchanged;
@@ -65,7 +65,7 @@ show the selected inputs, readable Created confirmation and complete contextual
 content. The earlier iPhone picker-opening frame retains its own limited scope.
 These represented scenes do not close full accessibility or whole-app UI review.
 
-The [diagnostic archive](evidence/native-shortcuts-optional-create-ui/diagnostics-index.json)
+The diagnostic archive
 retains ten prior execution epochs and their original pass/failure counts. All
 149 members were read and hash-compared before duplicate removal. Final packets
 stay separate, and compressed source manifests retain their decoded hashes.

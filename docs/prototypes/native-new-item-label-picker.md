@@ -28,7 +28,7 @@ The required behavior is exposed through the existing native UI boundary. No new
 
 `SavedNewItemForm` presents the existing `SavedItemLabelPicker` in a native popover, adapting to a large sheet in compact mobile layouts. Both use the same draft UUID bindings. The editor itself remains a detail column or pushed page. Item editing, domain commands, schema and save/navigation guards are unchanged.
 
-The new journey first reproduced the unwanted leaving prompt after Categories on the unchanged production form: one failure in 51.897 seconds, exit 65. Its [original capture](evidence/navigation/native-new-item-label-picker/phone-label-red/A9CD7973-1EF0-42FE-9062-AA65569859C1.png) shows Save/Discard/Keep Editing. The final test adds strict-format whitespace and diagnostic picker screenshots after that red epoch; its behavioral assertions are unchanged. Source archives distinguish the epochs.
+The new journey first reproduced the unwanted leaving prompt after Categories on the unchanged production form: one failure in 51.897 seconds, exit 65. Its original capture shows Save/Discard/Keep Editing. The final test adds strict-format whitespace and diagnostic picker screenshots after that red epoch; its behavioral assertions are unchanged. Source archives distinguish the epochs.
 
 | Invocation | Result | Scope |
 | --- | --- | --- |
@@ -44,7 +44,7 @@ Every runtime packet retains its command, exit, compressed log, source and execu
 
 ## Original capture inspection
 
-All fourteen named phone lifecycle/compatibility captures and fourteen named tablet lifecycle/compatibility captures were inspected individually. The selected-captures manifests map original PNGs to their executed tests. The [iPad Categories capture](evidence/navigation/native-new-item-label-picker/tablet-label-compatibility/1D88955E-42B3-482A-AD6A-EFD11ED25FE1.png) shows the native popover over the same draft; [picker return](evidence/navigation/native-new-item-label-picker/tablet-label-compatibility/AFB49BC5-7A8C-4D3F-9305-01A5F575A50E.png) shows its selected-count summary without a leaving prompt. The iPad landscape/portrait frames keep both selections visible. The phone landscape frame shows the top fields with labels below its viewport; final saved identity assertions, rather than that frame alone, establish retention through rotation.
+All fourteen named phone lifecycle/compatibility captures and fourteen named tablet lifecycle/compatibility captures were inspected individually. The selected-captures manifests map original PNGs to their executed tests. The iPad Categories capture shows the native popover over the same draft; picker return shows its selected-count summary without a leaving prompt. The iPad landscape/portrait frames keep both selections visible. The phone landscape frame shows the top fields with labels below its viewport; final saved identity assertions, rather than that frame alone, establish retention through rotation.
 
 Post-relaunch assertions inspect the selected Category and Tag toggles using their original shared identities. Those Edit Item pickers retain their existing navigation; this change concerns New Item only. The compatibility frames show the originating List, rich fields, and explicit navigation choices. They do not qualify Mac runtime, physical-device layouts, VoiceOver, keyboard operation, split-screen widths or final visual acceptance.
 
@@ -52,6 +52,6 @@ Separate Standards and Spec source reviews found no confirmed issues. The final 
 
 ## Final checks and limits
 
-The final Mac app/UI-test-host compiler pass succeeds with the previously authorized local ad hoc signature; account/team signing is unchanged. Affected strict Swift formatting, Markdown lint and whitespace checks pass. The [execution record](evidence/navigation/native-new-item-label-picker/execution.json) retains validation commands and inspected capture hashes. No Mac UI retry was attempted.
+The final Mac app/UI-test-host compiler pass succeeds with the previously authorized local ad hoc signature; account/team signing is unchanged. Affected strict Swift formatting, Markdown lint and whitespace checks pass. The execution record retains validation commands and inspected capture hashes. No Mac UI retry was attempted.
 
 The creation-label regression is fixed within the qualified mobile lifecycle. Q95 loading windows and Q96 clock input remain implementation work. Signing, physical sync/account/Share, broad accessibility/performance qualification and whole-app native polish retain their owning map gates.

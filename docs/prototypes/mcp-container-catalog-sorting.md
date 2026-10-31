@@ -28,7 +28,7 @@ The admission green passes both functions in 5.564 seconds. A later evidence aud
 
 Both named final SQLite fixtures existed after the test process exited. The external runner then removed only those generated UUID directories. Failed-run fixtures remain retained. Raw logs include system connection diagnostics and skipped App Intents metadata extraction warnings; no affected-source compiler warning was reported. Strict Swift lint passes the two changed Swift files. The report and adapter contract pass Markdown lint.
 
-The [evidence packet](evidence/navigation/mcp-container-catalog-sorting/) retains all six run revisions, exact commands, compressed raw output, source and product hashes, native result summary, historical and corrected runners, and cleanup receipts. The initial dirty-helper red is historical and does not establish final source qualification. Final standards and specification source reviews found no confirmed source findings. The standards artifact audit identified the collector issue described above, then verified the correction and all 68 artifact hashes. No confirmed findings remain.
+The evidence packet retains all six run revisions, exact commands, compressed raw output, source and product hashes, native result summary, historical and corrected runners, and cleanup receipts. The initial dirty-helper red is historical and does not establish final source qualification. Final standards and specification source reviews found no confirmed source findings. The standards artifact audit identified the collector issue described above, then verified the correction and all 68 artifact hashes. No confirmed findings remain.
 
 ## Remaining map gates
 

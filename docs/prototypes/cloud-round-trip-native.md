@@ -45,18 +45,18 @@ diagnostics are universally resolved.
 
 ## Evidence and cleanup
 
-[Evidence](evidence/cloud-round-trip-native/result.json) preserves the failed
+Evidence preserves the failed
 startup and direct-launch attempts, final diagnostic source and commands, exact
 event/results and a verified 90-member archive. Hashes cover all 90 actual Core
 sources, three probe inputs and seven actual signed bundle files. The exact
-[fresh results](evidence/cloud-round-trip-native/fresh-result.json) and
-[resumed results](evidence/cloud-round-trip-native/resumed-result.json) are
+fresh results and
+resumed results are
 separately readable. The final signature/profile checks pass before execution.
 
 Both cloud fixtures are confirmed deleted before local scratch cleanup. A
 separately signed App Group cleanup app removes only four known completed probe
 directories: 30 regular files, 7,859,208 logical bytes. It verifies that the stalled
-run's directory is absent. Its [native result](evidence/cloud-round-trip-native/scratch-cleanup.json)
+run's directory is absent. Its native result
 and verified cleanup source/build/launch archive are retained. It opens no normal
 Planner store, changes no cloud data and leaves reusable build caches intact.
 Shell access to App Group data was denied; cleanup uses the app's approved group

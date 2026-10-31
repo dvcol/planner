@@ -14,7 +14,7 @@ The failing real-store tracer showed that an older, independently valid backup
 could otherwise restore the discarded reference without authorization. Four
 retained acknowledged checkpoints prove that the original bookmark871/872 or
 Schedule873/874 became live on winning owner814 for both Item and Itinerary.
-The [diagnosis](evidence/native-membership-consolidation/native-owned-reference-import-red/unauthorized-import-diagnosis.json)
+The diagnosis
 records their exact bindings and retained checkpoint hashes.
 
 The correction uses existing deletion targets, restoration families and import
@@ -56,9 +56,9 @@ Neither final cohort has SQLite unlink warnings. Counts describe test functions,
 including parameterized functions, rather than individual assertions.
 
 Packets under
-[`native-membership-consolidation`](evidence/native-membership-consolidation/)
+`native-membership-consolidation`
 use the `native-owned-reference-*` prefix. The
-[validation record](evidence/native-membership-consolidation/native-owned-reference-import-validation.json)
+validation record
 reconciles inputs, products and lossless manifest compression. Intermediate test
 compile/assertion diagnostics remain retained and are not production-failure
 evidence. The initial unauthorized-import tracer supplies the behavioral failure.
@@ -86,7 +86,7 @@ matches the graph captured before competing delivery. Reopen and full redelivery
 retain that result.
 
 The Mac tracer and all 23 functions in the affected iPhone maintenance suite
-pass. The [combined validation record](evidence/native-membership-consolidation/native-owned-mixed-itinerary-validation.json)
+pass. The combined validation record
 reconciles 813 Mac and 1,160 phone inputs, both test products per platform and
 zero SQLite unlink diagnostics. All 90 Core production inputs and 514 frozen
 fixture inputs match the preceding checkpoint. This adds tests and evidence
@@ -115,7 +115,7 @@ repeat delivery in the opposite order retain the complete graph exactly.
 The private fixture can now seed the second List family. Its unchanged defaults
 and affected callers pass 47 Mac and 45 iPhone functions in eight suites,
 including genuine Schema18 and Schema12 migration. The
-[validation record](evidence/native-membership-consolidation/native-related-source-families-validation.json)
+validation record
 reconciles 813 Mac and 1,160 phone inputs and both test products per platform.
 All 90 Core production inputs, 514 frozen fixtures and 18 schema sources remain
 unchanged. Neither final cohort has SQLite unlink diagnostics. The first tracer
@@ -168,7 +168,7 @@ reimport also retain the fresh lifetime.
 | Inputs and compatibility | 813 shared Core inputs and 1,160 phone/HTTP inputs match; 514 frozen fixture inputs unchanged |
 
 There are no failures, skips or SQLite unlink warnings in the final cohorts.
-The [validation record](evidence/native-membership-consolidation/native-owned-family-history-validation.json)
+The validation record
 separates detailed Core/native-storage scenarios from the existing HTTP routing
 regressions. Unrelated fixture products in the raw compiler inventory receive no
 credit. Both genuine Schema18 and Schema12 migration functions execute on both
@@ -209,7 +209,7 @@ the deleted state or the same fresh restoration as appropriate.
 Final affected cohorts pass 49 Mac and 47 iPhone functions in eight suites,
 including genuine Schema18 and Schema12 migrations. Four existing real HTTP
 regressions pass, and the Mac app, Share and test host compile. The
-[validation record](evidence/native-membership-consolidation/native-closed-source-family-validation.json)
+validation record
 reconciles the 813 shared Core inputs, 1,160 phone/HTTP inputs and actual products.
 All 514 frozen fixture inputs and 18 schema sources match the preceding commit.
 No final cohort has failures, skips or SQLite unlink warnings. Existing formats,
@@ -238,7 +238,7 @@ and writer control stay unchanged. No format, model, gate or public interface
 changes. The first diagnostic's extra expectation of immediate bootstrap failure
 was corrected before retaining the exact failing source-read responses.
 
-The [validation record](evidence/native-membership-consolidation/native-closed-source-unknown-validation.json)
+The validation record
 reconciles 50 passing Mac functions, 48 passing iPhone functions and four
 existing real HTTP regressions. Both Core runtimes execute genuine Schema18/12
 migrations in the eight affected suites. All 813 shared Core inputs and 1,160
@@ -260,7 +260,7 @@ Old Remove replay and reopen retain the same restored graph.
 This passes with unchanged production code. Three focused functions on both Mac
 and iPhone also cover the existing legacy-closure and restored expanded-context
 cases, including preparation failure. The
-[validation record](evidence/native-membership-consolidation/native-closed-membership-family-validation.json)
+validation record
 reconciles 813 shared Core inputs and 1,160 phone inputs with actual products.
 All 90 production inputs and 514 frozen fixtures match the preceding checkpoint.
 Strict Swift/Markdown lint passes. The first attempt had a test-only compiler
@@ -292,7 +292,7 @@ declared restoration family authorizes it. Native records and recovery remain
 untouched. The private native-entry observation sorts equal public IDs by
 lifetime so its before/after comparison has a stable order.
 
-The [validation record](evidence/native-membership-consolidation/native-closed-entry-family-validation.json)
+The validation record
 reconciles 51 passing Mac functions, 49 passing iPhone functions and four existing
 real HTTP regressions. Both Core runtimes execute genuine Schema18/12 migrations
 in eight affected suites. The six stop cases execute on both. All 813 shared
@@ -326,13 +326,13 @@ exports preserve current selections, owner fields/timestamps and shared labels;
 old edit replay and reopen retain the same graph. Unknown copies remain stored
 and unavailable.
 
-The [validation record](evidence/native-membership-consolidation/native-closed-label-family-validation.json)
+The validation record
 reconciles 52 passing Mac functions, 50 passing iPhone functions and four existing
 real HTTP regressions, plus Mac app/Share/test-host compilation. The twelve label
 cases and genuine Schema18/12 migrations execute on both Core runtimes. All 813
 shared Core inputs and 1,160 phone/HTTP inputs match actual products. All 514
 frozen fixtures and 17 other schema sources remain unchanged. The retained
-[Schema18 diff](evidence/native-membership-consolidation/native-closed-label-family-schema18.diff)
+Schema18 diff
 changes only snapshot method signatures/bodies. Strict Swift/Markdown lint and
 whitespace checks pass; final cohorts have no failures, skips or SQLite unlink
 warnings. Native UI, system, cloud and physical acceptance remain separate.
@@ -358,7 +358,7 @@ returns its original checkpoint. The saved proposal equals the complete export;
 reopen and late redelivery preserve that same graph without merging contents.
 No production change is needed.
 
-The [validation record](evidence/native-membership-consolidation/native-owned-itinerary-publication-validation.json)
+The validation record
 reconciles three passing functions and five invocations on both Mac and iPhone
 Simulator. The mixed cases run with existing preparation-failure and committed
 source-recovery regressions. Actual products and all 813 Core inputs match;
@@ -400,7 +400,7 @@ native-save cases. Production code and the existing failure mechanism stay
 unchanged. The Mac child has its own file limit; it does not affect the parent or
 mobile tests.
 
-The [validation record](evidence/native-membership-consolidation/native-owned-itinerary-save-validation.json)
+The validation record
 verifies five passing Mac parent functions/seven invocations, including three
 actual passing child executions, and three passing iPhone functions/five
 invocations. Phone covers the shared ordinary/publication paths; it receives no
@@ -445,7 +445,7 @@ targets are unchanged from the preceding mixed-owned tests; one shared assertion
 checks the full graph against the original winning backup. Production is
 unchanged.
 
-The [validation record](evidence/native-membership-consolidation/native-owned-itinerary-interruption-validation.json)
+The validation record
 verifies six passing Mac parent functions/eight invocations. Its five children
 include the two deliberate SIGKILL cases and three passing native-write-failure
 regressions. Three iPhone functions/five invocations qualify the affected shared
@@ -484,7 +484,7 @@ Explicit Retry acknowledges the original maintenance and preserves original user
 receipts. Its saved proposal matches export. Reopen and repeated native delivery
 retain that same complete graph without merging metadata.
 
-The [validation record](evidence/native-membership-consolidation/native-owned-item-publication-validation.json)
+The validation record
 reconciles seven passing Mac parent functions/thirteen invocations and five
 passing iPhone functions/eleven invocations. Existing Item link, booking and
 label tests and the shared Itinerary paths pass. Three actual Itinerary child
@@ -517,7 +517,7 @@ identity, preserves the complete winning graph and all old receipts, and survive
 reopen and late redelivery. Its four exact losing-owned closures are the only
 graph additions. Saved field hashes and Last updated remain unchanged.
 
-The [validation record](evidence/native-membership-consolidation/native-owned-item-save-validation.json)
+The validation record
 reconciles seven passing Mac functions, including five successful native-fault
 children, and three passing iPhone Simulator functions. The actual Item write
 fault executes only in the isolated Mac child; phone qualifies the shared
@@ -552,7 +552,7 @@ writer control and reopened state. Expectations use the existing literal four
 Item-owned closures, one List-membership closure and original Add provenance,
 or seven Itinerary-owned closures. No collection merging or new policy is added.
 
-The [final validation](evidence/native-membership-consolidation/native-owned-payload-interruption-validation.json)
+The final validation
 reconciles seven passing Mac parent functions with six intentionally killed
 children and three successful native-save-fault children. Three shared-helper
 functions pass on iPhone Simulator. Actual final products and 813 shared Core

@@ -26,13 +26,13 @@ Five final native executions pass across three existing functions:
 
 All 1160 native inputs match the workspace and Mac app, Share-extension and
 UI-test compilation. Affected strict Swift and Markdown lint pass. The
-[structured results](evidence/native-itinerary-link-editor/final-validation.json)
+structured results
 retain the exact executed test identifiers and settings restoration.
 
 The test driver now scrolls the actual Form above the keyboard and places the
 caret at the end before replacing text. Its original saved-identity/order and
 Cancel assertions remain. The earlier committed-base offscreen Add Link failure
-stays in the [previous archive](evidence/native-owned-field-wrapping/execution-records-index.json).
+stays in the previous archive.
 The passing endpoint probe records the complete old URL and exact replacement.
 All temporary diagnostic prints are removed; no test target or production test
 control is added.
@@ -40,7 +40,7 @@ control is added.
 ## Visual review and remaining gates
 
 Eight inspected images retain six final views, the endpoint probe and one frame
-from the failed native recording. The [inspection record](evidence/native-itinerary-link-editor/visual-inspection.json)
+from the failed native recording. The inspection record
 records their hashes, dimensions and observations. The dark iPad editor keeps its
 staged links above the native keyboard, and both devices show the system alert.
 These ordinary-size views do not close the broader accessibility/layout review.

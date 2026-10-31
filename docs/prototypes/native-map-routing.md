@@ -30,15 +30,15 @@ results and an explicit Open in Maps action for each leg. It never substitutes a
 walking/driving path or a straight line for a transit route.
 
 The final scoped Simulator build succeeds in 33.582 seconds with 1,172 matched
-native inputs. The [final journeys](evidence/native-map-collection/multi-place-routes-final-2026-10-28/result.json)
+native inputs. The final journeys
 pass on a light iPhone in 211.034 seconds and a dark portrait iPad in 139.073
 seconds. Both create Hotel → Museum → Garden → Hotel through ordinary native
 creation controls: four appearances at three distinct coordinates. They verify
 three actual walking results and three actual driving results, the transit
 explanation/fallback, exact original Museum bookmark and all three hittable pins.
 Both original walking captures are inspected and show native street/path geometry:
-[phone](evidence/native-map-collection/multi-place-routes-final-2026-10-28/phone-light-walking.png)
-and [tablet](evidence/native-map-collection/multi-place-routes-final-2026-10-28/tablet-dark-walking.png).
+phone
+and tablet.
 Simulator appearances are restored afterward. Mac width/growth, physical routing,
 maximum accessibility text, positive transit ETA and controlled directions-provider
 failure/cancellation remain unqualified.
@@ -47,7 +47,7 @@ The existing direct controller-test target is Mac-only. Its earlier Simulator
 attempt began building Mac dependencies and was stopped without test execution.
 After the observed Mac restart, a fresh signed Mac build succeeds in 362.665
 seconds against 1,172 matched native inputs. The current
-[real-storage controller case](evidence/native-map-collection/route-controller-2026-10-28/result.json)
+real-storage controller case
 passes in 0.240 seconds, with the full runtime exiting zero in 6.603 seconds.
 It preserves repeated appearance identities/order, avoids lookup for identical
 adjacent coordinates, leaves gaps at unknown stops, clears legs on mode change
@@ -98,7 +98,7 @@ expression. The first width-correct run then exposes a missing inspector
 toolbar; placing details in a native NavigationStack restores that control.
 Neither failed attempt receives passing acceptance credit.
 
-The [final dark-tablet journey](evidence/native-map-collection/map-pane-width-2026-10-28/result.json)
+The final dark-tablet journey
 passes in 158.429 seconds with one test, zero failures and zero skips. The Map
 exceeds 60 percent of the window before selection. Selected details occupy at
 most 421 points, remain beside the Map, and are narrower than it. Hiding details
@@ -140,7 +140,7 @@ picker at its natural width when it fits, and uses an accessible icon-only
 Routes button. The duplicate inline transit paragraph is removed; its complete
 guidance remains reachable in route details.
 
-The [final scoped evidence](evidence/native-map-collection/adaptive-route-controls-2026-10-28/result.json)
+The final scoped evidence
 records one passing iPad test, zero failures and zero skips, in 176.906 seconds.
 It checks Walking, Driving and Public transport in both orientations at the
 largest accessibility text size with dark appearance and Increase Contrast.
@@ -149,8 +149,8 @@ hittable without overlapping its neighbors. The counted pin stays completely
 inside the visible Map. Route details retain Same location and the full transit
 guidance, then return to the exact selected Item's notes. All six original
 captures and their actual selected-mode labels are inspected. The retained
-[landscape](evidence/native-map-collection/adaptive-route-controls-2026-10-28/final-transit-landscape.png)
-and [portrait](evidence/native-map-collection/adaptive-route-controls-2026-10-28/final-transit-portrait.png)
+landscape
+and portrait
 captures show the final Public transport controls. This repeated-coordinate
 fixture performs no directions-provider lookup.
 
@@ -189,7 +189,7 @@ labels retain full accessibility names and a 44-point target; full titles still
 scale in Locations. The existing driver scrolls to each native route section
 before reading results and waits for each sheet dismissal.
 
-The [matching checkpoint](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/result.json)
+The matching checkpoint
 passes one Mac case in 152.718 seconds and one dark, maximum-text, increased-
 contrast phone case in 191.076 seconds, with zero failures or skips. Both verify
 all three walking/driving legs, transit fallback and the exact saved bookmark.
@@ -202,9 +202,9 @@ saved-data contracts are unchanged.
 
 Inspected captures also expose a remaining camera-framing defect: selected-detail
 resizing on Mac zooms out too far and bunches nearby labels together. The
-[selected-pane capture](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/mac-selected-1200.png)
+selected-pane capture
 records it. Passing containment and width checks do not close that visual issue.
-The [phone capture](evidence/native-map-collection/mac-pane-lifecycle-2026-10-29/phone-maximum-pins.png)
+The phone capture
 retains the represented maximum-text state. Camera fitting, physical routing and
 the broader assistive review remain open.
 
@@ -223,13 +223,13 @@ defers the size-triggered fit, rejecting obsolete measurements after yielding.
 The existing user-camera branch remains. No fixed delay, new module, test hook
 or saved-data change is introduced; temporary diagnostic logging is removed.
 
-The [matching final evidence](evidence/native-map-collection/camera-resize-2026-10-29/result.json)
+The matching final evidence
 passes one Mac case in 155.551 seconds and one maximum-text, dark, increased-
 contrast phone case in 193.538 seconds, with zero failures or skips. Mac's
 1200/1600-point checks now require each distinct marker to remain readable
 without intersecting another marker, as well as contained and hittable beside
 bounded details. Both original captures are inspected: the
-[1200-point view](evidence/native-map-collection/camera-resize-2026-10-29/mac-neighborhood-1200.png)
+1200-point view
 stays around the nearby stops instead of the wider metropolitan area.
 Both platforms retain all walking/driving legs, transit fallback and the exact
 bookmark. Simulator settings and boot state are verified restored.
@@ -247,8 +247,8 @@ near its pin, then zooms out to continent scale after resizing. An explicit
 native camera centered on that location at a 3,000-meter distance replaces its
 region request. The final 860/1200-point captures retain neighborhood framing,
 the exact bookmark and independent local completion. The original
-[before](evidence/native-map-collection/viewport-follow-up-2026-10-29/mac-before-860.png)
-and [after](evidence/native-map-collection/viewport-follow-up-2026-10-29/mac-after-860.png)
+before
+and after
 captures are retained.
 
 At maximum text size, the phone's landscape search drawer leaves the Map with
@@ -256,11 +256,11 @@ zero height. Toolbar placement alone does not fix it. Map mode now uses Apple's
 [minimized Search behavior](https://developer.apple.com/documentation/swiftui/searchtoolbarbehavior/minimize)
 in Items, Inbox, Lists and Itineraries; ordinary List-mode search keeps its
 presentation. The existing phone journey additionally requires the pin's whole
-frame to fit inside the Map. Its [final landscape capture](evidence/native-map-collection/viewport-follow-up-2026-10-29/phone-maximum-landscape.png)
+frame to fit inside the Map. Its final landscape capture
 has a 74-point Map containing the 57.67-point pin. Search entry itself is not
 newly qualified by this layout check.
 
-The [execution record](evidence/native-map-collection/viewport-follow-up-2026-10-29/result.json)
+The execution record
 contains four passes, zero failures and zero skips: Mac Items and List in 65.840
 and 79.140 seconds, maximum-text phone List in 109.538 seconds, and maximum-text
 iPad Items in 96.217 seconds. Both mobile runs use dark appearance and Increase
@@ -302,16 +302,16 @@ iPad keeps its native searchable control; Mac and ordinary List-mode search
 retain their existing presentation. No provider, Core command, saved-data format,
 package, target or test hook changes.
 
-The [execution record](evidence/native-map-collection/search-lifecycle-2026-10-29/result.json)
+The execution record
 contains five passes, zero failures and zero skips against 1,171 matched native
 inputs. Phone Items, standalone List, repeated direct stops and repeated List
 branches retain query/clear/reopen behavior, exact bookmarks and independent
 completion. The iPad Items case retains native Search and portrait/landscape
 details. All use the largest accessibility text size, dark appearance and Increase
 Contrast; settings and original boot states are verified restored. Original
-[Search-sheet](evidence/native-map-collection/search-lifecycle-2026-10-29/phone-search.png),
-[landscape](evidence/native-map-collection/search-lifecycle-2026-10-29/phone-landscape.png)
-and [iPad](evidence/native-map-collection/search-lifecycle-2026-10-29/tablet-search-cleared.png)
+Search-sheet,
+landscape
+and iPad
 captures are inspected. The phone landscape Map again has 74 points of height
 and contains its complete 57.67-point pin.
 
@@ -341,12 +341,12 @@ Hiding details widens the Map from 460 to 820 points. Reopening restores its
 original viewport, horizontal position and zoom within the declared tolerances,
 without changing the exact saved Museum bookmark. Production code is unchanged.
 
-The [execution record](evidence/native-map-collection/user-camera-2026-10-29/result.json)
+The execution record
 records one pass in 171.633 seconds, zero failures and zero skips against 1,171
 matched inputs. It also rechecks three walking and three driving results, transit
 fallback and distinct-pin framing. Original
-[hidden-details](evidence/native-map-collection/user-camera-2026-10-29/details-hidden.png)
-and [reopened-details](evidence/native-map-collection/user-camera-2026-10-29/details-open.png)
+hidden-details
+and reopened-details
 captures are inspected. Simulator settings and the actual original boot state
 are restored. Strict Swift lint and the affected build pass.
 
@@ -369,12 +369,12 @@ one completed row; Map shows one matching location. Clearing the filter restores
 the counted marker for both appearances without changing the selected status.
 Both repeated direct stops and repeated List branches pass.
 
-The [execution record](evidence/native-map-collection/representation-lifecycle-2026-10-29/result.json)
+The execution record
 records two passes in 221.631 and 235.253 seconds, zero failures and zero skips,
 with 1,171 matched inputs. The affected build and strict Swift lint pass.
 Simulator settings and actual original boot state are restored. Inspected
-original [List](evidence/native-map-collection/representation-lifecycle-2026-10-29/direct-list.png)
-and [Map](evidence/native-map-collection/representation-lifecycle-2026-10-29/nested-map.png)
+original List
+and Map
 captures show the retained Todo detail beside the filtered collection.
 
 The initial pair fails when the test queries the portrait collection toolbar
@@ -391,7 +391,7 @@ fresh iPad unlock.
 After the user's fresh unlock confirmation, the prepared signed iPad retry
 passes its lock and strict signature checks. The runner launches, then fails its
 60-second automation-mode handshake before any application test case starts.
-The [execution record](evidence/native-map-collection/physical-startup-2026-10-29/result.json)
+The execution record
 reports exit 65 and zero started cases. XCTest's one failed result record is the
 runner-initialization error, not an executed Map assertion.
 
@@ -416,11 +416,11 @@ zero skips. It creates Hotel → Museum → Garden → Hotel through native cont
 checks every distinct pin, three actual walking results, three driving results
 and the public-transport explanation/external-Maps fallback.
 
-The [execution record](evidence/native-map-collection/physical-routes-2026-10-29/result.json)
+The execution record
 also qualifies Map width before selection, bounded selected details, Hide and
 pin reopening with the exact original Museum bookmark. Inspected original
-[walking](evidence/native-map-collection/physical-routes-2026-10-29/walking.png)
-and [selected-details](evidence/native-map-collection/physical-routes-2026-10-29/selected-details.png)
+walking
+and selected-details
 captures show all three places, native street/path geometry and separate panes.
 
 This runs on the authorized iPad with iPadOS 27.0.1 and disposable local data.
@@ -451,12 +451,12 @@ pin, search and unlocated-Item selection at the same maximum text size.
 The existing iPad fixture journey passes in 155.930 seconds with dark mode,
 maximum text and Increase Contrast. It checks all three modes in portrait and
 landscape, 44-point controls, route-sheet access and retained Item details.
-Inspected original [phone](evidence/native-map-collection/accessible-footer-2026-10-31/phone-transit.png),
-[portrait iPad](evidence/native-map-collection/accessible-footer-2026-10-31/tablet-transit-portrait.png)
-and [landscape iPad](evidence/native-map-collection/accessible-footer-2026-10-31/tablet-transit-landscape.png)
+Inspected original phone,
+portrait iPad
+and landscape iPad
 captures keep the mode text clear of the count. An intermediate functional pass
 is rejected because visual review catches its native Picker caption overlapping
-that count. The [review packet](evidence/native-map-collection/accessible-footer-2026-10-31/review.json)
+that count. The review packet
 separates those trials from final credit. All 254 phone inputs match the iPad's
 307-input epoch and the final workspace.
 

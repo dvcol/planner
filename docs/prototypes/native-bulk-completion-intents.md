@@ -14,7 +14,7 @@ The [accepted contract](../native-bulk-intent-contract-review.md) precedes imple
 
 ## Local results
 
-The final hosted invocation passes **72 tests, 0 failures and 0 skipped**, including 14 new bulk cases and 58 affected completion, route-query and ordinary-write regressions. Its original log, selected command, source hashes, actual result summary and closed-fixture disposition are in [the final packet](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-qualified/).
+The final hosted invocation passes **72 tests, 0 failures and 0 skipped**, including 14 new bulk cases and 58 affected completion, route-query and ordinary-write regressions. Its original log, selected command, source hashes, actual result summary and closed-fixture disposition are in the final packet.
 
 The new cases establish:
 
@@ -26,15 +26,15 @@ The new cases establish:
 - Actual precommit recovery-filesystem failure leaves every target unapplied. Actual post-save failure retains the whole bulk result for each scope, blocks further changes and acknowledges the original operation only through explicit native recovery retry.
 - Production Intent calls reject invalid, cancelled and unavailable requests before confirmation. These calls do not prove system confirmation behavior.
 
-All prior 72 action contracts, entity properties, queries, enums and four discoverable shortcuts remain unchanged. The three new actions have required typed targets and a required completion Boolean. The branch retains the existing route-entry query. Mac, Simulator and unsigned-device builds and metadata verify 75 actions from the same 1,051 hashed source inputs. Strict lint on the four affected Swift files, documentation lint and whitespace checks pass. [The final validation](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-qualified/final-validation.json) records their commands and exits.
+All prior 72 action contracts, entity properties, queries, enums and four discoverable shortcuts remain unchanged. The three new actions have required typed targets and a required completion Boolean. The branch retains the existing route-entry query. Mac, Simulator and unsigned-device builds and metadata verify 75 actions from the same 1,051 hashed source inputs. Strict lint on the four affected Swift files, documentation lint and whitespace checks pass. The final validation records their commands and exits.
 
 ## Red/green and failed attempts
 
-[The first local runner](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-list-red/) was stopped by sandboxed compiler-cache permissions before compilation. It supplies no semantic red evidence. The subsequent compiler run found the missing production store interfaces and one invalid Equatable assertion. [The isolated red](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-list-red-isolated/) retains only the missing approved interfaces; the first List store case then passes.
+The first local runner was stopped by sandboxed compiler-cache permissions before compilation. It supplies no semantic red evidence. The subsequent compiler run found the missing production store interfaces and one invalid Equatable assertion. The isolated red retains only the missing approved interfaces; the first List store case then passes.
 
-An expanded nine-case invocation initially failed two test expectations. Creating local completion records legitimately adds expanded-completion references; removing a branch reports missingReference. The corrected tests preserve the original topology while allowing intentional completion records and assert the existing missing-reference outcome. No production behavior was changed to satisfy those corrections. [The failed invocation](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-store-expanded/) remains failed, with its separate closed-fixture cleanup and no passing credit. [All nine store cases then pass](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-store-final/).
+An expanded nine-case invocation initially failed two test expectations. Creating local completion records legitimately adds expanded-completion references; removing a branch reports missingReference. The corrected tests preserve the original topology while allowing intentional completion records and assert the existing missing-reference outcome. No production behavior was changed to satisfy those corrections. The failed invocation remains failed, with its separate closed-fixture cleanup and no passing credit. All nine store cases then pass.
 
-The [List action red](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-list-action-red/) and [Itinerary action red](evidence/navigation/native-itinerary-window-compatibility/app-intent-bulk-itinerary-actions-red/) retain missing-action compiler failures before their implementations. Their green runs precede the final 72-case qualification. The earlier store-qualified invocation ran only the original List case; it receives one-case credit only.
+The List action red and Itinerary action red retain missing-action compiler failures before their implementations. Their green runs precede the final 72-case qualification. The earlier store-qualified invocation ran only the original List case; it receives one-case credit only.
 
 ## Remaining acceptance
 

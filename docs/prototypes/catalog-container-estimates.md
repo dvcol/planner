@@ -40,7 +40,7 @@ Three functions are qualified on each simulator. The first phone bundle passes a
 
 The initial native captures show both metrics, manual status and upper bounds. Their narrow tablet sidebar also exposed wrapping caused by a separate Manual badge. The final layout lets Manual flow with the caption text. The final layout passes both estimate journeys on phone and tablet. Their separate bundles and inspected captures qualify this caption layout. The final tablet run took 1,647 seconds with repeated XCTest animation-completion timeouts; responsiveness and their cause remain unqualified.
 
-Mac app/UI host compilation and strict lint of nineteen changed Swift files pass. Native Mac runtime remains unqualified. The [execution evidence](evidence/navigation/catalog-container-estimates/) retains raw summaries, source hashes and captures as qualification completes.
+Mac app/UI host compilation and strict lint of nineteen changed Swift files pass. Native Mac runtime remains unqualified. The execution evidence retains raw summaries, source hashes and captures as qualification completes.
 
 Parallel review found no documented coding-rule violations. Spec review found that a valid manual budget hides calculated overflow in the catalog warning and accessibility value. Core correctly returns an unavailable calculated total while retaining exact manual full/remaining values. The next native fixture regression must expose that state and qualify the warning fix; this checkpoint leaves that edge case open.
 

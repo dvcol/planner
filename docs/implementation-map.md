@@ -22,8 +22,8 @@ workflows and recorded limitations.
   native/physical/assistive acceptance frontier; these statements do not declare
   the release accepted.
 - Validated workspace checkpoint: `278da3da` on `prototype/navigation`.
-  Published branch: `9eb878c5`. Newer source/evidence is not yet published;
-  final handoff must reconcile that explicitly.
+  Published branch: `9eb878c5`. Newer application source awaits privacy review
+  and the proposed artifact-history cleanup before publication.
 - Prefer the simplest sufficient MVP. Reuse passing evidence, run serial
   affected-target checks, and investigate reproducible defects. Do not fill time
   with broader matrices or repeat normal iCloud checks without a relevant
@@ -126,6 +126,6 @@ reported as complete. No signing setup or further iCloud stress run is queued.
 [Detailed implementation checkpoints](implementation-checkpoints.md) retain the
 previous chronological report with its actual versions, tests and limitations.
 [Decision checkpoints](decision-checkpoints.md) retain the old decision register.
-The exact before-edit issue bodies and relationships are preserved in the
-[tracker snapshot](history/tracker-before-mvp-reconciliation-2026-10-31.json.gz).
-These archives are historical evidence, not additional current task queues.
+Generated tracker snapshots and raw run artifacts are discarded after review.
+[Current validation](validation.md) keeps concise results and known limits;
+Git history and named issue comments retain source and decisions.
