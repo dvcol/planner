@@ -101,3 +101,18 @@ The temporary button style and audit changes are both reverted. No production
 workaround or audit exclusion remains; Save and actual Dark qualification
 stay open in the existing UI acceptance ticket. No physical device, iCloud
 setting, global developer selection or security policy is changed.
+
+## Current native draft follow-up
+
+The [native draft checkpoint](native-item-draft-layout.md) now records genuine
+Dark captures on a fresh isolated Simulator, both directly and through XCTest.
+The earlier environment's mismatch still has no proven cause. The mobile New
+Item page hides the tab bar while editing and restores it after Save; the Dark
+navigation/relaunch and Light draft-guard journeys pass.
+
+Native Save remains flagged by the separate unfiltered editor contrast audit.
+An opaque probe's first finding targeted the tab bar; after hiding it, Save was
+still flagged, so this never proved the palette was a fix. All temporary palette
+changes are reverted. The detailed native description is retained without
+filtering or declaring the audit passed. Final assistive/human review remains
+required.

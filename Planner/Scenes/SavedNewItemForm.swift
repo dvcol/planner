@@ -127,6 +127,9 @@ struct SavedNewItemForm: View {
         if isSaving { ProgressView("Saving Item") }
       }
     }
+    #if os(iOS)
+      .toolbar(.hidden, for: .tabBar)
+    #endif
     .popover(item: $presentedLabelKind) { kind in
       let selection = kind == .category ? $draft.categoryIdentifiers : $draft.tagIdentifiers
       NavigationStack {

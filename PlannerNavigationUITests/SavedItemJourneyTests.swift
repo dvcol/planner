@@ -495,6 +495,11 @@ final class SavedItemJourneyTests: XCTestCase {
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     XCTAssertFalse(application.plannerElement("saved.item.save").isEnabled)
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        XCTAssertFalse(application.tabBars.firstMatch.isHittable)
+      }
+    #endif
     recordScreenshot(application, name: "Native design empty Item draft")
     title.activateForPlannerJourney()
     title.typeText("Museum morning")
@@ -515,6 +520,11 @@ final class SavedItemJourneyTests: XCTestCase {
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(
       application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        XCTAssertTrue(application.tabBars.firstMatch.isHittable)
+      }
+    #endif
     let completion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(completion.waitForPlannerBooleanState(false))
@@ -741,7 +751,13 @@ final class SavedItemJourneyTests: XCTestCase {
       auditTypes: XCUIAccessibilityAuditType = [.hitRegion, .sufficientElementDescription]
     ) throws {
       try XCTContext.runActivity(named: "Native accessibility audit: \(name)") { _ in
-        try application.performAccessibilityAudit(for: auditTypes)
+        try application.performAccessibilityAudit(for: auditTypes) { issue in
+          let attachment = XCTAttachment(string: issue.detailedDescription)
+          attachment.name = "Native accessibility issue: \(name)"
+          attachment.lifetime = .keepAlways
+          self.add(attachment)
+          return false
+        }
       }
     }
   #endif
