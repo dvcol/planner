@@ -26,6 +26,23 @@ qualification; the current Mac management-policy restriction does not block
 MVP. Mobile Share capture, core Mac interaction, durable saves and private
 CloudKit synchronization retain their existing scope.
 
+## Personal unlisted distribution, reaffirmed 31 October 2026
+
+The app is for the owner's personal use. The only intended App Store delivery
+is unlisted distribution; no public launch, search visibility or marketing
+rollout is authorized. Prepare only accurate, minimal submission materials.
+
+Keep release manual and do not release the app before unlisted approval. Any
+temporary App Store Connect configuration required for Apple's request process
+does not authorize a public launch. App Review and the required listing,
+privacy/support information still apply to an unlisted app.
+
+Apple's [unlisted distribution rules](https://developer.apple.com/support/unlisted-app-distribution/)
+hide the app from discovery, but anyone with the link can install it. Unlisted
+distribution is not an owner-only installation restriction. Do not silently
+add a custom login/access-control system or expand the personal MVP to address
+that distinction.
+
 ## Private-cloud storage boundary, 29 October 2026
 
 The user requires Planner content to use only their private CloudKit database

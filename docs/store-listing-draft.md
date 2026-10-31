@@ -4,6 +4,13 @@ Prepared locally on 31 October 2026. These are editable submission materials,
 not a submitted listing or a claim of final MVP acceptance. App Store name
 availability and the account's existing app record have not been checked.
 
+## Distribution constraint
+
+This app is for the owner's personal use and unlisted distribution only.
+These materials satisfy submission requirements; they are not a public launch
+or marketing plan. Keep release manual and wait for unlisted approval before
+releasing. Follow the [standing release constraint](release-goals.md#personal-unlisted-distribution-reaffirmed-31-october-2026).
+
 ## English listing
 
 **Working name:** Planner
