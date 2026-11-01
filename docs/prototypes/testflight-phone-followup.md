@@ -67,3 +67,10 @@ for this navigation change.
 The Simulator kept rendering light after XCTest and system appearance changes;
 the screenshots therefore establish light-mode layout only. This run does not
 establish dark-mode visual acceptance. Controls use native adaptive styles.
+
+iOS `1.0.0 (5)` is processed and **Testing** in Personal, with its focused testing
+notes saved. Source is published on `main` at `e1a9cbf`; Mac compilation passes
+and its TestFlight build remains 1. App/Share versions and signatures validate,
+and the app/dSYM UUIDs match. The signed archive/symbols and a few final previews
+remain local; the disposable Simulator and generated results/upload logs were
+removed. App Store submission remains paused.
