@@ -52,11 +52,12 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
         sidebar.tap()
       }
     #endif
+    application.chooseSavedCalendarMode("Agenda")
     let day = Calendar(identifier: .gregorian).dateComponents([.year, .month, .day], from: Date())
     let dateIdentifier =
       "\(try XCTUnwrap(day.year))-\(try XCTUnwrap(day.month))-\(try XCTUnwrap(day.day))"
     let indicator = application.descendants(matching: .any).matching(
-      identifier: "saved.calendar.day.\(dateIdentifier).schedule-count"
+      identifier: "saved.calendar.mini-day.\(dateIdentifier)"
     ).firstMatch
     XCTAssertTrue(indicator.waitForExistence(timeout: 10))
     #if os(macOS)
@@ -69,7 +70,7 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
       add(nativeCount)
       XCTAssertEqual(indicator.value as? String, "1 scheduled entry")
     #else
-      XCTAssertEqual(indicator.label, "1 scheduled entry")
+      XCTAssertEqual(indicator.value as? String, "1 scheduled entry")
     #endif
     let entry = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.schedule.\(scheduleIdentifier)"

@@ -261,7 +261,12 @@ import XCTest
         application.chooseSavedCalendarMode(mode)
         let entry: XCUIElement
         if mode == "Month" {
-          entry = application.buttons["saved.calendar.schedule.\(scheduleIdentifier)"].firstMatch
+          entry =
+            application.buttons.matching(
+              NSPredicate(
+                format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
+                "saved.calendar.day.", String(scheduleIdentifier))
+            ).firstMatch
         } else {
           entry =
             grid.buttons.matching(
@@ -284,10 +289,8 @@ import XCTest
           }
         }
         XCTAssertTrue(entry.isHittable)
-        if mode == "Month", application.tabBars.firstMatch.exists,
-          application.tabBars.firstMatch.frame.minY > application.frame.midY
-        {
-          XCTAssertLessThanOrEqual(entry.frame.maxY, application.tabBars.firstMatch.frame.minY)
+        if mode == "Month" {
+          XCTAssertLessThanOrEqual(entry.frame.maxY, application.windows.firstMatch.frame.maxY)
         }
         XCTAssertEqual(entry.value as? String, description)
         let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
@@ -295,6 +298,7 @@ import XCTest
         capture.lifetime = .keepAlways
         add(capture)
       }
+      application.chooseSavedCalendarMode("Agenda")
       application.buttons["saved.calendar.schedule.\(scheduleIdentifier)"].firstMatch
         .activateForPlannerJourney()
       let sourceSchedule = application.descendants(matching: .any).matching(
@@ -432,7 +436,7 @@ import XCTest
       application.launchSavedPlannerJourney()
       XCTAssertTrue(application.buttons["Calendar"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Calendar")
-      application.plannerElement("saved.calendar.zone.open").activateForPlannerJourney()
+      application.openSavedCalendarDisplayZone()
       let followsDevice = application.descendants(matching: .any).matching(
         identifier: "saved.calendar.zone.follow-device"
       ).firstMatch
@@ -447,26 +451,20 @@ import XCTest
       application.plannerElement("saved.schedule.zone.option.\(zone)")
         .activateForPlannerJourney()
       application.plannerElement("saved.calendar.zone.done").activateForPlannerJourney()
-      let picker = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.date"
-      ).firstMatch
-      XCTAssertTrue(picker.waitForExistence(timeout: 5))
       var calendar = Calendar(identifier: .gregorian)
       calendar.timeZone = try XCTUnwrap(TimeZone(identifier: zone))
       let today = calendar.dateComponents([.year, .month], from: Date())
       let year = try XCTUnwrap(today.year)
       let month = try XCTUnwrap(today.month)
       let monthDifference = (2026 - year) * 12 + targetMonth - month
-      let direction = monthDifference >= 0 ? "next" : "previous"
       for _ in 0..<abs(monthDifference) {
-        let navigation = picker.buttons.matching(
-          NSPredicate(format: "label CONTAINS[c] %@", direction)
-        ).firstMatch
-        XCTAssertTrue(navigation.waitForExistence(timeout: 5), application.debugDescription)
-        navigation.activateForPlannerJourney()
+        let identifier = monthDifference >= 0 ? "DatePicker.NextMonth" : "DatePicker.PreviousMonth"
+        application.buttons[identifier].activateForPlannerJourney()
       }
-      let firstDay = picker.buttons.containing(.staticText, identifier: String(day)).firstMatch
-      XCTAssertTrue(firstDay.waitForExistence(timeout: 5), application.debugDescription)
+      application.chooseSavedCalendarMode("Agenda")
+      let firstDay = application.buttons["saved.calendar.mini-day.2026-\(targetMonth)-\(day)"]
+        .firstMatch
+      XCTAssertTrue(firstDay.waitForExistence(timeout: 5))
       firstDay.activateForPlannerJourney()
       return application
     }

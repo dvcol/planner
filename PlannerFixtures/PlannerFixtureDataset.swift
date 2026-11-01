@@ -6,6 +6,7 @@ enum PlannerFixtureDataset {
   private enum Scenario: String {
     case catalogOverflow = "catalog-overflow"
     case catalogSorting = "catalog-sorting"
+    case calendarDesign = "calendar-design"
     case calendarClockAlignment = "calendar-clock-alignment"
     case calendarRepeatedTimes = "calendar-repeated-times"
     case calendarRepeatedSpan = "calendar-repeated-span"
@@ -190,6 +191,10 @@ enum PlannerFixtureDataset {
     if scenario == .savedMapsDelay || scenario == .savedMapsRetry {
       try await PlannerSavedMapsFixture.seed(
         planner, session: session, usesRetry: scenario == .savedMapsRetry)
+      return SavedPlannerStore(configuration: configuration)
+    }
+    if scenario == .calendarDesign {
+      try await PlannerCalendarDesignFixture.seed(planner, session: session)
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .calendarClockAlignment {

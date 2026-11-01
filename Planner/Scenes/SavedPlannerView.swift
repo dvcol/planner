@@ -173,6 +173,7 @@ struct SavedPlannerView: View {
   @State private var itineraryDeletionMessage: String?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
+  @State private var calendarColumnVisibility: NavigationSplitViewVisibility = .detailOnly
   #if os(iOS)
     @State private var listEditMode: EditMode = .inactive
   #endif
@@ -491,7 +492,7 @@ struct SavedPlannerView: View {
   private var nativeLayout: some View {
     if usesSidebarNavigation {
       if selectedSection == .calendar {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
+        NavigationSplitView(columnVisibility: $calendarColumnVisibility) {
           plannerSidebar
         } detail: {
           #if os(macOS)
@@ -597,16 +598,19 @@ struct SavedPlannerView: View {
         wideCalendar
       } else {
         NavigationStack(path: calendarNavigationPath) {
-          SavedCalendarView(store: store, selection: $calendarSelection)
-            .safeAreaInset(edge: .top) { recoveryNotice }
-            .navigationDestination(for: SavedCalendarDestination.self) { destination in
-              switch destination {
-              case .schedule:
-                calendarDetail
-              case .website(let session):
-                SavedWebsiteView(session: session) { Task { await returnFromWebsite(session) } }
-              }
+          SavedCalendarView(
+            store: store, selection: $calendarSelection, openCollection: openCalendarCollection
+          )
+          .safeAreaInset(edge: .top) { recoveryNotice }
+          .navigationDestination(for: SavedCalendarDestination.self) { destination in
+            switch destination {
+            case .schedule:
+              calendarDetail.toolbar(.visible, for: .navigationBar)
+            case .website(let session):
+              SavedWebsiteView(session: session) { Task { await returnFromWebsite(session) } }
+                .toolbar(.visible, for: .navigationBar)
             }
+          }
         }
       }
     }
@@ -630,14 +634,26 @@ struct SavedPlannerView: View {
 
   private var calendarContent: some View {
     NavigationStack {
-      SavedCalendarView(store: store, selection: calendarInspectorSelection)
-        .safeAreaInset(edge: .top) { recoveryNotice }
-        .toolbar {
-          if !calendarInspectorPresented {
-            ToolbarItem(placement: .primaryAction) { calendarDetailsToggle }
-          }
-        }
+      SavedCalendarView(
+        store: store, selection: calendarInspectorSelection, openCollection: openCalendarCollection,
+        showDetails: calendarDetailsOpening
+      )
+      .safeAreaInset(edge: .top) { recoveryNotice }
     }
+  }
+
+  private func openCalendarCollection(_ collection: SavedCalendarCollection) {
+    switch collection {
+    case .lists: sectionSelection.wrappedValue = .lists
+    case .items: sectionSelection.wrappedValue = .items
+    case .inbox: sectionSelection.wrappedValue = .inbox
+    case .itineraries: sectionSelection.wrappedValue = .itineraries
+    }
+  }
+
+  private var calendarDetailsOpening: (() -> Void)? {
+    guard calendarSelection != nil, !calendarInspectorPresented else { return nil }
+    return { calendarInspectorPresented = true }
   }
 
   private var calendarDetailsToggle: some View {

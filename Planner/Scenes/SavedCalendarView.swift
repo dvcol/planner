@@ -10,32 +10,53 @@ struct SavedCalendarSelection: Hashable {
   let source: PlannerEntityReference
 }
 
+enum SavedCalendarCollection {
+  case lists, items, inbox, itineraries
+}
+
 struct SavedCalendarView: View {
   private enum Mode: String, CaseIterable {
+    case agenda = "Agenda"
     case day = "Day"
     case week = "Week"
     case month = "Month"
+    case quarter = "Quarter"
+    case year = "Year"
 
     var component: Calendar.Component {
       switch self {
+      case .agenda, .month, .quarter: .month
       case .day: .day
       case .week: .weekOfYear
-      case .month: .month
+      case .year: .year
       }
     }
   }
 
   @Environment(\.timeZone) private var deviceTimeZone
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @AppStorage private var overrideTimeZoneIdentifier: String
   @Bindable var store: SavedPlannerStore
   @Binding var selection: SavedCalendarSelection?
+  var openCollection: ((SavedCalendarCollection) -> Void)?
+  var showDetails: (() -> Void)?
   @State private var selectedDate = Date()
-  @State private var visibleDate = Date()
   @State private var entries: [PlannerCalendarEntry]?
   @State private var isLoading = true
-  @State private var mode = Mode.month
+  @State private var mode: Mode = {
+    #if os(iOS)
+      UIDevice.current.userInterfaceIdiom == .phone ? .agenda : .month
+    #else
+      .month
+    #endif
+  }()
   @State private var showsTimeZonePreferences = false
   @State private var showsDateSelection = false
+  @State private var showsScheduleCreation = false
+  @State private var showsSearch = false
+  @State private var searchText = ""
+  @State private var showsAgenda = true
+  @State private var navigatorExpanded = true
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
@@ -48,7 +69,13 @@ struct SavedCalendarView: View {
     #endif
   }
 
-  init(store: SavedPlannerStore, selection: Binding<SavedCalendarSelection?>) {
+  init(
+    store: SavedPlannerStore, selection: Binding<SavedCalendarSelection?>,
+    openCollection: ((SavedCalendarCollection) -> Void)? = nil,
+    showDetails: (() -> Void)? = nil
+  ) {
+    self.openCollection = openCollection
+    self.showDetails = showDetails
     self.store = store
     self._selection = selection
     let namespace = store.devicePreferenceNamespace ?? "unavailable"
@@ -61,26 +88,41 @@ struct SavedCalendarView: View {
   }
 
   private var visibleInterval: DateInterval? {
-    displayCalendar.dateInterval(
-      of: mode.component, for: mode == .month ? visibleDate : selectedDate)
+    guard let interval = displayCalendar.dateInterval(of: mode.component, for: selectedDate) else {
+      return nil
+    }
+    if mode == .quarter {
+      let month = displayCalendar.component(.month, from: selectedDate)
+      guard
+        let start = displayCalendar.date(
+          byAdding: .month, value: -((month - 1) % 3), to: interval.start),
+        let end = displayCalendar.date(byAdding: .month, value: 3, to: start)
+      else { return nil }
+      return .init(start: start, end: end)
+    }
+    return interval
+  }
+
+  /// Load the navigator and adjacent month cells with the same coherent query as the canvas.
+  private var readInterval: DateInterval? {
+    guard let visibleInterval,
+      let month = displayCalendar.dateInterval(of: .month, for: selectedDate),
+      let firstWeek = displayCalendar.dateInterval(
+        of: .weekOfYear, for: min(month.start, visibleInterval.start)),
+      let lastWeek = displayCalendar.dateInterval(
+        of: .weekOfYear, for: max(month.end, visibleInterval.end).addingTimeInterval(-1))
+    else { return nil }
+    return .init(start: firstWeek.start, end: lastWeek.end)
   }
 
   private var visibleDays: [Date] {
-    guard let interval = visibleInterval else { return [] }
-    var days: [Date] = []
-    var date = interval.start
-    while date < interval.end {
-      days.append(date)
-      guard let nextDate = displayCalendar.date(byAdding: .day, value: 1, to: date), nextDate > date
-      else { break }
-      date = nextDate
-    }
-    return days
+    guard let visibleInterval else { return [] }
+    return SavedCalendarDates.days(in: visibleInterval, calendar: displayCalendar)
   }
 
   private var loadIdentity: String {
     let components = displayCalendar.dateComponents(
-      [.year, .month, .day], from: visibleInterval?.start ?? selectedDate)
+      [.year, .month, .day], from: readInterval?.start ?? selectedDate)
     return store.changeRevision.uuidString + ":" + (store.devicePreferenceNamespace ?? "")
       + ":" + displayTimeZone.identifier + ":" + mode.rawValue
       + ":\(components.year ?? 0)-\(components.month ?? 0)-\(components.day ?? 0)"
@@ -89,6 +131,8 @@ struct SavedCalendarView: View {
   private var displayCalendar: Calendar {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = displayTimeZone
+    calendar.firstWeekday = Calendar.current.firstWeekday
+    calendar.minimumDaysInFirstWeek = Calendar.current.minimumDaysInFirstWeek
     return calendar
   }
 
@@ -114,7 +158,7 @@ struct SavedCalendarView: View {
   }
 
   private var windowQuery: PlannerCalendarQuery? {
-    guard let interval = visibleInterval,
+    guard let interval = readInterval,
       let lastDate = displayCalendar.date(byAdding: .day, value: -1, to: interval.end)
     else { return nil }
     let start = displayCalendar.dateComponents([.year, .month, .day], from: interval.start)
@@ -128,25 +172,11 @@ struct SavedCalendarView: View {
       displayTimeZone: displayTimeZone.identifier)
   }
 
-  private var scheduleCounts: [DateComponents: Int] {
-    guard !isLoading, let entries,
-      let interval = displayCalendar.dateInterval(of: .month, for: visibleDate)
-    else { return [:] }
-    var counts: [DateComponents: Int] = [:]
-    var date = interval.start
-    while date < interval.end {
-      let count = entries.filter { occurs($0, on: date) }.count
-      if count > 0 {
-        let components = displayCalendar.dateComponents([.year, .month, .day], from: date)
-        counts[
-          DateComponents(year: components.year, month: components.month, day: components.day)] =
-          count
-      }
-      guard let nextDate = displayCalendar.date(byAdding: .day, value: 1, to: date), nextDate > date
-      else { break }
-      date = nextDate
-    }
-    return counts
+  private func entries(on date: Date) -> [PlannerCalendarEntry] {
+    (entries ?? []).filter { entry in
+      occurs(entry, on: date)
+        && (searchText.isEmpty || entry.title.localizedStandardContains(searchText))
+    }.sorted(by: precedes)
   }
 
   private func scheduleDescription(_ entry: PlannerCalendarEntry) -> String {
@@ -192,63 +222,81 @@ struct SavedCalendarView: View {
   }
 
   var body: some View {
-    VStack(spacing: usesCompactControls ? 0 : 8) {
-      if !usesCompactControls { calendarControls }
-      if mode == .month {
-        monthContent
-      } else {
-        if isLoading {
-          ProgressView("Loading schedules").frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else if entries != nil {
-          GeometryReader { geometry in
-            if geometry.size.width >= 700 {
-              HStack(spacing: 0) {
-                ScrollView { agenda.padding() }.frame(width: 220)
-                Divider()
-                timeGrid
+    GeometryReader { geometry in
+      let isWide = geometry.size.width >= 700
+      let compactControls = usesCompactControls || !isWide
+      VStack(spacing: 0) {
+        if !compactControls { wideControls }
+        HStack(spacing: 0) {
+          if isWide && showsAgenda {
+            VStack(spacing: 0) {
+              dateHeading
+              if geometry.size.height > 400 || mode == .agenda {
+                SavedCalendarMiniMonth(
+                  month: selectedDate, selectedDate: $selectedDate, calendar: displayCalendar,
+                  entriesForDay: entries(on:), showsHeading: false
+                )
+                .padding(12)
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("saved.calendar.date")
               }
-            } else {
-              timeGrid
+              if mode != .agenda { agenda }
             }
+            .frame(width: min(280, geometry.size.width * 0.32))
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("saved.calendar.sidebar")
+            Divider()
           }
-        } else {
-          ContentUnavailableView {
-            Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
-          } actions: {
-            Button("Try again") { Task { await loadEntries() } }
+          VStack(spacing: 0) {
+            if !isWide || !showsAgenda { dateHeading }
+            if showsSearch {
+              HStack {
+                Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
+                TextField("Search this calendar window", text: $searchText)
+                  .textFieldStyle(.plain)
+                  .accessibilityIdentifier("saved.calendar.search")
+                Button("Close search", systemImage: "xmark.circle.fill") {
+                  searchText = ""
+                  showsSearch = false
+                }.labelStyle(.iconOnly)
+              }
+              .padding(12)
+            }
+            calendarCanvas(isWide: isWide)
           }
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+      }
+      .overlay(alignment: .bottom) {
+        if compactControls {
+          floatingControls(
+            agendaWidth: isWide && showsAgenda
+              ? min(280, geometry.size.width * 0.32) : 0
+          ).padding(.horizontal, 16).padding(.vertical, 8)
+        }
+      }
+      .overlay(alignment: .bottomTrailing) {
+        if !compactControls {
+          addButton.buttonStyle(.plain).glassEffect(in: .circle).padding(16)
+        }
+      }
+      .contentMargins(.bottom, compactControls ? 68 : 0, for: .scrollContent)
+      .background(.background)
+      .overlay(alignment: .topTrailing) {
+        if isLoading { ProgressView().controlSize(.small).padding(12) }
       }
     }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("saved.calendar.canvas")
+    .environment(\.calendar, displayCalendar)
     .environment(\.timeZone, displayTimeZone)
     #if os(iOS)
-      .modifier(SavedCollectionNavigationTitle(title: "Calendar"))
+      .toolbar(.hidden, for: .navigationBar)
+      .toolbar(.hidden, for: .tabBar)
     #else
       .navigationTitle("Calendar")
       .toolbarTitleDisplayMode(.inline)
     #endif
-    .toolbar {
-      if usesCompactControls {
-        ToolbarItem(placement: .primaryAction) { compactModeMenu }
-      }
-      ToolbarItemGroup(placement: .primaryAction) {
-        Button("Display time zone", systemImage: "globe") {
-          showsTimeZonePreferences = true
-        }
-        .labelStyle(.iconOnly)
-        .help("Calendar time zone")
-        .disabled(!store.isReady)
-        .accessibilityIdentifier("saved.calendar.zone.open")
-        Button("Today", systemImage: "calendar") {
-          selectedDate = Date()
-          visibleDate = selectedDate
-        }
-        .labelStyle(.titleOnly)
-        .help("Go to today")
-      }
-    }
     .sheet(isPresented: $showsDateSelection) {
       NavigationStack {
         ScrollView {
@@ -266,173 +314,256 @@ struct SavedCalendarView: View {
       }
       .presentationDetents([.medium, .large])
     }
+    .sheet(isPresented: $showsScheduleCreation) {
+      SavedCalendarScheduleCreation(store: store, date: selectedDate, timeZone: displayTimeZone)
+    }
     .sheet(isPresented: $showsTimeZonePreferences) {
       SavedCalendarDisplayZoneSettings(
         overrideTimeZoneIdentifier: $overrideTimeZoneIdentifier, deviceTimeZone: deviceTimeZone)
     }
-    .onChange(of: selectedDate) {
-      let selectedMonth = displayCalendar.dateComponents([.year, .month], from: selectedDate)
-      let visibleMonth = displayCalendar.dateComponents([.year, .month], from: visibleDate)
-      if selectedMonth != visibleMonth { visibleDate = selectedDate }
-    }
     .task(id: loadIdentity) { await loadEntries() }
   }
 
-  private var compactModeMenu: some View {
+  private var dateHeading: some View {
+    HStack(alignment: .firstTextBaseline, spacing: 4) {
+      Button {
+        showsDateSelection = true
+      } label: {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+          if mode != .year || !usesCompactControls {
+            Text(
+              selectedDate,
+              format: mode == .day ? .dateTime.month(.wide).day() : .dateTime.month(.wide)
+            )
+            .foregroundStyle(.primary)
+          }
+          Text(selectedDate, format: .dateTime.year()).foregroundStyle(.red)
+        }
+        .font(usesCompactControls ? .title.bold() : .title2.bold())
+        .lineLimit(1).minimumScaleFactor(0.7)
+      }
+      .buttonStyle(.plain)
+      .accessibilityValue(
+        Text(selectedDate, format: .dateTime.weekday().month().day().hour().minute())
+      )
+      .accessibilityIdentifier("saved.calendar.heading")
+      Spacer(minLength: 4)
+    }
+    .buttonStyle(.plain)
+    .padding(.horizontal, 16).padding(.vertical, usesCompactControls ? 8 : 12)
+    .background(.background)
+  }
+
+  @ViewBuilder
+  private func calendarCanvas(isWide: Bool) -> some View {
+    if entries == nil && !isLoading {
+      ContentUnavailableView {
+        Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
+      } actions: {
+        Button("Try again") { Task { await loadEntries() } }
+      }
+    } else {
+      switch mode {
+      case .agenda:
+        VStack(spacing: 0) {
+          if !isWide {
+            SavedCalendarMiniMonth(
+              month: selectedDate, selectedDate: $selectedDate, calendar: displayCalendar,
+              entriesForDay: entries(on:), showsHeading: false,
+              showsOnlySelectedWeek: !navigatorExpanded
+            )
+            .padding(.horizontal, 16)
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("saved.calendar.date")
+            Button {
+              navigatorExpanded.toggle()
+            } label: {
+              Capsule().fill(.secondary).frame(width: 36, height: 4)
+                .frame(maxWidth: .infinity, minHeight: 32).contentShape(.rect)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(navigatorExpanded ? "Show week navigator" : "Show month navigator")
+            .accessibilityIdentifier("saved.calendar.navigator.toggle")
+            .simultaneousGesture(
+              DragGesture(minimumDistance: 12).onEnded { gesture in
+                navigatorExpanded = gesture.translation.height > 0
+              })
+          }
+          agenda
+        }
+        .animation(reduceMotion ? nil : .snappy, value: navigatorExpanded)
+      case .day, .week:
+        SavedCalendarTimeGrid(
+          days: visibleDays, selectedDate: $selectedDate, calendar: displayCalendar,
+          selection: $selection, entriesForDay: entries(on:),
+          scheduleDescription: scheduleDescription)
+      case .month:
+        SavedCalendarMonthGrid(
+          selectedDate: $selectedDate, visibleDate: selectedDate, selection: $selection,
+          calendar: displayCalendar, entriesForDay: entries(on:))
+      case .quarter, .year:
+        SavedCalendarOverview(
+          interval: visibleInterval, selectedDate: $selectedDate, calendar: displayCalendar,
+          entriesForDay: entries(on:), openMonth: { mode = .month })
+      }
+    }
+  }
+
+  private var agenda: some View {
+    SavedCalendarAgenda(
+      selectedDate: $selectedDate, calendar: displayCalendar,
+      days: readInterval.map { SavedCalendarDates.days(in: $0, calendar: displayCalendar) } ?? [],
+      entriesForDay: entries(on:), selection: $selection, scheduleDescription: scheduleDescription)
+  }
+
+  private var modeMenu: some View {
     Menu {
-      Picker("Calendar view", selection: $mode) {
-        ForEach(Mode.allCases, id: \.self) { mode in
-          Text(mode.rawValue).tag(mode)
+      if let openCollection {
+        Menu("Collections", systemImage: "square.grid.2x2") {
+          Button("Lists", systemImage: "list.bullet") { openCollection(.lists) }
+          Button("Items", systemImage: "square.stack") { openCollection(.items) }
+          Button("Inbox", systemImage: "tray") { openCollection(.inbox) }
+          Button("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath") {
+            openCollection(.itineraries)
+          }
         }
       }
-      Button("Choose date", systemImage: "calendar") { showsDateSelection = true }
-        .accessibilityIdentifier("saved.calendar.choose-date")
+      Picker("Calendar view", selection: $mode) {
+        ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+      }
+      Menu("Options", systemImage: "ellipsis") {
+        if let showDetails {
+          Button("Show details", systemImage: "sidebar.right", action: showDetails)
+        }
+        Button("Choose date", systemImage: "calendar") { showsDateSelection = true }
+          .accessibilityIdentifier("saved.calendar.choose-date")
+        Button("Display time zone", systemImage: "globe") { showsTimeZonePreferences = true }
+          .accessibilityIdentifier("saved.calendar.zone.open")
+        Button(showsAgenda ? "Hide agenda" : "Show agenda", systemImage: "sidebar.left") {
+          showsAgenda.toggle()
+        }
+      }
     } label: {
-      Text(mode.rawValue)
+      Label(mode.rawValue, systemImage: "line.3.horizontal")
+        .labelStyle(.iconOnly).frame(width: 44, height: 44)
     }
+    .menuOrder(.fixed)
     .accessibilityLabel("Calendar view")
     .accessibilityValue(mode.rawValue)
     .accessibilityIdentifier("saved.calendar.mode")
   }
 
-  private var modePicker: some View {
-    Picker("Calendar view", selection: $mode) {
-      ForEach(Mode.allCases, id: \.self) { mode in
-        Text(mode.rawValue).tag(mode)
+  private var todayButton: some View {
+    Button {
+      selectedDate = Date()
+    } label: {
+      Text("Today").frame(minWidth: 72, minHeight: 44).contentShape(.rect)
+    }
+    .accessibilityIdentifier("saved.calendar.today")
+  }
+
+  private var searchButton: some View {
+    Button {
+      showsSearch.toggle()
+    } label: {
+      Image(systemName: "magnifyingglass").frame(width: 44, height: 44).contentShape(.rect)
+    }
+    .accessibilityLabel("Search")
+    .accessibilityIdentifier("saved.calendar.search.open")
+  }
+
+  private var addButton: some View {
+    Button {
+      showsScheduleCreation = true
+    } label: {
+      Image(systemName: "plus").frame(width: 44, height: 44).contentShape(.rect)
+    }
+    .accessibilityLabel("Schedule")
+    .disabled(!store.canCreate)
+    .accessibilityIdentifier("saved.calendar.add")
+  }
+
+  private var periodControls: some View {
+    HStack(spacing: 0) {
+      Button {
+        move(-1)
+      } label: {
+        Image(systemName: "chevron.left").frame(width: 32, height: 44).contentShape(.rect)
+      }
+      .accessibilityLabel("Previous").accessibilityIdentifier("DatePicker.PreviousMonth")
+      todayButton
+      Button {
+        move(1)
+      } label: {
+        Image(systemName: "chevron.right").frame(width: 32, height: 44).contentShape(.rect)
+      }
+      .accessibilityLabel("Next").accessibilityIdentifier("DatePicker.NextMonth")
+    }
+  }
+
+  private func floatingControls(agendaWidth: CGFloat) -> some View {
+    ZStack {
+      HStack {
+        modeMenu.buttonStyle(.plain).glassEffect(in: .circle)
+        Spacer()
+        HStack(spacing: 0) {
+          searchButton
+          addButton
+        }
+        .buttonStyle(.plain).glassEffect(in: .capsule)
+      }
+      periodControls.buttonStyle(.plain).glassEffect(in: .capsule)
+        .frame(maxWidth: .infinity).padding(.leading, agendaWidth)
+    }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier("saved.calendar.controls")
+  }
+
+  private var wideControls: some View {
+    HStack(spacing: 12) {
+      modeMenu.accessibilityIdentifier("saved.calendar.navigation")
+        .accessibilityLabel("Calendar navigation")
+      periodControls
+      Spacer(minLength: 0)
+      Picker("Calendar view", selection: $mode) {
+        ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+      }
+      .pickerStyle(.segmented)
+      .frame(maxWidth: 460)
+      .accessibilityValue(mode.rawValue)
+      .accessibilityIdentifier("saved.calendar.mode")
+      Spacer(minLength: 0)
+      searchButton
+      if let showDetails {
+        Button(action: showDetails) {
+          Image(systemName: "sidebar.right").frame(width: 44, height: 44).contentShape(.rect)
+        }
+        .accessibilityLabel("Show details")
+        .accessibilityIdentifier("saved.calendar.details.toggle")
       }
     }
-    .pickerStyle(.segmented)
-    .labelsHidden()
-    .frame(maxWidth: 400)
-    .accessibilityValue(mode.rawValue)
-    .accessibilityIdentifier("saved.calendar.mode")
+    .buttonStyle(.plain)
+    .padding(.horizontal, 12)
   }
 
-  private var datePicker: some View {
-    DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
-      .datePickerStyle(.compact)
-      .labelsHidden()
-      .fixedSize()
-  }
-
-  private var calendarControls: some View {
-    ViewThatFits(in: .horizontal) {
-      HStack(spacing: 12) {
-        modePicker
-        if mode != .month { datePicker }
-      }
-      VStack(spacing: 8) {
-        modePicker
-        if mode != .month { datePicker }
-      }
+  private func move(_ amount: Int) {
+    let component: Calendar.Component
+    if mode == .quarter {
+      component = .month
+    } else if mode == .agenda && !navigatorExpanded {
+      component = .weekOfYear
+    } else {
+      component = mode.component
     }
-    .padding(.horizontal)
-  }
-
-  private var timeGrid: some View {
-    SavedCalendarTimeGrid(
-      days: visibleDays, selectedDate: $selectedDate, calendar: displayCalendar,
-      selection: $selection,
-      entriesForDay: { date in
-        (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
-      },
-      scheduleDescription: scheduleDescription)
-  }
-
-  @ViewBuilder
-  private var monthContent: some View {
-    #if os(iOS)
-      GeometryReader { geometry in
-        if geometry.size.width >= 700 {
-          HStack(alignment: .top, spacing: 0) {
-            ScrollView { monthPicker.padding() }.frame(width: 340)
-            Divider()
-            ScrollView { agenda.padding() }.frame(maxWidth: .infinity)
-          }
-        } else {
-          ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-              monthPicker.frame(maxWidth: 400).frame(maxWidth: .infinity)
-              agenda
-            }
-            .padding()
-          }
-        }
-      }
-    #else
-      ScrollView {
-        VStack(alignment: .leading, spacing: 20) {
-          ScrollView(.horizontal) {
-            SavedCalendarMonthGrid(
-              selectedDate: $selectedDate, visibleDate: $visibleDate, selection: $selection,
-              calendar: displayCalendar,
-              entriesForDay: { date in
-                (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
-              }
-            )
-            .containerRelativeFrame(.horizontal, alignment: .leading) { availableWidth, _ in
-              max(560, availableWidth)
-            }
-          }
-          agenda
-        }
-        .padding()
-      }
-    #endif
-  }
-
-  #if os(iOS)
-    private var monthPicker: some View {
-      SavedCalendarMonthPicker(
-        selectedDate: $selectedDate, visibleDate: $visibleDate,
-        calendar: displayCalendar, scheduleCounts: scheduleCounts
-      )
-      .accessibilityIdentifier("saved.calendar.date")
-    }
-  #endif
-
-  private var agenda: some View {
-    VStack(alignment: .leading, spacing: 12) {
-      if isLoading {
-        ProgressView("Loading schedules")
-      } else if let entries {
-        let matchingEntries = entries.filter { occurs($0, on: selectedDate) }.sorted(by: precedes)
-        if matchingEntries.isEmpty {
-          VStack(alignment: .leading, spacing: 8) {
-            Label("No scheduled entries", systemImage: "calendar").font(.headline)
-            Text("Choose another date or schedule an Item or Itinerary.")
-              .font(.subheadline)
-              .foregroundStyle(.secondary)
-          }
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .padding(.vertical, 8)
-        } else {
-          Text(selectedDate, format: .dateTime.weekday().month().day()).font(.headline)
-          ForEach(matchingEntries, id: \.schedule.id) { entry in
-            Button {
-              selection = .init(
-                scheduleIdentifier: entry.schedule.id, source: entry.source)
-            } label: {
-              VStack(alignment: .leading, spacing: 4) {
-                Label(entry.title, systemImage: "calendar")
-                Text(scheduleDescription(entry)).font(.caption).foregroundStyle(.secondary)
-              }
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .padding(.vertical, 8)
-              .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(entry.title)
-            .accessibilityValue(scheduleDescription(entry))
-            .accessibilityIdentifier("saved.calendar.schedule.\(entry.schedule.id.uuidString)")
-          }
-        }
+    let value = mode == .quarter ? amount * 3 : amount
+    if let date = displayCalendar.date(byAdding: component, value: value, to: selectedDate) {
+      if (mode == .agenda && navigatorExpanded) || mode == .month,
+        let firstDay = displayCalendar.dateInterval(of: .month, for: date)?.start
+      {
+        selectedDate = SavedCalendarDates.selecting(
+          firstDay, preserving: selectedDate, calendar: displayCalendar)
       } else {
-        ContentUnavailableView {
-          Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
-        } actions: {
-          Button("Try again") { Task { await loadEntries() } }
-        }
+        selectedDate = date
       }
     }
   }

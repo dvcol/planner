@@ -41,35 +41,13 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
     ).firstMatch
     XCTAssertTrue(entry.waitForExistence(timeout: 10))
     let calendarDescription = try XCTUnwrap(entry.value as? String)
-    let overrideIdentifier = chooseDisplayZone(application: application)
+    _ = chooseDisplayZone(application: application)
     let indicator = application.descendants(matching: .any).matching(
-      identifier: "saved.calendar.day.\(dateIdentifier).schedule-count"
+      identifier: "saved.calendar.mini-day.\(dateIdentifier)"
     ).firstMatch
     XCTAssertTrue(indicator.waitForExistence(timeout: 10))
-    #if os(macOS)
-      XCTAssertEqual(indicator.value as? String, "1 scheduled entry")
-    #else
-      XCTAssertEqual(indicator.label, "1 scheduled entry")
-    #endif
-    #if os(macOS)
-      var calendar = Calendar(identifier: .gregorian)
-      calendar.timeZone = try XCTUnwrap(TimeZone(identifier: overrideIdentifier))
-      var originalDay = day
-      originalDay.hour = 12
-      let originalDate = try XCTUnwrap(calendar.date(from: originalDay))
-      var format = Date.FormatStyle().weekday(.wide).month(.wide).day()
-      format.calendar = calendar
-      format.timeZone = calendar.timeZone
-      application.buttons[originalDate.formatted(format)].firstMatch.activateForPlannerJourney()
-    #else
-      let picker = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.date"
-      ).firstMatch
-      let date = picker.buttons.containing(.staticText, identifier: String(try XCTUnwrap(day.day)))
-        .firstMatch
-      XCTAssertTrue(date.waitForExistence(timeout: 5))
-      date.activateForPlannerJourney()
-    #endif
+    XCTAssertEqual(indicator.value as? String, "1 scheduled entry")
+    indicator.activateForPlannerJourney()
     XCTAssertTrue(entry.waitForExistence(timeout: 10))
     XCTAssertEqual(entry.value as? String, calendarDescription)
     #if os(macOS)
@@ -81,7 +59,7 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
     capture.name = "All-day civil date stays fixed across Calendar display zones"
     capture.lifetime = .keepAlways
     add(capture)
-    application.plannerElement("saved.calendar.zone.open").activateForPlannerJourney()
+    application.openSavedCalendarDisplayZone()
     let followsDevice = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.zone.follow-device"
     ).firstMatch
@@ -167,9 +145,7 @@ final class SavedCalendarDisplayZoneJourneyTests: XCTestCase {
   }
 
   private func chooseDisplayZone(application: XCUIApplication) -> String {
-    let zoneControl = application.plannerElement("saved.calendar.zone.open")
-    XCTAssertTrue(zoneControl.waitForExistence(timeout: 5))
-    zoneControl.activateForPlannerJourney()
+    application.openSavedCalendarDisplayZone()
     let followsDevice = application.descendants(matching: .any).matching(
       identifier: "saved.calendar.zone.follow-device"
     ).firstMatch

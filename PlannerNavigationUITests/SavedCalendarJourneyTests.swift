@@ -201,8 +201,8 @@ final class SavedCalendarJourneyTests: XCTestCase {
     let picker = application.descendants(matching: .any).matching(identifier: "saved.calendar.date")
       .firstMatch
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
-    picker.buttons["DatePicker.NextMonth"].activateForPlannerJourney()
-    let firstDay = picker.buttons.containing(.staticText, identifier: "1").firstMatch
+    application.buttons["DatePicker.NextMonth"].activateForPlannerJourney()
+    let firstDay = application.savedCalendarDay(1)
     XCTAssertTrue(firstDay.waitForExistence(timeout: 5))
     XCTAssertTrue(
       firstDay.isSelected, "Browsing a month keeps the agenda's selected day in that month.")
@@ -268,5 +268,6 @@ final class SavedCalendarJourneyTests: XCTestCase {
     #endif
     XCTAssertTrue(destination.waitForExistence(timeout: 5))
     destination.activateForPlannerJourney()
+    application.chooseSavedCalendarMode("Agenda")
   }
 }

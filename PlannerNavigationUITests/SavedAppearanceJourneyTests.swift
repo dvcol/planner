@@ -133,7 +133,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   #endif
 
   #if os(iOS)
-    func testPhoneCatalogHeadersStayLeadingAndCalendarModeFitsItsToolbar() throws {
+    func testPhoneCatalogHeadersStayLeadingAndCalendarUsesFloatingControls() throws {
       guard UIDevice.current.userInterfaceIdiom == .phone else {
         throw XCTSkip("Phone tab headers use the compact navigation layout.")
       }
@@ -162,12 +162,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
             let mode = application.descendants(matching: .any)
               .matching(identifier: "saved.calendar.mode").firstMatch
             XCTAssertTrue(mode.waitForExistence(timeout: 5))
-            XCTAssertTrue(
-              navigation.frame.contains(mode.frame),
-              "The Calendar mode control must not consume a separate content row.")
+            let controls = application.descendants(matching: .any)
+              .matching(identifier: "saved.calendar.controls").firstMatch
+            XCTAssertTrue(controls.waitForExistence(timeout: 5))
+            XCTAssertTrue(controls.frame.contains(mode.frame))
             if landscape {
               mode.activateForPlannerJourney()
-              application.plannerElement("saved.calendar.choose-date").activateForPlannerJourney()
+              application.buttons["Options"].activateForPlannerJourney()
+              application.buttons["Choose date"].activateForPlannerJourney()
               let datePicker = application.descendants(matching: .any)
                 .matching(identifier: "saved.calendar.selected-date").firstMatch
               XCTAssertTrue(datePicker.waitForExistence(timeout: 5))
@@ -179,6 +181,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
               }
             }
           }
+          if section == "Calendar" { continue }
           let title = navigation.staticTexts[section].firstMatch
           XCTAssertTrue(title.waitForExistence(timeout: 5))
           let window = application.windows.firstMatch.frame

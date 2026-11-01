@@ -18,6 +18,10 @@ Home/lock-screen suspension still needs confirmation in the updated build;
 Simulator coverage does not establish that OS behavior. No repeat iCloud off/on
 or stress session is required.
 
+The Calendar presentation described below records build 2. The subsequent
+[full reference rework](native-calendar-reference-rework.md) replaces that
+Calendar UI; it does not change this crash diagnosis or private sync.
+
 Phone catalogs now use consistent leading headers, with full title width in
 landscape and one Lists heading. Calendar uses a native toolbar mode menu and
 date chooser on compact layouts. Its empty agenda has no card background;

@@ -205,39 +205,18 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
   }
 
   private func selectSavedScheduleDate(_ application: XCUIApplication) throws {
-    let picker = application.descendants(matching: .any).matching(
-      identifier: "saved.calendar.date"
-    ).firstMatch
-    XCTAssertTrue(picker.waitForExistence(timeout: 10))
-    let marker = application.descendants(matching: .any).matching(
+    application.chooseSavedCalendarMode("Agenda")
+    let marker = application.buttons.matching(
       NSPredicate(
-        format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
-        "saved.calendar.day.", ".schedule-count")
+        format: "identifier BEGINSWITH %@ AND value == %@", "saved.calendar.mini-day.",
+        "1 scheduled entry")
     ).firstMatch
     if !marker.waitForExistence(timeout: 5) {
-      picker.buttons["DatePicker.PreviousMonth"].activateForPlannerJourney()
+      application.buttons["DatePicker.PreviousMonth"].activateForPlannerJourney()
     }
     XCTAssertTrue(marker.waitForExistence(timeout: 10))
-    #if os(macOS)
-      XCTAssertEqual(marker.value as? String, "1 scheduled entry")
-    #else
-      XCTAssertEqual(marker.label, "1 scheduled entry")
-    #endif
-    let components = marker.identifier.split(separator: ".")[3].split(separator: "-")
-    XCTAssertEqual(components.count, 3)
-    let day = try XCTUnwrap(Int(components[2]))
-    #if os(macOS)
-      let year = try XCTUnwrap(Int(components[0]))
-      let month = try XCTUnwrap(Int(components[1]))
-      let calendar = Calendar(identifier: .gregorian)
-      let date = try XCTUnwrap(
-        calendar.date(from: .init(year: year, month: month, day: day, hour: 12)))
-      let format = Date.FormatStyle().weekday(.wide).month(.wide).day()
-      picker.buttons[date.formatted(format)].firstMatch.activateForPlannerJourney()
-    #else
-      picker.buttons.containing(.staticText, identifier: String(day)).firstMatch
-        .activateForPlannerJourney()
-    #endif
+    XCTAssertEqual(marker.value as? String, "1 scheduled entry")
+    marker.activateForPlannerJourney()
   }
 
   private func revealTimedEntry(

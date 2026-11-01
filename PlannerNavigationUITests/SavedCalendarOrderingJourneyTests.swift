@@ -4,6 +4,9 @@ import XCTest
 final class SavedCalendarOrderingJourneyTests: XCTestCase {
   func testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder() throws {
     continueAfterFailure = false
+    #if os(iOS)
+      XCUIDevice.shared.orientation = .portrait
+    #endif
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
@@ -72,11 +75,17 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
     #else
       application.buttons["Calendar"].firstMatch.activateForPlannerJourney()
     #endif
+    application.chooseSavedCalendarMode("Agenda")
     let picker = application.descendants(matching: .any).matching(identifier: "saved.calendar.date")
       .firstMatch
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
-    picker.buttons.containing(.staticText, identifier: "11").firstMatch.activateForPlannerJourney()
-    let entries = application.buttons.matching(
+    let selectedDay = application.savedCalendarDay(11)
+    selectedDay.activateForPlannerJourney()
+    let groupIdentifier = selectedDay.identifier.replacingOccurrences(
+      of: "mini-day", with: "agenda-day")
+    let group = application.descendants(matching: .any).matching(identifier: groupIdentifier)
+      .firstMatch
+    let entries = group.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.schedule."))
     XCTAssertTrue(entries.firstMatch.waitForExistence(timeout: 10))
     let expected = identifiers.reversed().map {
@@ -86,6 +95,12 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
     XCTAssertEqual(
       entries.allElementsBoundByIndex.map { $0.value as? String },
       ["All day · " + earlierDescription, "All day · " + laterDescription])
+    let agenda = application.scrollViews["saved.calendar.agenda"].firstMatch
+    let aligned = XCTNSPredicateExpectation(
+      predicate: NSPredicate { _, _ in
+        entries.firstMatch.frame.minY < agenda.frame.minY + 80
+      }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [aligned], timeout: 5), .completed)
     let attachment = XCTAttachment(screenshot: application.screenshot())
     attachment.name = "Overlapping all-day schedules retain chronological identity order"
     attachment.lifetime = .keepAlways

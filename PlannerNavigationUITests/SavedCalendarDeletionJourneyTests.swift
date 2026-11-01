@@ -66,7 +66,7 @@ final class SavedCalendarDeletionJourneyTests: XCTestCase {
     let picker = application.descendants(matching: .any).matching(identifier: "saved.calendar.date")
       .firstMatch
     XCTAssertTrue(picker.exists)
-    XCTAssertTrue(picker.buttons["DatePicker.NextMonth"].isHittable)
+    XCTAssertTrue(application.buttons["DatePicker.NextMonth"].isHittable)
     let attachment = XCTAttachment(screenshot: application.screenshot())
     attachment.name = "Confirmed Calendar Item deletion clears the invalid detail selection"
     attachment.lifetime = .keepAlways

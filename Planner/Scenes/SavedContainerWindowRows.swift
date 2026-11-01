@@ -66,7 +66,7 @@ struct SavedContainerWindowRows<SelectionValue: Hashable, RowContent: View>: Vie
     case .loaded(let presentation) where presentation.row.identity == .source(source):
       content(presentation.row)
     case .loading, .loaded:
-      ProgressView(sourceKind == .list ? "Loading List" : "Loading Itinerary")
+      ProgressView("Loading \(sourceKind.rawValue.capitalized)")
         .selectionDisabled()
     case .failed(let reason):
       VStack(alignment: .leading) {

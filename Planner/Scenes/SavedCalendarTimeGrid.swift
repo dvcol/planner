@@ -48,6 +48,9 @@ struct SavedCalendarTimeGrid: View {
   @State private var allDayPresentation: AllDayPresentation?
   @State private var selectedEntryTarget: (identifier: String, selection: SavedCalendarSelection)?
   @State private var horizontalScrollOffset: CGFloat = 0
+  @State private var verticalScrollOffset: CGFloat = 0
+  @State private var isUserScrolling = false
+  @State private var scrollPosition = ScrollPosition()
   @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
   @ScaledMetric(relativeTo: .subheadline) private var timedCardMinimumHeight = 64
   @ScaledMetric(relativeTo: .caption2) private var timeRulerWidth: CGFloat = 48
@@ -78,12 +81,6 @@ struct SavedCalendarTimeGrid: View {
     format.calendar = calendar
     format.timeZone = calendar.timeZone
     return date.formatted(format)
-  }
-
-  private var initialHour: Int {
-    guard calendar.isDateInToday(selectedDate) else { return 8 }
-    let date = Date()
-    return calendar.component(.hour, from: date)
   }
 
   private func timedPlacements(
@@ -184,16 +181,18 @@ struct SavedCalendarTimeGrid: View {
                   dayColumn(day, width: minimumWidths[index] + extraWidth)
                 }
               }
+              .overlay(alignment: .topLeading) {
+                currentTimeLine(widths: minimumWidths.map { $0 + extraWidth })
+              }
             } header: {
-              HStack(alignment: .top, spacing: 0) {
-                Rectangle().fill(.background)
-                  .frame(width: timeRulerWidth)
-                  .offset(x: horizontalScrollOffset)
-                  .zIndex(1)
-                  .accessibilityHidden(true)
-                ForEach(Array(days.enumerated()), id: \.element) { index, day in
-                  dayHeader(day, width: minimumWidths[index] + extraWidth)
+              VStack(spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
+                  Color.clear.frame(width: timeRulerWidth)
+                  ForEach(Array(days.enumerated()), id: \.element) { index, day in
+                    dayHeader(day, width: minimumWidths[index] + extraWidth)
+                  }
                 }
+                allDayBand(widths: minimumWidths.map { $0 + extraWidth })
               }
               .padding(.vertical, 4)
               .background(.background)
@@ -202,32 +201,87 @@ struct SavedCalendarTimeGrid: View {
           }
           .frame(width: timeRulerWidth + minimumWidth + extraWidth * CGFloat(days.count))
         }
-        .defaultScrollAnchor(.init(x: 0, y: 0.5), for: .sizeChanges)
-        .onScrollGeometryChange(for: CGFloat.self) { geometry in
-          max(0, geometry.contentOffset.x + geometry.contentInsets.leading)
-        } action: { _, offset in
-          horizontalScrollOffset = offset
+        .scrollPosition($scrollPosition)
+        .onScrollPhaseChange { _, phase in
+          isUserScrolling = phase == .interacting || phase == .decelerating
+        }
+        .onScrollGeometryChange(for: CGPoint.self) { geometry in
+          CGPoint(
+            x: max(0, geometry.contentOffset.x + geometry.contentInsets.leading),
+            y: max(0, geometry.contentOffset.y + geometry.contentInsets.top))
+        } action: { previous, offset in
+          horizontalScrollOffset = offset.x
+          verticalScrollOffset = offset.y
+          guard isUserScrolling else { return }
+          let minute = min(1439, max(0, Int(offset.y / pointsPerMinute)))
+          var focusDay = selectedDate
+          if abs(offset.x - previous.x) > abs(offset.y - previous.y) {
+            let widths = minimumWidths.map { $0 + extraWidth }
+            var end: CGFloat = 0
+            for (index, width) in widths.enumerated() {
+              end += width
+              if end > offset.x {
+                focusDay = days[index]
+                break
+              }
+            }
+          }
+          if let date = calendar.date(
+            bySettingHour: minute / 60, minute: minute % 60, second: 0, of: focusDay)
+          {
+            selectedDate = date
+          }
+        }
+        .onChange(of: selectedDate) {
+          scrollToFocus(
+            availableWidth: geometry.size.width, widths: minimumWidths.map { $0 + extraWidth })
+        }
+        .onChange(of: minimumWidths) {
+          scrollToFocus(
+            availableWidth: geometry.size.width, widths: minimumWidths.map { $0 + extraWidth })
         }
         .onAppear {
-          proxy.scrollTo(
-            hourIdentifier(selectedDate, hour: initialHour),
-            anchor: .init(x: horizontalAnchor, y: 0.5))
+          scrollToFocus(
+            availableWidth: geometry.size.width, widths: minimumWidths.map { $0 + extraWidth })
         }
         .onChange(of: geometry.size) { previousSize, size in
-          guard size.width < previousSize.width || size.height < previousSize.height,
+          if size.width < previousSize.width || size.height < previousSize.height,
             let selectedEntryTarget,
             selection == selectedEntryTarget.selection
-          else { return }
-          proxy.scrollTo(
-            selectedEntryTarget.identifier, anchor: .init(x: horizontalAnchor, y: 0.5))
+          {
+            proxy.scrollTo(
+              selectedEntryTarget.identifier, anchor: .init(x: horizontalAnchor, y: 0.5))
+          } else {
+            scrollToFocus(
+              availableWidth: size.width, widths: minimumWidths.map { $0 + extraWidth })
+          }
         }
       }
     }
+    .clipped()
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("saved.calendar.time-grid")
     .sheet(item: $allDayPresentation) { presentation in
       allDaySchedules(on: presentation.date)
     }
+  }
+
+  private func scrollToFocus(availableWidth: CGFloat, widths: [CGFloat]) {
+    guard !isUserScrolling else { return }
+    let minute =
+      calendar.component(.hour, from: selectedDate) * 60
+      + calendar.component(.minute, from: selectedDate)
+    var horizontal = horizontalScrollOffset
+    if let index = days.firstIndex(where: { calendar.isDate($0, inSameDayAs: selectedDate) }) {
+      let leading = widths.prefix(index).reduce(0, +)
+      if leading < horizontal
+        || leading + widths[index] + timeRulerWidth > horizontal + availableWidth
+      {
+        horizontal = leading
+      }
+    }
+    // Leave a little clock context so the current-time label clears the sticky heading.
+    scrollPosition.scrollTo(x: horizontal, y: max(0, CGFloat(minute) * pointsPerMinute - 16))
   }
 
   private func allDaySchedules(on day: Date) -> some View {
@@ -262,10 +316,10 @@ struct SavedCalendarTimeGrid: View {
   }
 
   private func dayHeader(_ day: Date, width: CGFloat) -> some View {
-    let entries = allDayEntries(on: day)
     return VStack(alignment: .leading, spacing: 4) {
       Button {
-        selectedDate = day
+        selectedDate = SavedCalendarDates.selecting(
+          day, preserving: selectedDate, calendar: calendar)
       } label: {
         Group {
           if isWeek {
@@ -273,16 +327,19 @@ struct SavedCalendarTimeGrid: View {
               Text(day, format: .dateTime.weekday(.abbreviated))
                 .font(.caption2).foregroundStyle(.secondary)
               Text(day, format: .dateTime.day())
+                .foregroundStyle(calendar.isDateInToday(day) ? Color.white : Color.primary)
                 .font(.subheadline.weight(.semibold))
                 .frame(minWidth: 28, minHeight: 28)
                 .background {
-                  if calendar.isDate(day, inSameDayAs: selectedDate) {
+                  if calendar.isDateInToday(day) {
+                    Circle().fill(.tint)
+                  } else if calendar.isDate(day, inSameDayAs: selectedDate) {
                     Circle().fill(.tint.opacity(colorScheme == .dark ? 0.32 : 0.16))
                   }
                 }
             }
           } else {
-            Text(day, format: .dateTime.weekday().month().day()).font(.headline)
+            Text(day, format: .dateTime.weekday(.wide)).font(.caption.weight(.semibold))
           }
         }
         .frame(maxWidth: .infinity, minHeight: 44)
@@ -292,25 +349,56 @@ struct SavedCalendarTimeGrid: View {
       .accessibilityLabel(Text(day, format: .dateTime.weekday().month().day()))
       .accessibilityAddTraits(calendar.isDate(day, inSameDayAs: selectedDate) ? .isSelected : [])
       .accessibilityIdentifier("saved.calendar.day-heading.\(dateIdentifier(day))")
-      ForEach(entries.prefix(2), id: \.schedule.id) { entry in
-        entryButton(entry, day: day, isTimed: false, isCompact: isWeek)
-          .frame(height: isWeek ? weekCardMinimumHeight : allDayCardHeight)
-          .background(
-            .tint.opacity(colorScheme == .dark ? 0.28 : 0.12), in: .rect(cornerRadius: 4)
-          )
-          .padding(.horizontal, 2)
-      }
-      if entries.count > 2 {
-        Button("\(entries.count - 2) more all-day schedules") {
-          allDayPresentation = .init(date: day)
-        }
-        .font(.caption)
-        .frame(minHeight: 44)
-        .padding(.horizontal, 4)
-        .accessibilityIdentifier("saved.calendar.all-day.more.\(dateIdentifier(day))")
-      }
     }
     .frame(width: width, alignment: .topLeading)
+  }
+
+  private func allDayBand(widths: [CGFloat]) -> some View {
+    let spans = SavedCalendarDates.spans(in: days, entriesForDay: entriesForDay)
+    let rows = min(2, (spans.map(\.lane).max() ?? -1) + 1)
+    let hasOverflow = spans.contains { $0.lane >= 2 }
+    return VStack(spacing: 0) {
+      if rows > 0 {
+        ZStack(alignment: .topLeading) {
+          Text("All day").font(.system(size: 10)).foregroundStyle(.secondary)
+            .frame(width: timeRulerWidth, height: 24)
+            .offset(x: horizontalScrollOffset)
+          ForEach(spans.filter { $0.lane < 2 }) { span in
+            entryButton(span.entry, day: days[span.start], isTimed: false, isCompact: true)
+              .frame(width: widths[span.start...span.end].reduce(0, +) - 4, height: 24)
+              .background(
+                Color.teal.opacity(colorScheme == .dark ? 0.28 : 0.14), in: .rect(cornerRadius: 3)
+              )
+              .offset(
+                x: timeRulerWidth + widths.prefix(span.start).reduce(0, +) + 2,
+                y: CGFloat(span.lane) * 26)
+          }
+        }
+        .frame(
+          width: timeRulerWidth + widths.reduce(0, +), height: CGFloat(rows) * 26,
+          alignment: .topLeading)
+      }
+      if hasOverflow {
+        HStack(spacing: 0) {
+          Color.clear.frame(width: timeRulerWidth)
+          ForEach(Array(days.enumerated()), id: \.element) { index, day in
+            let count = spans.filter { span in
+              span.lane >= 2 && span.start <= index && index <= span.end
+            }.count
+            Group {
+              if count > 0 {
+                Button("+\(count) more") { allDayPresentation = .init(date: day) }
+                  .font(.caption2)
+                  .accessibilityLabel("\(count) more all-day schedules")
+                  .accessibilityIdentifier("saved.calendar.all-day.more.\(dateIdentifier(day))")
+              } else {
+                Color.clear
+              }
+            }.frame(width: widths[index], height: 32)
+          }
+        }
+      }
+    }
   }
 
   private func dayColumn(_ day: Date, width: CGFloat) -> some View {
@@ -318,21 +406,28 @@ struct SavedCalendarTimeGrid: View {
     return VStack(spacing: 0) {
       if let interval = calendar.dateInterval(of: .day, for: day) {
         ZStack(alignment: .topLeading) {
+          if calendar.isDate(day, inSameDayAs: selectedDate) {
+            Color.accentColor.opacity(colorScheme == .dark ? 0.08 : 0.035)
+          }
           hourLines(day: day)
           ForEach(timedPlacements(entries, interval: interval), id: \.entry.schedule.id) {
             placement in
             let laneWidth = (width - 4) / CGFloat(placement.laneCount)
-            entryButton(placement.entry, day: day, isTimed: true, isCompact: isWeek)
-              .frame(width: laneWidth - 2, height: placement.height, alignment: .topLeading)
-              .background(
-                .tint.opacity(colorScheme == .dark ? 0.28 : 0.12), in: .rect(cornerRadius: 4)
-              )
-              .background(.background, in: .rect(cornerRadius: 4))
-              .overlay(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 2).fill(.tint).frame(width: 2)
-                  .accessibilityHidden(true)
-              }
-              .offset(x: 2 + CGFloat(placement.lane) * laneWidth, y: placement.top)
+            entryButton(
+              placement.entry, day: day, isTimed: true, isCompact: isWeek,
+              titleTopInset: max(
+                0, min(placement.height - 24, verticalScrollOffset - placement.top))
+            )
+            .frame(width: laneWidth - 2, height: placement.height, alignment: .topLeading)
+            .background(
+              Color.teal.opacity(colorScheme == .dark ? 0.28 : 0.12), in: .rect(cornerRadius: 4)
+            )
+            .background(.background, in: .rect(cornerRadius: 4))
+            .overlay(alignment: .leading) {
+              RoundedRectangle(cornerRadius: 2).fill(.teal).frame(width: 2)
+                .accessibilityHidden(true)
+            }
+            .offset(x: 2 + CGFloat(placement.lane) * laneWidth, y: placement.top)
           }
         }
         .frame(
@@ -345,6 +440,24 @@ struct SavedCalendarTimeGrid: View {
       }
     }
     .frame(width: width, alignment: .topLeading)
+  }
+
+  private func currentTimeLine(widths: [CGFloat]) -> some View {
+    TimelineView(.periodic(from: .now, by: 60)) { context in
+      if let index = days.firstIndex(where: { calendar.isDate($0, inSameDayAs: context.date) }),
+        let interval = calendar.dateInterval(of: .day, for: context.date)
+      {
+        let top = clockMinute(context.date, interval: interval) * pointsPerMinute
+        ZStack(alignment: .topLeading) {
+          Rectangle().fill(.red).frame(width: widths.reduce(0, +), height: 1)
+            .offset(x: timeRulerWidth, y: top)
+          Circle().fill(.red).frame(width: 7, height: 7)
+            .offset(x: timeRulerWidth + widths.prefix(index).reduce(0, +) - 3, y: top - 3)
+        }
+      }
+    }
+    .allowsHitTesting(false)
+    .accessibilityHidden(true)
   }
 
   private func hourLines(day: Date) -> some View {
@@ -360,12 +473,13 @@ struct SavedCalendarTimeGrid: View {
   }
 
   private var timeRuler: some View {
-    var hourFormat = Date.FormatStyle(date: .omitted, time: .shortened)
+    let hourFormat = DateFormatter()
     hourFormat.timeZone = .gmt
+    hourFormat.setLocalizedDateFormatFromTemplate("j")
     return VStack(alignment: .trailing, spacing: 0) {
       ForEach(0..<24, id: \.self) { hour in
         let date = Date(timeIntervalSinceReferenceDate: Double(hour) * 3600)
-        Text(date.formatted(hourFormat)).font(.caption2).foregroundStyle(.secondary)
+        Text(hourFormat.string(from: date)).font(.caption2).foregroundStyle(.secondary)
           .lineLimit(1)
           .padding(.trailing, 8)
           .frame(width: timeRulerWidth, height: 60 * pointsPerMinute, alignment: .topTrailing)
@@ -374,12 +488,26 @@ struct SavedCalendarTimeGrid: View {
     .frame(
       height: 24 * 60 * pointsPerMinute + cardMinimumHeight, alignment: .top
     )
+    .overlay(alignment: .topTrailing) {
+      TimelineView(.periodic(from: .now, by: 60)) { context in
+        if days.contains(where: { calendar.isDate($0, inSameDayAs: context.date) }),
+          let interval = calendar.dateInterval(of: .day, for: context.date)
+        {
+          Text(timeDescription(context.date)).font(.system(size: 9)).foregroundStyle(.red)
+            .padding(.trailing, 4).background(.background)
+            .offset(y: clockMinute(context.date, interval: interval) * pointsPerMinute - 6)
+            .accessibilityLabel("Current time " + timeDescription(context.date))
+        }
+      }
+      .allowsHitTesting(false)
+    }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("saved.calendar.time-ruler")
   }
 
   private func entryButton(
-    _ entry: PlannerCalendarEntry, day: Date, isTimed: Bool, isCompact: Bool
+    _ entry: PlannerCalendarEntry, day: Date, isTimed: Bool, isCompact: Bool,
+    titleTopInset: CGFloat = 0
   ) -> some View {
     let identifier =
       "saved.calendar.\(isTimed ? "timed" : "all-day").\(dateIdentifier(day)).\(entry.schedule.id.uuidString)"
@@ -390,13 +518,24 @@ struct SavedCalendarTimeGrid: View {
       selectedEntryTarget = (identifier, selected)
       selection = selected
     } label: {
-      VStack(alignment: .leading, spacing: 2) {
+      ViewThatFits(in: .vertical) {
+        VStack(alignment: .leading, spacing: 2) {
+          Text(entry.title).font(
+            isCompact ? .caption.weight(.medium) : .subheadline.weight(.medium)
+          )
+          .lineLimit(isTimed ? 2 : 1).fixedSize(horizontal: false, vertical: true)
+          if isTimed || !isCompact {
+            Text(previewDescription(entry, isTimed: isTimed, isCompact: isCompact)).font(.caption2)
+              .foregroundStyle(.secondary).lineLimit(isCompact ? 1 : 2)
+              .fixedSize(horizontal: false, vertical: true)
+          }
+        }
         Text(entry.title).font(isCompact ? .caption.weight(.medium) : .subheadline.weight(.medium))
-          .lineLimit(isCompact ? 1 : 2)
-        Text(previewDescription(entry, isTimed: isTimed, isCompact: isCompact)).font(.caption2)
-          .foregroundStyle(.secondary).lineLimit(isCompact ? 1 : 2)
+          .lineLimit(2)
       }
       .padding(isCompact ? 4 : 6)
+      // Keep a long event's title visible when its start is above the pinned date headings.
+      .padding(.top, titleTopInset)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
       .contentShape(.rect)
     }

@@ -24,6 +24,25 @@ extension XCUIApplication {
     return grid
   }
 
+  func savedCalendarDay(_ day: Int) -> XCUIElement {
+    buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
+        "saved.calendar.mini-day.", "-\(day)")
+    ).firstMatch
+  }
+
+  func openSavedCalendarDisplayZone() {
+    let navigation = descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier IN %@",
+        ["saved.calendar.mode", "saved.calendar.navigation"])
+    ).firstMatch
+    navigation.activateForPlannerJourney()
+    plannerElement("Options").activateForPlannerJourney()
+    plannerElement("Display time zone").activateForPlannerJourney()
+  }
+
   /// Selects the native toolbar menu on phones and the segmented control on wider layouts.
   func chooseSavedCalendarMode(_ name: String) {
     let control = descendants(matching: .any).matching(identifier: "saved.calendar.mode").firstMatch
@@ -543,6 +562,18 @@ extension XCUIApplication {
   }
 
   func openPlannerSection(_ title: String) {
+    let calendarMenu = descendants(matching: .any).matching(
+      NSPredicate(format: "identifier IN %@", ["saved.calendar.navigation", "saved.calendar.mode"])
+    ).firstMatch
+    if calendarMenu.exists && calendarMenu.isHittable {
+      if title == "Calendar" { return }
+      calendarMenu.activateForPlannerJourney()
+      plannerElement("Collections").activateForPlannerJourney()
+      let destination = plannerElement(title)
+      XCTAssertTrue(destination.waitForExistence(timeout: 5))
+      destination.activateForPlannerJourney()
+      return
+    }
     let savedSection = plannerElement("saved.section.\(title.lowercased())")
     #if os(macOS)
       activate()

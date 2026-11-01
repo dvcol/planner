@@ -196,13 +196,16 @@ struct SavedScheduleForm: View {
 
   init(
     store: SavedPlannerStore, source: PlannerEntityReference, sourceTitle: String,
-    schedule: PlannerScheduleSourceRead? = nil
+    schedule: PlannerScheduleSourceRead? = nil,
+    proposedStart: Date? = nil, proposedTimeZone: TimeZone = .current
   ) {
     self.store = store
     self.source = source
     self.sourceTitle = sourceTitle
     self.schedule = schedule
-    let initialStart = Calendar.current.dateInterval(of: .minute, for: Date())?.start ?? Date()
+    let requestedStart = proposedStart ?? Date()
+    let initialStart =
+      Calendar.current.dateInterval(of: .minute, for: requestedStart)?.start ?? requestedStart
     switch schedule?.content.form {
     case .timed(let start, let end, let planningTimeZone):
       let timeZone = TimeZone(identifier: planningTimeZone) ?? .current
@@ -243,10 +246,11 @@ struct SavedScheduleForm: View {
       _planningTimeZone = State(initialValue: TimeZone.gmt.identifier)
       initialDatesAvailable = startDate != nil && endDate != nil
     case nil:
+      _planningTimeZone = State(initialValue: proposedTimeZone.identifier)
       let startInput = SavedScheduleTimeInput(
-        proposedInstant: initialStart, planningTimeZone: .current)
+        proposedInstant: initialStart, planningTimeZone: proposedTimeZone)
       let endInput = SavedScheduleTimeInput(
-        proposedInstant: initialStart.addingTimeInterval(3600), planningTimeZone: .current)
+        proposedInstant: initialStart.addingTimeInterval(3600), planningTimeZone: proposedTimeZone)
       _startTimeInput = State(initialValue: startInput)
       _endTimeInput = State(initialValue: endInput)
       _startCivilDate = State(initialValue: startInput.pickerValue)
