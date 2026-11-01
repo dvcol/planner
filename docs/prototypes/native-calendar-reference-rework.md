@@ -91,7 +91,6 @@ uploaded archive and dSYMs are retained locally; the two disposable Simulators
 and 85 intermediate result/log/image paths were removed. A few final synthetic
 comparison previews remain outside Git. No App Store submission was made.
 
-
 ## Continuous scrolling revision, build 4
 
 The four focused continuous-scroll journeys cover both directions in Day/Week,
@@ -114,3 +113,15 @@ The existing autumn clock-change regression passes. Validation stays scoped to
 the changed app, existing fixture/native journeys and strict Swift formatting;
 there is no repeat of CloudKit off/on, migration or full-repository matrices.
 Physical-device visual acceptance and full Mac UI automation remain separate.
+
+## Internal delivery of build 4
+
+iOS `1.0.0 (4)` is processed and **Testing** in the existing Personal group.
+The focused Calendar testing notes are saved. Source is published on `main` at
+`57a3a42`. Mac compiles successfully; its TestFlight build remains 1.
+The app/Share signatures and build numbers validate, and the retained archive's
+app/dSYM UUIDs match. Both disposable Simulators and the reviewed intermediate
+result/log/image paths were removed. Only a few final synthetic previews remain
+outside Git, alongside the release archive/symbols. No App Store submission was
+made. Device visual acceptance and the earlier Home/lock confirmation remain
+owner checks after updating TestFlight.
