@@ -46,7 +46,12 @@ public actor PlannerLibrarySharing {
     else {
       throw PlannerFailure("invalidInput", "This invitation is not a private Plan 2Do library.")
     }
-    let share = try await container.accept(metadata)
+    let accepted = try await container.accept(metadata)
+    guard
+      let share = try await container.sharedCloudDatabase.record(for: accepted.recordID) as? CKShare
+    else {
+      throw PlannerFailure("sharingUnavailable", "The accepted invitation is unavailable.")
+    }
     return try await verifiedLibrary(share: share)
   }
 
@@ -81,7 +86,7 @@ public actor PlannerLibrarySharing {
       configuration = try JSONDecoder().decode(PlannerSharingConfiguration.self, from: data)
       try configuration.validated()
       guard !configuration.isPreparing, configuration.shareName == share.recordID.recordName,
-        case .selectedLists = configuration.scope
+        configuration.usesHierarchy
       else { throw PlannerFailure("sharingUnavailable", "The shared library scope has changed.") }
     }
     return try PlannerSharedLibrary(share: share, configuration: configuration)
@@ -149,7 +154,7 @@ public actor PlannerLibrarySharing {
         return try result.get()
       }
       for record in changes {
-        if case .selectedLists = scope, names.contains(record.recordID.recordName) {
+        if next.usesHierarchy, names.contains(record.recordID.recordName) {
           record.setParent(rootID)
         } else {
           record.setParent(nil as CKRecord.ID?)
@@ -163,9 +168,7 @@ public actor PlannerLibrarySharing {
     switch scope {
     case .off:
       share = nil
-    case .wholeLibrary:
-      share = CKShare(recordZoneID: PlannerCloudNode.zoneID)
-    case .selectedLists:
+    case .wholeLibrary, .selectedLists:
       guard let root, let shareName = next.shareName else {
         throw PlannerFailure("sharingUnavailable", "The sharing root is unavailable.")
       }
@@ -174,29 +177,21 @@ public actor PlannerLibrarySharing {
         rootRecord: currentRoot,
         shareID: .init(recordName: shareName, zoneID: PlannerCloudNode.zoneID))
       invitation.publicPermission = .none
-      invitation[CKShare.SystemFieldKey.title] = "Plan 2Do Lists" as NSString
+      let title = scope == .wholeLibrary ? "Plan 2Do library" : "Plan 2Do Lists"
+      invitation[CKShare.SystemFieldKey.title] = title as NSString
       let result = try await database.modifyRecords(
         saving: [currentRoot, invitation], deleting: [], savePolicy: .ifServerRecordUnchanged,
         atomically: true)
       try Self.validateSaveResults(result.saveResults)
       share = try result.saveResults[invitation.recordID]?.get() as? CKShare
     }
-    var saved = share
-    if case .wholeLibrary = scope, let share {
-      share.publicPermission = .none
-      share[CKShare.SystemFieldKey.title] = "Plan 2Do library" as NSString
-      share["f_scopeData"] =
-        try JSONEncoder().encode(
-          PlannerSharingConfiguration(scope: scope, generation: next.generation)) as NSData
-      saved = try await database.save(share) as? CKShare
-    }
-    if scope != .off, saved == nil {
+    if scope != .off, share == nil {
       throw PlannerFailure("sharingUnavailable", "CloudKit did not return the saved invitation.")
     }
     let ready = PlannerSharingConfiguration(scope: scope, generation: next.generation)
     control["f_scopeData"] = try JSONEncoder().encode(ready) as NSData
     _ = try await database.save(control)
-    return saved
+    return share
   }
 
   /// Atomic peers report cancellation; preserve the record error that caused the batch to fail.

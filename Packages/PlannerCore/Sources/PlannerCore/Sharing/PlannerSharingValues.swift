@@ -29,7 +29,7 @@ public struct PlannerSharedLibrary: Sendable, Equatable, Codable, Identifiable {
   var shareID: CKRecord.ID { .init(recordName: shareName, zoneID: zoneID) }
 
   var rootID: CKRecord.ID? {
-    guard case .selectedLists = scope, shareName.hasPrefix("invitation_") else { return nil }
+    guard scope != .off, shareName.hasPrefix("invitation_") else { return nil }
     return .init(
       recordName: "sharing_" + shareName.dropFirst("invitation_".count), zoneID: zoneID)
   }
@@ -37,7 +37,7 @@ public struct PlannerSharedLibrary: Sendable, Equatable, Codable, Identifiable {
   /// A received zone can contain several invitations; only this hierarchy belongs here.
   func contains(_ record: CKRecord) -> Bool {
     guard record.recordID.zoneID == zoneID else { return false }
-    if case .wholeLibrary = scope { return true }
+    if scope == .wholeLibrary, shareName == CKRecordNameZoneWideShare { return true }
     guard let rootID else { return false }
     return record.parent?.recordID == rootID
   }
@@ -73,7 +73,7 @@ struct PlannerSharingConfiguration: Codable, Sendable, Equatable {
     scope: PlannerSharingScope = .off, generation: UUID = UUID(), isPreparing: Bool = false,
     revokingShareName: String? = nil
   ) {
-    version = 1
+    version = scope == .wholeLibrary ? 2 : 1
     self.scope = scope
     self.generation = generation
     self.isPreparing = isPreparing
@@ -81,16 +81,25 @@ struct PlannerSharingConfiguration: Codable, Sendable, Equatable {
   }
 
   var rootName: String { "sharing_" + generation.uuidString.lowercased() }
+  var usesHierarchy: Bool {
+    switch scope {
+    case .off: false
+    case .wholeLibrary: version >= 2
+    case .selectedLists: true
+    }
+  }
+
   var shareName: String? {
     switch scope {
     case .off: nil
-    case .wholeLibrary: CKRecordNameZoneWideShare
+    case .wholeLibrary:
+      version == 1 ? CKRecordNameZoneWideShare : "invitation_" + generation.uuidString.lowercased()
     case .selectedLists: "invitation_" + generation.uuidString.lowercased()
     }
   }
 
   func validated() throws {
-    guard version == 1 else {
+    guard (1...2).contains(version) else {
       throw PlannerFailure("unsupportedVersion", "Update Plan 2Do to use this sharing setup.")
     }
     if case .selectedLists(let identifiers) = scope, identifiers.isEmpty {

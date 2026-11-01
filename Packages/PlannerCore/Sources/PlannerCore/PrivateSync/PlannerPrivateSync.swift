@@ -467,10 +467,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
           sentNodes[node.name] = node
           let record = try node.record(
             base: state.serverRecords[node.name].map(PlannerCloudNode.restore), zoneID: zoneID)
-          if let library, case .selectedLists = library.scope {
-            guard let root = library.rootID else {
-              throw PlannerFailure("sharingUnavailable", "The shared library root is unavailable.")
-            }
+          if let root = library?.rootID {
             record.setParent(root)
           } else if library == nil {
             record.setParent(desiredParent(for: node.name, projection: projection))
@@ -592,7 +589,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
 
   private func desiredParent(for name: String, projection: PlannerSharingProjection) -> CKRecord.ID?
   {
-    guard library == nil, case .selectedLists = sharingConfiguration.scope,
+    guard library == nil, sharingConfiguration.usesHierarchy,
       projection.names.contains(name)
     else { return nil }
     return .init(recordName: sharingConfiguration.rootName, zoneID: zoneID)

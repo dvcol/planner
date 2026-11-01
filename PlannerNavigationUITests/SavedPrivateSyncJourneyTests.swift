@@ -138,27 +138,251 @@
       continueAfterFailure = false
       let application = XCUIApplication()
       application.activate()
-      let invitation = application.otherElements["saved.sharing.invitation"]
-      if !invitation.waitForExistence(timeout: 3) {
-        let invite = application.buttons["saved.sharing.invite"]
-        if !invite.exists {
-          let sharing = application.buttons["saved.settings.sharing"]
-          if !sharing.exists { application.openSavedPlannerSettings() }
-          XCTAssertTrue(sharing.waitForExistence(timeout: 10))
-          sharing.activateForPlannerJourney()
-        }
-        XCTAssertTrue(invite.waitForExistence(timeout: 15))
-        let ready = XCTNSPredicateExpectation(
-          predicate: NSPredicate(format: "enabled == true"), object: invite)
-        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 15), .completed)
-        invite.activateForPlannerJourney()
-        XCTAssertTrue(invitation.waitForExistence(timeout: 45), application.debugDescription)
-      }
+      _ = openExistingSharingInvitation(application)
       capture(application, "Existing sharing invitation participants")
       let hierarchy = XCTAttachment(string: application.debugDescription)
       hierarchy.name = "Existing sharing invitation participant status"
       hierarchy.lifetime = .keepAlways
       add(hierarchy)
+    }
+
+    /// Reads Apple's copied invitation through the owner's own join field, without submitting it.
+    func testPhysicalExistingSharingLinkCanBeCopiedForTheRecipient() throws {
+      try XCTSkipUnless(
+        ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] != nil,
+        "Requires an attended two-account sharing run.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.activate()
+      let invitation = openExistingSharingInvitation(application)
+      let copy = invitation.buttons.matching(
+        NSPredicate(format: "label IN %@", ["Copy Link", "Copy link", "Copier le lien"])
+      ).firstMatch
+      XCTAssertTrue(copy.waitForExistence(timeout: 10))
+      copy.activateForPlannerJourney()
+      if invitation.exists {
+        let close = invitation.buttons.matching(
+          NSPredicate(format: "label IN %@", ["Close", "Fermer"])
+        ).firstMatch
+        XCTAssertTrue(close.waitForExistence(timeout: 5))
+        close.activateForPlannerJourney()
+      }
+      let field = application.textFields["saved.sharing.join.url"]
+      let form = application.collectionViews.containing(
+        .button, identifier: "saved.sharing.scope"
+      ).firstMatch
+      for _ in 0..<3 {
+        if field.exists && field.isHittable { break }
+        XCTAssertTrue(form.exists)
+        form.swipeUp()
+      }
+      XCTAssertTrue(field.waitForExistence(timeout: 10))
+      let existing = field.value as? String ?? ""
+      XCTAssertTrue(
+        existing == "iCloud invitation link" || existing.isEmpty)
+      field.activateForPlannerJourney()
+      field.press(forDuration: 1)
+      let paste = application.menuItems.matching(
+        NSPredicate(format: "label IN %@", ["Paste", "Coller"])
+      ).firstMatch
+      XCTAssertTrue(paste.waitForExistence(timeout: 5))
+      paste.activateForPlannerJourney()
+      let pasted = XCTNSPredicateExpectation(
+        predicate: NSPredicate { _, _ in
+          guard let value = field.value as? String, let url = URL(string: value) else {
+            return false
+          }
+          return url.scheme == "https"
+            && ["icloud.com", "www.icloud.com"].contains(url.host?.lowercased() ?? "")
+        }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [pasted], timeout: 10), .completed)
+      let link = try XCTUnwrap(field.value as? String)
+      let attachment = XCTAttachment(string: link)
+      attachment.name = "Private invitation link for attended recipient"
+      attachment.lifetime = .keepAlways
+      add(attachment)
+      field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: link.utf16.count))
+      XCTAssertFalse((field.value as? String ?? "").hasPrefix("https://"))
+    }
+
+    /// Inspects only the existing invitee so a new scope can target the same account.
+    func testPhysicalExistingSharingRecipientCanBeInspected() throws {
+      let run = ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      try XCTSkipUnless(UUID(uuidString: run) != nil, "Requires an attended sharing run.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.activate()
+      let invitation = openExistingSharingInvitation(application)
+      let participants = invitation.buttons.matching(identifier: "participantName")
+      XCTAssertEqual(participants.count, 2)
+      participants.element(boundBy: 1).activateForPlannerJourney()
+      capture(application, "Current invitation recipient details")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Current recipient controls"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+    }
+
+    /// Grants the same verified account access through Apple without sending a message.
+    func testPhysicalOwnerAddsTheVerifiedMacRecipient() throws {
+      let environment = ProcessInfo.processInfo.environment
+      let run = environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      try XCTSkipUnless(UUID(uuidString: run) != nil, "Requires an attended sharing run.")
+      let recipient = environment["PLANNER_SHARING_RECIPIENT"] ?? ""
+      try XCTSkipUnless(
+        recipient.contains("@") && !recipient.contains("\n"), "Requires the verified recipient.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.activate()
+      let field = application.textFields.matching(NSPredicate(format: "identifier == ''"))
+        .firstMatch
+      let access = application.navigationBars["Add Access"]
+      if !access.exists {
+        let action = application.cells.matching(
+          NSPredicate(format: "identifier == %@ AND label == %@", "actionGroupCell", "Add Access")
+        ).firstMatch
+        if !action.exists {
+          let invitation = openExistingSharingInvitation(application)
+          invitation.buttons.matching(
+            NSPredicate(format: "label IN %@", ["Add People", "Add Member", "Ajouter un membre"])
+          ).firstMatch.activateForPlannerJourney()
+        }
+        XCTAssertTrue(action.waitForExistence(timeout: 10))
+        action.activateForPlannerJourney()
+      }
+      XCTAssertTrue(access.waitForExistence(timeout: 10))
+      XCTAssertTrue(field.waitForExistence(timeout: 10))
+      field.activateForPlannerJourney()
+      field.typeText(recipient + "\n")
+      let addMember = application.buttons["Add"]
+      let ready = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: addMember)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 20), .completed)
+      addMember.activateForPlannerJourney()
+      XCTAssertTrue(access.waitForNonExistence(timeout: 45))
+      let copy = application.cells.matching(
+        NSPredicate(format: "identifier == %@ AND label == %@", "actionGroupCell", "Copy Link")
+      ).firstMatch
+      if copy.waitForExistence(timeout: 5) { copy.activateForPlannerJourney() }
+      capture(application, "Verified Mac account added to private sharing")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Private invitation after adding the verified account"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+    }
+
+    /// Replaces only the attended synthetic sharing scope, preserving all saved source content.
+    func testPhysicalOwnerPreparesRequestedSharingScope() throws {
+      let environment = ProcessInfo.processInfo.environment
+      let run = environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      let requested = environment["PLANNER_SHARING_EXPECTED_SCOPE"] ?? "whole"
+      try XCTSkipUnless(["selected", "whole"].contains(requested), "Requires a known scope.")
+      try XCTSkipUnless(UUID(uuidString: run) != nil, "Requires an attended sharing run.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      application.openSavedPlannerSettings()
+      application.plannerElement("saved.settings.sharing").activateForPlannerJourney()
+      let scope = readySharingScope(application)
+      let stop = application.buttons["saved.sharing.stop"]
+      if stop.exists {
+        stop.activateForPlannerJourney()
+        application.sheets.buttons.matching(identifier: "saved.sharing.scope.confirm")
+          .firstMatch.activateForPlannerJourney()
+        XCTAssertTrue(stop.waitForNonExistence(timeout: 30))
+      }
+      XCTAssertTrue(scope.staticTexts["Off"].waitForExistence(timeout: 10))
+      scope.activateForPlannerJourney()
+      application.plannerElement(requested == "whole" ? "Whole library" : "Selected Lists")
+        .activateForPlannerJourney()
+      if requested == "selected" {
+        let picker = application.buttons["saved.sharing.lists"]
+        picker.activateForPlannerJourney()
+        let shared = application.switches["Sharing check " + String(run.prefix(8))]
+        XCTAssertTrue(shared.waitForExistence(timeout: 10))
+        if shared.value as? String != "1" {
+          shared.switches.firstMatch.activateForPlannerJourney()
+        }
+        XCTAssertTrue(shared.waitForPlannerBooleanState(true))
+        XCTAssertTrue(
+          application.switches["Private check " + String(run.prefix(8))]
+            .waitForPlannerBooleanState(false))
+        application.buttons["saved.sharing.lists.done"].activateForPlannerJourney()
+        XCTAssertEqual(picker.label, "Shared Lists, 1 selected")
+      }
+      let apply = application.buttons["saved.sharing.apply"]
+      let ready = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: apply)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 15), .completed)
+      apply.activateForPlannerJourney()
+      let invitation = application.otherElements["saved.sharing.invitation"]
+      let finished = XCTNSPredicateExpectation(
+        predicate: NSPredicate { _, _ in
+          invitation.exists || application.alerts["Sharing"].exists
+        }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [finished], timeout: 60), .completed)
+      capture(application, "Requested sharing scope invitation")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Requested scope invitation controls"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      XCTAssertTrue(invitation.exists)
+    }
+
+    /// Confirms a recipient edit in the normal owner app, then saves one reply to that same Item.
+    func testPhysicalIPhoneReceivesAndRepliesToTheMacSharingEdit() throws {
+      let environment = ProcessInfo.processInfo.environment
+      let run = environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      try XCTSkipUnless(UUID(uuidString: run) != nil, "Requires an attended sharing run.")
+      let scope = environment["PLANNER_SHARING_EXPECTED_SCOPE"] ?? "selected"
+      XCTAssertTrue(["selected", "whole"].contains(scope))
+      let exchange = environment["PLANNER_SHARING_EXCHANGE"] ?? ""
+      try XCTSkipUnless(UUID(uuidString: exchange) != nil, "Requires a fresh paired exchange.")
+      continueAfterFailure = false
+      let suffix = String(run.prefix(8))
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      let invitation = application.otherElements["saved.sharing.invitation"]
+      if invitation.exists {
+        invitation.buttons.matching(
+          NSPredicate(format: "label IN %@", ["Close", "Fermer"])
+        ).firstMatch.activateForPlannerJourney()
+      }
+      let sharingDone = application.navigationBars["Sharing"].buttons["Done"]
+      if sharingDone.exists { sharingDone.activateForPlannerJourney() }
+      let settingsDone = application.buttons["saved.settings.done"]
+      if settingsDone.exists { settingsDone.activateForPlannerJourney() }
+      application.openPlannerSection("Items")
+      clearFilters(application)
+      search(application, for: suffix)
+      let row = application.savedPlannerItemRows("Shared stop " + suffix).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 30))
+      let identity = row.identifier
+      row.activateForPlannerJourney()
+      let notes = "Edited on Mac sharing " + scope + " " + String(exchange.prefix(8))
+      XCTAssertTrue(application.staticTexts[notes].waitForExistence(timeout: 90))
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Edit item").activateForPlannerJourney()
+      let field = application.textFields["saved.item.edit.notes"]
+      XCTAssertTrue(field.waitForExistence(timeout: 10))
+      field.activateForPlannerJourney()
+      field.press(forDuration: 1)
+      let selectAll = application.menuItems["Select All"]
+      XCTAssertTrue(selectAll.waitForExistence(timeout: 5))
+      selectAll.activateForPlannerJourney()
+      let reply = "Edited on iPhone sharing " + scope + " " + String(exchange.prefix(8))
+      field.typeText(reply)
+      XCTAssertTrue(field.waitForPlannerValue(reply))
+      application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts[reply].waitForExistence(timeout: 15))
+      XCTAssertFalse(application.staticTexts[reply].waitForNonExistence(timeout: 15))
+      let back = application.navigationBars.buttons["Items"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+      let retained = application.savedPlannerItemRows("Shared stop " + suffix).firstMatch
+      XCTAssertTrue(retained.waitForExistence(timeout: 10))
+      XCTAssertEqual(retained.identifier, identity)
+      capture(application, "Owner receives and replies to the exact shared Item")
+      print("PLANNER_SHARING_PHASE owner-replied \(scope)")
     }
 
     /// Creates only uniquely named Development fixtures and leaves the invitation for acceptance.
@@ -425,6 +649,26 @@
       application.openPlannerSection("Items")
       XCTAssertTrue(row.waitForNonExistence(timeout: 15))
       clearSearch(application)
+    }
+
+    /// Reopens current CloudKit participants without applying a new scope.
+    private func openExistingSharingInvitation(_ application: XCUIApplication) -> XCUIElement {
+      let invitation = application.otherElements["saved.sharing.invitation"]
+      if invitation.waitForExistence(timeout: 3) { return invitation }
+      let invite = application.buttons["saved.sharing.invite"]
+      if !invite.exists {
+        let sharing = application.buttons["saved.settings.sharing"]
+        if !sharing.exists { application.openSavedPlannerSettings() }
+        XCTAssertTrue(sharing.waitForExistence(timeout: 10))
+        sharing.activateForPlannerJourney()
+      }
+      XCTAssertTrue(invite.waitForExistence(timeout: 15))
+      let ready = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: invite)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 15), .completed)
+      invite.activateForPlannerJourney()
+      XCTAssertTrue(invitation.waitForExistence(timeout: 45), application.debugDescription)
+      return invitation
     }
 
     private func readySharingScope(_ application: XCUIApplication) -> XCUIElement {

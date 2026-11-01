@@ -1677,6 +1677,10 @@ public actor Planner {
           }
         }
       }
+      // Wake transport after our own durable saves; history observation also covers other writers.
+      if case .applied = result.outcome, let worker = privateSync {
+        Task { await worker.localDataChanged() }
+      }
       guard case .applied = result.outcome,
         let snapshot = associationUndoSnapshots[result.operationId]
       else { return result }

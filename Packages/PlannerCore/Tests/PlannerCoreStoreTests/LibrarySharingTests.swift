@@ -5,6 +5,29 @@ import Testing
 @testable import PlannerCore
 
 struct LibrarySharingTests {
+  @Test func wholeLibraryUsesTheSameHierarchyWithoutReinterpretingLegacyZoneShares() throws {
+    let generation = try #require(UUID(uuidString: "00000000-0000-4000-8000-000000000001"))
+    let whole = PlannerSharingConfiguration(scope: .wholeLibrary, generation: generation)
+    #expect(whole.version == 2)
+    #expect(whole.usesHierarchy)
+    #expect(whole.shareName == "invitation_00000000-0000-4000-8000-000000000001")
+    #expect(whole.rootName == "sharing_00000000-0000-4000-8000-000000000001")
+    let encoded = try JSONEncoder().encode(whole)
+    #expect(try JSONDecoder().decode(PlannerSharingConfiguration.self, from: encoded) == whole)
+    let literal = Data(
+      #"""
+      {"version":1,"scope":{"wholeLibrary":{}},
+       "generation":"00000000-0000-4000-8000-000000000001","isPreparing":false}
+      """#.utf8)
+    let legacy = try JSONDecoder().decode(PlannerSharingConfiguration.self, from: literal)
+    try legacy.validated()
+    #expect(!legacy.usesHierarchy)
+    #expect(legacy.shareName == CKRecordNameZoneWideShare)
+    let selected = PlannerSharingConfiguration(scope: .selectedLists([generation]))
+    #expect(selected.version == 1)
+    #expect(selected.usesHierarchy)
+  }
+
   @Test func atomicSavesPreserveTheSpecificFailureAndRejectCancelledBatches() throws {
     let record = CKRecord(recordType: "PlannerNode_v1")
     let peer = CKRecord.ID(recordName: "peer")
@@ -190,6 +213,8 @@ struct LibrarySharingTests {
     #expect(selected.contains(record))
     record.setParent(nil as CKRecord.ID?)
     let whole = try library(scope: .wholeLibrary, canEdit: true)
+    #expect(!whole.contains(record))
+    record.setParent(try #require(whole.rootID))
     #expect(whole.contains(record))
     let unrelated = CKRecord(
       recordType: PlannerCloudNode.recordType,
