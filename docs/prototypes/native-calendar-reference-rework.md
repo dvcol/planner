@@ -69,3 +69,12 @@ position. Remaining differences are the deliberately smaller planning feature se
 in the table above and the native system typography/materials, rather than copied
 Fantastical assets. The year overview uses a calendar year instead of a rolling
 sixteen-month horizon.
+
+## Internal delivery, 1 November 2026
+
+iOS `1.0.0 (3)` is processed and **Testing** in the existing Personal group.
+The app and Share extension signatures/build identities validate, and focused
+Calendar testing notes are saved. Mac TestFlight remains on build 1. The exact
+uploaded archive and dSYMs are retained locally; the two disposable Simulators
+and 85 intermediate result/log/image paths were removed. A few final synthetic
+comparison previews remain outside Git. No App Store submission was made.
