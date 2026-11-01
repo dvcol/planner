@@ -34,11 +34,12 @@ workflows and recorded limitations.
   quota. No public or developer-funded cloud fallback is permitted.
 - The accepted 1 November follow-up adds optional Whole library/Selected Lists
   sharing and corrects Calendar scrolling axes, weekends and the live clock.
-  [Calendar build 6](prototypes/native-calendar-scroll-axes.md) is Testing in the
-  Personal internal TestFlight group. [Library sharing](prototypes/native-library-sharing.md)
-  has focused Core tests and a passing physical iPhone owner flow through native
-  invitation preparation. Recipient entry, two-account acceptance/permissions and
-  Production schema deployment remain open independently of that Calendar delivery.
+  [Build 7](prototypes/native-library-sharing.md), including sharing and the
+  estimate-display fixes, is Testing on iOS and Mac in the Personal internal
+  TestFlight group. The required Production sharing schema is deployed. Core
+  tests and the native owner flow pass; real-account recipient, permission and
+  revocation confirmation remain open internal-beta checks. The
+  [Calendar corrections](prototypes/native-calendar-scroll-axes.md) are included.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.

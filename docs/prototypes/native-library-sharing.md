@@ -109,8 +109,16 @@ Release candidate 1.0.0(7) now produces signed iOS and arm64 Mac Release archive
 Both app binaries match their crash-symbol UUIDs; deep signature verification
 passes. Both distribution exports verify the Production container, App Group
 and matching app/extension versions; the Mac installer signature also validates.
-The iOS package retains sharing support. Packages remain local until
-the integrated sharing checks and required Production schema update complete.
-These packaging checks do not establish recipient access or final UI acceptance.
+The iOS package retains sharing support. These packaging checks do not establish
+recipient access or final UI acceptance.
+
+On 2 November, the reviewed additive sharing schema deployed to Production:
+`f_scopeData`, its two indexes and Apple's `cloudkit.share` type. Existing record
+grants were unchanged. No records were copied. Both build 7 uploads processed
+successfully and App Store Connect confirms **Testing** for iOS and macOS in the
+existing Personal internal group. They are internal-TestFlight-only builds;
+neither App Store submission nor external distribution is enabled. Saved testing
+notes describe the fixes and explicitly retain real-account recipient,
+permission and revocation confirmation as open internal-beta checks.
 
 Raw test outputs and screenshots stay temporary and outside Git.
