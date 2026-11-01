@@ -136,12 +136,6 @@ import XCTest
         "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
       ]
       application.launchSavedPlannerJourney()
-      let ready = application.descendants(matching: .any).matching(
-        NSPredicate(
-          format: "identifier == %@ OR label IN %@", "saved.section.calendar",
-          ["Calendar", "Show Sidebar"])
-      ).firstMatch
-      XCTAssertTrue(ready.waitForExistence(timeout: 30))
       application.openPlannerSection("Calendar")
       return application
     }

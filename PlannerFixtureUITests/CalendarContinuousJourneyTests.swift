@@ -107,17 +107,23 @@ import XCTest
         let grid = application.savedCalendarTimeGrid()
         let initial = try assertSelectedDateVisible(in: grid)
         XCTAssertEqual(initial, Calendar.current.startOfDay(for: Date()))
+        grid.swipeUp()
+        XCTAssertEqual(try assertSelectedDateVisible(in: grid), initial)
+        grid.swipeDown()
+        XCTAssertEqual(try assertSelectedDateVisible(in: grid), initial)
         var future = initial
-        for _ in 0..<14 {
-          grid.swipeUp()
+        let beyondWindow = try XCTUnwrap(
+          Calendar.current.date(byAdding: .day, value: mode == "Week" ? 49 : 16, to: initial))
+        for _ in 0..<24 {
+          grid.swipeLeft()
           future = try assertSelectedDateVisible(in: grid)
-          if future > initial { break }
+          if future >= beyondWindow { break }
         }
-        XCTAssertGreaterThan(future, initial)
+        XCTAssertGreaterThanOrEqual(future, beyondWindow)
         capture("\(mode) flows into its next period")
         var past = future
         for _ in 0..<14 {
-          grid.swipeDown()
+          grid.swipeRight()
           past = try assertSelectedDateVisible(in: grid)
           if past < future { break }
         }
@@ -126,13 +132,28 @@ import XCTest
       }
     }
 
-    private func openCalendar() -> XCUIApplication {
+    func testDarkCalendarShowsWeekendContrastAndCurrentTime() throws {
+      continueAfterFailure = false
+      XCUIDevice.shared.appearance = .dark
+      defer { XCUIDevice.shared.appearance = .light }
+      let application = openCalendar(dark: true)
+      for mode in ["Day", "Week", "Month", "Year"] {
+        application.chooseSavedCalendarMode(mode)
+        if mode == "Day" || mode == "Week" {
+          XCTAssertTrue(application.staticTexts["saved.calendar.current-time"].exists)
+        }
+        capture("Dark \(mode) weekend and clock review")
+      }
+    }
+
+    private func openCalendar(dark: Bool = false) -> XCUIApplication {
       XCUIDevice.shared.orientation = .portrait
       let application = XCUIApplication()
       application.launchArguments = [
         "--fixture", "calendar-design", "--fixture-dataset", UUID().uuidString,
         "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
       ]
+      if dark { application.launchArguments += ["-AppleInterfaceStyle", "Dark"] }
       application.launchSavedPlannerJourney()
       application.openPlannerSection("Calendar")
       return application

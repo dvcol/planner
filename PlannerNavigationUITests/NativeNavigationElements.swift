@@ -573,7 +573,18 @@ extension XCUIApplication {
   }
 
   func openPlannerSection(_ title: String) {
-    let navigation = plannerElement("saved.navigation")
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        let ready = XCTNSPredicateExpectation(
+          predicate: NSPredicate { _, _ in
+            self.buttons["saved.navigation"].isHittable
+              || self.buttons["saved.calendar.navigation"].isHittable
+              || self.buttons["saved.calendar.mode"].isHittable
+          }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 10), .completed)
+      }
+    #endif
+    let navigation = buttons["saved.navigation"].firstMatch
     if navigation.exists && navigation.isHittable {
       navigation.activateForPlannerJourney()
       plannerElement("Collections").activateForPlannerJourney()

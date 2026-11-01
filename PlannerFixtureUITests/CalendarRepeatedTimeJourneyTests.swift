@@ -434,7 +434,6 @@ import XCTest
         "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Calendar"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Calendar")
       application.openSavedCalendarDisplayZone()
       let followsDevice = application.descendants(matching: .any).matching(

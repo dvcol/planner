@@ -80,6 +80,20 @@ enum SavedCalendarDates {
   }
 }
 
+/// Weekend shading stays below selection and event colors in every calendar scale.
+struct SavedCalendarWeekendBackground: View {
+  @Environment(\.colorScheme) private var colorScheme
+  let day: Date
+  let calendar: Calendar
+
+  var body: some View {
+    let weekday = calendar.component(.weekday, from: day)
+    if weekday == 1 || weekday == 7 {
+      Color.primary.opacity(colorScheme == .dark ? 0.055 : 0.035)
+    }
+  }
+}
+
 struct SavedCalendarMiniMonth: View {
   let month: Date
   @Binding var selectedDate: Date
@@ -141,6 +155,7 @@ struct SavedCalendarMiniMonth: View {
                 Rectangle().fill(Color.orange.opacity(min(0.6, 0.1 + Double(count) * 0.08)))
               }
             }
+            .background { SavedCalendarWeekendBackground(day: day, calendar: calendar) }
             .overlay {
               if !selected && calendar.isDateInToday(day) {
                 Circle().strokeBorder(.tint, lineWidth: 1)

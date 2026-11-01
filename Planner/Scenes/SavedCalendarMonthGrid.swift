@@ -114,6 +114,7 @@ struct SavedCalendarMonthGrid: View {
           if isCompact {
             compactDayCell(day)
               .frame(width: width, height: height)
+              .background { SavedCalendarWeekendBackground(day: day, calendar: calendar) }
           } else {
             dayCell(day, height: height, spanRows: spanRows, spans: spans)
               .frame(width: width, height: height, alignment: .topLeading)
@@ -246,6 +247,7 @@ struct SavedCalendarMonthGrid: View {
     }
     .padding(.horizontal, 3)
     .background(selected ? Color.accentColor.opacity(0.1) : Color.clear)
+    .background { SavedCalendarWeekendBackground(day: day, calendar: calendar) }
     .opacity(calendar.isDate(day, equalTo: selectedDate, toGranularity: .month) ? 1 : 0.5)
     .overlay(alignment: .leading) { Divider().opacity(0.35) }
   }
