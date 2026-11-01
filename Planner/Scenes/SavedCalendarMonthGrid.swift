@@ -3,60 +3,68 @@ import SwiftUI
 
 struct SavedCalendarMonthGrid: View {
   @Binding var selectedDate: Date
-  let visibleDate: Date
+  let days: [Date]
   @Binding var selection: SavedCalendarSelection?
   let calendar: Calendar
   let entriesForDay: (Date) -> [PlannerCalendarEntry]
+  var isCompact = false
+  var onScrollSettled: () -> Void = {}
+  @State private var scrollPosition = ScrollPosition()
   @State private var agendaDay: Date?
   @State private var isUserScrolling = false
 
   private var weeks: [[Date]] {
-    let days = SavedCalendarDates.monthDays(visibleDate, calendar: calendar)
     return stride(from: 0, to: days.count, by: 7).map { Array(days[$0..<min($0 + 7, days.count)]) }
   }
 
   var body: some View {
     GeometryReader { geometry in
-      let rowHeight = max(100, (geometry.size.height - 24) / CGFloat(max(1, weeks.count)))
-      ScrollViewReader { proxy in
+      let rowHeight: CGFloat = isCompact ? 46 : max(100, (geometry.size.height - 24) / 6)
+      VStack(spacing: 0) {
+        HStack(spacing: 0) {
+          ForEach(
+            Array(SavedCalendarDates.weekdayNames(calendar: calendar).enumerated()), id: \.offset
+          ) { _, name in
+            Text(name).font(.caption2).foregroundStyle(.secondary)
+              .frame(maxWidth: .infinity, minHeight: 24)
+          }
+        }.background(.background)
         ScrollView {
-          VStack(spacing: 0) {
-            HStack(spacing: 0) {
-              ForEach(
-                Array(SavedCalendarDates.weekdayNames(calendar: calendar).enumerated()),
-                id: \.offset
-              ) { _, name in
-                Text(name).font(.caption2).foregroundStyle(.secondary)
-                  .frame(maxWidth: .infinity, minHeight: 24)
-              }
-            }
-            ForEach(weeks, id: \.first) { week in
+          LazyVStack(spacing: 0) {
+            ForEach(weeks, id: \.self) { week in
               weekRow(week, height: rowHeight)
-                .id(week.first)
-                .onGeometryChange(for: CGFloat.self) { geometry in
-                  geometry.frame(in: .scrollView(axis: .vertical)).minY
-                } action: { top in
-                  guard isUserScrolling, top >= 0, top < rowHeight / 2,
-                    let day = week.first(where: {
-                      calendar.isDate($0, equalTo: visibleDate, toGranularity: .month)
-                    })
-                  else { return }
-                  selectedDate = SavedCalendarDates.selecting(
-                    day, preserving: selectedDate, calendar: calendar)
-                }
             }
           }
+          .id(rowHeight)
+        }
+        .scrollPosition($scrollPosition)
+        .onScrollGeometryChange(for: CGFloat.self) {
+          $0.contentOffset.y + $0.contentInsets.top
+        } action: { _, offset in
+          guard isUserScrolling, !weeks.isEmpty else { return }
+          let index = min(weeks.count - 1, max(0, Int(offset / rowHeight)))
+          selectedDate = SavedCalendarDates.selecting(
+            weeks[index][0], preserving: selectedDate, calendar: calendar)
         }
         .onScrollPhaseChange { _, phase in
+          let wasScrolling = isUserScrolling
           isUserScrolling = phase == .interacting || phase == .decelerating
+          if phase == .idle && wasScrolling { onScrollSettled() }
         }
-        .onChange(of: selectedDate) {
-          guard !isUserScrolling,
-            let week = weeks.first(where: { week in
-              week.contains { calendar.isDate($0, inSameDayAs: selectedDate) }
-            })
-          else { return }
-          proxy.scrollTo(week.first, anchor: .top)
+        .task(id: selectedDate) {
+          await Task.yield()
+          guard !Task.isCancelled else { return }
+          scrollToFocus(rowHeight: rowHeight)
+        }
+        .task(id: days) {
+          await Task.yield()
+          guard !Task.isCancelled else { return }
+          scrollToFocus(rowHeight: rowHeight)
+        }
+        .task(id: rowHeight) {
+          await Task.yield()
+          guard !Task.isCancelled else { return }
+          scrollToFocus(rowHeight: rowHeight)
         }
       }
     }
@@ -86,16 +94,30 @@ struct SavedCalendarMonthGrid: View {
     }
   }
 
+  private func scrollToFocus(rowHeight: CGFloat) {
+    guard !isUserScrolling,
+      let index = weeks.firstIndex(where: {
+        $0.contains { calendar.isDate($0, inSameDayAs: selectedDate) }
+      })
+    else { return }
+    scrollPosition.scrollTo(y: CGFloat(index) * rowHeight)
+  }
+
   private func weekRow(_ week: [Date], height: CGFloat) -> some View {
     let spans = SavedCalendarDates.spans(in: week, entriesForDay: entriesForDay)
-    let visibleSpans = spans.filter { $0.lane < 2 }
-    let spanRows = min(2, (spans.map(\.lane).max() ?? -1) + 1)
+    let visibleSpans = isCompact ? [] : spans.filter { $0.lane < 2 }
+    let spanRows = isCompact ? 0 : min(2, (spans.map(\.lane).max() ?? -1) + 1)
     return GeometryReader { geometry in
       let width = geometry.size.width / 7
       HStack(spacing: 0) {
         ForEach(week, id: \.self) { day in
-          dayCell(day, height: height, spanRows: spanRows, spans: spans)
-            .frame(width: width, height: height, alignment: .topLeading)
+          if isCompact {
+            compactDayCell(day)
+              .frame(width: width, height: height)
+          } else {
+            dayCell(day, height: height, spanRows: spanRows, spans: spans)
+              .frame(width: width, height: height, alignment: .topLeading)
+          }
         }
       }
       ForEach(visibleSpans) { span in
@@ -121,6 +143,39 @@ struct SavedCalendarMonthGrid: View {
     }
     .frame(height: height)
     .overlay(alignment: .top) { Divider().opacity(0.6) }
+  }
+
+  private func compactDayCell(_ day: Date) -> some View {
+    let selected = calendar.isDate(day, inSameDayAs: selectedDate)
+    let count = entriesForDay(day).count
+    return Button {
+      selectedDate = SavedCalendarDates.selecting(
+        day, preserving: selectedDate, calendar: calendar)
+    } label: {
+      VStack(spacing: 2) {
+        Text(day, format: .dateTime.day()).font(.subheadline)
+          .foregroundStyle(selected ? Color.white : Color.primary)
+        HStack(spacing: 2) {
+          ForEach(0..<min(3, count), id: \.self) { _ in
+            Circle().fill(selected ? Color.white : Color.accentColor).frame(width: 3, height: 3)
+          }
+        }.frame(height: 3)
+      }
+      .frame(maxWidth: .infinity, minHeight: 40)
+      .background {
+        if selected { Circle().fill(.tint) }
+      }
+      .overlay {
+        if !selected && calendar.isDateInToday(day) { Circle().strokeBorder(.tint, lineWidth: 1) }
+      }
+      .contentShape(.rect)
+    }
+    .buttonStyle(.plain)
+    .accessibilityLabel(Text(day, format: .dateTime.weekday().month().day().year()))
+    .accessibilityValue(count == 1 ? "1 scheduled entry" : "\(count) scheduled entries")
+    .accessibilityAddTraits(selected ? .isSelected : [])
+    .accessibilityIdentifier(
+      "saved.calendar.mini-day.\(SavedCalendarDates.identifier(day, calendar: calendar))")
   }
 
   private func dayCell(_ day: Date, height: CGFloat, spanRows: Int, spans: [SavedCalendarSpan])
@@ -191,7 +246,7 @@ struct SavedCalendarMonthGrid: View {
     }
     .padding(.horizontal, 3)
     .background(selected ? Color.accentColor.opacity(0.1) : Color.clear)
-    .opacity(calendar.isDate(day, equalTo: visibleDate, toGranularity: .month) ? 1 : 0.5)
+    .opacity(calendar.isDate(day, equalTo: selectedDate, toGranularity: .month) ? 1 : 0.5)
     .overlay(alignment: .leading) { Divider().opacity(0.35) }
   }
 

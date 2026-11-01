@@ -16,16 +16,14 @@ enum SavedCalendarCollection {
 
 struct SavedCalendarView: View {
   private enum Mode: String, CaseIterable {
-    case agenda = "Agenda"
     case day = "Day"
     case week = "Week"
     case month = "Month"
-    case quarter = "Quarter"
     case year = "Year"
 
     var component: Calendar.Component {
       switch self {
-      case .agenda, .month, .quarter: .month
+      case .month: .month
       case .day: .day
       case .week: .weekOfYear
       case .year: .year
@@ -43,20 +41,15 @@ struct SavedCalendarView: View {
   @State private var selectedDate = Date()
   @State private var entries: [PlannerCalendarEntry]?
   @State private var isLoading = true
-  @State private var mode: Mode = {
-    #if os(iOS)
-      UIDevice.current.userInterfaceIdiom == .phone ? .agenda : .month
-    #else
-      .month
-    #endif
-  }()
+  @State private var mode: Mode = .month
+  @State private var timelineAnchor = Date()
+  @State private var bookingListAnchor = Date()
   @State private var showsTimeZonePreferences = false
   @State private var showsDateSelection = false
   @State private var showsScheduleCreation = false
   @State private var showsSearch = false
   @State private var searchText = ""
   @State private var showsAgenda = true
-  @State private var navigatorExpanded = true
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
@@ -87,37 +80,55 @@ struct SavedCalendarView: View {
     TimeZone(identifier: overrideTimeZoneIdentifier) ?? deviceTimeZone
   }
 
-  private var visibleInterval: DateInterval? {
-    guard let interval = displayCalendar.dateInterval(of: mode.component, for: selectedDate) else {
-      return nil
+  private var periodRadius: Int {
+    switch mode {
+    case .day: 21
+    case .week, .month: 6
+    case .year: 3
     }
-    if mode == .quarter {
-      let month = displayCalendar.component(.month, from: selectedDate)
-      guard
-        let start = displayCalendar.date(
-          byAdding: .month, value: -((month - 1) % 3), to: interval.start),
-        let end = displayCalendar.date(byAdding: .month, value: 3, to: start)
-      else { return nil }
-      return .init(start: start, end: end)
-    }
-    return interval
   }
 
-  /// Load the navigator and adjacent month cells with the same coherent query as the canvas.
+  private var periods: [Date] {
+    guard let center = displayCalendar.dateInterval(of: mode.component, for: timelineAnchor)?.start
+    else { return [] }
+    return (-periodRadius...periodRadius).compactMap { offset in
+      guard let date = displayCalendar.date(byAdding: mode.component, value: offset, to: center),
+        (1...9999).contains(displayCalendar.component(.year, from: date))
+      else { return nil }
+      return date
+    }
+  }
+
+  private var bookingDays: [Date] {
+    let center = displayCalendar.startOfDay(for: bookingListAnchor)
+    return (-21...21).compactMap { displayCalendar.date(byAdding: .day, value: $0, to: center) }
+  }
+
+  /// Keep adjacent dates available without materializing every Calendar row.
   private var readInterval: DateInterval? {
-    guard let visibleInterval,
+    guard let first = periods.first, let last = periods.last,
+      let end = displayCalendar.dateInterval(of: mode.component, for: last)?.end,
       let month = displayCalendar.dateInterval(of: .month, for: selectedDate),
+      let bookingEnd = displayCalendar.date(byAdding: .day, value: 1, to: bookingDays.last ?? last),
       let firstWeek = displayCalendar.dateInterval(
-        of: .weekOfYear, for: min(month.start, visibleInterval.start)),
+        of: .weekOfYear, for: min(month.start, first, bookingDays.first ?? first)),
       let lastWeek = displayCalendar.dateInterval(
-        of: .weekOfYear, for: max(month.end, visibleInterval.end).addingTimeInterval(-1))
+        of: .weekOfYear, for: max(month.end, end, bookingEnd).addingTimeInterval(-1))
     else { return nil }
     return .init(start: firstWeek.start, end: lastWeek.end)
   }
 
-  private var visibleDays: [Date] {
-    guard let visibleInterval else { return [] }
-    return SavedCalendarDates.days(in: visibleInterval, calendar: displayCalendar)
+  private func recenterTimeline() {
+    let distance =
+      displayCalendar.dateComponents(
+        [mode.component], from: timelineAnchor, to: selectedDate
+      ).value(for: mode.component) ?? 0
+    if abs(distance) >= max(1, periodRadius / 2) { timelineAnchor = selectedDate }
+    let dayDistance =
+      displayCalendar.dateComponents(
+        [.day], from: bookingListAnchor, to: selectedDate
+      ).day ?? 0
+    if abs(dayDistance) >= 7 { bookingListAnchor = selectedDate }
   }
 
   private var loadIdentity: String {
@@ -126,6 +137,7 @@ struct SavedCalendarView: View {
     return store.changeRevision.uuidString + ":" + (store.devicePreferenceNamespace ?? "")
       + ":" + displayTimeZone.identifier + ":" + mode.rawValue
       + ":\(components.year ?? 0)-\(components.month ?? 0)-\(components.day ?? 0)"
+      + ":\(readInterval?.end.timeIntervalSinceReferenceDate ?? 0)"
   }
 
   private var displayCalendar: Calendar {
@@ -231,7 +243,7 @@ struct SavedCalendarView: View {
           if isWide && showsAgenda {
             VStack(spacing: 0) {
               dateHeading
-              if geometry.size.height > 400 || mode == .agenda {
+              if geometry.size.height > 400 {
                 SavedCalendarMiniMonth(
                   month: selectedDate, selectedDate: $selectedDate, calendar: displayCalendar,
                   entriesForDay: entries(on:), showsHeading: false
@@ -240,7 +252,7 @@ struct SavedCalendarView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("saved.calendar.date")
               }
-              if mode != .agenda { agenda }
+              agenda
             }
             .frame(width: min(280, geometry.size.width * 0.32))
             .accessibilityElement(children: .contain)
@@ -262,7 +274,14 @@ struct SavedCalendarView: View {
               }
               .padding(12)
             }
-            calendarCanvas(isWide: isWide)
+            if !isWide {
+              calendarCanvas(isCompact: true)
+                .frame(height: showsAgenda ? calendarHeight(in: geometry.size.height) : nil)
+              scaleHandle
+              if showsAgenda { agenda }
+            } else {
+              calendarCanvas(isCompact: false)
+            }
           }
           .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -321,6 +340,25 @@ struct SavedCalendarView: View {
       SavedCalendarDisplayZoneSettings(
         overrideTimeZoneIdentifier: $overrideTimeZoneIdentifier, deviceTimeZone: deviceTimeZone)
     }
+    .animation(reduceMotion ? nil : .snappy, value: mode)
+    .onChange(of: mode) {
+      timelineAnchor = selectedDate
+      bookingListAnchor = selectedDate
+    }
+    .onChange(of: selectedDate) {
+      if abs(
+        displayCalendar.dateComponents([.day], from: bookingListAnchor, to: selectedDate).day ?? 0)
+        > 21
+      {
+        bookingListAnchor = selectedDate
+      }
+      if let first = periods.first, let last = periods.last,
+        let end = displayCalendar.dateInterval(of: mode.component, for: last)?.end,
+        selectedDate < first || selectedDate >= end
+      {
+        timelineAnchor = selectedDate
+      }
+    }
     .task(id: loadIdentity) { await loadEntries() }
   }
 
@@ -354,8 +392,40 @@ struct SavedCalendarView: View {
     .background(.background)
   }
 
+  private func calendarHeight(in height: CGFloat) -> CGFloat {
+    min(max(160, height * 0.46), mode == .month ? 320 : 420)
+  }
+
+  private func changeScale(_ direction: Int) {
+    let levels = Mode.allCases
+    guard let index = levels.firstIndex(of: mode) else { return }
+    mode = levels[min(levels.count - 1, max(0, index + direction))]
+  }
+
+  private var scaleHandle: some View {
+    Button {
+      let index = Mode.allCases.firstIndex(of: mode) ?? 0
+      mode = Mode.allCases[(index + 1) % Mode.allCases.count]
+    } label: {
+      Capsule().fill(.secondary).frame(width: 36, height: 4)
+        .frame(maxWidth: .infinity, minHeight: 32).contentShape(.rect)
+    }
+    .buttonStyle(.plain)
+    .accessibilityLabel("Calendar scale")
+    .accessibilityValue(mode.rawValue)
+    .accessibilityHint("Drag up for closer dates, down for a wider range.")
+    .accessibilityAdjustableAction { direction in
+      changeScale(direction == .increment ? 1 : -1)
+    }
+    .accessibilityIdentifier("saved.calendar.navigator.toggle")
+    .highPriorityGesture(
+      DragGesture(minimumDistance: 12).onEnded { gesture in
+        changeScale(gesture.translation.height > 0 ? 1 : -1)
+      })
+  }
+
   @ViewBuilder
-  private func calendarCanvas(isWide: Bool) -> some View {
+  private func calendarCanvas(isCompact: Bool) -> some View {
     if entries == nil && !isLoading {
       ContentUnavailableView {
         Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
@@ -364,56 +434,34 @@ struct SavedCalendarView: View {
       }
     } else {
       switch mode {
-      case .agenda:
-        VStack(spacing: 0) {
-          if !isWide {
-            SavedCalendarMiniMonth(
-              month: selectedDate, selectedDate: $selectedDate, calendar: displayCalendar,
-              entriesForDay: entries(on:), showsHeading: false,
-              showsOnlySelectedWeek: !navigatorExpanded
-            )
-            .padding(.horizontal, 16)
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("saved.calendar.date")
-            Button {
-              navigatorExpanded.toggle()
-            } label: {
-              Capsule().fill(.secondary).frame(width: 36, height: 4)
-                .frame(maxWidth: .infinity, minHeight: 32).contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(navigatorExpanded ? "Show week navigator" : "Show month navigator")
-            .accessibilityIdentifier("saved.calendar.navigator.toggle")
-            .simultaneousGesture(
-              DragGesture(minimumDistance: 12).onEnded { gesture in
-                navigatorExpanded = gesture.translation.height > 0
-              })
-          }
-          agenda
-        }
-        .animation(reduceMotion ? nil : .snappy, value: navigatorExpanded)
       case .day, .week:
         SavedCalendarTimeGrid(
-          days: visibleDays, selectedDate: $selectedDate, calendar: displayCalendar,
-          selection: $selection, entriesForDay: entries(on:),
-          scheduleDescription: scheduleDescription)
+          periods: periods, isWeek: mode == .week, selectedDate: $selectedDate,
+          calendar: displayCalendar, selection: $selection, entriesForDay: entries(on:),
+          scheduleDescription: scheduleDescription, onScrollSettled: recenterTimeline
+        )
+        .id(mode)
       case .month:
         SavedCalendarMonthGrid(
-          selectedDate: $selectedDate, visibleDate: selectedDate, selection: $selection,
-          calendar: displayCalendar, entriesForDay: entries(on:))
-      case .quarter, .year:
+          selectedDate: $selectedDate,
+          days: readInterval.map { SavedCalendarDates.days(in: $0, calendar: displayCalendar) }
+            ?? [],
+          selection: $selection, calendar: displayCalendar, entriesForDay: entries(on:),
+          isCompact: isCompact && showsAgenda, onScrollSettled: recenterTimeline)
+      case .year:
         SavedCalendarOverview(
-          interval: visibleInterval, selectedDate: $selectedDate, calendar: displayCalendar,
-          entriesForDay: entries(on:), openMonth: { mode = .month })
+          years: periods, selectedDate: $selectedDate, calendar: displayCalendar,
+          entriesForDay: entries(on:), onScrollSettled: recenterTimeline,
+          openMonth: { mode = .month })
       }
     }
   }
 
   private var agenda: some View {
     SavedCalendarAgenda(
-      selectedDate: $selectedDate, calendar: displayCalendar,
-      days: readInterval.map { SavedCalendarDates.days(in: $0, calendar: displayCalendar) } ?? [],
-      entriesForDay: entries(on:), selection: $selection, scheduleDescription: scheduleDescription)
+      selectedDate: $selectedDate, calendar: displayCalendar, days: bookingDays,
+      entriesForDay: entries(on:), selection: $selection, scheduleDescription: scheduleDescription,
+      isLoading: isLoading, onScrollSettled: recenterTimeline)
   }
 
   private var modeMenu: some View {
@@ -439,7 +487,8 @@ struct SavedCalendarView: View {
           .accessibilityIdentifier("saved.calendar.choose-date")
         Button("Display time zone", systemImage: "globe") { showsTimeZonePreferences = true }
           .accessibilityIdentifier("saved.calendar.zone.open")
-        Button(showsAgenda ? "Hide agenda" : "Show agenda", systemImage: "sidebar.left") {
+        Button(showsAgenda ? "Hide booking list" : "Show booking list", systemImage: "sidebar.left")
+        {
           showsAgenda.toggle()
         }
       }
@@ -547,24 +596,8 @@ struct SavedCalendarView: View {
   }
 
   private func move(_ amount: Int) {
-    let component: Calendar.Component
-    if mode == .quarter {
-      component = .month
-    } else if mode == .agenda && !navigatorExpanded {
-      component = .weekOfYear
-    } else {
-      component = mode.component
-    }
-    let value = mode == .quarter ? amount * 3 : amount
-    if let date = displayCalendar.date(byAdding: component, value: value, to: selectedDate) {
-      if (mode == .agenda && navigatorExpanded) || mode == .month,
-        let firstDay = displayCalendar.dateInterval(of: .month, for: date)?.start
-      {
-        selectedDate = SavedCalendarDates.selecting(
-          firstDay, preserving: selectedDate, calendar: displayCalendar)
-      } else {
-        selectedDate = date
-      }
+    if let date = displayCalendar.date(byAdding: mode.component, value: amount, to: selectedDate) {
+      selectedDate = date
     }
   }
 

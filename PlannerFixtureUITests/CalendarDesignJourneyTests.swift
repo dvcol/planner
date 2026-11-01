@@ -10,7 +10,7 @@ import XCTest
       XCUIDevice.shared.orientation = .portrait
       defer { XCUIDevice.shared.orientation = .portrait }
       let application = openCalendarFixture()
-      for mode in ["Agenda", "Day", "Week", "Month", "Quarter", "Year"] {
+      for mode in ["Day", "Week", "Month", "Year"] {
         application.chooseSavedCalendarMode(mode)
         capture("Portrait \(mode)")
       }
@@ -30,7 +30,7 @@ import XCTest
       let todayFields = Calendar.current.dateComponents([.year, .month, .day], from: Date())
       let todayIdentifier =
         "\(try XCTUnwrap(todayFields.year))-\(try XCTUnwrap(todayFields.month))-\(try XCTUnwrap(todayFields.day))"
-      let todayHeading = grid.buttons["saved.calendar.day-heading.\(todayIdentifier)"]
+      let todayHeading = grid.buttons["saved.calendar.day-heading.\(todayIdentifier)"].firstMatch
       let span = grid.buttons.matching(
         NSPredicate(
           format: "label == %@ AND identifier BEGINSWITH %@", "City weekend",
@@ -65,16 +65,14 @@ import XCTest
       capture("Landscape month event grid")
       application.chooseSavedCalendarMode("Week")
       application.plannerElement("saved.calendar.today").activateForPlannerJourney()
-      let entry = application.buttons.matching(
-        NSPredicate(
-          format: "identifier BEGINSWITH %@ AND label == %@", "saved.calendar.schedule.",
-          "Museum visit")
-      ).firstMatch
-      for _ in 0..<8 {
-        if entry.isHittable { break }
-        agenda.swipeDown()
-      }
-      XCTAssertTrue(entry.isHittable)
+      let day = sidebar.descendants(matching: .any)
+        .matching(identifier: "saved.calendar.agenda-day.\(todayIdentifier)").firstMatch
+      let entry = try XCTUnwrap(
+        day.buttons.matching(
+          NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label != %@", "saved.calendar.schedule.",
+            "City weekend")
+        ).allElementsBoundByIndex.first(where: \.isHittable))
       let scheduleIdentifier = try XCTUnwrap(entry.identifier.split(separator: ".").last)
       entry.activateForPlannerJourney()
       let exactSchedule = application.descendants(matching: .any)
@@ -88,6 +86,8 @@ import XCTest
       continueAfterFailure = false
       let application = openCalendarFixture()
       application.chooseSavedCalendarMode("Month")
+      application.setSavedCalendarBookingList(visible: false)
+      capture("Expanded Month before opening its itinerary")
       let span = application.buttons.matching(
         NSPredicate(
           format: "identifier BEGINSWITH %@ AND label == %@", "saved.calendar.span.", "City weekend"
@@ -111,30 +111,13 @@ import XCTest
       let application = openCalendarFixture()
       application.chooseSavedCalendarMode("Day")
       let grid = application.savedCalendarTimeGrid()
-      let entry = grid.buttons.matching(NSPredicate(format: "label == %@", "Museum visit"))
+      let entry = grid.buttons.matching(NSPredicate(format: "label == %@", "Current visit"))
         .firstMatch
       XCTAssertTrue(entry.waitForExistence(timeout: 10))
-      for _ in 0..<6 {
-        if entry.isHittable { break }
-        grid.swipeDown()
-      }
       XCTAssertTrue(entry.isHittable)
       capture("Day time grid before opening details")
       let identifier = try XCTUnwrap(entry.identifier.split(separator: ".").last)
-      let headerBottom =
-        grid.buttons.matching(
-          NSPredicate(
-            format: "identifier BEGINSWITH %@ OR identifier BEGINSWITH %@",
-            "saved.calendar.day-heading.", "saved.calendar.all-day.")
-        ).allElementsBoundByIndex.map(\.frame.maxY).max() ?? grid.frame.minY
-      let visibleFrame = entry.frame.intersection(
-        CGRect(
-          x: grid.frame.minX, y: headerBottom + 4, width: grid.frame.width,
-          height: max(0, grid.frame.maxY - headerBottom - 4)))
-      XCTAssertFalse(visibleFrame.isEmpty)
-      entry.coordinate(withNormalizedOffset: .zero).withOffset(
-        CGVector(dx: visibleFrame.midX - entry.frame.minX, dy: visibleFrame.midY - entry.frame.minY)
-      ).tap()
+      entry.activateForPlannerJourney()
       let schedule = application.descendants(matching: .any)
         .matching(identifier: "saved.item.schedule.\(identifier)").firstMatch
       for _ in 0..<6 {

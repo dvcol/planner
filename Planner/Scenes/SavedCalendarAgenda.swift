@@ -8,26 +8,26 @@ struct SavedCalendarAgenda: View {
   let entriesForDay: (Date) -> [PlannerCalendarEntry]
   @Binding var selection: SavedCalendarSelection?
   let scheduleDescription: (PlannerCalendarEntry) -> String
+  var isLoading = false
+  var onScrollSettled: () -> Void = {}
+  @State private var renderedDays: Set<Date> = []
+  @State private var pendingFocusDay: Date?
+  @State private var visibleRow: String?
   @State private var isUserScrolling = false
   @State private var viewportHeight: CGFloat = 1
   @State private var headerHeight: CGFloat = 34
-
-  private var matchingDays: [Date] {
-    days.filter { day in
-      calendar.isDate(day, inSameDayAs: selectedDate) || !entriesForDay(day).isEmpty
-    }
-  }
 
   var body: some View {
     ScrollViewReader { proxy in
       ScrollView {
         LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
-          ForEach(matchingDays, id: \.self) { day in
+          ForEach(days, id: \.self) { day in
             Section {
               VStack(alignment: .leading, spacing: 0) {
                 let entries = entriesForDay(day)
                 if entries.isEmpty {
-                  Text("No scheduled entries")
+                  Text(isLoading ? "Loading calendar" : "No scheduled entries")
+                    .id("empty." + SavedCalendarDates.identifier(day, calendar: calendar))
                     .font(.subheadline).foregroundStyle(.secondary)
                     .padding(.horizontal, 16).padding(.vertical, 20)
                 }
@@ -35,17 +35,23 @@ struct SavedCalendarAgenda: View {
                   row in
                   entryRow(row.entry, day: day)
                     .id(row.id)
-                    .onGeometryChange(for: CGFloat.self) { geometry in
-                      geometry.frame(in: .scrollView(axis: .vertical)).minY
-                    } action: { top in
-                      guard isUserScrolling, top >= headerHeight, top < headerHeight + 44 else {
-                        return
-                      }
+                    .onGeometryChange(for: CGRect.self) { geometry in
+                      geometry.frame(in: .scrollView(axis: .vertical))
+                    } action: { frame in
+                      guard isUserScrolling, frame.minY <= headerHeight + 4,
+                        frame.maxY > headerHeight + 4
+                      else { return }
                       selectedDate = focusDate(row.entry, day: day)
                     }
                 }
                 Color.clear.frame(height: 12)
               }
+              .onAppear {
+                renderedDays.insert(day)
+                if pendingFocusDay == day { scrollToFocus(proxy) }
+              }
+              .onDisappear { renderedDays.remove(day) }
+              .scrollTargetLayout()
               .accessibilityElement(children: .contain)
               .accessibilityIdentifier(
                 "saved.calendar.agenda-day.\(SavedCalendarDates.identifier(day, calendar: calendar))"
@@ -60,10 +66,14 @@ struct SavedCalendarAgenda: View {
               }
               .padding(.horizontal, 16).padding(.vertical, 10)
               .background(.background)
-              .onGeometryChange(for: CGFloat.self) {
-                $0.size.height
-              } action: {
-                headerHeight = $0
+              .onGeometryChange(for: CGRect.self) { geometry in
+                geometry.frame(in: .scrollView(axis: .vertical))
+              } action: { frame in
+                headerHeight = frame.height
+                if isUserScrolling && frame.minY >= 0 && frame.minY < 8 {
+                  selectedDate = SavedCalendarDates.selecting(
+                    day, preserving: selectedDate, calendar: calendar)
+                }
               }
               .overlay(alignment: .top) { Divider().opacity(0.5) }
               .id(calendar.startOfDay(for: day))
@@ -82,10 +92,22 @@ struct SavedCalendarAgenda: View {
       } action: {
         viewportHeight = $0
       }
+      .scrollPosition(id: $visibleRow)
       .onScrollPhaseChange { _, phase in
+        let wasScrolling = isUserScrolling
         isUserScrolling = phase == .interacting || phase == .decelerating
+        if phase == .idle && wasScrolling { onScrollSettled() }
       }
-      .onChange(of: selectedDate, initial: true) { scrollToFocus(proxy) }
+      .task(id: selectedDate) {
+        await Task.yield()
+        guard !Task.isCancelled else { return }
+        scrollToFocus(proxy)
+      }
+      .task(id: days) {
+        await Task.yield()
+        guard !Task.isCancelled else { return }
+        scrollToFocus(proxy)
+      }
       .onChange(of: entriesForDay(selectedDate).map(\.schedule.id)) { scrollToFocus(proxy) }
     }
     .accessibilityIdentifier("saved.calendar.agenda")
@@ -93,6 +115,13 @@ struct SavedCalendarAgenda: View {
 
   private func scrollToFocus(_ proxy: ScrollViewProxy) {
     guard !isUserScrolling else { return }
+    let day = calendar.startOfDay(for: selectedDate)
+    guard renderedDays.contains(day) else {
+      pendingFocusDay = day
+      proxy.scrollTo(day, anchor: .top)
+      return
+    }
+    pendingFocusDay = nil
     let entries = entriesForDay(selectedDate)
     let minute =
       calendar.component(.hour, from: selectedDate) * 60
@@ -133,6 +162,7 @@ struct SavedCalendarAgenda: View {
 
   private func entryRow(_ entry: PlannerCalendarEntry, day: Date) -> some View {
     Button {
+      selectedDate = focusDate(entry, day: day)
       selection = .init(scheduleIdentifier: entry.schedule.id, source: entry.source)
     } label: {
       HStack(alignment: .top, spacing: 10) {

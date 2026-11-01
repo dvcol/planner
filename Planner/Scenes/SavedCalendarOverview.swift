@@ -87,21 +87,22 @@ struct SavedCalendarMiniMonth: View {
   let entriesForDay: (Date) -> [PlannerCalendarEntry]
   var showsHeading = true
   var showsDensity = false
-  var showsOnlySelectedWeek = false
   var openDay: (() -> Void)?
 
   private var dates: [Date] {
-    if showsOnlySelectedWeek, let week = calendar.dateInterval(of: .weekOfYear, for: selectedDate) {
-      return SavedCalendarDates.days(in: week, calendar: calendar)
-    }
-    return SavedCalendarDates.monthDays(month, calendar: calendar)
+    SavedCalendarDates.monthDays(month, calendar: calendar)
   }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 6) {
       if showsHeading {
-        Text(month, format: .dateTime.month(.wide))
-          .font(.headline).padding(.bottom, 4)
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+          Text(month, format: .dateTime.month(.wide))
+          if showsDensity && calendar.component(.month, from: month) == 1 {
+            Text(month, format: .dateTime.year()).foregroundStyle(.red)
+          }
+        }
+        .font(.headline).padding(.bottom, 4)
       }
       LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 1), count: 7), spacing: 2)
       {
@@ -160,34 +161,29 @@ struct SavedCalendarMiniMonth: View {
 }
 
 struct SavedCalendarOverview: View {
-  let interval: DateInterval?
+  let years: [Date]
   @Binding var selectedDate: Date
   let calendar: Calendar
   let entriesForDay: (Date) -> [PlannerCalendarEntry]
+  let onScrollSettled: () -> Void
   let openMonth: () -> Void
   @State private var isUserScrolling = false
+  @State private var visibleMonth: Date?
 
   private var months: [Date] {
-    guard let interval else { return [] }
-    var result: [Date] = []
-    var date = interval.start
-    while date < interval.end {
-      result.append(date)
-      guard let next = calendar.date(byAdding: .month, value: 1, to: date), next > date else {
-        break
-      }
-      date = next
+    years.flatMap { year in
+      (0..<12).compactMap { calendar.date(byAdding: .month, value: $0, to: year) }
     }
-    return result
   }
 
   var body: some View {
-    ScrollViewReader { proxy in
+    GeometryReader { geometry in
+      let columns = geometry.size.width >= 850 ? 4 : geometry.size.width >= 500 ? 3 : 2
       ScrollView {
         LazyVGrid(
-          columns: [GridItem(.adaptive(minimum: 150), spacing: 24, alignment: .top)],
-          alignment: .leading,
-          spacing: 24
+          columns: Array(
+            repeating: GridItem(.flexible(), spacing: 24, alignment: .top), count: columns),
+          alignment: .leading, spacing: 24
         ) {
           ForEach(months, id: \.self) { month in
             SavedCalendarMiniMonth(
@@ -195,23 +191,28 @@ struct SavedCalendarOverview: View {
               entriesForDay: entriesForDay, showsDensity: true, openDay: openMonth
             )
             .id(month)
-            .onGeometryChange(for: CGFloat.self) { geometry in
-              geometry.frame(in: .scrollView(axis: .vertical)).minY
-            } action: { top in
-              if isUserScrolling && top >= 0 && top < 60 { selectedDate = month }
+            .onGeometryChange(for: CGPoint.self) { geometry in
+              geometry.frame(in: .scrollView(axis: .vertical)).origin
+            } action: { origin in
+              if isUserScrolling && origin.x < 17 && origin.y >= 0 && origin.y < 60 {
+                selectedDate = SavedCalendarDates.selecting(
+                  month, preserving: selectedDate, calendar: calendar)
+              }
             }
           }
         }
+        .scrollTargetLayout()
         .padding(16)
       }
+      .scrollPosition(id: $visibleMonth, anchor: .top)
       .onScrollPhaseChange { _, phase in
+        let wasScrolling = isUserScrolling
         isUserScrolling = phase == .interacting || phase == .decelerating
+        if phase == .idle && wasScrolling { onScrollSettled() }
       }
       .onChange(of: selectedDate, initial: true) {
-        guard !isUserScrolling,
-          let month = calendar.dateInterval(of: .month, for: selectedDate)?.start
-        else { return }
-        proxy.scrollTo(month, anchor: .top)
+        guard !isUserScrolling else { return }
+        visibleMonth = calendar.dateInterval(of: .month, for: selectedDate)?.start
       }
       .accessibilityIdentifier("saved.calendar.overview")
     }

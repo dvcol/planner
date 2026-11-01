@@ -205,7 +205,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
   }
 
   private func selectSavedScheduleDate(_ application: XCUIApplication) throws {
-    application.chooseSavedCalendarMode("Agenda")
+    application.chooseSavedCalendarMode("Month")
     let marker = application.buttons.matching(
       NSPredicate(
         format: "identifier BEGINSWITH %@ AND value == %@", "saved.calendar.mini-day.",

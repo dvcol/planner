@@ -54,6 +54,25 @@ enum PlannerCalendarDesignFixture {
       return .init(year: year, month: month, day: day)
     }
     try schedule(source: trip, form: .allDay(start: civilDate(today), end: civilDate(lastDay)))
+    let now = Date()
+    try schedule(
+      source: source(title: "Current visit"),
+      form: .timed(
+        start: now, end: now.addingTimeInterval(3600),
+        planningTimeZone: calendar.timeZone.identifier))
+    guard let month = calendar.dateInterval(of: .month, for: today)?.start,
+      let nextSummer = calendar.date(byAdding: .month, value: 8, to: month),
+      let futureYear = calendar.date(byAdding: .year, value: 4, to: today),
+      let futureJourney = calendar.date(
+        from: .init(
+          year: calendar.component(.year, from: futureYear), month: 2, day: 1))
+    else { throw CancellationError() }
+    try schedule(
+      source: source(title: "Next summer visit"),
+      form: .allDay(start: civilDate(nextSummer), end: nil))
+    try schedule(
+      source: source(title: "Future journey", kind: "itinerary"),
+      form: .allDay(start: civilDate(futureJourney), end: nil))
     for dayOffset in 0..<10 {
       guard let day = calendar.date(byAdding: .day, value: dayOffset, to: weekStart) else {
         throw CancellationError()

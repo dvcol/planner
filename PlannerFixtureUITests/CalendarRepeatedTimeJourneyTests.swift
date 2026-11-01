@@ -298,7 +298,7 @@ import XCTest
         capture.lifetime = .keepAlways
         add(capture)
       }
-      application.chooseSavedCalendarMode("Agenda")
+      application.chooseSavedCalendarMode("Month")
       application.buttons["saved.calendar.schedule.\(scheduleIdentifier)"].firstMatch
         .activateForPlannerJourney()
       let sourceSchedule = application.descendants(matching: .any).matching(
@@ -461,7 +461,7 @@ import XCTest
         let identifier = monthDifference >= 0 ? "DatePicker.NextMonth" : "DatePicker.PreviousMonth"
         application.buttons[identifier].activateForPlannerJourney()
       }
-      application.chooseSavedCalendarMode("Agenda")
+      application.chooseSavedCalendarMode("Month")
       let firstDay = application.buttons["saved.calendar.mini-day.2026-\(targetMonth)-\(day)"]
         .firstMatch
       XCTAssertTrue(firstDay.waitForExistence(timeout: 5))

@@ -7,29 +7,32 @@ import XCTest
 #endif
 
 extension XCUIApplication {
-  /// Compact single-child layouts expose the grid through the enclosing Calendar scroll view.
+  /// Includes the sticky date header and its scrolling time grid.
   func savedCalendarTimeGrid() -> XCUIElement {
-    #if os(macOS)
-      let grid = descendants(matching: .any).matching(identifier: "saved.calendar.time-grid")
-        .firstMatch
-    #else
-      let grid = scrollViews.matching(
-        NSPredicate(
-          format: "identifier IN %@", ["saved.calendar.time-grid", "saved.calendar.canvas"])
-      ).containing(
-        NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.day-heading.")
-      ).firstMatch
-    #endif
+    let grid = descendants(matching: .any).matching(identifier: "saved.calendar.time-grid")
+      .firstMatch
     XCTAssertTrue(grid.waitForExistence(timeout: 5))
     return grid
   }
 
   func savedCalendarDay(_ day: Int) -> XCUIElement {
-    buttons.matching(
+    let matches = buttons.matching(
       NSPredicate(
         format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
-        "saved.calendar.mini-day.", "-\(day)")
+        "saved.calendar.mini-day.", "-\(day)"))
+    return matches.allElementsBoundByIndex.first(where: \.isHittable) ?? matches.firstMatch
+  }
+
+  func setSavedCalendarBookingList(visible: Bool) {
+    let navigation = descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier IN %@", ["saved.calendar.mode", "saved.calendar.navigation"])
     ).firstMatch
+    navigation.activateForPlannerJourney()
+    plannerElement("Options").activateForPlannerJourney()
+    let action = plannerElement(visible ? "Show booking list" : "Hide booking list")
+    XCTAssertTrue(action.waitForExistence(timeout: 5))
+    action.activateForPlannerJourney()
   }
 
   func openSavedCalendarDisplayZone() {
@@ -59,6 +62,14 @@ extension XCUIApplication {
         choice.activateForPlannerJourney()
       }
     #endif
+    let selected = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "value == %@", name), object: control)
+    XCTAssertEqual(XCTWaiter.wait(for: [selected], timeout: 5), .completed)
+    if name == "Year" {
+      XCTAssertTrue(
+        descendants(matching: .any).matching(identifier: "saved.calendar.overview")
+          .firstMatch.waitForExistence(timeout: 10))
+    }
   }
 
   func activatePlannerFixtureWriterAction(_ identifier: String) {

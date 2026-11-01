@@ -52,7 +52,7 @@ final class SavedCalendarMonthJourneyTests: XCTestCase {
         sidebar.tap()
       }
     #endif
-    application.chooseSavedCalendarMode("Agenda")
+    application.chooseSavedCalendarMode("Month")
     let day = Calendar(identifier: .gregorian).dateComponents([.year, .month, .day], from: Date())
     let dateIdentifier =
       "\(try XCTUnwrap(day.year))-\(try XCTUnwrap(day.month))-\(try XCTUnwrap(day.day))"

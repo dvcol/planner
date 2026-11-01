@@ -23,7 +23,7 @@ import XCTest
       application.plannerElement("Schedule item").activateForPlannerJourney()
       application.plannerElement("saved.schedule.save").activateForPlannerJourney()
       application.openPlannerSection("Calendar")
-      application.chooseSavedCalendarMode("Agenda")
+      application.chooseSavedCalendarMode("Month")
       let schedule = application.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.schedule.")
       ).firstMatch
@@ -32,22 +32,11 @@ import XCTest
         of: "saved.calendar.schedule.", with: "")
       let value = try XCTUnwrap(schedule.value as? String)
       capture("Portrait agenda", application: application)
-      application.plannerElement("saved.calendar.navigator.toggle").activateForPlannerJourney()
-      let navigator = application.descendants(matching: .any).matching(
-        identifier: "saved.calendar.date"
-      ).firstMatch
-      XCTAssertEqual(
-        navigator.buttons.matching(
-          NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.mini-day.")
-        ).count, 7)
-      capture("Collapsed week navigator", application: application)
-      application.plannerElement("saved.calendar.navigator.toggle").activateForPlannerJourney()
-      XCTAssertGreaterThan(
-        navigator.buttons.matching(
-          NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.mini-day.")
-        ).count, 7)
+      let handle = application.plannerElement("saved.calendar.navigator.toggle")
+      XCTAssertTrue(handle.exists)
+      XCTAssertEqual(handle.value as? String, "Month")
 
-      for mode in ["Month", "Quarter", "Year", "Day", "Week"] {
+      for mode in ["Month", "Year", "Day", "Week"] {
         application.chooseSavedCalendarMode(mode)
         let control = application.descendants(matching: .any)
           .matching(identifier: "saved.calendar.mode").firstMatch
@@ -83,7 +72,7 @@ import XCTest
       let grid = application.savedCalendarTimeGrid()
       XCTAssertLessThanOrEqual(sidebar.frame.maxX, grid.frame.minX + 1)
       capture("Landscape week with left agenda", application: application)
-      application.chooseSavedCalendarMode("Agenda")
+      application.chooseSavedCalendarMode("Month")
       let sameSchedule = application.buttons["saved.calendar.schedule.\(identifier)"].firstMatch
       XCTAssertTrue(sameSchedule.waitForExistence(timeout: 10))
       XCTAssertEqual(sameSchedule.value as? String, value)
@@ -122,7 +111,7 @@ import XCTest
       XCTAssertTrue(owner.waitForExistence(timeout: 10))
       owner.activateForPlannerJourney()
       application.plannerElement("saved.schedule.save").activateForPlannerJourney()
-      application.chooseSavedCalendarMode("Agenda")
+      application.chooseSavedCalendarMode("Month")
       let schedule = application.buttons.matching(
         NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.schedule.")
       ).firstMatch

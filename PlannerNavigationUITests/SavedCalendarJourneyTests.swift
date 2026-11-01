@@ -268,6 +268,6 @@ final class SavedCalendarJourneyTests: XCTestCase {
     #endif
     XCTAssertTrue(destination.waitForExistence(timeout: 5))
     destination.activateForPlannerJourney()
-    application.chooseSavedCalendarMode("Agenda")
+    application.chooseSavedCalendarMode("Month")
   }
 }
