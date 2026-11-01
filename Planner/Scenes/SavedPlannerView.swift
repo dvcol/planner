@@ -2197,9 +2197,10 @@ struct SavedPlannerView: View {
 
   @ViewBuilder
   private var plannerCollectionColumn: some View {
+    // Bound runtime type expansion inside the combined tab and split-view hierarchy.
     if usesItineraryColumns {
       if selectedItineraryIdentifier != nil {
-        itineraryDetail
+        AnyView(itineraryDetail)
           .toolbar {
             ToolbarItem(placement: .navigation) {
               Button("Itineraries", systemImage: "chevron.backward") {
@@ -2209,12 +2210,12 @@ struct SavedPlannerView: View {
             }
           }
       } else {
-        itineraryCatalog
+        AnyView(itineraryCatalog)
       }
     } else if isItemSection {
-      itemCatalog(scope: catalogScope)
+      AnyView(itemCatalog(scope: catalogScope))
     } else if let selectedList {
-      listContents(selectedList)
+      AnyView(listContents(selectedList))
         .navigationSplitViewColumnWidth(
           min: listRepresentation == .map ? 320 : 220,
           ideal: listRepresentation == .map ? 560 : 320,

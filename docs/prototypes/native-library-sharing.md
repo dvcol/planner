@@ -73,6 +73,16 @@ ownership, payload digest or receipt validation. Five affected test methods pass
 including versions 23–25 and seven existing invalid/scoped-status cases. Signed
 Mac/iPhone rebuilds resume the same session with retained data; no reset is needed.
 
+After that correction, physical startup exposed a SwiftUI metadata stack overflow
+in the List collection column, also reproducible with an empty local dataset.
+Explicit `AnyView` boundaries around its content branches limit type expansion.
+Two existing physical iPhone journeys now pass: creation-menu cancellation and
+normal-library Settings/status/Sync now. The latter reports Up to date before
+and after synchronization. A cached runner first failed against obsolete sidebar
+selectors; rebuilding it for current navigation resolved that separate test
+failure. Signed iPhone and Mac builds and strict Swift lint pass. Invitation,
+permission and revocation acceptance remain open as described above.
+
 Calendar build 1.0.0(6), committed separately, uploaded successfully on
 1 November. It excludes this unfinished sharing slice. App Store Connect confirms
 Testing in the existing Personal internal group. No App Store submission or
