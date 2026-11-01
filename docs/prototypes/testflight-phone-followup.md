@@ -38,6 +38,8 @@ the current friendly timezone caption. No clock-placement rule changed.
 
 The affected Mac app views also compile successfully. Build 2 keeps version
 1.0.0. The signed iOS archive and host signature verification pass, and Apple
-accepts its TestFlight upload. Processing confirmation and group assignment need
-a renewed App Store Connect browser session. Mac remains on build 1; App Store drafts stay
-paused. Reviewed run artifacts and the disposable Simulator were removed.
+accepts its TestFlight upload. App Store Connect now confirms iOS `1.0.0 (2)`
+is processed and Testing in Personal, with one tester and three assigned builds.
+Mac remains on build 1; App Store drafts stay paused. Actual iPhone suspension
+confirmation is still pending. Reviewed run artifacts and the disposable
+Simulator were removed.

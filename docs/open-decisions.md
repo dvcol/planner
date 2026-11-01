@@ -30,9 +30,9 @@ reopen accepted answers or override the current native tracker state.
   owner also approved permanent local garbage collection; that cleanup is
   complete and the source handoff is available.
 - Immediate delivery is now internal TestFlight. Personal contains the existing
-  Account Holder and the processed iOS and Mac `1.0.0` (build `1`) packages.
-  Both builds are ready to test; the account invitation is issued. No external
-  group or public invitation link is created. Future builds are assigned
+  Account Holder, iOS `1.0.0 (2)` and the earlier iOS/Mac build `1` packages.
+  Build 2 is processed, assigned and Testing; the account invitation is issued.
+  No external group or public invitation link is created. Future builds are assigned
   explicitly, and the 90-day expiry remains a delivery constraint.
 - The owner pauses listing work. Store drafts remain unsubmitted with manual
   release, availability unset and contact fields blank. The approved privacy
@@ -45,9 +45,8 @@ reopen accepted answers or override the current native tracker state.
   suspension while holding a file/database lock. Build 1's private-sync worker retained
   an App Group file lock for its lifetime. The correction passes focused iOS/Mac
   ownership tests; phone header, List-title and Calendar-rotation journeys pass.
-  Signed iOS `1.0.0 (2)` uploaded successfully and is processing at Apple.
-  Status confirmation and Personal group assignment need an App Store Connect
-  browser sign-in. Actual iPhone suspension remains a final
+  Signed iOS `1.0.0 (2)` is processed and Testing in Personal, verified in
+  App Store Connect. Actual iPhone suspension remains a final
   verification step, separate from normal sync checks. See the
   [follow-up checkpoint](prototypes/testflight-phone-followup.md). The prior Mac
   store-capture sizing attempts did not produce a usable image, and their
