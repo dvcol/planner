@@ -130,6 +130,37 @@
       application.plannerElement("saved.settings.done").activateForPlannerJourney()
     }
 
+    /// Inspects an existing invitation without changing its scope or participants.
+    func testPhysicalExistingSharingInvitationCanBeInspectedWithoutChanges() throws {
+      try XCTSkipUnless(
+        ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] != nil,
+        "Requires an attended sharing inspection.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.activate()
+      let invitation = application.otherElements["saved.sharing.invitation"]
+      if !invitation.waitForExistence(timeout: 3) {
+        let invite = application.buttons["saved.sharing.invite"]
+        if !invite.exists {
+          let sharing = application.buttons["saved.settings.sharing"]
+          if !sharing.exists { application.openSavedPlannerSettings() }
+          XCTAssertTrue(sharing.waitForExistence(timeout: 10))
+          sharing.activateForPlannerJourney()
+        }
+        XCTAssertTrue(invite.waitForExistence(timeout: 15))
+        let ready = XCTNSPredicateExpectation(
+          predicate: NSPredicate(format: "enabled == true"), object: invite)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 15), .completed)
+        invite.activateForPlannerJourney()
+        XCTAssertTrue(invitation.waitForExistence(timeout: 45), application.debugDescription)
+      }
+      capture(application, "Existing sharing invitation participants")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Existing sharing invitation participant status"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+    }
+
     /// Creates only uniquely named Development fixtures and leaves the invitation for acceptance.
     func testPhysicalSelectedListSharingPreparesTheNativeInvitation() throws {
       let run = ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
