@@ -3,15 +3,17 @@
   import Foundation
   import PlannerCore
 
-  struct PlannerTagEntity: AppEntity {
+  struct PlannerTagEntity: PlannerLibraryBoundEntity {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Tag")
     static var defaultQuery: PlannerTagEntityQuery { PlannerTagEntityQuery() }
-    let id: UUID
+    let recordIdentifier: UUID
+    var libraryBinding: String
     @Property(title: "Name") var name: String
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(name)") }
 
-    init(id: UUID, name: String) {
-      self.id = id
+    @MainActor init(id: UUID, name: String, libraryBinding: String = "") {
+      self.recordIdentifier = id
+      self.libraryBinding = libraryBinding
       self.name = name
     }
   }
@@ -21,16 +23,32 @@
     @Dependency var plannerStore: SavedPlannerStore
 
     @MainActor func entities(for identifiers: [UUID]) async throws -> [PlannerTagEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let binding = plannerStore.appIntentLibraryBinding ?? "unavailable"
+      return try await entities(
+        for: identifiers.map { plannerEncodeIntentIdentifier($0.uuidString, binding: binding) })
+    }
+
+    @MainActor func entities(for identifiers: [String]) async throws -> [PlannerTagEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
-      var seenIdentifiers: Set<UUID> = []
+      var seenIdentifiers: Set<String> = []
       var entities: [PlannerTagEntity] = []
-      for identifier in identifiers where seenIdentifiers.insert(identifier).inserted {
+      for encoded in identifiers where seenIdentifiers.insert(encoded).inserted {
+        let raw = try plannerResolveIntentIdentifier(encoded, store: plannerStore)
+        guard let identifier = UUID(uuidString: raw) else { continue }
         try Task.checkCancellation()
         switch await planner.read(
           session: session, request: .source(.init(kind: .tag, id: identifier)))
         {
         case .source(.tag(let source)):
-          entities.append(.init(id: source.source.id, name: source.content.name))
+          entities.append(
+            .init(
+              id: source.source.id, name: source.content.name,
+              libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
         case .failed(let reason) where reason.code == "missingReference": continue
         case .failed(let reason): throw PlannerTagIntentFailure(message: reason.message)
         default: throw PlannerTagIntentFailure(message: "Planner could not resolve this Tag.")
@@ -74,7 +92,10 @@
             guard case .source(let source) = row.identity, source.kind == .tag else {
               throw PlannerTagIntentFailure(message: "Planner could not read its Tag choices.")
             }
-            entities.append(.init(id: source.id, name: row.title))
+            entities.append(
+              .init(
+                id: source.id, name: row.title,
+                libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
           }
           offset += Int64(window.rows.count)
         case .failed(let reason): throw PlannerTagIntentFailure(message: reason.message)
@@ -95,6 +116,8 @@
     typealias PerformResult = IntentResultContainer<PlannerTagEntity, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let result = try await plannerStore.executeAppIntent(.createTag(content: .init(name: name)))
       switch result.outcome {
       case .rejected(let reason): throw PlannerTagIntentFailure(message: reason.message)
@@ -117,7 +140,10 @@
           dialog =
             "The Tag was created on this device, but its recovery copy is incomplete. Open Planner before making more changes."
         }
-        return .result(value: PlannerTagEntity(id: source.id, name: name), dialog: dialog)
+        return .result(
+          value: PlannerTagEntity(
+            id: source.id, name: name,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"), dialog: dialog)
       }
     }
   }
@@ -132,9 +158,13 @@
     typealias PerformResult = IntentResultContainer<PlannerTagEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundTagIdentifier = try tag.sourceIdentifier(in: plannerStore)
       let query = PlannerTagEntityQuery()
       query.plannerStore = plannerStore
-      let matches = try await query.entities(for: [tag.id])
+      let matches = try await query.entities(for: [boundTagIdentifier])
       guard let current = matches.first else {
         throw PlannerTagIntentFailure(
           message: "This Tag is no longer available in Planner's current data.")
@@ -156,10 +186,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundTagIdentifier = try tag.sourceIdentifier(in: plannerStore)
       let source: PlannerTagSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .tag, id: tag.id)))
+        session: session, request: .source(.init(kind: .tag, id: boundTagIdentifier)))
       {
       case .source(.tag(let current)): source = current
       case .failed(let reason): throw PlannerTagIntentFailure(message: reason.message)

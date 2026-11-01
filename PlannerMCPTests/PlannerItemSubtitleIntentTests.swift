@@ -18,9 +18,9 @@ final class PlannerItemSubtitleIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let saved)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("The created Item and subtitle must survive reopening.") }
-    XCTAssertEqual(saved.source.id, item.id)
+    XCTAssertEqual(saved.source.id, item.recordIdentifier)
     XCTAssertEqual(saved.content.title, "Museum")
     XCTAssertEqual(saved.content.subtitle, "  Réservation · 金曜日  ")
     XCTAssertEqual(saved.content.notes, "Keep booking details")
@@ -113,7 +113,7 @@ final class PlannerItemSubtitleIntentTests: XCTestCase {
     notesOnly.notes = "Updated notes"
     let _: Void = try await notesOnly.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .item, id: item.id)
+    let source = PlannerEntityReference(kind: .item, id: item.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.item(let beforeInvalid)) = await planner.read(
         session: session, request: .source(source))
@@ -163,11 +163,11 @@ final class PlannerItemSubtitleIntentTests: XCTestCase {
       creation.title = "Museum"
       creation.subtitle = subtitle
       let item = try await creation.callAsFunction(donate: false)
-      XCTAssertTrue(identifiers.insert(item.id).inserted)
+      XCTAssertTrue(identifiers.insert(item.recordIdentifier).inserted)
       let reopened = PlannerCore.Planner(configuration: configuration)
       guard case .ready(let session) = await reopened.bootstrap(),
         case .source(.item(let saved)) = await reopened.read(
-          session: session, request: .source(.init(kind: .item, id: item.id)))
+          session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
       else { throw CancellationError() }
       XCTAssertEqual(saved.content.subtitle, subtitle)
       XCTAssertNil(saved.content.notes)
@@ -185,7 +185,7 @@ final class PlannerItemSubtitleIntentTests: XCTestCase {
     creation.subtitle = "Keep subtitle"
     let item = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .item, id: item.id)
+    let source = PlannerEntityReference(kind: .item, id: item.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.item(let before)) = await planner.read(
         session: session, request: .source(source))

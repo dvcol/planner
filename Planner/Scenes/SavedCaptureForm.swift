@@ -61,6 +61,11 @@ struct SavedCaptureForm: View {
   var body: some View {
     NavigationStack {
       Form {
+        if store.activeLibrary != nil {
+          Section {
+            LabeledContent("Library", value: store.libraryTitle)
+          }
+        }
         if let draft {
           reviewSections(draft)
         } else if case .share = entryPoint {

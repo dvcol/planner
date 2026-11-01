@@ -176,11 +176,11 @@ final class PlannerLabelRenameIntentTests: XCTestCase {
       if renamingCategory {
         let query = PlannerCategoryEntityQuery()
         query.plannerStore = fixture.store
-        identifiers = try await query.entities(matching: "SHARED name").map(\.id)
+        identifiers = try await query.entities(matching: "SHARED name").map(\.recordIdentifier)
       } else {
         let query = PlannerTagEntityQuery()
         query.plannerStore = fixture.store
-        identifiers = try await query.entities(matching: "SHARED name").map(\.id)
+        identifiers = try await query.entities(matching: "SHARED name").map(\.recordIdentifier)
       }
       XCTAssertEqual(Set(identifiers), [source.id, duplicate.id])
       XCTAssertEqual(identifiers.count, 2)

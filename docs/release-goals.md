@@ -65,8 +65,11 @@ submission metadata, not a blocker to the internal testing group.
 ## Private-cloud storage boundary, 29 October 2026
 
 The user requires Planner content to use only their private CloudKit database
-and its user-owned iCloud storage. There is no public, shared or developer-funded
-cloud fallback. This applies to development diagnostics and release builds.
+and its user-owned iCloud storage. There is no public or developer-funded cloud
+fallback. Explicitly accepted library invitations use CloudKit's shared database,
+backed by the owner's private storage; they are separate selected libraries, never
+a fallback when personal iCloud is unavailable. This applies to development
+diagnostics and release builds.
 
 When private iCloud is disabled, unavailable or out of quota, preserve local
 content and remain device-local/offline, with truthful synchronization status.

@@ -75,7 +75,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.list(let applied)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("The applied List archive must remain readable after reopening.") }
     XCTAssertEqual(applied.state.archived, true)
     XCTAssertEqual(applied.content.name, "Recovery List")
@@ -89,14 +89,14 @@ final class PlannerListEditingIntentTests: XCTestCase {
       case .appliedRecoveryComplete = await reopened.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.list(let recovered)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("Native retry must complete the original List archive operation.") }
     XCTAssertEqual(recovered.state.archived, true)
     XCTAssertEqual(recovered.content, applied.content)
     let _: Void = try await archiving.callAsFunction(donate: false)
     guard
       case .source(.list(let unarchived)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("An explicit Unarchive must succeed after native recovery retry.") }
     XCTAssertEqual(unarchived.state.archived, false)
     XCTAssertEqual(unarchived.progress.state, .empty)
@@ -141,7 +141,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.list(let applied)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("The actual List edit must remain saved after reopening.") }
     XCTAssertEqual(applied.content.name, "Updated List")
     XCTAssertEqual(applied.content.notes, "Reviewed notes")
@@ -152,16 +152,16 @@ final class PlannerListEditingIntentTests: XCTestCase {
       case .appliedRecoveryComplete = await reopened.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.list(let recovered)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("Native retry must acknowledge the original List edit operation.") }
     XCTAssertEqual(recovered.fieldHashes, applied.fieldHashes)
     editing.notes = "Allowed after recovery"
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.list(let final)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("An explicit later List edit must succeed after native recovery.") }
-    XCTAssertEqual(final.source.id, list.id)
+    XCTAssertEqual(final.source.id, list.recordIdentifier)
     XCTAssertEqual(final.content.name, "Updated List")
     XCTAssertEqual(final.content.notes, "Allowed after recovery")
     XCTAssertFalse(store.isSaving)
@@ -176,7 +176,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     creation.notes = "Keep the original notes"
     let list = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .list, id: list.id)
+    let source = PlannerEntityReference(kind: .list, id: list.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.list(let before)) = await planner.read(
         session: session, request: .source(source))
@@ -356,7 +356,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.list(let renamed)) = await planner.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("The same List must remain readable after a name-only edit.") }
     XCTAssertEqual(renamed.content.name, "Renamed List")
     XCTAssertEqual(renamed.content.notes, "Keep the notes")
@@ -365,7 +365,7 @@ final class PlannerListEditingIntentTests: XCTestCase {
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.list(let updated)) = await planner.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("A notes-only edit must retain the live renamed List.") }
     XCTAssertEqual(updated.content.name, "Renamed List")
     XCTAssertEqual(updated.content.notes, "Updated notes")
@@ -374,9 +374,9 @@ final class PlannerListEditingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .source(.list(let cleared)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .list, id: list.id)))
+        session: reopenedSession, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("The renamed List must survive explicit notes clearing and reopening.") }
-    XCTAssertEqual(cleared.source.id, list.id)
+    XCTAssertEqual(cleared.source.id, list.recordIdentifier)
     XCTAssertEqual(cleared.content.name, "Renamed List")
     XCTAssertNil(cleared.content.notes)
   }

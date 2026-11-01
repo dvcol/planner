@@ -39,9 +39,10 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     reading.endDay = reading.startDay
     reading.displayTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "Asia/Tokyo"))
     let schedules = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(schedules.map(\.id)), [overnight.id, fixture.timed.id, fixture.allDay.id])
-    XCTAssertFalse(schedules.contains { $0.id == excluded.id })
-    let current = try XCTUnwrap(schedules.first { $0.id == overnight.id })
+    XCTAssertEqual(
+      Set(schedules.map(\.recordIdentifier)), [overnight.id, fixture.timed.id, fixture.allDay.id])
+    XCTAssertFalse(schedules.contains { $0.recordIdentifier == excluded.id })
+    let current = try XCTUnwrap(schedules.first { $0.recordIdentifier == overnight.id })
     XCTAssertEqual(current.start, start)
     XCTAssertEqual(current.end, end)
     XCTAssertEqual(current.planningTimeZone?.id, "Asia/Tokyo")
@@ -81,7 +82,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
       { _ = try await itinerary.callAsFunction(donate: false) },
       { _ = try await itemOwner.callAsFunction(donate: false) },
       { _ = try await itineraryOwner.callAsFunction(donate: false) },
-      { _ = try await query.entities(for: []) },
+      { _ = try await query.entities(for: [String]()) },
       { _ = try await query.entities(matching: "") },
       { _ = try await query.suggestedEntities() },
     ]
@@ -148,13 +149,14 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     reading.endDay = reading.startDay
     reading.displayTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "Asia/Tokyo"))
     let tokyo = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(tokyo.map(\.id)), [early.id, fixture.timed.id, fixture.allDay.id])
-    XCTAssertEqual(tokyo.first { $0.id == early.id }?.start, instant)
+    XCTAssertEqual(
+      Set(tokyo.map(\.recordIdentifier)), [early.id, fixture.timed.id, fixture.allDay.id])
+    XCTAssertEqual(tokyo.first { $0.recordIdentifier == early.id }?.start, instant)
     reading.displayTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "Europe/Paris"))
     let paris = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(paris.map(\.id)), [fixture.timed.id, fixture.allDay.id])
-    XCTAssertEqual(paris.first { $0.id == fixture.allDay.id }?.startDay?.day, 9)
-    XCTAssertEqual(paris.first { $0.id == fixture.allDay.id }?.endDay?.day, 11)
+    XCTAssertEqual(Set(paris.map(\.recordIdentifier)), [fixture.timed.id, fixture.allDay.id])
+    XCTAssertEqual(paris.first { $0.recordIdentifier == fixture.allDay.id }?.startDay?.day, 9)
+    XCTAssertEqual(paris.first { $0.recordIdentifier == fixture.allDay.id }?.endDay?.day, 11)
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Changing the read window's zone cannot reschedule anything.") }
     XCTAssertEqual(after, before)
@@ -193,9 +195,9 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     reading.endDay = reading.startDay
     reading.displayTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "America/New_York"))
     let fall = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(fall.map(\.id)), Set(identifiers.prefix(3)))
-    let first = try XCTUnwrap(fall.first { $0.id == identifiers[0] })
-    let second = try XCTUnwrap(fall.first { $0.id == identifiers[1] })
+    XCTAssertEqual(Set(fall.map(\.recordIdentifier)), Set(identifiers.prefix(3)))
+    let first = try XCTUnwrap(fall.first { $0.recordIdentifier == identifiers[0] })
+    let second = try XCTUnwrap(fall.first { $0.recordIdentifier == identifiers[1] })
     XCTAssertEqual(first.start, starts[0])
     XCTAssertEqual(second.start, starts[1])
     XCTAssertEqual(first.end, try Date.ISO8601FormatStyle().parse("2026-11-01T06:45:00Z"))
@@ -204,7 +206,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     reading.startDay = .init(year: 2026, month: 3, day: 8)
     reading.endDay = reading.startDay
     let spring = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(spring.map(\.id), [identifiers[4]])
+    XCTAssertEqual(spring.map(\.recordIdentifier), [identifiers[4]])
     XCTAssertEqual(spring.first?.start, starts[4])
   }
 
@@ -230,19 +232,19 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     query.plannerStore = fixture.store
     let all = try await query.suggestedEntities()
     XCTAssertEqual(all.count, 73)
-    XCTAssertEqual(Set(all.map(\.id)), expected.union([fixture.outside.id]))
+    XCTAssertEqual(Set(all.map(\.recordIdentifier)), expected.union([fixture.outside.id]))
     let calendar = FindPlannerSchedulesIntent()
     calendar.startDay = .init(year: 2026, month: 10, day: 9)
     calendar.endDay = .init(year: 2026, month: 10, day: 11)
     calendar.displayTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "Asia/Tokyo"))
     let entries = try await calendar.callAsFunction(donate: false)
     XCTAssertEqual(entries.count, 72)
-    XCTAssertEqual(Set(entries.map(\.id)), expected)
+    XCTAssertEqual(Set(entries.map(\.recordIdentifier)), expected)
     let parent = GetPlannerItemSchedulesIntent()
     parent.item = .init(id: fixture.item.id, title: "Cached", done: false, archived: false)
     let bookings = try await parent.callAsFunction(donate: false)
     XCTAssertEqual(bookings.count, 72)
-    XCTAssertEqual(Set(bookings.map(\.id)), direct)
+    XCTAssertEqual(Set(bookings.map(\.recordIdentifier)), direct)
     calendar.startDay = .init(year: 2027, month: 1, day: 1)
     calendar.endDay = calendar.startDay
     let empty = try await calendar.callAsFunction(donate: false)
@@ -263,7 +265,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
       ).outcome,
       case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Remove only the selected Schedule before reading stale choices.") }
-    for identifier in [cached.id, fixture.item.id, UUID()] {
+    for identifier in [cached.recordIdentifier, fixture.item.id, UUID()] {
       let stale = try PlannerScheduleEntity(
         schedule: .init(kind: .schedule, id: identifier), owner: fixture.item,
         title: "Cached", form: .timed(start: fixture.instant, end: nil, planningTimeZone: "UTC"))
@@ -386,20 +388,21 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     let query = PlannerScheduleEntityQuery()
     query.plannerStore = fixture.store
     let all = try await query.suggestedEntities()
-    XCTAssertEqual(Set(all.map(\.id)), [fixture.timed.id, fixture.allDay.id, fixture.outside.id])
+    XCTAssertEqual(
+      Set(all.map(\.recordIdentifier)), [fixture.timed.id, fixture.allDay.id, fixture.outside.id])
     let initial = try await query.entities(matching: "museum")
-    XCTAssertEqual(Set(initial.map(\.id)), [fixture.timed.id, fixture.outside.id])
+    XCTAssertEqual(Set(initial.map(\.recordIdentifier)), [fixture.timed.id, fixture.outside.id])
     let rename = EditPlannerItemIntent()
     rename.item = .init(id: fixture.item.id, title: "Cached title", done: false, archived: false)
     rename.title = "Musée rénové"
     let _: Void = try await rename.callAsFunction(donate: false)
     let changed = try await query.entities(matching: "MUSEE RENOVE")
-    XCTAssertEqual(Set(changed.map(\.id)), [fixture.timed.id, fixture.outside.id])
+    XCTAssertEqual(Set(changed.map(\.recordIdentifier)), [fixture.timed.id, fixture.outside.id])
     XCTAssertTrue(changed.allSatisfy { $0.title == "Musée rénové" })
     let previous = try await query.entities(matching: "Museum")
     XCTAssertTrue(previous.isEmpty)
     let itinerary = try await query.entities(matching: "weekend")
-    XCTAssertEqual(itinerary.map(\.id), [fixture.allDay.id])
+    XCTAssertEqual(itinerary.map(\.recordIdentifier), [fixture.allDay.id])
     let missing = try await query.entities(matching: "No such schedule")
     XCTAssertTrue(missing.isEmpty)
   }
@@ -429,15 +432,15 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
       let itineraryReading = GetPlannerScheduleItineraryIntent()
       itineraryReading.schedule = schedule
       let itinerary = try await itineraryReading.callAsFunction(donate: false)
-      if schedule.id == fixture.timed.id {
-        XCTAssertEqual(item?.id, fixture.item.id)
+      if schedule.recordIdentifier == fixture.timed.id {
+        XCTAssertEqual(item?.recordIdentifier, fixture.item.id)
         XCTAssertEqual(item?.title, "Museum")
         XCTAssertEqual(item?.done, true)
         XCTAssertEqual(item?.archived, false)
         XCTAssertNil(itinerary)
       } else {
         XCTAssertNil(item)
-        XCTAssertEqual(itinerary?.id, fixture.itinerary.id)
+        XCTAssertEqual(itinerary?.recordIdentifier, fixture.itinerary.id)
         XCTAssertEqual(itinerary?.title, "Tokyo Weekend")
         XCTAssertEqual(itinerary?.archived, true)
       }
@@ -462,7 +465,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     let reading = GetPlannerItinerarySchedulesIntent()
     reading.itinerary = .init(id: fixture.itinerary.id, title: "Cached title", archived: false)
     let schedules = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(schedules.map(\.id), [fixture.allDay.id])
+    XCTAssertEqual(schedules.map(\.recordIdentifier), [fixture.allDay.id])
     XCTAssertEqual(schedules.first?.title, "Tokyo Weekend")
     XCTAssertEqual(schedules.first?.sourceType, "Itinerary")
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
@@ -482,8 +485,8 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     reading.endDay = .init(year: 2026, month: 10, day: 11)
     reading.displayTimeZone = try XCTUnwrap(zones.first)
     let schedules = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(schedules.map(\.id)), [fixture.timed.id, fixture.allDay.id])
-    let timed = try XCTUnwrap(schedules.first { $0.id == fixture.timed.id })
+    XCTAssertEqual(Set(schedules.map(\.recordIdentifier)), [fixture.timed.id, fixture.allDay.id])
+    let timed = try XCTUnwrap(schedules.first { $0.recordIdentifier == fixture.timed.id })
     XCTAssertEqual(timed.title, "Museum")
     XCTAssertEqual(timed.sourceType, "Item")
     XCTAssertFalse(timed.allDay)
@@ -492,7 +495,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     XCTAssertNil(timed.startDay)
     XCTAssertNil(timed.endDay)
     XCTAssertEqual(timed.planningTimeZone?.id, "Asia/Tokyo")
-    let allDay = try XCTUnwrap(schedules.first { $0.id == fixture.allDay.id })
+    let allDay = try XCTUnwrap(schedules.first { $0.recordIdentifier == fixture.allDay.id })
     XCTAssertEqual(allDay.title, "Tokyo Weekend")
     XCTAssertEqual(allDay.sourceType, "Itinerary")
     XCTAssertTrue(allDay.allDay)
@@ -523,7 +526,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     let initial = try await query.entities(for: [
       fixture.outside.id, fixture.timed.id, fixture.timed.id, UUID(),
     ])
-    XCTAssertEqual(initial.map(\.id), [fixture.outside.id, fixture.timed.id])
+    XCTAssertEqual(initial.map(\.recordIdentifier), [fixture.outside.id, fixture.timed.id])
     let cached = try XCTUnwrap(initial.last)
     XCTAssertEqual(cached.start, fixture.instant)
     let rename = EditPlannerItemIntent()
@@ -547,7 +550,7 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     let reading = GetPlannerScheduleIntent()
     reading.schedule = cached
     let current = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(current.id, fixture.timed.id)
+    XCTAssertEqual(current.recordIdentifier, fixture.timed.id)
     XCTAssertEqual(current.title, "Museum renamed")
     XCTAssertEqual(current.sourceType, "Item")
     XCTAssertTrue(current.allDay)
@@ -579,9 +582,9 @@ final class PlannerScheduleReadIntentTests: XCTestCase {
     let reading = GetPlannerItemSchedulesIntent()
     reading.item = .init(id: fixture.item.id, title: "Cached Item", done: true, archived: false)
     let schedules = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(schedules.map(\.id)), [fixture.timed.id, fixture.outside.id])
+    XCTAssertEqual(Set(schedules.map(\.recordIdentifier)), [fixture.timed.id, fixture.outside.id])
     XCTAssertTrue(schedules.allSatisfy { $0.sourceType == "Item" && $0.title == "Museum" })
-    XCTAssertFalse(schedules.contains { $0.id == fixture.allDay.id })
+    XCTAssertFalse(schedules.contains { $0.recordIdentifier == fixture.allDay.id })
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("The direct Schedule read must preserve every saved relationship.") }
     XCTAssertEqual(after, before)
@@ -603,35 +606,35 @@ private func readScheduleIdentifiers(
     reading.startDay = .init(year: 2026, month: 10, day: 9)
     reading.endDay = .init(year: 2026, month: 10, day: 11)
     reading.displayTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "Asia/Tokyo"))
-    return try await reading.callAsFunction(donate: false).map(\.id)
+    return try await reading.callAsFunction(donate: false).map(\.recordIdentifier)
   case .schedule:
     let reading = GetPlannerScheduleIntent()
     reading.schedule = schedule
-    return try await [reading.callAsFunction(donate: false).id]
+    return try await [reading.callAsFunction(donate: false).recordIdentifier]
   case .item:
     let reading = GetPlannerItemSchedulesIntent()
     reading.item = .init(id: fixture.item.id, title: "Cached", done: false, archived: false)
-    return try await reading.callAsFunction(donate: false).map(\.id)
+    return try await reading.callAsFunction(donate: false).map(\.recordIdentifier)
   case .itinerary:
     let reading = GetPlannerItinerarySchedulesIntent()
     reading.itinerary = .init(id: fixture.itinerary.id, title: "Cached", archived: false)
-    return try await reading.callAsFunction(donate: false).map(\.id)
+    return try await reading.callAsFunction(donate: false).map(\.recordIdentifier)
   case .itemOwner:
     let reading = GetPlannerScheduleItemIntent()
     reading.schedule = schedule
-    return try await reading.callAsFunction(donate: false).map { [$0.id] } ?? []
+    return try await reading.callAsFunction(donate: false).map { [$0.recordIdentifier] } ?? []
   case .itineraryOwner:
     let reading = GetPlannerScheduleItineraryIntent()
     reading.schedule = schedule
-    return try await reading.callAsFunction(donate: false).map { [$0.id] } ?? []
+    return try await reading.callAsFunction(donate: false).map { [$0.recordIdentifier] } ?? []
   case .choices:
     let query = PlannerScheduleEntityQuery()
     query.plannerStore = fixture.store
-    return try await query.suggestedEntities().map(\.id)
+    return try await query.suggestedEntities().map(\.recordIdentifier)
   case .search:
     let query = PlannerScheduleEntityQuery()
     query.plannerStore = fixture.store
-    return try await query.entities(matching: "").map(\.id)
+    return try await query.entities(matching: "").map(\.recordIdentifier)
   }
 }
 

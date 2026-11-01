@@ -25,8 +25,8 @@ struct PlannerCloudNode: Codable, Sendable, Equatable {
       ).encoded(), prefix: "p1_")
   }
 
-  init(record: CKRecord) throws {
-    guard record.recordType == Self.recordType, record.recordID.zoneID == Self.zoneID,
+  init(record: CKRecord, zoneID: CKRecordZone.ID = Self.zoneID) throws {
+    guard record.recordType == Self.recordType, record.recordID.zoneID == zoneID,
       (record["formatVersion"] as? NSNumber)?.intValue == 1,
       let kind = record["kind"] as? String
     else {
@@ -45,17 +45,17 @@ struct PlannerCloudNode: Codable, Sendable, Equatable {
     fields = values
   }
 
-  func record(base: CKRecord?) throws -> CKRecord {
+  func record(base: CKRecord?, zoneID: CKRecordZone.ID = Self.zoneID) throws -> CKRecord {
     let record: CKRecord
     if let base {
       record = try Self.restore(Self.archive(base))
-      guard record.recordID.recordName == name else {
+      guard record.recordID.recordName == name, record.recordID.zoneID == zoneID else {
         throw PlannerFailure(
           "cloudRecordInvalid", "Private record metadata has a different identity.")
       }
     } else {
       record = CKRecord(
-        recordType: Self.recordType, recordID: .init(recordName: name, zoneID: Self.zoneID))
+        recordType: Self.recordType, recordID: .init(recordName: name, zoneID: zoneID))
     }
     record["formatVersion"] = NSNumber(value: 1)
     record["kind"] = kind as NSString

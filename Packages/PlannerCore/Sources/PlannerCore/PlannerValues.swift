@@ -12,16 +12,18 @@ public struct PlannerStorageConfiguration: Sendable {
   public let recoveryDirectoryURL: URL
   public let processRole: ProcessRole
   public let storageMode: StorageMode
+  public let sharedLibrary: PlannerSharedLibrary?
 
   public init(
     storeURL: URL, controlURL: URL, recoveryDirectoryURL: URL,
-    processRole: ProcessRole, storageMode: StorageMode
+    processRole: ProcessRole, storageMode: StorageMode, sharedLibrary: PlannerSharedLibrary? = nil
   ) {
     self.storeURL = storeURL
     self.controlURL = controlURL
     self.recoveryDirectoryURL = recoveryDirectoryURL
     self.processRole = processRole
     self.storageMode = storageMode
+    self.sharedLibrary = sharedLibrary
   }
 }
 

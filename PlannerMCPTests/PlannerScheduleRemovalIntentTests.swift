@@ -133,7 +133,7 @@ final class PlannerScheduleRemovalIntentTests: XCTestCase {
     let query = PlannerScheduleEntityQuery()
     query.plannerStore = fixture.store
     let choices = try await query.entities(for: [fixture.timed.id, fixture.outside.id])
-    XCTAssertEqual(choices.map(\.id), [fixture.timed.id, fixture.outside.id])
+    XCTAssertEqual(choices.map(\.recordIdentifier), [fixture.timed.id, fixture.outside.id])
     let obstruction = IntentRecoverySaveObstruction(configuration: fixture.configuration)
     let observer = NotificationCenter.default.addObserver(
       forName: ModelContext.didSave, object: nil, queue: nil
@@ -224,7 +224,7 @@ final class PlannerScheduleRemovalIntentTests: XCTestCase {
         return false
       })
     let remaining = try await query.suggestedEntities()
-    XCTAssertEqual(Set(remaining.map(\.id)), [fixture.outside.id, fixture.allDay.id])
+    XCTAssertEqual(Set(remaining.map(\.recordIdentifier)), [fixture.outside.id, fixture.allDay.id])
     XCTAssertFalse(fixture.store.recoveryBlocked)
     XCTAssertFalse(fixture.store.isSaving)
   }

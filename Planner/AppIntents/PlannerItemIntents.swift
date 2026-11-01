@@ -4,10 +4,11 @@
   import GeoToolbox
   import PlannerCore
 
-  struct PlannerItemEntity: AppEntity {
+  struct PlannerItemEntity: PlannerLibraryBoundEntity {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Item")
     static var defaultQuery: PlannerItemEntityQuery { PlannerItemEntityQuery() }
-    let id: UUID
+    let recordIdentifier: UUID
+    var libraryBinding: String
     @Property(title: "Title") var title: String
     @Property(title: "Completed everywhere") var done: Bool
     @Property(title: "Archived") var archived: Bool
@@ -55,25 +56,32 @@
     }
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(title)") }
 
-    init(id: UUID, title: String, done: Bool, archived: Bool) {
-      self.id = id
+    @MainActor init(
+      id: UUID, title: String, done: Bool, archived: Bool, libraryBinding: String = ""
+    ) {
+      self.recordIdentifier = id
+      self.libraryBinding = libraryBinding
       self.title = title
       self.done = done
       self.archived = archived
     }
 
-    init(source: PlannerItemSourceRead) throws {
+    @MainActor init(source: PlannerItemSourceRead, libraryBinding: String = "") throws {
       guard let done = source.state.globalDone, let archived = source.state.archived else {
         throw PlannerIntentFailure(message: "Planner could not read this Item's state.")
       }
-      self.init(id: source.source.id, title: source.content.title, done: done, archived: archived)
+      self.init(
+        id: source.source.id, title: source.content.title, done: done, archived: archived,
+        libraryBinding: libraryBinding)
     }
 
-    init(row: PlannerRowRead) throws {
+    @MainActor init(row: PlannerRowRead, libraryBinding: String = "") throws {
       guard case .source(let source) = row.identity, source.kind == .item,
         let done = row.globalDone, let archived = row.archived
       else { throw PlannerIntentFailure(message: "Planner could not read its Item choices.") }
-      self.init(id: source.id, title: row.title, done: done, archived: archived)
+      self.init(
+        id: source.id, title: row.title, done: done, archived: archived,
+        libraryBinding: libraryBinding)
     }
   }
 
@@ -81,16 +89,33 @@
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
     @Dependency var plannerStore: SavedPlannerStore
     @MainActor func entities(for identifiers: [UUID]) async throws -> [PlannerItemEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let binding = plannerStore.appIntentLibraryBinding ?? "unavailable"
+      return try await entities(
+        for: identifiers.map { plannerEncodeIntentIdentifier($0.uuidString, binding: binding) })
+    }
+
+    @MainActor func entities(for identifiers: [String]) async throws -> [PlannerItemEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       try Task.checkCancellation()
       let (planner, session) = try await plannerStore.appIntentContext()
-      var seenIdentifiers: Set<UUID> = []
+      var seenIdentifiers: Set<String> = []
       var entities: [PlannerItemEntity] = []
-      for identifier in identifiers where seenIdentifiers.insert(identifier).inserted {
+      for encoded in identifiers where seenIdentifiers.insert(encoded).inserted {
+        let raw = try plannerResolveIntentIdentifier(encoded, store: plannerStore)
+        guard let identifier = UUID(uuidString: raw) else { continue }
         try Task.checkCancellation()
         switch await planner.read(
           session: session, request: .source(.init(kind: .item, id: identifier)))
         {
-        case .source(.item(let source)): entities.append(try PlannerItemEntity(source: source))
+        case .source(.item(let source)):
+          entities.append(
+            try PlannerItemEntity(
+              source: source,
+              libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
         case .failed(let reason) where reason.code == "missingReference": continue
         case .failed(let reason): throw PlannerIntentFailure(message: reason.message)
         default: throw PlannerIntentFailure(message: "Planner could not resolve this Item.")
@@ -106,6 +131,8 @@
     }
 
     @MainActor func loadItems(query: PlannerItemQuery) async throws -> [PlannerItemEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       try Task.checkCancellation()
       let (planner, session) = try await plannerStore.appIntentContext()
       let snapshot: PlannerQuerySnapshot
@@ -127,7 +154,11 @@
           guard !window.rows.isEmpty else {
             throw PlannerIntentFailure(message: "Planner could not load all matching Item choices.")
           }
-          entities.append(contentsOf: try window.rows.map(PlannerItemEntity.init(row:)))
+          entities.append(
+            contentsOf: try window.rows.map {
+              try PlannerItemEntity(
+                row: $0, libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session))
+            })
           offset += Int64(window.rows.count)
         case .failed(let reason): throw PlannerIntentFailure(message: reason.message)
         default: throw PlannerIntentFailure(message: "Planner could not read its Item choices.")
@@ -149,9 +180,14 @@
     @Dependency private var plannerStore: SavedPlannerStore
     typealias PerformResult = IntentResultContainer<PlannerItemEntity, Never, Never, IntentDialog>
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list?.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
         .createItem(
-          content: .init(title: title, subtitle: subtitle, notes: notes), listId: list?.id))
+          content: .init(title: title, subtitle: subtitle, notes: notes),
+          listId: boundListIdentifier))
       switch result.outcome {
       case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
       case .unverified:
@@ -174,7 +210,9 @@
             "The Item was created on this device, but its recovery copy is incomplete. Open Planner before making more changes."
         }
         return .result(
-          value: PlannerItemEntity(id: source.id, title: title, done: false, archived: false),
+          value: PlannerItemEntity(
+            id: source.id, title: title, done: false, archived: false,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"),
           dialog: dialog)
       }
     }
@@ -190,9 +228,13 @@
     typealias PerformResult = IntentResultContainer<PlannerItemEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let query = PlannerItemEntityQuery()
       query.plannerStore = plannerStore
-      let matches = try await query.entities(for: [item.id])
+      let matches = try await query.entities(for: [boundItemIdentifier])
       guard let current = matches.first else {
         throw PlannerIntentFailure(
           message: "This Item is no longer available in Planner's current data.")
@@ -215,8 +257,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
-        .setCompletion(scope: .globalItem(itemId: item.id), done: done))
+        .setCompletion(scope: .globalItem(itemId: boundItemIdentifier), done: done))
       switch result.outcome {
       case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
       case .unverified:
@@ -258,13 +304,16 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       guard title != nil || subtitle != nil || notes != nil else {
         throw PlannerIntentFailure(message: "Choose a title, subtitle or notes to change.")
       }
-      let (planner, session) = try await plannerStore.appIntentContext()
       let source: PlannerItemSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: boundItemIdentifier)))
       {
       case .source(.item(let current)): source = current
       case .failed(let reason): throw PlannerIntentFailure(message: reason.message)
@@ -322,8 +371,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
-        .setArchive(source: .init(kind: .item, id: item.id), archived: archived))
+        .setArchive(source: .init(kind: .item, id: boundItemIdentifier), archived: archived)
+      )
       switch result.outcome {
       case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
       case .unverified:

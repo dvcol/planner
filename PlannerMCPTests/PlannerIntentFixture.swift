@@ -1,5 +1,6 @@
 import Foundation
 import PlannerCore
+import XCTest
 
 @testable import Planner
 
@@ -7,6 +8,13 @@ private struct PlannerIntentFixtureRecord: Codable {
   let formatVersion: Int
   let directory: String
   let hostProcessIdentifier: Int32
+}
+
+/// Legacy path fixtures now resolve to a saved choice in the current library.
+@MainActor
+func expectedPlannerIntentIdentifier(_ legacy: String, store: SavedPlannerStore) throws -> String {
+  if legacy.hasPrefix("library2|") { return legacy }
+  return "library2|\(try XCTUnwrap(store.appIntentLibraryBinding))|\(legacy)"
 }
 
 @MainActor

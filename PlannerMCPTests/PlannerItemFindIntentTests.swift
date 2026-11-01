@@ -28,23 +28,23 @@ final class PlannerItemFindIntentTests: XCTestCase {
     guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Record saved data before cancelling empty related choices.") }
     let invocations: [(String, @MainActor () async throws -> Void)] = [
-      ("Category identities", { _ = try await categories.entities(for: []) }),
+      ("Category identities", { _ = try await categories.entities(for: [String]()) }),
       ("Category search", { _ = try await categories.entities(matching: "No match") }),
       ("Category suggestions", { _ = try await categories.suggestedEntities() }),
-      ("Tag identities", { _ = try await tags.entities(for: []) }),
+      ("Tag identities", { _ = try await tags.entities(for: [String]()) }),
       ("Tag search", { _ = try await tags.entities(matching: "No match") }),
       ("Tag suggestions", { _ = try await tags.suggestedEntities() }),
-      ("List identities", { _ = try await lists.entities(for: []) }),
+      ("List identities", { _ = try await lists.entities(for: [String]()) }),
       ("List search", { _ = try await lists.entities(matching: "No match") }),
       ("List suggestions", { _ = try await lists.suggestedEntities() }),
-      ("Itinerary identities", { _ = try await itineraries.entities(for: []) }),
+      ("Itinerary identities", { _ = try await itineraries.entities(for: [String]()) }),
       ("Itinerary search", { _ = try await itineraries.entities(matching: "No match") }),
       ("Itinerary suggestions", { _ = try await itineraries.suggestedEntities() }),
-      ("Appearance identities", { _ = try await appearances.entities(for: []) }),
+      ("Appearance identities", { _ = try await appearances.entities(for: [String]()) }),
       ("Malformed appearance identities", { _ = try await appearances.entities(for: ["Invalid"]) }),
       ("Unscoped appearance search", { _ = try await appearances.entities(matching: "No match") }),
       ("Unscoped appearance suggestions", { _ = try await appearances.suggestedEntities() }),
-      ("Entry identities", { _ = try await entries.entities(for: []) }),
+      ("Entry identities", { _ = try await entries.entities(for: [String]()) }),
       ("Malformed entry identities", { _ = try await entries.entities(for: ["Invalid"]) }),
       ("Unscoped entry search", { _ = try await entries.entities(matching: "No match") }),
       ("Unscoped entry suggestions", { _ = try await entries.suggestedEntities() }),
@@ -94,30 +94,31 @@ final class PlannerItemFindIntentTests: XCTestCase {
     _ = try await fixture.apply(
       .editItem(
         sourceId: current.source.id,
-        changes: .init(categoryIds: .set([category.id]), tagIds: .set([tag.id])),
+        changes: .init(
+          categoryIds: .set([category.recordIdentifier]), tagIds: .set([tag.recordIdentifier])),
         expectedFieldHashes: current.fieldHashes))
     _ = try await fixture.apply(
-      .addMembership(itemId: current.source.id, listId: list.id, placement: .last))
+      .addMembership(itemId: current.source.id, listId: list.recordIdentifier, placement: .last))
     guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Record the real identities and their associations.") }
     let find = FindPlannerItemsIntent()
     find.categories = [category, .init(id: UUID(), name: category.name)]
     let anyCategory: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(anyCategory.map(\.id), [current.source.id])
+    XCTAssertEqual(anyCategory.map(\.recordIdentifier), [current.source.id])
     find.categoryMatch = .all
     let everyCategory: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertTrue(everyCategory.isEmpty)
     find.categories = [category]
     find.tags = [tag, .init(id: UUID(), name: tag.name)]
     let anyTag: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(anyTag.map(\.id), [current.source.id])
+    XCTAssertEqual(anyTag.map(\.recordIdentifier), [current.source.id])
     find.tagMatch = .all
     let everyTag: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertTrue(everyTag.isEmpty)
     find.tags = [tag]
     find.lists = [list, .init(id: UUID(), name: list.name, archived: false)]
     let anyList: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(anyList.map(\.id), [current.source.id])
+    XCTAssertEqual(anyList.map(\.recordIdentifier), [current.source.id])
     find.listMatch = .all
     let everyList: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertTrue(everyList.isEmpty)
@@ -125,7 +126,7 @@ final class PlannerItemFindIntentTests: XCTestCase {
     find.tags = nil
     find.lists = nil
     let unrestricted: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(unrestricted.map(\.id), fixture.items.map(\.id))
+    XCTAssertEqual(unrestricted.map(\.recordIdentifier), fixture.items.map(\.id))
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Missing criterion identities cannot change or create data.") }
     XCTAssertEqual(after, before)
@@ -182,27 +183,27 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let find = FindPlannerItemsIntent()
     find.hasAddress = true
     let addressed: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(addressed.map(\.id), [0, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(addressed.map(\.recordIdentifier), [0, 3].map { fixture.items[$0].id })
     find.hasLinks = true
     let both: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(both.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(both.map(\.recordIdentifier), [fixture.items[0].id])
     find.hasAddress = false
     let linked: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(linked.map(\.id), [0, 1].map { fixture.items[$0].id })
+    XCTAssertEqual(linked.map(\.recordIdentifier), [0, 1].map { fixture.items[$0].id })
     find.scheduling = .scheduled
     let scheduled: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(scheduled.map(\.id), [0, 1].map { fixture.items[$0].id })
+    XCTAssertEqual(scheduled.map(\.recordIdentifier), [0, 1].map { fixture.items[$0].id })
     find.scope = .inbox
     let scheduledInbox: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(scheduledInbox.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(scheduledInbox.map(\.recordIdentifier), [fixture.items[0].id])
     find.scope = .allItems
     find.hasLinks = false
     find.scheduling = .unscheduled
     let unscheduled: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(unscheduled.map(\.id), [2, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(unscheduled.map(\.recordIdentifier), [2, 3].map { fixture.items[$0].id })
     find.hasAddress = true
     let unscheduledAddress: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(unscheduledAddress.map(\.id), [fixture.items[3].id])
+    XCTAssertEqual(unscheduledAddress.map(\.recordIdentifier), [fixture.items[3].id])
     find.hasLinks = true
     let noMatch: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertTrue(noMatch.isEmpty)
@@ -218,10 +219,10 @@ final class PlannerItemFindIntentTests: XCTestCase {
     find.hasAddress = false
     find.hasLinks = false
     let afterRemoval: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(afterRemoval.map(\.id), [1, 2, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(afterRemoval.map(\.recordIdentifier), [1, 2, 3].map { fixture.items[$0].id })
     find.scheduling = .scheduled
     let directRemains: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(directRemains.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(directRemains.map(\.recordIdentifier), [fixture.items[0].id])
   }
 
   func testTagAndListGroupsNarrowTogetherAndFollowMembershipChanges() async throws {
@@ -233,7 +234,10 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let createCategory = CreatePlannerCategoryIntent()
     createCategory.name = "Museum"
     let category = try await createCategory.callAsFunction(donate: false)
-    let tagSets: [Set<UUID>] = [[firstTag.id], [secondTag.id], [firstTag.id, secondTag.id]]
+    let tagSets: [Set<UUID>] = [
+      [firstTag.recordIdentifier], [secondTag.recordIdentifier],
+      [firstTag.recordIdentifier, secondTag.recordIdentifier],
+    ]
     for (itemIndex, identifiers) in tagSets.enumerated() {
       guard
         case .source(.item(let current)) = await fixture.planner.read(
@@ -242,7 +246,7 @@ final class PlannerItemFindIntentTests: XCTestCase {
       _ = try await fixture.apply(
         .editItem(
           sourceId: current.source.id,
-          changes: .init(categoryIds: .set([category.id]), tagIds: .set(identifiers)),
+          changes: .init(categoryIds: .set([category.recordIdentifier]), tagIds: .set(identifiers)),
           expectedFieldHashes: current.fieldHashes))
     }
     let createList = CreatePlannerListIntent()
@@ -251,11 +255,15 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let secondList = try await createList.callAsFunction(donate: false)
     for itemIndex in [0, 1, 3] {
       _ = try await fixture.apply(
-        .addMembership(itemId: fixture.items[itemIndex].id, listId: firstList.id, placement: .last))
+        .addMembership(
+          itemId: fixture.items[itemIndex].id, listId: firstList.recordIdentifier, placement: .last)
+      )
     }
     for itemIndex in [0, 2, 3] {
       _ = try await fixture.apply(
-        .addMembership(itemId: fixture.items[itemIndex].id, listId: secondList.id, placement: .last)
+        .addMembership(
+          itemId: fixture.items[itemIndex].id, listId: secondList.recordIdentifier, placement: .last
+        )
       )
     }
     guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
@@ -263,26 +271,26 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let find = FindPlannerItemsIntent()
     find.tags = [firstTag, secondTag, firstTag]
     let anyTag: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(anyTag.map(\.id), [0, 1, 2].map { fixture.items[$0].id })
+    XCTAssertEqual(anyTag.map(\.recordIdentifier), [0, 1, 2].map { fixture.items[$0].id })
     find.tagMatch = .all
     let everyTag: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(everyTag.map(\.id), [fixture.items[2].id])
+    XCTAssertEqual(everyTag.map(\.recordIdentifier), [fixture.items[2].id])
     find.tags = []
     find.lists = [firstList, secondList, firstList]
     let anyList: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(anyList.map(\.id), fixture.items.map(\.id))
+    XCTAssertEqual(anyList.map(\.recordIdentifier), fixture.items.map(\.id))
     find.listMatch = .all
     let everyList: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(everyList.map(\.id), [0, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(everyList.map(\.recordIdentifier), [0, 3].map { fixture.items[$0].id })
     find.lists = [secondList]
     find.categories = [category]
     find.tags = [firstTag]
     let combined: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(combined.map(\.id), [0, 2].map { fixture.items[$0].id })
+    XCTAssertEqual(combined.map(\.recordIdentifier), [0, 2].map { fixture.items[$0].id })
     find.archive = .active
     find.completion = .todo
     let active: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(active.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(active.map(\.recordIdentifier), [fixture.items[0].id])
     find.text = "OSAKA"
     let excludedText: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertTrue(excludedText.isEmpty)
@@ -297,21 +305,21 @@ final class PlannerItemFindIntentTests: XCTestCase {
     find.archive = .all
     find.completion = .all
     let unrestricted: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(unrestricted.map(\.id), fixture.items.map(\.id))
+    XCTAssertEqual(unrestricted.map(\.recordIdentifier), fixture.items.map(\.id))
     guard case .exported(let unchanged) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Finding through shared references cannot mutate the graph.") }
     XCTAssertEqual(unchanged, before)
     _ = try await fixture.apply(
-      .setArchive(source: .init(kind: .list, id: firstList.id), archived: true))
+      .setArchive(source: .init(kind: .list, id: firstList.recordIdentifier), archived: true))
     find.lists = [firstList]
     let archivedList: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(archivedList.map(\.id), [0, 1, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(archivedList.map(\.recordIdentifier), [0, 1, 3].map { fixture.items[$0].id })
     let remove = RemovePlannerItemFromListIntent()
     remove.item = .init(id: fixture.items[0].id, title: "Cached", done: false, archived: false)
     remove.list = firstList
     let _: Void = try await remove.callAsFunction(donate: false)
     let refreshed: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(refreshed.map(\.id), [1, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(refreshed.map(\.recordIdentifier), [1, 3].map { fixture.items[$0].id })
   }
 
   func testCategoryCriteriaUseSharedIdentitiesAndAnyAllMatchingAcrossLiveRenames() async throws {
@@ -320,8 +328,11 @@ final class PlannerItemFindIntentTests: XCTestCase {
     create.name = "Museum"
     let first = try await create.callAsFunction(donate: false)
     let second = try await create.callAsFunction(donate: false)
-    XCTAssertNotEqual(first.id, second.id)
-    let categorySets: [Set<UUID>] = [[first.id], [first.id, second.id], [second.id]]
+    XCTAssertNotEqual(first.recordIdentifier, second.recordIdentifier)
+    let categorySets: [Set<UUID>] = [
+      [first.recordIdentifier], [first.recordIdentifier, second.recordIdentifier],
+      [second.recordIdentifier],
+    ]
     for (itemIndex, identifiers) in categorySets.enumerated() {
       guard
         case .source(.item(let current)) = await fixture.planner.read(
@@ -337,27 +348,27 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let find = FindPlannerItemsIntent()
     find.categories = [first, first]
     let firstMatches: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(firstMatches.map(\.id), [0, 1].map { fixture.items[$0].id })
+    XCTAssertEqual(firstMatches.map(\.recordIdentifier), [0, 1].map { fixture.items[$0].id })
     find.categories = [second]
     let secondMatches: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(secondMatches.map(\.id), [1, 2].map { fixture.items[$0].id })
+    XCTAssertEqual(secondMatches.map(\.recordIdentifier), [1, 2].map { fixture.items[$0].id })
     find.categories = [first, second]
     let any: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(any.map(\.id), [0, 1, 2].map { fixture.items[$0].id })
+    XCTAssertEqual(any.map(\.recordIdentifier), [0, 1, 2].map { fixture.items[$0].id })
     find.categoryMatch = .all
     let every: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(every.map(\.id), [fixture.items[1].id])
+    XCTAssertEqual(every.map(\.recordIdentifier), [fixture.items[1].id])
     find.categories = []
     let unrestricted: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(unrestricted.map(\.id), fixture.items.map(\.id))
+    XCTAssertEqual(unrestricted.map(\.recordIdentifier), fixture.items.map(\.id))
     find.categories = [first]
     find.completion = .todo
     let todo: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(todo.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(todo.map(\.recordIdentifier), [fixture.items[0].id])
     find.categories = [second]
     find.archive = .archived
     let archived: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(archived.map(\.id), [fixture.items[2].id])
+    XCTAssertEqual(archived.map(\.recordIdentifier), [fixture.items[2].id])
     guard case .exported(let unchanged) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Finding by label identities must not rewrite shared data.") }
     XCTAssertEqual(unchanged, before)
@@ -367,7 +378,7 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let _: Void = try await rename.callAsFunction(donate: false)
     let categoryQuery = PlannerCategoryEntityQuery()
     categoryQuery.plannerStore = fixture.store
-    let current = try await categoryQuery.entities(for: [first.id])
+    let current = try await categoryQuery.entities(for: [first.recordIdentifier])
     XCTAssertEqual(current.first?.name, "Art")
     find.categories = [first]
     find.completion = .all
@@ -405,10 +416,10 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let find = FindPlannerItemsIntent()
     find.text = "SEARCHABLE"
     let all: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(all.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(all.map(\.recordIdentifier), [fixture.items[0].id])
     find.scope = .inbox
     let inbox: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(inbox.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(inbox.map(\.recordIdentifier), [fixture.items[0].id])
     XCTAssertEqual(fixture.store.incompleteRecoveryOperationIdentifiers, [operationIdentifier])
     XCTAssertTrue(fixture.store.recoveryBlocked)
     guard
@@ -458,7 +469,7 @@ final class PlannerItemFindIntentTests: XCTestCase {
     find.direction = .descending
     let matches: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertEqual(matches.count, 67)
-    XCTAssertEqual(matches.map(\.id), visits.dropFirst(2).reversed().map(\.id))
+    XCTAssertEqual(matches.map(\.recordIdentifier), visits.dropFirst(2).reversed().map(\.id))
     XCTAssertEqual(Set(matches.map(\.id)).count, 67)
     XCTAssertEqual(matches.first?.title, "Visit 68")
     XCTAssertEqual(matches.last?.title, "Visit 02")
@@ -477,11 +488,12 @@ final class PlannerItemFindIntentTests: XCTestCase {
     else { return XCTFail("A second real writer must complete the last visit.") }
     let refreshed: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertEqual(refreshed.count, 66)
-    XCTAssertEqual(refreshed.map(\.id), visits.dropFirst(2).dropLast().reversed().map(\.id))
+    XCTAssertEqual(
+      refreshed.map(\.recordIdentifier), visits.dropFirst(2).dropLast().reversed().map(\.id))
     find.completion = .all
     let all: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertEqual(all.count, 67)
-    XCTAssertEqual(all.first?.id, last.id)
+    XCTAssertEqual(all.first?.recordIdentifier, last.id)
     XCTAssertEqual(all.first?.done, true)
     guard case .exported(let after) = await other.exportData(session: otherSession)
     else { return XCTFail("Refreshed Find must not rewrite the other writer's saved change.") }
@@ -520,7 +532,7 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let invocations: [@MainActor () async throws -> Void] = [
       { let _: [PlannerItemEntity] = try await find.callAsFunction(donate: false) },
       { _ = try await query.entities(matching: "Nothing matches this text") },
-      { _ = try await query.entities(for: []) },
+      { _ = try await query.entities(for: [String]()) },
     ]
     for invocation in invocations {
       let task = Task { @MainActor in try await invocation() }
@@ -565,47 +577,49 @@ final class PlannerItemFindIntentTests: XCTestCase {
     let find = FindPlannerItemsIntent()
     find.scope = .inbox
     let inbox: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(inbox.map(\.id), [fixture.items[2].id, fixture.items[3].id])
+    XCTAssertEqual(inbox.map(\.recordIdentifier), [fixture.items[2].id, fixture.items[3].id])
     find.scope = .allItems
     find.direction = .descending
     let reverseTitle: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(reverseTitle.map(\.id), fixture.items.reversed().map(\.id))
+    XCTAssertEqual(reverseTitle.map(\.recordIdentifier), fixture.items.reversed().map(\.id))
     find.sort = .created
     find.direction = .ascending
     let created: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(created.map(\.id), fixture.items.map(\.id))
+    XCTAssertEqual(created.map(\.recordIdentifier), fixture.items.map(\.id))
     find.direction = .descending
     let reverseCreated: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(reverseCreated.map(\.id), fixture.items.reversed().map(\.id))
+    XCTAssertEqual(reverseCreated.map(\.recordIdentifier), fixture.items.reversed().map(\.id))
     find.sort = .lastUpdated
     find.direction = .ascending
     let updated: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(updated.map(\.id), [3, 1, 2, 0].map { fixture.items[$0].id })
+    XCTAssertEqual(updated.map(\.recordIdentifier), [3, 1, 2, 0].map { fixture.items[$0].id })
     find.direction = .descending
     let reverseUpdated: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(reverseUpdated.map(\.id), [0, 2, 1, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(
+      reverseUpdated.map(\.recordIdentifier), [0, 2, 1, 3].map { fixture.items[$0].id })
     find.sort = .duration
     find.direction = .ascending
     let estimates: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(estimates.map(\.id), [2, 0, 3, 1].map { fixture.items[$0].id })
+    XCTAssertEqual(estimates.map(\.recordIdentifier), [2, 0, 3, 1].map { fixture.items[$0].id })
     find.direction = .descending
     let reverseEstimates: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(reverseEstimates.map(\.id), [3, 0, 2, 1].map { fixture.items[$0].id })
+    XCTAssertEqual(
+      reverseEstimates.map(\.recordIdentifier), [3, 0, 2, 1].map { fixture.items[$0].id })
     find.sort = .title
     find.direction = .ascending
     find.completion = .todo
     let todo: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(todo.map(\.id), [0, 2, 3].map { fixture.items[$0].id })
+    XCTAssertEqual(todo.map(\.recordIdentifier), [0, 2, 3].map { fixture.items[$0].id })
     XCTAssertEqual(todo.first?.done, false)
     find.completion = .done
     let done: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(done.map(\.id), [fixture.items[1].id])
+    XCTAssertEqual(done.map(\.recordIdentifier), [fixture.items[1].id])
     find.archive = .archived
     let archivedDone: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
     XCTAssertTrue(archivedDone.isEmpty)
     find.completion = .all
     let archived: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(archived.map(\.id), [fixture.items[2].id])
+    XCTAssertEqual(archived.map(\.recordIdentifier), [fixture.items[2].id])
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Read the saved graph after every sorting/filtering combination.") }
     XCTAssertEqual(after, before)
@@ -617,13 +631,13 @@ final class PlannerItemFindIntentTests: XCTestCase {
     else { return XCTFail("Record the saved data before finding Items.") }
     let find = FindPlannerItemsIntent()
     let all: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(all.map(\.id), fixture.items.map(\.id))
+    XCTAssertEqual(all.map(\.recordIdentifier), fixture.items.map(\.id))
     XCTAssertEqual(all.map(\.title), ["A Museum", "B Museum", "C Museum", "D Osaka"])
     find.text = "TOKYO"
     find.completion = .todo
     find.archive = .active
     let narrowed: [PlannerItemEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(narrowed.map(\.id), [fixture.items[0].id])
+    XCTAssertEqual(narrowed.map(\.recordIdentifier), [fixture.items[0].id])
     XCTAssertEqual(narrowed.first?.done, false)
     XCTAssertEqual(narrowed.first?.archived, false)
     find.text = "No matching notes"

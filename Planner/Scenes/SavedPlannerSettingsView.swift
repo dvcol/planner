@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 struct SavedPlannerSettingsView: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
+  @State private var showSharing = false
   @State private var showLabels = false
   @State private var showRecovery = false
   @State private var exportRequest: UUID?
@@ -17,6 +18,21 @@ struct SavedPlannerSettingsView: View {
   @State private var importDraft: SavedBackupImportDraft?
   @State private var importFailure: String?
   @State private var isReadingDevicePlans = false
+  @State private var workflowIdentifier = UUID()
+
+  private var blocksLibrarySwitch: Bool {
+    showLabels || showRecovery || exportRequest != nil || showExporter || showImporter
+      || importURL != nil || importDraft != nil || isReadingDevicePlans
+  }
+
+  private var synchronizationStorageDescription: String {
+    if store.activeLibrary == nil {
+      return
+        "Sync uses your private iCloud storage. Your plans stay on this device when iCloud is unavailable."
+    }
+    return
+      "Sync uses the owner's private iCloud storage. Cached plans stay on this device during temporary network loss."
+  }
 
   var body: some View {
     NavigationStack {
@@ -50,9 +66,17 @@ struct SavedPlannerSettingsView: View {
               } header: {
                 Text("iCloud")
               } footer: {
-                Text(
-                  "Sync uses your private iCloud storage. Your plans stay on this device when iCloud is unavailable."
-                )
+                Text(synchronizationStorageDescription)
+              }
+            }
+            if store.hasPrivateSynchronization {
+              Section("Library") {
+                Button {
+                  showSharing = true
+                } label: {
+                  LabeledContent("Sharing and libraries", value: store.libraryTitle)
+                }
+                .accessibilityIdentifier("saved.settings.sharing")
               }
             }
             Section("Organization") {
@@ -104,6 +128,9 @@ struct SavedPlannerSettingsView: View {
             Text(reason)
           } actions: {
             Button("Try again") { Task { await store.open() } }
+            if store.hasPrivateSynchronization {
+              Button("Sharing and libraries") { showSharing = true }
+            }
             Button("Recovery copies", systemImage: "clock.arrow.circlepath") {
               showRecovery = true
             }
@@ -114,6 +141,10 @@ struct SavedPlannerSettingsView: View {
         }
       }
       .navigationTitle("Plan 2Do Settings")
+      .onChange(of: blocksLibrarySwitch, initial: true) {
+        store.setLibrarySwitchBlocked(blocksLibrarySwitch, window: workflowIdentifier)
+      }
+      .onDisappear { store.setLibrarySwitchBlocked(false, window: workflowIdentifier) }
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -131,6 +162,7 @@ struct SavedPlannerSettingsView: View {
     }
     .task(id: exportRequest) { await prepareBackup() }
     .task(id: importURL) { await prepareImport() }
+    .sheet(isPresented: $showSharing) { SavedLibrarySharingView(store: store) }
     .sheet(isPresented: $showLabels) { SavedLabelsView(store: store) }
     .sheet(isPresented: $showRecovery) { SavedRecoveryCopiesView(store: store) }
     .sheet(item: $importDraft) { draft in SavedBackupImportForm(store: store, draft: draft) }

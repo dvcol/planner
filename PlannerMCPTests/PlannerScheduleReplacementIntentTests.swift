@@ -22,7 +22,7 @@ final class PlannerScheduleReplacementIntentTests: XCTestCase {
     action.planningTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "America/New_York"))
     let replaced = try await action.callAsFunction(donate: false)
     let expected = try Date.ISO8601FormatStyle().parse("2026-11-01T06:30:00Z")
-    XCTAssertEqual(replaced.id, fixture.allDay.id)
+    XCTAssertEqual(replaced.recordIdentifier, fixture.allDay.id)
     XCTAssertEqual(replaced.title, "Tokyo Weekend")
     XCTAssertEqual(replaced.sourceType, "Itinerary")
     XCTAssertEqual(replaced.start, expected)
@@ -52,7 +52,8 @@ final class PlannerScheduleReplacementIntentTests: XCTestCase {
     query.plannerStore = fixture.store
     let schedules = try await query.suggestedEntities()
     XCTAssertEqual(
-      Set(schedules.map(\.id)), [fixture.timed.id, fixture.allDay.id, fixture.outside.id])
+      Set(schedules.map(\.recordIdentifier)),
+      [fixture.timed.id, fixture.allDay.id, fixture.outside.id])
     XCTAssertFalse(fixture.store.recoveryBlocked)
   }
   func testAllDayReplacementConvertsTimedAndClearsAnExistingAllDayEndWithTheSameIdentity()
@@ -68,7 +69,7 @@ final class PlannerScheduleReplacementIntentTests: XCTestCase {
       timeZone: TimeZone(identifier: "Europe/Paris"), year: 2026, month: 12, day: 1)
     action.endDay = .init(year: 2026, month: 12, day: 3)
     let converted = try await action.callAsFunction(donate: false)
-    XCTAssertEqual(converted.id, fixture.timed.id)
+    XCTAssertEqual(converted.recordIdentifier, fixture.timed.id)
     XCTAssertEqual(converted.title, "Museum")
     XCTAssertEqual(converted.sourceType, "Item")
     XCTAssertTrue(converted.allDay)

@@ -15,8 +15,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundTargetIdentifier = try target.sourceIdentifier(in: plannerStore)
       _ = try await planOpening.submit(
-        source: .init(kind: .list, id: target.id), store: plannerStore)
+        source: .init(kind: .list, id: boundTargetIdentifier), store: plannerStore)
       return .result(
         dialog:
           "Opening requested. If Planner has an edited Item, choose Save, Discard or Keep editing.")
@@ -36,8 +40,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundTargetIdentifier = try target.sourceIdentifier(in: plannerStore)
       _ = try await planOpening.submit(
-        source: .init(kind: .itinerary, id: target.id), store: plannerStore)
+        source: .init(kind: .itinerary, id: boundTargetIdentifier), store: plannerStore)
       return .result(
         dialog:
           "Opening requested. If Planner has an edited Item, choose Save, Discard or Keep editing.")

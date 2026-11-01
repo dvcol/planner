@@ -36,11 +36,11 @@ final class PlannerEstimateSettingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.list(let savedList)) = await reopened.read(
-        session: session, request: .source(.init(kind: .list, id: list.id))),
+        session: session, request: .source(.init(kind: .list, id: list.recordIdentifier))),
       case .source(.itinerary(let savedItinerary)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id))),
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier))),
       case .source(.item(let savedItem)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("Both manual estimates and their original sources must persist.") }
     XCTAssertEqual(savedList.content.manualEstimate, .init(minutes: 125, displayUnit: .hour))
     XCTAssertEqual(savedList.estimates.fullEstimate, .exact(minutes: 125))
@@ -71,7 +71,7 @@ final class PlannerEstimateSettingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let saved)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("The estimate must persist on the original Item.") }
     XCTAssertEqual(saved.content.estimate, .init(minutes: 125, displayUnit: .hour))
     XCTAssertEqual(saved.content.title, "Museum")

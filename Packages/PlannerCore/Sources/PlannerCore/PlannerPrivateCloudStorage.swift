@@ -137,14 +137,16 @@ struct PlannerPrivateCloudStorage: Sendable {
     -> PlannerStorageConfiguration
   {
     guard let owner else { return base }
-    let suffix = "private-cloud/\(scope)/\(owner)"
+    var suffix = "private-cloud/\(scope)/\(owner)"
+    if let library = base.sharedLibrary { suffix += "/libraries/" + library.id }
     return .init(
       storeURL: base.storeURL.deletingLastPathComponent().appendingPathComponent(suffix)
         .appendingPathComponent(base.storeURL.lastPathComponent),
       controlURL: base.controlURL.deletingLastPathComponent().appendingPathComponent(suffix)
         .appendingPathComponent(base.controlURL.lastPathComponent),
       recoveryDirectoryURL: base.recoveryDirectoryURL.appendingPathComponent(suffix),
-      processRole: base.processRole, storageMode: base.storageMode)
+      processRole: base.processRole, storageMode: base.storageMode,
+      sharedLibrary: base.sharedLibrary)
   }
 
   private func ownershipFailure() -> PlannerFailure {

@@ -25,11 +25,15 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
       let form = try plannerTimedScheduleForm(
         start: start, end: end, planningTimeZone: planningTimeZone.id,
         startOccurrence: startOccurrence, endOccurrence: endOccurrence)
       let replacement = try await replacePlannerSchedule(
-        scheduleIdentifier: schedule.id, form: form, store: plannerStore)
+        scheduleIdentifier: boundScheduleIdentifier, form: form, store: plannerStore)
       return .result(value: replacement.entity, dialog: replacement.dialog)
     }
   }
@@ -52,11 +56,15 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
       let form = PlannerScheduleForm.allDay(
         start: try plannerScheduleCivilDate(startDay), end: try endDay.map(plannerScheduleCivilDate)
       )
       let replacement = try await replacePlannerSchedule(
-        scheduleIdentifier: schedule.id, form: form, store: plannerStore)
+        scheduleIdentifier: boundScheduleIdentifier, form: form, store: plannerStore)
       return .result(value: replacement.entity, dialog: replacement.dialog)
     }
   }
@@ -99,7 +107,8 @@
       )
     case .applied(_, let recovery):
       let entity = try PlannerScheduleEntity(
-        schedule: schedule.source, owner: owner, title: title, form: form)
+        schedule: schedule.source, owner: owner, title: title, form: form,
+        libraryBinding: store.appIntentLibraryBinding ?? "unavailable")
       let dialog: IntentDialog
       switch recovery {
       case .complete: dialog = "Updated the booking. Its identity and owner are preserved."

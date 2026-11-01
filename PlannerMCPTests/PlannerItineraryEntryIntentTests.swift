@@ -152,7 +152,11 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
     let resolved = try await query.entities(for: [
       emptyIdentity, removal.entry.id, secondIdentity, directIdentity,
     ])
-    XCTAssertEqual(resolved.map(\.id), [emptyIdentity, secondIdentity, directIdentity])
+    XCTAssertEqual(
+      resolved.map(\.id),
+      try [emptyIdentity, secondIdentity, directIdentity].map {
+        try expectedPlannerIntentIdentifier($0, store: store)
+      })
     XCTAssertEqual(resolved.map(\.title), ["Empty stop", "Tokyo Food", "Museum"])
     XCTAssertEqual(
       resolved.map(\.context),
@@ -172,7 +176,7 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
         .init(
           operationId: UUID(), session: fixture.session,
           command: .createSchedule(
-            source: .init(kind: .itinerary, id: fixture.itinerary.id), form: form))
+            source: .init(kind: .itinerary, id: fixture.itinerary.recordIdentifier), form: form))
       ).outcome,
       let schedule = created.generated.first,
       case .source(.item(let beforeItem)) = await fixture.planner.read(
@@ -189,7 +193,8 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let saved)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: fixture.itinerary.id))),
+        session: session,
+        request: .source(.init(kind: .itinerary, id: fixture.itinerary.recordIdentifier))),
       case .source(.item(let afterItem)) = await reopened.read(
         session: session, request: .source(fixture.item)),
       case .source(.list(let afterList)) = await reopened.read(
@@ -201,7 +206,8 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
           session: session,
           request: .items(
             .init(
-              scope: .itinerary(fixture.itinerary.id), completion: .all, archive: .all,
+              scope: .itinerary(fixture.itinerary.recordIdentifier), completion: .all,
+              archive: .all,
               sort: .init(mode: .manual)))))
     else { return XCTFail("Reordering must retain the entire graph after reopening.") }
     let route = saved.references.compactMap { reference -> UUID? in
@@ -217,11 +223,11 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
         .appearance(
           source: fixture.item,
           appearance: .directItineraryItem(
-            itineraryId: fixture.itinerary.id, entryId: fixture.entryIdentifiers[2])),
+            itineraryId: fixture.itinerary.recordIdentifier, entryId: fixture.entryIdentifiers[2])),
         .appearance(
           source: fixture.item,
           appearance: .directItineraryItem(
-            itineraryId: fixture.itinerary.id, entryId: fixture.entryIdentifiers[0])),
+            itineraryId: fixture.itinerary.recordIdentifier, entryId: fixture.entryIdentifiers[0])),
       ])
     XCTAssertEqual(afterItem.fieldHashes, beforeItem.fieldHashes)
     XCTAssertEqual(afterItem.updatedAt, beforeItem.updatedAt)
@@ -238,7 +244,7 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
         case .appearance(let current) = await reopened.read(
           session: session,
           request: .appearance(
-            .directItineraryItem(itineraryId: fixture.itinerary.id, entryId: entry)))
+            .directItineraryItem(itineraryId: fixture.itinerary.recordIdentifier, entryId: entry)))
       else { return XCTFail("Repeated stops must retain independent completion.") }
       XCTAssertFalse(current.globalDone)
       XCTAssertEqual(current.localDone, expectedLocal)
@@ -258,7 +264,8 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
       let reopened = PlannerCore.Planner(configuration: fixture.configuration)
       guard case .ready(let session) = await reopened.bootstrap(),
         case .source(.itinerary(let current)) = await reopened.read(
-          session: session, request: .source(.init(kind: .itinerary, id: fixture.itinerary.id)))
+          session: session,
+          request: .source(.init(kind: .itinerary, id: fixture.itinerary.recordIdentifier)))
       else { return XCTFail("Every placement must persist before checking the next one.") }
       let route = current.references.compactMap { reference -> UUID? in
         guard case .itineraryEntry(let identifier, _, _) = reference else { return nil }
@@ -274,7 +281,8 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
           case .appearance(let appearance) = await reopened.read(
             session: session,
             request: .appearance(
-              .directItineraryItem(itineraryId: fixture.itinerary.id, entryId: entry)))
+              .directItineraryItem(itineraryId: fixture.itinerary.recordIdentifier, entryId: entry))
+          )
         else { return XCTFail("Reordering cannot replace contextual identities.") }
         XCTAssertFalse(appearance.globalDone)
         XCTAssertEqual(appearance.localDone, expectedLocal)
@@ -330,7 +338,9 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
     let query = PlannerItineraryEntryEntityQuery()
     query.plannerStore = store
     let emptyOnly = try await query.entities(for: identifiers)
-    XCTAssertEqual(emptyOnly.map(\.id), identifiers)
+    XCTAssertEqual(
+      emptyOnly.map(\.id),
+      try identifiers.map { try expectedPlannerIntentIdentifier($0, store: store) })
     XCTAssertEqual(emptyOnly.last?.context, "Old route · Stop 65 · List")
     XCTAssertTrue(emptyOnly.allSatisfy { $0.kind == .list && $0.title == "Food" })
     for _ in 0..<65 {
@@ -367,7 +377,9 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
       for: expected + [
         identifiers[0].lowercased(), "", "v1/direct/\(itinerary.id)/\(UUID())/\(item.id)",
       ])
-    XCTAssertEqual(resolved.map(\.id), expected)
+    XCTAssertEqual(
+      resolved.map(\.id), try expected.map { try expectedPlannerIntentIdentifier($0, store: store) }
+    )
     XCTAssertEqual(resolved.count, 130)
     XCTAssertEqual(resolved.first?.context, "Tokyo Weekend · Stop 130 · Item")
     XCTAssertEqual(resolved.last?.context, "Tokyo Weekend · Stop 1 · List")
@@ -386,7 +398,7 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
 
   func testInvalidStaleForeignAndDeletedEntriesOrAnchorsNeverRetarget() async throws {
     let fixture = try await makeItineraryEntryIntentFixture()
-    let owner = PlannerEntityReference(kind: .itinerary, id: fixture.itinerary.id)
+    let owner = PlannerEntityReference(kind: .itinerary, id: fixture.itinerary.recordIdentifier)
     guard
       case .source(.itinerary(let before)) = await fixture.planner.read(
         session: fixture.session, request: .source(owner)),
@@ -420,12 +432,12 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
     }
     for identifier in [
       "", fixture.entries[0].id + "/extra",
-      "v2/entry/\(fixture.itinerary.id)/\(fixture.entryIdentifiers[0])/item/\(fixture.item.id)",
-      "v1/direct/\(fixture.itinerary.id)/\(fixture.entryIdentifiers[0])/\(fixture.item.id)",
-      "v1/entry/\(fixture.itinerary.id)/\(fixture.entryIdentifiers[0])/tag/\(fixture.item.id)",
-      "v1/entry/\(fixture.itinerary.id)/\(fixture.entryIdentifiers[0])/list/\(fixture.item.id)",
-      "v1/entry/\(fixture.itinerary.id)/\(UUID())/item/\(fixture.item.id)",
-      "v1/entry/\(fixture.itinerary.id)/\(fixture.entryIdentifiers[0])/item/\(UUID())",
+      "v2/entry/\(fixture.itinerary.recordIdentifier)/\(fixture.entryIdentifiers[0])/item/\(fixture.item.id)",
+      "v1/direct/\(fixture.itinerary.recordIdentifier)/\(fixture.entryIdentifiers[0])/\(fixture.item.id)",
+      "v1/entry/\(fixture.itinerary.recordIdentifier)/\(fixture.entryIdentifiers[0])/tag/\(fixture.item.id)",
+      "v1/entry/\(fixture.itinerary.recordIdentifier)/\(fixture.entryIdentifiers[0])/list/\(fixture.item.id)",
+      "v1/entry/\(fixture.itinerary.recordIdentifier)/\(UUID())/item/\(fixture.item.id)",
+      "v1/entry/\(fixture.itinerary.recordIdentifier)/\(fixture.entryIdentifiers[0])/item/\(UUID())",
     ] {
       let invalid = PlannerItineraryEntryEntity(
         id: identifier, title: "Cached", context: "Cached", kind: .item, archived: false)
@@ -485,13 +497,15 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
         .init(
           operationId: UUID(), session: fixture.session,
           command: .addItineraryEntry(
-            itineraryId: fixture.itinerary.id, source: fixture.item, placement: .last))
+            itineraryId: fixture.itinerary.recordIdentifier, source: fixture.item, placement: .last)
+        )
       ).outcome,
       case .itineraryEntry(let replacement, _, _)? = added.generatedReferences.first,
       case .appearance(let newAppearance) = await fixture.planner.read(
         session: fixture.session,
         request: .appearance(
-          .directItineraryItem(itineraryId: fixture.itinerary.id, entryId: replacement)))
+          .directItineraryItem(
+            itineraryId: fixture.itinerary.recordIdentifier, entryId: replacement)))
     else { return XCTFail("Ordinary re-add must create a new local Todo stop.") }
     XCTAssertNotEqual(replacement, fixture.entryIdentifiers[2])
     XCTAssertFalse(newAppearance.localDone)
@@ -520,7 +534,7 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
 
   func testPrecancelledRemovalOrderingAndIdentityReadsLeaveTheRouteUntouched() async throws {
     let fixture = try await makeItineraryEntryIntentFixture()
-    let owner = PlannerEntityReference(kind: .itinerary, id: fixture.itinerary.id)
+    let owner = PlannerEntityReference(kind: .itinerary, id: fixture.itinerary.recordIdentifier)
     guard
       case .source(.itinerary(let before)) = await fixture.planner.read(
         session: fixture.session, request: .source(owner))
@@ -560,7 +574,11 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
     XCTAssertEqual(after.updatedAt, before.updatedAt)
     let _: Void = try await removal.callAsFunction(donate: false)
     let surviving = try await query.entities(for: fixture.entries.map(\.id))
-    XCTAssertEqual(surviving.map(\.id), [fixture.entries[0].id, fixture.entries[1].id])
+    XCTAssertEqual(
+      surviving.map(\.id),
+      try [fixture.entries[0].id, fixture.entries[1].id].map {
+        try expectedPlannerIntentIdentifier($0, store: fixture.store)
+      })
   }
 
   func testUnavailableStorageRejectsChoicesRemovalAndOrdering() async throws {
@@ -647,7 +665,7 @@ final class PlannerItineraryEntryIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try obstruction.restore()
       let reopened = PlannerCore.Planner(configuration: fixture.configuration)
-      let owner = PlannerEntityReference(kind: .itinerary, id: fixture.itinerary.id)
+      let owner = PlannerEntityReference(kind: .itinerary, id: fixture.itinerary.recordIdentifier)
       guard case .ready(let session) = await reopened.bootstrap(),
         case .source(.itinerary(let beforeRetry)) = await reopened.read(
           session: session, request: .source(owner))

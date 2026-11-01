@@ -17,11 +17,11 @@
       DisplayRepresentation(title: "\(title)", subtitle: "\(context)")
     }
 
-    init(
+    @MainActor init(
       id: String, title: String, context: String, globallyDone: Bool, locallyDone: Bool,
-      done: Bool, archived: Bool
+      done: Bool, archived: Bool, libraryBinding: String = ""
     ) {
-      self.id = id
+      self.id = plannerEncodeIntentIdentifier(id, binding: libraryBinding)
       self.title = title
       self.context = context
       self.globallyDone = globallyDone
@@ -40,9 +40,13 @@
 
     @MainActor func entities(for identifiers: [String]) async throws -> [PlannerItineraryItemEntity]
     {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       _ = try await plannerStore.appIntentContext()
       var seenIdentifiers: Set<String> = []
-      let identities = identifiers.compactMap(PlannerItineraryItemIdentity.init).filter {
+      let identities = identifiers.compactMap {
+        PlannerItineraryItemIdentity($0, store: plannerStore)
+      }.filter {
         seenIdentifiers.insert($0.id).inserted
       }
       var seenItineraries: Set<UUID> = []
@@ -61,8 +65,13 @@
     }
 
     @MainActor func entities(matching string: String) async throws -> [PlannerItineraryItemEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       _ = try await plannerStore.appIntentContext()
-      guard let identifier = getIntent?.itinerary.id ?? completionIntent?.itinerary.id else {
+      let getIdentifier = try getIntent?.itinerary.sourceIdentifier(in: plannerStore)
+      let completionIdentifier = try completionIntent?.itinerary.sourceIdentifier(in: plannerStore)
+      guard let identifier = getIdentifier ?? completionIdentifier
+      else {
         return []
       }
       return try await loadItems(in: identifier, matching: string)
@@ -105,7 +114,9 @@
       var contexts: [String: String] = [:]
       for (entryIndex, entry) in metadata.entries.enumerated() {
         for (childIndex, rowIdentity) in entry.rowIdentities.enumerated() {
-          guard let identity = PlannerItineraryItemIdentity(rowIdentity),
+          guard
+            let identity = PlannerItineraryItemIdentity(
+              rowIdentity, libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"),
             identity.itineraryIdentifier == itineraryIdentifier, contexts[identity.id] == nil
           else {
             throw PlannerItineraryItemIntentFailure(
@@ -121,7 +132,10 @@
       var entities: [PlannerItineraryItemEntity] = []
       for (index, rowIdentity) in snapshot.rows.enumerated() {
         try Task.checkCancellation()
-        guard let identity = PlannerItineraryItemIdentity(rowIdentity) else {
+        guard
+          let identity = PlannerItineraryItemIdentity(
+            rowIdentity, libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable")
+        else {
           throw PlannerItineraryItemIntentFailure(
             message: "Planner could not identify this Itinerary's Item.")
         }
@@ -178,8 +192,12 @@
     typealias PerformResult = IntentResultContainer<PlannerItineraryItemEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
-      guard let identity = PlannerItineraryItemIdentity(item.id),
-        identity.itineraryIdentifier == itinerary.id
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      guard let identity = PlannerItineraryItemIdentity(item.id, store: plannerStore),
+        identity.itineraryIdentifier == boundItineraryIdentifier
       else {
         throw PlannerItineraryItemIntentFailure(
           message: "Choose an Item appearance from the selected Itinerary.")
@@ -211,8 +229,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      guard let identity = PlannerItineraryItemIdentity(item.id),
-        identity.itineraryIdentifier == itinerary.id
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      guard let identity = PlannerItineraryItemIdentity(item.id, store: plannerStore),
+        identity.itineraryIdentifier == boundItineraryIdentifier
       else {
         throw PlannerItineraryItemIntentFailure(
           message: "Choose an Item appearance from the selected Itinerary.")
@@ -253,12 +275,15 @@
   }
 
   private struct PlannerItineraryItemIdentity {
+    let libraryBinding: String
     let itineraryIdentifier: UUID
     let entryIdentifier: UUID
     let membershipIdentifier: UUID?
     let sourceIdentifier: UUID
 
-    var id: String {
+    var id: String { plannerEncodeIntentIdentifier(rawIdentifier, binding: libraryBinding) }
+
+    private var rawIdentifier: String {
       if let membershipIdentifier {
         return
           "v1/list/\(itineraryIdentifier)/\(entryIdentifier)/\(membershipIdentifier)/\(sourceIdentifier)"
@@ -275,8 +300,12 @@
       return .directItineraryItem(itineraryId: itineraryIdentifier, entryId: entryIdentifier)
     }
 
-    init?(_ identifier: String) {
-      let components = identifier.split(separator: "/", omittingEmptySubsequences: false)
+    @MainActor init?(_ identifier: String, store: SavedPlannerStore) {
+      guard let raw = try? plannerResolveIntentIdentifier(identifier, store: store) else {
+        return nil
+      }
+      libraryBinding = store.appIntentLibraryBinding ?? "unavailable"
+      let components = raw.split(separator: "/", omittingEmptySubsequences: false)
       guard components.first == "v1", components.count == 5 || components.count == 6,
         let itineraryIdentifier = UUID(uuidString: String(components[2])),
         let entryIdentifier = UUID(uuidString: String(components[3])),
@@ -296,7 +325,8 @@
       self.sourceIdentifier = sourceIdentifier
     }
 
-    init?(_ rowIdentity: PlannerRowIdentity) {
+    @MainActor init?(_ rowIdentity: PlannerRowIdentity, libraryBinding: String) {
+      self.libraryBinding = libraryBinding
       guard case .appearance(let source, let appearance) = rowIdentity, source.kind == .item else {
         return nil
       }

@@ -23,7 +23,8 @@ final class PlannerAssignedLabelIntentTests: XCTestCase {
     let reading = GetPlannerItemCategoriesIntent()
     reading.item = assignment.item
     let categories = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(categories.map(\.id)), [fixture.category.id, fixture.extraCategory.id])
+    XCTAssertEqual(
+      Set(categories.map(\.recordIdentifier)), [fixture.category.id, fixture.extraCategory.id])
     XCTAssertEqual(categories.map(\.name), ["Museums", "Museums"])
     XCTAssertEqual(categories.count, 2)
     let reopened = PlannerCore.Planner(configuration: fixture.configuration)
@@ -56,7 +57,7 @@ final class PlannerAssignedLabelIntentTests: XCTestCase {
     let reading = GetPlannerItemTagsIntent()
     reading.item = assignment.item
     let tags = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(Set(tags.map(\.id)), [fixture.tag.id, fixture.extraTag.id])
+    XCTAssertEqual(Set(tags.map(\.recordIdentifier)), [fixture.tag.id, fixture.extraTag.id])
     XCTAssertEqual(tags.map(\.name), ["rainy-day", "rainy-day"])
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("An archived owner's labels must remain readable without mutation.") }
@@ -99,13 +100,15 @@ final class PlannerAssignedLabelIntentTests: XCTestCase {
     guard case .exported(let before) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("The Itinerary and referenced Item must have distinct assignments.") }
     let categories = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(categories.map(\.id), [fixture.category.id])
+    XCTAssertEqual(categories.map(\.recordIdentifier), [fixture.category.id])
     XCTAssertEqual(categories.map(\.name), ["Culture · 文化"])
     let readItem = GetPlannerItemCategoriesIntent()
     readItem.item = assignItem.item
     let itemCategories = try await readItem.callAsFunction(donate: false)
-    XCTAssertEqual(Set(itemCategories.map(\.id)), [fixture.category.id, fixture.extraCategory.id])
-    XCTAssertEqual(itemCategories.first { $0.id == fixture.category.id }?.name, "Culture · 文化")
+    XCTAssertEqual(
+      Set(itemCategories.map(\.recordIdentifier)), [fixture.category.id, fixture.extraCategory.id])
+    XCTAssertEqual(
+      itemCategories.first { $0.recordIdentifier == fixture.category.id }?.name, "Culture · 文化")
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Reading either owner must preserve the complete saved planner.") }
     XCTAssertEqual(after, before)
@@ -118,7 +121,8 @@ final class PlannerAssignedLabelIntentTests: XCTestCase {
     XCTAssertTrue(empty.isEmpty)
     let retainedItemCategories = try await readItem.callAsFunction(donate: false)
     XCTAssertEqual(
-      Set(retainedItemCategories.map(\.id)), [fixture.category.id, fixture.extraCategory.id])
+      Set(retainedItemCategories.map(\.recordIdentifier)),
+      [fixture.category.id, fixture.extraCategory.id])
     XCTAssertFalse(fixture.store.recoveryBlocked)
   }
 
@@ -145,12 +149,12 @@ final class PlannerAssignedLabelIntentTests: XCTestCase {
     let reading = GetPlannerItineraryTagsIntent()
     reading.itinerary = assignment.itinerary
     let tags = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(tags.map(\.id), [fixture.extraTag.id])
+    XCTAssertEqual(tags.map(\.recordIdentifier), [fixture.extraTag.id])
     XCTAssertEqual(tags.map(\.name), ["Réservé · 予約済み"])
     let readItem = GetPlannerItemTagsIntent()
     readItem.item = .init(id: fixture.item.id, title: "Cached Item", done: false, archived: false)
     let itemTags = try await readItem.callAsFunction(donate: false)
-    XCTAssertEqual(itemTags.map(\.id), [fixture.tag.id])
+    XCTAssertEqual(itemTags.map(\.recordIdentifier), [fixture.tag.id])
     XCTAssertEqual(itemTags.map(\.name), ["rainy-day"])
     let reopened = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
@@ -345,22 +349,22 @@ private func readAssignedLabelIdentifiers(
     let reading = GetPlannerItemCategoriesIntent()
     reading.item = .init(id: owner.id, title: "Cached Item", done: false, archived: false)
     let values = try await reading.callAsFunction(donate: false)
-    return values.map(\.id)
+    return values.map(\.recordIdentifier)
   case (.item, .tag):
     let reading = GetPlannerItemTagsIntent()
     reading.item = .init(id: owner.id, title: "Cached Item", done: false, archived: false)
     let values = try await reading.callAsFunction(donate: false)
-    return values.map(\.id)
+    return values.map(\.recordIdentifier)
   case (.itinerary, .category):
     let reading = GetPlannerItineraryCategoriesIntent()
     reading.itinerary = .init(id: owner.id, title: "Cached Itinerary", archived: false)
     let values = try await reading.callAsFunction(donate: false)
-    return values.map(\.id)
+    return values.map(\.recordIdentifier)
   case (.itinerary, .tag):
     let reading = GetPlannerItineraryTagsIntent()
     reading.itinerary = .init(id: owner.id, title: "Cached Itinerary", archived: false)
     let values = try await reading.callAsFunction(donate: false)
-    return values.map(\.id)
+    return values.map(\.recordIdentifier)
   default: throw CancellationError()
   }
 }

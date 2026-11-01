@@ -3,10 +3,11 @@
   import Foundation
   import PlannerCore
 
-  struct PlannerScheduleEntity: AppEntity {
+  struct PlannerScheduleEntity: PlannerLibraryBoundEntity {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Schedule")
     static var defaultQuery: PlannerScheduleEntityQuery { PlannerScheduleEntityQuery() }
-    let id: UUID
+    let recordIdentifier: UUID
+    var libraryBinding: String
     @Property(title: "Title") var title: String
     @Property(title: "Source type") var sourceType: String
     @Property(title: "All day") var allDay: Bool
@@ -20,14 +21,15 @@
       DisplayRepresentation(title: "\(title)", subtitle: "\(sourceType) · \(when)")
     }
 
-    init(
+    @MainActor init(
       schedule: PlannerEntityReference, owner: PlannerEntityReference, title: String,
-      form: PlannerScheduleForm
+      form: PlannerScheduleForm, libraryBinding: String = ""
     ) throws {
       guard schedule.kind == .schedule else {
         throw PlannerScheduleIntentFailure(message: "Planner could not identify this Schedule.")
       }
-      self.id = schedule.id
+      self.recordIdentifier = schedule.id
+      self.libraryBinding = libraryBinding
       self.title = title
       switch owner.kind {
       case .item: self.sourceType = "Item"
@@ -76,19 +78,39 @@
     @Dependency var plannerStore: SavedPlannerStore
 
     @MainActor func entities(for identifiers: [UUID]) async throws -> [PlannerScheduleEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let binding = plannerStore.appIntentLibraryBinding ?? "unavailable"
+      return try await entities(
+        for: identifiers.map { plannerEncodeIntentIdentifier($0.uuidString, binding: binding) })
+    }
+
+    @MainActor func entities(for identifiers: [String]) async throws -> [PlannerScheduleEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let sourceIdentifiers = try identifiers.compactMap {
+        UUID(uuidString: try plannerResolveIntentIdentifier($0, store: plannerStore))
+      }
       let entities = try await loadPlannerScheduleEntities(
-        store: plannerStore, selection: .identifiers(Set(identifiers)))
-      var resolved: [UUID: PlannerScheduleEntity] = [:]
-      for entity in entities { resolved[entity.id] = entity }
+        store: plannerStore, selection: .identifiers(Set(sourceIdentifiers)))
+      let resolved = Dictionary(uniqueKeysWithValues: entities.map { ($0.recordIdentifier, $0) })
       var seenIdentifiers: Set<UUID> = []
-      return identifiers.filter { seenIdentifiers.insert($0).inserted }.compactMap { resolved[$0] }
+      return sourceIdentifiers.filter { seenIdentifiers.insert($0).inserted }.compactMap {
+        resolved[$0]
+      }
     }
 
     @MainActor func suggestedEntities() async throws -> [PlannerScheduleEntity] {
-      try await loadPlannerScheduleEntities(store: plannerStore, selection: .all)
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      return try await loadPlannerScheduleEntities(store: plannerStore, selection: .all)
     }
 
     @MainActor func entities(matching string: String) async throws -> [PlannerScheduleEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let entities = try await loadPlannerScheduleEntities(store: plannerStore, selection: .all)
       return entities.filter { string.isEmpty || $0.title.localizedStandardContains(string) }
     }
@@ -98,6 +120,8 @@
     @Dependency var plannerStore: SavedPlannerStore
 
     @MainActor func results() async throws -> [PlannerScheduleEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let query = PlannerScheduleEntityQuery()
       query.plannerStore = plannerStore
       return try await query.suggestedEntities().filter { !$0.allDay }
@@ -117,11 +141,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
       try Task.checkCancellation()
       let source: PlannerScheduleSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .schedule, id: schedule.id)))
+        session: session,
+        request: .source(.init(kind: .schedule, id: boundScheduleIdentifier)))
       {
       case .source(.schedule(let current)): source = current
       case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
@@ -172,11 +200,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
       try Task.checkCancellation()
       let source: PlannerScheduleSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .schedule, id: schedule.id)))
+        session: session,
+        request: .source(.init(kind: .schedule, id: boundScheduleIdentifier)))
       {
       case .source(.schedule(let current)): source = current
       case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
@@ -223,7 +255,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      let result = try await plannerStore.executeAppIntent(.removeSchedule(scheduleId: schedule.id))
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
+      let result = try await plannerStore.executeAppIntent(
+        .removeSchedule(scheduleId: boundScheduleIdentifier))
       switch result.outcome {
       case .rejected(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
       case .unverified:
@@ -257,8 +294,12 @@
     typealias PerformResult = IntentResultContainer<[PlannerScheduleEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let entities = try await loadPlannerScheduleEntities(
-        store: plannerStore, selection: .owner(.init(kind: .item, id: item.id)))
+        store: plannerStore, selection: .owner(.init(kind: .item, id: boundItemIdentifier)))
       return .result(value: entities)
     }
   }
@@ -276,8 +317,13 @@
     typealias PerformResult = IntentResultContainer<[PlannerScheduleEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let entities = try await loadPlannerScheduleEntities(
-        store: plannerStore, selection: .owner(.init(kind: .itinerary, id: itinerary.id)))
+        store: plannerStore,
+        selection: .owner(.init(kind: .itinerary, id: boundItineraryIdentifier)))
       return .result(value: entities)
     }
   }
@@ -293,9 +339,13 @@
     typealias PerformResult = IntentResultContainer<PlannerScheduleEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
       let query = PlannerScheduleEntityQuery()
       query.plannerStore = plannerStore
-      let entities = try await query.entities(for: [schedule.id])
+      let entities = try await query.entities(for: [boundScheduleIdentifier])
       guard let current = entities.first else {
         throw PlannerScheduleIntentFailure(
           message: "This Schedule is no longer available in Planner's current data.")
@@ -317,11 +367,18 @@
     typealias PerformResult = IntentResultContainer<PlannerItemEntity?, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
-      let owner = try await loadPlannerScheduleOwner(store: plannerStore, identifier: schedule.id)
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
+      let owner = try await loadPlannerScheduleOwner(
+        store: plannerStore, identifier: boundScheduleIdentifier)
       guard case .item(let source) = owner else {
         return .result(value: Optional<PlannerItemEntity>.none)
       }
-      return .result(value: try PlannerItemEntity(source: source))
+      return .result(
+        value: try PlannerItemEntity(
+          source: source, libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"))
     }
   }
 
@@ -339,7 +396,12 @@
     typealias PerformResult = IntentResultContainer<PlannerItineraryEntity?, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
-      let owner = try await loadPlannerScheduleOwner(store: plannerStore, identifier: schedule.id)
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundScheduleIdentifier = try schedule.sourceIdentifier(in: plannerStore)
+      let owner = try await loadPlannerScheduleOwner(
+        store: plannerStore, identifier: boundScheduleIdentifier)
       guard case .itinerary(let source) = owner else {
         return .result(value: Optional<PlannerItineraryEntity>.none)
       }
@@ -349,7 +411,8 @@
       }
       return .result(
         value: PlannerItineraryEntity(
-          id: source.source.id, title: source.content.title, archived: archived))
+          id: source.source.id, title: source.content.title, archived: archived,
+          libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"))
     }
   }
 
@@ -369,6 +432,8 @@
     typealias PerformResult = IntentResultContainer<[PlannerScheduleEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
       try Task.checkCancellation()
       let query = PlannerCalendarQuery(
@@ -396,7 +461,8 @@
           for entry in window.rows {
             entities.append(
               try .init(
-                schedule: entry.schedule, owner: entry.source, title: entry.title, form: entry.form)
+                schedule: entry.schedule, owner: entry.source, title: entry.title, form: entry.form,
+                libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session))
             )
           }
           offset += Int64(window.rows.count)
@@ -496,7 +562,8 @@
           entities.append(
             try .init(
               schedule: source.source, owner: source.content.source, title: row.title,
-              form: source.content.form))
+              form: source.content.form,
+              libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
         case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
         default:
           throw PlannerScheduleIntentFailure(message: "Planner could not read this Schedule.")

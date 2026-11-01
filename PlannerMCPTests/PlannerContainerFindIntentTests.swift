@@ -44,13 +44,13 @@ final class PlannerContainerFindIntentTests: XCTestCase {
           find.text = "Recovery searchable"
           let matches: [PlannerListEntity] = try await find.callAsFunction(donate: false)
           XCTAssertEqual(matches.first?.name, "Recovery searchable Plan")
-          return matches.map(\.id)
+          return matches.map(\.recordIdentifier)
         }
         let find = FindPlannerItinerariesIntent()
         find.text = "Recovery searchable"
         let matches: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
         XCTAssertEqual(matches.first?.title, "Recovery searchable Plan")
-        return matches.map(\.id)
+        return matches.map(\.recordIdentifier)
       }
       let matches = try await findIdentifiers()
       XCTAssertEqual(matches, [source.id])
@@ -122,10 +122,10 @@ final class PlannerContainerFindIntentTests: XCTestCase {
       func readMatches() async throws -> [(identifier: UUID, title: String, archived: Bool)] {
         if kind == .list {
           let result: [PlannerListEntity] = try await lists.callAsFunction(donate: false)
-          return result.map { ($0.id, $0.name, $0.archived) }
+          return result.map { ($0.recordIdentifier, $0.name, $0.archived) }
         }
         let result: [PlannerItineraryEntity] = try await itineraries.callAsFunction(donate: false)
-        return result.map { ($0.id, $0.title, $0.archived) }
+        return result.map { ($0.recordIdentifier, $0.title, $0.archived) }
       }
       guard case .exported(let before) = await planner.exportData(session: session) else {
         return XCTFail("Record all 65 plans before paged native finding.")
@@ -169,7 +169,9 @@ final class PlannerContainerFindIntentTests: XCTestCase {
         case .exported(let changed) = await writer.exportData(session: writerSession)
       else { return XCTFail("The second writer must save the rename and archive.") }
       let expected =
-        containers.reversed().filter { $0.id != movedTitle.id }.map(\.id) + [movedTitle.id]
+        containers.reversed().filter { $0.id != movedTitle.id }.map(\.id) + [
+          movedTitle.id
+        ]
       let refreshed = try await readMatches()
       XCTAssertEqual(refreshed.map(\.identifier), expected)
       XCTAssertEqual(refreshed.last?.title, "A changed Plan")
@@ -253,7 +255,8 @@ final class PlannerContainerFindIntentTests: XCTestCase {
     else { return XCTFail("Record Itinerary routes, completion and bookings before finding.") }
     let find = FindPlannerItinerariesIntent()
     let defaults: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(defaults.map(\.id), [4, 0, 6, 2, 3, 5, 1].map { fixture.containers[$0].id })
+    XCTAssertEqual(
+      defaults.map(\.recordIdentifier), [4, 0, 6, 2, 3, 5, 1].map { fixture.containers[$0].id })
     let cases: [(PlannerCatalogFindSort, PlannerCatalogFindDirection, [Int])] = [
       (.title, .ascending, [4, 0, 6, 2, 3, 5, 1]),
       (.title, .descending, [1, 5, 3, 2, 6, 0, 4]),
@@ -268,7 +271,7 @@ final class PlannerContainerFindIntentTests: XCTestCase {
       find.sort = mode
       find.direction = direction
       let matches: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
-      XCTAssertEqual(matches.map(\.id), positions.map { fixture.containers[$0].id })
+      XCTAssertEqual(matches.map(\.recordIdentifier), positions.map { fixture.containers[$0].id })
     }
     guard
       case .exported(let afterSorts) = await fixture.planner.exportData(session: fixture.session)
@@ -286,13 +289,13 @@ final class PlannerContainerFindIntentTests: XCTestCase {
     find.direction = .ascending
     find.text = "PARTIAL"
     let partial: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(partial.map(\.id), [1, 5].map { fixture.containers[$0].id })
+    XCTAssertEqual(partial.map(\.recordIdentifier), [1, 5].map { fixture.containers[$0].id })
     find.archive = .active
     let active: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(active.map(\.id), [fixture.containers[5].id])
+    XCTAssertEqual(active.map(\.recordIdentifier), [fixture.containers[5].id])
     find.archive = .archived
     let archived: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(archived.map(\.id), [fixture.containers[1].id])
+    XCTAssertEqual(archived.map(\.recordIdentifier), [fixture.containers[1].id])
     XCTAssertEqual(archived.first?.archived, true)
     find.text = "No matching Itinerary"
     let empty: [PlannerItineraryEntity] = try await find.callAsFunction(donate: false)
@@ -322,13 +325,13 @@ final class PlannerContainerFindIntentTests: XCTestCase {
       find.sort = mode
       find.direction = direction
       let matches: [PlannerListEntity] = try await find.callAsFunction(donate: false)
-      XCTAssertEqual(matches.map(\.id), positions.map { fixture.containers[$0].id })
+      XCTAssertEqual(matches.map(\.recordIdentifier), positions.map { fixture.containers[$0].id })
     }
     find.sort = .fullEstimate
     find.direction = .ascending
     find.text = "PARTIAL"
     let partial: [PlannerListEntity] = try await find.callAsFunction(donate: false)
-    XCTAssertEqual(partial.map(\.id), [1, 5].map { fixture.containers[$0].id })
+    XCTAssertEqual(partial.map(\.recordIdentifier), [1, 5].map { fixture.containers[$0].id })
     guard case .exported(let after) = await fixture.planner.exportData(session: fixture.session)
     else { return XCTFail("Sorted List finding must preserve all saved source and context data.") }
     XCTAssertEqual(after, before)
@@ -349,7 +352,8 @@ final class PlannerContainerFindIntentTests: XCTestCase {
       case .applied(_, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: .setArchive(source: .init(kind: .list, id: lists[1].id), archived: true))
+          command: .setArchive(
+            source: .init(kind: .list, id: lists[1].recordIdentifier), archived: true))
       )
       .outcome,
       case .exported(let before) = await planner.exportData(session: session)

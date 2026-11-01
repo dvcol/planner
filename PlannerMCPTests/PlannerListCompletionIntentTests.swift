@@ -157,7 +157,7 @@ final class PlannerListCompletionIntentTests: XCTestCase {
     adding.item = otherItem
     let _: Void = try await adding.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let listReference = PlannerEntityReference(kind: .list, id: list.id)
+    let listReference = PlannerEntityReference(kind: .list, id: list.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.list(let before)) = await planner.read(
         session: session, request: .source(listReference)),
@@ -179,11 +179,11 @@ final class PlannerListCompletionIntentTests: XCTestCase {
       }
     }
     await requireRejected(item: item, list: otherList)
-    for unavailable in [UUID(), item.id] {
+    for unavailable in [UUID(), item.recordIdentifier] {
       await requireRejected(
         item: item, list: .init(id: unavailable, name: "Unavailable", archived: false))
     }
-    for unavailable in [UUID(), list.id] {
+    for unavailable in [UUID(), list.recordIdentifier] {
       await requireRejected(
         item: .init(id: unavailable, title: "Unavailable", done: false, archived: false), list: list
       )
@@ -192,7 +192,7 @@ final class PlannerListCompletionIntentTests: XCTestCase {
       case .source(.list(let afterInvalid)) = await planner.read(
         session: session, request: .source(listReference)),
       case .source(.item(let unchanged)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("Rejected requests must preserve original data.") }
     XCTAssertEqual(afterInvalid.references, before.references)
     XCTAssertEqual(afterInvalid.updatedAt, before.updatedAt)
@@ -202,7 +202,7 @@ final class PlannerListCompletionIntentTests: XCTestCase {
       case .applied(_, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: .removeMembership(listId: list.id, membershipId: identifier))
+          command: .removeMembership(listId: list.recordIdentifier, membershipId: identifier))
       ).outcome
     else {
       return XCTFail("The selected association must be removed before testing its cached pair.")
@@ -219,14 +219,14 @@ final class PlannerListCompletionIntentTests: XCTestCase {
         ).outcome
       else { throw CancellationError() }
     }
-    try await delete(.init(kind: .list, id: otherList.id))
+    try await delete(.init(kind: .list, id: otherList.recordIdentifier))
     await requireRejected(item: item, list: otherList)
     guard
       case .source(.item(let afterAbsentPair)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("Removing a membership must preserve its shared Item.") }
     XCTAssertEqual(afterAbsentPair.state.globalDone, false)
-    try await delete(.init(kind: .item, id: item.id))
+    try await delete(.init(kind: .item, id: item.recordIdentifier))
     await requireRejected(item: item, list: list)
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
@@ -234,7 +234,8 @@ final class PlannerListCompletionIntentTests: XCTestCase {
         session: reopenedSession, request: .source(listReference)),
       case .appearance(let otherState) = await reopened.read(
         session: reopenedSession,
-        request: .appearance(.listMembership(listId: list.id, membershipId: otherIdentifier))),
+        request: .appearance(
+          .listMembership(listId: list.recordIdentifier, membershipId: otherIdentifier))),
       case .snapshot(let items) = await reopened.query(
         .init(session: reopenedSession, request: .items(.init(completion: .all, archive: .all)))),
       case .snapshot(let lists) = await reopened.query(
@@ -244,13 +245,14 @@ final class PlannerListCompletionIntentTests: XCTestCase {
       retained.references,
       [
         .membership(
-          id: otherIdentifier, list: listReference, item: .init(kind: .item, id: otherItem.id))
+          id: otherIdentifier, list: listReference,
+          item: .init(kind: .item, id: otherItem.recordIdentifier))
       ])
     XCTAssertEqual(retained.progress.doneCount, 0)
     XCTAssertFalse(otherState.globalDone)
     XCTAssertFalse(otherState.localDone)
     XCTAssertFalse(otherState.effectiveDone)
-    XCTAssertEqual(items.rows, [.source(.init(kind: .item, id: otherItem.id))])
+    XCTAssertEqual(items.rows, [.source(.init(kind: .item, id: otherItem.recordIdentifier))])
     XCTAssertEqual(lists.rows, [.source(listReference)])
     XCTAssertFalse(store.recoveryBlocked)
     XCTAssertFalse(store.isSaving)
@@ -270,7 +272,7 @@ final class PlannerListCompletionIntentTests: XCTestCase {
     adding.list = list
     let _: Void = try await adding.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let reference = PlannerEntityReference(kind: .list, id: list.id)
+    let reference = PlannerEntityReference(kind: .list, id: list.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.list(let before)) = await planner.read(
         session: session, request: .source(reference)),
@@ -296,7 +298,8 @@ final class PlannerListCompletionIntentTests: XCTestCase {
         session: reopenedSession, request: .source(reference)),
       case .appearance(let current) = await reopened.read(
         session: reopenedSession,
-        request: .appearance(.listMembership(listId: list.id, membershipId: identifier)))
+        request: .appearance(
+          .listMembership(listId: list.recordIdentifier, membershipId: identifier)))
     else { return XCTFail("The unchanged original context must survive reopening.") }
     XCTAssertEqual(after.references, before.references)
     XCTAssertEqual(after.fieldHashes, before.fieldHashes)
@@ -326,8 +329,8 @@ final class PlannerListCompletionIntentTests: XCTestCase {
     adding.list = list
     let _: Void = try await adding.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let itemReference = PlannerEntityReference(kind: .item, id: item.id)
-    let listReference = PlannerEntityReference(kind: .list, id: list.id)
+    let itemReference = PlannerEntityReference(kind: .item, id: item.recordIdentifier)
+    let listReference = PlannerEntityReference(kind: .list, id: list.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.item(let beforeItem)) = await planner.read(
         session: session, request: .source(itemReference)),
@@ -335,7 +338,8 @@ final class PlannerListCompletionIntentTests: XCTestCase {
         session: session, request: .source(listReference)),
       case .membership(let identifier, _, _)? = beforeList.references.first
     else { return XCTFail("The durable original sources must exist before the recovery fault.") }
-    let appearance = PlannerAppearance.listMembership(listId: list.id, membershipId: identifier)
+    let appearance = PlannerAppearance.listMembership(
+      listId: list.recordIdentifier, membershipId: identifier)
     let obstruction = IntentRecoverySaveObstruction(configuration: configuration)
     let observer = NotificationCenter.default.addObserver(
       forName: ModelContext.didSave, object: nil, queue: nil

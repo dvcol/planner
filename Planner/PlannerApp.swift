@@ -9,6 +9,13 @@ import SwiftUI
   @main
 #endif
 struct PlannerApp: App {
+  #if os(iOS)
+    @UIApplicationDelegateAdaptor(PlannerSharingApplicationDelegate.self) private
+      var sharingDelegate
+  #else
+    @NSApplicationDelegateAdaptor(PlannerSharingApplicationDelegate.self) private
+      var sharingDelegate
+  #endif
   @State private var savedPlanner: SavedPlannerStore
   @State private var planOpening: SavedPlanOpeningCoordinator
   @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())
@@ -53,6 +60,12 @@ struct PlannerApp: App {
         .environment(previews)
         .environment(addressPreviews)
         .environment(mapsPreviews)
+        .task(id: PlannerSharingInvitations.shared.revision) {
+          await savedPlanner.open()
+          while let metadata = PlannerSharingInvitations.shared.consume() {
+            await savedPlanner.acceptSharingInvitation(metadata)
+          }
+        }
       }
     } defaultValue: {
       UUID()

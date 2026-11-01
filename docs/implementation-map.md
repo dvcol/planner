@@ -29,8 +29,15 @@ workflows and recorded limitations.
   affected-target checks, and investigate reproducible defects. Do not fill time
   with broader matrices or repeat normal iCloud checks without a relevant
   change.
-- Planner data uses local-authoritative storage and the user's private iCloud
-  database only. No public/shared/developer-funded cloud fallback.
+- Planner data uses local-authoritative storage and user-owned iCloud storage.
+  Explicitly accepted libraries use CloudKit sharing against the owner's private
+  quota. No public or developer-funded cloud fallback is permitted.
+- The accepted 1 November follow-up adds optional Whole library/Selected Lists
+  sharing and corrects Calendar scrolling axes, weekends and the live clock.
+  [Calendar build 6](prototypes/native-calendar-scroll-axes.md) is Testing in the
+  Personal internal TestFlight group. [Library sharing](prototypes/native-library-sharing.md)
+  has local implementation and focused tests; signed two-account acceptance and
+  schema deployment remain open independently of that Calendar delivery.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.
@@ -111,8 +118,9 @@ rather than silently choosing or expanding this map.
 - More iCloud off/on, conflict, interruption and quota stress qualification:
   currently deferred and unqualified; normal physical sync evidence is retained
   without promising untested outcomes.
-- Apple Calendar export, embedded Google Maps/API-key billing and shared
-  planning retain their existing exclusions. App Store/unlisted distribution
+- Apple Calendar export and embedded Google Maps/API-key billing retain their
+  existing exclusions. Optional library sharing is the explicitly accepted
+  follow-up above. App Store/unlisted distribution
   follows the core acceptance handoff.
 
 ## Remaining implementation and acceptance

@@ -16,8 +16,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let dialog = try await resetPlannerEstimate(
-        source: .init(kind: .item, id: item.id), store: plannerStore)
+        source: .init(kind: .item, id: boundItemIdentifier), store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -35,8 +39,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let dialog = try await resetPlannerEstimate(
-        source: .init(kind: .list, id: list.id), store: plannerStore)
+        source: .init(kind: .list, id: boundListIdentifier), store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -54,8 +62,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await resetPlannerEstimate(
-        source: .init(kind: .itinerary, id: itinerary.id), store: plannerStore)
+        source: .init(kind: .itinerary, id: boundItineraryIdentifier), store: plannerStore)
       return .result(dialog: dialog)
     }
   }

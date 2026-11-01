@@ -329,7 +329,7 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
     adding.list = sourceList
     let _: Void = try await adding.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let sourceReference = PlannerEntityReference(kind: .list, id: sourceList.id)
+    let sourceReference = PlannerEntityReference(kind: .list, id: sourceList.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.list(let before)) = await planner.read(
         session: session, request: .source(sourceReference))
@@ -363,7 +363,7 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
       }
     }
     await rejectMove(item: item, from: sourceList, to: sourceList)
-    for identifier in [UUID(), item.id] {
+    for identifier in [UUID(), item.recordIdentifier] {
       let unavailable = PlannerListEntity(id: identifier, name: "Unavailable", archived: false)
       await rejectMove(item: item, from: sourceList, to: unavailable)
       await rejectMove(item: item, from: unavailable, to: destinationList)
@@ -378,7 +378,8 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
       case .source(.list(let afterInvalid)) = await planner.read(
         session: session, request: .source(sourceReference)),
       case .source(.list(let untouchedDestination)) = await planner.read(
-        session: session, request: .source(.init(kind: .list, id: destinationList.id)))
+        session: session, request: .source(.init(kind: .list, id: destinationList.recordIdentifier))
+      )
     else {
       return XCTFail("Rejected commands must leave the original source/destination readable.")
     }
@@ -397,10 +398,10 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
         ).outcome
       else { throw CancellationError() }
     }
-    try await delete(.init(kind: .list, id: destinationList.id))
+    try await delete(.init(kind: .list, id: destinationList.recordIdentifier))
     await rejectMove(item: item, from: sourceList, to: destinationList)
     await rejectRemoval(item: item, list: destinationList)
-    try await delete(.init(kind: .item, id: item.id))
+    try await delete(.init(kind: .item, id: item.recordIdentifier))
     await rejectRemoval(item: item, list: sourceList)
     await rejectMove(item: item, from: sourceList, to: destinationList)
     let reopened = PlannerCore.Planner(configuration: configuration)
@@ -437,8 +438,9 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
     adding.list = sourceList
     let _: Void = try await adding.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let sourceReference = PlannerEntityReference(kind: .list, id: sourceList.id)
-    let destinationReference = PlannerEntityReference(kind: .list, id: destinationList.id)
+    let sourceReference = PlannerEntityReference(kind: .list, id: sourceList.recordIdentifier)
+    let destinationReference = PlannerEntityReference(
+      kind: .list, id: destinationList.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.list(let before)) = await planner.read(
         session: session, request: .source(sourceReference))
@@ -477,7 +479,7 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
       case .source(.list(let destination)) = await reopened.read(
         session: reopenedSession, request: .source(destinationReference)),
       case .source(.item(let retained)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .item, id: item.id)))
+        session: reopenedSession, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("Both original Lists and the Item must survive cancelled actions.") }
     XCTAssertEqual(after.references, before.references)
     XCTAssertEqual(after.references.count, 1)
@@ -510,8 +512,9 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
       adding.list = sourceList
       let _: Void = try await adding.callAsFunction(donate: false)
       let planner = PlannerCore.Planner(configuration: configuration)
-      let sourceReference = PlannerEntityReference(kind: .list, id: sourceList.id)
-      let destinationReference = PlannerEntityReference(kind: .list, id: destinationList.id)
+      let sourceReference = PlannerEntityReference(kind: .list, id: sourceList.recordIdentifier)
+      let destinationReference = PlannerEntityReference(
+        kind: .list, id: destinationList.recordIdentifier)
       guard case .ready(let session) = await planner.bootstrap(),
         case .source(.list(let original)) = await planner.read(
           session: session, request: .source(sourceReference)),
@@ -521,7 +524,8 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
             operationId: UUID(), session: session,
             command: .setCompletion(
               scope: .appearance(
-                .listMembership(listId: sourceList.id, membershipId: originalIdentifier)),
+                .listMembership(
+                  listId: sourceList.recordIdentifier, membershipId: originalIdentifier)),
               done: true))
         ).outcome
       else { return XCTFail("The original local Done membership must exist before the fault.") }
@@ -564,7 +568,7 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
         case .source(.list(let appliedDestination)) = await reopened.read(
           session: reopenedSession, request: .source(destinationReference)),
         case .source(.item(let retained)) = await reopened.read(
-          session: reopenedSession, request: .source(.init(kind: .item, id: item.id)))
+          session: reopenedSession, request: .source(.init(kind: .item, id: item.recordIdentifier)))
       else {
         return XCTFail(
           "Applied organization must remain durable despite missing recovery acknowledgment.")
@@ -580,10 +584,10 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
           case .appearance(let current) = await reopened.read(
             session: reopenedSession,
             request: .appearance(
-              .listMembership(listId: destinationList.id, membershipId: identifier)))
+              .listMembership(listId: destinationList.recordIdentifier, membershipId: identifier)))
         else { return XCTFail("A committed Move must retain its new destination membership.") }
         XCTAssertEqual(owner, destinationReference)
-        XCTAssertEqual(source, .init(kind: .item, id: item.id))
+        XCTAssertEqual(source, .init(kind: .item, id: item.recordIdentifier))
         XCTAssertNotEqual(identifier, originalIdentifier)
         XCTAssertFalse(current.localDone)
         XCTAssertFalse(current.effectiveDone)
@@ -614,7 +618,7 @@ final class PlannerListOrganizationIntentTests: XCTestCase {
         case .appearance(let readded) = await reopened.read(
           session: reopenedSession,
           request: .appearance(
-            .listMembership(listId: sourceList.id, membershipId: readdedIdentifier)))
+            .listMembership(listId: sourceList.recordIdentifier, membershipId: readdedIdentifier)))
       else {
         return XCTFail("A later explicit re-add must create a fresh ordinary Todo membership.")
       }

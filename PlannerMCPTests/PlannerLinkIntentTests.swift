@@ -27,11 +27,14 @@ final class PlannerLinkIntentTests: XCTestCase {
     let current = try await readLinkIntentSources(fixture)
     let savedItemLink = try XCTUnwrap(current.item.content.links.last)
     let savedItineraryLink = try XCTUnwrap(current.itinerary.content.links.last)
+    let libraryPrefix = "library2|\(try XCTUnwrap(fixture.store.appIntentLibraryBinding))|"
     XCTAssertEqual(
-      itemLink.id, "item:\(fixture.item.id.uuidString):\(savedItemLink.linkId.uuidString)")
+      itemLink.id,
+      libraryPrefix + "item:\(fixture.item.id.uuidString):\(savedItemLink.linkId.uuidString)")
     XCTAssertEqual(
       itineraryLink.id,
-      "itinerary:\(fixture.itinerary.id.uuidString):\(savedItineraryLink.linkId.uuidString)")
+      libraryPrefix
+        + "itinerary:\(fixture.itinerary.id.uuidString):\(savedItineraryLink.linkId.uuidString)")
     XCTAssertEqual(itemLink.originalURL, originalURL)
     XCTAssertEqual(itineraryLink.originalURL, originalURL)
     XCTAssertEqual(itemLink.url.absoluteString, originalURL)
@@ -238,7 +241,9 @@ final class PlannerLinkIntentTests: XCTestCase {
       XCTAssertEqual(expected.count, 1)
       XCTAssertEqual(
         added.id,
-        "\(owner.kind.rawValue):\(owner.id.uuidString):\(try XCTUnwrap(expected.first).uuidString)")
+        try expectedPlannerIntentIdentifier(
+          "\(owner.kind.rawValue):\(owner.id.uuidString):\(try XCTUnwrap(expected.first).uuidString)",
+          store: fixture.store))
       let beforeRepair = try await readLinkIntentSources(fixture)
       let links = try await readLinksUsingIntent(owner)
       XCTAssertEqual(links.last?.id, added.id)
@@ -287,8 +292,9 @@ final class PlannerLinkIntentTests: XCTestCase {
     XCTAssertEqual(Set(links.map(\.id)).count, 3)
     XCTAssertEqual(
       links.map(\.id),
-      before.content.links.map {
-        "item:\(fixture.item.id.uuidString):\($0.linkId.uuidString)"
+      try before.content.links.map {
+        try expectedPlannerIntentIdentifier(
+          "item:\(fixture.item.id.uuidString):\($0.linkId.uuidString)", store: fixture.store)
       })
     let reopened = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
@@ -329,7 +335,9 @@ final class PlannerLinkIntentTests: XCTestCase {
     XCTAssertEqual(links[0].position, 1)
     XCTAssertEqual(
       links[0].id,
-      "itinerary:\(fixture.itinerary.id.uuidString):\(before.content.links[0].linkId.uuidString)")
+      try expectedPlannerIntentIdentifier(
+        "itinerary:\(fixture.itinerary.id.uuidString):\(before.content.links[0].linkId.uuidString)",
+        store: fixture.store))
     let reopened = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let after)) = await reopened.read(
@@ -370,7 +378,10 @@ final class PlannerLinkIntentTests: XCTestCase {
       links[0].url.absoluteString,
       "https://example.com/caf%C3%A9?note=%C3%A9t%C3%A9&Ref=%2f#entr%C3%A9e")
     XCTAssertEqual(links.map(\.label), ["", nil, "  Réservé  "])
-    XCTAssertEqual(links[0].id, "item:\(fixture.item.id.uuidString):\(saved[0].linkId.uuidString)")
+    XCTAssertEqual(
+      links[0].id,
+      try expectedPlannerIntentIdentifier(
+        "item:\(fixture.item.id.uuidString):\(saved[0].linkId.uuidString)", store: fixture.store))
     try await assertLinkIntentSourcesUnchanged(current, fixture: fixture)
   }
 

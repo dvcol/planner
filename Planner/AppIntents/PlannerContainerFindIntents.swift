@@ -68,6 +68,8 @@
     typealias PerformResult = IntentResultContainer<[PlannerListEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let query = PlannerListEntityQuery()
       query.plannerStore = plannerStore
       let lists = try await query.loadLists(
@@ -93,6 +95,8 @@
     typealias PerformResult = IntentResultContainer<[PlannerItineraryEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let query = PlannerItineraryEntityQuery()
       query.plannerStore = plannerStore
       let itineraries = try await query.loadItineraries(

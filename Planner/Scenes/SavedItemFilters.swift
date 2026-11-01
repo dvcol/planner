@@ -232,7 +232,7 @@ private struct SavedItemFilterForm: View {
         }
         Section("Lists") {
           NavigationLink {
-            SavedFilterListPicker(store: store, selection: $filters.listIdentifiers)
+            SavedListSelectionView(store: store, selection: $filters.listIdentifiers)
           } label: {
             LabeledContent("In Lists", value: selectionSummary(filters.listIdentifiers))
           }
@@ -291,10 +291,12 @@ private struct SavedItemFilterForm: View {
   }
 }
 
-private struct SavedFilterListPicker: View {
+struct SavedListSelectionView: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   @Binding var selection: Set<UUID>
+  var title = "Lists"
+  var identifierPrefix = "saved.filters"
   @State private var window: SavedItemWindow?
   @State private var loadedIdentity: SavedItemWindowIdentity?
   @State private var loadingFailure: String?
@@ -326,12 +328,12 @@ private struct SavedFilterListPicker: View {
             }
             .accessibilityLabel(row.title)
             .accessibilityHint(row.archived == true ? "Archived List" : "Active List")
-            .accessibilityIdentifier("saved.filters.list.\(source.id.uuidString)")
+            .accessibilityIdentifier("\(identifierPrefix).list.\(source.id.uuidString)")
           }
         }
       }
     }
-    .accessibilityIdentifier("saved.filters.list.choices")
+    .accessibilityIdentifier("\(identifierPrefix).list.choices")
     .overlay {
       if let loadingFailure = catalogFailure {
         ContentUnavailableView {
@@ -349,11 +351,11 @@ private struct SavedFilterListPicker: View {
           description: Text("Create a List to filter its Items."))
       }
     }
-    .navigationTitle("Lists")
+    .navigationTitle(title)
     .toolbar {
       ToolbarItem(placement: .confirmationAction) {
         Button("Done") { dismiss() }
-          .accessibilityIdentifier("saved.filters.lists.done")
+          .accessibilityIdentifier("\(identifierPrefix).lists.done")
       }
     }
     .task(id: loadIdentity) { await loadLists() }

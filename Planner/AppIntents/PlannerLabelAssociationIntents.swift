@@ -13,11 +13,17 @@
     typealias PerformResult = IntentResultContainer<[PlannerCategoryEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let labels = try await readPlannerAssignedLabels(
-        owner: .init(kind: .item, id: item.id), store: plannerStore)
+        owner: .init(kind: .item, id: boundItemIdentifier), store: plannerStore)
       return .result(
         value: labels.filter { $0.reference.kind == .category }.map {
-          PlannerCategoryEntity(id: $0.reference.id, name: $0.name)
+          PlannerCategoryEntity(
+            id: $0.reference.id, name: $0.name,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable")
         })
     }
   }
@@ -32,11 +38,17 @@
     typealias PerformResult = IntentResultContainer<[PlannerTagEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let labels = try await readPlannerAssignedLabels(
-        owner: .init(kind: .item, id: item.id), store: plannerStore)
+        owner: .init(kind: .item, id: boundItemIdentifier), store: plannerStore)
       return .result(
         value: labels.filter { $0.reference.kind == .tag }.map {
-          PlannerTagEntity(id: $0.reference.id, name: $0.name)
+          PlannerTagEntity(
+            id: $0.reference.id, name: $0.name,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable")
         })
     }
   }
@@ -51,11 +63,17 @@
     typealias PerformResult = IntentResultContainer<[PlannerCategoryEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let labels = try await readPlannerAssignedLabels(
-        owner: .init(kind: .itinerary, id: itinerary.id), store: plannerStore)
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier), store: plannerStore)
       return .result(
         value: labels.filter { $0.reference.kind == .category }.map {
-          PlannerCategoryEntity(id: $0.reference.id, name: $0.name)
+          PlannerCategoryEntity(
+            id: $0.reference.id, name: $0.name,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable")
         })
     }
   }
@@ -70,11 +88,17 @@
     typealias PerformResult = IntentResultContainer<[PlannerTagEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let labels = try await readPlannerAssignedLabels(
-        owner: .init(kind: .itinerary, id: itinerary.id), store: plannerStore)
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier), store: plannerStore)
       return .result(
         value: labels.filter { $0.reference.kind == .tag }.map {
-          PlannerTagEntity(id: $0.reference.id, name: $0.name)
+          PlannerTagEntity(
+            id: $0.reference.id, name: $0.name,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable")
         })
     }
   }
@@ -93,8 +117,14 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
+      let boundCategoryIdentifier = try category.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerLabelAssignment(
-        owner: .init(kind: .item, id: item.id), label: .init(kind: .category, id: category.id),
+        owner: .init(kind: .item, id: boundItemIdentifier),
+        label: .init(kind: .category, id: boundCategoryIdentifier),
         assigned: assigned, store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -114,8 +144,14 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
+      let boundTagIdentifier = try tag.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerLabelAssignment(
-        owner: .init(kind: .item, id: item.id), label: .init(kind: .tag, id: tag.id),
+        owner: .init(kind: .item, id: boundItemIdentifier),
+        label: .init(kind: .tag, id: boundTagIdentifier),
         assigned: assigned, store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -136,9 +172,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      let boundCategoryIdentifier = try category.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerLabelAssignment(
-        owner: .init(kind: .itinerary, id: itinerary.id),
-        label: .init(kind: .category, id: category.id), assigned: assigned, store: plannerStore)
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier),
+        label: .init(kind: .category, id: boundCategoryIdentifier), assigned: assigned,
+        store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -158,9 +200,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      let boundTagIdentifier = try tag.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerLabelAssignment(
-        owner: .init(kind: .itinerary, id: itinerary.id),
-        label: .init(kind: .tag, id: tag.id), assigned: assigned, store: plannerStore)
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier),
+        label: .init(kind: .tag, id: boundTagIdentifier), assigned: assigned,
+        store: plannerStore)
       return .result(dialog: dialog)
     }
   }

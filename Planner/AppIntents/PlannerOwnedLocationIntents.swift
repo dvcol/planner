@@ -21,12 +21,16 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       guard placeName != nil || address != nil || removeSavedPin else {
         throw PlannerOwnedLocationIntentFailure(
           message: "Choose place text to change or remove the saved pin.")
       }
       let dialog = try await updatePlannerOwnedLocation(
-        source: .init(kind: .item, id: item.id), store: plannerStore
+        source: .init(kind: .item, id: boundItemIdentifier), store: plannerStore
       ) { current in
         plannerEditedOwnedLocation(
           current, placeName: placeName, address: address,
@@ -52,12 +56,16 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       guard placeName != nil || address != nil || removeSavedPin else {
         throw PlannerOwnedLocationIntentFailure(
           message: "Choose place text to change or remove the saved pin.")
       }
       let dialog = try await updatePlannerOwnedLocation(
-        source: .init(kind: .itinerary, id: itinerary.id), store: plannerStore
+        source: .init(kind: .itinerary, id: boundItineraryIdentifier), store: plannerStore
       ) { current in
         plannerEditedOwnedLocation(
           current, placeName: placeName, address: address,
@@ -84,9 +92,13 @@
     }
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let coordinate = try plannerOwnedPinCoordinate(location)
       let dialog = try await updatePlannerOwnedLocation(
-        source: .init(kind: .item, id: item.id), store: plannerStore
+        source: .init(kind: .item, id: boundItemIdentifier), store: plannerStore
       ) { current in
         .init(
           displayName: current?.displayName, formattedAddress: current?.formattedAddress,
@@ -113,9 +125,13 @@
     }
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let coordinate = try plannerOwnedPinCoordinate(location)
       let dialog = try await updatePlannerOwnedLocation(
-        source: .init(kind: .itinerary, id: itinerary.id), store: plannerStore
+        source: .init(kind: .itinerary, id: boundItineraryIdentifier), store: plannerStore
       ) { current in
         .init(
           displayName: current?.displayName, formattedAddress: current?.formattedAddress,
@@ -138,8 +154,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let dialog = try await updatePlannerOwnedLocation(
-        source: .init(kind: .item, id: item.id), store: plannerStore
+        source: .init(kind: .item, id: boundItemIdentifier), store: plannerStore
       ) { _ in nil }
       return .result(dialog: dialog)
     }
@@ -158,8 +178,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await updatePlannerOwnedLocation(
-        source: .init(kind: .itinerary, id: itinerary.id), store: plannerStore
+        source: .init(kind: .itinerary, id: boundItineraryIdentifier), store: plannerStore
       ) { _ in nil }
       return .result(dialog: dialog)
     }

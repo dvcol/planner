@@ -279,6 +279,10 @@ struct SavedPlannerView: View {
       .onChange(of: pendingDraftNavigation == nil) {
         if pendingDraftNavigation == nil { Task { await receivePlanOpening() } }
       }
+      .onChange(of: blocksLibrarySwitch, initial: true) {
+        store.setLibrarySwitchBlocked(blocksLibrarySwitch, window: windowIdentifier)
+      }
+      .onDisappear { store.setLibrarySwitchBlocked(false, window: windowIdentifier) }
       .onChange(of: hasPresentedWorkflow) {
         if !hasPresentedWorkflow { Task { await receivePlanOpening() } }
       }
@@ -324,6 +328,13 @@ struct SavedPlannerView: View {
         }
       }
       .onChange(of: store.devicePreferenceNamespace) {
+        selectedListId = nil
+        selectedItemId = nil
+        selectedItem = nil
+        selectedAppearanceIdentity = nil
+        selectedAppearance = nil
+        selectedItineraryIdentifier = nil
+        website = nil
         associationUndo.clear()
         mapDetailsRequested = false
         itineraryPresentations = [:]
@@ -2638,6 +2649,10 @@ struct SavedPlannerView: View {
   }
 
   private func beginNewItem(listIdentifier: UUID?) {
+    if listIdentifier == nil, case .selectedLists = store.activeLibrary?.scope {
+      store.alertMessage = "Open a shared List to create an Item in that List."
+      return
+    }
     requestDraftNavigation {
       guard let namespace = store.devicePreferenceNamespace else { return }
       recordSelectionChange()
@@ -2678,6 +2693,10 @@ struct SavedPlannerView: View {
     }
     pendingDraftNavigation = navigation
     showDraftNavigationReview = true
+  }
+
+  private var blocksLibrarySwitch: Bool {
+    newItemDraft != nil || (hasPresentedWorkflow && !showSettings) || isSavingNewItem
   }
 
   private var hasPresentedWorkflow: Bool {

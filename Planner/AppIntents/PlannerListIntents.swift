@@ -3,10 +3,11 @@
   import Foundation
   import PlannerCore
 
-  struct PlannerListEntity: AppEntity {
+  struct PlannerListEntity: PlannerLibraryBoundEntity {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "List")
     static var defaultQuery: PlannerListEntityQuery { PlannerListEntityQuery() }
-    let id: UUID
+    let recordIdentifier: UUID
+    var libraryBinding: String
     @Property(title: "Name") var name: String
     @Property(title: "Archived") var archived: Bool
     @DeferredProperty(title: "Notes")
@@ -29,8 +30,9 @@
     }
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(name)") }
 
-    init(id: UUID, name: String, archived: Bool) {
-      self.id = id
+    @MainActor init(id: UUID, name: String, archived: Bool, libraryBinding: String = "") {
+      self.recordIdentifier = id
+      self.libraryBinding = libraryBinding
       self.name = name
       self.archived = archived
     }
@@ -41,10 +43,23 @@
     @Dependency var plannerStore: SavedPlannerStore
 
     @MainActor func entities(for identifiers: [UUID]) async throws -> [PlannerListEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let binding = plannerStore.appIntentLibraryBinding ?? "unavailable"
+      return try await entities(
+        for: identifiers.map { plannerEncodeIntentIdentifier($0.uuidString, binding: binding) })
+    }
+
+    @MainActor func entities(for identifiers: [String]) async throws -> [PlannerListEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
-      var seenIdentifiers: Set<UUID> = []
+      var seenIdentifiers: Set<String> = []
       var entities: [PlannerListEntity] = []
-      for identifier in identifiers where seenIdentifiers.insert(identifier).inserted {
+      for encoded in identifiers where seenIdentifiers.insert(encoded).inserted {
+        let raw = try plannerResolveIntentIdentifier(encoded, store: plannerStore)
+        guard let identifier = UUID(uuidString: raw) else { continue }
         try Task.checkCancellation()
         switch await planner.read(
           session: session, request: .source(.init(kind: .list, id: identifier)))
@@ -54,7 +69,9 @@
             throw PlannerListIntentFailure(message: "Planner could not read this List's state.")
           }
           entities.append(
-            .init(id: source.source.id, name: source.content.name, archived: archived))
+            .init(
+              id: source.source.id, name: source.content.name, archived: archived,
+              libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
         case .failed(let reason) where reason.code == "missingReference": continue
         case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
         default: throw PlannerListIntentFailure(message: "Planner could not resolve this List.")
@@ -72,6 +89,8 @@
     }
 
     @MainActor func loadLists(query: PlannerCatalogQuery) async throws -> [PlannerListEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
       let snapshot: PlannerQuerySnapshot
       switch await planner.query(
@@ -99,7 +118,10 @@
             else {
               throw PlannerListIntentFailure(message: "Planner could not read its List choices.")
             }
-            entities.append(.init(id: source.id, name: row.title, archived: archived))
+            entities.append(
+              .init(
+                id: source.id, name: row.title, archived: archived,
+                libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
           }
           offset += Int64(window.rows.count)
         case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -121,6 +143,8 @@
     typealias PerformResult = IntentResultContainer<PlannerListEntity, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let result = try await plannerStore.executeAppIntent(
         .createList(content: .init(name: name, notes: notes)))
       switch result.outcome {
@@ -145,7 +169,9 @@
             "The List was created on this device, but its recovery copy is incomplete. Open Planner before making more changes."
         }
         return .result(
-          value: PlannerListEntity(id: source.id, name: name, archived: false), dialog: dialog)
+          value: PlannerListEntity(
+            id: source.id, name: name, archived: false,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"), dialog: dialog)
       }
     }
   }
@@ -160,9 +186,13 @@
     typealias PerformResult = IntentResultContainer<PlannerListEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let query = PlannerListEntityQuery()
       query.plannerStore = plannerStore
-      let matches = try await query.entities(for: [list.id])
+      let matches = try await query.entities(for: [boundListIdentifier])
       guard let current = matches.first else {
         throw PlannerListIntentFailure(
           message: "This List is no longer available in Planner's current data.")
@@ -184,8 +214,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
-        .addMembership(itemId: item.id, listId: list.id, placement: .last))
+        .addMembership(
+          itemId: boundItemIdentifier, listId: boundListIdentifier, placement: .last
+        ))
       switch result.outcome {
       case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
       case .unverified:
@@ -220,13 +257,16 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       guard name != nil || notes != nil else {
         throw PlannerListIntentFailure(message: "Choose a name or notes to change.")
       }
-      let (planner, session) = try await plannerStore.appIntentContext()
       let source: PlannerListSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: boundListIdentifier)))
       {
       case .source(.list(let current)): source = current
       case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -276,8 +316,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
-        .setArchive(source: .init(kind: .list, id: list.id), archived: archived))
+        .setArchive(source: .init(kind: .list, id: boundListIdentifier), archived: archived)
+      )
       switch result.outcome {
       case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
       case .unverified:
@@ -316,10 +361,14 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let current: PlannerListSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: boundListIdentifier)))
       {
       case .source(.list(let source)): current = source
       case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -327,13 +376,14 @@
       }
       let membership = current.references.first { reference in
         guard case .membership(_, let owner, let source) = reference else { return false }
-        return owner == .init(kind: .list, id: list.id) && source == .init(kind: .item, id: item.id)
+        return owner == .init(kind: .list, id: boundListIdentifier)
+          && source == .init(kind: .item, id: boundItemIdentifier)
       }
       guard case .membership(let identifier, _, _)? = membership else {
         throw PlannerListIntentFailure(message: "This Item no longer belongs to the selected List.")
       }
       let result = try await plannerStore.executeAppIntent(
-        .removeMembership(listId: list.id, membershipId: identifier))
+        .removeMembership(listId: boundListIdentifier, membershipId: identifier))
       switch result.outcome {
       case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
       case .unverified:
@@ -371,10 +421,16 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundSourceListIdentifier = try sourceList.sourceIdentifier(in: plannerStore)
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
+      let boundDestinationListIdentifier = try destinationList.sourceIdentifier(in: plannerStore)
       let current: PlannerListSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .list, id: sourceList.id)))
+        session: session,
+        request: .source(.init(kind: .list, id: boundSourceListIdentifier)))
       {
       case .source(.list(let source)): current = source
       case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -382,16 +438,16 @@
       }
       let membership = current.references.first { reference in
         guard case .membership(_, let owner, let source) = reference else { return false }
-        return owner == .init(kind: .list, id: sourceList.id)
-          && source == .init(kind: .item, id: item.id)
+        return owner == .init(kind: .list, id: boundSourceListIdentifier)
+          && source == .init(kind: .item, id: boundItemIdentifier)
       }
       guard case .membership(let identifier, _, _)? = membership else {
         throw PlannerListIntentFailure(message: "This Item no longer belongs to the source List.")
       }
       let result = try await plannerStore.executeAppIntent(
         .moveMembership(
-          listId: sourceList.id, membershipId: identifier,
-          destinationListId: destinationList.id, placement: .last))
+          listId: boundSourceListIdentifier, membershipId: identifier,
+          destinationListId: boundDestinationListIdentifier, placement: .last))
       switch result.outcome {
       case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
       case .unverified:
@@ -427,10 +483,14 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let current: PlannerListSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: boundListIdentifier)))
       {
       case .source(.list(let source)): current = source
       case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -438,14 +498,17 @@
       }
       let membership = current.references.first { reference in
         guard case .membership(_, let owner, let source) = reference else { return false }
-        return owner == .init(kind: .list, id: list.id) && source == .init(kind: .item, id: item.id)
+        return owner == .init(kind: .list, id: boundListIdentifier)
+          && source == .init(kind: .item, id: boundItemIdentifier)
       }
       guard case .membership(let identifier, _, _)? = membership else {
         throw PlannerListIntentFailure(message: "This Item no longer belongs to the selected List.")
       }
       let result = try await plannerStore.executeAppIntent(
         .setCompletion(
-          scope: .appearance(.listMembership(listId: list.id, membershipId: identifier)), done: done
+          scope: .appearance(
+            .listMembership(listId: boundListIdentifier, membershipId: identifier)),
+          done: done
         ))
       switch result.outcome {
       case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -498,10 +561,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
+      let boundRelativeItemIdentifier = try relativeItem?.sourceIdentifier(in: plannerStore)
       let current: PlannerListSourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .list, id: list.id)))
+        session: session, request: .source(.init(kind: .list, id: boundListIdentifier)))
       {
       case .source(.list(let source)): current = source
       case .failed(let reason): throw PlannerListIntentFailure(message: reason.message)
@@ -509,7 +577,8 @@
       }
       let membership = current.references.first { reference in
         guard case .membership(_, let owner, let source) = reference else { return false }
-        return owner == .init(kind: .list, id: list.id) && source == .init(kind: .item, id: item.id)
+        return owner == .init(kind: .list, id: boundListIdentifier)
+          && source == .init(kind: .item, id: boundItemIdentifier)
       }
       guard case .membership(let identifier, _, _)? = membership else {
         throw PlannerListIntentFailure(message: "This Item no longer belongs to the selected List.")
@@ -519,13 +588,13 @@
       case .first: placement = .first
       case .last: placement = .last
       case .before, .after:
-        guard let relativeItem else {
+        guard let boundRelativeItemIdentifier else {
           throw PlannerListIntentFailure(message: "Choose a relative Item for Before or After.")
         }
         let anchor = current.references.first { reference in
           guard case .membership(_, let owner, let source) = reference else { return false }
-          return owner == .init(kind: .list, id: list.id)
-            && source == .init(kind: .item, id: relativeItem.id)
+          return owner == .init(kind: .list, id: boundListIdentifier)
+            && source == .init(kind: .item, id: boundRelativeItemIdentifier)
         }
         guard case .membership(let anchorIdentifier, _, _)? = anchor else {
           throw PlannerListIntentFailure(
@@ -538,7 +607,8 @@
         }
       }
       let result = try await plannerStore.executeAppIntent(
-        .reorderMembership(listId: list.id, membershipId: identifier, placement: placement))
+        .reorderMembership(
+          listId: boundListIdentifier, membershipId: identifier, placement: placement))
       switch result.outcome {
       case .rejected(let reason): throw PlannerListIntentFailure(message: reason.message)
       case .unverified:

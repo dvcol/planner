@@ -33,11 +33,15 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let form = try plannerTimedScheduleForm(
         start: start, end: end, planningTimeZone: planningTimeZone.id,
         startOccurrence: startOccurrence, endOccurrence: endOccurrence)
       let created = try await createPlannerSchedule(
-        owner: .init(kind: .item, id: item.id), form: form, store: plannerStore)
+        owner: .init(kind: .item, id: boundItemIdentifier), form: form, store: plannerStore)
       return .result(value: created.entity, dialog: created.dialog)
     }
   }
@@ -63,11 +67,16 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let form = try plannerTimedScheduleForm(
         start: start, end: end, planningTimeZone: planningTimeZone.id,
         startOccurrence: startOccurrence, endOccurrence: endOccurrence)
       let created = try await createPlannerSchedule(
-        owner: .init(kind: .itinerary, id: itinerary.id), form: form, store: plannerStore)
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier), form: form,
+        store: plannerStore)
       return .result(value: created.entity, dialog: created.dialog)
     }
   }
@@ -89,11 +98,15 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let form = PlannerScheduleForm.allDay(
         start: try plannerScheduleCivilDate(startDay),
         end: try endDay.map(plannerScheduleCivilDate))
       let created = try await createPlannerSchedule(
-        owner: .init(kind: .item, id: item.id), form: form, store: plannerStore)
+        owner: .init(kind: .item, id: boundItemIdentifier), form: form, store: plannerStore)
       return .result(value: created.entity, dialog: created.dialog)
     }
   }
@@ -115,11 +128,16 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let form = PlannerScheduleForm.allDay(
         start: try plannerScheduleCivilDate(startDay),
         end: try endDay.map(plannerScheduleCivilDate))
       let created = try await createPlannerSchedule(
-        owner: .init(kind: .itinerary, id: itinerary.id), form: form, store: plannerStore)
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier), form: form,
+        store: plannerStore)
       return .result(value: created.entity, dialog: created.dialog)
     }
   }
@@ -228,7 +246,8 @@
         )
       }
       let entity = try PlannerScheduleEntity(
-        schedule: reference, owner: owner, title: title, form: form)
+        schedule: reference, owner: owner, title: title, form: form,
+        libraryBinding: store.appIntentLibraryBinding ?? "unavailable")
       let dialog: IntentDialog
       switch recovery {
       case .complete: dialog = "Saved the booking. Its Item or Itinerary is unchanged."

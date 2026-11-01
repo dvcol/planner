@@ -18,18 +18,18 @@ final class PlannerTagIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.tag(let current)) = await reopened.read(
-        session: session, request: .source(.init(kind: .tag, id: tag.id))),
+        session: session, request: .source(.init(kind: .tag, id: tag.recordIdentifier))),
       case .snapshot(let catalog) = await reopened.query(
         .init(session: session, request: .catalog(.init(sourceKind: .tag, archive: .all))))
     else { return XCTFail("The returned Tag must be readable from reopened real storage.") }
-    XCTAssertEqual(current.source.id, tag.id)
+    XCTAssertEqual(current.source.id, tag.recordIdentifier)
     XCTAssertEqual(current.content.name, "rainy-day")
     XCTAssertNil(current.content.color)
     XCTAssertNil(current.content.iconName)
     XCTAssertNil(current.state.archived)
     XCTAssertNil(current.state.globalDone)
     XCTAssertTrue(current.references.isEmpty)
-    XCTAssertEqual(catalog.rows, [.source(.init(kind: .tag, id: tag.id))])
+    XCTAssertEqual(catalog.rows, [.source(.init(kind: .tag, id: tag.recordIdentifier))])
     XCTAssertFalse(store.recoveryBlocked)
     XCTAssertFalse(store.isSaving)
   }
@@ -48,12 +48,12 @@ final class PlannerTagIntentTests: XCTestCase {
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.tag(let original)) = await planner.read(
-        session: session, request: .source(.init(kind: .tag, id: cached.id))),
+        session: session, request: .source(.init(kind: .tag, id: cached.recordIdentifier))),
       case .applied(_, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
           command: .editTag(
-            sourceId: cached.id, changes: .init(name: .set("Renamed tag")),
+            sourceId: cached.recordIdentifier, changes: .init(name: .set("Renamed tag")),
             expectedFieldHashes: original.fieldHashes))
       ).outcome
     else {
@@ -62,15 +62,19 @@ final class PlannerTagIntentTests: XCTestCase {
     let query = PlannerTagEntityQuery()
     query.plannerStore = store
     let resolved = try await query.entities(
-      for: [second.id, UUID(), cached.id, second.id, category.id, cached.id])
-    XCTAssertEqual(resolved.map(\.id), [second.id, cached.id])
+      for: [
+        second.recordIdentifier, UUID(), cached.recordIdentifier, second.recordIdentifier,
+        category.recordIdentifier, cached.recordIdentifier,
+      ])
+    XCTAssertEqual(
+      resolved.map(\.recordIdentifier), [second.recordIdentifier, cached.recordIdentifier])
     XCTAssertEqual(resolved.map(\.name), ["Second tag", "Renamed tag"])
     let reading = GetPlannerTagIntent()
     reading.tag = cached
     let current = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(current.id, cached.id)
+    XCTAssertEqual(current.recordIdentifier, cached.recordIdentifier)
     XCTAssertEqual(current.name, "Renamed tag")
-    reading.tag = .init(id: category.id, name: "Second tag")
+    reading.tag = .init(id: category.recordIdentifier, name: "Second tag")
     do {
       _ = try await reading.callAsFunction(donate: false)
       XCTFail("A Category cannot substitute for a Tag with the same name.")
@@ -105,12 +109,12 @@ final class PlannerTagIntentTests: XCTestCase {
     let query = PlannerTagEntityQuery()
     query.plannerStore = store
     let matches = try await query.entities(matching: "RAINY cafe")
-    XCTAssertEqual(matches.map(\.id), identifiers)
+    XCTAssertEqual(matches.map(\.recordIdentifier), identifiers)
     XCTAssertEqual(matches.first?.name, "Café 00 rainy")
     XCTAssertEqual(matches.last?.name, "Café 64 rainy")
     XCTAssertEqual(Set(matches.map(\.id)).count, 65)
     let suggestions = try await query.suggestedEntities()
-    XCTAssertEqual(suggestions.map(\.id), identifiers)
+    XCTAssertEqual(suggestions.map(\.recordIdentifier), identifiers)
     let absent = try await query.entities(matching: "cafe nonexistent")
     XCTAssertTrue(absent.isEmpty)
     XCTAssertFalse(store.recoveryBlocked)
@@ -124,21 +128,22 @@ final class PlannerTagIntentTests: XCTestCase {
     creation.name = "Museums"
     let first = try await creation.callAsFunction(donate: false)
     let second = try await creation.callAsFunction(donate: false)
-    XCTAssertNotEqual(first.id, second.id)
+    XCTAssertNotEqual(first.recordIdentifier, second.recordIdentifier)
     let query = PlannerTagEntityQuery()
     query.plannerStore = store
     let choices = try await query.entities(matching: "MUSEUMS")
-    let expectedIdentifiers = [first.id, second.id].sorted { firstIdentifier, secondIdentifier in
+    let expectedIdentifiers = [first.recordIdentifier, second.recordIdentifier].sorted {
+      firstIdentifier, secondIdentifier in
       firstIdentifier.uuidString < secondIdentifier.uuidString
     }
-    XCTAssertEqual(choices.map(\.id), expectedIdentifiers)
+    XCTAssertEqual(choices.map(\.recordIdentifier), expectedIdentifiers)
     XCTAssertEqual(choices.map(\.name), ["Museums", "Museums"])
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.tag(let firstSource)) = await reopened.read(
-        session: session, request: .source(.init(kind: .tag, id: first.id))),
+        session: session, request: .source(.init(kind: .tag, id: first.recordIdentifier))),
       case .source(.tag(let secondSource)) = await reopened.read(
-        session: session, request: .source(.init(kind: .tag, id: second.id)))
+        session: session, request: .source(.init(kind: .tag, id: second.recordIdentifier)))
     else { return XCTFail("Same-name Tags must retain separate saved sources.") }
     XCTAssertEqual(firstSource.content.name, "Museums")
     XCTAssertEqual(secondSource.content.name, "Museums")
@@ -190,7 +195,7 @@ final class PlannerTagIntentTests: XCTestCase {
     creation.name = "Surviving tag"
     let survivor = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .tag, id: removed.id)
+    let source = PlannerEntityReference(kind: .tag, id: removed.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .reviewed(let review) = await planner.prepareReview(
         session: session, command: .deleteSource(source: source)),
@@ -202,8 +207,10 @@ final class PlannerTagIntentTests: XCTestCase {
     else { return XCTFail("Native reviewed deletion must remove the selected Tag first.") }
     let query = PlannerTagEntityQuery()
     query.plannerStore = store
-    let resolved = try await query.entities(for: [removed.id, survivor.id, UUID()])
-    XCTAssertEqual(resolved.map(\.id), [survivor.id])
+    let resolved = try await query.entities(for: [
+      removed.recordIdentifier, survivor.recordIdentifier, UUID(),
+    ])
+    XCTAssertEqual(resolved.map(\.recordIdentifier), [survivor.recordIdentifier])
     let reading = GetPlannerTagIntent()
     reading.tag = removed
     do {
@@ -218,7 +225,7 @@ final class PlannerTagIntentTests: XCTestCase {
         .init(
           session: reopenedSession, request: .catalog(.init(sourceKind: .tag, archive: .all))))
     else { return XCTFail("The Tag catalog must remain readable after native deletion.") }
-    XCTAssertEqual(catalog.rows, [.source(.init(kind: .tag, id: survivor.id))])
+    XCTAssertEqual(catalog.rows, [.source(.init(kind: .tag, id: survivor.recordIdentifier))])
     XCTAssertFalse(store.recoveryBlocked)
     XCTAssertFalse(store.isSaving)
   }
@@ -287,7 +294,7 @@ final class PlannerTagIntentTests: XCTestCase {
     let query = PlannerTagEntityQuery()
     query.plannerStore = store
     let readable = try await query.suggestedEntities()
-    XCTAssertEqual(readable.map(\.id), [applied.id])
+    XCTAssertEqual(readable.map(\.recordIdentifier), [applied.recordIdentifier])
     creation.name = "Blocked tag"
     do {
       _ = try await creation.callAsFunction(donate: false)
@@ -301,7 +308,7 @@ final class PlannerTagIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.tag(let retained)) = await reopened.read(
-        session: session, request: .source(.init(kind: .tag, id: applied.id)))
+        session: session, request: .source(.init(kind: .tag, id: applied.recordIdentifier)))
     else { return XCTFail("The returned Tag must remain saved despite incomplete recovery.") }
     XCTAssertEqual(retained.content.name, "Recovery tag")
     XCTAssertNil(retained.state.globalDone)
@@ -313,18 +320,19 @@ final class PlannerTagIntentTests: XCTestCase {
       case .appliedRecoveryComplete(let recovered, _) = await reopened.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.tag(let afterRecovery)) = await reopened.read(
-        session: session, request: .source(.init(kind: .tag, id: applied.id)))
+        session: session, request: .source(.init(kind: .tag, id: applied.recordIdentifier)))
     else { return XCTFail("Native retry must acknowledge the original Tag creation.") }
-    XCTAssertEqual(recovered.generated, [.init(kind: .tag, id: applied.id)])
+    XCTAssertEqual(recovered.generated, [.init(kind: .tag, id: applied.recordIdentifier)])
     XCTAssertEqual(afterRecovery.createdAt, retained.createdAt)
     XCTAssertEqual(afterRecovery.updatedAt, retained.updatedAt)
     let afterRecoveryChoices = try await query.suggestedEntities()
-    XCTAssertEqual(afterRecoveryChoices.map(\.id), [applied.id])
+    XCTAssertEqual(afterRecoveryChoices.map(\.recordIdentifier), [applied.recordIdentifier])
     creation.name = "Allowed tag"
     let next = try await creation.callAsFunction(donate: false)
-    XCTAssertNotEqual(next.id, applied.id)
+    XCTAssertNotEqual(next.recordIdentifier, applied.recordIdentifier)
     let finalChoices = try await query.suggestedEntities()
-    XCTAssertEqual(finalChoices.map(\.id), [next.id, applied.id])
+    XCTAssertEqual(
+      finalChoices.map(\.recordIdentifier), [next.recordIdentifier, applied.recordIdentifier])
     XCTAssertFalse(store.isSaving)
   }
 }

@@ -4,10 +4,11 @@
   import GeoToolbox
   import PlannerCore
 
-  struct PlannerItineraryEntity: AppEntity {
+  struct PlannerItineraryEntity: PlannerLibraryBoundEntity {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Itinerary")
     static var defaultQuery: PlannerItineraryEntityQuery { PlannerItineraryEntityQuery() }
-    let id: UUID
+    let recordIdentifier: UUID
+    var libraryBinding: String
     @Property(title: "Title") var title: String
     @Property(title: "Archived") var archived: Bool
     @DeferredProperty(title: "Notes")
@@ -50,8 +51,9 @@
     }
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(title)") }
 
-    init(id: UUID, title: String, archived: Bool) {
-      self.id = id
+    @MainActor init(id: UUID, title: String, archived: Bool, libraryBinding: String = "") {
+      self.recordIdentifier = id
+      self.libraryBinding = libraryBinding
       self.title = title
       self.archived = archived
     }
@@ -62,10 +64,23 @@
     @Dependency var plannerStore: SavedPlannerStore
 
     @MainActor func entities(for identifiers: [UUID]) async throws -> [PlannerItineraryEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let binding = plannerStore.appIntentLibraryBinding ?? "unavailable"
+      return try await entities(
+        for: identifiers.map { plannerEncodeIntentIdentifier($0.uuidString, binding: binding) })
+    }
+
+    @MainActor func entities(for identifiers: [String]) async throws -> [PlannerItineraryEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
-      var seenIdentifiers: Set<UUID> = []
+      var seenIdentifiers: Set<String> = []
       var entities: [PlannerItineraryEntity] = []
-      for identifier in identifiers where seenIdentifiers.insert(identifier).inserted {
+      for encoded in identifiers where seenIdentifiers.insert(encoded).inserted {
+        let raw = try plannerResolveIntentIdentifier(encoded, store: plannerStore)
+        guard let identifier = UUID(uuidString: raw) else { continue }
         try Task.checkCancellation()
         switch await planner.read(
           session: session, request: .source(.init(kind: .itinerary, id: identifier)))
@@ -76,7 +91,9 @@
               message: "Planner could not read this Itinerary's state.")
           }
           entities.append(
-            .init(id: source.source.id, title: source.content.title, archived: archived))
+            .init(
+              id: source.source.id, title: source.content.title, archived: archived,
+              libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
         case .failed(let reason) where reason.code == "missingReference": continue
         case .failed(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
         default:
@@ -97,6 +114,8 @@
     @MainActor func loadItineraries(query: PlannerCatalogQuery) async throws
       -> [PlannerItineraryEntity]
     {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
       let snapshot: PlannerQuerySnapshot
       switch await planner.query(
@@ -126,7 +145,10 @@
               throw PlannerItineraryIntentFailure(
                 message: "Planner could not read its Itinerary choices.")
             }
-            entities.append(.init(id: source.id, title: row.title, archived: archived))
+            entities.append(
+              .init(
+                id: source.id, title: row.title, archived: archived,
+                libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)))
           }
           offset += Int64(window.rows.count)
         case .failed(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
@@ -152,6 +174,8 @@
     >
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let result = try await plannerStore.executeAppIntent(
         .createItinerary(content: .init(title: title, notes: notes)))
       switch result.outcome {
@@ -176,7 +200,9 @@
             "The Itinerary was created on this device, but its recovery copy is incomplete. Open Planner before making more changes."
         }
         return .result(
-          value: PlannerItineraryEntity(id: source.id, title: title, archived: false),
+          value: PlannerItineraryEntity(
+            id: source.id, title: title, archived: false,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable"),
           dialog: dialog)
       }
     }
@@ -192,9 +218,13 @@
     typealias PerformResult = IntentResultContainer<PlannerItineraryEntity, Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let query = PlannerItineraryEntityQuery()
       query.plannerStore = plannerStore
-      let matches = try await query.entities(for: [itinerary.id])
+      let matches = try await query.entities(for: [boundItineraryIdentifier])
       guard let current = matches.first else {
         throw PlannerItineraryIntentFailure(
           message: "This Itinerary is no longer available in Planner's current data.")
@@ -217,13 +247,17 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      let (planner, session) = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       guard title != nil || notes != nil else {
         throw PlannerItineraryIntentFailure(message: "Choose a title or notes to change.")
       }
-      let (planner, session) = try await plannerStore.appIntentContext()
       let source: PlannerItinerarySourceRead
       switch await planner.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session,
+        request: .source(.init(kind: .itinerary, id: boundItineraryIdentifier)))
       {
       case .source(.itinerary(let current)): source = current
       case .failed(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
@@ -275,8 +309,14 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
-        .setArchive(source: .init(kind: .itinerary, id: itinerary.id), archived: archived))
+        .setArchive(
+          source: .init(kind: .itinerary, id: boundItineraryIdentifier), archived: archived)
+      )
       switch result.outcome {
       case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
       case .unverified:
@@ -315,9 +355,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
         .addItineraryEntry(
-          itineraryId: itinerary.id, source: .init(kind: .item, id: item.id), placement: .last))
+          itineraryId: boundItineraryIdentifier,
+          source: .init(kind: .item, id: boundItemIdentifier), placement: .last))
       switch result.outcome {
       case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
       case .unverified:
@@ -352,9 +398,15 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let result = try await plannerStore.executeAppIntent(
         .addItineraryEntry(
-          itineraryId: itinerary.id, source: .init(kind: .list, id: list.id), placement: .last))
+          itineraryId: boundItineraryIdentifier,
+          source: .init(kind: .list, id: boundListIdentifier), placement: .last))
       switch result.outcome {
       case .rejected(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
       case .unverified:

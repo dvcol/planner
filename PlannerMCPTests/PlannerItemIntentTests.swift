@@ -48,7 +48,7 @@ final class PlannerItemIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let applied)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("The applied edit must survive reopening despite incomplete recovery.") }
     XCTAssertEqual(applied.content.title, "Updated museum")
     XCTAssertEqual(applied.content.notes, "Reviewed notes")
@@ -60,16 +60,16 @@ final class PlannerItemIntentTests: XCTestCase {
       case .appliedRecoveryComplete = await reopened.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.item(let recovered)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("Native recovery retry must acknowledge the original edit.") }
     XCTAssertEqual(recovered.fieldHashes, applied.fieldHashes)
     editing.notes = "Allowed after recovery"
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.item(let final)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("An explicit later edit must succeed after native recovery.") }
-    XCTAssertEqual(final.source.id, item.id)
+    XCTAssertEqual(final.source.id, item.recordIdentifier)
     XCTAssertEqual(final.content.title, "Updated museum")
     XCTAssertEqual(final.content.notes, "Allowed after recovery")
     XCTAssertEqual(final.content.subtitle, "Reviewed subtitle")
@@ -86,7 +86,7 @@ final class PlannerItemIntentTests: XCTestCase {
     creation.notes = "Keep the original notes"
     let item = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .item, id: item.id)
+    let source = PlannerEntityReference(kind: .item, id: item.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.item(let before)) = await planner.read(
         session: session, request: .source(source))
@@ -156,9 +156,9 @@ final class PlannerItemIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let current)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("The combined edit must retain the original saved Item.") }
-    XCTAssertEqual(current.source.id, item.id)
+    XCTAssertEqual(current.source.id, item.recordIdentifier)
     XCTAssertEqual(current.content.title, "Renamed museum")
     XCTAssertNil(current.content.notes)
   }
@@ -177,9 +177,9 @@ final class PlannerItemIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let current)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("A title-only edit must retain the original saved Item.") }
-    XCTAssertEqual(current.source.id, item.id)
+    XCTAssertEqual(current.source.id, item.recordIdentifier)
     XCTAssertEqual(current.content.title, "Revised museum")
     XCTAssertEqual(current.content.notes, "Keep these notes")
   }
@@ -301,9 +301,9 @@ final class PlannerItemIntentTests: XCTestCase {
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.item(let applied)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("The locally applied archive must survive reopening.") }
-    XCTAssertEqual(applied.source.id, item.id)
+    XCTAssertEqual(applied.source.id, item.recordIdentifier)
     XCTAssertEqual(applied.content.title, "Recovery museum")
     XCTAssertEqual(applied.content.notes, "Keep the locally archived Item")
     XCTAssertEqual(applied.state.archived, true)
@@ -314,7 +314,7 @@ final class PlannerItemIntentTests: XCTestCase {
       case .appliedRecoveryComplete = await planner.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.item(let recovered)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else {
       return XCTFail("Native recovery retry must acknowledge the original archive operation.")
     }
@@ -323,12 +323,12 @@ final class PlannerItemIntentTests: XCTestCase {
     let _: Void = try await archive.callAsFunction(donate: false)
     guard
       case .source(.item(let unarchived)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: item.id))),
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier))),
       case .snapshot(let items) = await planner.query(
         .init(session: session, request: .items(.init(completion: .all, archive: .all))))
     else { return XCTFail("An explicit unarchive must succeed after recovery is complete.") }
     XCTAssertEqual(unarchived.state.archived, false)
-    XCTAssertEqual(items.rows, [.source(.init(kind: .item, id: item.id))])
+    XCTAssertEqual(items.rows, [.source(.init(kind: .item, id: item.recordIdentifier))])
   }
 
   func testArchiveIntentRejectsMissingAndDeletedItemsWithoutResurrectingTheirIdentities()
@@ -340,7 +340,7 @@ final class PlannerItemIntentTests: XCTestCase {
     creation.title = "Deleted museum"
     let deletedItem = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let deletedSource = PlannerEntityReference(kind: .item, id: deletedItem.id)
+    let deletedSource = PlannerEntityReference(kind: .item, id: deletedItem.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .reviewed(let review) = await planner.prepareReview(
         session: session, command: .deleteSource(source: deletedSource)),
@@ -374,7 +374,7 @@ final class PlannerItemIntentTests: XCTestCase {
     for item in [deletedItem, missingItem] {
       guard
         case .failed(let reason) = await reopened.read(
-          session: reopenedSession, request: .source(.init(kind: .item, id: item.id)))
+          session: reopenedSession, request: .source(.init(kind: .item, id: item.recordIdentifier)))
       else { return XCTFail("Rejected archive actions cannot recreate either identity.") }
       XCTAssertEqual(reason.code, "missingReference")
     }
@@ -408,7 +408,7 @@ final class PlannerItemIntentTests: XCTestCase {
       let listCreation = try await save(.createList(content: .init(name: name)))
       let list = try XCTUnwrap(listCreation.generated.first)
       let membership = try await save(
-        .addMembership(itemId: item.id, listId: list.id, placement: .last))
+        .addMembership(itemId: item.recordIdentifier, listId: list.id, placement: .last))
       guard case .membership(let identifier, _, _)? = membership.generatedReferences.first else {
         return XCTFail("Each saved membership must retain its own identity.")
       }
@@ -423,9 +423,9 @@ final class PlannerItemIntentTests: XCTestCase {
       let reopened = PlannerCore.Planner(configuration: configuration)
       guard case .ready(let reopenedSession) = await reopened.bootstrap(),
         case .source(.item(let source)) = await reopened.read(
-          session: reopenedSession, request: .source(.init(kind: .item, id: item.id)))
+          session: reopenedSession, request: .source(.init(kind: .item, id: item.recordIdentifier)))
       else { return XCTFail("Archive must preserve the original source after reopening.") }
-      XCTAssertEqual(source.source.id, item.id)
+      XCTAssertEqual(source.source.id, item.recordIdentifier)
       XCTAssertEqual(source.content.title, "Museum")
       XCTAssertEqual(source.content.notes, "Keep the shared notes")
       XCTAssertEqual(source.state.archived, archived)
@@ -536,7 +536,7 @@ final class PlannerItemIntentTests: XCTestCase {
     let query = PlannerItemEntityQuery()
     query.plannerStore = fixture.store
     let choices = try await query.entities(matching: "VISIT")
-    XCTAssertEqual(choices.map(\.id), identities)
+    XCTAssertEqual(choices.map(\.recordIdentifier), identities)
     XCTAssertEqual(choices.first?.title, "Visit 00")
     XCTAssertEqual(choices.last?.title, "Visit 64")
     XCTAssertEqual(Set(choices.map(\.id)).count, 65)
@@ -579,16 +579,16 @@ final class PlannerItemIntentTests: XCTestCase {
       case .snapshot(let snapshot) = await planner.query(
         .init(session: session, request: .items(.init(completion: .all, archive: .all))))
     else { return XCTFail("The locally applied Item must remain readable.") }
-    XCTAssertEqual(snapshot.rows, [.source(.init(kind: .item, id: applied.id))])
+    XCTAssertEqual(snapshot.rows, [.source(.init(kind: .item, id: applied.recordIdentifier))])
     await store.retryIncompleteRecovery()
     XCTAssertFalse(store.recoveryBlocked)
     XCTAssertTrue(store.incompleteRecoveryOperationIdentifiers.isEmpty)
     creation.title = "Allowed after recovery retry"
     let next = try await creation.callAsFunction(donate: false)
-    XCTAssertNotEqual(next.id, applied.id)
+    XCTAssertNotEqual(next.recordIdentifier, applied.recordIdentifier)
     guard
       case .source(.item(let original)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: applied.id)))
+        session: session, request: .source(.init(kind: .item, id: applied.recordIdentifier)))
     else { return XCTFail("Recovery retry must not replace the original applied Item.") }
     XCTAssertEqual(original.content.title, "Recovery museum")
   }
@@ -617,7 +617,7 @@ final class PlannerItemIntentTests: XCTestCase {
     let secondItem = try secondOutcome.get()
     XCTAssertEqual(firstItem.title, "Train tickets")
     XCTAssertEqual(secondItem.title, "Hotel check-in")
-    XCTAssertNotEqual(firstItem.id, secondItem.id)
+    XCTAssertNotEqual(firstItem.recordIdentifier, secondItem.recordIdentifier)
     XCTAssertTrue(store.isReady)
     XCTAssertFalse(store.isSaving)
     let planner = PlannerCore.Planner(configuration: configuration)
@@ -628,8 +628,8 @@ final class PlannerItemIntentTests: XCTestCase {
     XCTAssertEqual(
       snapshot.rows,
       [
-        .source(.init(kind: .item, id: secondItem.id)),
-        .source(.init(kind: .item, id: firstItem.id)),
+        .source(.init(kind: .item, id: secondItem.recordIdentifier)),
+        .source(.init(kind: .item, id: firstItem.recordIdentifier)),
       ])
   }
 
@@ -659,7 +659,7 @@ final class PlannerItemIntentTests: XCTestCase {
       let listCreation = try await save(.createList(content: .init(name: name)))
       let list = try XCTUnwrap(listCreation.generated.first)
       let membership = try await save(
-        .addMembership(itemId: item.id, listId: list.id, placement: .last))
+        .addMembership(itemId: item.recordIdentifier, listId: list.id, placement: .last))
       guard case .membership(let membershipIdentifier, _, _)? = membership.generatedReferences.first
       else { return XCTFail("The original List association must have its own identity.") }
       appearances.append(.listMembership(listId: list.id, membershipId: membershipIdentifier))
@@ -705,45 +705,48 @@ final class PlannerItemIntentTests: XCTestCase {
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.item(let current)) = await planner.read(
-        session: session, request: .source(.init(kind: .item, id: cached.id))),
+        session: session, request: .source(.init(kind: .item, id: cached.recordIdentifier))),
       case .applied(_, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
           command: .editItem(
-            sourceId: cached.id, changes: .init(title: .set("Revised tickets")),
+            sourceId: cached.recordIdentifier, changes: .init(title: .set("Revised tickets")),
             expectedFieldHashes: current.fieldHashes))
       )
       .outcome,
       case .applied(_, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: .setCompletion(scope: .globalItem(itemId: cached.id), done: true))
+          command: .setCompletion(scope: .globalItem(itemId: cached.recordIdentifier), done: true))
       )
       .outcome,
       case .applied(_, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: .setArchive(source: .init(kind: .item, id: cached.id), archived: true))
+          command: .setArchive(
+            source: .init(kind: .item, id: cached.recordIdentifier), archived: true))
       )
       .outcome
     else { return XCTFail("Real Core edits must prepare the changed source.") }
     let query = PlannerItemEntityQuery()
     query.plannerStore = store
-    let resolved = try await query.entities(for: [cached.id, cached.id, UUID()])
-    XCTAssertEqual(resolved.map(\.id), [cached.id])
+    let resolved = try await query.entities(for: [
+      cached.recordIdentifier, cached.recordIdentifier, UUID(),
+    ])
+    XCTAssertEqual(resolved.map(\.recordIdentifier), [cached.recordIdentifier])
     XCTAssertEqual(resolved.first?.title, "Revised tickets")
     XCTAssertEqual(resolved.first?.done, true)
     XCTAssertEqual(resolved.first?.archived, true)
     let matches = try await query.entities(matching: "STATION")
-    XCTAssertEqual(matches.map(\.id), [cached.id])
+    XCTAssertEqual(matches.map(\.recordIdentifier), [cached.recordIdentifier])
     let missing = try await query.entities(matching: "No such visit")
     XCTAssertTrue(missing.isEmpty)
     let suggestions = try await query.suggestedEntities()
-    XCTAssertEqual(suggestions.map(\.id), [cached.id])
+    XCTAssertEqual(suggestions.map(\.recordIdentifier), [cached.recordIdentifier])
     let reading = GetPlannerItemIntent()
     reading.item = cached
     let refreshed = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(refreshed.id, cached.id)
+    XCTAssertEqual(refreshed.recordIdentifier, cached.recordIdentifier)
     XCTAssertEqual(refreshed.title, "Revised tickets")
     XCTAssertTrue(refreshed.done)
     XCTAssertTrue(refreshed.archived)
@@ -765,13 +768,13 @@ final class PlannerItemIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let saved)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: created.id))),
+        session: session, request: .source(.init(kind: .item, id: created.recordIdentifier))),
       case .snapshot(let items) = await reopened.query(
         .init(session: session, request: .items(.init(completion: .all, archive: .all)))),
       case .status(let status) = await reopened.read(session: session, request: .status)
     else { return XCTFail("The returned Item must be readable from reopened real storage.") }
     XCTAssertEqual(items.rows, [.source(saved.source)])
-    XCTAssertEqual(saved.source.id, created.id)
+    XCTAssertEqual(saved.source.id, created.recordIdentifier)
     XCTAssertEqual(saved.content.title, "Train tickets")
     XCTAssertEqual(saved.content.notes, "Collect at the station")
     guard case .known(let checkpoint, let incomplete, _, let blocked) = status.recovery else {

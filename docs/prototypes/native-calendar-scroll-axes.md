@@ -32,3 +32,12 @@ accessible labels and the companion booking list. Weather, third-party calendar
 sets and additional scales remain outside this change. Physical-device and Mac
 visual acceptance are separate from the Simulator evidence. Raw captures and
 run logs remain temporary and are excluded from Git.
+
+The production app also passes its existing Calendar modes/landscape and editor
+cancellation journeys after adding sharing invitation handling. Fresh light-mode
+captures confirm the left booking list, seven Week columns, weekend tint and
+current red time marker. Compared with the reference, narrow Week event titles
+remain abbreviated while the linked list shows their full titles; empty dates
+also retain more vertical space. These are recorded visual differences, not a
+claim of pixel-identical reproduction. The previously reviewed dark captures
+remain separate evidence.

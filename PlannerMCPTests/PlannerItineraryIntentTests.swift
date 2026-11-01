@@ -20,11 +20,11 @@ final class PlannerItineraryIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let current)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id))),
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier))),
       case .snapshot(let catalog) = await reopened.query(
         .init(session: session, request: .catalog(.init(sourceKind: .itinerary, archive: .all))))
     else { return XCTFail("The returned Itinerary must be readable from reopened real storage.") }
-    XCTAssertEqual(current.source.id, itinerary.id)
+    XCTAssertEqual(current.source.id, itinerary.recordIdentifier)
     XCTAssertEqual(current.content.title, "Tokyo Weekend")
     XCTAssertEqual(current.content.notes, "Museum, lunch and a return to the Hotel")
     XCTAssertEqual(current.state.archived, false)
@@ -33,7 +33,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     XCTAssertEqual(current.progress.totalCount, 0)
     XCTAssertTrue(current.references.isEmpty)
     XCTAssertTrue(current.listEntrySummaries.isEmpty)
-    XCTAssertEqual(catalog.rows, [.source(.init(kind: .itinerary, id: itinerary.id))])
+    XCTAssertEqual(catalog.rows, [.source(.init(kind: .itinerary, id: itinerary.recordIdentifier))])
     XCTAssertFalse(store.recoveryBlocked)
     XCTAssertFalse(store.isSaving)
   }
@@ -50,7 +50,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     itemCreation.title = "This is an Item, not an Itinerary"
     let item = try await itemCreation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .itinerary, id: first.id)
+    let source = PlannerEntityReference(kind: .itinerary, id: first.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.itinerary(let original)) = await planner.read(
         session: session, request: .source(source)),
@@ -58,7 +58,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
         .init(
           operationId: UUID(), session: session,
           command: .editItinerary(
-            sourceId: first.id, changes: .init(title: .set("Renamed itinerary")),
+            sourceId: first.recordIdentifier, changes: .init(title: .set("Renamed itinerary")),
             expectedFieldHashes: original.fieldHashes))
       ).outcome,
       case .applied(_, .complete) = await planner.execute(
@@ -70,8 +70,12 @@ final class PlannerItineraryIntentTests: XCTestCase {
     let query = PlannerItineraryEntityQuery()
     query.plannerStore = store
     let resolved = try await query.entities(
-      for: [second.id, UUID(), first.id, second.id, item.id, first.id])
-    XCTAssertEqual(resolved.map(\.id), [second.id, first.id])
+      for: [
+        second.recordIdentifier, UUID(), first.recordIdentifier, second.recordIdentifier,
+        item.recordIdentifier, first.recordIdentifier,
+      ])
+    XCTAssertEqual(
+      resolved.map(\.recordIdentifier), [second.recordIdentifier, first.recordIdentifier])
     XCTAssertEqual(resolved.map(\.title), ["Second itinerary", "Renamed itinerary"])
     XCTAssertEqual(resolved.map(\.archived), [false, true])
     XCTAssertFalse(store.recoveryBlocked)
@@ -85,7 +89,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     creation.title = "Original itinerary"
     let cached = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .itinerary, id: cached.id)
+    let source = PlannerEntityReference(kind: .itinerary, id: cached.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.itinerary(let original)) = await planner.read(
         session: session, request: .source(source)),
@@ -93,14 +97,14 @@ final class PlannerItineraryIntentTests: XCTestCase {
         .init(
           operationId: UUID(), session: session,
           command: .editItinerary(
-            sourceId: cached.id, changes: .init(title: .set("Renamed itinerary")),
+            sourceId: cached.recordIdentifier, changes: .init(title: .set("Renamed itinerary")),
             expectedFieldHashes: original.fieldHashes))
       ).outcome
     else { return XCTFail("The canonical source must change before resolving a cached entity.") }
     let reading = GetPlannerItineraryIntent()
     reading.itinerary = cached
     let current = try await reading.callAsFunction(donate: false)
-    XCTAssertEqual(current.id, cached.id)
+    XCTAssertEqual(current.recordIdentifier, cached.recordIdentifier)
     XCTAssertEqual(current.title, "Renamed itinerary")
     XCTAssertFalse(current.archived)
     reading.itinerary = .init(id: UUID(), title: "Missing", archived: false)
@@ -137,13 +141,13 @@ final class PlannerItineraryIntentTests: XCTestCase {
     let query = PlannerItineraryEntityQuery()
     query.plannerStore = store
     let matches = try await query.entities(matching: "ROUTE")
-    XCTAssertEqual(matches.map(\.id), identifiers)
+    XCTAssertEqual(matches.map(\.recordIdentifier), identifiers)
     XCTAssertEqual(matches.first?.title, "Route 00")
     XCTAssertEqual(matches.first?.archived, true)
     XCTAssertEqual(matches.last?.title, "Route 64")
     XCTAssertEqual(Set(matches.map(\.id)).count, 65)
     let suggestions = try await query.suggestedEntities()
-    XCTAssertEqual(suggestions.map(\.id), identifiers)
+    XCTAssertEqual(suggestions.map(\.recordIdentifier), identifiers)
     let absent = try await query.entities(matching: "No such itinerary")
     XCTAssertTrue(absent.isEmpty)
     XCTAssertFalse(store.recoveryBlocked)
@@ -196,7 +200,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     creation.notes = "Keep these notes"
     let survivor = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .itinerary, id: removed.id)
+    let source = PlannerEntityReference(kind: .itinerary, id: removed.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .reviewed(let review) = await planner.prepareReview(
         session: session, command: .deleteSource(source: source)),
@@ -208,8 +212,10 @@ final class PlannerItineraryIntentTests: XCTestCase {
     else { return XCTFail("Native reviewed deletion must remove the selected source first.") }
     let query = PlannerItineraryEntityQuery()
     query.plannerStore = store
-    let resolved = try await query.entities(for: [removed.id, survivor.id, UUID()])
-    XCTAssertEqual(resolved.map(\.id), [survivor.id])
+    let resolved = try await query.entities(for: [
+      removed.recordIdentifier, survivor.recordIdentifier, UUID(),
+    ])
+    XCTAssertEqual(resolved.map(\.recordIdentifier), [survivor.recordIdentifier])
     let reading = GetPlannerItineraryIntent()
     reading.itinerary = removed
     do {
@@ -225,9 +231,10 @@ final class PlannerItineraryIntentTests: XCTestCase {
           session: reopenedSession, request: .catalog(.init(sourceKind: .itinerary, archive: .all)))
       ),
       case .source(.itinerary(let retained)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .itinerary, id: survivor.id)))
+        session: reopenedSession,
+        request: .source(.init(kind: .itinerary, id: survivor.recordIdentifier)))
     else { return XCTFail("The surviving source must remain unchanged in reopened storage.") }
-    XCTAssertEqual(catalog.rows, [.source(.init(kind: .itinerary, id: survivor.id))])
+    XCTAssertEqual(catalog.rows, [.source(.init(kind: .itinerary, id: survivor.recordIdentifier))])
     XCTAssertEqual(retained.content.title, "Surviving route")
     XCTAssertEqual(retained.content.notes, "Keep these notes")
     XCTAssertEqual(retained.progress.state, .empty)
@@ -243,21 +250,22 @@ final class PlannerItineraryIntentTests: XCTestCase {
     let first = try await creation.callAsFunction(donate: false)
     creation.notes = "Second route notes"
     let second = try await creation.callAsFunction(donate: false)
-    XCTAssertNotEqual(first.id, second.id)
+    XCTAssertNotEqual(first.recordIdentifier, second.recordIdentifier)
     let query = PlannerItineraryEntityQuery()
     query.plannerStore = store
     let choices = try await query.entities(matching: "SAME route")
-    let expectedIdentifiers = [first.id, second.id].sorted { firstIdentifier, secondIdentifier in
+    let expectedIdentifiers = [first.recordIdentifier, second.recordIdentifier].sorted {
+      firstIdentifier, secondIdentifier in
       firstIdentifier.uuidString < secondIdentifier.uuidString
     }
-    XCTAssertEqual(choices.map(\.id), expectedIdentifiers)
+    XCTAssertEqual(choices.map(\.recordIdentifier), expectedIdentifiers)
     XCTAssertEqual(choices.map(\.title), ["Same route", "Same route"])
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let firstSource)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: first.id))),
+        session: session, request: .source(.init(kind: .itinerary, id: first.recordIdentifier))),
       case .source(.itinerary(let secondSource)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: second.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: second.recordIdentifier)))
     else {
       return XCTFail("Same-title sources must remain independently readable after reopening.")
     }
@@ -335,7 +343,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     let query = PlannerItineraryEntityQuery()
     query.plannerStore = store
     let readable = try await query.suggestedEntities()
-    XCTAssertEqual(readable.map(\.id), [applied.id])
+    XCTAssertEqual(readable.map(\.recordIdentifier), [applied.recordIdentifier])
     creation.title = "Blocked Itinerary"
     do {
       _ = try await creation.callAsFunction(donate: false)
@@ -350,7 +358,7 @@ final class PlannerItineraryIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let retained)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: applied.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: applied.recordIdentifier)))
     else { return XCTFail("The returned Itinerary must remain saved despite incomplete recovery.") }
     XCTAssertEqual(retained.content.title, "Recovery route")
     XCTAssertEqual(retained.content.notes, "Keep the applied Itinerary")
@@ -364,14 +372,15 @@ final class PlannerItineraryIntentTests: XCTestCase {
       case .appliedRecoveryComplete(let recovered, _) = await reopened.operationStatus(
         session: session, operationId: operationIdentifier)
     else { return XCTFail("Native retry must acknowledge the original creation operation.") }
-    XCTAssertEqual(recovered.generated, [.init(kind: .itinerary, id: applied.id)])
+    XCTAssertEqual(recovered.generated, [.init(kind: .itinerary, id: applied.recordIdentifier)])
     let afterRecovery = try await query.suggestedEntities()
-    XCTAssertEqual(afterRecovery.map(\.id), [applied.id])
+    XCTAssertEqual(afterRecovery.map(\.recordIdentifier), [applied.recordIdentifier])
     creation.title = "Allowed Itinerary"
     let next = try await creation.callAsFunction(donate: false)
-    XCTAssertNotEqual(next.id, applied.id)
+    XCTAssertNotEqual(next.recordIdentifier, applied.recordIdentifier)
     let finalChoices = try await query.suggestedEntities()
-    XCTAssertEqual(finalChoices.map(\.id), [next.id, applied.id])
+    XCTAssertEqual(
+      finalChoices.map(\.recordIdentifier), [next.recordIdentifier, applied.recordIdentifier])
     XCTAssertFalse(store.isSaving)
   }
 

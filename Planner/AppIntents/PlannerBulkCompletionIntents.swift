@@ -17,8 +17,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let dialog = try await performPlannerBulkCompletion(
-        self, scope: .list(list.id), done: completed, store: plannerStore)
+        self, scope: .list(boundListIdentifier), done: completed, store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -37,8 +41,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await performPlannerBulkCompletion(
-        self, scope: .itinerary(itinerary.id), done: completed, store: plannerStore)
+        self, scope: .itinerary(boundItineraryIdentifier), done: completed,
+        store: plannerStore)
       return .result(dialog: dialog)
     }
   }
@@ -59,8 +68,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      guard let identity = PlannerItineraryEntryIdentity(entry.id),
-        identity.itineraryIdentifier == itinerary.id, identity.kind == .list
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      guard let identity = PlannerItineraryEntryIdentity(entry.id, store: plannerStore),
+        identity.itineraryIdentifier == boundItineraryIdentifier, identity.kind == .list
       else {
         throw PlannerBulkIntentFailure(message: "Choose a List entry from the selected Itinerary.")
       }

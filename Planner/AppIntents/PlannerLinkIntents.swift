@@ -19,22 +19,26 @@
       return .init(title: "\(originalURL)", subtitle: "\(ownerTitle) · Link \(position)")
     }
 
-    init(
-      owner: PlannerEntityReference, ownerTitle: String, position: Int, link: PlannerOwnedLinkRead
+    @MainActor init(
+      owner: PlannerEntityReference, ownerTitle: String, position: Int, link: PlannerOwnedLinkRead,
+      libraryBinding: String = ""
     ) throws {
       guard let url = URL(string: link.originalUrl) else {
         throw PlannerLinkIntentFailure(message: "Planner could not read this saved Link's URL.")
       }
       self.init(
         owner: owner, ownerTitle: ownerTitle, position: position, linkIdentifier: link.linkId,
-        url: url, originalURL: link.originalUrl, label: link.label)
+        url: url, originalURL: link.originalUrl, label: link.label, libraryBinding: libraryBinding)
     }
 
-    fileprivate init(
+    @MainActor fileprivate init(
       owner: PlannerEntityReference, ownerTitle: String, position: Int, linkIdentifier: UUID,
-      url: URL, originalURL: String, label: String?
+      url: URL, originalURL: String, label: String?, libraryBinding: String = ""
     ) {
-      self.id = PlannerLinkIdentity(owner: owner, linkIdentifier: linkIdentifier).id
+      self.id =
+        PlannerLinkIdentity(
+          owner: owner, linkIdentifier: linkIdentifier, libraryBinding: libraryBinding
+        ).id
       self.url = url
       self.originalURL = originalURL
       self.label = label
@@ -56,12 +60,15 @@
     var itineraryReorderIntent
 
     @MainActor func entities(for identifiers: [String]) async throws -> [PlannerLinkEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
       try Task.checkCancellation()
       var seenIdentifiers: Set<String> = []
-      let identities = identifiers.compactMap(PlannerLinkIdentity.init).filter {
-        seenIdentifiers.insert($0.id).inserted
-      }
+      let identities = identifiers.compactMap { PlannerLinkIdentity($0, store: plannerStore) }
+        .filter {
+          seenIdentifiers.insert($0.id).inserted
+        }
       var seenOwners: Set<PlannerEntityReference> = []
       var resolved: [String: PlannerLinkEntity] = [:]
       for identity in identities where seenOwners.insert(identity.owner).inserted {
@@ -81,21 +88,23 @@
     }
 
     @MainActor func entities(matching string: String) async throws -> [PlannerLinkEntity] {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
       try Task.checkCancellation()
       let owner: PlannerEntityReference
       if let item = itemEditIntent?.item {
-        owner = .init(kind: .item, id: item.id)
+        owner = .init(kind: .item, id: (try item.sourceIdentifier(in: plannerStore)))
       } else if let itinerary = itineraryEditIntent?.itinerary {
-        owner = .init(kind: .itinerary, id: itinerary.id)
+        owner = .init(kind: .itinerary, id: (try itinerary.sourceIdentifier(in: plannerStore)))
       } else if let item = itemRemovalIntent?.item {
-        owner = .init(kind: .item, id: item.id)
+        owner = .init(kind: .item, id: (try item.sourceIdentifier(in: plannerStore)))
       } else if let itinerary = itineraryRemovalIntent?.itinerary {
-        owner = .init(kind: .itinerary, id: itinerary.id)
+        owner = .init(kind: .itinerary, id: (try itinerary.sourceIdentifier(in: plannerStore)))
       } else if let item = itemReorderIntent?.item {
-        owner = .init(kind: .item, id: item.id)
+        owner = .init(kind: .item, id: (try item.sourceIdentifier(in: plannerStore)))
       } else if let itinerary = itineraryReorderIntent?.itinerary {
-        owner = .init(kind: .itinerary, id: itinerary.id)
+        owner = .init(kind: .itinerary, id: (try itinerary.sourceIdentifier(in: plannerStore)))
       } else {
         return []
       }
@@ -122,10 +131,14 @@
     typealias PerformResult = IntentResultContainer<[PlannerLinkEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       guard
         let links = try await loadPlannerLinkEntities(
-          owner: .init(kind: .item, id: item.id), planner: planner, session: session)
+          owner: .init(kind: .item, id: boundItemIdentifier), planner: planner,
+          session: session)
       else {
         throw PlannerLinkIntentFailure(
           message: "This Item is no longer available in Planner's current data.")
@@ -147,10 +160,14 @@
     typealias PerformResult = IntentResultContainer<[PlannerLinkEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       guard
         let links = try await loadPlannerLinkEntities(
-          owner: .init(kind: .itinerary, id: itinerary.id), planner: planner, session: session)
+          owner: .init(kind: .itinerary, id: boundItineraryIdentifier), planner: planner,
+          session: session)
       else {
         throw PlannerLinkIntentFailure(
           message: "This Itinerary is no longer available in Planner's current data.")
@@ -185,8 +202,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let dialog = try await changePlannerLink(
-        owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
+        owner: .init(kind: .item, id: boundItemIdentifier), linkIdentifier: link.id,
         change: .reorder(position: position, relativeLinkIdentifier: relativeLink?.id),
         store: plannerStore)
       return .result(dialog: dialog)
@@ -210,8 +231,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await changePlannerLink(
-        owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier),
+        linkIdentifier: link.id,
         change: .reorder(position: position, relativeLinkIdentifier: relativeLink?.id),
         store: plannerStore)
       return .result(dialog: dialog)
@@ -231,8 +257,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let dialog = try await changePlannerLink(
-        owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
+        owner: .init(kind: .item, id: boundItemIdentifier), linkIdentifier: link.id,
         change: .remove, store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -252,8 +282,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await changePlannerLink(
-        owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier),
+        linkIdentifier: link.id,
         change: .remove, store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -275,8 +310,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let dialog = try await changePlannerLink(
-        owner: .init(kind: .item, id: item.id), linkIdentifier: link.id,
+        owner: .init(kind: .item, id: boundItemIdentifier), linkIdentifier: link.id,
         change: .edit(originalURL: originalURL, label: label), store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -298,8 +337,13 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await changePlannerLink(
-        owner: .init(kind: .itinerary, id: itinerary.id), linkIdentifier: link.id,
+        owner: .init(kind: .itinerary, id: boundItineraryIdentifier),
+        linkIdentifier: link.id,
         change: .edit(originalURL: originalURL, label: label), store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -320,8 +364,13 @@
     typealias PerformResult = IntentResultContainer<PlannerLinkEntity, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let added = try await addPlannerLink(
-        to: .init(kind: .item, id: item.id), originalURL: originalURL, label: label,
+        to: .init(kind: .item, id: boundItemIdentifier), originalURL: originalURL,
+        label: label,
         store: plannerStore)
       return .result(value: added.link, dialog: added.dialog)
     }
@@ -342,8 +391,13 @@
     typealias PerformResult = IntentResultContainer<PlannerLinkEntity, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let added = try await addPlannerLink(
-        to: .init(kind: .itinerary, id: itinerary.id), originalURL: originalURL, label: label,
+        to: .init(kind: .itinerary, id: boundItineraryIdentifier), originalURL: originalURL,
+        label: label,
         store: plannerStore)
       return .result(value: added.link, dialog: added.dialog)
     }
@@ -414,7 +468,8 @@
       return (
         PlannerLinkEntity(
           owner: owner, ownerTitle: ownerTitle, position: position, linkIdentifier: identifier,
-          url: url, originalURL: originalURL, label: label), dialog
+          url: url, originalURL: originalURL, label: label,
+          libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session)), dialog
       )
     }
   }
@@ -424,7 +479,8 @@
     owner: PlannerEntityReference, linkIdentifier: String, change: PlannerLinkChange,
     store: SavedPlannerStore
   ) async throws -> IntentDialog {
-    guard let identity = PlannerLinkIdentity(linkIdentifier), identity.owner == owner else {
+    guard let identity = PlannerLinkIdentity(linkIdentifier, store: store), identity.owner == owner
+    else {
       throw PlannerLinkIntentFailure(
         message: "Choose a Link saved in the selected Item or Itinerary.")
     }
@@ -460,7 +516,8 @@
         case .last: insertionIndex = updatedLinks.count
         case .before, .after:
           guard let relativeLinkIdentifier,
-            let anchor = PlannerLinkIdentity(relativeLinkIdentifier), anchor.owner == owner,
+            let anchor = PlannerLinkIdentity(relativeLinkIdentifier, store: store),
+            anchor.owner == owner,
             anchor.linkIdentifier != identity.linkIdentifier
           else {
             throw PlannerLinkIntentFailure(
@@ -537,23 +594,32 @@
   }
 
   private struct PlannerLinkIdentity {
+    let libraryBinding: String
     let owner: PlannerEntityReference
     let linkIdentifier: UUID
-    var id: String { "\(owner.kind.rawValue):\(owner.id.uuidString):\(linkIdentifier.uuidString)" }
+    var id: String {
+      plannerEncodeIntentIdentifier(
+        "\(owner.kind.rawValue):\(owner.id.uuidString):\(linkIdentifier.uuidString)",
+        binding: libraryBinding)
+    }
 
-    init(owner: PlannerEntityReference, linkIdentifier: UUID) {
+    @MainActor init(owner: PlannerEntityReference, linkIdentifier: UUID, libraryBinding: String) {
+      self.libraryBinding = libraryBinding
       self.owner = owner
       self.linkIdentifier = linkIdentifier
     }
 
-    init?(_ value: String) {
-      let components = value.split(separator: ":", omittingEmptySubsequences: false)
+    @MainActor init?(_ value: String, store: SavedPlannerStore) {
+      guard let raw = try? plannerResolveIntentIdentifier(value, store: store) else { return nil }
+      let components = raw.split(separator: ":", omittingEmptySubsequences: false)
       guard components.count == 3, let kind = PlannerEntityKind(rawValue: String(components[0])),
         kind == .item || kind == .itinerary,
         let ownerIdentifier = UUID(uuidString: String(components[1])),
         let linkIdentifier = UUID(uuidString: String(components[2]))
       else { return nil }
-      self.init(owner: .init(kind: kind, id: ownerIdentifier), linkIdentifier: linkIdentifier)
+      self.init(
+        owner: .init(kind: kind, id: ownerIdentifier), linkIdentifier: linkIdentifier,
+        libraryBinding: store.appIntentLibraryBinding ?? "unavailable")
     }
   }
 
@@ -579,7 +645,8 @@
     try Task.checkCancellation()
     return try links.enumerated().map { position, link in
       try PlannerLinkEntity(
-        owner: owner, ownerTitle: ownerTitle, position: position + 1, link: link)
+        owner: owner, ownerTitle: ownerTitle, position: position + 1, link: link,
+        libraryBinding: SavedPlannerStore.intentLibraryBinding(session: session))
     }
   }
 

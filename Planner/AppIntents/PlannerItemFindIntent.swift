@@ -142,6 +142,9 @@
     typealias PerformResult = IntentResultContainer<[PlannerItemEntity], Never, Never, Never>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
       let query = PlannerItemEntityQuery()
       query.plannerStore = plannerStore
       let items = try await query.loadItems(
@@ -149,10 +152,20 @@
           scope: scope.queryValue, text: text, completion: completion.queryValue,
           archive: archive.queryValue,
           categories: categories.map {
-            .init(ids: Set($0.map(\.id)), match: categoryMatch.queryValue)
+            .init(
+              ids: Set(try $0.map { try $0.sourceIdentifier(in: plannerStore) }),
+              match: categoryMatch.queryValue)
           },
-          tags: tags.map { .init(ids: Set($0.map(\.id)), match: tagMatch.queryValue) },
-          lists: lists.map { .init(ids: Set($0.map(\.id)), match: listMatch.queryValue) },
+          tags: tags.map {
+            .init(
+              ids: Set(try $0.map { try $0.sourceIdentifier(in: plannerStore) }),
+              match: tagMatch.queryValue)
+          },
+          lists: lists.map {
+            .init(
+              ids: Set(try $0.map { try $0.sourceIdentifier(in: plannerStore) }),
+              match: listMatch.queryValue)
+          },
           hasAddress: hasAddress, hasLinks: hasLinks, scheduled: scheduling.queryValue,
           sort: .init(mode: sort.queryValue, direction: direction.queryValue)))
       return .result(value: items)

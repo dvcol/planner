@@ -141,7 +141,7 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.itinerary(let renamed)) = await planner.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("The same Itinerary must remain readable after a title-only edit.") }
     XCTAssertEqual(renamed.content.title, "Renamed Itinerary")
     XCTAssertEqual(renamed.content.notes, "Keep the notes")
@@ -150,7 +150,7 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.itinerary(let updated)) = await planner.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("A notes-only edit must retain the live renamed Itinerary.") }
     XCTAssertEqual(updated.content.title, "Renamed Itinerary")
     XCTAssertEqual(updated.content.notes, "Updated notes")
@@ -159,11 +159,12 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
       case .source(.itinerary(let cleared)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: reopenedSession,
+        request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else {
       return XCTFail("The renamed Itinerary must survive explicit notes clearing and reopening.")
     }
-    XCTAssertEqual(cleared.source.id, itinerary.id)
+    XCTAssertEqual(cleared.source.id, itinerary.recordIdentifier)
     XCTAssertEqual(cleared.content.title, "Renamed Itinerary")
     XCTAssertNil(cleared.content.notes)
   }
@@ -310,7 +311,7 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
     creation.notes = "Keep the original notes"
     let itinerary = try await creation.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let source = PlannerEntityReference(kind: .itinerary, id: itinerary.id)
+    let source = PlannerEntityReference(kind: .itinerary, id: itinerary.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.itinerary(let before)) = await planner.read(
         session: session, request: .source(source))
@@ -418,7 +419,7 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let applied)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("The actual Itinerary edit must remain saved after reopening.") }
     XCTAssertEqual(applied.content.title, "Updated Itinerary")
     XCTAssertEqual(applied.content.notes, "Reviewed notes")
@@ -429,16 +430,16 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
       case .appliedRecoveryComplete = await reopened.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.itinerary(let recovered)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("Native retry must acknowledge the original Itinerary edit operation.") }
     XCTAssertEqual(recovered.fieldHashes, applied.fieldHashes)
     editing.notes = "Allowed after recovery"
     let _: Void = try await editing.callAsFunction(donate: false)
     guard
       case .source(.itinerary(let final)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("An explicit later Itinerary edit must succeed after native recovery.") }
-    XCTAssertEqual(final.source.id, itinerary.id)
+    XCTAssertEqual(final.source.id, itinerary.recordIdentifier)
     XCTAssertEqual(final.content.title, "Updated Itinerary")
     XCTAssertEqual(final.content.notes, "Allowed after recovery")
     XCTAssertFalse(store.isSaving)
@@ -481,7 +482,7 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.itinerary(let applied)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("The applied Itinerary archive must remain readable after reopening.") }
     XCTAssertEqual(applied.state.archived, true)
     XCTAssertEqual(applied.content.title, "Recovery Itinerary")
@@ -495,14 +496,14 @@ final class PlannerItineraryEditingIntentTests: XCTestCase {
       case .appliedRecoveryComplete = await reopened.operationStatus(
         session: session, operationId: operationIdentifier),
       case .source(.itinerary(let recovered)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("Native retry must complete the original Itinerary archive operation.") }
     XCTAssertEqual(recovered.state.archived, true)
     XCTAssertEqual(recovered.content, applied.content)
     let _: Void = try await archiving.callAsFunction(donate: false)
     guard
       case .source(.itinerary(let unarchived)) = await reopened.read(
-        session: session, request: .source(.init(kind: .itinerary, id: itinerary.id)))
+        session: session, request: .source(.init(kind: .itinerary, id: itinerary.recordIdentifier)))
     else { return XCTFail("An explicit Unarchive must succeed after native recovery retry.") }
     XCTAssertEqual(unarchived.state.archived, false)
     XCTAssertEqual(unarchived.progress.state, .empty)

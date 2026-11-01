@@ -30,7 +30,7 @@ final class PlannerDeferredContentTests: XCTestCase {
       item.subtitle, item.notes, item.locationName, item.address, item.pin,
       item.created, item.lastUpdated
     )
-    XCTAssertEqual(item.id, fixture.item.id)
+    XCTAssertEqual(item.recordIdentifier, fixture.item.id)
     XCTAssertEqual(itemValues.0, "Opening hours vary")
     XCTAssertEqual(itemValues.1, "Keep booking")
     XCTAssertEqual(itemValues.2, "Museum")
@@ -85,10 +85,10 @@ final class PlannerDeferredContentTests: XCTestCase {
     let reopened = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.item(let saved)) = await reopened.read(
-        session: session, request: .source(.init(kind: .item, id: item.id)))
+        session: session, request: .source(.init(kind: .item, id: item.recordIdentifier)))
     else { return XCTFail("The getter must retain the original saved Item.") }
     XCTAssertEqual(saved.content.notes, "Changed notes\nCafé")
-    XCTAssertEqual(saved.source.id, item.id)
+    XCTAssertEqual(saved.source.id, item.recordIdentifier)
     XCTAssertFalse(store.isSaving)
   }
   func testAbsentAndEmptyContentRemainDistinctAndMapsBookmarksDoNotInventPins() async throws {

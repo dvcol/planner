@@ -152,7 +152,7 @@ final class PlannerScheduleMutationSafetyTests: XCTestCase {
       guard case .ready(let session) = await reopened.bootstrap(),
         case .source(.schedule(let saved)) = await reopened.read(
           session: session,
-          request: .source(.init(kind: .schedule, id: created.id)))
+          request: .source(.init(kind: .schedule, id: created.recordIdentifier)))
       else { throw CancellationError() }
       XCTAssertEqual(saved.content.source, mode.owner(in: fixture))
       XCTAssertEqual(saved.content.form, expectedForm(allDay: mode.isAllDay))
@@ -281,7 +281,7 @@ final class PlannerScheduleMutationSafetyTests: XCTestCase {
         try? obstruction.restore()
       }
       let replaced = try await replace(mode, fixture: fixture)
-      XCTAssertEqual(replaced.id, fixture.allDay.id)
+      XCTAssertEqual(replaced.recordIdentifier, fixture.allDay.id)
       XCTAssertTrue(obstruction.didObstruct)
       XCTAssertTrue(fixture.store.recoveryBlocked)
       let operationIdentifier = try XCTUnwrap(

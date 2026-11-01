@@ -31,7 +31,7 @@ final class PlannerTimedScheduleOptionsTests: XCTestCase {
     let provider = PlannerTimedScheduleOptionsProvider()
     provider.plannerStore = fixture.store
     let choices = try await provider.results()
-    XCTAssertEqual(choices.map(\.id), [fixture.timed.id])
+    XCTAssertEqual(choices.map(\.recordIdentifier), [fixture.timed.id])
     XCTAssertEqual(choices.first?.title, "Renamed museum")
     XCTAssertEqual(choices.first?.allDay, false)
     XCTAssertEqual(choices.first?.start, fixture.instant)
@@ -46,7 +46,7 @@ final class PlannerTimedScheduleOptionsTests: XCTestCase {
     let provider = PlannerTimedScheduleOptionsProvider()
     provider.plannerStore = fixture.store
     let initial = try await provider.results()
-    XCTAssertEqual(initial.map(\.id), [fixture.timed.id])
+    XCTAssertEqual(initial.map(\.recordIdentifier), [fixture.timed.id])
     guard
       case .source(.schedule(let oldTimed)) = await fixture.planner.read(
         session: fixture.session, request: .source(fixture.timed)),
@@ -71,7 +71,7 @@ final class PlannerTimedScheduleOptionsTests: XCTestCase {
       else { throw CancellationError() }
     }
     let converted = try await provider.results()
-    XCTAssertEqual(converted.map(\.id), [fixture.allDay.id])
+    XCTAssertEqual(converted.map(\.recordIdentifier), [fixture.allDay.id])
     XCTAssertEqual(converted.first?.title, "Tokyo Weekend")
     XCTAssertEqual(converted.first?.sourceType, "Itinerary")
     XCTAssertEqual(converted.first?.planningTimeZone?.id, "Etc/UTC")
@@ -87,7 +87,7 @@ final class PlannerTimedScheduleOptionsTests: XCTestCase {
     let query = PlannerScheduleEntityQuery()
     query.plannerStore = fixture.store
     let ordinary = try await query.suggestedEntities()
-    XCTAssertEqual(Set(ordinary.map(\.id)), [fixture.timed.id, fixture.outside.id])
+    XCTAssertEqual(Set(ordinary.map(\.recordIdentifier)), [fixture.timed.id, fixture.outside.id])
     XCTAssertTrue(ordinary.allSatisfy(\.allDay))
     XCTAssertFalse(fixture.store.recoveryBlocked)
   }
@@ -148,7 +148,7 @@ final class PlannerTimedScheduleOptionsTests: XCTestCase {
     let provider = PlannerTimedScheduleOptionsProvider()
     provider.plannerStore = fixture.store
     let choices = try await provider.results()
-    XCTAssertEqual(choices.map(\.id), [fixture.timed.id])
+    XCTAssertEqual(choices.map(\.recordIdentifier), [fixture.timed.id])
     XCTAssertTrue(fixture.store.recoveryBlocked)
     XCTAssertEqual(fixture.store.incompleteRecoveryOperationIdentifiers, [operation])
     guard case .exported(let after) = await reopened.exportData(session: session)

@@ -1,3 +1,4 @@
+import CloudKit
 import Combine
 import CryptoKit
 import Foundation
@@ -48,7 +49,28 @@ enum SavedReviewedChangeResult {
 
 @MainActor @Observable
 final class SavedPlannerStore {
-  private let planner: PlannerCore.Planner?
+  private var planner: PlannerCore.Planner?
+  @ObservationIgnored private var storageConfiguration: PlannerStorageConfiguration?
+  @ObservationIgnored private var personalOwnershipBinding: String?
+  private(set) var activeLibrary: PlannerSharedLibrary?
+  private(set) var receivedLibraries: [PlannerSharedLibrary] = []
+  private(set) var sharingScope: PlannerSharingScope = .off
+  private(set) var isManagingSharing = false
+  private var activeIntentActions = 0
+  private(set) var librarySwitchBlockedWindows: Set<UUID> = []
+
+  var canChangeLibrary: Bool {
+    !isSaving && !isOpening && !isSynchronizing && !isManagingSharing && activeIntentActions == 0
+      && librarySwitchBlockedWindows.isEmpty
+  }
+  var libraryTitle: String { activeLibrary?.title ?? "Personal library" }
+  var sharedLibraryIsReadOnly: Bool { activeLibrary?.canEdit == false }
+  var librarySharing: PlannerLibrarySharing? {
+    guard let configuration = storageConfiguration,
+      case .privateCloud(let identifier) = configuration.storageMode
+    else { return nil }
+    return PlannerLibrarySharing(containerIdentifier: identifier)
+  }
   @ObservationIgnored private var deviceOnlyConfiguration: PlannerStorageConfiguration?
   private(set) var hasPrivateSynchronization = false
   private(set) var synchronizationTitle = "Saved on this device"
@@ -82,7 +104,7 @@ final class SavedPlannerStore {
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
   var canCreate: Bool {
-    isReady && !isSaving && !recoveryBlocked
+    isReady && !isSaving && !recoveryBlocked && !sharedLibraryIsReadOnly && !isManagingSharing
       && !isReconnectingChanges && !isSynchronizing && changeObservationFailure == nil
   }
   var canReconnectChanges: Bool {
@@ -99,10 +121,27 @@ final class SavedPlannerStore {
   var currentDatasetIdentifier: UUID? { session?.datasetId }
 
   var canCopyDevicePlans: Bool {
-    guard session?.ownershipBinding.hasPrefix("private-cloud-v1:") == true,
+    guard activeLibrary == nil, session?.ownershipBinding.hasPrefix("private-cloud-v1:") == true,
       let deviceOnlyConfiguration
     else { return false }
     return FileManager.default.fileExists(atPath: deviceOnlyConfiguration.storeURL.path)
+  }
+
+  /// Cloud bindings are stable across the same account's devices; local dataset IDs are not.
+  var appIntentLibraryBinding: String? {
+    guard let session else { return nil }
+    return Self.intentLibraryBinding(session: session)
+  }
+
+  /// The same cloud account/library has one binding across devices; local datasets remain distinct.
+  static func intentLibraryBinding(session: PlannerDatasetSession) -> String {
+    let identity: String
+    if session.ownershipBinding.hasPrefix("private-cloud-v1:") {
+      identity = session.ownershipBinding
+    } else {
+      identity = session.datasetId.uuidString + ":" + session.ownershipBinding
+    }
+    return SHA256.hash(data: Data(identity.utf8)).map { String(format: "%02x", $0) }.joined()
   }
 
   var devicePreferenceNamespace: String? {
@@ -112,6 +151,8 @@ final class SavedPlannerStore {
   }
 
   init(configuration: PlannerStorageConfiguration) {
+    storageConfiguration = configuration
+    activeLibrary = configuration.sharedLibrary
     planner = PlannerCore.Planner(configuration: configuration)
     if case .privateCloud = configuration.storageMode {
       hasPrivateSynchronization = true
@@ -162,6 +203,7 @@ final class SavedPlannerStore {
         localDirectory: directory, sharedDirectory: sharedDirectory)
       let configuration =
         isLocalPrototype ? local : try PlannerNativeStorage.privateConfiguration(local)
+      storageConfiguration = configuration
       planner = PlannerCore.Planner(configuration: configuration)
       if case .privateCloud = configuration.storageMode {
         hasPrivateSynchronization = true
@@ -197,6 +239,23 @@ final class SavedPlannerStore {
     switch await planner.bootstrap() {
     case .ready(let ready):
       session = ready
+      if activeLibrary == nil {
+        personalOwnershipBinding = ready.ownershipBinding
+        if hasPrivateSynchronization,
+          let data = sharingPreferences.data(forKey: "planner.library." + ready.ownershipBinding)
+        {
+          do {
+            let library = try JSONDecoder().decode(PlannerSharedLibrary.self, from: data)
+            isOpening = false
+            await switchLibrary(to: library)
+            return
+          } catch {
+            openingFailure = "The selected library could not be read. Choose a library in Settings."
+            session = nil
+            return
+          }
+        }
+      }
       await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
     case .unavailable(let reason): openingFailure = reason.message
@@ -204,6 +263,134 @@ final class SavedPlannerStore {
       openingFailure = "Open Plan 2Do once to set up its shared data before using Share."
     case .mainAppMigrationRequired:
       openingFailure = "Open Plan 2Do to update its shared data before using Share."
+    }
+  }
+
+  private var sharingPreferences: UserDefaults {
+    if let group = Bundle.main.object(forInfoDictionaryKey: "PlannerAppGroupIdentifier") as? String,
+      let preferences = UserDefaults(suiteName: group)
+    {
+      return preferences
+    }
+    return .standard
+  }
+
+  /// Keep external choices, deferred reads and their results within one active library.
+  func beginAppIntentAction() async throws {
+    _ = try await appIntentContext()
+    activeIntentActions += 1
+  }
+
+  func endAppIntentAction() {
+    assert(activeIntentActions > 0)
+    activeIntentActions -= 1
+  }
+
+  func setLibrarySwitchBlocked(_ blocked: Bool, window: UUID) {
+    if blocked {
+      librarySwitchBlockedWindows.insert(window)
+    } else {
+      librarySwitchBlockedWindows.remove(window)
+    }
+  }
+
+  func refreshSharing() async {
+    guard let manager = librarySharing else { return }
+    do {
+      receivedLibraries = try await manager.acceptedLibraries()
+      if activeLibrary == nil, let planner, let session {
+        sharingScope = try await planner.sharingScope(session: session)
+      }
+    } catch { alertMessage = (error as? PlannerFailure)?.message ?? error.localizedDescription }
+  }
+
+  func switchLibrary(to library: PlannerSharedLibrary?) async {
+    guard canChangeLibrary, let base = storageConfiguration,
+      let ownership = personalOwnershipBinding
+    else {
+      alertMessage = "Finish open editors and saves before changing libraries."
+      return
+    }
+    isOpening = true
+    changeObservationTask?.cancel()
+    recoveryRefresh?.task.cancel()
+    await planner?.close()
+    session = nil
+    activeLibrary = library
+    changeObservationFailure = nil
+    openingFailure = nil
+    let key = "planner.library." + ownership
+    do {
+      if let library {
+        sharingPreferences.set(try JSONEncoder().encode(library), forKey: key)
+      } else {
+        sharingPreferences.removeObject(forKey: key)
+      }
+      let configuration = PlannerStorageConfiguration(
+        storeURL: base.storeURL, controlURL: base.controlURL,
+        recoveryDirectoryURL: base.recoveryDirectoryURL, processRole: base.processRole,
+        storageMode: base.storageMode, sharedLibrary: library)
+      let next = PlannerCore.Planner(configuration: configuration)
+      planner = next
+      switch await next.bootstrap() {
+      case .ready(let ready):
+        session = ready
+        await observeChanges(next, session: ready)
+        await refreshRecoveryStatus()
+      case .unavailable(let reason): openingFailure = reason.message
+      case .mainAppSetupRequired: openingFailure = "Open Plan 2Do to prepare the selected library."
+      case .mainAppMigrationRequired:
+        openingFailure = "Open Plan 2Do to update the selected library."
+      }
+    } catch { openingFailure = error.localizedDescription }
+    changeRevision = UUID()
+    isOpening = false
+  }
+
+  func acceptSharingInvitation(_ metadata: CKShare.Metadata) async {
+    guard let manager = librarySharing else { return }
+    do {
+      let library = try await manager.accept(metadata)
+      receivedLibraries.removeAll { $0.id == library.id }
+      receivedLibraries.append(library)
+      alertMessage = "Library added. Choose it in Settings → Sharing when you are ready."
+    } catch { alertMessage = (error as? PlannerFailure)?.message ?? error.localizedDescription }
+  }
+
+  func acceptSharingInvitation(url: URL) async {
+    guard let manager = librarySharing else { return }
+    do {
+      let library = try await manager.accept(url: url)
+      receivedLibraries.removeAll { $0.id == library.id }
+      receivedLibraries.append(library)
+      alertMessage = "Library added. Choose it in Settings → Sharing when you are ready."
+    } catch { alertMessage = (error as? PlannerFailure)?.message ?? error.localizedDescription }
+  }
+
+  func previewSharing(_ scope: PlannerSharingScope) async throws -> PlannerSharingPreview {
+    guard let planner, let session else { throw CocoaError(.fileReadUnknown) }
+    return try await planner.previewSharing(session: session, scope: scope)
+  }
+
+  func changeSharing(to scope: PlannerSharingScope) async -> CKShare? {
+    guard let planner, let session, canChangeLibrary, activeLibrary == nil else { return nil }
+    isManagingSharing = true
+    defer { isManagingSharing = false }
+    do {
+      let invitation = try await planner.setSharing(session: session, scope: scope)
+      sharingScope = scope
+      return invitation
+    } catch {
+      alertMessage = (error as? PlannerFailure)?.message ?? error.localizedDescription
+      return nil
+    }
+  }
+
+  func currentSharingInvitation() async -> CKShare? {
+    guard let planner, let session, activeLibrary == nil else { return nil }
+    do { return try await planner.sharingInvitation(session: session) } catch {
+      alertMessage = (error as? PlannerFailure)?.message ?? error.localizedDescription
+      return nil
     }
   }
 

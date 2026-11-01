@@ -26,11 +26,11 @@ final class PlannerScheduleCreationIntentTests: XCTestCase {
     XCTAssertEqual(created.start, expectedStart)
     XCTAssertNil(created.end)
     XCTAssertEqual(created.planningTimeZone?.id, "Asia/Tokyo")
-    XCTAssertNotEqual(created.id, fixture.itemSchedule.id)
+    XCTAssertNotEqual(created.recordIdentifier, fixture.itemSchedule.id)
     let reopened = PlannerCore.Planner(configuration: fixture.configuration)
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.schedule(let saved)) = await reopened.read(
-        session: session, request: .source(.init(kind: .schedule, id: created.id)))
+        session: session, request: .source(.init(kind: .schedule, id: created.recordIdentifier)))
     else { return XCTFail("Return the exact Schedule identity that was durably saved.") }
     XCTAssertEqual(saved.content.source, fixture.item)
     XCTAssertEqual(
@@ -97,7 +97,7 @@ final class PlannerScheduleCreationIntentTests: XCTestCase {
     for created in [earlier, later, crossing, equalClock, firstHalfHour, secondHalfHour] {
       guard
         case .source(.schedule(let saved)) = await reopened.read(
-          session: session, request: .source(.init(kind: .schedule, id: created.id)))
+          session: session, request: .source(.init(kind: .schedule, id: created.recordIdentifier)))
       else { throw CancellationError() }
       XCTAssertEqual(saved.content.source, fixture.item)
       XCTAssertEqual(
@@ -217,7 +217,7 @@ final class PlannerScheduleCreationIntentTests: XCTestCase {
       guard
         case .source(.schedule(let saved)) = await reopened.read(
           session: session,
-          request: .source(.init(kind: .schedule, id: booking.id)))
+          request: .source(.init(kind: .schedule, id: booking.recordIdentifier)))
       else { throw CancellationError() }
       XCTAssertEqual(saved.content.source, owner)
       XCTAssertEqual(
@@ -250,7 +250,7 @@ final class PlannerScheduleCreationIntentTests: XCTestCase {
     guard case .ready(let session) = await reopened.bootstrap(),
       case .source(.schedule(let saved)) = await reopened.read(
         session: session,
-        request: .source(.init(kind: .schedule, id: created.id)))
+        request: .source(.init(kind: .schedule, id: created.recordIdentifier)))
     else { throw CancellationError() }
     XCTAssertEqual(saved.content.source, fixture.itinerary)
     let after = try await readEstimateResetSources(fixture, planner: reopened, session: session)

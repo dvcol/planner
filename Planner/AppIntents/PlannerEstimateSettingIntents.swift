@@ -50,8 +50,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItemIdentifier = try item.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerEstimate(
-        source: .init(kind: .item, id: item.id), quantity: quantity,
+        source: .init(kind: .item, id: boundItemIdentifier), quantity: quantity,
         unit: unit, additionalMinutes: additionalMinutes, store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -73,8 +77,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundListIdentifier = try list.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerEstimate(
-        source: .init(kind: .list, id: list.id), quantity: quantity,
+        source: .init(kind: .list, id: boundListIdentifier), quantity: quantity,
         unit: unit, additionalMinutes: additionalMinutes, store: plannerStore)
       return .result(dialog: dialog)
     }
@@ -96,8 +104,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
       let dialog = try await setPlannerEstimate(
-        source: .init(kind: .itinerary, id: itinerary.id), quantity: quantity,
+        source: .init(kind: .itinerary, id: boundItineraryIdentifier), quantity: quantity,
         unit: unit, additionalMinutes: additionalMinutes, store: plannerStore)
       return .result(dialog: dialog)
     }

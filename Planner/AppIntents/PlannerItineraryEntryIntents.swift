@@ -23,10 +23,11 @@
       DisplayRepresentation(title: "\(title)", subtitle: "\(context)")
     }
 
-    init(
-      id: String, title: String, context: String, kind: PlannerItineraryEntryKind, archived: Bool
+    @MainActor init(
+      id: String, title: String, context: String, kind: PlannerItineraryEntryKind, archived: Bool,
+      libraryBinding: String = ""
     ) {
-      self.id = id
+      self.id = plannerEncodeIntentIdentifier(id, binding: libraryBinding)
       self.title = title
       self.context = context
       self.kind = kind
@@ -45,9 +46,13 @@
     @MainActor func entities(for identifiers: [String]) async throws
       -> [PlannerItineraryEntryEntity]
     {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       _ = try await plannerStore.appIntentContext()
       var seenIdentifiers: Set<String> = []
-      let identities = identifiers.compactMap(PlannerItineraryEntryIdentity.init).filter {
+      let identities = identifiers.compactMap {
+        PlannerItineraryEntryIdentity($0, store: plannerStore)
+      }.filter {
         seenIdentifiers.insert($0.id).inserted
       }
       var seenItineraries: Set<UUID> = []
@@ -65,10 +70,13 @@
 
     @MainActor func entities(matching string: String) async throws -> [PlannerItineraryEntryEntity]
     {
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
       _ = try await plannerStore.appIntentContext()
-      guard
-        let identifier = removalIntent?.itinerary.id ?? reorderIntent?.itinerary.id
-          ?? bulkCompletionIntent?.itinerary.id
+      let removalIdentifier = try removalIntent?.itinerary.sourceIdentifier(in: plannerStore)
+      let reorderIdentifier = try reorderIntent?.itinerary.sourceIdentifier(in: plannerStore)
+      let bulkIdentifier = try bulkCompletionIntent?.itinerary.sourceIdentifier(in: plannerStore)
+      guard let identifier = removalIdentifier ?? reorderIdentifier ?? bulkIdentifier
       else { return [] }
       let entries = try await loadEntries(in: identifier, matching: string)
       if bulkCompletionIntent != nil { return entries.filter { $0.kind == .list } }
@@ -117,7 +125,8 @@
         guard
           let identity = PlannerItineraryEntryIdentity(
             itineraryIdentifier: itineraryIdentifier, entryIdentifier: entry.id,
-            source: entry.source)
+            source: entry.source,
+            libraryBinding: plannerStore.appIntentLibraryBinding ?? "unavailable")
         else {
           throw PlannerItineraryEntryIntentFailure(
             message: "Planner could not identify a route entry.")
@@ -201,8 +210,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      guard let identity = PlannerItineraryEntryIdentity(entry.id),
-        identity.itineraryIdentifier == itinerary.id
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      guard let identity = PlannerItineraryEntryIdentity(entry.id, store: plannerStore),
+        identity.itineraryIdentifier == boundItineraryIdentifier
       else {
         throw PlannerItineraryEntryIntentFailure(
           message: "Choose an entry from the selected Itinerary.")
@@ -215,7 +228,8 @@
           message: "This entry no longer belongs to the selected Itinerary.")
       }
       let result = try await plannerStore.executeAppIntent(
-        .removeItineraryEntry(itineraryId: itinerary.id, entryId: identity.entryIdentifier))
+        .removeItineraryEntry(
+          itineraryId: boundItineraryIdentifier, entryId: identity.entryIdentifier))
       switch result.outcome {
       case .rejected(let reason): throw PlannerItineraryEntryIntentFailure(message: reason.message)
       case .unverified:
@@ -264,8 +278,12 @@
     typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
 
     @MainActor func perform() async throws -> PerformResult {
-      guard let identity = PlannerItineraryEntryIdentity(entry.id),
-        identity.itineraryIdentifier == itinerary.id
+      try await plannerStore.beginAppIntentAction()
+      defer { plannerStore.endAppIntentAction() }
+      _ = try await plannerStore.appIntentContext()
+      let boundItineraryIdentifier = try itinerary.sourceIdentifier(in: plannerStore)
+      guard let identity = PlannerItineraryEntryIdentity(entry.id, store: plannerStore),
+        identity.itineraryIdentifier == boundItineraryIdentifier
       else {
         throw PlannerItineraryEntryIntentFailure(
           message: "Choose an entry from the selected Itinerary.")
@@ -276,8 +294,9 @@
       case .first: placement = .first
       case .last: placement = .last
       case .before, .after:
-        guard let relativeEntry, let anchor = PlannerItineraryEntryIdentity(relativeEntry.id),
-          anchor.itineraryIdentifier == itinerary.id
+        guard let relativeEntry,
+          let anchor = PlannerItineraryEntryIdentity(relativeEntry.id, store: plannerStore),
+          anchor.itineraryIdentifier == boundItineraryIdentifier
         else {
           throw PlannerItineraryEntryIntentFailure(
             message: "Choose a relative entry from the same Itinerary.")
@@ -299,7 +318,8 @@
       }
       let result = try await plannerStore.executeAppIntent(
         .reorderItineraryEntry(
-          itineraryId: itinerary.id, entryId: identity.entryIdentifier, placement: placement))
+          itineraryId: boundItineraryIdentifier, entryId: identity.entryIdentifier,
+          placement: placement))
       switch result.outcome {
       case .rejected(let reason): throw PlannerItineraryEntryIntentFailure(message: reason.message)
       case .unverified:
@@ -323,17 +343,24 @@
   }
 
   struct PlannerItineraryEntryIdentity {
+    let libraryBinding: String
     let itineraryIdentifier: UUID
     let entryIdentifier: UUID
     let sourceIdentifier: UUID
     let kind: PlannerItineraryEntryKind
 
     var id: String {
-      "v1/entry/\(itineraryIdentifier)/\(entryIdentifier)/\(kind.rawValue)/\(sourceIdentifier)"
+      plannerEncodeIntentIdentifier(
+        "v1/entry/\(itineraryIdentifier)/\(entryIdentifier)/\(kind.rawValue)/\(sourceIdentifier)",
+        binding: libraryBinding)
     }
 
-    init?(_ identifier: String) {
-      let components = identifier.split(separator: "/", omittingEmptySubsequences: false)
+    @MainActor init?(_ identifier: String, store: SavedPlannerStore) {
+      guard let raw = try? plannerResolveIntentIdentifier(identifier, store: store) else {
+        return nil
+      }
+      libraryBinding = store.appIntentLibraryBinding ?? "unavailable"
+      let components = raw.split(separator: "/", omittingEmptySubsequences: false)
       guard components.count == 6, components[0] == "v1", components[1] == "entry",
         let itinerary = UUID(uuidString: String(components[2])),
         let entry = UUID(uuidString: String(components[3])),
@@ -346,7 +373,11 @@
       self.kind = kind
     }
 
-    init?(itineraryIdentifier: UUID, entryIdentifier: UUID, source: PlannerEntityReference) {
+    @MainActor init?(
+      itineraryIdentifier: UUID, entryIdentifier: UUID, source: PlannerEntityReference,
+      libraryBinding: String
+    ) {
+      self.libraryBinding = libraryBinding
       switch source.kind {
       case .item: kind = .item
       case .list: kind = .list

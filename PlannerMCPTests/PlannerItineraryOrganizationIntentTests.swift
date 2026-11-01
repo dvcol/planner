@@ -29,8 +29,8 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     adding.itinerary = itinerary
     let _: Void = try await adding.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let itinerarySource = PlannerEntityReference(kind: .itinerary, id: itinerary.id)
-    let itemSource = PlannerEntityReference(kind: .item, id: item.id)
+    let itinerarySource = PlannerEntityReference(kind: .itinerary, id: itinerary.recordIdentifier)
+    let itemSource = PlannerEntityReference(kind: .item, id: item.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.itinerary(let first)) = await planner.read(
         session: session, request: .source(itinerarySource)),
@@ -40,7 +40,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     XCTAssertEqual(source, itemSource)
     XCTAssertEqual(first.references.count, 1)
     let firstAppearance = PlannerAppearance.directItineraryItem(
-      itineraryId: itinerary.id, entryId: firstIdentifier)
+      itineraryId: itinerary.recordIdentifier, entryId: firstIdentifier)
     guard
       case .appearance(let initial) = await planner.read(
         session: session, request: .appearance(firstAppearance))
@@ -84,7 +84,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     XCTAssertEqual(savedItem.state.globalDone, false)
     XCTAssertEqual(itemCatalog.rows, [.source(itemSource)])
     let secondAppearance = PlannerAppearance.directItineraryItem(
-      itineraryId: itinerary.id, entryId: secondIdentifier)
+      itineraryId: itinerary.recordIdentifier, entryId: secondIdentifier)
     for (appearance, expectedLocalDone) in [(firstAppearance, true), (secondAppearance, false)] {
       guard
         case .appearance(let current) = await reopened.read(
@@ -115,8 +115,8 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     membershipAddition.list = list
     let _: Void = try await membershipAddition.callAsFunction(donate: false)
     let planner = PlannerCore.Planner(configuration: configuration)
-    let listSource = PlannerEntityReference(kind: .list, id: list.id)
-    let museumSource = PlannerEntityReference(kind: .item, id: museum.id)
+    let listSource = PlannerEntityReference(kind: .list, id: list.recordIdentifier)
+    let museumSource = PlannerEntityReference(kind: .item, id: museum.recordIdentifier)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.list(let originalList)) = await planner.read(
         session: session, request: .source(listSource)),
@@ -130,12 +130,12 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
       else { throw CancellationError() }
     }
     let standalone = PlannerAppearance.listMembership(
-      listId: list.id, membershipId: membershipIdentifier)
+      listId: list.recordIdentifier, membershipId: membershipIdentifier)
     try await save(.setCompletion(scope: .appearance(standalone), done: true))
     let planCreation = CreatePlannerItineraryIntent()
     planCreation.title = "Tokyo Weekend"
     let itinerary = try await planCreation.callAsFunction(donate: false)
-    let itinerarySource = PlannerEntityReference(kind: .itinerary, id: itinerary.id)
+    let itinerarySource = PlannerEntityReference(kind: .itinerary, id: itinerary.recordIdentifier)
     let addingList = AddPlannerListToItineraryIntent()
     addingList.list = list
     addingList.itinerary = itinerary
@@ -147,7 +147,8 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     else { return XCTFail("Adding the List must save a live branch.") }
     XCTAssertEqual(firstSource, listSource)
     let firstAppearance = PlannerAppearance.expandedListItem(
-      itineraryId: itinerary.id, listEntryId: firstIdentifier, membershipId: membershipIdentifier)
+      itineraryId: itinerary.recordIdentifier, listEntryId: firstIdentifier,
+      membershipId: membershipIdentifier)
     guard
       case .appearance(let initial) = await planner.read(
         session: session, request: .appearance(firstAppearance))
@@ -203,9 +204,10 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     XCTAssertEqual(savedList.progress.totalCount, 2)
     XCTAssertEqual(savedList.progress.doneCount, 1)
     let secondAppearance = PlannerAppearance.expandedListItem(
-      itineraryId: itinerary.id, listEntryId: entries[2].0, membershipId: membershipIdentifier)
+      itineraryId: itinerary.recordIdentifier, listEntryId: entries[2].0,
+      membershipId: membershipIdentifier)
     let directAppearance = PlannerAppearance.directItineraryItem(
-      itineraryId: itinerary.id, entryId: entries[1].0)
+      itineraryId: itinerary.recordIdentifier, entryId: entries[1].0)
     for (appearance, expectedLocalDone) in [
       (standalone, true), (firstAppearance, true), (directAppearance, false),
       (secondAppearance, false),
@@ -263,16 +265,16 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
         XCTAssertFalse(error.localizedDescription.isEmpty)
       }
     }
-    for identifier in [UUID(), list.id] {
+    for identifier in [UUID(), list.recordIdentifier] {
       await requireRejectedItem(
         .init(id: identifier, title: "Unavailable Item", done: false, archived: false),
         itinerary: survivor)
     }
-    for identifier in [UUID(), item.id] {
+    for identifier in [UUID(), item.recordIdentifier] {
       await requireRejectedList(
         .init(id: identifier, name: "Unavailable List", archived: false), itinerary: survivor)
     }
-    for identifier in [UUID(), list.id] {
+    for identifier in [UUID(), list.recordIdentifier] {
       let missing = PlannerItineraryEntity(
         id: identifier, title: "Unavailable route", archived: false)
       await requireRejectedItem(item, itinerary: missing)
@@ -291,11 +293,11 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
         ).outcome
       else { throw CancellationError() }
     }
-    try await delete(.init(kind: .itinerary, id: removed.id))
+    try await delete(.init(kind: .itinerary, id: removed.recordIdentifier))
     await requireRejectedItem(item, itinerary: removed)
     await requireRejectedList(list, itinerary: removed)
-    try await delete(.init(kind: .item, id: item.id))
-    try await delete(.init(kind: .list, id: list.id))
+    try await delete(.init(kind: .item, id: item.recordIdentifier))
+    try await delete(.init(kind: .list, id: list.recordIdentifier))
     await requireRejectedItem(item, itinerary: survivor)
     await requireRejectedList(list, itinerary: survivor)
     let reopened = PlannerCore.Planner(configuration: configuration)
@@ -309,9 +311,10 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
       case .snapshot(let items) = await reopened.query(
         .init(session: reopenedSession, request: .items(.init(completion: .all, archive: .all)))),
       case .source(.itinerary(let retained)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .itinerary, id: survivor.id)))
+        session: reopenedSession,
+        request: .source(.init(kind: .itinerary, id: survivor.recordIdentifier)))
     else { return XCTFail("Rejected additions must leave the surviving dataset readable.") }
-    XCTAssertEqual(plans.rows, [.source(.init(kind: .itinerary, id: survivor.id))])
+    XCTAssertEqual(plans.rows, [.source(.init(kind: .itinerary, id: survivor.recordIdentifier))])
     XCTAssertTrue(items.rows.isEmpty)
     XCTAssertTrue(lists.rows.isEmpty)
     XCTAssertTrue(retained.references.isEmpty)
@@ -334,7 +337,7 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
     let planCreation = CreatePlannerItineraryIntent()
     planCreation.title = "Unchanged route"
     let itinerary = try await planCreation.callAsFunction(donate: false)
-    let source = PlannerEntityReference(kind: .itinerary, id: itinerary.id)
+    let source = PlannerEntityReference(kind: .itinerary, id: itinerary.recordIdentifier)
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap(),
       case .source(.itinerary(let before)) = await planner.read(
@@ -371,9 +374,9 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
       case .source(.itinerary(let after)) = await reopened.read(
         session: reopenedSession, request: .source(source)),
       case .source(.item(let retainedItem)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .item, id: item.id))),
+        session: reopenedSession, request: .source(.init(kind: .item, id: item.recordIdentifier))),
       case .source(.list(let retainedList)) = await reopened.read(
-        session: reopenedSession, request: .source(.init(kind: .list, id: list.id)))
+        session: reopenedSession, request: .source(.init(kind: .list, id: list.recordIdentifier)))
     else { return XCTFail("Cancellation must preserve the actual original sources.") }
     XCTAssertTrue(after.references.isEmpty)
     XCTAssertEqual(after.fieldHashes, before.fieldHashes)
@@ -439,8 +442,9 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
       NotificationCenter.default.removeObserver(observer)
       try obstruction.restore()
       let reopened = PlannerCore.Planner(configuration: configuration)
-      let destinationSource = PlannerEntityReference(kind: .itinerary, id: destination.id)
-      let otherSource = PlannerEntityReference(kind: .itinerary, id: other.id)
+      let destinationSource = PlannerEntityReference(
+        kind: .itinerary, id: destination.recordIdentifier)
+      let otherSource = PlannerEntityReference(kind: .itinerary, id: other.recordIdentifier)
       guard case .ready(let session) = await reopened.bootstrap(),
         case .source(.itinerary(let applied)) = await reopened.read(
           session: session, request: .source(destinationSource)),
@@ -454,9 +458,9 @@ final class PlannerItineraryOrganizationIntentTests: XCTestCase {
       XCTAssertEqual(owner, destinationSource)
       let expectedSource: PlannerEntityReference
       if addsList {
-        expectedSource = .init(kind: .list, id: list.id)
+        expectedSource = .init(kind: .list, id: list.recordIdentifier)
       } else {
-        expectedSource = .init(kind: .item, id: item.id)
+        expectedSource = .init(kind: .item, id: item.recordIdentifier)
       }
       XCTAssertEqual(source, expectedSource)
       XCTAssertEqual(applied.references.count, 1)

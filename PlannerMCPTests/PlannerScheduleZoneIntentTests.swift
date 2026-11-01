@@ -137,7 +137,9 @@ final class PlannerScheduleZoneIntentTests: XCTestCase {
     else { return XCTFail("The cached timed choice must now name an all-day form.") }
     let change = SetPlannerScheduleTimeZoneIntent()
     change.planningTimeZone = try XCTUnwrap(PlannerTimeZoneEntity(identifier: "Europe/Paris"))
-    for identifier in [cached.id, fixture.allDay.id, fixture.outside.id, fixture.item.id, UUID()] {
+    for identifier in [
+      cached.recordIdentifier, fixture.allDay.id, fixture.outside.id, fixture.item.id, UUID(),
+    ] {
       change.schedule = try PlannerScheduleEntity(
         schedule: .init(kind: .schedule, id: identifier), owner: fixture.item,
         title: "Cached",

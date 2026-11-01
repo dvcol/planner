@@ -1,3 +1,4 @@
+import CloudKit
 import Foundation
 import Observation
 import SwiftData
@@ -10,6 +11,7 @@ public actor Planner {
   private var accountObservation: PlannerAccountObservation = .unknown
   private var cloudAccountObservation: PlannerCloudAccountObservation?
   private var accountResolutionId = UUID()
+  private var sharingChangeInProgress = false
   private var privateSync: PlannerPrivateSync?
   private var privateSyncGeneration = UUID()
   private var privateSyncObservation: Task<Void, Never>?
@@ -364,11 +366,13 @@ public actor Planner {
     }
   }
 
-  private var writerVersion: Int { privateOwnershipBinding == nil ? 23 : 24 }
+  private var writerVersion: Int { privateOwnershipBinding == nil ? 23 : 25 }
 
   private var privateOwnershipBinding: String? {
     guard let privateCloudStorage, let privateCloudOwner else { return nil }
-    return privateCloudStorage.binding(owner: privateCloudOwner)
+    let personal = privateCloudStorage.binding(owner: privateCloudOwner)
+    guard let library = baseConfiguration.sharedLibrary else { return personal }
+    return personal + ":" + library.id
   }
 
   private func selectStorage() async throws -> Bool {
@@ -395,6 +399,28 @@ public actor Planner {
     guard accountResolutionId == resolutionId else {
       throw PlannerFailure("staleDatasetSession", "The iCloud account changed during setup; retry.")
     }
+    var verifiedLibraryAccess = false
+    if let library = baseConfiguration.sharedLibrary, case .available = account {
+      let sharing = PlannerLibrarySharing(containerIdentifier: containerIdentifier)
+      do {
+        let share = try await CKContainer(identifier: containerIdentifier).sharedCloudDatabase
+          .record(
+            for: library.shareID)
+        guard let share = share as? CKShare,
+          try await sharing.verifiedLibrary(share: share) == library
+        else {
+          throw PlannerFailure(
+            "sharingUnavailable", "This library's access has changed. Select it again in Settings.")
+        }
+        verifiedLibraryAccess = true
+      } catch let error as CKError
+        where
+        [.networkUnavailable, .networkFailure, .serviceUnavailable, .accountTemporarilyUnavailable]
+        .contains(error.code)
+      {
+        // Cached plans stay editable; the engine rechecks permission before any upload.
+      }
+    }
     return try coordinated {
       let previous = try storage.selectedOwner()
       let owner: String?
@@ -414,6 +440,24 @@ public actor Planner {
       privateCloudOwner = owner
       accountObservation = account.observation
       configuration = storage.configuration(base: baseConfiguration, owner: owner)
+      if baseConfiguration.sharedLibrary != nil {
+        guard owner != nil else {
+          throw PlannerFailure(
+            "privateCloudUnavailable", "Private iCloud is required to accept a library.")
+        }
+        let revoked = configuration.controlURL.deletingLastPathComponent().appendingPathComponent(
+          "sharing-revoked")
+        if verifiedLibraryAccess, FileManager.default.fileExists(atPath: revoked.path) {
+          try plannerWriteDurably(Data("verified".utf8), to: revoked)
+        }
+        if FileManager.default.fileExists(atPath: revoked.path) {
+          let access = try Data(contentsOf: revoked)
+          guard access == Data("verified".utf8) else {
+            throw PlannerFailure(
+              "sharingRevoked", "Access to this library ended. Personal plans are unchanged.")
+          }
+        }
+      }
       return true
     }
   }
@@ -1120,6 +1164,9 @@ public actor Planner {
     do {
       return try coordinated {
         let identity = try validateSession(session)
+        if let library = baseConfiguration.sharedLibrary {
+          try PlannerSharingPermissions.validate(command, library: library)
+        }
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
         try ensureCanonicalNativeGraph(identity: identity, context: context)
@@ -1250,6 +1297,12 @@ public actor Planner {
     do {
       let result: PlannerOperationResult = try coordinated {
         let identity = try validateSession(operation.session)
+        guard !sharingChangeInProgress else {
+          throw PlannerFailure("sharingBusy", "Finish changing sharing before saving.")
+        }
+        if let library = baseConfiguration.sharedLibrary {
+          try PlannerSharingPermissions.validate(operation.command, library: library)
+        }
         let container = try openContainer()
         let context = ModelContext(container)
         context.autosaveEnabled = false
@@ -10380,7 +10433,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...24).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...25).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")
@@ -10431,6 +10484,90 @@ public actor Planner {
 }
 
 extension Planner {
+  /// Verify the exact scoped records through the ordinary native graph validator before exposure.
+  fileprivate func validateSharingProjection(nodes: [PlannerCloudNode], scope: PlannerSharingScope)
+    throws
+  {
+    let names = try PlannerSharingProjection(nodes: nodes, scope: scope).names
+    let schema = Schema(PlannerPrivateSchemaV20.models)
+    let container = try ModelContainer(
+      for: schema, configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: true))
+    let context = ModelContext(container)
+    context.autosaveEnabled = false
+    try PlannerCloudGraph.stage(
+      .init(upserts: nodes.filter { names.contains($0.name) }, deletions: [], bases: [:]),
+      in: context)
+    _ = try maintenanceSnapshot(context).validated()
+  }
+
+  public func previewSharing(session: PlannerDatasetSession, scope: PlannerSharingScope) throws
+    -> PlannerSharingPreview
+  {
+    try coordinated {
+      let identity = try validateSession(session)
+      guard baseConfiguration.sharedLibrary == nil else {
+        throw PlannerFailure("sharingOwnerRequired", "Only the owner can preview sharing scope.")
+      }
+      let context = ModelContext(try openContainer())
+      context.autosaveEnabled = false
+      try ensureCanonicalNativeGraph(identity: identity, context: context)
+      let nodes = try PlannerCloudGraph.nodes(in: context)
+      let names = try PlannerSharingProjection(nodes: nodes, scope: scope).names
+      try validateSharingProjection(nodes: nodes, scope: scope)
+      let selected = nodes.filter { names.contains($0.name) }
+      let sources = try selected.compactMap { node -> PlannerEntityReference? in
+        guard let kind = PlannerEntityKind(rawValue: node.kind) else { return nil }
+        return .init(kind: kind, id: try node.uuid("id"))
+      }
+      return .init(
+        sources: sources, membershipCount: selected.filter { $0.kind == "membership" }.count,
+        recordCount: names.count)
+    }
+  }
+
+  public func close() async {
+    let worker = privateSync
+    invalidateAccountSessions()
+    await worker?.stop()
+  }
+
+  public func sharingScope(session: PlannerDatasetSession) async throws -> PlannerSharingScope {
+    _ = try coordinated { try validateSession(session) }
+    guard baseConfiguration.sharedLibrary == nil, let worker = privateSync else {
+      throw PlannerFailure(
+        "sharingUnavailable",
+        "Open your personal library with private iCloud enabled to manage sharing.")
+    }
+    return try await worker.sharingStatus().scope
+  }
+
+  public func sharingInvitation(session: PlannerDatasetSession) async throws -> CKShare? {
+    _ = try coordinated { try validateSession(session) }
+    guard baseConfiguration.sharedLibrary == nil, let worker = privateSync else {
+      throw PlannerFailure(
+        "sharingOwnerRequired", "Open the owner's personal library to manage invitations.")
+    }
+    return try await worker.sharingInvitation()
+  }
+
+  public func setSharing(session: PlannerDatasetSession, scope: PlannerSharingScope) async throws
+    -> CKShare?
+  {
+    _ = try coordinated { try validateSession(session) }
+    guard baseConfiguration.sharedLibrary == nil, let worker = privateSync, !sharingChangeInProgress
+    else {
+      throw PlannerFailure(
+        "sharingUnavailable", "Private synchronization must be available before sharing.")
+    }
+    sharingChangeInProgress = true
+    defer { sharingChangeInProgress = false }
+    if scope == .off {
+      try await worker.stopSharing()
+      return nil
+    }
+    return try await worker.changeSharing(scope: scope)
+  }
+
   fileprivate func configurePrivateSync(session: PlannerDatasetSession) async {
     guard configuration.processRole == .mainApplication, let storage = privateCloudStorage,
       let binding = privateOwnershipBinding
@@ -10462,7 +10599,9 @@ extension Planner {
       let worker = try await PlannerPrivateSync.start(
         binding: .init(
           containerIdentifier: storage.containerIdentifier,
-          directory: configuration.controlURL.deletingLastPathComponent(), ownershipBinding: binding
+          directory: configuration.controlURL.deletingLastPathComponent(),
+          ownershipBinding: binding,
+          library: baseConfiguration.sharedLibrary
         ),
         client: .init(
           load: { [weak self] in
@@ -10480,6 +10619,10 @@ extension Planner {
           },
           status: { [weak self] observation in
             await self?.updateCloudObservation(observation, generation: generation)
+          },
+          validateSharing: { [weak self] nodes, scope in
+            guard let self else { throw unavailable }
+            try await self.validateSharingProjection(nodes: nodes, scope: scope)
           },
           accountChanged: { [weak self] in
             await self?.privateSyncAccountChanged(generation: generation)
