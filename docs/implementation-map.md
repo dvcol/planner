@@ -121,8 +121,8 @@ rather than silently choosing or expanding this map.
   without promising untested outcomes.
 - Apple Calendar export and embedded Google Maps/API-key billing retain their
   existing exclusions. Optional library sharing is the explicitly accepted
-  follow-up above. App Store/unlisted distribution
-  follows the core acceptance handoff.
+  follow-up above. App Store/unlisted listing and submission remain paused;
+  current distribution uses the Personal internal TestFlight group.
 
 ## Remaining implementation and acceptance
 

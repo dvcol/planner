@@ -105,4 +105,12 @@ Calendar build 1.0.0(6), committed separately, uploaded successfully on
 Testing in the existing Personal internal group. No App Store submission or
 external tester invitation was made.
 
+Release candidate 1.0.0(7) now produces signed iOS and arm64 Mac Release archives.
+Both app binaries match their crash-symbol UUIDs; deep signature verification
+passes. Both distribution exports verify the Production container, App Group
+and matching app/extension versions; the Mac installer signature also validates.
+The iOS package retains sharing support. Packages remain local until
+the integrated sharing checks and required Production schema update complete.
+These packaging checks do not establish recipient access or final UI acceptance.
+
 Raw test outputs and screenshots stay temporary and outside Git.
