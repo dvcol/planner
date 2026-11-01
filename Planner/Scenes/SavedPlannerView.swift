@@ -8,6 +8,16 @@ import SwiftUI
 
 private enum SavedPlannerSection: Hashable {
   case lists, items, inbox, itineraries, calendar
+
+  var title: String {
+    switch self {
+    case .lists: "Lists"
+    case .items: "Items"
+    case .inbox: "Inbox"
+    case .itineraries: "Itineraries"
+    case .calendar: "Calendar"
+    }
+  }
 }
 
 private enum SavedPlannerSidebarSelection: Hashable {
@@ -94,7 +104,7 @@ struct SavedPlannerView: View {
     #if os(macOS)
       return .automatic
     #else
-      if horizontalSizeClass == .regular { return .bottomBar }
+      if usesSidebarNavigation { return .bottomBar }
       return .automatic
     #endif
   }
@@ -523,11 +533,17 @@ struct SavedPlannerView: View {
     } else {
       #if os(iOS)
         TabView(selection: sectionSelection) {
-          Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
-          Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns(scope: .items) }
-          Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns(scope: .inbox) }
+          Tab("Lists", systemImage: "list.bullet", value: .lists) {
+            plannerColumns.toolbar(.hidden, for: .tabBar)
+          }
+          Tab("Items", systemImage: "square.stack", value: .items) {
+            catalogColumns(scope: .items).toolbar(.hidden, for: .tabBar)
+          }
+          Tab("Inbox", systemImage: "tray", value: .inbox) {
+            catalogColumns(scope: .inbox).toolbar(.hidden, for: .tabBar)
+          }
           Tab("Calendar", systemImage: "calendar", value: .calendar) {
-            calendarColumns
+            calendarColumns.toolbar(.hidden, for: .tabBar)
           }
           Tab(
             "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
@@ -546,15 +562,62 @@ struct SavedPlannerView: View {
               }
             }
             .id(itineraryNavigationIdentifier)
+            .toolbar(.hidden, for: .tabBar)
           }
         }
-        .tabViewBottomAccessory(isEnabled: associationUndo.presentsControl) {
-          SavedAssociationUndoControl(history: associationUndo, store: store)
-            .padding(.horizontal)
+        .contentMargins(.bottom, associationUndo.presentsControl ? 128 : 68, for: .scrollContent)
+        .overlay(alignment: .bottomLeading) {
+          compactNavigationControls
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
         }
       #endif
     }
   }
+
+  #if os(iOS)
+    private var showsCalendarNavigation: Bool {
+      selectedSection == .calendar && calendarSelection == nil && website == nil
+    }
+
+    private var compactNavigationControls: some View {
+      VStack(alignment: .leading, spacing: 12) {
+        if associationUndo.presentsControl {
+          SavedAssociationUndoControl(history: associationUndo, store: store)
+            .fixedSize(horizontal: true, vertical: false)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
+            .glassEffect(in: .capsule)
+        }
+        if !showsCalendarNavigation {
+          Menu {
+            Menu("Collections", systemImage: "square.grid.2x2") {
+              Picker("Collection", selection: sectionSelection) {
+                Label("Lists", systemImage: "list.bullet").tag(SavedPlannerSection.lists)
+                Label("Items", systemImage: "square.stack").tag(SavedPlannerSection.items)
+                Label("Inbox", systemImage: "tray").tag(SavedPlannerSection.inbox)
+                Label(
+                  "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath"
+                )
+                .tag(SavedPlannerSection.itineraries)
+                Label("Calendar", systemImage: "calendar").tag(SavedPlannerSection.calendar)
+              }
+            }
+          } label: {
+            Image(systemName: "line.3.horizontal")
+              .frame(width: 44, height: 44)
+              .contentShape(.circle)
+          }
+          .buttonStyle(.plain)
+          .glassEffect(in: .circle)
+          .accessibilityLabel("Navigation")
+          .accessibilityValue(selectedSection.title)
+          .accessibilityIdentifier("saved.navigation")
+        }
+      }
+      .padding(.bottom, showsCalendarNavigation ? 60 : 0)
+    }
+  #endif
 
   private func catalogColumns(scope: SavedItemCatalogScope) -> some View {
     NavigationSplitView(preferredCompactColumn: compactColumnSelection) {

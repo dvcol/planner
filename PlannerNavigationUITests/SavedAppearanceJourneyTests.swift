@@ -775,7 +775,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #else
       let undo = application.plannerElement("saved.association.undo")
       XCTAssertTrue(undo.waitForExistence(timeout: 5))
-      recordScreenshot(application, name: "Native removal offers Undo above the system tabs")
+      recordScreenshot(application, name: "Native removal offers floating Undo")
       undo.activateForPlannerJourney()
     #endif
     XCTAssertTrue(row.waitForExistence(timeout: 10))

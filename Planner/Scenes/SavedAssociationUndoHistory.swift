@@ -171,12 +171,19 @@ struct SavedAssociationUndoControl: View {
           ProgressView("Undoing removal")
             .controlSize(.small)
         } else if let title = history.actionTitle {
-          Button("Undo", systemImage: "arrow.uturn.backward") { history.undo() }
-            .controlSize(.large)
-            .accessibilityLabel(title)
-            .help(title)
-            .disabled(!store.canCreate)
-            .accessibilityIdentifier("saved.association.undo")
+          Button {
+            history.undo()
+          } label: {
+            Label("Undo", systemImage: "arrow.uturn.backward")
+              #if os(iOS)
+                .frame(minHeight: 44)
+              #endif
+          }
+          .controlSize(.large)
+          .accessibilityLabel(title)
+          .help(title)
+          .disabled(!store.canCreate)
+          .accessibilityIdentifier("saved.association.undo")
         }
         Spacer()
       }

@@ -573,6 +573,15 @@ extension XCUIApplication {
   }
 
   func openPlannerSection(_ title: String) {
+    let navigation = plannerElement("saved.navigation")
+    if navigation.exists && navigation.isHittable {
+      navigation.activateForPlannerJourney()
+      plannerElement("Collections").activateForPlannerJourney()
+      let destination = collectionViews.buttons[title].firstMatch
+      XCTAssertTrue(destination.waitForExistence(timeout: 5))
+      destination.activateForPlannerJourney()
+      return
+    }
     let calendarMenu = descendants(matching: .any).matching(
       NSPredicate(format: "identifier IN %@", ["saved.calendar.navigation", "saved.calendar.mode"])
     ).firstMatch

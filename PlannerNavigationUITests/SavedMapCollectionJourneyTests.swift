@@ -30,6 +30,14 @@ final class SavedMapCollectionJourneyTests: XCTestCase {
     XCTAssertTrue(locatedCount.waitForExistence(timeout: 5))
     XCTAssertTrue(locatedCount.isHittable)
     XCTAssertTrue(locations.isHittable)
+    #if os(iOS)
+      let navigation = application.plannerElement("saved.navigation")
+      if navigation.exists {
+        XCTAssertTrue(navigation.isHittable)
+        XCTAssertFalse(navigation.frame.intersects(locatedCount.frame))
+        XCTAssertFalse(navigation.frame.intersects(locations.frame))
+      }
+    #endif
     let footerCapture = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     footerCapture.name = "Collection Map footer remains readable at accessibility text sizes"
     footerCapture.lifetime = .keepAlways

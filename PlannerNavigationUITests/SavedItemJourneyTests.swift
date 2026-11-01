@@ -452,6 +452,72 @@ final class SavedItemJourneyTests: XCTestCase {
     try qualifyAdaptiveNavigation(appearance: "Dark")
   }
 
+  #if os(iOS)
+    func testFloatingNavigationKeepsSavedItemAndProtectsAnEditedDraftAcrossRotations() throws {
+      guard UIDevice.current.userInterfaceIdiom == .phone else {
+        throw XCTSkip("Wide layouts use sidebar navigation.")
+      }
+      continueAfterFailure = false
+      let originalAppearance = XCUIDevice.shared.appearance
+      XCUIDevice.shared.orientation = .portrait
+      XCUIDevice.shared.appearance = .light
+      defer {
+        XCUIDevice.shared.orientation = .portrait
+        XCUIDevice.shared.appearance = originalAppearance
+      }
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      application.openSavedPlannerNewItemEditor()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Floating navigation visit")
+      application.openPlannerSection("Calendar")
+      let keepEditing = application.buttons["Keep editing"].firstMatch
+      XCTAssertTrue(keepEditing.waitForExistence(timeout: 5))
+      keepEditing.activateForPlannerJourney()
+      XCTAssertEqual(title.value as? String, "Floating navigation visit")
+      XCTAssertTrue(application.plannerElement("saved.navigation").waitForPlannerValue("Items"))
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      let completion = application.descendants(matching: .any)
+        .matching(identifier: "saved.item.completion").firstMatch
+      XCTAssertTrue(completion.waitForExistence(timeout: 10))
+      application.navigationBars.buttons["Items"].firstMatch.activateForPlannerJourney()
+      let item = application.savedPlannerItemRows("Floating navigation visit").firstMatch
+      XCTAssertTrue(item.waitForExistence(timeout: 5))
+      let itemIdentifier = item.identifier
+
+      for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
+        XCUIDevice.shared.orientation = orientation
+        if orientation == .landscapeLeft { XCUIDevice.shared.appearance = .dark }
+        for section in ["Inbox", "Itineraries", "Lists", "Calendar", "Items"] {
+          application.openPlannerSection(section)
+          let navigation = application.plannerElement(
+            section == "Calendar" ? "saved.calendar.mode" : "saved.navigation")
+          XCTAssertTrue(navigation.waitForPlannerHittability())
+          XCTAssertFalse(application.tabBars.firstMatch.isHittable)
+          let window = application.windows.firstMatch.frame
+          XCTAssertGreaterThan(navigation.frame.midY, window.midY)
+          XCTAssertLessThanOrEqual(navigation.frame.width, 56)
+          XCTAssertLessThanOrEqual(navigation.frame.height, 56)
+          if section != "Calendar" {
+            XCTAssertTrue(navigation.waitForPlannerValue(section))
+          }
+        }
+        let back = application.navigationBars.buttons["Items"].firstMatch
+        if back.exists { back.activateForPlannerJourney() }
+        XCTAssertTrue(item.waitForExistence(timeout: 5))
+        XCTAssertEqual(item.identifier, itemIdentifier)
+        item.activateForPlannerJourney()
+        XCTAssertTrue(completion.waitForExistence(timeout: 5))
+        XCTAssertTrue(application.staticTexts["Floating navigation visit"].firstMatch.exists)
+        recordScreenshot(application, name: "Floating navigation \(orientation.rawValue)")
+      }
+    }
+  #endif
+
   private func qualifyAdaptiveNavigation(appearance: String? = nil) throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -523,7 +589,8 @@ final class SavedItemJourneyTests: XCTestCase {
       application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
     #if os(iOS)
       if UIDevice.current.userInterfaceIdiom == .phone {
-        XCTAssertTrue(application.tabBars.firstMatch.isHittable)
+        XCTAssertFalse(application.tabBars.firstMatch.isHittable)
+        XCTAssertTrue(application.plannerElement("saved.navigation").isHittable)
       }
     #endif
     let completion = application.descendants(matching: .any)
@@ -546,9 +613,8 @@ final class SavedItemJourneyTests: XCTestCase {
       case "Lists":
         #if os(iOS)
           if UIDevice.current.userInterfaceIdiom == .phone {
-            let tab = application.buttons.matching(identifier: "list.bullet").firstMatch
-            XCTAssertTrue(tab.exists)
-            XCTAssertTrue(tab.isSelected)
+            XCTAssertTrue(
+              application.plannerElement("saved.navigation").waitForPlannerValue("Lists"))
           } else {
             XCTAssertTrue(
               application.descendants(matching: .any).matching(identifier: "saved.lists.empty")

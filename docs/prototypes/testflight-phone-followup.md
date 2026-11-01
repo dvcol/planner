@@ -47,3 +47,23 @@ is processed and Testing in Personal, with one tester and three assigned builds.
 Mac remains on build 1; App Store drafts stay paused. Actual iPhone suspension
 confirmation is still pending. Reviewed run artifacts and the disposable
 Simulator were removed.
+
+## Consistent floating navigation, build 5
+
+Compact layouts now use a bottom-leading glass navigation button in every
+collection and pushed detail/editor, matching Calendar's existing floating
+control. The native TabView retains the navigation containers with its tab bar
+hidden in each section. Switching collections uses the existing edited-draft
+guard. Undo floats above navigation when available; scrolling content can move
+clear of the controls, and the Map footer leaves room for the navigation button.
+Wide iPad and Mac retain their sidebar navigation.
+
+Three focused native iPhone Simulator journeys qualify all five sections in
+portrait and landscape, edited-draft protection, exact saved-Item
+readback, original-association Undo/relaunch and Map footer separation. Final
+screenshots are inspected outside Git. No cloud or full-suite reruns are needed
+for this navigation change.
+
+The Simulator kept rendering light after XCTest and system appearance changes;
+the screenshots therefore establish light-mode layout only. This run does not
+establish dark-mode visual acceptance. Controls use native adaptive styles.

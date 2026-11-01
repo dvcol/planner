@@ -67,6 +67,17 @@ struct SavedMapCollectionLayout<Summary: View, MapContent: View>: View {
 }
 
 struct SavedMapCollectionView: View {
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+  private var navigationButtonClearance: CGFloat {
+    #if os(iOS)
+      horizontalSizeClass == .compact || verticalSizeClass == .compact ? 60 : 0
+    #else
+      0
+    #endif
+  }
+
   private enum PresentedSheet: Identifiable {
     case locations
     case directions
@@ -286,7 +297,7 @@ struct SavedMapCollectionView: View {
     .safeAreaInset(edge: .bottom, spacing: 0) {
       VStack(alignment: .leading, spacing: 12) {
         if routeRequest.stops.count > 1 { routeControls }
-        footer
+        footer.padding(.leading, navigationButtonClearance)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .padding()
