@@ -118,6 +118,7 @@ struct SavedLibrarySharingView: View {
                 confirmScopeChange = true
               }
               .disabled(!store.canChangeLibrary)
+              .accessibilityIdentifier("saved.sharing.stop")
             }
             if store.isManagingSharing { ProgressView("Preparing sharing") }
           } header: {
@@ -143,6 +144,7 @@ struct SavedLibrarySharingView: View {
         }
       }
       .formStyle(.grouped)
+      .disabled(isLoading || store.isManagingSharing)
       .navigationTitle("Sharing")
       .toolbar {
         ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
@@ -182,6 +184,7 @@ struct SavedLibrarySharingView: View {
         Button(mode == .off ? "Stop sharing" : "Replace sharing", role: .destructive) {
           Task { await apply() }
         }
+        .accessibilityIdentifier("saved.sharing.scope.confirm")
       } message: {
         Text(
           "Existing participants lose access. Your plans stay saved. You can invite people again with the new scope."

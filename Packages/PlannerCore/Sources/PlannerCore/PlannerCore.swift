@@ -10491,7 +10491,9 @@ extension Planner {
     let names = try PlannerSharingProjection(nodes: nodes, scope: scope).names
     let schema = Schema(PlannerPrivateSchemaV20.models)
     let container = try ModelContainer(
-      for: schema, configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: true))
+      for: schema,
+      configurations: ModelConfiguration(
+        schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none))
     let context = ModelContext(container)
     context.autosaveEnabled = false
     try PlannerCloudGraph.stage(

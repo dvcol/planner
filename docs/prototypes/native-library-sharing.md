@@ -58,12 +58,14 @@ record identity. The existing 130-entry fixture exceeded short runner budgets
 and then passed once with a ten-minute allowance. Reuse that result rather than
 repeating the expensive setup as routine smoke coverage.
 
-Actual invitation, acceptance, two-account edits, permission
-changes, revocation and relaunch still need one signed integration session using
-the iPhone owner account and different Mac account. Development schema creation
-and Production deployment of the new scope field follow that session. No real
-invitation has been issued by these local tests. No repeated iCloud off/on test
-or new MCP listener is required for this work.
+The signed iPhone owner flow now creates a private scoped invitation and opens
+Apple's native management sheet. Automated setup preserves existing plans, uses
+two uniquely named Lists and one Item, selects only the shared List, verifies the
+private List remains unchecked, and confirms the one-Item preview before Apply.
+The inspected native sheet shows only the owner and invited-person edit access.
+No participant has been added yet. Two-account acceptance, edits, permission
+changes, revocation and relaunch remain open, followed by Production deployment
+of the scope field. No repeated iCloud off/on test or new MCP listener is needed.
 
 The first signed build 7 attempt stopped during startup with
 `recoveryIntegrityFailure`: private storage writes version 25, but the recovery
@@ -80,8 +82,23 @@ Two existing physical iPhone journeys now pass: creation-menu cancellation and
 normal-library Settings/status/Sync now. The latter reports Up to date before
 and after synchronization. A cached runner first failed against obsolete sidebar
 selectors; rebuilding it for current navigation resolved that separate test
-failure. Signed iPhone and Mac builds and strict Swift lint pass. Invitation,
-permission and revocation acceptance remain open as described above.
+failure. Signed iPhone and Mac builds and strict Swift lint pass.
+
+Opening Sharing then exposed a separate signed-device preview crash: its
+temporary SwiftData configuration left CloudKit automatic. The preview now
+explicitly uses no CloudKit database. A physical regression reproduces the
+original crash, then passes opening Sharing, previewing Whole library, opening
+the Selected Lists picker and cancelling without changing the saved Off scope.
+Controls wait for loading and prevent concurrent changes during preparation.
+
+Real invitation creation also exposed stale CloudKit versions in parent-link
+updates. Preparation now fetches current records and the current root before
+optimistic saves, preserving server content while changing sharing parents.
+Atomic failures report the causal record error instead of a cancelled peer.
+The same disposable fixtures survive the failed-preparation reset and successful
+retry. The native owner flow passes in 86.5 seconds; five focused Core sharing
+tests, signed platform builds and strict affected Swift lint pass. Recipient
+entry in Apple's controls is the current attended step; raw diagnostics stay local.
 
 Calendar build 1.0.0(6), committed separately, uploaded successfully on
 1 November. It excludes this unfinished sharing slice. App Store Connect confirms

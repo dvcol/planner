@@ -17,6 +17,7 @@ import SwiftUI
         .allowPrivate, invitation.canEdit ? .allowReadWrite : .allowReadOnly,
       ]
       controller.delegate = context.coordinator
+      controller.view.accessibilityIdentifier = "saved.sharing.invitation"
       return controller
     }
 

@@ -36,8 +36,9 @@ workflows and recorded limitations.
   sharing and corrects Calendar scrolling axes, weekends and the live clock.
   [Calendar build 6](prototypes/native-calendar-scroll-axes.md) is Testing in the
   Personal internal TestFlight group. [Library sharing](prototypes/native-library-sharing.md)
-  has local implementation and focused tests; signed two-account acceptance and
-  schema deployment remain open independently of that Calendar delivery.
+  has focused Core tests and a passing physical iPhone owner flow through native
+  invitation preparation. Recipient entry, two-account acceptance/permissions and
+  Production schema deployment remain open independently of that Calendar delivery.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.

@@ -140,7 +140,14 @@ public actor PlannerLibrarySharing {
       root = nil
     }
     for batch in stride(from: 0, to: records.count, by: 200) {
-      let changes = Array(records[batch..<min(batch + 200, records.count)])
+      let requested = Array(records[batch..<min(batch + 200, records.count)])
+      let current = try await database.records(for: requested.map(\.recordID))
+      let changes = try requested.map { record in
+        guard let result = current[record.recordID] else {
+          throw PlannerFailure("sharingUnavailable", "A plan record is unavailable for sharing.")
+        }
+        return try result.get()
+      }
       for record in changes {
         if case .selectedLists = scope, names.contains(record.recordID.recordName) {
           record.setParent(rootID)
@@ -150,7 +157,7 @@ public actor PlannerLibrarySharing {
       }
       let result = try await database.modifyRecords(
         saving: changes, deleting: [], savePolicy: .ifServerRecordUnchanged, atomically: true)
-      for value in result.saveResults.values { _ = try value.get() }
+      try Self.validateSaveResults(result.saveResults)
     }
     let share: CKShare?
     switch scope {
@@ -162,15 +169,16 @@ public actor PlannerLibrarySharing {
       guard let root, let shareName = next.shareName else {
         throw PlannerFailure("sharingUnavailable", "The sharing root is unavailable.")
       }
+      let currentRoot = try await database.record(for: root.recordID)
       let invitation = CKShare(
-        rootRecord: root,
+        rootRecord: currentRoot,
         shareID: .init(recordName: shareName, zoneID: PlannerCloudNode.zoneID))
       invitation.publicPermission = .none
       invitation[CKShare.SystemFieldKey.title] = "Plan 2Do Lists" as NSString
       let result = try await database.modifyRecords(
-        saving: [root, invitation], deleting: [], savePolicy: .ifServerRecordUnchanged,
+        saving: [currentRoot, invitation], deleting: [], savePolicy: .ifServerRecordUnchanged,
         atomically: true)
-      for value in result.saveResults.values { _ = try value.get() }
+      try Self.validateSaveResults(result.saveResults)
       share = try result.saveResults[invitation.recordID]?.get() as? CKShare
     }
     var saved = share
@@ -189,6 +197,19 @@ public actor PlannerLibrarySharing {
     control["f_scopeData"] = try JSONEncoder().encode(ready) as NSData
     _ = try await database.save(control)
     return saved
+  }
+
+  /// Atomic peers report cancellation; preserve the record error that caused the batch to fail.
+  static func validateSaveResults(_ results: [CKRecord.ID: Result<CKRecord, any Error>]) throws {
+    let failures = results.values.compactMap { result -> (any Error)? in
+      if case .failure(let error) = result { return error }
+      return nil
+    }
+    if let error = failures.first(where: { ($0 as? CKError)?.code != .batchRequestFailed })
+      ?? failures.first
+    {
+      throw error
+    }
   }
 
   /// Stop also recovers an interrupted preparation without deleting any plan records.

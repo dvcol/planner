@@ -5,6 +5,27 @@ import Testing
 @testable import PlannerCore
 
 struct LibrarySharingTests {
+  @Test func atomicSavesPreserveTheSpecificFailureAndRejectCancelledBatches() throws {
+    let record = CKRecord(recordType: "PlannerNode_v1")
+    let peer = CKRecord.ID(recordName: "peer")
+    let atomic = CKError(.batchRequestFailed)
+    let specific = CKError(
+      .serverRejectedRequest, userInfo: [NSLocalizedDescriptionKey: "The root record is invalid."])
+    do {
+      try PlannerLibrarySharing.validateSaveResults([
+        peer: .failure(atomic), record.recordID: .failure(specific),
+      ])
+      Issue.record("A rejected atomic save must not report success.")
+    } catch {
+      #expect((error as? CKError)?.code == .serverRejectedRequest)
+      #expect(error.localizedDescription == "The root record is invalid.")
+    }
+    #expect(throws: CKError.self) {
+      try PlannerLibrarySharing.validateSaveResults([peer: .failure(atomic)])
+    }
+    try PlannerLibrarySharing.validateSaveResults([record.recordID: .success(record)])
+  }
+
   @Test func selectedListsKeepLiveItemsAndExcludePrivateRelationships() async throws {
     let directory = try makePlannerStoreFixtureDirectory()
     let configuration = PlannerStorageConfiguration(

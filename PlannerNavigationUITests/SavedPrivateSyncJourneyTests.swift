@@ -92,6 +92,120 @@
       capture(application, "Physical catalog after explicit private sync")
     }
 
+    /// Opens real sharing controls without applying a scope or issuing an invitation.
+    func testPhysicalSharingOptionsCanOpenWithoutChangingSavedScope() throws {
+      try XCTSkipUnless(
+        ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] != nil,
+        "Requires an attended Development sharing run.")
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      application.openSavedPlannerSettings()
+      let sharing = application.plannerElement("saved.settings.sharing")
+      XCTAssertTrue(sharing.waitForExistence(timeout: 10))
+      sharing.activateForPlannerJourney()
+      let scope = readySharingScope(application)
+      XCTAssertTrue(scope.staticTexts["Off"].waitForExistence(timeout: 5))
+      scope.activateForPlannerJourney()
+      application.plannerElement("Whole library").activateForPlannerJourney()
+      let apply = application.plannerElement("saved.sharing.apply")
+      XCTAssertTrue(apply.waitForPlannerHittability())
+      let previewReady = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: apply)
+      XCTAssertEqual(XCTWaiter.wait(for: [previewReady], timeout: 15), .completed)
+      capture(application, "Physical Sharing previews the whole library without applying")
+      scope.activateForPlannerJourney()
+      application.plannerElement("Selected Lists").activateForPlannerJourney()
+      application.plannerElement("saved.sharing.lists").activateForPlannerJourney()
+      let picker = application.navigationBars["Shared Lists"]
+      XCTAssertTrue(picker.waitForExistence(timeout: 10))
+      picker.buttons["Done"].activateForPlannerJourney()
+      application.navigationBars["Sharing"].buttons["Done"].activateForPlannerJourney()
+      sharing.activateForPlannerJourney()
+      XCTAssertTrue(scope.waitForExistence(timeout: 10))
+      XCTAssertTrue(scope.staticTexts["Off"].waitForExistence(timeout: 5))
+      XCTAssertFalse(apply.isEnabled)
+      capture(application, "Closing sharing options preserves the saved Off scope")
+      application.navigationBars["Sharing"].buttons["Done"].activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+    }
+
+    /// Creates only uniquely named Development fixtures and leaves the invitation for acceptance.
+    func testPhysicalSelectedListSharingPreparesTheNativeInvitation() throws {
+      let run = ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
+      try XCTSkipUnless(
+        UUID(uuidString: run) != nil, "Requires an attended Development sharing run.")
+      continueAfterFailure = false
+      let suffix = String(run.prefix(8))
+      let sharedTitle = "Sharing check " + suffix
+      let privateTitle = "Private check " + suffix
+      let itemTitle = "Shared stop " + suffix
+      print("PLANNER_SHARING_FIXTURE \(sharedTitle) | \(privateTitle) | \(itemTitle)")
+      let application = XCUIApplication()
+      application.launchSavedPlannerJourney()
+      createSharingList(application, title: sharedTitle)
+      if !application.staticTexts[itemTitle].firstMatch.waitForExistence(timeout: 5) {
+        application.plannerElement("saved.list.addMenu").activateForPlannerJourney()
+        application.plannerElement("saved.list.createItem").activateForPlannerJourney()
+        let title = application.textFields["saved.item.title"]
+        XCTAssertTrue(title.waitForExistence(timeout: 10))
+        title.activateForPlannerJourney()
+        title.typeText(itemTitle)
+        application.plannerElement("saved.item.save").activateForPlannerJourney()
+      }
+      XCTAssertTrue(application.staticTexts[itemTitle].firstMatch.waitForExistence(timeout: 10))
+      createSharingList(application, title: privateTitle)
+      openSharingListCatalog(application)
+      application.openSavedPlannerSettings()
+      application.plannerElement("saved.settings.sharing").activateForPlannerJourney()
+      let scope = readySharingScope(application)
+      if !scope.staticTexts["Off"].exists {
+        XCTAssertTrue(scope.staticTexts["Selected Lists"].exists)
+        let lists = application.plannerElement("saved.sharing.lists")
+        XCTAssertEqual(lists.label, "Shared Lists, 1 selected")
+        lists.activateForPlannerJourney()
+        XCTAssertTrue(application.switches[sharedTitle].waitForPlannerBooleanState(true))
+        application.plannerElement("saved.sharing.lists.done").activateForPlannerJourney()
+        let stop = application.plannerElement("saved.sharing.stop")
+        stop.activateForPlannerJourney()
+        application.sheets.buttons.matching(identifier: "saved.sharing.scope.confirm")
+          .firstMatch.activateForPlannerJourney()
+        XCTAssertTrue(stop.waitForNonExistence(timeout: 30))
+      }
+      XCTAssertTrue(scope.staticTexts["Off"].waitForExistence(timeout: 5))
+      scope.activateForPlannerJourney()
+      application.plannerElement("Selected Lists").activateForPlannerJourney()
+      application.plannerElement("saved.sharing.lists").activateForPlannerJourney()
+      let selected = application.switches[sharedTitle]
+      XCTAssertTrue(selected.waitForExistence(timeout: 10))
+      if selected.value as? String != "1" {
+        selected.switches.firstMatch.activateForPlannerJourney()
+      }
+      XCTAssertTrue(selected.waitForPlannerBooleanState(true))
+      XCTAssertTrue(application.switches[privateTitle].waitForPlannerBooleanState(false))
+      application.plannerElement("saved.sharing.lists.done").activateForPlannerJourney()
+      let apply = application.plannerElement("saved.sharing.apply")
+      let ready = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: apply)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 15), .completed)
+      XCTAssertTrue(application.staticTexts["1 Items · 1 List entries"].exists)
+      apply.activateForPlannerJourney()
+      let invitation = application.otherElements["saved.sharing.invitation"]
+      let finished = XCTNSPredicateExpectation(
+        predicate: NSPredicate { _, _ in
+          invitation.exists || application.alerts["Sharing"].exists
+        }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [finished], timeout: 60), .completed)
+      XCTAssertFalse(
+        application.alerts["Sharing"].exists, application.alerts["Sharing"].debugDescription)
+      XCTAssertTrue(invitation.exists, application.debugDescription)
+      capture(application, "Selected List opens Apple's native private invitation")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Native invitation controls for attended two-account sharing"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+    }
+
     /// Uses normal installed storage and the paired iPhone's unique Item.
     func testPhysicalIPadReceivesEditsAndDeletesTheExactIPhoneItem() throws {
       let runIdentifier = ProcessInfo.processInfo.environment["PLANNER_PRIVATE_SYNC_RUN"] ?? ""
@@ -280,6 +394,45 @@
       application.openPlannerSection("Items")
       XCTAssertTrue(row.waitForNonExistence(timeout: 15))
       clearSearch(application)
+    }
+
+    private func readySharingScope(_ application: XCUIApplication) -> XCUIElement {
+      let scope = application.plannerElement("saved.sharing.scope")
+      XCTAssertTrue(scope.waitForExistence(timeout: 10))
+      let ready = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: scope)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 15), .completed)
+      return scope
+    }
+
+    private func openSharingListCatalog(_ application: XCUIApplication) {
+      application.openPlannerSection("Lists")
+      let create = application.plannerElement("saved.list.new")
+      for _ in 0..<3 {
+        if create.exists && create.isHittable { break }
+        let back = application.navigationBars.buttons["BackButton"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 5))
+        back.activateForPlannerJourney()
+      }
+      XCTAssertTrue(create.waitForPlannerHittability())
+    }
+
+    private func createSharingList(_ application: XCUIApplication, title: String) {
+      openSharingListCatalog(application)
+      let existing = application.savedPlannerListRow(title)
+      if existing.waitForExistence(timeout: 3) {
+        existing.activateForPlannerJourney()
+        XCTAssertTrue(
+          application.plannerElement("saved.list.addMenu").waitForExistence(timeout: 10))
+        return
+      }
+      application.plannerElement("saved.list.new").activateForPlannerJourney()
+      let name = application.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      name.activateForPlannerJourney()
+      name.typeText(title)
+      application.plannerElement("saved.list.save").activateForPlannerJourney()
+      XCTAssertTrue(application.plannerElement("saved.list.addMenu").waitForExistence(timeout: 10))
     }
 
     private func editNotes(_ application: XCUIApplication, to value: String) {
