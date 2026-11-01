@@ -113,7 +113,12 @@ The iOS package retains sharing support. These packaging checks do not establish
 recipient access or final UI acceptance.
 
 On 2 November, the reviewed additive sharing schema deployed to Production:
-`f_scopeData`, its two indexes and Apple's `cloudkit.share` type. Existing record
+`f_scopeData` on `PlannerNode_v1` (two indexes) and on Apple's `cloudkit.share`
+type. Both fields are required: scoped invitations use the root node's metadata;
+Whole library uses the share's metadata. The final review caught the missing
+share field, which was added and deployed without rebuilding build 7. A local,
+network-free Apple SDK probe verifies that `CKShare` retains the custom bytes;
+the Console confirms the matching Production schema deployment. Existing record
 grants were unchanged. No records were copied. Both build 7 uploads processed
 successfully and App Store Connect confirms **Testing** for iOS and macOS in the
 existing Personal internal group. They are internal-TestFlight-only builds;
