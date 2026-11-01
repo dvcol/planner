@@ -6,6 +6,12 @@ struct SavedContainerEstimatePreview: View {
   let manualEstimate: PlannerEstimate?
 
   var body: some View {
+    if estimates.hasNativeEstimates {
+      preview
+    }
+  }
+
+  private var preview: some View {
     HStack(alignment: .firstTextBaseline) {
       Label {
         Text(displayDescription).fixedSize(horizontal: false, vertical: true)
@@ -36,6 +42,14 @@ struct SavedContainerEstimatePreview: View {
 }
 
 extension PlannerContainerEstimates {
+  var hasNativeEstimates: Bool {
+    switch fullEstimate {
+    case .exact(let minutes), .lowerBound(let minutes, _), .upperBound(let minutes, _):
+      minutes > 0
+    case .unavailable: true
+    }
+  }
+
   var hasNativeEstimateWarning: Bool {
     if completedExceedsTotal { return true }
     if case .lowerBound = calculatedEstimate { return true }
@@ -47,6 +61,7 @@ extension PlannerContainerEstimates {
   }
 
   func nativeEstimatePreviewAccessibilityDescription(manualEstimate: PlannerEstimate?) -> String {
+    guard hasNativeEstimates else { return "" }
     let manual = manualEstimate == nil ? "" : ", Manual"
     var description =
       "Estimate\(manual), \(fullEstimate.nativeContainerDurationAccessibilityDescription). "

@@ -8,6 +8,12 @@ struct SavedContainerEstimates: View {
   let accessibilityIdentifierPrefix: String
 
   var body: some View {
+    if estimates.hasNativeEstimates {
+      metrics
+    }
+  }
+
+  private var metrics: some View {
     VStack(alignment: .leading, spacing: 6) {
       metric(
         "Estimate", total: estimates.fullEstimate, identifier: "full",

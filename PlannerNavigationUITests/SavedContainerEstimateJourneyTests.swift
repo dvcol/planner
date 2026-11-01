@@ -2,6 +2,65 @@ import XCTest
 
 @MainActor
 final class SavedContainerEstimateJourneyTests: XCTestCase {
+  func testListHidesEstimatesUntilAnItemHasADuration() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Lunch", includeEstimate: false, application: application)
+    #if os(iOS)
+      let back = application.navigationBars.buttons["BackButton"].firstMatch
+      if back.exists && back.isHittable { back.activateForPlannerJourney() }
+    #endif
+    createItem("Museum", includeEstimate: true, application: application)
+    application.beginPlannerListCreation()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Optional estimates")
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    let full = estimate("full", application: application)
+    let remaining = estimate("remaining", application: application)
+    let warning = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.warning.missing"
+    ).firstMatch
+    XCTAssertFalse(full.exists)
+    XCTAssertFalse(remaining.exists)
+    XCTAssertFalse(warning.exists)
+    recordScreenshot(application, name: "Empty List omits estimate information")
+    for title in ["Lunch", "Museum"] {
+      toolbarAction("saved.list.add", application: application).activateForPlannerJourney()
+      let candidate = application.staticTexts[title].firstMatch
+      XCTAssertTrue(candidate.waitForExistence(timeout: 5))
+      candidate.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
+      if title == "Lunch" {
+        XCTAssertFalse(full.exists)
+        XCTAssertFalse(remaining.exists)
+        XCTAssertFalse(warning.exists)
+        recordScreenshot(application, name: "Unestimated Items omit totals and missing warning")
+      } else {
+        XCTAssertTrue(full.waitForPlannerValue("At least 120 minutes; 1 estimate missing"))
+        XCTAssertTrue(remaining.waitForPlannerValue("At least 120 minutes; 1 estimate missing"))
+        XCTAssertTrue(warning.waitForExistence(timeout: 5))
+        recordScreenshot(application, name: "Partial estimate retains subtotal and missing warning")
+      }
+    }
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    let retained = application.savedPlannerListRow("Optional estimates")
+    revealSidebarIfNeeded(application, element: retained)
+    XCTAssertTrue(retained.waitForExistence(timeout: 10))
+    XCTAssertTrue((retained.value as? String)?.contains("120 minutes") == true)
+    retained.activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("At least 120 minutes; 1 estimate missing"))
+    XCTAssertTrue(warning.exists)
+  }
+
   func testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -386,8 +445,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     ).firstMatch
     toggle(enabled)
     application.plannerElement("saved.list.save").activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
-    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No items"].exists)
     recordScreenshot(application, name: "List estimate shortcut clears back to calculation")
     application.terminate()
@@ -397,8 +455,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     XCTAssertEqual(retained.identifier, identifier)
     retained.activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
-    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No items"].exists)
   }
 
@@ -483,9 +540,8 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     ).firstMatch
     toggle(enabled)
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
-    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
-    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(remaining.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No items"].exists)
     XCTAssertTrue(application.staticTexts["Keep the meeting point"].exists)
     recordScreenshot(application, name: "Itinerary shortcut resets to calculation and keeps notes")
@@ -496,9 +552,8 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     XCTAssertEqual(retained.identifier, itineraryIdentifier)
     retained.activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
-    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
-    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(remaining.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No items"].exists)
     XCTAssertTrue(application.staticTexts["Keep the meeting point"].exists)
   }
@@ -803,10 +858,9 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(quantity.waitForPlannerValue("4"))
     toggle(enabled)
     application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
-    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(remaining.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["Meet at the museum"].exists)
-    XCTAssertFalse(full.label.contains("Manual"))
     recordScreenshot(application, name: "Native Itinerary resets to calculation and retains notes")
     application.terminate()
     application.launchSavedPlannerJourney()
@@ -815,7 +869,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     XCTAssertEqual(retained.identifier, identity)
     retained.activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["Meet at the museum"].exists)
   }
 
@@ -875,9 +929,8 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(remainder.waitForPlannerValue("5"))
     toggle(enabled)
     application.plannerElement("saved.list.save").activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
-    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
-    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(remaining.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No items"].exists)
     recordScreenshot(
       application, name: "Native List resets to calculation without completing an empty plan")
@@ -888,7 +941,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     XCTAssertEqual(retained.identifier, identity)
     retained.activateForPlannerJourney()
-    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(full.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No items"].exists)
   }
 
