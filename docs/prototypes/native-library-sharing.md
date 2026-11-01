@@ -67,9 +67,12 @@ library check. The iPad is not controlled by these tests.
 The Production root metadata field `PlannerNode_v1.f_scopeData` is already
 deployed. The legacy `cloudkit.share.f_scopeData` field remains for older
 zone-wide invitations. No additional schema deployment or data-zone migration is
-needed for the hierarchy correction. Build 7 is already available in the Personal
-internal TestFlight group; the corrections are prepared for build 8. Neither App
-Store submission nor external distribution is enabled.
+needed for the hierarchy correction. Build 1.0.0 (8), including these corrections
+and the estimate-display fixes, is Testing for iOS and macOS in the existing
+Personal internal TestFlight group. Both distribution packages have verified
+signatures, expected App Group/private-cloud permissions, and matching crash
+symbols. The Share extensions retain their narrower App Group permissions.
+Neither App Store submission nor external distribution is enabled.
 
 Actual native permission changes, read-only invitation behavior, revocation,
 and cross-account TestFlight Production qualification remain separate beta
