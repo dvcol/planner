@@ -3,6 +3,50 @@ import PlannerCore
 import Testing
 
 struct RecoveryFailureTests {
+  @Test(arguments: [23, 24, 25])
+  func currentWriterCheckpointsRemainReadable(storageVersion: Int) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let result, .complete(let generation)) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Retained sharing plan")))
+      ).outcome,
+      let source = result.generated.first,
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first
+    else { throw CancellationError() }
+    await planner.close()
+    let namespaceDirectory = configuration.recoveryDirectoryURL.appendingPathComponent(
+      namespace.namespaceId.uuidString)
+    for (filename, field, value) in [
+      ("identity.json", "schemaVersion", storageVersion as Any),
+      ("checkpoint-\(generation).json", "storageSchemaVersion", String(storageVersion) as Any),
+    ] {
+      let url = namespaceDirectory.appendingPathComponent(filename)
+      var record = try #require(
+        JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any])
+      record[field] = value
+      try JSONSerialization.data(withJSONObject: record).write(to: url, options: .atomic)
+    }
+    let inspection = await planner.inspectRecovery(
+      request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: generation))
+    guard case .selected(let selection) = inspection else {
+      Issue.record("Supported writer checkpoint must remain readable: \(inspection)")
+      return
+    }
+    let item = try #require(selection.decodedBackup.backup.items.first)
+    #expect(item.id == source.id)
+    #expect(item.content.title == "Retained sharing plan")
+  }
+
   @Test func inaccessibleRecoveryRejectsCreationBeforeCommitAndRetainsAcknowledgedData()
     async throws
   {

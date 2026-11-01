@@ -65,6 +65,14 @@ and Production deployment of the new scope field follow that session. No real
 invitation has been issued by these local tests. No repeated iCloud off/on test
 or new MCP listener is required for this work.
 
+The first signed build 7 attempt stopped during startup with
+`recoveryIntegrityFailure`: private storage writes version 25, but the recovery
+reader's version list ended at 24. A focused real-store regression reproduced
+the exact rejection only for 25. The reader now accepts 25 without weakening
+ownership, payload digest or receipt validation. Five affected test methods pass,
+including versions 23–25 and seven existing invalid/scoped-status cases. Signed
+Mac/iPhone rebuilds resume the same session with retained data; no reset is needed.
+
 Calendar build 1.0.0(6), committed separately, uploaded successfully on
 1 November. It excludes this unfinished sharing slice. App Store Connect confirms
 Testing in the existing Personal internal group. No App Store submission or
