@@ -10,12 +10,6 @@ final class ProductionMCPJourneyTests: XCTestCase {
     continueAfterFailure = false
   }
 
-  func testInstalledTestFlightCanBeInspected() {
-    let application = XCUIApplication(bundleIdentifier: "com.apple.TestFlight")
-    application.launch()
-    record(application, name: "Installed TestFlight catalog")
-  }
-
   #if os(iOS) && !targetEnvironment(simulator)
     func testProductionPhoneSharingCanBeInspectedWithoutChanges() {
       let application = XCUIApplication(bundleIdentifier: "dvcol.planner")
@@ -91,11 +85,16 @@ final class ProductionMCPJourneyTests: XCTestCase {
       XCTAssertTrue(library.label.contains("Can edit"))
       if library.isEnabled { library.activateForPlannerJourney() }
       let selected = XCTNSPredicateExpectation(
-        predicate: NSPredicate(format: "enabled == false"), object: library)
+        predicate: NSPredicate { _, _ in
+          !library.isEnabled && application.buttons["Refresh libraries"].isEnabled
+        }, object: nil)
       XCTAssertEqual(XCTWaiter.wait(for: [selected], timeout: 30), .completed)
       application.buttons["Done"].activateForPlannerJourney()
       let enable = application.buttons["saved.agent.enable"]
       XCTAssertTrue(enable.waitForExistence(timeout: 10))
+      let ready = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: enable)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 30), .completed)
       enable.activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["saved.agent.status"].waitForExistence(timeout: 20))
       XCTAssertTrue(application.staticTexts["saved.agent.connection"].exists)

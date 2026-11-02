@@ -49,8 +49,9 @@ workflows and recorded limitations.
   scheduling, and Mac/iPhone shared-library readback. Local signed lifecycle,
   HTTP and real Codex preflight checks pass. Mac build 9 is uploaded with verified
   release signatures and matching symbols; Personal-group assignment awaits an
-  App Store Connect sign-in. Production acceptance remains pending OS automation
-  approval and the explicit Production sharing/access setup.
+  App Store Connect sign-in. The user approved Production sharing/access setup;
+  acceptance awaits the installed Mac release and iPhone automation. Manual Mac
+  approval cleared its automation startup gate.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.

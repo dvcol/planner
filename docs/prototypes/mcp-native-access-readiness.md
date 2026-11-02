@@ -71,12 +71,20 @@ Production qualification remains pending: create and edit an Item and List,
 schedule the Item through MCP in the selected shared library, verify native
 readback on Mac and iPhone, and read a phone-side edit back through MCP. The
 attended runner compiles for both platforms. Initial Mac and iPhone attempts
-timed out while enabling OS automation, with zero test cases started. The iPhone
-uses Apple's `UseDestinationArtifacts` mode to preserve the installed app; that
-mode explicitly rejects Mac destinations, whose runner instead targets the real
-installed app path. No Production sharing or MCP write has been executed by
-these attempts. Whole-library access to the owner's Production library and the
-verified Mac recipient requires explicit approval before setup.
+timed out while enabling OS automation, with zero test cases started. Manual
+Mac approval subsequently cleared that startup gate. XCTest can launch the Mac
+TestFlight app but cannot access its installation window controls, so installing
+build 9 is a manual prerequisite. The iPhone retry still stopped before any app
+action while enabling automation; its lock-state read reported no passcode
+requirement. It uses Apple's `UseDestinationArtifacts` mode to preserve the
+installed app; that mode explicitly rejects Mac destinations, whose runner
+instead targets the real installed app path. No Production sharing or MCP write
+has been executed by these attempts. The user explicitly approved Whole library
+sharing in Production with editing permission for the verified Mac recipient and
+local Codex access. That
+approval remains valid; the missing steps are Apple sign-in, installing the Mac
+release, and attended device automation, rather than another sharing-policy
+decision.
 
 Other agent clients and broader idle/sleep matrices are outside this requested
 Codex slice. Raw credentials, invitation links, contact details and device logs
