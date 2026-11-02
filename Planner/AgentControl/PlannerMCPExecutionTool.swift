@@ -586,9 +586,20 @@
       ]),
       "properties": .object([
         "kind": .object(["type": .string("string"), "const": .string("timed")]),
-        "start": .object(["type": .string("number")]),
-        "end": .object(["type": .array([.string("number"), .string("null")])]),
-        "planningTimeZone": .object(["type": .string("string")]),
+        "start": .object([
+          "type": .string("number"),
+          "description": .string(
+            "Finite seconds since 2001-01-01T00:00:00Z (Apple reference date), NOT Unix seconds."),
+        ]),
+        "end": .object([
+          "type": .array([.string("number"), .string("null")]),
+          "description": .string(
+            "Optional exclusive end instant, using the same seconds-since-2001 epoch as start."),
+        ]),
+        "planningTimeZone": .object([
+          "type": .string("string"),
+          "description": .string("IANA time zone identifier, for example Asia/Tokyo."),
+        ]),
       ]),
     ])
 

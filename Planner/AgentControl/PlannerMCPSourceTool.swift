@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the local Planner prototype. mapRows projects saved location inputs, Maps links and exact route/List context from an Item query, without provider lookups. calendarRows returns Schedule identities, live owner identities/titles and saved forms from a Calendar query generation.",
+        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the selected Plan 2Do library. Numeric timestamps, including timed Schedule start/end, are seconds since 2001-01-01T00:00:00Z (Apple reference date), NOT Unix seconds. mapRows projects saved location inputs, Maps links and exact route/List context from an Item query, without provider lookups. calendarRows returns Schedule identities, live owner identities/titles and saved forms from a Calendar query generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
