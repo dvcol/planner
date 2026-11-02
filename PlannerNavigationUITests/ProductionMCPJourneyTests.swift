@@ -48,15 +48,22 @@ final class ProductionMCPJourneyTests: XCTestCase {
   #endif
 
   #if os(macOS)
+    func testProductionMacSharingCanBeInspectedWithoutChanges() {
+      let application = XCUIApplication()
+      application.activate()
+      openMacSharing(application)
+      XCTAssertTrue(application.buttons["Refresh libraries"].waitForExistence(timeout: 30))
+      record(application, name: "Production Mac current and received libraries")
+    }
+
     func testProductionMacAcceptsTheExactInvitation() throws {
       let link = ProcessInfo.processInfo.environment["PLANNER_PRODUCTION_INVITATION"] ?? ""
       let url = try XCTUnwrap(URL(string: link))
       XCTAssertEqual(url.scheme, "https")
       XCTAssertTrue(["icloud.com", "www.icloud.com"].contains(url.host ?? ""))
-      let application = XCUIApplication(bundleIdentifier: "dvcol.planner")
+      let application = XCUIApplication()
       application.activate()
-      application.openSavedPlannerSettings()
-      application.plannerElement("saved.settings.sharing").activateForPlannerJourney()
+      openMacSharing(application)
       let field = application.textFields["saved.sharing.join.url"]
       XCTAssertTrue(field.waitForExistence(timeout: 20))
       field.activateForPlannerJourney()
@@ -76,10 +83,9 @@ final class ProductionMCPJourneyTests: XCTestCase {
     func testProductionMacSelectsTheReceivedLibraryAndEnablesMCP() throws {
       let identifier = ProcessInfo.processInfo.environment["PLANNER_PRODUCTION_LIBRARY"] ?? ""
       XCTAssertTrue(identifier.hasPrefix("saved.sharing.library.shared_"))
-      let application = XCUIApplication(bundleIdentifier: "dvcol.planner")
+      let application = XCUIApplication()
       application.activate()
-      application.openSavedPlannerSettings()
-      application.plannerElement("saved.settings.sharing").activateForPlannerJourney()
+      openMacSharing(application)
       let library = application.buttons[identifier]
       XCTAssertTrue(library.waitForExistence(timeout: 30))
       XCTAssertTrue(library.label.contains("Can edit"))
@@ -100,6 +106,14 @@ final class ProductionMCPJourneyTests: XCTestCase {
       XCTAssertTrue(application.staticTexts["saved.agent.connection"].exists)
       record(application, name: "Production shared-library MCP enabled")
     }
+
+    /// Reuses an open sharing sheet between attended steps instead of clicking its disabled parent.
+    private func openMacSharing(_ application: XCUIApplication) {
+      if application.buttons["Refresh libraries"].exists { return }
+      application.openSavedPlannerSettings()
+      application.plannerElement("saved.settings.sharing").activateForPlannerJourney()
+      XCTAssertTrue(application.buttons["Refresh libraries"].waitForExistence(timeout: 30))
+    }
   #endif
 
   func testProductionMCPItemListAndBookingAppearInTheNativeApp() throws {
@@ -109,7 +123,7 @@ final class ProductionMCPJourneyTests: XCTestCase {
     let itemTitle = try XCTUnwrap(environment["PLANNER_PRODUCTION_ITEM_TITLE"])
     let listTitle = try XCTUnwrap(environment["PLANNER_PRODUCTION_LIST_TITLE"])
     let notes = try XCTUnwrap(environment["PLANNER_PRODUCTION_NOTES"])
-    let application = XCUIApplication(bundleIdentifier: "dvcol.planner")
+    let application = XCUIApplication()
     application.activate()
     dismissSettings(application)
     application.openPlannerSection("Lists")

@@ -61,30 +61,33 @@ explicitly authorized disposable writes, without disabling sandboxing or changin
 persistent approval settings. Tool guidance now calls out `sourceId` for source
 edits and `scheduleId` for Schedule edits.
 
-The affected Mac and iOS Simulator app/Share builds pass. Mac build 9 has been
-uploaded successfully with matching crash symbols. Its exported sandbox and
-Production private-CloudKit entitlements are verified. Personal-group assignment
-still requires the expired App Store Connect session to be renewed; delivery is
-not claimed until Apple shows the package Testing there.
+The affected Mac and iOS Simulator app/Share builds pass. Mac build 9 is Testing
+in the Personal internal TestFlight group, with matching uploaded crash symbols
+and saved testing notes. The installed Mac app's build 9, receipt, signature and
+Production private-CloudKit/server entitlements are independently verified.
+iOS build 8 already contains the compatible sharing/data protocol; this Mac-only
+bridge does not require an iOS build-number change.
 
 Production qualification remains pending: create and edit an Item and List,
 schedule the Item through MCP in the selected shared library, verify native
 readback on Mac and iPhone, and read a phone-side edit back through MCP. The
-attended runner compiles for both platforms. Initial Mac and iPhone attempts
-timed out while enabling OS automation, with zero test cases started. Manual
-Mac approval subsequently cleared that startup gate. XCTest can launch the Mac
-TestFlight app but cannot access its installation window controls, so installing
-build 9 is a manual prerequisite. The iPhone retry still stopped before any app
-action while enabling automation; its lock-state read reported no passcode
-requirement. It uses Apple's `UseDestinationArtifacts` mode to preserve the
-installed app; that mode explicitly rejects Mac destinations, whose runner
-instead targets the real installed app path. No Production sharing or MCP write
-has been executed by these attempts. The user explicitly approved Whole library
-sharing in Production with editing permission for the verified Mac recipient and
-local Codex access. That
-approval remains valid; the missing steps are Apple sign-in, installing the Mac
-release, and attended device automation, rather than another sharing-policy
-decision.
+attended runner compiles for both platforms. Manual Mac automation approval,
+the completed TestFlight update and a primary-app reference now yield a passing
+native inspection of the actual Production sharing controls. No received library
+is registered yet. The iPhone attempts still stop before any test begins while
+enabling automation, including a retry announced for live approval. A read-only
+lock-state check reported no passcode requirement. Its runner uses Apple's
+`UseDestinationArtifacts` mode to preserve the installed app; that mode explicitly
+rejects Mac destinations, whose runner targets the installed app path instead.
+
+The remaining attended handoff is a foreground Terminal run of the existing
+native iPhone tests: prepare Whole library sharing only from Off, add the verified
+Mac recipient, then copy its private invitation for acceptance. Existing narrower
+sharing remains unchanged, no source plans are created by these steps, and manual
+automation authentication stays enabled. The user explicitly approved this
+Production sharing/editing and local Codex access. No new policy decision is
+pending. Production MCP writes and cross-device readback remain unqualified until
+that invitation is accepted and the exact received library is selected.
 
 Other agent clients and broader idle/sleep matrices are outside this requested
 Codex slice. Raw credentials, invitation links, contact details and device logs

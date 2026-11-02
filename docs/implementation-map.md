@@ -47,11 +47,12 @@ workflows and recorded limitations.
   [Codex client route](https://github.com/dvcol/planner/issues/6) into current work.
   Final acceptance requires Production-app MCP create/edit of Items and Lists,
   scheduling, and Mac/iPhone shared-library readback. Local signed lifecycle,
-  HTTP and real Codex preflight checks pass. Mac build 9 is uploaded with verified
-  release signatures and matching symbols; Personal-group assignment awaits an
-  App Store Connect sign-in. The user approved Production sharing/access setup;
-  acceptance awaits the installed Mac release and iPhone automation. Manual Mac
-  approval cleared its automation startup gate.
+  HTTP and real Codex preflight checks pass. Mac build 9 is Testing in Personal;
+  its installed receipt, signature and Production entitlements are verified. The
+  compatible iPhone app remains on build 8. Native Mac sharing inspection passes.
+  The approved iPhone invitation setup still awaits a foreground automation run;
+  no received Production library is registered on the Mac yet, so final shared
+  MCP writes/readback remain pending.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.
