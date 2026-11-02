@@ -47,8 +47,10 @@ workflows and recorded limitations.
   [Codex client route](https://github.com/dvcol/planner/issues/6) into current work.
   Final acceptance requires Production-app MCP create/edit of Items and Lists,
   scheduling, and Mac/iPhone shared-library readback. Local signed lifecycle,
-  HTTP and real Codex preflight checks pass; delivery and Production acceptance
-  remain pending.
+  HTTP and real Codex preflight checks pass. Mac build 9 is uploaded with verified
+  release signatures and matching symbols; Personal-group assignment awaits an
+  App Store Connect sign-in. Production acceptance remains pending OS automation
+  approval and the explicit Production sharing/access setup.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.

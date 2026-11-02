@@ -61,11 +61,22 @@ explicitly authorized disposable writes, without disabling sandboxing or changin
 persistent approval settings. Tool guidance now calls out `sourceId` for source
 edits and `scheduleId` for Schedule edits.
 
-The affected Mac and iOS Simulator app/Share builds pass. Production/TestFlight
-qualification remains pending: create and edit an Item and List, schedule the
-Item through MCP in the selected shared library, verify native readback on Mac
-and iPhone, and read a phone-side edit back through MCP. Build 9 delivery is not
-claimed until Apple shows the package Testing in Personal.
+The affected Mac and iOS Simulator app/Share builds pass. Mac build 9 has been
+uploaded successfully with matching crash symbols. Its exported sandbox and
+Production private-CloudKit entitlements are verified. Personal-group assignment
+still requires the expired App Store Connect session to be renewed; delivery is
+not claimed until Apple shows the package Testing there.
+
+Production qualification remains pending: create and edit an Item and List,
+schedule the Item through MCP in the selected shared library, verify native
+readback on Mac and iPhone, and read a phone-side edit back through MCP. The
+attended runner compiles for both platforms. Initial Mac and iPhone attempts
+timed out while enabling OS automation, with zero test cases started. The iPhone
+uses Apple's `UseDestinationArtifacts` mode to preserve the installed app; that
+mode explicitly rejects Mac destinations, whose runner instead targets the real
+installed app path. No Production sharing or MCP write has been executed by
+these attempts. Whole-library access to the owner's Production library and the
+verified Mac recipient requires explicit approval before setup.
 
 Other agent clients and broader idle/sleep matrices are outside this requested
 Codex slice. Raw credentials, invitation links, contact details and device logs
