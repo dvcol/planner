@@ -1,40 +1,72 @@
-# Native Agent Control readiness
+# Mac MCP bridge for Codex
 
-Refreshed on 18 October 2026 against `prototype/navigation`. Subsequent decision: Q100 B defers native Agent Control implementation until signing and native Mac automation are available. The controlled credential-I/O boundary in option A is not approved. Existing HTTP/Core tests establish transport and domain behavior; they do not establish an enabled native product or a selected-client connection.
+The 2 November request brings local Mac MCP access into the current TestFlight
+follow-up. The selected client is Codex on the Mac and its connected phone
+session. The implementation reuses the existing authenticated HTTP adapter and
+the exact PlannerCore facade/session owned by the native app. It adds no server
+on iOS, cloud backend, public endpoint, package or target.
 
-## Current source and next step
+## Use
 
-`PlannerApp` starts SwiftUI and owns `SavedPlannerStore`. The store owns its real Core facade/session. Production startup does not construct the existing request handler or loopback listener. There is no native Agent Control owner, menu-bar status/control or non-UI `--mcp-headers` branch. The accepted signed Keychain/App Group reader remains unimplemented.
+1. Open the shared library in Plan 2Do Settings → Sharing and libraries.
+2. In Settings → Agent access, check the displayed library and choose Enable.
+3. Copy the Codex connection block shown there into the host's MCP configuration.
+   It contains the loopback URL and a command invoking this installed app with
+   `--mcp-headers`; it contains no credential. Use the installed app's actual path,
+   not an old Xcode build path.
+4. Reconnect Codex to load the server. Normal Codex tool-approval settings still
+   apply. The connected phone session uses that Mac connection.
 
-The [Q100 proposal](../native-agent-control-contract-review.md) describes the missing lifecycle owner and option A's shared production credential I/O interface. The human selected Q100 B, so the alternative interface and its controlled tests are unapproved. Implementation waits for actual signing/storage qualification. Q98 A and Q99 A are approved independent work.
+The Mac must be awake and Plan 2Do running to answer requests. Closing a planning
+window does not end access. Stop, app quit, or changing the selected library ends
+the access window. Relaunch starts Off. No idle timer or daemon is added.
 
-After the user returned to the unlocked Mac, the [Q101 native Capture journey](native-catalog-add-menu.md) starts and passes, 68.643 seconds. It removes the previous pre-test automation blocker for that run. The fresh signing inventory still reports no valid development identities. The user declines paid membership; verify the available free signing/capability route before claiming the actual protected-storage gate. This does not approve option A's controlled credential tests or a plaintext/volatile fallback.
+Whole library sharing allows creating new Lists. Selected-List sharing retains
+its existing restrictions: agents can edit selected Lists and create Items in
+them, while the owner manages List creation and global deletion. Read-only
+libraries retain Core's write rejection. MCP clients cannot select another
+account or dataset through request fields.
 
-## Refreshed CLI facts
+## Credentials and lifecycle
 
-Recorded commands identify Codex CLI 0.162.1 and Claude Code 2.1.295. Version/help commands are not successful MCP calls.
+Each Enable generates a new 32-byte random credential in the app's private,
+device-only data-protection Keychain. An ephemeral App Group discovery file holds
+only the accepted version, instance/window IDs, endpoint, protocol and On state.
+The non-UI reader validates that state, reads Keychain without prompting, performs
+an authenticated ping with the matching window header, then rereads discovery
+state before emitting its header JSON. It never starts the GUI, opens Planner data
+or enables a listener. Redirects and non-loopback endpoints are rejected.
 
-The installed Codex parser recognizes a temporary runtime `http_headers_helper` override. `codex mcp get` returns a streamable-HTTP configuration with that field redacted. The probe uses a dummy `/usr/bin/false` helper, not a credential reader; it invokes no Planner tool and proves no connection. No MCP add/configuration mutation command was used. The command reports a denied PATH-alias cache write, retained in its stderr. Exact probe.
+Stop revokes admission and cancels active tool tasks before listener/credential
+cleanup. An already committed command keeps its truthful result; Stop does not
+promise rollback. Re-enable rotates the credential and can immediately reuse the
+port. Failed binding or discovery publication never reports On. A library/session
+replacement stops the old bridge instead of silently retargeting its clients.
 
-[Official OpenAI documentation](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) documents local HTTP helper commands that return a JSON header map. [Official Claude documentation](https://code.claude.com/docs/en/mcp) documents `headersHelper`, including connection-time execution, trust and reconnect rules. These support the planned same-executable reader route. Installed-parser recognition and documentation do not prove helper execution, refresh, trust, actual tools or either desktop route.
+## Qualification
 
-All four selected routes still need separately recorded results: Codex CLI, local Codex desktop, Claude Code CLI and Claude Desktop's local Code tab. Real concurrent-client/native behavior and credential handling remain required. Do not replace those gates with the existing Swift SDK/URLSession tests or a hand-supplied token.
+Four focused signed app-hosted lifecycle/validation tests and eight existing
+HTTP authentication, ping, initialization and listener tests pass. They use real
+Keychain and disposable real Planner storage, including a real MCP write, stale
+credential rejection, immediate re-enable, occupied-port/publication failure,
+concurrent Stop, and native library replacement. Six existing capture/bulk
+admission checks also pass after cancellation forwarding was preserved.
 
-## Earlier Mac runtime retry
+A real Codex CLI 0.165.0 preflight passes through the signed executable's header
+helper: create a uniquely named Item, read its exact generated identity, then edit
+notes using the returned field hash. Core independently observes the final value.
+The first noninteractive run correctly refused writes under its Never approval
+policy; the successful run uses Codex's normal automatic-review mode for these
+explicitly authorized disposable writes, without disabling sandboxing or changing
+persistent approval settings. Tool guidance now calls out `sourceId` for source
+edits and `scheduleId` for Schedule edits.
 
-The existing final Mac compiler products were reused after their source/product checks. One bounded ordinary Apple Maps/owned-address UI journey was attempted. Literal packet reports exit 65: XCTest timed out while enabling automation mode. Zero Test Cases started. The readiness record and compressed log retain the failure.
+The affected Mac and iOS Simulator app/Share builds pass. Production/TestFlight
+qualification remains pending: create and edit an Item and List, schedule the
+Item through MCP in the selected shared library, verify native readback on Mac
+and iPhone, and read a phone-side edit back through MCP. Build 9 delivery is not
+claimed until Apple shows the package Testing in Personal.
 
-That attempt supplies no native UI, map, interaction or visual credit. No permission or signing-account setting was changed. The later Q101 pass is separately recorded above, with its actual production source/products, failed assertions, correction and window captures. It establishes the selected Capture workflow, not Agent Control or signed storage. Physical and CloudKit qualification remain unmet.
-
-## Remaining gates
-
-| Requirement | Current evidence | Next dependency |
-| --- | --- | --- |
-| Native manual Enable/Stop and shared lifecycle owner | Absent from production source | Q100 B: actual signing/storage, then real signed/native TDD; selected Mac Capture automation now works |
-| Menu-bar On/Off/Stop and last-window behavior | Absent from production source | Same owner and actual native qualification |
-| Same-executable protected credential reader | Approved declaration, no implementation | Actual signed storage and reader implementation/runtime proof |
-| Four selected client routes | CLI availability and Codex config recognition only | Working native owner/reader and actual client calls |
-| Native Mac UI behavior | Earlier pre-test failure; later Q101 Capture journey passes | Qualify remaining native scenes and Agent Control lifecycle |
-| App Group, protected Keychain, account/sync/Share and physical gates | No valid development identity; actual capabilities unverified | Free signing setup and required scenarios; CloudKit still requires membership or a reviewed replacement |
-
-Source hashes, factual review and evidence hashes retain the earlier source inspection, configuration recognition and startup failure. The linked Q101 packet supplies the later native result. Q100 B's signed-storage requirement is still unmet. These checks close no map ticket; all remaining acceptance gates stay in place.
+Other agent clients and broader idle/sleep matrices are outside this requested
+Codex slice. Raw credentials, invitation links, contact details and device logs
+remain temporary and outside Git.

@@ -1,5 +1,15 @@
 # Native Agent Control lifecycle contract review
 
+## 2 November implementation follow-up
+
+The user now explicitly requests the Mac bridge for Codex and its connected phone
+session, delivery to TestFlight, and final create/edit/schedule validation through
+MCP against the Production apps on Mac and iPhone. Signing is established. The
+[current implementation and qualification](prototypes/mcp-native-access-readiness.md)
+uses real signed Keychain/storage and the existing native/HTTP seams. No controlled
+credential mock, new package or target is introduced. The older deferral and
+unselected option A below are retained as historical review context.
+
 Status: Q100 B selected on 18 October 2026. Defer native Agent Control implementation until signing and native Mac automation are available, then qualify actual signed storage/native journeys. The controlled credential-I/O interface in option A is not approved. Existing Core, HTTP, native UI and reader-process contracts remain accepted.
 
 The user subsequently returned to the unlocked Mac. The [Q101 retry](prototypes/native-catalog-add-menu.md) now starts native tests and reaches Capture, removing the earlier pre-test automation failure for that run. A fresh signing inventory still finds no valid development identity. The user declines paid membership; qualify an available free signing route before treating B's actual signed-storage gate as met. No switch to A's controlled credential boundary, plaintext fallback or CloudKit replacement is implied.

@@ -7,6 +7,7 @@
     private var credential: String?
     private let accessWindowIdentifier: UUID
     private let dataset: (planner: PlannerCore.Planner, session: PlannerDatasetSession)?
+    private var activeCalls: [UUID: Task<CallTool.Result, Never>] = [:]
 
     init(credential: String, accessWindowIdentifier: UUID) {
       self.credential = credential
@@ -25,6 +26,7 @@
 
     func revokeAccess() {
       credential = nil
+      for call in activeCalls.values { call.cancel() }
     }
 
     func handleRequest(_ request: HTTPRequest) async -> HTTPResponse {
@@ -53,7 +55,7 @@
       var capabilities = Server.Capabilities()
       if dataset != nil { capabilities.tools = .init() }
       let server = Server(
-        name: "Planner MCP prototype", version: "0.0.1", capabilities: capabilities)
+        name: "Plan 2Do", version: "1.0.0", capabilities: capabilities)
       if dataset != nil {
         await server.withMethodHandler(ListTools.self) { _ in
           ListTools.Result(
@@ -91,6 +93,18 @@
     }
 
     private func callPlannerTool(_ parameters: CallTool.Parameters) async -> CallTool.Result {
+      let identifier = UUID()
+      let task = Task { await dispatchPlannerTool(parameters) }
+      activeCalls[identifier] = task
+      defer { activeCalls.removeValue(forKey: identifier) }
+      return await withTaskCancellationHandler {
+        await task.value
+      } onCancel: {
+        task.cancel()
+      }
+    }
+
+    private func dispatchPlannerTool(_ parameters: CallTool.Parameters) async -> CallTool.Result {
       guard credential != nil, let dataset else {
         return PlannerMCPSourceTool.failure(
           code: "forbiddenOperation", message: "This agent access window is no longer active.")

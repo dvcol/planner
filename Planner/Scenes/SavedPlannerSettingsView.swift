@@ -40,6 +40,9 @@ struct SavedPlannerSettingsView: View {
         if store.isReady {
           Form {
             SavedRecoveryStatusSection(store: store)
+            #if PLANNER_AGENT_CONTROL
+              PlannerAgentAccessSection(store: store)
+            #endif
             if store.hasPrivateSynchronization {
               Section {
                 Label(store.synchronizationTitle, systemImage: "icloud")

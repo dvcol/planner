@@ -49,6 +49,38 @@ enum SavedReviewedChangeResult {
 
 @MainActor @Observable
 final class SavedPlannerStore {
+  #if PLANNER_AGENT_CONTROL
+    let agentAccess = PlannerAgentAccess()
+
+    func enableAgentAccess() async {
+      guard let planner, let session, isReady, !isSaving, !isManagingSharing else { return }
+      do {
+        let controlURL = try PlannerAgentConnection.controlURL()
+        await agentAccess.enable(.init(planner: planner, session: session, controlURL: controlURL))
+      } catch {
+        alertMessage = "Agent access requires the app's configured shared storage."
+      }
+    }
+
+    var agentConnectionInstructions: String {
+      guard case .on(let endpoint) = agentAccess.state,
+        let executable = Bundle.main.executableURL?.path
+      else { return "" }
+      let command =
+        "'" + executable.replacingOccurrences(of: "'", with: "'\\''")
+        + "' --mcp-headers"
+      guard let data = try? JSONEncoder().encode(command),
+        let encoded = String(data: data, encoding: .utf8)
+      else { return "" }
+      let helper = encoded.replacingOccurrences(of: "\\/", with: "/")
+      return """
+        [mcp_servers.plan2do]
+        url = "\(endpoint.absoluteString)"
+        http_headers_helper = \(helper)
+        """
+    }
+  #endif
+
   private var planner: PlannerCore.Planner?
   @ObservationIgnored private var storageConfiguration: PlannerStorageConfiguration?
   @ObservationIgnored private var personalOwnershipBinding: String?
@@ -312,6 +344,9 @@ final class SavedPlannerStore {
       return
     }
     isOpening = true
+    #if PLANNER_AGENT_CONTROL
+      await agentAccess.stop()
+    #endif
     changeObservationTask?.cancel()
     recoveryRefresh?.task.cancel()
     await planner?.close()
@@ -416,6 +451,9 @@ final class SavedPlannerStore {
         self?.changeObservationFailure =
           (error as? PlannerFailure)?.message ?? "Planner could not observe saved changes."
         if (error as? PlannerFailure)?.code == "staleDatasetSession" {
+          #if PLANNER_AGENT_CONTROL
+            await self?.agentAccess.stop()
+          #endif
           Task { [weak self] in
             await self?.refreshRecoveryStatus()
             await self?.reconnectChanges()
@@ -448,6 +486,9 @@ final class SavedPlannerStore {
     changeObservationTask?.cancel()
     switch await planner.bootstrap() {
     case .ready(let ready):
+      #if PLANNER_AGENT_CONTROL
+        if ready != expected { await agentAccess.stop() }
+      #endif
       guard ready.datasetId == expected.datasetId,
         ready.ownershipBinding == expected.ownershipBinding
       else {
@@ -459,7 +500,11 @@ final class SavedPlannerStore {
       await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
       changeRevision = UUID()
-    case .unavailable(let reason): changeObservationFailure = reason.message
+    case .unavailable(let reason):
+      #if PLANNER_AGENT_CONTROL
+        await agentAccess.stop()
+      #endif
+      changeObservationFailure = reason.message
     case .mainAppSetupRequired:
       changeObservationFailure = "Open Plan 2Do to finish setting up its shared data."
     case .mainAppMigrationRequired:

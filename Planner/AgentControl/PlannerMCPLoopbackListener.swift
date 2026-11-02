@@ -26,6 +26,7 @@
 
       let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
       let bootstrap = ServerBootstrap(group: eventLoopGroup)
+        .serverChannelOption(ChannelOptions.socketOption(.so_reuseaddr), value: 1)
         .childChannelOption(ChannelOptions.autoRead, value: false)
       let acceptedConnections = PlannerMCPAcceptedConnections()
 

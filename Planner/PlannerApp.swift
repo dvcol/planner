@@ -5,7 +5,7 @@ import SwiftUI
   import AppIntents
 #endif
 
-#if !PLANNER_FIXTURES
+#if !PLANNER_FIXTURES && !os(macOS)
   @main
 #endif
 struct PlannerApp: App {
@@ -93,6 +93,25 @@ struct PlannerApp: App {
             .disabled(showPrototypeInformation == nil)
           }
         #endif
+      }
+    #endif
+    #if PLANNER_AGENT_CONTROL
+      MenuBarExtra(
+        "Plan 2Do agent access",
+        systemImage: savedPlanner.agentAccess.isEnabled ? "network" : "network.slash"
+      ) {
+        Text(savedPlanner.agentAccess.isEnabled ? "Agent access on" : "Agent access off")
+        Text(savedPlanner.libraryTitle)
+        if savedPlanner.agentAccess.isEnabled || savedPlanner.agentAccess.state == .enabling {
+          Button("Stop agent access") { Task { await savedPlanner.agentAccess.stop() } }
+        } else {
+          Button("Enable agent access") { Task { await savedPlanner.enableAgentAccess() } }
+            .disabled(
+              !savedPlanner.isReady || savedPlanner.isSaving || savedPlanner.isManagingSharing
+                || savedPlanner.agentAccess.state == .stopping)
+        }
+        Divider()
+        SettingsLink { Label("Settings", systemImage: "gear") }
       }
     #endif
     #if os(macOS)
