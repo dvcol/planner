@@ -39,20 +39,21 @@ workflows and recorded limitations.
   Personal internal TestFlight group. The required Production sharing schema is
   deployed. Selected Lists and Whole library have passed fresh two-way edits
   between signed Development devices on different accounts; selected scope
-  excludes private Lists. Permission changes, read-only access, revocation and
-  cross-account Production qualification remain internal-beta checks. The
+  excludes private Lists. Whole-library Can edit sharing now also passes the
+  cross-account Production MCP/native round trip below. Permission changes,
+  read-only access and revocation remain separate internal-beta checks. The
   [Calendar corrections](prototypes/native-calendar-scroll-axes.md) are included.
 - The 2 November [Mac MCP follow-up](prototypes/mcp-native-access-readiness.md)
-  brings [Agent Control](https://github.com/dvcol/planner/issues/16) and the
-  [Codex client route](https://github.com/dvcol/planner/issues/6) into current work.
-  Final acceptance requires Production-app MCP create/edit of Items and Lists,
-  scheduling, and Mac/iPhone shared-library readback. Local signed lifecycle,
-  HTTP and real Codex preflight checks pass. Mac build 9 is Testing in Personal;
-  its installed receipt, signature and Production entitlements are verified. The
-  compatible iPhone app remains on build 8. Native Mac sharing inspection passes.
-  The approved iPhone invitation setup still awaits a foreground automation run;
-  no received Production library is registered on the Mac yet, so final shared
-  MCP writes/readback remain pending.
+  completes the requested local [Agent Control](https://github.com/dvcol/planner/issues/16)
+  and [Codex client route](https://github.com/dvcol/planner/issues/6) slice. Mac
+  build 9 is Testing in Personal and installed with verified Production
+  entitlements; compatible iPhone build 8 remains installed. The iPhone's Whole
+  library invitation is accepted on the Mac with Can edit. Real Codex creates
+  and edits a List, Item and booking in that exact received library. Both native
+  apps read them back, including after iPhone relaunch, and a fresh Codex
+  connection reads an iPhone-side edit. The saved configuration uses the installed
+  app's Keychain helper. Broader clients/lifecycle matrices remain outside this
+  slice; these results do not imply App Store submission or blanket beta acceptance.
 - Consult `code-quality`, `code-architecture` and `code-testing` when
   applicable. Use TDD when requested. Existing interface approvals carry
   forward; tracker cleanup creates no new product answers or test seams.

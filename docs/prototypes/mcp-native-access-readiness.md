@@ -68,26 +68,38 @@ Production private-CloudKit/server entitlements are independently verified.
 iOS build 8 already contains the compatible sharing/data protocol; this Mac-only
 bridge does not require an iOS build-number change.
 
-Production qualification remains pending: create and edit an Item and List,
-schedule the Item through MCP in the selected shared library, verify native
-readback on Mac and iPhone, and read a phone-side edit back through MCP. The
-attended runner compiles for both platforms. Manual Mac automation approval,
-the completed TestFlight update and a primary-app reference now yield a passing
-native inspection of the actual Production sharing controls. No received library
-is registered yet. The iPhone attempts still stop before any test begins while
-enabling automation, including a retry announced for live approval. A read-only
-lock-state check reported no passcode requirement. Its runner uses Apple's
-`UseDestinationArtifacts` mode to preserve the installed app; that mode explicitly
-rejects Mac destinations, whose runner targets the installed app path instead.
+The requested Production round trip passes on 2 November 2026, using the actual
+installed Mac TestFlight build 9 and iPhone TestFlight build 8:
 
-The remaining attended handoff is a foreground Terminal run of the existing
-native iPhone tests: prepare Whole library sharing only from Off, add the verified
-Mac recipient, then copy its private invitation for acceptance. Existing narrower
-sharing remains unchanged, no source plans are created by these steps, and manual
-automation authentication stays enabled. The user explicitly approved this
-Production sharing/editing and local Codex access. No new policy decision is
-pending. Production MCP writes and cross-device readback remain unqualified until
-that invitation is accepted and the exact received library is selected.
+- Three native iPhone steps pass: Whole library setup from Off, adding the verified
+  Mac account and copying the private invitation. No narrower share was replaced.
+- Mac acceptance produces the native “Library added” confirmation. The exact
+  received library has Can edit permission; selecting it and enabling MCP passes.
+- Real Codex CLI 0.165.0 applies six commands: create/edit List, create/edit Item,
+  create/edit Schedule. Exact source reads independently verify generated
+  identities, membership, names, notes and the booking: 3 November 2026,
+  10:00–11:15 Asia/Tokyo.
+- Mac native readback passes. iPhone native readback passes after app relaunch,
+  then changes only that test Item's notes through its actual editor.
+- A fresh Codex process uses the saved user MCP configuration and reads the
+  phone's new notes plus the unchanged exact booking. Both read-only calls pass.
+
+The initial client attempt was rejected before writing: operation IDs must be
+UUIDs, and List creation uses `content.name`, while Items use `content.title`.
+The successful run supplies the adapter-verified wire forms and returned field
+hashes; it does not infer success from the model's final message. User Codex
+configuration now contains the loopback URL and installed-app header helper,
+without a saved credential or changes to normal approval policy. Reconnect Codex
+to load that server into a new session.
+
+The iPhone runner uses Apple's `UseDestinationArtifacts` mode to preserve the
+installed app. Mac targets the installed app path. Direct PTY execution starts
+mobile automation; TestFlight onboarding initially covered Planner. Its one-off
+captured-screen dismissal was removed afterward. The retained checks use native
+macOS sheets, visible form controls, the source Item's View item action and the
+Schedule's actual accessibility role. Manual automation authentication remains
+enabled. No iPad access, iCloud switch cycle or unrelated Production write was
+needed. The synthetic List, Item and booking remain available for inspection.
 
 Other agent clients and broader idle/sleep matrices are outside this requested
 Codex slice. Raw credentials, invitation links, contact details and device logs

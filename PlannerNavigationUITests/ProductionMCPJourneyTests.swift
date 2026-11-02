@@ -69,14 +69,21 @@ final class ProductionMCPJourneyTests: XCTestCase {
       field.activateForPlannerJourney()
       field.typeKey("a", modifierFlags: .command)
       field.typeText(link)
-      application.buttons["Accept invitation"].activateForPlannerJourney()
-      let alert = application.alerts["Sharing"]
+      XCTAssertTrue(field.waitForPlannerValue(link))
+      let form = application.scrollViews.containing(
+        .textField, identifier: "saved.sharing.join.url"
+      ).firstMatch
+      form.scroll(byDeltaX: 0, deltaY: -200)
+      let accept = application.buttons["Accept invitation"]
+      XCTAssertTrue(accept.waitForPlannerHittability())
+      accept.activateForPlannerJourney()
+      let alert = application.sheets.containing(.button, identifier: "action-button-1").firstMatch
       XCTAssertTrue(alert.waitForExistence(timeout: 90))
       record(application, name: "Production invitation acceptance result")
       XCTAssertTrue(
-        alert.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Library added."))
+        alert.staticTexts.matching(NSPredicate(format: "value BEGINSWITH %@", "Library added."))
           .firstMatch.exists)
-      alert.buttons["OK"].activateForPlannerJourney()
+      alert.buttons["OK"].firstMatch.activateForPlannerJourney()
       record(application, name: "Production received libraries")
     }
 
@@ -85,6 +92,14 @@ final class ProductionMCPJourneyTests: XCTestCase {
       XCTAssertTrue(identifier.hasPrefix("saved.sharing.library.shared_"))
       let application = XCUIApplication()
       application.activate()
+      let added = application.staticTexts.matching(
+        NSPredicate(
+          format: "value == %@",
+          "Library added. Choose it in Settings → Sharing when you are ready.")
+      ).firstMatch
+      if added.exists {
+        application.sheets.buttons["action-button-1"].firstMatch.activateForPlannerJourney()
+      }
       openMacSharing(application)
       let library = application.buttons[identifier]
       XCTAssertTrue(library.waitForExistence(timeout: 30))
@@ -98,9 +113,12 @@ final class ProductionMCPJourneyTests: XCTestCase {
       application.buttons["Done"].activateForPlannerJourney()
       let enable = application.buttons["saved.agent.enable"]
       XCTAssertTrue(enable.waitForExistence(timeout: 10))
+      application.scrollViews.containing(.button, identifier: "saved.agent.enable")
+        .firstMatch.scroll(byDeltaX: 0, deltaY: 1000)
       let ready = XCTNSPredicateExpectation(
         predicate: NSPredicate(format: "enabled == true"), object: enable)
       XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 30), .completed)
+      XCTAssertTrue(enable.waitForPlannerHittability())
       enable.activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["saved.agent.status"].waitForExistence(timeout: 20))
       XCTAssertTrue(application.staticTexts["saved.agent.connection"].exists)
@@ -109,8 +127,8 @@ final class ProductionMCPJourneyTests: XCTestCase {
 
     /// Reuses an open sharing sheet between attended steps instead of clicking its disabled parent.
     private func openMacSharing(_ application: XCUIApplication) {
-      if application.buttons["Refresh libraries"].exists { return }
       application.openSavedPlannerSettings()
+      if application.buttons["Refresh libraries"].exists { return }
       application.plannerElement("saved.settings.sharing").activateForPlannerJourney()
       XCTAssertTrue(application.buttons["Refresh libraries"].waitForExistence(timeout: 30))
     }
@@ -124,7 +142,12 @@ final class ProductionMCPJourneyTests: XCTestCase {
     let listTitle = try XCTUnwrap(environment["PLANNER_PRODUCTION_LIST_TITLE"])
     let notes = try XCTUnwrap(environment["PLANNER_PRODUCTION_NOTES"])
     let application = XCUIApplication()
-    application.activate()
+    #if os(iOS)
+      application.terminate()
+      application.launch()
+    #else
+      application.activate()
+    #endif
     dismissSettings(application)
     application.openPlannerSection("Lists")
     let list = application.plannerElement("saved.list." + listIdentifier.uppercased())
@@ -136,8 +159,12 @@ final class ProductionMCPJourneyTests: XCTestCase {
     XCTAssertTrue(item.waitForExistence(timeout: 30))
     item.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts[notes].waitForExistence(timeout: 30))
-    let schedule = application.plannerElement(
-      "saved.item.schedule." + scheduleIdentifier.uppercased())
+    application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+    application.plannerElement("View item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts[notes].waitForExistence(timeout: 30))
+    let schedule = application.descendants(matching: .any).matching(
+      identifier: "saved.item.schedule." + scheduleIdentifier.uppercased()
+    ).firstMatch
     XCTAssertTrue(schedule.waitForExistence(timeout: 30))
     let description = schedule.value as? String ?? ""
     XCTAssertTrue(description.contains("Tokyo"), description)
