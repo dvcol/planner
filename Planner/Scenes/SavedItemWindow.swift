@@ -2,6 +2,40 @@ import Foundation
 import Observation
 import PlannerCore
 
+/// A native consumer owns its query capture for exactly as long as it can request rows.
+final class SavedQueryCapture: Sendable {
+  let snapshot: PlannerQuerySnapshot
+  private let planner: PlannerCore.Planner
+  private let session: PlannerDatasetSession
+
+  init(snapshot: PlannerQuerySnapshot, planner: PlannerCore.Planner, session: PlannerDatasetSession)
+  {
+    self.snapshot = snapshot
+    self.planner = planner
+    self.session = session
+  }
+
+  deinit {
+    let planner = planner
+    let session = session
+    let generation = snapshot.generation
+    Task { await planner.releaseQuery(session: session, generation: generation) }
+  }
+}
+
+extension PlannerCore.Planner {
+  func queryForNativeUse(_ query: PlannerQuery) -> Result<SavedQueryCapture, PlannerFailure> {
+    switch self.query(
+      .init(session: query.session, request: query.request, retention: .callerManaged))
+    {
+    case .snapshot(let snapshot):
+      return .success(.init(snapshot: snapshot, planner: self, session: query.session))
+    case .failed(let reason):
+      return .failure(reason)
+    }
+  }
+}
+
 struct SavedItemWindowIdentity: Equatable {
   let namespace: String
   let savedRevision: UUID
@@ -67,7 +101,8 @@ final class SavedItemWindow {
   private var visibilityRequestIdentifier = UUID()
   private var query: PlannerQueryRequest?
   private var lifecycleIdentity: SavedItemWindowIdentity?
-  private var generation: UUID?
+  private var capture: SavedQueryCapture?
+  private var generation: UUID? { capture?.snapshot.generation }
   private var pages: [Int: [SavedItemWindowRow]] = [:]
   private var pageFailures: [Int: String] = [:]
   private var retainedPages: Set<Int> = []
@@ -78,6 +113,8 @@ final class SavedItemWindow {
     self.planner = planner
     self.session = session
   }
+
+  var sessionIdentifier: UUID { session.sessionId }
 
   func reload(query: PlannerItemQuery, identity: SavedItemWindowIdentity) async {
     await replaceQuery(.items(query), identity: identity)
@@ -102,7 +139,7 @@ final class SavedItemWindow {
     refreshTask = nil
     for pending in pendingPages.values { pending.task.cancel() }
     pendingPages = [:]
-    generation = nil
+    capture = nil
     query = nil
     lifecycleIdentity = nil
     pages = [:]
@@ -138,7 +175,7 @@ final class SavedItemWindow {
     reloadIdentifier = requestIdentifier
     for pending in pendingPages.values { pending.task.cancel() }
     pendingPages = [:]
-    generation = nil
+    capture = nil
     state = .loading
     listSource = nil
     if !preservesItineraryRows {
@@ -156,12 +193,13 @@ final class SavedItemWindow {
       return
     }
     while !Task.isCancelled {
-      let result = await planner.query(.init(session: session, request: query))
+      let result = await planner.queryForNativeUse(.init(session: session, request: query))
       guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
-      guard case .snapshot(let snapshot) = result else {
-        if case .failed(let reason) = result { state = .failed(reason.message) }
+      guard case .success(let capture) = result else {
+        if case .failure(let reason) = result { state = .failed(reason.message) }
         return
       }
+      let snapshot = capture.snapshot
       var identifiers: Set<RowKey> = []
       for rowIdentity in snapshot.rows {
         guard let identifier = rowKey(for: rowIdentity, query: query),
@@ -244,7 +282,7 @@ final class SavedItemWindow {
         if case .success(let metadata) = metadataResult { itineraryMetadata = metadata }
         rowIdentities = snapshot.rows
         matchingCount = snapshot.matchingCount
-        generation = snapshot.generation
+        self.capture = capture
         pages[0] = items
         state = .ready
         return
@@ -343,7 +381,7 @@ final class SavedItemWindow {
     identifier: UUID, query: PlannerItemQuery, matchingSnapshot: PlannerQuerySnapshot,
     requestIdentifier: UUID
   ) async throws -> SavedItineraryWindowMetadata {
-    let fullQuery = await planner.query(
+    let fullQuery = await planner.queryForNativeUse(
       .init(
         session: session,
         request: .items(
@@ -351,12 +389,14 @@ final class SavedItemWindow {
             scope: .itinerary(identifier), completion: .all, archive: .all,
             sort: .init(mode: .manual), rowPresentation: matchingSnapshot.rowPresentation))))
     try checkMetadataRequest(requestIdentifier)
-    guard case .snapshot(let fullSnapshot) = fullQuery else {
-      if case .failed(let reason) = fullQuery {
+    guard case .success(let fullCapture) = fullQuery else {
+      if case .failure(let reason) = fullQuery {
         throw MetadataReadError.unavailable(reason.message)
       }
       throw MetadataReadError.unavailable("Planner could not read this Itinerary's entries.")
     }
+    let fullSnapshot = fullCapture.snapshot
+    defer { withExtendedLifetime(fullCapture) {} }
     let itineraryRead = await planner.read(
       session: session, request: .source(.init(kind: .itinerary, id: identifier)))
     try checkMetadataRequest(requestIdentifier)
@@ -382,17 +422,20 @@ final class SavedItemWindow {
       || query.lists?.ids.isEmpty == false || query.duration != nil
       || query.hasAddress || query.hasLinks || query.scheduled != .all
     var matchingLists: Set<UUID> = []
-    var listSnapshot: PlannerQuerySnapshot?
+    var listCapture: SavedQueryCapture?
     if !lists.isEmpty && !hasItemRestrictions {
-      let result = await planner.query(
+      let result = await planner.queryForNativeUse(
         .init(
           session: session,
           request: .catalog(.init(sourceKind: .list, text: query.text, archive: query.archive))))
       try checkMetadataRequest(requestIdentifier)
-      guard case .snapshot(let snapshot) = result else {
-        if case .failed(let reason) = result { throw MetadataReadError.unavailable(reason.message) }
+      guard case .success(let capture) = result else {
+        if case .failure(let reason) = result {
+          throw MetadataReadError.unavailable(reason.message)
+        }
         throw MetadataReadError.unavailable("Planner could not filter its Itinerary Lists.")
       }
+      let snapshot = capture.snapshot
       for identity in snapshot.rows {
         guard case .source(let source) = identity, source.kind == .list,
           matchingLists.insert(source.id).inserted
@@ -401,11 +444,12 @@ final class SavedItemWindow {
       guard Int64(matchingLists.count) == snapshot.matchingCount else {
         throw MetadataReadError.unavailable("Planner could not resolve its complete List headers.")
       }
-      listSnapshot = snapshot
+      listCapture = capture
     }
     try await validateMetadataSnapshot(fullSnapshot, requestIdentifier: requestIdentifier)
-    if let listSnapshot {
-      try await validateMetadataSnapshot(listSnapshot, requestIdentifier: requestIdentifier)
+    if let listCapture {
+      defer { withExtendedLifetime(listCapture) {} }
+      try await validateMetadataSnapshot(listCapture.snapshot, requestIdentifier: requestIdentifier)
     }
     return try assembleItineraryMetadata(
       itinerary: itinerary, lists: lists, fullSnapshot: fullSnapshot,

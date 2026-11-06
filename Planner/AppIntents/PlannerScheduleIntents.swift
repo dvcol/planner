@@ -440,11 +440,13 @@
         startDay: try plannerScheduleCivilDate(startDay),
         endDay: try plannerScheduleCivilDate(endDay),
         displayTimeZone: displayTimeZone?.id ?? TimeZone.current.identifier)
-      let snapshot: PlannerQuerySnapshot
-      switch await planner.query(.init(session: session, request: .calendar(query))) {
-      case .snapshot(let current): snapshot = current
-      case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+      let capture: SavedQueryCapture
+      switch await planner.queryForNativeUse(.init(session: session, request: .calendar(query))) {
+      case .success(let current): capture = current
+      case .failure(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       var entities: [PlannerScheduleEntity] = []
       var offset: Int64 = 0
       while offset < snapshot.matchingCount {
@@ -496,13 +498,15 @@
   ) async throws -> [PlannerScheduleEntity] {
     let (planner, session) = try await store.appIntentContext()
     try Task.checkCancellation()
-    let snapshot: PlannerQuerySnapshot
-    switch await planner.query(
+    let capture: SavedQueryCapture
+    switch await planner.queryForNativeUse(
       .init(session: session, request: .catalog(.init(sourceKind: .schedule, archive: .all))))
     {
-    case .snapshot(let current): snapshot = current
-    case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+    case .success(let current): capture = current
+    case .failure(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
     }
+    let snapshot = capture.snapshot
+    defer { withExtendedLifetime(capture) {} }
     let identifiers: Set<UUID>?
     switch selection {
     case .all: identifiers = nil
@@ -588,13 +592,15 @@
   ) async throws -> PlannerSourceRead {
     let (planner, session) = try await store.appIntentContext()
     try Task.checkCancellation()
-    let snapshot: PlannerQuerySnapshot
-    switch await planner.query(
+    let capture: SavedQueryCapture
+    switch await planner.queryForNativeUse(
       .init(session: session, request: .catalog(.init(sourceKind: .schedule, archive: .all))))
     {
-    case .snapshot(let current): snapshot = current
-    case .failed(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
+    case .success(let current): capture = current
+    case .failure(let reason): throw PlannerScheduleIntentFailure(message: reason.message)
     }
+    let snapshot = capture.snapshot
+    defer { withExtendedLifetime(capture) {} }
     let owner: PlannerEntityReference
     switch await planner.read(
       session: session, request: .source(.init(kind: .schedule, id: identifier)))

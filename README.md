@@ -52,8 +52,10 @@ logs, screenshots and test bundles are temporary and discarded after review.
 - [Shared command contracts](docs/shared-command-contracts.md) records accepted
   integration authority, wire formats, capture limits, Agent Control and MCP
   client behavior. Its Contract Q1-Q26 choices are accepted with the later
-  amendment removing maximum duration, idle expiry and countdown: access stays
-  enabled until Stop or app quit. Q27 selects field-hash edit guards and Q28
+  amendments removing automatic expiry and persisting the selected library's
+  on/off choice across relaunches and same-account session refreshes. Stop saves
+  Off; a different library or account requires its own enablement. Q27 selects
+  field-hash edit guards and Q28
   accepts a same-app credential reader. Q30 C removes extra app-imposed
   client/request caps, retaining concurrent-client proof and measured capacity.
   Q29 selects the official Swift SDK and its supported sessionless HTTP

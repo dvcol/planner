@@ -118,7 +118,7 @@ extension PlannerSchemaV18.Item {
   }
 }
 
-struct PlannerBoundIdentity: Codable {
+struct PlannerBoundIdentity: Codable, Hashable {
   let kind: String
   let id: UUID
   let lifetimeId: UUID

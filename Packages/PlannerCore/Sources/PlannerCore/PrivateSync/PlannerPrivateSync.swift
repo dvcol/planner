@@ -34,6 +34,8 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   private var tail: Task<Void, Never>?
   private var networkTask: Task<Void, Never>?
   private var networkRequested = false
+  private var localChangesRequested = false
+  private var drainingLocalChanges = false
   private var sentNodes: [String: PlannerCloudNode] = [:]
   private var valid = true
   private var sendFailure: PlannerFailure?
@@ -114,14 +116,22 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
   }
 
   func localDataChanged() async {
-    do {
-      let changed = try await ordered { [self] in
-        guard await isValid else { return false }
-        try await finishIncoming()
-        return try await enqueueLocalChanges()
-      }
-      if changed { scheduleNetwork() }
-    } catch { await report(error) }
+    guard isValid else { return }
+    localChangesRequested = true
+    guard !drainingLocalChanges else { return }
+    drainingLocalChanges = true
+    defer { drainingLocalChanges = false }
+    while localChangesRequested && isValid {
+      localChangesRequested = false
+      do {
+        let changed = try await ordered { [self] in
+          guard await isValid else { return false }
+          try await finishIncoming()
+          return try await enqueueLocalChanges()
+        }
+        if changed { scheduleNetwork() }
+      } catch { await report(error) }
+    }
   }
 
   /// Failed inbox/state writes must not advance the engine beyond durable data.
@@ -395,14 +405,10 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
     var changes: [CKSyncEngine.PendingRecordZoneChange] = []
     let projection = try PlannerSharingProjection(nodes: nodes, scope: sharingConfiguration.scope)
     for node in nodes where !state.incomingDeletions.contains(node.name) {
-      let previous = try state.serverRecords[node.name].map {
-        try PlannerCloudNode(record: PlannerCloudNode.restore($0), zoneID: zoneID)
-      }
+      let savedRecord = try state.serverRecords[node.name].map { try PlannerCloudNode.restore($0) }
+      let previous = try savedRecord.map { try PlannerCloudNode(record: $0, zoneID: zoneID) }
       let parent = desiredParent(for: node.name, projection: projection)
-      let savedParent =
-        try state.serverRecords[node.name].map {
-          try PlannerCloudNode.restore($0).parent?.recordID
-        } ?? nil
+      let savedParent = savedRecord?.parent?.recordID
       if node != previous || (library == nil && savedParent != parent) {
         changes.append(.saveRecord(.init(recordName: node.name, zoneID: zoneID)))
       }
@@ -445,6 +451,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
     try await refreshSharingAuthority(database: engine.database)
     guard isValid, verifiedWriteAccess else { return nil }
     let allNodes = try await client.nodes()
+    let allLocalNames = Set(allNodes.map(\.name))
     let nodes: [PlannerCloudNode]
     if let library, case .selectedLists = library.scope {
       let names = try PlannerSharingProjection(nodes: allNodes, scope: library.scope).names
@@ -477,7 +484,7 @@ actor PlannerPrivateSync: CKSyncEngineDelegate {
           engine.state.remove(pendingRecordZoneChanges: [change])
         }
       case .deleteRecord(let identifier):
-        if !allNodes.contains(where: { $0.name == identifier.recordName }) {
+        if !allLocalNames.contains(identifier.recordName) {
           deletions.append(identifier)
         } else {
           engine.state.remove(pendingRecordZoneChanges: [change])

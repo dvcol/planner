@@ -30,6 +30,15 @@ extension ContainerEstimateItinerarySnapshot {
       listEntrySummaries: [PlannerItineraryListEntrySummary]
     )
   {
+    try progressAndEstimates(index: .init(memberships: memberships, items: items, lists: lists))
+  }
+
+  func progressAndEstimates(index: ContainerEstimateIndex) throws
+    -> (
+      progress: PlannerContainerProgress, estimates: PlannerContainerEstimates,
+      listEntrySummaries: [PlannerItineraryListEntrySummary]
+    )
+  {
     var totalCount: Int64 = 0
     var doneCount: Int64 = 0
     var archivedCount: Int64 = 0
@@ -37,7 +46,7 @@ extension ContainerEstimateItinerarySnapshot {
     var listEntrySummaries: [PlannerItineraryListEntrySummary] = []
     for entry in entries {
       if entry.source.kind == "item" {
-        let item = try resolvedItem(entry.source, in: items)
+        let item = try resolvedItem(entry.source, in: index)
         estimateContributions.append(
           ContainerEstimateChild(
             estimate: item.estimate,
@@ -51,8 +60,8 @@ extension ContainerEstimateItinerarySnapshot {
         }
         continue
       }
-      let matchingLists = lists.filter {
-        $0.id == entry.source.id && $0.lifetimeId == entry.source.lifetimeId
+      let matchingLists = (index.listsById[entry.source.id] ?? []).filter {
+        $0.lifetimeId == entry.source.lifetimeId
       }
       guard matchingLists.count == 1, let list = matchingLists.first
       else {
@@ -61,16 +70,15 @@ extension ContainerEstimateItinerarySnapshot {
       var listEstimateChildren: [ContainerEstimateChild] = []
       var branchDoneCount: Int64 = 0
       var branchArchivedCount: Int64 = 0
-      for membership in memberships
-      where membership.list.id == entry.source.id
-        && membership.list.lifetimeId == entry.source.lifetimeId
-      {
-        let item = try resolvedItem(membership.item, in: items)
+      let localCompletionByMembership = Dictionary(
+        grouping: entry.expandedCompletions, by: { $0.context.membershipId })
+      for membership in index.membershipsByList[entry.source.id] ?? []
+      where membership.list.lifetimeId == entry.source.lifetimeId {
+        let item = try resolvedItem(membership.item, in: index)
         totalCount += 1
         let localDone =
-          entry.expandedCompletions.first {
-            $0.context.membershipId == membership.id
-              && $0.context.membershipLifetimeId == membership.lifetimeId
+          localCompletionByMembership[membership.id]?.first {
+            $0.context.membershipLifetimeId == membership.lifetimeId
           }?.localDone ?? false
         listEstimateChildren.append(
           .init(
@@ -129,11 +137,11 @@ extension ContainerEstimateItinerarySnapshot {
   }
 
   private func resolvedItem(
-    _ binding: PlannerBoundIdentity, in items: [ContainerEstimateItemSnapshot]
+    _ binding: PlannerBoundIdentity, in index: ContainerEstimateIndex
   ) throws
     -> ContainerEstimateItemSnapshot
   {
-    let matches = items.filter { $0.id == binding.id && $0.lifetimeId == binding.lifetimeId }
+    let matches = (index.itemsById[binding.id] ?? []).filter { $0.lifetimeId == binding.lifetimeId }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure("readUnavailable", "An itinerary child Item is unresolved.")
     }

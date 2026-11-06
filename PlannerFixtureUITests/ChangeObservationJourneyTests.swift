@@ -397,6 +397,9 @@ final class ChangeObservationJourneyTests: XCTestCase {
     }
     let reconnect = application.plannerElement("saved.changes.retry")
     XCTAssertTrue(reconnect.waitForExistence(timeout: 15))
+    let reason = application.staticTexts["saved.changes.reason"]
+    XCTAssertTrue(reason.waitForExistence(timeout: 5))
+    XCTAssertFalse(reason.label.isEmpty)
     XCTAssertFalse(save.isEnabled)
     XCTAssertEqual(title.value as? String, "Connection draft")
     XCTAssertEqual(notes.value as? String, "Retain connection notes")

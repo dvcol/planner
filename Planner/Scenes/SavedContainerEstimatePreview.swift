@@ -37,7 +37,8 @@ struct SavedContainerEstimatePreview: View {
     let remaining = estimates.remainingEstimate.nativeContainerDurationDescription(
       displayUnit: unit)
     let manual = manualEstimate == nil ? "" : " · Manual"
-    return "\(full) estimate · \(remaining) remaining\(manual)"
+    if estimates.fullEstimate == estimates.remainingEstimate { return full + manual }
+    return "\(remaining) left · \(full) total\(manual)"
   }
 }
 

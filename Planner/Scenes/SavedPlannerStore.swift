@@ -2,6 +2,7 @@ import CloudKit
 import Combine
 import CryptoKit
 import Foundation
+import OSLog
 import Observation
 import PlannerCore
 
@@ -51,15 +52,22 @@ enum SavedReviewedChangeResult {
 final class SavedPlannerStore {
   #if PLANNER_AGENT_CONTROL
     let agentAccess = PlannerAgentAccess()
+    @ObservationIgnored private var agentControlURL: URL?
 
     func enableAgentAccess() async {
       guard let planner, let session, isReady, !isSaving, !isManagingSharing else { return }
-      do {
-        let controlURL = try PlannerAgentConnection.controlURL()
-        await agentAccess.enable(.init(planner: planner, session: session, controlURL: controlURL))
-      } catch {
+      guard let agentControlURL else {
         alertMessage = "Agent access requires the app's configured shared storage."
+        return
       }
+      await agentAccess.enable(
+        .init(planner: planner, session: session, controlURL: agentControlURL))
+    }
+
+    private func resumeAgentAccess() async {
+      guard let planner, let session, let agentControlURL else { return }
+      await agentAccess.resume(
+        .init(planner: planner, session: session, controlURL: agentControlURL))
     }
 
     var agentConnectionInstructions: String {
@@ -92,7 +100,8 @@ final class SavedPlannerStore {
   private(set) var librarySwitchBlockedWindows: Set<UUID> = []
 
   var canChangeLibrary: Bool {
-    !isSaving && !isOpening && !isSynchronizing && !isManagingSharing && activeIntentActions == 0
+    !isSaving && !isOpening && !isSynchronizing && !isReconnectingChanges && !isManagingSharing
+      && activeIntentActions == 0
       && librarySwitchBlockedWindows.isEmpty
   }
   var libraryTitle: String { activeLibrary?.title ?? "Personal library" }
@@ -111,6 +120,10 @@ final class SavedPlannerStore {
   private var session: PlannerDatasetSession?
   @ObservationIgnored private var openingTask: Task<Void, Never>?
   @ObservationIgnored private var changeObservationTask: Task<Void, Never>?
+  @ObservationIgnored private var changeRetryTask: Task<Void, Never>?
+  @ObservationIgnored private var changeRetryIdentifier = UUID()
+  private var changeFailureCode: String?
+  private static let changeLogger = Logger(subsystem: "dvcol.planner", category: "LiveUpdates")
   private(set) var changeObservationFailure: String?
   private(set) var isReconnectingChanges = false
   private(set) var isOpening = false
@@ -139,10 +152,16 @@ final class SavedPlannerStore {
     isReady && !isSaving && !recoveryBlocked && !sharedLibraryIsReadOnly && !isManagingSharing
       && !isReconnectingChanges && !isSynchronizing && changeObservationFailure == nil
   }
-  var canReconnectChanges: Bool {
+  private var canStartChangeRefresh: Bool {
     isReady && !isSaving && !isCheckingRecovery && !isReconnectingChanges && !isSynchronizing
-      && changeObservationFailure != nil
+      && !isManagingSharing && activeIntentActions == 0
   }
+
+  var canReconnectChanges: Bool {
+    canStartChangeRefresh && changeObservationFailure != nil
+      && changeFailureCode != "datasetSelectionChanged"
+  }
+
   var hasIncompleteRecovery: Bool {
     !incompleteRecoveryOperationIdentifiers.isEmpty
       || !incompleteRecoveryMaintenanceIdentifiers.isEmpty
@@ -184,6 +203,10 @@ final class SavedPlannerStore {
 
   init(configuration: PlannerStorageConfiguration) {
     storageConfiguration = configuration
+    #if PLANNER_AGENT_CONTROL
+      agentControlURL = configuration.controlURL.deletingLastPathComponent()
+        .appending(path: "AgentControlState.plist")
+    #endif
     activeLibrary = configuration.sharedLibrary
     planner = PlannerCore.Planner(configuration: configuration)
     if case .privateCloud = configuration.storageMode {
@@ -236,6 +259,13 @@ final class SavedPlannerStore {
       let configuration =
         isLocalPrototype ? local : try PlannerNativeStorage.privateConfiguration(local)
       storageConfiguration = configuration
+      #if PLANNER_AGENT_CONTROL
+        if isLocalPrototype {
+          agentControlURL = directory.appending(path: "AgentControlState.plist")
+        } else {
+          agentControlURL = try PlannerAgentConnection.controlURL()
+        }
+      #endif
       planner = PlannerCore.Planner(configuration: configuration)
       if case .privateCloud = configuration.storageMode {
         hasPrivateSynchronization = true
@@ -248,6 +278,7 @@ final class SavedPlannerStore {
   }
 
   deinit {
+    changeRetryTask?.cancel()
     changeObservationTask?.cancel()
     recoveryRefresh?.task.cancel()
   }
@@ -290,6 +321,9 @@ final class SavedPlannerStore {
       }
       await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
+      #if PLANNER_AGENT_CONTROL
+        await resumeAgentAccess()
+      #endif
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired:
       openingFailure = "Open Plan 2Do once to set up its shared data before using Share."
@@ -345,14 +379,16 @@ final class SavedPlannerStore {
     }
     isOpening = true
     #if PLANNER_AGENT_CONTROL
-      await agentAccess.stop()
+      await agentAccess.suspend()
     #endif
+    cancelChangeRetry()
     changeObservationTask?.cancel()
-    recoveryRefresh?.task.cancel()
+    invalidateRecoveryRefresh()
     await planner?.close()
     session = nil
     activeLibrary = library
     changeObservationFailure = nil
+    changeFailureCode = nil
     openingFailure = nil
     let key = "planner.library." + ownership
     do {
@@ -372,6 +408,9 @@ final class SavedPlannerStore {
         session = ready
         await observeChanges(next, session: ready)
         await refreshRecoveryStatus()
+        #if PLANNER_AGENT_CONTROL
+          await resumeAgentAccess()
+        #endif
       case .unavailable(let reason): openingFailure = reason.message
       case .mainAppSetupRequired: openingFailure = "Open Plan 2Do to prepare the selected library."
       case .mainAppMigrationRequired:
@@ -432,48 +471,114 @@ final class SavedPlannerStore {
   private func observeChanges(_ planner: PlannerCore.Planner, session: PlannerDatasetSession) async
   {
     changeObservationTask?.cancel()
-    changeObservationFailure = nil
-    let changes = await planner.changes(session: session)
-    changeObservationTask = Task { [weak self] in
-      do {
-        for try await change in changes {
+    do {
+      let changes = try await planner.subscribeToChanges(session: session)
+      guard self.session == session, !Task.isCancelled else { return }
+      changeObservationFailure = nil
+      changeFailureCode = nil
+      changeObservationTask = Task { [weak self] in
+        do {
+          for try await change in changes {
+            guard !Task.isCancelled, self?.session == session else { return }
+            switch change.payload {
+            case .dataChanged: self?.changeRevision = UUID()
+            case .recoveryStatusChanged(let value):
+              self?.invalidateRecoveryRefresh()
+              self?.applyRecoveryObservation(value)
+            case .accountStatusChanged, .cloudActivityChanged: await self?.refreshRecoveryStatus()
+            }
+          }
           guard !Task.isCancelled, self?.session == session else { return }
-          switch change.payload {
-          case .dataChanged: self?.changeRevision = UUID()
-          case .recoveryStatusChanged: await self?.refreshRecoveryStatus()
-          case .accountStatusChanged, .cloudActivityChanged: await self?.refreshRecoveryStatus()
-          }
+          self?.recordChangeFailure(
+            code: "observationUnavailable", message: "Live updates stopped. Reconnect to resume.")
+        } catch {
+          guard !Task.isCancelled, self?.session == session else { return }
+          self?.recordChangeFailure(error)
         }
-        guard !Task.isCancelled, self?.session == session else { return }
-        self?.changeObservationFailure = "Live updates stopped. Reconnect to refresh this window."
-      } catch {
-        guard !Task.isCancelled, self?.session == session else { return }
-        self?.changeObservationFailure =
-          (error as? PlannerFailure)?.message ?? "Planner could not observe saved changes."
-        if (error as? PlannerFailure)?.code == "staleDatasetSession" {
-          #if PLANNER_AGENT_CONTROL
-            await self?.agentAccess.stop()
-          #endif
-          Task { [weak self] in
-            await self?.refreshRecoveryStatus()
-            await self?.reconnectChanges()
-          }
+      }
+    } catch {
+      guard self.session == session, !Task.isCancelled else { return }
+      recordChangeFailure(error)
+    }
+  }
+
+  private func recordChangeFailure(_ error: any Error) {
+    let failure = error as? PlannerFailure
+    recordChangeFailure(
+      code: failure?.code ?? "observationUnavailable",
+      message: failure?.message ?? "Planner could not watch saved changes.")
+  }
+
+  private func recordChangeFailure(code: String, message: String) {
+    changeFailureCode = code
+    changeObservationFailure = message
+    Self.changeLogger.error("Live updates failed with code \(code, privacy: .public)")
+    if code == "staleDatasetSession" || code == "observationUnavailable" {
+      startChangeRetry()
+    }
+  }
+
+  private func cancelChangeRetry() {
+    changeRetryIdentifier = UUID()
+    changeRetryTask?.cancel()
+    changeRetryTask = nil
+  }
+
+  /// Keep one retry series alive while saves, recovery checks, or sync own the refresh slot.
+  private func startChangeRetry() {
+    guard changeRetryTask == nil else { return }
+    let identifier = UUID()
+    changeRetryIdentifier = identifier
+    changeRetryTask = Task { [weak self] in
+      defer {
+        if self?.changeRetryIdentifier == identifier { self?.changeRetryTask = nil }
+      }
+      let delays: [Duration] = [.zero, .milliseconds(500), .seconds(2), .seconds(5)]
+      for delay in delays {
+        if delay != .zero {
+          do { try await Task.sleep(for: delay) } catch { return }
         }
+        let availability = Observations { [weak self] in
+          self?.canStartChangeRefresh ?? true
+        }
+        for await available in availability where available { break }
+        guard !Task.isCancelled, let self, self.changeRetryIdentifier == identifier,
+          let planner = self.planner, let expected = self.session,
+          self.changeObservationFailure != nil
+        else { return }
+        await self.reconnectOnce(planner, expected: expected)
+        guard
+          self.changeFailureCode == "staleDatasetSession"
+            || self.changeFailureCode == "observationUnavailable"
+        else { return }
       }
     }
   }
 
   func reconnectChanges() async {
-    guard let planner, let expected = session, canReconnectChanges else { return }
+    guard canReconnectChanges else { return }
+    cancelChangeRetry()
+    startChangeRetry()
+    await changeRetryTask?.value
+  }
+
+  private func reconnectOnce(_ planner: PlannerCore.Planner, expected: PlannerDatasetSession) async
+  {
     isReconnectingChanges = true
     defer { isReconnectingChanges = false }
-    await refreshSession(planner, expected: expected)
+    if changeFailureCode == "staleDatasetSession" {
+      await refreshSession(planner, expected: expected)
+    } else {
+      await observeChanges(planner, session: expected)
+      if changeObservationFailure == nil {
+        await refreshRecoveryStatus()
+        changeRevision = UUID()
+      }
+    }
   }
 
   func synchronize() async {
-    guard let planner, let expected = session, isReady, !isSaving,
-      !isCheckingRecovery, !isReconnectingChanges, !isSynchronizing,
-      hasPrivateSynchronization
+    guard let planner, let expected = session, canStartChangeRefresh, hasPrivateSynchronization
     else { return }
     isSynchronizing = true
     defer { isSynchronizing = false }
@@ -484,31 +589,35 @@ final class SavedPlannerStore {
   private func refreshSession(_ planner: PlannerCore.Planner, expected: PlannerDatasetSession) async
   {
     changeObservationTask?.cancel()
+    #if PLANNER_AGENT_CONTROL
+      await agentAccess.suspend()
+    #endif
     switch await planner.bootstrap() {
     case .ready(let ready):
-      #if PLANNER_AGENT_CONTROL
-        if ready != expected { await agentAccess.stop() }
-      #endif
       guard ready.datasetId == expected.datasetId,
         ready.ownershipBinding == expected.ownershipBinding
       else {
-        changeObservationFailure =
-          "The available Planner account changed. Quit and reopen Planner to use its data."
+        recordChangeFailure(
+          code: "datasetSelectionChanged",
+          message: "The available Planner account changed. Choose a library in Settings.")
         return
       }
       session = ready
       await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
-      changeRevision = UUID()
-    case .unavailable(let reason):
       #if PLANNER_AGENT_CONTROL
-        await agentAccess.stop()
+        await resumeAgentAccess()
       #endif
-      changeObservationFailure = reason.message
+      changeRevision = UUID()
+    case .unavailable(let reason): recordChangeFailure(reason)
     case .mainAppSetupRequired:
-      changeObservationFailure = "Open Plan 2Do to finish setting up its shared data."
+      recordChangeFailure(
+        code: "mainAppSetupRequired", message: "Open Plan 2Do to finish setting up its shared data."
+      )
     case .mainAppMigrationRequired:
-      changeObservationFailure = "Open Plan 2Do to finish updating its shared data."
+      recordChangeFailure(
+        code: "mainAppMigrationRequired",
+        message: "Open Plan 2Do to finish updating its shared data.")
     }
   }
 
@@ -624,24 +733,28 @@ final class SavedPlannerStore {
     switch result {
     case .status(let status):
       updateSynchronizationStatus(status)
-      switch status.recovery {
-      case .known(
-        let checkpoint, let incompleteIdentifiers, let maintenanceIdentifiers, let mutationBlocked):
-        incompleteRecoveryOperationIdentifiers = incompleteIdentifiers
-        incompleteRecoveryMaintenanceIdentifiers = maintenanceIdentifiers
-        recoveryBlocked = mutationBlocked || requiresRecoveryReview
-        recoveryStatusFailure = nil
-        if requiresRecoveryReview {
-          recoveryStatusTitle = "Recovery review needed"
-        } else if mutationBlocked {
-          recoveryStatusTitle = "Recovery copy incomplete"
-        } else {
-          recoveryStatusTitle = checkpoint == nil ? "No saved changes yet" : "Saved on this device"
-        }
-      case .unavailable(let reason): showUnavailableRecovery(reason.message)
-      }
+      applyRecoveryObservation(status.recovery)
     case .failed(let reason): showUnavailableRecovery(reason.message)
     default: showUnavailableRecovery("Planner could not read its local recovery evidence.")
+    }
+  }
+
+  private func applyRecoveryObservation(_ recovery: PlannerRecoveryObservation) {
+    switch recovery {
+    case .known(
+      let checkpoint, let incompleteIdentifiers, let maintenanceIdentifiers, let mutationBlocked):
+      incompleteRecoveryOperationIdentifiers = incompleteIdentifiers
+      incompleteRecoveryMaintenanceIdentifiers = maintenanceIdentifiers
+      recoveryBlocked = mutationBlocked || requiresRecoveryReview
+      recoveryStatusFailure = nil
+      if requiresRecoveryReview {
+        recoveryStatusTitle = "Recovery review needed"
+      } else if mutationBlocked {
+        recoveryStatusTitle = "Recovery copy incomplete"
+      } else {
+        recoveryStatusTitle = checkpoint == nil ? "No saved changes yet" : "Saved on this device"
+      }
+    case .unavailable(let reason): showUnavailableRecovery(reason.message)
     }
   }
 
@@ -787,11 +900,19 @@ final class SavedPlannerStore {
     }
   }
 
+  /// A superseded read cannot publish a result or alert into the current session.
+  private func readForPresentation(_ request: PlannerReadRequest) async -> PlannerReadResult? {
+    guard !Task.isCancelled, let planner, let session else { return nil }
+    let result = await planner.read(session: session, request: request)
+    guard !Task.isCancelled, self.session == session else { return nil }
+    if case .failed(let reason) = result, reason.code == "cancelled" { return nil }
+    return result
+  }
+
   func readList(_ identifier: UUID) async -> PlannerListSourceRead? {
-    guard let planner, let session else { return nil }
-    switch await planner.read(
-      session: session, request: .source(.init(kind: .list, id: identifier)))
-    {
+    guard let result = await readForPresentation(.source(.init(kind: .list, id: identifier)))
+    else { return nil }
+    switch result {
     case .source(.list(let list)): return list
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this List."
@@ -800,18 +921,19 @@ final class SavedPlannerStore {
   }
 
   func readLabels(_ kind: SavedLabelKind) async -> [SavedPlannerLabel]? {
-    guard let planner, let session else { return nil }
-    switch await planner.query(
-      PlannerQuery(
-        session: session, request: .catalog(.init(sourceKind: kind.sourceKind, archive: .all)))
-    )
-    {
-    case .failed(let reason): alertMessage = reason.message
-    case .snapshot(let snapshot):
-      switch await planner.read(
+    guard !Task.isCancelled, let planner, let session else { return nil }
+    let result = await planner.queryForNativeUse(
+      .init(session: session, request: .catalog(.init(sourceKind: kind.sourceKind, archive: .all))))
+    guard !Task.isCancelled, self.session == session else { return nil }
+    switch result {
+    case .failure(let reason): alertMessage = reason.message
+    case .success(let capture):
+      defer { withExtendedLifetime(capture) {} }
+      let result = await planner.read(
         session: session,
-        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
-      {
+        request: .rows(generation: capture.snapshot.generation, offset: 0, limit: Int64.max))
+      guard !Task.isCancelled, self.session == session else { return nil }
+      switch result {
       case .rows(let window):
         return window.rows.compactMap { row in
           guard case .source(let source) = row.identity, source.kind == kind.sourceKind else {
@@ -827,10 +949,11 @@ final class SavedPlannerStore {
   }
 
   func readLabel(_ selection: SavedLabelSelection) async -> SavedLabelSource? {
-    guard let planner, let session else { return nil }
-    switch await planner.read(
-      session: session, request: .source(.init(kind: selection.kind.sourceKind, id: selection.id)))
-    {
+    guard
+      let result = await readForPresentation(
+        .source(.init(kind: selection.kind.sourceKind, id: selection.id)))
+    else { return nil }
+    switch result {
     case .source(.category(let category)): return .category(category)
     case .source(.tag(let tag)): return .tag(tag)
     case .failed(let reason): alertMessage = reason.message
@@ -840,10 +963,9 @@ final class SavedPlannerStore {
   }
 
   func readItinerary(_ identifier: UUID) async -> PlannerItinerarySourceRead? {
-    guard let planner, let session else { return nil }
-    switch await planner.read(
-      session: session, request: .source(.init(kind: .itinerary, id: identifier)))
-    {
+    guard let result = await readForPresentation(.source(.init(kind: .itinerary, id: identifier)))
+    else { return nil }
+    switch result {
     case .source(.itinerary(let itinerary)): return itinerary
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this Itinerary."
@@ -852,20 +974,21 @@ final class SavedPlannerStore {
   }
 
   func readSchedule(_ identifier: UUID) async -> PlannerReadResult? {
-    guard let planner, let session else { return nil }
-    return await planner.read(
-      session: session, request: .source(.init(kind: .schedule, id: identifier)))
+    await readForPresentation(.source(.init(kind: .schedule, id: identifier)))
   }
 
   func readCalendarEntries(query: PlannerCalendarQuery) async -> [PlannerCalendarEntry]? {
     guard let planner, let session else { return nil }
     while !Task.isCancelled {
-      let result = await planner.query(.init(session: session, request: .calendar(query)))
-      guard !Task.isCancelled else { return nil }
-      guard case .snapshot(let snapshot) = result else {
-        if case .failed(let reason) = result { alertMessage = reason.message }
+      let result = await planner.queryForNativeUse(
+        .init(session: session, request: .calendar(query)))
+      guard !Task.isCancelled, self.session == session else { return nil }
+      guard case .success(let capture) = result else {
+        if case .failure(let reason) = result { alertMessage = reason.message }
         return nil
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       var entries: [PlannerCalendarEntry] = []
       var offset: Int64 = 0
       var needsRefresh = false
@@ -873,7 +996,7 @@ final class SavedPlannerStore {
         let result = await planner.read(
           session: session,
           request: .calendarRows(generation: snapshot.generation, offset: offset, limit: 64))
-        guard !Task.isCancelled else { return nil }
+        guard !Task.isCancelled, self.session == session else { return nil }
         switch result {
         case .calendarRows(let page):
           guard !page.rows.isEmpty else {
@@ -951,6 +1074,11 @@ final class SavedPlannerStore {
       operationId: UUID())
   }
 
+  func canReuseItemWindow(_ window: SavedItemWindow?) -> Bool {
+    guard let session, let window else { return false }
+    return window.sessionIdentifier == session.sessionId
+  }
+
   func makeItemWindow() -> SavedItemWindow? {
     guard let planner, let session else { return nil }
     return SavedItemWindow(planner: planner, session: session)
@@ -967,10 +1095,9 @@ final class SavedPlannerStore {
   }
 
   func readItem(_ identifier: UUID) async -> PlannerItemSourceRead? {
-    guard let planner, let session else { return nil }
-    switch await planner.read(
-      session: session, request: .source(.init(kind: .item, id: identifier)))
-    {
+    guard let result = await readForPresentation(.source(.init(kind: .item, id: identifier)))
+    else { return nil }
+    switch result {
     case .source(.item(let item)): return item
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this Item."
@@ -979,8 +1106,9 @@ final class SavedPlannerStore {
   }
 
   func readAppearance(_ appearance: PlannerAppearance) async -> PlannerAppearanceRead? {
-    guard let planner, let session else { return nil }
-    switch await planner.read(session: session, request: .appearance(appearance)) {
+    guard let result = await readForPresentation(.appearance(appearance))
+    else { return nil }
+    switch result {
     case .appearance(let item): return item
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this List entry."

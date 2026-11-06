@@ -606,6 +606,54 @@ struct RecoveryPreparedProposal: Codable {
   }
 }
 
+/// Identifies acknowledged proposals without decoding their obsolete prepared snapshots.
+private struct RecoveryPreparedProposalHeader: Decodable, Sendable {
+  let proposalId: UUID
+  let originalOperationId: UUID
+  let datasetId: UUID
+  let ownershipBinding: String
+  let evidence: String
+}
+
+/// Identifies checkpoint candidates without decoding their historical payloads or receipts.
+private struct RecoveryEnvelopeHeader: Decodable, Sendable {
+  let format: String
+  let formatVersion: Int
+  let namespaceId: UUID
+  let datasetId: UUID
+  let ownershipBinding: String
+  let storageSchemaVersion: String
+  let checkpointGeneration: String
+
+  init(envelope: RecoveryEnvelope) {
+    format = envelope.format
+    formatVersion = envelope.formatVersion
+    namespaceId = envelope.namespaceId
+    datasetId = envelope.datasetId
+    ownershipBinding = envelope.ownershipBinding
+    storageSchemaVersion = envelope.storageSchemaVersion
+    checkpointGeneration = envelope.checkpointGeneration
+  }
+
+  func validated(identity: PlannerStoreIdentity) throws -> Int64 {
+    guard format == "planner-recovery", (1...2).contains(formatVersion),
+      [
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
+        "18", "19", "20", "21", "22", "23", "24", "25",
+      ]
+      .contains(storageSchemaVersion),
+      namespaceId == identity.namespaceId, datasetId == identity.datasetId,
+      ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
+      let generation = Int64(checkpointGeneration), generation > 0,
+      String(generation) == checkpointGeneration
+    else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Recovery ownership, version or digest validation failed.")
+    }
+    return generation
+  }
+}
+
 struct RecoveryEnvelope: Codable {
   let format: String
   let formatVersion: Int
@@ -621,18 +669,8 @@ struct RecoveryEnvelope: Codable {
   let maintenanceReceipts: [RecoveryMaintenanceReceipt]
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
-    guard format == "planner-recovery", (1...2).contains(formatVersion),
-      formatVersion == 2 || maintenanceReceipts.isEmpty,
-      [
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-        "18", "19", "20", "21", "22", "23", "24", "25",
-      ]
-      .contains(
-        storageSchemaVersion),
-      namespaceId == identity.namespaceId, datasetId == identity.datasetId,
-      ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
-      let generation = Int64(checkpointGeneration), generation > 0,
-      String(generation) == checkpointGeneration,
+    let generation = try RecoveryEnvelopeHeader(envelope: self).validated(identity: identity)
+    guard formatVersion == 2 || maintenanceReceipts.isEmpty,
       let bytes = Data(base64Encoded: portablePayloadBase64),
       plannerDigest(bytes, prefix: "sha256:") == dataDigest,
       Set(receipts.map(\.operationId)).count == receipts.count,
@@ -681,14 +719,33 @@ struct RecoveryEnvelope: Codable {
   }
 }
 
+private let recoveryCheckpointHeaders = PlannerRecoveryHeaderCache<RecoveryEnvelopeHeader>()
+private let recoveryProposalHeaders = PlannerRecoveryHeaderCache<RecoveryPreparedProposalHeader>()
+
 struct PlannerRecoveryArchive {
   let rootURL: URL
   let identity: PlannerStoreIdentity
   let nativeContext: ModelContext?
 
+  /// A coordinated command reuses only reads made before the next write phase.
+  final class ReadPhase {
+    fileprivate var head: RecoveryEnvelope??
+    fileprivate var proposals: [RecoveryPreparedProposal]?
+
+    fileprivate func reset() {
+      head = nil
+      proposals = nil
+    }
+  }
+
+  var readPhase: ReadPhase? = nil
+
+  func beginReadPhase() { readPhase?.reset() }
+
   var namespaceURL: URL { rootURL.appendingPathComponent(identity.namespaceId.uuidString) }
 
   func prepare(_ proposal: RecoveryPreparedProposal) throws {
+    defer { readPhase?.proposals = nil }
     var retained = proposal
     if let nativeContext {
       let lineage = try PlannerNativeLineage(context: nativeContext)
@@ -711,6 +768,7 @@ struct PlannerRecoveryArchive {
   }
 
   func discardPreparedProposal(_ proposalId: UUID) throws {
+    defer { readPhase?.proposals = nil }
     let proposalURL = namespaceURL.appendingPathComponent("proposal-\(proposalId.uuidString).json")
     if FileManager.default.fileExists(atPath: proposalURL.path) {
       try FileManager.default.removeItem(at: proposalURL)
@@ -718,42 +776,89 @@ struct PlannerRecoveryArchive {
   }
 
   func latest() throws -> RecoveryEnvelope? {
+    if let head = readPhase?.head { return head }
+    let envelope = try readLatest()
+    readPhase?.head = .some(envelope)
+    return envelope
+  }
+
+  private func readLatest() throws -> RecoveryEnvelope? {
     let files = try FileManager.default.contentsOfDirectory(
       at: namespaceURL, includingPropertiesForKeys: nil
     ).filter { $0.lastPathComponent.hasPrefix("checkpoint-") && $0.pathExtension == "json" }
-    var latest: RecoveryEnvelope?
+    var latestURL: URL?
     var latestGeneration: Int64 = 0
     for file in files {
-      let envelope = try JSONDecoder().decode(RecoveryEnvelope.self, from: Data(contentsOf: file))
-      let (_, _, generation) = try envelope.validated(identity: identity)
+      let filenameGeneration = file.deletingPathExtension().lastPathComponent
+        .dropFirst("checkpoint-".count)
+      guard let generation = Int64(filenameGeneration), generation > 0,
+        file.lastPathComponent == "checkpoint-\(generation).json"
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "A recovery checkpoint filename is invalid.")
+      }
+      let header = try recoveryCheckpointHeaders.read(at: file)
+      guard try header.validated(identity: identity) == generation else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure",
+          "A recovery checkpoint does not match its recorded generation.")
+      }
       if generation > latestGeneration {
-        latest = envelope
+        latestURL = file
         latestGeneration = generation
       }
     }
-    return latest
+    guard let latestURL else { return nil }
+    let latestData = try Data(contentsOf: latestURL)
+    let envelope = try JSONDecoder().decode(RecoveryEnvelope.self, from: latestData)
+    guard try envelope.validated(identity: identity).2 == latestGeneration else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The selected checkpoint changed its recorded generation.")
+    }
+    return envelope
   }
 
   func proposals() throws -> [RecoveryPreparedProposal] {
+    if let proposals = readPhase?.proposals { return proposals }
+    let proposals = try readProposals()
+    readPhase?.proposals = proposals
+    return proposals
+  }
+
+  private func readProposals() throws -> [RecoveryPreparedProposal] {
     let files = try FileManager.default.contentsOfDirectory(
       at: namespaceURL, includingPropertiesForKeys: nil
     )
     .filter { $0.lastPathComponent.hasPrefix("proposal-") && $0.pathExtension == "json" }
     let completed = Set(try latest()?.receipts.map(\.operationId) ?? [])
-    return try files.map { file in
-      let proposal = try JSONDecoder().decode(
-        RecoveryPreparedProposal.self, from: Data(contentsOf: file))
-      guard proposal.datasetId == identity.datasetId,
-        proposal.ownershipBinding == identity.ownershipBinding,
-        proposal.evidence == "preparedUnverified"
+    return try files.compactMap { file -> RecoveryPreparedProposal? in
+      let header = try recoveryProposalHeaders.read(at: file)
+      guard header.datasetId == identity.datasetId,
+        header.ownershipBinding == identity.ownershipBinding,
+        header.evidence == "preparedUnverified"
       else {
         throw PlannerFailure(
           "recoveryIntegrityFailure", "Prepared recovery evidence has an invalid owner.")
       }
+      guard file.lastPathComponent == "proposal-\(header.proposalId.uuidString).json" else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "A recovery proposal does not match its recorded identity.")
+      }
+      guard !completed.contains(header.originalOperationId) else { return nil }
+      let data = try Data(contentsOf: file)
+      let proposal = try JSONDecoder().decode(RecoveryPreparedProposal.self, from: data)
+      guard proposal.proposalId == header.proposalId,
+        proposal.originalOperationId == header.originalOperationId,
+        proposal.datasetId == identity.datasetId,
+        proposal.ownershipBinding == identity.ownershipBinding,
+        proposal.evidence == "preparedUnverified"
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "Prepared recovery evidence changed its recorded identity.")
+      }
       _ = try proposal.proposedBackup.validated()
       return proposal
-    }.filter { !completed.contains($0.originalOperationId) }
-      .sorted { $0.proposalId.uuidString < $1.proposalId.uuidString }
+    }.sorted { $0.proposalId.uuidString < $1.proposalId.uuidString }
   }
 
   func publish(
@@ -784,8 +889,10 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(snapshot: PlannerDataSnapshot, receipts: [PlannerSchemaV1.Receipt]) throws -> Int64 {
+    beginReadPhase()
+    defer { beginReadPhase() }
     let previous = try latest()
-    let previousGeneration = try previous?.validated(identity: identity).2 ?? 0
+    let previousGeneration = previous.flatMap { Int64($0.checkpointGeneration) } ?? 0
     let (generation, overflow) = previousGeneration.addingReportingOverflow(1)
     guard !overflow else {
       throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")

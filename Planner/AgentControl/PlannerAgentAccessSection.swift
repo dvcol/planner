@@ -14,6 +14,10 @@
           }
           .disabled(!store.isReady || store.isSaving || store.isManagingSharing)
           .accessibilityIdentifier("saved.agent.enable")
+          if store.agentAccess.isConfigured { stopButton }
+        case .suspended:
+          Label("Agent access will resume for this library", systemImage: "pause.circle")
+          stopButton
         case .enabling:
           ProgressView("Starting agent access")
           stopButton
@@ -38,7 +42,7 @@
         Text("Agent access")
       } footer: {
         Text(
-          "Allows local agents to read and edit this library. Access lasts until Stop or app quit. Changing libraries stops access. Credentials stay in Keychain."
+          "Allows local agents on this Mac to read and edit this library. Your choice is saved until Stop. Access resumes after app relaunch or reconnection for the same library and account. Other libraries require their own enablement. Credentials stay in Keychain."
         )
       }
     }

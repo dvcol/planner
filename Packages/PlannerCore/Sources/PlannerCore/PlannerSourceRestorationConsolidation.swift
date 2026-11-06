@@ -222,10 +222,15 @@ struct PlannerSourceRestorationConsolidation {
     entryRetirements.contains { $0.entry === entry }
   }
 
-  func itemValue(_ item: PlannerSchemaV18.Item) throws -> ItemSnapshot {
-    try item.value(
-      retiringOwnedLinks: Set(ownedLinkRetirements.map(\.identity)),
-      retiringLabels: Set(labelRetirements.map(\.identity)))
+  func itemValues(_ items: [PlannerSchemaV18.Item]) throws -> [ItemSnapshot] {
+    let labels = PlannerLabelReadScope()
+    let retiringOwnedLinks = Set(ownedLinkRetirements.map(\.identity))
+    let retiringLabels = Set(labelRetirements.map(\.identity))
+    return try items.map {
+      try $0.value(
+        retiringOwnedLinks: retiringOwnedLinks, retiringLabels: retiringLabels,
+        labelReadScope: labels)
+    }
   }
 
   func itineraryValue(_ itinerary: PlannerSchemaV18.Itinerary) throws -> ItinerarySnapshot {

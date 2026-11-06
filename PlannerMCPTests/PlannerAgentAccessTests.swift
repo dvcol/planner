@@ -100,9 +100,268 @@ final class PlannerAgentAccessTests: XCTestCase {
     XCTAssertEqual(
       ping.1.value(forHTTPHeaderField: "X-Planner-Access-Window"), second.accessWindowId.uuidString)
 
-    await fixture.store.switchLibrary(to: nil)
-    XCTAssertEqual(access.state, .off, "Changing the library must revoke existing agent access.")
+    await access.stop()
+    XCTAssertEqual(access.state, .off)
     XCTAssertFalse(FileManager.default.fileExists(atPath: controlURL.path))
+  }
+
+  func testSavedChoiceResumesInANewStoreAndStopRemainsOffAfterReopening() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let (planner, session) = try await fixture.store.appIntentContext()
+    let controlURL = fixture.configuration.controlURL.deletingLastPathComponent()
+      .appending(path: "AgentControlState.plist")
+    let access = fixture.store.agentAccess
+    let port = try await availablePort()
+    await access.enable(
+      .init(planner: planner, session: session, controlURL: controlURL), port: port)
+    guard case .on(let endpoint) = access.state else {
+      return XCTFail(access.notice ?? "Initial enable failed.")
+    }
+    let original = try PlannerAgentConnection.read(from: controlURL)
+    let oldCredential = try PlannerAgentCredential.read(window: original.accessWindowId)
+    await access.suspend()
+    XCTAssertEqual(access.state, .suspended)
+    XCTAssertTrue(access.isConfigured)
+    XCTAssertThrowsError(try PlannerAgentCredential.read(window: original.accessWindowId))
+
+    let reopened = SavedPlannerStore(configuration: fixture.configuration)
+    let (reopenedPlanner, reopenedSession) = try await reopened.appIntentContext()
+    let disabled = SavedPlannerStore(configuration: fixture.configuration)
+    addTeardownBlock {
+      await access.stop()
+      await reopened.agentAccess.stop()
+      await disabled.agentAccess.stop()
+      await planner.close()
+      await reopenedPlanner.close()
+    }
+    XCTAssertEqual(reopenedSession.datasetId, session.datasetId)
+    XCTAssertEqual(reopenedSession.ownershipBinding, session.ownershipBinding)
+    guard case .on(let restoredEndpoint) = reopened.agentAccess.state else {
+      return XCTFail(reopened.agentAccess.notice ?? "The saved choice must resume on open.")
+    }
+    XCTAssertEqual(restoredEndpoint, endpoint)
+    let restored = try PlannerAgentConnection.read(from: controlURL)
+    XCTAssertNotEqual(restored.mainInstanceId, original.mainInstanceId)
+    XCTAssertNotEqual(restored.accessWindowId, original.accessWindowId)
+    let rejected = try await exchange(endpoint, credential: oldCredential, method: "ping")
+    XCTAssertEqual(rejected.1.statusCode, 401)
+    let currentCredential = try PlannerAgentCredential.read(window: restored.accessWindowId)
+    let accepted = try await exchange(endpoint, credential: currentCredential, method: "ping")
+    XCTAssertEqual(accepted.1.statusCode, 200)
+
+    await reopened.agentAccess.stop()
+    let (disabledPlanner, _) = try await disabled.appIntentContext()
+    XCTAssertEqual(disabled.agentAccess.state, .off)
+    XCTAssertFalse(disabled.agentAccess.isConfigured)
+    XCTAssertFalse(FileManager.default.fileExists(atPath: controlURL.path))
+    await disabledPlanner.close()
+  }
+
+  func testStoreAutomaticallyRebindsWhenTheSameLibrarySessionIsInvalidated() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let (planner, session) = try await fixture.store.appIntentContext()
+    let controlURL = fixture.configuration.controlURL.deletingLastPathComponent()
+      .appending(path: "AgentControlState.plist")
+    let access = fixture.store.agentAccess
+    let port = try await availablePort()
+    await access.enable(
+      .init(planner: planner, session: session, controlURL: controlURL), port: port)
+    addTeardownBlock {
+      await access.stop()
+      await planner.close()
+    }
+    guard case .on(let endpoint) = access.state else {
+      return XCTFail(access.notice ?? "Initial enable failed.")
+    }
+    let original = try PlannerAgentConnection.read(from: controlURL)
+    let oldCredential = try PlannerAgentCredential.read(window: original.accessWindowId)
+    await planner.close()
+    let deadline = Date().addingTimeInterval(10)
+    while Date() < deadline {
+      if access.isEnabled,
+        let current = try? PlannerAgentConnection.read(from: controlURL),
+        current.accessWindowId != original.accessWindowId
+      {
+        break
+      }
+      try await Task.sleep(for: .milliseconds(20))
+    }
+    guard case .on = access.state else {
+      return XCTFail(access.notice ?? "A same-library refresh must resume agent access.")
+    }
+    let current = try PlannerAgentConnection.read(from: controlURL)
+    XCTAssertNotEqual(current.accessWindowId, original.accessWindowId)
+    XCTAssertEqual(current.mainInstanceId, original.mainInstanceId)
+    XCTAssertThrowsError(try PlannerAgentCredential.read(window: original.accessWindowId))
+    let rejected = try await exchange(endpoint, credential: oldCredential, method: "ping")
+    XCTAssertEqual(rejected.1.statusCode, 401)
+    let currentCredential = try PlannerAgentCredential.read(window: current.accessWindowId)
+    let query = try await call(
+      endpoint, credential: currentCredential, tool: "planner_query",
+      arguments: [
+        "formatVersion": 1, "query": ["kind": "items", "scope": ["kind": "global"]],
+      ])
+    XCTAssertNotNil(query["generation"], "MCP must use the refreshed live Core session.")
+    let (_, refreshedSession) = try await fixture.store.appIntentContext()
+    XCTAssertNotEqual(refreshedSession.sessionId, session.sessionId)
+    XCTAssertEqual(refreshedSession.datasetId, session.datasetId)
+    XCTAssertEqual(refreshedSession.ownershipBinding, session.ownershipBinding)
+  }
+
+  func testStopWhileReconnectIsPendingKeepsTheSavedChoiceOff() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let store = fixture.store
+    let (planner, session) = try await store.appIntentContext()
+    let access = store.agentAccess
+    let controlURL = fixture.configuration.controlURL.deletingLastPathComponent()
+      .appending(path: "AgentControlState.plist")
+    let port = try await availablePort()
+    await access.enable(
+      .init(planner: planner, session: session, controlURL: controlURL), port: port)
+    XCTAssertTrue(access.isConfigured)
+    addTeardownBlock {
+      await access.stop()
+      await planner.close()
+    }
+
+    try await store.beginAppIntentAction()
+    await planner.close()
+    let failureDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while store.changeObservationFailure == nil, ContinuousClock.now < failureDeadline {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertNotNil(store.changeObservationFailure)
+    XCTAssertFalse(store.canReconnectChanges)
+    await access.stop()
+    store.endAppIntentAction()
+
+    let recoveryDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while store.changeObservationFailure != nil || store.isReconnectingChanges {
+      if ContinuousClock.now >= recoveryDeadline { return XCTFail("Planner did not reconnect.") }
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    let (_, renewed) = try await store.appIntentContext()
+    XCTAssertNotEqual(renewed.sessionId, session.sessionId)
+    XCTAssertEqual(renewed.datasetId, session.datasetId)
+    XCTAssertEqual(access.state, .off)
+    XCTAssertFalse(access.isConfigured)
+    XCTAssertFalse(FileManager.default.fileExists(atPath: controlURL.path))
+  }
+
+  func testDifferentDatasetOrOwnerCannotInheritOrEraseTheSavedChoice() async throws {
+    let firstFixture = try makePlannerIntentStorage()
+    let secondFixture = try makePlannerIntentStorage()
+    let (firstPlanner, firstSession) = try await firstFixture.store.appIntentContext()
+    let (secondPlanner, secondSession) = try await secondFixture.store.appIntentContext()
+    let access = firstFixture.store.agentAccess
+    let port = try await availablePort()
+    let controlURL = firstFixture.directory.appending(path: "AgentControlState.plist")
+    let context = PlannerAgentAccess.Context(
+      planner: firstPlanner, session: firstSession, controlURL: controlURL)
+    await access.enable(context, port: port)
+    addTeardownBlock {
+      await access.stop()
+      await firstPlanner.close()
+      await secondPlanner.close()
+    }
+    guard case .on = access.state else { return XCTFail(access.notice ?? "Initial enable failed.") }
+    let preferenceURL = firstFixture.directory.appending(path: "AgentControlPreference.plist")
+    let savedChoice = try Data(contentsOf: preferenceURL)
+    await access.resume(
+      .init(planner: secondPlanner, session: secondSession, controlURL: controlURL))
+    XCTAssertEqual(access.state, .off)
+    XCTAssertFalse(access.isConfigured)
+    XCTAssertFalse(FileManager.default.fileExists(atPath: controlURL.path))
+    XCTAssertEqual(try Data(contentsOf: preferenceURL), savedChoice)
+    await access.stop()
+    XCTAssertEqual(try Data(contentsOf: preferenceURL), savedChoice)
+
+    var otherOwner = try XCTUnwrap(
+      PropertyListSerialization.propertyList(from: savedChoice, format: nil) as? [String: Any])
+    otherOwner["ownershipBinding"] = "another-account"
+    let otherOwnerData = try PropertyListSerialization.data(
+      fromPropertyList: otherOwner, format: .binary, options: 0)
+    try otherOwnerData.write(to: preferenceURL, options: .atomic)
+    await access.resume(context)
+    XCTAssertEqual(access.state, .off, "The same dataset ID cannot reuse another account's grant.")
+    XCTAssertFalse(access.isConfigured)
+    XCTAssertEqual(try Data(contentsOf: preferenceURL), otherOwnerData)
+    try savedChoice.write(to: preferenceURL, options: .atomic)
+    await access.resume(context)
+    XCTAssertTrue(access.isEnabled, "Returning to the authorized dataset must retain its choice.")
+  }
+
+  func testStopFromAnOlderControllerPreservesTheNewerGrantForAnotherLibrary() async throws {
+    let firstFixture = try makePlannerIntentStorage()
+    let secondFixture = try makePlannerIntentStorage()
+    let (firstPlanner, firstSession) = try await firstFixture.store.appIntentContext()
+    let (secondPlanner, secondSession) = try await secondFixture.store.appIntentContext()
+    let first = firstFixture.store.agentAccess
+    let second = secondFixture.store.agentAccess
+    let controlURL = firstFixture.directory.appending(path: "AgentControlState.plist")
+    let firstContext = PlannerAgentAccess.Context(
+      planner: firstPlanner, session: firstSession, controlURL: controlURL)
+    let secondContext = PlannerAgentAccess.Context(
+      planner: secondPlanner, session: secondSession, controlURL: controlURL)
+    addTeardownBlock {
+      await first.stop()
+      await second.stop()
+      await firstPlanner.close()
+      await secondPlanner.close()
+    }
+    let port = try await availablePort()
+    await first.enable(firstContext, port: port)
+    XCTAssertTrue(first.isEnabled)
+    await first.suspend()
+    await second.enable(secondContext, port: port)
+    guard case .on = second.state else { return XCTFail(second.notice ?? "New grant failed.") }
+    let savedChoice = try Data(contentsOf: firstContext.preferenceURL)
+
+    await first.stop()
+    XCTAssertEqual(first.state, .off)
+    XCTAssertFalse(first.isConfigured, "The older controller must refresh its cached choice.")
+    XCTAssertEqual(try Data(contentsOf: firstContext.preferenceURL), savedChoice)
+    XCTAssertTrue(second.isEnabled)
+
+    await second.suspend()
+    await second.resume(secondContext)
+    XCTAssertTrue(second.isEnabled, "The newer library's saved grant must still resume.")
+    XCTAssertEqual(try Data(contentsOf: firstContext.preferenceURL), savedChoice)
+  }
+
+  func testStopUsesTheCurrentSavedPortForTheSameLibrary() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let (planner, session) = try await fixture.store.appIntentContext()
+    let first = fixture.store.agentAccess
+    let second = PlannerAgentAccess()
+    let context = PlannerAgentAccess.Context(
+      planner: planner, session: session,
+      controlURL: fixture.directory.appending(path: "AgentControlState.plist"))
+    addTeardownBlock {
+      await first.stop()
+      await second.stop()
+      await planner.close()
+    }
+    let originalPort = try await availablePort()
+    await first.enable(context, port: originalPort)
+    XCTAssertTrue(first.isEnabled)
+    let currentPort = try await availablePort()
+    XCTAssertNotEqual(currentPort, originalPort)
+    await first.suspend()
+    await second.enable(context, port: currentPort)
+    XCTAssertTrue(second.isEnabled)
+    await second.suspend()
+
+    await first.stop()
+    XCTAssertFalse(first.isConfigured)
+    let current = try XCTUnwrap(
+      PropertyListSerialization.propertyList(
+        from: Data(contentsOf: context.preferenceURL), format: nil) as? [String: Any])
+    XCTAssertEqual(current["port"] as? UInt16, currentPort)
+    XCTAssertEqual(current["enabled"] as? Bool, false)
+    await second.resume(context)
+    XCTAssertEqual(second.state, .off)
+    XCTAssertFalse(second.isConfigured)
   }
 
   func testOccupiedPortAndFailedPublicationNeverEnableAccess() async throws {
