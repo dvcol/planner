@@ -95,12 +95,14 @@
         scope: .itinerary(itineraryIdentifier), text: text, completion: .all, archive: .all,
         sort: .init(mode: .manual))
       // Guard entry names too if the shared loader refreshes while paging.
-      let snapshot: PlannerQuerySnapshot
-      switch await planner.query(.init(session: session, request: .items(query))) {
-      case .snapshot(let current): snapshot = current
-      case .failed(let reason) where reason.code == "missingReference": return []
-      case .failed(let reason): throw PlannerItineraryEntryIntentFailure(message: reason.message)
+      let capture: SavedQueryCapture
+      switch await planner.queryForNativeUse(.init(session: session, request: .items(query))) {
+      case .success(let current): capture = current
+      case .failure(let reason) where reason.code == "missingReference": return []
+      case .failure(let reason): throw PlannerItineraryEntryIntentFailure(message: reason.message)
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       let window = SavedItemWindow(planner: planner, session: session)
       defer { window.cancel() }
       await window.reload(

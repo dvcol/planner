@@ -1,6 +1,6 @@
 # Query generation retention decision
 
-Status: Q84 C accepted by the human on 15 October 2026. Keep the current in-memory retention and lazy cleanup. No eviction, expiry, disk-spill or release mechanism is introduced.
+Status: Q84 C accepted on 15 October 2026. The scalability follow-up adds explicit release for native callers that opt in to a caller-managed generation. Legacy callers and MCP retain session-scoped availability. Caller-managed generations belong to a single acquisition, including equivalent Calendar requests, and are released when their native consumer finishes. Time and unrelated queries do not evict a valid generation.
 
 ## Context, starting state and goal
 

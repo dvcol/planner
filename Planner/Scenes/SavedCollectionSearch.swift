@@ -1,3 +1,11 @@
+/// Let a burst of text edits settle before entering Core's serialized read path.
+func waitForPlannerSearchChange(from previous: String, to current: String) async -> Bool {
+  if previous != current {
+    do { try await Task.sleep(for: .milliseconds(100)) } catch { return false }
+  }
+  return !Task.isCancelled
+}
+
 #if os(iOS)
   import SwiftUI
 

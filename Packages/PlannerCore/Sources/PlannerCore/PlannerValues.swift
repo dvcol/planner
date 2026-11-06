@@ -450,12 +450,21 @@ public enum PlannerReadResult: Sendable {
 }
 
 public struct PlannerQuery: Sendable {
+  public enum Retention: Sendable, Equatable {
+    case session
+    case callerManaged
+  }
+
   public let session: PlannerDatasetSession
   public let request: PlannerQueryRequest
+  public let retention: Retention
 
-  public init(session: PlannerDatasetSession, request: PlannerQueryRequest) {
+  public init(
+    session: PlannerDatasetSession, request: PlannerQueryRequest, retention: Retention = .session
+  ) {
     self.session = session
     self.request = request
+    self.retention = retention
   }
 }
 

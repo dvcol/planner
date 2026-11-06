@@ -208,6 +208,46 @@ final class PlannerAgentAccessTests: XCTestCase {
     XCTAssertEqual(refreshedSession.ownershipBinding, session.ownershipBinding)
   }
 
+  func testStopWhileReconnectIsPendingKeepsTheSavedChoiceOff() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let store = fixture.store
+    let (planner, session) = try await store.appIntentContext()
+    let access = store.agentAccess
+    let controlURL = fixture.configuration.controlURL.deletingLastPathComponent()
+      .appending(path: "AgentControlState.plist")
+    let port = try await availablePort()
+    await access.enable(
+      .init(planner: planner, session: session, controlURL: controlURL), port: port)
+    XCTAssertTrue(access.isConfigured)
+    addTeardownBlock {
+      await access.stop()
+      await planner.close()
+    }
+
+    try await store.beginAppIntentAction()
+    await planner.close()
+    let failureDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while store.changeObservationFailure == nil, ContinuousClock.now < failureDeadline {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertNotNil(store.changeObservationFailure)
+    XCTAssertFalse(store.canReconnectChanges)
+    await access.stop()
+    store.endAppIntentAction()
+
+    let recoveryDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+    while store.changeObservationFailure != nil || store.isReconnectingChanges {
+      if ContinuousClock.now >= recoveryDeadline { return XCTFail("Planner did not reconnect.") }
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    let (_, renewed) = try await store.appIntentContext()
+    XCTAssertNotEqual(renewed.sessionId, session.sessionId)
+    XCTAssertEqual(renewed.datasetId, session.datasetId)
+    XCTAssertEqual(access.state, .off)
+    XCTAssertFalse(access.isConfigured)
+    XCTAssertFalse(FileManager.default.fileExists(atPath: controlURL.path))
+  }
+
   func testDifferentDatasetOrOwnerCannotInheritOrEraseTheSavedChoice() async throws {
     let firstFixture = try makePlannerIntentStorage()
     let secondFixture = try makePlannerIntentStorage()

@@ -117,13 +117,15 @@
       try await plannerStore.beginAppIntentAction()
       defer { plannerStore.endAppIntentAction() }
       let (planner, session) = try await plannerStore.appIntentContext()
-      let snapshot: PlannerQuerySnapshot
-      switch await planner.query(
+      let capture: SavedQueryCapture
+      switch await planner.queryForNativeUse(
         .init(session: session, request: .catalog(query)))
       {
-      case .snapshot(let current): snapshot = current
-      case .failed(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
+      case .success(let current): capture = current
+      case .failure(let reason): throw PlannerItineraryIntentFailure(message: reason.message)
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       try Task.checkCancellation()
       var entities: [PlannerItineraryEntity] = []
       var offset: Int64 = 0

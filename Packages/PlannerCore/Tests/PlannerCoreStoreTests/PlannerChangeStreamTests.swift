@@ -7,6 +7,67 @@ import Testing
 #endif
 
 struct PlannerChangeStreamTests {
+  @Test func largeRecoveryHistoryKeepsTwoSubscribersLiveAndObservesOlderDamage() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = configuration(directory: directory)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "First saved item")))
+      ).outcome,
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+    else { throw CancellationError() }
+    let namespace = try #require(namespaces.first(where: { $0.datasetId == session.datasetId }))
+    let archive = configuration.recoveryDirectoryURL.appending(
+      path: namespace.namespaceId.uuidString)
+    let first = archive.appending(path: "checkpoint-1.json")
+    let original = try Data(contentsOf: first)
+    var checkpoint = try #require(JSONSerialization.jsonObject(with: original) as? [String: Any])
+    for generation in 2...1_000 {
+      checkpoint["checkpointGeneration"] = String(generation)
+      try JSONSerialization.data(withJSONObject: checkpoint).write(
+        to: archive.appending(path: "checkpoint-\(generation).json"))
+    }
+
+    let firstSubscriber = await planner.changes(session: session)
+    let secondSubscriber = await planner.changes(session: session)
+    guard
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "After a thousand checkpoints")))
+      ).outcome
+    else { throw CancellationError() }
+    try await waitForDataInvalidation(firstSubscriber)
+    try await waitForDataInvalidation(secondSubscriber)
+
+    _ = try await waitForRecoveryObservation(firstSubscriber) {
+      if case .known(let generation, _, _, _) = $0 { return generation == 1_001 }
+      return false
+    }
+    // Separate the in-place fault from the preceding checkpoint publication's file events.
+    try await Task.sleep(for: .milliseconds(150))
+    let recoverySubscriber = await planner.changes(session: session)
+    try writeCheckpoint(Data("{ invalid checkpoint".utf8), to: first, atomicReplacement: false)
+    _ = try await waitForRecoveryObservation(recoverySubscriber) {
+      if case .unavailable = $0 { return true }
+      return false
+    }
+    try original.write(to: first, options: .atomic)
+    _ = try await waitForRecoveryObservation(recoverySubscriber) {
+      if case .known(let generation, _, _, _) = $0 { return generation == 1_001 }
+      return false
+    }
+    guard
+      case .snapshot(let snapshot) = await planner.query(
+        .init(session: session, request: .items(.init())))
+    else { throw CancellationError() }
+    #expect(snapshot.matchingCount == 2)
+    await planner.close()
+  }
+
   @Test(arguments: [false, true])
   func recoveryDirectoryRepairKeepsTheSubscriptionAndSavedContent(
     subscribeWhileUnavailable: Bool

@@ -42,6 +42,7 @@ struct SavedItemCatalog: View {
   @State private var windowNamespace: String?
   @State private var visibleIdentifiers: Set<UUID> = []
   @State private var retryIdentifier = UUID()
+  @State private var requestedSearchText = ""
   #if os(iOS)
     @State private var contentWidth: CGFloat = 0
   #endif
@@ -283,7 +284,11 @@ struct SavedItemCatalog: View {
       visibleIdentifiers = []
       return
     }
-    if window == nil || windowNamespace != namespace {
+    guard await waitForPlannerSearchChange(from: requestedSearchText, to: request.searchText),
+      self.request == request
+    else { return }
+    requestedSearchText = request.searchText
+    if !store.canReuseItemWindow(window) || windowNamespace != namespace {
       window?.cancel()
       window = store.makeItemWindow()
       windowNamespace = namespace

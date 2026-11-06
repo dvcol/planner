@@ -10,7 +10,7 @@ import XCTest
         "--fixture", "large-collection", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 120))
+      waitForCatalogNavigation(in: application)
       application.openPlannerSection("Items")
       XCTAssertTrue(
         application.savedPlannerItemRows("Scale Item 00001").firstMatch
@@ -100,7 +100,7 @@ import XCTest
         "--fixture", "large-collection", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 120))
+      waitForCatalogNavigation(in: application)
       application.openPlannerSection("Items")
       let firstItem = application.savedPlannerItemRows("Scale Item 00001").firstMatch
       XCTAssertTrue(firstItem.waitForExistence(timeout: 30))
@@ -146,7 +146,7 @@ import XCTest
       capture("The two-hundredth List retains its twenty-five live Item references")
       application.terminate()
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 120))
+      waitForCatalogNavigation(in: application)
       application.openPlannerSection("Items")
       let filters = application.plannerElement("saved.items.filters")
       XCTAssertTrue(filters.waitForExistence(timeout: 30))
@@ -165,6 +165,13 @@ import XCTest
       identities.name = "Native large-collection observed identities"
       identities.lifetime = .keepAlways
       add(identities)
+    }
+
+    private func waitForCatalogNavigation(in application: XCUIApplication) {
+      let navigation = application.buttons.matching(
+        NSPredicate(format: "identifier == %@ OR label == %@", "saved.navigation", "Items")
+      ).firstMatch
+      XCTAssertTrue(navigation.waitForExistence(timeout: 120))
     }
 
     private func replaceSearch(_ text: String, in search: XCUIElement) {
@@ -233,10 +240,23 @@ import XCTest
       }
       for _ in 0..<6 {
         if ordered.evaluate(with: contents) { break }
+        let frame = contents.frame
+        let keyboard = application.keyboards.firstMatch
+        let visibleTop = max(frame.minY, application.searchFields["Search Items"].frame.maxY)
+        let visibleBottom = keyboard.exists ? min(frame.maxY, keyboard.frame.minY) : frame.maxY
+        let visibleHeight = visibleBottom - visibleTop
+        guard visibleHeight > 44 else {
+          return XCTFail("The catalog has no scrollable area above the keyboard.")
+        }
+        let origin = contents.coordinate(withNormalizedOffset: .zero)
+        let upper = origin.withOffset(
+          .init(dx: frame.width * 0.9, dy: visibleTop - frame.minY + visibleHeight * 0.3))
+        let lower = origin.withOffset(
+          .init(dx: frame.width * 0.9, dy: visibleTop - frame.minY + visibleHeight * 0.8))
         if towardEnd {
-          contents.swipeUp()
+          lower.press(forDuration: 0.05, thenDragTo: upper)
         } else {
-          contents.swipeDown()
+          upper.press(forDuration: 0.05, thenDragTo: lower)
         }
       }
       XCTAssertEqual(

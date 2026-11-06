@@ -89,12 +89,14 @@ final class SavedMapCollection {
     clearPublication()
     state = .loading
     reloadSnapshot: while !Task.isCancelled, requestIdentifier == identifier {
-      let result = await planner.query(.init(session: session, request: .items(query)))
+      let result = await planner.queryForNativeUse(.init(session: session, request: .items(query)))
       guard !Task.isCancelled, requestIdentifier == identifier else { return }
-      guard case .snapshot(let snapshot) = result else {
-        if case .failed(let reason) = result { state = .failed(reason.message) }
+      guard case .success(let capture) = result else {
+        if case .failure(let reason) = result { state = .failed(reason.message) }
         return
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       guard snapshot.matchingCount == Int64(snapshot.rows.count) else {
         state = .failed("Planner could not resolve the complete Map collection.")
         return

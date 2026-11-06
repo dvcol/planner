@@ -200,6 +200,7 @@ struct SavedItineraryDetail: View {
   let recordOwnedRemovals: (PlannerOperationResult) -> Void
   @State private var window: SavedItemWindow?
   @State private var windowNamespace: String?
+  @State private var requestedSearchText = ""
   @State private var windowItineraryIdentifier: UUID?
   @State private var windowCreationFailure: String?
   @State private var visibleRows: Set<SavedItineraryRowSelection> = []
@@ -905,12 +906,16 @@ struct SavedItineraryDetail: View {
       window?.cancel()
       return
     }
+    guard await waitForPlannerSearchChange(from: requestedSearchText, to: inputs.text),
+      readInputs == inputs, !isReviewingDeletion
+    else { return }
+    requestedSearchText = inputs.text
     if windowNamespace != namespace || windowItineraryIdentifier != inputs.identifier {
       visibleRows = []
       scrollAnchor = nil
       pendingScrollAnchor = nil
     }
-    if window == nil || windowNamespace != namespace {
+    if !store.canReuseItemWindow(window) || windowNamespace != namespace {
       window?.cancel()
       window = store.makeItemWindow()
       windowNamespace = namespace

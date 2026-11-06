@@ -130,6 +130,8 @@ struct SavedPlannerView: View {
   @State private var retainedListSource: PlannerListSourceRead?
   @State private var listWindow: SavedItemWindow?
   @State private var listWindowNamespace: String?
+  @State private var requestedListSearchText = ""
+  @State private var requestedMapSearchText = ""
   @State private var visibleMembershipIdentifiers: Set<UUID> = []
   @State private var listScrollAnchor: UUID?
   @State private var pendingListScrollAnchor: UUID?
@@ -460,11 +462,16 @@ struct SavedPlannerView: View {
           ProgressView().controlSize(.small)
             .accessibilityLabel("Reconnecting saved data")
         }
-        Label("Live updates unavailable", systemImage: "exclamationmark.triangle")
-          .font(.callout)
-          .help(failure)
-          .accessibilityHint(failure)
-          .accessibilityIdentifier("saved.changes.failure")
+        VStack(alignment: .leading, spacing: 3) {
+          Label("Live updates unavailable", systemImage: "exclamationmark.triangle")
+            .font(.callout)
+            .accessibilityIdentifier("saved.changes.failure")
+          Text(failure)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("saved.changes.reason")
+        }
         Spacer()
         Button(store.isReconnectingChanges ? "Reconnecting" : "Reconnect") {
           Task { await store.reconnectChanges() }
@@ -1040,6 +1047,10 @@ struct SavedPlannerView: View {
       mapCollection?.cancel()
       return
     }
+    guard await waitForPlannerSearchChange(from: requestedMapSearchText, to: request.searchText),
+      mapRequest == request
+    else { return }
+    requestedMapSearchText = request.searchText
     if loadedMapRequest?.hasSameCollection(as: request) != true { loadedMapRequest = nil }
     if mapCollection == nil {
       mapCollection = .init(addressPreviews: addressPreviews, mapsPreviews: mapsPreviews)
@@ -1498,12 +1509,16 @@ struct SavedPlannerView: View {
       isOpeningList = false
       return
     }
+    guard await waitForPlannerSearchChange(from: requestedListSearchText, to: inputs.searchText),
+      listWindowInputs == inputs
+    else { return }
+    requestedListSearchText = inputs.searchText
     isOpeningList = true
-    if listWindowNamespace != namespace || listWindow == nil {
+    if listWindowNamespace != namespace || !store.canReuseItemWindow(listWindow) {
+      if listWindowNamespace != namespace { retainedListSource = nil }
       listWindow?.cancel()
       listWindow = store.makeItemWindow()
       listWindowNamespace = namespace
-      retainedListSource = nil
     }
     if retainedListSource?.source.id != identifier {
       retainedListSource = nil
@@ -2015,7 +2030,12 @@ struct SavedPlannerView: View {
         } description: {
           Text(reason)
         } actions: {
-          Button("Try again") { Task { await loadSelectedList() } }
+          Button("Try again") {
+            Task {
+              if store.canReconnectChanges { await store.reconnectChanges() }
+              await loadSelectedList()
+            }
+          }
         }
       case .idle, .loading:
         ProgressView("Opening List")

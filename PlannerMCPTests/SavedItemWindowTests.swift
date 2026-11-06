@@ -6,6 +6,80 @@ import XCTest
 
 @MainActor
 final class SavedItemWindowTests: XCTestCase {
+  func testCancelledDetailReadLeavesAlertsAndSavedDataAlone() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let store = fixture.store
+    let (planner, session) = try await store.appIntentContext()
+    guard
+      case .applied(let change, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Saved Item")))
+      ).outcome
+    else { return XCTFail("Could not seed the disposable library.") }
+    let item = try XCTUnwrap(change.generated.first)
+
+    let cancelledRead = Task {
+      withUnsafeCurrentTask { $0?.cancel() }
+      return await store.readItem(item.id)
+    }
+    let cancelledItem = await cancelledRead.value
+    XCTAssertNil(cancelledItem)
+    XCTAssertNil(store.alertMessage)
+
+    let current = await store.readItem(item.id)
+    XCTAssertEqual(current?.content.title, "Saved Item")
+    let missing = await store.readItem(UUID())
+    XCTAssertNil(missing)
+    XCTAssertNotNil(store.alertMessage)
+  }
+
+  func testReconnectWaitsForAnActiveIntentAndReplacesTheWindowSession() async throws {
+    let fixture = try makePlannerIntentStorage()
+    let store = fixture.store
+    let (planner, session) = try await store.appIntentContext()
+    guard
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Keep this item")))
+      ).outcome
+    else { return XCTFail("Could not seed the disposable library.") }
+    let original = try XCTUnwrap(store.makeItemWindow())
+    let namespace = try XCTUnwrap(store.devicePreferenceNamespace)
+    XCTAssertTrue(store.canReuseItemWindow(original))
+
+    try await store.beginAppIntentAction()
+    await planner.close()
+    let failedBefore = ContinuousClock.now.advanced(by: .seconds(5))
+    while store.changeObservationFailure == nil, ContinuousClock.now < failedBefore {
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertNotNil(store.changeObservationFailure)
+    XCTAssertFalse(store.canReconnectChanges)
+    let (_, pendingSession) = try await store.appIntentContext()
+    XCTAssertEqual(pendingSession, session)
+    store.endAppIntentAction()
+
+    let recoveredBefore = ContinuousClock.now.advanced(by: .seconds(5))
+    while store.changeObservationFailure != nil || store.isReconnectingChanges {
+      if ContinuousClock.now >= recoveredBefore {
+        return XCTFail("The deferred retry did not complete.")
+      }
+      try await Task.sleep(for: .milliseconds(10))
+    }
+    XCTAssertEqual(store.devicePreferenceNamespace, namespace)
+    XCTAssertFalse(store.canReuseItemWindow(original))
+    let current = try XCTUnwrap(store.makeItemWindow())
+    await current.reload(
+      query: .init(),
+      identity: .init(namespace: namespace, savedRevision: store.changeRevision))
+    guard case .loaded(let presentation) = current.presentation(at: 0) else {
+      return XCTFail("The refreshed session could not read the saved Item.")
+    }
+    XCTAssertEqual(presentation.row.title, "Keep this item")
+  }
+
   func testMovingWindowsWithFiveThousandItemsAndTwoHundredLists() async throws {
     let seededAt = Date()
     let fixture = try await makeFixture(itemCount: 5_000, listName: "Scale plan", listCount: 200)

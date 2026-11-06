@@ -4,6 +4,67 @@ import SQLite3
 import Testing
 
 struct CalendarWindowConsistencyTests {
+  @Test(arguments: [false, true])
+  func releasingAManagedCaptureKeepsOtherConsumersReadable(calendar: Bool) async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let planner = Planner(
+      configuration: .init(
+        storeURL: directory.appending(path: "store/Planner.sqlite"),
+        controlURL: directory.appending(path: "control/writer"),
+        recoveryDirectoryURL: directory.appending(path: "recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .ready(let otherSession) = await planner.bootstrap()
+    else { throw CancellationError() }
+    let request: PlannerQueryRequest
+    if calendar {
+      let day = PlannerCivilDate(year: 2026, month: 11, day: 4)
+      request = .calendar(.init(startDay: day, endDay: day, displayTimeZone: "Asia/Tokyo"))
+    } else {
+      request = .items(.init())
+    }
+    func acquire(_ retention: PlannerQuery.Retention) async throws -> UUID {
+      guard
+        case .snapshot(let snapshot) = await planner.query(
+          .init(session: session, request: request, retention: retention))
+      else { throw CancellationError() }
+      return snapshot.generation
+    }
+    func read(_ generation: UUID) async -> PlannerReadResult {
+      await planner.read(
+        session: session,
+        request: calendar
+          ? .calendarRows(generation: generation, offset: 0, limit: 1)
+          : .rows(generation: generation, offset: 0, limit: 1))
+    }
+    let first = try await acquire(.callerManaged)
+    let second = try await acquire(.callerManaged)
+    let legacy = try await acquire(.session)
+    #expect(Set([first, second, legacy]).count == 3)
+
+    await planner.releaseQuery(session: otherSession, generation: first)
+    if case .failed(let reason) = await read(first) {
+      Issue.record("A foreign session released a capture: \(reason)")
+    }
+    await planner.releaseQuery(session: session, generation: first)
+    await planner.releaseQuery(session: session, generation: first)
+    guard case .failed(let stale) = await read(first) else {
+      Issue.record("The released capture remained readable")
+      return
+    }
+    #expect(stale.code == "staleSnapshot")
+
+    await planner.releaseQuery(session: session, generation: legacy)
+    for live in [second, legacy] {
+      switch (calendar, await read(live)) {
+      case (true, .calendarRows(let rows)): #expect(rows.generation == live)
+      case (false, .rows(let rows)): #expect(rows.generation == live)
+      default: Issue.record("Releasing a managed handle disrupted another consumer")
+      }
+    }
+    await planner.close()
+  }
+
   @Test func duplicateScheduleIdentitiesOutsideTheWindowRejectTheWholeCalendarRead() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     let configuration = PlannerStorageConfiguration(

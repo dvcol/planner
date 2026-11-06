@@ -3,6 +3,78 @@ import PlannerCore
 import Testing
 
 struct ItemQueryTests {
+  @Test func cancelledReadAndQueryReturnAnExplicitCancellation() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let planner = Planner(
+      configuration: .init(
+        storeURL: directory.appending(path: "store/Planner.sqlite"),
+        controlURL: directory.appending(path: "control/writer"),
+        recoveryDirectoryURL: directory.appending(path: "recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    let (read, query) = await Task {
+      withUnsafeCurrentTask { $0?.cancel() }
+      let read = await planner.read(session: session, request: .status)
+      let query = await planner.query(.init(session: session, request: .items(.init())))
+      return (read, query)
+    }.value
+    guard case .failed(let readFailure) = read, case .failed(let queryFailure) = query else {
+      Issue.record("Cancelled reads must return cancellation evidence.")
+      return
+    }
+    #expect(readFailure.code == "cancelled")
+    #expect(queryFailure == readFailure)
+    #expect(!readFailure.message.contains("Swift.CancellationError"))
+  }
+
+  @Test func warmedTextQueriesReadAnotherWritersUpdatedNotes() async throws {
+    let directory = try makePlannerStoreFixtureDirectory()
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appending(path: "store/Planner.sqlite"),
+      controlURL: directory.appending(path: "control/writer"),
+      recoveryDirectoryURL: directory.appending(path: "recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let reader = Planner(configuration: configuration)
+    let writer = Planner(configuration: configuration)
+    guard case .ready(let session) = await reader.bootstrap(),
+      case .ready(let writerSession) = await writer.bootstrap(),
+      case .applied(let created, .complete) = await writer.execute(
+        .init(
+          operationId: UUID(), session: writerSession,
+          command: .createItem(content: .init(title: "Market", notes: "Fresh soba"))
+        )
+      ).outcome,
+      let source = created.generated.first,
+      case .source(.item(let item)) = await writer.read(
+        session: writerSession, request: .source(source))
+    else { throw CancellationError() }
+    func rows(_ text: String) async throws -> [PlannerRowIdentity] {
+      guard
+        case .snapshot(let snapshot) = await reader.query(
+          .init(session: session, request: .items(.init(text: text))))
+      else { throw CancellationError() }
+      return snapshot.rows
+    }
+
+    #expect(try await rows("soba") == [.source(source)])
+    #expect(try await rows("fresh") == [.source(source)])
+    guard
+      case .applied(_, .complete) = await writer.execute(
+        .init(
+          operationId: UUID(), session: writerSession,
+          command: .editItem(
+            sourceId: source.id, changes: .init(notes: .set("Grilled fish")),
+            expectedFieldHashes: item.fieldHashes)
+        )
+      ).outcome
+    else { throw CancellationError() }
+
+    #expect(try await rows("soba").isEmpty)
+    #expect(try await rows("grilled") == [.source(source)])
+    await reader.close()
+    await writer.close()
+  }
+
   @Test func defaultQueryReturnsEveryCreatedItemIdentityInTitleOrderAfterReopen() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }

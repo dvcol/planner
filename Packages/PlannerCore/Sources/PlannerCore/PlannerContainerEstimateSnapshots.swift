@@ -9,6 +9,22 @@ struct ContainerEstimateItemSnapshot {
   let archived: Bool
 }
 
+/// Index once per projection while retaining duplicate candidates for integrity checks.
+struct ContainerEstimateIndex {
+  let membershipsByList: [UUID: [MembershipSnapshot]]
+  let itemsById: [UUID: [ContainerEstimateItemSnapshot]]
+  let listsById: [UUID: [ContainerEstimateListSnapshot]]
+
+  init(
+    memberships: [MembershipSnapshot], items: [ContainerEstimateItemSnapshot],
+    lists: [ContainerEstimateListSnapshot] = []
+  ) {
+    membershipsByList = Dictionary(grouping: memberships, by: { $0.list.id })
+    itemsById = Dictionary(grouping: items, by: \.id)
+    listsById = Dictionary(grouping: lists, by: \.id)
+  }
+}
+
 struct ContainerEstimateListSnapshot {
   let id: UUID
   let lifetimeId: UUID
@@ -20,13 +36,19 @@ struct ContainerEstimateListSnapshot {
   func progressAndEstimates(
     memberships: [MembershipSnapshot], items: [ContainerEstimateItemSnapshot]
   ) throws -> (progress: PlannerContainerProgress, estimates: PlannerContainerEstimates) {
-    let children = memberships.filter { $0.list.id == id }
+    try progressAndEstimates(index: .init(memberships: memberships, items: items))
+  }
+
+  func progressAndEstimates(
+    index: ContainerEstimateIndex
+  ) throws -> (progress: PlannerContainerProgress, estimates: PlannerContainerEstimates) {
+    let children = index.membershipsByList[id] ?? []
     var doneCount: Int64 = 0
     var archivedCount: Int64 = 0
     var estimateChildren: [ContainerEstimateChild] = []
     for membership in children {
-      let matches = items.filter {
-        $0.id == membership.item.id && $0.lifetimeId == membership.item.lifetimeId
+      let matches = (index.itemsById[membership.item.id] ?? []).filter {
+        $0.lifetimeId == membership.item.lifetimeId
       }
       guard membership.list.lifetimeId == lifetimeId, matches.count == 1,
         let item = matches.first

@@ -70,15 +70,17 @@
       -> [PlannerCategoryEntity]
     {
       let (planner, session) = try await plannerStore.appIntentContext()
-      let snapshot: PlannerQuerySnapshot
-      switch await planner.query(
+      let capture: SavedQueryCapture
+      switch await planner.queryForNativeUse(
         .init(
           session: session,
           request: .catalog(.init(sourceKind: .category, text: text, archive: .all))))
       {
-      case .snapshot(let current): snapshot = current
-      case .failed(let reason): throw PlannerCategoryIntentFailure(message: reason.message)
+      case .success(let current): capture = current
+      case .failure(let reason): throw PlannerCategoryIntentFailure(message: reason.message)
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       var entities: [PlannerCategoryEntity] = []
       var offset: Int64 = 0
       while offset < snapshot.matchingCount {

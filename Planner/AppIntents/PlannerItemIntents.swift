@@ -135,12 +135,14 @@
       defer { plannerStore.endAppIntentAction() }
       try Task.checkCancellation()
       let (planner, session) = try await plannerStore.appIntentContext()
-      let snapshot: PlannerQuerySnapshot
-      switch await planner.query(.init(session: session, request: .items(query)))
+      let capture: SavedQueryCapture
+      switch await planner.queryForNativeUse(.init(session: session, request: .items(query)))
       {
-      case .snapshot(let current): snapshot = current
-      case .failed(let reason): throw PlannerIntentFailure(message: reason.message)
+      case .success(let current): capture = current
+      case .failure(let reason): throw PlannerIntentFailure(message: reason.message)
       }
+      let snapshot = capture.snapshot
+      defer { withExtendedLifetime(capture) {} }
       try Task.checkCancellation()
       var entities: [PlannerItemEntity] = []
       var offset: Int64 = 0

@@ -149,13 +149,15 @@ final class SavedPlanOpeningCoordinator {
     guard let namespace = store.devicePreferenceNamespace else {
       throw failure("Planner could not identify its current data.")
     }
-    let snapshot: PlannerQuerySnapshot
-    switch await planner.query(
+    let capture: SavedQueryCapture
+    switch await planner.queryForNativeUse(
       .init(session: session, request: .catalog(.init(sourceKind: source.kind, archive: .all))))
     {
-    case .snapshot(let value): snapshot = value
-    case .failed(let reason): throw failure(reason.message)
+    case .success(let value): capture = value
+    case .failure(let reason): throw failure(reason.message)
     }
+    let snapshot = capture.snapshot
+    defer { withExtendedLifetime(capture) {} }
     guard let index = snapshot.rows.firstIndex(of: .source(source)) else {
       throw failure("This plan is no longer available.")
     }

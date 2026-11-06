@@ -727,9 +727,25 @@ struct PlannerRecoveryArchive {
   let identity: PlannerStoreIdentity
   let nativeContext: ModelContext?
 
+  /// A coordinated command reuses only reads made before the next write phase.
+  final class ReadPhase {
+    fileprivate var head: RecoveryEnvelope??
+    fileprivate var proposals: [RecoveryPreparedProposal]?
+
+    fileprivate func reset() {
+      head = nil
+      proposals = nil
+    }
+  }
+
+  var readPhase: ReadPhase? = nil
+
+  func beginReadPhase() { readPhase?.reset() }
+
   var namespaceURL: URL { rootURL.appendingPathComponent(identity.namespaceId.uuidString) }
 
   func prepare(_ proposal: RecoveryPreparedProposal) throws {
+    defer { readPhase?.proposals = nil }
     var retained = proposal
     if let nativeContext {
       let lineage = try PlannerNativeLineage(context: nativeContext)
@@ -752,6 +768,7 @@ struct PlannerRecoveryArchive {
   }
 
   func discardPreparedProposal(_ proposalId: UUID) throws {
+    defer { readPhase?.proposals = nil }
     let proposalURL = namespaceURL.appendingPathComponent("proposal-\(proposalId.uuidString).json")
     if FileManager.default.fileExists(atPath: proposalURL.path) {
       try FileManager.default.removeItem(at: proposalURL)
@@ -759,6 +776,13 @@ struct PlannerRecoveryArchive {
   }
 
   func latest() throws -> RecoveryEnvelope? {
+    if let head = readPhase?.head { return head }
+    let envelope = try readLatest()
+    readPhase?.head = .some(envelope)
+    return envelope
+  }
+
+  private func readLatest() throws -> RecoveryEnvelope? {
     let files = try FileManager.default.contentsOfDirectory(
       at: namespaceURL, includingPropertiesForKeys: nil
     ).filter { $0.lastPathComponent.hasPrefix("checkpoint-") && $0.pathExtension == "json" }
@@ -795,6 +819,13 @@ struct PlannerRecoveryArchive {
   }
 
   func proposals() throws -> [RecoveryPreparedProposal] {
+    if let proposals = readPhase?.proposals { return proposals }
+    let proposals = try readProposals()
+    readPhase?.proposals = proposals
+    return proposals
+  }
+
+  private func readProposals() throws -> [RecoveryPreparedProposal] {
     let files = try FileManager.default.contentsOfDirectory(
       at: namespaceURL, includingPropertiesForKeys: nil
     )
@@ -858,8 +889,10 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(snapshot: PlannerDataSnapshot, receipts: [PlannerSchemaV1.Receipt]) throws -> Int64 {
+    beginReadPhase()
+    defer { beginReadPhase() }
     let previous = try latest()
-    let previousGeneration = try previous?.validated(identity: identity).2 ?? 0
+    let previousGeneration = previous.flatMap { Int64($0.checkpointGeneration) } ?? 0
     let (generation, overflow) = previousGeneration.addingReportingOverflow(1)
     guard !overflow else {
       throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
