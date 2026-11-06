@@ -7,6 +7,33 @@ import XCTest
 
 @MainActor
 final class SavedPlanOpeningTests: XCTestCase {
+  func testMenuNavigationTargetsOnlyTheMostRecentlyActiveWindow() {
+    let opening = SavedPlanOpeningCoordinator()
+    let recent = UUID()
+    let inactive = UUID()
+    opening.register(windowIdentifier: recent, isActive: true, isReady: true)
+    opening.register(windowIdentifier: recent, isActive: false, isReady: true)
+    opening.register(windowIdentifier: inactive, isActive: false, isReady: true)
+    opening.navigate(to: .settings)
+    XCTAssertEqual(opening.navigation?.windowIdentifier, recent)
+    XCTAssertNil(opening.consumeNavigation(windowIdentifier: inactive))
+    XCTAssertEqual(opening.consumeNavigation(windowIdentifier: recent), .settings)
+    XCTAssertNil(opening.consumeNavigation(windowIdentifier: recent))
+  }
+
+  func testMenuNavigationCreatesARecipientAfterTheLastWindowCloses() throws {
+    let opening = SavedPlanOpeningCoordinator()
+    let closed = UUID()
+    opening.register(windowIdentifier: closed, isActive: true, isReady: true)
+    opening.unregister(windowIdentifier: closed)
+    opening.navigate(to: .planner)
+    let recipient = try XCTUnwrap(opening.navigation?.windowIdentifier)
+    XCTAssertNotEqual(recipient, closed)
+    opening.register(windowIdentifier: recipient, isActive: true, isReady: false)
+    XCTAssertEqual(opening.consumeNavigation(windowIdentifier: recipient), .planner)
+    XCTAssertNil(opening.navigation)
+  }
+
   func testNewInactiveWindowDoesNotReplaceTheMostRecentlyFocusedRecipient() async throws {
     let (_, _, store) = try makePlannerIntentStorage()
     let source = try await createOpeningPlan(.list, store: store)

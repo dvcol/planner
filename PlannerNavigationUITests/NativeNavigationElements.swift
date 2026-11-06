@@ -253,6 +253,11 @@ extension XCUIApplication {
     #if os(macOS)
       let sidebar = windows.firstMatch.buttons["Show Sidebar"].firstMatch
       if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
+      if identifier == "saved.categories.manage" || identifier == "saved.settings.open" {
+        plannerElement("saved.library.actions").activateForPlannerJourney()
+        XCTAssertTrue(direct.waitForExistence(timeout: 5))
+        return direct
+      }
       return savedPlannerMenu(identifier: identifier, title: title)
     #else
       let menuAction = collectionViews.buttons.matching(

@@ -23,6 +23,9 @@ private enum SavedPlannerSection: Hashable {
 private enum SavedPlannerSidebarSelection: Hashable {
   case lists, items, inbox, itineraries, calendar
   case list(UUID)
+  #if os(macOS)
+    case settings
+  #endif
 }
 
 private enum SavedDeletionReplacementContext: Equatable {
@@ -143,6 +146,7 @@ struct SavedPlannerView: View {
   @State private var listEditDraft: SavedListEditDraft?
   @State private var showLabels = false
   @State private var showSettings = false
+  @State private var settingsBlocksNavigation = false
   @State private var showRecovery = false
   @State private var listCatalogWindow: SavedItemWindow?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
@@ -192,7 +196,7 @@ struct SavedPlannerView: View {
 
   private var listLifecycleContent: some View {
     Group {
-      if store.isReady {
+      if store.isReady || showsEmbeddedSettings {
         nativeLayout
       } else if let reason = store.openingFailure {
         ContentUnavailableView {
@@ -359,6 +363,11 @@ struct SavedPlannerView: View {
 
   var body: some View {
     AnyView(plannerLifecycleContent)
+      .onChange(of: planOpening.navigation, initial: true) { receiveWindowNavigation() }
+      .onChange(of: store.isReady) { receiveWindowNavigation() }
+      .onChange(of: hasPresentedWorkflow) { receiveWindowNavigation() }
+      .onChange(of: settingsBlocksNavigation) { receiveWindowNavigation() }
+      .onChange(of: store.librarySwitchBlockedWindows) { receiveWindowNavigation() }
       .sheet(isPresented: $showLabels) {
         SavedLabelsView(store: store)
       }
@@ -487,13 +496,8 @@ struct SavedPlannerView: View {
         Label(store.recoveryStatusTitle, systemImage: "exclamationmark.triangle")
           .font(.callout)
         Spacer()
-        #if os(macOS)
-          SettingsLink { Text("Recovery") }
-            .accessibilityIdentifier("saved.recovery.status.open")
-        #else
-          Button("Recovery") { showSettings = true }
-            .accessibilityIdentifier("saved.recovery.status.open")
-        #endif
+        Button("Recovery") { requestDraftNavigation { showSettings = true } }
+          .accessibilityIdentifier("saved.recovery.status.open")
       }
       .padding(.horizontal).padding(.vertical, 8)
       .background(.bar)
@@ -516,10 +520,31 @@ struct SavedPlannerView: View {
     #endif
   }
 
+  private var showsEmbeddedSettings: Bool {
+    #if os(macOS)
+      showSettings
+    #else
+      false
+    #endif
+  }
+
   @ViewBuilder
   private var nativeLayout: some View {
     if usesSidebarNavigation {
-      if selectedSection == .calendar {
+      if showsEmbeddedSettings {
+        NavigationSplitView {
+          plannerSidebar
+        } detail: {
+          SavedPlannerSettingsView(store: store, blocksNavigation: $settingsBlocksNavigation)
+            .toolbar {
+              ToolbarItem(placement: .navigation) {
+                Button("Back to Planner", systemImage: "chevron.backward") { showSettings = false }
+                  .accessibilityIdentifier("saved.settings.back")
+              }
+            }
+        }
+        .navigationSplitViewStyle(.balanced)
+      } else if selectedSection == .calendar {
         NavigationSplitView(columnVisibility: $calendarColumnVisibility) {
           plannerSidebar
         } detail: {
@@ -801,6 +826,9 @@ struct SavedPlannerView: View {
   private var sidebarSelection: Binding<SavedPlannerSidebarSelection?> {
     Binding(
       get: {
+        #if os(macOS)
+          if showSettings { return .settings }
+        #endif
         if usesSidebarNavigation {
           if selectedSection == .items { return .items }
           if selectedSection == .inbox { return .inbox }
@@ -814,6 +842,7 @@ struct SavedPlannerView: View {
         guard selection != nil else { return }
         requestDraftNavigation {
           recordSelectionChange()
+          showSettings = false
           switch selection {
           case .items: selectedSection = .items
           case .inbox: selectedSection = .inbox
@@ -828,6 +857,9 @@ struct SavedPlannerView: View {
           case .lists:
             selectedSection = .lists
             selectedListId = nil
+          #if os(macOS)
+            case .settings: showSettings = true
+          #endif
           case nil: break
           }
           #if os(iOS)
@@ -1797,9 +1829,25 @@ struct SavedPlannerView: View {
         }
       } header: {
         if usesSidebarNavigation { Text("Lists").foregroundStyle(Color.primary) }
+        #if os(macOS)
+          HStack {
+            listCatalogSortControl
+            SavedCatalogArchiveFilterMenu(
+              archive: $listCatalogArchive, pluralTitle: "Lists",
+              accessibilityIdentifier: "saved.lists.archive")
+          }
+          .menuStyle(.borderlessButton)
+          .controlSize(.small)
+          .font(.caption)
+          .textCase(nil)
+          .padding(.vertical, 4)
+        #endif
       }
     }
     .listStyle(.sidebar)
+    #if os(macOS)
+      .safeAreaInset(edge: .bottom, spacing: 0) { sidebarActions }
+    #endif
     .accessibilityIdentifier("saved.lists.catalog")
     .overlay {
       #if os(iOS)
@@ -1861,26 +1909,57 @@ struct SavedPlannerView: View {
           ToolbarItem(placement: secondaryToolbarPlacement) { sidebarSettingsControl }
           ToolbarItem { listCatalogSortControl }
         }
-      #else
-        ToolbarItem(placement: secondaryToolbarPlacement) { manageLabelsControl }
-        ToolbarItem { listCatalogSortControl }
       #endif
-      ToolbarItem {
-        SavedCatalogArchiveFilterMenu(
-          archive: $listCatalogArchive, pluralTitle: "Lists",
-          accessibilityIdentifier: "saved.lists.archive")
-      }
-      ToolbarItem(placement: .primaryAction) {
-        Button("New list", systemImage: "plus") {
-          requestDraftNavigation { showNewList = true }
+      #if os(iOS)
+        ToolbarItem {
+          SavedCatalogArchiveFilterMenu(
+            archive: $listCatalogArchive, pluralTitle: "Lists",
+            accessibilityIdentifier: "saved.lists.archive")
         }
-        .labelStyle(.iconOnly)
-        .help("New list")
-        .disabled(!store.canCreate)
-        .accessibilityIdentifier("saved.list.new")
-      }
+        ToolbarItem(placement: .primaryAction) {
+          Button("New list", systemImage: "plus") {
+            requestDraftNavigation { showNewList = true }
+          }
+          .labelStyle(.iconOnly)
+          .help("New list")
+          .disabled(!store.canCreate)
+          .accessibilityIdentifier("saved.list.new")
+        }
+      #endif
     }
   }
+
+  #if os(macOS)
+    private var sidebarActions: some View {
+      VStack(spacing: 10) {
+        Divider()
+        HStack {
+          Button("New List", systemImage: "plus") {
+            requestDraftNavigation { showNewList = true }
+          }
+          .disabled(!store.canCreate)
+          .accessibilityIdentifier("saved.list.new")
+          Spacer()
+          Menu {
+            Button("Manage labels", systemImage: "tag") { showLabels = true }
+              .disabled(!store.isReady)
+              .accessibilityIdentifier("saved.categories.manage")
+            Button("Settings…", systemImage: "gearshape") {
+              requestDraftNavigation { showSettings = true }
+            }
+            .accessibilityIdentifier("saved.settings.open")
+          } label: {
+            Label("Library", systemImage: "ellipsis.circle")
+          }
+          .menuStyle(.borderlessButton)
+          .accessibilityIdentifier("saved.library.actions")
+        }
+        .buttonStyle(.borderless)
+      }
+      .padding(12)
+      .background(.bar)
+    }
+  #endif
 
   private var sidebarDestinations: some View {
     Group {
@@ -1909,6 +1988,12 @@ struct SavedPlannerView: View {
           .foregroundStyle(SavedRowForeground())
       }
       .accessibilityIdentifier("saved.section.calendar")
+      #if os(macOS)
+        NavigationLink(value: SavedPlannerSidebarSelection.settings) {
+          Label("Settings", systemImage: "gearshape")
+        }
+        .accessibilityIdentifier("saved.section.settings")
+      #endif
     }
   }
 
@@ -2417,7 +2502,11 @@ struct SavedPlannerView: View {
     } label: {
       Label("Add", systemImage: "plus")
     }
-    .labelStyle(.iconOnly)
+    #if os(macOS)
+      .labelStyle(.titleAndIcon)
+    #else
+      .labelStyle(.iconOnly)
+    #endif
     .help("Add an item to this list")
     .disabled(!store.canCreate || list.state.archived == true || isSavingNewItem)
     .accessibilityIdentifier("saved.list.addMenu")
@@ -2467,7 +2556,11 @@ struct SavedPlannerView: View {
     } label: {
       Label("List actions", systemImage: "ellipsis")
     }
-    .labelStyle(.iconOnly)
+    #if os(macOS)
+      .labelStyle(.titleAndIcon)
+    #else
+      .labelStyle(.iconOnly)
+    #endif
     .disabled(!store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion)
     .help("List actions")
     .accessibilityIdentifier("saved.list.actions")
@@ -2694,6 +2787,30 @@ struct SavedPlannerView: View {
       save: { Task { await saveNewItem(continuingNavigation: false) } }
     )
     .safeAreaInset(edge: .top, spacing: 0) { recoveryNotice }
+  }
+
+  private func receiveWindowNavigation() {
+    guard let request = planOpening.navigation, request.windowIdentifier == windowIdentifier,
+      !hasPresentedWorkflow || showSettings, !settingsBlocksNavigation,
+      store.librarySwitchBlockedWindows.subtracting([windowIdentifier]).isEmpty,
+      request.destination == .settings || request.destination == .planner || store.isReady,
+      let destination = planOpening.consumeNavigation(windowIdentifier: windowIdentifier)
+    else { return }
+    requestDraftNavigation {
+      showSettings = destination == .settings
+      switch destination {
+      case .planner, .settings: break
+      case .lists: sidebarSelection.wrappedValue = .lists
+      case .items: sidebarSelection.wrappedValue = .items
+      case .inbox: sidebarSelection.wrappedValue = .inbox
+      case .itineraries: sidebarSelection.wrappedValue = .itineraries
+      case .calendar: sidebarSelection.wrappedValue = .calendar
+      case .newList: showNewList = true
+      case .newItem:
+        selectedSection = .items
+        beginNewItem(listIdentifier: nil)
+      }
+    }
   }
 
   private func requestDraftNavigation(_ navigation: @escaping () -> Void) {

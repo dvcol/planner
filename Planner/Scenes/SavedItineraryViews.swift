@@ -94,7 +94,11 @@ struct SavedItineraryCatalog: View {
       }
       ToolbarItem(placement: .primaryAction) {
         Button("New itinerary", systemImage: "plus") { showNewItinerary = true }
-          .labelStyle(.iconOnly)
+          #if os(macOS)
+            .labelStyle(.titleAndIcon)
+          #else
+            .labelStyle(.iconOnly)
+          #endif
           .help("New itinerary")
           .disabled(!store.canCreate)
           .accessibilityIdentifier("saved.itinerary.new")
@@ -412,7 +416,7 @@ struct SavedItineraryDetail: View {
               ToolbarItem(placement: .primaryAction) { actionsMenu(itinerary) }
             }
           #else
-            ToolbarItem(placement: .secondaryAction) { representationMenu }
+            ToolbarItem(placement: .primaryAction) { representationMenu }
             ToolbarItem(placement: .primaryAction) { editButton(itinerary) }
             ToolbarItem(placement: .primaryAction) { actionsMenu(itinerary) }
           #endif

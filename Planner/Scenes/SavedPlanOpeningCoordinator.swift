@@ -3,6 +3,16 @@ import Observation
 import PlannerCore
 import SwiftUI
 
+enum SavedPlannerWindowDestination: Equatable {
+  case planner, lists, items, inbox, itineraries, calendar, settings, newItem, newList
+}
+
+struct SavedPlannerWindowNavigation: Equatable {
+  let identifier = UUID()
+  let destination: SavedPlannerWindowDestination
+  let windowIdentifier: UUID
+}
+
 struct SavedPlanOpeningRequest: Equatable {
   let identifier: UUID
   let source: PlannerEntityReference
@@ -26,10 +36,40 @@ final class SavedPlanOpeningCoordinator {
   private var isSubmitting = false
   @ObservationIgnored private var openWindow: OpenWindowAction?
   private(set) var pending: SavedPlanOpeningRequest?
+  private(set) var navigation: SavedPlannerWindowNavigation?
 
   func connect(_ action: OpenWindowAction) {
     openWindow = action
     activateRecipient()
+    if let navigation {
+      openWindow?(id: Self.mainWindowSceneIdentifier, value: navigation.windowIdentifier)
+    }
+  }
+
+  /// Routes menu commands to the most recently used main window, creating one when needed.
+  func navigate(to destination: SavedPlannerWindowDestination) {
+    let recipient = preferredWindowIdentifier ?? UUID()
+    navigation = .init(destination: destination, windowIdentifier: recipient)
+    openWindow?(id: Self.mainWindowSceneIdentifier, value: recipient)
+  }
+
+  func consumeNavigation(windowIdentifier: UUID) -> SavedPlannerWindowDestination? {
+    guard navigation?.windowIdentifier == windowIdentifier else { return nil }
+    let destination = navigation?.destination
+    navigation = nil
+    return destination
+  }
+
+  private var preferredWindowIdentifier: UUID? {
+    windows.keys.sorted { first, second in
+      let firstWindow = windows[first]!
+      let secondWindow = windows[second]!
+      if firstWindow.isActive != secondWindow.isActive { return firstWindow.isActive }
+      if firstWindow.activityOrder != secondWindow.activityOrder {
+        return firstWindow.activityOrder > secondWindow.activityOrder
+      }
+      return first.uuidString < second.uuidString
+    }.first
   }
 
   func readyRequestIdentifier(for windowIdentifier: UUID) -> UUID? {
@@ -53,6 +93,7 @@ final class SavedPlanOpeningCoordinator {
 
   func unregister(windowIdentifier: UUID) {
     windows[windowIdentifier] = nil
+    if navigation?.windowIdentifier == windowIdentifier { navigation = nil }
     if pending?.windowIdentifier == windowIdentifier { pending = nil }
   }
 
@@ -72,15 +113,7 @@ final class SavedPlanOpeningCoordinator {
     isSubmitting = true
     defer { isSubmitting = false }
     let binding = try await readBinding(source: source, store: store)
-    let recipient = windows.keys.sorted { first, second in
-      let firstWindow = windows[first]!
-      let secondWindow = windows[second]!
-      if firstWindow.isActive != secondWindow.isActive { return firstWindow.isActive }
-      if firstWindow.activityOrder != secondWindow.activityOrder {
-        return firstWindow.activityOrder > secondWindow.activityOrder
-      }
-      return first.uuidString < second.uuidString
-    }.first
+    let recipient = preferredWindowIdentifier
     let request = SavedPlanOpeningRequest(
       identifier: UUID(), source: source, sourceLifetimeIdentifier: binding.lifetime,
       namespace: binding.namespace, windowIdentifier: recipient)

@@ -65,9 +65,18 @@ struct SavedCatalogSortMenu: View {
       }
       .pickerStyle(.inline)
     } label: {
-      Label("Sort: \(sort.summary)", systemImage: "arrow.up.arrow.down")
+      #if os(macOS)
+        Label("Sort", systemImage: "arrow.up.arrow.down")
+      #else
+        Label("Sort: \(sort.summary)", systemImage: "arrow.up.arrow.down")
+      #endif
     }
-    .labelStyle(.iconOnly)
+    #if os(macOS)
+      .labelStyle(.titleAndIcon)
+    #else
+      .labelStyle(.iconOnly)
+    #endif
+    .accessibilityValue(sort.summary)
     .accessibilityIdentifier(accessibilityIdentifier)
     .help("Sort: \(sort.summary)")
   }

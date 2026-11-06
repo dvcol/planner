@@ -110,7 +110,10 @@ struct SavedItemCatalog: View {
       }
     #endif
     .toolbar {
-      ToolbarItem {
+      #if os(macOS)
+        ToolbarItem(placement: .primaryAction) { representationMenu }
+      #endif
+      ToolbarItem(placement: .primaryAction) {
         SavedItemFilterControl(
           filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
       }
@@ -125,10 +128,9 @@ struct SavedItemCatalog: View {
           ToolbarItem { sortMenu }
         }
       #else
-        ToolbarItem { representationMenu }
-        ToolbarItem { sortMenu }
+        ToolbarItem(placement: .primaryAction) { sortMenu }
       #endif
-      ToolbarItem {
+      ToolbarItem(placement: .primaryAction) {
         Menu {
           Button("New item", systemImage: "square.and.pencil", action: create)
             .accessibilityIdentifier("saved.item.new")
@@ -137,7 +139,11 @@ struct SavedItemCatalog: View {
         } label: {
           Label("Add", systemImage: "plus")
         }
-        .labelStyle(.iconOnly)
+        #if os(macOS)
+          .labelStyle(.titleAndIcon)
+        #else
+          .labelStyle(.iconOnly)
+        #endif
         .help("Add an item")
         .disabled(!canCreate)
         .accessibilityIdentifier("saved.item.addMenu")

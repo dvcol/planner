@@ -121,6 +121,7 @@ final class ProductionMCPJourneyTests: XCTestCase {
       XCTAssertTrue(enable.waitForPlannerHittability())
       enable.activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["saved.agent.status"].waitForExistence(timeout: 20))
+      application.plannerElement("saved.agent.connection.disclosure").activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["saved.agent.connection"].exists)
       record(application, name: "Production shared-library MCP enabled")
     }
@@ -193,9 +194,8 @@ final class ProductionMCPJourneyTests: XCTestCase {
 
   private func dismissSettings(_ application: XCUIApplication) {
     #if os(macOS)
-      let settings = application.windows.containing(.button, identifier: "saved.agent.stop")
-        .firstMatch
-      if settings.exists { settings.buttons["_XCUI:CloseWindow"].activateForPlannerJourney() }
+      let back = application.plannerElement("saved.settings.back")
+      if back.exists { back.activateForPlannerJourney() }
     #else
       let sharingDone = application.navigationBars["Sharing"].buttons["Done"]
       if sharingDone.exists { sharingDone.activateForPlannerJourney() }

@@ -136,7 +136,11 @@ struct SavedItemFilterControl: View {
       showFilters = true
     } label: {
       Label {
-        if showsSummary { Text(filters.summary) }
+        #if os(macOS)
+          Text("Filter")
+        #else
+          if showsSummary { Text(filters.summary) }
+        #endif
       } icon: {
         Image(systemName: "line.3.horizontal.decrease")
       }
@@ -410,7 +414,11 @@ struct SavedCatalogArchiveFilterMenu: View {
     } label: {
       Label(title, systemImage: "line.3.horizontal.decrease")
     }
-    .labelStyle(.iconOnly)
+    #if os(macOS)
+      .labelStyle(.titleAndIcon)
+    #else
+      .labelStyle(.iconOnly)
+    #endif
     .accessibilityLabel(title)
     .accessibilityIdentifier(accessibilityIdentifier)
     .help("Show \(title.lowercased())")

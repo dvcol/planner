@@ -1246,7 +1246,7 @@ final class SavedBackupImportJourneyTests: XCTestCase {
 
   private func closeSettings(_ application: XCUIApplication) {
     #if os(macOS)
-      application.typeKey("w", modifierFlags: .command)
+      application.plannerElement("saved.settings.back").activateForPlannerJourney()
     #else
       application.plannerElement("saved.settings.done").activateForPlannerJourney()
     #endif

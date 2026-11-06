@@ -28,7 +28,11 @@ struct SavedCollectionRepresentationMenu: View {
     } label: {
       Label("View", systemImage: representation == .map ? "map" : "list.bullet")
     }
-    .labelStyle(.iconOnly)
+    #if os(macOS)
+      .labelStyle(.titleAndIcon)
+    #else
+      .labelStyle(.iconOnly)
+    #endif
     .accessibilityValue(representation == .map ? "Map" : "List")
     .accessibilityIdentifier(accessibilityIdentifier)
     .help("Show as a list or map")

@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 struct SavedPlannerSettingsView: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
+  var blocksNavigation: Binding<Bool> = .constant(false)
   @State private var showSharing = false
   @State private var showLabels = false
   @State private var showRecovery = false
@@ -124,6 +125,11 @@ struct SavedPlannerSettingsView: View {
             }
           }
           .formStyle(.grouped)
+          #if os(macOS)
+            .frame(maxWidth: 760)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(.background)
+          #endif
         } else if let reason = store.openingFailure {
           ContentUnavailableView {
             Label("Planner unavailable", systemImage: "exclamationmark.triangle")
@@ -143,11 +149,17 @@ struct SavedPlannerSettingsView: View {
           ProgressView("Opening Planner")
         }
       }
-      .navigationTitle("Plan 2Do Settings")
+      .navigationTitle("Settings")
       .onChange(of: blocksLibrarySwitch, initial: true) {
         store.setLibrarySwitchBlocked(blocksLibrarySwitch, window: workflowIdentifier)
       }
-      .onDisappear { store.setLibrarySwitchBlocked(false, window: workflowIdentifier) }
+      .onChange(of: blocksLibrarySwitch || showSharing, initial: true) {
+        blocksNavigation.wrappedValue = blocksLibrarySwitch || showSharing
+      }
+      .onDisappear {
+        store.setLibrarySwitchBlocked(false, window: workflowIdentifier)
+        blocksNavigation.wrappedValue = false
+      }
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -191,9 +203,7 @@ struct SavedPlannerSettingsView: View {
       Text(importFailure ?? "")
     }
     .interactiveDismissDisabled(store.isSaving)
-    #if os(macOS)
-      .frame(minWidth: 440, minHeight: 320)
-    #endif
+    .accessibilityIdentifier("saved.settings.content")
   }
 
   private var exportFailurePresented: Binding<Bool> {
