@@ -17,9 +17,15 @@ The Xcode target copies both helpers and required licenses into the Mac app.
 CodeSignOnCopy signs the helpers with the app's team and preserves their sandbox
 inheritance entitlements. The iOS build excludes these artifacts.
 
-Keep the identifiers `dvcol.planner.TunnelRuntime` and `dvcol.planner.TunnelBridge` when signing. Their only
-entitlements are `com.apple.security.app-sandbox` and `com.apple.security.inherit`.
-The app checks both helpers' identities, signing team and entitlements before launch.
+Keep the identifiers `dvcol.planner.TunnelRuntime` and `dvcol.planner.TunnelBridge` when signing.
+Their sandbox entitlements are `com.apple.security.app-sandbox` and `com.apple.security.inherit`.
+TestFlight re-signs them with Apple's beta distribution certificate and adds
+`beta-reports-active = true`. The app accepts that reporting marker alongside the
+two required sandbox flags, and rejects other entitlements. Both the developer
+and TestFlight signing paths require Apple trust, the exact helper identifier,
+and a signed TeamIdentifier matching the host app. The TestFlight certificate's
+subject OU is Apple's, so it cannot supply the original developer team check.
+The app verifies these properties before launch and when checking a running helper.
 The build requires normal Apple development signing for the app's capabilities.
 
 ## Connect your account

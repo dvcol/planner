@@ -5,6 +5,11 @@
 
   /// PID, start time and signed executable must all match before reconciling a leftover helper.
   struct PlannerAgentTunnelProcess: Codable, Equatable, Sendable {
+    private static let testFlightCertificateExtension = "1.2.840.113635.100.6.1.25.1"
+    private static let allowedEntitlements: Set<String> = [
+      "com.apple.security.app-sandbox", "com.apple.security.inherit", "beta-reports-active",
+    ]
+
     enum Helper {
       case runtime
       case bridge
@@ -82,9 +87,23 @@
       guard guestStatus == errSecSuccess, let code else {
         throw PlannerAgentTunnelFailure.cleanupFailed
       }
-      let validity = SecCodeCheckValidity(code, [], try Self.requirement(helper: helper))
-      guard validity == errSecSuccess
+      let team = try Self.ownSigningTeam()
+      let validity = SecCodeCheckValidity(
+        code, [], try Self.requirement(helper: helper, team: team))
+      var staticCode: SecStaticCode?
+      var information: CFDictionary?
+      guard validity == errSecSuccess,
+        SecCodeCopyStaticCode(code, [], &staticCode) == errSecSuccess, let staticCode,
+        SecCodeCopySigningInformation(
+          staticCode, SecCSFlags(rawValue: kSecCSSigningInformation), &information)
+          == errSecSuccess,
+        let values = information as? [String: Any]
       else { throw PlannerAgentTunnelFailure.cleanupFailed }
+      do {
+        try Self.validateSigningInformation(values, team: team)
+      } catch {
+        throw PlannerAgentTunnelFailure.cleanupFailed
+      }
     }
 
     func isOrphaned() throws -> Bool {
@@ -112,26 +131,36 @@
     }
 
     static func validateExecutable(helper: Helper = .runtime) throws {
+      let team = try ownSigningTeam()
       var code: SecStaticCode?
       guard SecStaticCodeCreateWithPath(helper.executable as CFURL, [], &code) == errSecSuccess,
         let code,
         SecStaticCodeCheckValidity(
-          code, SecCSFlags(rawValue: kSecCSCheckAllArchitectures), try requirement(helper: helper))
+          code, SecCSFlags(rawValue: kSecCSCheckAllArchitectures),
+          try requirement(helper: helper, team: team))
           == errSecSuccess
       else { throw PlannerAgentTunnelFailure.runtimeUnavailable }
       var information: CFDictionary?
       guard
         SecCodeCopySigningInformation(
           code, SecCSFlags(rawValue: kSecCSSigningInformation), &information) == errSecSuccess,
-        let values = information as? [String: Any],
+        let values = information as? [String: Any]
+      else { throw PlannerAgentTunnelFailure.runtimeUnavailable }
+      try validateSigningInformation(values, team: team)
+    }
+
+    /// TestFlight may add beta reporting metadata; helper capabilities remain sandbox inheritance only.
+    static func validateSigningInformation(_ values: [String: Any], team: String) throws {
+      guard values[kSecCodeInfoTeamIdentifier as String] as? String == team,
         let entitlements = values[kSecCodeInfoEntitlementsDict as String] as? [String: Any],
-        entitlements.count == 2,
+        Set(entitlements.keys).isSubset(of: allowedEntitlements),
         entitlements["com.apple.security.app-sandbox"] as? Bool == true,
-        entitlements["com.apple.security.inherit"] as? Bool == true
+        entitlements["com.apple.security.inherit"] as? Bool == true,
+        entitlements["beta-reports-active"].map({ $0 as? Bool == true }) ?? true
       else { throw PlannerAgentTunnelFailure.runtimeUnavailable }
     }
 
-    private static func requirement(helper: Helper) throws -> SecRequirement {
+    private static func ownSigningTeam() throws -> String {
       var ownCode: SecCode?
       var ownStaticCode: SecStaticCode?
       var information: CFDictionary?
@@ -141,12 +170,19 @@
           ownStaticCode, SecCSFlags(rawValue: kSecCSSigningInformation), &information)
           == errSecSuccess,
         let values = information as? [String: Any],
-        let team = values[kSecCodeInfoTeamIdentifier as String] as? String,
+        let team = values[kSecCodeInfoTeamIdentifier as String] as? String, !team.isEmpty,
         team.allSatisfy({ $0.isASCII && ($0.isLetter || $0.isNumber) })
       else { throw PlannerAgentTunnelFailure.runtimeUnavailable }
+      return team
+    }
+
+    private static func requirement(helper: Helper, team: String) throws -> SecRequirement {
       var requirement: SecRequirement?
+      // TestFlight uses Apple's certificate; validateSigningInformation still pins the signed team.
       let expression =
-        "identifier \"\(helper.identifier)\" and anchor apple generic and certificate leaf[subject.OU] = \"\(team)\""
+        "identifier \"\(helper.identifier)\" and anchor apple generic and "
+        + "(certificate leaf[subject.OU] = \"\(team)\" or "
+        + "certificate leaf[field.\(testFlightCertificateExtension)] exists)"
       guard
         SecRequirementCreateWithString(expression as CFString, [], &requirement) == errSecSuccess,
         let requirement

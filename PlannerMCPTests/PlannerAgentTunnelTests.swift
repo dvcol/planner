@@ -1,6 +1,7 @@
 import Darwin
 import Foundation
 import PlannerCore
+import Security
 import XCTest
 
 @testable import Planner
@@ -8,6 +9,58 @@ import XCTest
 @MainActor
 final class PlannerAgentTunnelTests: XCTestCase {
   private let tunnelId = "tunnel_0123456789abcdef0123456789abcdef"
+
+  func testHelperSigningAcceptsTestFlightReportingWithTheSameInheritedSandbox() throws {
+    for testFlight in [false, true] {
+      var entitlements: [String: Any] = [
+        "com.apple.security.app-sandbox": true, "com.apple.security.inherit": true,
+      ]
+      if testFlight { entitlements["beta-reports-active"] = true }
+      try PlannerAgentTunnelProcess.validateSigningInformation(
+        [
+          kSecCodeInfoTeamIdentifier as String: "EXPECTEDTEAM",
+          kSecCodeInfoEntitlementsDict as String: entitlements,
+        ], team: "EXPECTEDTEAM")
+    }
+  }
+
+  func testHelperSigningRejectsOtherTeamsAndAdditionalCapabilities() {
+    let inherited: [String: Any] = [
+      "com.apple.security.app-sandbox": true, "com.apple.security.inherit": true,
+    ]
+    let rejectedOverrides: [[String: Any]] = [
+      ["com.apple.security.app-sandbox": false],
+      ["com.apple.security.inherit": false],
+      ["com.apple.security.network.client": true],
+      ["com.apple.security.network.server": true],
+      ["com.apple.security.application-groups": ["group.unrelated"]],
+      ["com.apple.security.get-task-allow": false],
+      ["beta-reports-active": false],
+      ["beta-reports-active": "true"],
+    ]
+    var rejectedEntitlements = rejectedOverrides.map { inherited.merging($0) { _, new in new } }
+    for required in inherited.keys {
+      var missing = inherited
+      missing.removeValue(forKey: required)
+      rejectedEntitlements.append(missing)
+    }
+    for entitlements in rejectedEntitlements {
+      XCTAssertThrowsError(
+        try PlannerAgentTunnelProcess.validateSigningInformation(
+          [
+            kSecCodeInfoTeamIdentifier as String: "EXPECTEDTEAM",
+            kSecCodeInfoEntitlementsDict as String: entitlements,
+          ], team: "EXPECTEDTEAM"))
+    }
+    for team in ["ANOTHERTEAM", ""] {
+      XCTAssertThrowsError(
+        try PlannerAgentTunnelProcess.validateSigningInformation(
+          [
+            kSecCodeInfoTeamIdentifier as String: team,
+            kSecCodeInfoEntitlementsDict as String: inherited,
+          ], team: "EXPECTEDTEAM"))
+    }
+  }
 
   func testBundledUniversalHelperIsSignedAndRunsInsideTheAppSandbox() async throws {
     try await Task.detached { try PlannerAgentTunnelProcess.validateExecutable() }.value
