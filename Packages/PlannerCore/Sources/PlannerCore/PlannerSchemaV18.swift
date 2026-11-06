@@ -1,6 +1,17 @@
 import Foundation
 import SwiftData
 
+/// Reuses full label validation only within one synchronous, unchanged bulk read.
+final class PlannerLabelReadScope {
+  fileprivate var values: [PersistentIdentifier: PlannerLabelRead] = [:]
+}
+
+/// Materializes every Item and association while validating each physical label once.
+func plannerItemSnapshots(_ records: [PlannerSchemaV18.Item]) throws -> [ItemSnapshot] {
+  let labels = PlannerLabelReadScope()
+  return try records.map { try $0.value(labelReadScope: labels) }
+}
+
 enum PlannerSchemaV18: VersionedSchema {
   static let versionIdentifier = Schema.Version(18, 0, 0)
   static var models: [any PersistentModel.Type] {
@@ -368,7 +379,8 @@ enum PlannerSchemaV18: VersionedSchema {
 
     func value(
       retiringOwnedLinks: Set<PlannerPortableBoundIdentity> = [],
-      retiringLabels: Set<PlannerPortableBoundIdentity> = []
+      retiringLabels: Set<PlannerPortableBoundIdentity> = [],
+      labelReadScope: PlannerLabelReadScope? = nil
     ) throws -> ItemSnapshot {
       guard let id, let lifetimeId, let createdAt, let updatedAt else {
         throw PlannerFailure("readUnavailable", "The Item has unresolved identity or timestamps.")
@@ -417,7 +429,7 @@ enum PlannerSchemaV18: VersionedSchema {
         labels: try labelRecords.sorted {
           ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "")
         }.map {
-          try $0.labelRead()
+          try $0.labelRead(scope: labelReadScope)
         }
       )
       snapshot.contentOrigins = try plannerReadContentOrigins(
@@ -962,21 +974,27 @@ enum PlannerSchemaV18: VersionedSchema {
         label: PlannerBoundIdentity(kind: labelKind, id: labelId, lifetimeId: labelLifetimeId))
     }
 
-    func labelRead() throws -> PlannerLabelRead {
+    func labelRead(scope: PlannerLabelReadScope? = nil) throws -> PlannerLabelRead {
       let snapshot = try value()
       if let category {
+        if let retained = scope?.values[category.persistentModelID] { return retained }
         let content = try category.value().content
-        return PlannerLabelRead(
+        let read = PlannerLabelRead(
           reference: snapshot.labelReference, name: content.name,
           color: content.color, iconName: content.iconName)
+        scope?.values[category.persistentModelID] = read
+        return read
       }
       guard let tag else {
         throw PlannerFailure("readUnavailable", "The association has no resolved label.")
       }
+      if let retained = scope?.values[tag.persistentModelID] { return retained }
       let content = try tag.value().content
-      return PlannerLabelRead(
+      let read = PlannerLabelRead(
         reference: snapshot.labelReference, name: content.name,
         color: content.color, iconName: content.iconName)
+      scope?.values[tag.persistentModelID] = read
+      return read
     }
   }
 

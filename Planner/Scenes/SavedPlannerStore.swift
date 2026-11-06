@@ -51,15 +51,22 @@ enum SavedReviewedChangeResult {
 final class SavedPlannerStore {
   #if PLANNER_AGENT_CONTROL
     let agentAccess = PlannerAgentAccess()
+    @ObservationIgnored private var agentControlURL: URL?
 
     func enableAgentAccess() async {
       guard let planner, let session, isReady, !isSaving, !isManagingSharing else { return }
-      do {
-        let controlURL = try PlannerAgentConnection.controlURL()
-        await agentAccess.enable(.init(planner: planner, session: session, controlURL: controlURL))
-      } catch {
+      guard let agentControlURL else {
         alertMessage = "Agent access requires the app's configured shared storage."
+        return
       }
+      await agentAccess.enable(
+        .init(planner: planner, session: session, controlURL: agentControlURL))
+    }
+
+    private func resumeAgentAccess() async {
+      guard let planner, let session, let agentControlURL else { return }
+      await agentAccess.resume(
+        .init(planner: planner, session: session, controlURL: agentControlURL))
     }
 
     var agentConnectionInstructions: String {
@@ -184,6 +191,10 @@ final class SavedPlannerStore {
 
   init(configuration: PlannerStorageConfiguration) {
     storageConfiguration = configuration
+    #if PLANNER_AGENT_CONTROL
+      agentControlURL = configuration.controlURL.deletingLastPathComponent()
+        .appending(path: "AgentControlState.plist")
+    #endif
     activeLibrary = configuration.sharedLibrary
     planner = PlannerCore.Planner(configuration: configuration)
     if case .privateCloud = configuration.storageMode {
@@ -236,6 +247,13 @@ final class SavedPlannerStore {
       let configuration =
         isLocalPrototype ? local : try PlannerNativeStorage.privateConfiguration(local)
       storageConfiguration = configuration
+      #if PLANNER_AGENT_CONTROL
+        if isLocalPrototype {
+          agentControlURL = directory.appending(path: "AgentControlState.plist")
+        } else {
+          agentControlURL = try PlannerAgentConnection.controlURL()
+        }
+      #endif
       planner = PlannerCore.Planner(configuration: configuration)
       if case .privateCloud = configuration.storageMode {
         hasPrivateSynchronization = true
@@ -290,6 +308,9 @@ final class SavedPlannerStore {
       }
       await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
+      #if PLANNER_AGENT_CONTROL
+        await resumeAgentAccess()
+      #endif
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired:
       openingFailure = "Open Plan 2Do once to set up its shared data before using Share."
@@ -345,7 +366,7 @@ final class SavedPlannerStore {
     }
     isOpening = true
     #if PLANNER_AGENT_CONTROL
-      await agentAccess.stop()
+      await agentAccess.suspend()
     #endif
     changeObservationTask?.cancel()
     recoveryRefresh?.task.cancel()
@@ -372,6 +393,9 @@ final class SavedPlannerStore {
         session = ready
         await observeChanges(next, session: ready)
         await refreshRecoveryStatus()
+        #if PLANNER_AGENT_CONTROL
+          await resumeAgentAccess()
+        #endif
       case .unavailable(let reason): openingFailure = reason.message
       case .mainAppSetupRequired: openingFailure = "Open Plan 2Do to prepare the selected library."
       case .mainAppMigrationRequired:
@@ -452,7 +476,7 @@ final class SavedPlannerStore {
           (error as? PlannerFailure)?.message ?? "Planner could not observe saved changes."
         if (error as? PlannerFailure)?.code == "staleDatasetSession" {
           #if PLANNER_AGENT_CONTROL
-            await self?.agentAccess.stop()
+            await self?.agentAccess.suspend()
           #endif
           Task { [weak self] in
             await self?.refreshRecoveryStatus()
@@ -484,11 +508,11 @@ final class SavedPlannerStore {
   private func refreshSession(_ planner: PlannerCore.Planner, expected: PlannerDatasetSession) async
   {
     changeObservationTask?.cancel()
+    #if PLANNER_AGENT_CONTROL
+      await agentAccess.suspend()
+    #endif
     switch await planner.bootstrap() {
     case .ready(let ready):
-      #if PLANNER_AGENT_CONTROL
-        if ready != expected { await agentAccess.stop() }
-      #endif
       guard ready.datasetId == expected.datasetId,
         ready.ownershipBinding == expected.ownershipBinding
       else {
@@ -499,11 +523,11 @@ final class SavedPlannerStore {
       session = ready
       await observeChanges(planner, session: ready)
       await refreshRecoveryStatus()
+      #if PLANNER_AGENT_CONTROL
+        await resumeAgentAccess()
+      #endif
       changeRevision = UUID()
     case .unavailable(let reason):
-      #if PLANNER_AGENT_CONTROL
-        await agentAccess.stop()
-      #endif
       changeObservationFailure = reason.message
     case .mainAppSetupRequired:
       changeObservationFailure = "Open Plan 2Do to finish setting up its shared data."

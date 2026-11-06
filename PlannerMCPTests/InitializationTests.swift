@@ -58,6 +58,10 @@ struct InitializationTests {
     let fixtures = [
       InitializationExchange(
         body:
+          #"{"jsonrpc":"2.0","id":3,"method":"initialize","params":{"protocolVersion":"2025-11-25","clientInfo":{"name":"ChatGPT fixture","version":"1"},"capabilities":{"experimental":{"object-extension":{"supported":true},"string-extension":"enabled"},"extensions":{},"roots":{}}}}"#,
+        requestIdentifier: 3, protocolVersion: "2025-11-25"),
+      InitializationExchange(
+        body:
           #"{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","clientInfo":{"name":"Fixture A","version":"1"},"capabilities":{}}}"#,
         requestIdentifier: 1, protocolVersion: "2025-11-25"),
       InitializationExchange(
@@ -93,6 +97,9 @@ struct InitializationTests {
         #expect(envelope["error"] == nil)
         let result = try #require(envelope["result"] as? [String: Any])
         #expect(result["protocolVersion"] as? String == fixture.protocolVersion)
+        let instructions = try #require(result["instructions"] as? String)
+        #expect(instructions.contains("planner_operation_status"))
+        #expect(instructions.contains("fresh field hashes"))
         let capabilities = try #require(result["capabilities"] as? [String: Any])
         #expect(capabilities.isEmpty)
       }

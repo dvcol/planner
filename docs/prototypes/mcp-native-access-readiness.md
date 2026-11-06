@@ -18,8 +18,15 @@ on iOS, cloud backend, public endpoint, package or target.
    apply. The connected phone session uses that Mac connection.
 
 The Mac must be awake and Plan 2Do running to answer requests. Closing a planning
-window does not end access. Stop, app quit, or changing the selected library ends
-the access window. Relaunch starts Off. No idle timer or daemon is added.
+window does not end access. The on/off choice is saved for the authorized library
+and account. Relaunch and same-library session refresh restore enabled access
+with a fresh credential. Stop saves Off. Changing to another library or account
+revokes the current window and does not transfer its authorization. No idle timer
+or daemon is added.
+
+The endpoint binds only to `127.0.0.1`; it is not directly reachable over LAN or
+the internet. The Planner iOS app opens its own local Core session and synchronizes
+shared planning data through iCloud rather than connecting to this Mac endpoint.
 
 Whole library sharing allows creating new Lists. Selected-List sharing retains
 its existing restrictions: agents can edit selected Lists and create Items in
@@ -29,8 +36,11 @@ account or dataset through request fields.
 
 ## Credentials and lifecycle
 
-Each Enable generates a new 32-byte random credential in the app's private,
-device-only data-protection Keychain. An ephemeral App Group discovery file holds
+Each enabled access window generates a new 32-byte random credential in the app's
+private, device-only data-protection Keychain. A separate, non-secret preference
+retains the selected dataset, ownership binding and port beside the discovery
+file. It contains no credential and is not synchronized as a cross-device grant.
+An ephemeral App Group discovery file holds
 only the accepted version, instance/window IDs, endpoint, protocol and On state.
 The non-UI reader validates that state, reads Keychain without prompting, performs
 an authenticated ping with the matching window header, then rereads discovery
@@ -40,10 +50,30 @@ or enables a listener. Redirects and non-loopback endpoints are rejected.
 Stop revokes admission and cancels active tool tasks before listener/credential
 cleanup. An already committed command keeps its truthful result; Stop does not
 promise rollback. Re-enable rotates the credential and can immediately reuse the
-port. Failed binding or discovery publication never reports On. A library/session
-replacement stops the old bridge instead of silently retargeting its clients.
+port. Failed binding or discovery publication never reports On. A session
+replacement revokes the old bridge before restoring the saved choice for the
+same authorized library and account. A different scope stays off and preserves
+the previous scope's saved choice.
 
 ## Qualification
+
+The persistent-choice follow-up passes nine focused signed lifecycle tests with
+real Keychain, listener and disposable Core stores. They cover reconstruction of
+the controller/store, automatic replacement of a stale same-library session,
+durable Stop, scope isolation, stale-controller Stop and retention of a newer
+port. The separate opt-in attended-client check was not rerun. Installed Mac
+TestFlight build 12 restores access after the user enables it once, quits and
+reopens the app without retoggling: the signed header helper and all six source
+catalog reads succeed. A real iCloud account switch has not been performed.
+
+The associated large-library follow-up reuses validated physical labels within
+one unchanged bulk read or row window. The write/recovery cohort passes 161 tests;
+the subsequent rows/capture/query cohort passes 30 tests, including paging,
+another writer's label rename and malformed-label repair. These cohorts overlap.
+No label values are cached across requests and no storage migration is added.
+The installed build reads a real 64-row food List window with 87 matching Items
+in 0.323 and 0.315 seconds; its corresponding identity queries take 0.141 and
+0.086 seconds. Full-library timing remains part of the import completion check.
 
 Four focused signed app-hosted lifecycle/validation tests and eight existing
 HTTP authentication, ping, initialization and listener tests pass. They use real

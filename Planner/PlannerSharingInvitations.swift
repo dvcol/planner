@@ -56,6 +56,23 @@ final class PlannerSharingInvitations {
   import AppKit
 
   final class PlannerSharingApplicationDelegate: NSObject, NSApplicationDelegate {
+    #if PLANNER_AGENT_CONTROL
+      weak var agentAccess: PlannerAgentAccess?
+      private var terminationPending = false
+
+      func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard let agentAccess else { return .terminateNow }
+        if !terminationPending {
+          terminationPending = true
+          Task {
+            await agentAccess.shutdown()
+            sender.reply(toApplicationShouldTerminate: true)
+          }
+        }
+        return .terminateLater
+      }
+    #endif
+
     func application(
       _ application: NSApplication, userDidAcceptCloudKitShareWith metadata: CKShare.Metadata
     ) {

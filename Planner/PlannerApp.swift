@@ -61,6 +61,9 @@ struct PlannerApp: App {
         .environment(addressPreviews)
         .environment(mapsPreviews)
         .task(id: PlannerSharingInvitations.shared.revision) {
+          #if PLANNER_AGENT_CONTROL
+            sharingDelegate.agentAccess = savedPlanner.agentAccess
+          #endif
           await savedPlanner.open()
           while let metadata = PlannerSharingInvitations.shared.consume() {
             await savedPlanner.acceptSharingInvitation(metadata)
@@ -100,9 +103,15 @@ struct PlannerApp: App {
         "Plan 2Do agent access",
         systemImage: savedPlanner.agentAccess.isEnabled ? "network" : "network.slash"
       ) {
-        Text(savedPlanner.agentAccess.isEnabled ? "Agent access on" : "Agent access off")
+        if savedPlanner.agentAccess.isEnabled {
+          Text("Agent access on")
+        } else if savedPlanner.agentAccess.isConfigured {
+          Text("Agent access paused")
+        } else {
+          Text("Agent access off")
+        }
         Text(savedPlanner.libraryTitle)
-        if savedPlanner.agentAccess.isEnabled || savedPlanner.agentAccess.state == .enabling {
+        if savedPlanner.agentAccess.isConfigured || savedPlanner.agentAccess.state == .enabling {
           Button("Stop agent access") { Task { await savedPlanner.agentAccess.stop() } }
         } else {
           Button("Enable agent access") { Task { await savedPlanner.enableAgentAccess() } }

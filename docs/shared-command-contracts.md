@@ -1,5 +1,18 @@
 # Shared command contracts
 
+## Current lifecycle amendment — 2 November 2026
+
+The user requests persistent Agent Control on/off settings. This supersedes the
+restart-starts-Off and same-library session-replacement wording in the historical
+decisions below. Save the choice against the exact dataset and ownership binding.
+While Planner is running, restore an enabled choice after a matching library
+session refresh; restore it again after app relaunch. Revoke the old access
+window before issuing fresh device-only Keychain credentials. A different dataset
+or account must not inherit the grant or erase the prior scope's choice. Manual
+Stop persists Off. App quit still ends the running listener, and the credential
+reader remains unable to launch the app or grant access. The endpoint remains
+loopback-only; iOS planning data continues to synchronize through iCloud.
+
 In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The human answered revised Contract Q1-Q26 on 2026-10-08; the accepted choices below govern the earlier proposals. Q27 delegates the simple edit guard to engineering judgment; per-field hashes are selected. Q28 accepts the same-app credential reader. Q30 C removes an additional app-imposed client/request cap while retaining two-client proof and measured capacity. Q29 accepts the official Swift SDK and its supported sessionless HTTP baseline. The current inspected release is 0.12.1; actual client compatibility and SDK stability remain prototype evidence gates. No Swift declarations have been compiled and no unit, store, UI, device or client test has been executed here.
 
 ## Context

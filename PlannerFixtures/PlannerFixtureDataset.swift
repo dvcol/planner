@@ -20,6 +20,7 @@ enum PlannerFixtureDataset {
     case unavailableStore = "unavailable-store"
     case largeCollection = "large-collection"
     case listWindows = "list-windows"
+    case rowReadability = "row-readability"
     case itineraryWindows = "itinerary-windows"
     case containerWindows = "container-windows"
     case graphRecovery = "graph-recovery"
@@ -98,6 +99,9 @@ enum PlannerFixtureDataset {
     }
     if scenario == .listWindows {
       return try await PlannerListWindowFixture.makeStore(directory: directory)
+    }
+    if scenario == .rowReadability {
+      return try await PlannerRowReadabilityFixture.makeStore(directory: directory)
     }
     if scenario == .largeCollection {
       return try await PlannerLargeCollectionFixture.makeStore(directory: directory)

@@ -38,6 +38,8 @@
         return .error(statusCode: 401, .invalidRequest("Unauthorized"))
       }
 
+      let request = compatibleInitialization(request)
+
       if let body = request.body,
         let initialization = try? JSONDecoder().decode(Request<Initialize>.self, from: body),
         initialization.method == Initialize.name,
@@ -55,7 +57,10 @@
       var capabilities = Server.Capabilities()
       if dataset != nil { capabilities.tools = .init() }
       let server = Server(
-        name: "Plan 2Do", version: "1.0.0", capabilities: capabilities)
+        name: "Plan 2Do", version: "1.0.0",
+        instructions: """
+          Read the selected library through planner_query and planner_read before editing. Use fresh field hashes from planner_read for edits and obtain the required planner_prepare_review or capture review token before reviewed changes. Use a new operationId for each changed payload. After an uncertain write, check planner_operation_status with the original operationId before retrying; reuse that ID only for the exact same payload. All changes apply to the currently authorized library.
+          """, capabilities: capabilities)
       if dataset != nil {
         await server.withMethodHandler(ListTools.self) { _ in
           ListTools.Result(
@@ -90,6 +95,26 @@
 
       responseHeaders["X-Planner-Access-Window"] = accessWindowIdentifier.uuidString
       return .data(responseData, headers: responseHeaders)
+    }
+
+    /// SDK 0.12.1 only decodes string experimental values; this server implements no extensions.
+    private func compatibleInitialization(_ request: HTTPRequest) -> HTTPRequest {
+      guard let body = request.body,
+        var envelope = try? JSONSerialization.jsonObject(with: body) as? [String: Any],
+        envelope["method"] as? String == Initialize.name,
+        var parameters = envelope["params"] as? [String: Any],
+        var capabilities = parameters["capabilities"] as? [String: Any],
+        let experimental = capabilities["experimental"] as? [String: Any],
+        experimental.values.contains(where: { !($0 is String) })
+      else { return request }
+      capabilities["experimental"] = experimental.filter { $0.value is String }
+      parameters["capabilities"] = capabilities
+      envelope["params"] = parameters
+      guard let compatibleBody = try? JSONSerialization.data(withJSONObject: envelope) else {
+        return request
+      }
+      return HTTPRequest(
+        method: request.method, headers: request.headers, body: compatibleBody, path: request.path)
     }
 
     private func callPlannerTool(_ parameters: CallTool.Parameters) async -> CallTool.Result {

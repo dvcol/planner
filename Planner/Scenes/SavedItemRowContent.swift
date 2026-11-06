@@ -150,7 +150,7 @@ struct SavedItemRowContent: View {
   }
 
   var body: some View {
-    HStack(alignment: .top) {
+    HStack(alignment: .center, spacing: 12) {
       textContent.frame(maxWidth: .infinity, alignment: .leading)
       if let request = previewRequest,
         case .available(let content) = previews.linkState(for: request),
@@ -159,12 +159,13 @@ struct SavedItemRowContent: View {
         previewImage(imageData)
           .resizable()
           .scaledToFill()
-          .frame(width: 44, height: 44)
-          .clipShape(RoundedRectangle(cornerRadius: 6))
+          .frame(width: 56, height: 56)
+          .clipShape(RoundedRectangle(cornerRadius: 8))
           .accessibilityLabel("Website preview")
           .accessibilityIdentifier("saved.item.preview.thumbnail.\(request.linkId.uuidString)")
       }
     }
+    .padding(.vertical, 8)
     .task(id: previewRequest) {
       if let request = previewRequest { await previews.loadLink(request) }
     }
@@ -181,8 +182,9 @@ struct SavedItemRowContent: View {
   }
 
   private var textContent: some View {
-    VStack(alignment: .leading, spacing: 4) {
+    VStack(alignment: .leading, spacing: 6) {
       Text(row.title)
+        .font(.body.weight(.semibold))
         .foregroundStyle(SavedRowForeground())
         .strikethrough((row.effectiveDone ?? row.globalDone) == true)
         .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
@@ -190,29 +192,7 @@ struct SavedItemRowContent: View {
         Text(subtitle)
           .font(.subheadline)
           .foregroundStyle(SavedRowForeground.secondary)
-          .lineLimit(1)
-      }
-      if let estimate = row.estimate {
-        Label(estimate.nativeEstimateDescription, systemImage: "clock")
-          .font(.caption)
-          .foregroundStyle(SavedRowForeground.secondary)
-          .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
-      }
-      if let link = row.previewLink {
-        Label(link.displayTitle, systemImage: link.systemImage)
-          .font(.caption)
-          .foregroundStyle(SavedRowForeground.secondary)
-          .lineLimit(1)
-      } else if row.hasLinks {
-        Label("Maps", systemImage: "map")
-          .font(.caption)
-          .foregroundStyle(SavedRowForeground.secondary)
-      }
-      if let location = row.locationCaption {
-        Label(location, systemImage: "mappin.and.ellipse")
-          .font(.caption)
-          .foregroundStyle(SavedRowForeground.secondary)
-          .lineLimit(1)
+          .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
       }
       if let schedule = row.scheduleDescription(presentation: rowPresentation) {
         let additionalCount = row.additionalScheduleCount
@@ -220,16 +200,29 @@ struct SavedItemRowContent: View {
           additionalCount > 0 ? "\(schedule) · +\(additionalCount)" : schedule,
           systemImage: "calendar"
         )
-        .font(.caption)
+        .font(.subheadline)
         .foregroundStyle(SavedRowForeground.secondary)
-        .lineLimit(1)
+        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+      }
+      if !activitySummary.isEmpty {
+        Text(activitySummary)
+          .font(.caption)
+          .foregroundStyle(SavedRowForeground.secondary)
+          .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+          .fixedSize(horizontal: false, vertical: true)
       }
       if let labels = row.compactLabelDescription {
         Text(labels)
           .font(.caption)
           .foregroundStyle(SavedRowForeground.secondary)
-          .lineLimit(1)
+          .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
       }
     }
+  }
+
+  private var activitySummary: String {
+    [row.estimate?.nativeEstimateDescription, row.locationCaption]
+      .compactMap { $0 }
+      .joined(separator: " · ")
   }
 }

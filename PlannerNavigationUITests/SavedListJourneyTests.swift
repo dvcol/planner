@@ -16,7 +16,9 @@ final class SavedListJourneyTests: XCTestCase {
       name.typeText(listName)
       application.plannerElement("saved.list.save").activateForPlannerJourney()
       XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
-      let emptyContent = application.scrollViews.firstMatch
+      let emptyContent = application.descendants(matching: .any).matching(
+        identifier: "saved.list.contents"
+      ).firstMatch
       let emptyHeading = emptyContent.staticTexts[listName].firstMatch
       recordScreenshot(application, name: "Full List name in empty content")
       XCTAssertTrue(emptyHeading.waitForExistence(timeout: 5))

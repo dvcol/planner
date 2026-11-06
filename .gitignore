@@ -13,3 +13,6 @@ docs/history/
 *.log
 *.log.gz
 *.xcarchive/
+
+# Personal planning context stays on this host.
+/personal/

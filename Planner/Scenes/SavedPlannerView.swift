@@ -1755,13 +1755,12 @@ struct SavedPlannerView: View {
                   HStack {
                     Label(list.name, systemImage: "list.bullet.rectangle")
                       .foregroundStyle(SavedRowForeground())
+                      .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                     if list.archived {
                       Image(systemName: "archivebox").foregroundStyle(.secondary)
                         .accessibilityHidden(true)
                     }
                   }
-                  SavedContainerEstimatePreview(
-                    estimates: list.estimates, manualEstimate: list.manualEstimate)
                 }
               }
               .accessibilityLabel(list.name)
