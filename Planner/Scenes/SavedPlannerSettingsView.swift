@@ -203,7 +203,6 @@ struct SavedPlannerSettingsView: View {
       Text(importFailure ?? "")
     }
     .interactiveDismissDisabled(store.isSaving)
-    .accessibilityIdentifier("saved.settings.content")
   }
 
   private var exportFailurePresented: Binding<Bool> {

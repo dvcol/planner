@@ -1782,6 +1782,19 @@ struct SavedPlannerView: View {
         }
       }
       Section {
+        #if os(macOS)
+          HStack {
+            listCatalogSortControl
+            SavedCatalogArchiveFilterMenu(
+              archive: $listCatalogArchive, pluralTitle: "Lists",
+              accessibilityIdentifier: "saved.lists.archive")
+          }
+          .menuStyle(.borderlessButton)
+          .controlSize(.small)
+          .font(.caption)
+          .accessibilityElement(children: .contain)
+          .selectionDisabled()
+        #endif
         if usesSidebarNavigation, listCatalogWindow?.state == .ready,
           listCatalogWindow?.matchingCount == 0
         {
@@ -1829,26 +1842,13 @@ struct SavedPlannerView: View {
         }
       } header: {
         if usesSidebarNavigation { Text("Lists").foregroundStyle(Color.primary) }
-        #if os(macOS)
-          HStack {
-            listCatalogSortControl
-            SavedCatalogArchiveFilterMenu(
-              archive: $listCatalogArchive, pluralTitle: "Lists",
-              accessibilityIdentifier: "saved.lists.archive")
-          }
-          .menuStyle(.borderlessButton)
-          .controlSize(.small)
-          .font(.caption)
-          .textCase(nil)
-          .padding(.vertical, 4)
-        #endif
       }
     }
     .listStyle(.sidebar)
+    .accessibilityIdentifier("saved.lists.catalog")
     #if os(macOS)
       .safeAreaInset(edge: .bottom, spacing: 0) { sidebarActions }
     #endif
-    .accessibilityIdentifier("saved.lists.catalog")
     .overlay {
       #if os(iOS)
         if !usesSidebarNavigation, listCatalogWindow?.state == .ready,

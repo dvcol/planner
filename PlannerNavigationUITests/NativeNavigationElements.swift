@@ -396,15 +396,27 @@ extension XCUIApplication {
   func launchSavedPlannerJourney() {
     launch()
     #if os(macOS)
-      if !windows.firstMatch.waitForExistence(timeout: 3) {
+      let plannerWindows = windows.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "planner-main-"))
+      if !plannerWindows.firstMatch.waitForExistence(timeout: 5) {
         menuBars.menuBarItems["File"].click()
         menuItems["New Window"].click()
-        XCTAssertTrue(windows.firstMatch.waitForExistence(timeout: 5))
+        XCTAssertTrue(plannerWindows.firstMatch.waitForExistence(timeout: 5))
       }
-      let restoredWindowCount = windows.count
+      activate()
+      menuBars.menuBarItems["View"].click()
+      let exitFullScreen = menuItems["Exit Full Screen"]
+      if exitFullScreen.exists && exitFullScreen.isEnabled {
+        exitFullScreen.click()
+        XCTAssertTrue(
+          plannerWindows.firstMatch.buttons["_XCUI:CloseWindow"].waitForExistence(timeout: 10))
+      } else {
+        menuBars.menuBarItems["View"].click()
+      }
+      let restoredWindowCount = plannerWindows.count
       for _ in 1..<max(1, restoredWindowCount) {
-        let identifier = windows.firstMatch.identifier
-        let window = windows.matching(NSPredicate(format: "identifier == %@", identifier))
+        let identifier = plannerWindows.firstMatch.identifier
+        let window = plannerWindows.matching(NSPredicate(format: "identifier == %@", identifier))
           .firstMatch
         window.buttons["_XCUI:CloseWindow"].click()
         XCTAssertTrue(window.waitForNonExistence(timeout: 5))

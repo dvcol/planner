@@ -111,10 +111,7 @@ struct PlannerApp: App {
       }
     #endif
     #if PLANNER_AGENT_CONTROL
-      MenuBarExtra(
-        "Plan 2Do",
-        systemImage: savedPlanner.agentAccess.isEnabled ? "network" : "network.slash"
-      ) {
+      MenuBarExtra {
         Button("Open Plan 2Do") { planOpening.navigate(to: .planner) }
         Menu("Go to") {
           Button("Lists") { planOpening.navigate(to: .lists) }
@@ -173,6 +170,13 @@ struct PlannerApp: App {
         Button("Settings…") { planOpening.navigate(to: .settings) }
         Divider()
         Button("Quit Plan 2Do") { NSApplication.shared.terminate(nil) }
+      } label: {
+        Label(
+          "Plan 2Do", systemImage: savedPlanner.agentAccess.isEnabled ? "network" : "network.slash"
+        )
+        .labelStyle(.iconOnly)
+        .accessibilityLabel("Plan 2Do")
+        .help("Plan 2Do")
       }
     #endif
     #if os(macOS)
